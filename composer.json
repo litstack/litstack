@@ -16,12 +16,5 @@
             "email": "jannes@aw-studio.de"
         }
     ],
-    "minimum-stability": "dev",
-    "extra": {
-        "laravel": {
-            "providers": [
-                "AwStudio\\Fjord\\FjordServiceProvider"
-            ]
-        }
-    }
+    "minimum-stability": "dev"
 }
