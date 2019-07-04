@@ -16,5 +16,16 @@
             "email": "jannes@aw-studio.de"
         }
     ],
-    "minimum-stability": "dev"
+    "autoload": {
+        "psr-4": {
+            "AwStudio\\Fjord\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AwStudio\\Fjord\\FjordServiceProvider"
+            ]
+        }
+    }
 }
