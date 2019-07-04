@@ -8,9 +8,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Styles -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzfU1NLWVY5qSV_JOLK7KFivMt3L8CS38&libraries=places"
-    ></script>
 
     @guest
     <style media="screen">
