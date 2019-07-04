@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Models;
+
+use AwStudio\Fjord\Models\Model as FjordModel;
+DummyTraits
+class DummyClassname extends FjordModel DummyImplement
+{
+    DummyUses
+
+    protected $fillable = [];
+
+    DummyVars
+
+    DummySluggable
+
+    DummyGetAttributes
+}

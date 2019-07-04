@@ -1,0 +1,8 @@
+/**
+     * Append the image column to each query.
+     *
+     */
+    public function getImageAttribute()
+    {
+        return $this->getMedia('image');
+    }

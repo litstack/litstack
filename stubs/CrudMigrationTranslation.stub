@@ -1,0 +1,12 @@
+Schema::create('DummyTranslationTablename', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('DummyForeignId')->unsigned();
+            $table->string('locale')->index();
+
+            // The columns that are translated
+            // $table->string('title')->nullable();
+            // $table->text('content')->nullable();
+
+            $table->unique(['DummyForeignId', 'locale']);
+            $table->foreign('DummyForeignId')->references('id')->on('DummyTablename')->onDelete('cascade');
+        });

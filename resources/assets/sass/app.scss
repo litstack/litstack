@@ -1,0 +1,50 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500&display=swap');
+
+// Variables
+@import 'variables';
+
+// Atoms
+@import '_atoms/aw-brand';
+@import '_atoms/aw-card';
+
+// Molecules
+@import '_molecules/aw-topbar';
+@import '_molecules/aw-sidebar';
+@import '_molecules/aw-notifications';
+@import '_molecules/aw-dropzone';
+@import '_molecules/aw-form';
+@import '_molecules/aw-tabs';
+@import '_molecules/aw-modal';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Quill Theme
+@import '~quill/dist/quill.snow.css';
+
+#app {
+    display: grid;
+    grid-template:
+        't t'
+        's m';
+
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: $top_height auto;
+
+    background-color: #f1f1f1;
+    .btn:focus {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+}
+main {
+    grid-area: m;
+    height: calc(100vh - #{$top_height});
+    overflow-y: scroll;
+    padding: 20px 0;
+    .card {
+        border-top: 4px solid #5c10ff;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+}

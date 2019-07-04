@@ -1,0 +1,42 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class DummyClassname extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('DummyTablename', function (Blueprint $table) {
+            $table->bigIncrements('id');
+
+            // $table->string('title');
+
+            DummySlug
+
+            $table->unsignedInteger('order_column')->nullable();
+            $table->boolean('active')->default(true);
+
+            $table->timestamps();
+        });
+
+        DummyTranslation
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('DummyTablename');
+        DummyDownTranslation
+    }
+}

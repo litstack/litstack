@@ -1,0 +1,41 @@
+.aw-topbar {
+    grid-area: t;
+    height: $top_height;
+    background: linear-gradient(to right, #4200b7 0%, #5c00ff 100%);
+    padding: 0 20px;
+    display: flex;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    z-index: 9;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0px;
+        left: 0;
+        width: 100vw;
+        height: 4px;
+        background: linear-gradient(to right, #150d54 0%, #280969 100%);
+    }
+    &_brand {
+        color: white;
+        font-weight: 500;
+        font-size: 1.2rem;
+        letter-spacing: 0.1rem;
+        align-self: center;
+        text-transform: uppercase;
+        img {
+            width: 150px;
+        }
+    }
+    &_link {
+        padding-top: 2px;
+        color: white;
+        letter-spacing: 0.1rem;
+        align-self: center;
+        text-transform: uppercase;
+        font-weight: 800;
+        &:hover {
+            text-decoration: none;
+            color: $light;
+        }
+    }
+}

@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Http\Controllers\Fjord;
+
+use AwStudio\Fjord\Http\Controllers\FjordCrudController;
+
+class DummyClassname extends FjordCrudController
+{
+    protected $modelName = 'DummyModelName';
+}
