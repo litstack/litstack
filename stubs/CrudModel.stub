@@ -8,7 +8,10 @@ class DummyClassname extends FjordModel DummyImplement
 {
     DummyUses
 
-    protected $fillable = [];
+    // enter all fillable columns. translated columns must also
+    // be set fillable. don't forget to also set them fillable in
+    // the coresponding translation-model
+    protected $fillable = ['title', 'text'];
 
     DummyVars
 

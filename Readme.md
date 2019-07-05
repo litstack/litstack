@@ -2,9 +2,10 @@
 
 ## Installation
 
-Install this package using the following command:
+Install this package using the following commands:
 
 ```bash
+composer require aw-studio/fjord
 php artisan fjord:install
 ```
 
@@ -22,6 +23,18 @@ php artisan fjord:admin
 
 It's all setup now, visit http://yourapp.tld/admin
 
+## Setup
+
+If your application is multilingual edit the `config/translatable.php` config
+and set the locals to your needing:
+
+```php
+'locales' => [
+    'de',
+    'en'
+],
+```
+
 ## Use the CRUD-System
 
 Generate a fresh CRUDable Model using:
@@ -36,12 +49,15 @@ Edit the generated migration to your liking and migrate:
 php artisan migrate
 ```
 
-Add all fillable columns to the new Model.
+Add all fillable columns to the new Model, e.g:
+
+```php
+protected $fillable = ['title', 'text', 'link',];
+```
 
 Add a navigation-entry to the config file `config/fjord-navigation.php`.
 
 ```php
-<?php
 return [
     [
         'title' => 'Posts',
@@ -54,8 +70,6 @@ return [
 Add the crud fields to the config file `config/fjord-crud.php`.
 
 ```php
-<?php
-
 return [
     'posts' =>[
         [

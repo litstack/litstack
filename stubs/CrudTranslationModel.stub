@@ -3,9 +3,13 @@
 namespace App\Models\Translations;
 
 use Illuminate\Database\Eloquent\Model;
-
+DummyTraits
 class DummyClassname extends Model
 {
+    DummyUses
+
     public $timestamps = false;
     protected $fillable = ['title'];
+
+    DummySluggable
 }

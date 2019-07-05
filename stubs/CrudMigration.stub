@@ -16,6 +16,9 @@ class DummyClassname extends Migration
         Schema::create('DummyTablename', function (Blueprint $table) {
             $table->bigIncrements('id');
 
+            // enter all non-trnslated columns here
+            // set them to fillable in your model
+            //
             // $table->string('title');
 
             DummySlug

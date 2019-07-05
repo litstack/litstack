@@ -46,6 +46,12 @@ class FjordCrud extends Command
         $this->makeMigration($modelName, $s, $t);
         $this->makeController($modelName);
 
+        $this->info("\n----- finished -----\n");
+        $this->info('1) edit the generated migration and migrate');
+        $this->info('2) set the fillable fields in your model(s)');
+        $this->info('3) make your model editable by adding it to the config/fjord-crud.php');
+        $this->info('4) add a navigation entry to your config/fjord-navigation.php');
+
     }
 
     private function makeModel($modelName, $m, $s, $t)
@@ -78,12 +84,15 @@ class FjordCrud extends Command
 
                 // model has slug
                 if($s){
-                    $fileContents = str_replace('DummyTraits', "use Cviebrock\EloquentSluggable\Sluggable;\nDummyTraits", $fileContents);
+                    // if is not translated
+                    if(!$t){
+                        $fileContents = str_replace('DummyTraits', "use Cviebrock\EloquentSluggable\Sluggable;\nDummyTraits", $fileContents);
 
-                    $sluggableContents = file_get_contents(__DIR__.'/../../stubs/CrudModelSluggable.stub');
-                    $fileContents = str_replace('DummySluggable', $sluggableContents, $fileContents);
+                        $sluggableContents = file_get_contents(__DIR__.'/../../stubs/CrudModelSluggable.stub');
+                        $fileContents = str_replace('DummySluggable', $sluggableContents, $fileContents);
 
-                    $uses []= 'Sluggable';
+                        $uses []= 'Sluggable';
+                    }
                 }
 
                 // model is translatable
@@ -99,55 +108,16 @@ class FjordCrud extends Command
                     $uses []= 'Translatable';
                     $appends []= 'translation';
 
-                    $this->makeTranslationModel($modelName);
+                    $this->makeTranslationModel($modelName, $s);
                 }
 
-                // model implements…
-                if(count($implements) > 0){
-                    $delimiter = '';
-                    $str = 'implements ';
-                    foreach ($implements as $imp) {
-                        $str .= $delimiter . $imp;
-                        $delimiter = ', ';
-                    }
-                }else{
-                    $str = '';
-                }
-                $fileContents = str_replace('DummyImplement', $str, $fileContents);
 
-                // model uses traits:
-                if(count($uses) > 0){
-                    $delimiter = '';
-                    $str = 'use ';
-                    foreach ($uses as $use) {
-                        $str .= $delimiter . $use;
-                        $delimiter = ', ';
-                    }
-                }else{
-                    $str = '';
-                }
-                $fileContents = str_replace('DummyUses', $str.';', $fileContents);
-
-                // model appends:
-                if(count($appends) > 0){
-                    $delimiter = '';
-                    $str = 'protected $appends = [';
-                    foreach ($appends as $append) {
-                        $str .= $delimiter . "'" . $append . "'";
-                        $delimiter = ', ';
-                    }
-                }else{
-                    $str = '';
-                }
-                $fileContents = str_replace('DummyVars', $str.'];', $fileContents);
-
+                $fileContents = $this->makeImplements($implements, $fileContents);
+                $fileContents = $this->makeUses($uses, $fileContents);
+                $fileContents = $this->makeAppends($appends, $fileContents);
 
                 // remove placeholders
-                $fileContents = str_replace('DummyTraits', '', $fileContents);
-                $fileContents = str_replace('DummyUses', '', $fileContents);
-                $fileContents = str_replace('DummyVars', '', $fileContents);
-                $fileContents = str_replace('DummySluggable', '', $fileContents);
-                $fileContents = str_replace('DummyGetAttributes', '', $fileContents);
+                $fileContents = $this->cleanUp($fileContents);
             }else{
                 $this->error('template not found');
             }
@@ -160,7 +130,7 @@ class FjordCrud extends Command
         }
     }
 
-    private function makeTranslationModel($modelName)
+    private function makeTranslationModel($modelName, $s)
     {
         $model = app_path('Models/Translations/'.$modelName.'Translation.php');
 
@@ -168,6 +138,22 @@ class FjordCrud extends Command
             $fileContents = file_get_contents(__DIR__.'/../../stubs/CrudTranslationModel.stub');
 
             $fileContents = str_replace('DummyClassname', $modelName.'Translation', $fileContents);
+
+            // if the model is sluggable, add sluggable trait
+            if($s){
+                $fileContents = str_replace('DummyTraits', "use Cviebrock\EloquentSluggable\Sluggable;\nDummyTraits", $fileContents);
+
+                $sluggableContents = file_get_contents(__DIR__.'/../../stubs/CrudModelSluggable.stub');
+                $fileContents = str_replace('DummySluggable', $sluggableContents, $fileContents);
+
+                $uses = ['Sluggable'];
+                $fileContents = $this->makeUses($uses, $fileContents);
+            }
+
+
+
+            // remove placeholders
+            $fileContents = $this->cleanUp($fileContents);
 
             if(!\File::exists('app/Models/Translations')){
                 \File::makeDirectory('app/Models/Translations');
@@ -229,6 +215,66 @@ class FjordCrud extends Command
         if(\File::put($controller, $fileContents)){
             $this->info('controller created');
         }
+    }
+
+    private function cleanUp($fileContents)
+    {
+        $fileContents = str_replace('DummyTraits', '', $fileContents);
+        $fileContents = str_replace('DummyUses', '', $fileContents);
+        $fileContents = str_replace('DummyVars', '', $fileContents);
+        $fileContents = str_replace('DummySluggable', '', $fileContents);
+        $fileContents = str_replace('DummyGetAttributes', '', $fileContents);
+        $fileContents = str_replace('DummyImplement', '', $fileContents);
+
+        return $fileContents;
+    }
+
+    private function makeImplements($implements, $fileContents)
+    {
+        // model implements…
+        if(count($implements) > 0){
+            $delimiter = '';
+            $str = 'implements ';
+            foreach ($implements as $imp) {
+                $str .= $delimiter . $imp;
+                $delimiter = ', ';
+            }
+            $fileContents = str_replace('DummyImplement', $str, $fileContents);
+        }
+
+        return $fileContents;
+    }
+
+    private function makeUses($uses, $fileContents)
+    {
+        // model uses traits:
+        if(count($uses) > 0){
+            $delimiter = '';
+            $str = 'use ';
+            foreach ($uses as $use) {
+                $str .= $delimiter . $use;
+                $delimiter = ', ';
+            }
+            $fileContents = str_replace('DummyUses', $str.';', $fileContents);
+        }
+
+        return $fileContents;
+    }
+
+    private function makeAppends($appends, $fileContents)
+    {
+        // model appends:
+        if(count($appends) > 0){
+            $delimiter = '';
+            $str = 'protected $appends = [';
+            foreach ($appends as $append) {
+                $str .= $delimiter . "'" . $append . "'";
+                $delimiter = ', ';
+            }
+            $fileContents = str_replace('DummyVars', $str.'];', $fileContents);
+        }
+
+        return $fileContents;
     }
 
 

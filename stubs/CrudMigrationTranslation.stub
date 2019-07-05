@@ -3,9 +3,12 @@ Schema::create('DummyTranslationTablename', function (Blueprint $table) {
             $table->unsignedBigInteger('DummyForeignId')->unsigned();
             $table->string('locale')->index();
 
-            // The columns that are translated
+            // set all columns that are translated here
+            // set them to fillable in the model
+            // as well as in the translation-model
+            //
             // $table->string('title')->nullable();
-            // $table->text('content')->nullable();
+            // $table->text('text')->nullable();
 
             $table->unique(['DummyForeignId', 'locale']);
             $table->foreign('DummyForeignId')->references('id')->on('DummyTablename')->onDelete('cascade');
