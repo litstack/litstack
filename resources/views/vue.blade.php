@@ -2,7 +2,7 @@
 
 @section('title')
     @isset($title)
-        {{$title}}
+        {{ucfirst($title)}}
     @endisset
 @endsection
 

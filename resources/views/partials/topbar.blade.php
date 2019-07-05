@@ -1,12 +1,15 @@
-<nav class="aw-topbar justify-content-between align-items-center">
-    <a href="#" class="aw-brand">
-        <img src="{{asset('fjord/images/fjord-logo.png')}}" class="img-fluid" alt="">
-    </a>
+<nav class="fjord-topbar justify-content-between align-items-center">
+    <div>
+        <a href="#" class="fjord-brand">
+            <img src="{{asset('fjord/images/fjord-logo.png')}}" class="img-fluid" alt="">
+        </a>
+        <input class="form-control form-control-lg fjord-search" type="text" placeholder="Search everything">
+    </div>
 
     @guest
 
     @else
-        <a class="aw-topbar_link" href="{{route('fjord.logout')}}"
+        <a class="fjord-topbar_link" href="{{route('fjord.logout')}}"
            onclick="event.preventDefault();
                          document.getElementById('logout-form').submit();">
             logout <i class="fas fa-sign-out-alt"></i>

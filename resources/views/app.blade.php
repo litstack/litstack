@@ -9,29 +9,17 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
 
-    @guest
-    <style media="screen">
-        #app {
-            grid-template:
-                't t'
-                'm m' !important;
-        }
-    </style>
-    @endguest
-
     <link href="{{ asset('fjord/css/app.css') }}" rel="stylesheet">
 </head>
 
 <body>
     <div id="app">
-        @include('fjord::partials.topbar')
-        @include('fjord::partials.sidebar')
+        <header>
+            @include('fjord::partials.topbar')
+        </header>
+        @include('fjord::partials.navigation')
         <main>
             <div class="container">
-                <h6 class="mt-3 mb-4 text-muted">
-                    <i class="fas fa-angle-right"></i>
-                    @yield('title')
-                </h6>
                 @yield('content')
             </div>
         </main>

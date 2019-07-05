@@ -5,17 +5,18 @@
 @import 'variables';
 
 // Atoms
-@import '_atoms/aw-brand';
-@import '_atoms/aw-card';
+@import '_atoms/fjord-brand';
+@import '_atoms/fjord-card';
+@import '_atoms/fjord-search';
 
 // Molecules
-@import '_molecules/aw-topbar';
-@import '_molecules/aw-sidebar';
-@import '_molecules/aw-notifications';
-@import '_molecules/aw-dropzone';
-@import '_molecules/aw-form';
-@import '_molecules/aw-tabs';
-@import '_molecules/aw-modal';
+@import '_molecules/fjord-topbar';
+@import '_molecules/fjord-navigation';
+@import '_molecules/fjord-notifications';
+@import '_molecules/fjord-dropzone';
+@import '_molecules/fjord-form';
+@import '_molecules/fjord-tabs';
+@import '_molecules/fjord-modal';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
@@ -23,28 +24,28 @@
 // Quill Theme
 @import '~quill/dist/quill.snow.css';
 
+body,
+html {
+    background-color: $dark;
+}
 #app {
-    display: grid;
-    grid-template:
-        't t'
-        's m';
-
-    grid-template-columns: 200px 1fr;
-    grid-template-rows: $top_height auto;
-
     background-color: #f1f1f1;
+    min-height: calc(100vh - #{$topbar_height});
     .btn:focus {
         outline: none !important;
         box-shadow: none !important;
     }
 }
+header {
+    position: fixed;
+    top: 0;
+    z-index: 99;
+}
 main {
-    grid-area: m;
-    height: calc(100vh - #{$top_height});
-    overflow-y: scroll;
-    padding: 20px 0;
+    padding-top: 80px;
+    padding-bottom: 60px;
     .card {
-        border-top: 4px solid #5c10ff;
+        border-top: 3px solid $primary;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
     }
 }

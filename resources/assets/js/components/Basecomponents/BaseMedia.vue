@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-4">
             <vue-dropzone
-                class="aw-dropzone"
+                class="fjord-dropzone"
                 :ref="`dropzone-${data.id}`"
                 :id="`dropzone-${data.id}`"
                 :options="dropzoneOptions"
@@ -17,8 +17,8 @@
                     v-if="images.length > 0"
                     :key="image.id"
                 >
-                    <div class="card no-fx mb-3 aw-card">
-                        <div class="card-header aw-card__1x1">
+                    <div class="card no-fx mb-3 fjord-card">
+                        <div class="card-header fjord-card__1x1">
                             <img :src="imgPath(image)" class="" />
                         </div>
 
@@ -56,7 +56,7 @@
 
                             <button
                                 @click.prevent="destroy(image.id, index)"
-                                class="btn btn-outline-danger btn-sm aw-dropzone__delete"
+                                class="btn btn-outline-danger btn-sm fjord-dropzone__delete"
                             >
                                 <i class="far fa-trash-alt"></i> löschen
                             </button>

@@ -289,7 +289,7 @@ export default {
                         this.id = response.data.id;
                         this.$notify({
                             group: 'general',
-                            type: 'aw-success',
+                            type: 'fjord-success',
                             title: 'Speichern erfolgreich',
                             text: `Der Mitarbeiter ${response.data.firstname} ${
                                 response.data.lastname
@@ -307,7 +307,7 @@ export default {
                     .then(response => {
                         this.$notify({
                             group: 'general',
-                            type: 'aw-success',
+                            type: 'fjord-success',
                             title: 'Speichern erfolgreich',
                             text: `Der Daten von ${response.data.firstname} ${
                                 response.data.lastname

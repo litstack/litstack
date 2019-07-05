@@ -1,7 +1,6 @@
 <template>
-    <div>
-        <h6 class="p-3 mb-0 text-secondary">Navigation</h6>
-        <ul class="aw-sidebar__parent">
+    <div class="container">
+        <ul class="fjord-navigation__parent">
             <slot />
         </ul>
     </div>
@@ -33,10 +32,10 @@ export default {
 
         let item = $(`.nav-${location}`);
 
-        item.addClass('aw-sidebar__is-active');
+        item.addClass('fjord-navigation__is-active');
         item.find($('ul')).toggle();
 
-        $('.aw-sidebar__has-children').on('click', function() {
+        $('.fjord-navigation__has-children').on('click', function() {
             $(this)
                 .closest('li')
                 .find('ul')

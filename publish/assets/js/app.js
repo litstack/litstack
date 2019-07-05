@@ -2744,7 +2744,7 @@ __webpack_require__.r(__webpack_exports__);
 
           _this2.$notify({
             group: 'general',
-            type: 'aw-success',
+            type: 'fjord-success',
             title: 'Speichern erfolgreich',
             text: "Der Mitarbeiter ".concat(response.data.firstname, " ").concat(response.data.lastname, " wurde angelegt."),
             duration: -1
@@ -2756,7 +2756,7 @@ __webpack_require__.r(__webpack_exports__);
         axios.put("/admin/".concat(this.parameters.route, "/").concat(this.data.id), this.payload).then(function (response) {
           _this2.$notify({
             group: 'general',
-            type: 'aw-success',
+            type: 'fjord-success',
             title: 'Speichern erfolgreich',
             text: "Der Daten von ".concat(response.data.firstname, " ").concat(response.data.lastname, " wurde gespeichert."),
             duration: -1
@@ -3361,7 +3361,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Navigation',
   data: function data() {
@@ -3387,9 +3386,9 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var location = window.location.pathname.replace('/admin/', '').split('/')[0];
     var item = $(".nav-".concat(location));
-    item.addClass('aw-sidebar__is-active');
+    item.addClass('fjord-navigation__is-active');
     item.find($('ul')).toggle();
-    $('.aw-sidebar__has-children').on('click', function () {
+    $('.fjord-navigation__has-children').on('click', function () {
       $(this).closest('li').find('ul').slideToggle(100);
     });
   }
@@ -50946,7 +50945,7 @@ var render = function() {
       [
         _c("vue-dropzone", {
           ref: "dropzone-" + _vm.data.id,
-          staticClass: "aw-dropzone",
+          staticClass: "fjord-dropzone",
           attrs: {
             id: "dropzone-" + _vm.data.id,
             options: _vm.dropzoneOptions
@@ -50977,8 +50976,8 @@ var render = function() {
           _vm._l(_vm.images, function(image, index) {
             return _vm.images.length > 0
               ? _c("div", { key: image.id, staticClass: "col-4" }, [
-                  _c("div", { staticClass: "card no-fx mb-3 aw-card" }, [
-                    _c("div", { staticClass: "card-header aw-card__1x1" }, [
+                  _c("div", { staticClass: "card no-fx mb-3 fjord-card" }, [
+                    _c("div", { staticClass: "card-header fjord-card__1x1" }, [
                       _c("img", { attrs: { src: _vm.imgPath(image) } })
                     ]),
                     _vm._v(" "),
@@ -51075,7 +51074,7 @@ var render = function() {
                         "button",
                         {
                           staticClass:
-                            "btn btn-outline-danger btn-sm aw-dropzone__delete",
+                            "btn btn-outline-danger btn-sm fjord-dropzone__delete",
                           on: {
                             click: function($event) {
                               $event.preventDefault()
@@ -51159,7 +51158,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "aw-tabs" }, [
+  return _c("div", { staticClass: "fjord-tabs" }, [
     _c(
       "ul",
       { staticClass: "nav nav-tabs", attrs: { role: "tablist" } },
@@ -51287,7 +51286,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("notifications", {
-    staticClass: "aw-notifications",
+    staticClass: "fjord-notifications",
     attrs: { group: "general" },
     scopedSlots: _vm._u([
       {
@@ -51297,32 +51296,34 @@ var render = function() {
             _c(
               "div",
               {
-                staticClass: "aw-notifications__wrapper card",
+                staticClass: "fjord-notifications__wrapper card",
                 class: props.item.type
               },
               [
                 _c("div", { staticClass: "d-flex" }, [
                   _c(
                     "div",
-                    { staticClass: "aw-notifications__icon align-self-center" },
+                    {
+                      staticClass: "fjord-notifications__icon align-self-center"
+                    },
                     [
-                      props.item.type == "aw-success"
+                      props.item.type == "fjord-success"
                         ? _c("i", {
                             staticClass: "far fa-grin-alt text-success"
                           })
                         : _vm._e(),
                       _vm._v(" "),
-                      props.item.type == "aw-error"
+                      props.item.type == "fjord-error"
                         ? _c("i", { staticClass: "far fa-angry text-danger" })
                         : _vm._e(),
                       _vm._v(" "),
-                      props.item.type == "aw-warning"
+                      props.item.type == "fjord-warning"
                         ? _c("i", { staticClass: "far fa-meh-rolling-eyes" })
                         : _vm._e()
                     ]
                   ),
                   _vm._v(" "),
-                  _c("div", { staticClass: "aw-notifications__body" }, [
+                  _c("div", { staticClass: "fjord-notifications__body" }, [
                     _c("h6", { staticClass: "title pb-1 mb-0" }, [
                       _vm._v(
                         "\n                        " +
@@ -51338,7 +51339,7 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "aw-notifications__close",
+                    staticClass: "fjord-notifications__close",
                     on: { click: props.close }
                   },
                   [_c("i", { staticClass: "far fa-times-circle" })]
@@ -51373,12 +51374,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h6", { staticClass: "p-3 mb-0 text-secondary" }, [
-      _vm._v("Navigation")
-    ]),
-    _vm._v(" "),
-    _c("ul", { staticClass: "aw-sidebar__parent" }, [_vm._t("default")], 2)
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "ul",
+      { staticClass: "fjord-navigation__parent" },
+      [_vm._t("default")],
+      2
+    )
   ])
 }
 var staticRenderFns = []

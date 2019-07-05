@@ -1,12 +1,16 @@
 #app > .notifications {
     position: fixed;
-    top: 50px !important;
+    top: calc(10px + #{$topbar_height}) !important;
     right: 10px !important;
 }
 
-.aw-notifications {
+.fjord-notifications {
     .notification-wrapper {
         overflow: visible;
+        .card {
+            background-color: $mid;
+            color: white;
+        }
     }
     &__wrapper {
         padding: 10px;
@@ -33,5 +37,6 @@
         border: none;
         outline: none;
         cursor: pointer;
+        color: white;
     }
 }

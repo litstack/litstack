@@ -1,11 +1,14 @@
-.aw-topbar {
-    grid-area: t;
-    height: $top_height;
-    background: linear-gradient(to right, #4200b7 0%, #5c00ff 100%);
+.fjord-topbar {
+    width: 100vw;
+    height: $topbar_height;
+
+    //background: linear-gradient(to right, #4200b7 0%, #5c00ff 100%);
+    background: $dark;
     padding: 0 20px;
     display: flex;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
     z-index: 9;
+    /*
     &::before {
         content: '';
         position: absolute;
@@ -15,6 +18,7 @@
         height: 4px;
         background: linear-gradient(to right, #150d54 0%, #280969 100%);
     }
+    */
     &_brand {
         color: white;
         font-weight: 500;

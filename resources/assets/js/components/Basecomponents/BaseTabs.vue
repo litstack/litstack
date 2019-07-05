@@ -1,5 +1,5 @@
 <template>
-    <div class="aw-tabs">
+    <div class="fjord-tabs">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item" v-for="(tab, i) in tabs">
                 <a

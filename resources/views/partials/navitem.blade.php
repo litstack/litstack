@@ -7,12 +7,12 @@
     @endisset
     >
     @isset($entry['children'])
-        <a href="#" class="aw-sidebar__has-children">
-            <div class="aw-sidebar__icon">
+        <a href="#" class="fjord-navigation__has-children">
+            <div class="fjord-navigation__icon">
                 {!!$entry['icon']!!}
             </div>
             {{$entry['title']}}
-            <i class="fas fa-caret-down text-muted aw-sidebar__down"></i>
+            <i class="fas fa-caret-down text-muted fjord-navigation__down"></i>
         </a>
         <ul>
             @foreach ($entry['children'] as $entry)
@@ -23,7 +23,7 @@
     @else
         <a href="/admin/{{$entry['link']}}">
             @isset($entry['icon'])
-                <div class="aw-sidebar__icon">
+                <div class="fjord-navigation__icon">
                     {!!$entry['icon']!!}
                 </div>
             @endisset
