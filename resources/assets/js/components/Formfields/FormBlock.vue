@@ -1,6 +1,6 @@
 <template>
     <BaseFormitem :field="field">
-        <div class="card no-fx">
+        <div class="fjord-block card no-fx">
             <div class="card-body">
                 <draggable
                     v-model="payload"
