@@ -113,7 +113,7 @@ namespace App\Models;
 use AwStudio\Fjord\Models\Model as FjordModel;
 use AwStudio\Fjord\Models\Traits\HasContent;
 
-class Article extends FjordModel implements TranslatableContract
+class Article extends FjordModel
 {
     use HasContent;
 
@@ -152,4 +152,109 @@ You can now add Content in the Admin Panel and use the filled content relation l
         @endif
     @endforeach
 </span>
+```
+
+## Using Fjord Pages
+
+Fjord offers a convenient way to populate your website's pages with content.
+You can define as many "static" fields as needed per page.
+Additionally you can define blocks for repetetive content. Each block can hold
+many types of repeatables.
+
+Start of by configuring a page in your `config.fjord-pages.php`
+
+```php
+<?php
+
+return [
+    'home' =>[
+        'translatable' => true,
+        'fields' => [
+            [
+                'id' => 'h1',
+                'type' => 'input',
+                'title' => 'Headline',
+                'placeholder' => 'Headline',
+                'hint' => 'The Headline of your homepage',
+                'width' => 8
+            ],
+            [
+                'id' => 'intro',
+                'type' => 'wysiwyg',
+                'title' => 'Intro Text',
+                'placeholder' => 'Intro',
+                'hint' => 'A Intro text for your homepage',
+                'width' => 12
+            ],
+            [
+                'id' => 'contentblock',
+                'type' => 'block',
+                'title' => 'Articles',
+                'placeholder' => 'Articles',
+                'hint' => 'A block of Articles',
+                'width' => 12,
+                'repeatables' => [
+                    'article', 'quote'
+                ]
+            ]
+        ]
+    ],
+];
+```
+
+In order to make use of the block, define your repeatables in `config.fjord-repeatables.php`
+
+```php
+return [
+    'article' => [
+        [
+            'id' => 'title',
+            'type' => 'input',
+            'title' => 'Title',
+            'placeholder' => 'Title',
+            'hint' => 'The artice Ttile',
+            'width' => 6
+        ],
+        [
+            'id' => 'text',
+            'type' => 'wysiwyg',
+            'title' => 'Text',
+            'placeholder' => 'Text',
+            'hint' => 'The article text',
+            'width' => 6
+        ],
+        [
+            'type' => 'image',
+            'id' => 'image',
+            'title' => 'Image',
+            'hint' => 'Upload an image for your article',
+            'width' => 12,
+            'maxFiles' => 1,
+        ],
+    ],
+    'quote' => [
+        [
+            'id' => 'quote',
+            'type' => 'input',
+            'title' => 'Quote',
+            'placeholder' => 'Quote',
+            'hint' => 'Add a mindful quote to your Articles',
+            'width' => 6
+        ],
+    ]
+];
+```
+
+Finally, add your page to the navigation `config.fjord-navigation.php`
+
+```php
+<?php
+
+return [
+    [
+        'title' => 'Home',
+        'link' => 'pages/home', // pages/name-of-your-page
+        'icon' =>'<i class="fas fa-home"></i>'
+    ],
+];
 ```
