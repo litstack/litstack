@@ -258,3 +258,39 @@ return [
     ],
 ];
 ```
+
+Passing the data to your frontend-views is simple. In your favourite controller return a view like this:
+
+```php
+<?php
+…
+return view('home')->with(Fjord::page('home'));
+```
+
+Retrieving data in your view is even more simple:
+
+```php
+<h1>
+    @field('h1')
+</h1>
+@field('intro')
+
+@block('contentblock')
+```
+
+For each repeatable you need to create a template in `resources/views/repeatables/article.blade.php`
+
+```php
+<div class="row @if($loop->iteration  % 2 == 0) flex-row-reverse @endif">
+    <div class="col-4">
+        <img src="@imageUrl('sm')" class="img-fluid img-thumbnail">
+    </div>
+    <div class="col-8">
+        <h3>
+            @repeatable('title')
+        </h3>
+        @repeatable('text')
+    </div>
+</div>
+<hr>
+```
