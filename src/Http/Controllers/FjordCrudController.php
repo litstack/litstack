@@ -4,6 +4,7 @@ namespace AwStudio\Fjord\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use AwStudio\Fjord\Models\Content;
 
 class FjordCrudController extends Controller
 {
@@ -115,14 +116,27 @@ class FjordCrudController extends Controller
      */
     public function edit($id)
     {
-        $data = $this->model::findOrFail($id);
+        $data = (new $this->model())->has_content
+            // TODO: with('content') doesn't seem to work
+            //? $this->model::with('content')->findOrFail($id)
+            ? $this->model::findOrFail($id)
+            : $this->model::findOrFail($id);
+
+        $content = new Content();
+        $content->model = $this->model;
+        $content->model_id = $data->id;
 
         return view('fjord::vue')->withComponent('crud-show')
                                 ->withTitle('edit ' . $this->titleSingular)
                                 ->withProps([
                                     'data' => $data,
                                     'method' => 'put',
-                                    'parameters' => $this->parameters
+
+                                    'content' => $data->has_content ?? false
+                                        ? $content
+                                        : collect([]),
+                                    'parameters' => $this->parameters,
+                                    'fields' => collect(config('fjord-content'))
                                 ]);
     }
 

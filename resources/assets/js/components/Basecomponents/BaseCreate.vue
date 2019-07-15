@@ -1,12 +1,6 @@
 <template>
-    <div class="row">
+    <div class="row fjord-form">
         <div class="col-12">
-            <a
-                :href="`/admin/${parameters.route}`"
-                class="btn btn-sm btn-primary add-button"
-            >
-                <i class="fas fa-angle-left"></i> zurück
-            </a>
             <div class="card">
                 <div
                     class="card-header d-flex justify-content-end"
@@ -31,7 +25,6 @@
                 <form class="card-body">
                     <div class="row">
                         <div
-                            class="form-group"
                             :class="fieldWidth(field)"
                             v-for="(field, index) in parameters.fields"
                         >
@@ -171,10 +164,22 @@
                         <div class="col-12">
                             <div class="d-flex justify-content-end">
                                 <button
+                                    v-if="controls.includes('delete')"
                                     type="submit"
                                     name="button"
-                                    class="btn btn-primary"
-                                    @click.prevent="save"
+                                    class="btn btn-danger mr-2"
+                                    @click.prevent="call('delete')"
+                                >
+                                    <i class="far fa-save"></i> Löschen
+                                </button>
+                                <button
+                                    v-if="controls.includes('save')"
+                                    type="submit"
+                                    name="button"
+                                    class="btn btn-primary mr-2"
+                                    @click.prevent="
+                                        call(id ? 'update' : 'create')
+                                    "
                                 >
                                     <i class="far fa-save"></i> Speichern
                                 </button>
@@ -189,10 +194,14 @@
 
 <script>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import CrudApi from './../../common/crud.api';
 
 export default {
     name: 'BaseCreate',
     props: {
+        notifyText: {
+            type: Function
+        },
         method: {
             type: String,
             required: true
@@ -204,6 +213,12 @@ export default {
         parameters: {
             type: Object,
             required: true
+        },
+        controls: {
+            type: Array,
+            default: () => {
+                return ['save'];
+            }
         }
     },
     data() {
@@ -281,40 +296,19 @@ export default {
                 this.$set(this.payload, id, true);
             }
         },
-        save() {
-            if (this.method == 'post') {
-                axios
-                    .post(`/admin/${this.parameters.route}`, this.payload)
-                    .then(response => {
-                        this.id = response.data.id;
-                        this.$notify({
-                            group: 'general',
-                            type: 'fjord-success',
-                            title: 'Speichern erfolgreich',
-                            text: `Der Mitarbeiter ${response.data.firstname} ${
-                                response.data.lastname
-                            } wurde angelegt.`,
-                            duration: -1
-                        });
-                    });
-            }
-            if (this.method == 'put') {
-                axios
-                    .put(
-                        `/admin/${this.parameters.route}/${this.data.id}`,
-                        this.payload
-                    )
-                    .then(response => {
-                        this.$notify({
-                            group: 'general',
-                            type: 'fjord-success',
-                            title: 'Speichern erfolgreich',
-                            text: `Der Daten von ${response.data.firstname} ${
-                                response.data.lastname
-                            } wurde gespeichert.`,
-                            duration: -1
-                        });
-                    });
+        async call(method) {
+            let route =
+                method == 'create'
+                    ? this.parameters.route
+                    : `${this.parameters.route}/${this.id}`;
+
+            let response = await CrudApi[method](route, this.payload, {
+                notifyText: this.notifyText
+            });
+
+            // set ID for created model
+            if (method == 'post') {
+                this.id = response.data.id;
             }
 
             /**

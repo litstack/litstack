@@ -100,3 +100,56 @@ return [
     ]
 ];
 ```
+
+### Use customizeable Content in a CRUD Model
+
+Add the `HasContent` Trait to the Model. Like in the Example:
+
+```php
+<?php
+
+namespace App\Models;
+
+use AwStudio\Fjord\Models\Model as FjordModel;
+use AwStudio\Fjord\Models\Traits\HasContent;
+
+class Article extends FjordModel implements TranslatableContract
+{
+    use HasContent;
+
+    ...
+}
+```
+
+Create Content fields in config/fjord-content.php like this:
+
+```php
+<?php
+return [
+    'text' => [
+        [
+            'type' => 'textarea',
+            'title' => 'Preview',
+            'id' => 'text',
+            'placeholder' => 'Preview Text',
+            'hint' => 'Lorem ipsum',
+            'rows' => 4,
+            'width' => 12,
+            'default' => '',
+        ]
+    ],
+    ...
+];
+```
+
+You can now add Content in the Admin Panel and use the filled content relation like this:
+
+```blade
+<span>
+    @foreach($article->content as $content)
+        @if($content->type == 'text')
+            {{ $content->text }}
+        @endif
+    @endforeach
+</span>
+```

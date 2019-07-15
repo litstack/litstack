@@ -8,6 +8,7 @@
 @import '_atoms/fjord-brand';
 @import '_atoms/fjord-card';
 @import '_atoms/fjord-search';
+@import '_atoms/fjord-draggable';
 
 // Molecules
 @import '_molecules/fjord-topbar';
@@ -17,6 +18,7 @@
 @import '_molecules/fjord-form';
 @import '_molecules/fjord-tabs';
 @import '_molecules/fjord-modal';
+@import '_molecules/fjord-pagecontrols';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';

@@ -15,12 +15,12 @@ export default {
     methods: {
         navClasses(item) {
             if (!item.hasOwnProperty('children')) {
-                return `nav-${item.link} `;
+                return `nav-${item.link.replace('/', '_')} `;
             }
             let classes = _.map(item.children, 'link');
             let string = '';
             for (var i = 0; i < classes.length; i++) {
-                string += `nav-${classes[i]} `;
+                string += `nav-${classes[i].replace('/', '_')} `;
             }
             return string;
         }
@@ -28,7 +28,10 @@ export default {
     mounted() {
         let location = window.location.pathname
             .replace('/admin/', '')
-            .split('/')[0];
+            .replace('/', '-')
+            .replace('/', '-');
+
+        console.log(location);
 
         let item = $(`.nav-${location}`);
 

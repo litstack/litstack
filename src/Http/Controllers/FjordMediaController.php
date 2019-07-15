@@ -27,7 +27,6 @@ class FjordMediaController extends FjordController
                   'title' => $request->title ?? null,
                   'alt' => $request->alt ?? null,
               ])
-              ->withResponsiveImages()
               ->toMediaCollection($request->collection);
 
         return $model->getMedia($request->collection);
@@ -60,11 +59,9 @@ class FjordMediaController extends FjordController
         return 'success';
     }
 
-
-
     protected function setModel($model)
     {
-        $this->model = "App\\Models\\" . ucfirst($model);
+        $this->model = $model;
 
         return $this;
     }

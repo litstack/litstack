@@ -150,8 +150,6 @@ class FjordCrud extends Command
                 $fileContents = $this->makeUses($uses, $fileContents);
             }
 
-
-
             // remove placeholders
             $fileContents = $this->cleanUp($fileContents);
 

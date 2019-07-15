@@ -27,7 +27,7 @@ import camelCase from 'lodash/camelCase';
 const requireComponent = require.context(
     './components/Basecomponents',
     false,
-    /Base[A-Z]\w+\.(vue|js)$/
+    /[A-Z]\w+\.(vue|js)$/
 );
 
 requireComponent.keys().forEach(fileName => {

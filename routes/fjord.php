@@ -17,7 +17,17 @@ Route::group(['as' => 'fjord.'], function(){
         Route::put('/order', $ns.'FjordController@order');
         Route::put('/media/attributes', $ns.'FjordMediaController@attributes');
         Route::resource('/media', $ns.'FjordMediaController')->only(['store', 'destroy']);
+        Route::resource('/contents', "{$ns}ContentController");
 
+        // Repeatables CRUD
+        Route::resource('/repeatables', "{$ns}FjordRepeatableController");
+
+        // Page Content
+        Route::put('/pages/{page}/page-content/{field_name}', "{$ns}FjordPageContentController@update");
+
+        Route::get('/fjord-users', $ns.'FjordUserController@index')->name('users');
+
+        Route::get('/pages/{page}', $ns.'FjordPageController@show');
 
         /**
          * Make resourceful routes for all crudable models

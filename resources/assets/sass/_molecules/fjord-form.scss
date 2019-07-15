@@ -2,14 +2,19 @@
     small {
         margin-bottom: 13px;
     }
-    .ql-toolbar.ql-snow {
-        border: 1px solid #ced4da;
-        border-top-left-radius: 0.25rem;
-        border-top-right-radius: 0.25rem;
+    .ck.ck-editor {
+        width: calc(100% - 42px);
+        min-width: calc(100% - 42px);
     }
-    .ql-container.ql-snow {
-        border: 1px solid #ced4da;
-        border-bottom-left-radius: 0.25rem;
-        border-bottom-right-radius: 0.25rem;
+    .ck.ck-toolbar {
+        border: 1px solid #ced4da !important;
+        border-top-left-radius: 0.25rem !important;
     }
+    .ck.ck-editor__main > .ck-editor__editable {
+        border: 1px solid #ced4da !important;
+        border-top: none !important;
+        border-bottom-left-radius: 0.25rem !important;
+    }
+}
+.form-control {
 }

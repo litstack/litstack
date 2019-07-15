@@ -104,7 +104,7 @@ export default {
             images: [],
             dropzoneOptions: {
                 url: '/admin/media',
-                autoProcessQueue: this.method == 'put' ? true : false,
+                autoProcessQueue: true,
                 thumbnailWidth: 150,
                 maxFilesize: 20,
                 maxFiles:
@@ -134,6 +134,7 @@ export default {
         id() {
             if (this.id) {
                 this.dropzoneOptions.params.id = this.id;
+                this.dropzoneOptions.autoProcessQueue = this.id ? true : false
                 this.update();
             }
         }
@@ -151,16 +152,8 @@ export default {
         },
         update() {
             let dropzone = this.$refs[`dropzone-${this.data.id}`];
-            if (this.images.length < this.data.maxFiles) {
-                dropzone.enable();
-                dropzone.processQueue();
-                $(`#dropzone-${this.data.id}`)
-                    .removeClass('disabled')
-                    .find('.dz-message')
-                    .html('<i class="far fa-images"></i> drag and drop');
 
-                dropzone.removeAllFiles();
-            } else {
+            if(this.images.length >= this.data.maxFiles) {
                 dropzone.disable();
                 $(`#dropzone-${this.data.id}`)
                     .addClass('disabled')
@@ -168,7 +161,20 @@ export default {
                     .html(
                         '<i class="far fa-images"></i> maximale Anzahl an Bildern erreicht'
                     );
+                return
             }
+
+            if(!this.id) {
+                return;
+            }
+
+            dropzone.processQueue();
+            $(`#dropzone-${this.data.id}`)
+                .removeClass('disabled')
+                .find('.dz-message')
+                .html('<i class="far fa-images"></i> drag and drop');
+
+            dropzone.removeAllFiles();
         },
         destroy(id, index) {
             axios
