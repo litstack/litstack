@@ -1,12 +1,17 @@
 <template>
-    <BaseFormitem :field="item">
+    <fj-form-item :field="field">
+
         <ckeditor
             :editor="editor"
             :config="editorConfig"
-            v-model="model"
-        ></ckeditor>
+            v-model="field.model"
+            @input="$emit('changed')"/>
+
+        <fj-form-language :field="field"/>
+
         <slot />
-    </BaseFormitem>
+
+    </fj-form-item>
 </template>
 
 <script>
@@ -15,13 +20,10 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export default {
     name: 'FormWysiwyg',
     props: {
-        item: {
+        field: {
             type: Object,
             required: true
         },
-        value: {
-            required: true
-        }
     },
     data() {
         return {
@@ -43,29 +45,8 @@ export default {
                     ]
                 }
             },
-            model: null
         };
     },
-    beforeMount() {
-        this.init();
-    },
-    methods: {
-        init() {
-            this.model = this.value;
-        }
-    },
-    watch: {
-        model(val) {
-            this.$emit('input', val);
-        },
-        value(val) {
-            if (val == null) {
-                this.model = '';
-            } else {
-                this.init();
-            }
-        }
-    }
 };
 </script>
 

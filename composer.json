@@ -17,6 +17,9 @@
         }
     ],
     "autoload": {
+        "files": [
+            "src/Support/helpers.php"
+        ],
         "psr-4": {
             "AwStudio\\Fjord\\": "src"
         }

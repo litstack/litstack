@@ -1,19 +1,28 @@
 <template>
-    <BaseFormitem :field="item">
+    <fj-form-item :field="field">
+
         <input
             class="form-control"
-            :value="value"
-            @input="$emit('input', $event.target.value)"
-            :placeholder="item.placeholder"
-        />
+            v-model="field.model"
+            :placeholder="field.placeholder"
+            @input="$emit('changed')"/>
+
+        <fj-form-language :field="field"/>
+
         <slot />
-    </BaseFormitem>
+
+    </fj-form-item>
 </template>
 
 <script>
 export default {
     name: 'FormInput',
-    props: ['item', 'value']
+    props: {
+        field: {
+            required: true,
+            type: Object
+        },
+    }
 };
 </script>
 

@@ -1,4 +1,5 @@
 window._ = require('lodash');
+window.collect = require('collect.js');
 window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Vue = require('vue');
@@ -7,7 +8,7 @@ try {
     window.$ = window.jQuery = require('jquery');
 } catch (e) {}
 
-require('bootstrap');
+//require('bootstrap');
 
 const token = document.head.querySelector('meta[name="csrf-token"]');
 

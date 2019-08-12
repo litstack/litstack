@@ -31,8 +31,6 @@ export default {
             .replace('/', '-')
             .replace('/', '-');
 
-        console.log(location);
-
         let item = $(`.nav-${location}`);
 
         item.addClass('fjord-navigation__is-active');

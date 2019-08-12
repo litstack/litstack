@@ -1,7 +1,7 @@
 <template>
     <div>
         <base-index
-            :parameters="parameters"
+            :parameters="config"
             :tableData="data"
             :columns="columns"
             :options="options"
@@ -17,7 +17,7 @@ export default {
             type: Array,
             required: true
         },
-        parameters: {
+        config: {
             type: Object,
             required: true
         }

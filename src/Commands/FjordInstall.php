@@ -5,6 +5,7 @@ namespace AwStudio\Fjord\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
+use Spatie\Permission\Models\Role;
 
 class FjordInstall extends Command
 {
@@ -44,6 +45,8 @@ class FjordInstall extends Command
         $this->handleFjordRoutes($filesystem);
         $this->handleFjordPublishable();
 
+        $role = Role::create(['name' => 'admin']);
+
         $this->info('installation complete - run fjord:admin to create an admin user');
     }
 
@@ -66,6 +69,14 @@ class FjordInstall extends Command
             '--provider' => "Spatie\MediaLibrary\MediaLibraryServiceProvider",
             '--tag' => "migrations"
         ]);
+
+        $this->call('vendor:publish', [
+            '--provider' => "Spatie\Permission\PermissionServiceProvider",
+            '--tag' => "migrations"
+        ]);
+
+        // migrate vendor tables
+        $this->call('migrate');
 
         // set correct namespace for translation models
         $search = "'translation_model_namespace' => null,";
@@ -146,5 +157,8 @@ class FjordInstall extends Command
         $this->call('vendor:publish', [
             '--provider' => "AwStudio\Fjord\FjordServiceProvider"
         ]);
+
+        // migrate tables
+        $this->call('migrate');
     }
 }

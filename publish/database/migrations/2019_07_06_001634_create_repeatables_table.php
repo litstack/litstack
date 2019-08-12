@@ -19,6 +19,9 @@ class CreateRepeatablesTable extends Migration
             $table->string('page_name')->nullable();
             $table->string('block_name')->nullable();
 
+            $table->string('model_id')->nullable();
+            $table->string('model_type')->nullable();
+
             $table->string('type')->nullable();
             $table->text('content')->nullable();
 

@@ -7,8 +7,22 @@
 @endsection
 
 @section('content')
-    <{{$component}}
-        @foreach ($props as $key => $prop)
+    @php
+
+        $fjProps = [
+            'component' => $component,
+            'props' => collect($props ?? []),
+            'models' => collect([]),
+            'language' => app()->getLocale(),
+            'languages' => collect(config('translatable.locales'))
+        ];
+
+        foreach($models ?? [] as $title => $model) {
+            $fjProps['models'][$title] = $model->toArray();
+        }
+    @endphp
+    <fjord-app
+        @foreach ($fjProps as $key => $prop)
             @if(is_string($prop))
                 @php
                     $prop = "'".$prop."'";
@@ -24,8 +38,5 @@
             @else
                 :{{$key}}="{{$prop}}"
             @endif
-
-        @endforeach
-    >
-    </{{$component}}>
+        @endforeach></fjord-app>
 @endsection

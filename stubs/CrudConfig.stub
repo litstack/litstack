@@ -1,0 +1,18 @@
+<?php
+
+return [
+    'model' => \App\Models\DummyClassname::class,
+    'fields' => [
+        /*
+        [
+            'type' => 'input',
+            'id' => 'title',
+            'max' => 60,
+            'title' => 'Title',
+            'placeholder' => 'Title',
+            'hint' => 'The title neeeds to be filled',
+            'width' => 8
+        ]
+        */
+    ]
+];

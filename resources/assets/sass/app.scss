@@ -39,7 +39,7 @@ html {
         box-shadow: none !important;
     }
 }
-header {
+div#app header {
     position: fixed;
     top: 0;
     z-index: 99;
@@ -51,4 +51,8 @@ main {
         border-top: 3px solid $primary;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
     }
+}
+
+.modal-backdrop{
+    opacity: .5 !important;
 }

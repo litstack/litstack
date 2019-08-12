@@ -35,10 +35,7 @@
                                 "
                                 :field="field"
                             >
-                                <div
-                                    class="input-group"
-                                    v-if="translatable(field.id)"
-                                >
+                                <template v-if="translatable(field.id)">
                                     <input
                                         :type="field.type"
                                         class="form-control"
@@ -51,7 +48,7 @@
                                             language
                                         }}</span>
                                     </div>
-                                </div>
+                                </template>
                                 <input
                                     :type="field.type"
                                     class="form-control"
@@ -194,7 +191,6 @@
 
 <script>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import CrudApi from './../../common/crud.api';
 
 export default {
     name: 'BaseCreate',

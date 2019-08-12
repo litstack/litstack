@@ -4,7 +4,7 @@ namespace AwStudio\Fjord\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use AwStudio\Fjord\Models\Content;
+use AwStudio\Fjord\Models\ModelContent;
 
 class FjordCrudController extends Controller
 {
@@ -23,8 +23,8 @@ class FjordCrudController extends Controller
     // Is the Model translatable
     protected $translatable;
 
-    // The Model's parameters
-    protected $parameters;
+    // The Model's config
+    protected $config;
 
     public function __construct()
     {
@@ -32,7 +32,6 @@ class FjordCrudController extends Controller
         $this->titlePlural = $this->titlePlural ?? lcfirst(str_plural($this->modelName));
 
         $this->model = "App\\Models\\" . ucfirst($this->modelName);
-
 
         // check, if the mode is translatable
         $reflect = new \ReflectionClass($this->model);
@@ -47,14 +46,8 @@ class FjordCrudController extends Controller
 
         $translatedAttributes = $this->translatable ? $data->translatedAttributes() : null;
 
-        $this->parameters = collect([
-            'translatable' => $this->translatable,
-            'translatedAttributes' => $translatedAttributes,
-            'route' => $this->titlePlural,
-            'fields' => collect(config('fjord-crud.' . $this->titlePlural)),
-            'languages' => config('translatable.locales'),
-            'title' => $this->titleSingular
-        ]);
+        $this->config = getConfig('crud', $this->model)
+            ->merge(['route' => $this->titlePlural]);
     }
 
     /**
@@ -70,7 +63,7 @@ class FjordCrudController extends Controller
                                 ->withTitle($this->titleSingular)
                                 ->withProps([
                                     'data' => $data,
-                                    'parameters' => $this->parameters
+                                    'config' => $this->config
                                 ]);
     }
 
@@ -79,19 +72,17 @@ class FjordCrudController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $model = $this->model;
-        $data = new $model();
+     public function create()
+     {
+         $className = $this->model;
+         $model = new $className();
 
-        return view('fjord::vue')->withComponent('crud-show')
-                                ->withTitle('add ' . $this->titleSingular)
-                                ->withProps([
-                                    'data' => $data,
-                                    'method' => 'post',
-                                    'parameters' => $this->parameters
-                                ]);
-    }
+         return view('fjord::vue')->withComponent('crud-show')
+             ->withTitle('edit ' . $this->titleSingular)
+             ->withModels([
+                 'model' => $model->eloquentJs(),
+             ]);
+     }
 
     /**
      * Store a newly created resource in storage.
@@ -106,8 +97,6 @@ class FjordCrudController extends Controller
         return $data;
     }
 
-
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -116,28 +105,18 @@ class FjordCrudController extends Controller
      */
     public function edit($id)
     {
-        $data = (new $this->model())->has_content
-            // TODO: with('content') doesn't seem to work
-            //? $this->model::with('content')->findOrFail($id)
-            ? $this->model::findOrFail($id)
-            : $this->model::findOrFail($id);
-
-        $content = new Content();
-        $content->model = $this->model;
-        $content->model_id = $data->id;
+        $model = $this->model::withRelation('repeatables')
+            ->withFormRelations()
+            ->eloquentJs('findOrFail', $id);
 
         return view('fjord::vue')->withComponent('crud-show')
-                                ->withTitle('edit ' . $this->titleSingular)
-                                ->withProps([
-                                    'data' => $data,
-                                    'method' => 'put',
-
-                                    'content' => $data->has_content ?? false
-                                        ? $content
-                                        : collect([]),
-                                    'parameters' => $this->parameters,
-                                    'fields' => collect(config('fjord-content'))
-                                ]);
+            ->withTitle('edit ' . $this->titleSingular)
+            ->withModels([
+                'model' => $model,
+            ])
+            ->withProps([
+                't' => 's'
+            ]);
     }
 
     /**

@@ -16,7 +16,7 @@ class FjordRepeatableController extends Controller
 
         $repeatable->update($request->all());
 
-        return $repeatable;
+        return eloquentJs($repeatable, Repeatable::class);
     }
 
     public function update(Request $request, $id)
@@ -27,6 +27,4 @@ class FjordRepeatableController extends Controller
 
         return $repeatable;
     }
-
-
 }

@@ -10,16 +10,16 @@
                     <v-client-table
                         :data="tableData"
                         :columns="columns"
-                        :options="options"
-                    >
+                        :options="options">
+
                         <a
                             slot="edit"
                             slot-scope="props"
                             class="btn btn-outline-primary btn-sm"
-                            :href="editLink(props.row.id)"
-                        >
+                            :href="editLink(props.row.id)">
                             <i class="fas fa-edit"></i> edit
                         </a>
+                        
                     </v-client-table>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 d-flex justify-content-end">
             <slot>
                 <a
                     v-if="route"
@@ -13,7 +13,6 @@
                 <slot name="actions"/>
             </slot>
         </div>
-
     </div>
 </template>
 
@@ -25,9 +24,9 @@ let props = {
 }
 
 export default {
-    props
+    props,
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="css">
 </style>

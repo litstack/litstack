@@ -17,7 +17,7 @@
 
 <script>
 export default {
-    name: 'BaseFormitem',
+    name: 'FormItem',
     props: {
         field: {
             type: [Object, Array],
@@ -35,4 +35,4 @@ export default {
 };
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css"></style>

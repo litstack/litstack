@@ -3,8 +3,8 @@
         <div class="col-4">
             <vue-dropzone
                 class="fjord-dropzone"
-                :ref="`dropzone-${data.id}`"
-                :id="`dropzone-${data.id}`"
+                :ref="`dropzone-${field.id}`"
+                :id="`dropzone-${field.id}`"
                 :options="dropzoneOptions"
                 @vdropzone-success="uploadSuccess"
             ></vue-dropzone>
@@ -76,11 +76,13 @@ import draggable from 'vuedraggable';
 export default {
     name: 'BaseMedia',
     props: {
-        method: {
-            type: String
+        model: {
+            required: true,
+            type: Object
         },
-        collection: {
-            type: String
+        field: {
+            required: true,
+            type: Object
         },
         id: {
             type: [Boolean, Number]
@@ -90,10 +92,6 @@ export default {
             default: function() {
                 return [];
             }
-        },
-        data: {
-            type: Object,
-            required: true
         }
     },
     components: {
@@ -108,7 +106,7 @@ export default {
                 thumbnailWidth: 150,
                 maxFilesize: 20,
                 maxFiles:
-                    this.data.maxFiles !== undefined ? this.data.maxFiles : 1,
+                    this.field.maxFiles !== undefined ? this.field.maxFiles : 1,
                 method: 'POST',
                 paramName: 'media',
                 acceptedFiles: 'image/*',
@@ -121,8 +119,8 @@ export default {
                 },
                 params: {
                     id: this.id,
-                    collection: this.data.id,
-                    model: this.data.model
+                    collection: this.field.id,
+                    model: this.model.model
                 }
             }
         };
@@ -134,7 +132,7 @@ export default {
         id() {
             if (this.id) {
                 this.dropzoneOptions.params.id = this.id;
-                this.dropzoneOptions.autoProcessQueue = this.id ? true : false
+                this.dropzoneOptions.autoProcessQueue = this.id ? true : false;
                 this.update();
             }
         }
@@ -151,25 +149,25 @@ export default {
             return `/${image.id}/${image.file_name}`;
         },
         update() {
-            let dropzone = this.$refs[`dropzone-${this.data.id}`];
+            let dropzone = this.$refs[`dropzone-${this.field.id}`];
 
-            if(this.images.length >= this.data.maxFiles) {
+            if (this.images.length >= this.field.maxFiles) {
                 dropzone.disable();
-                $(`#dropzone-${this.data.id}`)
+                $(`#dropzone-${this.field.id}`)
                     .addClass('disabled')
                     .find('.dz-message')
                     .html(
                         '<i class="far fa-images"></i> maximale Anzahl an Bildern erreicht'
                     );
-                return
+                return;
             }
 
-            if(!this.id) {
+            if (!this.id) {
                 return;
             }
 
             dropzone.processQueue();
-            $(`#dropzone-${this.data.id}`)
+            $(`#dropzone-${this.field.id}`)
                 .removeClass('disabled')
                 .find('.dz-message')
                 .html('<i class="far fa-images"></i> drag and drop');

@@ -101,7 +101,7 @@ class FjordServiceProvider extends ServiceProvider
         $loader->alias('Fjord', FjordFacade::class);
 
         $this->app->singleton('fjord', function () {
-            return new Fjord();
+            return new Fjord\Fjord();
         });
 
         if (App::runningInConsole()) {

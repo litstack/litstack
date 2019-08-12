@@ -45,6 +45,7 @@ class FjordCrud extends Command
         $this->makeModel($modelName, $m, $s, $t);
         $this->makeMigration($modelName, $s, $t);
         $this->makeController($modelName);
+        $this->makeConfig($modelName);
 
         $this->info("\n----- finished -----\n");
         $this->info('1) edit the generated migration and migrate');
@@ -212,6 +213,18 @@ class FjordCrud extends Command
         }
         if(\File::put($controller, $fileContents)){
             $this->info('controller created');
+        }
+    }
+
+    private function makeConfig($modelName)
+    {
+        $config = fjord_resource_path('crud/'.strtolower(str_plural($modelName)).'.php');
+
+        $fileContents = file_get_contents(__DIR__.'/../../stubs/CrudConfig.stub');
+        $fileContents = str_replace('DummyClassname', $modelName, $fileContents);
+
+        if(\File::put($config, $fileContents)){
+            $this->info('config created');
         }
     }
 

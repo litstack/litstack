@@ -1,111 +1,48 @@
 <template>
-    <BaseFormitem :field="field">
+    <fj-form-item :field="field">
         <div class="fjord-block card no-fx">
             <div class="card-body">
                 <draggable
-                    v-model="payload"
+                    v-model="repeatables.items.items"
                     @end="newOrder"
-                    handle=".fjord-draggable__dragbar"
-                >
+                    handle=".fjord-draggable__dragbar">
+
                     <div
                         class="fjord-draggable"
-                        v-for="(repeatable, index) in payload"
-                        :key="repeatable.id"
-                    >
-                        <div
-                            class="fjord-draggable__dragbar d-flex justify-content-center"
-                        >
+                        v-for="(repeatable, index) in repeatables.items.items"
+                        :key="repeatable.id">
+
+                        <div class="fjord-draggable__dragbar d-flex justify-content-center">
                             <i class="fas fa-grip-horizontal text-muted"></i>
                         </div>
-                        <div class="row">
-                            <div
-                                :class="`col col-${item.width}`"
-                                v-for="item in config.repeatables[
-                                    repeatable.type
-                                ]"
-                            >
-                                <template
-                                    v-if="
-                                        config.translatable &&
-                                            payload[index][language]
-                                    "
-                                >
-                                    <FormInput
-                                        v-if="item.type == 'input'"
-                                        :item="item"
-                                        :value="
-                                            payload[index][language].content[
-                                                item.id
-                                            ]
-                                        "
-                                        v-model="
-                                            payload[index][language].content[
-                                                item.id
-                                            ]
-                                        "
-                                    />
-                                    <FormWysiwyg
-                                        v-if="item.type == 'wysiwyg'"
-                                        :item="item"
-                                        :value="
-                                            payload[index][language].content[
-                                                item.id
-                                            ]
-                                        "
-                                        v-model="
-                                            payload[index][language].content[
-                                                item.id
-                                            ]
-                                        "
-                                    />
-                                </template>
-                                <template v-else>
-                                    <FormInput
-                                        v-if="item.type == 'input'"
-                                        :item="item"
-                                        :value="payload[index].content[item.id]"
-                                        v-model="
-                                            payload[index].content[item.id]
-                                        "
-                                    />
-                                    <FormWysiwyg
-                                        v-if="item.type == 'wysiwyg'"
-                                        :item="item"
-                                        :value="payload[index].content[item.id]"
-                                        v-model="
-                                            payload[index].content[item.id]
-                                        "
-                                    />
-                                </template>
-                                <FormImage
-                                    v-if="item.type == 'image'"
-                                    :item="item"
-                                    :data="{
-                                        model:
-                                            ' AwStudio\\Fjord\\Models\\Repeatable'
-                                    }"
-                                    :id="payload[index].id"
-                                    :value="payload[index].image"
-                                    v-model="payload[index].image"
-                                />
-                            </div>
-                        </div>
+
+                        <fj-form :model="repeatable" />
+
+                        <b-row>
+                            <b-col sm="12" class="text-center fj-block-trash text-muted">
+                                <fa-icon icon="trash" @click="deleteRepeatable(repeatable)"/>
+                            </b-col>
+                        </b-row>
+
                     </div>
+
                 </draggable>
+
                 <button
                     class="btn btn-secondary btn-sm mr-2"
-                    v-for="type in block.repeatables"
-                    @click="addRepeatableOfType(type)"
-                >
-                    <i class="fas fa-plus"></i> add {{ type }}
+                    v-for="(repeatables, type) in field.repeatables"
+                    @click.prevent="add(type)">
+
+                    <fa-icon icon="plus"/> add {{ type }}
+
                 </button>
             </div>
         </div>
-    </BaseFormitem>
+    </fj-form-item>
 </template>
 
 <script>
-import CrudApi from './../../common/crud.api';
+import Eloquent from './../../eloquent'
 
 export default {
     name: 'FormBlock',
@@ -113,17 +50,14 @@ export default {
         field: {
             type: Object
         },
-        data: {
-            type: Array,
-            required: true
+        repeatables: {
+            type: Object
         },
-        config: {
-            type: Object,
-            required: true
+        model: {
+            type: Object
         },
-        language: {
-            type: String,
-            required: true
+        pageName: {
+            type: String
         }
     },
     data() {
@@ -132,97 +66,74 @@ export default {
             payload: []
         };
     },
-    beforeMount() {
-        this.block = this.field;
-        this.payload = this.data;
-
-        this.init();
-    },
     watch: {
         payload(val) {
             this.$emit('input', val);
         }
     },
     methods: {
-        async addRepeatableOfType(type) {
-            // Prepare the payload for the API-Call
+        async add(type) {
             let data = {
                 type: type,
-                page_name: this.config.page,
+                page_name: this.pageName,
+                model_type: this.model ? this.model.model : '',
+                model_id: this.model ? this.model.id : '',
                 block_name: this.field.id,
                 content: this.newRepeatable(type)
             };
 
-            let response = await CrudApi.create('repeatables', data);
-
-            /**
-             *  generate correct object structure
-             */
-            for (var i = 0; i < this.config.languages.length; i++) {
-                let lng = this.config.languages[i];
-                response.data[lng] = {
-                    content: response.data.content
-                };
-            }
-            this.payload.push(response.data);
+            let response = await axios.post(`/admin/repeatables`, data);
+            let model = new Eloquent(response.data);
+            this.$emit('newRepeatable', model);
+            this.$forceUpdate();
+            this.$notify({
+                group: 'general',
+                type: 'aw-success',
+                title: this.field.title,
+                text: `Added new ${type} block.`,
+                duration: 1500
+            });
+        },
+        async deleteRepeatable(repeatable) {
+            await repeatable.delete()
+            this.$forceUpdate()
+            this.$notify({
+                group: 'general',
+                type: 'aw-success',
+                title: this.field.title,
+                text: 'Deleted block.',
+                duration: 1500
+            });
         },
         newRepeatable(type) {
             let obj = {};
 
-            for (var i = 0; i < this.config.repeatables[type].length; i++) {
-                if (this.config.repeatables[type][i].id != 'image') {
-                    obj[this.config.repeatables[type][i].id] = '';
+            for (var i = 0; i < this.field.repeatables[type].length; i++) {
+                if (this.field.repeatables[type][i].id != 'image') {
+                    obj[this.field.repeatables[type][i].id] = '';
                 }
             }
+
             return obj;
         },
-        init() {
-            if (this.config.translatable == true) {
-                for (var p = 0; p < this.payload.length; p++) {
-                    //let item = this.payload[p].content;
-
-                    if (this.payload[p].type == 'image') {
-                        continue;
-                    }
-
-                    for (var i = 0; i < this.config.languages.length; i++) {
-                        let lng = this.config.languages[i];
-                        let item = _.filter(this.payload[p].translations, [
-                            'locale',
-                            lng
-                        ]);
-
-                        /**
-                         *  copy translations to correct structure
-                         *  if translation is missing, set to default content
-                         */
-                        if (item[0] !== undefined) {
-                            this.$set(this.payload[p], lng, {
-                                content: JSON.parse(
-                                    JSON.stringify(item[0].content)
-                                )
-                            });
-                        } else {
-                            this.$set(this.payload[p], lng, {
-                                content: this.payload[p].content
-                            });
-                        }
-                    }
-                }
-            }
-        },
-        newOrder() {
+        async newOrder() {
             let payload = {
                 model: 'AwStudio\\Fjord\\Models\\Repeatable',
-                order: _.map(this.payload, 'id')
+                order: this.repeatables.items.map(item => item.id).toArray()
             };
 
-            console.log(this.payload);
-
-            axios.put('/admin/order', payload).then(response => {
-                console.log('Response: ', response.data);
-            });
+            let response = await axios.put('/admin/order', payload)
+            console.log('Response: ', response.data);
         }
     }
 };
 </script>
+
+<style lang="scss">
+.fj-block-trash {
+    svg:hover{
+        cursor: pointer;
+        color: black;
+    }
+}
+</style>

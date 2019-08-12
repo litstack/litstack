@@ -9,7 +9,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
 
-    <link href="{{ asset('fjord/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('fjord/css/app.css') }}?t={{ filemtime(public_path('fjord/css/app.css')) }}" rel="stylesheet">
 </head>
 
 <body>
@@ -25,7 +25,8 @@
         </main>
         <notify />
     </div>
-    <script src="{{ asset('fjord/js/app.js') }}" defer></script>
+
+    <script src="{{ asset('fjord/js/app.js') }}?t={{ filemtime(public_path('fjord/js/app.js')) }}" defer></script>
 </body>
 
 </html>

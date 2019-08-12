@@ -1,5 +1,7 @@
 # Fjord
 
+Fjord is a multilanguage admin-panel/cms scaffolding package that helps you creating CRUD in seconds via Artisan-commands. It also lets you manage the "static" content of each of your websites pages (Headlines, Text, Images), as well repetitive mixed contents you define. Generating content as well as passing it to your views and retrieving it is super simple.
+
 ## Installation
 
 Install this package using the following commands:

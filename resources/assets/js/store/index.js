@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import default from './default.module'
+import main from './main.module'
 
-export default {
-    sidebar,
-    order,
-    auth
-}
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+    modules: {
+        main
+    }
+})

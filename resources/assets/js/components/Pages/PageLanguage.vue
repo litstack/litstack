@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import CrudApi from './../../common/crud.api';
 
 export default {
     name: 'PageLanguage',
