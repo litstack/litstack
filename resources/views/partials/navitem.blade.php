@@ -21,7 +21,7 @@
         </ul>
 
     @else
-        <a href="/admin/{{$entry['link']}}">
+        <a href="/{{ config('fjord.route_prefix') }}/{{$entry['link']}}">
             @isset($entry['icon'])
                 <div class="fjord-navigation__icon">
                     {!!$entry['icon']!!}

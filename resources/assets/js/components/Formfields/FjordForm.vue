@@ -45,7 +45,6 @@
                     :field="field"
                     :repeatables="m.relations.repeatables"
                     :model="m"
-                    v-model="field.model"
                     @newRepeatable="(repeatable) => {newRepeatable(m, repeatable)}"
                     />
 
@@ -60,7 +59,6 @@
                         v-else
                         :field="field"
                         :model="m"
-                        @changed="changed(field, m)"
                         />
 
                 </template>
@@ -127,7 +125,6 @@ export default {
     },
     methods: {
         changed(field, model) {
-            console.log(field.originalModel == field.model, field.originalModel, field.model)
             if(field.originalModel == field.model) {
                 this.$store.commit('removeModelFromSave', {model, id: field.id})
             } else {

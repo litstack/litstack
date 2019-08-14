@@ -4,7 +4,7 @@
             <slot>
                 <a
                     v-if="route"
-                    :href="`/admin/${route}`"
+                    :href="`${baseURL}${route}`"
                     class="btn btn-sm btn-primary add-button"
                 >
                     <i class="fas fa-angle-left"></i> zurück
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 let props = {
     route: {
         type: String
@@ -24,9 +25,14 @@ let props = {
 }
 
 export default {
+    name: 'SiteNav',
+    computed: {
+        ...mapGetters(['baseURL'])
+    },
     props,
 }
 </script>
 
 <style lang="css">
+
 </style>

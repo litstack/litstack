@@ -57,7 +57,7 @@ export default {
                 model_id: this.model.id,
                 id: this.field.id,
             }
-            let response = await axios.post('/admin/relations/', payload)
+            let response = await axios.post('relations/', payload)
 
             let items = []
             for(let i=0;i<response.data.length;i++) {

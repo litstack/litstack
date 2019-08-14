@@ -1,11 +1,10 @@
 <template>
     <div>
-        <base-index
+        <fj-base-index
             :parameters="config"
             :tableData="data"
             :columns="columns"
-            :options="options"
-        />
+            :options="options"/>
     </div>
 </template>
 

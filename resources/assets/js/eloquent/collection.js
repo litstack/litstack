@@ -38,16 +38,12 @@ export default class EloquentCollection {
                 continue;
             }
 
-            try {
-                this.items.items[i].setData(items[i])
-            } catch(e) {
-                console.log(e, 'OH NO', this.items.items[i])
-            }
+            this.items.items[i].setData(items[i])
         }
     }
 
     async save() {
-        let route = `/admin/eloquent/save-all`
+        let route = `eloquent/save-all`
         let payload = {
             items: this.items.map(item => item.getPayload()).toArray()
         }

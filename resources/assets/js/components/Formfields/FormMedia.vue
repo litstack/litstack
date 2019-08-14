@@ -72,6 +72,7 @@
 import vue2Dropzone from 'vue2-dropzone';
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 import draggable from 'vuedraggable';
+import { mapGetters } from 'vuex'
 
 export default {
     name: 'FormMedia',
@@ -101,7 +102,7 @@ export default {
         return {
             images: [],
             dropzoneOptions: {
-                url: '/admin/media',
+                url: `${this.baseURL}media`,
                 autoProcessQueue: true,
                 thumbnailWidth: 150,
                 maxFilesize: 20,
@@ -135,6 +136,7 @@ export default {
     },
     beforeMount() {
         this.images = this.media
+        // TODO: FIX FOR BLOCK
         if(typeof this.media == typeof {} && !_.isEmpty(this.media)) {
             this.images = [this.media]
         }
@@ -143,6 +145,7 @@ export default {
         this.checkMaxFiles()
     },
     computed: {
+        ...mapGetters(['baseURL']),
         dropzone() {
             return this.$refs[`dropzone-${this.field.id}`]
         }
@@ -193,7 +196,7 @@ export default {
             this.dropzone.enable()
         },
         async destroy(id, index) {
-            let response = await axios.delete(`/admin/media/${id}`)
+            let response = await axios.delete(`media/${id}`)
             this.$delete(this.images, index);
             this.update();
         },
@@ -202,7 +205,7 @@ export default {
                 model: 'AwStudio\\Fjord\\Models\\Media',
                 order: _.map(this.images, 'id')
             };
-            axios.put('/admin/order', payload).then(response => {
+            axios.put('order', payload).then(response => {
                 console.log('Response: ', response.data);
             });
         }

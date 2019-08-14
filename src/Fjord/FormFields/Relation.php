@@ -23,11 +23,7 @@ class Relation
     {
         // Get query builder from model string.
         $field->query = $field->model;
-
-        // foreign key
         
-        // local key
-
         if(is_string($field->model)) {
             $field->query = $field->model::query();
         } else {
@@ -37,6 +33,25 @@ class Relation
         if(! $field->attributeExists('button')) {
             $tableName = with(new $field->model)->getTable();
             $field->button = "Add " . ucfirst(Str::singular($tableName));
+        }
+
+        $field = self::setKeys($field);
+
+        return $field;
+    }
+
+    protected static function setKeys($field)
+    {
+        if($field->many) {
+            return;
+        }
+
+        if(! $field->attributeExists('local_key')) {
+            $field->local_key = "{$field->id}_id";
+        }
+
+        if(! $field->attributeExists('foreign_key')) {
+            $field->foreign_key = "id";
         }
 
         return $field;

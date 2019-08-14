@@ -1,6 +1,6 @@
 <template>
     <div>
-        <base-site-nav :route="model.route" />
+        <fj-site-nav :route="model.route" />
 
         <div class="row fjord-form">
             <div class="col-12">
@@ -32,11 +32,14 @@ export default {
             model: null,
         }
     },
+
     methods: {
-       saved() {
-           if(window.location.pathname.split('/').pop() == 'create') {
-               window.location.replace(`${this.model.id}/edit`)
-           }
+        saved() {
+            console.log(this.model.id)
+            // TODO: FIX THIS...
+            if(window.location.pathname.split('/').pop() == 'create') {
+                //window.location.replace(`${this.model.id}/edit`)
+            }
        }
    },
    beforeMount() {

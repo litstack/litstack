@@ -2,7 +2,7 @@
 
 if(! function_exists('fjord_resource_path')) {
     function fjord_resource_path($path = '') {
-        return resource_path(config('fjord.resources_path') . ($path ? DIRECTORY_SEPARATOR.$path : $path));
+        return resource_path(config('fjord.resource_path') . ($path ? DIRECTORY_SEPARATOR.$path : $path));
     }
 }
 

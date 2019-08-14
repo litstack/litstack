@@ -26,6 +26,8 @@ export default function VueBootstrap() {
 
     // components
     Fjord.components(require.context('./../components/FormFields/', true, /\.(js|vue)$/i))
+    Fjord.components(require.context('./../components/BaseComponents/', true, /\.(js|vue)$/i))
+    
     Vue.component('crud-index', CrudIndex);
     Vue.component('crud-show', CrudShow);
     Vue.component('page-show', PageShow);
@@ -47,3 +49,5 @@ export default function VueBootstrap() {
     // prototypes
     Vue.prototype.$bus = Bus;
 }
+
+VueBootstrap()

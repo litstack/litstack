@@ -34,29 +34,29 @@ export default class Field {
 
     get originalModel() {
         if(this.translatable) {
-            if(!(this.config.id in this.originalItem[store.state.main.language])) {
-                this.originalItem[store.state.main.language][this.config.id] = null;
+            if(!(this.config.id in this.originalItem[store.state.config.language])) {
+                this.originalItem[store.state.config.language][this.config.id] = null;
             }
         }
         return this.translatable
-            ? this.originalItem[store.state.main.language][this.config.id]
+            ? this.originalItem[store.state.config.language][this.config.id]
             : this.originalItem[this.config.id]
     }
 
     get model() {
         if(this.translatable) {
-            if(!(this.config.id in this.item[store.state.main.language])) {
-                this.item[store.state.main.language][this.config.id] = null;
+            if(!(this.config.id in this.item[store.state.config.language])) {
+                this.item[store.state.config.language][this.config.id] = null;
             }
         }
         return this.translatable
-            ? this.item[store.state.main.language][this.config.id]
+            ? this.item[store.state.config.language][this.config.id]
             : this.item[this.config.id]
     }
 
     set model(val) {
         if(this.translatable) {
-            this.item[store.state.main.language][this.config.id] = val
+            this.item[store.state.config.language][this.config.id] = val
         } else {
             this.item[this.config.id] = val
         }

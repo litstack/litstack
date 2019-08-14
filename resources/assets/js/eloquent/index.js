@@ -65,8 +65,8 @@ export default class Eloquent {
             return;
         }
 
-        for(let i=0;i<store.state.main.languages.length;i++) {
-            let locale = store.state.main.languages[i]
+        for(let i=0;i<store.state.config.languages.length;i++) {
+            let locale = store.state.config.languages[i]
             // set empty object if locale entry doesnt exist
             if(!(locale in this.data.translation)) {
                 this.data[locale] = this._getEmptyFields()
@@ -91,7 +91,7 @@ export default class Eloquent {
 
     async save() {
         let method = this.data.id ? 'put' : 'post'
-        let route = `/admin/eloquent/${this.data.id ? this.data.id : '' }`
+        let route = `eloquent/${this.data.id ? this.data.id : '' }`
         let response = await axios[method](route, this.getPayload())
         this.setData(response.data)
         for(name in this.relations) {
@@ -100,7 +100,7 @@ export default class Eloquent {
     }
 
     async delete() {
-        let route = `/admin/eloquent/destroy/${this.data.id}`
+        let route = `eloquent/destroy/${this.data.id}`
         let response = await axios.post(route, {model:this.model})
         Bus.$emit('deletedModel', this)
     }

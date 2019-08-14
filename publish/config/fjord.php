@@ -2,7 +2,7 @@
 
 return [
 
-    'resources_path' => 'fjord',
+    'resource_path' => 'fjord',
 
     'route_prefix' => 'admin',
 

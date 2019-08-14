@@ -8,6 +8,9 @@ export const Fjord = {
         }
     },
     component(component) {
+        if(!component.default.name) {
+            throw "Component name required in " + component.default.__file;
+        }
         Vue.component(`Fj${component.default.name}`, component.default);
     }
 }

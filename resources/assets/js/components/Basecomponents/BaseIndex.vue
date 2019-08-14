@@ -19,7 +19,7 @@
                             :href="editLink(props.row.id)">
                             <i class="fas fa-edit"></i> edit
                         </a>
-                        
+
                     </v-client-table>
                 </div>
             </div>
@@ -33,12 +33,12 @@ export default {
     props: ['parameters', 'tableData', 'columns', 'options'],
     computed: {
         createLink() {
-            return `/admin/${this.parameters.route}/create`;
+            return `${this.parameters.route}/create`;
         }
     },
     methods: {
         editLink(id) {
-            return `/admin/${this.parameters.route}/${id}/edit`;
+            return `${this.parameters.route}/${id}/edit`;
         }
     }
 };

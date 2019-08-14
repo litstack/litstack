@@ -1,8 +1,5 @@
 require('./bootstrap');
 
-import VueBootstrap from './bootstrap/vue'
-VueBootstrap()
-
 import Navigation from './components/Partials/Navigation';
 import Notify from './components/Notify';
 

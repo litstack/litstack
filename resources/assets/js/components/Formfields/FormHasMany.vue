@@ -18,9 +18,9 @@
                         thead-class="hidden-header"
                         class="mb-0">
 
-                        <div slot="trash" slot-scope="{data}" class="text-right">
-                            <a href="#" @click.prevent="removeRelation(data)">
-                                <i class="far fa-times-circle"></i>
+                        <div slot="trash" slot-scope="{index}" class="text-right">
+                            <a href="#" @click.prevent="removeRelation(index)" class="fj-trash text-muted">
+                                <fa-icon icon="trash" @click="deleteRepeatable(repeatable)"/>
                             </a>
                         </div>
 
@@ -63,11 +63,6 @@ export default {
         async addRelation(item) {
             this.relations.push(new TranslatableEloquent(item))
         },
-        _removeRelation(index) {
-            this.relations.splice(index, 1)
-
-            axios.delete(`/admin/relations/${index}`)
-        },
         selected(item) {
             this.addRelation(item.data)
 
@@ -78,19 +73,30 @@ export default {
                 to_model_id: item.id
             }
 
-            axios.post('/admin/relations/store', payload)
+            axios.post('relations/store', payload)
+
+            this.$notify({
+                group: 'general',
+                type: 'aw-success',
+                title: this.field.title,
+                text: `Added item to ${this.field.title}`,
+                duration: 1500
+            });
 
             //this.$bvModal.hide(this.modalId)
         },
-        removeRelation(row, $event) {
-            console.log(row)
-            let items = this.relations
-            for(let i=0;i<items.length;i++) {
-                let item = items[i]
-                if(item.id == row.value) {
-                    this._removeRelation(i)
-                }
-            }
+        async removeRelation(index, $event) {
+            this.relations.splice(index, 1)
+
+            axios.delete(`relations/${index}`)
+
+            this.$notify({
+                group: 'general',
+                type: 'aw-success',
+                title: this.field.title,
+                text: `Removed item from ${this.field.title}`,
+                duration: 1500
+            });
         },
         setItem(item, model) {
             item.trash = model.id

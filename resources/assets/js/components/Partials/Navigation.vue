@@ -7,10 +7,16 @@
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex'
+
 export default {
     name: 'Navigation',
     data() {
         return {};
+    },
+    computed: {
+        ...mapGetters(['baseURL'])
     },
     methods: {
         navClasses(item) {
@@ -26,8 +32,8 @@ export default {
         }
     },
     mounted() {
-        let location = window.location.pathname
-            .replace('/admin/', '')
+        let location = String(window.location.pathname)
+            .replace(this.baseURL, '')
             .replace('/', '-')
             .replace('/', '-');
 

@@ -8,18 +8,19 @@
                             :model="pageContent"
                         />
 
-                        <fj-form-block
-                            v-for="(model, id) in repeatables"
-                            :key="id"
-                            :field="model.config.field"
-                            :repeatables="model"
-                            :pageName="pageName"
-                            @newRepeatable="
-                                repeatable => {
-                                    newRepeatable(model, repeatable);
-                                }
-                            "
-                        />
+                        <template v-for="(model, id) in repeatables">
+                            <fj-form-block
+                                :field="model.config.field"
+                                :repeatables="model"
+                                :pageName="pageName"
+                                @newRepeatable="
+                                    repeatable => {
+                                        newRepeatable(model, repeatable);
+                                    }
+                                "
+                            />
+                        </template>
+
                     </div>
                 </div>
             </div>

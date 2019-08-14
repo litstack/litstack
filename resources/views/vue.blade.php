@@ -14,7 +14,8 @@
             'props' => collect($props ?? []),
             'models' => collect([]),
             'language' => app()->getLocale(),
-            'languages' => collect(config('translatable.locales'))
+            'languages' => collect(config('translatable.locales')),
+            'config' => collect(config('fjord'))
         ];
 
         foreach($models ?? [] as $title => $model) {

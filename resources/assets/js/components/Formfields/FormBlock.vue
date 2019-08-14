@@ -3,13 +3,13 @@
         <div class="fjord-block card no-fx">
             <div class="card-body">
                 <draggable
-                    v-model="repeatables.items.items"
+                    v-model="sortableRepeatables"
                     @end="newOrder"
                     handle=".fjord-draggable__dragbar">
 
                     <div
                         class="fjord-draggable"
-                        v-for="(repeatable, index) in repeatables.items.items"
+                        v-for="(repeatable, index) in sortableRepeatables"
                         :key="repeatable.id">
 
                         <div class="fjord-draggable__dragbar d-flex justify-content-center">
@@ -19,7 +19,7 @@
                         <fj-form :model="repeatable" />
 
                         <b-row>
-                            <b-col sm="12" class="text-center fj-block-trash text-muted">
+                            <b-col sm="12" class="text-center fj-trash text-muted">
                                 <fa-icon icon="trash" @click="deleteRepeatable(repeatable)"/>
                             </b-col>
                         </b-row>
@@ -58,18 +58,18 @@ export default {
         },
         pageName: {
             type: String
-        }
+        },
     },
     data() {
         return {
-            block: null,
-            payload: []
+            sortableRepeatables: []
         };
     },
-    watch: {
-        payload(val) {
-            this.$emit('input', val);
+    beforeMount() {
+        if(!this.repeatables) {
+            return
         }
+        this.sortableRepeatables = this.repeatables.items.items
     },
     methods: {
         async add(type) {
@@ -82,10 +82,10 @@ export default {
                 content: this.newRepeatable(type)
             };
 
-            let response = await axios.post(`/admin/repeatables`, data);
+            let response = await axios.post(`repeatables`, data);
             let model = new Eloquent(response.data);
-            this.$emit('newRepeatable', model);
-            this.$forceUpdate();
+
+            this.sortableRepeatables.push(model)
             this.$notify({
                 group: 'general',
                 type: 'aw-success',
@@ -96,7 +96,8 @@ export default {
         },
         async deleteRepeatable(repeatable) {
             await repeatable.delete()
-            this.$forceUpdate()
+            this.sortableRepeatables.splice(this.sortableRepeatables.indexOf(repeatable), 1)
+
             this.$notify({
                 group: 'general',
                 type: 'aw-success',
@@ -119,21 +120,23 @@ export default {
         async newOrder() {
             let payload = {
                 model: 'AwStudio\\Fjord\\Models\\Repeatable',
-                order: this.repeatables.items.map(item => item.id).toArray()
+                order: this.sortableRepeatables.map(item => item.id)
             };
 
-            let response = await axios.put('/admin/order', payload)
-            console.log('Response: ', response.data);
+            await axios.put('order', payload)
+
+            this.$notify({
+                group: 'general',
+                type: 'aw-success',
+                title: this.field.title,
+                text: 'Changed order.',
+                duration: 1500
+            });
         }
     }
 };
 </script>
 
 <style lang="scss">
-.fj-block-trash {
-    svg:hover{
-        cursor: pointer;
-        color: black;
-    }
-}
+
 </style>

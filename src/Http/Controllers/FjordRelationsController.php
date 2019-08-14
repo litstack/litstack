@@ -14,10 +14,6 @@ class FjordRelationsController extends FjordController
 {
     public function index(Request $request)
     {
-        if(! $request->model_type || ! $request->id) {
-            abort(404);
-        }
-
         $model = with(new $request->model_type);
         if($request->model_id) {
             $model = $request->model_type::where('id', $request->model_id)->first();
@@ -26,6 +22,14 @@ class FjordRelationsController extends FjordController
         $field = $model->findField($request->id);
 
         return $field['query']->get();
+    }
+
+    public function updateHasOne(Request $request)
+    {
+        $model = $request->model::findOrFail($request->id);
+        $model->{$request->key} = $request->value;
+        $model->save();
+        return $model;
     }
 
     public function store(Request $request)

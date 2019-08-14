@@ -29,7 +29,7 @@ export default class PreviewEloquent {
             return
         }
 
-        let lng = store.state.main.language
+        let lng = store.state.config.language
         if(!(lng in this.data.translation)) {
             return
         }

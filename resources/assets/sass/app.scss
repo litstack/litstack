@@ -56,3 +56,10 @@ main {
 .modal-backdrop{
     opacity: .5 !important;
 }
+
+.fj-trash {
+    svg:hover{
+        cursor: pointer;
+        color: black;
+    }
+}

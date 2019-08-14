@@ -16,6 +16,7 @@ class FjordPageController extends FjordController
         $repeatables = $this->getRepeatables($page);
 
         $pageContent = $this->getPageContent($page);
+        //dd($pageContent['data']->where('id', 7)->first()->toArray());
 
         return view('fjord::vue')->withComponent('page-show')
             ->withModels(array_merge($repeatables, [

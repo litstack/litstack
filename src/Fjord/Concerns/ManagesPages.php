@@ -2,6 +2,9 @@
 
 namespace AwStudio\Fjord\Fjord\Concerns;
 
+use AwStudio\Fjord\Models\PageContent;
+use AwStudio\Fjord\Models\Repeatable;
+
 trait ManagesPages
 {
     protected $pages = [];
@@ -68,8 +71,22 @@ trait ManagesPages
         return $field;
     }
 
-    public function pageContent()
+    public function page($page)
     {
-        // TODO: Load Models
+        $repeatables = Repeatable::with('media', 'translations')
+            ->orderByRaw('-order_column DESC')
+            ->where('page_name', $page)
+            ->get()
+            ->groupBy('block_name');
+        $content = PageContent::where('page_name', $page)
+            ->get()
+            ->filter(function($page) {
+                return $page->field != null;
+            })
+            ->mapWithKeys(function($page) {
+                return [$page->field_name => $page->getFormContent()];
+            });
+
+        return (object) array_merge($content->all(), $repeatables->all());
     }
 }

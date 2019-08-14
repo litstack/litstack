@@ -109,6 +109,8 @@ class FjordCrudController extends Controller
             ->withFormRelations()
             ->eloquentJs('findOrFail', $id);
 
+        //dd($model['data']);
+
         return view('fjord::vue')->withComponent('crud-show')
             ->withTitle('edit ' . $this->titleSingular)
             ->withModels([

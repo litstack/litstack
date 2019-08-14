@@ -18,10 +18,9 @@
                             </button>
                         </div>
                         <div class="col-12 pt-3">
-                            <base-lang
+                            <fj-lang-select
                                 :languages="languages"
-                                :currentLanguage="language"
-                            />
+                                :currentLanguage="language"/>
                         </div>
                     </div>
                 </div>
@@ -62,6 +61,10 @@ export default {
         languages: {
             type: Array,
             required: true
+        },
+        config: {
+            type: Object,
+            required: true
         }
     },
     data() {
@@ -96,6 +99,7 @@ export default {
     beforeMount() {
         this.$store.commit('setLanguages', this.languages);
         this.$store.commit('setLanguage', this.language);
+        this.$store.commit('setConfig', this.config);
 
         this.prepareModels()
         this.prepareProps()

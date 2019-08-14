@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
 use AwStudio\Fjord\Facades\Fjord as FjordFacade;
+use Illuminate\Support\Facades\Route;
 
 use AwStudio\Fjord\Http\Middleware\FjordAuthenticate;
 
@@ -20,6 +21,8 @@ class FjordServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
+        $this->app->register('AwStudio\Fjord\FjordRouteServiceProvider');
+
         /**
          * Load the Fjord views
          *

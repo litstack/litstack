@@ -73,13 +73,26 @@ export default {
     },
     methods: {
         selected(item) {
+            // TODO: remove save job if old one
             this.field.item[this.field.id] = item.data
-            this.$emit('changed')
+
+            let job = {
+                route: 'relation',
+                method: 'put',
+                data: {
+                    model: this.model.model,
+                    id: this.model.id,
+                    key: this.field.local_key,
+                    value: item.data.id
+                }
+            }
+            this.$store.commit('addSaveJob', job)
+
             this.$bvModal.hide(this.modalId)
         },
         removeRelation() {
             this.field.item[this.field.id] = null
-            this.$emit('changed')
+            //this.$emit('changed')
         },
         setItem(item) {
             item.trash = ''

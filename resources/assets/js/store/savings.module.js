@@ -3,37 +3,42 @@ import EloquentCollection from './../eloquent/collection'
 import Bus from './../common/event.bus'
 
 const initialState = {
-    language: '',
-    languages: [],
     modelsToSave: [],
+    saveJobs: [],
     saveModelIds: {}
 }
 
 const getters = {
-    lng(state) {
-        return state.language
-    },
-    language(state) {
-        return state.language
-    },
-    lngs(state) {
-        return state.languages
-    },
-    languages(state) {
-        return state.languages
-    },
     canSave(state) {
         return state.modelsToSave.length > 0
+            || state.saveJobs.length > 0
     }
 }
+
 
 export const actions = {
     async ['saveModels']({ commit, state }) {
 
-        let collection = new EloquentCollection({data: []})
-        collection.items = collect(state.modelsToSave)
-        await collection.save()
+        // save jobs
+        let promises = []
+        for(let i=0;i<state.saveJobs.length;i++) {
+            let saveJob = state.saveJobs[i]
+            let promise = axios[saveJob.method](saveJob.route, saveJob.data)
+            promises.push(promise)
+        }
 
+        // save eloquent models
+        if(state.modelsToSave.length > 0) {
+            let collection = new EloquentCollection({data: []})
+            collection.items = collect(state.modelsToSave)
+            let promise = collection.save()
+            promises.push(promise)
+        }
+
+
+        // parallel map flow
+        let results = promises.map(async (job) => await job);
+        
         Vue.notify({
             group: 'general',
             type: 'aw-success',
@@ -44,19 +49,21 @@ export const actions = {
 
         Bus.$emit('modelsSaved')
 
-        commit('resetModelsToSave')
+        commit('saved')
     }
 }
 
 export const state = Object.assign({}, initialState)
 
 export const mutations = {
-    ['setLanguages'](state, languages) {
-        state.languages = languages
+    ['addSaveJob'](state, job) {
+        state.saveJobs.push(job)
     },
-    ['setLanguage'](state, lng) {
-        state.language = lng
-        Bus.$emit('languageChanged', state.language)
+    ['removeSaveJob'](state, job) {
+        if(!state.saveJobs.includes(job)) {
+            return
+        }
+        state.saveJobs.splice(state.saveJobs.indexOf(job), 1)
     },
     ['addModelToSave'](state, {model, id}) {
         if(!state.modelsToSave.includes(model)) {
@@ -80,8 +87,10 @@ export const mutations = {
         }
         state.modelsToSave.splice(state.modelsToSave.indexOf(model), 1)
     },
-    ['resetModelsToSave'](state, ) {
+    ['saved'](state) {
         state.modelsToSave = []
+        state.saveModelIds = {}
+        state.saveJobs = []
     }
 }
 

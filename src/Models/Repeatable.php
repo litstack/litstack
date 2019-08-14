@@ -68,7 +68,6 @@ class Repeatable extends Model implements HasMedia, TranslatableContract
         }
     }
 
-
     /**
      * Append the image column to each query.
      *
