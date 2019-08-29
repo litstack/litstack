@@ -19,8 +19,8 @@
                         </div>
                         <div class="col-12 pt-3">
                             <fj-lang-select
-                                :languages="languages"
-                                :currentLanguage="language"/>
+                                :languages="translatable.languages"
+                                :currentLanguage="translatable.language"/>
                         </div>
                     </div>
                 </div>
@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import Eloquent from './eloquent';
-import EloquentTest from './components/Test/EloquentTest';
+import FjordModel from './eloquent/fjord.model';
+import TranslatableModel from './eloquent/translatable.model';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -54,13 +54,9 @@ export default {
         props: {
             type: [Object, Array]
         },
-        language: {
-            type: String,
-            required: true
-        },
-        languages: {
-            type: Array,
-            required: true
+        translatable: {
+            type: Object,
+            required: true,
         },
         config: {
             type: Object,
@@ -83,7 +79,7 @@ export default {
             }
 
             for (name in this.models) {
-                this.preparedModels[name] = new Eloquent(this.models[name]);
+                this.preparedModels[name] = this.prepareModel(this.models[name]);
             }
         },
         prepareProps() {
@@ -92,13 +88,25 @@ export default {
             }
 
             if(this.preparedModels) {
+
                 this.preparedProps.models = this.preparedModels;
+            }
+        },
+        prepareModel(model) {
+            switch (model.type) {
+                case 'fjord':
+                    return new FjordModel(model);
+                case 'translatable':
+                    return new TranslatableModel(model);
+                default:
+                    return new FjordModel(model);
             }
         }
     },
     beforeMount() {
-        this.$store.commit('setLanguages', this.languages);
-        this.$store.commit('setLanguage', this.language);
+        this.$store.commit('setLanguages', this.translatable.languages);
+        this.$store.commit('setLanguage', this.translatable.language);
+        this.$store.commit('setFallbackLocale', this.translatable.fallback_locale);
         this.$store.commit('setConfig', this.config);
 
         this.prepareModels()

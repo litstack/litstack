@@ -13,8 +13,11 @@
             'component' => $component,
             'props' => collect($props ?? []),
             'models' => collect([]),
-            'language' => app()->getLocale(),
-            'languages' => collect(config('translatable.locales')),
+            'translatable' => collect([
+                'language' => app()->getLocale(),
+                'languages' => collect(config('translatable.locales')),
+                'fallback_locale' => config('translatable.fallback_locale'),
+            ]),
             'config' => collect(config('fjord'))
         ];
 

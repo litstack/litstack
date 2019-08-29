@@ -8,8 +8,7 @@ use AwStudio\Fjord\Models\PageContent;
 class Fjord
 {
     use Concerns\ManagesNavigation,
-        Concerns\ManagesPages,
-        Concerns\ManagesCruds;
+        Concerns\ManagesForms;
 
     public function __construct()
     {

@@ -15,44 +15,27 @@
                     class="col-4"
                     v-for="(image, index) in images"
                     v-if="images.length > 0"
-                    :key="image.id"
-                    >
+                    :key="image.id">
                     <div class="card no-fx mb-3 fjord-card">
                         <div class="card-header fjord-card__1x1">
                             <img :src="imgPath(image)" class="" />
                         </div>
 
                         <div class="card-body">
-                            <div class="input-group input-group-sm mb-3">
-                                <div class="input-group-prepend">
-                                    <span
-                                        class="input-group-text"
-                                        id="inputGroup-sizing-sm"
-                                        >title</span
-                                    >
-                                </div>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    @input="updateAttributes"
-                                    v-model="image.custom_properties.title"
-                                />
-                            </div>
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                    <span
-                                        class="input-group-text"
-                                        id="inputGroup-sizing-sm"
-                                        >alt</span
-                                    >
-                                </div>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    @input="updateAttributes"
-                                    v-model="image.custom_properties.alt"
-                                />
-                            </div>
+                            <small>Title</small>
+                            <b-input-group
+                                size="sm"
+                                :append="field.translatable ? lng : null"
+                                class="mb-1">
+                                <b-input :value="getCustomProperty(image, 'title')" @input="changed($event, 'title', image)"/>
+                            </b-input-group>
+
+                            <small>Alt</small>
+                            <b-input-group
+                                size="sm"
+                                :append="field.translatable ? lng : null">
+                                <b-input :value="getCustomProperty(image, 'alt')" @input="changed($event, 'alt', image)"/>
+                            </b-input-group>
 
                             <button
                                 @click.prevent="destroy(image.id, index)"
@@ -135,9 +118,11 @@ export default {
         }
     },
     beforeMount() {
+        this.dropzoneOptions.url = `${this.baseURL}media`
+
         this.images = this.media
         // TODO: FIX FOR BLOCK
-        if(typeof this.media == typeof {} && !_.isEmpty(this.media)) {
+        if(Object.keys(this.media)[0] != "0" && !_.isEmpty(this.media)) {
             this.images = [this.media]
         }
     },
@@ -145,12 +130,48 @@ export default {
         this.checkMaxFiles()
     },
     computed: {
-        ...mapGetters(['baseURL']),
+        ...mapGetters(['baseURL', 'lng']),
         dropzone() {
             return this.$refs[`dropzone-${this.field.id}`]
         }
     },
     methods: {
+        getCustomProperty(image, key) {
+            if(!this.field.translatable) {
+                return image.custom_properties[key]
+            }
+
+            if(!(this.lng in image.custom_properties)) {
+                image.custom_properties[this.lng] = {
+                    alt: '',
+                    title: ''
+                }
+            }
+
+            return image.custom_properties[this.lng][key]
+        },
+        changed(value, key, image) {
+            if(!this.field.translatable) {
+                image.custom_properties[key] = value
+            } else {
+                if(!(this.lng in image.custom_properties)) {
+                    image.custom_properties[this.lng] = {
+                        alt: '',
+                        title: ''
+                    }
+                }
+
+                image.custom_properties[this.lng][key] = value
+            }
+
+            let job = {
+              route: 'media/attributes',
+              method: 'put',
+              data: image,
+            };
+
+            this.$store.commit('addSaveJob', job);
+        },
         checkMaxFiles() {
             if (this.images.length >= this.field.maxFiles) {
                 this.dropzone.disable();

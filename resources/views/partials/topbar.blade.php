@@ -16,6 +16,12 @@
             <a class="fjord-topbar_link mr-4" href="{{route('fjord.users')}}">
                 <i class="fas fa-user-friends"></i>
             </a>
+            @foreach(fjord()->getNavigation('topbar') as $entry)
+                <a class="fjord-topbar_link mr-4" href="/{{ config('fjord.route_prefix') }}/{{ $entry['link'] }}">
+                    {!! $entry['icon'] !!}
+                </a>
+            @endforeach
+
 
             <a class="fjord-topbar_link" href="{{route('fjord.logout')}}"
                onclick="event.preventDefault();

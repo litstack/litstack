@@ -1,6 +1,7 @@
-import Vue from 'vue';
-import EloquentCollection from './../eloquent/collection';
-import Bus from './../common/event.bus';
+import Vue from 'vue'
+import EloquentCollection from './../eloquent/collection'
+import FjordModel from './../eloquent/fjord.model'
+import Bus from './../common/event.bus'
 
 const initialState = {
     modelsToSave: [],
@@ -25,15 +26,15 @@ export const actions = {
         }
 
         // save eloquent models
-        if (state.modelsToSave.length > 0) {
-            let collection = new EloquentCollection({ data: [] });
-            collection.items = collect(state.modelsToSave);
-            let promise = collection.save();
-            promises.push(promise);
+        if(state.modelsToSave.length > 0) {
+            let collection = new EloquentCollection({data: []}, FjordModel)
+            collection.items = collect(state.modelsToSave)
+            let promise = collection.save()
+            promises.push(promise)
         }
 
         // parallel map flow
-        let results = await promises.map(async job => await job);
+        let results = await Promise.all(promises);
 
         Vue.notify({
             group: 'general',
@@ -53,7 +54,19 @@ export const state = Object.assign({}, initialState);
 
 export const mutations = {
     ['addSaveJob'](state, job) {
-        state.saveJobs.push(job);
+        let saveJob = state.saveJobs.find((saveJob) => {
+            return saveJob.route == job.route
+                && saveJob.method == job.method
+                && saveJob.data.id == job.data.id
+        })
+        if(!saveJob) {
+            console.log('NEW JOB')
+            state.saveJobs.push(job)
+        } else {
+            console.log('UPDATE')
+            // Update save job
+            state.saveJobs[state.saveJobs.indexOf(saveJob)] = job
+        }
     },
     ['removeSaveJob'](state, job) {
         if (!state.saveJobs.includes(job)) {

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePageContentTable extends Migration
+class CreateFormContentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreatePageContentTable extends Migration
      */
     public function up()
     {
-        Schema::create('page_content', function (Blueprint $table) {
+        Schema::create('form_content', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('page_name')->nullable();
-            $table->string('field_name')->nullable();
+            $table->string('name')->nullable();
+            $table->string('field_id')->nullable();
 
-            $table->text('content')->nullable();
+            $table->text('value')->nullable();
 
             $table->unsignedInteger('order_column')->nullable();
             $table->boolean('active')->default(true);
@@ -27,15 +27,15 @@ class CreatePageContentTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('page_content_translations', function (Blueprint $table) {
+        Schema::create('form_translations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('page_content_id')->unsigned();
             $table->string('locale')->index();
 
-            $table->text('content')->nullable();
+            $table->text('value')->nullable();
 
-            $table->unique(['page_content_id', 'locale']);
-            $table->foreign('page_content_id')->references('id')->on('page_content')->onDelete('cascade');
+            $table->unique(['form_content_id', 'locale']);
+            $table->foreign('form_content_id')->references('id')->on('form_content')->onDelete('cascade');
         });
     }
 
@@ -46,7 +46,7 @@ class CreatePageContentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('page_content');
-        Schema::dropIfExists('page_content_translations');
+        Schema::dropIfExists('form_content');
+        Schema::dropIfExists('form_content_translations');
     }
 }

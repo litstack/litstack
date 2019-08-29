@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Str;
 
 class FjordInstall extends Command
 {
@@ -42,10 +43,10 @@ class FjordInstall extends Command
     {
         $this->vendorConfigs();
         $this->handleUserModel();
-        $this->handleFjordRoutes($filesystem);
+        //$this->handleFjordRoutes($filesystem);
         $this->handleFjordPublishable();
 
-        $role = Role::create(['name' => 'admin']);
+        $role = Role::firstOrCreate(['name' => 'admin']);
 
         $this->info('installation complete - run fjord:admin to create an admin user');
     }
@@ -57,6 +58,8 @@ class FjordInstall extends Command
      */
     private function vendorConfigs()
     {
+        $migrationFiles = array_keys(app()['migrator']->getMigrationFiles(database_path('migrations')));
+
         $this->call('vendor:publish', [
             '--provider' => "Cviebrock\EloquentSluggable\ServiceProvider"
         ]);
@@ -65,10 +68,15 @@ class FjordInstall extends Command
             '--tag' => "translatable"
         ]);
 
-        $this->call('vendor:publish', [
-            '--provider' => "Spatie\MediaLibrary\MediaLibraryServiceProvider",
-            '--tag' => "migrations"
-        ]);
+        $mediaMatch = collect($migrationFiles)->filter(function($file) {
+            return \Str::endsWith($file, 'create_media_table');
+        })->first();
+        if(! $mediaMatch) {
+            $this->call('vendor:publish', [
+                '--provider' => "Spatie\MediaLibrary\MediaLibraryServiceProvider",
+                '--tag' => "migrations"
+            ]);
+        }
 
         $this->call('vendor:publish', [
             '--provider' => "Spatie\Permission\PermissionServiceProvider",

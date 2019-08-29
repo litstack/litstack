@@ -7,10 +7,10 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
-use AwStudio\Fjord\Facades\Fjord as FjordFacade;
+use AwStudio\Fjord\Support\Facades\Fjord as FjordFacade;
 use Illuminate\Support\Facades\Route;
 
-use AwStudio\Fjord\Http\Middleware\FjordAuthenticate;
+use AwStudio\Fjord\Auth\Middleware\Authenticate;
 
 class FjordServiceProvider extends ServiceProvider
 {
@@ -21,7 +21,9 @@ class FjordServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $this->app->register('AwStudio\Fjord\FjordRouteServiceProvider');
+        $this->app->register('AwStudio\Fjord\Routing\RouteServiceProvider');
+        $this->app->register('AwStudio\Fjord\Form\FormServiceProvider');
+        $this->app->register('AwStudio\Fjord\Blade\BladeServiceProvider');
 
         /**
          * Load the Fjord views
@@ -57,40 +59,7 @@ class FjordServiceProvider extends ServiceProvider
          * Register Fjord Auth Middleware
          *
          */
-        $router->aliasMiddleware('fjord.auth', FjordAuthenticate::class);
-
-
-        /**
-         * Register Fjord Blade Directives
-         *
-         */
-        Blade::directive('block', function($expression){
-            return "<?php
-                    \$loop = (object) [
-                        'iteration' => 0
-                    ];
-                    foreach (\$repeatables[($expression)] as \$repeatable) {
-                        \$view = 'repeatables.'.\$repeatable->type;
-                        echo \$__env->make(\$view, array_except(get_defined_vars(), ['__data', '__path']))->render();
-                        \$loop->iteration++;
-                    }
-                    ?>";
-        });
-        Blade::directive('repeatable', function($expression){
-            return "<?php
-                    echo \$repeatable->content[($expression)];
-                    ?>";
-        });
-        Blade::directive('imageUrl', function($expression){
-            return "<?php
-                    echo \$repeatable->getFirstMediaUrl('image', ($expression));
-                    ?>";
-        });
-        Blade::directive('field', function($expression){
-            return "<?php
-                    echo \$content->where('field_name', ($expression))->first()->content;
-                    ?>";
-        });
+        $router->aliasMiddleware('fjord.auth', Authenticate::class);
     }
 
     /**
@@ -102,6 +71,10 @@ class FjordServiceProvider extends ServiceProvider
     {
         $loader = AliasLoader::getInstance();
         $loader->alias('Fjord', FjordFacade::class);
+
+        $this->app->singleton('fjord.router', function ($app) {
+            return new Routing\Router($app['events'], $app);
+        });
 
         $this->app->singleton('fjord', function () {
             return new Fjord\Fjord();

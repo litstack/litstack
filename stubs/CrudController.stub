@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Fjord;
 
-use AwStudio\Fjord\Http\Controllers\FjordCrudController;
+use AwStudio\Fjord\Form\Controllers\CrudController;
 
-class DummyClassname extends FjordCrudController
+class DummyClassname extends CrudController
 {
     protected $modelName = 'DummyModelName';
 }

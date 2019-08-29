@@ -1,11 +1,11 @@
 <template>
     <fj-form-item :field="field">
 
-        <input
+        <b-input
             class="form-control"
-            v-model="field.model"
+            :value="model[`${field.id}Model`]"
             :placeholder="field.placeholder"
-            @input="$emit('changed')"/>
+            @input="changed"/>
 
         <fj-form-language :field="field"/>
 
@@ -22,6 +22,16 @@ export default {
             required: true,
             type: Object
         },
+        model: {
+            required: true,
+            type: Object
+        },
+    },
+    methods: {
+        changed(value) {
+            this.model[`${this.field.id}Model`] = value
+            this.$emit('changed')
+        }
     }
 };
 </script>

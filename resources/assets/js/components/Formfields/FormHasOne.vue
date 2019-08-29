@@ -74,7 +74,8 @@ export default {
     methods: {
         selected(item) {
             // TODO: remove save job if old one
-            this.field.item[this.field.id] = item.data
+            this.model[`${this.field.id}Model`] = item.data.id
+            this.model.attributes[this.field.id] = item.data
 
             let job = {
                 route: 'relation',
@@ -91,8 +92,11 @@ export default {
             this.$bvModal.hide(this.modalId)
         },
         removeRelation() {
-            this.field.item[this.field.id] = null
-            //this.$emit('changed')
+            this.model[`${this.field.id}Model`] = null
+            this.model.attributes[this.field.id] = null
+            this.$forceUpdate()
+            console.log(this.model.attributes)
+            this.$emit('changed')
         },
         setItem(item) {
             item.trash = ''
@@ -107,7 +111,8 @@ export default {
             return `${this.model.route}-form-relation-table-${this.field.id}`
         },
         relation() {
-            let relation = this.field.item[this.field.id]
+            console.log("ss", this.model.attributes)
+            let relation = this.model[this.field.id]
             if(relation) {
                 return new TranslatableEloquent(relation)
             }

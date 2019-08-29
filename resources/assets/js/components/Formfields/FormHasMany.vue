@@ -20,7 +20,7 @@
 
                         <div slot="trash" slot-scope="{index}" class="text-right">
                             <a href="#" @click.prevent="removeRelation(index)" class="fj-trash text-muted">
-                                <fa-icon icon="trash" @click="deleteRepeatable(repeatable)"/>
+                                <fa-icon icon="trash"/>
                             </a>
                         </div>
 
@@ -69,7 +69,7 @@ export default {
             let payload = {
                 from_model_type: this.model.model,
                 from_model_id: this.model.id,
-                to_model_type: this.field.config.model,
+                to_model_type: this.field.model,
                 to_model_id: item.id
             }
 
@@ -87,6 +87,8 @@ export default {
         },
         async removeRelation(index, $event) {
             this.relations.splice(index, 1)
+
+            console.log(index)
 
             axios.delete(`relations/${index}`)
 
@@ -110,7 +112,8 @@ export default {
         }
     },
     beforeMount() {
-        let items = this.field.item[this.field.id] || []
+        let items = this.model[this.field.id] || []
+        console.log(items)
 
         for(let i=0;i<items.length;i++) {
             this.addRelation(items[i])

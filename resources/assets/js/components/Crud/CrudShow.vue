@@ -31,10 +31,8 @@ export default {
 
     methods: {
         saved() {
-            console.log(this.model.id);
-            // TODO: FIX THIS...
-            if (window.location.pathname.split('/').pop() == 'create') {
-                window.location.replace(`${this.model.id}/edit`);
+            if(window.location.pathname.split('/').pop() == 'create') {
+                window.location.replace(`${this.model.id}/edit`)
             }
         }
     },

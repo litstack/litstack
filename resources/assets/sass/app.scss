@@ -24,6 +24,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Quill Theme
+@import '~quill/dist/quill.snow.css';
+
 body,
 html {
     background-color: $dark;
@@ -50,12 +53,12 @@ main {
     }
 }
 
-.modal-backdrop {
-    opacity: 0.5 !important;
+.modal-backdrop{
+    opacity: .5 !important;
 }
 
 .fj-trash {
-    svg:hover {
+    svg:hover{
         cursor: pointer;
         color: black;
     }

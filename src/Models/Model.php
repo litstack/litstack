@@ -2,11 +2,13 @@
 
 namespace AwStudio\Fjord\Models;
 
-use Illuminate\Database\Eloquent\Model as BaseModel;
+use Illuminate\Database\Eloquent\Model as LaravelModel;
+use AwStudio\Fjord\Form\Database\HasFormFields;
+use AwStudio\Fjord\EloquentJs\CanEloquentJs;
 
-class Model extends BaseModel
+class Model extends LaravelModel
 {
-    use Traits\HasFormFields, Traits\CanEloquentJs, Traits\HasRepeatables;
+    use CanEloquentJs, HasFormFields;
 
     public function translatedAttributes()
     {

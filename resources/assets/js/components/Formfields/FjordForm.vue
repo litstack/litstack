@@ -4,32 +4,36 @@
         <template v-for="m in preparedModels">
             <div
                 :class="fieldWidth(field)"
-                v-for="(field, index) in m.formFields">
+                v-for="(field, index) in m.form_fields">
 
                 <fj-form-input
                     v-if="field.type == ('input')"
+                    :model="m"
                     :field="field"
                     @changed="changed(field, m)"/>
 
                 <fj-form-boolean
                     v-if="field.type == ('boolean')"
-                    v-model="field.model"
+                    v-model="m[`${field.id}Model`]"
                     :field="field"
                     @input="changed(field, m)"/>
 
                 <fj-form-select
                     v-if="field.type == ('select')"
                     :field="field"
+                    :model="m"
                     @changed="changed(field, m)"/>
 
                 <fj-form-textarea
                     v-if="field.type == ('textarea')"
                     :field="field"
+                    :model="m"
                     @changed="changed(field, m)"/>
 
                 <fj-form-wysiwyg
                     v-if="field.type == ('wysiwyg')"
                     :field="field"
+                    :model="m"
                     @changed="changed(field, m)"/>
 
                 <fj-form-media
@@ -43,7 +47,7 @@
                 <fj-form-block
                     v-if="field.type == ('block') && m.id"
                     :field="field"
-                    :repeatables="m.relations.repeatables"
+                    :repeatables="m.relations[field.id]"
                     :model="m"
                     @newRepeatable="(repeatable) => {newRepeatable(m, repeatable)}"
                     />
@@ -55,6 +59,7 @@
                         :field="field"
                         :model="m"
                         />
+
                     <fj-form-has-one
                         v-else
                         :field="field"
@@ -75,7 +80,7 @@
 
 <script>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import Eloquent from './../../eloquent'
+import FjordModel from './../../eloquent/fjord.model'
 import EloquentCollection from './../../eloquent/collection'
 import {mapGetters} from 'vuex'
 
@@ -94,7 +99,7 @@ export default {
         ...mapGetters(['lng'])
     },
     beforeMount() {
-        if(this.model instanceof Eloquent) {
+        if(this.model instanceof FjordModel) {
             this.preparedModels = [this.model]
         } else {
             this.preparedModels = this.model.items.items
@@ -125,7 +130,8 @@ export default {
     },
     methods: {
         changed(field, model) {
-            if(field.originalModel == field.model) {
+            console.log('yey', model[`${field.id}Model`])
+            if(model.originalModels[field.id] == model[`${field.id}Model`]) {
                 this.$store.commit('removeModelFromSave', {model, id: field.id})
             } else {
                 this.$store.commit('addModelToSave', {model, id: field.id})

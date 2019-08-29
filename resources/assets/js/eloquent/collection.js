@@ -1,14 +1,14 @@
 
-import Eloquent from './index'
+import FjordModel from './fjord.model'
 import Bus from './../common/event.bus'
 
 export default class EloquentCollection {
-    constructor(config) {
+    constructor(config, constructor) {
 
         this.items = collect(config.data).map(item => {
             let c = config
             c.data = item
-            return new Eloquent(c)
+            return new constructor(c)
         })
 
         this.config = config
@@ -32,13 +32,13 @@ export default class EloquentCollection {
         return this[prop] || this.items[prop] || undefined;
     }
 
-    _setData(items) {
+    _setAttributes(items) {
         for(let i=0;i<items.length;i++) {
             if(i >= this.items.items.length) {
                 continue;
             }
 
-            this.items.items[i].setData(items[i])
+            this.items.items[i].setAttributes(items[i])
         }
     }
 
@@ -49,7 +49,7 @@ export default class EloquentCollection {
         }
         let response = await axios['post'](route, payload)
 
-        this._setData(response.data)
+        this._setAttributes(response.data)
     }
 
     delete() {

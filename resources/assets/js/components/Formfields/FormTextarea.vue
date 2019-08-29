@@ -3,11 +3,11 @@
 
         <textarea
             class="form-control"
-            v-model="field.model"
             :id="field.id"
             :rows="field.rows"
             :placeholder="field.placeholder"
-            @input="$emit('changed')">
+            :value="model[`${field.id}Model`]"
+            @input="changed"/>
         </textarea>
 
         <fj-form-language :field="field"/>
@@ -25,6 +25,16 @@ export default {
             required: true,
             type: Object
         },
+        model: {
+            required: true,
+            type: Object
+        },
+    },
+    methods: {
+        changed(value) {
+            this.model[`${this.field.id}Model`] = value
+            this.$emit('changed')
+        }
     }
 };
 </script>

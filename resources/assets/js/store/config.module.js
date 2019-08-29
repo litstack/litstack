@@ -4,6 +4,7 @@ import Bus from './../common/event.bus';
 const initialState = {
     language: '',
     languages: [],
+    fallback_locale: '',
     config: {},
     baseURL: ''
 };
@@ -14,6 +15,9 @@ const getters = {
     },
     language(state) {
         return state.language;
+    },
+    fallback_locale(state) {
+        return state.fallback_locale
     },
     lngs(state) {
         return state.languages;
@@ -45,6 +49,9 @@ export const mutations = {
     },
     ['setLanguages'](state, languages) {
         state.languages = languages;
+    },
+    ['setFallbackLocale'](state, fallback_locale) {
+        state.fallback_locale = fallback_locale
     },
     ['setLanguage'](state, lng) {
         state.language = lng;

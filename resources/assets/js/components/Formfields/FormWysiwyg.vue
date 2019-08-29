@@ -1,11 +1,11 @@
 <template>
     <fj-form-item :field="field">
-
+        
         <ckeditor
             :editor="editor"
             :config="editorConfig"
-            v-model="field.model"
-            @input="$emit('changed')"/>
+            :value="model[`${field.id}Model`]"
+            @input="changed"/>
 
         <fj-form-language :field="field"/>
 
@@ -24,6 +24,16 @@ export default {
             type: Object,
             required: true
         },
+        model: {
+            required: true,
+            type: Object
+        },
+    },
+    methods: {
+        changed(value) {
+            this.model[`${this.field.id}Model`] = value
+            this.$emit('changed')
+        }
     },
     data() {
         return {

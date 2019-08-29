@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import Eloquent from './../../eloquent'
+import FjordModel from './../../eloquent/fjord.model'
 
 export default {
     name: 'FormBlock',
@@ -75,15 +75,15 @@ export default {
         async add(type) {
             let data = {
                 type: type,
-                page_name: this.pageName,
                 model_type: this.model ? this.model.model : '',
                 model_id: this.model ? this.model.id : '',
-                block_name: this.field.id,
-                content: this.newRepeatable(type)
+                field_id: this.field.id,
+                value: this.newBlock(type),
+                order_column: this.sortableRepeatables.length
             };
 
-            let response = await axios.post(`repeatables`, data);
-            let model = new Eloquent(response.data);
+            let response = await axios.post(`form_blocks`, data);
+            let model = new FjordModel(response.data);
 
             this.sortableRepeatables.push(model)
             this.$notify({
@@ -106,7 +106,7 @@ export default {
                 duration: 1500
             });
         },
-        newRepeatable(type) {
+        newBlock(type) {
             let obj = {};
 
             for (var i = 0; i < this.field.repeatables[type].length; i++) {
@@ -119,7 +119,7 @@ export default {
         },
         async newOrder() {
             let payload = {
-                model: 'AwStudio\\Fjord\\Models\\Repeatable',
+                model: 'AwStudio\\Fjord\\Form\\Database\\FormBlock',
                 order: this.sortableRepeatables.map(item => item.id)
             };
 

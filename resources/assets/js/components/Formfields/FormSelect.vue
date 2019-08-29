@@ -2,7 +2,7 @@
     <fj-form-item :field="field">
         <select
             class="form-control"
-            :value="this.field.model"
+            :value="model[`${field.id}Model`]"
             @input="handle($event.target.value)">
             <option
                 :value="`${key}`"
@@ -22,10 +22,14 @@ export default {
             required: true,
             type: Object
         },
+        model: {
+            required: true,
+            type: Object
+        },
     },
     methods: {
         handle(val) {
-            this.field.model = val
+            this.model[`${this.field.id}Model`] = val
             this.$emit('changed')
         }
     },

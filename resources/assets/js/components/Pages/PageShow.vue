@@ -1,30 +1,14 @@
 <template>
     <div>
-        <div class="row fjord-form">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <fj-form
-                            :model="pageContent"
-                        />
-
-                        <template v-for="(model, id) in repeatables">
-                            <fj-form-block
-                                :field="model.config.field"
-                                :repeatables="model"
-                                :pageName="pageName"
-                                @newRepeatable="
-                                    repeatable => {
-                                        newRepeatable(model, repeatable);
-                                    }
-                                "
-                            />
-                        </template>
-
-                    </div>
-                </div>
-            </div>
-        </div>
+        <b-row class="fjord-form">
+            <b-col lg="12">
+                <b-card>
+                    <fj-form
+                        :model="pageContent"
+                    />
+                </b-card>
+            </b-col>
+        </b-row>
     </div>
 </template>
 

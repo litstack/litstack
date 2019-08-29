@@ -8,8 +8,9 @@ class EloquentJs
 
     private $relations = [];
 
-    public function __construct($model, $class)
+    public function __construct($model, $class, string $type = 'fjord')
     {
+        $this->type = $type;
         $this->infoModel = new $class();
         $this->model = $model;
         $this->setRelations();
@@ -17,10 +18,39 @@ class EloquentJs
 
     protected function setRelations()
     {
-        if(! property_exists($this->model, 'eloquentRelations')) {
+
+        if(! $this->model) {
             return;
         }
 
+        if(get_class($this->model) == get_class($this->infoModel)) {
+            if(! property_exists($this->model, 'eloquentRelations')) {
+                return;
+            }
+
+            if(! $this->model->eloquentRelations) {
+                return;
+            }
+
+            $this->model->append('eloquentJs');
+
+            return;
+        }
+
+        foreach($this->model as $model) {
+            if(! property_exists($model, 'eloquentRelations')) {
+                continue;
+            }
+
+            if(! $model->eloquentRelations) {
+                continue;
+            }
+
+            $model->append('eloquentJs');
+        }
+
+
+        return;
         foreach($this->model->eloquentRelations as $name => $class) {
             // TODO: only works for hasMany
             if($this->model->$name->count() == 0) {
@@ -32,9 +62,15 @@ class EloquentJs
         }
     }
 
+    protected function setRelation($model)
+    {
+
+    }
+
     public function toArray()
     {
         return collect([
+            'type' => $this->type,
             'fillable' => $this->getFillables(),
             'relations' => $this->relations,
             'data' => $this->model,
