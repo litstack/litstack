@@ -1,14 +1,15 @@
 <template>
     <fj-form-item :field="field">
 
+
         <textarea
             class="form-control"
             :id="field.id"
             :rows="field.rows"
             :placeholder="field.placeholder"
-            :value="model[`${field.id}Model`]"
-            @input="changed"/>
+            v-model="text"/>
         </textarea>
+
 
         <fj-form-language :field="field"/>
 
@@ -30,9 +31,15 @@ export default {
             type: Object
         },
     },
-    methods: {
-        changed(value) {
-            this.model[`${this.field.id}Model`] = value
+    data() {
+        return {text: ''}
+    },
+    beforeMount() {
+        this.text = this.model[`${this.field.id}Model`]
+    },
+    watch: {
+        text(val) {
+            this.model[`${this.field.id}Model`] = val
             this.$emit('changed')
         }
     }
