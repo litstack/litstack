@@ -28,21 +28,9 @@ class FormCollection extends Collection
 
     public function getAttribute($key)
     {
-        // TODO: multiple collections / multiple form_names
-        if($this->hasMultipleCollections()) {
-            if(in_array($key, $this->getCollections())) {
-                return $this->where('collection', $key);
-            }
 
-            return;
-        }
-
-        if($this->hasMultipleNames()) {
-            if(in_array($key, $this->getNames())) {
-                return $this->where('form_name', $key);
-            }
-
-            return;
+        if(array_key_exists($key, $this->items)) {
+            return $this->items[$key];
         }
 
         $form_field = $this->where('field_id', $key)->first();
