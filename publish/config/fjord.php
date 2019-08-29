@@ -3,8 +3,8 @@
 return [
 
     'resource_path' => 'fjord',
-
-    'route_prefix' => 'admin',
+    'navigation_path' => 'navigation',
+    'route_prefix' => 'fjord',
 
     'mediaconversions' => [
         'repeatables' => [
@@ -15,10 +15,15 @@ return [
         ]
     ],
 
-    'pages' => [
-
-        // Should Pages be translatable by default.
-        'translatable' => true
+    'forms' => [
+        'pages' => [
+            // Should Pages be translatable by default.
+            'translatable' => true,
+            'route_prefix' => 'pages'
+        ],
+        'settings' => [
+            'translatable' => false,
+        ]
     ],
 
     'crud' => [
