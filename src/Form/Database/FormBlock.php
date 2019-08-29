@@ -22,7 +22,7 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
     public $translatedAttributes = ['value'];
 
     protected $fillable = ['field_id', 'model_type', 'model_id', 'type', 'content', 'order_column'];
-    protected $appends = ['image', 'form_fields', 'translation'];
+    protected $appends = ['form_fields', 'translation'];
     protected $casts = ['value' => 'json'];
 
     public function getFormFieldsPathAttribute()
@@ -85,13 +85,26 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
         }
     }
 
+    public function toArray()
+    {
+        $this->setImageAttributes();
+
+        return parent::toArray();
+    }
+
     /**
      * Append the image column to each query.
      *
      */
-    public function getImageAttribute()
+    public function setImageAttributes()
     {
-        return $this->getMedia('image');
+        foreach($this->form_fields as $form_field) {
+            if($form_field->type != 'image') {
+                continue;
+            }
+
+            $this->setAttribute($form_field->id, $this->getMedia($form_field->id));
+        }
     }
 
 }

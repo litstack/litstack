@@ -46,7 +46,7 @@ class FormField extends Model implements HasMedia, TranslatableContract
     {
         return $this->formMany($this->form_field->model ?? '');
     }
-
+    
     public function form_field_relation()
     {
         return $this->hasOne($this->form_field->model, 'id', 'value');
