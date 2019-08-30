@@ -143,7 +143,7 @@ class CrudController extends Controller
         $item = $this->model::findOrFail($id);
         $item->update($request->all());
 
-        return $data;
+        return $item;
     }
 
     /**
