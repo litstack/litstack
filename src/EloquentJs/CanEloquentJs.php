@@ -13,7 +13,7 @@ trait CanEloquentJs
         $relations = [];
 
         foreach($this->eloquentRelations as $relationName => $class) {
-            $relations[$relationName] = eloquentJs($this->$relationName()->get(), $class);
+            $relations[$relationName] = eloquentJs($this->$relationName, $class);
         }
 
         return $relations;

@@ -1,73 +1,74 @@
 <template>
-
     <form class="row">
         <template v-for="m in preparedModels">
             <div
                 :class="fieldWidth(field)"
-                v-for="(field, index) in m.form_fields">
-
+                v-for="(field, index) in m.form_fields"
+            >
                 <fj-form-input
-                    v-if="field.type == ('input')"
+                    v-if="field.type == 'input'"
                     :model="m"
                     :field="field"
-                    @changed="changed(field, m)"/>
+                    @changed="changed(field, m)"
+                />
 
                 <fj-form-boolean
-                    v-if="field.type == ('boolean')"
+                    v-if="field.type == 'boolean'"
                     :model="m"
                     :field="field"
-                    @changed="changed(field, m)"/>
+                    @changed="changed(field, m)"
+                />
 
                 <fj-form-select
-                    v-if="field.type == ('select')"
+                    v-if="field.type == 'select'"
                     :field="field"
                     :model="m"
-                    @changed="changed(field, m)"/>
+                    @changed="changed(field, m)"
+                />
 
                 <fj-form-textarea
-                    v-if="field.type == ('textarea')"
+                    v-if="field.type == 'textarea'"
                     :field="field"
                     :model="m"
-                    @changed="changed(field, m)"/>
+                    @changed="changed(field, m)"
+                />
 
                 <fj-form-wysiwyg
-                    v-if="field.type == ('wysiwyg')"
+                    v-if="field.type == 'wysiwyg'"
                     :field="field"
                     :model="m"
-                    @changed="changed(field, m)"/>
+                    @changed="changed(field, m)"
+                />
 
                 <fj-form-media
-                    v-if="field.type == ('image')"
+                    v-if="field.type == 'image'"
                     :field="field"
                     :id="m.id"
                     :model="m"
                     :media="m[field.id]"
-                    />
+                />
 
                 <fj-form-block
-                    v-if="field.type == ('block') && m.id"
+                    v-if="field.type == 'block' && m.id"
                     :field="field"
                     :repeatables="m.relations[field.id]"
                     :model="m"
-                    @newRepeatable="(repeatable) => {newRepeatable(m, repeatable)}"
-                    />
+                    @newRepeatable="
+                        repeatable => {
+                            newRepeatable(m, repeatable);
+                        }
+                    "
+                />
 
-                <template v-if="field.type == ('relation')">
-
+                <template v-if="field.type == 'relation'">
                     <fj-form-has-many
                         v-if="field.many"
                         :field="field"
                         :model="m"
-                        />
+                    />
 
-                    <fj-form-has-one
-                        v-else
-                        :field="field"
-                        :model="m"
-                        />
-
+                    <fj-form-has-one v-else :field="field" :model="m" />
                 </template>
-
             </div>
         </template>
         <div class="col-12">
@@ -80,16 +81,16 @@
 
 <script>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import FjordModel from './../../eloquent/fjord.model'
-import EloquentCollection from './../../eloquent/collection'
-import {mapGetters} from 'vuex'
+import FjordModel from './../../eloquent/fjord.model';
+import EloquentCollection from './../../eloquent/collection';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'Form',
     props: {
         model: {
             type: Object,
-            required: true,
+            required: true
         },
         repeatables: {
             type: Object
@@ -99,10 +100,10 @@ export default {
         ...mapGetters(['lng'])
     },
     beforeMount() {
-        if(this.model instanceof FjordModel) {
-            this.preparedModels = [this.model]
+        if (this.model instanceof FjordModel) {
+            this.preparedModels = [this.model];
         } else {
-            this.preparedModels = this.model.items.items
+            this.preparedModels = this.model.items.items;
         }
     },
     data() {
@@ -126,29 +127,31 @@ export default {
                     ]
                 }
             }
-        }
+        };
     },
     methods: {
         changed(field, model) {
-            console.log('yey', model[`${field.id}Model`], model, field)
-            if(model.originalModels[field.id] == model[`${field.id}Model`]) {
-                this.$store.commit('removeModelFromSave', {model, id: field.id})
+            console.log('yey', model[`${field.id}Model`], model, field);
+            if (model.originalModels[field.id] == model[`${field.id}Model`]) {
+                this.$store.commit('removeModelFromSave', {
+                    model,
+                    id: field.id
+                });
             } else {
-                this.$store.commit('addModelToSave', {model, id: field.id})
+                this.$store.commit('addModelToSave', { model, id: field.id });
             }
         },
         toggle(field) {
-            field.model = !field.model
+            field.model = !field.model;
         },
         newRepeatable(model, repeatable) {
-            model.relations.repeatables.items.items.push(repeatable)
+            model.relations.repeatables.items.items.push(repeatable);
         },
         fieldWidth(field) {
             return field.width !== undefined ? `col-${field.width}` : 'col-12';
-        },
+        }
     }
-}
+};
 </script>
 
-<style lang="css">
-</style>
+<style lang="css"></style>
