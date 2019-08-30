@@ -20,6 +20,14 @@ let FormMixin = Base =>
             Bus.$on('modelsSaved', this._setOriginalModels);
         }
 
+        isFjordModel() {
+            return (
+                this.model ==
+                ('AwStudio\\Fjord\\Form\\Database\\FormField' ||
+                    'AwStudio\\Fjord\\Form\\Database\\FormBlock')
+            );
+        }
+
         _setOriginalModels() {
             if (!this.form_fields) {
                 return;
@@ -51,7 +59,7 @@ let FormMixin = Base =>
             if (form_field.translatable) {
                 // translatable field
                 obj = this.attributes[store.state.config.language];
-            } else if (this.translatable) {
+            } else if (this.translatable && this.isFjordModel()) {
                 // not translatable field but translatable model
                 // using fallback_locale
                 obj = this.attributes[store.state.config.fallback_locale];
@@ -134,12 +142,7 @@ let FormMixin = Base =>
 
             // not translatable field but translatable model
             // using fallback_locale
-            if (
-                this.translatable &&
-                this.model ==
-                    ('AwStudio\\Fjord\\Form\\Database\\FormField' ||
-                        'AwStudio\\Fjord\\Form\\Database\\FormBlock')
-            ) {
+            if (this.translatable && this.isFjordModel()) {
                 return this.attributes[fallback_locale][form_field.local_key];
             }
 
