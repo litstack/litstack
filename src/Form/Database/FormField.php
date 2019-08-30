@@ -16,21 +16,17 @@ class FormField extends Model implements HasMedia, TranslatableContract
     use Translatable,
         CanEloquentJs,
         HasMediaTrait,
-        HasFormfields;
+        Traits\HasFormfields,
+        Traits\FormatFormFields;
 
     protected $translationModel = Translations\FormFieldTranslation::class;
     public $translatedAttributes = ['value'];
 
     public $fillable = ['collection', 'form_name', 'field_id', 'value'];
     protected $appends = ['translation', 'form_fields'];
+    protected $with = ['translations'];
 
     protected $formable = 'value';
-
-    /*
-    public $form_field_id_column = 'field_id';
-    public $form_field_value_column = 'value';
-    protected $formable = 'value';
-    */
 
    public function isTranslatableFormFieldFillable()
    {
@@ -46,7 +42,7 @@ class FormField extends Model implements HasMedia, TranslatableContract
     {
         return $this->formMany($this->form_field->model ?? '');
     }
-    
+
     public function form_field_relation()
     {
         return $this->hasOne($this->form_field->model, 'id', 'value');
@@ -101,29 +97,15 @@ class FormField extends Model implements HasMedia, TranslatableContract
             : $this->form_field_relation;
     }
 
-    /**
-     * Get formatted values for the given form_field type.
-     *
-     * @return void
-     */
-    public function getFormattedFormFieldValue($form_field, $builder = false)
+    public function getTranslatedFormFieldValue($form_field)
     {
-        switch($form_field->type ?? null) {
-            case 'relation':
-                return $this->getFormFieldRelation();
-            case 'boolean':
-                return (bool) $this->value;
-            case 'select':
-                return $form_field->options[$this->value];
-            case 'block':
-                return $this->getBlocks($form_field, $builder);
-            case 'image':
-                return $this->form_field->maxFiles > 1
-                    ? $this->getImageRelation(true)->get()
-                    : $this->getImageRelation(true)->first();
-            default:
-                return $this->value;
+        if($form_field->translatable) {
+            $value = $this->translation[app()->getLocale()] ?? [];
+        } else {
+            $value = $this->translation[config('translatable.fallback_locale')] ?? [];
         }
+
+        return $value['value'] ?? null;
     }
 
     /**
@@ -158,28 +140,16 @@ class FormField extends Model implements HasMedia, TranslatableContract
     }
 
     /**
-     * Modified to return relations for type "relation" or "block"
+     * Modified to return relations for type "relation" or "block".
      */
-    public function __call($key, $parameters)
-    {
-        if (($this->attributes['field_id'] ?? null) == $key) {
+     public function __call($method, $parameters)
+     {
+         if($form_field = $this->findFormField($method)) {
+             return $this->getFormattedFormFieldValue($form_field, true);
+         }
 
-            if($this->form_field->type == 'relation') {
-                return $this->getFormFieldRelation(true);
-            }
-
-            if($this->form_field->type == 'block') {
-                return $this->getBlocks($this->form_field, true);
-            }
-
-            if($this->form_field->type == 'image') {
-                return $this->getImageRelation(true);
-            }
-
-        }
-
-        return parent::__call($key, $parameters);
-    }
+         return parent::__call($method, $parameters);
+     }
 
     public function getFormFieldAttribute()
     {
@@ -209,71 +179,16 @@ class FormField extends Model implements HasMedia, TranslatableContract
         return $fields;
     }
 
-    /*
-    public function getTranslatedFormContent()
-    {
-        if ($this->form_field->translatable) {
-            $attributes = $this->getTranslationsArray()[app()->getLocale()] ?? $this->attributes;
-            return $attributes[$this->form_field_value_column];
-        } else {
-            return $this->getTranslationsArray()[config('translatable.fallback_locale')][$this->form_field_value_column];
-        }
-    }
-
     public function getAttribute($key)
     {
-        if (($this->attributes['field_name'] ?? null) == $key) {
-            return $this->getFormContent();
+        if(! array_key_exists('field_id', $this->attributes)) {
+            return parent::getAttribute($key);
         }
 
-        if ($key == 'content') {
-            return $this->getTranslatedFormContent();
+        if($this->attributes['field_id'] != $key) {
+            return parent::getAttribute($key);
         }
 
-        return parent::getAttribute($key);
+        return $this->getFormattedFormFieldValue($this->form_field);
     }
-    */
-
-
-    /*
-    public function getFieldAttribute()
-    {
-        return $this->fields[0] ?? null;
-    }
-
-    public function getFieldsAttribute()
-    {
-        if (! array_key_exists('field_name', $this->attributes)) {
-            return form_collect([]);
-        }
-
-        $page = fjord()->getPage($this->page_name ?? null) ?? [];
-
-        if (! array_key_exists('fields', $page)) {
-            return form_collect([]);
-        }
-
-        $fields = $page['fields'];
-
-        $query = $fields->where('id', $this->attributes['field_name']);
-
-        if(! $query->first()) {
-            return form_collect([]);
-        }
-
-        $field = clone $query->first();
-
-        if (! $field) {
-            return form_collect([]);
-        }
-
-        $fields = $this->getDynamicFieldValues(form_collect([$field]));
-
-        if ($field->type != 'relation') {
-            $field->id = 'content';
-        }
-
-        return form_collect([$field]);
-    }
-    */
 }

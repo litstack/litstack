@@ -21,6 +21,7 @@ class FormRouteServiceProvider extends RouteServiceProvider
 
     public function map()
     {
+        $this->mapFormFieldRoutes();
         $this->mapFormRoutes();
         $this->mapCrudRoutes();
         $this->mapFormBlockRoutes();
@@ -31,7 +32,7 @@ class FormRouteServiceProvider extends RouteServiceProvider
     protected function mapCrudRoutes()
     {
         foreach(Fjord::cruds() as $key => $crud) {
-            $controllerClass = ucfirst(Str::singular($crud)) . "Controller";
+            $controllerClass = ucfirst(Str::camel(Str::singular($crud))) . "Controller";
             $namespace = "\\App\\Http\\Controllers\\Fjord\\{$controllerClass}";
 
             FjordRoute::resource(config('fjord.route_prefix') . "/{$crud}", $namespace)
@@ -59,10 +60,15 @@ class FormRouteServiceProvider extends RouteServiceProvider
         }
     }
 
+    protected function mapFormFieldRoutes()
+    {
+        FjordRoute::put('form_fields/{id}', FormController::class . "@update")->name('form_field.update');
+    }
+
     protected function mapFormBlockRoutes()
     {
-        FjordRoute::post('form_blocks', FormBlockController::class . "@store")->name('form_blocks.store');
-        Route::resource('/form_blocks', FormBlockController::class);
+        FjordRoute::post('form_blocks', FormBlockController::class . "@store")->name('form_block.store');
+        FjordRoute::put('form_blocks/{id}', FormBlockController::class . "@update")->name('form_block.update');
     }
 
     protected function mapFormRelationRoutes()

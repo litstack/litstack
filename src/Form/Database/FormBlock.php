@@ -11,15 +11,21 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use AwStudio\Fjord\EloquentJs\CanEloquentJs;
 use AwStudio\Fjord\Support\Facades\FormLoader;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class FormBlock extends Model implements HasMedia, TranslatableContract
 {
-    use HasMediaTrait, Translatable, CanEloquentJs, HasFormFields;
+    use HasMediaTrait,
+        Translatable,
+        CanEloquentJs,
+        Traits\HasFormFields,
+        Traits\FormatFormFields;
 
     protected $translationModel = Translations\FormBlockTranslation::class;
 
     public $timestamps = false;
     public $translatedAttributes = ['value'];
+    protected $formFieldIds = [];
 
     protected $fillable = ['field_id', 'model_type', 'model_id', 'type', 'content', 'order_column'];
     protected $appends = ['form_fields', 'translation'];
@@ -40,15 +46,21 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
         return true;
     }
 
-    /**
-     * Append the image column to each query.
-     *
-     */
     public function getTranslationAttribute()
     {
         return collect($this->getTranslationsArray())->map(function($item) {
             return array_pop($item);
         })->toArray();
+    }
+
+    public function setFormFieldIds($ids)
+    {
+        $this->formFieldIds = $ids;
+    }
+
+    public function getFormFieldIds()
+    {
+        return $this->formFieldIds;
     }
 
     public function update(array $attributes = array(), array $options = array()) {
@@ -73,8 +85,6 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
         return $this->getDynamicFieldValues($fields);
     }
 
-
-
     public function registerMediaConversions(Media $media = null)
     {
         foreach (config('fjord.mediaconversions.repeatables') as $key => $value) {
@@ -87,24 +97,60 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
 
     public function toArray()
     {
-        $this->setImageAttributes();
+        $array = parent::toArray();
 
-        return parent::toArray();
-    }
-
-    /**
-     * Append the image column to each query.
-     *
-     */
-    public function setImageAttributes()
-    {
         foreach($this->form_fields as $form_field) {
-            if($form_field->type != 'image') {
+
+            if(! in_array($form_field->type, ['boolean', 'relation', 'image'])) {
                 continue;
             }
 
-            $this->setAttribute($form_field->id, $this->getMedia($form_field->id));
+            $value = $this->getFormattedFormFieldValue($form_field);
+
+            if($form_field->type == 'boolean') {
+                $array['translation'][config('translatable.fallback_locale')][$form_field->id] = $value;
+            } else {
+                $array[$form_field->id] = $value;
+            }
+            //$array[$form_field->id] = $this->getMedia($form_field->id)->toArray();
         }
+
+        return $array;
     }
 
+    public function getTranslatedFormFieldValue($form_field)
+    {
+        if($form_field->translatable) {
+            $values = $this->translation[app()->getLocale()] ?? [];
+        } else {
+            $values = $this->translation[config('translatable.fallback_locale')] ?? [];
+        }
+
+        return $values[$form_field->id] ?? null;
+    }
+
+    public function getAttribute($key)
+    {
+        if(in_array($key, $this->formFieldIds) && ! array_key_exists($key, $this->attributes)) {
+
+            return $this->getFormattedFormFieldValue(
+                $this->findFormField($key)
+            );
+
+        }
+
+        return parent::getAttribute($key);
+    }
+
+
+    public function newFromBuilder($attributes = [], $connection = null)
+    {
+        $model = parent::newFromBuilder($attributes, $connection);
+
+        $model->setFormFieldIds(
+            $model->form_fields->pluck('id')->toArray()
+        );
+
+        return $model;
+    }
 }

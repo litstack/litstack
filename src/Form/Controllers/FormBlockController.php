@@ -6,7 +6,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use AwStudio\Fjord\Form\Database\FormBlock;
 
-
 class FormBlockController extends Controller
 {
     public function store(Request $request)
@@ -18,10 +17,10 @@ class FormBlockController extends Controller
 
     public function update(Request $request, $id)
     {
-        $repeatable = Repeatable::findOrFail($id);
+        $formBlock = FormBlock::findOrFail($id);
 
-        $repeatable->update($request->all());
+        $formBlock->update($request->all());
 
-        return $repeatable;
+        return $formBlock;
     }
 }

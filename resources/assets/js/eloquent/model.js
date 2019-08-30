@@ -67,16 +67,12 @@ export default class EloquentModel
     }
 
     getPayload() {
-        let payload = {
-            model: this.model,
-            data: Object.assign({}, this.attributes)
-        }
-        return payload
+        return Object.assign({}, this.attributes)
     }
 
     async save() {
         let method = this.attributes.id ? 'put' : 'post'
-        let route = `eloquent/${this.attributes.id ? this.attributes.id : '' }`
+        let route = `${this.route}/${this.attributes.id ? this.attributes.id : '' }`
         let response = await axios[method](route, this.getPayload())
 
         this.setAttributes(response.data)

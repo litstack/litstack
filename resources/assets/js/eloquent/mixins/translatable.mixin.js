@@ -66,12 +66,18 @@ let TranslatableMixin = Base => class extends Base
     }
 
     setCurrentLanguageAttributes() {
-        if(!(store.state.config.language in this.attributes)) {
+        let lng = store.state.config.language
+
+        if(!(lng in this.attributes)) {
             return
         }
 
-        for(let key in this.attributes[store.state.config.language]) {
-            this.attributes[key] = this.attributes[store.state.config.language][key]
+        for(let key in this.attributes[lng]) {
+            if(key in this.attributes) {
+                continue;
+            }
+            
+            this.attributes[key] = this.attributes[lng][key]
         }
     }
 

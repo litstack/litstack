@@ -43,6 +43,17 @@ export default class EloquentCollection {
     }
 
     async save() {
+
+        let promises = [];
+
+        this.items.map((item) => {
+            promises.push(item.save())
+        })
+        
+        let results = await Promise.all(promises);
+
+        return results
+        /*
         let route = `eloquent/save-all`
         let payload = {
             items: this.items.map(item => item.getPayload()).toArray()
@@ -50,6 +61,7 @@ export default class EloquentCollection {
         let response = await axios['post'](route, payload)
 
         this._setAttributes(response.data)
+        */
     }
 
     delete() {

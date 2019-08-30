@@ -14,9 +14,9 @@
 
                 <fj-form-boolean
                     v-if="field.type == ('boolean')"
-                    v-model="m[`${field.id}Model`]"
+                    :model="m"
                     :field="field"
-                    @input="changed(field, m)"/>
+                    @changed="changed(field, m)"/>
 
                 <fj-form-select
                     v-if="field.type == ('select')"
@@ -130,7 +130,7 @@ export default {
     },
     methods: {
         changed(field, model) {
-            console.log('yey', model[`${field.id}Model`])
+            console.log('yey', model[`${field.id}Model`], model, field)
             if(model.originalModels[field.id] == model[`${field.id}Model`]) {
                 this.$store.commit('removeModelFromSave', {model, id: field.id})
             } else {

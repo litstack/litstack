@@ -3,6 +3,7 @@
 namespace AwStudio\Fjord\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class FjordCrud extends Command
 {
@@ -167,6 +168,7 @@ class FjordCrud extends Command
 
     private function makeMigration($modelName, $s, $t)
     {
+        $tableName = Str::snake(Str::plural($modelName));
         $fileContents = file_get_contents(__DIR__.'/../../stubs/CrudMigration.stub');
 
         // model is translatable
@@ -174,8 +176,8 @@ class FjordCrud extends Command
             $translationContents = file_get_contents(__DIR__.'/../../stubs/CrudMigrationTranslation.stub');
             $fileContents = str_replace('DummyTranslation', $translationContents, $fileContents);
             $fileContents = str_replace('DummyDownTranslation', "Schema::dropIfExists('DummyTranslationTablename');", $fileContents);
-            $fileContents = str_replace('DummyTranslationTablename', lcfirst($modelName) . '_translations', $fileContents);
-            $fileContents = str_replace('DummyForeignId', lcfirst($modelName) . '_id', $fileContents);
+            $fileContents = str_replace('DummyTranslationTablename', $tableName . '_translations', $fileContents);
+            $fileContents = str_replace('DummyForeignId', Str::singular($tableName) . '_id', $fileContents);
         }else{
             $fileContents = str_replace('DummyTranslation', '', $fileContents);
             $fileContents = str_replace('DummyTranslationDown', '', $fileContents);
@@ -189,12 +191,12 @@ class FjordCrud extends Command
         }
 
         $fileContents = str_replace('DummyClassname', "Create".ucfirst(str_plural($modelName))."Table", $fileContents);
-        $fileContents = str_replace('DummyTablename', lcfirst(str_plural($modelName)), $fileContents);
+        $fileContents = str_replace('DummyTablename', $tableName, $fileContents);
 
 
 
         $timestamp = str_replace(' ', '_', str_replace('-', '_', str_replace(':', '', now())));
-        if(\File::put('database/migrations/'.$timestamp.'_create_'.str_plural(lcfirst($modelName)).'_table.php', $fileContents)){
+        if(\File::put('database/migrations/'.$timestamp.'_create_'. $tableName .'_table.php', $fileContents)){
             $this->info('migration created');
         }
     }
@@ -218,7 +220,8 @@ class FjordCrud extends Command
 
     private function makeConfig($modelName)
     {
-        $config = fjord_resource_path('crud/'.strtolower(str_plural($modelName)).'.php');
+        $tableName = Str::snake(Str::plural($modelName));
+        $config = fjord_resource_path('crud/'.$tableName.'.php');
 
         $fileContents = file_get_contents(__DIR__.'/../../stubs/CrudConfig.stub');
         $fileContents = str_replace('DummyClassname', $modelName, $fileContents);

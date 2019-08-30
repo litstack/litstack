@@ -10,15 +10,34 @@ use Exception;
 
 class FormController extends Controller
 {
+    public function update(Request $request, $id)
+    {
+        $formField = FormField::findOrFail($id);
+
+        $formField->update($request->all());
+
+        return $formField;
+    }
+
     public function show(Request $request)
     {
         [$collection, $form_name] = explode('.', str_replace('fjord.form.', '', Route::currentRouteName()));
 
         $formFields = $this->getFormFields($collection, $form_name);
 
-        return view('fjord::vue')->withComponent('page-show')
+        /*
+        dd($formFields['data']
+            ->where('field_id', 'content_block')
+            ->first()
+            ->content_block
+            ->first()
+            ->toArray()
+        );
+        */
+
+        return view('fjord::vue')->withComponent('form-show')
             ->withModels([
-                'pageContent' => $formFields
+                'formFields' => $formFields
             ])
             ->withTitle(ucfirst($form_name))
             ->withProps([

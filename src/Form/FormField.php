@@ -111,6 +111,12 @@ class FormField implements ArrayAccess
         return self::FIELDS[$this->type];
     }
 
+    /**
+     * Set default values for the Form Field.
+     *
+     * @param callable $callback
+     * @return void
+     */
     protected function setDefaults(callable $callback = null)
     {
 
@@ -154,6 +160,7 @@ class FormField implements ArrayAccess
             $this->setAttribute('translatable', false);
         }
     }
+
 
     public function __set($key, $value)
     {

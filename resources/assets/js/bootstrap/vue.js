@@ -5,7 +5,7 @@ import Vuex from 'vuex'
 import Bus from './../common/event.bus'
 import Fjord from './../common/fjord'
 
-import PageShow from './../components/Pages/PageShow';
+import FormShow from './../components/Form/FormShow';
 import CrudShow from './../components/Crud/CrudShow';
 import CrudIndex from './../components/Crud/CrudIndex';
 
@@ -32,7 +32,7 @@ export default function VueBootstrap() {
 
     Vue.component('crud-index', CrudIndex);
     Vue.component('crud-show', CrudShow);
-    Vue.component('page-show', PageShow);
+    Vue.component('form-show', FormShow);
 
     // FontAwesome
     library.add(far);

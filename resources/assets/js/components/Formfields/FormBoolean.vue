@@ -2,11 +2,11 @@
     <fj-form-item :field="field">
 
         <button
-            @click.prevent="$emit('input', !value)"
+            @click.prevent="toggleValue"
             class="btn btn-lg">
             <i
                 class="fas fa-toggle-on text-success"
-                v-if="value"/>
+                v-if="model[`${field.id}Model`]"/>
             <i
                 class="fas fa-toggle-off text-danger"
                 v-else/>
@@ -25,10 +25,16 @@ export default {
             required: true,
             type: Object
         },
-        value: {
+        model: {
             required: true,
         }
     },
+    methods: {
+        toggleValue() {
+            this.model[`${this.field.id}Model`] = !this.model[`${this.field.id}Model`]
+            this.$emit('changed')
+        }
+    }
 };
 </script>
 
