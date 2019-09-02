@@ -25,8 +25,4 @@ return [
             'translatable' => false,
         ]
     ],
-
-    'crud' => [
-
-    ]
 ];

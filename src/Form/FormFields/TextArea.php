@@ -13,6 +13,7 @@ class TextArea
     ];
 
     const DEFAULTS = [
-        'translatable' => false
+        'translatable' => false,
+        'max_rows' => 6
     ];
 }
