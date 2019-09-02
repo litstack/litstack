@@ -5,7 +5,6 @@
         <div class="row fjord-form">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-end"></div>
                     <div class="card-body">
                         <fj-form :model="model" />
                     </div>
@@ -31,8 +30,8 @@ export default {
 
     methods: {
         saved() {
-            if(window.location.pathname.split('/').pop() == 'create') {
-                window.location.replace(`${this.model.id}/edit`)
+            if (window.location.pathname.split('/').pop() == 'create') {
+                window.location.replace(`${this.model.id}/edit`);
             }
         }
     },

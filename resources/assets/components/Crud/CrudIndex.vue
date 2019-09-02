@@ -3,7 +3,8 @@
         <fj-table-index
             :items="items"
             :fields="fields"
-            :actions="['edit', 'delete']"/>
+            :actions="['edit', 'delete']"
+        />
     </div>
 </template>
 
@@ -14,7 +15,7 @@ export default {
         models: {
             type: Object,
             required: true
-        },
+        }
     },
     data() {
         return {
@@ -23,13 +24,13 @@ export default {
                     key: 'title',
                     label: 'Title',
                     sortable: true
-                },
+                }
             ],
-            items: {},
+            items: {}
         };
     },
     beforeMount() {
-        this.items = this.models.items
+        this.items = this.models.items;
     }
 };
 </script>

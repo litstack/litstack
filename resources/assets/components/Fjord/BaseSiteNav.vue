@@ -7,32 +7,30 @@
                     :href="`${baseURL}${route}`"
                     class="btn btn-sm btn-primary add-button"
                 >
-                    <i class="fas fa-angle-left"></i> zurück
+                    <i class="fas fa-angle-left"></i> back
                 </a>
 
-                <slot name="actions"/>
+                <slot name="actions" />
             </slot>
         </div>
     </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 let props = {
     route: {
         type: String
     }
-}
+};
 
 export default {
     name: 'SiteNav',
     computed: {
         ...mapGetters(['baseURL'])
     },
-    props,
-}
+    props
+};
 </script>
 
-<style lang="css">
-
-</style>
+<style lang="css"></style>
