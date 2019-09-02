@@ -9,7 +9,7 @@ use Spatie\MediaLibrary\Models\Media;
 class MediaController extends FjordController
 {
     protected $model;
-
+    
     /**
      * Store a newly created resource in storage.
      *

@@ -2,6 +2,7 @@
 
 namespace AwStudio\Fjord\Form\Controllers;
 
+use AwStudio\Fjord\Support\Facades\FormLoader;
 use AwStudio\Fjord\Form\Database\FormField;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
@@ -49,20 +50,26 @@ class FormController extends Controller
     {
         $formFields = [];
 
+        $formFieldInstance = new FormField();
+        $formFieldInstance->collection = $collection;
+        $formFieldInstance->form_name = $form_name;
+
+        $form = FormLoader::load($formFieldInstance->form_fields_path, new FormField());
+
         $page = require fjord_resource_path("{$collection}/{$form_name}.php");
 
-        foreach($page['fields'] as $key => $field) {
+        foreach($form->fields as $key => $field) {
 
             $formFields[$key] = FormField::firstOrCreate(
-                ['collection' => $collection, 'form_name' => $form_name, 'field_id' => $field['id']],
-                ['content' => $field['default'] ?? null]
+                ['collection' => $collection, 'form_name' => $form_name, 'field_id' => $field->id],
+                ['content' => $field->default ?? null]
             );
 
-            if($field['type'] == 'block') {
-                $formFields[$key]->withRelation($field['id']);
+            if($field->type == 'block') {
+                $formFields[$key]->withRelation($field->id);
             }
 
-            if($field['type'] == 'relation') {
+            if($field->type == 'relation') {
                 $formFields[$key]->setFormRelation();
             }
             /*

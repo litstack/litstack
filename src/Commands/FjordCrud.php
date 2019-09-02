@@ -2,6 +2,7 @@
 
 namespace AwStudio\Fjord\Commands;
 
+use AwStudio\Fjord\Filesystem\StubBuilder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
@@ -42,9 +43,10 @@ class FjordCrud extends Command
         $m = $this->choice('does the model have media?', ['y', 'n'], 0) == 'y' ? true : false;
         $s = $this->choice('does the model have a slug?', ['y', 'n'], 0) == 'y' ? true : false;
         $t = $this->choice('does the model need to be translated?', ['y', 'n'], 0) == 'y' ? true : false;
+        $so = $this->choice('is the model sortable?', ['y', 'n'], 0) == 'y' ? true : false;
 
         $this->makeModel($modelName, $m, $s, $t);
-        $this->makeMigration($modelName, $s, $t);
+        $this->makeMigration($modelName, $s, $t, $so);
         $this->makeController($modelName);
         $this->makeConfig($modelName);
 
@@ -64,72 +66,71 @@ class FjordCrud extends Command
         $uses = [];
         $appends = [];
 
-        if (!file_exists($model) ) {
-            $fileContents = file_get_contents(__DIR__.'/../../stubs/CrudModel.stub');
-
-            if ($fileContents !== false) {
-                $fileContents = str_replace('DummyClassname', $modelName, $fileContents);
-
-                // model has media
-                if($m){
-                    $fileContents = str_replace('DummyTraits', "use Spatie\MediaLibrary\HasMedia\HasMedia;\nDummyTraits", $fileContents);
-                    $fileContents = str_replace('DummyTraits', "use Spatie\MediaLibrary\HasMedia\HasMediaTrait;\nDummyTraits", $fileContents);
-                    //$fileContents = str_replace('DummyVars', 'protected $appends'." = ['image'];\n    DummyVars", $fileContents);
-
-                    $attributeContents = file_get_contents(__DIR__.'/../../stubs/CrudModelMediaAttribute.stub');
-                    $fileContents = str_replace('DummyGetAttributes', $attributeContents."\n    DummyGetAttributes", $fileContents);
-
-                    $implements []= 'HasMedia';
-                    $uses []= 'HasMediaTrait';
-                    $appends []= 'image';
-                }
-
-                // model has slug
-                if($s){
-                    // if is not translated
-                    if(!$t){
-                        $fileContents = str_replace('DummyTraits', "use Cviebrock\EloquentSluggable\Sluggable;\nDummyTraits", $fileContents);
-
-                        $sluggableContents = file_get_contents(__DIR__.'/../../stubs/CrudModelSluggable.stub');
-                        $fileContents = str_replace('DummySluggable', $sluggableContents, $fileContents);
-
-                        $uses []= 'Sluggable';
-                    }
-                }
-
-                // model is translatable
-                if($t){
-                    $fileContents = str_replace('DummyTraits', "use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;\nDummyTraits", $fileContents);
-                    $fileContents = str_replace('DummyTraits', "use Astrotomic\Translatable\Translatable;\nDummyTraits", $fileContents);
-                    $fileContents = str_replace('DummyVars', 'public $translatedAttributes'." = ['title', 'text'];\n    DummyVars", $fileContents);
-
-                    $attributeContents = file_get_contents(__DIR__.'/../../stubs/CrudModelTranslationAttribute.stub');
-                    $fileContents = str_replace('DummyGetAttributes', $attributeContents."\n    DummyGetAttributes", $fileContents);
-
-                    $implements []= 'TranslatableContract';
-                    $uses []= 'Translatable';
-                    $appends []= 'translation';
-
-                    $this->makeTranslationModel($modelName, $s);
-                }
-
-
-                $fileContents = $this->makeImplements($implements, $fileContents);
-                $fileContents = $this->makeUses($uses, $fileContents);
-                $fileContents = $this->makeAppends($appends, $fileContents);
-
-                // remove placeholders
-                $fileContents = $this->cleanUp($fileContents);
-            }else{
-                $this->error('template not found');
-            }
-
-            if(\File::put($model, $fileContents)){
-                $this->info('model created');
-            }
-        }else{
+        if(file_exists($model)) {
             $this->error('model already exists');
         }
+
+        $builder = new StubBuilder(fjord_path('stubs/CrudModel.stub'));
+
+        $builder->withClassname($modelName);
+
+        // model has media
+        if($m) {
+            $builder->withTraits("use Spatie\MediaLibrary\HasMedia\HasMedia;");
+            $builder->withTraits("use Spatie\MediaLibrary\HasMedia\HasMediaTrait;");
+            
+            $attributeContents = file_get_contents(fjord_path('stubs/CrudModelMediaAttribute.stub'));
+            $builder->withGetAttributes($attributeContents);
+
+            $implements []= 'HasMedia';
+            $uses []= 'HasMediaTrait';
+            $appends []= 'image';
+        }
+
+        // model has slug
+        if($s){
+            // if is not translated
+            if(!$t){
+                $builder->withTraits("use Cviebrock\EloquentSluggable\Sluggable;");
+
+                $sluggableContents = file_get_contents(fjord_path('stubs/CrudModelSluggable.stub'));
+                $builder->withSluggable($sluggableContents);
+
+                $uses []= 'Sluggable';
+            }
+        }
+
+        // model is translatable
+        if($t){
+            $builder->withTraits("use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;");
+            $builder->withTraits("use Astrotomic\Translatable\Translatable;");
+            $builder->withVars('public $translatedAttributes'." = ['title', 'text'];");
+
+            $attributeContents = file_get_contents(fjord_path('stubs/CrudModelTranslationAttribute.stub'));
+            $builder->withGetAttributes($attributeContents);
+
+            $implements []= 'TranslatableContract';
+            $uses []= 'Translatable';
+            $appends []= 'translation';
+
+            $this->makeTranslationModel($modelName, $s);
+        }
+
+        if($implements) {
+            $builder->withImplement('implements ' . implode(', ', $implements));
+        }
+
+        if($uses) {
+            $builder->withUses('use ' . implode(', ', $uses) . ';');
+        }
+
+        if($appends) {
+            $builder->withVars("\tprotected \$appends = ['" . implode("', '", $appends) . "'];");
+        }
+
+        $builder->create($model);
+
+        $this->info('model created');
     }
 
     private function makeTranslationModel($modelName, $s)
@@ -166,7 +167,7 @@ class FjordCrud extends Command
         }
     }
 
-    private function makeMigration($modelName, $s, $t)
+    private function makeMigration($modelName, $s, $t, $so)
     {
         $tableName = Str::snake(Str::plural($modelName));
         $fileContents = file_get_contents(__DIR__.'/../../stubs/CrudMigration.stub');
@@ -188,6 +189,10 @@ class FjordCrud extends Command
             $fileContents = str_replace('DummySlug', '$table->string'."('slug')->nullable();", $fileContents);
         }else{
             $fileContents = str_replace('DummySlug', '', $fileContents);
+        }
+
+        if($so) {
+
         }
 
         $fileContents = str_replace('DummyClassname', "Create".ucfirst(str_plural($modelName))."Table", $fileContents);

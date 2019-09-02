@@ -22,6 +22,7 @@ class DummyClassname extends Migration
             // $table->string('title');
 
             DummySlug
+            DummySortable
 
             $table->unsignedInteger('order_column')->nullable();
             $table->boolean('active')->default(true);

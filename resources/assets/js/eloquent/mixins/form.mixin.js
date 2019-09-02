@@ -21,11 +21,10 @@ let FormMixin = Base =>
         }
 
         isFjordModel() {
-            return (
-                this.model ==
-                ('AwStudio\\Fjord\\Form\\Database\\FormField' ||
-                    'AwStudio\\Fjord\\Form\\Database\\FormBlock')
-            );
+            return [
+                'AwStudio\\Fjord\\Form\\Database\\FormField',
+                'AwStudio\\Fjord\\Form\\Database\\FormBlock'
+            ].includes(this.model)
         }
 
         _setOriginalModels() {

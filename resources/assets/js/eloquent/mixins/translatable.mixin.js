@@ -76,7 +76,7 @@ let TranslatableMixin = Base => class extends Base
             if(key in this.attributes) {
                 continue;
             }
-            
+
             this.attributes[key] = this.attributes[lng][key]
         }
     }

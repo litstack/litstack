@@ -16,7 +16,7 @@ class FormField extends Model implements HasMedia, TranslatableContract
     use Translatable,
         CanEloquentJs,
         HasMediaTrait,
-        Traits\HasFormfields,
+        Traits\HasFormFields,
         Traits\FormatFormFields;
 
     protected $translationModel = Translations\FormFieldTranslation::class;
@@ -190,5 +190,15 @@ class FormField extends Model implements HasMedia, TranslatableContract
         }
 
         return $this->getFormattedFormFieldValue($this->form_field);
+    }
+
+    public function registerMediaConversions(Media $media = null)
+    {
+        foreach ($this->mediaConversions as $key => $value) {
+            $this->addMediaConversion($key)
+                  ->width($value[0])
+                  ->height($value[1])
+                  ->sharpen($value[2]);
+        }
     }
 }

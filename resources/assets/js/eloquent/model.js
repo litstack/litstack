@@ -44,6 +44,11 @@ export default class EloquentModel
         this.setOriginalAttributes()
     }
 
+    hasChanges()
+    {
+        // TODO:
+    }
+
     setOriginalAttributes()
     {
         // is used to locate changes

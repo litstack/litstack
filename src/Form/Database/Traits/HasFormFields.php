@@ -4,6 +4,7 @@ namespace AwStudio\Fjord\Form\Database\Traits;
 
 use AwStudio\Fjord\Form\FormFieldCollection;
 use AwStudio\Fjord\Support\Facades\FormLoader;
+use Spatie\MediaLibrary\Models\Media;
 
 trait HasFormFields
 {
@@ -123,7 +124,6 @@ trait HasFormFields
             }
 
             call_user_func_array([$this, $methodName], [$fields[$key]]);
-
          }
 
         return $fields;

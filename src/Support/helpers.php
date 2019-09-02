@@ -47,3 +47,10 @@ if(! function_exists('closure_info')) {
         return new \ReflectionFunction($closure);
     }
 }
+
+if(! function_exists('is_valid_path')) {
+    function is_valid_path($path)
+    {
+        return (bool) file_exists($path);
+    }
+}

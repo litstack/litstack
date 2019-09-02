@@ -55,19 +55,21 @@ trait LoadFields
 
     protected function loadForm(array $form, $model)
     {
-
-        if(array_key_exists('fields', $form)) {
-            $form['fields'] = $this->getFields($form['fields'], $model);
-        }
+        $form['fields'] = $this->getFields($form['fields'] ?? [], $model);
+        $form['fields'] = $form['fields']->merge(
+            $this->getFields($form['controlls'] ?? [], $model, 'controlls')
+        );
 
         return $form;
     }
 
-    public function getFields($fields, $model)
+    public function getFields($fields, $model, $location = 'fields')
     {
         return $this->getFormFieldObjects(
             $fields,
-            function($field) use ($model) { return $this->setFormFieldDefaults($field, $model); }
+            function($field) use ($model, $location) {
+                return $this->setFormFieldDefaults($field, $model, $location);
+            }
         );
     }
 
@@ -82,7 +84,7 @@ trait LoadFields
         return new FormFieldCollection($fields);
     }
 
-    protected function setFormFieldDefaults($field, $model)
+    protected function setFormFieldDefaults($field, $model, $location)
     {
         // Basic Checks.
         $this->isFieldFillable($field, $model);
@@ -95,6 +97,8 @@ trait LoadFields
             );
 
         }
+
+        $field->setAttribute('location', $location);
 
         return $field;
     }
