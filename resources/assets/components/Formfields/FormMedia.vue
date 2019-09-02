@@ -1,61 +1,95 @@
 <template>
-    <div class="row">
-        <div class="col-4">
-            <vue-dropzone
-                class="fjord-dropzone"
-                :ref="`dropzone-${field.id}`"
-                :id="`dropzone-${field.id}`"
-                :options="dropzoneOptions"
-                @vdropzone-success="uploadSuccess"
-            ></vue-dropzone>
-        </div>
-        <div class="col-8">
-            <draggable v-model="images" class="row" @end="newOrder">
-                <div
-                    class="col-4"
-                    v-for="(image, index) in images"
-                    v-if="images.length > 0"
-                    :key="image.id">
-                    <div class="card no-fx mb-3 fjord-card">
-                        <div class="card-header fjord-card__1x1">
-                            <img :src="imgPath(image)" class="" />
-                        </div>
-
-                        <div class="card-body">
-                            <small>Title</small>
-                            <b-input-group
-                                size="sm"
-                                :append="field.translatable ? lng : null"
-                                class="mb-1">
-                                <b-input :value="getCustomProperty(image, 'title')" @input="changed($event, 'title', image)"/>
-                            </b-input-group>
-
-                            <small>Alt</small>
-                            <b-input-group
-                                size="sm"
-                                :append="field.translatable ? lng : null">
-                                <b-input :value="getCustomProperty(image, 'alt')" @input="changed($event, 'alt', image)"/>
-                            </b-input-group>
-
-                            <button
-                                @click.prevent="destroy(image.id, index)"
-                                class="btn btn-outline-danger btn-sm fjord-dropzone__delete"
-                            >
-                                <i class="far fa-trash-alt"></i> löschen
-                            </button>
-                        </div>
-                    </div>
+    <fj-form-item :field="field">
+        <div class="w-100">
+            <b-row>
+                <div class="col-12 order-2" v-if="!maxFiles">
+                    <vue-dropzone
+                        class="fjord-dropzone"
+                        :ref="`dropzone-${field.id}`"
+                        :id="`dropzone-${field.id}`"
+                        :options="dropzoneOptions"
+                        @vdropzone-success="uploadSuccess"
+                    ></vue-dropzone>
                 </div>
-            </draggable>
+                <div class="col-12 order-1">
+                    <draggable v-model="images" class="row" @end="newOrder">
+                        <div
+                            :class="imgCols(field.image_size)"
+                            v-for="(image, index) in images"
+                            v-if="images.length > 0"
+                            :key="image.id"
+                        >
+                            <div class="card no-fx mb-3 fjord-card">
+                                <div class="card-header fjord-card__1x1">
+                                    <img :src="imgPath(image)" class="" />
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="mb-2">
+                                        <label class="mb-1">
+                                            Title
+                                        </label>
+                                        <b-badge
+                                            v-if="field.translatable"
+                                            variant="primary"
+                                        >
+                                            <small>{{ lng }}</small>
+                                        </b-badge>
+
+                                        <b-input
+                                            :value="
+                                                getCustomProperty(
+                                                    image,
+                                                    'title'
+                                                )
+                                            "
+                                            @input="
+                                                changed($event, 'title', image)
+                                            "
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label class="mb-1">Alt</label>
+                                        <b-badge
+                                            v-if="field.translatable"
+                                            variant="primary"
+                                        >
+                                            <small>{{ lng }}</small>
+                                        </b-badge>
+                                        <b-input
+                                            :value="
+                                                getCustomProperty(image, 'alt')
+                                            "
+                                            @input="
+                                                changed($event, 'alt', image)
+                                            "
+                                        />
+                                    </div>
+
+                                    <button
+                                        @click.prevent="
+                                            destroy(image.id, index)
+                                        "
+                                        class="btn btn-outline-danger btn-sm fjord-dropzone__delete"
+                                    >
+                                        <i class="far fa-trash-alt"></i> löschen
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </draggable>
+                </div>
+            </b-row>
         </div>
-    </div>
+    </fj-form-item>
 </template>
 
 <script>
 import vue2Dropzone from 'vue2-dropzone';
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 import draggable from 'vuedraggable';
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'FormMedia',
@@ -118,56 +152,62 @@ export default {
         }
     },
     beforeMount() {
-        this.dropzoneOptions.url = `${this.baseURL}media`
+        this.dropzoneOptions.url = `${this.baseURL}media`;
 
-        this.images = this.media
+        this.images = this.media;
         // TODO: FIX FOR BLOCK
-        if(Object.keys(this.media)[0] != "0" && !_.isEmpty(this.media)) {
-            this.images = [this.media]
+        if (Object.keys(this.media)[0] != '0' && !_.isEmpty(this.media)) {
+            this.images = [this.media];
         }
     },
     mounted() {
-        this.checkMaxFiles()
+        //this.checkMaxFiles();
     },
     computed: {
         ...mapGetters(['baseURL', 'lng']),
         dropzone() {
-            return this.$refs[`dropzone-${this.field.id}`]
+            return this.$refs[`dropzone-${this.field.id}`];
+        },
+        maxFiles() {
+            return this.images.length >= this.field.maxFiles;
         }
     },
     methods: {
+        imgCols(size = 3) {
+            return `col-${size}`;
+        },
         getCustomProperty(image, key) {
-            if(!this.field.translatable) {
-                return image.custom_properties[key]
+            if (!this.field.translatable) {
+                return image.custom_properties[key];
             }
 
-            if(!(this.lng in image.custom_properties)) {
+            if (!(this.lng in image.custom_properties)) {
                 image.custom_properties[this.lng] = {
                     alt: '',
                     title: ''
-                }
+                };
             }
 
-            return image.custom_properties[this.lng][key]
+            return image.custom_properties[this.lng][key];
         },
         changed(value, key, image) {
-            if(!this.field.translatable) {
-                image.custom_properties[key] = value
+            if (!this.field.translatable) {
+                image.custom_properties[key] = value;
             } else {
-                if(!(this.lng in image.custom_properties)) {
+                if (!(this.lng in image.custom_properties)) {
                     image.custom_properties[this.lng] = {
                         alt: '',
                         title: ''
-                    }
+                    };
                 }
 
-                image.custom_properties[this.lng][key] = value
+                image.custom_properties[this.lng][key] = value;
             }
 
             let job = {
-              route: 'media/attributes',
-              method: 'put',
-              data: image,
+                route: 'media/attributes',
+                method: 'put',
+                data: image
             };
 
             this.$store.commit('addSaveJob', job);
@@ -184,8 +224,7 @@ export default {
                 return true;
             }
 
-            return false
-
+            return false;
         },
         updateAttributes() {
             this.$emit('updateAttributes', this.images);
@@ -198,14 +237,15 @@ export default {
             return `/${image.id}/${image.file_name}`;
         },
         update() {
-            if(this.checkMaxFiles()) {
+            /*
+            if (this.checkMaxFiles()) {
                 return;
             }
+            */
 
             if (!this.id) {
                 return;
             }
-
 
             this.dropzone.processQueue();
             $(`#dropzone-${this.field.id}`)
@@ -214,10 +254,10 @@ export default {
                 .html('<i class="far fa-images"></i> drag and drop');
 
             this.dropzone.removeAllFiles();
-            this.dropzone.enable()
+            this.dropzone.enable();
         },
         async destroy(id, index) {
-            let response = await axios.delete(`media/${id}`)
+            let response = await axios.delete(`media/${id}`);
             this.$delete(this.images, index);
             this.update();
         },

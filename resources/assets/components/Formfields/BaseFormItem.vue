@@ -2,13 +2,15 @@
     <div class="pb-4 fjord-form">
         <h5 class="mb-0">
             <label :for="field.id">{{ field.title }}</label>
-            <b-badge
-                v-if="field.translatable"
-                variant="light">
+            <b-badge v-if="field.translatable" variant="primary">
                 <small>{{ lng }}</small>
             </b-badge>
         </h5>
-        <div :class="{'input-group': field.type != ('relation' || 'image' || 'block')}">
+        <div
+            :class="{
+                'input-group': field.type != ('relation' || 'image' || 'block')
+            }"
+        >
             <slot />
         </div>
         <div class="d-flex justify-content-between">
@@ -21,7 +23,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'FormItem',
@@ -37,9 +39,7 @@ export default {
     computed: {
         ...mapGetters(['lng']),
         length() {
-            return this.field.model
-                ? this.field.model.length
-                : 0
+            return this.field.model ? this.field.model.length : 0;
         },
         max() {
             return;
