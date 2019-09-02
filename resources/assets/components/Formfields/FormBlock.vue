@@ -2,31 +2,35 @@
     <fj-form-item :field="field">
         <div class="fjord-block card no-fx">
             <div class="card-body">
-                <draggable
-                    v-model="sortableRepeatables"
-                    @end="newOrder"
-                    handle=".fjord-draggable__dragbar">
+                <div class="row">
+                    <draggable
+                        v-model="sortableRepeatables"
+                        @end="newOrder"
+                        handle=".fjord-draggable__dragbar"
+                        :class="`col-${field.block_width}`">
 
-                    <div
-                        class="fjord-draggable"
-                        v-for="(repeatable, index) in sortableRepeatables"
-                        :key="repeatable.id">
+                        <div
+                            class="fjord-draggable"
+                            v-for="(repeatable, index) in sortableRepeatables"
+                            :key="repeatable.id">
 
-                        <div class="fjord-draggable__dragbar d-flex justify-content-center">
-                            <i class="fas fa-grip-horizontal text-muted"></i>
+                            <div class="fjord-draggable__dragbar d-flex justify-content-center">
+                                <i class="fas fa-grip-horizontal text-muted"></i>
+                            </div>
+
+                            <fj-form :model="repeatable" />
+
+                            <b-row>
+                                <b-col sm="12" class="text-center fj-trash text-muted">
+                                    <fa-icon icon="trash" @click="deleteRepeatable(repeatable)"/>
+                                </b-col>
+                            </b-row>
+
                         </div>
 
-                        <fj-form :model="repeatable" />
+                    </draggable>
+                </div>
 
-                        <b-row>
-                            <b-col sm="12" class="text-center fj-trash text-muted">
-                                <fa-icon icon="trash" @click="deleteRepeatable(repeatable)"/>
-                            </b-col>
-                        </b-row>
-
-                    </div>
-
-                </draggable>
 
                 <button
                     class="btn btn-secondary btn-sm mr-2"

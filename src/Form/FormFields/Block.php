@@ -14,7 +14,7 @@ class Block
     ];
 
     const DEFAULTS = [
-
+        'block_width' => 12
     ];
 
     public static function prepare($field, $path) {
