@@ -43,13 +43,23 @@ class FjordInstall extends Command
     {
         $this->vendorConfigs();
         $this->handleUserModel();
-        //$this->handleFjordRoutes($filesystem);
         $this->handleFjordPublishable();
-        
+        $this->handleFjordResources();
 
         $role = Role::firstOrCreate(['name' => 'admin']);
 
+        $this->call('storage:link');
+        
         $this->info('installation complete - run fjord:admin to create an admin user');
+    }
+
+    public function handleFjordResources()
+    {
+        if(is_dir(fjord_resource_path())) {
+            return;
+        }
+
+        File::copyDirectory(fjord_path('resources/fjord'), resource_path('fjord'));
     }
 
     /**
@@ -111,7 +121,7 @@ class FjordInstall extends Command
 
             if ($str !== false) {
                 $str = str_replace('namespace App;', "namespace App\Models;", $str);
-                $str = str_replace("use Illuminate\Foundation\Auth\User as Authenticatable;", "use AwStudio\Fjord\Models\User as FjordUser;", $str);
+                $str = str_replace("use Illuminate\Foundation\Auth\User as Authenticatable;", "use AwStudio\Fjord\Fjord\Models\User as FjordUser;", $str);
                 $str = str_replace('extends Authenticatable', "extends FjordUser", $str);
 
 
@@ -134,25 +144,6 @@ class FjordInstall extends Command
             $str = file_get_contents($file);
             $str = str_replace('App\User', "App\Models\User", $str);
             file_put_contents($file, $str);
-        }
-    }
-
-    /**
-     * Append a route group containing the Fjord-Routes
-     * to the routes/web.php, if not present yet
-     *
-     * @param  Filesystem $filesystem
-     * @return void
-     */
-    private function handleFjordRoutes(Filesystem $filesystem)
-    {
-        $this->info('Adding Fjord routes to routes/web.php');
-        $routes_contents = $filesystem->get(base_path('routes/web.php'));
-        if (false === strpos($routes_contents, 'Fjord::routes()')) {
-            $filesystem->append(
-                base_path('routes/web.php'),
-                "\n\nRoute::group(['prefix' => 'admin'], function () {\n    Fjord::routes();\n});\n"
-            );
         }
     }
 
