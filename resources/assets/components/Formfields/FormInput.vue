@@ -1,17 +1,13 @@
 <template>
     <fj-form-item :field="field">
 
-
-        <textarea
+        <b-input
             class="form-control"
-            :id="field.id"
-            :rows="field.rows"
+            :value="model[`${field.id}Model`]"
             :placeholder="field.placeholder"
-            v-model="text"/>
-        </textarea>
+            @input="changed"/>
 
-
-        <fj-form-language :field="field"/>
+        <!--<fj-form-language :field="field"/>-->
 
         <slot />
 
@@ -20,7 +16,7 @@
 
 <script>
 export default {
-    name: 'FormTextarea',
+    name: 'FormInput',
     props: {
         field: {
             required: true,
@@ -31,15 +27,9 @@ export default {
             type: Object
         },
     },
-    data() {
-        return {text: ''}
-    },
-    beforeMount() {
-        this.text = this.model[`${this.field.id}Model`]
-    },
-    watch: {
-        text(val) {
-            this.model[`${this.field.id}Model`] = val
+    methods: {
+        changed(value) {
+            this.model[`${this.field.id}Model`] = value
             this.$emit('changed')
         }
     }

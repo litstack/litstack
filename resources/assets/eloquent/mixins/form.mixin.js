@@ -16,8 +16,8 @@ let FormMixin = Base =>
             this._setFormFields(this.attributes.form_fields);
 
             this.originalModels = {};
-            this._setOriginalModels();
-            Bus.$on('modelsSaved', this._setOriginalModels);
+            //this._setOriginalModels();
+            //Bus.$on('modelsSaved', this._setOriginalModels);
         }
 
         isFjordModel() {
@@ -25,6 +25,10 @@ let FormMixin = Base =>
                 'AwStudio\\Fjord\\Form\\Database\\FormField',
                 'AwStudio\\Fjord\\Form\\Database\\FormBlock'
             ].includes(this.model)
+        }
+
+        getOriginalModel(form_field) {
+            return this._getModel(this.startingAttributes, form_field.id)
         }
 
         _setOriginalModels() {
@@ -75,14 +79,14 @@ let FormMixin = Base =>
                 let id = prop.replace('Model', '');
 
                 if (this.formFieldExists(id)) {
-                    return this._getModel(id);
+                    return this._getModel(this.attributes, id);
                 }
             }
 
             return EloquentModel.prototype.get.call(this, target, prop);
         }
 
-        _getModel(id) {
+        _getModel(attributes, id) {
             let fallback_locale = store.state.config.fallback_locale;
             let lng = store.state.config.language;
             let form_field = this.getFormFieldById(id);
@@ -99,28 +103,29 @@ let FormMixin = Base =>
             if (form_field.translatable) {
                 // set not existing object keys
 
-                if (!this.attributes[lng]) {
-                    this.attributes[lng] = {};
+                if (!attributes[lng]) {
+                    attributes[lng] = {};
                 }
 
-                if (!(form_field.local_key in this.attributes[lng])) {
-                    this.attributes[lng][form_field.local_key] = null;
+                if (!(form_field.local_key in attributes[lng])) {
+                    attributes[lng][form_field.local_key] = null;
                 }
             }
 
             if (this.translatable) {
+
                 // set not existing object keys
                 if (
-                    !(fallback_locale in this.attributes) ||
-                    this.attributes[fallback_locale] === undefined
+                    !(fallback_locale in attributes) ||
+                    attributes[fallback_locale] === undefined
                 ) {
-                    this.attributes[fallback_locale] = {};
+                    attributes[fallback_locale] = {};
                 }
 
                 if (
-                    !(form_field.local_key in this.attributes[fallback_locale])
+                    !(form_field.local_key in attributes[fallback_locale])
                 ) {
-                    this.attributes[fallback_locale][
+                    attributes[fallback_locale][
                         form_field.local_key
                     ] = null;
                 }
@@ -130,23 +135,25 @@ let FormMixin = Base =>
             if (form_field.translatable) {
                 // ckeditor is not able to work with null values
                 if (
-                    this.attributes[lng][form_field.local_key] === null &&
+                    attributes[lng][form_field.local_key] === null &&
                     form_field.type == ('wysiwyg' || 'textarea')
                 ) {
-                    this.attributes[lng][form_field.local_key] = '';
+                    attributes[lng][form_field.local_key] = '';
                 }
-
-                return this.attributes[lng][form_field.local_key];
+                if(form_field.id == 'testtext') {
+                    console.log(attributes, lng, attributes[lng])
+                }
+                return attributes[lng][form_field.local_key];
             }
 
             // not translatable field but translatable model
             // using fallback_locale
             if (this.translatable && this.isFjordModel()) {
-                return this.attributes[fallback_locale][form_field.local_key];
+                return attributes[fallback_locale][form_field.local_key];
             }
 
             // not translatable model
-            return this.attributes[form_field.local_key];
+            return attributes[form_field.local_key];
         }
 
         hasFormFieldChanged(id) {

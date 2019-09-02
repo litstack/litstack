@@ -1,13 +1,13 @@
 <template>
     <fj-form-item :field="field">
-        
+
         <ckeditor
             :editor="editor"
             :config="editorConfig"
             :value="model[`${field.id}Model`]"
             @input="changed"/>
 
-        <fj-form-language :field="field"/>
+        <!--<fj-form-language :field="field"/>-->
 
         <slot />
 

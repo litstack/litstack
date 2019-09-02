@@ -1,11 +1,10 @@
 require('./bootstrap');
 
+import FjordApp from './FjordApp';
 import Navigation from './components/Partials/Navigation';
 import Notify from './components/Notify';
 
 import store from './store';
-
-import FjordApp from './FjordApp';
 
 const app = new Vue({
     el: '#app',

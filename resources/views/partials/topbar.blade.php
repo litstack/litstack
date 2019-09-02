@@ -3,19 +3,20 @@
         <a href="#" class="fjord-brand">
             <img src="{{asset('fjord/images/fjord-logo.png')}}" class="img-fluid" alt="">
         </a>
-        @guest
-        @else
-            <input class="form-control fjord-search" type="text" placeholder="Search everything">
-        @endguest
+        {{--
+        <input class="form-control fjord-search" type="text" placeholder="Search everything">
+        --}}
     </div>
 
     @guest
 
     @else
         <div>
+            {{--
             <a class="fjord-topbar_link mr-4" href="{{route('fjord.users')}}">
                 <i class="fas fa-user-friends"></i>
             </a>
+            --}}
             @foreach(fjord()->getNavigation('topbar') as $entry)
                 <a class="fjord-topbar_link mr-4" href="/{{ config('fjord.route_prefix') }}/{{ $entry['link'] }}">
                     {!! $entry['icon'] !!}

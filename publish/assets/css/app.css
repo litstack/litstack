@@ -1343,8 +1343,8 @@ div#app .fjord-dropzone__delete {
 }
 
 .fjord-form .ck.ck-editor {
-  width: calc(100% - 42px);
-  min-width: calc(100% - 42px);
+  width: calc(100%);
+  min-width: calc(100%);
 }
 
 .fjord-form .ck.ck-toolbar {
@@ -12527,4 +12527,3 @@ main .card {
   cursor: pointer;
   color: black;
 }
-

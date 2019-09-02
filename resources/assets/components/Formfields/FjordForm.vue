@@ -131,8 +131,7 @@ export default {
     },
     methods: {
         changed(field, model) {
-            console.log('yey', model[`${field.id}Model`], model, field);
-            if (model.originalModels[field.id] == model[`${field.id}Model`]) {
+            if (model.getOriginalModel(field) == model[`${field.id}Model`]) {
                 this.$store.commit('removeModelFromSave', {
                     model,
                     id: field.id

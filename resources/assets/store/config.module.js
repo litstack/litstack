@@ -44,7 +44,7 @@ export const mutations = {
         let slash = config.route_prefix.startsWith('/') ? '' : '/';
 
         state.baseURL = '' + slash + config.route_prefix + '/';
-
+        console.log(state)
         Bus.$emit('configSet', state.config);
     },
     ['setLanguages'](state, languages) {

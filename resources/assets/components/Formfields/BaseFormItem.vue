@@ -2,6 +2,11 @@
     <div class="pb-4 fjord-form">
         <h5 class="mb-0">
             <label :for="field.id">{{ field.title }}</label>
+            <b-badge
+                v-if="field.translatable"
+                variant="light">
+                <small>{{ lng }}</small>
+            </b-badge>
         </h5>
         <div :class="{'input-group': field.type != ('relation' || 'image' || 'block')}">
             <slot />
@@ -16,6 +21,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
     name: 'FormItem',
     props: {
@@ -28,6 +35,7 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(['lng']),
         length() {
             return this.field.model
                 ? this.field.model.length

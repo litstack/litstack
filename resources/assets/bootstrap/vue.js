@@ -41,6 +41,7 @@ export default function VueBootstrap() {
     Vue.component('fa-icon', FontAwesomeIcon)
 
     // Modules
+    Vue.use(Vuex)
     Vue.use(BootstrapVue)
     Vue.use(Notifications);
     Vue.use(VModal);

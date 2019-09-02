@@ -21,6 +21,10 @@ class FormRouteServiceProvider extends RouteServiceProvider
 
     public function map()
     {
+        if(! fjord()->installed()) {
+            return;
+        }
+
         $this->mapFormFieldRoutes();
         $this->mapFormRoutes();
         $this->mapCrudRoutes();

@@ -17,6 +17,7 @@ let TranslatableMixin = Base => class extends Base
         this.translatable = config.translatable
         this.translation = null
         this.translations = null
+        this.canSetKeys = []
 
         let self = this
         Bus.$on('languageChanged', () => {
@@ -66,6 +67,7 @@ let TranslatableMixin = Base => class extends Base
     }
 
     setCurrentLanguageAttributes() {
+
         let lng = store.state.config.language
 
         if(!(lng in this.attributes)) {
@@ -73,10 +75,6 @@ let TranslatableMixin = Base => class extends Base
         }
 
         for(let key in this.attributes[lng]) {
-            if(key in this.attributes) {
-                continue;
-            }
-
             this.attributes[key] = this.attributes[lng][key]
         }
     }

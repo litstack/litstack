@@ -4,6 +4,7 @@ namespace AwStudio\Fjord\Fjord;
 
 use AwStudio\Fjord\Models\Repeatable;
 use AwStudio\Fjord\Models\PageContent;
+use Schema;
 
 class Fjord
 {
@@ -26,5 +27,11 @@ class Fjord
     public function routes()
     {
         require fjord_path('routes/fjord.php');
+    }
+
+    public function installed()
+    {
+        return Schema::hasTable('form_fields')
+            && config()->has('fjord');
     }
 }

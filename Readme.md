@@ -296,3 +296,32 @@ For each repeatable you need to create a template in `resources/views/repeatable
 </div>
 <hr>
 ```
+
+## Extend Fjord Vue Application
+
+To use the npm fjord package you must install the local package that is located in the vendor folder:
+
+```
+npm i vendor/aw-studio/fjord
+```
+
+You can now extend the Fjord Vue Application:
+
+```javascript
+
+import Fjord from 'fjord'
+
+const store = {
+
+}
+
+const mixins = {
+
+}
+
+new Fjord({
+    store,
+    mixins
+})
+
+```

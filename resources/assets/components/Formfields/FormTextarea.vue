@@ -1,13 +1,15 @@
 <template>
     <fj-form-item :field="field">
 
-        <b-input
-            class="form-control"
-            :value="model[`${field.id}Model`]"
+        <b-form-textarea
+            v-model="model[`${field.id}Model`]"
             :placeholder="field.placeholder"
-            @input="changed"/>
+            :rows="field.rows"
+            :max-rows="field.max_rows"
+            @input="changed">
+        </b-form-textarea>
 
-        <fj-form-language :field="field"/>
+        <!--<fj-form-language :field="field"/>-->
 
         <slot />
 
@@ -16,7 +18,7 @@
 
 <script>
 export default {
-    name: 'FormInput',
+    name: 'FormTextarea',
     props: {
         field: {
             required: true,

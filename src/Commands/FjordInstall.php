@@ -45,6 +45,7 @@ class FjordInstall extends Command
         $this->handleUserModel();
         //$this->handleFjordRoutes($filesystem);
         $this->handleFjordPublishable();
+        
 
         $role = Role::firstOrCreate(['name' => 'admin']);
 
