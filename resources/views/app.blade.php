@@ -12,21 +12,32 @@
     <link href="{{ asset('fjord/css/app.css') }}?t={{ filemtime(public_path('fjord/css/app.css')) }}" rel="stylesheet">
 </head>
 
-<body>
+<body onload="makeVisible()">
     <div id="app">
         <header>
             @include('fjord::partials.topbar')
         </header>
         @include('fjord::partials.navigation')
         <main>
-            <div class="container">
+            <div class="container fjord-container">
                 @yield('content')
             </div>
+            <div id="fjord-spinner"
+            class="fjord-spinner d-flex justify-content-center align-items-center">
+                <div class="lds-ripple d-flex justify-content-center align-items-center"><div></div><div></div></div>
+            </div>
         </main>
+
         <notify />
     </div>
 
     <script src="{{ asset('fjord/js/app.js') }}?t={{ filemtime(public_path('fjord/js/app.js')) }}" defer></script>
+    <script type="text/javascript">
+        function makeVisible(){
+            var d = document.getElementById("fjord-spinner");
+            d.className += " loaded";
+        }
+    </script>
 </body>
 
 </html>

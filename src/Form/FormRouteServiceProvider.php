@@ -43,7 +43,7 @@ class FormRouteServiceProvider extends RouteServiceProvider
     protected function mapFormRoutes()
     {
         $collections = config('fjord.forms');
-        
+
         foreach($collections as $collectionName => $config) {
 
             $forms = Fjord::forms($collectionName);
