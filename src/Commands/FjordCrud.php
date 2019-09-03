@@ -78,7 +78,7 @@ class FjordCrud extends Command
         if($m) {
             $builder->withTraits("use Spatie\MediaLibrary\HasMedia\HasMedia;");
             $builder->withTraits("use Spatie\MediaLibrary\HasMedia\HasMediaTrait;");
-            
+
             $attributeContents = file_get_contents(fjord_path('stubs/CrudModelMediaAttribute.stub'));
             $builder->withGetAttributes($attributeContents);
 
@@ -170,6 +170,8 @@ class FjordCrud extends Command
     private function makeMigration($modelName, $s, $t, $so)
     {
         $tableName = Str::snake(Str::plural($modelName));
+        $translationTableName = Str::singular($tableName) . '_translations';
+
         $fileContents = file_get_contents(__DIR__.'/../../stubs/CrudMigration.stub');
 
         // model is translatable
@@ -177,7 +179,7 @@ class FjordCrud extends Command
             $translationContents = file_get_contents(__DIR__.'/../../stubs/CrudMigrationTranslation.stub');
             $fileContents = str_replace('DummyTranslation', $translationContents, $fileContents);
             $fileContents = str_replace('DummyDownTranslation', "Schema::dropIfExists('DummyTranslationTablename');", $fileContents);
-            $fileContents = str_replace('DummyTranslationTablename', $tableName . '_translations', $fileContents);
+            $fileContents = str_replace('DummyTranslationTablename', $translationTableName , $fileContents);
             $fileContents = str_replace('DummyForeignId', Str::singular($tableName) . '_id', $fileContents);
         }else{
             $fileContents = str_replace('DummyTranslation', '', $fileContents);

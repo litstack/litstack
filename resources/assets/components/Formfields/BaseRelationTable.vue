@@ -1,9 +1,8 @@
 <template>
-    <div>
+    <div class="fj-relation">
         <slot :items="tableItems">
             <b-table
                 v-bind:hover="select"
-                striped
                 :items="tableItems"
                 :thead-class="{'hidden-header': true}"
                 :tbody-class="select ? 'fj-select-table' : ''"
@@ -88,7 +87,19 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
+.fj-relation {
+    table.fj-relation-table{
+        tr:first-child{
+            td:first-child{
+                border-top-left-radius: 5px;
+            }
+            td:last-child{
+                border-top-right-radius: 5px;
+            }
+        }
+    }
+}
 .hidden-header {
   display: none;
 }

@@ -8,34 +8,47 @@
                 :items="relations"
                 :field="field"
                 :setItem="setItem"
-                :noHeader="true">
+                :noHeader="true"
+                :sortable="true">
 
                 <div slot-scope="{items}">
                     <b-table
                         outlined
-                        striped
+                        table-variant="light"
                         :items="items"
+                        :fields="fields"
                         thead-class="hidden-header"
-                        class="mb-0">
+                        class="mb-0 fj-relation-table">
+                        <template slot="table-colgroup" slot-scope="scope">
+                            <col
+                              v-for="field in scope.fields"
+                              :key="field.key"
+                              :style="{ width: field.key === 'drag' ? '10px' : '180px' }"
+                            >
+                          </template>
+                        <div slot="drag" slot-scope="{index}" class="text-right">
+                            DRAG
+                        </div>
 
                         <div slot="trash" slot-scope="{index}" class="text-right">
                             <a href="#" @click.prevent="removeRelation(index)" class="fj-trash text-muted">
                                 <fa-icon icon="trash"/>
                             </a>
                         </div>
-
                     </b-table>
                 </div>
 
             </fj-form-relation-table>
 
-        </b-card>
+            <b-button
+                class="mt-3"
+                variant="secondary"
+                size="sm"
+                v-b-modal="modalId">
+                {{ field.button }}
+            </b-button>
 
-        <b-button
-            variant="primary"
-            v-b-modal="modalId">
-            {{ field.button }}
-        </b-button>
+        </b-card>
 
         <slot />
 
@@ -88,8 +101,6 @@ export default {
         async removeRelation(index, $event) {
             this.relations.splice(index, 1)
 
-            console.log(index)
-
             axios.delete(`relations/${index}`)
 
             this.$notify({
@@ -101,19 +112,26 @@ export default {
             });
         },
         setItem(item, model) {
+            if(this.fields.length == 0) {
+                this.fields.push('drag')
+                for(let key in item) {
+                    this.fields.push(key)
+                }
+                this.fields.push('trash')
+            }
+            item.drag = model.id
             item.trash = model.id
-
             return item
         }
     },
     data() {
         return {
-            relations: []
+            relations: [],
+            fields: [],
         }
     },
     beforeMount() {
         let items = this.model[this.field.id] || []
-        console.log(items)
 
         for(let i=0;i<items.length;i++) {
             this.addRelation(items[i])

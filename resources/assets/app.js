@@ -6,9 +6,11 @@ import Notify from './components/Notify';
 
 import store from './store';
 
+store.createStore({})
+
 const app = new Vue({
     el: '#app',
-    store,
+    store: store.store,
     components: {
         FjordApp,
         Navigation,

@@ -4,10 +4,10 @@ return [
     [
         'translatable' => true,
         'type' => 'image',
-        'id' => 'image',
+        'id' => 'logo_image',
         'title' => 'Image',
-        'hint' => 'Post an epic image',
+        'hint' => 'Lorem ipsum',
         'width' => 12,
-        'maxFiles' => 3,
+        'maxFiles' => 1,
     ],
 ];
