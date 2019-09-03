@@ -3,7 +3,7 @@
         class="nav-{{str_replace('/', '-', $entry['link'])}}"
     @endisset
     @isset($entry['children'])
-        class="@foreach ($entry['children'] as $child)@isset($child['link']) nav-{{$child['link']}}@endisset @endforeach"
+        class="@foreach ($entry['children'] as $child)@isset($child['link']) nav-{{str_replace('/', '-', $child['link'])}}@endisset @endforeach"
     @endisset
     >
     @isset($entry['children'])

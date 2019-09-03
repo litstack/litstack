@@ -7,8 +7,7 @@
 </template>
 
 <script>
-
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'Navigation',
@@ -32,22 +31,48 @@ export default {
         }
     },
     mounted() {
+        let timer;
+
         let location = String(window.location.pathname)
             .replace(this.baseURL, '')
             .replace('/', '-')
             .replace('/', '-');
 
+        console.log(location);
+
         let item = $(`.nav-${location}`);
 
         item.addClass('fjord-navigation__is-active');
-        item.find($('ul')).toggle();
+        //item.find($('ul')).toggle();
 
-        $('.fjord-navigation__has-children').on('click', function() {
+        $('.fjord-navigation__has-children').on('mouseenter', function() {
+            clearInterval(timer);
             $(this)
                 .closest('li')
+                .addClass('active-parent')
                 .find('ul')
-                .slideToggle(100);
+                .slideDown(100)
+                .addClass('is-open');
         });
+
+        $('body').on('mouseleave', '.active-parent', function() {
+            $('.fjord-navigation__parent .is-open')
+                .removeClass('is-open')
+                .slideUp(100);
+        });
+
+        $('.fjord-navigation__parent').on('mouseleave', function() {
+            StartTimer();
+        });
+
+        function StartTimer() {
+            timer = setInterval(function() {
+                $('.fjord-navigation__parent .is-open')
+                    .removeClass('is-open')
+                    .slideUp(100);
+                clearInterval(timer);
+            }, 300);
+        }
     }
 };
 </script>
