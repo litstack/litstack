@@ -2,35 +2,34 @@
     <fj-form-item :field="field">
         <div class="fjord-block card no-fx">
             <div class="card-body">
-                <div class="row">
+
                     <draggable
                         v-model="sortableRepeatables"
                         @end="newOrder"
-                        handle=".fjord-draggable__dragbar"
-                        :class="`col-${field.block_width}`">
+                        handle=".fj-draggable__dragbar"
+                        tag="b-row">
 
-                        <div
-                            class="fjord-draggable"
-                            v-for="(repeatable, index) in sortableRepeatables"
-                            :key="repeatable.id">
+                            <b-col
+                                :cols="field.block_width"
+                                v-for="(repeatable, index) in sortableRepeatables"
+                                :key="repeatable.id">
 
-                            <div class="fjord-draggable__dragbar d-flex justify-content-center">
-                                <i class="fas fa-grip-horizontal text-muted"></i>
-                            </div>
+                                <div class="fjord-draggable">
+                                    <div class="fj-draggable__dragbar d-flex justify-content-center">
+                                        <i class="fas fa-grip-horizontal text-muted"></i>
+                                    </div>
 
-                            <fj-form :model="repeatable" />
+                                    <fj-form :model="repeatable" />
 
-                            <b-row>
-                                <b-col sm="12" class="text-center fj-trash text-muted">
-                                    <fa-icon icon="trash" @click="deleteRepeatable(repeatable)"/>
-                                </b-col>
-                            </b-row>
-
-                        </div>
+                                    <b-row>
+                                        <b-col sm="12" class="text-center fj-trash text-muted">
+                                            <fa-icon icon="trash" @click="deleteRepeatable(repeatable)"/>
+                                        </b-col>
+                                    </b-row>
+                                </div>
+                            </b-col>
 
                     </draggable>
-                </div>
-
 
                 <button
                     class="btn btn-secondary btn-sm mr-2"
@@ -126,6 +125,7 @@ export default {
                 model: 'AwStudio\\Fjord\\Form\\Database\\FormBlock',
                 order: this.sortableRepeatables.map(item => item.id)
             };
+
 
             await axios.put('order', payload)
 

@@ -17,6 +17,6 @@ class DummyClassname extends FjordModel DummyImplement
     DummyVars
 
     DummySluggable
-
+    
     DummyGetAttributes
 }

@@ -21,7 +21,8 @@ trait HasFormFields
 
         return $this->belongsToMany($related, 'form_relations', 'from_model_id', 'to_model_id', $this->getKeyName(), $instance->getKeyName())
             ->where('form_relations.from_model_type', get_class($this))
-            ->where('form_relations.to_model_type', $related);
+            ->where('form_relations.to_model_type', $related)
+            ->orderBy('form_relations.order_column');
     }
 
     public function getBlocks($form_field, $builder = false)

@@ -79,6 +79,7 @@ class FormRouteServiceProvider extends RouteServiceProvider
     {
         FjordRoute::put('/relation', FormRelationsController::class . "@updateHasOne")->name('relation.update');
         FjordRoute::post('/relations', FormRelationsController::class . "@index")->name('relations.index');
+        FjordRoute::put('/relations/order', FormRelationsController::class . "@order")->name('relations.order');
         FjordRoute::post('/relations/store', FormRelationsController::class . "@store")->name('relation.store');
         FjordRoute::delete('/relations/{index}', FormRelationsController::class . "@delete")->name('relation.delete');
     }

@@ -7,8 +7,6 @@
             :value="model[`${field.id}Model`]"
             @input="changed"/>
 
-        <!--<fj-form-language :field="field"/>-->
-
         <slot />
 
     </fj-form-item>

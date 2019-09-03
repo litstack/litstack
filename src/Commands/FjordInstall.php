@@ -47,9 +47,10 @@ class FjordInstall extends Command
         $this->handleFjordResources();
 
         $role = Role::firstOrCreate(['name' => 'admin']);
+        $role = Role::firstOrCreate(['name' => 'user']);
 
         $this->call('storage:link');
-        
+
         $this->info('installation complete - run fjord:admin to create an admin user');
     }
 
@@ -58,8 +59,7 @@ class FjordInstall extends Command
         if(is_dir(fjord_resource_path())) {
             return;
         }
-
-        File::copyDirectory(fjord_path('resources/fjord'), resource_path('fjord'));
+        File::copyDirectory(fjord_path('publish/fjord'), resource_path('fjord'));
     }
 
     /**
