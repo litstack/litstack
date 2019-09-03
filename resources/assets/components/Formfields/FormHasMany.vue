@@ -12,36 +12,54 @@
                 :sortable="true">
 
                 <div slot-scope="{items}">
-                    <b-table
-                        outlined
-                        table-variant="light"
-                        :items="items"
-                        :fields="fields"
-                        thead-class="hidden-header"
-                        class="mb-0 fj-relation-table">
-                        <template slot="table-colgroup" slot-scope="scope">
-                            <col
-                              v-for="field in scope.fields"
-                              :key="field.key"
-                              :style="{ width: field.key === 'drag' ? '10px' : '180px' }"
-                            >
-                          </template>
-                        <div slot="drag" slot-scope="{index}" class="text-right">
-                            DRAG
-                        </div>
 
-                        <div slot="trash" slot-scope="{index}" class="text-right">
-                            <a href="#" @click.prevent="removeRelation(index)" class="fj-trash text-muted">
-                                <fa-icon icon="trash"/>
-                            </a>
-                        </div>
-                    </b-table>
+                        <b-table-simple
+                            outlined
+                            table-variant="light">
+
+                            <colgroup>
+                                <col
+                                    v-for="key in fields"
+                                    :key="key"
+                                    :style="{ width: key == ('drag' || 'trash') ? '10px' : '100%' }"
+                                    />
+                            </colgroup>
+
+                            <draggable
+                                v-model="items"
+                                @end="newOrder(items)"
+                                tag="tbody"
+                                handle=".fj-draggable__dragbar">
+
+                                <b-tr v-for="(item, key) in items" :key="key">
+                                    <b-td
+                                        v-for="key in fields"
+                                        :key="key"
+                                        :class="key == 'drag' ? 'fj-draggable__dragbar' : ''"
+                                        >
+                                        <div v-if="key == 'drag'" class="text-center text-muted">
+                                            <fa-icon icon="grip-vertical"/>
+                                        </div>
+                                        <div v-else-if="key == 'trash'" class="text-center">
+                                            <a href="#" @click.prevent="removeRelation(item[key])" class="fj-trash text-muted">
+                                                <fa-icon icon="trash"/>
+                                            </a>
+                                        </div>
+                                        <div v-else>
+                                            {{ item[key] }}
+                                        </diV>
+                                    </b-td>
+                                </b-tr>
+
+                            </draggable>
+
+                        </b-table-simple>
+
                 </div>
 
             </fj-form-relation-table>
 
             <b-button
-                class="mt-3"
                 variant="secondary"
                 size="sm"
                 v-b-modal="modalId">
@@ -98,7 +116,10 @@ export default {
 
             //this.$bvModal.hide(this.modalId)
         },
-        async removeRelation(index, $event) {
+        async removeRelation(id, $event) {
+            let relation = this.relations.find(r => r.id == id)
+            let index = this.relations.indexOf(relation)
+
             this.relations.splice(index, 1)
 
             axios.delete(`relations/${index}`)
@@ -121,7 +142,40 @@ export default {
             }
             item.drag = model.id
             item.trash = model.id
+
             return item
+        },
+        async newOrder(items) {
+            let relations = []
+            let ids = []
+
+            let relation_type = {
+                from_model_type: this.model.model,
+                from_model_id: this.model.id,
+                to_model_type: this.field.model,
+            }
+            for(let i=0;i<items.length;i++) {
+                let item = items[i]
+                let relation = this.relations.find(r => r.id == item.drag)
+                relations.push(relation)
+                ids.push(relation.id)
+            }
+            this.relations = relations
+
+            let payload = {
+                data: relation_type,
+                ids
+            };
+
+            await axios.put('relations/order', payload)
+
+            this.$notify({
+                group: 'general',
+                type: 'aw-success',
+                title: this.field.title,
+                text: 'Changed order.',
+                duration: 1500
+            });
         }
     },
     data() {

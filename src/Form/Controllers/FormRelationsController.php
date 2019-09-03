@@ -44,4 +44,24 @@ class FormRelationsController extends FjordController
         $item = FormRelation::skip($index)->first();
         $item->delete();
     }
+
+    public function order(Request $request)
+    {
+        $data = $request->data;
+        $ids = $request->ids;
+
+        if(! $data || ! $ids) {
+            abort(404);
+        }
+
+        foreach($ids as $order => $id) {
+            $relation = FormRelation::where('from_model_type', $data['from_model_type'])
+                ->where('from_model_id', $data['from_model_id'])
+                ->where('to_model_type', $data['to_model_type'])
+                ->where('to_model_id', $id)
+                ->first();
+            $relation->order_column = $order;
+            $relation->save();
+        }
+    }
 }

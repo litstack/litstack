@@ -10,14 +10,13 @@ class FjordController extends Controller
     public function order(Request $request)
     {
         $model = $request->model;
-
-        $i = 1;
-        foreach ($request->order as $id) {
+        
+        foreach ($request->order as $order => $id) {
             $row = $model::findOrFail($id);
-            $row['order_column'] = $i;
+            $row['order_column'] = $order;
             $row->save();
-            $i++;
         }
+
         return $request->all();
     }
 }

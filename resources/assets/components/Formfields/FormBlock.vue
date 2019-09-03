@@ -6,7 +6,7 @@
                     <draggable
                         v-model="sortableRepeatables"
                         @end="newOrder"
-                        handle=".fjord-draggable__dragbar">
+                        handle=".fj-draggable__dragbar">
 
                         <div class="row">
                             <b-col
@@ -15,7 +15,7 @@
                                 :key="repeatable.id">
 
                                 <div class="fjord-draggable">
-                                    <div class="fjord-draggable__dragbar d-flex justify-content-center">
+                                    <div class="fj-draggable__dragbar d-flex justify-content-center">
                                         <i class="fas fa-grip-horizontal text-muted"></i>
                                     </div>
 
@@ -126,6 +126,7 @@ export default {
                 model: 'AwStudio\\Fjord\\Form\\Database\\FormBlock',
                 order: this.sortableRepeatables.map(item => item.id)
             };
+
 
             await axios.put('order', payload)
 

@@ -1,6 +1,6 @@
 <template>
     <div class="fj-relation">
-        <slot :items="tableItems">
+        <slot :items.sync="tableItems">
             <b-table
                 v-bind:hover="select"
                 :items="tableItems"
