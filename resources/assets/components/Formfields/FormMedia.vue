@@ -234,7 +234,7 @@ export default {
             this.update();
         },
         imgPath(image) {
-            return `/${image.id}/${image.file_name}`;
+            return `/storage/${image.id}/${image.file_name}`;
         },
         update() {
             /*
