@@ -118,7 +118,12 @@ class CrudController extends Controller
      */
     public function edit($id)
     {
-        $model = $this->model::with(['translations', 'media'])
+        $withs = ['media'];
+        if(is_translateable($this->model)) {
+            $withs []= 'translations';
+        }
+
+        $model = $this->model::with($withs)
             ->withRelation('blocks')
             ->withFormRelations()
             ->findOrFail($id)
