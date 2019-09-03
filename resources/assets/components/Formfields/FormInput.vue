@@ -7,8 +7,6 @@
             :placeholder="field.placeholder"
             @input="changed"/>
 
-        <!--<fj-form-language :field="field"/>-->
-
         <slot />
 
     </fj-form-item>

@@ -6,9 +6,9 @@
                     <draggable
                         v-model="sortableRepeatables"
                         @end="newOrder"
-                        handle=".fj-draggable__dragbar">
+                        handle=".fj-draggable__dragbar"
+                        tag="b-row">
 
-                        <div class="row">
                             <b-col
                                 :cols="field.block_width"
                                 v-for="(repeatable, index) in sortableRepeatables"
@@ -28,7 +28,6 @@
                                     </b-row>
                                 </div>
                             </b-col>
-                        </div>
 
                     </draggable>
 

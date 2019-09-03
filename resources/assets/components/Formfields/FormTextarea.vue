@@ -9,8 +9,6 @@
             @input="changed">
         </b-form-textarea>
 
-        <!--<fj-form-language :field="field"/>-->
-
         <slot />
 
     </fj-form-item>

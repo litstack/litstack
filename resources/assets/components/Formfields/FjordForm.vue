@@ -71,11 +71,6 @@
                 </template>
             </div>
         </template>
-        <div class="col-12">
-            <div class="d-flex justify-content-end">
-                <!-- TODO: DELETE OR SOMETHING-->
-            </div>
-        </div>
     </form>
 </template>
 
