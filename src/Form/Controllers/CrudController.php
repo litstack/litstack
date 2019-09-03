@@ -55,11 +55,18 @@ class CrudController extends Controller
      */
     public function index()
     {
-        $items = $this->model::with(['translations', 'media'])->eloquentJs('translatable', 'get');
-        $items['data']->map(function($item) {
-            return $item->append('translation');
-        });
+        $withs = ['media'];
+        if(is_translateable($this->model)) {
+            $withs []= 'translations';
+        }
 
+        $items = $this->model::with($withs)->eloquentJs('translatable', 'get');
+
+        if(is_translateable($this->model)) {
+            $items['data']->map(function($item) {
+                return $item->append('translation');
+            });
+        }
         /*
         get()->map(function($model) {
             return $model->append('translation');
@@ -118,7 +125,10 @@ class CrudController extends Controller
             ->setFormRelations()
             ->eloquentJs('fjord');
 
-        $model['data']->append('translation');
+        if(is_translateable($this->model)) {
+            $model['data']->append('translation');
+        }
+
         //dd($model['data']);
 
         return view('fjord::vue')->withComponent('crud-show')
