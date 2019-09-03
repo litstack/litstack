@@ -23,16 +23,14 @@
                             <b-button
                                 variant="outline-primary"
                                 :href="editLink(row.item.id)"
-                                v-if="hasAction('edit')"
-                            >
-                                <fa-icon icon="edit" /> edit
+                                v-if="hasAction('edit')">
+                                <fa-icon icon="edit" />
                             </b-button>
                             <b-button
                                 variant="outline-danger"
                                 @click="deleteItem(row.item)"
-                                v-if="hasAction('delete')"
-                            >
-                                <fa-icon icon="trash" /> delete
+                                v-if="hasAction('delete')">
+                                <fa-icon icon="trash" />
                             </b-button>
                         </b-button-group>
 
