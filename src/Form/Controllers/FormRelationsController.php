@@ -34,6 +34,18 @@ class FormRelationsController extends FjordController
 
     public function store(Request $request)
     {
+        $relation = FormRelation::where('from_model_type', $request->from_model_type)
+            ->where('from_model_id', $request->from_model_id)
+            ->where('to_model_type', $request->to_model_type)
+            ->where('to_model_id', $request->to_model_id)
+            ->exists();
+
+        if($relation) {
+            return response()->json([
+                'message' => 'You have already selected this item.'
+            ], 400);
+        }
+
         $data = FormRelation::create($request->all());
 
         return $data;

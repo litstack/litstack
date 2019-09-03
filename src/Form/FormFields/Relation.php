@@ -17,6 +17,7 @@ class Relation
 
     const DEFAULTS = [
         'many' => false,
+        'multiple_selection' => false
     ];
 
     public static function prepare($field, $path)

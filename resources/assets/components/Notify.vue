@@ -3,22 +3,29 @@
         <template slot="body" slot-scope="props">
             <div
                 :class="props.item.type"
-                class="fjord-notifications__wrapper card"
-            >
+                class="fjord-notifications__wrapper card">
                 <div class="d-flex">
                     <div class="fjord-notifications__icon align-self-center">
-                        <i
-                            class="far fa-grin-alt text-success"
-                            v-if="props.item.type == 'fjord-success'"
-                        ></i>
-                        <i
-                            class="far fa-angry text-danger"
-                            v-if="props.item.type == 'fjord-error'"
-                        ></i>
-                        <i
-                            class="far fa-meh-rolling-eyes"
-                            v-if="props.item.type == 'fjord-warning'"
-                        ></i>
+                        <fa-icon
+                            icon="check-circle"
+                            class="text-success"
+                            v-if="props.item.type == 'success'"/>
+                        <fa-icon
+                            icon="info-circle"
+                            class="text-info"
+                            v-if="props.item.type == 'info'"/>
+                        <fa-icon
+                            icon="exclamation-circle"
+                            class="text-warning"
+                            v-if="props.item.type == 'warning'"/>
+                        <fa-icon
+                            icon="times-circle"
+                            class="text-danger"
+                            v-if="props.item.type == 'danger'"/>
+                        <fa-icon
+                            icon="question-circle"
+                            class="text-light"
+                            v-if="props.item.type == 'question'"/>
                     </div>
                     <div class="fjord-notifications__body">
                         <h6 class="title pb-1 mb-0">

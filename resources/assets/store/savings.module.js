@@ -38,7 +38,7 @@ export const actions = {
 
         Vue.notify({
             group: 'general',
-            type: 'aw-success',
+            type: 'success',
             title: 'Saved successfully.',
             text: '',
             duration: 1500

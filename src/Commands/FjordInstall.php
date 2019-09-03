@@ -88,6 +88,18 @@ class FjordInstall extends Command
                 '--tag' => "migrations"
             ]);
         }
+        $this->call('vendor:publish', [
+            '--provider' => "Spatie\MediaLibrary\MediaLibraryServiceProvider",
+            '--tag' => "config"
+        ]);
+        $content = file_get_contents(config_path('mediaLibrary.php'));
+        $content = str_replace(
+            'Spatie\MediaLibrary\Models\Media::class',
+            'AwStudio\Fjord\Form\Database\Media::class',
+            $content
+        );
+        File::put(config_path('mediaLibrary.php'), $content);
+
 
         $this->call('vendor:publish', [
             '--provider' => "Spatie\Permission\PermissionServiceProvider",

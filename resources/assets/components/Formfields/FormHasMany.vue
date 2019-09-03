@@ -1,87 +1,79 @@
 <template>
-    <fj-form-item :field="field" v-if="model.id">
+    <fj-form-item :field="form_field" v-if="model.id">
 
         <b-card class="fjord-block no-fx mb-2">
 
-            <fj-form-relation-table
-                v-if="relations.length > 0"
-                :items="relations"
-                :field="field"
-                :setItem="setItem"
-                :noHeader="true"
-                :sortable="true">
+            <div>
 
-                <div slot-scope="{items}">
+                    <b-table-simple
+                        outlined
+                        table-variant="light">
 
-                        <b-table-simple
-                            outlined
-                            table-variant="light">
+                        <fj-colgroup
+                            :icons="['drag', 'trash']"
+                            :cols="fields"/>
 
-                            <colgroup>
-                                <col
-                                    v-for="key in fields"
-                                    :key="key"
-                                    :style="{ width: key == ('drag' || 'trash') ? '10px' : '100%' }"
-                                    />
-                            </colgroup>
+                        <draggable
+                            v-model="relations"
+                            @end="newOrder(relations)"
+                            tag="tbody"
+                            handle=".fj-draggable__dragbar">
 
-                            <draggable
-                                v-model="items"
-                                @end="newOrder(items)"
-                                tag="tbody"
-                                handle=".fj-draggable__dragbar">
+                            <b-tr v-for="(relation, rkey) in relations" :key="rkey">
+                                <b-td
+                                    style="vertical-align: middle;"
+                                    v-for="(field, key) in fields"
+                                    :key="`td-${key}`"
+                                    :class="field.key == 'drag' ? 'fj-draggable__dragbar' : ''">
+                                    <div v-if="field.key == 'drag'" class="text-center text-muted">
+                                        <fa-icon icon="grip-vertical"/>
+                                    </div>
+                                    <div v-else-if="field.key == 'trash'" class="text-center">
+                                        <a href="#" @click.prevent="removeRelation(relation.id)" class="fj-trash text-muted">
+                                            <fa-icon icon="trash"/>
+                                        </a>
+                                    </div>
+                                    <div v-else>
+                                        <fj-table-col :item="relation" :col="field"/>
+                                    </diV>
+                                </b-td>
+                            </b-tr>
 
-                                <b-tr v-for="(item, key) in items" :key="key">
-                                    <b-td
-                                        v-for="key in fields"
-                                        :key="key"
-                                        :class="key == 'drag' ? 'fj-draggable__dragbar' : ''"
-                                        >
-                                        <div v-if="key == 'drag'" class="text-center text-muted">
-                                            <fa-icon icon="grip-vertical"/>
-                                        </div>
-                                        <div v-else-if="key == 'trash'" class="text-center">
-                                            <a href="#" @click.prevent="removeRelation(item[key])" class="fj-trash text-muted">
-                                                <fa-icon icon="trash"/>
-                                            </a>
-                                        </div>
-                                        <div v-else>
-                                            {{ item[key] }}
-                                        </diV>
-                                    </b-td>
-                                </b-tr>
+                        </draggable>
 
-                            </draggable>
+                    </b-table-simple>
 
-                        </b-table-simple>
-
-                </div>
-
-            </fj-form-relation-table>
+            </div>
 
             <b-button
                 variant="secondary"
                 size="sm"
                 v-b-modal="modalId">
-                {{ field.button }}
+                {{ form_field.button }}
             </b-button>
 
         </b-card>
 
         <slot />
 
-        <fj-form-relation-modal :field="field" :model="model" @selected="selected"/>
+        <fj-form-relation-modal
+            :field="form_field"
+            :model="model"
+            :selectedModels="relations"
+            @selected="selected"
+            @remove="removeRelation"/>
 
     </fj-form-item>
 </template>
 
 <script>
 import TranslatableEloquent from './../../eloquent/translatable'
+import TableModel from './../../eloquent/table.model'
 
 export default {
     name: 'FormHasMany',
     props: {
-        field: {
+        form_field: {
             required: true,
             type: Object
         },
@@ -92,26 +84,36 @@ export default {
     },
     methods: {
         async addRelation(item) {
-            this.relations.push(new TranslatableEloquent(item))
+            this.relations.push(new TableModel(item))
         },
-        selected(item) {
-            this.addRelation(item.data)
+        async selected(item) {
 
             let payload = {
                 from_model_type: this.model.model,
                 from_model_id: this.model.id,
-                to_model_type: this.field.model,
+                to_model_type: this.form_field.model,
                 to_model_id: item.id
             }
 
-            axios.post('relations/store', payload)
+            try {
+                await axios.post('relations/store', payload)
+            } catch(e) {
+                this.$notify({
+                    group: 'general',
+                    type: 'warning',
+                    title: this.form_field.title,
+                    text: e.response.data.message,
+                });
+                return
+            }
+
+            this.relations.push(item)
 
             this.$notify({
                 group: 'general',
-                type: 'aw-success',
-                title: this.field.title,
-                text: `Added item to ${this.field.title}`,
-                duration: 1500
+                type: 'success',
+                title: this.form_field.title,
+                text: `Added item to ${this.form_field.title}`,
             });
 
             //this.$bvModal.hide(this.modalId)
@@ -126,56 +128,61 @@ export default {
 
             this.$notify({
                 group: 'general',
-                type: 'aw-success',
-                title: this.field.title,
-                text: `Removed item from ${this.field.title}`,
-                duration: 1500
+                type: 'success',
+                title: this.form_field.title,
+                text: `Removed item from ${this.form_field.title}`,
             });
         },
-        setItem(item, model) {
-            if(this.fields.length == 0) {
-                this.fields.push('drag')
-                for(let key in item) {
-                    this.fields.push(key)
-                }
-                this.fields.push('trash')
-            }
-            item.drag = model.id
-            item.trash = model.id
-
-            return item
-        },
-        async newOrder(items) {
-            let relations = []
+        async newOrder() {
             let ids = []
 
             let relation_type = {
                 from_model_type: this.model.model,
                 from_model_id: this.model.id,
-                to_model_type: this.field.model,
+                to_model_type: this.form_field.model,
             }
-            for(let i=0;i<items.length;i++) {
-                let item = items[i]
-                let relation = this.relations.find(r => r.id == item.drag)
-                relations.push(relation)
+            for(let i=0;i<this.relations.length;i++) {
+                let relation = this.relations[i]
                 ids.push(relation.id)
             }
-            this.relations = relations
 
             let payload = {
                 data: relation_type,
                 ids
             };
 
-            await axios.put('relations/order', payload)
+            let response = await axios.put('relations/order', payload)
 
             this.$notify({
                 group: 'general',
-                type: 'aw-success',
-                title: this.field.title,
+                type: 'success',
+                title: this.form_field.title,
                 text: 'Changed order.',
-                duration: 1500
             });
+        },
+        setFields() {
+            this.fields.push({key: 'drag'})
+            for(let i=0;i<this.form_field.preview.length;i++) {
+                let field = this.form_field.preview[i]
+
+                if(typeof field == typeof '') {
+                    field = {key: field}
+                }
+                this.fields.push(field)
+            }
+            this.fields.push({key: 'trash'})
+        },
+        colSize(field)
+        {
+            if(field.key == 'trash' || field.key == 'drag') {
+                return '10px'
+            }
+
+            if(field.type == 'image') {
+                return '40px'
+            }
+
+            return '100%'
         }
     },
     data() {
@@ -185,7 +192,9 @@ export default {
         }
     },
     beforeMount() {
-        let items = this.model[this.field.id] || []
+        this.setFields()
+
+        let items = this.model[this.form_field.id] || []
 
         for(let i=0;i<items.length;i++) {
             this.addRelation(items[i])
@@ -193,7 +202,7 @@ export default {
     },
     computed: {
         modalId() {
-            return `${this.model.route}-form-relation-table-${this.field.id}`
+            return `${this.model.route}-form-relation-table-${this.form_field.id}`
         },
     }
 };

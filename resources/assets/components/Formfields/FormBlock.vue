@@ -91,7 +91,7 @@ export default {
             this.sortableRepeatables.push(model)
             this.$notify({
                 group: 'general',
-                type: 'aw-success',
+                type: 'success',
                 title: this.field.title,
                 text: `Added new ${type} block.`,
                 duration: 1500
@@ -103,7 +103,7 @@ export default {
 
             this.$notify({
                 group: 'general',
-                type: 'aw-success',
+                type: 'success',
                 title: this.field.title,
                 text: 'Deleted block.',
                 duration: 1500
@@ -131,7 +131,7 @@ export default {
 
             this.$notify({
                 group: 'general',
-                type: 'aw-success',
+                type: 'success',
                 title: this.field.title,
                 text: 'Changed order.',
                 duration: 1500

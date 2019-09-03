@@ -87,7 +87,7 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
 
     public function registerMediaConversions(Media $media = null)
     {
-        foreach (config('fjord.mediaconversions.repeatables') as $key => $value) {
+        foreach (config('fjord.mediaconversions.default') as $key => $value) {
             $this->addMediaConversion($key)
                   ->width($value[0])
                   ->height($value[1])

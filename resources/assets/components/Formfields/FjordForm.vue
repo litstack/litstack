@@ -63,7 +63,7 @@
                 <template v-if="field.type == 'relation'">
                     <fj-form-has-many
                         v-if="field.many"
-                        :field="field"
+                        :form_field="field"
                         :model="m"
                     />
 

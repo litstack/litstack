@@ -62,7 +62,7 @@ export default {
 
             for(let i=0;i<this.field.preview.length;i++) {
                 let key = this.field.preview[i]
-                item[key] = model[key]
+                item[key] = model
             }
 
             if(this.setItem) {

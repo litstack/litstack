@@ -2,61 +2,65 @@
     <fj-form-item :field="field">
 
         <b-card class="fjord-block no-fx mb-2">
+            <b-table-simple
+                v-if="model[`${field.id}Model`]"
+                outlined
+                table-variant="light">
 
-            <fj-form-relation-table
-                v-if="relation"
-                :items="[relation]"
-                :field="field"
-                :setItem="setItem"
-                :noHeader="true">
+                <fj-colgroup
+                    :icons="['drag', 'trash']"
+                    :cols="cols"/>
 
-                <div
-                    class="fjord-draggable mb-0"
-                    slot-scope="{items}">
-
-                    <b-table
-                        borderless
-                        :items="items"
-                        :thead-class="'hidden-header'"
-                        class="mb-0">
-
-                        <div slot="trash" slot-scope="row" class="text-right">
-                            <a href="#" @click.prevent="removeRelation"><i class="far fa-times-circle"></i></a>
+                <b-tr>
+                    <b-td
+                        style="vertical-align: middle;"
+                        v-for="(col, key) in cols"
+                        :key="`td-${key}`"
+                        :class="col.key == 'drag' ? 'fj-draggable__dragbar' : ''">
+                        <div v-if="col.key == 'drag'" class="text-center text-muted">
+                            <fa-icon icon="grip-vertical"/>
                         </div>
-
-                    </b-table>
-                </div>
-
-            </fj-form-relation-table>
-
+                        <div v-else-if="col.key == 'trash'" class="text-center">
+                            <a href="#" @click.prevent="removeRelation(relation.id)" class="fj-trash text-muted">
+                                <fa-icon icon="trash"/>
+                            </a>
+                        </div>
+                        <div v-else>
+                            <fj-table-col :item="relation" :col="col"/>
+                        </diV>
+                    </b-td>
+                </b-tr>
+            </b-table-simple>
             <div v-else class="text-center">
-
                 <span class="text-muted">
                     No {{ field.title }} selected.
                 </span>
             </div>
 
+            <b-button
+                variant="secondary"
+                size="sm"
+                v-b-modal="modalId">
+                {{ field.button }}
+            </b-button>
+
         </b-card>
-
-
-        <b-button
-            variant="secondary"
-            size="sm"
-            v-b-modal="modalId">
-
-            <fa-icon icon="plus"/> {{ field.button }}
-
-        </b-button>
 
         <slot />
 
-        <fj-form-relation-modal :field="field" :model="model" @selected="selected"/>
+        <fj-form-relation-modal
+            :field="field"
+            :model="model"
+            :hasMany="false"
+            :selectedModels="[relation]"
+            @selected="selected"/>
 
     </fj-form-item>
 </template>
 
 <script>
 import TranslatableEloquent from './../../eloquent/translatable'
+import TableModel from './../../eloquent/table.model'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -71,11 +75,37 @@ export default {
             type: Object
         }
     },
+    data() {
+        return {
+            relation: {},
+            cols: [],
+        }
+    },
+    beforeMount() {
+        this.setCols()
+        let relation = this.model[this.field.id]
+
+        if(relation) {
+            this.relation = new TableModel(relation)
+        }
+    },
     methods: {
+        setCols() {
+            this.cols.push({key: 'drag'})
+            for(let i=0;i<this.field.preview.length;i++) {
+                let col = this.field.preview[i]
+
+                if(typeof col == typeof '') {
+                    col = {key: col}
+                }
+                this.cols.push(col)
+            }
+            this.cols.push({key: 'trash'})
+        },
         selected(item) {
             // TODO: remove save job if old one
             this.model[`${this.field.id}Model`] = item.data.id
-            this.model.attributes[this.field.id] = item.data
+            this.model.attributes[this.field.id] = item.attributes
 
             let job = {
                 route: 'relation',
@@ -110,13 +140,7 @@ export default {
         modalId() {
             return `${this.model.route}-form-relation-table-${this.field.id}`
         },
-        relation() {
-            console.log("ss", this.model.attributes)
-            let relation = this.model[this.field.id]
-            if(relation) {
-                return new TranslatableEloquent(relation)
-            }
-        },
+
     }
 };
 </script>

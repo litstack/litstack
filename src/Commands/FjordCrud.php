@@ -76,6 +76,7 @@ class FjordCrud extends Command
 
         // model has media
         if($m) {
+            $builder->withTraits("use Spatie\MediaLibrary\Models\Media;");
             $builder->withTraits("use Spatie\MediaLibrary\HasMedia\HasMedia;");
             $builder->withTraits("use Spatie\MediaLibrary\HasMedia\HasMediaTrait;");
 

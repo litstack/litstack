@@ -98,7 +98,7 @@ export default {
             item.delete();
             this.$notify({
                 group: 'general',
-                type: 'aw-success',
+                type: 'success',
                 title: `Deleted ${item.route}.`,
                 text: '',
                 duration: 1500

@@ -6,20 +6,40 @@
         :busy="true"
         :title="field.title">
 
-        <fj-form-relation-table
-            :items="items"
-            :field="field"
-            :select="true"
-            :busy="busy"
-            @selected="selected">
+        <b-table-simple
+            outlined
+            hover>
 
-        </fj-form-relation-table>
+            <fj-colgroup
+                :icons="['check']"
+                :cols="cols"/>
+
+            <tbody>
+                <b-tr
+                    v-for="(item, key) in items"
+                    :key="key" style="cursor:pointer;"
+                    @click="selected(item)">
+                    <b-td
+                        style="vertical-align: middle;"
+                        v-for="(col, ckey) in cols"
+                        :key="ckey"
+                        :class="col.key == 'drag' ? 'fj-draggable__dragbar' : ''">
+
+                        <b-radio v-if="col.key == 'check' && !hasMany" :selected="itemChecked(item)"/>
+                        <b-checkbox v-else-if="col.key == 'check' && hasMany" :checked="itemChecked(item)"/>
+                        <fj-table-col v-else :item="item" :col="col" />
+
+                    </b-td>
+                </b-tr>
+            </tbody>
+        </b-table-simple>
 
     </b-modal>
 </template>
 
 <script>
 import TranslatableEloquent from './../../eloquent/translatable'
+import TableModel from './../../eloquent/table.model'
 
 export default {
     name: 'FormRelationModal',
@@ -31,20 +51,50 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        hasMany: {
+            type: Boolean,
+            default: true
+        },
+        selectedModels: {
+            type: Array,
+            default: () => {return []}
         }
     },
     data() {
         return {
             busy: true,
+            cols: [],
             items: []
+        }
+    },
+    beforeMount() {
+        this.cols.push({key: 'check'})
+
+        for(let i=0;i<this.field.preview.length;i++) {
+            let col = this.field.preview[i]
+
+            if(typeof col == typeof '') {
+                col = {key: col}
+            }
+            this.cols.push(col)
         }
     },
     mounted() {
         this.loadRelations()
     },
     methods: {
+        itemChecked(item) {
+            return this.selectedModels.find(model => model.id == item.id)
+                ? true
+                : false
+        },
         selected(item) {
-            this.$emit('selected', item)
+            if(this.itemChecked(item)) {
+                this.$emit('remove', item.id)
+            } else {
+                this.$emit('selected', item)
+            }
         },
         async loadRelations() {
             this.busy = true
@@ -61,7 +111,7 @@ export default {
 
             let items = []
             for(let i=0;i<response.data.length;i++) {
-                items.push(new TranslatableEloquent(response.data[i]))
+                items.push(new TableModel(response.data[i]))
             }
             this.items = items
         }

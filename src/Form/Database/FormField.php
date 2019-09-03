@@ -11,6 +11,7 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use AwStudio\Fjord\EloquentJs\CanEloquentJs;
 use AwStudio\Fjord\Form\FormFieldCollection;
 use AwStudio\Fjord\Support\Facades\FormLoader;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class FormField extends Model implements HasMedia, TranslatableContract
 {
@@ -46,8 +47,10 @@ class FormField extends Model implements HasMedia, TranslatableContract
 
     public function form_field_relation()
     {
-        return $this->hasOne($this->form_field->model, 'id', 'value');
+        return (new Relations\EmptyRelation($this->form_field->query, $this))
+            ->where('id', $this->getTranslatedFormFieldValue($this->form_field));
     }
+
 
     public function media_relation()
     {
@@ -95,7 +98,7 @@ class FormField extends Model implements HasMedia, TranslatableContract
 
         return $getQuery
             ? $this->form_field_relation()
-            : $this->form_field_relation;
+            : $this->form_field_relation()->first();
     }
 
     public function getTranslatedFormFieldValue($form_field)
