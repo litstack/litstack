@@ -2,7 +2,7 @@
 
 return [
     'route_prefix' => 'main',
-    'fields' => [
+    'form_fields' => [
         [
             'translatable' => false,
             'id' => 'title',

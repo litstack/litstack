@@ -81,7 +81,7 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
     public function getFormFieldsAttribute()
     {
         $fields = clone FormLoader::loadFields($this->form_fields_path, $this);
-
+        
         return $this->getDynamicFieldValues($fields);
     }
 

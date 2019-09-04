@@ -3,7 +3,7 @@
 
 
 return [
-    'fields' => [
+    'form_fields' => [
         [
             'translatable' => true,
             'id' => 'h1',

@@ -58,7 +58,7 @@ class FormController extends Controller
 
         $page = require fjord_resource_path("{$collection}/{$form_name}.php");
 
-        foreach($form->fields as $key => $field) {
+        foreach($form->form_fields as $key => $field) {
 
             $formFields[$key] = FormField::firstOrCreate(
                 ['collection' => $collection, 'form_name' => $form_name, 'field_id' => $field->id],

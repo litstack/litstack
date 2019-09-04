@@ -168,19 +168,19 @@ class FormField extends Model implements HasMedia, TranslatableContract
 
         $form = FormLoader::load($this->form_fields_path, $this);
 
-        if(! property_exists($form, 'fields')) {
+        if(! property_exists($form, 'form_fields')) {
             return new FormFieldCollection([]);
         }
 
-        $fields = clone $form->fields;
+        $form_fields = clone $form->form_fields;
 
-        $fields = $fields->where('id', $this->attributes['field_id']);
+        $form_fields = $form_fields->where('id', $this->attributes['field_id']);
 
-        $fields = $this->getDynamicFieldValues($fields);
+        $form_fields = $this->getDynamicFieldValues($form_fields);
 
-        $fields->first()->local_key = 'value';
+        $form_fields->first()->local_key = 'value';
 
-        return $fields;
+        return $form_fields;
     }
 
     public function getAttribute($key)
