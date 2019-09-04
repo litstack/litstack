@@ -2,10 +2,13 @@
     <div>
         <b-row class="fjord-form">
             <b-col lg="12">
-                <b-card>
+                <b-card
+                    v-for="(ids, key) in formLayout"
+                    :key="key"
+                    class="mb-4">
                     <fj-form
-                        :model="formFields"
-                    />
+                        :ids="ids"
+                        :model="formFields"/>
                 </b-card>
             </b-col>
         </b-row>
@@ -21,6 +24,10 @@ export default {
         },
         pageName: {
             type: String,
+            required: true
+        },
+        formLayout: {
+            type: [Array, Object],
             required: true
         }
     },

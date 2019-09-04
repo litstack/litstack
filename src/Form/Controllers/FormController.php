@@ -24,17 +24,14 @@ class FormController extends Controller
     {
         [$collection, $form_name] = explode('.', str_replace('fjord.form.', '', Route::currentRouteName()));
 
-        $formFields = $this->getFormFields($collection, $form_name);
+        $formFieldInstance = new FormField();
+        $formFieldInstance->collection = $collection;
+        $formFieldInstance->form_name = $form_name;
 
-        /*
-        dd($formFields['data']
-            ->where('field_id', 'content_block')
-            ->first()
-            ->content_block
-            ->first()
-            ->toArray()
-        );
-        */
+        $this->formPath = $formFieldInstance->form_fields_path;
+        $this->form = FormLoader::load($this->formPath, new FormField());
+
+        $formFields = $this->getFormFields($collection, $form_name);
 
         return view('fjord::vue')->withComponent('form-show')
             ->withModels([
@@ -43,6 +40,7 @@ class FormController extends Controller
             ->withTitle(ucfirst($form_name))
             ->withProps([
                 'pageName' => $form_name,
+                'formLayout' => $this->form->layout,
             ]);
     }
 
@@ -50,15 +48,7 @@ class FormController extends Controller
     {
         $formFields = [];
 
-        $formFieldInstance = new FormField();
-        $formFieldInstance->collection = $collection;
-        $formFieldInstance->form_name = $form_name;
-
-        $form = FormLoader::load($formFieldInstance->form_fields_path, new FormField());
-
-        $page = require fjord_resource_path("{$collection}/{$form_name}.php");
-
-        foreach($form->form_fields as $key => $field) {
+        foreach($this->form->form_fields as $key => $field) {
 
             $formFields[$key] = FormField::firstOrCreate(
                 ['collection' => $collection, 'form_name' => $form_name, 'field_id' => $field->id],

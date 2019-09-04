@@ -67,11 +67,6 @@ class CrudController extends Controller
                 return $item->append('translation');
             });
         }
-        /*
-        get()->map(function($model) {
-            return $model->append('translation');
-        });
-        */
 
         return view('fjord::vue')->withComponent('crud-index')
                                 ->withTitle($this->titleSingular)

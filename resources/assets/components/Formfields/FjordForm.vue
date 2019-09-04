@@ -1,73 +1,74 @@
 <template>
-    <form class="row">
+    <form class="row" style="margin-bottom: -1.5em;">
         <template v-for="m in preparedModels">
             <div
                 :class="fieldWidth(field)"
-                v-for="(field, index) in m.form_fields"
-            >
-                <fj-form-input
-                    v-if="field.type == 'input'"
-                    :model="m"
-                    :field="field"
-                    @changed="changed(field, m)"
-                />
-
-                <fj-form-boolean
-                    v-if="field.type == 'boolean'"
-                    :model="m"
-                    :field="field"
-                    @changed="changed(field, m)"
-                />
-
-                <fj-form-select
-                    v-if="field.type == 'select'"
-                    :field="field"
-                    :model="m"
-                    @changed="changed(field, m)"
-                />
-
-                <fj-form-textarea
-                    v-if="field.type == 'textarea'"
-                    :field="field"
-                    :model="m"
-                    @changed="changed(field, m)"
-                />
-
-                <fj-form-wysiwyg
-                    v-if="field.type == 'wysiwyg'"
-                    :field="field"
-                    :model="m"
-                    @changed="changed(field, m)"
-                />
-
-                <fj-form-media
-                    v-if="field.type == 'image'"
-                    :field="field"
-                    :id="m.id"
-                    :model="m"
-                    :media="m[field.id]"
-                />
-
-                <fj-form-block
-                    v-if="field.type == 'block' && m.id"
-                    :field="field"
-                    :repeatables="m.relations[field.id]"
-                    :model="m"
-                    @newRepeatable="
-                        repeatable => {
-                            newRepeatable(m, repeatable);
-                        }
-                    "
-                />
-
-                <template v-if="field.type == 'relation'">
-                    <fj-form-has-many
-                        v-if="field.many"
-                        :form_field="field"
+                v-for="(field, index) in m.form_fields">
+                <template v-if="ids.length < 1 || ids.includes(field.id)">
+                    <fj-form-input
+                        v-if="field.type == 'input'"
                         :model="m"
+                        :field="field"
+                        @changed="changed(field, m)"
                     />
 
-                    <fj-form-has-one v-else :field="field" :model="m" />
+                    <fj-form-boolean
+                        v-if="field.type == 'boolean'"
+                        :model="m"
+                        :field="field"
+                        @changed="changed(field, m)"
+                    />
+
+                    <fj-form-select
+                        v-if="field.type == 'select'"
+                        :field="field"
+                        :model="m"
+                        @changed="changed(field, m)"
+                    />
+
+                    <fj-form-textarea
+                        v-if="field.type == 'textarea'"
+                        :field="field"
+                        :model="m"
+                        @changed="changed(field, m)"
+                    />
+
+                    <fj-form-wysiwyg
+                        v-if="field.type == 'wysiwyg'"
+                        :field="field"
+                        :model="m"
+                        @changed="changed(field, m)"
+                    />
+
+                    <fj-form-media
+                        v-if="field.type == 'image'"
+                        :field="field"
+                        :id="m.id"
+                        :model="m"
+                        :media="m[field.id]"
+                    />
+
+                    <fj-form-block
+                        v-if="field.type == 'block' && m.id"
+                        :field="field"
+                        :repeatables="m.relations[field.id]"
+                        :model="m"
+                        @newRepeatable="
+                            repeatable => {
+                                newRepeatable(m, repeatable);
+                            }
+                        "
+                    />
+
+                    <template v-if="field.type == 'relation'">
+                        <fj-form-has-many
+                            v-if="field.many"
+                            :form_field="field"
+                            :model="m"
+                        />
+
+                        <fj-form-has-one v-else :field="field" :model="m" />
+                    </template>
                 </template>
             </div>
         </template>
@@ -87,8 +88,16 @@ export default {
             type: Object,
             required: true
         },
+        /*
         repeatables: {
             type: Object
+        },
+        */
+        ids: {
+            type: Array,
+            default() {
+                return []
+            }
         }
     },
     computed: {

@@ -37,8 +37,43 @@ trait LoadForms
 
     protected function loadForm(array $form, $model)
     {
+        $form = $this->getFormLayout($form);
         $form['form_fields'] = $this->getFields($form['form_fields'] ?? [], $model);
 
         return $form;
+    }
+
+    protected function getFormLayout($form)
+    {
+        if(count($form['form_fields']) < 1) {
+            return $form;
+        }
+
+        $form_fields = [];
+
+        $form['layout'] = [];
+        foreach($form['form_fields'] as $array) {
+            if($this->isArrayFormField($array)) {
+                $form_fields [] = $array;
+                $form['layout'] []= $this->getFormLayoutIds([$array]);
+            } else {
+                $form_fields = array_merge($array, $form_fields);
+                $form['layout'] []= $this->getFormLayoutIds($array);
+            }
+        }
+
+        $form['form_fields'] = $form_fields;
+
+        return $form;
+    }
+
+    protected function getFormLayoutIds($form_fields)
+    {
+        return collect($form_fields)->pluck('id')->toArray();
+    }
+
+    protected function flattenFormFieldsArray($form_fields)
+    {
+
     }
 }
