@@ -134,9 +134,9 @@ trait HasFormFields
     {
         $form = FormLoader::load($this->form_fields_path, $this);
 
-        $fields = clone $form->fields;
+        $form_fields = clone $form->form_fields;
 
-        return $this->getDynamicFieldValues($fields);
+        return $this->getDynamicFieldValues($form_fields);
     }
 
     public function scopewithFormRelations($query)
