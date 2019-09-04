@@ -18,7 +18,7 @@
                             @end="newOrder(relations)"
                             tag="tbody"
                             handle=".fj-draggable__dragbar">
-
+                            
                             <b-tr v-for="(relation, rkey) in relations" :key="rkey">
                                 <b-td
                                     style="vertical-align: middle;"

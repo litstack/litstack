@@ -8,7 +8,6 @@
 
 @section('content')
     @php
-
         $fjProps = [
             'component' => $component,
             'props' => collect($props ?? []),

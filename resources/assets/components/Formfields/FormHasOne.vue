@@ -17,10 +17,7 @@
                         v-for="(col, key) in cols"
                         :key="`td-${key}`"
                         :class="col.key == 'drag' ? 'fj-draggable__dragbar' : ''">
-                        <div v-if="col.key == 'drag'" class="text-center text-muted">
-                            <fa-icon icon="grip-vertical"/>
-                        </div>
-                        <div v-else-if="col.key == 'trash'" class="text-center">
+                        <div v-if="col.key == 'trash'" class="text-center">
                             <a href="#" @click.prevent="removeRelation(relation.id)" class="fj-trash text-muted">
                                 <fa-icon icon="trash"/>
                             </a>
@@ -91,7 +88,6 @@ export default {
     },
     methods: {
         setCols() {
-            this.cols.push({key: 'drag'})
             for(let i=0;i<this.field.preview.length;i++) {
                 let col = this.field.preview[i]
 
@@ -103,19 +99,15 @@ export default {
             this.cols.push({key: 'trash'})
         },
         selected(item) {
+            console.log(item)
             // TODO: remove save job if old one
-            this.model[`${this.field.id}Model`] = item.data.id
-            this.model.attributes[this.field.id] = item.attributes
+            this.model[`${this.field.id}Model`] = item.id
+            this.relation = item
 
             let job = {
-                route: 'relation',
+                route: `${this.model.route}/${this.model.id}`,
                 method: 'put',
-                data: {
-                    model: this.model.model,
-                    id: this.model.id,
-                    key: this.field.local_key,
-                    value: item.data.id
-                }
+                data: this.model.attributes
             }
             this.$store.commit('addSaveJob', job)
 

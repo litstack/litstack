@@ -25,7 +25,10 @@
                         :key="ckey"
                         :class="col.key == 'drag' ? 'fj-draggable__dragbar' : ''">
 
-                        <b-radio v-if="col.key == 'check' && !hasMany" :selected="itemChecked(item)"/>
+                        <div class="custom-control custom-radio" v-if="col.key == 'check' && !hasMany">
+                            <input type="radio" autocomplete="off" class="custom-control-input" value="" :checked="itemChecked(item)">
+                            <label class="custom-control-label"></label>
+                        </div>
                         <b-checkbox v-else-if="col.key == 'check' && hasMany" :checked="itemChecked(item)"/>
                         <fj-table-col v-else :item="item" :col="col" />
 
@@ -90,7 +93,7 @@ export default {
                 : false
         },
         selected(item) {
-            if(this.itemChecked(item)) {
+            if(this.itemChecked(item) && this.hasMany) {
                 this.$emit('remove', item.id)
             } else {
                 this.$emit('selected', item)

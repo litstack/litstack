@@ -51,6 +51,7 @@ export default function VueBootstrap() {
 
     // prototypes
     Vue.prototype.$bus = Bus;
+
 }
 
 VueBootstrap()
