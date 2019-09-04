@@ -82,6 +82,40 @@
                 </div>
             </b-row>
         </div>
+        <b-modal
+            :id="`fjord-cropper-${field.id}`"
+            size="xl"
+            title="Crop Image"
+            :static="true"
+        >
+            <div class="row">
+                <div class="col-8">
+                    <div class="card no-fx">
+                        <div class="fjord-cropper__canvas-wrapper r4x3">
+                            <div class="fjord-cropper__canvas"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="r4x3">
+                        <div class="fjord-cropper__preview"></div>
+                    </div>
+                </div>
+            </div>
+            <div slot="modal-footer" class="w-100 d-flex justify-content-end">
+                <b-button id="cropper-cancel" variant="secondary" size="sm">
+                    Cancel
+                </b-button>
+                <b-button
+                    id="cropper-save"
+                    variant="primary"
+                    size="sm"
+                    class="ml-2"
+                >
+                    Save
+                </b-button>
+            </div>
+        </b-modal>
     </fj-form-item>
 </template>
 
@@ -116,10 +150,12 @@ export default {
         vueDropzone: vue2Dropzone
     },
     data() {
+        let self = this;
         return {
             images: [],
             dropzoneOptions: {
                 url: `${this.baseURL}media`,
+                transformFile: this.transformFile,
                 autoProcessQueue: true,
                 thumbnailWidth: 150,
                 maxFilesize: 20,
@@ -237,12 +273,6 @@ export default {
             return `/storage/${image.id}/${image.file_name}`;
         },
         update() {
-            /*
-            if (this.checkMaxFiles()) {
-                return;
-            }
-            */
-
             if (!this.id) {
                 return;
             }
@@ -253,8 +283,15 @@ export default {
                 .find('.dz-message')
                 .html('<i class="far fa-images"></i> drag and drop');
 
+            // Delete existing files
             this.dropzone.removeAllFiles();
+            // Cancel current uploads
+            this.dropzone.removeAllFiles(true);
+
             this.dropzone.enable();
+        },
+        clear() {
+            this.dropzone.removeAllFiles();
         },
         async destroy(id, index) {
             let response = await axios.delete(`media/${id}`);
@@ -268,6 +305,85 @@ export default {
             };
             axios.put('order', payload).then(response => {
                 console.log('Response: ', response.data);
+            });
+        },
+        transformFile(file, done) {
+            // If image doesn't require cropping, return bare image
+            //
+            //
+            if (!this.field.crop) {
+                done(file);
+                return;
+            }
+
+            // Set some constants
+            //
+            //
+            const DROPZONE = this.dropzone;
+            const CANVAS = $('.fjord-cropper__canvas');
+            let uploadable = true;
+
+            // Show the cropping modal
+            //
+            //
+            this.$bvModal.show(`fjord-cropper-${this.field.id}`);
+
+            // Create an image node for Cropper.js
+            //
+            //
+            var image = new Image();
+            image.src = URL.createObjectURL(file);
+            CANVAS.append(image);
+
+            // Create Cropper
+            //
+            //
+            var cropper = new Cropper(image, {
+                aspectRatio: this.field.ratio,
+                viewMode: 2,
+                preview: $(
+                    `#fjord-cropper-${this.field.id} .fjord-cropper__preview`
+                )[0]
+            });
+
+            // User Actions
+            //
+            //
+            $(document).keydown(e => {
+                if (e.keyCode == 27) {
+                    uploadable = false;
+                    this.dropzone.removeAllFiles();
+                    // Cancel current uploads
+                    this.dropzone.removeAllFiles(true);
+                    CANVAS.html('');
+                }
+            });
+
+            $('body').on('click', '#cropper-cancel', () => {
+                uploadable = false;
+                this.dropzone.removeAllFiles();
+                // Cancel current uploads
+                this.dropzone.removeAllFiles(true);
+                CANVAS.html('');
+                this.$bvModal.hide(`fjord-cropper-${this.field.id}`);
+            });
+
+            $('body').on('click', '#cropper-save', () => {
+                if (uploadable) {
+                    // Get the canvas with image data from Cropper.js
+                    var canvas = cropper.getCroppedCanvas({
+                        width: 1400,
+                        height: 1000
+                    });
+                    // Turn the canvas into a Blob (file object without a name)
+                    canvas.toBlob(function(blob) {
+                        console.log('uploading');
+                        done(blob);
+                    });
+                }
+
+                CANVAS.html('');
+                this.$bvModal.hide(`fjord-cropper-${this.field.id}`);
             });
         }
     }

@@ -2,7 +2,7 @@
 
 return [
     'model' => \App\Models\DummyClassname::class,
-    'fields' => [
+    'form_fields' => [
         /*
         [
             'type' => 'input',

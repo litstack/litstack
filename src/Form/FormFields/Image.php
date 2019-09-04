@@ -13,6 +13,8 @@ class Image
     ];
 
     const DEFAULTS = [
-        'maxFiles' => 10,
+        'maxFiles' => 1,
+        'crop' => false,
+        'ratio' => 4/3
     ];
 }

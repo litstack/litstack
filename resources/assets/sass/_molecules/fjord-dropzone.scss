@@ -18,16 +18,16 @@ div#app .fjord-dropzone {
 
     &.disabled,
     &.dz-max-files-reached {
-        opacity: 0.6;
-        background: #ddd;
-        cursor: not-allowed;
-        .dz-message {
-            display: block;
-            color: black;
-        }
-        .dz-preview {
-            display: none;
-        }
+        // opacity: 0.6;
+        // background: #ddd;
+        // cursor: not-allowed;
+        // .dz-message {
+        //     display: block;
+        //     color: black;
+        // }
+        // .dz-preview {
+        //     display: none;
+        // }
     }
 
     &__delete {
