@@ -18,7 +18,7 @@
                             @end="newOrder(relations)"
                             tag="tbody"
                             handle=".fj-draggable__dragbar">
-                            
+
                             <b-tr v-for="(relation, rkey) in relations" :key="rkey">
                                 <b-td
                                     style="vertical-align: middle;"
@@ -124,7 +124,14 @@ export default {
 
             this.relations.splice(index, 1)
 
-            axios.delete(`relations/${index}`)
+            let payload = {
+                from_model_type: this.model.model,
+                from_model_id: this.model.id,
+                to_model_type: this.form_field.model,
+                to_model_id: id
+            }
+
+            await axios.post(`relations/delete`, payload)
 
             this.$notify({
                 group: 'general',

@@ -2,7 +2,6 @@
 
 namespace AwStudio\Fjord\Form\Database\Traits;
 
-
 trait FormatFormFields
 {
     /**
@@ -13,10 +12,13 @@ trait FormatFormFields
     public function getFormattedFormFieldValue($form_field, $builder = false)
     {
         $value = $this->getTranslatedFormFieldValue($form_field);
+        $isJson = ($this->casts['value'] ?? null) == 'json';
 
         switch($form_field->type ?? null) {
             case 'relation':
-                return $this->getFormFieldRelation();
+                return $isJson
+                    ? $this->getFormFieldRelation($form_field, $builder)
+                    : $this->getFormFieldRelation($builder);
             case 'boolean':
                 return (bool) $value;
             case 'select':
