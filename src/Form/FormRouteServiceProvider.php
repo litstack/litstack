@@ -81,7 +81,7 @@ class FormRouteServiceProvider extends RouteServiceProvider
         FjordRoute::post('/relations', FormRelationsController::class . "@index")->name('relations.index');
         FjordRoute::put('/relations/order', FormRelationsController::class . "@order")->name('relations.order');
         FjordRoute::post('/relations/store', FormRelationsController::class . "@store")->name('relation.store');
-        FjordRoute::delete('/relations/{index}', FormRelationsController::class . "@delete")->name('relation.delete');
+        FjordRoute::post('/relations/delete', FormRelationsController::class . "@delete")->name('relation.delete');
     }
 
     protected function mapMediaRoutes()

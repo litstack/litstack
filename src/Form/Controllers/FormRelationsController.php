@@ -51,10 +51,13 @@ class FormRelationsController extends FjordController
         return $data;
     }
 
-    public function delete($index)
+    public function delete(Request $request)
     {
-        $item = FormRelation::skip($index)->first();
-        $item->delete();
+        FormRelation::where('from_model_type', $request->from_model_type)
+            ->where('from_model_id', $request->from_model_id)
+            ->where('to_model_type', $request->to_model_type)
+            ->where('to_model_id', $request->to_model_id)
+            ->delete();
     }
 
     public function order(Request $request)

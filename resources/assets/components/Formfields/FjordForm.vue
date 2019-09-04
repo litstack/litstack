@@ -64,10 +64,13 @@
                         <fj-form-has-many
                             v-if="field.many"
                             :form_field="field"
-                            :model="m"
-                        />
+                            :model="m"/>
 
-                        <fj-form-has-one v-else :field="field" :model="m" />
+                        <fj-form-has-one
+                            v-else
+                            :field="field"
+                            :model="m"
+                            @changed="changed(field, m)"/>
                     </template>
                 </template>
             </div>

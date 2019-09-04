@@ -88,7 +88,7 @@ export default {
     },
     methods: {
         itemChecked(item) {
-            return this.selectedModels.find(model => model.id == item.id)
+            return this.selectedModels.find(model => model ? model.id == item.id : false)
                 ? true
                 : false
         },
