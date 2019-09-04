@@ -26,15 +26,13 @@ class FormController extends Controller
 
         $formFields = $this->getFormFields($collection, $form_name);
 
-        /*
-        dd($formFields['data']
-            ->where('field_id', 'content_block')
-            ->first()
-            ->content_block
-            ->first()
-            ->toArray()
-        );
-        */
+        // dd($formFields['data']
+        //     ->where('field_id', 'preview_image')
+        //     ->first()
+        //     ->preview_image
+        //     ->first()
+        //     ->toArray()
+        // );
 
         return view('fjord::vue')->withComponent('form-show')
             ->withModels([
