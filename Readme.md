@@ -171,7 +171,7 @@ Start of by configuring a page in your `config.fjord-pages.php`
 return [
     'home' =>[
         'translatable' => true,
-        'fields' => [
+        'form_fields' => [
             [
                 'id' => 'h1',
                 'type' => 'input',

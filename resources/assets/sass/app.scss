@@ -1,6 +1,8 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500&display=swap');
 
+@import '~cropperjs/src/index';
+
 // Variables
 @import 'variables';
 
@@ -10,6 +12,7 @@
 @import '_atoms/fjord-search';
 @import '_atoms/fjord-draggable';
 @import '_atoms/fjord-container';
+@import '_atoms/fjord-spinner';
 
 // Molecules
 @import '_molecules/fjord-topbar';
@@ -21,6 +24,7 @@
 @import '_molecules/fjord-modal';
 @import '_molecules/fjord-pagecontrols';
 @import '_molecules/fjord-block';
+@import '_molecules/fjord-cropper';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
@@ -40,7 +44,7 @@ html {
         box-shadow: none !important;
     }
 }
-div#app header {
+div#app > header {
     position: fixed;
     top: 0;
     z-index: 99;
