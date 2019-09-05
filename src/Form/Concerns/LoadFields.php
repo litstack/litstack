@@ -3,7 +3,7 @@
 namespace AwStudio\Fjord\Form\Concerns;
 
 use AwStudio\Fjord\Form\FormField;
-use AwStudio\Fjord\Form\FormFieldCollection;
+use AwStudio\Fjord\Support\NestedCollection;
 use Illuminate\Support\Facades\Schema;
 use Exception;
 
@@ -51,7 +51,7 @@ trait LoadFields
 
         }
 
-        return new FormFieldCollection($fields);
+        return new NestedCollection($fields);
     }
 
     protected function setFormFieldDefaults($field, $model, $location)
@@ -103,7 +103,7 @@ trait LoadFields
 
     protected function isFieldTranslatable($field, $model)
     {
-        if(! is_translateable($model)) {
+        if(! is_translatable($model)) {
             return false;
         }
 
@@ -114,8 +114,5 @@ trait LoadFields
         return in_array($field->id ,$tableCols);
     }
 
-    protected function isArrayFormField($array)
-    {
-        return array_key_exists('type', $array) ? true : false;
-    }
+
 }

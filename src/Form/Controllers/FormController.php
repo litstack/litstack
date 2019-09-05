@@ -3,6 +3,7 @@
 namespace AwStudio\Fjord\Form\Controllers;
 
 use AwStudio\Fjord\Support\Facades\FormLoader;
+use AwStudio\Fjord\Form\FormFieldCollection;
 use AwStudio\Fjord\Form\Database\FormField;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
@@ -22,25 +23,23 @@ class FormController extends Controller
 
     public function show(Request $request)
     {
-        [$collection, $form_name] = explode('.', str_replace('fjord.form.', '', Route::currentRouteName()));
+        [$collection, $formName] = explode('.', str_replace('fjord.form.', '', Route::currentRouteName()));
 
-        $formFieldInstance = new FormField();
-        $formFieldInstance->collection = $collection;
-        $formFieldInstance->form_name = $form_name;
+        $this->setForm($collection, $formName);
 
-        $this->formPath = $formFieldInstance->form_fields_path;
-        $this->form = FormLoader::load($this->formPath, new FormField());
+        $eloquentFormFields = $this->getFormFields($collection, $formName);
 
-        $formFields = $this->getFormFields($collection, $form_name);
+        $this->form->setPreviewRoute(
+            new FormFieldCollection($eloquentFormFields['data'])
+        );
 
-        return view('fjord::vue')->withComponent('form-show')
+        return view('fjord::vue')->withComponent('crud-show')
             ->withModels([
-                'formFields' => $formFields
+                'model' => $eloquentFormFields
             ])
-            ->withTitle(ucfirst($form_name))
+            ->withTitle($this->form->title)
             ->withProps([
-                'pageName' => $form_name,
-                'formLayout' => $this->form->layout,
+                'formConfig' => $this->form->toArray(),
             ]);
     }
 
@@ -70,5 +69,15 @@ class FormController extends Controller
         }
 
         return eloquentJs(collect($formFields), FormField::class);
+    }
+
+    protected function setForm($collection, $formName)
+    {
+        $formFieldInstance = new FormField();
+        $formFieldInstance->collection = $collection;
+        $formFieldInstance->form_name = $formName;
+
+        $this->formPath = $formFieldInstance->form_fields_path;
+        $this->form = FormLoader::load($this->formPath, FormField::class);
     }
 }

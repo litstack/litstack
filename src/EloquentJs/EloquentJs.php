@@ -74,7 +74,7 @@ class EloquentJs
             'fillable' => $this->getFillables(),
             'relations' => $this->relations,
             'data' => $this->model,
-            'translatable' => is_translateable($this->infoModel),
+            'translatable' => is_translatable($this->infoModel),
             'model' => get_class($this->infoModel),
             'route' => $this->infoModel->getTable()
         ]);
@@ -82,7 +82,7 @@ class EloquentJs
 
     public function getFillables()
     {
-        if(! is_translateable($this->infoModel)) {
+        if(! is_translatable($this->infoModel)) {
             return $this->getFillablesFromModel($this->infoModel);
         }
         $modelName = $this->infoModel->getTranslationModelName();

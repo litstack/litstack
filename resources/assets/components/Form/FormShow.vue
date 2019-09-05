@@ -3,7 +3,7 @@
         <b-row class="fjord-form">
             <b-col lg="12">
                 <b-card
-                    v-for="(ids, key) in formLayout"
+                    v-for="(ids, key) in formConfig.layout"
                     :key="key"
                     class="mb-4">
                     <fj-form
@@ -22,11 +22,7 @@ export default {
         models: {
             type: Object
         },
-        pageName: {
-            type: String,
-            required: true
-        },
-        formLayout: {
+        formConfig: {
             type: [Array, Object],
             required: true
         }

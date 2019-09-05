@@ -1,17 +1,34 @@
 <template>
-    <div>
-        <fj-site-nav :route="model.route" />
+    <b-row>
+        <fj-site-nav :route="model.route">
+            <template slot="actions" class="text-secondary">
 
-        <div class="row fjord-form">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <fj-form :model="model" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                <span class="action" v-b-modal.fj-page-preview v-if="formConfig.preview_route">
+                    <fa-icon icon="eye"/> Preview
+                </span>
+
+            </template>
+        </fj-site-nav>
+
+        <b-col cols="12" md="9" order-md="1">
+            <b-row class="fjord-form">
+                <b-col cols="12">
+                    <b-card
+                        v-for="(ids, key) in formConfig.layout"
+                        :key="key"
+                        class="mb-4">
+                        <fj-form
+                            :ids="ids"
+                            :model="model"/>
+                    </b-card>
+                </b-col>
+            </b-row>
+        </b-col>
+
+        <fj-controlls/>
+
+        <fj-page-preview :route="formConfig.preview_route" v-if="formConfig.preview_route"/>
+    </b-row>
 </template>
 
 <script>
@@ -20,6 +37,10 @@ export default {
     props: {
         models: {
             type: Object
+        },
+        formConfig: {
+            type: [Array, Object],
+            required: true
         }
     },
     data() {

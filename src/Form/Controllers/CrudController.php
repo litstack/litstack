@@ -5,6 +5,7 @@ namespace AwStudio\Fjord\Form\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use AwStudio\Fjord\Models\ModelContent;
+use AwStudio\Fjord\Support\Facades\FormLoader;
 
 class CrudController extends Controller
 {
@@ -55,24 +56,22 @@ class CrudController extends Controller
      */
     public function index()
     {
-        $withs = ['media'];
-        if(is_translateable($this->model)) {
-            $withs []= 'translations';
-        }
+        $items = $this->model::with($this->getWiths())->eloquentJs('translatable', 'get');
 
-        $items = $this->model::with($withs)->eloquentJs('translatable', 'get');
-
-        if(is_translateable($this->model)) {
+        if(is_translatable($this->model)) {
             $items['data']->map(function($item) {
                 return $item->append('translation');
             });
         }
-
+        
         return view('fjord::vue')->withComponent('crud-index')
-                                ->withTitle($this->titleSingular)
-                                ->withModels([
-                                    'items' => $items,
-                                ]);
+            ->withTitle($this->titleSingular)
+            ->withModels([
+                'items' => $items,
+            ])
+            ->withProps([
+                'formConfig' => $this->getForm()
+            ]);
     }
 
     /**
@@ -89,7 +88,10 @@ class CrudController extends Controller
              ->withTitle('edit ' . $this->titleSingular)
              ->withModels([
                  'model' => $model->eloquentJs('fjord'),
-             ]);
+             ])
+             ->withProps([
+                 'formConfig' => $this->getForm($model)
+             ]);;
      }
 
     /**
@@ -113,31 +115,27 @@ class CrudController extends Controller
      */
     public function edit($id)
     {
-        $withs = ['media'];
-        if(is_translateable($this->model)) {
-            $withs []= 'translations';
-        }
-
-        $model = $this->model::with($withs)
+        $eloquentModel = $this->model::with($this->getWiths())
             ->withRelation('blocks')
             ->withFormRelations()
             ->findOrFail($id)
             ->setFormRelations()
             ->eloquentJs('fjord');
 
-        if(is_translateable($this->model)) {
-            $model['data']->append('translation');
+        if(is_translatable($this->model)) {
+            $eloquentModel['data']->append('translation');
         }
 
-        //dd($model['data']);
+        $form = $this->getForm($eloquentModel['data']);
+        $form->setPreviewRoute($eloquentModel['data']);
 
         return view('fjord::vue')->withComponent('crud-show')
             ->withTitle('edit ' . $this->titleSingular)
             ->withModels([
-                'model' => $model,
+                'model' => $eloquentModel,
             ])
             ->withProps([
-                't' => 's'
+                'formConfig' => $form->toArray()
             ]);
     }
 
@@ -150,8 +148,12 @@ class CrudController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $item = $this->model::findOrFail($id);
+        $item = $this->model::with($this->getWiths())->findOrFail($id);
         $item->update($request->all());
+
+        if(is_translatable($this->model)) {
+            $item->append('translation');
+        }
 
         return $item;
     }
@@ -166,6 +168,24 @@ class CrudController extends Controller
     {
         $item = $this->model::findOrFail($id);
         $item->delete();
+    }
+
+    protected function getForm($model = null)
+    {
+        if(! $model) {
+            $model = with(new $this->model);
+        }
+        return FormLoader::load($model->form_fields_path, $this->model);
+    }
+
+    protected function getWiths()
+    {
+        $withs = ['media'];
+        if(is_translatable($this->model)) {
+            $withs []= 'translations';
+        }
+
+        return $withs;
     }
 
 }

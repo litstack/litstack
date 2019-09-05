@@ -1,18 +1,24 @@
 <template>
-    <div class="row">
-        <div class="col-12 d-flex justify-content-end">
-            <slot>
-                <a
-                    v-if="route"
-                    :href="`${baseURL}${route}`"
-                    class="btn btn-sm btn-primary add-button"
-                >
-                    <i class="fas fa-angle-left"></i> back
-                </a>
+    <div class="col-12 mb-4">
+        <b-row>
+            <b-col cols="9" class="d-flex justify-content-between">
+                <div class="text-secondary fj-site-nav-actions">
+                    <slot name="actions"/>
+                </div>
 
-                <slot name="actions" />
-            </slot>
-        </div>
+
+                <slot>
+                    <a
+                        v-if="route"
+                        :href="`${baseURL}${route}`"
+                        class="btn btn-sm btn-primary">
+                        <i class="fas fa-angle-left"></i> back
+                    </a>
+
+                </slot>
+            </b-col>
+        </b-row>
+
     </div>
 </template>
 
@@ -33,4 +39,13 @@ export default {
 };
 </script>
 
-<style lang="css"></style>
+<style lang="scss">
+.fj-site-nav-actions{
+    .action{
+        cursor: pointer;
+        &:hover{
+            color: black;
+        }
+    }
+}
+</style>

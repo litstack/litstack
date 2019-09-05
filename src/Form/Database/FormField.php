@@ -9,7 +9,7 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Astrotomic\Translatable\Translatable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use AwStudio\Fjord\EloquentJs\CanEloquentJs;
-use AwStudio\Fjord\Form\FormFieldCollection;
+use AwStudio\Fjord\Support\NestedCollection;
 use AwStudio\Fjord\Support\Facades\FormLoader;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
@@ -163,13 +163,13 @@ class FormField extends Model implements HasMedia, TranslatableContract
     public function getFormFieldsAttribute()
     {
         if(! array_key_exists('field_id', $this->attributes)) {
-            return new FormFieldCollection([]);
+            return new NestedCollection([]);
         }
 
         $form = FormLoader::load($this->form_fields_path, $this);
 
         if(! property_exists($form, 'form_fields')) {
-            return new FormFieldCollection([]);
+            return new NestedCollection([]);
         }
 
         $form_fields = clone $form->form_fields;

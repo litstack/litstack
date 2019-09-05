@@ -2,10 +2,12 @@
 
 namespace AwStudio\Fjord\Form\Concerns;
 
-use AwStudio\Fjord\Form\FormField;
-use AwStudio\Fjord\Form\FormFieldCollection;
-use Illuminate\Support\Facades\Schema;
 use Exception;
+use AwStudio\Fjord\Form\Form;
+use AwStudio\Fjord\Form\FormField;
+use AwStudio\Fjord\Form\CrudForm;
+use AwStudio\Fjord\Support\NestedCollection;
+use Illuminate\Support\Facades\Schema;
 
 trait LoadForms
 {
@@ -14,7 +16,7 @@ trait LoadForms
     protected $currentPath;
 
     /**
-     * Load form for a crud or a form like pages or settings.
+     * Load crud form array from path.
      */
     public function load($path, $model)
     {
@@ -28,7 +30,7 @@ trait LoadForms
             return (object) [];
         }
 
-        $form = $this->loadForm(require $path, $model);
+        $form = new CrudForm($path, $model);
 
         $this->forms[$path] = (object) $form;
 
@@ -38,7 +40,21 @@ trait LoadForms
     protected function loadForm(array $form, $model)
     {
         $form = $this->getFormLayout($form);
+        $form = $this->getPreviewRoute($form, $model);
         $form['form_fields'] = $this->getFields($form['form_fields'] ?? [], $model);
+
+        return $form;
+    }
+
+    protected function getPreviewRoute($form, $model)
+    {
+        if(! array_key_exists('preview_route', $form)) {
+            return $form;
+        }
+
+        if(is_callable($form['preview_route'])) {
+            $form['preview_route'] = $form['preview_route']($model);
+        }
 
         return $form;
     }

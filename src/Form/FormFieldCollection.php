@@ -7,40 +7,62 @@ use Illuminate\Support\Collection;
 class FormFieldCollection extends Collection
 {
     /**
-     * Works also for nested Collections.
+     * The \AwStudio\Fjord\Form\FormField::class items contained in the collection.
+     *
+     * @var array
      */
-    public function toArray()
+    protected $items = [];
+
+    /**
+     * Get collection groups in this FormFieldCollection.
+     *
+     * @return array
+     */
+    public function getCollections()
     {
-        $array = parent::toArray();
-
-        $array = $this->getArrays($array);
-
-        return $array;
+        return $this->groupBy('collection')->keys()->toArray();
     }
 
-    protected function getArrays($array) {
-
-        if(! is_array($array)) {
-            return $this->compileValue($array);
-        }
-
-        foreach($array as $key => $value) {
-            $array[$key] = $this->getArrays($value);
-        }
-
-        return $array;
+    /**
+     * Get form_name groups in this FormFieldCollection.
+     *
+     * @return array
+     */
+    public function getNames()
+    {
+        return $this->groupBy('form_name')->keys()->toArray();
     }
 
-    protected function compileValue($value)
+    public function hasMultipleCollections()
     {
-        if(gettype($value) != gettype((object) [])) {
-            return $value;
+        return $this->groupBy('collection')->keys()->count() > 1;
+    }
+
+    public function hasMultipleNames()
+    {
+        return $this->groupBy('form_name')->keys()->count() > 1;
+    }
+
+    public function getAttribute($key)
+    {
+        // Return values for array key if items is not a list.
+        // This returns FormFields models
+        if(array_key_exists($key, $this->items)) {
+            return $this->items[$key];
         }
 
-        if(! method_exists($value, 'toArray')) {
-            return $value;
+        //
+        $form_field = $this->where('field_id', $key)->first();
+
+        if(! $form_field) {
+            return;
         }
 
-        return $this->getArrays($value->toArray());
+        return $form_field->getFormattedFormFieldValue($form_field->form_field);
+    }
+
+    public function __get($key)
+    {
+        return $this->getAttribute($key);
     }
 }
