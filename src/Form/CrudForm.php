@@ -2,6 +2,7 @@
 
 namespace AwStudio\Fjord\Form;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use AwStudio\Fjord\Support\Facades\FormLoader;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -12,7 +13,10 @@ class CrudForm
         'form_fields' => [],
         'layout' => [],
         'preview_route' => null,
-        'title' => null
+        'names' => [],
+        'back_route' => null,
+        'back_text' => null,
+        'index' => []
     ];
 
     protected $path;
@@ -65,22 +69,74 @@ class CrudForm
         $this->setModel();
         $this->setLayout();
         $this->setFormFields();
-        $this->setTitle();
+        $this->setNames();
+        $this->setBackRoute();
+        $this->setIndex();
     }
 
-    protected function setTitle()
+    protected function setIndex()
     {
-        if($this->attributes['title']) {
-            return;
+        $index = $this->attributes['index'];
+
+        $index['search'] = $this->getSearch($index);
+
+
+        $this->attributes['index'] = $index;
+    }
+
+    protected function getSearch($index)
+    {
+        if(! array_key_exists('search', $index)) {
+            return $this->modelInstance->getFillable();
         }
 
-        $words = explode('_', str_replace('.php', '', basename($this->path)));
+        if(! is_array($index['search'])) {
+            return $this->compileSearchKey($index['search']);
+        }
 
+        $keys = [];
+        foreach($index['search'] as $key) {
+            $keys []= $this->compileSearchKey($key);
+        }
+
+        return $keys;
+    }
+
+    protected function compileSearchKey($key)
+    {
+        if(in_array($key, $this->modelInstance->translatedAttributes)) {
+            return 'translations.' . $key;
+        }
+
+
+    }
+
+    protected function setNames()
+    {
+        $names = ['title' => ['singular' => '', 'plural' => '']];
+
+        $table = $this->modelInstance->getTable();
+        $singular = Str::singular(Str::snake($this->getName()));
+        $plural = Str::plural($singular);
+
+        $words = explode('_', $singular);
         foreach($words as $key => $word) {
-            $words[$key] = ucfirst($word);
+            $names['title']['singular'] .= ucfirst($word);
         }
 
-        $this->attributes['title'] = implode(' ', $words);
+        $words = explode('_', $plural);
+        foreach($words as $key => $word) {
+            $names['title']['plural'] .= ucfirst($word);
+        }
+
+        $names['table'] = $table;
+
+        $this->attributes['names'] = $names;
+    }
+
+    protected function getName()
+    {
+        return str_replace('.php', '', last(explode('/', $this->path)));
     }
 
     protected function setModel()
@@ -119,6 +175,26 @@ class CrudForm
         $this->attributes['form_fields'] = $formFields;
     }
 
+    protected function setBackRoute()
+    {
+        if($this->isFjordModel()) {
+            return;
+        }
+
+        $this->attributes['back_route'] = $this->modelInstance->getTable();
+
+        $this->setBackText();
+    }
+
+    protected function setBackText()
+    {
+        if($this->attributes['back_text']) {
+            return;
+        }
+
+        $this->attributes['back_text'] = $this->attributes['names']['title']['plural'];
+    }
+
     public function setPreviewRoute($model)
     {
         $route = $this->attributes['preview_route'];
@@ -151,6 +227,11 @@ class CrudForm
         }
 
         $this->attributes['preview_route'] = $route;
+    }
+
+    protected function isFjordModel()
+    {
+        return $this->model == Database\FormField::class;
     }
 
     protected function getFormLayoutIds($formFields)

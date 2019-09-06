@@ -5,7 +5,6 @@ import Vuex from 'vuex'
 import Bus from './../common/event.bus'
 import Fjord from './../common/fjord'
 
-import FormShow from './../components/Form/FormShow';
 import CrudShow from './../components/Crud/CrudShow';
 import CrudIndex from './../components/Crud/CrudIndex';
 
@@ -30,10 +29,9 @@ export default function VueBootstrap() {
     Fjord.components(require.context('./../components/Indexes/', true, /\.(js|vue)$/i))
     Fjord.components(require.context('./../components/Test/', true, /\.(js|vue)$/i))
     Fjord.components(require.context('./../components/Modals/', true, /\.(js|vue)$/i))
-
+    
     Vue.component('crud-index', CrudIndex);
     Vue.component('crud-show', CrudShow);
-    Vue.component('form-show', FormShow);
 
     // FontAwesome
     library.add(far);

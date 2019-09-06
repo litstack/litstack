@@ -1,4 +1,116 @@
 
-div#app.vertical {
+div#fjord-app.vertical {
+    display: grid;
+    grid-template:
+        't t'
+        's m';
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: $topbar_height auto;
 
+    main {
+        grid-area: m;
+        height: calc(100vh - #{$topbar_height});
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+
+    > nav.fj-topbar {
+        grid-area: t;
+        height: $topbar-height;
+        background: $topbar-bg;
+        padding: 0 20px;
+        display: flex;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+        z-index: 9;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0px;
+            left: 0;
+            width: 100vw;
+            height: 4px;
+            background: darken($topbar-bg, 10%);
+        }
+    }
+
+    .fj-navigation {
+        grid-area: s;
+        border-right: 1px solid $light;
+        background: #fcfcfc;
+
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        .list-group {
+            .list-group-item {
+                border-radius: 0;
+                a {
+                    color: $blue-dark;
+                    width: 100%;
+                }
+                border-right: none;
+                border-left: none;
+            }
+        }
+        &__is-active {
+            background-color: #f1f1f1;
+            & > a {
+                font-weight: 800;
+            }
+        }
+        &__icon {
+            display: inline-block;
+            width: 36px;
+            color: $primary;
+            padding-left: 10px;
+        }
+
+        &__down {
+            float: right;
+            line-height: 40px;
+            padding-right: 10px;
+        }
+
+        &__parent {
+            list-style-type: none;
+            padding-left: 0;
+            //border-bottom: 1px solid #dee2e6;
+            letter-spacing: 0.03rem;
+
+            a {
+                height: 40px;
+                display: inline-block;
+                width: 100%;
+                line-height: 40px;
+                color: black;
+                //border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+                &:hover {
+                    text-decoration: none;
+                    background-color: #efefef;
+                    color: black;
+                }
+            }
+            ul {
+                display: none;
+                list-style-type: none;
+                background-color: #3f3e44;
+                padding-left: 0;
+
+                box-shadow: inset 0px 11px 8px -10px rgba(0, 0, 0, 0.5),
+                    inset 0px -11px 8px -10px rgba(0, 0, 0, 0.5);
+                a {
+                    color: white;
+                    padding-left: 42px;
+                    //border-top: 1px solid rgba(118, 116, 125, 0.4);
+                    &:hover {
+                        background-color: #2c2b2f;
+                        color: white;
+                    }
+                }
+                .fjord-navigation__is-active {
+                    background-color: #2c2b2f;
+                }
+            }
+        }
+    }
 }

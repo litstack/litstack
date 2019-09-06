@@ -11,6 +11,8 @@ class Fjord
     use Concerns\ManagesNavigation,
         Concerns\ManagesForms;
 
+    public $translatedAttributes = [];
+
     public function __construct()
     {
 

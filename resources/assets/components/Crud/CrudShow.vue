@@ -1,34 +1,40 @@
 <template>
-    <b-row>
-        <fj-site-nav :route="model.route">
-            <template slot="actions" class="text-secondary">
+    <fj-container>
+        <fj-header :title="formConfig.names.title.singular" :back="formConfig.back_route" :back-text="formConfig.back_text">
+            <div slot="actions" class="indent sm">
 
-                <span class="action" v-b-modal.fj-page-preview v-if="formConfig.preview_route">
+                <b-button
+                    variant="transparent"
+                    size="sm"
+                    v-if="formConfig.preview_route"
+                    v-b-modal.fj-page-preview>
                     <fa-icon icon="eye"/> Preview
-                </span>
+                </b-button>
 
-            </template>
-        </fj-site-nav>
+            </div>
+        </fj-header>
 
-        <b-col cols="12" md="9" order-md="1">
-            <b-row class="fjord-form">
-                <b-col cols="12">
-                    <b-card
-                        v-for="(ids, key) in formConfig.layout"
-                        :key="key"
-                        class="mb-4">
-                        <fj-form
-                            :ids="ids"
-                            :model="model"/>
-                    </b-card>
-                </b-col>
-            </b-row>
-        </b-col>
+        <b-row>
+            <b-col cols="12" md="9" order-md="1">
+                <b-row class="fjord-form">
+                    <b-col cols="12">
+                        <b-card
+                            v-for="(ids, key) in formConfig.layout"
+                            :key="key"
+                            class="mb-4">
+                            <fj-form
+                                :ids="ids"
+                                :model="model"/>
+                        </b-card>
+                    </b-col>
+                </b-row>
+            </b-col>
 
-        <fj-controlls/>
+            <fj-controlls/>
 
-        <fj-page-preview :route="formConfig.preview_route" v-if="formConfig.preview_route"/>
-    </b-row>
+            <fj-page-preview :route="formConfig.preview_route" v-if="formConfig.preview_route"/>
+        </b-row>
+    </fj-container>
 </template>
 
 <script>
@@ -63,3 +69,9 @@ export default {
     }
 };
 </script>
+
+<style lang="scss">
+.fj-site-nav-actions{
+
+}
+</style>

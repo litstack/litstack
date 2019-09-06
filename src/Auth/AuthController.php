@@ -56,7 +56,8 @@ class AuthController extends Controller
 
     public function redirectTo()
     {
-        return '/admin';
+
+        return config('fjord.route_prefix') . '/' . config('fjord.default_route');
     }
 
 }

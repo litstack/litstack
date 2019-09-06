@@ -14,21 +14,15 @@
 </head>
 
 <body onload="makeVisible()">
-    <div id="app" class="{{ config('fjord.layout') }}">
+    <div id="fjord-app" class="{{ config('fjord.layout') }}">
 
-        <header>
-            @include(fjord_view('topbar', true))
-        </header>
+        @include('fjord::partials.topbar')
 
-        @include(fjord_view('navigation', true))
+        @include('fjord::partials.navigation')
 
         <main>
-            <div class="container fjord-container">
-                @yield('content')
-            </div>
-
-            @include(fjord_view('partials.spinner'))
-
+            @yield('content')
+            @include('fjord::partials.spinner')
         </main>
 
         <notify />

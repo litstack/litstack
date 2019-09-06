@@ -12,7 +12,7 @@
                         <fj-colgroup
                             :icons="['drag', 'trash']"
                             :cols="fields"/>
-
+                            
                         <draggable
                             v-model="relations"
                             @end="newOrder(relations)"

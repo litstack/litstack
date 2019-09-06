@@ -9,6 +9,8 @@ use AwStudio\Fjord\Support\Facades\FormLoader;
 
 class CrudController extends Controller
 {
+    use Traits\CrudIndex;
+
     // The Model (Class)Name, e.g. Post
     protected $modelName;
 
@@ -56,21 +58,10 @@ class CrudController extends Controller
      */
     public function index()
     {
-        $items = $this->model::with($this->getWiths())->eloquentJs('translatable', 'get');
-
-        if(is_translatable($this->model)) {
-            $items['data']->map(function($item) {
-                return $item->append('translation');
-            });
-        }
-        
         return view('fjord::vue')->withComponent('crud-index')
             ->withTitle($this->titleSingular)
-            ->withModels([
-                'items' => $items,
-            ])
             ->withProps([
-                'formConfig' => $this->getForm()
+                'formConfig' => $this->getForm()->toArray()
             ]);
     }
 
@@ -90,7 +81,7 @@ class CrudController extends Controller
                  'model' => $model->eloquentJs('fjord'),
              ])
              ->withProps([
-                 'formConfig' => $this->getForm($model)
+                 'formConfig' => $this->getForm($model)->toArray()
              ]);;
      }
 

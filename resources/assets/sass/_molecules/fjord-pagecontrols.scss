@@ -1,4 +1,16 @@
 .fjord-pagecontrols {
     position: sticky !important;
-    top: 60px;
+
+}
+
+div#fjord-app.vertical{
+    .fjord-pagecontrols{
+        top: $grid-gutter-width;
+    }
+}
+
+div#fjord-app.horizontal{
+    .fjord-pagecontrols{
+        top: $topbar-height + $grid-gutter-width;
+    }
 }
