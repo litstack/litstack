@@ -1,7 +1,5 @@
 @guest
 
-
-
 @else
 <nav class="fjord-navigation">
     <div class="container">
@@ -11,7 +9,7 @@
     </div>
     <navigation>
         @foreach (fjord()->getNavigation() as $entry)
-            @include('fjord::partials.navitem')
+            @include(fjord_view('navitem', true))
         @endforeach
     </navigation>
 </nav>

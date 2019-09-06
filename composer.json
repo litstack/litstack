@@ -3,6 +3,7 @@
     "description": "Fjord is a admin-panel/cms scaffolding package",
     "type": "project",
     "require": {
+        "php": "^7.2",
         "spatie/eloquent-sortable": "^3.6",
         "spatie/laravel-permission": "^2.37",
         "spatie/laravel-medialibrary": "^7.0.0",
@@ -14,6 +15,10 @@
         {
             "name": "Jannes Behrens",
             "email": "jannes@aw-studio.de"
+        },
+        {
+            "name": "Lennart Carstens-Behrens",
+            "email": "lennart.carbe@gmail.com"
         }
     ],
     "autoload": {

@@ -123,9 +123,34 @@ class CrudForm
     {
         $route = $this->attributes['preview_route'];
 
-        if(is_callable($route)) {
-            $this->attributes['preview_route'] = call_user_func($route, $model);
+        if(is_callable($route) && ! is_array($route)) {
+            $route = call_user_func($route, $model);
         }
+
+        if(is_array($route)) {
+
+            $class = $route[0];
+            $method = $route[1];
+
+            $params = [];
+
+            if($class != $this->model) {
+                $params = [$model];
+            }
+
+            if(method_exists($model, $method)) {
+                $class = $model;
+
+                $methodRef = new \ReflectionMethod(get_class($class), $method);
+                if($methodRef->isStatic()) {
+                    $params = [$model];
+                }
+            }
+
+            $route = call_user_func_array([$class, $method], $params);
+        }
+
+        $this->attributes['preview_route'] = $route;
     }
 
     protected function getFormLayoutIds($formFields)

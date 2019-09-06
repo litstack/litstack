@@ -54,3 +54,12 @@ if(! function_exists('is_valid_path')) {
         return (bool) file_exists($path);
     }
 }
+
+if(! function_exists('fjord_view')) {
+    function fjord_view($name, $layout = false)
+    {
+        return $layout
+            ? 'fjord::layouts.' . config('fjord.layout') . '.' . $name
+            : 'fjord::' . $name;
+    }
+}

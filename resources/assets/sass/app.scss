@@ -26,6 +26,10 @@
 @import '_molecules/fjord-block';
 @import '_molecules/fjord-cropper';
 
+// layout
+@import 'horizontal';
+@import 'vertical';
+
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
@@ -44,11 +48,7 @@ html {
         box-shadow: none !important;
     }
 }
-div#app > header {
-    position: fixed;
-    top: 0;
-    z-index: 99;
-}
+
 main {
     padding-top: 80px;
     padding-bottom: 60px;

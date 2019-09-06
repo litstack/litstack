@@ -16,7 +16,7 @@
         </a>
         <ul>
             @foreach ($entry['children'] as $entry)
-                @include('fjord::partials.navitem')
+                @include(fjord_view('navitem', true))
             @endforeach
         </ul>
 

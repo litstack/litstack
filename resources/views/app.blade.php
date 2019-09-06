@@ -14,22 +14,25 @@
 </head>
 
 <body onload="makeVisible()">
-    <div id="app">
+    <div id="app" class="{{ config('fjord.layout') }}">
+
         <header>
-            @include('fjord::partials.topbar')
+            @include(fjord_view('topbar', true))
         </header>
-        @include('fjord::partials.navigation')
+
+        @include(fjord_view('navigation', true))
+
         <main>
             <div class="container fjord-container">
                 @yield('content')
             </div>
-            <div id="fjord-spinner"
-            class="fjord-spinner d-flex justify-content-center align-items-center">
-                <div class="lds-ripple d-flex justify-content-center align-items-center"><div></div><div></div></div>
-            </div>
+
+            @include(fjord_view('partials.spinner'))
+
         </main>
 
         <notify />
+
     </div>
 
     <script src="{{ asset('fjord/js/app.js') }}?t={{ filemtime(public_path('fjord/js/app.js')) }}" defer></script>
