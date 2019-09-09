@@ -40,6 +40,7 @@ class FormController extends Controller
             ->withTitle($this->form->title)
             ->withProps([
                 'formConfig' => $this->form->toArray(),
+                'actions' => ['crud-action-preview']
             ]);
     }
 

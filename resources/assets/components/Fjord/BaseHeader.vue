@@ -13,14 +13,7 @@
             </div>
 
 
-            <div class="indent">
-                <!--
-                <b-button variant="transparent">
-                    HII
-                </b-button>
-                -->
-            </div>
-
+            <slot name="navigation"/>
 
         </b-col>
         <b-col cols="12" class="d-flex justify-content-between">

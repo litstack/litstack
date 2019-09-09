@@ -16,7 +16,8 @@ class CrudForm
         'names' => [],
         'back_route' => null,
         'back_text' => null,
-        'index' => []
+        'index' => [],
+        'sort_by' => null
     ];
 
     protected $path;

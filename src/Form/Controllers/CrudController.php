@@ -120,13 +120,21 @@ class CrudController extends Controller
         $form = $this->getForm($eloquentModel['data']);
         $form->setPreviewRoute($eloquentModel['data']);
 
+        $previous = $this->model::where('id', '<', $id)->orderBy('id','desc')->select('id')->first()->id ?? null;
+        $next = $this->model::where('id', '>', $id)->orderBy('id')->select('id')->first()->id ?? null;
+
         return view('fjord::vue')->withComponent('crud-show')
             ->withTitle('edit ' . $this->titleSingular)
             ->withModels([
                 'model' => $eloquentModel,
             ])
             ->withProps([
-                'formConfig' => $form->toArray()
+                'formConfig' => $form->toArray(),
+                'nearItems' => [
+                    'next' => $next,
+                    'previous' => $previous
+                ],
+                'actions' => ['crud-action-preview']
             ]);
     }
 
@@ -159,6 +167,11 @@ class CrudController extends Controller
     {
         $item = $this->model::findOrFail($id);
         $item->delete();
+    }
+
+    public function deleteAll(Request $request)
+    {
+        $this->model::whereIn('id', $request->ids)->delete();
     }
 
     protected function getForm($model = null)

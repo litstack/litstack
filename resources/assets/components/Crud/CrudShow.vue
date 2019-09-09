@@ -1,15 +1,39 @@
 <template>
     <fj-container>
-        <fj-header :title="formConfig.names.title.singular" :back="formConfig.back_route" :back-text="formConfig.back_text">
-            <div slot="actions" class="indent sm">
+        <fj-header
+            :title="formConfig.names.title.singular"
+            :back="formConfig.back_route"
+            :back-text="formConfig.back_text">
+
+            <div
+                slot="navigation"
+                class="indent sm"
+                v-if="nearItems">
 
                 <b-button
+                    :href="`${baseURL}${formConfig.names.table}/${nearItems.previous}/edit`"
+                    :disabled="!nearItems.previous"
                     variant="transparent"
-                    size="sm"
-                    v-if="formConfig.preview_route"
-                    v-b-modal.fj-page-preview>
-                    <fa-icon icon="eye"/> Preview
+                    size="sm">
+                    <fa-icon icon="arrow-left"/>
                 </b-button>
+                <b-button
+                    :href="`${baseURL}${formConfig.names.table}/${nearItems.next}/edit`"
+                    :disabled="!nearItems.next"
+                    variant="transparent"
+                    size="sm">
+                    <fa-icon icon="arrow-right"/>
+                </b-button>
+
+            </div>
+
+            <div slot="actions" class="indent sm">
+
+                <components
+                    v-for="(component, key) in actions"
+                    :key="key"
+                    :is="component"
+                    :config="formConfig"/>
 
             </div>
         </fj-header>
@@ -31,13 +55,13 @@
             </b-col>
 
             <fj-controlls/>
-
-            <fj-page-preview :route="formConfig.preview_route" v-if="formConfig.preview_route"/>
         </b-row>
     </fj-container>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
     name: 'CrudShow',
     props: {
@@ -47,6 +71,13 @@ export default {
         formConfig: {
             type: [Array, Object],
             required: true
+        },
+        nearItems: {
+            type: Object
+        },
+        actions: {
+            type: Array,
+            default: []
         }
     },
     data() {
@@ -54,11 +85,15 @@ export default {
             model: null
         };
     },
-
+    computed: {
+        ...mapGetters(['baseURL'])
+    },
     methods: {
         saved() {
             if (window.location.pathname.split('/').pop() == 'create') {
-                window.location.replace(`${this.model.id}/edit`);
+                setTimeout(() => {
+                    window.location.replace(`${this.model.id}/edit`);
+                }, 1)
             }
         }
     },

@@ -320,7 +320,7 @@ export default {
             //
             //
             const DROPZONE = this.dropzone;
-            const CANVAS = $('.fjord-cropper__canvas');
+            const CANVAS = $(`#fjord-cropper-${this.field.id} .fjord-cropper__canvas`);
             let uploadable = true;
 
             // Show the cropping modal

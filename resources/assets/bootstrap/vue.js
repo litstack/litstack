@@ -7,6 +7,7 @@ import Fjord from './../common/fjord'
 
 import CrudShow from './../components/Crud/CrudShow';
 import CrudIndex from './../components/Crud/CrudIndex';
+import CrudActionPreview from './../components/Crud/CrudActionPreview';
 
 // FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -29,9 +30,10 @@ export default function VueBootstrap() {
     Fjord.components(require.context('./../components/Indexes/', true, /\.(js|vue)$/i))
     Fjord.components(require.context('./../components/Test/', true, /\.(js|vue)$/i))
     Fjord.components(require.context('./../components/Modals/', true, /\.(js|vue)$/i))
-    
+
     Vue.component('crud-index', CrudIndex);
     Vue.component('crud-show', CrudShow);
+    Vue.component('crud-action-preview', CrudActionPreview);
 
     // FontAwesome
     library.add(far);

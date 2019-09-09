@@ -12466,8 +12466,11 @@ a.text-dark:focus {
 .fjord-container {
   margin: 0 auto;
   padding: 30px !important;
-  width: 100vw !important;
   max-width: 1440px !important;
+}
+
+.fjord-container.sm {
+  max-width: 960px !important;
 }
 
 .fjord-spinner {
@@ -13018,6 +13021,10 @@ div#fjord-app {
 div#fjord-app .btn:focus {
   outline: none !important;
   box-shadow: none !important;
+}
+
+main {
+  height: calc(100vh - 52px);
 }
 
 main .card {
