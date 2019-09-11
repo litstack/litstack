@@ -42,16 +42,14 @@ export default {
     },
     data() {
         return {
-            fields: [
-                {
-                    key: 'title',
-                    label: 'Title',
-                }
-            ],
+            fields: [],
             actions: {
                 'Delete': this.deleteItems
             }
         };
+    },
+    beforeMount() {
+        this.setFields()
     },
     computed: {
         createRoute() {
@@ -59,6 +57,16 @@ export default {
         }
     },
     methods: {
+        setFields() {
+            for(let i=0;i<this.formConfig.index.preview.length;i++) {
+                let field = this.formConfig.index.preview[i]
+
+                if(typeof field == typeof '') {
+                    field = {key: field}
+                }
+                this.fields.push(field)
+            }
+        },
         async deleteItems(ids) {
 
             await axios.post(`${this.formConfig.names.table}/delete-all`, {ids})

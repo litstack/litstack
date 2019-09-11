@@ -17,6 +17,11 @@ class DummyClassname extends FjordModel DummyImplement
     DummyVars
 
     DummySluggable
-    
+
     DummyGetAttributes
+
+    public function getRoute()
+    {
+        return route('article', ['id' => $this->id]);
+    }
 }

@@ -1,7 +1,19 @@
 <?php
 
+use \App\Models\DummyClassname;
+
 return [
-    'model' => \App\Models\DummyClassname::class,
+    'preview_route' => [DummyClassname::class, 'getRoute'],
+    'index' => [
+        'preview' => ['title'],
+        'search' => ['title', 'text', 'slug'],
+        'sort_by' => [
+            'id.desc' => 'New -> Old',
+            'id.asc' => 'Old -> New',
+
+        ],
+        'sort_by_default' => 'id.desc',
+    ],
     'form_fields' => [
         /*
         [

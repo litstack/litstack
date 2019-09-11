@@ -52,7 +52,7 @@ class CrudForm
             return $model;
         }
 
-        if($model == EloquentCollection::class) {
+        if(get_class($model) == EloquentCollection::class) {
             return get_class($model->first());
         }
 

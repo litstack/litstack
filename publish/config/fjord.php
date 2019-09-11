@@ -2,12 +2,15 @@
 
 return [
 
+    'route_prefix' => 'admin',
+
     'resource_path' => 'fjord',
+
     'navigation_path' => 'navigation',
-    'route_prefix' => 'fjord',
+
 
     // Layouts: horizontal / vertical
-    'layout' => env('FJORD_LAYOUT', 'horizontal'),
+    'layout' => env('FJORD_LAYOUT', 'vertical'),
 
     'default_route' => 'pages/home',
 

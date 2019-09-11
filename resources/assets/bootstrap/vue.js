@@ -21,6 +21,7 @@ import VModal from 'vue-js-modal';
 import { ServerTable, ClientTable, Event } from 'vue-tables-2';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import BootstrapVue from 'bootstrap-vue';
+import VueI18n from 'vue-i18n'
 
 export default function VueBootstrap() {
 
@@ -49,6 +50,7 @@ export default function VueBootstrap() {
     Vue.use(ClientTable);
     Vue.use(CKEditor);
     Vue.use(BootstrapVue)
+    Vue.use(VueI18n)
 
     // prototypes
     Vue.prototype.$bus = Bus;
