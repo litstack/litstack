@@ -56,6 +56,11 @@ class FjordInstall extends Command
 
     public function handleFjordResources()
     {
+        // clear the config cache, otherwise, fjord_resource_path() will return
+        // the resource path itself, which is present for shure
+        $this->call('config:cache');
+
+        
         if(is_dir(fjord_resource_path())) {
             return;
         }
