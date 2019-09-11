@@ -56,6 +56,8 @@ class FjordCrud extends Command
         $this->info('3) make your model editable by adding it to the config/fjord-crud.php');
         $this->info('4) add a navigation entry to your config/fjord-navigation.php');
 
+        $this->call('route:cache');
+
     }
 
     private function makeModel($modelName, $m, $s, $t)
@@ -237,7 +239,7 @@ class FjordCrud extends Command
         if(! is_dir(fjord_resource_path('crud'))) {
             \File::makeDirectory(fjord_resource_path('crud'));
         }
-        
+
         if(\File::put($config, $fileContents)){
             $this->info('config created');
         }
