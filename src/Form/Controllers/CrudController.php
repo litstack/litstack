@@ -184,7 +184,11 @@ class CrudController extends Controller
 
     protected function getWiths()
     {
-        $withs = ['media'];
+        $withs = [];
+
+        if(has_media($this->model)) {
+            $withs []= 'media';
+        }
         if(is_translatable($this->model)) {
             $withs []= 'translations';
         }

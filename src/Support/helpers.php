@@ -41,6 +41,17 @@ if(! function_exists('is_translatable')) {
     }
 }
 
+if(! function_exists('has_media')) {
+    function has_media($model)
+    {
+        $reflect = new \ReflectionClass($model);
+        if ($reflect->implementsInterface('Spatie\MediaLibrary\HasMedia\HasMedia')){
+            return true;
+        }
+        return false;
+    }
+}
+
 if(! function_exists('closure_info')) {
     function closure_info(callable $closure)
     {
