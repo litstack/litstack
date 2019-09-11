@@ -1,4 +1,4 @@
-<nav class="fjord-topbar justify-content-between align-items-center">
+<nav class="fj-topbar justify-content-between align-items-center">
     <div>
         <a href="#" class="fjord-brand">
             <img src="{{asset('fjord/images/fjord-logo.png')}}" class="img-fluid" alt="">
@@ -18,13 +18,13 @@
             </a>
             --}}
             @foreach(fjord()->getNavigation('topbar') as $entry)
-                <a class="fjord-topbar_link mr-4" href="/{{ config('fjord.route_prefix') }}/{{ $entry['link'] }}">
+                <a class="fj-topbar_link mr-4" href="/{{ config('fjord.route_prefix') }}/{{ $entry['link'] }}">
                     {!! $entry['icon'] !!}
                 </a>
             @endforeach
 
 
-            <a class="fjord-topbar_link" href="{{route('fjord.logout')}}"
+            <a class="fj-topbar_link" href="{{route('fjord.logout')}}"
                onclick="event.preventDefault();
                              document.getElementById('logout-form').submit();">
                 logout <i class="fas fa-sign-out-alt"></i>

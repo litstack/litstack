@@ -8,7 +8,7 @@ import Notify from './components/Notify';
 import store from './store'
 import mixins from './bootstrap/mixins'
 
-const APP_ID = '#app'
+const APP_ID = '#fjord-app'
 
 function Fjord(options) {
 

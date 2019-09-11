@@ -2,7 +2,7 @@
 
 namespace AwStudio\Fjord\Form\Database\Traits;
 
-use AwStudio\Fjord\Form\FormFieldCollection;
+use AwStudio\Fjord\Support\NestedCollection;
 use AwStudio\Fjord\Support\Facades\FormLoader;
 use Spatie\MediaLibrary\Models\Media;
 
@@ -103,6 +103,7 @@ trait HasFormFields
     public function findFormField($id)
     {
         foreach($this->form_fields as $form_field) {
+
             if($form_field->id == $id) {
                 return $form_field;
             }
@@ -134,9 +135,9 @@ trait HasFormFields
     {
         $form = FormLoader::load($this->form_fields_path, $this);
 
-        $fields = clone $form->fields;
+        $form_fields = clone $form->form_fields;
 
-        return $this->getDynamicFieldValues($fields);
+        return $this->getDynamicFieldValues($form_fields);
     }
 
     public function scopewithFormRelations($query)

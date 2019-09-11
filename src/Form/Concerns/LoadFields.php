@@ -3,37 +3,17 @@
 namespace AwStudio\Fjord\Form\Concerns;
 
 use AwStudio\Fjord\Form\FormField;
-use AwStudio\Fjord\Form\FormFieldCollection;
+use AwStudio\Fjord\Support\NestedCollection;
 use Illuminate\Support\Facades\Schema;
 use Exception;
 
 trait LoadFields
 {
-    protected $forms = [];
-
     protected $fields = [];
 
-    protected $currentPath;
-
-    public function load($path, $model)
-    {
-        $this->currentPath = $path;
-
-        if(array_key_exists($path, $this->forms)) {
-            return $this->forms[$path];
-        }
-
-        if(! file_exists($path)) {
-            return (object) [];
-        }
-
-        $form = $this->loadForm(require $path, $model);
-
-        $this->forms[$path] = (object) $form;
-
-        return $this->forms[$path];
-    }
-
+    /**
+     * Load fields from file for example from repeatables.
+     */
     public function loadFields($path, $model)
     {
         $this->currentPath = $path;
@@ -51,16 +31,6 @@ trait LoadFields
         $this->fields[$path] = (object) $form;
 
         return $this->fields[$path];
-    }
-
-    protected function loadForm(array $form, $model)
-    {
-        $form['fields'] = $this->getFields($form['fields'] ?? [], $model);
-        $form['fields'] = $form['fields']->merge(
-            $this->getFields($form['controlls'] ?? [], $model, 'controlls')
-        );
-
-        return $form;
     }
 
     public function getFields($fields, $model, $location = 'fields')
@@ -81,7 +51,7 @@ trait LoadFields
 
         }
 
-        return new FormFieldCollection($fields);
+        return new NestedCollection($fields);
     }
 
     protected function setFormFieldDefaults($field, $model, $location)
@@ -133,14 +103,12 @@ trait LoadFields
 
     protected function isFieldTranslatable($field, $model)
     {
-        if(! is_translateable($model)) {
+        if(! is_translatable($model)) {
             return false;
         }
 
-        $translationModel = $model->getTranslationModelName();
-        $translationTableName = with(new $translationModel)->getTable();
-        $tableCols = Schema::getColumnListing($translationTableName);
-
-        return in_array($field->id ,$tableCols);
+        return in_array($field->id, $model->translatedAttributes);
     }
+
+
 }

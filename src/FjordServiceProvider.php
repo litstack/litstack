@@ -6,6 +6,7 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\App;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Blade;
 use AwStudio\Fjord\Support\Facades\Fjord as FjordFacade;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,7 @@ class FjordServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         $this->app->register('AwStudio\Fjord\Routing\RouteServiceProvider');
-        $this->app->register('AwStudio\Fjord\Form\FormServiceProvider');
+        $this->app->register('AwStudio\Fjord\Form\ServiceProvider');
         $this->app->register('AwStudio\Fjord\Blade\BladeServiceProvider');
 
         /**
@@ -60,6 +61,28 @@ class FjordServiceProvider extends ServiceProvider
          *
          */
         $router->aliasMiddleware('fjord.auth', Authenticate::class);
+
+        Builder::macro('whereLike', function ($attributes, string $searchTerm) {
+            $this->where(function (Builder $query) use ($attributes, $searchTerm) {
+                foreach (array_wrap($attributes) as $attribute) {
+                    $query->when(
+                        str_contains($attribute, '.'),
+                        function (Builder $query) use ($attribute, $searchTerm) {
+                            [$relationName, $relationAttribute] = explode('.', $attribute);
+
+                            $query->orWhereHas($relationName, function (Builder $query) use ($relationAttribute, $searchTerm) {
+                                $query->where($relationAttribute, 'LIKE', "%{$searchTerm}%");
+                            });
+                        },
+                        function (Builder $query) use ($attribute, $searchTerm) {
+                            $query->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
+                        }
+                    );
+                }
+            });
+
+            return $this;
+        });
     }
 
     /**

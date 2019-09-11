@@ -39,14 +39,14 @@ class EloquentJsController extends Controller
                 $data = $item['model']::findOrFail($item['data']['id']);
                 $data->update($item['data']);
 
-                if(is_translateable($data)) {
+                if(is_translatable($data)) {
                     $data->append('translation');
                 }
 
                 $items[] = $data;
             } else {
                 $data = $item['model']::create($item['data']);
-                if(is_translateable($data)) {
+                if(is_translatable($data)) {
                     $data->append('translation');
                 }
                 $items[] = $data;

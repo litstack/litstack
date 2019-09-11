@@ -2,12 +2,12 @@
 
 namespace AwStudio\Fjord\Form;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\App;
 use AwStudio\Fjord\Support\Facades\Form as FormFacade;
 
-class FormServiceProvider extends ServiceProvider
+class ServiceProvider extends LaravelServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -16,7 +16,7 @@ class FormServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->register('AwStudio\Fjord\Form\FormRouteServiceProvider');
+        $this->app->register('AwStudio\Fjord\Form\RouteServiceProvider');
     }
 
     /**

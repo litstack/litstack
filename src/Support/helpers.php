@@ -18,9 +18,9 @@ if(! function_exists('fjord')) {
     }
 }
 
-if(! function_exists('form_field_collect')) {
-    function form_field_collect(array $array) {
-        return new \AwStudio\Fjord\Form\FormFieldCollection($array);
+if(! function_exists('nested_collect')) {
+    function nested_collect(array $array) {
+        return new \AwStudio\Fjord\Support\NestedCollection($array);
     }
 }
 
@@ -30,8 +30,8 @@ if(! function_exists('eloquentJs')) {
     }
 }
 
-if(! function_exists('is_translateable')) {
-    function is_translateable($model)
+if(! function_exists('is_translatable')) {
+    function is_translatable($model)
     {
         $reflect = new \ReflectionClass($model);
         if ($reflect->implementsInterface('Astrotomic\Translatable\Contracts\Translatable')){
@@ -52,5 +52,14 @@ if(! function_exists('is_valid_path')) {
     function is_valid_path($path)
     {
         return (bool) file_exists($path);
+    }
+}
+
+if(! function_exists('fjord_view')) {
+    function fjord_view($name, $layout = false)
+    {
+        return $layout
+            ? 'fjord::layouts.' . config('fjord.layout') . '.' . $name
+            : 'fjord::' . $name;
     }
 }

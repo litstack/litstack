@@ -4,16 +4,21 @@
 // Variables
 @import 'variables';
 
+// Modules
+@import '~bootstrap/scss/bootstrap';
+@import '~cropperjs/src/index';
+
 // Atoms
+@import '_atoms/bs-buttons';
 @import '_atoms/fjord-brand';
 @import '_atoms/fjord-card';
 @import '_atoms/fjord-search';
 @import '_atoms/fjord-draggable';
 @import '_atoms/fjord-container';
+@import '_atoms/fjord-spinner';
 
 // Molecules
 @import '_molecules/fjord-topbar';
-@import '_molecules/fjord-navigation';
 @import '_molecules/fjord-notifications';
 @import '_molecules/fjord-dropzone';
 @import '_molecules/fjord-form';
@@ -21,9 +26,11 @@
 @import '_molecules/fjord-modal';
 @import '_molecules/fjord-pagecontrols';
 @import '_molecules/fjord-block';
+@import '_molecules/fjord-cropper';
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// layout
+@import 'horizontal';
+@import 'vertical';
 
 // Quill Theme
 @import '~quill/dist/quill.snow.css';
@@ -34,22 +41,19 @@ body,
 html {
     background-color: $dark;
 }
-#app {
+
+div#fjord-app {
     background-color: #f1f1f1;
-    min-height: calc(100vh - #{$topbar_height});
+
     .btn:focus {
         outline: none !important;
         box-shadow: none !important;
     }
 }
-div#app header {
-    position: fixed;
-    top: 0;
-    z-index: 99;
-}
+
 main {
-    padding-top: 80px;
-    padding-bottom: 60px;
+    height: calc(100vh - #{$topbar-height});
+
     .card {
         border-top: 3px solid $primary;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);

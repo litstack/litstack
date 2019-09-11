@@ -5,9 +5,12 @@ namespace AwStudio\Fjord\Form\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use AwStudio\Fjord\Models\ModelContent;
+use AwStudio\Fjord\Support\Facades\FormLoader;
 
 class CrudController extends Controller
 {
+    use Traits\CrudIndex;
+
     // The Model (Class)Name, e.g. Post
     protected $modelName;
 
@@ -55,29 +58,11 @@ class CrudController extends Controller
      */
     public function index()
     {
-        $withs = ['media'];
-        if(is_translateable($this->model)) {
-            $withs []= 'translations';
-        }
-
-        $items = $this->model::with($withs)->eloquentJs('translatable', 'get');
-
-        if(is_translateable($this->model)) {
-            $items['data']->map(function($item) {
-                return $item->append('translation');
-            });
-        }
-        /*
-        get()->map(function($model) {
-            return $model->append('translation');
-        });
-        */
-
         return view('fjord::vue')->withComponent('crud-index')
-                                ->withTitle($this->titleSingular)
-                                ->withModels([
-                                    'items' => $items,
-                                ]);
+            ->withTitle($this->titleSingular)
+            ->withProps([
+                'formConfig' => $this->getForm()->toArray()
+            ]);
     }
 
     /**
@@ -94,7 +79,10 @@ class CrudController extends Controller
              ->withTitle('edit ' . $this->titleSingular)
              ->withModels([
                  'model' => $model->eloquentJs('fjord'),
-             ]);
+             ])
+             ->withProps([
+                 'formConfig' => $this->getForm($model)->toArray()
+             ]);;
      }
 
     /**
@@ -118,31 +106,35 @@ class CrudController extends Controller
      */
     public function edit($id)
     {
-        $withs = ['media'];
-        if(is_translateable($this->model)) {
-            $withs []= 'translations';
-        }
-
-        $model = $this->model::with($withs)
+        $eloquentModel = $this->model::with($this->getWiths())
             ->withRelation('blocks')
             ->withFormRelations()
             ->findOrFail($id)
             ->setFormRelations()
             ->eloquentJs('fjord');
 
-        if(is_translateable($this->model)) {
-            $model['data']->append('translation');
+        if(is_translatable($this->model)) {
+            $eloquentModel['data']->append('translation');
         }
 
-        //dd($model['data']);
+        $form = $this->getForm($eloquentModel['data']);
+        $form->setPreviewRoute($eloquentModel['data']);
+
+        $previous = $this->model::where('id', '<', $id)->orderBy('id','desc')->select('id')->first()->id ?? null;
+        $next = $this->model::where('id', '>', $id)->orderBy('id')->select('id')->first()->id ?? null;
 
         return view('fjord::vue')->withComponent('crud-show')
             ->withTitle('edit ' . $this->titleSingular)
             ->withModels([
-                'model' => $model,
+                'model' => $eloquentModel,
             ])
             ->withProps([
-                't' => 's'
+                'formConfig' => $form->toArray(),
+                'nearItems' => [
+                    'next' => $next,
+                    'previous' => $previous
+                ],
+                'actions' => ['crud-action-preview']
             ]);
     }
 
@@ -155,8 +147,12 @@ class CrudController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $item = $this->model::findOrFail($id);
+        $item = $this->model::with($this->getWiths())->findOrFail($id);
         $item->update($request->all());
+
+        if(is_translatable($this->model)) {
+            $item->append('translation');
+        }
 
         return $item;
     }
@@ -171,6 +167,29 @@ class CrudController extends Controller
     {
         $item = $this->model::findOrFail($id);
         $item->delete();
+    }
+
+    public function deleteAll(Request $request)
+    {
+        $this->model::whereIn('id', $request->ids)->delete();
+    }
+
+    protected function getForm($model = null)
+    {
+        if(! $model) {
+            $model = with(new $this->model);
+        }
+        return FormLoader::load($model->form_fields_path, $this->model);
+    }
+
+    protected function getWiths()
+    {
+        $withs = ['media'];
+        if(is_translatable($this->model)) {
+            $withs []= 'translations';
+        }
+
+        return $withs;
     }
 
 }

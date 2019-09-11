@@ -1,5 +1,5 @@
 <template>
-    <notifications group="general" class="fjord-notifications">
+    <notifications group="general" class="fjord-notifications" style="top: 53px;">
         <template slot="body" slot-scope="props">
             <div
                 :class="props.item.type"
@@ -47,3 +47,10 @@ export default {
     name: 'CLNotifications'
 };
 </script>
+
+<style>
+.fjord-notifications{
+    top: 52px;
+}
+
+</style>

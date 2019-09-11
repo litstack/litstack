@@ -1,6 +1,10 @@
 <template>
     <fj-form-item :field="field">
 
+        <b-form-checkbox v-model="selected" name="check-button" switch>
+
+        </b-form-checkbox>
+        <!--
         <button
             @click.prevent="toggleValue"
             class="btn btn-lg">
@@ -11,7 +15,7 @@
                 class="fas fa-toggle-off text-danger"
                 v-else/>
         </button>
-
+        -->
         <slot />
 
     </fj-form-item>
@@ -29,10 +33,27 @@ export default {
             required: true,
         }
     },
+    data() {
+        return {
+            selected: false,
+        }
+
+    },
+    beforeMount() {
+        this.selected = this.model[`${this.field.id}Model`]
+    },
+    watch: {
+        selected(val) {
+            console.log('SEL', val)
+            this.model[`${this.field.id}Model`] = val
+            this.$emit('changed')
+        }
+    },
     methods: {
         toggleValue() {
-            this.model[`${this.field.id}Model`] = !this.model[`${this.field.id}Model`]
-            this.$emit('changed')
+            console.log('LSLDKSKLS')
+            // = !this.model[`${this.field.id}Model`]
+
         }
     }
 };

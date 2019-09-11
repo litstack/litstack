@@ -9,7 +9,7 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Astrotomic\Translatable\Translatable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use AwStudio\Fjord\EloquentJs\CanEloquentJs;
-use AwStudio\Fjord\Form\FormFieldCollection;
+use AwStudio\Fjord\Support\NestedCollection;
 use AwStudio\Fjord\Support\Facades\FormLoader;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
@@ -148,8 +148,8 @@ class FormField extends Model implements HasMedia, TranslatableContract
      */
      public function __call($method, $parameters)
      {
-         if($form_field = $this->findFormField($method)) {
-             return $this->getFormattedFormFieldValue($form_field, true);
+         if($method == ($this->form_field->id ?? '')) {
+             return $this->getFormattedFormFieldValue($this->form_field, true);
          }
 
          return parent::__call($method, $parameters);
@@ -163,24 +163,24 @@ class FormField extends Model implements HasMedia, TranslatableContract
     public function getFormFieldsAttribute()
     {
         if(! array_key_exists('field_id', $this->attributes)) {
-            return new FormFieldCollection([]);
+            return new NestedCollection([]);
         }
 
         $form = FormLoader::load($this->form_fields_path, $this);
 
-        if(! property_exists($form, 'fields')) {
-            return new FormFieldCollection([]);
+        if(! property_exists($form, 'form_fields')) {
+            return new NestedCollection([]);
         }
 
-        $fields = clone $form->fields;
+        $form_fields = clone $form->form_fields;
 
-        $fields = $fields->where('id', $this->attributes['field_id']);
+        $form_fields = $form_fields->where('id', $this->attributes['field_id']);
 
-        $fields = $this->getDynamicFieldValues($fields);
+        $form_fields = $this->getDynamicFieldValues($form_fields);
 
-        $fields->first()->local_key = 'value';
+        $form_fields->first()->local_key = 'value';
 
-        return $fields;
+        return $form_fields;
     }
 
     public function getAttribute($key)

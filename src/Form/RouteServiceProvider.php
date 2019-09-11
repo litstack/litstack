@@ -3,7 +3,7 @@ namespace AwStudio\Fjord\Form;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
-use App\Providers\RouteServiceProvider;
+use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 use AwStudio\Fjord\Support\Facades\Fjord;
 use AwStudio\Fjord\Support\Facades\FjordRoute;
 use AwStudio\Fjord\Form\Controllers\MediaController;
@@ -11,7 +11,7 @@ use AwStudio\Fjord\Form\Controllers\FormController;
 use AwStudio\Fjord\Form\Controllers\FormBlockController;
 use AwStudio\Fjord\Form\Controllers\FormRelationsController;
 
-class FormRouteServiceProvider extends RouteServiceProvider
+class RouteServiceProvider extends LaravelRouteServiceProvider
 {
 
     public function boot()
@@ -41,6 +41,10 @@ class FormRouteServiceProvider extends RouteServiceProvider
 
             FjordRoute::resource(config('fjord.route_prefix') . "/{$crud}", $namespace)
                 ->except(['show']);
+            FjordRoute::post("/{$crud}/index", $namespace . "@postIndex")
+                ->name("{$crud}.post_index");
+            FjordRoute::post("/{$crud}/delete-all", $namespace . "@deleteAll")
+                ->name("{$crud}.delete_all");
         }
     }
 
@@ -55,8 +59,7 @@ class FormRouteServiceProvider extends RouteServiceProvider
 
             foreach($forms as $formName => $path) {
 
-                $form = require $path;
-                $formRoutePrefix = $form['route_prefix'] ?? $formName;
+                $formRoutePrefix = $formName;
 
                 FjordRoute::get("{$collectionRoutePrefix}/{$formRoutePrefix}", FormController::class . "@show")
                     ->name("form.{$collectionName}.{$formName}");
@@ -81,7 +84,7 @@ class FormRouteServiceProvider extends RouteServiceProvider
         FjordRoute::post('/relations', FormRelationsController::class . "@index")->name('relations.index');
         FjordRoute::put('/relations/order', FormRelationsController::class . "@order")->name('relations.order');
         FjordRoute::post('/relations/store', FormRelationsController::class . "@store")->name('relation.store');
-        FjordRoute::delete('/relations/{index}', FormRelationsController::class . "@delete")->name('relation.delete');
+        FjordRoute::post('/relations/delete', FormRelationsController::class . "@delete")->name('relation.delete');
     }
 
     protected function mapMediaRoutes()

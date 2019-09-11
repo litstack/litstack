@@ -7,12 +7,12 @@
     @endisset
     >
     @isset($entry['children'])
-        <a href="#" class="fjord-navigation__has-children">
-            <div class="fjord-navigation__icon">
+        <a href="#" class="fj-navigation__has-children">
+            <div class="fj-navigation__icon">
                 {!!$entry['icon']!!}
             </div>
             {{$entry['title']}}
-            <i class="fas fa-caret-down text-muted fjord-navigation__down"></i>
+            <i class="fas fa-caret-down text-muted fj-navigation__down"></i>
         </a>
         <ul>
             @foreach ($entry['children'] as $entry)
@@ -23,7 +23,7 @@
     @else
         <a href="/{{ config('fjord.route_prefix') }}/{{$entry['link']}}">
             @isset($entry['icon'])
-                <div class="fjord-navigation__icon">
+                <div class="fj-navigation__icon">
                     {!!$entry['icon']!!}
                 </div>
             @endisset

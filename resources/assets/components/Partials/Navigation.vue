@@ -1,8 +1,16 @@
 <template>
-    <div class="container">
-        <ul class="fjord-navigation__parent">
+    <div :class="config.layout == 'horizontal' ? 'container' : ''">
+
+        <h6
+            v-if="config.layout == 'vertical'"
+            class="p-3 mb-0 text-secondary">
+            Navigation
+        </h6>
+
+        <ul class="fj-navigation__parent">
             <slot />
         </ul>
+
     </div>
 </template>
 
@@ -15,7 +23,7 @@ export default {
         return {};
     },
     computed: {
-        ...mapGetters(['baseURL'])
+        ...mapGetters(['baseURL', 'config'])
     },
     methods: {
         navClasses(item) {
@@ -38,14 +46,12 @@ export default {
             .replace('/', '-')
             .replace('/', '-');
 
-        console.log(location);
-
         let item = $(`.nav-${location}`);
 
-        item.addClass('fjord-navigation__is-active');
+        item.addClass('fj-navigation__is-active');
         //item.find($('ul')).toggle();
 
-        $('.fjord-navigation__has-children').on('mouseenter', function() {
+        $('.fj-navigation__has-children').on('mouseenter', function() {
             clearInterval(timer);
             $(this)
                 .closest('li')
@@ -56,18 +62,18 @@ export default {
         });
 
         $('body').on('mouseleave', '.active-parent', function() {
-            $('.fjord-navigation__parent .is-open')
+            $('.fj-navigation__parent .is-open')
                 .removeClass('is-open')
                 .slideUp(100);
         });
 
-        $('.fjord-navigation__parent').on('mouseleave', function() {
+        $('.fj-navigation__parent').on('mouseleave', function() {
             StartTimer();
         });
 
         function StartTimer() {
             timer = setInterval(function() {
-                $('.fjord-navigation__parent .is-open')
+                $('.fj-navigation__parent .is-open')
                     .removeClass('is-open')
                     .slideUp(100);
                 clearInterval(timer);
@@ -76,5 +82,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss" scoped></style>

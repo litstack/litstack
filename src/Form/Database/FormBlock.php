@@ -46,6 +46,30 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
         return true;
     }
 
+    public function form_field_relations($form_field)
+    {
+        return $this->formMany($form_field->model ?? '');
+    }
+
+    public function form_field_relation($form_field)
+    {
+        return (new Relations\EmptyRelation($form_field->query, $this))
+            ->where('id', $this->getTranslatedFormFieldValue($form_field));
+    }
+
+    public function getFormFieldRelation($form_field, $getQuery = false)
+    {
+        if ($form_field->many) {
+            return $getQuery
+                ? $this->form_field_relations($form_field)
+                : $this->form_field_relations($form_field)->get();
+        }
+
+        return $getQuery
+            ? $this->form_field_relation($form_field)
+            : $this->form_field_relation($form_field)->first();
+    }
+
     public function getTranslationAttribute()
     {
         return collect($this->getTranslationsArray())->map(function($item) {

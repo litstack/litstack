@@ -4,6 +4,8 @@ window.axios = require('axios');
 
 window.Vue = require('vue');
 
+window.Cropper = require('cropperjs');
+
 try {
     window.$ = window.jQuery = require('jquery');
 } catch (e) {}

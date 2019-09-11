@@ -3,6 +3,7 @@
 namespace AwStudio\Fjord\Form\Controllers;
 
 use AwStudio\Fjord\Support\Facades\FormLoader;
+use AwStudio\Fjord\Form\FormFieldCollection;
 use AwStudio\Fjord\Form\Database\FormField;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
@@ -22,25 +23,24 @@ class FormController extends Controller
 
     public function show(Request $request)
     {
-        [$collection, $form_name] = explode('.', str_replace('fjord.form.', '', Route::currentRouteName()));
+        [$collection, $formName] = explode('.', str_replace('fjord.form.', '', Route::currentRouteName()));
 
-        $formFields = $this->getFormFields($collection, $form_name);
+        $this->setForm($collection, $formName);
 
-        // dd($formFields['data']
-        //     ->where('field_id', 'preview_image')
-        //     ->first()
-        //     ->preview_image
-        //     ->first()
-        //     ->toArray()
-        // );
+        $eloquentFormFields = $this->getFormFields($collection, $formName);
 
-        return view('fjord::vue')->withComponent('form-show')
+        $this->form->setPreviewRoute(
+            new FormFieldCollection($eloquentFormFields['data'])
+        );
+
+        return view('fjord::vue')->withComponent('crud-show')
             ->withModels([
-                'formFields' => $formFields
+                'model' => $eloquentFormFields
             ])
-            ->withTitle(ucfirst($form_name))
+            ->withTitle($this->form->title)
             ->withProps([
-                'pageName' => $form_name,
+                'formConfig' => $this->form->toArray(),
+                'actions' => ['crud-action-preview']
             ]);
     }
 
@@ -48,15 +48,7 @@ class FormController extends Controller
     {
         $formFields = [];
 
-        $formFieldInstance = new FormField();
-        $formFieldInstance->collection = $collection;
-        $formFieldInstance->form_name = $form_name;
-
-        $form = FormLoader::load($formFieldInstance->form_fields_path, new FormField());
-
-        $page = require fjord_resource_path("{$collection}/{$form_name}.php");
-
-        foreach($form->fields as $key => $field) {
+        foreach($this->form->form_fields as $key => $field) {
 
             $formFields[$key] = FormField::firstOrCreate(
                 ['collection' => $collection, 'form_name' => $form_name, 'field_id' => $field->id],
@@ -78,5 +70,15 @@ class FormController extends Controller
         }
 
         return eloquentJs(collect($formFields), FormField::class);
+    }
+
+    protected function setForm($collection, $formName)
+    {
+        $formFieldInstance = new FormField();
+        $formFieldInstance->collection = $collection;
+        $formFieldInstance->form_name = $formName;
+
+        $this->formPath = $formFieldInstance->form_fields_path;
+        $this->form = FormLoader::load($this->formPath, FormField::class);
     }
 }

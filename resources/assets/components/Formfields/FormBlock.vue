@@ -94,7 +94,7 @@ export default {
                 type: 'success',
                 title: this.field.title,
                 text: `Added new ${type} block.`,
-                duration: 1500
+                duration: -1
             });
         },
         async deleteRepeatable(repeatable) {

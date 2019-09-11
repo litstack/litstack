@@ -3,9 +3,8 @@
         <template v-if="col.type == 'image'">
             <img :src="item[col.key]" style="max-width: 70px;">
         </template>
-        <template v-else>
-            {{ item[col.key] }}
-        </template>
+        <div v-else-if="'values' in col" v-html="getColValue(col, item[col.key])"/>
+        <div v-else v-html="format(col.key, item) "/>
     </div>
 </template>
 
@@ -20,6 +19,23 @@ export default {
         col: {
             required: true,
             type: Object
+        }
+    },
+    methods: {
+        getColValue(col, value) {
+            let checkValue = value
+            checkValue = checkValue === true ? '1' : checkValue
+            checkValue = checkValue === false ? '0' : checkValue
+
+            if(checkValue in col.values) {
+                return col.values[checkValue]
+            }
+
+            if('default' in col.values) {
+                return col.values.default
+            }
+
+            return value
         }
     }
 }
