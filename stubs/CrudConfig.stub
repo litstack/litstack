@@ -5,7 +5,7 @@ use \App\Models\DummyClassname;
 return [
     'preview_route' => [DummyClassname::class, 'getRoute'],
     'index' => [
-        'preview' => ['title'],
+        'preview' => ['{title}'],
         'search' => ['title', 'text', 'slug'],
         'sort_by' => [
             'id.desc' => 'New -> Old',
