@@ -107,11 +107,7 @@ trait LoadFields
             return false;
         }
 
-        $translationModel = $model->getTranslationModelName();
-        $translationTableName = with(new $translationModel)->getTable();
-        $tableCols = Schema::getColumnListing($translationTableName);
-
-        return in_array($field->id ,$tableCols);
+        return in_array($field->id, $model->translatedAttributes);
     }
 
 

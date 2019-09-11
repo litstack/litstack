@@ -29,7 +29,9 @@ export const actions = {
         if(state.modelsToSave.length > 0) {
             let collection = new EloquentCollection({data: []}, FjordModel)
             collection.items = collect(state.modelsToSave)
+
             let promise = collection.save()
+            
             promises.push(promise)
         }
 

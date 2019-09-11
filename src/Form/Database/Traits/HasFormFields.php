@@ -103,6 +103,7 @@ trait HasFormFields
     public function findFormField($id)
     {
         foreach($this->form_fields as $form_field) {
+
             if($form_field->id == $id) {
                 return $form_field;
             }

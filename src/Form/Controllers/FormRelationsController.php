@@ -14,13 +14,14 @@ class FormRelationsController extends FjordController
 {
     public function index(Request $request)
     {
+
         $model = with(new $request->model_type);
         if($request->model_id) {
             $model = $request->model_type::where('id', $request->model_id)->first();
         }
 
         $field = $model->findFormField($request->id);
-
+        
         return $field['query']->get();
     }
 

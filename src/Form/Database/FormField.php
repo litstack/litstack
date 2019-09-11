@@ -148,8 +148,8 @@ class FormField extends Model implements HasMedia, TranslatableContract
      */
      public function __call($method, $parameters)
      {
-         if($form_field = $this->findFormField($method)) {
-             return $this->getFormattedFormFieldValue($form_field, true);
+         if($method == ($this->form_field->id ?? '')) {
+             return $this->getFormattedFormFieldValue($this->form_field, true);
          }
 
          return parent::__call($method, $parameters);
