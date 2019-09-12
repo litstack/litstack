@@ -20,8 +20,11 @@ class DummyClassname extends FjordModel DummyImplement
 
     DummyGetAttributes
 
+    // The getRoute function is needed when your CRUD-Model does need a
+    // preview view, which is defined in the fjord-resources crud config file.
+    // In order to use it, you should define a named route in routes/web.php
     public function getRoute()
     {
-        return route('article', ['id' => $this->id]);
+        return route('DummyRoutename', ['id' => $this->id]);
     }
 }

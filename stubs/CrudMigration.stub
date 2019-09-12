@@ -22,9 +22,8 @@ class DummyClassname extends Migration
             // $table->string('title');
 
             DummySlug
-            DummySortable
 
-            $table->unsignedInteger('order_column')->nullable();
+            DummySortable
             $table->boolean('active')->default(true);
 
             $table->timestamps();
@@ -41,6 +40,6 @@ class DummyClassname extends Migration
     public function down()
     {
         Schema::dropIfExists('DummyTablename');
-        DummyDownTranslation
+        DummyTranslationDown
     }
 }
