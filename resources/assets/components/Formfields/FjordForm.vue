@@ -19,6 +19,13 @@
                         @changed="changed(field, m)"
                     />
 
+                    <fj-form-checkboxes
+                        v-if="field.type == 'checkboxes'"
+                        :model="m"
+                        :field="field"
+                        @changed="changed(field, m)"
+                    />
+
                     <fj-form-select
                         v-if="field.type == 'select'"
                         :field="field"

@@ -11,16 +11,25 @@ trait FormatFormFields
      *
      * @return void
      */
-    public function getFormattedFormFieldValue($form_field, $builder = false)
+    public function getFormattedFormFieldValue($form_field, $builder = false, $transform = true)
     {
         $value = $this->getTranslatedFormFieldValue($form_field);
-        $isJson = ($this->casts['value'] ?? null) == 'json';
 
-        if($form_field->attributeExists('transform')) {
+        $value = $this->transformFormFieldValues($form_field, $value, $builder);
+
+        if($form_field->attributeExists('transform') && $transform) {
             return $this->getTransformedFormFieldValueFromConfigCallback($form_field, $value, $builder);
         }
 
+        return $value;
+    }
+
+    protected function transformFormFieldValues($form_field, $value, $builder)
+    {
+        $isJson = ($this->casts['value'] ?? null) == 'json';
         switch($form_field->type ?? null) {
+            case 'checkboxes':
+                return json_decode($value) ?? [];
             case 'relation':
                 return $isJson
                     ? $this->getFormFieldRelation($form_field, $builder)

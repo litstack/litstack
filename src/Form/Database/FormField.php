@@ -128,16 +128,24 @@ class FormField extends Model implements HasMedia, TranslatableContract
             return $array;
         }
 
-        if(! in_array($form_field->type, ['boolean', 'block', 'relation', 'image'])) {
+        if(! in_array($form_field->type, ['boolean', 'block', 'relation', 'image', 'checkboxes'])) {
             return $array;
         }
 
-        $value = $this->getFormattedFormFieldValue($this->form_field);
+        $value = $this->getFormattedFormFieldValue($this->form_field, false, false);
 
-        if($form_field->type == 'boolean') {
+        if(in_array($form_field->type, ['checkboxes', 'boolean'])) {
+
+            // Formated casts (json, array, boolean, etc...) must be put back to
+            // their original place.
             $array['translation'][config('translatable.fallback_locale')]['value'] = $value;
+
         } else {
+
+            // For relations add $form_field->id as array_key and set the
+            // relation as value.
             $array[$form_field->id] = $value;
+
         }
 
         return $array;

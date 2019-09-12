@@ -15,7 +15,8 @@ class FormField implements ArrayAccess
         'block' => FormFields\Block::class,
         'relation' => FormFields\Relation::class,
         'select' => FormFields\Select::class,
-        'image' => FormFields\Image::class
+        'image' => FormFields\Image::class,
+        'checkboxes' => FormFields\Checkboxes::class,
     ];
 
     protected $attributes = [];
@@ -140,7 +141,7 @@ class FormField implements ArrayAccess
                 throw new \Exception("FormField callback in returns invalid attributes" . $info->getFileName() . " on line " . $info->getStartLine() . " - " . $info->getEndLine());
             }
         }
-        
+
         // Defaults.
         foreach($this->getFieldClass()::DEFAULTS as $key => $value) {
 

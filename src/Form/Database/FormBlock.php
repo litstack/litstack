@@ -125,16 +125,24 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
 
         foreach($this->form_fields as $form_field) {
 
-            if(! in_array($form_field->type, ['boolean', 'relation', 'image'])) {
+            if(! in_array($form_field->type, ['boolean', 'relation', 'image', 'checkboxes'])) {
                 continue;
             }
 
-            $value = $this->getFormattedFormFieldValue($form_field);
+            $value = $this->getFormattedFormFieldValue($form_field, false, false);
 
-            if($form_field->type == 'boolean') {
+            if(in_array($form_field->type, ['checkboxes', 'boolean'])) {
+
+                // Formated casts (json, array, boolean, etc...) must be put back to
+                // their original place.
                 $array['translation'][config('translatable.fallback_locale')][$form_field->id] = $value;
+
             } else {
+
+                // For relations add $form_field->id as array_key and set the
+                // relation as value.
                 $array[$form_field->id] = $value;
+
             }
             //$array[$form_field->id] = $this->getMedia($form_field->id)->toArray();
         }
