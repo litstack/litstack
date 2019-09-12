@@ -51,7 +51,6 @@ class FormFieldCollection extends Collection
             return $this->items[$key];
         }
 
-        //
         $form_field = $this->where('field_id', $key)->first();
 
         if(! $form_field) {
