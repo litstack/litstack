@@ -40,7 +40,7 @@ export default class TableModel
 
     _getTranslatedAttribute(key, attributes) {
         let lng = store.state.config.language
-        
+
         if(!('translation' in attributes)) {
             return attributes[key] || null
         }

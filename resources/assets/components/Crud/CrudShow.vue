@@ -77,7 +77,9 @@ export default {
         },
         actions: {
             type: Array,
-            default: []
+            default: () => {
+                return []
+            }
         }
     },
     data() {

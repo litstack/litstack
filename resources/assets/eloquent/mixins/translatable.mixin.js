@@ -77,13 +77,19 @@ let TranslatableMixin = Base => class extends Base
         for(let key in this.attributes[lng]) {
 
             if(this.getFormFieldById) {
+
                 let form_field = this.getFormFieldById(key)
+
                 if(form_field) {
                     if([
                         'image',
                         'block',
                         'relation'
                     ].includes(form_field.type)) {
+                        continue
+                    }
+
+                    if(!form_field.translatable) {
                         continue
                     }
                 }

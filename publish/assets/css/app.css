@@ -13066,6 +13066,7 @@ div#fjord-app .btn:focus {
 
 main {
   height: calc(100vh - 52px);
+  overflow: scroll;
 }
 
 main .card {
