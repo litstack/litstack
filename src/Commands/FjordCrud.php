@@ -43,7 +43,7 @@ class FjordCrud extends Command
         $m = $this->choice('does the model have media?', ['y', 'n'], 0) == 'y' ? true : false;
         $s = $this->choice('does the model have a slug?', ['y', 'n'], 0) == 'y' ? true : false;
         $t = $this->choice('does the model need to be translated?', ['y', 'n'], 0) == 'y' ? true : false;
-        $so = $this->choice('is the model sortable?', ['y', 'n'], 0) == 'y' ? true : false;
+        $so = $this->choice('does the model need to be sortable?', ['y', 'n'], 0) == 'y' ? true : false;
 
         $this->makeModel($modelName, $m, $s, $t);
         $this->makeMigration($modelName, $s, $t, $so);
@@ -56,8 +56,7 @@ class FjordCrud extends Command
         $this->info('3) make your model editable by adding it to the config/fjord-crud.php');
         $this->info('4) add a navigation entry to your config/fjord-navigation.php');
 
-        $this->call('route:cache');
-
+        $this->info("\nif your navigation entry doesn't appear, consider clearing your cache\n");
     }
 
     private function makeModel($modelName, $m, $s, $t)
@@ -75,6 +74,9 @@ class FjordCrud extends Command
         $builder = new StubBuilder(fjord_path('stubs/CrudModel.stub'));
 
         $builder->withClassname($modelName);
+
+        // getRoute routename
+        $builder->withRoutename(Str::snake(Str::plural($modelName)));
 
         // model has media
         if($m) {
@@ -197,7 +199,7 @@ class FjordCrud extends Command
         }
 
         if($so) {
-
+            $fileContents = str_replace('DummySortable', '$table->unsignedInteger'."('order_column')->nullable();", $fileContents);
         }
 
         $fileContents = str_replace('DummyClassname', "Create".ucfirst(str_plural($modelName))."Table", $fileContents);
