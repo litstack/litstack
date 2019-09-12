@@ -1,15 +1,6 @@
 <template>
     <fj-form-item :field="field">
-        <select
-            class="form-control"
-            :value="model[`${field.id}Model`]"
-            @input="handle($event.target.value)">
-            <option
-                :value="`${key}`"
-                v-for="(value, key) in options">
-                {{ value }}
-            </option>
-        </select>
+        <b-select :value="model[`${field.id}Model`]" :options="options" @input="changed"/>
         <slot />
     </fj-form-item>
 </template>
@@ -28,9 +19,14 @@ export default {
         },
     },
     methods: {
-        handle(val) {
+        changed(val) {
+            console.log('changed', val)
             this.model[`${this.field.id}Model`] = val
             this.$emit('changed')
+        },
+        handle(val) {
+            //t
+
         }
     },
     computed: {

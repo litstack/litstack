@@ -2,6 +2,9 @@
     small {
         margin-bottom: 13px;
     }
+    .badge {
+        transform: translateY(-2px);
+    }
     .ck.ck-editor {
         width: calc(100%);
         min-width: calc(100%);

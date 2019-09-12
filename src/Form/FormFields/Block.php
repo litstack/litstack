@@ -4,13 +4,19 @@ namespace AwStudio\Fjord\Form\FormFields;
 
 class Block
 {
+    /**
+     * Forces Translatable to be false.
+     *
+     * @var boolean
+     */
     const TRANSLATABLE = false;
 
     // TODO: 'type' => 'string' / 'type' => ['string', 'array']
     const REQUIRED = [
         'type',
         'id',
-        'repeatables'
+        'repeatables',
+        'title',
     ];
 
     const DEFAULTS = [

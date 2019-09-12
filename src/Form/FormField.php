@@ -156,6 +156,7 @@ class FormField implements ArrayAccess
             call_user_func_array([$this->getFieldClass(), 'prepare'], [$this, $this->path]);
         }
 
+        // Force
         if(! $this->getFieldClass()::TRANSLATABLE) {
             $this->setAttribute('translatable', false);
         }

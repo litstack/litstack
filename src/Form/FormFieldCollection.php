@@ -43,7 +43,7 @@ class FormFieldCollection extends Collection
         return $this->groupBy('form_name')->keys()->count() > 1;
     }
 
-    public function getAttribute($key)
+    public function getAttribute($key, $builder = false)
     {
         // Return values for array key if items is not a list.
         // This returns FormFields models
@@ -58,11 +58,16 @@ class FormFieldCollection extends Collection
             return;
         }
 
-        return $form_field->getFormattedFormFieldValue($form_field->form_field);
+        return $form_field->getFormattedFormFieldValue($form_field->form_field, $builder);
     }
 
     public function __get($key)
     {
         return $this->getAttribute($key);
+    }
+
+    public function __call($method, $attributes)
+    {
+        return $this->getAttribute($method, true);
     }
 }

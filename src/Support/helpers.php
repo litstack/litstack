@@ -74,3 +74,27 @@ if(! function_exists('fjord_view')) {
             : 'fjord::' . $name;
     }
 }
+
+if(! function_exists('call_func')) {
+    function call_func($method, array $params)
+    {
+        if(is_callable($method) && ! is_array($method)) {
+            return call_user_func_array($method, $params);
+        }
+
+        if(is_array($method)) {
+            $class = $method[0];
+            $method = $method[1];
+
+            return call_user_func_array([$class, $method], $params);
+        }
+        
+        if(is_string($method)) {
+            $split = explode('@', $method);
+            $class = $split[0];
+            $method = $split[1];
+
+            return call_user_func_array([$class, $method], $params);
+        }
+    }
+}

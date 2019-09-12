@@ -9,7 +9,8 @@ class Image
     // TODO: 'type' => 'string' / 'type' => ['string', 'array']
     const REQUIRED = [
         'type',
-        'id'
+        'id',
+        'title',
     ];
 
     const DEFAULTS = [

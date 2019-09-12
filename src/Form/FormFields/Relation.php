@@ -13,6 +13,7 @@ class Relation
         'id',
         'model',
         'preview',
+        'title',
     ];
 
     const DEFAULTS = [

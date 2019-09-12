@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display:900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,700&display=swap');
+
+$wysiwyg-serif: 'Playfair Display', serif;
+$wysiwyg-sans: 'Roboto', sans-serif;
+
+$h2-font-family: $wysiwyg-serif;
+$h2-font-weight: 900;
+$h2-font-size: 35px;
+$h2-color: #35285d;
+$h2-line-hight: 39px;
+
+$h3-font-family: $wysiwyg-sans;
+$h3-font-weight: 800;
+$h3-font-size: 20px;
+$h3-color: #119496;
+$h3-line-hight: 25px;
+
+$h4-font-family: $wysiwyg-sans;
+$h4-font-weight: 800;
+$h4-font-size: 18px;
+$h4-color: black;
+$h4-line-hight: 23px;
+
+$p-font-family: $wysiwyg-sans;
+$p-font-weight: 400;
+$p-font-size: 14px;
+$p-color: black;
+$p-line-hight: 22px;
+
+// Don't change anything below here
+//
+.ck-editor {
+    h2,
+    .ck-heading_heading1 > span {
+        font-family: $h2-font-family !important;
+        font-weight: $h2-font-weight !important;
+        font-size: $h2-font-size !important;
+        color: $h2-color !important;
+        line-height: $h2-line-hight !important;
+    }
+    h3,
+    .ck-heading_heading2 > span {
+        font-family: $h3-font-family !important;
+        font-weight: $h3-font-weight !important;
+        font-size: $h3-font-size !important;
+        color: $h3-color !important;
+        line-height: $h3-line-hight !important;
+    }
+    h4,
+    .ck-heading_heading3 > span {
+        font-family: $h4-font-family !important;
+        font-weight: $h4-font-weight !important;
+        font-size: $h4-font-size !important;
+        color: $h4-color !important;
+        line-height: $h4-line-hight !important;
+    }
+    p,
+    .ck-heading_paragraph > span {
+        font-family: $p-font-family !important;
+        font-weight: $p-font-weight !important;
+        font-size: $p-font-size !important;
+        color: $p-color !important;
+        line-height: $p-line-hight !important;
+    }
+}

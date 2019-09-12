@@ -9,7 +9,8 @@ class Select
     // TODO: 'type' => 'string' / 'type' => ['string', 'array']
     const REQUIRED = [
         'type',
-        'options'
+        'options',
+        'title',
     ];
 
     const DEFAULTS = [

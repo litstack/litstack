@@ -35,6 +35,8 @@
 // Quill Theme
 @import '~quill/dist/quill.snow.css';
 
+@import 'wysiwyg';
+
 body,
 html {
     background-color: $dark;
