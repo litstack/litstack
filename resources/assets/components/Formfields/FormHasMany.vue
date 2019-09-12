@@ -12,7 +12,7 @@
                         <fj-colgroup
                             :icons="['drag', 'trash']"
                             :cols="fields"/>
-                            
+
                         <draggable
                             v-model="relations"
                             @end="newOrder(relations)"
@@ -201,7 +201,7 @@ export default {
     beforeMount() {
         this.setFields()
 
-        let items = this.model[this.form_field.id] || []
+        let items = this.model[this.form_field.relationship] || []
 
         for(let i=0;i<items.length;i++) {
             this.addRelation(items[i])

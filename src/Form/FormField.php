@@ -140,7 +140,7 @@ class FormField implements ArrayAccess
                 throw new \Exception("FormField callback in returns invalid attributes" . $info->getFileName() . " on line " . $info->getStartLine() . " - " . $info->getEndLine());
             }
         }
-
+        
         // Defaults.
         foreach($this->getFieldClass()::DEFAULTS as $key => $value) {
 
@@ -157,7 +157,7 @@ class FormField implements ArrayAccess
         }
 
         // Force
-        if(! $this->getFieldClass()::TRANSLATABLE) {
+        if(defined($this->getFieldClass() . '::TRANSLATABLE') &&! $this->getFieldClass()::TRANSLATABLE) {
             $this->setAttribute('translatable', false);
         }
     }

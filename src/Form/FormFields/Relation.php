@@ -41,6 +41,10 @@ class Relation
 
         //$field = self::setKeys($field);
 
+        if(! $field->attributeExists('relationship')) {
+            $field->relationship = $field->id;
+        }
+
         return $field;
     }
 

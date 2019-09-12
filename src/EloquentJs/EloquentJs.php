@@ -11,7 +11,7 @@ class EloquentJs
     public function __construct($model, $class, string $type = 'fjord')
     {
         $this->type = $type;
-        $this->infoModel = new $class();
+        $this->infoModel = with(new $class());
         $this->model = $model;
         $this->setRelations();
     }

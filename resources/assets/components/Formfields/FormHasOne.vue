@@ -80,10 +80,11 @@ export default {
     },
     beforeMount() {
         this.setCols()
-        let relation = this.model[this.field.id]
+        let relation = this.model[this.field.relationship]
 
         if(relation) {
             this.relation = new TableModel(relation)
+            console.log(relation, this.relation)
         }
     },
     methods: {
@@ -102,7 +103,7 @@ export default {
             // TODO: remove save job if old one
             this.model[`${this.field.id}Model`] = item.id
             this.relation = item
-
+            
             this.$emit('changed')
             this.$bvModal.hide(this.modalId)
         },

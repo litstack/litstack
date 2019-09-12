@@ -110,7 +110,6 @@ class CrudController extends Controller
             ->withRelation('blocks')
             ->withFormRelations()
             ->findOrFail($id)
-            ->setFormRelations()
             ->eloquentJs('fjord');
 
         if(is_translatable($this->model)) {

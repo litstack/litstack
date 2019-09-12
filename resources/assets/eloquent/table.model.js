@@ -34,13 +34,13 @@ export default class TableModel
                 return
             }
             attribute = this._getTranslatedAttribute(key, attribute)
-
         }
         return attribute
     }
 
     _getTranslatedAttribute(key, attributes) {
         let lng = store.state.config.language
+        
         if(!('translation' in attributes)) {
             return attributes[key] || null
         }

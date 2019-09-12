@@ -36,8 +36,6 @@ class Form
     {
         $filteredItems = new FormFieldCollection([]);
 
-        dump($items->count());
-
         if($loadingName) {
 
             $ids = $this->getExistingFormFieldIds($items->first()->form_fields_path);

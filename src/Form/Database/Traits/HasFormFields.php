@@ -43,12 +43,14 @@ trait HasFormFields
         }
 
         $value = $form_field->type == 'relation'
-            ? $form_field->local_key
+            ? $this->{$form_field->relationship}
             : $this->getBlocks($form_field);
 
-        $this->setAttribute($form_field->id, $value);
+        // setAttribute
+        //$this->setAttribute($form_field->relationship, $value);
 
-        $this->withRelation($form_field->id);
+        // Add eloquentJs relation.
+        $this->withRelation($form_field->relationship);
 
         return $this;
     }
@@ -75,7 +77,7 @@ trait HasFormFields
     {
         $fillable = $this->getFillable();
 
-        if($form_field->type == 'relation') {
+        if($form_field->type == 'relation' && $form_field->many) {
             return true;
         }
 
@@ -147,7 +149,7 @@ trait HasFormFields
                 continue;
             }
 
-            $query->with($form_field->id);
+            $query->with($form_field->relationship);
         }
 
         return $query;
