@@ -22,6 +22,10 @@ import { ServerTable, ClientTable, Event } from 'vue-tables-2';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import BootstrapVue from 'bootstrap-vue';
 import VueI18n from 'vue-i18n'
+import VueCodemirror from 'vue-codemirror'
+
+// TODO: Remove from npm:
+import VueHighlightJS from 'vue-highlightjs'
 
 export default function VueBootstrap() {
 
@@ -51,6 +55,16 @@ export default function VueBootstrap() {
     Vue.use(CKEditor);
     Vue.use(BootstrapVue)
     Vue.use(VueI18n)
+    // TODO: Remove from npm:
+    Vue.use(VueHighlightJS)
+
+    // you can set default global options and events when use
+    // https://www.npmjs.com/package/vue-codemirror
+    Vue.use(VueCodemirror, /* {
+        options: { theme: 'base16-dark', ... },
+        events: ['scroll', ...]
+    } */)
+
 
     // prototypes
     Vue.prototype.$bus = Bus;

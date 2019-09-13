@@ -1,10 +1,11 @@
 <template>
     <form class="row" style="margin-bottom: -1.5em;">
         <template v-for="m in preparedModels">
-            <div
-                :class="fieldWidth(field)"
-                v-for="(field, index) in m.form_fields">
-                <template v-if="ids.length < 1 || ids.includes(field.id)">
+            <template v-for="(field, index) in m.form_fields">
+                <div
+                    :class="fieldWidth(field)"
+                    v-if="ids.length < 1 || ids.includes(field.id)"
+                >
                     <fj-form-input
                         v-if="field.type == 'input'"
                         :model="m"
@@ -47,6 +48,13 @@
                         @changed="changed(field, m)"
                     />
 
+                    <fj-form-code
+                        v-if="field.type == 'code'"
+                        :field="field"
+                        :model="m"
+                        @changed="changed(field, m)"
+                    />
+
                     <fj-form-media
                         v-if="field.type == 'image'"
                         :field="field"
@@ -71,16 +79,18 @@
                         <fj-form-has-many
                             v-if="field.many"
                             :form_field="field"
-                            :model="m"/>
+                            :model="m"
+                        />
 
                         <fj-form-has-one
                             v-else
                             :field="field"
                             :model="m"
-                            @changed="changed(field, m)"/>
+                            @changed="changed(field, m)"
+                        />
                     </template>
-                </template>
-            </div>
+                </div>
+            </template>
         </template>
     </form>
 </template>
@@ -106,7 +116,7 @@ export default {
         ids: {
             type: Array,
             default() {
-                return []
+                return [];
             }
         }
     },

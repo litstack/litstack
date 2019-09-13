@@ -1,11 +1,14 @@
 <template>
     <fj-form-item :field="field">
 
-        <b-input
-            class="form-control"
-            :value="model[`${field.id}Model`]"
-            :placeholder="field.placeholder"
-            @input="changed"/>
+        <b-input-group :size="field.size" :prepend="field.prepend" :append="field.append">
+            <b-input
+                class="form-control"
+                :value="model[`${field.id}Model`]"
+                :placeholder="field.placeholder"
+                :type="field.input_type"
+                @input="changed"/>
+        </b-input-group>
 
         <slot />
 
