@@ -23,9 +23,7 @@ import CKEditor from '@ckeditor/ckeditor5-vue';
 import BootstrapVue from 'bootstrap-vue';
 import VueI18n from 'vue-i18n'
 import VueCodemirror from 'vue-codemirror'
-
-// TODO: Remove from npm:
-import VueHighlightJS from 'vue-highlightjs'
+import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 
 export default function VueBootstrap() {
 
@@ -39,6 +37,7 @@ export default function VueBootstrap() {
     Vue.component('crud-index', CrudIndex);
     Vue.component('crud-show', CrudShow);
     Vue.component('crud-action-preview', CrudActionPreview);
+    Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 
     // FontAwesome
     library.add(far);
@@ -55,8 +54,6 @@ export default function VueBootstrap() {
     Vue.use(CKEditor);
     Vue.use(BootstrapVue)
     Vue.use(VueI18n)
-    // TODO: Remove from npm:
-    Vue.use(VueHighlightJS)
 
     // you can set default global options and events when use
     // https://www.npmjs.com/package/vue-codemirror

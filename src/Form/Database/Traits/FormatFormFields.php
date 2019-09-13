@@ -2,6 +2,7 @@
 
 namespace AwStudio\Fjord\Form\Database\Traits;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 trait FormatFormFields
@@ -28,6 +29,9 @@ trait FormatFormFields
     {
         $isJson = ($this->casts['value'] ?? null) == 'json';
         switch($form_field->type ?? null) {
+            case 'dt':
+            case 'datetime':
+                return Carbon::parse($value);
             case 'checkboxes':
                 return json_decode($value) ?? [];
             case 'relation':
