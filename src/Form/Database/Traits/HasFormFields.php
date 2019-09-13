@@ -8,11 +8,17 @@ use Spatie\MediaLibrary\Models\Media;
 
 trait HasFormFields
 {
-    public function blocks()
+    public function blocks(string $field_id = '')
     {
-        return $this->morphMany('AwStudio\Fjord\Form\Database\FormBlock', 'model')
+        $query = $this->morphMany('AwStudio\Fjord\Form\Database\FormBlock', 'model')
             ->with('translations')
             ->orderBy('order_column');
+
+        if($field_id) {
+            $query->where('field_id', $field_id);
+        }
+
+        return $query;
     }
 
     public function formMany($related)

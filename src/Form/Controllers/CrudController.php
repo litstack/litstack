@@ -106,15 +106,23 @@ class CrudController extends Controller
      */
     public function edit($id)
     {
-        $eloquentModel = $this->model::with($this->getWiths())
-            ->withRelation('blocks')
+        $model = $this->model::with($this->getWiths())
             ->withFormRelations()
-            ->findOrFail($id)
-            ->eloquentJs('fjord');
+            ->findOrFail($id);
 
         if(is_translatable($this->model)) {
-            $eloquentModel['data']->append('translation');
+            $model->append('translation');
         }
+
+        foreach($model->form_fields as $form_field) {
+            if($form_field->type == 'block') {
+                $model->withRelation($form_field->id);
+            }
+        }
+        
+        $eloquentModel = $model->eloquentJs('fjord');
+
+        $eloquentModel['data']->withRelation('blocks');
 
         $form = $this->getForm($eloquentModel['data']);
         $form->setPreviewRoute($eloquentModel['data']);
