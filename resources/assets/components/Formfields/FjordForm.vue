@@ -55,6 +55,13 @@
                         @changed="changed(field, m)"
                     />
 
+                    <fj-form-date-time
+                        v-if="field.type == 'datetime' || field.type == 'dt'"
+                        :field="field"
+                        :model="m"
+                        @changed="changed(field, m)"
+                    />
+
                     <fj-form-media
                         v-if="field.type == 'image'"
                         :field="field"

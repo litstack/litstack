@@ -4,7 +4,7 @@
             <img :src="item[col.key]" style="max-width: 70px;">
         </template>
         <div v-else-if="'values' in col" v-html="getColValue(col, item[col.key])"/>
-        <div v-else v-html="format(col.key, item) "/>
+        <div v-else v-html="_format(col.key, item) "/>
     </div>
 </template>
 

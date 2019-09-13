@@ -18,6 +18,9 @@ class FormField implements ArrayAccess
         'image' => FormFields\Image::class,
         'checkboxes' => FormFields\Checkboxes::class,
         'code' => FormFields\Code::class,
+        
+        'datetime' => FormFields\DateTime::class,
+        'dt' => FormFields\DateTime::class,
     ];
 
     protected $attributes = [];
