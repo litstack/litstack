@@ -52,8 +52,8 @@ div#fjord-app {
 }
 
 main {
-    height: calc(100vh - #{$topbar-height});
-    overflow: scroll;
+
+    
 
     .card {
         border-top: 3px solid $primary;

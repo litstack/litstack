@@ -13064,11 +13064,6 @@ div#fjord-app .btn:focus {
   box-shadow: none !important;
 }
 
-main {
-  height: calc(100vh - 52px);
-  overflow: scroll;
-}
-
 main .card {
   border-top: 3px solid #1584ff;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
