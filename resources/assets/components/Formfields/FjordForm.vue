@@ -47,6 +47,13 @@
                         @changed="changed(field, m)"
                     />
 
+                    <fj-form-code
+                        v-if="field.type == 'code'"
+                        :field="field"
+                        :model="m"
+                        @changed="changed(field, m)"
+                    />
+
                     <fj-form-media
                         v-if="field.type == 'image'"
                         :field="field"

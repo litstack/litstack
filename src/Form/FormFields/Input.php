@@ -2,6 +2,8 @@
 
 namespace AwStudio\Fjord\Form\FormFields;
 
+use Exception;
+
 class Input
 {
     const TRANSLATABLE = true;
@@ -14,6 +16,22 @@ class Input
     ];
 
     const DEFAULTS = [
-        'translatable' => false
+        'translatable' => false,
+        'input_type' => 'text',
     ];
+
+    const ALLOWED_INPUT_TYPES = [
+        'text',
+        'email',
+        'range',
+        'color'
+    ];
+
+    public static function prepare($field, $path)
+    {
+        if(! in_array($field->input_type, self::ALLOWED_INPUT_TYPES)) {
+            throw new Exception("Invalid form field input type \"{$field->input_type}\", allowed input types are: " . implode(', ', self::ALLOWED_INPUT_TYPES));
+        }
+    }
+
 }

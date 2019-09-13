@@ -17,6 +17,7 @@ class FormField implements ArrayAccess
         'select' => FormFields\Select::class,
         'image' => FormFields\Image::class,
         'checkboxes' => FormFields\Checkboxes::class,
+        'code' => FormFields\Code::class,
     ];
 
     protected $attributes = [];
