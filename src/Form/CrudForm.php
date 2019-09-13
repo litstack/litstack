@@ -81,7 +81,6 @@ class CrudForm
 
         $index['search'] = $this->getSearch($index);
 
-
         $this->attributes['index'] = $index;
     }
 
@@ -105,11 +104,13 @@ class CrudForm
 
     protected function compileSearchKey($key)
     {
+        if(! is_translatable($this->modelInstance)) {
+            return $key;
+        }
+        
         if(in_array($key, $this->modelInstance->translatedAttributes)) {
             return 'translations.' . $key;
         }
-
-
     }
 
     protected function setNames()

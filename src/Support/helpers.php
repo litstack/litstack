@@ -88,7 +88,7 @@ if(! function_exists('call_func')) {
 
             return call_user_func_array([$class, $method], $params);
         }
-        
+
         if(is_string($method)) {
             $split = explode('@', $method);
             $class = $split[0];
