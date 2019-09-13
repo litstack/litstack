@@ -1,11 +1,16 @@
 <template>
 <fj-form-item :field="field">
-    <codemirror :value="model[`${field.id}Model`]" :options="options" @input="changed"/>
+    <codemirror
+        :class="`fj-code-${field.id}`"
+        :value="model[`${field.id}Model`]"
+        :options="options"
+        @input="changed"
+        @blur="blur"
+        @focus="focus"/>
 </fj-form-item>
 </template>
 
 <script>
-//import 'codemirror/mode/javascript/javascript.js'
 import 'codemirror/lib/codemirror.css';
 
 const path = require('path');
@@ -41,7 +46,13 @@ export default {
         changed(value) {
             this.model[`${this.field.id}Model`] = value
             this.$emit('changed')
-        }
+        },
+        focus(cm) {
+            $(`.fj-code-${this.field.id}`).addClass('focus');
+        },
+        blur(cm) {
+            $(`.fj-code-${this.field.id}`).removeClass('focus');
+        },
     },
     data() {
         return {
@@ -121,8 +132,33 @@ export default {
 @import '~codemirror/theme/yonce.css';
 @import '~codemirror/theme/zenburn.css';
 
+@import '../../sass/variables';
+
 .vue-codemirror{
     width: 100%;
     font-size: 1rem;
+
+    @include border-radius($input-border-radius, 0);
+
+    &.focus{
+        color: $input-focus-color;
+        background-color: $input-focus-bg;
+        border-color: $input-focus-border-color;
+        outline: 0;
+        // Avoid using mixin so we can pass custom focus shadow properly
+        @if $enable-shadows {
+          box-shadow: $input-box-shadow, $input-focus-box-shadow;
+        } @else {
+          box-shadow: $input-focus-box-shadow;
+        }
+    }
+
+    .CodeMirror {
+        @include border-radius($input-border-radius, 0);
+        height: auto;
+        min-height: 200px;
+
+    }
+
 }
 </style>
