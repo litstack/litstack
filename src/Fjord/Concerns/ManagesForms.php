@@ -25,7 +25,7 @@ trait ManagesForms
     public function forms($name)
     {
         $files = glob(fjord_resource_path("{$name}/*.php"));
-        
+
         return collect($files)->mapWithKeys(function($path) {
             return [str_replace('.php', '', basename($path)) => $path];
         });

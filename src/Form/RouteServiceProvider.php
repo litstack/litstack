@@ -10,6 +10,7 @@ use AwStudio\Fjord\Form\Controllers\MediaController;
 use AwStudio\Fjord\Form\Controllers\FormController;
 use AwStudio\Fjord\Form\Controllers\FormBlockController;
 use AwStudio\Fjord\Form\Controllers\FormRelationsController;
+use AwStudio\Fjord\Support\Facades\FormLoader;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -35,8 +36,15 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapCrudRoutes()
     {
-        foreach(Fjord::cruds() as $key => $crud) {
+        foreach(Fjord::forms('crud') as $crud => $path) {
+            $crudArray = require $path;
+
+
             $controllerClass = ucfirst(Str::camel(Str::singular($crud))) . "Controller";
+            if(array_key_exists('controller', $crudArray)) {
+                $controllerClass = $crudArray['controller'];
+            }
+
             $namespace = "\\App\\Http\\Controllers\\Fjord\\{$controllerClass}";
 
             FjordRoute::resource(config('fjord.route_prefix') . "/{$crud}", $namespace)

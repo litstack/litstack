@@ -188,7 +188,7 @@ class FjordCrud extends Command
             $fileContents = str_replace('DummyForeignId', Str::singular($tableName) . '_id', $fileContents);
         }else{
             $fileContents = str_replace('DummyTranslation', '', $fileContents);
-            $fileContents = str_replace('DummyTranslationDown', '', $fileContents);
+            $fileContents = str_replace('DummyDownTranslation', '', $fileContents);
         }
 
         // model has slug
@@ -200,6 +200,8 @@ class FjordCrud extends Command
 
         if($so) {
             $fileContents = str_replace('DummySortable', '$table->unsignedInteger'."('order_column')->nullable();", $fileContents);
+        }else{
+            $fileContents = str_replace('DummySortable', '', $fileContents);
         }
 
         $fileContents = str_replace('DummyClassname', "Create".ucfirst(str_plural($modelName))."Table", $fileContents);
