@@ -5,6 +5,8 @@ namespace AwStudio\Fjord\Commands;
 use AwStudio\Fjord\Filesystem\StubBuilder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class FjordCrud extends Command
 {
@@ -49,6 +51,7 @@ class FjordCrud extends Command
         $this->makeMigration($modelName, $s, $t, $so);
         $this->makeController($modelName);
         $this->makeConfig($modelName);
+        $this->makePermissions($modelName);
 
         $this->info("\n----- finished -----\n");
         $this->info('1) edit the generated migration and migrate');
@@ -57,6 +60,25 @@ class FjordCrud extends Command
         $this->info('4) add a navigation entry to your config/fjord-navigation.php');
 
         $this->info("\nif your navigation entry doesn't appear, consider clearing your cache\n");
+    }
+
+    private function makePermissions($modelName)
+    {
+        $name = Str::snake(Str::plural($modelName));
+        $admin = Role::where('name', 'admin')->first();
+
+        $permissions = [
+            'create ' . $name,
+            'read ' . $name,
+            'update ' . $name,
+            'delete ' . $name
+        ];
+
+        // create permissions and give them to admin
+        foreach ($permissions as $permission) {
+            Permission::create(['name' => $permission]);
+            $admin->givePermissionTo($permission);
+        }
     }
 
     private function makeModel($modelName, $m, $s, $t)

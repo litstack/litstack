@@ -6,6 +6,10 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use AwStudio\Fjord\Models\ModelContent;
 use AwStudio\Fjord\Support\Facades\FormLoader;
+use AwStudio\Fjord\Form\Requests\CrudCreateRequest;
+use AwStudio\Fjord\Form\Requests\CrudReadRequest;
+use AwStudio\Fjord\Form\Requests\CrudUpdateRequest;
+use AwStudio\Fjord\Form\Requests\CrudDeleteRequest;
 
 class CrudController extends Controller
 {
@@ -56,7 +60,7 @@ class CrudController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(CrudReadRequest $request)
     {
         return view('fjord::vue')->withComponent('crud-index')
             ->withTitle($this->titleSingular)
@@ -70,20 +74,20 @@ class CrudController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function create()
-     {
-         $className = $this->model;
-         $model = new $className();
+    public function create(CrudCreateRequest $request)
+    {
+        $className = $this->model;
+        $model = new $className();
 
-         return view('fjord::vue')->withComponent('crud-show')
-             ->withTitle('edit ' . $this->titleSingular)
-             ->withModels([
-                 'model' => $model->eloquentJs('fjord'),
-             ])
-             ->withProps([
-                 'formConfig' => $this->getForm($model)->toArray()
-             ]);;
-     }
+        return view('fjord::vue')->withComponent('crud-show')
+            ->withTitle('edit ' . $this->titleSingular)
+            ->withModels([
+                'model' => $model->eloquentJs('fjord'),
+            ])
+            ->withProps([
+                'formConfig' => $this->getForm($model)->toArray()
+            ]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -104,7 +108,7 @@ class CrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(CrudUpdateRequest $request, $id)
     {
         $model = $this->model::with($this->getWiths())
             ->withFormRelations()
@@ -119,7 +123,7 @@ class CrudController extends Controller
                 $model->withRelation($form_field->id);
             }
         }
-        
+
         $eloquentModel = $model->eloquentJs('fjord');
 
         $eloquentModel['data']->withRelation('blocks');
@@ -152,7 +156,7 @@ class CrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CrudUpdateRequest $request, $id)
     {
         $item = $this->model::with($this->getWiths())->findOrFail($id);
         $item->update($request->all());
@@ -170,13 +174,13 @@ class CrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(CrudDeleteRequest $request, $id)
     {
         $item = $this->model::findOrFail($id);
         $item->delete();
     }
 
-    public function deleteAll(Request $request)
+    public function deleteAll(CrudDeleteRequest $request)
     {
         $this->model::whereIn('id', $request->ids)->delete();
     }

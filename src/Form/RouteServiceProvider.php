@@ -11,6 +11,7 @@ use AwStudio\Fjord\Form\Controllers\FormController;
 use AwStudio\Fjord\Form\Controllers\FormBlockController;
 use AwStudio\Fjord\Form\Controllers\FormRelationsController;
 use AwStudio\Fjord\Support\Facades\FormLoader;
+use AwStudio\Fjord\Fjord\Controllers\RolePermissionController;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -32,6 +33,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->mapFormBlockRoutes();
         $this->mapFormRelationRoutes();
         $this->mapMediaRoutes();
+        $this->mapRolePermissionRoutes();
     }
 
     protected function mapCrudRoutes()
@@ -100,5 +102,10 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::put('/media/attributes', MediaController::class . '@attributes')->name('media.attributes');
         FjordRoute::post('/media', MediaController::class . '@store')->name('media.store');
         FjordRoute::delete('/media/{medium}', MediaController::class . '@destroy')->name('media.destroy');
+    }
+
+    protected function mapRolePermissionRoutes()
+    {
+        FjordRoute::put('/role_permissions', RolePermissionController::class . '@update')->name('role_permissions.update');
     }
 }
