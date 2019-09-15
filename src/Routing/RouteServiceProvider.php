@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use AwStudio\Fjord\Auth\AuthController;
 use AwStudio\Fjord\Fjord\Controllers\FjordController;
 use AwStudio\Fjord\Fjord\Controllers\RolePermissionController;
-use AwStudio\Fjord\Fjord\Controllers\UserController;
+use AwStudio\Fjord\Fjord\Controllers\UserRoleController;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -23,6 +23,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->mapAuthRoutes();
         $this->mapFjordRoutes();
         $this->mapUserRoutes();
+        $this->mapRolePermissionRoutes();
+        $this->mapUserRoleRoutes();
     }
 
     protected function mapAuthRoutes()
@@ -56,7 +58,20 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapUserRoutes()
     {
+        //
+    }
+
+    protected function mapRolePermissionRoutes()
+    {
         FjordRoute::get('/role-permissions', RolePermissionController::class . '@index')
             ->name('role-permissions');
+        FjordRoute::put('/role_permissions', RolePermissionController::class . '@update')->name('role_permissions.update');
+    }
+
+    protected function mapUserRoleRoutes()
+    {
+        FjordRoute::get('/user-roles', UserRoleController::class . '@index')
+            ->name('user-roles');
+        FjordRoute::put('/user_roles', UserRoleController::class . '@update')->name('user_role.update');
     }
 }

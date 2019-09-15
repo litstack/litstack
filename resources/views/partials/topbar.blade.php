@@ -24,8 +24,12 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item"
+                   href="{{route('fjord.user-roles')}}">
+                    <i class="fas fa-user-tag mr-2"></i> User-Roles
+                </a>
+                <a class="dropdown-item"
                    href="{{route('fjord.role-permissions')}}">
-                    <i class="fas fa-user-tag"></i> Role-Permissions
+                    <i class="fas fa-user-tag mr-2"></i> Role-Permissions
                 </a>
             </div>
         </div>

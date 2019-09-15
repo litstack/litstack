@@ -33,7 +33,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->mapFormBlockRoutes();
         $this->mapFormRelationRoutes();
         $this->mapMediaRoutes();
-        $this->mapRolePermissionRoutes();
+
     }
 
     protected function mapCrudRoutes()
@@ -104,8 +104,4 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::delete('/media/{medium}', MediaController::class . '@destroy')->name('media.destroy');
     }
 
-    protected function mapRolePermissionRoutes()
-    {
-        FjordRoute::put('/role_permissions', RolePermissionController::class . '@update')->name('role_permissions.update');
-    }
 }

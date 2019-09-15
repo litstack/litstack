@@ -13,7 +13,7 @@ class RolePermissionController extends Controller
 {
     public function index()
     {
-        // TODO: Role/Permission Table
+        // TODO: auth
         return view('fjord::vue')->withComponent('role-permissions')
             ->withTitle('Users')
             ->withProps([
