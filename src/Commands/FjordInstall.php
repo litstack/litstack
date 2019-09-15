@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 
 class FjordInstall extends Command
 {
+    use Traits\RolesAndPermissions;
+
     /**
      * The name and signature of the console command.
      *
@@ -46,8 +48,8 @@ class FjordInstall extends Command
         $this->handleFjordPublishable();
         $this->handleFjordResources();
 
-        $role = Role::firstOrCreate(['name' => 'admin']);
-        $role = Role::firstOrCreate(['name' => 'user']);
+        $this->createDefaultRoles();
+        $this->createDefaultPermissions();
 
         $this->call('storage:link');
 
@@ -60,7 +62,7 @@ class FjordInstall extends Command
         // the resource path itself, which is present for shure
         $this->call('config:cache');
 
-        
+
         if(is_dir(fjord_resource_path())) {
             return;
         }

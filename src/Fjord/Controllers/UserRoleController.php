@@ -7,11 +7,12 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 use AwStudio\Fjord\Fjord\Models\ModelRole;
-use AwStudio\Fjord\Fjord\Requests\UserRoleUpdateRequest;
+use AwStudio\Fjord\Fjord\Requests\UpdateUserRoleRequest;
+use AwStudio\Fjord\Fjord\Requests\IndexUserRoleRequest;
 
 class UserRoleController extends Controller
 {
-    public function index()
+    public function index(IndexUserRoleRequest $request)
     {
         return view('fjord::vue')->withComponent('user-roles')
             ->withTitle('Users')
@@ -22,7 +23,7 @@ class UserRoleController extends Controller
             ]);
     }
 
-    public function update(UserRoleUpdateRequest $request)
+    public function update(UpdateUserRoleRequest $request)
     {
         $user = User::findOrFail($request->user['id']);
         $role = Role::findOrFail($request->role['id']);

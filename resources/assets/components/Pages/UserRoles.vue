@@ -1,6 +1,6 @@
 <template>
     <fj-container>
-        <fj-header :title="'User-Roles'"></fj-header>
+        <fj-header :title="'Roles'"></fj-header>
         <div class="card">
             <div class="card-body">
                 <table class="table table-hover">

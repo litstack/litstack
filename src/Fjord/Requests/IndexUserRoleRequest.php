@@ -4,7 +4,7 @@ namespace AwStudio\Fjord\Fjord\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RolePermissionUpdateRequest extends FormRequest
+class IndexUserRoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,8 +13,7 @@ class RolePermissionUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        // TODO: 
-        return true;
+        return auth()->user()->can('read user-roles');
     }
 
     /**

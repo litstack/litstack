@@ -1,6 +1,6 @@
 <template>
     <fj-container>
-        <fj-header :title="'Role-Permissions'"></fj-header>
+        <fj-header :title="'Permissions'"></fj-header>
         <div class="card">
             <div class="card-body">
                 <table class="table table-hover">

@@ -23,14 +23,18 @@
                 <i class="fas fa-user-friends"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
+                @can('read user-roles')
                 <a class="dropdown-item"
                    href="{{route('fjord.user-roles')}}">
-                    <i class="fas fa-user-tag mr-2"></i> User-Roles
+                    <i class="fas fa-address-card"></i> Roles
                 </a>
+                @endcan
+                @can('read role-permissions')
                 <a class="dropdown-item"
                    href="{{route('fjord.role-permissions')}}">
-                    <i class="fas fa-user-tag mr-2"></i> Role-Permissions
+                    <i class="fas fa-key"></i> Permissions
                 </a>
+                @endcan
             </div>
         </div>
         @foreach(fjord()->getNavigation('topbar') as $entry) <a class="fj-topbar_link mr-4"

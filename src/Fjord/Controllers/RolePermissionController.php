@@ -7,11 +7,12 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use AwStudio\Fjord\Fjord\Models\RolePermission;
-use AwStudio\Fjord\Fjord\Requests\RolePermissionUpdateRequest;
+use AwStudio\Fjord\Fjord\Requests\UpdateRolePermissionRequest;
+use AwStudio\Fjord\Fjord\Requests\IndexRolePermissionRequest;
 
 class RolePermissionController extends Controller
 {
-    public function index()
+    public function index(IndexRolePermissionRequest $request)
     {
         // TODO: auth
         return view('fjord::vue')->withComponent('role-permissions')
@@ -23,7 +24,7 @@ class RolePermissionController extends Controller
             ]);
     }
 
-    public function update(RolePermissionUpdateRequest $request)
+    public function update(UpdateRolePermissionRequest $request)
     {
         $role = Role::findOrFail($request->role['id']);
         $permission = $request->permission['name'];
