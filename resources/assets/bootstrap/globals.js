@@ -8,6 +8,7 @@ window.Cropper = require('cropperjs');
 
 try {
     window.$ = window.jQuery = require('jquery');
+    require('bootstrap');
 } catch (e) {}
 
 const token = document.head.querySelector('meta[name="csrf-token"]');

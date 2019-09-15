@@ -8,7 +8,7 @@ import CrudShow from './../components/Crud/CrudShow';
 import CrudIndex from './../components/Crud/CrudIndex';
 import CrudActionPreview from './../components/Crud/CrudActionPreview';
 
-import RolesPermissions from './../components/Pages/RolesPermissions';
+import RolePermissions from './../components/Pages/RolePermissions';
 
 // FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -48,7 +48,7 @@ export default function VueBootstrap() {
     Vue.component('crud-show', CrudShow);
     Vue.component('crud-action-preview', CrudActionPreview);
     Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
-    Vue.component('roles-permissions', RolesPermissions);
+    Vue.component('role-permissions', RolePermissions);
 
     // FontAwesome
     library.add(far);

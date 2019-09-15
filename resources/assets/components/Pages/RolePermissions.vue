@@ -3,17 +3,17 @@
         <fj-header :title="'Role-Permissions'"></fj-header>
         <div class="card">
             <div class="card-body">
-                <table class="table table-sm">
+                <table class="table table-hover">
                     <thead>
                         <tr>
-                            <td></td>
-                            <td v-for="role in roles">
-                                {{ role.name }}
-                            </td>
+                            <th scope="col">Permission</th>
+                            <th scope="col" v-for="role in roles">
+                                {{ role.name.capitalize() }}
+                            </th>
                         </tr>
                     </thead>
                     <tr v-for="permission in permissions">
-                        <td>{{ permission.name }}</td>
+                        <th scope="row">{{ permission.name.capitalize() }}</th>
                         <td v-for="role in roles">
                             <b-form-checkbox
                                 v-model="
@@ -36,7 +36,7 @@
 
 <script>
 export default {
-    name: 'RolesPermissions',
+    name: 'RolePermissions',
     props: {
         roles: {
             type: Array

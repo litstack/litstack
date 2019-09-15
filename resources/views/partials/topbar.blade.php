@@ -12,10 +12,23 @@
     @guest
     @else
     <div>
-        <a class="fjord-topbar_link mr-4"
-           href="{{route('fjord.users')}}">
-            <i class="fas fa-user-friends"></i>
-        </a>
+
+        <div class="btn-group mr-4">
+            <button
+                type="button"
+                class="btn btn-sm btn-transparent dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+                <i class="fas fa-user-friends"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item"
+                   href="{{route('fjord.role-permissions')}}">
+                    <i class="fas fa-user-tag"></i> Role-Permissions
+                </a>
+            </div>
+        </div>
         @foreach(fjord()->getNavigation('topbar') as $entry) <a class="fj-topbar_link mr-4"
                href="/{{ config('fjord.route_prefix') }}/{{ $entry['link'] }}"> {!! $entry['icon'] !!} </a>
             @endforeach
