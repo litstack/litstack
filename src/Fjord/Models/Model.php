@@ -13,6 +13,10 @@ class Model extends LaravelModel
 
     public function translatedAttributes()
     {
+        if(! is_translatable($this)) {
+            return [];
+        }
+
         return $this->translatedAttributes;
     }
 }
