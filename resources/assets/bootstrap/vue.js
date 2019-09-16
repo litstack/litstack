@@ -55,6 +55,10 @@ export default function VueBootstrap() {
     Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
     Vue.component('role-permissions', RolePermissions);
     Vue.component('user-roles', UserRoles);
+    Vue.component(
+        'dashboard',
+        require('./../components/Pages/Dashboard').default
+    );
 
     // FontAwesome
     library.add(far);

@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Route;
 use AwStudio\Fjord\Auth\AuthController;
 use AwStudio\Fjord\Form\Crud;
 use AwStudio\Fjord\Fjord\Controllers\FjordController;
-use AwStudio\Fjord\Fjord\Controllers\RolePermissionController;
-use AwStudio\Fjord\Fjord\Controllers\UserRoleController;
+use AwStudio\Fjord\Fjord\Controllers\DashboardController;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -42,7 +41,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     protected function mapFjordRoutes()
     {
         FjordRoute::group(function() {
-            Route::view('/', 'fjord::app')->name('dashboard');
+            Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         });
 
         FjordRoute::put('/order', FjordController::class . '@order')

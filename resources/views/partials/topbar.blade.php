@@ -1,6 +1,6 @@
 <nav class="fj-topbar justify-content-between align-items-center">
     <div>
-        <a href="#"
+        <a href="{{route('fjord.dashboard')}}"
            class="fjord-brand">
             <img src="{{asset('fjord/images/fjord-logo.png')}}"
                  class="img-fluid"

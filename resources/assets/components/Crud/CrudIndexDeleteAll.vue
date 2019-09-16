@@ -1,6 +1,5 @@
 <template>
-    <b-dropdown-item
-        @click="deleteAll">
+    <b-dropdown-item @click="deleteAll">
         Delete {{ selectedItems.length }} Items
     </b-dropdown-item>
 </template>
@@ -23,12 +22,14 @@ export default {
     },
     methods: {
         deleteAll() {
-            this.sendAction(`${this.formConfig.names.table}/delete-all`, this.selectedItems)
-            this.$bus.$emit('reloadCrudIndex')
+            this.sendAction(
+                `${this.formConfig.names.table}/delete-all`,
+                this.selectedItems
+            );
+            this.$bus.$emit('reloadCrudIndex');
         }
     }
-}
+};
 </script>
 
-<style lang="css" scoped>
-</style>
+<style lang="css" scoped></style>

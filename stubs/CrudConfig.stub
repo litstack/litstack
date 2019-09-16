@@ -1,9 +1,9 @@
 <?php
 
-use \App\Models\DummyClassname;
+//use \App\Models\DummyClassname;
 
 return [
-    'preview_route' => [DummyClassname::class, 'getRoute'],
+    //'preview_route' => [DummyClassname::class, 'getRoute'],
     'index' => [
         'preview' => ['{title}'],
         'search' => ['title', 'text', 'slug'],
@@ -17,13 +17,15 @@ return [
     'form_fields' => [
         /*
         [
-            'type' => 'input',
-            'id' => 'title',
-            'max' => 60,
-            'title' => 'Title',
-            'placeholder' => 'Title',
-            'hint' => 'The title neeeds to be filled',
-            'width' => 8
+            [
+                'type' => 'input',
+                'id' => 'title',
+                'max' => 60,
+                'title' => 'Title',
+                'placeholder' => 'Title',
+                'hint' => 'The title neeeds to be filled',
+                'width' => 8
+            ]
         ]
         */
     ]
