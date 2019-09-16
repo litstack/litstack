@@ -23,8 +23,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     {
         $this->mapAuthRoutes();
         $this->mapFjordRoutes();
-        $this->mapRolePermissionRoutes();
-        $this->mapUserRoleRoutes();
     }
 
     protected function mapAuthRoutes()
@@ -54,19 +52,5 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             ->namespace($this->namespace)
             ->middleware('web')
             ->group(fjord_path('routes/fjord.php'));
-    }
-
-    protected function mapRolePermissionRoutes()
-    {
-        FjordRoute::get('/role-permissions', RolePermissionController::class . '@index')
-            ->name('role-permissions');
-        FjordRoute::put('/role_permissions', RolePermissionController::class . '@update')->name('role_permissions.update');
-    }
-
-    protected function mapUserRoleRoutes()
-    {
-        FjordRoute::get('/user-roles', UserRoleController::class . '@index')
-            ->name('user-roles');
-        FjordRoute::put('/user_roles', UserRoleController::class . '@update')->name('user_role.update');
     }
 }
