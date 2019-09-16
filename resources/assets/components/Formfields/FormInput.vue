@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field">
+    <fj-form-item :field="field" :model="model">
 
         <b-input-group :size="field.size" :prepend="field.prepend" :append="field.append">
             <b-input

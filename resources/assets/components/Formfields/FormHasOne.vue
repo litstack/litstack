@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field">
+    <fj-form-item :field="field" :model="model">
 
         <b-card class="fjord-block no-fx mb-2">
             <b-table-simple
@@ -103,7 +103,7 @@ export default {
             // TODO: remove save job if old one
             this.model[`${this.field.id}Model`] = item.id
             this.relation = item
-            
+
             this.$emit('changed')
             this.$bvModal.hide(this.modalId)
         },

@@ -1,5 +1,5 @@
 <template>
-<fj-form-item :field="field">
+<fj-form-item :field="field" :model="model">
     <codemirror
         :class="`fj-code-${field.id}`"
         :value="model[`${field.id}Model`]"
