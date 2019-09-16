@@ -156,8 +156,6 @@ export default {
     .CodeMirror {
         @include border-radius($input-border-radius, 0);
         height: auto;
-        min-height: 200px;
-
     }
 
 }

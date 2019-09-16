@@ -2,6 +2,10 @@
 
 namespace AwStudio\Fjord\Routing;
 
+use Form;
+use ReflectionClass;
+use ReflectionMethod;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 
 class Router
@@ -27,5 +31,27 @@ class Router
         return Route::prefix(config('fjord.route_prefix'))
             ->as('fjord.')
             ->middleware('web');
+    }
+
+    /**
+     * Register crud action routes.
+     *
+     * @param  string $crud
+     * @param  string $namespace
+     *
+     * @return
+     */
+    public function extensionRoutes(string $class)
+    {
+        $reflection = new ReflectionClass($class);
+
+        foreach($reflection->getMethods() as $method) {
+            if(! Str::startsWith($method->name, 'make') && ! Str::endsWith($method->name, 'Route')) {
+                continue;
+            }
+
+            $instance = with(new $class());
+            call_user_func_array([$instance, $method->name], []);
+        }
     }
 }

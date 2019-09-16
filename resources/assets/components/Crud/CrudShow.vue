@@ -33,7 +33,8 @@
                     v-for="(component, key) in actions"
                     :key="key"
                     :is="component"
-                    :config="formConfig"/>
+                    :formConfig="formConfig"
+                    :model="model"/>
 
             </div>
         </fj-header>
@@ -41,7 +42,16 @@
         <b-row>
             <b-col cols="12" md="9" order-md="1">
                 <b-row class="fjord-form">
-                    <b-col cols="12">
+
+
+                        <component
+                            v-for="(component, key) in content"
+                            :key="key"
+                            :is="component"
+                            :formConfig="formConfig"
+                            :model="model"
+                        />
+                        <!--
                         <b-card
                             v-for="(ids, key) in formConfig.layout"
                             :key="key"
@@ -50,7 +60,8 @@
                                 :ids="ids"
                                 :model="model"/>
                         </b-card>
-                    </b-col>
+                        -->
+
                 </b-row>
             </b-col>
 
@@ -76,6 +87,12 @@ export default {
             type: Object
         },
         actions: {
+            type: Array,
+            default: () => {
+                return []
+            }
+        },
+        content: {
             type: Array,
             default: () => {
                 return []

@@ -2,6 +2,7 @@
 
 namespace AwStudio\Fjord\Form;
 
+use Form;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use AwStudio\Fjord\Support\Facades\FormLoader;
@@ -107,7 +108,7 @@ class CrudForm
         if(! is_translatable($this->modelInstance)) {
             return $key;
         }
-        
+
         if(in_array($key, $this->modelInstance->translatedAttributes)) {
             return 'translations.' . $key;
         }
@@ -268,5 +269,10 @@ class CrudForm
     public function __get($key)
     {
         return $this->getAttribute($key);
+    }
+
+    public function setAttribute($key, $value)
+    {
+        $this->attributes[$key] = $value;
     }
 }

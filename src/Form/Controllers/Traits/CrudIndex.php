@@ -37,4 +37,18 @@ trait CrudIndex
 
         return $items;
     }
+
+    protected function getWiths()
+    {
+        $withs = [];
+
+        if(has_media($this->model)) {
+            $withs []= 'media';
+        }
+        if(is_translatable($this->model)) {
+            $withs []= 'translations';
+        }
+
+        return $withs;
+    }
 }

@@ -6,7 +6,9 @@ import Fjord from './../common/fjord';
 
 import CrudShow from './../components/Crud/CrudShow';
 import CrudIndex from './../components/Crud/CrudIndex';
-import CrudActionPreview from './../components/Crud/CrudActionPreview';
+import CrudShowPreview from './../components/Crud/CrudShowPreview';
+import CrudShowForm from './../components/Crud/CrudShowForm';
+import CrudIndexDeleteAll from './../components/Crud/CrudIndexDeleteAll';
 
 import RolePermissions from './../components/Pages/RolePermissions';
 import UserRoles from './../components/Pages/UserRoles';
@@ -47,7 +49,9 @@ export default function VueBootstrap() {
 
     Vue.component('crud-index', CrudIndex);
     Vue.component('crud-show', CrudShow);
-    Vue.component('crud-action-preview', CrudActionPreview);
+    Vue.component('crud-show-preview', CrudShowPreview);
+    Vue.component('crud-show-form', CrudShowForm);
+    Vue.component('crud-index-delete-all', CrudIndexDeleteAll);
     Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
     Vue.component('role-permissions', RolePermissions);
     Vue.component('user-roles', UserRoles);

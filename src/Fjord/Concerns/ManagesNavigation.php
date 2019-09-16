@@ -8,4 +8,9 @@ trait ManagesNavigation
     {
         return require fjord_resource_path(config('fjord.navigation_path') . "/{$name}.php");
     }
+
+    protected function loadNavigation()
+    {
+
+    }
 }

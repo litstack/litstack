@@ -23,6 +23,7 @@
                 <i class="fas fa-user-friends"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
+
                 @can('read user-roles')
                 <a class="dropdown-item"
                    href="{{route('fjord.user-roles')}}">

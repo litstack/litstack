@@ -98,3 +98,11 @@ if(! function_exists('call_func')) {
         }
     }
 }
+
+if(! function_exists('camel_space_case')) {
+    function camel_space_case($string) {
+        return collect(explode('_', Str::snake($string)))->map(function($item) {
+            return ucfirst($item);
+        })->implode(' ');
+    }
+}

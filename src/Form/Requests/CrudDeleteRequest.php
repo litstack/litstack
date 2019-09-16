@@ -15,6 +15,7 @@ class CrudDeleteRequest extends FormRequest
      */
     public function authorize()
     {
+        return true;
         return auth()->user()->can('delete ' . $this->model());
     }
 

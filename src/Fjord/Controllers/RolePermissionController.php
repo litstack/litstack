@@ -14,7 +14,6 @@ class RolePermissionController extends Controller
 {
     public function index(IndexRolePermissionRequest $request)
     {
-        // TODO: auth
         return view('fjord::vue')->withComponent('role-permissions')
             ->withTitle('Users')
             ->withProps([
@@ -34,5 +33,7 @@ class RolePermissionController extends Controller
         }else{
             $role->givePermissionTo($permission);
         }
+
+        \Cache::forget('spatie.permission.cache');
     }
 }

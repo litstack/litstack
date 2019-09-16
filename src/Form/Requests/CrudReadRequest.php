@@ -15,6 +15,7 @@ class CrudReadRequest extends FormRequest
      */
     public function authorize()
     {
+        return true;
         return auth()->user()->can('read ' . $this->model());
     }
 

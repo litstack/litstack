@@ -2,14 +2,23 @@
 @php
     $show = false;
 @endphp
-@if (strpos($entry['link'], '/') === false)
+
+@if(! array_key_exists('link', $entry))
+
+    @php
+    $show = true;
+    @endphp
+
+@elseif (strpos($entry['link'], '/') === false)
     {{-- this is a crud route --}}
-    @can('read ' . $entry['link'])
+    @can('read ' . ($entry['link'] ?? ''))
         @php
             $show = true;
         @endphp
     @endcan
+
 @else
+
     {{-- this is NOT a crud route, check, if roles are set --}}
     @if (array_key_exists('role', $entry))
         @php

@@ -79,12 +79,16 @@
                                         Actions
                                     </template>
 
-                                        <b-dropdown-item
-                                            v-for="(method, title) in actions"
-                                            :key="title"
-                                            @click="method(selectedItems)">
-                                            {{ title }}
-                                        </b-dropdown-item>
+                                    <slot name="actions"/>
+
+                                    <!--
+                                    <b-dropdown-item
+                                        v-for="(route, title) in actions"
+                                        :key="title"
+                                        @click="action(selectedItems, {route, title})">
+                                        {{ title }}
+                                    </b-dropdown-item>
+                                    -->
 
                                 </b-dropdown>
 
@@ -158,7 +162,9 @@ export default {
         },
         actions: {
             type: Object,
-            default: {}
+            default: () => {
+                return {}
+            }
         }
     },
     data() {
@@ -184,6 +190,8 @@ export default {
             }, this.typingDelay)
         },
         selectedItems(val) {
+            this.$emit('selectedItemsChanged', val)
+
             if(val.length == this.items.length) {
                 this.selectedAll = true
                 this.indeterminateSelectedItems = false
@@ -218,6 +226,7 @@ export default {
         },
         setTableCols() {
             this.tableCols = []
+
             this.tableCols.push({
                 key: 'check',
                 label: 'Check',
@@ -269,7 +278,7 @@ export default {
             });
         },
         openItem(item) {
-            window.location.href = `${this.route}/${item.id}/edit`
+            window.location.href = `${this.route}/${item.id}` + ('route' in this.config ? this.config.route : '/edit')
         }
     }
 };

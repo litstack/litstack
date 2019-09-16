@@ -53,8 +53,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 ->except(['show']);
             FjordRoute::post("/{$crud}/index", $namespace . "@postIndex")
                 ->name("{$crud}.post_index");
-            FjordRoute::post("/{$crud}/delete-all", $namespace . "@deleteAll")
-                ->name("{$crud}.delete_all");
+
+            FjordRoute::extensionRoutes($namespace);
         }
     }
 

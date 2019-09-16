@@ -15,6 +15,7 @@ class CrudUpdateRequest extends FormRequest
      */
     public function authorize()
     {
+        return true;
         return auth()->user()->can('update ' . $this->model());
     }
 

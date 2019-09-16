@@ -5,6 +5,7 @@ namespace AwStudio\Fjord\Form\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use AwStudio\Fjord\Models\ModelContent;
+use AwStudio\Fjord\Fjord\Controllers\Traits\CanHaveFjordExtensions;
 use AwStudio\Fjord\Support\Facades\FormLoader;
 use AwStudio\Fjord\Form\Requests\CrudCreateRequest;
 use AwStudio\Fjord\Form\Requests\CrudReadRequest;
@@ -13,7 +14,9 @@ use AwStudio\Fjord\Form\Requests\CrudDeleteRequest;
 
 class CrudController extends Controller
 {
-    use Traits\CrudIndex;
+
+    use CanHaveFjordExtensions,
+        Traits\CrudIndex;
 
     // The Model (Class)Name, e.g. Post
     protected $modelName;
@@ -65,7 +68,8 @@ class CrudController extends Controller
         return view('fjord::vue')->withComponent('crud-index')
             ->withTitle($this->titleSingular)
             ->withProps([
-                'formConfig' => $this->getForm()->toArray()
+                'formConfig' => $this->getForm()->toArray(),
+                'actions' => $this->getExtensions('index.actions'),
             ]);
     }
 
@@ -85,7 +89,8 @@ class CrudController extends Controller
                 'model' => $model->eloquentJs('fjord'),
             ])
             ->withProps([
-                'formConfig' => $this->getForm($model)->toArray()
+                'formConfig' => $this->getForm($model)->toArray(),
+                'content' => ['crud-show-form']
             ]);
     }
 
@@ -145,7 +150,8 @@ class CrudController extends Controller
                     'next' => $next,
                     'previous' => $previous
                 ],
-                'actions' => ['crud-action-preview']
+                'actions' => $this->getExtensions('show.actions'),
+                'content' => $this->getExtensions('show.content')
             ]);
     }
 
@@ -180,31 +186,12 @@ class CrudController extends Controller
         $item->delete();
     }
 
-    public function deleteAll(CrudDeleteRequest $request)
-    {
-        $this->model::whereIn('id', $request->ids)->delete();
-    }
-
     protected function getForm($model = null)
     {
         if(! $model) {
             $model = with(new $this->model);
         }
+
         return FormLoader::load($model->form_fields_path, $this->model);
     }
-
-    protected function getWiths()
-    {
-        $withs = [];
-
-        if(has_media($this->model)) {
-            $withs []= 'media';
-        }
-        if(is_translatable($this->model)) {
-            $withs []= 'translations';
-        }
-
-        return $withs;
-    }
-
 }

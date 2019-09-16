@@ -23,7 +23,20 @@
                         :config="formConfig.index"
                         :cols="fields"
                         :route="this.formConfig.names.table"
-                        :actions="actions"/>
+                        :actions="formConfig.index.actions"
+                        @selectedItemsChanged="setSelectedItems">
+
+                        <component
+                            slot="actions"
+                            v-for="(component, key) in actions"
+                            :key="key"
+                            :is="component"
+                            :formConfig="formConfig"
+                            :selectedItems="selectedItems"
+                            :sendAction="sendAction"
+                        />
+
+                    </fj-crud-index-table>
                 </b-card>
             </b-col>
         </b-row>
@@ -38,14 +51,16 @@ export default {
         formConfig: {
             type: Object,
             required: true
+        },
+        actions: {
+            type: Array,
+            required: true,
         }
     },
     data() {
         return {
             fields: [],
-            actions: {
-                'Delete': this.deleteItems
-            }
+            selectedItems: []
         };
     },
     beforeMount() {
@@ -57,6 +72,34 @@ export default {
         }
     },
     methods: {
+        async sendAction(route, ids) {
+            let response = null
+            let message = ''
+            let type = 'success'
+            try {
+                response = await _axios({
+                    method: 'post',
+                    url: route,
+                    data: {ids},
+                })
+
+                message = response.data
+            } catch(e) {
+                response = e.response
+                message = response.data.message
+                type = 'danger'
+            }
+
+            this.$notify({
+                group: 'general',
+                type: type,
+                title: `${this.names.title.plural}`,
+                text: message,
+            });
+        },
+        setSelectedItems(items) {
+            this.selectedItems = items
+        },
         setFields() {
             for(let i=0;i<this.formConfig.index.preview.length;i++) {
                 let field = this.formConfig.index.preview[i]
@@ -80,7 +123,6 @@ export default {
                 type: 'success',
                 title: this.formConfig.names.title.plural,
                 text: `Successfully deleted ${ids.length} ${deletedTitle}.`,
-                duration: 1500
             });
 
             this.$bus.$emit('unselectCrudIndex')
