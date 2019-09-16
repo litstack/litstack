@@ -1,7 +1,7 @@
 <nav class="fj-topbar justify-content-between align-items-center">
     <div>
         <a href="#" class="fjord-brand">
-            <img src="{{asset('fjord/images/fjord-logo.png')}}" class="img-fluid" alt="">
+            <img src="{{ route('fjord.logo') }}" class="img-fluid" alt="">
         </a>
         {{--
         <input class="form-control fjord-search" type="text" placeholder="Search everything">

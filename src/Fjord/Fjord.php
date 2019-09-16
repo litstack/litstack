@@ -9,7 +9,8 @@ use Schema;
 class Fjord
 {
     use Concerns\ManagesNavigation,
-        Concerns\ManagesForms;
+        Concerns\ManagesForms,
+        Concerns\ManagesFiles;
 
     public $translatedAttributes = [];
 

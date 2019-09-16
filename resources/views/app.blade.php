@@ -9,7 +9,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
 
-    <link href="{{ asset('fjord/css/app.css') }}?t={{ filemtime(public_path('fjord/css/app.css')) }}" rel="stylesheet">
+
+    @foreach(fjord()->getCssFiles() as $path)
+        <link href="{{ $path }}{{ config('app.env') == 'production' ? '' : '?t=' . time() }}" rel="stylesheet">
+    @endforeach
 
 </head>
 
@@ -29,7 +32,8 @@
 
     </div>
 
-    <script src="{{ asset('fjord/js/app.js') }}?t={{ filemtime(public_path('fjord/js/app.js')) }}" defer></script>
+    <script src="{{ config('fjord.assets.js') ? config('fjord.assets.js') : route('fjord.js') }}{{ config('app.env') == 'production' ? '' : '?t=' . time() }}" defer></script>
+
     <script type="text/javascript">
         function makeVisible(){
             var d = document.getElementById("fjord-spinner");

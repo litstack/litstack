@@ -60,7 +60,7 @@ class FjordInstall extends Command
         // the resource path itself, which is present for shure
         $this->call('config:cache');
 
-        
+
         if(is_dir(fjord_resource_path())) {
             return;
         }
