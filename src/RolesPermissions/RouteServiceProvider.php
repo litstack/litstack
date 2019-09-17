@@ -30,6 +30,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     {
         FjordRoute::get('/user-roles', UserRoleController::class . '@index')
             ->name('user-roles');
-        FjordRoute::put('/user_roles', UserRoleController::class . '@update')->name('user_role.update');
+        FjordRoute::put('/user_roles', UserRoleController::class . '@update')->name('user_roles.update');
     }
 }

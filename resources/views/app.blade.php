@@ -1,22 +1,15 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport"
-              content="width=device-width, initial-scale=1">
-        <!-- CSRF Token -->
-        <meta name="csrf-token"
-              content="{{ csrf_token() }}">
-        <title>Fjord @yield('title')</title>
-        <!-- Styles -->
-        <link rel="stylesheet"
-              href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"
-              integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns"
-              crossorigin="anonymous">
-        <link href="{{ asset('fjord/css/app.css') }}?t={{ filemtime(public_path('fjord/css/app.css')) }}"
-              rel="stylesheet">
-    </head>
+<head>
+    <title>Fjord @yield('title')</title>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
 
 
     @foreach(fjord()->getCssFiles() as $path)
@@ -24,6 +17,7 @@
     @endforeach
 
 </head>
+
 
 <body onload="makeVisible()">
     <div id="fjord-app" class="{{ auth()->guard()->guest() ? '' : config('fjord.layout') }}">
