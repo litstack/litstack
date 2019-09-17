@@ -87,6 +87,19 @@ class FjordInstall extends Command
             '--tag' => "translatable"
         ]);
 
+        $replace = file_get_contents(config_path('translatable.php'));
+        $replace = str_replace(
+            "'fr',
+        'es' => [
+            'MX', // mexican spanish
+            'CO', // colombian spanish
+        ],",
+            "'de'",
+            $replace
+        );
+        File::put(config_path('translatable.php'), $replace);
+
+
         $mediaMatch = collect($migrationFiles)->filter(function($file) {
             return \Str::endsWith($file, 'create_media_table');
         })->first();
