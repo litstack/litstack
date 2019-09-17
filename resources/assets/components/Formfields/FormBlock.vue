@@ -2,42 +2,49 @@
     <fj-form-item :field="field" :model="model">
         <div class="fjord-block card no-fx">
             <div class="card-body">
+                <draggable
+                    v-model="sortableRepeatables"
+                    @end="newOrder"
+                    handle=".fj-draggable__dragbar"
+                    tag="b-row"
+                >
+                    <b-col
+                        :cols="field.block_width"
+                        v-for="(repeatable, index) in sortableRepeatables"
+                        :key="repeatable.id"
+                    >
+                        <div class="fjord-draggable">
+                            <div
+                                class="fj-draggable__dragbar d-flex justify-content-center"
+                            >
+                                <i
+                                    class="fas fa-grip-horizontal text-muted"
+                                ></i>
+                            </div>
 
-                    <draggable
-                        v-model="sortableRepeatables"
-                        @end="newOrder"
-                        handle=".fj-draggable__dragbar"
-                        tag="b-row">
+                            <fj-form :model="repeatable" />
 
-                            <b-col
-                                :cols="field.block_width"
-                                v-for="(repeatable, index) in sortableRepeatables"
-                                :key="repeatable.id">
-
-                                <div class="fjord-draggable">
-                                    <div class="fj-draggable__dragbar d-flex justify-content-center">
-                                        <i class="fas fa-grip-horizontal text-muted"></i>
-                                    </div>
-
-                                    <fj-form :model="repeatable" />
-
-                                    <b-row>
-                                        <b-col sm="12" class="text-center fj-trash text-muted">
-                                            <fa-icon icon="trash" @click="deleteRepeatable(repeatable)"/>
-                                        </b-col>
-                                    </b-row>
-                                </div>
-                            </b-col>
-
-                    </draggable>
+                            <b-row>
+                                <b-col
+                                    sm="12"
+                                    class="text-center fj-trash text-muted"
+                                >
+                                    <fa-icon
+                                        icon="trash"
+                                        @click="deleteRepeatable(repeatable)"
+                                    />
+                                </b-col>
+                            </b-row>
+                        </div>
+                    </b-col>
+                </draggable>
 
                 <button
                     class="btn btn-secondary btn-sm mr-2"
                     v-for="(repeatables, type) in field.repeatables"
-                    @click.prevent="add(type)">
-
-                    <fa-icon icon="plus"/> add {{ type }}
-
+                    @click.prevent="add(type)"
+                >
+                    <fa-icon icon="plus" /> add {{ type }}
                 </button>
             </div>
         </div>
@@ -45,7 +52,7 @@
 </template>
 
 <script>
-import FjordModel from './../../eloquent/fjord.model'
+import FjordModel from './../../eloquent/fjord.model';
 
 export default {
     name: 'FormBlock',
@@ -61,7 +68,7 @@ export default {
         },
         pageName: {
             type: String
-        },
+        }
     },
     data() {
         return {
@@ -69,10 +76,10 @@ export default {
         };
     },
     beforeMount() {
-        if(!this.repeatables) {
-            return
+        if (!this.repeatables) {
+            return;
         }
-        this.sortableRepeatables = this.repeatables.items.items
+        this.sortableRepeatables = this.repeatables.items.items;
     },
     methods: {
         async add(type) {
@@ -88,7 +95,7 @@ export default {
             let response = await axios.post(`form_blocks`, data);
             let model = new FjordModel(response.data);
 
-            this.sortableRepeatables.push(model)
+            this.sortableRepeatables.push(model);
             this.$notify({
                 group: 'general',
                 type: 'success',
@@ -98,8 +105,11 @@ export default {
             });
         },
         async deleteRepeatable(repeatable) {
-            await repeatable.delete()
-            this.sortableRepeatables.splice(this.sortableRepeatables.indexOf(repeatable), 1)
+            await repeatable.delete();
+            this.sortableRepeatables.splice(
+                this.sortableRepeatables.indexOf(repeatable),
+                1
+            );
 
             this.$notify({
                 group: 'general',
@@ -126,8 +136,7 @@ export default {
                 order: this.sortableRepeatables.map(item => item.id)
             };
 
-
-            await axios.put('order', payload)
+            await axios.put('order', payload);
 
             this.$notify({
                 group: 'general',
@@ -140,7 +149,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss">
-
-</style>
