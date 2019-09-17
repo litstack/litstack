@@ -12546,7 +12546,7 @@ div#fjord-app.vertical .fj-navigation__parent ul .fjord-navigation__is-active {
 
 .ck-editor h2,
 .ck-editor .ck-heading_heading1 > span {
-  font-family: "Playfair Display", serif !important;
+  font-family: "Roboto", sans-serif !important;
   font-weight: 900 !important;
   font-size: 35px !important;
   color: #35285d !important;
@@ -12587,6 +12587,7 @@ html {
 
 div#fjord-app {
   background-color: #f1f1f2;
+  min-height: 100vh;
 }
 
 div#fjord-app .btn:focus {
