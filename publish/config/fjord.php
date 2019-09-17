@@ -14,6 +14,14 @@ return [
 
     'default_route' => 'pages/home',
 
+    'assets' => [
+        // Set path to the app.js file.
+        'js' => null,
+        'css' => [
+            // Put path to css files that should be included here...
+        ],
+    ],
+
     'mediaconversions' => [
         'default' => [
             'sm' => [300, 300, 8],

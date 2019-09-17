@@ -92,6 +92,10 @@ class FjordServiceProvider extends ServiceProvider
 
     public function addFiles()
     {
+        if(! fjord()->installed()) {
+            return;
+        }
+
         $this->app['fjord']->addCssFile('/' . config('fjord.route_prefix') . '/css/app.css');
         foreach(config('fjord.assets.css') as $path) {
             $this->app['fjord']->addCssFile($path);
