@@ -41,25 +41,33 @@ class FjordCrud extends Command
      */
     public function handle()
     {
-        $modelName = ucfirst(str_singular($this->ask('enter the model name')));
+        $this->info("    ______ _                   __   ______ ____   __  __ ____  ");
+        $this->info("   / ____/(_)____   _____ ____/ /  / ____// __ \ / / / // __ \ ");
+        $this->info("  / /_   / // __ \ / ___// __  /  / /    / /_/ // / / // / / / ");
+        $this->info(" / __/  / // /_/ // /   / /_/ /  / /___ / _, _// /_/ // /_/ /  ");
+        $this->info("/_/  __/ / \____//_/    \__,_/   \____//_/ |_| \____//_____/   ");
+        $this->info("    /___/                                                      ");
+
+
+        $modelName = ucfirst(str_singular($this->ask('enter the model name (PascalCase, singular)')));
         $m = $this->choice('does the model have media?', ['y', 'n'], 0) == 'y' ? true : false;
         $s = $this->choice('does the model have a slug?', ['y', 'n'], 0) == 'y' ? true : false;
-        $t = $this->choice('does the model need to be translated?', ['y', 'n'], 0) == 'y' ? true : false;
-        $so = $this->choice('does the model need to be sortable?', ['y', 'n'], 0) == 'y' ? true : false;
+        $t = $this->choice('is the model translatable?', ['y', 'n'], 0) == 'y' ? true : false;
 
         $this->makeModel($modelName, $m, $s, $t);
-        $this->makeMigration($modelName, $s, $t, $so);
+        $this->makeMigration($modelName, $s, $t);
         $this->makeController($modelName);
         $this->makeConfig($modelName);
         $this->makePermissions($modelName);
 
+        $fjordResourcesPath = 'resources/' . config('fjord.resource_path');
+
         $this->info("\n----- finished -----\n");
         $this->info('1) edit the generated migration and migrate');
-        $this->info('2) set the fillable fields in your model(s)');
-        $this->info('3) make your model editable by adding it to the config/fjord-crud.php');
-        $this->info('4) add a navigation entry to your config/fjord-navigation.php');
+        $this->info('2) set the fillable fields in your model' . ($t ? ' and in your translation model' : ''));
+        $this->info('3) configure the crud-model in ' . $fjordResourcesPath . '/crud/' . Str::snake(Str::plural($modelName)) . '.php');
+        $this->info('4) add a navigation entry in ' . $fjordResourcesPath . 'navigation/main.php');
 
-        $this->info("\nif your navigation entry doesn't appear, consider clearing your cache\n");
     }
 
     private function makePermissions($modelName)
@@ -187,14 +195,14 @@ class FjordCrud extends Command
                 \File::makeDirectory('app/Models/Translations');
             }
             if(\File::put($model, $fileContents)){
-                $this->info('model created');
+                $this->info('translation model created');
             }
         }else{
             $this->error('translation-model already exists');
         }
     }
 
-    private function makeMigration($modelName, $s, $t, $so)
+    private function makeMigration($modelName, $s, $t)
     {
         $tableName = Str::snake(Str::plural($modelName));
         $translationTableName = Str::singular($tableName) . '_translations';
@@ -220,11 +228,6 @@ class FjordCrud extends Command
             $fileContents = str_replace('DummySlug', '', $fileContents);
         }
 
-        if($so) {
-            $fileContents = str_replace('DummySortable', '$table->unsignedInteger'."('order_column')->nullable();", $fileContents);
-        }else{
-            $fileContents = str_replace('DummySortable', '', $fileContents);
-        }
 
         $fileContents = str_replace('DummyClassname', "Create".ucfirst(str_plural($modelName))."Table", $fileContents);
         $fileContents = str_replace('DummyTablename', $tableName, $fileContents);

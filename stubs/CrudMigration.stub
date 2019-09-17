@@ -23,7 +23,6 @@ class DummyClassname extends Migration
 
             DummySlug
 
-            DummySortable
             $table->boolean('active')->default(true);
 
             $table->timestamps();

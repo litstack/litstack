@@ -43,6 +43,16 @@ class FjordInstall extends Command
      */
     public function handle(Filesystem $filesystem)
     {
+        // http://patorjk.com/software/taag/#p=display&h=1&v=0&f=Slant&t=Fjord%20Install
+        $this->info("    ______ _                   __   ____              __          __ __");
+        $this->info("   / ____/(_)____   _____ ____/ /  /  _/____   _____ / /_ ____ _ / // /");
+        $this->info("  / /_   / // __ \ / ___// __  /   / / / __ \ / ___// __// __ `// // / ");
+        $this->info(" / __/  / // /_/ // /   / /_/ /  _/ / / / / /(__  )/ /_ / /_/ // // /  ");
+        $this->info("/_/  __/ / \____//_/    \__,_/  /___//_/ /_//____/ \__/ \__,_//_//_/   ");
+        $this->info("    /___/                                                              ");
+
+        $this->info("\n----- start -----\n");
+
         $this->vendorConfigs();
         $this->handleUserModel();
         $this->handleFjordPublishable();
@@ -51,17 +61,17 @@ class FjordInstall extends Command
         $this->createDefaultRoles();
         $this->createDefaultPermissions();
 
-        $this->call('storage:link');
+        $this->info("\n----- finished -----\n");
 
-        $this->info('installation complete - run fjord:admin to create an admin user');
+        $this->info('installation complete - run php artisan fjord:admin to create an admin user');
     }
 
     public function handleFjordResources()
     {
-        $this->info('------------- fjord resources ---------------');
+        $this->info('publishing fjord resources');
         // clear the config cache, otherwise, fjord_resource_path() will return
         // the resource path itself, which is present for shure
-        $this->call('config:cache');
+        $this->callSilent('config:cache');
 
 
         if(is_dir(fjord_resource_path())) {
@@ -77,13 +87,15 @@ class FjordInstall extends Command
      */
     private function vendorConfigs()
     {
+        $this->info('publishing vendor configs');
+
         $migrationFiles = array_keys(app()['migrator']->getMigrationFiles(database_path('migrations')));
 
-        $this->call('vendor:publish', [
+        $this->callSilent('vendor:publish', [
             '--provider' => "Cviebrock\EloquentSluggable\ServiceProvider"
         ]);
 
-        $this->call('vendor:publish', [
+        $this->callSilent('vendor:publish', [
             '--tag' => "translatable"
         ]);
 
@@ -104,12 +116,12 @@ class FjordInstall extends Command
             return \Str::endsWith($file, 'create_media_table');
         })->first();
         if(! $mediaMatch) {
-            $this->call('vendor:publish', [
+            $this->callSilent('vendor:publish', [
                 '--provider' => "Spatie\MediaLibrary\MediaLibraryServiceProvider",
                 '--tag' => "migrations"
             ]);
         }
-        $this->call('vendor:publish', [
+        $this->callSilent('vendor:publish', [
             '--provider' => "Spatie\MediaLibrary\MediaLibraryServiceProvider",
             '--tag' => "config"
         ]);
@@ -122,13 +134,13 @@ class FjordInstall extends Command
         File::put(config_path('mediaLibrary.php'), $content);
 
 
-        $this->call('vendor:publish', [
+        $this->callSilent('vendor:publish', [
             '--provider' => "Spatie\Permission\PermissionServiceProvider",
             '--tag' => "migrations"
         ]);
 
         // migrate vendor tables
-        $this->call('migrate');
+        $this->callSilent('migrate');
 
         // set correct namespace for translation models
         $search = "'translation_model_namespace' => null,";
@@ -149,6 +161,8 @@ class FjordInstall extends Command
      */
     private function handleUserModel()
     {
+        $this->info('updating user model');
+
         if (file_exists(app_path('User.php'))) {
             $str = file_get_contents(app_path('User.php'));
 
@@ -187,13 +201,13 @@ class FjordInstall extends Command
      */
     private function handleFjordPublishable()
     {
-        $this->info('------------- publishing config & migrations ---------------');
+        $this->info('publishing fjord config & migrations');
 
-        $this->call('vendor:publish', [
+        $this->callSilent('vendor:publish', [
             '--provider' => "AwStudio\Fjord\FjordServiceProvider"
         ]);
 
         // migrate tables
-        $this->call('migrate');
+        $this->callSilent('migrate');
     }
 }
