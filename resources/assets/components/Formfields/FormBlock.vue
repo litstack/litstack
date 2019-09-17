@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field">
+    <fj-form-item :field="field" :model="model">
         <div class="fjord-block card no-fx">
             <div class="card-body">
 

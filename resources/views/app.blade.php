@@ -2,6 +2,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+    <title>Fjord @yield('title')</title>
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
@@ -15,6 +17,7 @@
     @endforeach
 
 </head>
+
 
 <body onload="makeVisible()">
     <div id="fjord-app" class="{{ auth()->guard()->guest() ? '' : config('fjord.layout') }}">

@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field">
+    <fj-form-item :field="field" :model="model">
 
         <b-form-checkbox v-model="selected" name="check-button" switch>
 

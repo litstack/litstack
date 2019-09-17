@@ -11,6 +11,7 @@ use AwStudio\Fjord\Form\Controllers\FormController;
 use AwStudio\Fjord\Form\Controllers\FormBlockController;
 use AwStudio\Fjord\Form\Controllers\FormRelationsController;
 use AwStudio\Fjord\Support\Facades\FormLoader;
+use AwStudio\Fjord\Fjord\Controllers\RolePermissionController;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -32,6 +33,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->mapFormBlockRoutes();
         $this->mapFormRelationRoutes();
         $this->mapMediaRoutes();
+
     }
 
     protected function mapCrudRoutes()
@@ -51,8 +53,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 ->except(['show']);
             FjordRoute::post("/{$crud}/index", $namespace . "@postIndex")
                 ->name("{$crud}.post_index");
-            FjordRoute::post("/{$crud}/delete-all", $namespace . "@deleteAll")
-                ->name("{$crud}.delete_all");
+
+            FjordRoute::extensionRoutes($namespace);
         }
     }
 
@@ -101,4 +103,5 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::post('/media', MediaController::class . '@store')->name('media.store');
         FjordRoute::delete('/media/{medium}', MediaController::class . '@destroy')->name('media.destroy');
     }
+
 }

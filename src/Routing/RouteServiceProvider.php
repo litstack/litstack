@@ -5,7 +5,9 @@ use AwStudio\Fjord\Support\Facades\FjordRoute;
 use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 use AwStudio\Fjord\Auth\AuthController;
+use AwStudio\Fjord\Form\Crud;
 use AwStudio\Fjord\Fjord\Controllers\FjordController;
+use AwStudio\Fjord\Fjord\Controllers\DashboardController;
 use AwStudio\Fjord\Fjord\Controllers\UserController;
 use AwStudio\Fjord\Fjord\Controllers\FileController;
 
@@ -43,7 +45,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     protected function mapFjordRoutes()
     {
         FjordRoute::group(function() {
-            Route::view('/', 'fjord::app')->name('dashboard');
+            Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         });
 
         FjordRoute::put('/order', FjordController::class . '@order')
@@ -66,11 +68,9 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::public()
             ->get('js/app.js', FileController::class . '@fjordJs')
             ->name('js');
-
         FjordRoute::public()
             ->get('css/app.css', FileController::class . '@fjordCss')
             ->name('css');
-
         FjordRoute::public()
             ->get('images/fjord-logo.png', FileController::class . '@fjordLogo')
             ->name('logo');

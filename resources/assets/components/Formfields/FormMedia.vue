@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field">
+    <fj-form-item :field="field" :model="model">
         <div class="w-100">
             <b-row>
                 <div class="col-12 order-2" v-if="!maxFiles">

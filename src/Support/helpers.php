@@ -98,3 +98,26 @@ if(! function_exists('call_func')) {
         }
     }
 }
+
+if(! function_exists('camel_space_case')) {
+    function camel_space_case($string) {
+        return collect(explode('_', Str::snake($string)))->map(function($item) {
+            return ucfirst($item);
+        })->implode(' ');
+    }
+}
+
+if(! function_exists('hasClassPermissions')) {
+    function hasClassPermissions($model) {
+        $class_name = 'App\Http\Controllers\Fjord\\' . Str::studly(Str::singular($model)).'Controller';
+
+        $class_reflex = new \ReflectionClass($class_name);
+        $class_constants = $class_reflex->getConstants();
+
+        if (!array_key_exists('PERMISSIONS', $class_constants)) {
+            return false;
+        }
+
+        return $class_name::PERMISSIONS;
+    }
+}

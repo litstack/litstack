@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 
 class FjordInstall extends Command
 {
+    use Traits\RolesAndPermissions;
+
     /**
      * The name and signature of the console command.
      *
@@ -46,8 +48,8 @@ class FjordInstall extends Command
         $this->handleFjordPublishable();
         $this->handleFjordResources();
 
-        $role = Role::firstOrCreate(['name' => 'admin']);
-        $role = Role::firstOrCreate(['name' => 'user']);
+        $this->createDefaultRoles();
+        $this->createDefaultPermissions();
 
         $this->call('storage:link');
 
