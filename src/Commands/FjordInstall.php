@@ -58,6 +58,7 @@ class FjordInstall extends Command
 
     public function handleFjordResources()
     {
+        $this->info('------------- fjord resources ---------------');
         // clear the config cache, otherwise, fjord_resource_path() will return
         // the resource path itself, which is present for shure
         $this->call('config:cache');
@@ -173,6 +174,8 @@ class FjordInstall extends Command
      */
     private function handleFjordPublishable()
     {
+        $this->info('------------- publishing config & migrations ---------------');
+
         $this->call('vendor:publish', [
             '--provider' => "AwStudio\Fjord\FjordServiceProvider"
         ]);

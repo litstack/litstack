@@ -25,6 +25,7 @@ class DummyClassname extends FjordModel DummyImplement
     // In order to use it, you should define a named route in routes/web.php
     public function getRoute()
     {
-        return route('DummyRoutename', ['id' => $this->id]);
+        return '';
+        //return route('DummyRoutename', ['id' => $this->id]);
     }
 }

@@ -106,3 +106,18 @@ if(! function_exists('camel_space_case')) {
         })->implode(' ');
     }
 }
+
+if(! function_exists('hasClassPermissions')) {
+    function hasClassPermissions($model) {
+        $class_name = 'App\Http\Controllers\Fjord\\' . Str::studly(Str::singular($model)).'Controller';
+
+        $class_reflex = new \ReflectionClass($class_name);
+        $class_constants = $class_reflex->getConstants();
+
+        if (!array_key_exists('PERMISSIONS', $class_constants)) {
+            return false;
+        }
+
+        return $class_name::PERMISSIONS;
+    }
+}

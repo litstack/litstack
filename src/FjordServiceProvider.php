@@ -23,7 +23,7 @@ class FjordServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         $this->app->register('AwStudio\Fjord\Routing\RouteServiceProvider');
-        $this->app->register('AwStudio\Fjord\RolesPermissions\RouteServiceProvider');
+        $this->app->register('AwStudio\Fjord\RolesPermissions\ServiceProvider');
         $this->app->register('AwStudio\Fjord\Form\ServiceProvider');
         $this->app->register('AwStudio\Fjord\Blade\BladeServiceProvider');
 
@@ -34,35 +34,17 @@ class FjordServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'fjord');
 
         /**
-         * Publish Fjords assets
-         *
-         */
-        $this->publishes([
-            __DIR__.'/../publish/assets' => public_path('fjord'),
-        ], 'public');
-
-        /**
-         * Publish Fjords config
-         *
-         */
-        $this->publishes([
-            __DIR__.'/../publish/config' => config_path(),
-        ], 'config');
-
-        /**
-         * Publish Fjords migrations
-         *
-         */
-        $this->publishes([
-            __DIR__.'/../publish/database/migrations' => database_path('migrations'),
-        ], 'migrations');
-
-        /**
          * Register Fjord Auth Middleware
          *
          */
         $router->aliasMiddleware('fjord.auth', Authenticate::class);
 
+
+        $this->publish();
+    }
+
+    protected function builder()
+    {
         Builder::macro('whereLike', function ($attributes, string $searchTerm) {
             $this->where(function (Builder $query) use ($attributes, $searchTerm) {
                 foreach (array_wrap($attributes) as $attribute) {
@@ -107,13 +89,48 @@ class FjordServiceProvider extends ServiceProvider
         if (App::runningInConsole()) {
             $this->registerConsoleCommands();
         }
+
+        $this->addFiles();
+
+    }
+
+    public function addFiles()
+    {
+        if(! fjord()->installed()) {
+            return;
+        }
+
+        $this->app['fjord']->addCssFile('/' . config('fjord.route_prefix') . '/css/app.css');
+        foreach(config('fjord.assets.css') as $path) {
+            $this->app['fjord']->addCssFile($path);
+        }
     }
 
     private function registerConsoleCommands()
     {
         $this->commands(Commands\FjordInstall::class);
-        $this->commands(Commands\FjordUpdate::class);
         $this->commands(Commands\FjordAdmin::class);
         $this->commands(Commands\FjordCrud::class);
+        $this->commands(Commands\FjordCrudPermissions::class);
+        $this->commands(Commands\FjordDefaultPermissions::class);
+    }
+
+    protected function publish()
+    {
+        /**
+         * Publish Fjords config
+         *
+         */
+        $this->publishes([
+            __DIR__.'/../publish/config' => config_path(),
+        ], 'config');
+
+        /**
+         * Publish Fjords migrations
+         *
+         */
+        $this->publishes([
+            __DIR__.'/../publish/database/migrations' => database_path('migrations'),
+        ], 'migrations');
     }
 }

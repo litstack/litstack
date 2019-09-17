@@ -11,6 +11,12 @@ trait CrudIndexDeleteAll
     public function deleteAll(CrudDeleteRequest $request)
     {
         $this->model::whereIn('id', $request->ids)->delete();
+
+        $count = count($request->ids);
+
+        return response()->json([
+            'message' => "Deleted {$count} item" . ($count > 1 ? 's' : '')
+        ], 200);
     }
 
     public function makeDeleteAllRoute()

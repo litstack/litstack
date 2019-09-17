@@ -15,6 +15,11 @@
         @php
             $show = true;
         @endphp
+    @else
+        {{-- show if class doesn't use permissions --}}
+        @php
+            $show = !hasClassPermissions($entry['link']);
+        @endphp
     @endcan
 
 @else

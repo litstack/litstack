@@ -44,6 +44,7 @@ html {
 
 div#fjord-app {
     background-color: #f1f1f2;
+    min-height: 100vh;
 
     .btn:focus {
         outline: none !important;

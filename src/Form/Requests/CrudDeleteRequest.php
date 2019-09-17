@@ -3,20 +3,25 @@
 namespace AwStudio\Fjord\Form\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class CrudDeleteRequest extends FormRequest
 {
-    use Traits\ModelName;
+    use Traits\ModelName,
+        Traits\HasPermissions;
 
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(Request $request)
     {
-        return true;
-        return auth()->user()->can('delete ' . $this->model());
+        if($this->hasPermissions($request)){
+            return auth()->user()->can('delete ' . $this->model());
+        }else{
+            return true;
+        }
     }
 
     /**
