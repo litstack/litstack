@@ -18,24 +18,37 @@
               rel="stylesheet">
     </head>
 
-    <body onload="makeVisible()">
-        <div id="fjord-app"
-             class="{{ auth()->guard()->guest() ? '' : config('fjord.layout') }}">
-            @include('fjord::partials.topbar')
-            @include('fjord::partials.navigation')
-            <main> @yield('content')
-                @include('fjord::partials.spinner')
-            </main>
-            <notify />
-        </div>
-        <script src="{{ asset('fjord/js/app.js') }}?t={{ filemtime(public_path('fjord/js/app.js')) }}"
-                defer></script>
-        <script type="text/javascript">
-            function makeVisible() {
-                var d = document.getElementById("fjord-spinner");
-                d.className += " loaded";
-            }
-        </script>
-    </body>
+
+    @foreach(fjord()->getCssFiles() as $path)
+        <link href="{{ $path }}{{ config('app.env') == 'production' ? '' : '?t=' . time() }}" rel="stylesheet">
+    @endforeach
+
+</head>
+
+<body onload="makeVisible()">
+    <div id="fjord-app" class="{{ auth()->guard()->guest() ? '' : config('fjord.layout') }}">
+
+        @include('fjord::partials.topbar')
+
+        @include('fjord::partials.navigation')
+
+        <main>
+            @yield('content')
+            @include('fjord::partials.spinner')
+        </main>
+
+        <notify />
+
+    </div>
+
+    <script src="{{ config('fjord.assets.js') ? config('fjord.assets.js') : route('fjord.js') }}{{ config('app.env') == 'production' ? '' : '?t=' . time() }}" defer></script>
+
+    <script type="text/javascript">
+        function makeVisible(){
+            var d = document.getElementById("fjord-spinner");
+            d.className += " loaded";
+        }
+    </script>
+</body>
 
 </html>
