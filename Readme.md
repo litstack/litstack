@@ -52,10 +52,7 @@ import Fjord from 'fjord';
 
 const store = {};
 
-const mixins = {};
-
 new Fjord({
-    store,
-    mixins
+    store
 });
 ```
