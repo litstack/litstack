@@ -14,7 +14,15 @@
             <slot />
         </div>
         <div class="d-flex justify-content-between">
-            <small class="form-text text-muted" v-html="_format(field.hint || '', {value: model[`${field.id}Model`]})"/>
+            <small
+                v-if="model"
+                class="form-text text-muted"
+                v-html="
+                    _format(field.hint || '', {
+                        value: model[`${field.id}Model`]
+                    })
+                "
+            />
             <small class="form-text text-muted">
                 <template v-if="field.max && length">{{ max }}</template>
             </small>
@@ -32,9 +40,7 @@ export default {
             type: [Object, Array],
             required: true
         },
-        model: {
-
-        }
+        model: {}
     },
     computed: {
         ...mapGetters(['lng']),
