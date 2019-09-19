@@ -8,7 +8,7 @@
         "spatie/laravel-permission": "^2.37",
         "spatie/laravel-medialibrary": "^7.0.0",
         "astrotomic/laravel-translatable": "^11.1",
-        "cviebrock/eloquent-sluggable": "^4.8"
+        "cviebrock/eloquent-sluggable": "^4.8|^6.0"
     },
     "license": "MIT",
     "authors": [
