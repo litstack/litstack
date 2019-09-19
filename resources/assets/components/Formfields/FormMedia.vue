@@ -37,6 +37,7 @@
                                         </b-badge>
 
                                         <b-input
+                                            :size="'sm'"
                                             :value="
                                                 getCustomProperty(
                                                     image,
@@ -58,6 +59,7 @@
                                             <small>{{ lng }}</small>
                                         </b-badge>
                                         <b-input
+                                            :size="'sm'"
                                             :value="
                                                 getCustomProperty(image, 'alt')
                                             "
@@ -71,7 +73,7 @@
                                         @click.prevent="
                                             destroy(image.id, index)
                                         "
-                                        class="btn btn-outline-danger btn-sm fjord-dropzone__delete"
+                                        class="btn btn-outline-danger btn-sm fjord-dropzone__delete mt-3"
                                     >
                                         <i class="far fa-trash-alt"></i> löschen
                                     </button>
@@ -320,7 +322,9 @@ export default {
             //
             //
             const DROPZONE = this.dropzone;
-            const CANVAS = $(`#fjord-cropper-${this.field.id} .fjord-cropper__canvas`);
+            const CANVAS = $(
+                `#fjord-cropper-${this.field.id} .fjord-cropper__canvas`
+            );
             let uploadable = true;
 
             // Show the cropping modal

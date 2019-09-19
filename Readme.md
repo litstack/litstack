@@ -23,7 +23,7 @@ php artisan fjord:admin
 
 It's all setup now, visit http://yourapp.tld/admin
 
-## Setup
+## Multilanguage
 
 If your application is multilingual edit the `config/translatable.php` config
 and set the locals to your needing:
