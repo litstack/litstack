@@ -110,6 +110,7 @@ class FjordServiceProvider extends ServiceProvider
     {
         $this->commands(Commands\FjordInstall::class);
         $this->commands(Commands\FjordAdmin::class);
+        $this->commands(Commands\FjordUser::class);
         $this->commands(Commands\FjordCrud::class);
         $this->commands(Commands\FjordCrudPermissions::class);
         $this->commands(Commands\FjordDefaultPermissions::class);
