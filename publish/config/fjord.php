@@ -7,22 +7,80 @@ return [
     | Fjord Route-Prefix
     |--------------------------------------------------------------------------
     |
-    | This option controls under which route-prefix the fjord-admin-interface
+    | This option controls under which route-prefix the fjord admin-interface
     | will be located, e.g. http://your-domain.tld/admin.
     |
     */
 
     'route_prefix' => 'admin',
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fjord Resource-Path
+    |--------------------------------------------------------------------------
+    |
+    | Set the resource-path in which the fjord form-settings are stored.
+    |
+    | default: resources/fjord
+    |
+    */
+
+
     'resource_path' => 'fjord',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fjord Navigation-Path
+    |--------------------------------------------------------------------------
+    |
+    | Set the path in the fjord-resource-directory in which the fjord
+    | navigations are stored.
+    |
+    | default: resources/fjord/navigation
+    |
+    */
 
     'navigation_path' => 'navigation',
 
 
-    // Layouts: horizontal / vertical
+    /*
+    |--------------------------------------------------------------------------
+    | Fjord Navigation-Layout
+    |--------------------------------------------------------------------------
+    |
+    | With this option you may set the fjord navigation layout.
+    |
+    | Supported: "horizontal", "vertical"
+    |
+    */
+
     'layout' => env('FJORD_LAYOUT', 'vertical'),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fjord Default-Route
+    |--------------------------------------------------------------------------
+    |
+    | Set the default route a user is redirected to after logging in.
+    |
+    */
+
     'default_route' => 'pages/home',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fjord Assets
+    |--------------------------------------------------------------------------
+    |
+    | You may add own assets to the fjord-interface. To use an own version of
+    | the app.js follow the instructions in the documentation.
+    | CSS-Files may be added to the app in order to style your forms
+    | to your liking.
+    |
+    */
 
     'assets' => [
         // Set path to the app.js file.
@@ -32,6 +90,21 @@ return [
         ],
     ],
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Media-Conversions
+    |--------------------------------------------------------------------------
+    |
+    | These settings are used for converting your uploaded images. If your
+    | CRUD-Models use the HasMediaTrait, they should have a function
+    | registerMediaConversions in which the conversions are set up.
+    |
+    | Read the full documentation at
+    | https://docs.spatie.be/laravel-medialibrary/v7/converting-images/defining-conversions/
+    |
+    */
+
     'mediaconversions' => [
         'default' => [
             'sm' => [300, 300, 8],
@@ -40,6 +113,17 @@ return [
             'xl' => [1400, 1400, 1]
         ]
     ],
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fjord Forms
+    |--------------------------------------------------------------------------
+    |
+    | You may add as many form-types as you like to the already existing 'pages'
+    | and 'settings' forms.
+    |
+    */
 
     'forms' => [
         'pages' => [
@@ -54,6 +138,16 @@ return [
 
         ]
     ],
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fjord CRUD
+    |--------------------------------------------------------------------------
+    |
+    | The default CRUD-settings
+    |
+    */
 
     'crud' => [
         'preview' => [
