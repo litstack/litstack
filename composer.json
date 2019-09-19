@@ -4,9 +4,9 @@
     "type": "project",
     "require": {
         "php": "^7.2",
-        "spatie/eloquent-sortable": "^3.6",
+        "spatie/eloquent-sortable": "^3.6|^3.7",
         "spatie/laravel-permission": "^2.37|^3.0",
-        "spatie/laravel-medialibrary": "^7.0.0",
+        "spatie/laravel-medialibrary": "^7.0.0|^7.1.0",
         "astrotomic/laravel-translatable": "^11.1",
         "cviebrock/eloquent-sluggable": "^4.8|^6.0"
     },
