@@ -1,8 +1,8 @@
-# Fjord: A Laravel Admin-Panel / CMS
+# Fjord: A Laravel CMS/Admin-Panel
 
 Fjord is a multilanguage CMS/Admin-Panel.
 
-It offers Artisan-Commands for generating CRUD-Modelst and Users. Manage CRUD-Models as well as all Page-Content of your website on a modern yet super simple Interface.
+It offers Artisan-Commands for generating CRUD-Modelst and Users. Manage CRUD-Models as well as all Page-Content of your website on a modern yet super simple interface.
 
 ![Fjord Interface](https://raw.githubusercontent.com/aw-studio/fjord/master/fjord.png 'Fjord Interface')
 
