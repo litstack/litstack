@@ -5,6 +5,7 @@ namespace AwStudio\Fjord\Auth;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;;
 use AwStudio\Fjord\Facades\Fjord;
 
 class AuthController extends Controller
@@ -54,10 +55,10 @@ class AuthController extends Controller
         return view('fjord::login');
     }
 
-    public function redirectTo()
+    public function redirectPath()
     {
-
-        return config('fjord.route_prefix') . '/' . config('fjord.default_route');
+        $redirect = '/' . config('fjord.route_prefix') . '/' . config('fjord.default_route');
+        return $redirect;
     }
 
 }

@@ -2,6 +2,16 @@
 
 return [
 
+    /*
+    |--------------------------------------------------------------------------
+    | Fjord Route-Prefix
+    |--------------------------------------------------------------------------
+    |
+    | This option controls under which route-prefix the fjord-admin-interface
+    | will be located, e.g. http://your-domain.tld/admin.
+    |
+    */
+
     'route_prefix' => 'admin',
 
     'resource_path' => 'fjord',

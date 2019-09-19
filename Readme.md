@@ -1,6 +1,12 @@
 # Fjord: A Laravel Admin-Panel / CMS
 
-Fjord is a multilanguage admin-panel/cms scaffolding package that helps you creating CRUD in seconds via Artisan-commands. It also lets you manage the "static" content of each of your websites pages (Headlines, Text, Images), as well repetitive mixed contents you define. Generating content as well as passing it to your views and retrieving it is super simple.
+Fjord is a multilanguage CMS/Admin-Panel.
+
+It offers Artisan-Commands for generating CRUD-Modelst and Users. Manage CRUD-Models as well as all Page-Content of your website on a modern yet super simple Interface.
+
+```
+![Fjord Interface](https://raw.githubusercontent.com/aw-studio/fjord/master/fjord.png "Fjord Interface")
+```
 
 ## Installation
 
@@ -11,13 +17,7 @@ composer require aw-studio/fjord
 php artisan fjord:install
 ```
 
-First, migrate the Laravel's default tables running:
-
-```bash
-php artisan migrate
-```
-
-You can easily create a new admin-user by running:
+Thats it for the installation. You can easily create a new admin-user by running:
 
 ```bash
 php artisan fjord:admin
