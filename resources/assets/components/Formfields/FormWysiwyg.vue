@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field" :model="model">
+    <fj-form-item :field="field" :model="model" :value="value">
         <ckeditor
             :editor="editor"
             :config="editorConfig"
@@ -28,12 +28,14 @@ export default {
     },
     methods: {
         changed(value) {
+            this.value = value.rawText();
             this.model[`${this.field.id}Model`] = value;
             this.$emit('changed');
         }
     },
     data() {
         return {
+            value: this.model[`${this.field.id}Model`].rawText(),
             editor: ClassicEditor,
             editorConfig: {
                 removePlugins: [],

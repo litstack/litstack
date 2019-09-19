@@ -1,17 +1,21 @@
 <template>
-    <fj-form-item :field="field" :model="model">
-
-        <b-input-group :size="field.size" :prepend="field.prepend" :append="field.append">
+    <fj-form-item :field="field" :model="model" :value="value">
+        <b-input-group
+            :size="field.size"
+            :prepend="field.prepend"
+            :append="field.append"
+        >
             <b-input
                 class="form-control"
                 :value="model[`${field.id}Model`]"
                 :placeholder="field.placeholder"
                 :type="field.input_type"
-                @input="changed"/>
+                :maxlength="field.max"
+                @input="changed"
+            />
         </b-input-group>
 
         <slot />
-
     </fj-form-item>
 </template>
 
@@ -26,12 +30,18 @@ export default {
         model: {
             required: true,
             type: Object
-        },
+        }
+    },
+    data() {
+        return {
+            value: this.model[`${this.field.id}Model`]
+        };
     },
     methods: {
         changed(value) {
-            this.model[`${this.field.id}Model`] = value
-            this.$emit('changed')
+            this.value = value;
+            this.model[`${this.field.id}Model`] = value;
+            this.$emit('changed');
         }
     }
 };

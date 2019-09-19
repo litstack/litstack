@@ -1,12 +1,10 @@
 <template>
     <fj-form-item :field="field" :model="model">
-
         <b-checkbox-group
             :checked="value"
             :options="options"
             @input="changed"
         />
-
     </fj-form-item>
 </template>
 
@@ -21,15 +19,15 @@ export default {
         model: {
             required: true,
             type: Object
-        },
+        }
     },
     data() {
         return {
             value: null
-        }
+        };
     },
     beforeMount() {
-        this.value = this.model[`${this.field.id}Model`]
+        this.value = this.model[`${this.field.id}Model`];
         /*
         if(this.model.isFjordModel()) {
             this.value = JSON.parse(model[`${field.id}Model`])
@@ -38,24 +36,23 @@ export default {
     },
     methods: {
         changed(val) {
-            console.log('changed', val)
+            console.log('changed', val);
 
-            if(this.model.isFjordModel()) {
-                this.model[`${this.field.id}Model`] = JSON.stringify(val)
+            if (this.model.isFjordModel()) {
+                this.model[`${this.field.id}Model`] = JSON.stringify(val);
             } else {
-                this.model[`${this.field.id}Model`] = val
+                this.model[`${this.field.id}Model`] = val;
             }
 
-            this.$emit('changed')
+            this.$emit('changed');
         },
         handle(val) {
             //t
-
         }
     },
     computed: {
         options() {
-            return this.field.options
+            return this.field.options;
         }
     }
 };

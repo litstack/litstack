@@ -3,6 +3,9 @@
         box-shadow: none;
         border: 1px solid rgba(0, 0, 0, 0.125);
     }
+    border-top: 3px solid $primary;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 1px;
 }
 .fjord-card {
     &__1x1 {

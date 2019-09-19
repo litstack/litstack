@@ -24,7 +24,9 @@
                 "
             />
             <small class="form-text text-muted">
-                <template v-if="field.max && length">{{ max }}</template>
+                <template v-if="field.max"
+                    >{{ length }}/{{ field.max }}</template
+                >
             </small>
         </div>
     </div>
@@ -40,19 +42,14 @@ export default {
             type: [Object, Array],
             required: true
         },
-        model: {}
+        model: {},
+        value: {}
     },
     computed: {
         ...mapGetters(['lng']),
         length() {
-            return this.field.model ? this.field.model.length : 0;
-        },
-        max() {
-            return;
-            return `${this.length} / ${this.field.max}`;
+            return this.value ? this.value.length : 0;
         }
     }
 };
 </script>
-
-<style lang="css"></style>

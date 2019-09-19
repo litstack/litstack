@@ -1,16 +1,16 @@
 <template>
-    <fj-form-item :field="field" :model="model">
-
+    <fj-form-item :field="field" :model="model" :value="value">
         <b-form-textarea
-            v-model="model[`${field.id}Model`]"
+            :value="model[`${field.id}Model`]"
             :placeholder="field.placeholder"
             :rows="field.rows"
             :max-rows="field.max_rows"
-            @input="changed">
+            :maxlength="field.max"
+            @input="changed"
+        >
         </b-form-textarea>
 
         <slot />
-
     </fj-form-item>
 </template>
 
@@ -25,12 +25,18 @@ export default {
         model: {
             required: true,
             type: Object
-        },
+        }
+    },
+    data() {
+        return {
+            value: this.model[`${this.field.id}Model`]
+        };
     },
     methods: {
         changed(value) {
-            this.model[`${this.field.id}Model`] = value
-            this.$emit('changed')
+            this.value = value;
+            this.model[`${this.field.id}Model`] = value;
+            this.$emit('changed');
         }
     }
 };
