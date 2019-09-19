@@ -4,9 +4,7 @@ Fjord is a multilanguage CMS/Admin-Panel.
 
 It offers Artisan-Commands for generating CRUD-Modelst and Users. Manage CRUD-Models as well as all Page-Content of your website on a modern yet super simple Interface.
 
-```
-![Fjord Interface](https://raw.githubusercontent.com/aw-studio/fjord/master/fjord.png "Fjord Interface")
-```
+![Fjord Interface](https://raw.githubusercontent.com/aw-studio/fjord/master/fjord.png 'Fjord Interface')
 
 ## Installation
 
