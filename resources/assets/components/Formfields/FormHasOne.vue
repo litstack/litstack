@@ -16,7 +16,7 @@
                         style="vertical-align: middle;"
                         v-for="(col, key) in cols"
                         :key="`td-${key}`"
-                        :class="col.key == 'drag' ? 'fj-draggable__dragbar' : ''">
+                        :class="col.key == 'drag' ? 'fjord-draggable__dragbar' : ''">
                         <div v-if="col.key == 'trash'" class="text-center">
                             <a href="#" @click.prevent="removeRelation(relation.id)" class="fj-trash text-muted">
                                 <fa-icon icon="trash"/>

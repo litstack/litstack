@@ -6,6 +6,28 @@
     border-top: 3px solid $primary;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
     border-radius: 1px;
+    &:not(.fjord-block) {
+        .card-body {
+            & > table.table {
+                margin: 0 -20px;
+                width: calc(100% + 2.5rem);
+                thead {
+                    th {
+                        border-top: 0;
+                    }
+                }
+                th,
+                td {
+                    &:first-child {
+                        padding-left: 2.5rem;
+                    }
+                    &:last-child {
+                        padding-right: 2.5rem;
+                    }
+                }
+            }
+        }
+    }
 }
 .fjord-card {
     &__1x1 {
