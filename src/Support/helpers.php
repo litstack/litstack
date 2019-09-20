@@ -109,7 +109,15 @@ if(! function_exists('camel_space_case')) {
 
 if(! function_exists('hasClassPermissions')) {
     function hasClassPermissions($model) {
-        $class_name = 'App\Http\Controllers\Fjord\\' . Str::studly(Str::singular($model)).'Controller';
+        $config = require fjord_resource_path("crud/{$model}.php");
+
+        if(array_key_exists('controller', $config)){
+            $controllerName = $config['controller'];
+        }else{
+            $controllerName = Str::studly(Str::singular($model)).'Controller';
+        }
+
+        $class_name = 'App\Http\Controllers\Fjord\\' . $controllerName;
 
         $class_reflex = new \ReflectionClass($class_name);
         $class_constants = $class_reflex->getConstants();
