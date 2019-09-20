@@ -17,14 +17,14 @@
                             v-model="relations"
                             @end="newOrder(relations)"
                             tag="tbody"
-                            handle=".fj-draggable__dragbar">
+                            handle=".fjord-draggable__dragbar">
 
                             <b-tr v-for="(relation, rkey) in relations" :key="rkey">
                                 <b-td
                                     style="vertical-align: middle;"
                                     v-for="(field, key) in fields"
                                     :key="`td-${key}`"
-                                    :class="field.key == 'drag' ? 'fj-draggable__dragbar' : ''">
+                                    :class="field.key == 'drag' ? 'fjord-draggable__dragbar' : ''">
                                     <div v-if="field.key == 'drag'" class="text-center text-muted">
                                         <fa-icon icon="grip-vertical"/>
                                     </div>

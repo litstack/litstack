@@ -9,9 +9,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $dashboard = require fjord_resource_path('dashboard.php');
+
         return view('fjord::vue')->withComponent('dashboard')
             ->withTitle('Dashboard')
             ->withProps([
+                'cards' => $dashboard['cards']
             ]);
     }
 }

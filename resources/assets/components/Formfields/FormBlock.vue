@@ -5,7 +5,7 @@
                 <draggable
                     v-model="sortableRepeatables"
                     @end="newOrder"
-                    handle=".fj-draggable__dragbar"
+                    handle=".fjord-draggable__dragbar"
                     tag="b-row"
                 >
                     <b-col
@@ -15,7 +15,7 @@
                     >
                         <div class="fjord-draggable">
                             <div
-                                class="fj-draggable__dragbar d-flex justify-content-center"
+                                class="fjord-draggable__dragbar d-flex justify-content-center"
                             >
                                 <i
                                     class="fas fa-grip-horizontal text-muted"
