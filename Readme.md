@@ -23,6 +23,18 @@ php artisan fjord:admin
 
 It's all setup now, visit http://yourapp.tld/admin
 
+## CRUD
+
+Create your first CRUD-Model by typing the command:
+
+```bash
+php artisan fjord:crud
+```
+
+Follow the instructions and your Model will be cruddy in no-time.
+
+![Fjord Interface](https://raw.githubusercontent.com/aw-studio/fjord/master/crud.png 'Fjord CRUD')
+
 ## Multilanguage
 
 If your application is multilingual edit the `config/translatable.php` config
