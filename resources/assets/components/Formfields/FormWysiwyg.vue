@@ -35,7 +35,10 @@ export default {
     },
     data() {
         return {
-            value: this.model[`${this.field.id}Model`].rawText(),
+            value:
+                this.model[`${this.field.id}Model`] == null
+                    ? this.model[`${this.field.id}Model`]
+                    : this.model[`${this.field.id}Model`].rawText(),
             editor: ClassicEditor,
             editorConfig: {
                 removePlugins: [],
