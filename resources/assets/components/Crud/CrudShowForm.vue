@@ -1,12 +1,7 @@
 <template>
     <b-col cols="12">
-        <b-card
-            v-for="(ids, key) in formConfig.layout"
-            :key="key"
-            class="mb-4">
-            <fj-form
-                :ids="ids"
-                :model="model"/>
+        <b-card v-for="(ids, key) in formConfig.layout" :key="key" class="mb-5">
+            <fj-form :ids="ids" :model="model" />
         </b-card>
     </b-col>
 </template>
@@ -24,5 +19,5 @@ export default {
             type: Object
         }
     }
-}
+};
 </script>

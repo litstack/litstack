@@ -1,11 +1,20 @@
 .card {
+    .card {
+        border-radius: 3px;
+    }
     &.no-fx {
         box-shadow: none;
         border: 1px solid rgba(0, 0, 0, 0.125);
     }
+
+    box-shadow: $box-shadow;
+
+    border-radius: 6px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border: none;
     border-top: 3px solid $primary;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    border-radius: 1px;
+
     &:not(.fjord-block) {
         .card-body {
             & > table.table {

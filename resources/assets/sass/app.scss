@@ -41,7 +41,7 @@ html {
 }
 
 div#fjord-app {
-    background-color: #f1f1f2;
+    background-color: $body-bg;
     min-height: 100vh;
 
     .btn:focus {
