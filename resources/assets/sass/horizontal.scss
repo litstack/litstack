@@ -34,21 +34,6 @@ div#fjord-app.horizontal {
         &__is-active {
             position: relative;
             background-color: $body-bg;
-            border-top: 3px solid $primary;
-            border-top-left-radius: 3px;
-            border-top-right-radius: 3px;
-            border-right: 1px solid $border !important;
-            border-left: 1px solid $border !important;
-
-            &::after {
-                content: '';
-                position: absolute;
-                bottom: -1px;
-                height: 1px;
-                width: 100%;
-                background: $body-bg;
-                display: block;
-            }
             & > a {
                 font-weight: 800;
             }
@@ -77,6 +62,22 @@ div#fjord-app.horizontal {
                 position: relative;
                 border-right: 1px solid transparent;
                 border-left: 1px solid transparent;
+                &.fj-navigation__is-active {
+                    border-top: 3px solid $primary;
+                    border-top-left-radius: 3px;
+                    border-top-right-radius: 3px;
+                    border-right: 1px solid $border !important;
+                    border-left: 1px solid $border !important;
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        bottom: -1px;
+                        height: 1px;
+                        width: 100%;
+                        background: $body-bg;
+                        display: block;
+                    }
+                }
                 &:hover {
                     border-top-left-radius: 3px;
                     border-top-right-radius: 3px;

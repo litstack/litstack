@@ -1,6 +1,7 @@
 .fjord-form {
     small {
         margin-bottom: 13px;
+        max-width: calc(100% - 70px);
     }
     .badge {
         transform: translateY(-2px);

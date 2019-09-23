@@ -9,6 +9,7 @@
                         :id="`dropzone-${field.id}`"
                         :options="dropzoneOptions"
                         @vdropzone-success="uploadSuccess"
+                        @vdropzone-error="uploadError"
                     ></vue-dropzone>
                 </div>
                 <div class="col-12 order-1">
@@ -215,7 +216,7 @@ export default {
                 transformFile: this.transformFile,
                 autoProcessQueue: true,
                 thumbnailWidth: 150,
-                maxFilesize: 20,
+                maxFilesize: 100,
                 maxFiles: this.field.maxFiles,
                 method: 'POST',
                 paramName: 'media',
@@ -325,6 +326,16 @@ export default {
         uploadSuccess(file, response) {
             this.images = response;
             this.update();
+            // TODO: notify
+        },
+        uploadError(file, errorMessage, xhr) {
+            this.$notify({
+                group: 'general',
+                type: 'danger',
+                title: `Error ${xhr.status}`,
+                text: errorMessage.message,
+                duration: -1
+            });
         },
         imgPath(image) {
             return `/storage/${image.id}/${image.file_name}`;
