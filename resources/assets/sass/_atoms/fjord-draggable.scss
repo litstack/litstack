@@ -1,11 +1,11 @@
 .fjord-draggable {
     padding: 20px;
-    border: 1px solid #ced4da;
+    border: 1px solid $border;
     border-radius: 3px;
     background: #f7f7f7;
     margin-bottom: 20px;
     &__dragbar {
-        cursor: pointer;
+        cursor: grab;
         margin: 0 -20px;
         margin-top: -20px;
         padding-top: 10px;
