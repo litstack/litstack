@@ -7,10 +7,9 @@
 .fjord-notifications {
     .notification-wrapper {
         overflow: visible;
-        .card {
-            background-color: $dark_transparent;
-            color: white;
-        }
+        background-color: $dark_transparent;
+        color: white;
+        border-radius: $radius;
     }
     &__wrapper {
         padding: 10px;

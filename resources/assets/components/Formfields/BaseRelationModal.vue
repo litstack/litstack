@@ -1,6 +1,6 @@
 <template>
     <b-modal
-        :id="`${model.route}-form-relation-table-${field.id}`"
+        :id="`${model.route}-form-relation-table-${field.id}-${model.id}`"
         size="lg"
         hide-footer
         :busy="true"
