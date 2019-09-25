@@ -82,6 +82,12 @@
                         "
                     />
 
+                    <fj-form-morph-one
+                        v-if="field.type == 'morphOne'"
+                        :field="field"
+                        :model="m"
+                    />
+
                     <template v-if="field.type == 'relation'">
                         <fj-form-has-many
                             v-if="field.many"
