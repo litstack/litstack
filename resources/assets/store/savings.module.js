@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import EloquentCollection from './../eloquent/collection'
-import FjordModel from './../eloquent/fjord.model'
-import Bus from './../common/event.bus'
+import Vue from 'vue';
+import EloquentCollection from './../eloquent/collection';
+import FjordModel from './../eloquent/fjord.model';
+import Bus from './../common/event.bus';
 
 const initialState = {
     modelsToSave: [],
@@ -26,29 +26,41 @@ export const actions = {
         }
 
         // save eloquent models
-        if(state.modelsToSave.length > 0) {
-            let collection = new EloquentCollection({data: []}, FjordModel)
-            collection.items = collect(state.modelsToSave)
+        if (state.modelsToSave.length > 0) {
+            let collection = new EloquentCollection({ data: [] }, FjordModel);
+            collection.items = collect(state.modelsToSave);
 
-            let promise = collection.save()
-            
-            promises.push(promise)
+            let promise = collection.save();
+
+            promises.push(promise);
         }
 
         // parallel map flow
-        let results = await Promise.all(promises);
+        try {
+            let results = await Promise.all(promises);
+            console.log(results);
 
-        Vue.notify({
-            group: 'general',
-            type: 'success',
-            title: 'Saved successfully.',
-            text: '',
-            duration: 1500
-        });
+            Vue.notify({
+                group: 'general',
+                type: 'success',
+                title: 'Saved successfully.',
+                text: '',
+                duration: 1500
+            });
 
-        Bus.$emit('modelsSaved');
+            Bus.$emit('modelsSaved');
 
-        commit('saved');
+            commit('saved');
+        } catch (e) {
+            console.log(e.response.data.message);
+            Vue.notify({
+                group: 'general',
+                type: 'danger',
+                title: 'Error.',
+                text: `${e.response.data.message}`,
+                duration: -1
+            });
+        }
     }
 };
 
@@ -56,18 +68,20 @@ export const state = Object.assign({}, initialState);
 
 export const mutations = {
     ['addSaveJob'](state, job) {
-        let saveJob = state.saveJobs.find((saveJob) => {
-            return saveJob.route == job.route
-                && saveJob.method == job.method
-                && saveJob.data.id == job.data.id
-        })
-        if(!saveJob) {
-            console.log('NEW JOB')
-            state.saveJobs.push(job)
+        let saveJob = state.saveJobs.find(saveJob => {
+            return (
+                saveJob.route == job.route &&
+                saveJob.method == job.method &&
+                saveJob.data.id == job.data.id
+            );
+        });
+        if (!saveJob) {
+            console.log('NEW JOB');
+            state.saveJobs.push(job);
         } else {
-            console.log('UPDATE')
+            console.log('UPDATE');
             // Update save job
-            state.saveJobs[state.saveJobs.indexOf(saveJob)] = job
+            state.saveJobs[state.saveJobs.indexOf(saveJob)] = job;
         }
     },
     ['removeSaveJob'](state, job) {

@@ -5,10 +5,7 @@
         style="top: 53px;"
     >
         <template slot="body" slot-scope="props">
-            <div
-                :class="props.item.type"
-                class="fjord-notifications__wrapper card no-fx"
-            >
+            <div :class="props.item.type" class="fjord-notifications__wrapper">
                 <div class="d-flex">
                     <div class="fjord-notifications__icon align-self-center">
                         <fa-icon

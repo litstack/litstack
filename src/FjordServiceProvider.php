@@ -39,7 +39,12 @@ class FjordServiceProvider extends ServiceProvider
          */
         $router->aliasMiddleware('fjord.auth', Authenticate::class);
 
-
+        /**
+         * Register Fjord Builder
+         *
+         */
+        $this->builder();
+        
         $this->publish();
     }
 

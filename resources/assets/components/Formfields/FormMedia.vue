@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field" :model="model">
+    <fj-form-item :field="field" :model="model" :value="images">
         <div class="w-100">
             <b-row>
                 <div class="col-12 order-2" v-if="!maxFiles">
@@ -9,6 +9,7 @@
                         :id="`dropzone-${field.id}`"
                         :options="dropzoneOptions"
                         @vdropzone-success="uploadSuccess"
+                        @vdropzone-error="uploadError"
                     ></vue-dropzone>
                 </div>
                 <div class="col-12 order-1">
@@ -20,64 +21,119 @@
                             :key="image.id"
                         >
                             <div class="card no-fx mb-3 fjord-card">
-                                <div class="card-header fjord-card__1x1">
+                                <div class="fjord-card__1x1 fjord-card__image">
                                     <img :src="imgPath(image)" class="" />
                                 </div>
+                                <div class="text-right">
+                                    <b-button
+                                        size="sm"
+                                        variant="link"
+                                        class="text-secondary"
+                                        v-b-modal="
+                                            `fjord-image-${field.id}-${
+                                                image.id
+                                            }`
+                                        "
+                                    >
+                                        <i class="fas fa-edit"></i>
+                                    </b-button>
+                                </div>
+                                <b-modal
+                                    :id="`fjord-image-${field.id}-${image.id}`"
+                                    size="xl"
+                                    :title="`${image.name}`"
+                                    :static="true"
+                                >
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <img
+                                                :src="imgPath(image)"
+                                                class="img-fluid"
+                                            />
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="mb-2">
+                                                <label class="mb-1">
+                                                    Title
+                                                </label>
+                                                <b-badge
+                                                    v-if="field.translatable"
+                                                    variant="primary"
+                                                >
+                                                    <small>{{ lng }}</small>
+                                                </b-badge>
 
-                                <div class="card-body">
-                                    <div class="mb-2">
-                                        <label class="mb-1">
-                                            Title
-                                        </label>
-                                        <b-badge
-                                            v-if="field.translatable"
-                                            variant="primary"
+                                                <b-input
+                                                    :size="'sm'"
+                                                    :value="
+                                                        getCustomProperty(
+                                                            image,
+                                                            'title'
+                                                        )
+                                                    "
+                                                    @input="
+                                                        changed(
+                                                            $event,
+                                                            'title',
+                                                            image
+                                                        )
+                                                    "
+                                                />
+                                            </div>
+                                            <div>
+                                                <label class="mb-1">Alt</label>
+                                                <b-badge
+                                                    v-if="field.translatable"
+                                                    variant="primary"
+                                                >
+                                                    <small>{{ lng }}</small>
+                                                </b-badge>
+                                                <b-input
+                                                    :size="'sm'"
+                                                    :value="
+                                                        getCustomProperty(
+                                                            image,
+                                                            'alt'
+                                                        )
+                                                    "
+                                                    @input="
+                                                        changed(
+                                                            $event,
+                                                            'alt',
+                                                            image
+                                                        )
+                                                    "
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        slot="modal-footer"
+                                        class="w-100 d-flex justify-content-between"
+                                    >
+                                        <button
+                                            @click.prevent="
+                                                destroy(image.id, index)
+                                            "
+                                            class="btn btn-danger btn-sm"
                                         >
-                                            <small>{{ lng }}</small>
-                                        </b-badge>
-
-                                        <b-input
-                                            :size="'sm'"
-                                            :value="
-                                                getCustomProperty(
-                                                    image,
-                                                    'title'
+                                            <i class="far fa-trash-alt"></i>
+                                            delete
+                                        </button>
+                                        <button
+                                            @click.prevent="
+                                                $bvModal.hide(
+                                                    `fjord-image-${field.id}-${
+                                                        image.id
+                                                    }`
                                                 )
                                             "
-                                            @input="
-                                                changed($event, 'title', image)
-                                            "
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label class="mb-1">Alt</label>
-                                        <b-badge
-                                            v-if="field.translatable"
-                                            variant="primary"
+                                            class="btn btn-secondary btn-sm"
                                         >
-                                            <small>{{ lng }}</small>
-                                        </b-badge>
-                                        <b-input
-                                            :size="'sm'"
-                                            :value="
-                                                getCustomProperty(image, 'alt')
-                                            "
-                                            @input="
-                                                changed($event, 'alt', image)
-                                            "
-                                        />
+                                            close
+                                        </button>
                                     </div>
-
-                                    <button
-                                        @click.prevent="
-                                            destroy(image.id, index)
-                                        "
-                                        class="btn btn-outline-danger btn-sm fjord-dropzone__delete mt-3"
-                                    >
-                                        <i class="far fa-trash-alt"></i> löschen
-                                    </button>
-                                </div>
+                                </b-modal>
                             </div>
                         </div>
                     </draggable>
@@ -160,11 +216,11 @@ export default {
                 transformFile: this.transformFile,
                 autoProcessQueue: true,
                 thumbnailWidth: 150,
-                maxFilesize: 20,
+                maxFilesize: 100,
                 maxFiles: this.field.maxFiles,
                 method: 'POST',
                 paramName: 'media',
-                acceptedFiles: 'image/*',
+                acceptedFiles: 'image/*, application/pdf',
                 dictDefaultMessage: `<i class="fas fa-file-import"></i> Drag and drop`,
                 headers: {
                     'X-CSRF-TOKEN': document.head.querySelector(
@@ -270,6 +326,16 @@ export default {
         uploadSuccess(file, response) {
             this.images = response;
             this.update();
+            // TODO: notify
+        },
+        uploadError(file, errorMessage, xhr) {
+            this.$notify({
+                group: 'general',
+                type: 'danger',
+                title: `Error ${xhr.status}`,
+                text: errorMessage.message,
+                duration: -1
+            });
         },
         imgPath(image) {
             return `/storage/${image.id}/${image.file_name}`;
@@ -302,7 +368,7 @@ export default {
         },
         newOrder() {
             let payload = {
-                model: 'AwStudio\\Fjord\\Models\\Media',
+                model: 'Spatie\\MediaLibrary\\Models\\Media',
                 order: _.map(this.images, 'id')
             };
             axios.put('order', payload).then(response => {

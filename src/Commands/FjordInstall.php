@@ -66,19 +66,6 @@ class FjordInstall extends Command
         $this->info('installation complete - run php artisan fjord:admin to create an admin user');
     }
 
-    public function handleFjordResources()
-    {
-        $this->info('publishing fjord resources');
-        // clear the config cache, otherwise, fjord_resource_path() will return
-        // the resource path itself, which is present for shure
-        $this->callSilent('config:cache');
-
-
-        if(is_dir(fjord_resource_path())) {
-            return;
-        }
-        File::copyDirectory(fjord_path('publish/fjord'), resource_path('fjord'));
-    }
 
     /**
      * Publish all relevant vendor config files and edit them as needed
@@ -111,7 +98,7 @@ class FjordInstall extends Command
         );
         File::put(config_path('translatable.php'), $replace);
 
-
+        // If media migration exists, skip
         $mediaMatch = collect($migrationFiles)->filter(function($file) {
             return \Str::endsWith($file, 'create_media_table');
         })->first();
@@ -125,13 +112,13 @@ class FjordInstall extends Command
             '--provider' => "Spatie\MediaLibrary\MediaLibraryServiceProvider",
             '--tag' => "config"
         ]);
-        $content = file_get_contents(config_path('mediaLibrary.php'));
+        $content = file_get_contents(config_path('medialibrary.php'));
         $content = str_replace(
             'Spatie\MediaLibrary\Models\Media::class',
             'AwStudio\Fjord\Form\Database\Media::class',
             $content
         );
-        File::put(config_path('mediaLibrary.php'), $content);
+        File::put(config_path('medialibrary.php'), $content);
 
 
         $this->callSilent('vendor:publish', [
@@ -140,7 +127,12 @@ class FjordInstall extends Command
         ]);
 
         // migrate vendor tables
-        $this->callSilent('migrate');
+        if (App::environment(['local', 'staging'])) {
+            $this->callSilent('migrate');
+        }else{
+            $this->call('migrate');
+        }
+
 
         // set correct namespace for translation models
         $search = "'translation_model_namespace' => null,";
@@ -153,6 +145,22 @@ class FjordInstall extends Command
             file_put_contents(config_path('translatable.php'), $str);
         }
     }
+
+
+    public function handleFjordResources()
+    {
+        $this->info('publishing fjord resources');
+        // clear the config cache, otherwise, fjord_resource_path() will return
+        // the resource path itself, which is present for shure
+        $this->callSilent('config:cache');
+
+
+        if(is_dir(fjord_resource_path())) {
+            return;
+        }
+        File::copyDirectory(fjord_path('publish/fjord'), resource_path('fjord'));
+    }
+
 
     /**
      * Edits and moves the Laravel user model
@@ -194,6 +202,7 @@ class FjordInstall extends Command
         }
     }
 
+
     /**
      * Publish Fjord config and assets
      *
@@ -208,6 +217,10 @@ class FjordInstall extends Command
         ]);
 
         // migrate tables
-        $this->callSilent('migrate');
+        if (App::environment(['local', 'staging'])) {
+            $this->callSilent('migrate');
+        }else{
+            $this->call('migrate');
+        }
     }
 }

@@ -1,5 +1,5 @@
 // Body
-$body-bg: #f8fafc;
+$body-bg: #f1f1f2;
 
 // Typography
 $font-family-sans-serif: 'IBM Plex Sans', sans-serif;
@@ -24,16 +24,22 @@ $old-purple: linear-gradient(to right, #4200b7 0%, #5c00ff 100%);
 $old-purple-gradient: linear-gradient(to right, #150d54 0%, #280969 100%);
 
 // fjord
+$border: #ced4da;
 $mid: #353535;
 $dark: #232127;
 $darker: #100f10;
 
+$muted: #6c757d;
 $light: #e1e1e1;
 $blue-dark: #081838;
 
 $dark_transparent: rgba(34, 33, 38, 0.7);
 
-$primary: #1584ff;
+$primary: $blue;
+
+$box-shadow: 0 15px 15px -15px rgba(0, 0, 0, 0.2);
+
+$radius: 3px;
 
 // Topbar
 $topbar-bg: $dark;

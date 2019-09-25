@@ -11,6 +11,7 @@
                 :placeholder="field.placeholder"
                 :type="field.input_type"
                 :maxlength="field.max"
+                :required="field.required"
                 @input="changed"
             />
         </b-input-group>

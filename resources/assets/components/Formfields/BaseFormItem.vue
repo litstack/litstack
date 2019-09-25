@@ -27,6 +27,9 @@
                 <template v-if="field.max"
                     >{{ length }}/{{ field.max }}</template
                 >
+                <template v-if="field.maxFiles"
+                    >{{ value.length }}/{{ field.maxFiles }}</template
+                >
             </small>
         </div>
     </div>
