@@ -1,65 +1,33 @@
 <template>
     <fj-form-item :field="field" :model="model">
         <b-card class="fjord-block no-fx mb-2">
-            <b-table-simple
-                v-if="model[`${field.id}Model`]"
-                outlined
-                table-variant="light"
-            >
-                <fj-colgroup :icons="['drag', 'trash']" :cols="cols" />
-
-                <b-tr>
-                    <b-td
-                        style="vertical-align: middle;"
-                        v-for="(col, key) in cols"
-                        :key="`td-${key}`"
-                        :class="
-                            col.key == 'drag' ? 'fjord-draggable__dragbar' : ''
-                        "
-                    >
-                        <div v-if="col.key == 'trash'" class="text-center">
-                            <a
-                                href="#"
-                                @click.prevent="removeRelation(relation.id)"
-                                class="fj-trash text-muted"
-                            >
-                                <fa-icon icon="trash" />
-                            </a>
-                        </div>
-                        <div v-else>
-                            <fj-table-col :item="relation" :col="col" />
-                        </div>
-                    </b-td>
-                </b-tr>
-            </b-table-simple>
-            <div v-else class="text-center">
-                <span class="text-muted"> No {{ field.title }} selected. </span>
-            </div>
-
-            <b-button variant="secondary" size="sm" v-b-modal="modalId">
-                {{ field.button }}
-            </b-button>
+            <b-row>
+                <b-col cols="6">
+                    <b-form-select v-model="morphModel" @change="loadModel">
+                        <option
+                            :value="model"
+                            v-for="(model, key) in field.models"
+                        >
+                            {{ key }}
+                        </option>
+                    </b-form-select>
+                </b-col>
+                <b-col cols="6" v-if="rows">
+                    <b-form-select v-model="model_id" @change="storeMorphOne">
+                        <option :value="model.id" v-for="model in rows">
+                            {{ model.title }}
+                        </option>
+                    </b-form-select>
+                </b-col>
+            </b-row>
         </b-card>
-
         <slot />
-
-        <fj-form-relation-modal
-            :field="field"
-            :model="model"
-            :hasMany="false"
-            :selectedModels="[relation]"
-            @selected="selected"
-        />
     </fj-form-item>
 </template>
 
 <script>
-import TranslatableEloquent from './../../eloquent/translatable';
-import TableModel from './../../eloquent/table.model';
-import { mapGetters } from 'vuex';
-
 export default {
-    name: 'FormHasOne',
+    name: 'FormMorphOne',
     props: {
         field: {
             required: true,
@@ -73,55 +41,79 @@ export default {
     data() {
         return {
             relation: {},
-            cols: []
+            cols: [],
+
+            // Model or QueryBuilder
+            morphModel: null,
+            rows: null,
+            model_name: null,
+            model_id: null
         };
     },
     beforeMount() {
-        this.setCols();
-        let relation = this.model[this.field.relationship];
+        // TODO: this doesn't work with query builders, yet
+        //
+        this.morphModel = this.model.attributes[`${this.field.morph}_type`];
 
-        if (relation) {
-            this.relation = new TableModel(relation);
-            console.log(relation, this.relation);
+        if (this.morphModel) {
+            this.loadModel().then(() => {
+                this.model_id = this.model.attributes[`${this.field.morph}_id`];
+            });
+        }
+
+        for (let i = 0; i < this.field.preview.length; i++) {
+            let col = this.field.preview[i];
+
+            if (typeof col == typeof '') {
+                col = { key: col };
+            }
+            this.cols.push(col);
         }
     },
     methods: {
-        setCols() {
-            for (let i = 0; i < this.field.preview.length; i++) {
-                let col = this.field.preview[i];
+        async loadModel() {
+            let payload = {
+                model_type: this.model.model,
+                id: this.field.id,
+                model_name: _.invert(this.field.models)[this.morphModel]
+            };
+            try {
+                const { data } = await axios.post('morph-one/', payload);
 
-                if (typeof col == typeof '') {
-                    col = { key: col };
-                }
-                this.cols.push(col);
+                this.model_name = data.model;
+                this.model_id = null;
+                this.rows = data.rows;
+            } catch (e) {
+                console.log(e);
             }
-            this.cols.push({ key: 'trash' });
         },
-        selected(item) {
-            // TODO: remove save job if old one
-            this.model[`${this.field.id}Model`] = item.id;
-            this.relation = item;
+        async storeMorphOne() {
+            let payload = {
+                model: this.model.model,
+                id: this.model.attributes.id,
+                morph: this.field.morph,
+                morph_model: this.model_name,
+                morph_id: this.model_id
+            };
+            try {
+                const { data } = await axios.post('morph-one/store', payload);
 
-            this.$emit('changed');
-            this.$bvModal.hide(this.modalId);
-        },
-        removeRelation() {
-            this.model[`${this.field.id}Model`] = null;
-            this.relation = null;
-
-            this.$emit('changed');
-        },
-        setItem(item) {
-            item.trash = '';
-            return item;
-        }
-    },
-    computed: {
-        ...mapGetters(['lng']),
-        modalId() {
-            return `${this.model.route}-form-relation-table-${this.field.id}-${
-                this.model.id
-            }`;
+                this.$notify({
+                    group: 'general',
+                    type: 'success',
+                    title: this.field.title,
+                    text: `MorphOne relation set.`,
+                    duration: 1500
+                });
+            } catch (e) {
+                this.$notify({
+                    group: 'general',
+                    type: 'danger',
+                    title: this.field.title,
+                    text: e,
+                    duration: -1
+                });
+            }
         }
     }
 };

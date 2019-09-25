@@ -9,6 +9,7 @@ use AwStudio\Fjord\Support\Facades\FjordRoute;
 use AwStudio\Fjord\Form\Controllers\MediaController;
 use AwStudio\Fjord\Form\Controllers\FormController;
 use AwStudio\Fjord\Form\Controllers\FormBlockController;
+use AwStudio\Fjord\Form\Controllers\FormMorphOneController;
 use AwStudio\Fjord\Form\Controllers\FormRelationsController;
 use AwStudio\Fjord\Support\Facades\FormLoader;
 use AwStudio\Fjord\Fjord\Controllers\RolePermissionController;
@@ -32,6 +33,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->mapCrudRoutes();
         $this->mapFormBlockRoutes();
         $this->mapFormRelationRoutes();
+        $this->mapFormMorphOneRoutes();
         $this->mapMediaRoutes();
 
     }
@@ -95,6 +97,12 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::put('/relations/order', FormRelationsController::class . "@order")->name('relations.order');
         FjordRoute::post('/relations/store', FormRelationsController::class . "@store")->name('relation.store');
         FjordRoute::post('/relations/delete', FormRelationsController::class . "@delete")->name('relation.delete');
+    }
+
+    protected function mapFormMorphOneRoutes()
+    {
+        FjordRoute::post('/morph-one', FormMorphOneController::class . "@index")->name('morph_one.index');
+        FjordRoute::post('/morph-one/store', FormMorphOneController::class . "@store")->name('morph_one.store');
     }
 
     protected function mapMediaRoutes()
