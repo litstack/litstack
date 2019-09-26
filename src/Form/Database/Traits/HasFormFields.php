@@ -90,7 +90,7 @@ trait HasFormFields
         return in_array($form_field->id, $fillable);
     }
 
-    public function isTranslatableFormFieldFillable()
+    public function isTranslatableFormFieldFillable($field)
     {
         $translationClass = $this->getTranslationModelName();
         $fillable = with(new $translationClass)->getFillable();
