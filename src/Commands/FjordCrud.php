@@ -49,7 +49,8 @@ class FjordCrud extends Command
         $this->info("    /___/                                                      ");
 
 
-        $modelName = ucfirst(str_singular($this->ask('enter the model name (PascalCase, singular)')));
+        $modelName = $this->ask('enter the model name (PascalCase, singular)');
+        $modelName = ucfirst(Str::singular($modelName));
         $m = $this->choice('does the model have media?', ['y', 'n'], 0) == 'y' ? true : false;
         $s = $this->choice('does the model have a slug?', ['y', 'n'], 0) == 'y' ? true : false;
         $t = $this->choice('is the model translatable?', ['y', 'n'], 0) == 'y' ? true : false;
@@ -229,7 +230,7 @@ class FjordCrud extends Command
         }
 
 
-        $fileContents = str_replace('DummyClassname', "Create".ucfirst(str_plural($modelName))."Table", $fileContents);
+        $fileContents = str_replace('DummyClassname', "Create".ucfirst(Str::plural($modelName))."Table", $fileContents);
         $fileContents = str_replace('DummyTablename', $tableName, $fileContents);
 
 

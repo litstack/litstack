@@ -39,7 +39,7 @@ class CrudController extends Controller
     public function __construct()
     {
         $this->titleSingular = $this->titleSingular ?? lcfirst($this->modelName);
-        $this->titlePlural = $this->titlePlural ?? \Str::snake(str_plural($this->modelName));
+        $this->titlePlural = $this->titlePlural ?? \Str::snake(\Str::plural($this->modelName));
 
         $this->model = "App\\Models\\" . ucfirst($this->modelName);
 
