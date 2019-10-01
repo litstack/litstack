@@ -127,7 +127,7 @@ class FjordInstall extends Command
         ]);
 
         // migrate vendor tables
-        if (App::environment(['local', 'staging'])) {
+        if (\App::environment(['local', 'staging'])) {
             $this->callSilent('migrate');
         }else{
             $this->call('migrate');
@@ -217,7 +217,7 @@ class FjordInstall extends Command
         ]);
 
         // migrate tables
-        if (App::environment(['local', 'staging'])) {
+        if (\App::environment(['local', 'staging'])) {
             $this->callSilent('migrate');
         }else{
             $this->call('migrate');

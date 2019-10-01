@@ -21,11 +21,12 @@ export default {
         }
     },
     methods: {
-        deleteAll() {
-            this.sendAction(
+        async deleteAll() {
+            let response = await this.sendAction(
                 `${this.formConfig.names.table}/delete-all`,
                 this.selectedItems
             );
+
             this.$bus.$emit('reloadCrudIndex');
         }
     }
