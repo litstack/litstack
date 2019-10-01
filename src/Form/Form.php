@@ -37,7 +37,8 @@ class Form
         $filteredItems = new FormFieldCollection([]);
 
         if($loadingName) {
-
+            // TODO: this fails on empty collections
+            // 
             $ids = $this->getExistingFormFieldIds($items->first()->form_fields_path);
             return $items->whereIn('field_id', $ids);
 

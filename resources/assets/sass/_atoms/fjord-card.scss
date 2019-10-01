@@ -54,6 +54,7 @@
     &__image {
         cursor: grab;
         img {
+            width: 100%;
             border-top-left-radius: $radius;
             border-top-right-radius: $radius;
             border: 3px solid white;

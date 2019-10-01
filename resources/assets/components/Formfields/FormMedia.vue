@@ -21,7 +21,10 @@
                             :key="image.id"
                         >
                             <div class="card no-fx mb-3 fjord-card">
-                                <div class="fjord-card__1x1 fjord-card__image">
+                                <div
+                                    :class="{ 'fjord-card__1x1': field.square }"
+                                    class="fjord-card__image"
+                                >
                                     <img :src="imgPath(image)" class="" />
                                 </div>
                                 <div class="text-right">

@@ -35,10 +35,11 @@
                                 >
                                     <b-button-group size="sm">
                                         <b-button
+                                            v-if="hasEditLink(form_field)"
                                             :href="
-                                                `${baseURL}${
-                                                    form_field.relationship
-                                                }s/${relation.id}/edit`
+                                                `${baseURL}${form_field.edit}/${
+                                                    relation.id
+                                                }/edit`
                                             "
                                             class="btn-transparent"
                                             ><fa-icon icon="edit"
@@ -243,6 +244,9 @@ export default {
             }
 
             return '100%';
+        },
+        hasEditLink(form_field) {
+            return form_field.edit != undefined;
         }
     },
     data() {
@@ -252,7 +256,6 @@ export default {
         };
     },
     beforeMount() {
-        console.log(this.form_field.relationship);
         this.setFields();
 
         let items = this.model[this.form_field.relationship] || [];
