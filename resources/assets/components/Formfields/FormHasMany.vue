@@ -3,7 +3,7 @@
         <b-card class="fjord-block no-fx mb-2">
             <div>
                 <b-table-simple outlined table-variant="light">
-                    <fj-colgroup :icons="['drag', 'trash']" :cols="fields" />
+                    <fj-colgroup :icons="['drag', 'controls']" :cols="fields" />
 
                     <draggable
                         v-model="relations"
@@ -28,19 +28,68 @@
                                 >
                                     <fa-icon icon="grip-vertical" />
                                 </div>
+
                                 <div
-                                    v-else-if="field.key == 'trash'"
-                                    class="text-center"
+                                    v-else-if="field.key == 'controls'"
+                                    class="d-flex align"
                                 >
-                                    <a
-                                        href="#"
-                                        @click.prevent="
-                                            removeRelation(relation.id)
+                                    <b-button-group size="sm">
+                                        <b-button
+                                            :href="
+                                                `${baseURL}${
+                                                    form_field.relationship
+                                                }s/${relation.id}/edit`
+                                            "
+                                            class="btn-transparent"
+                                            ><fa-icon icon="edit"
+                                        /></b-button>
+                                        <b-button
+                                            class="btn-transparent"
+                                            v-b-modal="
+                                                `modal-${
+                                                    model.attributes.id
+                                                }-${key}`
+                                            "
+                                            ><fa-icon icon="trash"
+                                        /></b-button>
+                                    </b-button-group>
+                                    <b-modal
+                                        :id="
+                                            `modal-${
+                                                model.attributes.id
+                                            }-${key}`
                                         "
-                                        class="fj-trash text-muted"
+                                        title="Delete Item"
                                     >
-                                        <fa-icon icon="trash" />
-                                    </a>
+                                        Please confirm that you want to delete
+                                        the item
+
+                                        <template v-slot:modal-footer>
+                                            <b-button
+                                                variant="secondary"
+                                                size="sm"
+                                                class="float-right"
+                                                @click="
+                                                    $bvModal.hide(
+                                                        `modal-${
+                                                            model.attributes.id
+                                                        }-${key}`
+                                                    )
+                                                "
+                                            >
+                                                cancel
+                                            </b-button>
+                                            <a
+                                                href="#"
+                                                @click.prevent="
+                                                    removeRelation(relation.id)
+                                                "
+                                                class="fj-trash btn btn-danger btn-sm"
+                                            >
+                                                <fa-icon icon="trash" /> delete
+                                            </a>
+                                        </template>
+                                    </b-modal>
                                 </div>
                                 <div v-else>
                                     <fj-table-col
@@ -74,6 +123,7 @@
 <script>
 import TranslatableEloquent from './../../eloquent/translatable';
 import TableModel from './../../eloquent/table.model';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'FormHasMany',
@@ -181,7 +231,7 @@ export default {
                 }
                 this.fields.push(field);
             }
-            this.fields.push({ key: 'trash' });
+            this.fields.push({ key: 'controls' });
         },
         colSize(field) {
             if (field.key == 'trash' || field.key == 'drag') {
@@ -202,6 +252,7 @@ export default {
         };
     },
     beforeMount() {
+        console.log(this.form_field.relationship);
         this.setFields();
 
         let items = this.model[this.form_field.relationship] || [];
@@ -215,7 +266,8 @@ export default {
             return `${this.model.route}-form-relation-table-${
                 this.form_field.id
             }-${this.model.id}`;
-        }
+        },
+        ...mapGetters(['baseURL'])
     }
 };
 </script>
