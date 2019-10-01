@@ -23,6 +23,8 @@ class FormField implements ArrayAccess
         'dt' => FormFields\DateTime::class,
 
         'morphOne' => FormFields\MorphOne::class,
+
+        'form_header' => FormFields\FormHeader::class,
     ];
 
     protected $attributes = [];
