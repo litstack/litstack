@@ -12,8 +12,17 @@
             </b-input-group-prepend>
 
             <b-form-input :placeholder="`Filter`" v-model="search" />
-        </b-input-group>
 
+            <b-input-group-append v-if="hasEditLink">
+                <b-link
+                    :href="`${baseURL}${field.edit}/create`"
+                    class="btn btn-primary"
+                >
+                    <i class="fas fa-plus"></i>
+                    {{ field.model.split('\\').pop() }}
+                </b-link>
+            </b-input-group-append>
+        </b-input-group>
         <b-table-simple outlined hover id="relations">
             <fj-colgroup :icons="['check']" :cols="cols" />
 
@@ -60,6 +69,7 @@
 <script>
 import TranslatableEloquent from './../../eloquent/translatable';
 import TableModel from './../../eloquent/table.model';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'FormRelationModal',
@@ -121,6 +131,12 @@ export default {
                 this.$emit('selected', item);
             }
         },
+        hasEditLink() {
+            return this.field.edit != undefined;
+        },
+        addLink() {
+            return `${this.baseURL}${this.field.edit}/create`;
+        },
         async loadRelations() {
             this.busy = true;
             await this._loadRelations();
@@ -155,6 +171,9 @@ export default {
                 }
             });
         }
+    },
+    computed: {
+        ...mapGetters(['baseURL'])
     }
 };
 </script>

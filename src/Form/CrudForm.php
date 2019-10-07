@@ -116,22 +116,31 @@ class CrudForm
 
     protected function setNames()
     {
-        $names = ['title' => ['singular' => '', 'plural' => '']];
+        $names = [
+            'title' => [
+                'singular' => $this->attributes['names']['singular'] ?? '',
+                'plural' => $this->attributes['names']['plural'] ?? ''
+            ]
+        ];
+
+
+        if($names['title']['singular'] == '' ){
+            $singular = Str::singular(Str::snake($this->getName()));
+            $words = explode('_', $singular);
+            foreach($words as $key => $word) {
+                $names['title']['singular'] .= ucfirst($word);
+            }
+        }
+
+        if($names['title']['plural'] == ''){
+            $plural = Str::plural($singular);
+            $words = explode('_', $plural);
+            foreach($words as $key => $word) {
+                $names['title']['plural'] .= ucfirst($word);
+            }
+        }
 
         $table = $this->modelInstance->getTable();
-        $singular = Str::singular(Str::snake($this->getName()));
-        $plural = Str::plural($singular);
-
-        $words = explode('_', $singular);
-        foreach($words as $key => $word) {
-            $names['title']['singular'] .= ucfirst($word);
-        }
-
-        $words = explode('_', $plural);
-        foreach($words as $key => $word) {
-            $names['title']['plural'] .= ucfirst($word);
-        }
-
         $names['table'] = $table;
 
         $this->attributes['names'] = $names;

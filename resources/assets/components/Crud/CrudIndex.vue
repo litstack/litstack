@@ -3,8 +3,8 @@
         <fj-header :title="formConfig.names.title.plural">
             <div slot="actions-right">
                 <b-button size="sm" variant="primary" :href="createRoute">
-                    <fa-icon icon="plus" /> add
-                    {{ formConfig.names.title.singular }}
+                    <fa-icon icon="plus" />
+                    {{ buttonNewText }}
                 </b-button>
             </div>
         </fj-header>
@@ -61,6 +61,9 @@ export default {
     computed: {
         createRoute() {
             return `${this.formConfig.names.table}/create`;
+        },
+        buttonNewText() {
+            return this.formConfig.names.title.singular;
         }
     },
     methods: {
