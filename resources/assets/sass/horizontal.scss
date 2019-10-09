@@ -36,12 +36,15 @@ div#fjord-app.horizontal {
             background-color: $body-bg;
             & > a {
                 font-weight: 800;
+                .fj-navigation__icon {
+                    color: $primary;
+                }
             }
         }
         &__icon {
             display: inline-block;
             width: 36px;
-            color: $primary;
+            color: $secondary;
             padding-left: 10px;
         }
 

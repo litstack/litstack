@@ -31,7 +31,7 @@
 
                                 <div
                                     v-else-if="field.key == 'controls'"
-                                    class="d-flex align"
+                                    class="d-flex table-controls"
                                 >
                                     <b-button-group size="sm">
                                         <b-button
@@ -41,7 +41,7 @@
                                                     relation.id
                                                 }/edit`
                                             "
-                                            class="btn-transparent"
+                                            class="btn-transparent d-flex align-items-center"
                                             ><fa-icon icon="edit"
                                         /></b-button>
                                         <b-button
@@ -278,5 +278,10 @@ export default {
 <style lang="scss" scoped>
 .fjord-draggable {
     margin-bottom: 5px;
+}
+.table-controls {
+    margin: -24px 0;
+    margin-right: -13px;
+    height: 48px;
 }
 </style>

@@ -1,6 +1,6 @@
 {
     "name": "aw-studio/fjord",
-    "description": "Fjord is a admin-panel/cms scaffolding package",
+    "description": "Fjord: A Laravel CMS/Admin-Panel",
     "type": "project",
     "require": {
         "php": "^7.2",

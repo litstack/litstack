@@ -15,6 +15,15 @@
     border: none;
     border-top: 3px solid $primary;
 
+    table.table {
+        th,
+        td,
+        thead th,
+        tbody + tbody {
+            border-color: $border;
+        }
+    }
+
     &:not(.fjord-block) {
         .card-body {
             & > table.table {
