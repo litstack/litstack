@@ -14,7 +14,7 @@
 
     /**
      * unique by title + locale
-     
+     *
      */
     public function scopeWithUniqueSlugConstraints(Builder $query, Model $model, $attribute, $config, $slug)
     {

@@ -181,6 +181,7 @@ class FjordCrud extends Command
             // if the model is sluggable, add sluggable trait
             if($s){
                 $fileContents = str_replace('DummyTraits', "use Cviebrock\EloquentSluggable\Sluggable;\nDummyTraits", $fileContents);
+                $fileContents = str_replace('DummyTraits', "use Illuminate\Database\Eloquent\Builder;\nDummyTraits", $fileContents);
 
                 $sluggableContents = file_get_contents(__DIR__.'/../../stubs/CrudModelSluggable.stub');
                 $fileContents = str_replace('DummySluggable', $sluggableContents, $fileContents);
