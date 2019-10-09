@@ -112,12 +112,13 @@ if(! function_exists('hasClassPermissions')) {
         $config = require fjord_resource_path("crud/{$model}.php");
 
         if(array_key_exists('controller', $config)){
-            $controllerName = $config['controller'];
+            $class_name = $config['controller'];
         }else{
             $controllerName = Str::studly(Str::singular($model)).'Controller';
+            $class_name = 'App\Http\Controllers\Fjord\\' . $controllerName;
         }
 
-        $class_name = 'App\Http\Controllers\Fjord\\' . $controllerName;
+        // $class_name = 'App\Http\Controllers\Fjord\\' . $controllerName;
 
         $class_reflex = new \ReflectionClass($class_name);
         $class_constants = $class_reflex->getConstants();
