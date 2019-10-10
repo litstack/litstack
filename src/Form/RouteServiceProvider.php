@@ -43,13 +43,12 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         foreach(Fjord::forms('crud') as $crud => $path) {
             $crudArray = require $path;
 
-
-            $controllerClass = ucfirst(Str::camel(Str::singular($crud))) . "Controller";
-            if(array_key_exists('controller', $crudArray)) {
-                $controllerClass = $crudArray['controller'];
+            if(array_key_exists('controller', $crudArray)){
+                $namespace = $crudArray['controller'];
+            }else{
+                $controllerClass = Str::studly(Str::singular($crud)).'Controller';
+                $namespace = "\\App\\Http\\Controllers\\Fjord\\{$controllerClass}";
             }
-
-            $namespace = "\\App\\Http\\Controllers\\Fjord\\{$controllerClass}";
 
             FjordRoute::resource(config('fjord.route_prefix') . "/{$crud}", $namespace)
                 ->except(['show']);
