@@ -16,6 +16,7 @@
                                 style="vertical-align: middle;"
                                 v-for="(field, key) in fields"
                                 :key="`td-${key}`"
+                                class="position-relative"
                                 :class="
                                     field.key == 'drag'
                                         ? 'fjord-draggable__dragbar'
@@ -280,8 +281,17 @@ export default {
     margin-bottom: 5px;
 }
 .table-controls {
-    margin: -24px 0;
-    margin-right: -13px;
-    height: 48px;
+    // margin: -24px 0;
+    // margin-right: -13px;
+    // height: 48px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    .btn-group{
+        .btn{
+            border-radius: 0 !important;
+        }
+    }
 }
 </style>
