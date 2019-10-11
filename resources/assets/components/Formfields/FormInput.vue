@@ -1,10 +1,9 @@
 <template>
     <fj-form-item :field="field" :model="model" :value="value">
-        <b-input-group
-            :size="field.size"
-            :prepend="field.prepend"
-            :append="field.append"
-        >
+        <b-input-group :size="field.size">
+            <b-input-group-prepend is-text v-if="field.prepend">
+                <span v-html="field.prepend"></span>
+            </b-input-group-prepend>
             <b-input
                 class="form-control"
                 :value="model[`${field.id}Model`]"
@@ -14,6 +13,9 @@
                 :required="field.required"
                 @input="changed"
             />
+            <b-input-group-append is-text v-if="field.append">
+                <span v-html="field.append"></span>
+            </b-input-group-append>
         </b-input-group>
 
         <slot />
