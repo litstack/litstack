@@ -23,6 +23,7 @@
                 </b-link>
             </b-input-group-append>
         </b-input-group>
+
         <b-table-simple outlined hover id="relations">
             <fj-colgroup :icons="['check']" :cols="cols" />
 
@@ -48,17 +49,21 @@
                             <input
                                 type="radio"
                                 autocomplete="off"
-                                class="custom-control-input"
+                                class="custom-control-input pointer-events-none"
                                 value=""
                                 :checked="itemChecked(item)"
                             />
                             <label class="custom-control-label"></label>
                         </div>
                         <b-checkbox
+                            class="pointer-events-none"
                             v-else-if="col.key == 'check' && hasMany"
                             :checked="itemChecked(item)"
                         />
-                        <fj-table-col v-else :item="item" :col="col" />
+                        <fj-table-col
+                            v-else
+                            :item="item"
+                            :col="col"/>
                     </b-td>
                 </b-tr>
             </tbody>
@@ -178,4 +183,8 @@ export default {
 };
 </script>
 
-<style lang="css"></style>
+<style lang="scss" scoped>
+.pointer-events-none{
+    pointer-events: none;
+}
+</style>
