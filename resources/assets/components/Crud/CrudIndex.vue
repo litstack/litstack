@@ -1,7 +1,16 @@
 <template>
     <fj-container>
         <fj-header :title="formConfig.names.title.plural">
+
             <div slot="actions-right">
+
+                <component
+                    v-for="(component, key) in globalActions"
+                    :key="key"
+                    :is="component"
+                    :formConfig="formConfig"
+                />
+
                 <b-button size="sm" variant="primary" :href="createRoute">
                     <fa-icon icon="plus" />
                     {{ buttonNewText }}
@@ -47,6 +56,12 @@ export default {
         actions: {
             type: Array,
             required: true
+        },
+        globalActions: {
+            type: Array,
+            default: () => {
+                return []
+            }
         }
     },
     data() {
