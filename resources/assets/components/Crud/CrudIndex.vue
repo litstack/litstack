@@ -27,6 +27,7 @@
                         :cols="fields"
                         :route="this.formConfig.names.table"
                         :actions="formConfig.index.actions"
+                        :recordActions="recordActions"
                         @selectedItemsChanged="setSelectedItems"
                     >
                         <component
@@ -62,7 +63,13 @@ export default {
             default: () => {
                 return []
             }
-        }
+        },
+        recordActions: {
+            type: Array,
+            default: () => {
+                return []
+            }
+        },
     },
     data() {
         return {

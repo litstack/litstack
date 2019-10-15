@@ -71,6 +71,7 @@ class CrudController extends Controller
                 'formConfig' => $this->getForm()->toArray(),
                 'actions' => $this->getExtensions('index.actions'),
                 'globalActions' => $this->getExtensions('index.globalActions'),
+                'recordActions' => $this->getExtensions('index.recordActions'),
             ]);
     }
 

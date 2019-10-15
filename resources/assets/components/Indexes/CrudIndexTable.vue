@@ -36,81 +36,27 @@
             </b-input-group>
         </div>
 
+        <fj-selected-items-actions
+            :items="items"
+            :selectedItems="selectedItems">
+            <slot name="actions" slot="actions"/>
+        </fj-selected-items-actions>
+
         <b-table-simple :aria-busy="isBusy">
             <fj-colgroup :icons="['check']" :cols="tableCols" />
 
-            <thead>
-                <b-tr>
-                    <b-th
-                        v-if="col.key == 'check' || selectedItems.length == 0"
-                        v-for="(col, key) in tableCols"
-                        :colspan="
-                            col.key == 'check' && selectedItems.length > 0
-                                ? tableCols.length
-                                : 1
-                        "
-                        :key="key"
-                    >
-                        <template v-if="col.key == 'check'">
-                            <b-checkbox
-                                class="float-left"
-                                v-model="selectedAll"
-                                :indeterminate.sync="indeterminateSelectedItems"
-                                @change="changeSelectedItems"
-                                v-if="
-                                    col.key == 'check' &&
-                                        selectedItems.length == 0
-                                "
-                            />
-
-                            <b-input-group
-                                v-if="
-                                    col.key == 'check' &&
-                                        selectedItems.length > 0
-                                "
-                                class="fj-index-checkbox__group"
-                                :size="'sm'"
-                            >
-                                <b-input-group-prepend is-text>
-                                    <b-checkbox
-                                        class="float-left"
-                                        v-model="selectedAll"
-                                        :indeterminate.sync="
-                                            indeterminateSelectedItems
-                                        "
-                                        @change="changeSelectedItems"
-                                    />
-                                </b-input-group-prepend>
-
-                                <b-input-group-prepend is-text>
-                                    <strong>
-                                        {{ selectedItems.length }}
-                                        {{
-                                            selectedItems.length == 1
-                                                ? ' Item'
-                                                : ' Items'
-                                        }}
-                                        selected
-                                    </strong>
-                                </b-input-group-prepend>
-
-                                <template v-slot:append>
-                                    <b-dropdown
-                                        text="Actions"
-                                        class="btn-brl-none"
-                                        variant="outline-secondary"
-                                    >
-                                        <slot name="actions" />
-                                    </b-dropdown>
-                                </template>
-                            </b-input-group>
-                        </template>
-                        <template v-else>
-                            {{ col.label }}
-                        </template>
-                    </b-th>
-                </b-tr>
-            </thead>
+            <fj-crud-index-table-head
+                :tableCols="tableCols"
+                :hasRecordActions="hasRecordActions"
+                :selectedItems="selectedItems">
+                <b-checkbox
+                    slot="checkbox"
+                    class="float-left"
+                    v-model="selectedAll"
+                    :indeterminate.sync="indeterminateSelectedItems"
+                    @change="changeSelectedItems"
+                />
+            </fj-crud-index-table-head>
 
             <tbody>
                 <tr role="row" class="b-table-busy-slot" v-if="isBusy">
@@ -143,9 +89,19 @@
                                 <fj-table-col :item="item" :col="col" />
                             </b-td>
                         </template>
+                        <b-td v-if="hasRecordActions">
+                            <component
+                                v-for="(component, key) in recordActions"
+                                :key="key"
+                                :is="component"
+                                :item="item"
+                                @reload="loadItems"
+                            />
+                        </b-td>
                     </b-tr>
                 </template>
             </tbody>
+
         </b-table-simple>
     </div>
 </template>
@@ -177,7 +133,13 @@ export default {
             default: () => {
                 return {};
             }
-        }
+        },
+        recordActions: {
+            type: Array,
+            default: () => {
+                return []
+            }
+        },
     },
     data() {
         return {
@@ -225,6 +187,11 @@ export default {
         this.$bus.$on('unselectCrudIndex', () => {
             this.selectedItems = [];
         });
+    },
+    computed: {
+        hasRecordActions(){
+            return this.recordActions.length > 0
+        },
     },
     methods: {
         changeSelectedItems(val) {
