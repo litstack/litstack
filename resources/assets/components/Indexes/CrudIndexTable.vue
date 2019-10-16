@@ -65,7 +65,7 @@
                     </td>
                 </tr>
                 <template v-else>
-                    <b-tr
+                    <tr
                         v-for="(item, key) in items"
                         :key="key"
                         :class="
@@ -75,21 +75,21 @@
                         "
                     >
                         <template v-for="(col, col_key) in tableCols">
-                            <b-td v-if="col.key == 'check'">
+                            <td v-if="col.key == 'check'">
                                 <b-checkbox
                                     v-model="selectedItems"
                                     :value="item.id"
                                 />
-                            </b-td>
-                            <b-td
+                            </td>
+                            <td
                                 v-else
                                 @click="openItem(item)"
                                 class="pointer"
                             >
                                 <fj-table-col :item="item" :col="col" />
-                            </b-td>
+                            </td>
                         </template>
-                        <b-td v-if="hasRecordActions">
+                        <td v-if="hasRecordActions">
                             <component
                                 v-for="(component, key) in recordActions"
                                 :key="key"
@@ -97,8 +97,8 @@
                                 :item="item"
                                 @reload="loadItems"
                             />
-                        </b-td>
-                    </b-tr>
+                        </td>
+                    </tr>
                 </template>
             </tbody>
 

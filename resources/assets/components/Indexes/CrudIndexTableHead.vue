@@ -1,7 +1,7 @@
 <template>
     <thead>
-        <b-tr>
-            <b-th
+        <tr>
+            <th
                 v-for="(col, key) in tableCols"
                 :key="key"
             >
@@ -11,11 +11,11 @@
                 <template v-else>
                     {{ col.label }}
                 </template>
-            </b-th>
-            <b-th v-if="hasRecordActions">
-                
-            </b-th>
-        </b-tr>
+            </th>
+            <th v-if="hasRecordActions">
+
+            </th>
+        </tr>
     </thead>
 </template>
 
