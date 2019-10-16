@@ -48,7 +48,8 @@
             <fj-crud-index-table-head
                 :tableCols="tableCols"
                 :hasRecordActions="hasRecordActions"
-                :selectedItems="selectedItems">
+                :selectedItems="selectedItems"
+                @sort="sortCol">
                 <b-checkbox
                     slot="checkbox"
                     class="float-left"
@@ -242,6 +243,9 @@ export default {
         sortBy(key) {
             this.sort_by_key = key;
             this.loadItems();
+        },
+        sortCol(value){
+            this.sortBy(value)
         },
         hasAction(action) {
             return this.actions.includes(action);
