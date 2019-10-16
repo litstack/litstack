@@ -9,10 +9,15 @@
                     <slot name="checkbox"/>
                 </template>
                 <template v-else>
-                    <div @click="sortCol(col.key)">
+                    <div
+                        @click="sortCol(col.key, key)"
+                        class="pointer"
+                        :class="{'text-muted': (key != activeCol && activeCol != null)}">
                         {{ col.label }}
-                        <fa-icon class="ml-2" icon="sort-alpha-down" v-if="sort == 'desc'"/>
-                        <fa-icon class="ml-2" icon="sort-alpha-down-alt" v-if="sort == 'asc'"/>
+                        <span class="d-inline-block ml-2" v-if="key == activeCol">
+                            <fa-icon icon="sort-alpha-down" v-if="sort == 'desc'"/>
+                            <fa-icon icon="sort-alpha-down-alt" v-if="sort == 'asc'"/>
+                        </span>
                     </div>
                 </template>
             </th>
@@ -42,15 +47,18 @@ export default {
     },
     data(){
         return {
-            sort: null
+            sort: null,
+            activeCol: null
         }
     },
     methods: {
-        sortCol(key){
+        sortCol(key, index){
             if(this.sort == null){
                 this.sort = 'asc'
             }
+            this.activeCol = index
 
+            // TODO: this is a bit hacky
             let sort = key.replace('{', '').replace('}', '').concat(`.${this.sort}`)
             this.$emit('sort', sort);
 
@@ -66,3 +74,9 @@ export default {
     }
 }
 </script>
+
+<style lang="css" scoped>
+.pointer{
+    cursor: pointer;
+}
+</style>
