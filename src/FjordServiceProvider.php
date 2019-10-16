@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Blade;
 use AwStudio\Fjord\Support\Facades\Fjord as FjordFacade;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use AwStudio\Fjord\Auth\Middleware\Authenticate;
 
 class FjordServiceProvider extends ServiceProvider
@@ -44,7 +45,7 @@ class FjordServiceProvider extends ServiceProvider
          *
          */
         $this->builder();
-        
+
         $this->publish();
     }
 
@@ -52,9 +53,9 @@ class FjordServiceProvider extends ServiceProvider
     {
         Builder::macro('whereLike', function ($attributes, string $searchTerm) {
             $this->where(function (Builder $query) use ($attributes, $searchTerm) {
-                foreach (array_wrap($attributes) as $attribute) {
+                foreach (Arr::wrap($attributes) as $attribute) {
                     $query->when(
-                        str_contains($attribute, '.'),
+                        Str::contains($attribute, '.'),
                         function (Builder $query) use ($attribute, $searchTerm) {
                             [$relationName, $relationAttribute] = explode('.', $attribute);
 
