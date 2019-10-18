@@ -184,6 +184,9 @@ class FjordCrud extends Command
                 $fileContents = str_replace('DummyTraits', "use Illuminate\Database\Eloquent\Builder;\nDummyTraits", $fileContents);
 
                 $sluggableContents = file_get_contents(__DIR__.'/../../stubs/CrudModelSluggable.stub');
+                $fileContents = str_replace('DummySluggable', $sluggableContents . "\n" . 'DummySluggable', $fileContents);
+
+                $sluggableContents = file_get_contents(__DIR__.'/../../stubs/CrudTranslationModelSlugUnique.stub');
                 $fileContents = str_replace('DummySluggable', $sluggableContents, $fileContents);
 
                 $uses = ['Sluggable'];

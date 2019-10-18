@@ -10,18 +10,25 @@
                     :placeholder="`Filter ${names.title.plural}`"
                     v-model="search"
                 />
+
                 <template v-slot:append>
                     <b-dropdown
                         right
-                        text="Actions"
+                        text="Filter"
+                        class="btn-br-none"
+                        variant="outline-secondary"
+                    >
+                        <b-dropdown-item>
+                            Coming soon…
+                        </b-dropdown-item>
+                    </b-dropdown>
+                    <b-dropdown
+                        right
+                        text="Sort"
                         class="btn-brl-none"
                         variant="outline-secondary"
                         v-if="config.sort_by"
                     >
-                        <template slot="button-content">
-                            Sort
-                        </template>
-
                         <b-dropdown-item
                             v-for="(text, key) in config.sort_by"
                             :key="key"
@@ -38,8 +45,9 @@
 
         <fj-selected-items-actions
             :items="items"
-            :selectedItems="selectedItems">
-            <slot name="actions" slot="actions"/>
+            :selectedItems="selectedItems"
+        >
+            <slot name="actions" slot="actions" />
         </fj-selected-items-actions>
 
         <b-table-simple :aria-busy="isBusy">
@@ -49,7 +57,8 @@
                 :tableCols="tableCols"
                 :hasRecordActions="hasRecordActions"
                 :selectedItems="selectedItems"
-                @sort="sortCol">
+                @sort="sortCol"
+            >
                 <b-checkbox
                     slot="checkbox"
                     class="float-left"
@@ -82,11 +91,7 @@
                                     :value="item.id"
                                 />
                             </td>
-                            <td
-                                v-else
-                                @click="openItem(item)"
-                                class="pointer"
-                            >
+                            <td v-else @click="openItem(item)" class="pointer">
                                 <fj-table-col :item="item" :col="col" />
                             </td>
                         </template>
@@ -102,7 +107,6 @@
                     </tr>
                 </template>
             </tbody>
-
         </b-table-simple>
     </div>
 </template>
@@ -138,9 +142,9 @@ export default {
         recordActions: {
             type: Array,
             default: () => {
-                return []
+                return [];
             }
-        },
+        }
     },
     data() {
         return {
@@ -190,9 +194,9 @@ export default {
         });
     },
     computed: {
-        hasRecordActions(){
-            return this.recordActions.length > 0
-        },
+        hasRecordActions() {
+            return this.recordActions.length > 0;
+        }
     },
     methods: {
         changeSelectedItems(val) {
@@ -244,8 +248,8 @@ export default {
             this.sort_by_key = key;
             this.loadItems();
         },
-        sortCol(value){
-            this.sortBy(value)
+        sortCol(value) {
+            this.sortBy(value);
         },
         hasAction(action) {
             return this.actions.includes(action);
@@ -335,6 +339,11 @@ export default {
     button {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
+    }
+}
+.btn-br-none {
+    button {
+        border-radius: 0;
     }
 }
 
