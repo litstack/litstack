@@ -52,6 +52,10 @@ export default function VueBootstrap() {
     Vue.component('crud-show-preview', CrudShowPreview);
     Vue.component('crud-show-form', CrudShowForm);
     Vue.component('crud-index-delete-all', CrudIndexDeleteAll);
+    Vue.component(
+        'crud-show-near-items',
+        require('./../components/Crud/CrudShowNearItems').default
+    );
     Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
     Vue.component('role-permissions', RolePermissions);
     Vue.component('user-roles', UserRoles);
