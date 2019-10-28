@@ -54,7 +54,7 @@ class FjordInstall extends Command
         $this->info("\n----- start -----\n");
 
         $this->vendorConfigs();
-        $this->prepareAuthConfig();
+        $this->call('fjord:guard');
 
         $this->handleFjordPublishable();
         $this->handleFjordResources();
@@ -148,47 +148,6 @@ class FjordInstall extends Command
     }
 
 
-    public function handleFjordResources()
-    {
-        $this->info('publishing fjord resources');
-        // clear the config cache, otherwise, fjord_resource_path() will return
-        // the resource path itself, which is present for shure
-        $this->callSilent('config:cache');
-
-
-        if(is_dir(fjord_resource_path())) {
-            return;
-        }
-        File::copyDirectory(fjord_path('publish/fjord'), resource_path('fjord'));
-    }
-
-
-    private function prepareAuthConfig()
-    {
-        $this->info('updating auth-config');
-        $replace = file_get_contents(config_path('auth.php'));
-        $replace = str_replace(
-            "'guards' => [",
-            "'guards' => [
-        'fjord' => [
-            'driver' => 'session',
-            'provider' => 'fjord_users',
-        ],",
-            $replace
-        );
-        $replace = str_replace(
-            "'providers' => [",
-            "'providers' => [
-        'fjord_users' => [
-            'driver' => 'eloquent',
-            'model' => AwStudio\Fjord\Fjord\Models\FjordUser::class,
-        ],",
-            $replace
-        );
-        File::put(config_path('auth.php'), $replace);
-    }
-
-
     /**
      * Publish Fjord config and assets
      *
@@ -208,5 +167,20 @@ class FjordInstall extends Command
         }else{
             $this->call('migrate');
         }
+    }
+
+
+    public function handleFjordResources()
+    {
+        $this->info('publishing fjord resources');
+        // clear the config cache, otherwise, fjord_resource_path() will return
+        // the resource path itself, which is present for shure
+        $this->callSilent('config:clear');
+
+
+        if(is_dir(fjord_resource_path())) {
+            return;
+        }
+        File::copyDirectory(fjord_path('publish/fjord'), resource_path('fjord'));
     }
 }

@@ -115,6 +115,7 @@ class FjordServiceProvider extends ServiceProvider
     private function registerConsoleCommands()
     {
         $this->commands(Commands\FjordInstall::class);
+        $this->commands(Commands\FjordGuard::class);
         $this->commands(Commands\FjordAdmin::class);
         $this->commands(Commands\FjordUser::class);
         $this->commands(Commands\FjordCrud::class);
