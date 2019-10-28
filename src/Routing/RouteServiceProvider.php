@@ -8,7 +8,6 @@ use AwStudio\Fjord\Auth\AuthController;
 use AwStudio\Fjord\Form\Crud;
 use AwStudio\Fjord\Fjord\Controllers\FjordController;
 use AwStudio\Fjord\Fjord\Controllers\DashboardController;
-use AwStudio\Fjord\Fjord\Controllers\UserController;
 use AwStudio\Fjord\Fjord\Controllers\FileController;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
@@ -24,7 +23,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     {
         $this->mapAuthRoutes();
         $this->mapFjordRoutes();
-        $this->mapUserRoutes();
         $this->mapFileRoutes();
     }
 
@@ -55,12 +53,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             ->namespace($this->namespace)
             ->middleware('web')
             ->group(fjord_path('routes/fjord.php'));
-    }
-
-    protected function mapUserRoutes()
-    {
-        FjordRoute::get('/fjord-users', UserController::class . '@index')
-            ->name('users');
     }
 
     protected function mapFileRoutes()

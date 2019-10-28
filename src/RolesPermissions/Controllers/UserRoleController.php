@@ -5,7 +5,7 @@ namespace AwStudio\Fjord\RolesPermissions\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use App\Models\User;
+use AwStudio\Fjord\Fjord\Models\FjordUser;
 use AwStudio\Fjord\RolesPermissions\Models\ModelRole;
 use AwStudio\Fjord\RolesPermissions\Requests\UpdateUserRoleRequest;
 use AwStudio\Fjord\RolesPermissions\Requests\IndexUserRoleRequest;
@@ -18,14 +18,14 @@ class UserRoleController extends Controller
             ->withTitle('Users')
             ->withProps([
                 'roles' => Role::all(),
-                'users' => User::all(),
-                'user_roles' => ModelRole::where('model_type', 'App\Models\User')->get(),
+                'users' => FjordUser::all(),
+                'user_roles' => ModelRole::where('model_type', 'AwStudio\Fjord\Fjord\Models\FjordUser')->get(),
             ]);
     }
 
     public function update(UpdateUserRoleRequest $request)
     {
-        $user = User::findOrFail($request->user['id']);
+        $user = FjordUser::findOrFail($request->user['id']);
         $role = Role::findOrFail($request->role['id']);
 
         if($user->hasRole($role)){

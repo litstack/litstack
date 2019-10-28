@@ -54,7 +54,8 @@ class FjordInstall extends Command
         $this->info("\n----- start -----\n");
 
         $this->vendorConfigs();
-        $this->handleUserModel();
+        $this->prepareAuthConfig();
+
         $this->handleFjordPublishable();
         $this->handleFjordResources();
 
@@ -162,44 +163,29 @@ class FjordInstall extends Command
     }
 
 
-    /**
-     * Edits and moves the Laravel user model
-     *
-     * @return void
-     */
-    private function handleUserModel()
+    private function prepareAuthConfig()
     {
-        $this->info('updating user model');
-
-        if (file_exists(app_path('User.php'))) {
-            $str = file_get_contents(app_path('User.php'));
-
-            if ($str !== false) {
-                $str = str_replace('namespace App;', "namespace App\Models;", $str);
-                $str = str_replace("use Illuminate\Foundation\Auth\User as Authenticatable;", "use AwStudio\Fjord\Fjord\Models\User as FjordUser;", $str);
-                $str = str_replace('extends Authenticatable', "extends FjordUser", $str);
-
-
-                file_put_contents(app_path('User.php'), $str);
-                if(!\File::exists('app/Models')){
-                    \File::makeDirectory('app/Models');
-                }
-                $move = File::move(app_path('User.php'), app_path('Models/User.php'));
-            }
-        }
-
-        // correct namespace where User is being used
-        $files = [
-            app_path('Http/Controllers/Auth/RegisterController.php'),
-            config_path('auth.php'),
-            config_path('services.php'),
-            base_path('database/factories/UserFactory.php')
-        ];
-        foreach ($files as $file) {
-            $str = file_get_contents($file);
-            $str = str_replace('App\User', "App\Models\User", $str);
-            file_put_contents($file, $str);
-        }
+        $this->info('updating auth-config');
+        $replace = file_get_contents(config_path('auth.php'));
+        $replace = str_replace(
+            "'guards' => [",
+            "'guards' => [
+        'fjord' => [
+            'driver' => 'session',
+            'provider' => 'fjord_users',
+        ],",
+            $replace
+        );
+        $replace = str_replace(
+            "'providers' => [",
+            "'providers' => [
+        'fjord_users' => [
+            'driver' => 'eloquent',
+            'model' => AwStudio\Fjord\Fjord\Models\FjordUser::class,
+        ],",
+            $replace
+        );
+        File::put(config_path('auth.php'), $replace);
     }
 
 

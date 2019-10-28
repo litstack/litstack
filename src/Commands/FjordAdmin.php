@@ -3,7 +3,7 @@
 namespace AwStudio\Fjord\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\User;
+use AwStudio\Fjord\Fjord\Models\FjordUser;
 use Spatie\Permission\Models\Role;
 
 class FjordAdmin extends Command
@@ -48,7 +48,7 @@ class FjordAdmin extends Command
         $email = $this->ask('enter the admin email');
         $password = $this->secret('enter the admin password');
 
-        $user = User::firstOrCreate([
+        $user = FjordUser::firstOrCreate([
             'name' => $name,
             'email' => $email,
             'password' => bcrypt($password)

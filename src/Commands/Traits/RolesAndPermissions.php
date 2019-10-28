@@ -9,8 +9,8 @@ trait RolesAndPermissions
 {
     public function createDefaultRoles()
     {
-        Role::firstOrCreate(['name' => 'admin']);
-        Role::firstOrCreate(['name' => 'user']);
+        Role::firstOrCreate(['guard_name' => 'fjord','name' => 'admin']);
+        Role::firstOrCreate(['guard_name' => 'fjord','name' => 'user']);
     }
 
     public function createDefaultPermissions()
@@ -26,7 +26,7 @@ trait RolesAndPermissions
 
         // create permissions and give them to admin
         foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
+            Permission::firstOrCreate(['guard_name' => 'fjord','name' => $permission]);
             $admin->givePermissionTo($permission);
         }
     }
@@ -49,7 +49,7 @@ trait RolesAndPermissions
 
             // create permissions and give them to admin
             foreach ($permissions as $permission) {
-                Permission::firstOrCreate(['name' => $permission]);
+                Permission::firstOrCreate(['guard_name' => 'fjord','name' => $permission]);
             }
         }
     }

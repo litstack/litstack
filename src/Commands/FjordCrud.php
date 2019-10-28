@@ -85,7 +85,10 @@ class FjordCrud extends Command
 
         // create permissions and give them to admin
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            Permission::create([
+                'guard_name' => 'fjord',
+                'name' => $permission
+            ]);
             $admin->givePermissionTo($permission);
         }
     }

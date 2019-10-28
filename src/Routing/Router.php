@@ -21,7 +21,7 @@ class Router
     {
         $route = Route::prefix(config('fjord.route_prefix'))
             ->as('fjord.')
-            ->middleware(['web', 'fjord.auth']);
+            ->middleware(['web', 'fjord.auth:fjord']);
 
         return $route->$method(...$parameters);
     }
