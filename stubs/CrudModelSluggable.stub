@@ -1,4 +1,4 @@
-/**
+    /**
      * Return the sluggable configuration array for this model.
      *
      * @return array
@@ -10,14 +10,4 @@
                 'source' => 'title'
             ]
         ];
-    }
-
-    /**
-     * unique by title + locale
-     *
-     */
-    public function scopeWithUniqueSlugConstraints(Builder $query, Model $model, $attribute, $config, $slug)
-    {
-        $locale = $model->locale;
-        return $query->where('locale', $locale);
     }

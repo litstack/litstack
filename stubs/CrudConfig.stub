@@ -5,8 +5,13 @@
 return [
     //'preview_route' => [DummyClassname::class, 'getRoute'],
     'index' => [
-        'preview' => ['{title}'],
-        'search' => ['title', 'text', 'slug'],
+        'preview' => [
+            [
+                'key' => '{title}',
+                'label' => 'Title'
+            ]
+        ],
+        'search' => ['title', 'text'],
         'sort_by' => [
             'id.desc' => 'New -> Old',
             'id.asc' => 'Old -> New',
@@ -14,6 +19,12 @@ return [
         ],
         'sort_by_default' => 'id.desc',
     ],
+    /*
+    'names' => [
+        'singular' => 'Singular',
+        'plural' => 'Plural'
+    ],
+    */
     'form_fields' => [
         /*
         [

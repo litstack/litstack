@@ -26,6 +26,18 @@ class FileController extends Controller
             ->header('Content-Type', 'image/png');
     }
 
+    public function fjordFaviconBig()
+    {
+        return $this->sendFile(fjord_path('public/favicon/favicon-32x32.png'))
+            ->header('Content-Type', 'image/png');
+    }
+
+    public function fjordFaviconSmall()
+    {
+        return $this->sendFile(fjord_path('public/favicon/favicon-16x16.png'))
+            ->header('Content-Type', 'image/png');
+    }
+
     protected function sendFile($path)
     {
         return response(File::get($path), 200);

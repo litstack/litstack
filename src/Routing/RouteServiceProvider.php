@@ -66,5 +66,11 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::public()
             ->get('images/fjord-logo.png', FileController::class . '@fjordLogo')
             ->name('logo');
+        FjordRoute::public()
+            ->get('favicon/favicon-32x32.png', FileController::class . '@fjordFaviconBig')
+            ->name('favicon-big');
+        FjordRoute::public()
+            ->get('favicon/favicon-16x16.png', FileController::class . '@fjordFaviconSmall')
+            ->name('favicon-small');
     }
 }
