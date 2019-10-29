@@ -167,6 +167,10 @@ class FjordCrud extends Command
             $builder->withVars("\tprotected \$appends = ['" . implode("', '", $appends) . "'];");
         }
 
+        if(!\File::exists('app/Models')){
+            \File::makeDirectory('app/Models');
+        }
+
         $builder->create($model);
 
         $this->info('model created');
