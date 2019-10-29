@@ -18,7 +18,7 @@ class CrudDeleteRequest extends FormRequest
     public function authorize(Request $request)
     {
         if($this->hasPermissions($request)){
-            return auth()->user()->can('delete ' . $this->model());
+            return fjord_user()->can('delete ' . $this->model());
         }else{
             return true;
         }

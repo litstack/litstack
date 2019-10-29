@@ -18,7 +18,7 @@ class CrudCreateRequest extends FormRequest
     public function authorize(Request $request)
     {
         if($this->hasPermissions($request)){
-            return auth()->user()->can('create ' . $this->model());
+            return fjord_user()->can('create ' . $this->model());
         }else{
             return true;
         }

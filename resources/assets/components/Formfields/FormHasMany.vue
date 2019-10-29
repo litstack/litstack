@@ -175,16 +175,6 @@ export default {
             //this.$bvModal.hide(this.modalId)
         },
         async removeRelation(id, $event) {
-            // close modal
-            this.$bvModal.hide(`modal-${
-                this.form_field.edit
-            }-${id}`)
-
-            let relation = this.relations.find(r => r.id == id);
-            let index = this.relations.indexOf(relation);
-
-            this.relations.splice(index, 1);
-
             let payload = {
                 from_model_type: this.model.model,
                 from_model_id: this.model.id,
@@ -192,14 +182,35 @@ export default {
                 to_model_id: id
             };
 
-            await axios.post(`relations/delete`, payload);
+            try {
+                const { data } = await axios.post(`relations/delete`, payload);
 
-            this.$notify({
-                group: 'general',
-                type: 'success',
-                title: this.form_field.title,
-                text: `Removed item from ${this.form_field.title}`
-            });
+                // close modal
+                this.$bvModal.hide(`modal-${
+                    this.form_field.edit
+                }-${id}`)
+
+                let relation = this.relations.find(r => r.id == id);
+                let index = this.relations.indexOf(relation);
+
+                this.relations.splice(index, 1);
+
+                console.log(data);
+
+                this.$notify({
+                    group: 'general',
+                    type: 'success',
+                    title: data.message,
+                    text: data.request
+                });
+            } catch (e) {
+                this.$notify({
+                    group: 'general',
+                    type: 'danger',
+                    title: 'Error',
+                    text: e
+                });
+            }
         },
         async newOrder() {
             let ids = [];

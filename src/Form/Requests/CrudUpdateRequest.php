@@ -18,7 +18,7 @@ class CrudUpdateRequest extends FormRequest
     public function authorize(Request $request)
     {
         if($this->hasPermissions($request)){
-            return auth()->user()->can('update ' . $this->model());
+            return fjord_user()->can('update ' . $this->model());
         }else{
             return true;
         }

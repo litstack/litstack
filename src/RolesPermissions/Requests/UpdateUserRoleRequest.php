@@ -13,7 +13,7 @@ class UpdateUserRoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('update user-roles');
+        return fjord_user()->can('update user-roles');
     }
 
     /**

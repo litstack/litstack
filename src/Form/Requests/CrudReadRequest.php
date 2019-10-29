@@ -18,7 +18,7 @@ class CrudReadRequest extends FormRequest
     public function authorize(Request $request)
     {
         if($this->hasPermissions($request)){
-            return auth()->user()->can('read ' . $this->model());
+            return fjord_user()->can('read ' . $this->model());
         }else{
             return true;
         }

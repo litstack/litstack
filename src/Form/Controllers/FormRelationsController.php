@@ -54,11 +54,18 @@ class FormRelationsController extends FjordController
 
     public function delete(Request $request)
     {
-        FormRelation::where('from_model_type', $request->from_model_type)
+        $delete = FormRelation::where('from_model_type', $request->from_model_type)
             ->where('from_model_id', $request->from_model_id)
             ->where('to_model_type', $request->to_model_type)
             ->where('to_model_id', $request->to_model_id)
             ->delete();
+
+        if($delete) {
+            return response()->json([
+                'message' => 'Deleted relation',
+                'request' => $request->all()
+            ], 200);
+        }
     }
 
     public function order(Request $request)

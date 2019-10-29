@@ -13,7 +13,7 @@ class IndexRolePermissionRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('read role-permissions');
+        return fjord_user()->can('read role-permissions');
     }
 
     /**

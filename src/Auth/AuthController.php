@@ -19,7 +19,7 @@ class AuthController extends Controller
 
     public function login()
     {
-        if (auth()->user()) {
+        if (fjord_user()) {
             return redirect()->route('fjord.dashboard');
         }
 

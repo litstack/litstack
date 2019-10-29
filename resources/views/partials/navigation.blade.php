@@ -1,6 +1,4 @@
-@guest
-
-@else
+@auth('fjord')
 <nav class="fj-navigation">
     <navigation>
         @foreach (fjord()->getNavigation() as $entry)
@@ -8,4 +6,4 @@
         @endforeach
     </navigation>
 </nav>
-@endguest
+@endauth
