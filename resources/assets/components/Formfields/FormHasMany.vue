@@ -74,8 +74,8 @@
                                                 @click="
                                                     $bvModal.hide(
                                                         `modal-${
-                                                            model.attributes.id
-                                                        }-${key}`
+                                                            form_field.edit
+                                                        }-${relation.id}`
                                                     )
                                                 "
                                             >
@@ -84,7 +84,7 @@
                                             <a
                                                 href="#"
                                                 @click.prevent="
-                                                    removeRelation(relation.id)
+                                                    removeRelation(relation.id, form_field.edit)
                                                 "
                                                 class="fj-trash btn btn-danger btn-sm"
                                             >
@@ -175,6 +175,11 @@ export default {
             //this.$bvModal.hide(this.modalId)
         },
         async removeRelation(id, $event) {
+            // close modal
+            this.$bvModal.hide(`modal-${
+                this.form_field.edit
+            }-${id}`)
+
             let relation = this.relations.find(r => r.id == id);
             let index = this.relations.indexOf(relation);
 

@@ -1,18 +1,5 @@
 <template>
     <fj-form-item :field="field" :model="model" :value="value">
-        <!-- <b-input-group :size="field.size">
-
-            <b-input
-                class="form-control"
-                :value="model[`${field.id}Model`]"
-                :placeholder="field.placeholder"
-                :type="field.input_type"
-                :maxlength="field.max"
-                :required="field.required"
-                @input="changed"
-            />
-
-        </b-input-group> -->
 
         <b-form-input
             :value="model[`${field.id}Model`]"
