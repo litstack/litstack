@@ -25,6 +25,8 @@ class FormField implements ArrayAccess
         'morphOne' => FormFields\MorphOne::class,
 
         'form_header' => FormFields\FormHeader::class,
+
+        'range' => FormFields\Range::class,
     ];
 
     protected $attributes = [];

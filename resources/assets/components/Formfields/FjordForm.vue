@@ -55,6 +55,13 @@
                         @changed="changed(field, m)"
                     />
 
+                    <fj-form-range
+                        v-if="field.type == 'range'"
+                        :field="field"
+                        :model="m"
+                        @changed="changed(field, m)"
+                    />
+
                     <fj-form-date-time
                         v-if="field.type == 'datetime' || field.type == 'dt'"
                         :field="field"
