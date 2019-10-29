@@ -49,17 +49,17 @@
                                             class="btn-transparent"
                                             v-b-modal="
                                                 `modal-${
-                                                    model.attributes.id
-                                                }-${key}`
+                                                    form_field.edit
+                                                }-${relation.id}`
                                             "
                                             ><fa-icon icon="trash"
                                         /></b-button>
                                     </b-button-group>
                                     <b-modal
                                         :id="
-                                            `modal-${
-                                                model.attributes.id
-                                            }-${key}`
+                                        `modal-${
+                                            form_field.edit
+                                        }-${relation.id}`
                                         "
                                         title="Delete Item"
                                     >
