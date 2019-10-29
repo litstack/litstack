@@ -47,10 +47,12 @@
                                         /></b-button>
                                         <b-button
                                             class="btn-transparent"
-                                            v-b-modal="
-                                                `modal-${
-                                                    form_field.edit
-                                                }-${relation.id}`
+                                            @click="
+                                                showModal(
+                                                    `modal-${
+                                                        form_field.edit
+                                                    }-${relation.id}`
+                                                )
                                             "
                                             ><fa-icon icon="trash"
                                         /></b-button>
@@ -140,6 +142,9 @@ export default {
         }
     },
     methods: {
+        showModal(id){
+            this.$bvModal.show(id)
+        },
         async addRelation(item) {
             this.relations.push(new TableModel(item));
         },
@@ -194,8 +199,6 @@ export default {
                 let index = this.relations.indexOf(relation);
 
                 this.relations.splice(index, 1);
-
-                console.log(data);
 
                 this.$notify({
                     group: 'general',
