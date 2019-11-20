@@ -9,7 +9,7 @@
 
 Route::group(['as' => 'fjord.'], function(){
 
-    Route::group(['middleware' => 'fjord.auth'], function () {
+    Route::group(['middleware' => 'fjord.auth:fjord'], function () {
 
         // Eloquent JS
         Route::resource('/eloquent', '\AwStudio\Fjord\EloquentJs\EloquentJsController');
