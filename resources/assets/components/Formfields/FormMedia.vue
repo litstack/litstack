@@ -10,6 +10,8 @@
                         :options="dropzoneOptions"
                         @vdropzone-success="uploadSuccess"
                         @vdropzone-error="uploadError"
+                        @vdropzone-file-added="processQueue"
+                        @vdropzone-complete="removeFile"
                     ></vue-dropzone>
                 </div>
                 <div class="col-12 order-1">
@@ -217,7 +219,8 @@ export default {
             dropzoneOptions: {
                 url: `${this.baseURL}media`,
                 transformFile: this.transformFile,
-                autoProcessQueue: true,
+                parallelUploads: 1,
+                autoProcessQueue: false,
                 thumbnailWidth: 150,
                 maxFilesize: 100,
                 maxFiles: this.field.maxFiles,
@@ -243,8 +246,7 @@ export default {
         id() {
             if (this.id) {
                 this.dropzoneOptions.params.id = this.id;
-                this.dropzoneOptions.autoProcessQueue = this.id ? true : false;
-                this.update();
+                //this.dropzoneOptions.autoProcessQueue = this.id ? true : false;
             }
         }
     },
@@ -256,9 +258,6 @@ export default {
         if (Object.keys(this.media)[0] != '0' && !_.isEmpty(this.media)) {
             this.images = [this.media];
         }
-    },
-    mounted() {
-        //this.checkMaxFiles();
     },
     computed: {
         ...mapGetters(['baseURL', 'lng']),
@@ -328,38 +327,33 @@ export default {
         },
         uploadSuccess(file, response) {
             this.images = response;
-            this.update();
-            // TODO: notify
+            this.$notify({
+                group: 'general',
+                type: 'success',
+                title: `Success`,
+                text: 'Image uploaded successfully',
+                duration: 1500
+            });
         },
         uploadError(file, errorMessage, xhr) {
             this.$notify({
                 group: 'general',
                 type: 'danger',
-                title: `Error ${xhr.status}`,
-                text: errorMessage.message,
+                title: `Error`,
+                text: errorMessage,
                 duration: -1
             });
         },
         imgPath(image) {
             return `/storage/${image.id}/${image.file_name}`;
         },
-        update() {
-            if (!this.id) {
-                return;
-            }
-
+        processQueue() {
             this.dropzone.processQueue();
-            $(`#dropzone-${this.field.id}`)
-                .removeClass('disabled')
-                .find('.dz-message')
-                .html('<i class="far fa-images"></i> drag and drop');
-
-            // Delete existing files
-            this.dropzone.removeAllFiles();
-            // Cancel current uploads
-            this.dropzone.removeAllFiles(true);
-
-            this.dropzone.enable();
+        },
+        removeFile(file) {
+            setTimeout(() => {
+                this.dropzone.removeFile(file);
+            }, 500);
         },
         clear() {
             this.dropzone.removeAllFiles();
@@ -367,7 +361,6 @@ export default {
         async destroy(id, index) {
             let response = await axios.delete(`media/${id}`);
             this.$delete(this.images, index);
-            this.update();
         },
         newOrder() {
             let payload = {
