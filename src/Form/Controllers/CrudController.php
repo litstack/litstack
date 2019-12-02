@@ -58,6 +58,14 @@ class CrudController extends Controller
 
     }
 
+    public function relation($id, $relation)
+    {
+        $className = $this->model;
+        $model = new $className();
+
+        return $model->find($id)->$relation()->get();
+    }
+
     /**
      * Display a listing of the resource.
      *
