@@ -95,14 +95,20 @@
                         :model="m"
                     />
 
+                    <fj-form-has-many
+                        v-if="field.type == 'hasMany'"
+                        :field="field"
+                        :model="m"
+                    />
+
                     <template v-if="field.type == 'relation'">
-                        <fj-form-has-many
+                        <fj-form-relation-has-many
                             v-if="field.many"
                             :form_field="field"
                             :model="m"
                         />
 
-                        <fj-form-has-one
+                        <fj-form-relation-has-one
                             v-else
                             :field="field"
                             :model="m"

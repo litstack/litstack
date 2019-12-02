@@ -16,7 +16,8 @@ class CrudController extends Controller
 {
 
     use CanHaveFjordExtensions,
-        Traits\CrudIndex;
+        Traits\CrudIndex,
+        Traits\CrudRelations;
 
     // The Model (Class)Name, e.g. Post
     protected $modelName;
