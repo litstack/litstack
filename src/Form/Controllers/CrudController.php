@@ -63,7 +63,13 @@ class CrudController extends Controller
         $className = $this->model;
         $model = new $className();
 
-        return $model->find($id)->$relation()->get();
+        $relations = $model->find($id)->$relation()->get();
+
+        $eloquentModels = [];
+        foreach ($relations as $relation) {
+            $eloquentModels[]=($relation->eloquentJs('fjord'));
+        }
+        return $eloquentModels;
     }
 
     /**

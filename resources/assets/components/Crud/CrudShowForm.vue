@@ -46,18 +46,18 @@ export default {
                     : form_header;
             }
 
-            if(form_header){
+            if (form_header) {
                 if (this.model.attributes !== undefined) {
                     return _.filter(this.model.form_fields, [
-                          'id',
-                          form_header
-                      ])[0].title;
+                        'id',
+                        form_header
+                    ])[0].title;
                 }
-                if(this.model.items !== undefined ) {
+                if (this.model.items !== undefined) {
                     return _.filter(this.model.items.items, [
-                          'attributes.field_id',
-                          form_header
-                      ])[0].form_fields[0].title
+                        'attributes.field_id',
+                        form_header
+                    ])[0].form_fields[0].title;
                 }
             }
             return null;

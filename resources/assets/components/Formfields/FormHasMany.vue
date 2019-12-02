@@ -1,13 +1,17 @@
 <template>
     <fj-form-item :field="field" v-if="model.id">
-        <pre>{{ rows }}</pre>
-        <div v-for="(row, index) in rows">
-            <input v-model="row.title" />
+        <div class="fjord-block card no-fx">
+            <div class="card-body">
+                <div v-for="(m, index) in eloquentModels">
+                    <fj-form :ids="ids" :model="fjModel(m)" />
+                </div>
+            </div>
         </div>
     </fj-form-item>
 </template>
 
 <script>
+import FjordModel from './../../eloquent/fjord.model';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -29,20 +33,28 @@ export default {
                     this.field.id
                 }`
             );
-            this.rows = data;
+            this.eloquentModels = data;
+        },
+        fjModel(model) {
+            return new FjordModel(model);
         }
     },
     data() {
         return {
-            rows: null
+            rows: null,
+            eloquentModels: []
         };
     },
     beforeMount() {
         this.fetchRelation();
-        this.$bus.$on('modelsSaved', () => {
-            console.log('listener from FormHasMany');
-        });
     },
-    computed: {}
+    computed: {
+        ids() {
+            return _.map(this.form_fields, 'id');
+        },
+        form_fields() {
+            return _.flatten(this.field.form.form_fields);
+        }
+    }
 };
 </script>
