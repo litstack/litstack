@@ -14,8 +14,6 @@ use AwStudio\Fjord\Form\Controllers\FormRelationsController;
 use AwStudio\Fjord\Support\Facades\FormLoader;
 use AwStudio\Fjord\Fjord\Controllers\RolePermissionController;
 
-use AwStudio\Fjord\Form\Controllers\CrudRelationController;
-
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
 
@@ -56,8 +54,11 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 ->except(['show']);
             FjordRoute::post("/{$crud}/index", $namespace . "@postIndex")
                 ->name("{$crud}.post_index");
-            FjordRoute::get("/{$crud}/{id}/relations/{relation}", $namespace . "@relation")
-                ->name("{$crud}.relation");
+
+            FjordRoute::get("/{$crud}/{id}/relations/{relation}", $namespace . "@relationIndex");
+            FjordRoute::get("/{$crud}/{id}/relations/{relation}/create", $namespace . "@relationStore");
+            FjordRoute::delete("/{$crud}/{id}/relations/{relation}/{foreign_id}", $namespace . "@relationDestroy");
+            FjordRoute::post("/{$crud}/{id}/relations/{relation}/{foreign_id}/remove", $namespace . "@relationRemove");
 
             FjordRoute::extensionRoutes($namespace);
         }

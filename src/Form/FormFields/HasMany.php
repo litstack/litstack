@@ -12,6 +12,8 @@ class HasMany
         'type',
         'id',
         'model',
+        'foreign_key',
+        'form',
         'title',
     ];
 

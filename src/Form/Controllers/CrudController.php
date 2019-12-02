@@ -16,7 +16,8 @@ class CrudController extends Controller
 {
 
     use CanHaveFjordExtensions,
-        Traits\CrudIndex;
+        Traits\CrudIndex,
+        Traits\CrudRelations;
 
     // The Model (Class)Name, e.g. Post
     protected $modelName;
@@ -56,20 +57,6 @@ class CrudController extends Controller
 
         $translatedAttributes = $this->translatable ? $data->translatedAttributes() : null;
 
-    }
-
-    public function relation($id, $relation)
-    {
-        $className = $this->model;
-        $model = new $className();
-
-        $relations = $model->find($id)->$relation()->get();
-
-        $eloquentModels = [];
-        foreach ($relations as $relation) {
-            $eloquentModels[]=($relation->eloquentJs('fjord'));
-        }
-        return $eloquentModels;
     }
 
     /**
