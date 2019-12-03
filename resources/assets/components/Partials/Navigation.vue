@@ -58,7 +58,7 @@ export default {
         //     .replace('/', '-')
         //     .replace('/', '-');
 
-        console.log(location);
+        // console.log(location);
 
         let item = $(`.nav-${location}`);
 

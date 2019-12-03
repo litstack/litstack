@@ -17,7 +17,7 @@ const getters = {
         return state.language;
     },
     fallback_locale(state) {
-        return state.fallback_locale
+        return state.fallback_locale;
     },
     lngs(state) {
         return state.languages;
@@ -44,14 +44,14 @@ export const mutations = {
         let slash = config.route_prefix.startsWith('/') ? '' : '/';
 
         state.baseURL = '' + slash + config.route_prefix + '/';
-        console.log(state)
+        //console.log(state)
         Bus.$emit('configSet', state.config);
     },
     ['setLanguages'](state, languages) {
         state.languages = languages;
     },
     ['setFallbackLocale'](state, fallback_locale) {
-        state.fallback_locale = fallback_locale
+        state.fallback_locale = fallback_locale;
     },
     ['setLanguage'](state, lng) {
         state.language = lng;

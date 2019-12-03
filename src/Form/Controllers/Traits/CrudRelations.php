@@ -77,4 +77,34 @@ trait CrudRelations
             'success' => true
         ]);
     }
+
+    public function unrelatedRelation(Request $request)
+    {
+        $className = $request->model;
+        $model = new $className();
+
+        $relations = $model->where($request->foreign_key,  '')
+                           ->orWhereNull($request->foreign_key)
+                           ->get();
+
+        $eloquentModels = [];
+        foreach ($relations as $relation) {
+            $eloquentModels[]=($relation->eloquentJs('fjord'));
+        }
+        return $eloquentModels;
+    }
+
+    public function relationLink(Request $request)
+    {
+        $className = $request->model;
+        $model = new $className();
+        
+        $relations = $model->find($request->id)->update([
+            $request->foreign_key => $request->foreign_id
+        ]);
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
 }

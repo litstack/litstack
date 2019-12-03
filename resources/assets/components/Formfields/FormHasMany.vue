@@ -15,7 +15,7 @@
                         <b-button
                             variant="outline-secondary"
                             size="sm"
-                            @click="removeRelation(m, index)"
+                            @click="unlinkRelation(m, index)"
                         >
                             <fa-icon icon="unlink" />
                         </b-button>
@@ -30,9 +30,69 @@
                 </div>
             </div>
         </div>
-        <b-button variant="secondary" size="sm" @click="createRelation">
-            create
+        <b-button
+            variant="secondary"
+            size="sm"
+            @click="createRelation"
+            class="mr-1"
+        >
+            <fa-icon icon="plus" /> {{ field.form.names.singular }}
         </b-button>
+        <b-button
+            variant="secondary"
+            size="sm"
+            @click="addRelation"
+            v-b-modal.add-frelation
+        >
+            <fa-icon icon="link" /> {{ field.form.names.singular }}
+        </b-button>
+        <b-modal id="add-frelation" size="lg" title="Add Relation">
+            <b-table-simple outlined>
+                <thead>
+                    <tr>
+                        <th
+                            colspan="2"
+                            v-for="(col, index) in field.form.index.preview"
+                            :key="index"
+                        >
+                            {{ col.label }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        v-for="(row, key) in unrelatedEloquentModels"
+                        :key="key"
+                    >
+                        <td
+                            v-for="(col, index) in field.form.index.preview"
+                            :key="index"
+                        >
+                            <fj-table-col :item="row.data" :col="col" />
+                        </td>
+                        <td class="text-right">
+                            <b-button
+                                variant="secondary"
+                                size="sm"
+                                @click="linkRelation(key, row.data.id)"
+                            >
+                                <fa-icon icon="link" />
+                            </b-button>
+                        </td>
+                    </tr>
+                </tbody>
+            </b-table-simple>
+            <div slot="modal-footer" class="w-100 d-flex justify-content-end">
+                <b-button
+                    id="cropper-cancel"
+                    variant="secondary"
+                    size="sm"
+                    @click="$bvModal.hide('add-frelation')"
+                >
+                    close
+                </b-button>
+            </div>
+        </b-modal>
     </fj-form-item>
 </template>
 
@@ -58,7 +118,8 @@ export default {
             eloquentModels: [],
             baseRoute: `/${this.model.route}/${
                 this.model.attributes.id
-            }/relations/${this.field.id}`
+            }/relations/${this.field.id}`,
+            unrelatedEloquentModels: []
         };
     },
     methods: {
@@ -70,7 +131,23 @@ export default {
             const { data } = await axios.get(`${this.baseRoute}/create`);
             this.eloquentModels.push(data);
         },
-        async removeRelation(model, index) {
+        async linkRelation(key, id) {
+            try {
+                const { data } = await axios.post('link-relation', {
+                    id,
+                    model: this.field.model,
+                    foreign_key: this.field.foreign_key,
+                    foreign_id: this.model.id
+                });
+                if (data.success) {
+                    let row = this.unrelatedEloquentModels.splice(key, 1);
+                    this.fetchRelation();
+                }
+            } catch (e) {
+            } finally {
+            }
+        },
+        async unlinkRelation(model, index) {
             try {
                 const { data } = await axios.post(
                     `${this.baseRoute}/${model.data.id}/remove`
@@ -94,11 +171,21 @@ export default {
             } finally {
             }
         },
+        async fetchUnrelated() {
+            const { data } = await axios.post('unrelated-relation', {
+                model: this.field.model,
+                foreign_key: this.field.foreign_key
+            });
+            this.unrelatedEloquentModels = data;
+        },
         fjModel(model) {
             return new FjordModel(model);
         },
         rerenderKey(model, index) {
             return `${model.data.id}-${index}`;
+        },
+        addRelation() {
+            this.fetchUnrelated();
         }
     },
     beforeMount() {
