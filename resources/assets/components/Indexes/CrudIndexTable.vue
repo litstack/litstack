@@ -231,7 +231,8 @@ export default {
 
             let payload = {
                 search: this.search,
-                sort_by: this.sort_by_key
+                sort_by: this.sort_by_key,
+                eagerLoad: this.config.load || []
             };
 
             let response = await axios.post(`${this.route}/index`, payload);
