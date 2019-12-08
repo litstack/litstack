@@ -1,0 +1,12 @@
+{
+    "name": "fjord-docs",
+    "version": "1.0",
+    "license": "MIT",
+    "scripts": {
+        "dev": "vuepress dev",
+        "build": "vuepress build"
+    },
+    "author": [
+        "Jannes Behrens"
+    ]
+}
