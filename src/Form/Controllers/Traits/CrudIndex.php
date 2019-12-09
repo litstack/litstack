@@ -36,7 +36,8 @@ trait CrudIndex
                     $table = with(new $this->model)->getTable();
 
                     // join the related table for ordering by a foreign column
-                    $query->join($foreign_table, $foreign_table . '.id', '=', $table . '.' . rtrim($foreign_table, 's') . '_id')
+                    $query->rightJoin($foreign_table, $foreign_table . '.id', '=', $table . '.' . rtrim($foreign_table, 's') . '_id')
+                          ->select($table . '.*', $foreign_table . '.' . explode('.', $request->sort_by)[1])
                           ->orderBy($foreign_table.'.'.explode('.', $request->sort_by)[1], $order)
                           ->get();
 
