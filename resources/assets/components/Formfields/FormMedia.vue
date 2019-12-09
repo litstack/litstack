@@ -10,7 +10,7 @@
                         :options="dropzoneOptions"
                         @vdropzone-success="uploadSuccess"
                         @vdropzone-error="uploadError"
-                        @vdropzone-file-added="processQueue"
+                        @vdropzone-files-added="processQueue"
                         @vdropzone-complete="removeFile"
                     ></vue-dropzone>
                 </div>
@@ -348,6 +348,7 @@ export default {
             return `/storage/${image.id}/${image.file_name}`;
         },
         processQueue() {
+            console.log('processQueue');
             this.dropzone.processQueue();
         },
         removeFile(file) {

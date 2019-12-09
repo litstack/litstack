@@ -91,6 +91,16 @@
                                     :value="item.id"
                                 />
                             </td>
+                            <td
+                                v-else-if="col.component !== undefined"
+                                class="pointer"
+                            >
+                                <component
+                                    :is="col.component"
+                                    :item="item"
+                                    :col="col"
+                                />
+                            </td>
                             <td v-else @click="openItem(item)" class="pointer">
                                 <fj-table-col :item="item" :col="col" />
                             </td>
@@ -140,6 +150,12 @@ export default {
             }
         },
         recordActions: {
+            type: Array,
+            default: () => {
+                return [];
+            }
+        },
+        recordComponents: {
             type: Array,
             default: () => {
                 return [];
