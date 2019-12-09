@@ -21,7 +21,7 @@ let head = [
 ];
 
 module.exports = {
-    base: '/fjord/',
+    base: '/',
     title: 'Fjord',
     description: 'description',
     head,
