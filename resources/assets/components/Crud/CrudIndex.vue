@@ -1,9 +1,7 @@
 <template>
     <fj-container>
         <fj-header :title="formConfig.names.title.plural">
-
             <div slot="actions-right">
-
                 <component
                     v-for="(component, key) in globalActions"
                     :key="key"
@@ -18,31 +16,26 @@
             </div>
         </fj-header>
 
-        <b-row>
-            <b-col cols="12">
-                <b-card>
-                    <fj-crud-index-table
-                        :names="formConfig.names"
-                        :config="formConfig.index"
-                        :cols="fields"
-                        :route="this.formConfig.names.table"
-                        :actions="formConfig.index.actions"
-                        :recordActions="recordActions"
-                        @selectedItemsChanged="setSelectedItems"
-                    >
-                        <component
-                            slot="actions"
-                            v-for="(component, key) in actions"
-                            :key="key"
-                            :is="component"
-                            :formConfig="formConfig"
-                            :selectedItems="selectedItems"
-                            :sendAction="sendAction"
-                        />
-                    </fj-crud-index-table>
-                </b-card>
-            </b-col>
-        </b-row>
+        <fj-crud-index-table
+            :names="formConfig.names"
+            :config="formConfig.index"
+            :cols="fields"
+            :route="this.formConfig.names.table"
+            :actions="formConfig.index.actions"
+            :recordActions="recordActions"
+            @selectedItemsChanged="setSelectedItems"
+            :perPage="formConfig.index.per_page"
+        >
+            <component
+                slot="actions"
+                v-for="(component, key) in actions"
+                :key="key"
+                :is="component"
+                :formConfig="formConfig"
+                :selectedItems="selectedItems"
+                :sendAction="sendAction"
+            />
+        </fj-crud-index-table>
     </fj-container>
 </template>
 
@@ -61,15 +54,15 @@ export default {
         globalActions: {
             type: Array,
             default: () => {
-                return []
+                return [];
             }
         },
         recordActions: {
             type: Array,
             default: () => {
-                return []
+                return [];
             }
-        },
+        }
     },
     data() {
         return {
