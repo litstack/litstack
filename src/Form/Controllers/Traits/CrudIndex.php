@@ -16,8 +16,15 @@ trait CrudIndex
 
         $form = $this->getForm();
 
+        // apply the search
         if($request->search) {
             $query->whereLike($form->index['search'], $request->search);
+        }
+
+        // apply the filter
+        if($request->filter) {
+            $scope = $request->filter;
+            $query->$scope();
         }
 
         if($request->sort_by) {
@@ -50,7 +57,20 @@ trait CrudIndex
 
         }
 
-        $items = $query->get();
+        //$items = $query->get();
+
+        // pagination
+        if($request->perPage !== 0){
+            $page = $request->page ?? 1;
+            $count = $this->model::all()->count();
+            $perPage = $request->perPage;
+            $total = $query->get()->count();
+
+            $items = $query->skip( ($page-1) * $perPage )->take($perPage)->get();
+        }else{
+            $items = $query->get();
+        }
+
 
 
 
@@ -60,7 +80,10 @@ trait CrudIndex
             });
         }
 
-        return $items;
+        return [
+            'count' => $total ?? 0,
+            'items' => $items
+        ];
     }
 
 

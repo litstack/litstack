@@ -1,123 +1,184 @@
 <template>
-    <div class="fj-crud-index-table">
-        <div class="fj-crud-index-table__form mb-2">
-            <b-input-group>
-                <b-input-group-prepend is-text>
-                    <fa-icon icon="search" />
-                </b-input-group-prepend>
+    <div>
+        <b-row>
+            <b-col cols="12">
+                <b-card>
+                    <div class="fj-crud-index-table">
+                        <div class="fj-crud-index-table__form mb-2">
+                            <b-input-group>
+                                <b-input-group-prepend is-text>
+                                    <fa-icon icon="search" />
+                                </b-input-group-prepend>
 
-                <b-form-input
-                    :placeholder="`Filter ${names.title.plural}`"
-                    v-model="search"
-                />
+                                <b-form-input
+                                    :placeholder="
+                                        `Filter ${names.title.plural}`
+                                    "
+                                    v-model="search"
+                                />
 
-                <template v-slot:append>
-                    <b-dropdown
-                        right
-                        text="Filter"
-                        class="btn-br-none"
-                        variant="outline-secondary"
-                    >
-                        <b-dropdown-item>
-                            Coming soon…
-                        </b-dropdown-item>
-                    </b-dropdown>
-                    <b-dropdown
-                        right
-                        text="Sort"
-                        class="btn-brl-none"
-                        variant="outline-secondary"
-                        v-if="config.sort_by"
-                    >
-                        <b-dropdown-item
-                            v-for="(text, key) in config.sort_by"
-                            :key="key"
-                            @click="sortBy(key)"
+                                <template v-slot:append>
+                                    <b-dropdown
+                                        right
+                                        text="Filter"
+                                        class="btn-br-none"
+                                        :variant="filterVariant"
+                                    >
+                                        <b-dropdown-group
+                                            :header="key"
+                                            v-for="(group,
+                                            key) in config.filter"
+                                            :key="key"
+                                        >
+                                            <b-dropdown-item-button
+                                                v-for="(item, index) in group"
+                                                @click="filter(index)"
+                                                :key="item"
+                                                :active="filterActive(index)"
+                                            >
+                                                {{ item }}
+                                            </b-dropdown-item-button>
+                                        </b-dropdown-group>
+                                        <b-dropdown-divider></b-dropdown-divider>
+                                        <b-dropdown-item-button
+                                            @click="resetFilter"
+                                        >
+                                            reset
+                                        </b-dropdown-item-button>
+                                    </b-dropdown>
+                                    <b-dropdown
+                                        right
+                                        text="Sort"
+                                        class="btn-brl-none"
+                                        variant="outline-secondary"
+                                        v-if="config.sort_by"
+                                    >
+                                        <b-dropdown-item
+                                            v-for="(text,
+                                            key) in config.sort_by"
+                                            :key="key"
+                                            @click="sortBy(key)"
+                                        >
+                                            <b-form-radio
+                                                :checked="sort_by_key"
+                                                :value="key"
+                                                >{{ text }}</b-form-radio
+                                            >
+                                        </b-dropdown-item>
+                                    </b-dropdown>
+                                </template>
+                            </b-input-group>
+                        </div>
+
+                        <fj-selected-items-actions
+                            :items="items"
+                            :selectedItems="selectedItems"
                         >
-                            <b-form-radio :checked="sort_by_key" :value="key">{{
-                                text
-                            }}</b-form-radio>
-                        </b-dropdown-item>
-                    </b-dropdown>
-                </template>
-            </b-input-group>
-        </div>
+                            <slot name="actions" slot="actions" />
+                        </fj-selected-items-actions>
 
-        <fj-selected-items-actions
-            :items="items"
-            :selectedItems="selectedItems"
-        >
-            <slot name="actions" slot="actions" />
-        </fj-selected-items-actions>
+                        <b-table-simple :aria-busy="isBusy">
+                            <fj-colgroup :icons="['check']" :cols="tableCols" />
 
-        <b-table-simple :aria-busy="isBusy">
-            <fj-colgroup :icons="['check']" :cols="tableCols" />
-
-            <fj-crud-index-table-head
-                :tableCols="tableCols"
-                :hasRecordActions="hasRecordActions"
-                :selectedItems="selectedItems"
-                @sort="sortCol"
-            >
-                <b-checkbox
-                    slot="checkbox"
-                    class="float-left"
-                    v-model="selectedAll"
-                    :indeterminate.sync="indeterminateSelectedItems"
-                    @change="changeSelectedItems"
-                />
-            </fj-crud-index-table-head>
-
-            <tbody>
-                <tr role="row" class="b-table-busy-slot" v-if="isBusy">
-                    <td :colspan="tableCols.length" role="cell" align="center">
-                        <fj-spinner class="text-center" />
-                    </td>
-                </tr>
-                <template v-else>
-                    <tr
-                        v-for="(item, key) in items"
-                        :key="key"
-                        :class="
-                            selectedItems.includes(item.id)
-                                ? 'table-primary'
-                                : ''
-                        "
-                    >
-                        <template v-for="(col, col_key) in tableCols">
-                            <td v-if="col.key == 'check'">
-                                <b-checkbox
-                                    v-model="selectedItems"
-                                    :value="item.id"
-                                />
-                            </td>
-                            <td
-                                v-else-if="col.component !== undefined"
-                                class="pointer"
+                            <fj-crud-index-table-head
+                                :tableCols="tableCols"
+                                :hasRecordActions="hasRecordActions"
+                                :selectedItems="selectedItems"
+                                @sort="sortCol"
                             >
-                                <component
-                                    :is="col.component"
-                                    :item="item"
-                                    :col="col"
+                                <b-checkbox
+                                    slot="checkbox"
+                                    class="float-left"
+                                    v-model="selectedAll"
+                                    :indeterminate.sync="
+                                        indeterminateSelectedItems
+                                    "
+                                    @change="changeSelectedItems"
                                 />
-                            </td>
-                            <td v-else @click="openItem(item)" class="pointer">
-                                <fj-table-col :item="item" :col="col" />
-                            </td>
-                        </template>
-                        <td v-if="hasRecordActions">
-                            <component
-                                v-for="(component, key) in recordActions"
-                                :key="key"
-                                :is="component"
-                                :item="item"
-                                @reload="loadItems"
-                            />
-                        </td>
-                    </tr>
-                </template>
-            </tbody>
-        </b-table-simple>
+                            </fj-crud-index-table-head>
+
+                            <tbody>
+                                <tr
+                                    role="row"
+                                    class="b-table-busy-slot"
+                                    v-if="isBusy"
+                                >
+                                    <td
+                                        :colspan="tableCols.length"
+                                        role="cell"
+                                        align="center"
+                                    >
+                                        <fj-spinner class="text-center" />
+                                    </td>
+                                </tr>
+                                <template v-else>
+                                    <tr
+                                        v-for="(item, key) in items"
+                                        :key="key"
+                                        :class="
+                                            selectedItems.includes(item.id)
+                                                ? 'table-primary'
+                                                : ''
+                                        "
+                                    >
+                                        <template
+                                            v-for="(col, col_key) in tableCols"
+                                        >
+                                            <td v-if="col.key == 'check'">
+                                                <b-checkbox
+                                                    v-model="selectedItems"
+                                                    :value="item.id"
+                                                />
+                                            </td>
+                                            <td
+                                                v-else-if="
+                                                    col.component !== undefined
+                                                "
+                                                class="pointer"
+                                            >
+                                                <component
+                                                    :is="col.component"
+                                                    :item="item"
+                                                    :col="col"
+                                                />
+                                            </td>
+                                            <td
+                                                v-else
+                                                @click="openItem(item)"
+                                                class="pointer"
+                                            >
+                                                <fj-table-col
+                                                    :item="item"
+                                                    :col="col"
+                                                />
+                                            </td>
+                                        </template>
+                                        <td v-if="hasRecordActions">
+                                            <component
+                                                v-for="(component,
+                                                key) in recordActions"
+                                                :key="key"
+                                                :is="component"
+                                                :item="item"
+                                                @reload="loadItems"
+                                            />
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </b-table-simple>
+                    </div>
+                </b-card>
+            </b-col>
+        </b-row>
+        <div class="d-flex justify-content-center" v-if="perPage">
+            <b-pagination-nav
+                class="mt-4"
+                :link-gen="linkGen"
+                :number-of-pages="number_of_pages"
+                @change="goToPage"
+            ></b-pagination-nav>
+        </div>
     </div>
 </template>
 
@@ -127,6 +188,10 @@ import TableModel from './../../eloquent/table.model';
 export default {
     name: 'CrudIndexTable',
     props: {
+        perPage: {
+            type: Number,
+            default: 0
+        },
         names: {
             type: Object,
             required: true
@@ -170,9 +235,12 @@ export default {
             items: [],
             search: '',
             sort_by_key: '',
+            filter_scope: null,
             selectedItems: [],
             indeterminateSelectedItems: false,
-            selectedAll: false
+            selectedAll: false,
+            page: 1,
+            number_of_pages: null
         };
     },
     watch: {
@@ -212,9 +280,19 @@ export default {
     computed: {
         hasRecordActions() {
             return this.recordActions.length > 0;
+        },
+        filterVariant() {
+            return this.filter_scope ? 'primary' : 'outline-secondary';
         }
     },
     methods: {
+        goToPage(page) {
+            this.page = page;
+            this.loadItems();
+        },
+        linkGen(pageNum) {
+            return { path: `#${pageNum}` };
+        },
         changeSelectedItems(val) {
             if (val) {
                 this.selectedItems = this.items.map(item => {
@@ -246,18 +324,24 @@ export default {
             this.isBusy = true;
 
             let payload = {
+                page: this.page,
+                perPage: this.perPage,
                 search: this.search,
                 sort_by: this.sort_by_key,
+                filter: this.filter_scope,
                 eagerLoad: this.config.load || []
             };
 
             let response = await axios.post(`${this.route}/index`, payload);
 
             let items = [];
-            for (let i = 0; i < response.data.length; i++) {
-                items.push(new TableModel(response.data[i]));
+            for (let i = 0; i < response.data.items.length; i++) {
+                items.push(new TableModel(response.data.items[i]));
             }
             this.items = items;
+            this.number_of_pages = Math.ceil(
+                response.data.count / this.perPage
+            );
 
             this.isBusy = false;
         },
@@ -267,6 +351,18 @@ export default {
         },
         sortCol(value) {
             this.sortBy(value);
+        },
+        filter(key) {
+            this.page = 1;
+            this.filter_scope = key;
+            this.loadItems();
+        },
+        resetFilter() {
+            this.filter_scope = null;
+            this.loadItems();
+        },
+        filterActive(key) {
+            return key == this.filter_scope;
         },
         hasAction(action) {
             return this.actions.includes(action);
