@@ -25,9 +25,9 @@
                         >
                             <b-dropdown-item-button
                                 v-for="(item, index) in group"
-                                @click="filter(item)"
-                                :key="index"
-                                :active="filterActive(item)"
+                                @click="filter(index)"
+                                :key="item"
+                                :active="filterActive(index)"
                             >
                                 {{ item }}
                             </b-dropdown-item-button>
