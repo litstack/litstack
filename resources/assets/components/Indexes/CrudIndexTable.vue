@@ -353,6 +353,7 @@ export default {
             this.sortBy(value);
         },
         filter(key) {
+            this.page = 1;
             this.filter_scope = key;
             this.loadItems();
         },

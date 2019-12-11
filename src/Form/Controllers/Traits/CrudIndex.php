@@ -63,7 +63,7 @@ trait CrudIndex
         if($request->perPage !== 0){
             $page = $request->page ?? 1;
             $count = $this->model::all()->count();
-            $perPage = $request->perPage ?? 20;
+            $perPage = $request->perPage;
             $total = $query->get()->count();
 
             $items = $query->skip( ($page-1) * $perPage )->take($perPage)->get();
