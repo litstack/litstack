@@ -16,11 +16,26 @@
                         right
                         text="Filter"
                         class="btn-br-none"
-                        variant="outline-secondary"
+                        :variant="filterVariant"
                     >
-                        <b-dropdown-item>
-                            Coming soon…
-                        </b-dropdown-item>
+                        <b-dropdown-group
+                            :header="key"
+                            v-for="(group, key) in config.filter"
+                            :key="key"
+                        >
+                            <b-dropdown-item-button
+                                v-for="(item, index) in group"
+                                @click="filter(item)"
+                                :key="index"
+                                :active="filterActive(item)"
+                            >
+                                {{ item }}
+                            </b-dropdown-item-button>
+                        </b-dropdown-group>
+                        <b-dropdown-divider></b-dropdown-divider>
+                        <b-dropdown-item-button @click="resetFilter">
+                            reset
+                        </b-dropdown-item-button>
                     </b-dropdown>
                     <b-dropdown
                         right
@@ -170,6 +185,7 @@ export default {
             items: [],
             search: '',
             sort_by_key: '',
+            filter_scope: null,
             selectedItems: [],
             indeterminateSelectedItems: false,
             selectedAll: false
@@ -212,6 +228,9 @@ export default {
     computed: {
         hasRecordActions() {
             return this.recordActions.length > 0;
+        },
+        filterVariant() {
+            return this.filter_scope ? 'primary' : 'outline-secondary';
         }
     },
     methods: {
@@ -248,6 +267,7 @@ export default {
             let payload = {
                 search: this.search,
                 sort_by: this.sort_by_key,
+                filter: this.filter_scope,
                 eagerLoad: this.config.load || []
             };
 
@@ -267,6 +287,17 @@ export default {
         },
         sortCol(value) {
             this.sortBy(value);
+        },
+        filter(key) {
+            this.filter_scope = key;
+            this.loadItems();
+        },
+        resetFilter() {
+            this.filter_scope = null;
+            this.loadItems();
+        },
+        filterActive(key) {
+            return key == this.filter_scope;
         },
         hasAction(action) {
             return this.actions.includes(action);

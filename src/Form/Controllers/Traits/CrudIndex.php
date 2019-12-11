@@ -16,8 +16,15 @@ trait CrudIndex
 
         $form = $this->getForm();
 
+        // apply the search
         if($request->search) {
             $query->whereLike($form->index['search'], $request->search);
+        }
+
+        // apply the filter
+        if($request->filter) {
+            $scope = $request->filter;
+            $query->$scope();
         }
 
         if($request->sort_by) {
