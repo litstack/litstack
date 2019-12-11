@@ -178,7 +178,7 @@ class FjordInstall extends Command
         $this->callSilent('config:clear');
 
 
-        if(is_dir(fjord_resource_path())) {
+        if(is_dir(fjord_resource_path()) && fjord_resource_path() !== resource_path() ) {
             return;
         }
         File::copyDirectory(fjord_path('publish/fjord'), resource_path('fjord'));
