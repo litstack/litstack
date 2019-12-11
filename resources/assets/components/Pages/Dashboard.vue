@@ -2,27 +2,11 @@
     <fj-container>
         <fj-header :title="'Dashboard'"></fj-header>
         <b-row>
-            <b-col cols="4" v-for="(item, index) in cards" :key="index">
-                <div class="card">
-                    <div class="card-header">
-                        <b>{{ item.title }}</b>
-                    </div>
-                    <div class="card-body">
-                        <p>
-                            {{ item.text }}
-                        </p>
-                        <div class="btn-group" role="group">
-                            <a
-                                v-for="link in item.links"
-                                :href="link.target"
-                                :class="link.class"
-                                v-html="link.text"
-                            >
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </b-col>
+            <component
+                v-for="(component, index) in components"
+                :is="component"
+                :key="index"
+            />
         </b-row>
     </fj-container>
 </template>
@@ -31,7 +15,7 @@
 export default {
     name: 'Dashboard',
     props: {
-        cards: {
+        components: {
             type: Array
         }
     }
