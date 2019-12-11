@@ -310,6 +310,7 @@ export default {
         },
         checkMaxFiles() {
             if (this.images.length >= this.field.maxFiles) {
+                this.dropzone.removeAllFiles();
                 this.dropzone.disable();
                 $(`#dropzone-${this.field.id}`)
                     .addClass('disabled')
@@ -348,16 +349,14 @@ export default {
             return `/storage/${image.id}/${image.file_name}`;
         },
         processQueue() {
-            console.log('processQueue');
-            this.dropzone.processQueue();
+            this.$nextTick(() => {
+                this.dropzone.processQueue();
+            });
         },
         removeFile(file) {
             setTimeout(() => {
                 this.dropzone.removeFile(file);
             }, 500);
-        },
-        clear() {
-            this.dropzone.removeAllFiles();
         },
         async destroy(id, index) {
             let response = await axios.delete(`media/${id}`);
@@ -368,9 +367,7 @@ export default {
                 model: 'Spatie\\MediaLibrary\\Models\\Media',
                 order: _.map(this.images, 'id')
             };
-            axios.put('order', payload).then(response => {
-                console.log('Response: ', response.data);
-            });
+            axios.put('order', payload);
         },
         transformFile(file, done) {
             // If image doesn't require cropping, return bare image
