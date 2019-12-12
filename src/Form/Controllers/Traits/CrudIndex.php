@@ -24,7 +24,7 @@ trait CrudIndex
         // apply the filter
         if($request->filter) {
             $scope = $request->filter;
-            $query->$scope();
+            $query = $query->$scope();
         }
 
         if($request->sort_by) {
