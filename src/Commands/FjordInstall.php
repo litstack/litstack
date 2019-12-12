@@ -62,6 +62,8 @@ class FjordInstall extends Command
         $this->createDefaultRoles();
         $this->createDefaultPermissions();
 
+        $this->publishDashboardController();
+
         $this->info("\n----- finished -----\n");
 
         $this->info('installation complete - run php artisan fjord:admin to create an admin user');
@@ -172,15 +174,31 @@ class FjordInstall extends Command
 
     public function handleFjordResources()
     {
+        if(is_dir(fjord_resource_path()) && fjord_resource_path() !== resource_path() ) {
+            return;
+        }
+        
         $this->info('publishing fjord resources');
         // clear the config cache, otherwise, fjord_resource_path() will return
         // the resource path itself, which is present for shure
         $this->callSilent('config:clear');
 
-
-        if(is_dir(fjord_resource_path()) && fjord_resource_path() !== resource_path() ) {
-            return;
-        }
         File::copyDirectory(fjord_path('publish/fjord'), resource_path('fjord'));
+    }
+
+    public function publishDashboardController()
+    {
+        if(!\File::exists( app_path('Http/Controllers/Fjord') )){
+            \File::makeDirectory( app_path('Http/Controllers/Fjord') );
+        }
+
+        if(!File::exists(app_path('Http/Controllers/Fjord/DashboardController.php'))){
+            $this->info('publishing DashboardController');
+
+            File::copy(
+                fjord_path('publish/controllers/DashboardController.php'),
+                app_path('Http/Controllers/Fjord/DashboardController.php')
+            );
+        }
     }
 }

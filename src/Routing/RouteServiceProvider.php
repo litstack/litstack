@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Route;
 use AwStudio\Fjord\Auth\AuthController;
 use AwStudio\Fjord\Form\Crud;
 use AwStudio\Fjord\Fjord\Controllers\FjordController;
-use AwStudio\Fjord\Fjord\Controllers\DashboardController;
 use AwStudio\Fjord\Fjord\Controllers\FileController;
+use App\Http\Controllers\Fjord\DashboardController;
+use Exception;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -24,6 +25,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->mapAuthRoutes();
         $this->mapFjordRoutes();
         $this->mapFileRoutes();
+        $this->mapDashboardRoutes();
     }
 
     protected function mapAuthRoutes()
@@ -72,5 +74,15 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::public()
             ->get('favicon/favicon-16x16.png', FileController::class . '@fjordFaviconSmall')
             ->name('favicon-small');
+    }
+
+    protected function mapDashboardRoutes()
+    {
+        if(
+            !\File::exists(app_path('Http/Controllers/Fjord/DashboardController.php'))
+        ){
+            throw new Exception("The App/Http/Controllers/Fjord/DashboardController.php does not exist. Run php artisan fjord:install to create it.");
+        }
+        FjordRoute::extensionRoutes(\App\Http\Controllers\Fjord\DashboardController::class);
     }
 }
