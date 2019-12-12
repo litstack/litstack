@@ -11,6 +11,12 @@ trait CrudIndex
         // eager load models default withs
         $query = $this->model::with($this->getWiths());
 
+        // apply the filter
+        if($request->filter) {
+            $scope = $request->filter;
+            $query = $query->$scope();
+        }
+
         // and the related models added in the crud->index->load
         $query->with(array_keys($request->eagerLoad));
 
@@ -19,12 +25,6 @@ trait CrudIndex
         // apply the search
         if($request->search) {
             $query->whereLike($form->index['search'], $request->search);
-        }
-
-        // apply the filter
-        if($request->filter) {
-            $scope = $request->filter;
-            $query = $query->$scope();
         }
 
         if($request->sort_by) {
