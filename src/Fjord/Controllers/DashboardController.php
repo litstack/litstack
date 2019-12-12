@@ -14,7 +14,7 @@ class DashboardController extends Controller
         return view('fjord::vue')->withComponent('dashboard')
             ->withTitle('Dashboard')
             ->withProps([
-                'components' => $dashboard['components']
+                'components' => $dashboard['components'] ?? []
             ]);
     }
 }
