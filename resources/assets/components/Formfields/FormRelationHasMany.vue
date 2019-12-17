@@ -11,7 +11,7 @@
                         tag="tbody"
                         handle=".fjord-draggable__dragbar"
                     >
-                        <b-tr v-for="(relation, rkey) in relations" :key="rkey">
+                        <tr v-for="(relation, rkey) in relations" :key="rkey">
                             <b-td
                                 style="vertical-align: middle;"
                                 v-for="(field, key) in fields"
@@ -105,7 +105,7 @@
                                     />
                                 </div>
                             </b-td>
-                        </b-tr>
+                        </tr>
                     </draggable>
                 </b-table-simple>
             </div>

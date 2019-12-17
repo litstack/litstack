@@ -8,7 +8,7 @@
             >
                 <fj-colgroup :icons="['drag', 'trash']" :cols="cols" />
 
-                <b-tr>
+                <tr>
                     <b-td
                         style="vertical-align: middle;"
                         v-for="(col, key) in cols"
@@ -30,8 +30,9 @@
                             <fj-table-col :item="relation" :col="col" />
                         </div>
                     </b-td>
-                </b-tr>
+                </tr>
             </b-table-simple>
+
             <div v-else class="text-center">
                 <span class="text-muted"> No {{ field.title }} selected. </span>
             </div>

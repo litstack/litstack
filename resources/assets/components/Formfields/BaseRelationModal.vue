@@ -28,7 +28,7 @@
             <fj-colgroup :icons="['check']" :cols="cols" />
 
             <tbody>
-                <b-tr
+                <tr
                     v-for="(item, key) in items"
                     :key="key"
                     style="cursor:pointer;"
@@ -60,12 +60,9 @@
                             v-else-if="col.key == 'check' && hasMany"
                             :checked="itemChecked(item)"
                         />
-                        <fj-table-col
-                            v-else
-                            :item="item"
-                            :col="col"/>
+                        <fj-table-col v-else :item="item" :col="col" />
                     </b-td>
-                </b-tr>
+                </tr>
             </tbody>
         </b-table-simple>
     </b-modal>
@@ -184,7 +181,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pointer-events-none{
+.pointer-events-none {
     pointer-events: none;
 }
 </style>

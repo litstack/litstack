@@ -413,6 +413,9 @@ export default {
         tbody {
             td {
                 vertical-align: middle;
+                > div {
+                    white-space: nowrap;
+                }
 
                 &.pointer {
                     cursor: pointer;
