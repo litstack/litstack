@@ -78,6 +78,9 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapDashboardRoutes()
     {
+        if(\App::runningInConsole()){
+            return;
+        }
         if(
             !\File::exists(app_path('Http/Controllers/Fjord/DashboardController.php'))
         ){
