@@ -42,6 +42,17 @@ module.exports = {
                     ]
                 },
                 {
+                    title: 'Resources',
+                    collapsable: false,
+                    children: [
+                        ['guide/resources/crud', 'Crud'],
+                        ['guide/resources/navigation', 'Navigation'],
+                        ['guide/resources/pages', 'Pages'],
+                        ['guide/resources/repeatables', 'Repeatables'],
+                        ['guide/resources/dashboard', 'Dashboard']
+                    ]
+                },
+                {
                     title: 'CRUD',
                     collapsable: false,
                     children: [
@@ -52,7 +63,7 @@ module.exports = {
                 },
                 {
                     title: 'Formfields',
-                    collapsable: true,
+                    collapsable: false,
                     children: [
                         ['guide/formfields/input', 'Input'],
                         ['guide/formfields/textarea', 'Textarea'],
@@ -66,6 +77,11 @@ module.exports = {
                         ['guide/formfields/has-many', 'HasMany'],
                         ['guide/formfields/relation', 'Relation']
                     ]
+                },
+                {
+                    title: 'Extending Fjord',
+                    collapsable: false,
+                    children: [['guide/extensions/setup', 'Setup']]
                 }
             ]
         }
