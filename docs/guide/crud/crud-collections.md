@@ -1,3 +1,0 @@
-# CRUD-Collections
-
-Coming soon…

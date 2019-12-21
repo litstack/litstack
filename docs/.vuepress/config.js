@@ -57,13 +57,17 @@ module.exports = {
                     collapsable: false,
                     children: [
                         ['guide/crud/create-crud', 'Create CRUD-Models'],
-                        ['guide/crud/crud-config', 'CRUD Config'],
-                        ['guide/crud/crud-collections', 'CRUD Collections']
+                        ['guide/crud/crud-config', 'Configure CRUD-Models']
                     ]
                 },
                 {
-                    title: 'Formfields',
+                    title: 'Collections',
                     collapsable: false,
+                    children: [['guide/collections/pages', 'Pages']]
+                },
+                {
+                    title: 'Formfields',
+                    collapsable: true,
                     children: [
                         ['guide/formfields/input', 'Input'],
                         ['guide/formfields/textarea', 'Textarea'],
