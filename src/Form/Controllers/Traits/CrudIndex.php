@@ -33,6 +33,9 @@ trait CrudIndex
 
 
         // pagination
+        if($request->perPage){
+            $total = $query->get()->count();
+        }
         $items = $this->paginate($request, $query);
 
 
