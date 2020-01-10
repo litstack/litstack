@@ -276,6 +276,9 @@ export default {
         this.$bus.$on('unselectCrudIndex', () => {
             this.selectedItems = [];
         });
+        this.$bus.$on('openItem', item => {
+            this.openItem(item);
+        });
     },
     computed: {
         hasRecordActions() {

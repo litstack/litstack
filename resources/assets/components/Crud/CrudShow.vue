@@ -12,7 +12,7 @@
                 :nearItems="nearItems"
             />
 
-            <div slot="actions" class="indent sm">
+            <div slot="actions" class="pt-3" v-if="actions.length > 0">
                 <components
                     v-for="(component, key) in actions"
                     :key="key"

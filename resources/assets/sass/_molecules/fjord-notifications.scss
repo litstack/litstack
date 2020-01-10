@@ -5,16 +5,20 @@
 }
 
 .fjord-notifications {
-    .notification-wrapper {
-        overflow: visible;
-        background-color: $dark_transparent;
-        color: white;
-        border-radius: $radius;
-    }
+    // .notification-wrapper {
+    //     overflow: visible;
+    //     background-color: $dark_transparent;
+    //     color: white;
+    //     border-radius: $radius;
+    // }
     &__wrapper {
         padding: 10px;
         margin: 5px;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        overflow: visible;
+        background-color: $dark_transparent;
+        color: white;
+        border-radius: $radius;
     }
     &__icon {
         font-size: 30px;
