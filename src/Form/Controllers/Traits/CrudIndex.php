@@ -31,6 +31,14 @@ trait CrudIndex
         // if sorted by eager loaded value, we need a query with ordering
         $query = $this->orderByEager($request, $query);
 
+        // order before paginating
+        $key = explode('.', $request->sort_by)[0];
+        $order = last(explode('.', $request->sort_by));
+        if(!in_array($key, array_keys($request->eagerLoad))){
+            if($request->sort_by){
+                $query->orderBy($key, $order);
+            }
+        }
 
         // pagination
         if($request->perPage){
@@ -40,7 +48,7 @@ trait CrudIndex
 
 
         // sort items, if needed
-        $items = $this->sort($request, $items);
+        $items = $this->sortItems($request, $items);
 
 
         if(is_translatable($this->model)) {
@@ -83,7 +91,7 @@ trait CrudIndex
      * @param  Collection
      * @return Collection
      */
-    private function sort(Request $request, Collection $items): Collection
+    private function sortItems(Request $request, Collection $items): Collection
     {
         // sort
         if(!$request->sort_by){
@@ -110,6 +118,7 @@ trait CrudIndex
 
         return $items;
     }
+
 
 
     /**
@@ -157,6 +166,7 @@ trait CrudIndex
     {
         // if a perPage value is set, get the requested page,
         // else get all items
+
         if($request->perPage !== 0){
             $page = $request->page ?? 1;
             $count = $this->model::all()->count();
@@ -164,6 +174,7 @@ trait CrudIndex
             $total = $query->get()->count();
 
             $items = $query->skip( ($page-1) * $perPage )->take($perPage)->get();
+
         }else{
             $items = $query->get();
         }
