@@ -118,8 +118,12 @@ class CrudController extends Controller
      */
     public function edit(CrudUpdateRequest $request, $id)
     {
-        $model = $this->model::with($this->getWiths())
-            ->withFormRelations()
+        $query = $this->model::with($this->getWiths());
+        if(array_key_exists('load', $this->getForm()->toArray()['index'])){
+            $query->with(array_keys($this->getForm()->toArray()['index']['load']));
+        }
+
+        $model = $query->withFormRelations()
             ->findOrFail($id);
 
         if(is_translatable($this->model)) {
