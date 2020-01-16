@@ -40,7 +40,16 @@
                 :create="create"
                 :title="formConfig.names.title.singular"
             >
-                <!-- Custom controls -->
+                <div slot="controls" class="pt-1" v-if="controls.length > 0">
+                    <hr />
+                    <components
+                        v-for="(component, key) in controls"
+                        :key="key"
+                        :is="component"
+                        :formConfig="formConfig"
+                        :model="model"
+                    />
+                </div>
             </fj-controls>
         </b-row>
     </fj-container>
@@ -61,6 +70,12 @@ export default {
             type: Object
         },
         actions: {
+            type: Array,
+            default: () => {
+                return [];
+            }
+        },
+        controls: {
             type: Array,
             default: () => {
                 return [];

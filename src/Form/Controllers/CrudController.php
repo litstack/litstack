@@ -158,6 +158,7 @@ class CrudController extends Controller
                     'previous' => $previous
                 ],
                 'actions' => $this->getExtensions('show.actions'),
+                'controls' => $this->getExtensions('show.controls'),
                 'content' => $this->getExtensions('show.content')
             ]);
     }

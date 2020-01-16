@@ -29,7 +29,9 @@
                             {{ title }}
                         </button>
                     </div>
-                    <slot />
+                    <div class="col-12">
+                        <slot name="controls" />
+                    </div>
                 </div>
             </div>
         </div>
