@@ -1,31 +1,33 @@
-import Vuex from 'vuex'
+import Vuex from 'vuex';
 
-import config from './config.module'
-import savings from './savings.module'
+import config from './config.module';
+import savings from './savings.module';
+import form from './form.module';
 
 const modules = {
     config,
-    savings
-}
+    savings,
+    form
+};
 
 class FjordStore {
     constructor(modules) {
-        this.store = null
+        this.store = null;
 
-        return new Proxy(this, this)
+        return new Proxy(this, this);
     }
 
     createStore(assign) {
         this.store = new Vuex.Store({
             modules: Object.assign(assign, modules)
-        })
+        });
     }
 
     get(target, prop) {
-        return this[prop] || this.store[prop]
+        return this[prop] || this.store[prop];
     }
 }
 
-export const store = new FjordStore()
+export const store = new FjordStore();
 
-export default store
+export default store;

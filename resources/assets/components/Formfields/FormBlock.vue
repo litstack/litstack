@@ -1,6 +1,6 @@
 <template>
     <fj-form-item :field="field" :model="model">
-        <div class="fjord-block card no-fx">
+        <div class="fjord-block card no-fx" v-if="model.id">
             <div class="card-body">
                 <draggable
                     v-model="sortableRepeatables"
@@ -48,11 +48,18 @@
                 </button>
             </div>
         </div>
+        <template v-else>
+            <b-alert show variant="warning"
+                >{{ form.config.names.title.singular }} has to be created in
+                order to add <i>{{ field.title }}</i></b-alert
+            >
+        </template>
     </fj-form-item>
 </template>
 
 <script>
 import FjordModel from './../../eloquent/fjord.model';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'FormBlock',
@@ -146,6 +153,9 @@ export default {
                 duration: 1500
             });
         }
+    },
+    computed: {
+        ...mapGetters(['form'])
     }
 };
 </script>

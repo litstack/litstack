@@ -1,184 +1,207 @@
 <template>
     <fj-form-item :field="field" :model="model" :value="images">
-        <div class="w-100">
-            <b-row>
-                <div class="col-12 order-2" v-if="!maxFiles">
-                    <vue-dropzone
-                        class="fjord-dropzone"
-                        :ref="`dropzone-${field.id}`"
-                        :id="`dropzone-${field.id}`"
-                        :options="dropzoneOptions"
-                        @vdropzone-success="uploadSuccess"
-                        @vdropzone-error="uploadError"
-                        @vdropzone-files-added="processQueue"
-                        @vdropzone-complete="removeFile"
-                    ></vue-dropzone>
-                </div>
-                <div class="col-12 order-1">
-                    <draggable v-model="images" class="row" @end="newOrder">
-                        <div
-                            :class="imgCols(field.image_size)"
-                            v-for="(image, index) in images"
-                            v-if="images.length > 0"
-                            :key="image.id"
-                        >
-                            <div class="card no-fx mb-3 fjord-card">
-                                <div
-                                    :class="{ 'fjord-card__1x1': field.square }"
-                                    class="fjord-card__image"
-                                >
-                                    <img :src="imgPath(image)" class="" />
-                                </div>
-                                <div class="text-right">
-                                    <b-button
-                                        size="sm"
-                                        variant="link"
-                                        class="text-secondary"
-                                        v-b-modal="
+        <template v-if="model.id">
+            <div class="w-100">
+                <b-row>
+                    <div class="col-12 order-2" v-if="!maxFiles">
+                        <vue-dropzone
+                            class="fjord-dropzone"
+                            :ref="`dropzone-${field.id}`"
+                            :id="`dropzone-${field.id}`"
+                            :options="dropzoneOptions"
+                            @vdropzone-success="uploadSuccess"
+                            @vdropzone-error="uploadError"
+                            @vdropzone-files-added="processQueue"
+                            @vdropzone-complete="removeFile"
+                        ></vue-dropzone>
+                    </div>
+                    <div class="col-12 order-1">
+                        <draggable v-model="images" class="row" @end="newOrder">
+                            <div
+                                :class="imgCols(field.image_size)"
+                                v-for="(image, index) in images"
+                                v-if="images.length > 0"
+                                :key="image.id"
+                            >
+                                <div class="card no-fx mb-3 fjord-card">
+                                    <div
+                                        :class="{
+                                            'fjord-card__1x1': field.square
+                                        }"
+                                        class="fjord-card__image"
+                                    >
+                                        <img :src="imgPath(image)" class="" />
+                                    </div>
+                                    <div class="text-right">
+                                        <b-button
+                                            size="sm"
+                                            variant="link"
+                                            class="text-secondary"
+                                            v-b-modal="
+                                                `fjord-image-${field.id}-${
+                                                    image.id
+                                                }`
+                                            "
+                                        >
+                                            <i class="fas fa-edit"></i>
+                                        </b-button>
+                                    </div>
+                                    <b-modal
+                                        :id="
                                             `fjord-image-${field.id}-${
                                                 image.id
                                             }`
                                         "
+                                        size="xl"
+                                        :title="`${image.name}`"
+                                        :static="true"
                                     >
-                                        <i class="fas fa-edit"></i>
-                                    </b-button>
-                                </div>
-                                <b-modal
-                                    :id="`fjord-image-${field.id}-${image.id}`"
-                                    size="xl"
-                                    :title="`${image.name}`"
-                                    :static="true"
-                                >
-                                    <div class="row">
-                                        <div class="col-7">
-                                            <img
-                                                :src="imgPath(image)"
-                                                class="img-fluid"
-                                            />
-                                        </div>
-                                        <div class="col-5">
-                                            <div class="mb-2">
-                                                <label class="mb-1">
-                                                    Title
-                                                </label>
-                                                <b-badge
-                                                    v-if="field.translatable"
-                                                    variant="primary"
-                                                >
-                                                    <small>{{ lng }}</small>
-                                                </b-badge>
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <img
+                                                    :src="imgPath(image)"
+                                                    class="img-fluid"
+                                                />
+                                            </div>
+                                            <div class="col-5">
+                                                <div class="mb-2">
+                                                    <label class="mb-1">
+                                                        Title
+                                                    </label>
+                                                    <b-badge
+                                                        v-if="
+                                                            field.translatable
+                                                        "
+                                                        variant="primary"
+                                                    >
+                                                        <small>{{ lng }}</small>
+                                                    </b-badge>
 
-                                                <b-input
-                                                    :size="'sm'"
-                                                    :value="
-                                                        getCustomProperty(
-                                                            image,
-                                                            'title'
-                                                        )
-                                                    "
-                                                    @input="
-                                                        changed(
-                                                            $event,
-                                                            'title',
-                                                            image
-                                                        )
-                                                    "
-                                                />
-                                            </div>
-                                            <div>
-                                                <label class="mb-1">Alt</label>
-                                                <b-badge
-                                                    v-if="field.translatable"
-                                                    variant="primary"
-                                                >
-                                                    <small>{{ lng }}</small>
-                                                </b-badge>
-                                                <b-input
-                                                    :size="'sm'"
-                                                    :value="
-                                                        getCustomProperty(
-                                                            image,
-                                                            'alt'
-                                                        )
-                                                    "
-                                                    @input="
-                                                        changed(
-                                                            $event,
-                                                            'alt',
-                                                            image
-                                                        )
-                                                    "
-                                                />
+                                                    <b-input
+                                                        :size="'sm'"
+                                                        :value="
+                                                            getCustomProperty(
+                                                                image,
+                                                                'title'
+                                                            )
+                                                        "
+                                                        @input="
+                                                            changed(
+                                                                $event,
+                                                                'title',
+                                                                image
+                                                            )
+                                                        "
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label class="mb-1"
+                                                        >Alt</label
+                                                    >
+                                                    <b-badge
+                                                        v-if="
+                                                            field.translatable
+                                                        "
+                                                        variant="primary"
+                                                    >
+                                                        <small>{{ lng }}</small>
+                                                    </b-badge>
+                                                    <b-input
+                                                        :size="'sm'"
+                                                        :value="
+                                                            getCustomProperty(
+                                                                image,
+                                                                'alt'
+                                                            )
+                                                        "
+                                                        @input="
+                                                            changed(
+                                                                $event,
+                                                                'alt',
+                                                                image
+                                                            )
+                                                        "
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div
-                                        slot="modal-footer"
-                                        class="w-100 d-flex justify-content-between"
-                                    >
-                                        <button
-                                            @click.prevent="
-                                                destroy(image.id, index)
-                                            "
-                                            class="btn btn-danger btn-sm"
+                                        <div
+                                            slot="modal-footer"
+                                            class="w-100 d-flex justify-content-between"
                                         >
-                                            <i class="far fa-trash-alt"></i>
-                                            delete
-                                        </button>
-                                        <button
-                                            @click.prevent="
-                                                $bvModal.hide(
-                                                    `fjord-image-${field.id}-${
-                                                        image.id
-                                                    }`
-                                                )
-                                            "
-                                            class="btn btn-secondary btn-sm"
-                                        >
-                                            close
-                                        </button>
-                                    </div>
-                                </b-modal>
+                                            <button
+                                                @click.prevent="
+                                                    destroy(image.id, index)
+                                                "
+                                                class="btn btn-danger btn-sm"
+                                            >
+                                                <i class="far fa-trash-alt"></i>
+                                                delete
+                                            </button>
+                                            <button
+                                                @click.prevent="
+                                                    $bvModal.hide(
+                                                        `fjord-image-${
+                                                            field.id
+                                                        }-${image.id}`
+                                                    )
+                                                "
+                                                class="btn btn-secondary btn-sm"
+                                            >
+                                                close
+                                            </button>
+                                        </div>
+                                    </b-modal>
+                                </div>
+                            </div>
+                        </draggable>
+                    </div>
+                </b-row>
+            </div>
+            <b-modal
+                :id="`fjord-cropper-${field.id}`"
+                size="xl"
+                title="Crop Image"
+                :static="true"
+            >
+                <div class="row">
+                    <div class="col-8">
+                        <div class="card no-fx">
+                            <div class="fjord-cropper__canvas-wrapper r4x3">
+                                <div class="fjord-cropper__canvas"></div>
                             </div>
                         </div>
-                    </draggable>
-                </div>
-            </b-row>
-        </div>
-        <b-modal
-            :id="`fjord-cropper-${field.id}`"
-            size="xl"
-            title="Crop Image"
-            :static="true"
-        >
-            <div class="row">
-                <div class="col-8">
-                    <div class="card no-fx">
-                        <div class="fjord-cropper__canvas-wrapper r4x3">
-                            <div class="fjord-cropper__canvas"></div>
+                    </div>
+                    <div class="col-4">
+                        <div class="r4x3">
+                            <div class="fjord-cropper__preview"></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="r4x3">
-                        <div class="fjord-cropper__preview"></div>
-                    </div>
-                </div>
-            </div>
-            <div slot="modal-footer" class="w-100 d-flex justify-content-end">
-                <b-button id="cropper-cancel" variant="secondary" size="sm">
-                    Cancel
-                </b-button>
-                <b-button
-                    id="cropper-save"
-                    variant="primary"
-                    size="sm"
-                    class="ml-2"
+                <div
+                    slot="modal-footer"
+                    class="w-100 d-flex justify-content-end"
                 >
-                    Save
-                </b-button>
-            </div>
-        </b-modal>
+                    <b-button id="cropper-cancel" variant="secondary" size="sm">
+                        Cancel
+                    </b-button>
+                    <b-button
+                        id="cropper-save"
+                        variant="primary"
+                        size="sm"
+                        class="ml-2"
+                    >
+                        Save
+                    </b-button>
+                </div>
+            </b-modal>
+        </template>
+        <template v-else>
+            <b-alert show variant="warning"
+                >{{ form.config.names.title.singular }} has to be created in
+                order to add <i>{{ field.title }}</i></b-alert
+            >
+        </template>
     </fj-form-item>
 </template>
 
@@ -260,7 +283,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['baseURL', 'lng']),
+        ...mapGetters(['baseURL', 'lng', 'form']),
         dropzone() {
             return this.$refs[`dropzone-${this.field.id}`];
         },

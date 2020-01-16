@@ -1,56 +1,68 @@
 <template>
     <fj-form-item :field="field" :model="model">
-        <b-card class="fjord-block no-fx mb-2">
-            <b-table-simple
-                v-if="model[`${field.id}Model`]"
-                outlined
-                table-variant="light"
+        <template v-if="model.id">
+            <b-card class="fjord-block no-fx mb-2">
+                <b-table-simple
+                    v-if="model[`${field.id}Model`]"
+                    outlined
+                    table-variant="light"
+                >
+                    <fj-colgroup :icons="['drag', 'trash']" :cols="cols" />
+
+                    <tr>
+                        <b-td
+                            style="vertical-align: middle;"
+                            v-for="(col, key) in cols"
+                            :key="`td-${key}`"
+                            :class="
+                                col.key == 'drag'
+                                    ? 'fjord-draggable__dragbar'
+                                    : ''
+                            "
+                        >
+                            <div v-if="col.key == 'trash'" class="text-center">
+                                <a
+                                    href="#"
+                                    @click.prevent="removeRelation(relation.id)"
+                                    class="fj-trash text-muted"
+                                >
+                                    <fa-icon icon="trash" />
+                                </a>
+                            </div>
+                            <div v-else>
+                                <fj-table-col :item="relation" :col="col" />
+                            </div>
+                        </b-td>
+                    </tr>
+                </b-table-simple>
+
+                <div v-else class="text-center">
+                    <span class="text-muted">
+                        No {{ field.title }} selected.
+                    </span>
+                </div>
+
+                <b-button variant="secondary" size="sm" v-b-modal="modalId">
+                    {{ field.button }}
+                </b-button>
+            </b-card>
+
+            <slot />
+
+            <fj-form-relation-modal
+                :field="field"
+                :model="model"
+                :hasMany="false"
+                :selectedModels="[relation]"
+                @selected="selected"
+            />
+        </template>
+        <template v-else>
+            <b-alert show variant="warning"
+                >{{ form.config.names.title.singular }} has to be created in
+                order to add <i>{{ field.title }}</i></b-alert
             >
-                <fj-colgroup :icons="['drag', 'trash']" :cols="cols" />
-
-                <tr>
-                    <b-td
-                        style="vertical-align: middle;"
-                        v-for="(col, key) in cols"
-                        :key="`td-${key}`"
-                        :class="
-                            col.key == 'drag' ? 'fjord-draggable__dragbar' : ''
-                        "
-                    >
-                        <div v-if="col.key == 'trash'" class="text-center">
-                            <a
-                                href="#"
-                                @click.prevent="removeRelation(relation.id)"
-                                class="fj-trash text-muted"
-                            >
-                                <fa-icon icon="trash" />
-                            </a>
-                        </div>
-                        <div v-else>
-                            <fj-table-col :item="relation" :col="col" />
-                        </div>
-                    </b-td>
-                </tr>
-            </b-table-simple>
-
-            <div v-else class="text-center">
-                <span class="text-muted"> No {{ field.title }} selected. </span>
-            </div>
-
-            <b-button variant="secondary" size="sm" v-b-modal="modalId">
-                {{ field.button }}
-            </b-button>
-        </b-card>
-
-        <slot />
-
-        <fj-form-relation-modal
-            :field="field"
-            :model="model"
-            :hasMany="false"
-            :selectedModels="[relation]"
-            @selected="selected"
-        />
+        </template>
     </fj-form-item>
 </template>
 
@@ -118,7 +130,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['lng']),
+        ...mapGetters(['lng', 'form']),
         modalId() {
             return `${this.model.route}-form-relation-table-${this.field.id}-${
                 this.model.id

@@ -1,98 +1,109 @@
 <template>
-    <fj-form-item :field="field" v-if="model.id">
-        <div
-            class="fjord-block card no-fx mb-2"
-            v-for="(m, index) in eloquentModels"
-        >
-            <div class="card-body">
-                <fj-form
-                    :ids="ids"
-                    :model="fjModel(m)"
-                    :key="rerenderKey(m, index)"
-                />
-                <div class="d-flex justify-content-end">
-                    <b-button-group>
-                        <b-button
-                            variant="outline-secondary"
-                            size="sm"
-                            @click="unlinkRelation(m, index)"
-                        >
-                            <fa-icon icon="unlink" />
-                        </b-button>
-                        <b-button
-                            variant="outline-secondary"
-                            size="sm"
-                            @click="deleteRelation(m, index)"
-                        >
-                            <fa-icon icon="trash" />
-                        </b-button>
-                    </b-button-group>
+    <fj-form-item :field="field">
+        <template v-if="model.id">
+            <div
+                class="fjord-block card no-fx mb-2"
+                v-for="(m, index) in eloquentModels"
+            >
+                <div class="card-body">
+                    <fj-form
+                        :ids="ids"
+                        :model="fjModel(m)"
+                        :key="rerenderKey(m, index)"
+                    />
+                    <div class="d-flex justify-content-end">
+                        <b-button-group>
+                            <b-button
+                                variant="outline-secondary"
+                                size="sm"
+                                @click="unlinkRelation(m, index)"
+                            >
+                                <fa-icon icon="unlink" />
+                            </b-button>
+                            <b-button
+                                variant="outline-secondary"
+                                size="sm"
+                                @click="deleteRelation(m, index)"
+                            >
+                                <fa-icon icon="trash" />
+                            </b-button>
+                        </b-button-group>
+                    </div>
                 </div>
             </div>
-        </div>
-        <b-button
-            variant="secondary"
-            size="sm"
-            @click="createRelation"
-            class="mr-1"
-        >
-            <fa-icon icon="plus" /> {{ field.form.names.singular }}
-        </b-button>
-        <b-button
-            variant="secondary"
-            size="sm"
-            @click="addRelation"
-            v-b-modal.add-frelation
-        >
-            <fa-icon icon="link" /> {{ field.form.names.singular }}
-        </b-button>
-        <b-modal id="add-frelation" size="lg" title="Add Relation">
-            <b-table-simple outlined>
-                <thead>
-                    <tr>
-                        <th
-                            colspan="2"
-                            v-for="(col, index) in field.form.index.preview"
-                            :key="index"
-                        >
-                            {{ col.label }}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr
-                        v-for="(row, key) in unrelatedEloquentModels"
-                        :key="key"
-                    >
-                        <td
-                            v-for="(col, index) in field.form.index.preview"
-                            :key="index"
-                        >
-                            <fj-table-col :item="row.data" :col="col" />
-                        </td>
-                        <td class="text-right">
-                            <b-button
-                                variant="secondary"
-                                size="sm"
-                                @click="linkRelation(key, row.data.id)"
+            <b-button
+                variant="secondary"
+                size="sm"
+                @click="createRelation"
+                class="mr-1"
+            >
+                <fa-icon icon="plus" /> {{ field.form.names.singular }}
+            </b-button>
+            <b-button
+                variant="secondary"
+                size="sm"
+                @click="addRelation"
+                v-b-modal.add-frelation
+            >
+                <fa-icon icon="link" /> {{ field.form.names.singular }}
+            </b-button>
+            <b-modal id="add-frelation" size="lg" title="Add Relation">
+                <b-table-simple outlined>
+                    <thead>
+                        <tr>
+                            <th
+                                colspan="2"
+                                v-for="(col, index) in field.form.index.preview"
+                                :key="index"
                             >
-                                <fa-icon icon="link" />
-                            </b-button>
-                        </td>
-                    </tr>
-                </tbody>
-            </b-table-simple>
-            <div slot="modal-footer" class="w-100 d-flex justify-content-end">
-                <b-button
-                    id="cropper-cancel"
-                    variant="secondary"
-                    size="sm"
-                    @click="$bvModal.hide('add-frelation')"
+                                {{ col.label }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            v-for="(row, key) in unrelatedEloquentModels"
+                            :key="key"
+                        >
+                            <td
+                                v-for="(col, index) in field.form.index.preview"
+                                :key="index"
+                            >
+                                <fj-table-col :item="row.data" :col="col" />
+                            </td>
+                            <td class="text-right">
+                                <b-button
+                                    variant="secondary"
+                                    size="sm"
+                                    @click="linkRelation(key, row.data.id)"
+                                >
+                                    <fa-icon icon="link" />
+                                </b-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </b-table-simple>
+                <div
+                    slot="modal-footer"
+                    class="w-100 d-flex justify-content-end"
                 >
-                    close
-                </b-button>
-            </div>
-        </b-modal>
+                    <b-button
+                        id="cropper-cancel"
+                        variant="secondary"
+                        size="sm"
+                        @click="$bvModal.hide('add-frelation')"
+                    >
+                        close
+                    </b-button>
+                </div>
+            </b-modal>
+        </template>
+        <template v-else>
+            <b-alert show variant="warning"
+                >{{ form.config.names.title.singular }} has to be created in
+                order to add <i>{{ field.title }}</i></b-alert
+            >
+        </template>
     </fj-form-item>
 </template>
 
@@ -189,9 +200,12 @@ export default {
         }
     },
     beforeMount() {
-        this.fetchRelation();
+        if (this.model.id !== undefined) {
+            this.fetchRelation();
+        }
     },
     computed: {
+        ...mapGetters(['form']),
         ids() {
             return _.map(this.form_fields, 'id');
         },

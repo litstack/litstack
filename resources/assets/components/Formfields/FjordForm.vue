@@ -78,7 +78,7 @@
                     />
 
                     <fj-form-block
-                        v-if="field.type == 'block' && m.id"
+                        v-if="field.type == 'block'"
                         :field="field"
                         :repeatables="m.relations[field.id]"
                         :model="m"

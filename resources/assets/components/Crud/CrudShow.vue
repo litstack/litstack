@@ -36,7 +36,10 @@
                 </b-row>
             </b-col>
 
-            <fj-controls>
+            <fj-controls
+                :create="create"
+                :title="formConfig.names.title.singular"
+            >
                 <!-- Custom controls -->
             </fj-controls>
         </b-row>
@@ -84,8 +87,15 @@ export default {
             }
         }
     },
+    computed: {
+        create() {
+            return window.location.pathname.split('/').pop() == 'create';
+        }
+    },
     beforeMount() {
         this.model = this.models.model;
+
+        this.$store.dispatch('setFormConfig', this.formConfig);
 
         this.$bus.$on('modelsSaved', this.saved);
     }

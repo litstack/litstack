@@ -25,7 +25,8 @@
                             :disabled.prop="!canSave"
                             @click="saveAll"
                         >
-                            <i class="fas fa-save"></i> Save
+                            <i class="fas fa-save"></i> {{ buttonText }}
+                            {{ title }}
                         </button>
                     </div>
                     <slot />
@@ -40,6 +41,15 @@ import { mapGetters } from 'vuex';
 
 export default {
     name: 'Controls',
+    props: {
+        create: {
+            type: Boolean,
+            default: false
+        },
+        title: {
+            type: String
+        }
+    },
     methods: {
         saveAll() {
             this.$store.dispatch('saveModels');
@@ -66,7 +76,10 @@ export default {
         );
     },
     computed: {
-        ...mapGetters(['canSave', 'lng', 'lngs'])
+        ...mapGetters(['canSave', 'lng', 'lngs']),
+        buttonText() {
+            return this.create ? 'Create' : 'Save';
+        }
     }
 };
 </script>

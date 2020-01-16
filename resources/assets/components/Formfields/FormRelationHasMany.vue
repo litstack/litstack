@@ -1,129 +1,144 @@
 <template>
-    <fj-form-item :field="form_field" v-if="model.id">
-        <b-card class="fjord-block no-fx mb-2">
-            <div>
-                <b-table-simple outlined table-variant="light">
-                    <fj-colgroup :icons="['drag', 'controls']" :cols="fields" />
+    <fj-form-item :field="form_field">
+        <template v-if="model.id">
+            <b-card class="fjord-block no-fx mb-2">
+                <div>
+                    <b-table-simple outlined table-variant="light">
+                        <fj-colgroup
+                            :icons="['drag', 'controls']"
+                            :cols="fields"
+                        />
 
-                    <draggable
-                        v-model="relations"
-                        @end="newOrder(relations)"
-                        tag="tbody"
-                        handle=".fjord-draggable__dragbar"
-                    >
-                        <tr v-for="(relation, rkey) in relations" :key="rkey">
-                            <b-td
-                                style="vertical-align: middle;"
-                                v-for="(field, key) in fields"
-                                :key="`td-${key}`"
-                                class="position-relative"
-                                :class="
-                                    field.key == 'drag'
-                                        ? 'fjord-draggable__dragbar'
-                                        : ''
-                                "
+                        <draggable
+                            v-model="relations"
+                            @end="newOrder(relations)"
+                            tag="tbody"
+                            handle=".fjord-draggable__dragbar"
+                        >
+                            <tr
+                                v-for="(relation, rkey) in relations"
+                                :key="rkey"
                             >
-                                <div
-                                    v-if="field.key == 'drag'"
-                                    class="text-center text-muted"
+                                <b-td
+                                    style="vertical-align: middle;"
+                                    v-for="(field, key) in fields"
+                                    :key="`td-${key}`"
+                                    class="position-relative"
+                                    :class="
+                                        field.key == 'drag'
+                                            ? 'fjord-draggable__dragbar'
+                                            : ''
+                                    "
                                 >
-                                    <fa-icon icon="grip-vertical" />
-                                </div>
-
-                                <div
-                                    v-else-if="field.key == 'controls'"
-                                    class="d-flex table-controls"
-                                >
-                                    <b-button-group size="sm">
-                                        <b-button
-                                            v-if="hasEditLink(form_field)"
-                                            :href="
-                                                `${baseURL}${form_field.edit}/${
-                                                    relation.id
-                                                }/edit`
-                                            "
-                                            class="btn-transparent d-flex align-items-center"
-                                            ><fa-icon icon="edit"
-                                        /></b-button>
-                                        <b-button
-                                            class="btn-transparent"
-                                            @click="
-                                                showModal(
-                                                    `modal-${form_field.edit}-${
-                                                        relation.id
-                                                    }`
-                                                )
-                                            "
-                                            ><fa-icon icon="trash"
-                                        /></b-button>
-                                    </b-button-group>
-                                    <b-modal
-                                        :id="
-                                            `modal-${form_field.edit}-${
-                                                relation.id
-                                            }`
-                                        "
-                                        title="Delete Item"
+                                    <div
+                                        v-if="field.key == 'drag'"
+                                        class="text-center text-muted"
                                     >
-                                        Please confirm that you want to delete
-                                        the item
+                                        <fa-icon icon="grip-vertical" />
+                                    </div>
 
-                                        <template v-slot:modal-footer>
+                                    <div
+                                        v-else-if="field.key == 'controls'"
+                                        class="d-flex table-controls"
+                                    >
+                                        <b-button-group size="sm">
                                             <b-button
-                                                variant="secondary"
-                                                size="sm"
-                                                class="float-right"
+                                                v-if="hasEditLink(form_field)"
+                                                :href="
+                                                    `${baseURL}${
+                                                        form_field.edit
+                                                    }/${relation.id}/edit`
+                                                "
+                                                class="btn-transparent d-flex align-items-center"
+                                                ><fa-icon icon="edit"
+                                            /></b-button>
+                                            <b-button
+                                                class="btn-transparent"
                                                 @click="
-                                                    $bvModal.hide(
+                                                    showModal(
                                                         `modal-${
                                                             form_field.edit
                                                         }-${relation.id}`
                                                     )
                                                 "
-                                            >
-                                                cancel
-                                            </b-button>
-                                            <a
-                                                href="#"
-                                                @click.prevent="
-                                                    removeRelation(
-                                                        relation.id,
-                                                        form_field.edit
-                                                    )
-                                                "
-                                                class="fj-trash btn btn-danger btn-sm"
-                                            >
-                                                <fa-icon icon="trash" /> delete
-                                            </a>
-                                        </template>
-                                    </b-modal>
-                                </div>
-                                <div v-else>
-                                    <fj-table-col
-                                        :item="relation"
-                                        :col="field"
-                                    />
-                                </div>
-                            </b-td>
-                        </tr>
-                    </draggable>
-                </b-table-simple>
-            </div>
+                                                ><fa-icon icon="trash"
+                                            /></b-button>
+                                        </b-button-group>
+                                        <b-modal
+                                            :id="
+                                                `modal-${form_field.edit}-${
+                                                    relation.id
+                                                }`
+                                            "
+                                            title="Delete Item"
+                                        >
+                                            Please confirm that you want to
+                                            delete the item
 
-            <b-button variant="secondary" size="sm" v-b-modal="modalId">
-                {{ form_field.button }}
-            </b-button>
-        </b-card>
+                                            <template v-slot:modal-footer>
+                                                <b-button
+                                                    variant="secondary"
+                                                    size="sm"
+                                                    class="float-right"
+                                                    @click="
+                                                        $bvModal.hide(
+                                                            `modal-${
+                                                                form_field.edit
+                                                            }-${relation.id}`
+                                                        )
+                                                    "
+                                                >
+                                                    cancel
+                                                </b-button>
+                                                <a
+                                                    href="#"
+                                                    @click.prevent="
+                                                        removeRelation(
+                                                            relation.id,
+                                                            form_field.edit
+                                                        )
+                                                    "
+                                                    class="fj-trash btn btn-danger btn-sm"
+                                                >
+                                                    <fa-icon icon="trash" />
+                                                    delete
+                                                </a>
+                                            </template>
+                                        </b-modal>
+                                    </div>
+                                    <div v-else>
+                                        <fj-table-col
+                                            :item="relation"
+                                            :col="field"
+                                        />
+                                    </div>
+                                </b-td>
+                            </tr>
+                        </draggable>
+                    </b-table-simple>
+                </div>
 
-        <slot />
+                <b-button variant="secondary" size="sm" v-b-modal="modalId">
+                    {{ form_field.button }}
+                </b-button>
+            </b-card>
 
-        <fj-form-relation-modal
-            :field="form_field"
-            :model="model"
-            :selectedModels="relations"
-            @selected="selected"
-            @remove="removeRelation"
-        />
+            <slot />
+
+            <fj-form-relation-modal
+                :field="form_field"
+                :model="model"
+                :selectedModels="relations"
+                @selected="selected"
+                @remove="removeRelation"
+            />
+        </template>
+        <template v-else>
+            <b-alert show variant="warning"
+                >{{ form.config.names.title.singular }} has to be created in
+                order to add <i>{{ field.title }}</i></b-alert
+            >
+        </template>
     </fj-form-item>
 </template>
 
@@ -291,7 +306,7 @@ export default {
                 this.form_field.id
             }-${this.model.id}`;
         },
-        ...mapGetters(['baseURL'])
+        ...mapGetters(['baseURL', 'form'])
     }
 };
 </script>
