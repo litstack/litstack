@@ -169,6 +169,7 @@ class FjordCrud extends Command
 
         if(!\File::exists('app/Models')){
             \File::makeDirectory('app/Models');
+            \File::makeDirectory('app/Models/Translations');
         }
 
         $builder->create($model);
