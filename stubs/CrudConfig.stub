@@ -41,7 +41,7 @@ return [
         //         'max' => 60,
         //         'title' => 'Title',
         //         'placeholder' => 'Title',
-        //         'hint' => 'The title neeeds to be filled',
+        //         'hint' => 'The title needs to be filled',
         //         'width' => 8
         //     ]
         // ]
