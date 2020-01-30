@@ -10,14 +10,14 @@ return [
             'type' => 'input',
             'title' => 'Headline',
             'placeholder' => 'Headline',
-            'hint' => 'The Headline neeeds to be filled',
+            'hint' => 'The Headline needs to be filled',
             'width' => 12
         ],
         [
             'id' => 'content_block',
             'type' => 'block',
             'title' => 'Content',
-            'hint' => 'The Headline neeeds to be filled',
+            'hint' => 'The Headline needs to be filled',
             'width' => 12,
             'repeatables' => [
                 'text', 'image'
