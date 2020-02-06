@@ -38,9 +38,7 @@
                                             variant="link"
                                             class="text-secondary"
                                             v-b-modal="
-                                                `fjord-image-${field.id}-${
-                                                    image.id
-                                                }`
+                                                `fjord-image-${field.id}-${image.id}`
                                             "
                                         >
                                             <i class="fas fa-edit"></i>
@@ -48,11 +46,10 @@
                                     </div>
                                     <b-modal
                                         :id="
-                                            `fjord-image-${field.id}-${
-                                                image.id
-                                            }`
+                                            `fjord-image-${field.id}-${image.id}`
                                         "
                                         size="xl"
+                                        class="fjord-image-modal"
                                         :title="`${image.name}`"
                                         :static="true"
                                     >
@@ -141,9 +138,7 @@
                                             <button
                                                 @click.prevent="
                                                     $bvModal.hide(
-                                                        `fjord-image-${
-                                                            field.id
-                                                        }-${image.id}`
+                                                        `fjord-image-${field.id}-${image.id}`
                                                     )
                                                 "
                                                 class="btn btn-secondary btn-sm"
