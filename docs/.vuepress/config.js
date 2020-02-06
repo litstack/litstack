@@ -63,7 +63,10 @@ module.exports = {
                 {
                     title: 'Collections',
                     collapsable: false,
-                    children: [['guide/collections/pages', 'Pages']]
+                    children: [
+                        ['guide/collections/introduction', 'Introduction'],
+                        ['guide/collections/pages', 'Pages']
+                    ]
                 },
                 {
                     title: 'Formfields',
