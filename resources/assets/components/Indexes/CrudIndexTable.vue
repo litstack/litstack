@@ -168,6 +168,16 @@
                             </tbody>
                         </b-table-simple>
                     </div>
+                    <small
+                        class="text-primary fj-crud-index-table__index-indicator"
+                        >{{ page * (perPage || 1) - (perPage || 1) + 1 }} -
+                        {{
+                            page * (perPage || 1) > total
+                                ? total || items.length
+                                : page * (perPage || 1)
+                        }}
+                        / {{ total || items.length }}</small
+                    >
                 </b-card>
             </b-col>
         </b-row>
@@ -240,7 +250,8 @@ export default {
             indeterminateSelectedItems: false,
             selectedAll: false,
             page: 1,
-            number_of_pages: null
+            number_of_pages: null,
+            total: null
         };
     },
     watch: {
@@ -336,6 +347,8 @@ export default {
             };
 
             let response = await axios.post(`${this.route}/index`, payload);
+
+            this.total = response.data.count;
 
             let items = [];
             for (let i = 0; i < response.data.items.length; i++) {
@@ -451,6 +464,11 @@ export default {
         .input-group {
             flex: 1;
         }
+    }
+    &__index-indicator {
+        position: absolute;
+        margin-top: -10px;
+        right: 20px;
     }
 }
 
