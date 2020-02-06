@@ -63,6 +63,7 @@ class FjordInstall extends Command
         $this->createDefaultPermissions();
 
         $this->publishDashboardController();
+        $this->makeModelDirs();
 
         $this->info("\n----- finished -----\n");
 
@@ -177,7 +178,7 @@ class FjordInstall extends Command
         if(is_dir(fjord_resource_path()) && fjord_resource_path() !== resource_path() ) {
             return;
         }
-        
+
         $this->info('publishing fjord resources');
         // clear the config cache, otherwise, fjord_resource_path() will return
         // the resource path itself, which is present for shure
@@ -199,6 +200,16 @@ class FjordInstall extends Command
                 fjord_path('publish/controllers/DashboardController.php'),
                 app_path('Http/Controllers/Fjord/DashboardController.php')
             );
+        }
+    }
+
+    private function makeModelDirs()
+    {
+        if(!\File::exists('app/Models')){
+            \File::makeDirectory('app/Models');
+        }
+        if(!\File::exists('app/Models/Translations')){
+            \File::makeDirectory('app/Models/Translations');
         }
     }
 }

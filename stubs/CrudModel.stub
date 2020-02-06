@@ -13,8 +13,8 @@ class DummyClassname extends FjordModel DummyImplement
     // be set fillable. don't forget to also set them fillable in
     // the coresponding translation-model
     protected $fillable = ['title', 'text'];
-
     DummyVars
+    DummyWiths
 
     DummySluggable
 

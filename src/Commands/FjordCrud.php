@@ -124,6 +124,8 @@ class FjordCrud extends Command
             $implements []= 'HasMedia';
             $uses []= 'HasMediaTrait';
             $appends []= 'image';
+            $with []= 'media';
+
         }
 
         // model has slug
@@ -151,6 +153,7 @@ class FjordCrud extends Command
             $implements []= 'TranslatableContract';
             $uses []= 'Translatable';
             $appends []= 'translation';
+            $with []= 'translations';
 
             $this->makeTranslationModel($modelName, $s);
         }
@@ -167,9 +170,8 @@ class FjordCrud extends Command
             $builder->withVars("\tprotected \$appends = ['" . implode("', '", $appends) . "'];");
         }
 
-        if(!\File::exists('app/Models')){
-            \File::makeDirectory('app/Models');
-            \File::makeDirectory('app/Models/Translations');
+        if($with){
+            $builder->withWiths("protected \$with = ['" . implode("', '", $with) . "'];");
         }
 
         $builder->create($model);

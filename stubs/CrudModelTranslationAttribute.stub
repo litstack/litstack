@@ -1,5 +1,5 @@
-/**
-     * Append the image column to each query.
+    /**
+     * Append the translation to each query.
      *
      */
     public function getTranslationAttribute()
