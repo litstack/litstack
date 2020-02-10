@@ -1,5 +1,17 @@
 <?php
 
+if(! function_exists('fjord_js')) {
+    function fjord_js() {
+        $js_path = config('fjord.assets.js') ? config('fjord.assets.js') : route('fjord.js');
+
+        if(config('fjord.assets.js')){
+            $js_path .= '?v=' . filemtime(ltrim(config('fjord.assets.js'), '/'));
+        }
+
+        return $js_path;
+    }
+}
+
 if(! function_exists('fjord_user')) {
     function fjord_user() {
         return Auth::guard('fjord')->user();

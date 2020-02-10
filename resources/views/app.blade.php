@@ -40,7 +40,7 @@
 
     </div>
 
-    <script src="{{ config('fjord.assets.js') ? config('fjord.assets.js') : route('fjord.js') }}{{ config('app.env') == 'production' ? '' : '?t=' . time() }}" defer></script>
+    <script src="{{ fjord_js() }}" defer></script>
 
     <script type="text/javascript">
         function makeVisible(){
