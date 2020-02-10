@@ -100,6 +100,7 @@ class FjordCrud extends Command
         $implements = [];
         $uses = [];
         $appends = [];
+        $with = [];
 
         if(file_exists($model)) {
             $this->error('model already exists');
