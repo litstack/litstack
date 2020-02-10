@@ -72,7 +72,12 @@ export default class EloquentModel {
         let route = `${this.route}/${
             this.attributes.id ? this.attributes.id : ''
         }`;
-        let response = await axios[method](route, this.getPayload());
+
+        // strip trailing slashes
+        let response = await axios[method](
+            route.replace(/\/$/, ''),
+            this.getPayload()
+        );
 
         this.setAttributes(response.data);
         this._setRelations();
