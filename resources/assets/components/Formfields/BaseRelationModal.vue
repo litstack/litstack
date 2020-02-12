@@ -151,7 +151,7 @@ export default {
                 id: this.field.id
             };
 
-            let response = await axios.post('relations/', payload);
+            let response = await axios.post('relations', payload);
 
             let items = [];
             for (let i = 0; i < response.data.length; i++) {
