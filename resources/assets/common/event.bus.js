@@ -1,6 +1,5 @@
+import Vue from 'vue';
 
-import Vue from 'vue'
+const Bus = new Vue();
 
-const Bus = new Vue()
-
-export default Bus
+export default Bus;

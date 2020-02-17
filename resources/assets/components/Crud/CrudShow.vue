@@ -22,7 +22,6 @@
                 />
             </div>
         </fj-header>
-
         <b-row>
             <b-col cols="12" md="9" order-md="1">
                 <b-row class="fjord-form">

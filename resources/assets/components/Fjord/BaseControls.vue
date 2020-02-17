@@ -1,15 +1,15 @@
 <template>
     <div class="col-12 col-md-3 order-md-2 pb-4 mb-md-0">
         <div class="fjord-pagecontrols card">
-            <div class="card-header">
+            <!-- <div class="card-header">
                 <i class="fas fa-sliders-h text-primary pr-2"></i>
                 <b>Controls</b>
-            </div>
+            </div> -->
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 pb-3">
                         <b class="text-muted d-block pb-1">
-                            Select language
+                            {{ $t('select_language') }}
                         </b>
                         <fj-lang-select
                             :languages="lngs"
@@ -18,7 +18,7 @@
                     </div>
                     <div class="col-12">
                         <b class="text-muted d-block pb-1">
-                            Save changes
+                            {{ $t('save_changes') }}
                         </b>
                         <button
                             class="btn btn-sm btn-primary"
@@ -26,7 +26,6 @@
                             @click="saveAll"
                         >
                             <i class="fas fa-save"></i> {{ buttonText }}
-                            {{ title }}
                         </button>
                     </div>
                     <div class="col-12">
@@ -80,7 +79,9 @@ export default {
     computed: {
         ...mapGetters(['canSave', 'lng', 'lngs']),
         buttonText() {
-            return this.create ? 'Create' : 'Save';
+            return this.create
+                ? this.$t('create_model', { model: this.title })
+                : this.$t('save_model', { model: this.title });
         }
     }
 };

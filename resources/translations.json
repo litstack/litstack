@@ -1,0 +1,26 @@
+{
+    "en": {
+        "add_model": "Add {model}",
+        "save_model": "Save {model}",
+        "create_model": "Create {model}",
+        "search_models": "Search {models}",
+        "filter": "Filter",
+        "sort": "Sort",
+        "select_language": "Select language",
+        "save_changes": "Save changes",
+        "delete": "delete",
+        "cancel": "cancel"
+    },
+    "de": {
+        "add_model": "{model} hinzufügen",
+        "save_model": "{model} speichern",
+        "create_model": "{model} erstellen",
+        "search_models": "{models} durchsuchen",
+        "filter": "filtern",
+        "sort": "sortieren",
+        "select_language": "Sprache auswählen",
+        "save_changes": "Änderungen speichern",
+        "delete": "löschen",
+        "cancel": "abbrechen"
+    }
+}

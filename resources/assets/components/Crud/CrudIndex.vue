@@ -11,7 +11,7 @@
 
                 <b-button size="sm" variant="primary" :href="createRoute">
                     <fa-icon icon="plus" />
-                    {{ buttonNewText }}
+                    {{ $t('add_model', { model: modelNameSingular }) }}
                 </b-button>
             </div>
         </fj-header>
@@ -77,7 +77,7 @@ export default {
         createRoute() {
             return `${this.formConfig.names.table}/create`;
         },
-        buttonNewText() {
+        modelNameSingular() {
             return this.formConfig.names.title.singular;
         }
     },

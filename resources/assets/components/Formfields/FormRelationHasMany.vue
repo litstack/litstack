@@ -45,9 +45,7 @@
                                             <b-button
                                                 v-if="hasEditLink(form_field)"
                                                 :href="
-                                                    `${baseURL}${
-                                                        form_field.edit
-                                                    }/${relation.id}/edit`
+                                                    `${baseURL}${form_field.edit}/${relation.id}/edit`
                                                 "
                                                 class="btn-transparent d-flex align-items-center"
                                                 ><fa-icon icon="edit"
@@ -56,9 +54,7 @@
                                                 class="btn-transparent"
                                                 @click="
                                                     showModal(
-                                                        `modal-${
-                                                            form_field.edit
-                                                        }-${relation.id}`
+                                                        `modal-${form_field.edit}-${relation.id}`
                                                     )
                                                 "
                                                 ><fa-icon icon="trash"
@@ -66,9 +62,7 @@
                                         </b-button-group>
                                         <b-modal
                                             :id="
-                                                `modal-${form_field.edit}-${
-                                                    relation.id
-                                                }`
+                                                `modal-${form_field.edit}-${relation.id}`
                                             "
                                             title="Delete Item"
                                         >
@@ -82,13 +76,11 @@
                                                     class="float-right"
                                                     @click="
                                                         $bvModal.hide(
-                                                            `modal-${
-                                                                form_field.edit
-                                                            }-${relation.id}`
+                                                            `modal-${form_field.edit}-${relation.id}`
                                                         )
                                                     "
                                                 >
-                                                    cancel
+                                                    {{ $t('cancel') }}
                                                 </b-button>
                                                 <a
                                                     href="#"
@@ -101,7 +93,7 @@
                                                     class="fj-trash btn btn-danger btn-sm"
                                                 >
                                                     <fa-icon icon="trash" />
-                                                    delete
+                                                    {{ $t('delete') }}
                                                 </a>
                                             </template>
                                         </b-modal>
@@ -302,9 +294,7 @@ export default {
     },
     computed: {
         modalId() {
-            return `${this.model.route}-form-relation-table-${
-                this.form_field.id
-            }-${this.model.id}`;
+            return `${this.model.route}-form-relation-table-${this.form_field.id}-${this.model.id}`;
         },
         ...mapGetters(['baseURL', 'form'])
     }

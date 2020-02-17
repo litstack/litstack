@@ -12,7 +12,9 @@
 
                                 <b-form-input
                                     :placeholder="
-                                        `Filter ${names.title.plural}`
+                                        $t('search_models', {
+                                            models: names.title.plural
+                                        })
                                     "
                                     v-model="search"
                                 />
@@ -20,7 +22,7 @@
                                 <template v-slot:append>
                                     <b-dropdown
                                         right
-                                        text="Filter"
+                                        :text="$t('filter')"
                                         class="btn-br-none"
                                         :variant="filterVariant"
                                     >
@@ -48,7 +50,7 @@
                                     </b-dropdown>
                                     <b-dropdown
                                         right
-                                        text="Sort"
+                                        :text="$t('sort')"
                                         class="btn-brl-none"
                                         variant="outline-secondary"
                                         v-if="config.sort_by"

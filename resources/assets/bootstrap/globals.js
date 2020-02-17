@@ -10,14 +10,13 @@ window.axios = axios.create({
     headers: {
         'X-Requested-With': 'XMLHttpRequest'
     }
-})
+});
 
 window._axios = axios.create({
     headers: {
         'X-Requested-With': 'XMLHttpRequest'
     }
-})
-
+});
 
 try {
     window.$ = window.jQuery = require('jquery');

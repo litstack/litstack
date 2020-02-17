@@ -1,8 +1,7 @@
-
 import store from './../store';
 
-window.onbeforeunload = function(){
+window.onbeforeunload = function() {
     return store.getters.canSave
         ? 'There are unsaved changes, are you sure you want to leave?'
-        : undefined
+        : undefined;
 };
