@@ -48,8 +48,11 @@ export default {
         }
     },
     methods: {
-        saveAll() {
-            this.$store.dispatch('saveModels');
+        async saveAll() {
+            await this.$store.dispatch('saveModels');
+            this.$bvToast.toast(this.$t('model_saved', { model: this.title }), {
+                variant: 'success'
+            });
         }
     },
     mounted() {

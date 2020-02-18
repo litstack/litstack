@@ -100,11 +100,8 @@ export default {
                 type = 'danger';
             }
 
-            this.$notify({
-                group: 'general',
-                type: type,
-                title: `${this.formConfig.names.title.plural}`,
-                text: message
+            this.$bvToast.toast(message, {
+                variant: 'info'
             });
         },
         setSelectedItems(items) {

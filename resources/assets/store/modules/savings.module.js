@@ -2,6 +2,8 @@ import Vue from 'vue';
 import EloquentCollection from './../../eloquent/collection';
 import FjordModel from './../../eloquent/fjord.model';
 import Bus from './../../common/event.bus';
+import { ToastPlugin } from 'bootstrap-vue';
+Vue.use(ToastPlugin);
 
 const initialState = {
     modelsToSave: [],
@@ -39,25 +41,11 @@ export const actions = {
         try {
             let results = await Promise.all(promises);
 
-            Vue.notify({
-                group: 'general',
-                type: 'success',
-                title: 'Saved successfully.',
-                text: '',
-                duration: 1500
-            });
-
             Bus.$emit('modelsSaved');
 
             commit('SAVED');
         } catch (e) {
-            Vue.notify({
-                group: 'general',
-                type: 'danger',
-                title: 'Error.',
-                text: `${e.response.data.message}`,
-                duration: -1
-            });
+            Bus.$emit('error', e);
         }
     },
     saveJob({ commit }, job) {

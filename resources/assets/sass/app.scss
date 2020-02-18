@@ -4,8 +4,11 @@
 // Variables
 @import 'variables';
 
+@import '~flag-icon-css/sass/flag-icon';
+
 // Modules
 @import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/src/index';
 @import '~cropperjs/src/index';
 
 // Atoms
@@ -28,11 +31,11 @@
 @import '_molecules/fjord-pagecontrols';
 @import '_molecules/fjord-block';
 @import '_molecules/fjord-cropper';
+@import '_molecules/fjord-toast';
 
 // layout
 @import 'horizontal';
 @import 'vertical';
-
 
 body,
 html {

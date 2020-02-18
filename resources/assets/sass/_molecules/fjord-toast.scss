@@ -1,0 +1,82 @@
+.b-toaster.b-toaster-top-right,
+.b-toaster.b-toaster-top-left,
+.b-toaster.b-toaster-top-center,
+.b-toaster.b-toaster-top-full {
+    top: 55px;
+}
+
+.toast {
+    background: rgba(35, 32, 39, 0.65) !important;
+    color: white !important;
+    border: none !important;
+    backdrop-filter: blur(5px) !important;
+    .close {
+        font-weight: 400 !important;
+        color: white !important;
+        text-shadow: none !important;
+        opacity: 1 !important;
+    }
+    .toast-header {
+        padding: 0 !important;
+        position: absolute !important;
+        right: 7px !important;
+        top: 2px !important;
+    }
+}
+
+.b-toast .toast .toast-body,
+.toast .toast-header {
+    background: transparent !important;
+    color: white !important;
+    border: none !important;
+}
+
+.toast-body::before {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    padding-right: 10px;
+}
+
+.b-toast-success {
+    .toast-body::before {
+        content: '\f058';
+        color: $green;
+    }
+}
+.b-toast-danger {
+    .toast-body::before {
+        content: '\f057';
+        color: $red;
+    }
+}
+
+.b-toast-default {
+    .toast-body::before {
+        padding: 0;
+        display: none;
+    }
+}
+.b-toast-primary {
+    .toast-body::before {
+        content: '\f05a';
+        color: $primary;
+    }
+}
+.b-toast-secondary {
+    .toast-body::before {
+        content: '\f05a';
+        color: $light;
+    }
+}
+.b-toast-warning {
+    .toast-body::before {
+        content: '\f06a';
+        color: $yellow;
+    }
+}
+.b-toast-info {
+    .toast-body::before {
+        content: '\f05a';
+        color: $primary;
+    }
+}

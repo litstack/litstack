@@ -45,7 +45,9 @@
                                             <b-button
                                                 v-if="hasEditLink(form_field)"
                                                 :href="
-                                                    `${baseURL}${form_field.edit}/${relation.id}/edit`
+                                                    `${baseURL}${
+                                                        form_field.edit
+                                                    }/${relation.id}/edit`
                                                 "
                                                 class="btn-transparent d-flex align-items-center"
                                                 ><fa-icon icon="edit"
@@ -54,7 +56,9 @@
                                                 class="btn-transparent"
                                                 @click="
                                                     showModal(
-                                                        `modal-${form_field.edit}-${relation.id}`
+                                                        `modal-${
+                                                            form_field.edit
+                                                        }-${relation.id}`
                                                     )
                                                 "
                                                 ><fa-icon icon="trash"
@@ -62,7 +66,9 @@
                                         </b-button-group>
                                         <b-modal
                                             :id="
-                                                `modal-${form_field.edit}-${relation.id}`
+                                                `modal-${form_field.edit}-${
+                                                    relation.id
+                                                }`
                                             "
                                             title="Delete Item"
                                         >
@@ -76,7 +82,9 @@
                                                     class="float-right"
                                                     @click="
                                                         $bvModal.hide(
-                                                            `modal-${form_field.edit}-${relation.id}`
+                                                            `modal-${
+                                                                form_field.edit
+                                                            }-${relation.id}`
                                                         )
                                                     "
                                                 >
@@ -168,26 +176,20 @@ export default {
 
             try {
                 await axios.post('relations/store', payload);
+
+                let relation = this.form_field.title;
+                this.$bvToast.toast(this.$t('relation_added', { relation }), {
+                    variant: 'success'
+                });
             } catch (e) {
-                this.$notify({
-                    group: 'general',
-                    type: 'warning',
-                    title: this.form_field.title,
-                    text: e.response.data.message
+                this.$bvToast.toast(e.response.data.message, {
+                    variant: 'danger',
+                    noAutoHide: true
                 });
                 return;
             }
 
             this.relations.push(item);
-
-            this.$notify({
-                group: 'general',
-                type: 'success',
-                title: this.form_field.title,
-                text: `Added item to ${this.form_field.title}`
-            });
-
-            //this.$bvModal.hide(this.modalId)
         },
         async removeRelation(id, $event) {
             let payload = {
@@ -208,18 +210,13 @@ export default {
 
                 this.relations.splice(index, 1);
 
-                this.$notify({
-                    group: 'general',
-                    type: 'success',
-                    title: data.message,
-                    text: data.request
+                this.$bvToast.toast(this.$t('relation_set'), {
+                    variant: 'success'
                 });
             } catch (e) {
-                this.$notify({
-                    group: 'general',
-                    type: 'danger',
-                    title: 'Error',
-                    text: e
+                this.$bvToast.toast(e, {
+                    variant: 'danger',
+                    noAutoHide: true
                 });
             }
         },
@@ -243,11 +240,8 @@ export default {
 
             let response = await axios.put('relations/order', payload);
 
-            this.$notify({
-                group: 'general',
-                type: 'success',
-                title: this.form_field.title,
-                text: 'Changed order.'
+            this.$bvToast.toast(this.$t('order_changed'), {
+                variant: 'success'
             });
         },
         setFields() {
@@ -294,7 +288,9 @@ export default {
     },
     computed: {
         modalId() {
-            return `${this.model.route}-form-relation-table-${this.form_field.id}-${this.model.id}`;
+            return `${this.model.route}-form-relation-table-${
+                this.form_field.id
+            }-${this.model.id}`;
         },
         ...mapGetters(['baseURL', 'form'])
     }

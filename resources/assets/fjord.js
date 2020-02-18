@@ -12,6 +12,8 @@ require('./service/library.service');
 import FjordApp from './FjordApp';
 import Navigation from './components/Partials/Navigation';
 import Notify from './components/Notify';
+import Bus from './common/event.bus';
+Vue.prototype.$Bus = Bus;
 
 import store from './store';
 import mixins from './common/mixins';
@@ -55,5 +57,9 @@ Fjord.prototype._vue = function() {
         }
     });
 };
+
+Bus.$on('setLocale', locale => {
+    i18n.locale = locale;
+});
 
 export default Fjord;

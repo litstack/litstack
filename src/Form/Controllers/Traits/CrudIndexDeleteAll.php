@@ -27,6 +27,6 @@ trait CrudIndexDeleteAll
 
     protected function addDeleteAllExtension()
     {
-        return ['index.actions' => ['crud-index-delete-all']];
+        return ['index.actions' => ['fj-crud-index-delete-all']];
     }
 }

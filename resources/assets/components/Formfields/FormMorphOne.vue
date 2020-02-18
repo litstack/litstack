@@ -98,20 +98,13 @@ export default {
             try {
                 const { data } = await axios.post('morph-one/store', payload);
 
-                this.$notify({
-                    group: 'general',
-                    type: 'success',
-                    title: this.field.title,
-                    text: `MorphOne relation set.`,
-                    duration: 1500
+                this.$bvToast.toast(this.$t('relation_set'), {
+                    variant: 'success'
                 });
             } catch (e) {
-                this.$notify({
-                    group: 'general',
-                    type: 'danger',
-                    title: this.field.title,
-                    text: e,
-                    duration: -1
+                this.$bvToast.toast(e, {
+                    variant: 'danger',
+                    noAutoHide: true
                 });
             }
         }

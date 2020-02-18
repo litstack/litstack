@@ -387,12 +387,9 @@ export default {
         },
         deleteItem(item) {
             item.delete();
-            this.$notify({
-                group: 'general',
-                type: 'success',
-                title: `Deleted ${item.route}.`,
-                text: '',
-                duration: 1500
+
+            this.$bvToast.toast(this.$t('deleted_item', { item: item.route }), {
+                variant: 'success'
             });
         },
         openItem(item) {

@@ -10,7 +10,6 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 
-import Notifications from 'vue-notification';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import BootstrapVue from 'bootstrap-vue';
 import VueCodemirror from 'vue-codemirror';
@@ -25,7 +24,6 @@ Vue.component('fa-icon', FontAwesomeIcon);
 // Modules
 Vue.use(Vuex);
 Vue.use(BootstrapVue);
-Vue.use(Notifications);
 Vue.use(CKEditor);
 Vue.use(VueCodemirror);
 

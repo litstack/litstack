@@ -30,6 +30,10 @@ export default {
         config: {
             type: Object,
             required: true
+        },
+        auth: {
+            type: Object,
+            required: true
         }
     },
     data() {
@@ -38,7 +42,17 @@ export default {
             preparedProps: {}
         };
     },
+    mounted() {
+        this.$Bus.$on('error', e => {
+            this.$bvToast.toast(e, {
+                variant: 'danger'
+            });
+        });
+    },
     methods: {
+        setAuthData() {
+            this.$store.commit('SET_AUTH_DATA', this.auth);
+        },
         prepareModels() {
             if (typeof this.models != typeof {}) {
                 return;
@@ -81,6 +95,7 @@ export default {
 
         this.prepareModels();
         this.prepareProps();
+        this.setAuthData();
     }
 };
 </script>

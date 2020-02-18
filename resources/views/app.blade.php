@@ -36,8 +36,6 @@
             @include('fjord::partials.spinner')
         </main>
 
-        <notify />
-
     </div>
 
     <script src="{{ fjord_js() }}" defer></script>

@@ -38,7 +38,9 @@
                                             variant="link"
                                             class="text-secondary"
                                             v-b-modal="
-                                                `fjord-image-${field.id}-${image.id}`
+                                                `fjord-image-${field.id}-${
+                                                    image.id
+                                                }`
                                             "
                                         >
                                             <i class="fas fa-edit"></i>
@@ -46,7 +48,9 @@
                                     </div>
                                     <b-modal
                                         :id="
-                                            `fjord-image-${field.id}-${image.id}`
+                                            `fjord-image-${field.id}-${
+                                                image.id
+                                            }`
                                         "
                                         size="xl"
                                         class="fjord-image-modal"
@@ -138,7 +142,9 @@
                                             <button
                                                 @click.prevent="
                                                     $bvModal.hide(
-                                                        `fjord-image-${field.id}-${image.id}`
+                                                        `fjord-image-${
+                                                            field.id
+                                                        }-${image.id}`
                                                     )
                                                 "
                                                 class="btn btn-secondary btn-sm"
@@ -346,21 +352,15 @@ export default {
         },
         uploadSuccess(file, response) {
             this.images = response;
-            this.$notify({
-                group: 'general',
-                type: 'success',
-                title: `Success`,
-                text: 'Image uploaded successfully',
-                duration: 1500
+
+            this.$bvToast.toast(this.$t('image_uploaded'), {
+                variant: 'success'
             });
         },
         uploadError(file, errorMessage, xhr) {
-            this.$notify({
-                group: 'general',
-                type: 'danger',
-                title: `Error`,
-                text: errorMessage,
-                duration: -1
+            this.$bvToast.toast(errorMessage, {
+                variant: 'danger',
+                noAutoHide: true
             });
         },
         imgPath(image) {

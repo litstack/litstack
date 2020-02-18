@@ -1,12 +1,9 @@
 <template>
     <transition name="slide">
-        <b-input-group
-            v-if="selectedItems.length > 0"
-            :size="'sm'"
-        >
+        <b-input-group v-if="selectedItems.length > 0" :size="'sm'">
             <b-input-group-prepend is-text>
                 <strong>
-                    {{ selectedItems.length }}
+                    <!-- {{ selectedItems.length }}
                     {{
                         selectedItems.length == 1
                             ? ' Item'
@@ -16,8 +13,15 @@
                         selectedItems.length == items.length
                             ? ' (all)'
                             : ''
+                    }} -->
+
+                    {{ $tc('n_items_selected', selectedItems.length) }}
+                    {{
+                        selectedItems.length == items.length
+                            ? `(${$t('all')})`
+                            : ''
                     }}
-                    selected
+                    <!-- selected -->
                 </strong>
             </b-input-group-prepend>
 
@@ -45,9 +49,9 @@ export default {
         selectedItems: {
             type: Array,
             required: true
-        },
+        }
     }
-}
+};
 </script>
 
 <style lang="css" scoped>

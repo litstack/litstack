@@ -24,11 +24,11 @@ let FormMixin = Base =>
             return [
                 'AwStudio\\Fjord\\Form\\Database\\FormField',
                 'AwStudio\\Fjord\\Form\\Database\\FormBlock'
-            ].includes(this.model)
+            ].includes(this.model);
         }
 
         getOriginalModel(form_field) {
-            return this._getModel(this.startingAttributes, form_field.id)
+            return this._getModel(this.startingAttributes, form_field.id);
         }
 
         _setOriginalModels() {
@@ -113,7 +113,6 @@ let FormMixin = Base =>
             }
 
             if (this.translatable) {
-
                 // set not existing object keys
                 if (
                     !(fallback_locale in attributes) ||
@@ -122,12 +121,8 @@ let FormMixin = Base =>
                     attributes[fallback_locale] = {};
                 }
 
-                if (
-                    !(form_field.local_key in attributes[fallback_locale])
-                ) {
-                    attributes[fallback_locale][
-                        form_field.local_key
-                    ] = null;
+                if (!(form_field.local_key in attributes[fallback_locale])) {
+                    attributes[fallback_locale][form_field.local_key] = null;
                 }
             }
 
@@ -140,8 +135,8 @@ let FormMixin = Base =>
                 ) {
                     attributes[lng][form_field.local_key] = '';
                 }
-                if(form_field.id == 'testtext') {
-                    console.log(attributes, lng, attributes[lng])
+                if (form_field.id == 'testtext') {
+                    console.log(attributes, lng, attributes[lng]);
                 }
                 return attributes[lng][form_field.local_key];
             }

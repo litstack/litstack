@@ -103,12 +103,9 @@ export default {
             let model = new FjordModel(response.data);
 
             this.sortableRepeatables.push(model);
-            this.$notify({
-                group: 'general',
-                type: 'success',
-                title: this.field.title,
-                text: `Added new ${type} block.`,
-                duration: -1
+
+            this.$bvToast.toast(this.$t('new_block', { type }), {
+                variant: 'success'
             });
         },
         async deleteRepeatable(repeatable) {
@@ -118,12 +115,8 @@ export default {
                 1
             );
 
-            this.$notify({
-                group: 'general',
-                type: 'success',
-                title: this.field.title,
-                text: 'Deleted block.',
-                duration: 1500
+            this.$bvToast.toast(this.$t('deleted_block'), {
+                variant: 'success'
             });
         },
         newBlock(type) {
@@ -145,12 +138,8 @@ export default {
 
             await axios.put('order', payload);
 
-            this.$notify({
-                group: 'general',
-                type: 'success',
-                title: this.field.title,
-                text: 'Changed order.',
-                duration: 1500
+            this.$bvToast.toast(this.$t('order_changed'), {
+                variant: 'success'
             });
         }
     },

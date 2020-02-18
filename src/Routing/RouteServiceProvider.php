@@ -46,6 +46,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     {
         FjordRoute::group(function() {
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+            Route::post('/set-locale', 'AwStudio\Fjord\Actions\SetLocale')->name('set-locale');
         });
 
         FjordRoute::put('/order', FjordController::class . '@order')

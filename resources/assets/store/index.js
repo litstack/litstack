@@ -3,11 +3,13 @@ import Vuex from 'vuex';
 import config from './modules/config.module';
 import savings from './modules/savings.module';
 import form from './modules/form.module';
+import auth from './modules/auth.module';
 
 const modules = {
     config,
     savings,
-    form
+    form,
+    auth
 };
 
 class FjordStore {

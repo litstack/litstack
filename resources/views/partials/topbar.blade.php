@@ -3,47 +3,30 @@
         <a href="{{route('fjord.dashboard')}}" class="fjord-brand">
             <img src="{{ route('fjord.logo') }}" class="img-fluid" alt="">
         </a>
-        {{-- <input class="form-control fjord-search" type="text" placeholder="Search everything">
-        --}}
     </div>
     @auth('fjord')
         <div>
 
-            @if (Route::has('fjord.user-roles') && Route::has('fjord.role-permissions'))
-                <div class="btn-group mr-4">
-                    <button
-                        type="button"
-                        class="btn btn-sm btn-transparent dropdown-toggle"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false">
-                        <i class="fas fa-user-friends"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
+            <b-dropdown class="m-md-2" right variant="transparent" size="sm">
+                <template v-slot:button-content>
+                  <fa-icon icon="cogs" />
+                </template>
+                @if (Route::has('fjord.user-roles') && Route::has('fjord.role-permissions'))
+                    @can('read user-roles')
+                        <b-dropdown-item href="{{route('fjord.user-roles')}}">Roles</b-dropdown-item>
+                    @endcan
+                    @can('read role-permissions')
+                        <b-dropdown-item href="{{route('fjord.role-permissions')}}">Permissions</b-dropdown-item>
+                    @endcan
+                    <b-dropdown-divider></b-dropdown-divider>
+                @endif
+                @foreach(fjord()->getNavigation('topbar') as $entry)
+                    <b-dropdown-item href="/{{ config('fjord.route_prefix') }}/{{ $entry['link'] }}">{{ $entry['text'] }}</b-dropdown-item>
+                @endforeach
+                <b-dropdown-divider></b-dropdown-divider>
+                <fj-locales />
+            </b-dropdown>
 
-                        @can('read user-roles')
-                        <a class="dropdown-item"
-                           href="{{route('fjord.user-roles')}}">
-                            <i class="fas fa-address-card"></i> Roles
-                        </a>
-                        @endcan
-                        @can('read role-permissions')
-                        <a class="dropdown-item"
-                           href="{{route('fjord.role-permissions')}}">
-                            <i class="fas fa-key"></i> Permissions
-                        </a>
-                        @endcan
-                    </div>
-                </div>
-            @endif
-
-            @foreach(fjord()->getNavigation('topbar') as $entry)
-                <a
-                    class="fj-topbar_link mr-4"
-                    href="/{{ config('fjord.route_prefix') }}/{{ $entry['link'] }}">
-                    {!! $entry['icon'] !!}
-                </a>
-            @endforeach
             <a class="fj-topbar_link"
                href="{{route('fjord.logout')}}"
                onclick="event.preventDefault();

@@ -26,7 +26,6 @@ class FjordServiceProvider extends ServiceProvider
         $this->app->register('AwStudio\Fjord\Routing\RouteServiceProvider');
         $this->app->register('AwStudio\Fjord\RolesPermissions\ServiceProvider');
         $this->app->register('AwStudio\Fjord\Form\ServiceProvider');
-        $this->app->register('AwStudio\Fjord\Blade\BladeServiceProvider');
 
         /**
          * Load the Fjord views

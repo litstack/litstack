@@ -53,13 +53,6 @@ export default {
             location = location.replace('/', '-').replace('/', '-');
         }
 
-        // let location = String(window.location.pathname)
-        //     .replace(this.baseURL, '')
-        //     .replace('/', '-')
-        //     .replace('/', '-');
-
-        // console.log(location);
-
         let item = $(`.nav-${location}`);
 
         item.addClass('fj-navigation__is-active');
