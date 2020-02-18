@@ -17,10 +17,10 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex';
 
 export default {
-    name: 'LangSelect',
+    name: 'BaseLang',
     computed: {
         ...mapGetters(['lng'])
     },
@@ -36,12 +36,10 @@ export default {
     },
     methods: {
         switchLanguage(language) {
-            this.$store.commit('setLanguage', language)
-        },
-    },
-
-}
+            this.$store.commit('SET_LANGUAGE', language);
+        }
+    }
+};
 </script>
 
-<style lang="css" scoped>
-</style>
+<style lang="css" scoped></style>

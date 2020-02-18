@@ -6,7 +6,7 @@
                 v-for="(m, index) in eloquentModels"
             >
                 <div class="card-body">
-                    <fj-form
+                    <fj-fjord-form
                         :ids="ids"
                         :model="fjModel(m)"
                         :key="rerenderKey(m, index)"
@@ -127,9 +127,7 @@ export default {
         return {
             rows: null,
             eloquentModels: [],
-            baseRoute: `/${this.model.route}/${
-                this.model.attributes.id
-            }/relations/${this.field.id}`,
+            baseRoute: `/${this.model.route}/${this.model.attributes.id}/relations/${this.field.id}`,
             unrelatedEloquentModels: []
         };
     },

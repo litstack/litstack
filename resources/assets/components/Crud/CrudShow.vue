@@ -1,11 +1,11 @@
 <template>
-    <fj-container>
-        <fj-header
+    <fj-base-container>
+        <fj-base-header
             :title="formConfig.names.title.singular"
             :back="formConfig.back_route"
             :back-text="formConfig.back_text"
         >
-            <crud-show-near-items
+            <fj-crud-show-near-items
                 slot="navigation"
                 v-if="nearItems"
                 :formConfig="formConfig"
@@ -21,7 +21,7 @@
                     :model="model"
                 />
             </div>
-        </fj-header>
+        </fj-base-header>
         <b-row>
             <b-col cols="12" md="9" order-md="1">
                 <b-row class="fjord-form">
@@ -35,7 +35,7 @@
                 </b-row>
             </b-col>
 
-            <fj-controls
+            <fj-base-controls
                 :create="create"
                 :title="formConfig.names.title.singular"
             >
@@ -49,9 +49,9 @@
                         :model="model"
                     />
                 </div>
-            </fj-controls>
+            </fj-base-controls>
         </b-row>
-    </fj-container>
+    </fj-base-container>
 </template>
 
 <script>

@@ -14,7 +14,6 @@ use AwStudio\Fjord\Form\Requests\CrudDeleteRequest;
 
 class CrudController extends Controller
 {
-
     use CanHaveFjordExtensions,
         Traits\CrudIndex,
         Traits\CrudRelations;
@@ -66,7 +65,7 @@ class CrudController extends Controller
      */
     public function index(CrudReadRequest $request)
     {
-        return view('fjord::vue')->withComponent('crud-index')
+        return view('fjord::vue')->withComponent('fj-crud-index')
             ->withTitle($this->titleSingular)
             ->withProps([
                 'formConfig' => $this->getForm()->toArray(),
@@ -86,14 +85,14 @@ class CrudController extends Controller
         $className = $this->model;
         $model = new $className();
 
-        return view('fjord::vue')->withComponent('crud-show')
+        return view('fjord::vue')->withComponent('fj-crud-show')
             ->withTitle('edit ' . $this->titleSingular)
             ->withModels([
                 'model' => $model->eloquentJs('fjord'),
             ])
             ->withProps([
                 'formConfig' => $this->getForm($model)->toArray(),
-                'content' => ['crud-show-form']
+                'content' => ['fj-crud-show-form']
             ]);
     }
 
@@ -118,7 +117,15 @@ class CrudController extends Controller
      */
     public function edit(CrudUpdateRequest $request, $id)
     {
-        $query = $this->model::with($this->getWiths());
+        // initial query
+        if(array_key_exists('query', $this->getForm()->toArray()['index'])){
+            $query = $this->getForm()->toArray()['index']['query'];
+        }else{
+            $query = new $this->model;
+        }
+
+        $query = $query->with($this->getWiths());
+
         if(array_key_exists('load', $this->getForm()->toArray()['index'])){
             $query->with(array_keys($this->getForm()->toArray()['index']['load']));
         }
@@ -146,7 +153,7 @@ class CrudController extends Controller
         $previous = $this->model::where('id', '<', $id)->orderBy('id','desc')->select('id')->first()->id ?? null;
         $next = $this->model::where('id', '>', $id)->orderBy('id')->select('id')->first()->id ?? null;
 
-        return view('fjord::vue')->withComponent('crud-show')
+        return view('fjord::vue')->withComponent('fj-crud-show')
             ->withTitle('edit ' . $this->titleSingular)
             ->withModels([
                 'model' => $eloquentModel,

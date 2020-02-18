@@ -1,17 +1,13 @@
 <template>
     <div class="col-12 col-md-3 order-md-2 pb-4 mb-md-0">
         <div class="fjord-pagecontrols card">
-            <!-- <div class="card-header">
-                <i class="fas fa-sliders-h text-primary pr-2"></i>
-                <b>Controls</b>
-            </div> -->
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 pb-3">
                         <b class="text-muted d-block pb-1">
                             {{ $t('select_language') }}
                         </b>
-                        <fj-lang-select
+                        <fj-base-lang
                             :languages="lngs"
                             :currentLanguage="lng"
                         />
@@ -41,7 +37,7 @@
 import { mapGetters } from 'vuex';
 
 export default {
-    name: 'Controls',
+    name: 'BaseControls',
     props: {
         create: {
             type: Boolean,

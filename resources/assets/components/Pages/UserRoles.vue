@@ -1,6 +1,6 @@
 <template>
-    <fj-container>
-        <fj-header :title="'Roles'"></fj-header>
+    <fj-base-container>
+        <fj-base-header :title="'Roles'"></fj-base-header>
         <div class="card">
             <div class="card-body">
                 <table class="table table-hover">
@@ -29,7 +29,7 @@
                 </table>
             </div>
         </div>
-    </fj-container>
+    </fj-base-container>
 </template>
 
 <script>

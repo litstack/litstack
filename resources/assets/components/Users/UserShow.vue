@@ -1,6 +1,6 @@
 <template>
-    <fj-container>
-        <fj-header
+    <fj-base-container>
+        <fj-base-header
             :title="formConfig.names.title.singular"
             :back="formConfig.back_route"
             :back-text="formConfig.back_text">
@@ -36,9 +36,9 @@
                     :config="formConfig"/>
 
             </div>
-        </fj-header>
+        </fj-base-header>
 
-    </fj-container>
+    </fj-base-container>
 </template>
 
 <script>

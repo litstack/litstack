@@ -6,6 +6,6 @@ trait CrudShowForm
 {
     protected function addFormExtension()
     {
-        return ['show.content' => ['crud-show-form']];
+        return ['show.content' => ['fj-crud-show-form']];
     }
 }

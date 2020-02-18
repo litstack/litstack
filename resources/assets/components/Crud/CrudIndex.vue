@@ -1,6 +1,6 @@
 <template>
-    <fj-container>
-        <fj-header :title="formConfig.names.title.plural">
+    <fj-base-container>
+        <fj-base-header :title="formConfig.names.title.plural">
             <div slot="actions-right">
                 <component
                     v-for="(component, key) in globalActions"
@@ -14,7 +14,7 @@
                     {{ $t('add_model', { model: modelNameSingular }) }}
                 </b-button>
             </div>
-        </fj-header>
+        </fj-base-header>
 
         <fj-crud-index-table
             :names="formConfig.names"
@@ -36,7 +36,7 @@
                 :sendAction="sendAction"
             />
         </fj-crud-index-table>
-    </fj-container>
+    </fj-base-container>
 </template>
 
 <script>

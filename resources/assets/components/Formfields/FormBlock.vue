@@ -22,7 +22,7 @@
                                 ></i>
                             </div>
 
-                            <fj-form :model="repeatable" />
+                            <fj-fjord-form :model="repeatable" />
 
                             <b-row>
                                 <b-col

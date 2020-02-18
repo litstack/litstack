@@ -1,6 +1,6 @@
 <template>
-    <fj-container>
-        <fj-header :title="'Dashboard'"></fj-header>
+    <fj-base-container>
+        <fj-base-header :title="'Dashboard'"></fj-base-header>
         <b-row>
             <component
                 v-for="(component, index) in components"
@@ -8,7 +8,7 @@
                 :key="index"
             />
         </b-row>
-    </fj-container>
+    </fj-base-container>
 </template>
 
 <script>

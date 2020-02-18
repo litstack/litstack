@@ -1,8 +1,8 @@
 import Vuex from 'vuex';
 
-import config from './config.module';
-import savings from './savings.module';
-import form from './form.module';
+import config from './modules/config.module';
+import savings from './modules/savings.module';
+import form from './modules/form.module';
 
 const modules = {
     config,

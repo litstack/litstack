@@ -71,13 +71,13 @@ export default {
         }
     },
     beforeMount() {
-        this.$store.commit('setLanguages', this.translatable.languages);
-        this.$store.commit('setLanguage', this.translatable.language);
+        this.$store.commit('SET_LANGUAGES', this.translatable.languages);
+        this.$store.commit('SET_LANGUAGE', this.translatable.language);
         this.$store.commit(
-            'setFallbackLocale',
+            'SET_FALLBACK_LOCALE',
             this.translatable.fallback_locale
         );
-        this.$store.commit('setConfig', this.config);
+        this.$store.commit('SET_CONFIG', this.config);
 
         this.prepareModels();
         this.prepareProps();

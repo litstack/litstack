@@ -1,11 +1,11 @@
 <template>
     <b-container class="fjord-container">
-        <slot/>
+        <slot />
     </b-container>
 </template>
 
 <script>
 export default {
-    name: 'Container'
-}
+    name: 'BaseContainer'
+};
 </script>

@@ -1,4 +1,3 @@
+import Fjord from './fjord';
 
-import Fjord from './fjord'
-
-export default Fjord
+export default Fjord;

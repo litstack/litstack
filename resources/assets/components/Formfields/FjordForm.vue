@@ -128,7 +128,7 @@ import EloquentCollection from './../../eloquent/collection';
 import { mapGetters } from 'vuex';
 
 export default {
-    name: 'Form',
+    name: 'FjordForm',
     props: {
         model: {
             type: Object,
@@ -182,12 +182,15 @@ export default {
     methods: {
         changed(field, model) {
             if (model.getOriginalModel(field) == model[`${field.id}Model`]) {
-                this.$store.commit('removeModelFromSave', {
+                this.$store.commit('REMOVE_MODELS_FROM_SAVE', {
                     model,
                     id: field.id
                 });
             } else {
-                this.$store.commit('addModelToSave', { model, id: field.id });
+                this.$store.commit('ADD_MODELS_TO_SAVE', {
+                    model,
+                    id: field.id
+                });
             }
         },
         toggle(field) {

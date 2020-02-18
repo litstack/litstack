@@ -1,13 +1,21 @@
-require('./bootstrap');
+require('./common/bootstrap');
+require('./common/string');
+require('./common/axios');
+require('./common/window');
 
-import Vuex from 'vuex';
+require('./service/component.service');
+require('./service/library.service');
+
+/**
+ * Load all required components for the FjordApp
+ */
 import FjordApp from './FjordApp';
 import Navigation from './components/Partials/Navigation';
 import Notify from './components/Notify';
 
 import store from './store';
-import mixins from './bootstrap/mixins';
-import i18n from './service/i18n';
+import mixins from './common/mixins';
+import i18n from './common/i18n';
 
 const APP_ID = '#fjord-app';
 

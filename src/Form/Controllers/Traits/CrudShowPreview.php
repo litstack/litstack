@@ -6,6 +6,6 @@ trait CrudShowPreview
 {
     protected function addPreviewExtension()
     {
-        return ['show.actions' => ['crud-show-preview']];
+        return ['show.actions' => ['fj-crud-show-preview']];
     }
 }

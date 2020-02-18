@@ -110,7 +110,7 @@
                                         role="cell"
                                         align="center"
                                     >
-                                        <fj-spinner class="text-center" />
+                                        <fj-base-spinner class="text-center" />
                                     </td>
                                 </tr>
                                 <template v-else>

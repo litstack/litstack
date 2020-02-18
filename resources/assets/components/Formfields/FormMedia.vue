@@ -324,7 +324,7 @@ export default {
                 data: image
             };
 
-            this.$store.commit('addSaveJob', job);
+            this.$store.dispatch('saveJob', job);
         },
         checkMaxFiles() {
             if (this.images.length >= this.field.maxFiles) {

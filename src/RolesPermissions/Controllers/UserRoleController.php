@@ -14,7 +14,7 @@ class UserRoleController extends Controller
 {
     public function index(IndexUserRoleRequest $request)
     {
-        return view('fjord::vue')->withComponent('user-roles')
+        return view('fjord::vue')->withComponent('fj-user-roles')
             ->withTitle('Users')
             ->withProps([
                 'roles' => Role::all(),

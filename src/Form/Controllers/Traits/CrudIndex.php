@@ -11,8 +11,15 @@ trait CrudIndex
 {
     public function postIndex(Request $request)
     {
+        // set the initial query
+        if(array_key_exists('query', $this->getForm()->index)){
+            $query = $this->getForm()->index['query'];
+        }else{
+            $query = new $this->model;
+        }
+
         // eager load models default withs
-        $query = $this->model::with($this->getWiths());
+        $query = $query->with($this->getWiths());
 
         // apply the filter
         if($request->filter) {
@@ -169,12 +176,8 @@ trait CrudIndex
 
         if($request->perPage !== 0){
             $page = $request->page ?? 1;
-            $count = $this->model::all()->count();
             $perPage = $request->perPage;
-            $total = $query->get()->count();
-
             $items = $query->skip( ($page-1) * $perPage )->take($perPage)->get();
-
         }else{
             $items = $query->get();
         }

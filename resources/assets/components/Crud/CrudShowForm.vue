@@ -18,7 +18,7 @@
                 </button>
             </template>
             <b-collapse :id="`accordion-${key}`" visible>
-                <fj-form :ids="ids" :model="model" />
+                <fj-fjord-form :ids="ids" :model="model" />
             </b-collapse>
         </b-card>
     </b-col>

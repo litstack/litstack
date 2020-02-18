@@ -9,7 +9,8 @@
         "select_language": "Select language",
         "save_changes": "Save changes",
         "delete": "delete",
-        "cancel": "cancel"
+        "cancel": "cancel",
+        "navigation": "Navigation"
     },
     "de": {
         "add_model": "{model} hinzufügen",
@@ -21,6 +22,7 @@
         "select_language": "Sprache auswählen",
         "save_changes": "Änderungen speichern",
         "delete": "löschen",
-        "cancel": "abbrechen"
+        "cancel": "abbrechen",
+        "navigation": "Navigation"
     }
 }

@@ -1,13 +1,14 @@
 <template>
-<fj-form-item :field="field" :model="model">
-    <codemirror
-        :class="`fj-code-${field.id}`"
-        :value="model[`${field.id}Model`]"
-        :options="options"
-        @input="changed"
-        @blur="blur"
-        @focus="focus"/>
-</fj-form-item>
+    <fj-form-item :field="field" :model="model">
+        <codemirror
+            :class="`fj-code-${field.id}`"
+            :value="model[`${field.id}Model`]"
+            :options="options"
+            @input="changed"
+            @blur="blur"
+            @focus="focus"
+        />
+    </fj-form-item>
 </template>
 
 <script>
@@ -16,19 +17,21 @@ import 'codemirror/lib/codemirror.css';
 const path = require('path');
 
 function requireAll(requireContext) {
-  return requireContext.keys().reduce((previous, current) => {
-    const name = current.substring(current.lastIndexOf('/') + 1, current.lastIndexOf('.'));
-    previous[name] = requireContext(current);
-    return previous;
-  }, {});
+    return requireContext.keys().reduce((previous, current) => {
+        const name = current.substring(
+            current.lastIndexOf('/') + 1,
+            current.lastIndexOf('.')
+        );
+        previous[name] = requireContext(current);
+        return previous;
+    }, {});
 }
 
-const actionCreators = requireAll(require.context('codemirror/mode', true, /^\.\/.*\.js$/));
+const actionCreators = requireAll(
+    require.context('codemirror/mode', true, /^\.\/.*\.js$/)
+);
 
-
-let modes = {
-
-}
+let modes = {};
 
 export default {
     name: 'FormCode',
@@ -40,19 +43,19 @@ export default {
         model: {
             required: true,
             type: Object
-        },
+        }
     },
     methods: {
         changed(value) {
-            this.model[`${this.field.id}Model`] = value
-            this.$emit('changed')
+            this.model[`${this.field.id}Model`] = value;
+            this.$emit('changed');
         },
         focus(cm) {
             $(`.fj-code-${this.field.id}`).addClass('focus');
         },
         blur(cm) {
             $(`.fj-code-${this.field.id}`).removeClass('focus');
-        },
+        }
     },
     data() {
         return {
@@ -61,15 +64,14 @@ export default {
                 mode: this.field.language,
                 theme: this.field.theme,
                 lineNumbers: this.field.line_numbers,
-                line: this.field.line,
+                line: this.field.line
             }
-        }
+        };
     }
-}
+};
 </script>
 
 <style lang="scss">
-
 @import '~codemirror/theme/3024-day.css';
 @import '~codemirror/theme/3024-night.css';
 @import '~codemirror/theme/abcdef.css';
@@ -134,22 +136,22 @@ export default {
 
 @import '../../sass/variables';
 
-.vue-codemirror{
+.vue-codemirror {
     width: 100%;
     font-size: 1rem;
 
     @include border-radius($input-border-radius, 0);
 
-    &.focus{
+    &.focus {
         color: $input-focus-color;
         background-color: $input-focus-bg;
         border-color: $input-focus-border-color;
         outline: 0;
         // Avoid using mixin so we can pass custom focus shadow properly
         @if $enable-shadows {
-          box-shadow: $input-box-shadow, $input-focus-box-shadow;
+            box-shadow: $input-box-shadow, $input-focus-box-shadow;
         } @else {
-          box-shadow: $input-focus-box-shadow;
+            box-shadow: $input-focus-box-shadow;
         }
     }
 
@@ -157,6 +159,5 @@ export default {
         @include border-radius($input-border-radius, 0);
         height: auto;
     }
-
 }
 </style>
