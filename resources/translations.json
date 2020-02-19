@@ -22,7 +22,13 @@
         "relation_added": "{relation} added",
         "deleted_item": "deleted {item}",
         "n_items_selected": "{count} item selected | {count} items selected",
-        "all": "all"
+        "all": "all",
+        "toggle_all": "toggle all",
+        "create": "Create",
+        "update": "Update",
+        "read": "Read",
+        "delete": "Delete",
+        "permission_updated": "Permission updated: {operation} {group}"
     },
     "de": {
         "add_model": "{model} hinzufügen",
@@ -47,6 +53,12 @@
         "relation_added": "{relation} erfolreich verknüpft",
         "deleted_item": "{item} gelöscht",
         "n_items_selected": "{count} Element ausgewählt | {count} Elemente ausgewählt",
-        "all": "alle"
+        "all": "alle",
+        "toggle_all": "alle an/aus",
+        "create": "Erstellen",
+        "update": "Updaten",
+        "read": "Lesen",
+        "delete": "Löschen",
+        "permission_updated": "Berechtigung geändert: {group} {operation}"
     }
 }
