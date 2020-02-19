@@ -207,6 +207,7 @@
 </template>
 
 <script>
+import vue2Dropzone from 'vue2-dropzone';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -229,6 +230,9 @@ export default {
                 return [];
             }
         }
+    },
+    components: {
+        vueDropzone: vue2Dropzone
     },
     data() {
         let self = this;
