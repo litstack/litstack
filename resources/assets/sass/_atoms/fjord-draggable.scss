@@ -2,7 +2,7 @@
     padding: 20px;
     border: 1px solid $border;
     border-radius: 3px;
-    background: #f7f7f7;
+    background: $draggable;
     margin-bottom: 20px;
     &__dragbar {
         cursor: grab;
@@ -19,5 +19,19 @@
                 rgba(0, 0, 0, 0)
             );
         }
+    }
+}
+.draggable-tr {
+    background: $draggable;
+    border: 1px solid $border;
+    td {
+        border: none !important;
+    }
+    &.sortable-ghost {
+        transform: scale(1.02);
+        box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.6);
+        outline: 1px solid darken($border, 10%);
+        outline-offset: -1px;
+        border: 1px solid $border;
     }
 }

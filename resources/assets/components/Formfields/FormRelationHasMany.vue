@@ -16,6 +16,7 @@
                             handle=".fjord-draggable__dragbar"
                         >
                             <tr
+                                class="draggable-tr"
                                 v-for="(relation, rkey) in relations"
                                 :key="rkey"
                             >
@@ -143,7 +144,6 @@
 </template>
 
 <script>
-import TranslatableEloquent from './../../eloquent/translatable';
 import TableModel from './../../eloquent/table.model';
 import { mapGetters } from 'vuex';
 
@@ -298,9 +298,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fjord-draggable {
-    margin-bottom: 5px;
-}
 .table-controls {
     // margin: -24px 0;
     // margin-right: -13px;

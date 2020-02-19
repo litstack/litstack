@@ -207,9 +207,6 @@
 </template>
 
 <script>
-import vue2Dropzone from 'vue2-dropzone';
-import 'vue2-dropzone/dist/vue2Dropzone.min.css';
-import draggable from 'vuedraggable';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -232,9 +229,6 @@ export default {
                 return [];
             }
         }
-    },
-    components: {
-        vueDropzone: vue2Dropzone
     },
     data() {
         let self = this;
