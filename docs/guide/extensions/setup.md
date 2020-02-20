@@ -35,5 +35,20 @@ In order to load the custom `app.js` you have to include it in your `config/fjor
 and render it each time you make changes, for exampe via larvel mix using `npm run dev`:
 
 ```js
+mix.webpackConfig({
+    resolve: {
+        alias: {
+            '@fj-js': path.resolve(
+                __dirname,
+                'vendor/aw-studio/fjord/resources/js/'
+            ),
+            '@fj-sass': path.resolve(
+                __dirname,
+                'vendor/aw-studio/fjord/resources/sass/'
+            )
+        }
+    }
+});
+
 mix.js('resources/js/fjord/app.js', 'public/fjord/js');
 ```
