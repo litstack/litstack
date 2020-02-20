@@ -15,14 +15,8 @@
 </template>
 
 <script>
-import messages from '@fj-js/../translations.json';
 export default {
     name: 'Locales',
-    data() {
-        return {
-            messages
-        };
-    },
     methods: {
         async setLocale(locale) {
             let response = await this.$store.dispatch('setLocale', { locale });
@@ -39,7 +33,7 @@ export default {
     },
     computed: {
         locales() {
-            return Object.keys(this.messages);
+            return Object.keys(window.i18n);
         }
     }
 };

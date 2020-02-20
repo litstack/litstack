@@ -52,6 +52,20 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::put('/order', FjordController::class . '@order')
             ->name('order');
 
+        FjordRoute::get('/lang.js', function(){
+        $locales = array_diff(scandir(fjord_path('resources/lang/')), array('..', '.'));
+           $translations = [];
+
+           foreach ($locales as $locale) {
+               $content = require(fjord_path('resources/lang/'.$locale.'/fjord.php'));
+               $translations[$locale] = $content;
+           }
+
+           $js = 'window.i18n = ' . json_encode($translations) . ';';
+           return response($js, 200)
+               ->header('Content-Type', 'text/javascript');
+        });
+
         Route::prefix(config('fjord.route_prefix'))
             ->namespace($this->namespace)
             ->middleware('web')

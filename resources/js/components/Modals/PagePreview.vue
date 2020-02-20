@@ -7,36 +7,38 @@
 
             <div class="device-btns">
                 <b-button class="mr-2" @click="setDevice('mobile')">
-                    <fa-icon fas icon="mobile-alt"/>
+                    <fa-icon fas icon="mobile-alt" />
                 </b-button>
                 <b-button class="mr-2" @click="setDevice('tablet')">
-                    <fa-icon fas icon="tablet-alt"/>
+                    <fa-icon fas icon="tablet-alt" />
                 </b-button>
                 <b-button @click="setDevice('desktop')">
-                    <fa-icon fas icon="desktop"/>
+                    <fa-icon fas icon="desktop" />
                 </b-button>
             </div>
 
             <div></div>
 
-            <button type="button" aria-label="Close" class="close" @click="close()">×</button>
+            <button
+                type="button"
+                aria-label="Close"
+                class="close"
+                @click="close()"
+            >
+                ×
+            </button>
         </template>
 
         <div :class="`device ${device}`">
-            <!--
-
-            -->
             <div class="display">
-                <iframe :src="route"/>
+                <iframe :src="route" />
             </div>
         </div>
-
-
     </b-modal>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'PagePreview',
@@ -49,20 +51,20 @@ export default {
     data() {
         return {
             device: 'desktop'
-        }
+        };
     },
     beforeMount() {
-        this.device = this.config.crud.preview.default_device
+        this.device = this.config.crud.preview.default_device;
     },
     methods: {
         setDevice(device) {
-            this.device = device
+            this.device = device;
         }
     },
     computed: {
         ...mapGetters(['config'])
     }
-}
+};
 </script>
 
 <style lang="scss">
@@ -78,15 +80,13 @@ export default {
         right: 0;
         bottom: 0;
 
-        .modal-header{
+        .modal-header {
             position: relative;
-            .device-btns{
-
-                .btn{
-
+            .device-btns {
+                .btn {
                 }
             }
-            .close{
+            .close {
                 position: absolute;
                 bottom: 0;
                 top: 0;
@@ -105,7 +105,7 @@ export default {
             right: 0;
             bottom: 0;
 
-            .modal-body{
+            .modal-body {
                 padding: 0;
                 position: relative;
                 display: flex;
@@ -113,9 +113,8 @@ export default {
                 align-items: center;
             }
 
-            .device{
-
-                &.mobile{
+            .device {
+                &.mobile {
                     position: absolute;
                     width: 375px;
                     height: calc(100vh - 130px);
@@ -124,7 +123,7 @@ export default {
                     padding: 40px 20px;
                     border-radius: 5px;
                 }
-                &.tablet{
+                &.tablet {
                     position: absolute;
                     width: 1024px;
                     height: calc(100vh - 130px);
@@ -133,7 +132,7 @@ export default {
                     padding: 40px 20px;
                     border-radius: 5px;
                 }
-                &.desktop{
+                &.desktop {
                     position: absolute;
                     top: 0;
                     left: 0;
@@ -141,20 +140,18 @@ export default {
                     bottom: 0;
                 }
 
-                .display{
+                .display {
                     position: relative;
                     height: 100%;
                     width: 100%;
                     background: white;
 
-                    iframe{
+                    iframe {
                         border: none;
                         width: 100%;
                         height: 100%;
                     }
                 }
-
-
             }
         }
     }

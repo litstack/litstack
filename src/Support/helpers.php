@@ -30,6 +30,12 @@ if(! function_exists('fjord_path')) {
     }
 }
 
+if(! function_exists('fjord_local_resource_path')) {
+    function fjord_local_resource_path($path = '') {
+        return realpath(__DIR__ . '/../../resources/').($path ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+}
+
 if(! function_exists('fjord')) {
     function fjord() {
         return app()->get('fjord');

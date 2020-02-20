@@ -38,6 +38,7 @@
 
     </div>
 
+    <script src="/admin/lang.js"></script>
     <script src="{{ fjord_js() }}" defer></script>
 
     <script type="text/javascript">

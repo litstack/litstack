@@ -1,12 +1,16 @@
 <template>
     <b-button
-        variant="transparent"
+        variant="primary"
         size="sm"
         v-if="formConfig.preview_route"
-        v-b-modal.fj-page-preview>
-        <fa-icon icon="eye"/> Preview
+        v-b-modal.fj-page-preview
+    >
+        <fa-icon icon="eye" /> {{ $t('preview') }}
 
-        <fj-page-preview :route="formConfig.preview_route" v-if="formConfig.preview_route"/>
+        <fj-page-preview
+            :route="formConfig.preview_route"
+            v-if="formConfig.preview_route"
+        />
     </b-button>
 </template>
 
@@ -23,5 +27,5 @@ export default {
             type: Object
         }
     }
-}
+};
 </script>
