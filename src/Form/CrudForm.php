@@ -111,6 +111,8 @@ class CrudForm
 
         if(in_array($key, $this->modelInstance->translatedAttributes)) {
             return 'translations.' . $key;
+        }else{
+            return $key;
         }
     }
 
