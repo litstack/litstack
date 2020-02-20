@@ -1,7 +1,7 @@
 <template>
     <b-col cols="12">
         <b-card
-            v-for="(ids, key) in formConfig.layout"
+            v-for="(ids, key) in form.config.layout"
             :key="key"
             class="mb-5"
             header-class="d-flex justify-content-between align-items-center"
@@ -25,13 +25,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
     name: 'CrudShowForm',
     props: {
-        formConfig: {
-            required: true,
-            type: Object
-        },
         model: {
             required: true,
             type: Object
@@ -62,6 +59,9 @@ export default {
             }
             return null;
         }
+    },
+    computed: {
+        ...mapGetters(['form'])
     }
 };
 </script>

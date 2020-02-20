@@ -5,13 +5,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
     name: 'CrudIndexDeleteAll',
     props: {
-        formConfig: {
-            required: true,
-            type: Object
-        },
         selectedItems: {
             type: Array,
             required: true
@@ -23,14 +20,15 @@ export default {
     methods: {
         async deleteAll() {
             let response = await this.sendAction(
-                `${this.formConfig.names.table}/delete-all`,
+                `${this.form.config.names.table}/delete-all`,
                 this.selectedItems
             );
 
             this.$bus.$emit('reloadCrudIndex');
         }
+    },
+    computed: {
+        ...mapGetters(['form'])
     }
 };
 </script>
-
-<style lang="css" scoped></style>

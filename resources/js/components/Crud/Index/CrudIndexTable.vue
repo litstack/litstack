@@ -4,73 +4,7 @@
             <b-col cols="12">
                 <b-card>
                     <div class="fj-crud-index-table">
-                        <div class="fj-crud-index-table__form mb-2">
-                            <b-input-group>
-                                <b-input-group-prepend is-text>
-                                    <fa-icon icon="search" />
-                                </b-input-group-prepend>
-
-                                <b-form-input
-                                    :placeholder="
-                                        $t('search_models', {
-                                            models: names.title.plural
-                                        })
-                                    "
-                                    v-model="search"
-                                />
-
-                                <template v-slot:append>
-                                    <b-dropdown
-                                        right
-                                        :text="$t('filter')"
-                                        class="btn-br-none"
-                                        :variant="filterVariant"
-                                    >
-                                        <b-dropdown-group
-                                            :header="key"
-                                            v-for="(group,
-                                            key) in config.filter"
-                                            :key="key"
-                                        >
-                                            <b-dropdown-item-button
-                                                v-for="(item, index) in group"
-                                                @click="filter(index)"
-                                                :key="item"
-                                                :active="filterActive(index)"
-                                            >
-                                                {{ item }}
-                                            </b-dropdown-item-button>
-                                        </b-dropdown-group>
-                                        <b-dropdown-divider></b-dropdown-divider>
-                                        <b-dropdown-item-button
-                                            @click="resetFilter"
-                                        >
-                                            reset
-                                        </b-dropdown-item-button>
-                                    </b-dropdown>
-                                    <b-dropdown
-                                        right
-                                        :text="$t('sort')"
-                                        class="btn-brl-none"
-                                        variant="outline-secondary"
-                                        v-if="config.sort_by"
-                                    >
-                                        <b-dropdown-item
-                                            v-for="(text,
-                                            key) in config.sort_by"
-                                            :key="key"
-                                            @click="sortBy(key)"
-                                        >
-                                            <b-form-radio
-                                                :checked="sort_by_key"
-                                                :value="key"
-                                                >{{ text }}</b-form-radio
-                                            >
-                                        </b-dropdown-item>
-                                    </b-dropdown>
-                                </template>
-                            </b-input-group>
-                        </div>
+                        <fj-crud-index-table-form />
 
                         <fj-selected-items-actions
                             :items="items"
@@ -183,7 +117,10 @@
                 </b-card>
             </b-col>
         </b-row>
-        <div class="d-flex justify-content-center" v-if="perPage">
+        <div
+            class="d-flex justify-content-center"
+            v-if="form.config.index.per_page !== undefined"
+        >
             <b-pagination-nav
                 class="mt-4"
                 :link-gen="linkGen"
@@ -196,43 +133,15 @@
 
 <script>
 import TableModel from '@fj-js/eloquent/table.model';
-
+import { mapGetters } from 'vuex';
 export default {
     name: 'CrudIndexTable',
     props: {
-        perPage: {
-            type: Number,
-            default: 0
-        },
-        names: {
-            type: Object,
-            required: true
-        },
-        config: {
-            type: Object,
-            required: true
-        },
-        route: {
-            type: String,
-            required: true
-        },
         cols: {
             required: true,
             type: Array
         },
-        actions: {
-            type: Object,
-            default: () => {
-                return {};
-            }
-        },
         recordActions: {
-            type: Array,
-            default: () => {
-                return [];
-            }
-        },
-        recordComponents: {
             type: Array,
             default: () => {
                 return [];
@@ -243,14 +152,18 @@ export default {
         return {
             typingDelay: 500,
             isBusy: true,
+
             tableCols: {},
             items: [],
-            search: '',
-            sort_by_key: '',
-            filter_scope: null,
             selectedItems: [],
             indeterminateSelectedItems: false,
+
+            search: '',
+            sort_by_key: '',
+
+            filter_scope: null,
             selectedAll: false,
+
             page: 1,
             number_of_pages: null,
             total: null
@@ -258,10 +171,9 @@ export default {
     },
     watch: {
         search(val) {
-            let self = this;
-            setTimeout(function() {
-                if (self.search == val) {
-                    self.loadItems();
+            setTimeout(() => {
+                if (this.search == val) {
+                    this.loadItems();
                 }
             }, this.typingDelay);
         },
@@ -281,11 +193,25 @@ export default {
     beforeMount() {
         this.setTableCols();
 
-        this.sort_by_key = this.config.sort_by_default || null;
+        this.sort_by_key = this.form.config.index.sort_by_default || null;
 
         this.loadItems();
 
-        this.$bus.$on('reloadCrudIndex', this.loadItems);
+        this.$bus.$on('crudSearch', val => {
+            this.search = val;
+        });
+        this.$bus.$on('crudSort', val => {
+            this.sort_by_key = val;
+            this.loadItems();
+        });
+        this.$bus.$on('crudFilter', key => {
+            this.filter_scope = key;
+            this.loadItems();
+        });
+
+        this.$bus.$on('reloadCrudIndex', () => {
+            this.loadItems();
+        });
         this.$bus.$on('unselectCrudIndex', () => {
             this.selectedItems = [];
         });
@@ -294,14 +220,45 @@ export default {
         });
     },
     computed: {
+        ...mapGetters(['form']),
         hasRecordActions() {
             return this.recordActions.length > 0;
         },
-        filterVariant() {
-            return this.filter_scope ? 'primary' : 'outline-secondary';
+        perPage() {
+            return this.form.config.index.per_page || 0;
         }
     },
     methods: {
+        async loadItems() {
+            this.isBusy = true;
+
+            let payload = {
+                page: this.page,
+                perPage: this.perPage,
+                search: this.search,
+                sort_by: this.sort_by_key,
+                filter: this.filter_scope,
+                eagerLoad: this.form.config.index.load || []
+            };
+
+            let response = await axios.post(
+                `${this.form.config.names.table}/index`,
+                payload
+            );
+
+            this.total = response.data.count;
+
+            let items = [];
+            for (let i = 0; i < response.data.items.length; i++) {
+                items.push(new TableModel(response.data.items[i]));
+            }
+            this.items = items;
+            this.number_of_pages = Math.ceil(
+                response.data.count / this.perPage
+            );
+
+            this.isBusy = false;
+        },
         goToPage(page) {
             this.page = page;
             this.loadItems();
@@ -336,66 +293,15 @@ export default {
                 this.tableCols.push(col);
             }
         },
-        async loadItems() {
-            this.isBusy = true;
-
-            let payload = {
-                page: this.page,
-                perPage: this.perPage,
-                search: this.search,
-                sort_by: this.sort_by_key,
-                filter: this.filter_scope,
-                eagerLoad: this.config.load || []
-            };
-
-            let response = await axios.post(`${this.route}/index`, payload);
-
-            this.total = response.data.count;
-
-            let items = [];
-            for (let i = 0; i < response.data.items.length; i++) {
-                items.push(new TableModel(response.data.items[i]));
-            }
-            this.items = items;
-            this.number_of_pages = Math.ceil(
-                response.data.count / this.perPage
-            );
-
-            this.isBusy = false;
-        },
-        sortBy(key) {
-            this.sort_by_key = key;
-            this.loadItems();
-        },
         sortCol(value) {
             this.sortBy(value);
         },
-        filter(key) {
-            this.page = 1;
-            this.filter_scope = key;
-            this.loadItems();
-        },
-        resetFilter() {
-            this.filter_scope = null;
-            this.loadItems();
-        },
-        filterActive(key) {
-            return key == this.filter_scope;
-        },
-        hasAction(action) {
-            return this.actions.includes(action);
-        },
-        deleteItem(item) {
-            item.delete();
-
-            this.$bvToast.toast(this.$t('deleted_item', { item: item.route }), {
-                variant: 'success'
-            });
-        },
         openItem(item) {
             window.location.href =
-                `${this.route}/${item.id}` +
-                ('route' in this.config ? this.config.route : '/edit');
+                `${this.form.config.names.table}/${item.id}` +
+                ('route' in this.form.config.index
+                    ? this.form.config.index.route
+                    : '/edit');
         }
     }
 };

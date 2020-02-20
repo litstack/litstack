@@ -4,6 +4,7 @@ require('./common/axios');
 require('./common/window');
 
 require('./service/component.service');
+require('./service/page.service');
 require('./service/library.service');
 
 /**

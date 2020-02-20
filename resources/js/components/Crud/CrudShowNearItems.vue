@@ -2,7 +2,7 @@
     <div class="indent sm">
         <b-button
             :href="
-                `${baseURL}${formConfig.names.table}/${nearItems.previous}/edit`
+                `${baseURL}${form.config.names.table}/${nearItems.previous}/edit`
             "
             :disabled="!nearItems.previous"
             variant="transparent"
@@ -11,7 +11,9 @@
             <fa-icon icon="arrow-left" />
         </b-button>
         <b-button
-            :href="`${baseURL}${formConfig.names.table}/${nearItems.next}/edit`"
+            :href="
+                `${baseURL}${form.config.names.table}/${nearItems.next}/edit`
+            "
             :disabled="!nearItems.next"
             variant="transparent"
             size="sm"
@@ -28,14 +30,10 @@ export default {
     props: {
         nearItems: {
             type: Object
-        },
-        formConfig: {
-            type: [Array, Object],
-            required: true
         }
     },
     computed: {
-        ...mapGetters(['baseURL'])
+        ...mapGetters(['baseURL', 'form'])
     }
 };
 </script>
