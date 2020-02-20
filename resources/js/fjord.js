@@ -7,19 +7,23 @@ require('./service/component.service');
 require('./service/library.service');
 
 /**
- * Load all required components for the FjordApp
+ * The Fjord Application
+ *
+ *
  */
 import FjordApp from './FjordApp';
-import Navigation from './partials/Navigation';
-import Notify from './components/Notify';
+
+/**
+ * A simple event-bus
+ *
+ *
+ */
 import Bus from './common/event.bus';
 Vue.prototype.$Bus = Bus;
 
 import store from './store';
 import mixins from './common/mixins';
 import i18n from './common/i18n';
-
-const APP_ID = '#fjord-app';
 
 function Fjord(options) {
     this.store = null;
@@ -47,13 +51,11 @@ Fjord.prototype._init = function(options) {
 
 Fjord.prototype._vue = function() {
     this.app = new Vue({
-        el: APP_ID,
+        el: '#fjord-app',
         i18n,
         store: store.store,
         components: {
-            FjordApp,
-            Navigation,
-            Notify
+            FjordApp
         }
     });
 };

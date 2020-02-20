@@ -16174,46 +16174,6 @@ div#fjord-app.vertical .container {
   color: #e1e1e1;
 }
 
-#app > .notifications {
-  position: fixed;
-  top: calc(10px + 56px) !important;
-  right: 10px !important;
-}
-
-.fjord-notifications__wrapper {
-  padding: 10px;
-  margin: 5px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-  overflow: visible;
-  background-color: rgba(34, 33, 38, 0.7);
-  color: white;
-  border-radius: 3px;
-}
-
-.fjord-notifications__icon {
-  font-size: 30px;
-  padding-right: 10px;
-}
-
-.fjord-notifications__body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  padding-left: 10px;
-}
-
-.fjord-notifications__close {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  color: white;
-}
-
 div#fjord-app .vue-dropzone {
   width: 100%;
   font-size: 1.3rem;

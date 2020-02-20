@@ -1,9 +1,9 @@
 @auth('fjord')
 <nav class="fj-navigation">
-    <navigation>
+    <fj-navigation>
         @foreach (fjord()->getNavigation() as $entry)
             @include('fjord::partials.navitem')
         @endforeach
-    </navigation>
+    </fj-navigation>
 </nav>
 @endauth
