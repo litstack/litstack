@@ -195,7 +195,7 @@
 </template>
 
 <script>
-import TableModel from './../../eloquent/table.model';
+import TableModel from './../../../eloquent/table.model';
 
 export default {
     name: 'CrudIndexTable',
@@ -402,7 +402,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../sass/_variables';
+@import '../../../sass/_variables';
 .fj-crud-index-table {
     table.b-table {
         width: auto;
