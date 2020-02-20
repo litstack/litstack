@@ -10,7 +10,7 @@ require('./service/library.service');
  * Load all required components for the FjordApp
  */
 import FjordApp from './FjordApp';
-import Navigation from './components/Partials/Navigation';
+import Navigation from './partials/Navigation';
 import Notify from './components/Notify';
 import Bus from './common/event.bus';
 Vue.prototype.$Bus = Bus;
