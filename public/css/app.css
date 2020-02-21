@@ -16249,19 +16249,6 @@ div#fjord-app .vue-dropzone__delete {
   left: 0 !important;
 }
 
-.fjord-pagecontrols {
-  position: -webkit-sticky !important;
-  position: sticky !important;
-}
-
-div#fjord-app.vertical .fjord-pagecontrols {
-  top: 30px;
-}
-
-div#fjord-app.horizontal .fjord-pagecontrols {
-  top: 86px;
-}
-
 .fjord-block {
   width: 100%;
 }

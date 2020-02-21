@@ -35,21 +35,27 @@
                 </b-row>
             </b-col>
 
-            <fj-base-controls
-                :create="create"
-                :title="formConfig.names.title.singular"
-            >
-                <div slot="controls" class="pt-1" v-if="controls.length > 0">
-                    <hr />
-                    <components
-                        v-for="(component, key) in controls"
-                        :key="key"
-                        :is="component"
-                        :formConfig="formConfig"
-                        :model="model"
-                    />
-                </div>
-            </fj-base-controls>
+            <b-col cols="12" md="3" order-md="2" class="pb-4 mb-md-0">
+                <fj-crud-show-controls
+                    :create="create"
+                    :title="formConfig.names.title.singular"
+                >
+                    <div
+                        slot="controls"
+                        class="pt-1"
+                        v-if="controls.length > 0"
+                    >
+                        <hr />
+                        <components
+                            v-for="(component, key) in controls"
+                            :key="key"
+                            :is="component"
+                            :formConfig="formConfig"
+                            :model="model"
+                        />
+                    </div>
+                </fj-crud-show-controls>
+            </b-col>
         </b-row>
     </fj-base-container>
 </template>
