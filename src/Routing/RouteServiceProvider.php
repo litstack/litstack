@@ -47,23 +47,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::group(function() {
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
             Route::post('/set-locale', 'AwStudio\Fjord\Actions\SetLocale')->name('set-locale');
-        });
-
-        FjordRoute::put('/order', FjordController::class . '@order')
-            ->name('order');
-
-        FjordRoute::get('/lang.js', function(){
-        $locales = array_diff(scandir(fjord_path('resources/lang/')), array('..', '.'));
-           $translations = [];
-
-           foreach ($locales as $locale) {
-               $content = require(fjord_path('resources/lang/'.$locale.'/fjord.php'));
-               $translations[$locale] = $content;
-           }
-
-           $js = 'window.i18n = ' . json_encode($translations) . ';';
-           return response($js, 200)
-               ->header('Content-Type', 'text/javascript');
+            Route::get('/lang.js', 'AwStudio\Fjord\Fjord\Controllers\FjordTranslationsController')->name('fjord-translations');
+            Route::put('/order', [FjordController::class, 'order'])->name('order');
         });
 
         Route::prefix(config('fjord.route_prefix'))

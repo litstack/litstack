@@ -65,5 +65,14 @@ class AuthController extends Controller
         $redirect = '/' . config('fjord.route_prefix') . '/' . config('fjord.default_route');
         return $redirect;
     }
+    
+    protected function authenticated(Request $request, $user)
+    {
+        if ( fjord_user() ) {
+            return redirect($this->redirectPath());
+        }
+
+        return redirect('/');
+    }
 
 }
