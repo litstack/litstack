@@ -37,10 +37,19 @@ export default {
     },
     data() {
         return {
-            value: this.model[`${this.field.id}Model`]
+            value: null
         };
     },
+    beforeMount() {
+        this.init();
+        // this.$bus.$on('loadModel', () => {
+        //     this.init();
+        // });
+    },
     methods: {
+        init() {
+            this.value = this.model[`${this.field.id}Model`];
+        },
         changed(value) {
             this.value = value;
             this.model[`${this.field.id}Model`] = value;

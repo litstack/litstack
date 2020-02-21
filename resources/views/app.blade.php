@@ -38,7 +38,9 @@
 
     </div>
 
+    <!-- fjord translations -->
     <script src="/admin/lang.js"></script>
+    <!-- fjord app -->
     <script src="{{ fjord_js() }}" defer></script>
 
     <script type="text/javascript">

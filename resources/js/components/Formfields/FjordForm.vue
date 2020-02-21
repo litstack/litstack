@@ -125,14 +125,11 @@
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import FjordModel from '@fj-js/eloquent/fjord.model';
 import EloquentCollection from '@fj-js/eloquent/collection';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'FjordForm',
     props: {
-        model: {
-            type: Object,
-            required: true
-        },
         ids: {
             type: Array,
             default() {
@@ -141,11 +138,11 @@ export default {
         }
     },
     beforeMount() {
-        if (this.model instanceof FjordModel) {
-            this.preparedModels = [this.model];
-        } else {
-            this.preparedModels = this.model.items.items;
-        }
+        this.init();
+
+        // this.$bus.$on('loadModel', () => {
+        //     this.init();
+        // });
     },
     data() {
         return {
@@ -171,6 +168,13 @@ export default {
         };
     },
     methods: {
+        init() {
+            if (this.crud.model instanceof FjordModel) {
+                this.preparedModels = [this.crud.model];
+            } else {
+                this.preparedModels = this.crud.model.items.items;
+            }
+        },
         changed(field, model) {
             if (model.getOriginalModel(field) == model[`${field.id}Model`]) {
                 this.$store.commit('REMOVE_MODELS_FROM_SAVE', {
@@ -193,8 +197,9 @@ export default {
         fieldWidth(field) {
             return field.width !== undefined ? `col-${field.width}` : 'col-12';
         }
+    },
+    computed: {
+        ...mapGetters(['crud'])
     }
 };
 </script>
-
-<style lang="css"></style>

@@ -50,8 +50,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 $namespace = "\\App\\Http\\Controllers\\Fjord\\{$controllerClass}";
             }
 
-            FjordRoute::resource(config('fjord.route_prefix') . "/{$crud}", $namespace)
-                ->except(['show']);
+            FjordRoute::resource(config('fjord.route_prefix') . "/{$crud}", $namespace);
             FjordRoute::post("/{$crud}/index", $namespace . "@postIndex")
                 ->name("{$crud}.post_index");
 

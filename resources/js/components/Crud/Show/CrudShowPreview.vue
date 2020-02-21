@@ -18,14 +18,8 @@
 import { mapGetters } from 'vuex';
 export default {
     name: 'CrudShowPreview',
-    props: {
-        model: {
-            required: true,
-            type: Object
-        }
-    },
     computed: {
-        ...mapGetters(['form'])
+        ...mapGetters(['form', 'crud'])
     }
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-row>
-            <b-col cols="12">
+            <b-col>
                 <b-card>
                     <div class="fj-crud-index-table">
                         <fj-crud-index-table-form />
@@ -104,16 +104,7 @@
                             </tbody>
                         </b-table-simple>
                     </div>
-                    <small
-                        class="text-primary fj-crud-index-table__index-indicator"
-                        >{{ page * (perPage || 1) - (perPage || 1) + 1 }} -
-                        {{
-                            page * (perPage || 1) > total
-                                ? total || items.length
-                                : page * (perPage || 1)
-                        }}
-                        / {{ total || items.length }}</small
-                    >
+                    <fj-crud-index-table-index-indicator :items="items" />
                 </b-card>
             </b-col>
         </b-row>

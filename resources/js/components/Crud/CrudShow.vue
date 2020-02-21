@@ -18,7 +18,8 @@
                     :key="key"
                     :is="component"
                     :formConfig="formConfig"
-                    :model="model"
+                    v-if="crud.model"
+                    :model="crud.model"
                 />
             </div>
         </fj-base-header>
@@ -30,7 +31,8 @@
                         :key="key"
                         :is="component"
                         :formConfig="formConfig"
-                        :model="model"
+                        v-if="crud.model"
+                        :model="crud.model"
                     />
                 </b-row>
             </b-col>
@@ -51,16 +53,19 @@
                             :key="key"
                             :is="component"
                             :formConfig="formConfig"
-                            :model="model"
+                            v-if="crud.model"
+                            :model="crud.model"
                         />
                     </div>
                 </fj-crud-show-controls>
+                <!-- <b-button @click="loadModel">reload</b-button> -->
             </b-col>
         </b-row>
     </fj-base-container>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
     name: 'CrudShow',
     props: {
@@ -95,25 +100,36 @@ export default {
     },
     data() {
         return {
-            model: null
+            //model: null,
+            route: null
         };
     },
     methods: {
         saved() {
             if (window.location.pathname.split('/').pop() == 'create') {
                 setTimeout(() => {
-                    window.location.replace(`${this.model.id}/edit`);
+                    window.location.replace(`${this.crud.model.id}/edit`);
                 }, 1);
             }
+        },
+        loadModel() {
+            this.$store.dispatch('loadModel', {
+                route: this.crud.model.route,
+                id: this.crud.model.id
+            });
+            this.$bus.$emit('loadModel');
         }
     },
     computed: {
+        ...mapGetters(['crud']),
         create() {
             return window.location.pathname.split('/').pop() == 'create';
         }
     },
     beforeMount() {
-        this.model = this.models.model;
+        //this.crud.model = this.crud.models.model;
+
+        this.$store.commit('SET_MODEL', this.models.model);
 
         this.$store.dispatch('setFormConfig', this.formConfig);
 
