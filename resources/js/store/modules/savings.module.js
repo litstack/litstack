@@ -102,9 +102,9 @@ export const mutations = {
         state.saveJobs = [];
     },
     FLUSH_SAVINGS(state) {
-        (state.modelsToSave = []),
-            (state.saveJobs = []),
-            (state.saveModelIds = {});
+        state.modelsToSave = [];
+        state.saveJobs = [];
+        state.saveModelIds = {};
     }
 };
 
