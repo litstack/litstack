@@ -28,7 +28,7 @@
         border: none !important;
     }
     &.sortable-ghost {
-        transform: scale(1.02);
+        transform: scale(1.02) !important;
         box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.6);
         outline: 1px solid darken($border, 10%);
         outline-offset: -1px;

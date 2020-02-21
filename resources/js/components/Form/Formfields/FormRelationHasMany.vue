@@ -299,9 +299,6 @@ export default {
 
 <style lang="scss" scoped>
 .table-controls {
-    // margin: -24px 0;
-    // margin-right: -13px;
-    // height: 48px;
     height: 100%;
     position: absolute;
     top: 0;

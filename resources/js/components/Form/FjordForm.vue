@@ -150,25 +150,7 @@ export default {
     },
     data() {
         return {
-            preparedModels: [],
-            editor: ClassicEditor,
-            editorConfig: {
-                removePlugins: [],
-                toolbar: {
-                    items: [
-                        'heading',
-                        '|',
-                        'bold',
-                        'italic',
-                        'link',
-                        'undo',
-                        'redo',
-                        'bulletedList',
-                        'numberedList',
-                        'blockQuote'
-                    ]
-                }
-            }
+            preparedModels: []
         };
     },
     methods: {
