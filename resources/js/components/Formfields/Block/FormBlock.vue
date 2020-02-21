@@ -8,35 +8,13 @@
                     handle=".fjord-draggable__dragbar"
                     tag="b-row"
                 >
-                    <b-col
-                        :cols="field.block_width"
+                    <fj-form-block-item
                         v-for="(repeatable, index) in sortableRepeatables"
                         :key="repeatable.id"
-                    >
-                        <div class="fjord-draggable">
-                            <div
-                                class="fjord-draggable__dragbar d-flex justify-content-center"
-                            >
-                                <i
-                                    class="fas fa-grip-horizontal text-muted"
-                                ></i>
-                            </div>
-
-                            <fj-fjord-form :model="repeatable" />
-
-                            <b-row>
-                                <b-col
-                                    sm="12"
-                                    class="text-center fj-trash text-muted"
-                                >
-                                    <fa-icon
-                                        icon="trash"
-                                        @click="deleteRepeatable(repeatable)"
-                                    />
-                                </b-col>
-                            </b-row>
-                        </div>
-                    </b-col>
+                        :repeatable="repeatable"
+                        :field="field"
+                        @deleteBlock="deleteBlock"
+                    />
                 </draggable>
 
                 <fj-form-block-add-buttons
@@ -82,17 +60,15 @@ export default {
         };
     },
     beforeMount() {
-        if (!this.repeatables) {
-            return;
+        if (!!this.repeatables) {
+            this.sortableRepeatables = this.repeatables.items.items;
         }
-        this.sortableRepeatables = this.repeatables.items.items;
     },
     methods: {
         newBlock(block) {
             this.sortableRepeatables.push(block);
         },
-        async deleteRepeatable(repeatable) {
-            await repeatable.delete();
+        deleteBlock(repeatable) {
             this.sortableRepeatables.splice(
                 this.sortableRepeatables.indexOf(repeatable),
                 1
