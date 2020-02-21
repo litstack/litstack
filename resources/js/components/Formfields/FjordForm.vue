@@ -130,6 +130,10 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'FjordForm',
     props: {
+        // the model prop is only used in blocks
+        model: {
+            type: Object
+        },
         ids: {
             type: Array,
             default() {
@@ -140,9 +144,9 @@ export default {
     beforeMount() {
         this.init();
 
-        // this.$bus.$on('loadModel', () => {
-        //     this.init();
-        // });
+        this.$bus.$on('modelLoaded', () => {
+            this.init();
+        });
     },
     data() {
         return {
@@ -169,10 +173,12 @@ export default {
     },
     methods: {
         init() {
-            if (this.crud.model instanceof FjordModel) {
-                this.preparedModels = [this.crud.model];
+            let model = this.model || this.crud.model;
+
+            if (model instanceof FjordModel) {
+                this.preparedModels = [model];
             } else {
-                this.preparedModels = this.crud.model.items.items;
+                this.preparedModels = model.items.items;
             }
         },
         changed(field, model) {

@@ -58,7 +58,6 @@
                         />
                     </div>
                 </fj-crud-show-controls>
-                <!-- <b-button @click="loadModel">reload</b-button> -->
             </b-col>
         </b-row>
     </fj-base-container>
@@ -100,7 +99,7 @@ export default {
     },
     data() {
         return {
-            //model: null,
+            id: this.models.model.id,
             route: null
         };
     },
@@ -112,16 +111,16 @@ export default {
                 }, 1);
             }
         },
-        loadModel() {
-            this.$store.dispatch('loadModel', {
+        async loadModel() {
+            await this.$store.dispatch('loadModel', {
                 route: this.crud.model.route,
-                id: this.crud.model.id
+                id: this.id
             });
-            this.$bus.$emit('loadModel');
+            this.$bus.$emit('modelLoaded');
         }
     },
     computed: {
-        ...mapGetters(['crud']),
+        ...mapGetters(['crud', 'form']),
         create() {
             return window.location.pathname.split('/').pop() == 'create';
         }
@@ -133,7 +132,24 @@ export default {
 
         this.$store.dispatch('setFormConfig', this.formConfig);
 
-        this.$bus.$on('modelsSaved', this.saved);
+        this.$bus.$on('modelsSaved', () => {
+            this.saved();
+        });
+
+        this.$bus.$on('loadModal', () => {
+            this.loadModel();
+        });
+
+        this.$bus.$on('modelLoaded', () => {
+            this.$bvToast.toast(
+                this.$t('model_loaded', {
+                    model: this.form.config.names.title.singular
+                }),
+                {
+                    variant: 'success'
+                }
+            );
+        });
     }
 };
 </script>

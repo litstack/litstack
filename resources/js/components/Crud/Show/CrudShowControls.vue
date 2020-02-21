@@ -18,6 +18,9 @@
                     @click="saveAll"
                     ><i class="fas fa-save"></i> {{ buttonText }}</b-button
                 >
+                <b-button size="sm" @click="loadModel">
+                    <fa-icon icon="undo" />
+                </b-button>
             </b-col>
 
             <b-col cols="12">
@@ -47,6 +50,9 @@ export default {
             this.$bvToast.toast(this.$t('model_saved', { model: this.title }), {
                 variant: 'success'
             });
+        },
+        loadModel() {
+            this.$bus.$emit('loadModal');
         }
     },
     mounted() {

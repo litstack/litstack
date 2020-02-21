@@ -30,5 +30,6 @@ return [
     "read" => "Lesen",
     "delete" => "Löschen",
     "permission_updated" => "Berechtigung geändert: {group} {operation}",
-    "preview" => "Vorschau"
+    "preview" => "Vorschau",
+    "model_loaded" => "{model} neu geladen",
 ];

@@ -42,9 +42,9 @@ export default {
     },
     beforeMount() {
         this.init();
-        // this.$bus.$on('loadModel', () => {
-        //     this.init();
-        // });
+        this.$bus.$on('modelLoaded', () => {
+            this.init();
+        });
     },
     methods: {
         init() {

@@ -1,5 +1,20 @@
 import Vue from 'vue';
 import Bus from '@fj-js/common/event.bus';
+import FjordModel from '@fj-js/eloquent/fjord.model';
+//import TranslatableModel from '@fj-js/eloquent/translatable.model';
+
+const prepareModel = model => {
+    switch (model.type) {
+        case 'fjord':
+            return new FjordModel(model);
+        case 'translatable':
+        // TODO: this throws:
+        // Super expression must either be null or a function
+        //return new TranslatableModel(model);
+        default:
+            return new FjordModel(model);
+    }
+};
 
 const state = {
     models: [],
@@ -29,7 +44,7 @@ const actions = {
         try {
             const { data } = await axios.get(`${route}/${id}`);
 
-            commit('SET_MODEL', data);
+            commit('SET_MODEL', prepareModel(data));
 
             return;
         } catch (e) {
