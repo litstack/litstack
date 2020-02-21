@@ -116,6 +116,7 @@ export default {
                 route: this.crud.model.route,
                 id: this.id
             });
+            this.$store.commit('FLUSH_SAVINGS');
             this.$bus.$emit('modelLoaded');
         }
     },
