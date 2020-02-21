@@ -137,7 +137,7 @@ export default {
             this.saved();
         });
 
-        this.$bus.$on('loadModal', () => {
+        this.$bus.$on('loadModel', () => {
             this.loadModel();
         });
 

@@ -52,7 +52,7 @@ export default {
             });
         },
         loadModel() {
-            this.$bus.$emit('loadModal');
+            this.$bus.$emit('loadModel');
         }
     },
     mounted() {
