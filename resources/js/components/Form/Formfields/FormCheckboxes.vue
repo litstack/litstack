@@ -27,17 +27,16 @@ export default {
         };
     },
     beforeMount() {
-        this.value = this.model[`${this.field.id}Model`];
-        /*
-        if(this.model.isFjordModel()) {
-            this.value = JSON.parse(model[`${field.id}Model`])
-        }
-        */
+        this.init();
+        this.$bus.$on('modelLoaded', () => {
+            this.init();
+        });
     },
     methods: {
+        init() {
+            this.value = this.model[`${this.field.id}Model`];
+        },
         changed(val) {
-            console.log('changed', val);
-
             if (this.model.isFjordModel()) {
                 this.model[`${this.field.id}Model`] = JSON.stringify(val);
             } else {
@@ -45,9 +44,6 @@ export default {
             }
 
             this.$emit('changed');
-        },
-        handle(val) {
-            //t
         }
     },
     computed: {

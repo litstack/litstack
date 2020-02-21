@@ -25,7 +25,15 @@ export default {
         };
     },
     beforeMount() {
-        this.selected = this.model[`${this.field.id}Model`];
+        this.init();
+        this.$bus.$on('modelLoaded', () => {
+            this.init();
+        });
+    },
+    methods: {
+        init() {
+            this.selected = this.model[`${this.field.id}Model`];
+        }
     },
     watch: {
         selected(val) {

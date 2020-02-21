@@ -45,8 +45,18 @@ export default {
             type: Object
         }
     },
+    beforeMount() {
+        this.init();
+        this.$bus.$on('modelLoaded', () => {
+            this.init();
+        });
+    },
     methods: {
+        init() {
+            this.value = this.model[`${this.field.id}Model`];
+        },
         changed(value) {
+            this.value = value;
             this.model[`${this.field.id}Model`] = value;
             this.$emit('changed');
         },
@@ -59,6 +69,7 @@ export default {
     },
     data() {
         return {
+            value: null,
             options: {
                 tabSize: this.field.tab_size,
                 mode: this.field.language,

@@ -33,15 +33,22 @@ export default {
         };
     },
     beforeMount() {
-        this.value = this.model[`${this.field.id}Model`];
+        this.init();
+        this.$bus.$on('modelLoaded', () => {
+            this.init();
+        });
     },
     watch: {
         value(val) {
+            this.value = value;
             this.model[`${this.field.id}Model`] = val;
             this.$emit('changed');
         }
     },
     methods: {
+        init() {
+            this.value = this.model[`${this.field.id}Model`];
+        },
         makeid(length) {
             var result = '';
             var characters =
