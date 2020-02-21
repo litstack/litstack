@@ -142,7 +142,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['baseURL', 'lng', 'form']),
+        ...mapGetters(['baseURL', 'language', 'form']),
         dropzone() {
             return this.$refs[`dropzone-${this.field.id}`];
         },
@@ -164,14 +164,14 @@ export default {
                 return image.custom_properties[key];
             }
 
-            if (!(this.lng in image.custom_properties)) {
-                image.custom_properties[this.lng] = {
+            if (!(this.language in image.custom_properties)) {
+                image.custom_properties[this.language] = {
                     alt: '',
                     title: ''
                 };
             }
 
-            return image.custom_properties[this.lng][key];
+            return image.custom_properties[this.language][key];
         },
 
         checkMaxFiles() {

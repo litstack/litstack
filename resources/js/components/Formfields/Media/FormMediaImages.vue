@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 export default {
     name: 'FormMediaImages',
     props: {
@@ -75,9 +74,6 @@ export default {
         deleteImage(index) {
             this.$delete(this.sortable, index);
         }
-    },
-    computed: {
-        ...mapGetters(['lng'])
     }
 };
 </script>

@@ -4,8 +4,8 @@
             class="btn"
             :class="[
                 {
-                    'btn-primary': lang == lng,
-                    'btn-secondary': lang != lng
+                    'btn-primary': lang == language,
+                    'btn-secondary': lang != language
                 }
             ]"
             v-for="lang in languages"
@@ -22,7 +22,7 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'BaseLang',
     computed: {
-        ...mapGetters(['lng'])
+        ...mapGetters(['language'])
     },
     props: {
         languages: {
@@ -41,5 +41,3 @@ export default {
     }
 };
 </script>
-
-<style lang="css" scoped></style>

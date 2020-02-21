@@ -16,7 +16,7 @@
                         Title
                     </label>
                     <b-badge v-if="field.translatable" variant="primary">
-                        <small>{{ lng }}</small>
+                        <small>{{ language }}</small>
                     </b-badge>
 
                     <b-input
@@ -28,7 +28,7 @@
                 <div>
                     <label class="mb-1">Alt</label>
                     <b-badge v-if="field.translatable" variant="primary">
-                        <small>{{ lng }}</small>
+                        <small>{{ language }}</small>
                     </b-badge>
                     <b-input
                         :size="'sm'"
@@ -85,14 +85,14 @@ export default {
             if (!this.field.translatable) {
                 image.custom_properties[key] = value;
             } else {
-                if (!(this.lng in image.custom_properties)) {
-                    image.custom_properties[this.lng] = {
+                if (!(this.language in image.custom_properties)) {
+                    image.custom_properties[this.language] = {
                         alt: '',
                         title: ''
                     };
                 }
 
-                image.custom_properties[this.lng][key] = value;
+                image.custom_properties[this.language][key] = value;
             }
 
             let job = {
@@ -108,14 +108,14 @@ export default {
                 return image.custom_properties[key];
             }
 
-            if (!(this.lng in image.custom_properties)) {
-                image.custom_properties[this.lng] = {
+            if (!(this.language in image.custom_properties)) {
+                image.custom_properties[this.language] = {
                     alt: '',
                     title: ''
                 };
             }
 
-            return image.custom_properties[this.lng][key];
+            return image.custom_properties[this.language][key];
         },
         async destroy(id, index) {
             let response = await axios.delete(`media/${id}`);
@@ -123,7 +123,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['lng'])
+        ...mapGetters(['language'])
     }
 };
 </script>

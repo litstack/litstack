@@ -8,8 +8,8 @@
                             {{ $t('select_language') }}
                         </b>
                         <fj-base-lang
-                            :languages="lngs"
-                            :currentLanguage="lng"
+                            :languages="languages"
+                            :currentLanguage="language"
                         />
                     </div>
                     <div class="col-12">
@@ -76,7 +76,7 @@ export default {
         );
     },
     computed: {
-        ...mapGetters(['canSave', 'lng', 'lngs']),
+        ...mapGetters(['canSave', 'language', 'languages']),
         buttonText() {
             return this.create
                 ? this.$t('create_model', { model: this.title })

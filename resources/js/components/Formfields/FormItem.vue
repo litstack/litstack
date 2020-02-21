@@ -3,7 +3,7 @@
         <h5 class="mb-0">
             <label :for="field.id">{{ field.title }}</label>
             <b-badge v-if="field.translatable" variant="primary">
-                <small>{{ lng }}</small>
+                <small>{{ language }}</small>
             </b-badge>
         </h5>
         <div
@@ -50,7 +50,7 @@ export default {
         value: {}
     },
     computed: {
-        ...mapGetters(['lng']),
+        ...mapGetters(['language']),
         length() {
             return this.value ? this.value.length : 0;
         }

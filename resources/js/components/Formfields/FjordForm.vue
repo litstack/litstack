@@ -125,7 +125,6 @@
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import FjordModel from '@fj-js/eloquent/fjord.model';
 import EloquentCollection from '@fj-js/eloquent/collection';
-import { mapGetters } from 'vuex';
 
 export default {
     name: 'FjordForm',
@@ -134,20 +133,12 @@ export default {
             type: Object,
             required: true
         },
-        /*
-        repeatables: {
-            type: Object
-        },
-        */
         ids: {
             type: Array,
             default() {
                 return [];
             }
         }
-    },
-    computed: {
-        ...mapGetters(['lng'])
     },
     beforeMount() {
         if (this.model instanceof FjordModel) {

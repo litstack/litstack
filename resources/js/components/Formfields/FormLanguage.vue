@@ -1,15 +1,13 @@
 <template>
-    <div
-        class="input-group-append"
-        v-if="field.translatable">
+    <div class="input-group-append" v-if="field.translatable">
         <span class="input-group-text">
-            {{lng}}
+            {{ language }}
         </span>
     </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'FormLanguage',
@@ -20,9 +18,9 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['lng'])
+        ...mapGetters(['language'])
     }
-}
+};
 </script>
 
 <style lang="css"></style>

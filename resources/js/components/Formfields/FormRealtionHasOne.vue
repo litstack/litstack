@@ -130,11 +130,9 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['lng', 'form']),
+        ...mapGetters(['form']),
         modalId() {
-            return `${this.model.route}-form-relation-table-${this.field.id}-${
-                this.model.id
-            }`;
+            return `${this.model.route}-form-relation-table-${this.field.id}-${this.model.id}`;
         }
     }
 };
