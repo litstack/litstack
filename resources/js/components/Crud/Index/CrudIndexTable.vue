@@ -6,12 +6,10 @@
                     <div class="fj-crud-index-table">
                         <fj-crud-index-table-form />
 
-                        <fj-selected-items-actions
+                        <fj-crud-index-table-selected-items-actions
                             :items="items"
                             :selectedItems="selectedItems"
-                        >
-                            <slot name="actions" slot="actions" />
-                        </fj-selected-items-actions>
+                        />
 
                         <b-table-simple :aria-busy="isBusy">
                             <fj-colgroup :icons="['check']" :cols="tableCols" />

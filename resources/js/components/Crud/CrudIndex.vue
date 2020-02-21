@@ -17,21 +17,11 @@
                 </div>
             </fj-base-header>
 
-            {{ form.config.index.actions }}
             <fj-crud-index-table
-                :cols="fields"
+                :cols="tableCols"
                 :recordActions="recordActions"
                 @selectedItemsChanged="setSelectedItems"
             >
-                <component
-                    slot="actions"
-                    v-for="(component, key) in actions"
-                    :key="key"
-                    :is="component"
-                    :formConfig="form.config"
-                    :selectedItems="selectedItems"
-                    :sendAction="sendAction"
-                />
             </fj-crud-index-table>
         </template>
     </fj-base-container>
@@ -65,13 +55,15 @@ export default {
     },
     data() {
         return {
-            fields: [],
+            tableCols: [],
             selectedItems: []
         };
     },
     beforeMount() {
-        this.setFields();
+        this.setTableCols();
         this.$store.dispatch('setFormConfig', this.formConfig);
+
+        this.$store.commit('SET_ACTIONS', this.actions);
     },
     computed: {
         ...mapGetters(['form']),
@@ -83,39 +75,39 @@ export default {
         }
     },
     methods: {
-        async sendAction(route, ids) {
-            let response = null;
-            let message = '';
-            let type = 'success';
-            try {
-                response = await _axios({
-                    method: 'post',
-                    url: route,
-                    data: { ids }
-                });
-
-                message = response.data.message;
-            } catch (e) {
-                response = e.response;
-                message = response.data.message;
-                type = 'danger';
-            }
-
-            this.$bvToast.toast(message, {
-                variant: 'info'
-            });
-        },
+        // async sendAction(route, ids) {
+        //     let response = null;
+        //     let message = '';
+        //     let type = 'success';
+        //     try {
+        //         response = await _axios({
+        //             method: 'post',
+        //             url: route,
+        //             data: { ids }
+        //         });
+        //
+        //         message = response.data.message;
+        //     } catch (e) {
+        //         response = e.response;
+        //         message = response.data.message;
+        //         type = 'danger';
+        //     }
+        //
+        //     this.$bvToast.toast(message, {
+        //         variant: 'info'
+        //     });
+        // },
         setSelectedItems(items) {
             this.selectedItems = items;
         },
-        setFields() {
+        setTableCols() {
             for (let i = 0; i < this.formConfig.index.preview.length; i++) {
                 let field = this.formConfig.index.preview[i];
 
                 if (typeof field == typeof '') {
                     field = { key: field };
                 }
-                this.fields.push(field);
+                this.tableCols.push(field);
             }
         }
     }

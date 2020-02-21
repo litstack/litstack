@@ -18,7 +18,14 @@
                     class="btn-brl-none"
                     variant="outline-secondary"
                 >
-                    <slot name="actions" />
+                    <component
+                        v-for="(component, key) in actions.actions"
+                        :key="key"
+                        :is="component"
+                        :formConfig="form.config"
+                        :selectedItems="selectedItems"
+                        :sendAction="sendAction"
+                    />
                 </b-dropdown>
             </template>
         </b-input-group>
@@ -26,8 +33,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
-    name: 'SelectedItemsActions',
+    name: 'CrudIndexTableSelectedItemsActions',
     props: {
         items: {
             type: Array,
@@ -36,6 +44,33 @@ export default {
         selectedItems: {
             type: Array,
             required: true
+        }
+    },
+    computed: {
+        ...mapGetters(['actions', 'form'])
+    },
+    methods: {
+        async sendAction(route, ids) {
+            let response = null;
+            let message = '';
+            let type = 'success';
+            try {
+                response = await _axios({
+                    method: 'post',
+                    url: route,
+                    data: { ids }
+                });
+
+                message = response.data.message;
+            } catch (e) {
+                response = e.response;
+                message = response.data.message;
+                type = 'danger';
+            }
+
+            this.$bvToast.toast(message, {
+                variant: 'info'
+            });
         }
     }
 };

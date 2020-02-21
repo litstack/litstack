@@ -5,13 +5,15 @@ import savings from './modules/savings.module';
 import form from './modules/form.module';
 import auth from './modules/auth.module';
 import crud from './modules/crud.module';
+import actions from './modules/actions.module';
 
 const modules = {
     config,
     savings,
     form,
     auth,
-    crud
+    crud,
+    actions
 };
 
 class FjordStore {
