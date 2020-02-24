@@ -17,7 +17,6 @@
                                 :tableCols="tableCols"
                                 :hasRecordActions="hasRecordActions"
                                 :selectedItems="selectedItems"
-                                @sort="sortCol"
                             >
                                 <b-checkbox
                                     slot="checkbox"
@@ -217,22 +216,25 @@ export default {
     methods: {
         async loadItems() {
             this.isBusy = true;
+            try {
+                let payload = {
+                    page: this.page,
+                    perPage: this.perPage,
+                    search: this.search,
+                    sort_by: this.sort_by_key,
+                    filter: this.filter_scope
+                    //eagerLoad: this.form.config.index.load || []
+                };
 
-            let payload = {
-                page: this.page,
-                perPage: this.perPage,
-                search: this.search,
-                sort_by: this.sort_by_key,
-                filter: this.filter_scope,
-                eagerLoad: this.form.config.index.load || []
-            };
+                this.$store.dispatch('loadItems', {
+                    table: this.form.config.names.table,
+                    payload
+                });
 
-            this.$store.dispatch('loadItems', {
-                table: this.form.config.names.table,
-                payload
-            });
-
-            this.isBusy = false;
+                this.isBusy = false;
+            } catch (e) {
+                console.log(e);
+            }
         },
         goToPage(page) {
             this.page = page;
@@ -267,9 +269,6 @@ export default {
 
                 this.tableCols.push(col);
             }
-        },
-        sortCol(value) {
-            this.sortBy(value);
         },
         openItem(item) {
             window.location.href =

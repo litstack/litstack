@@ -56,6 +56,8 @@ const actions = {
                 n: data.count,
                 per_page: payload.perPage
             });
+
+            return;
         } catch (e) {
             console.log(e);
         }

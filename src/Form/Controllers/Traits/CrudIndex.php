@@ -28,7 +28,11 @@ trait CrudIndex
         }
 
         // and the related models added in the crud->index->load
-        $query->with(array_keys($request->eagerLoad));
+        $eager = [];
+        if(array_key_exists('load', $this->getForm()->toArray()['index'])){
+            $eager = array_keys($this->getForm()->toArray()['index']['load']);
+            $query->with($eager);
+        }
 
 
         // perform search
@@ -36,12 +40,12 @@ trait CrudIndex
 
 
         // if sorted by eager loaded value, we need a query with ordering
-        $query = $this->orderByEager($request, $query);
+        $query = $this->orderByEager($request, $query, $eager);
 
         // order before paginating
         $key = explode('.', $request->sort_by)[0];
         $order = last(explode('.', $request->sort_by));
-        if(!in_array($key, array_keys($request->eagerLoad))){
+        if(!in_array($key, $eager)){
             if($request->sort_by){
                 $query->orderBy($key, $order);
             }
@@ -55,7 +59,7 @@ trait CrudIndex
 
 
         // sort items, if needed
-        $items = $this->sortItems($request, $items);
+        $items = $this->sortItems($request, $items, $eager);
 
 
         if(is_translatable($this->model)) {
@@ -98,7 +102,7 @@ trait CrudIndex
      * @param  Collection
      * @return Collection
      */
-    private function sortItems(Request $request, Collection $items): Collection
+    private function sortItems(Request $request, Collection $items, $eager): Collection
     {
         // sort
         if(!$request->sort_by){
@@ -109,7 +113,7 @@ trait CrudIndex
         $order = last(explode('.', $request->sort_by));
 
         // check, if is already eager ordered
-        if(in_array($key, array_keys($request->eagerLoad))){
+        if(in_array($key, $eager)){
             return $items;
         }
 
@@ -135,7 +139,7 @@ trait CrudIndex
      * @param  Builder
      * @return Builder
      */
-    private function orderByEager(Request $request, Builder $query): Builder
+    private function orderByEager(Request $request, Builder $query, $eager): Builder
     {
         $key = $request->sort_by;
         $order = 'asc';
@@ -146,10 +150,10 @@ trait CrudIndex
         }
 
 
-        if(in_array($key, array_keys($request->eagerLoad))){
+        if(in_array($key, $eager)){
 
             // get the table names of the related models
-            $foreign_table = with(new $request->eagerLoad[$key])->getTable();
+            $foreign_table = with(new $eager[$key])->getTable();
             $table = with(new $this->model)->getTable();
 
             // join the related table for ordering by a foreign column

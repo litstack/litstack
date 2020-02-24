@@ -37,10 +37,6 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'CrudIndexTableSelectedItemsActions',
     props: {
-        // items: {
-        //     type: Array,
-        //     required: true
-        // },
         selectedItems: {
             type: Array,
             required: true
