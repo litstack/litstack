@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Bus from '@fj-js/common/event.bus';
 import FjordModel from '@fj-js/eloquent/fjord.model';
 //import TranslatableModel from '@fj-js/eloquent/translatable.model';
+import TableModel from '@fj-js/eloquent/table.model';
 
 const prepareModel = model => {
     switch (model.type) {
@@ -17,8 +18,9 @@ const prepareModel = model => {
 };
 
 const state = {
-    models: [],
-    model: {}
+    model: {},
+    items: [],
+    number_of_pages: 1
 };
 
 const getters = {
@@ -30,15 +32,33 @@ const getters = {
 const mutations = {
     SET_MODEL(state, data) {
         state.model = data;
+    },
+    SET_ITEMS(state, data) {
+        let items = [];
+        for (let i = 0; i < data.items.length; i++) {
+            items.push(new TableModel(data.items[i]));
+        }
+        state.items = items;
+    },
+    SET_NUMBER_OF_PAGES(state, { n, per_page }) {
+        if (n && per_page) {
+            state.number_of_pages = Math.ceil(n / per_page);
+        }
     }
 };
 
 const actions = {
-    async loadItems({ commit, state }, locale) {
-        // const { data } = await axios.post(
-        //     `${this.form.config.names.table}/index`,
-        //     payload
-        // );
+    async loadItems({ commit, state }, { table, payload }) {
+        try {
+            const { data } = await axios.post(`${table}/index`, payload);
+            commit('SET_ITEMS', data);
+            commit('SET_NUMBER_OF_PAGES', {
+                n: data.count,
+                per_page: payload.perPage
+            });
+        } catch (e) {
+            console.log(e);
+        }
     },
     async loadModel({ commit }, { route, id }) {
         try {

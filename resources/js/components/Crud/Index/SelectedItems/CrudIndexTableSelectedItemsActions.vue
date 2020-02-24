@@ -5,7 +5,7 @@
                 <strong>
                     {{ $tc('n_items_selected', selectedItems.length) }}
                     {{
-                        selectedItems.length == items.length
+                        selectedItems.length == crud.items.length
                             ? `(${$t('all')})`
                             : ''
                     }}
@@ -37,17 +37,17 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'CrudIndexTableSelectedItemsActions',
     props: {
-        items: {
-            type: Array,
-            required: true
-        },
+        // items: {
+        //     type: Array,
+        //     required: true
+        // },
         selectedItems: {
             type: Array,
             required: true
         }
     },
     computed: {
-        ...mapGetters(['actions', 'form'])
+        ...mapGetters(['actions', 'form', 'crud'])
     },
     methods: {
         async sendAction(route, ids) {

@@ -7,7 +7,6 @@
                         <fj-crud-index-table-form />
 
                         <fj-crud-index-table-selected-items-actions
-                            :items="items"
                             :selectedItems="selectedItems"
                         />
 
@@ -47,7 +46,7 @@
                                 </tr>
                                 <template v-else>
                                     <tr
-                                        v-for="(item, key) in items"
+                                        v-for="(item, key) in crud.items"
                                         :key="key"
                                         :class="
                                             selectedItems.includes(item.id)
@@ -102,7 +101,7 @@
                             </tbody>
                         </b-table-simple>
                     </div>
-                    <fj-crud-index-table-index-indicator :items="items" />
+                    <fj-crud-index-table-index-indicator />
                 </b-card>
             </b-col>
         </b-row>
@@ -113,7 +112,7 @@
             <b-pagination-nav
                 class="mt-4"
                 :link-gen="linkGen"
-                :number-of-pages="number_of_pages"
+                :number-of-pages="crud.number_of_pages"
                 @change="goToPage"
             ></b-pagination-nav>
         </div>
@@ -153,9 +152,7 @@ export default {
             filter_scope: null,
             selectedAll: false,
 
-            page: 1,
-            number_of_pages: null,
-            total: null
+            page: 1
         };
     },
     watch: {
@@ -169,7 +166,7 @@ export default {
         selectedItems(val) {
             this.$emit('selectedItemsChanged', val);
 
-            if (val.length == this.items.length) {
+            if (val.length == this.crud.items.length) {
                 this.selectedAll = true;
                 this.indeterminateSelectedItems = false;
                 return;
@@ -209,7 +206,7 @@ export default {
         });
     },
     computed: {
-        ...mapGetters(['form']),
+        ...mapGetters(['form', 'crud']),
         hasRecordActions() {
             return this.recordActions.length > 0;
         },
@@ -230,21 +227,10 @@ export default {
                 eagerLoad: this.form.config.index.load || []
             };
 
-            let response = await axios.post(
-                `${this.form.config.names.table}/index`,
+            this.$store.dispatch('loadItems', {
+                table: this.form.config.names.table,
                 payload
-            );
-
-            this.total = response.data.count;
-
-            let items = [];
-            for (let i = 0; i < response.data.items.length; i++) {
-                items.push(new TableModel(response.data.items[i]));
-            }
-            this.items = items;
-            this.number_of_pages = Math.ceil(
-                response.data.count / this.perPage
-            );
+            });
 
             this.isBusy = false;
         },
@@ -257,7 +243,7 @@ export default {
         },
         changeSelectedItems(val) {
             if (val) {
-                this.selectedItems = this.items.map(item => {
+                this.selectedItems = this.crud.items.map(item => {
                     return item.id;
                 });
             } else {
