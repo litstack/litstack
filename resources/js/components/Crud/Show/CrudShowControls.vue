@@ -1,7 +1,7 @@
 <template>
     <b-card class="fj_crud-show__controls">
         <b-row>
-            <b-col cols="12" class="pb-3">
+            <b-col cols="12" class="pb-3" v-if="isMultilanguage">
                 <b class="text-muted d-block pb-1">
                     {{ $t('select_language') }}
                 </b>
@@ -77,6 +77,9 @@ export default {
     },
     computed: {
         ...mapGetters(['canSave', 'language', 'languages']),
+        isMultilanguage() {
+            return this.languages.length > 1;
+        },
         buttonText() {
             return this.create
                 ? this.$t('create_model', { model: this.title })
