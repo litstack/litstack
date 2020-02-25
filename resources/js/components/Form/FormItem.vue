@@ -33,6 +33,7 @@
                 >
             </small>
         </div>
+        <pre>{{ model }}</pre>
     </div>
 </template>
 
