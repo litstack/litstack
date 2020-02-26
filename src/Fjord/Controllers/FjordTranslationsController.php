@@ -15,6 +15,13 @@ class FjordTranslationsController extends Controller
         foreach ($locales as $locale) {
             $content = require(fjord_path('resources/lang/'.$locale.'/fjord.php'));
             $translations[$locale] = $content;
+
+            foreach (glob(resource_path('lang/'.$locale.'/*.php')) as $file) {
+                $content = require($file);
+                $key = explode('.', basename($file))[0];
+
+                $translations[$locale][$key] = $content;
+            }
         }
 
         $js = 'window.i18n = ' . json_encode($translations) . ';';
