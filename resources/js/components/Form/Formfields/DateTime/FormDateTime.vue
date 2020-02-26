@@ -40,7 +40,7 @@ export default {
     },
     watch: {
         value(val) {
-            this.value = value;
+            this.value = val;
             this.model[`${this.field.id}Model`] = val;
             this.$emit('changed');
         }
