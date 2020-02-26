@@ -1,10 +1,13 @@
 <template>
     <div>
         <template v-if="col.type == 'image'">
-            <img :src="item[col.key]" style="max-width: 70px;">
+            <img :src="item[col.key]" style="max-width: 70px;" />
         </template>
-        <div v-else-if="'values' in col" v-html="getColValue(col, item[col.key])"/>
-        <div v-else v-html="_format(col.key, item)"/>
+        <div
+            v-else-if="'values' in col"
+            v-html="getColValue(col, item[col.key])"
+        />
+        <div v-else v-html="_format(col.key, item)" />
     </div>
 </template>
 
@@ -21,25 +24,27 @@ export default {
             type: Object
         }
     },
+    beforeMount() {
+        //console.log(this.col);
+    },
     methods: {
         getColValue(col, value) {
-            let checkValue = value
-            checkValue = checkValue === true ? '1' : checkValue
-            checkValue = checkValue === false ? '0' : checkValue
+            let checkValue = value;
+            checkValue = checkValue === true ? '1' : checkValue;
+            checkValue = checkValue === false ? '0' : checkValue;
 
-            if(checkValue in col.values) {
-                return col.values[checkValue]
+            if (checkValue in col.values) {
+                return col.values[checkValue];
             }
 
-            if('default' in col.values) {
-                return col.values.default
+            if ('default' in col.values) {
+                return col.values.default;
             }
 
-            return value
+            return value;
         }
     }
-}
+};
 </script>
 
-<style lang="css" scoped>
-</style>
+<style lang="css" scoped></style>

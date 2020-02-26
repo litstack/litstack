@@ -101,6 +101,12 @@
                         :model="m"
                     />
 
+                    <fj-form-belongs-to-many
+                        v-if="field.type == 'belongsToMany'"
+                        :field="field"
+                        :model="m"
+                    />
+
                     <template v-if="field.type == 'relation'">
                         <fj-form-relation-has-many
                             v-if="field.many"

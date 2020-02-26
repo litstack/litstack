@@ -29,6 +29,7 @@ class FormField implements ArrayAccess
         'range' => FormFields\Range::class,
 
         'hasMany' => FormFields\HasMany::class,
+        'belongsToMany' => FormFields\BelongsToMany::class,
     ];
 
     protected $attributes = [];
