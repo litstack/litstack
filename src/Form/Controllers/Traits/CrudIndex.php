@@ -29,6 +29,7 @@ trait CrudIndex
 
         // and the related models added in the crud->index->load
         $eager = [];
+        $eagerClasses = [];
         if(array_key_exists('load', $this->getForm()->toArray()['index'])){
             $eagerClasses = $this->getForm()->toArray()['index']['load'];
             $eager = array_keys($eagerClasses);
