@@ -3,7 +3,7 @@
 namespace AwStudio\Fjord\Form\Controllers;
 
 use AwStudio\Fjord\Fjord\Controllers\FjordController;
-use AwStudio\Fjord\Form\FormLoader;
+use AwStudio\Fjord\Support\Facades\FormLoader;
 use Illuminate\Http\Request;
 
 class FormBelongsToManyController extends FjordController
@@ -20,8 +20,13 @@ class FormBelongsToManyController extends FjordController
 
     public function index(Request $request)
     {
-        $model = new $request->model;
-        return $model->all();
+        $model = with(new $request->model);
+
+        $fields = require $model->form_fields_path;
+        
+        $query = collect($fields['form_fields'])->flatten(1)->firstWhere('id', $request->field['id'])['model'];
+
+        return $query->get();
     }
 
     public function update(Request $request)

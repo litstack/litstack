@@ -95,7 +95,8 @@ export default {
         async fetchRelations() {
             try {
                 const { data } = await axios.post(`/belongs-to-many`, {
-                    model: this.field.model
+                    model: this.crud.model.model,
+                    field: this.field
                 });
                 this.items = data;
                 let items = [];
