@@ -24,8 +24,19 @@
                         :checked="itemChecked(data.item)"
                     />
                 </template>
+                <!-- checkbox column header -->
                 <template v-slot:head(selected)="data">
-                    &nbsp;
+                    <fa-icon icon="check-square" />
+                </template>
+                <!-- make the checkbox column narrow -->
+                <template v-slot:table-colgroup="scope">
+                    <col
+                        v-for="field in scope.fields"
+                        :key="field.key"
+                        :style="{
+                            width: field.key === 'selected' ? '36px' : 'auto'
+                        }"
+                    />
                 </template>
                 <template v-slot:cell()="data">
                     <fj-table-col :item="data.item" :col="data.field" />

@@ -1,13 +1,15 @@
 <template>
-    <small class="text-primary fj-crud-index-table__index-indicator"
-        >{{ page * (perPage || 1) - (perPage || 1) + 1 }} -
-        {{
-            page * (perPage || 1) > total
-                ? total || crud.items.length
-                : page * (perPage || 1)
-        }}
-        {{ $t('of') }} {{ total || crud.items.length }}</small
-    >
+    <div>
+        <small class="text-primary fj-crud-index-table__index-indicator"
+            >{{ crud.page * (perPage || 1) - (perPage || 1) + 1 }} -
+            {{
+                crud.page * (perPage || 1) > crud.total
+                    ? crud.total || crud.items.length
+                    : crud.page * (perPage || 1)
+            }}
+            {{ $t('of') }} {{ crud.total || crud.items.length }}</small
+        >
+    </div>
 </template>
 
 <script>
@@ -16,8 +18,7 @@ export default {
     name: 'CrudIndexTableIndexIndicator',
     data() {
         return {
-            page: 1,
-            total: null
+            page: 1
         };
     },
     computed: {
