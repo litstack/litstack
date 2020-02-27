@@ -116,7 +116,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     {
         FjordRoute::post('/belongs-to-many', FormBelongsToManyController::class . "@index");
         FjordRoute::post('/belongs-to-many/relations', FormBelongsToManyController::class . "@relations");
-        FjordRoute::post('/belongs-to-many/store', FormBelongsToManyController::class . "@store");
+        FjordRoute::post('/belongs-to-many/update', FormBelongsToManyController::class . "@update");
     }
 
     protected function mapMediaRoutes()

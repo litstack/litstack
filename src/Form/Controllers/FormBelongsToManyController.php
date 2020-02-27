@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class FormBelongsToManyController extends FjordController
 {
-    public function index(Request $request)
+    public function relations(Request $request)
     {
         $model = new $request->model;
         $foreign = $request->foreign;
@@ -18,23 +18,19 @@ class FormBelongsToManyController extends FjordController
         return $related;
     }
 
-    public function relations(Request $request)
+    public function index(Request $request)
     {
         $model = new $request->model;
         return $model->all();
     }
 
-    public function store(Request $request)
+    public function update(Request $request)
     {
         $model = new $request->model;
         $foreign = $request->foreign;
 
-        $model->find($request->id)->$foreign()->attach($request->foreign_id);
+        $result = $model->find($request->id)->$foreign()->toggle([$request->foreign_id]);
 
-        $related = $model->find($request->id)->$foreign()->find($request->foreign_id);
-
-        return $related;
+        return $result;
     }
-
-
 }

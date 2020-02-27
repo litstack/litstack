@@ -73,7 +73,8 @@ export default {
         return {
             visible: false,
             relations: [],
-            cols: []
+            cols: [],
+            items: []
         };
     },
     beforeMount() {
@@ -93,12 +94,10 @@ export default {
     methods: {
         async fetchRelations() {
             try {
-                const { data } = await axios.post(
-                    `/belongs-to-many/relations`,
-                    {
-                        model: this.field.model
-                    }
-                );
+                const { data } = await axios.post(`/belongs-to-many`, {
+                    model: this.field.model
+                });
+                this.items = data;
                 let items = [];
                 for (let i = 0; i < data.length; i++) {
                     items.push(new TableModel(data[i]));
@@ -114,11 +113,7 @@ export default {
                 : false;
         },
         selected(item) {
-            if (this.itemChecked(item) && this.hasMany) {
-                this.$emit('remove', item.id);
-            } else {
-                this.$emit('selected', item);
-            }
+            this.$emit('toggle', item);
         }
     },
     computed: {

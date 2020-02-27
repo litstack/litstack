@@ -27,17 +27,13 @@
             <fj-form-belongs-to-many-modal
                 :field="field"
                 :selectedModels="relations"
-                @selected="storeRelation"
+                @toggle="updateRelation"
             />
-            <pre>{{ relations }}</pre>
         </b-card>
     </fj-form-item>
 </template>
 
 <script>
-import FjordModel from '@fj-js/eloquent/fjord.model';
-import { mapGetters } from 'vuex';
-
 export default {
     name: 'FormBelongsToMany',
     props: {
@@ -73,16 +69,19 @@ export default {
         },
         async fetchRelated() {
             try {
-                const { data } = await axios.post(`/belongs-to-many`, {
-                    model: this.model.model,
-                    id: this.model.id,
-                    foreign: this.field.id
-                });
+                const { data } = await axios.post(
+                    `/belongs-to-many/relations`,
+                    {
+                        model: this.model.model,
+                        id: this.model.id,
+                        foreign: this.field.id
+                    }
+                );
 
                 this.relations = data;
             } catch (e) {}
         },
-        async storeRelation(item) {
+        async updateRelation(item) {
             let payload = {
                 model: this.model.model,
                 id: this.model.id,
@@ -91,15 +90,19 @@ export default {
             };
             try {
                 const { data } = await axios.post(
-                    '/belongs-to-many/store',
+                    '/belongs-to-many/update',
                     payload
                 );
-                this.relations.push(data);
+
+                if (data['detached'].length) {
+                    let index = _.findIndex(this.relations, ['id', item.id]);
+                    this.relations.splice(index, 1);
+                }
+                if (data['attached'].length) {
+                    this.relations.push(item);
+                }
             } catch (e) {}
         }
-    },
-    computed: {
-        ...mapGetters(['form'])
     }
 };
 </script>
