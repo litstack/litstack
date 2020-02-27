@@ -23,8 +23,12 @@ class FormBelongsToManyController extends FjordController
         $model = with(new $request->model);
 
         $fields = require $model->form_fields_path;
-        
+
         $query = collect($fields['form_fields'])->flatten(1)->firstWhere('id', $request->field['id'])['model'];
+
+        if(is_string($query)){
+            $query = new $query;
+        }
 
         return $query->get();
     }
