@@ -1,52 +1,36 @@
 <template>
     <div>
         <b-button variant="secondary" size="sm" @click="visible = !visible">
-            add
+            {{ $t('edit') }}
         </b-button>
         <b-modal v-model="visible" hide-footer :title="title">
-            <b-table-simple outlined hover id="relations">
-                <fj-colgroup :icons="['check']" :cols="cols" />
-
-                <tbody>
-                    <tr
-                        v-for="(item, key) in relations"
-                        :key="key"
-                        style="cursor:pointer;"
-                        @click="selected(item)"
-                    >
-                        <b-td
-                            style="vertical-align: middle;"
-                            v-for="(col, ckey) in cols"
-                            :key="ckey"
-                            :class="
-                                col.key == 'drag'
-                                    ? 'fjord-draggable__dragbar'
-                                    : ''
-                            "
-                        >
-                            <div
-                                class="custom-control custom-radio"
-                                v-if="col.key == 'check'"
-                            >
-                                <input
-                                    type="radio"
-                                    autocomplete="off"
-                                    class="custom-control-input pointer-events-none"
-                                    value=""
-                                    :checked="itemChecked(item)"
-                                />
-                                <label class="custom-control-label"></label>
-                            </div>
-                            <b-checkbox
-                                class="pointer-events-none"
-                                v-else-if="col.key == 'check'"
-                                :checked="itemChecked(item)"
-                            />
-                            <fj-table-col v-else :item="item" :col="col" />
-                        </b-td>
-                    </tr>
-                </tbody>
-            </b-table-simple>
+            <b-form-input
+                v-model="filter"
+                type="search"
+                placeholder="Type to Search"
+            ></b-form-input>
+            <b-table
+                :items="relations"
+                :filter="filter"
+                :fields="fields"
+                @row-clicked="selected"
+            >
+                <template v-slot:cell(selected)="data">
+                    <input
+                        type="checkbox"
+                        autocomplete="off"
+                        value=""
+                        class="pointer-events-none"
+                        :checked="itemChecked(data.item)"
+                    />
+                </template>
+                <template v-slot:head(selected)="data">
+                    &nbsp;
+                </template>
+                <template v-slot:cell()="data">
+                    <fj-table-col :item="data.item" :col="data.field" />
+                </template>
+            </b-table>
         </b-modal>
     </div>
 </template>
@@ -73,22 +57,20 @@ export default {
         return {
             visible: false,
             relations: [],
-            cols: [],
-            items: []
+            items: [],
+            filter: null,
+            fields: ['selected']
         };
     },
     beforeMount() {
         this.fetchRelations();
 
-        this.cols.push({ key: 'check' });
-
         for (let i = 0; i < this.field.preview.length; i++) {
             let col = this.field.preview[i];
-
             if (typeof col == typeof '') {
                 col = { key: col };
             }
-            this.cols.push(col);
+            this.fields.push(col);
         }
     },
     methods: {
@@ -98,12 +80,7 @@ export default {
                     model: this.crud.model.model,
                     field: this.field
                 });
-                this.items = data;
-                let items = [];
-                for (let i = 0; i < data.length; i++) {
-                    items.push(new TableModel(data[i]));
-                }
-                this.relations = items;
+                this.relations = data;
             } catch (e) {}
         },
         itemChecked(item) {

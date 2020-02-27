@@ -32,5 +32,6 @@ return [
     "permission_updated" => "Berechtigung geändert: {group} {operation}",
     "preview" => "Vorschau",
     "model_loaded" => "{model} neu geladen",
-    "of" => 'von'
+    "of" => 'von',
+    "edit" => 'editieren',
 ];

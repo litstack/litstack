@@ -24,9 +24,6 @@ export default {
             type: Object
         }
     },
-    beforeMount() {
-        //console.log(this.col);
-    },
     methods: {
         getColValue(col, value) {
             let checkValue = value;

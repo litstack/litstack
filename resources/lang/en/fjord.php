@@ -32,5 +32,6 @@ return [
     "permission_updated" => "Permission updated: {operation} {group}",
     "preview" => "Preview",
     "model_loaded" => "Reloaded {model}",
-    "of" => 'of'
+    "of" => 'of',
+    "edit" => 'edit',
 ];
