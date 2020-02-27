@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'route_prefix' => 'main',
+    'route_prefix' => 'settings',
     'form_fields' => [
         [
             'translatable' => false,
