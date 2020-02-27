@@ -1,13 +1,7 @@
 <template>
     <div>
         <small class="text-primary fj-crud-index-table__index-indicator"
-            >{{ crud.page * (perPage || 1) - (perPage || 1) + 1 }} -
-            {{
-                crud.page * (perPage || 1) > crud.total
-                    ? crud.total || crud.items.length
-                    : crud.page * (perPage || 1)
-            }}
-            {{ $t('of') }} {{ crud.total || crud.items.length }}</small
+            >{{ from }} - {{ to }} {{ $t('of') }} {{ total }}</small
         >
     </div>
 </template>
@@ -16,15 +10,27 @@
 import { mapGetters } from 'vuex';
 export default {
     name: 'CrudIndexTableIndexIndicator',
-    data() {
-        return {
-            page: 1
-        };
-    },
     computed: {
         ...mapGetters(['form', 'crud']),
         perPage() {
             return this.form.config.index.per_page || 0;
+        },
+        from() {
+            return (
+                this.crud.page * (this.perPage || 1) -
+                    (this.perPage || 1) +
+                    1 || 1
+            );
+        },
+        to() {
+            return (
+                (this.crud.page * (this.perPage || 1) > this.crud.total
+                    ? this.crud.total || this.crud.items.length
+                    : this.crud.page * (this.perPage || 1)) || this.total
+            );
+        },
+        total() {
+            return this.crud.total || this.crud.items.length;
         }
     }
 };
