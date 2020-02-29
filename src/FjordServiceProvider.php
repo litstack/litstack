@@ -24,7 +24,9 @@ class FjordServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         $this->app->register('AwStudio\Fjord\Routing\RouteServiceProvider');
-        $this->app->register('AwStudio\Fjord\RolesPermissions\ServiceProvider');
+        if(config('fjord.roles_permissions')){
+            $this->app->register('AwStudio\Fjord\RolesPermissions\ServiceProvider');
+        }
         $this->app->register('AwStudio\Fjord\Form\ServiceProvider');
 
         /**
