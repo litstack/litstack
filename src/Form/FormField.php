@@ -29,6 +29,7 @@ class FormField implements ArrayAccess
         'range' => FormFields\Range::class,
 
         'hasMany' => FormFields\HasMany::class,
+        'editHasMany' => FormFields\EditHasMany::class,
         'belongsToMany' => FormFields\BelongsToMany::class,
     ];
 

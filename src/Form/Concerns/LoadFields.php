@@ -96,6 +96,10 @@ trait LoadFields
             return;
         }
 
+        if($field->type == 'editHasMany') {
+            return;
+        }
+
         if($field->type == 'belongsToMany') {
             return;
         }

@@ -101,6 +101,12 @@
                         :model="m"
                     />
 
+                    <fj-form-edit-has-many
+                        v-if="field.type == 'editHasMany'"
+                        :field="field"
+                        :model="m"
+                    />
+
                     <fj-form-belongs-to-many
                         v-if="field.type == 'belongsToMany'"
                         :field="field"

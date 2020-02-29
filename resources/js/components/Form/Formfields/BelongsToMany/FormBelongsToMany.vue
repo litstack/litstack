@@ -1,6 +1,6 @@
 <template>
     <fj-form-item :field="field">
-        <b-card class="fjord-block no-fx mb-2">
+        <b-card class="fjord-block no-fx mb-2" v-if="model.id">
             <div>
                 <b-table-simple outlined table-variant="light">
                     <tr
@@ -30,10 +30,18 @@
                 @toggle="updateRelation"
             />
         </b-card>
+        <template v-else>
+            <b-alert show variant="warning"
+                >{{ form.config.names.title.singular }} has to be created in
+                order to add <i>{{ field.title }}</i></b-alert
+            >
+        </template>
     </fj-form-item>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
     name: 'FormBelongsToMany',
     props: {
@@ -54,7 +62,9 @@ export default {
     },
     beforeMount() {
         this.setFields();
-        this.fetchRelated();
+        if (this.model.id !== undefined) {
+            this.fetchRelated();
+        }
     },
     methods: {
         setFields() {
@@ -102,6 +112,12 @@ export default {
                     this.relations.push(item);
                 }
             } catch (e) {}
+        }
+    },
+    computed: {
+        ...mapGetters(['crud', 'form']),
+        modelName() {
+            return this.crud.model.model.split('\\').pop();
         }
     }
 };
