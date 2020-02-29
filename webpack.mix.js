@@ -13,6 +13,7 @@ mix.sass('resources/sass/app.scss', 'public/css')
     .js('resources/js/app.js', 'public/js/app.js')
     .options({
         fileLoaderDirs: {
-            images: 'public/images'
-        }
+            images: 'images'
+        },
+        publicPath: 'public'
     });
