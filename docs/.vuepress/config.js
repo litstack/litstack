@@ -25,7 +25,14 @@ module.exports = {
     title: 'Fjord',
     description: 'description',
     head,
-    plugins: {},
+    plugins: [
+        [
+            '@vuepress/google-analytics',
+            {
+                ga: 'UA-77559383-19'
+            }
+        ]
+    ],
     themeConfig: {
         repo: 'aw-studio/fjord',
         editLinks: true,
@@ -38,7 +45,11 @@ module.exports = {
                     collapsable: false,
                     children: [
                         ['guide/getting-started/installation', 'Installation'],
-                        ['guide/getting-started/configuration', 'Configuration']
+                        [
+                            'guide/getting-started/configuration',
+                            'Configuration'
+                        ],
+                        ['guide/getting-started/playground', '🕹 Playground']
                     ]
                 },
                 {
@@ -82,6 +93,7 @@ module.exports = {
                         ['guide/formfields/range', 'Range'],
                         ['guide/formfields/block', 'Block'],
                         ['guide/formfields/has-many', 'HasMany'],
+                        ['guide/formfields/edit-has-many', 'EditHasMany'],
                         ['guide/formfields/relation', 'Relation']
                     ]
                 },

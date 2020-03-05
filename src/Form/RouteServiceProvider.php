@@ -10,6 +10,8 @@ use AwStudio\Fjord\Form\Controllers\MediaController;
 use AwStudio\Fjord\Form\Controllers\FormController;
 use AwStudio\Fjord\Form\Controllers\FormBlockController;
 use AwStudio\Fjord\Form\Controllers\FormMorphOneController;
+use AwStudio\Fjord\Form\Controllers\FormBelongsToManyController;
+use AwStudio\Fjord\Form\Controllers\FormHasManyController;
 use AwStudio\Fjord\Form\Controllers\FormRelationsController;
 use AwStudio\Fjord\Support\Facades\FormLoader;
 use AwStudio\Fjord\Fjord\Controllers\RolePermissionController;
@@ -34,6 +36,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->mapFormBlockRoutes();
         $this->mapFormRelationRoutes();
         $this->mapFormMorphOneRoutes();
+        $this->mapFormBelongsToManyRoutes();
+        $this->mapFormHasManyRoutes();
         $this->mapMediaRoutes();
 
     }
@@ -108,6 +112,20 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     {
         FjordRoute::post('/morph-one', FormMorphOneController::class . "@index")->name('morph_one.index');
         FjordRoute::post('/morph-one/store', FormMorphOneController::class . "@store")->name('morph_one.store');
+    }
+
+    protected function mapFormBelongsToManyRoutes()
+    {
+        FjordRoute::post('/belongs-to-many', FormBelongsToManyController::class . "@index");
+        FjordRoute::post('/belongs-to-many/relations', FormBelongsToManyController::class . "@relations");
+        FjordRoute::post('/belongs-to-many/update', FormBelongsToManyController::class . "@update");
+    }
+
+    protected function mapFormHasManyRoutes()
+    {
+        FjordRoute::post('/has-many', FormHasManyController::class . "@index");
+        FjordRoute::post('/has-many/relations', FormHasManyController::class . "@relations");
+        FjordRoute::post('/has-many/update', FormHasManyController::class . "@update");
     }
 
     protected function mapMediaRoutes()

@@ -13,7 +13,7 @@ class HasMany
         'id',
         'model',
         'foreign_key',
-        'form',
+        'preview',
         'title',
     ];
 

@@ -20,6 +20,8 @@ const prepareModel = model => {
 const state = {
     model: {},
     items: [],
+    total: null,
+    page: null,
     number_of_pages: 1
 };
 
@@ -40,9 +42,11 @@ const mutations = {
         }
         state.items = items;
     },
-    SET_NUMBER_OF_PAGES(state, { n, per_page }) {
+    SET_NUMBER_OF_PAGES(state, { n, per_page, page }) {
         if (n && per_page) {
             state.number_of_pages = Math.ceil(n / per_page);
+            state.total = n;
+            state.page = page;
         }
     }
 };
@@ -54,7 +58,8 @@ const actions = {
             commit('SET_ITEMS', data);
             commit('SET_NUMBER_OF_PAGES', {
                 n: data.count,
-                per_page: payload.perPage
+                per_page: payload.perPage,
+                page: payload.page
             });
 
             return;

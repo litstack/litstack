@@ -29,8 +29,11 @@ trait CrudIndex
 
         // and the related models added in the crud->index->load
         $eager = [];
+        $eagerClasses = [];
         if(array_key_exists('load', $this->getForm()->toArray()['index'])){
-            $eager = array_keys($this->getForm()->toArray()['index']['load']);
+            $eagerClasses = $this->getForm()->toArray()['index']['load'];
+            $eager = array_keys($eagerClasses);
+
             $query->with($eager);
         }
 
@@ -40,7 +43,7 @@ trait CrudIndex
 
 
         // if sorted by eager loaded value, we need a query with ordering
-        $query = $this->orderByEager($request, $query, $eager);
+        $query = $this->orderByEager($request, $query, $eagerClasses);
 
         // order before paginating
         $key = explode('.', $request->sort_by)[0];
@@ -139,7 +142,7 @@ trait CrudIndex
      * @param  Builder
      * @return Builder
      */
-    private function orderByEager(Request $request, Builder $query, $eager): Builder
+    private function orderByEager(Request $request, Builder $query, $eagerClasses): Builder
     {
         $key = $request->sort_by;
         $order = 'asc';
@@ -149,11 +152,12 @@ trait CrudIndex
             $order = last(explode('.', $request->sort_by));
         }
 
+        $eager = array_keys($eagerClasses);
 
         if(in_array($key, $eager)){
-
             // get the table names of the related models
-            $foreign_table = with(new $eager[$key])->getTable();
+
+            $foreign_table = with(new $eagerClasses[$key])->getTable();
             $table = with(new $this->model)->getTable();
 
             // join the related table for ordering by a foreign column

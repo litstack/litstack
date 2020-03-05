@@ -54,6 +54,6 @@ $navigation-tab-height: 28px;
 // buttons
 $input-btn-padding-x-sm: 1rem;
 
-@import 'node_modules/bootstrap/scss/functions';
-@import 'node_modules/bootstrap/scss/variables';
-@import 'node_modules/bootstrap/scss/mixins';
+@import '~bootstrap/scss/_functions';
+@import '~bootstrap/scss/_variables';
+@import '~bootstrap/scss/_mixins';
