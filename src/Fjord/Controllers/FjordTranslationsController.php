@@ -13,10 +13,10 @@ class FjordTranslationsController extends Controller
         $translations = [];
 
         foreach ($locales as $locale) {
-            $content = require(fjord_path('resources/lang/'.$locale.'/fjord.php'));
+            $content = require(fjord_path('resources/lang/' . $locale . '/fjord.php'));
             $translations[$locale] = $content;
 
-            foreach (glob(resource_path('lang/'.$locale.'/*.php')) as $file) {
+            foreach (glob(resource_path('lang/' . $locale . '/*.php')) as $file) {
                 $content = require($file);
                 $key = explode('.', basename($file))[0];
 
