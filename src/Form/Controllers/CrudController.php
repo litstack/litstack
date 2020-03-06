@@ -184,7 +184,6 @@ class CrudController extends Controller
         if(! $model) {
             $model = with(new $this->model);
         }
-
         return FormLoader::load($model->form_fields_path, $this->model);
     }
 }
