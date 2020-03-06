@@ -35,7 +35,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             ->name('login');
 
         FjordRoute::public()
-            ->post('login', AuthController::class . '@postLogin')
+            ->post('login', AuthController::class . '@authenticate')
             ->name('login.post');
 
         FjordRoute::post('logout', AuthController::class . '@logout')
@@ -44,7 +44,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapFjordRoutes()
     {
-        FjordRoute::group(function() {
+        FjordRoute::group(function () {
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
             Route::post('/set-locale', 'AwStudio\Fjord\Actions\SetLocale')->name('set-locale');
             Route::get('/lang.js', 'AwStudio\Fjord\Fjord\Controllers\FjordTranslationsController')->name('fjord-translations');
@@ -78,12 +78,12 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapDashboardRoutes()
     {
-        if(\App::runningInConsole()){
+        if (\App::runningInConsole()) {
             return;
         }
-        if(
+        if (
             !\File::exists(app_path('Http/Controllers/Fjord/DashboardController.php'))
-        ){
+        ) {
             throw new Exception("The App/Http/Controllers/Fjord/DashboardController.php does not exist. Run php artisan fjord:install to create it.");
         }
         FjordRoute::extensionRoutes(\App\Http\Controllers\Fjord\DashboardController::class);
