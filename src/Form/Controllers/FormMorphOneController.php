@@ -21,7 +21,8 @@ class FormMorphOneController extends FjordController
 
     public function store(Request $request)
     {
-        $model = $request->model::findOrFail($request->id);
+        $model = with(new $request->model);
+        $model = $model::findOrFail($request->id);
 
         $model->update([
             "{$request->morph}_type" =>  $request->morph_model,

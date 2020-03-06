@@ -223,7 +223,6 @@ export default {
                     search: this.search,
                     sort_by: this.sort_by_key,
                     filter: this.filter_scope
-                    //eagerLoad: this.form.config.index.load || []
                 };
 
                 this.$store.dispatch('loadItems', {

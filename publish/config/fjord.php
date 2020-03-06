@@ -134,9 +134,7 @@ return [
         'settings' => [
             'translatable' => false,
         ],
-        'collections' => [
-
-        ]
+        'collections' => []
     ],
 
 
@@ -154,5 +152,16 @@ return [
             // devices: mobile / tablet / desktop
             'default_device' => 'desktop'
         ]
-    ]
+    ],
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Roles & Permissions
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+
+    'roles_permissions' => true
 ];
