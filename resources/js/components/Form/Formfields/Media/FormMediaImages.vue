@@ -1,9 +1,13 @@
 <template>
-    <draggable v-model="sortable" class="row" @end="newOrder">
+    <draggable
+        v-model="sortable"
+        class="row"
+        @end="newOrder"
+        v-if="sortable.length > 0"
+    >
         <div
             :class="imgCols(field.image_size)"
             v-for="(image, index) in sortable"
-            v-if="sortable.length > 0"
             :key="image.id"
         >
             <div class="card no-fx mb-3 fjord-card">
@@ -13,7 +17,7 @@
                     }"
                     class="fjord-card__image"
                 >
-                    <img :src="imgPath(image)" class="" />
+                    <img :src="imgPath(image)" class />
                 </div>
                 <div class="text-right">
                     <b-button

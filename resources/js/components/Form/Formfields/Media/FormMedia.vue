@@ -3,7 +3,7 @@
         <template v-if="model.id">
             <div class="w-100">
                 <b-row>
-                    <div class="col-12 order-2" v-if="!maxFiles">
+                    <div class="col-12 order-2">
                         <vue-dropzone
                             class="fjord-dropzone"
                             :ref="`dropzone-${field.id}`"

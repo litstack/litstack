@@ -87,11 +87,12 @@ module.exports = {
                         ['guide/formfields/textarea', 'Textarea'],
                         ['guide/formfields/wysiwyg', 'WYSIWYG'],
                         ['guide/formfields/select', 'Select'],
-                        ['guide/formfields/image', 'Image'],
                         ['guide/formfields/date-time', 'Date/Time'],
                         ['guide/formfields/boolean', 'Boolean'],
                         ['guide/formfields/range', 'Range'],
+                        ['guide/formfields/image', 'Image'],
                         ['guide/formfields/block', 'Block'],
+                        ['guide/formfields/belongs-to-many', 'BelongsToMany'],
                         ['guide/formfields/has-many', 'HasMany'],
                         ['guide/formfields/edit-has-many', 'EditHasMany'],
                         ['guide/formfields/relation', 'Relation']
