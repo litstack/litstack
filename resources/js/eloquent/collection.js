@@ -24,7 +24,6 @@ export default class EloquentCollection {
 
     _checkItems(model) {
         this.items = this.items.filter(item => model != item);
-        console.log(this, this.items);
     }
 
     get(target, prop) {

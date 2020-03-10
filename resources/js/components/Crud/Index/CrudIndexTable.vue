@@ -232,7 +232,7 @@ export default {
 
                 this.isBusy = false;
             } catch (e) {
-                console.log(e);
+                this.$bus.$emit('error', e);
             }
         },
         goToPage(page) {

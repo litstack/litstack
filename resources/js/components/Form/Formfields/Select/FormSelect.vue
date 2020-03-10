@@ -1,6 +1,10 @@
 <template>
     <fj-form-item :field="field" :model="model">
-        <b-select :value="model[`${field.id}Model`]" :options="options" @input="changed"/>
+        <b-select
+            :value="model[`${field.id}Model`]"
+            :options="options"
+            @input="changed"
+        />
         <slot />
     </fj-form-item>
 </template>
@@ -16,22 +20,20 @@ export default {
         model: {
             required: true,
             type: Object
-        },
+        }
     },
     methods: {
         changed(val) {
-            console.log('changed', val)
-            this.model[`${this.field.id}Model`] = val
-            this.$emit('changed')
+            this.model[`${this.field.id}Model`] = val;
+            this.$emit('changed');
         },
         handle(val) {
             //t
-
         }
     },
     computed: {
         options() {
-            return this.field.options
+            return this.field.options;
         }
     }
 };

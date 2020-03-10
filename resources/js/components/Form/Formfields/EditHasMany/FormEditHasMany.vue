@@ -2,8 +2,9 @@
     <fj-form-item :field="field">
         <template v-if="model.id">
             <div
-                class="fjord-block card no-fx mb-2"
+                class="fjord-block card no-fx"
                 v-for="(m, index) in eloquentModels"
+                :key="index"
             >
                 <div class="card-body">
                     <fj-fjord-form
@@ -127,9 +128,7 @@ export default {
         return {
             rows: null,
             eloquentModels: [],
-            baseRoute: `/${this.model.route}/${
-                this.model.attributes.id
-            }/relations/${this.field.id}`,
+            baseRoute: `/${this.model.route}/${this.model.attributes.id}/relations/${this.field.id}`,
             unrelatedEloquentModels: []
         };
     },

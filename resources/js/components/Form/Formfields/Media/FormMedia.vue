@@ -282,7 +282,6 @@ export default {
                     });
                     // Turn the canvas into a Blob (file object without a name)
                     canvas.toBlob(function(blob) {
-                        console.log('uploading');
                         done(blob);
                     });
                 }

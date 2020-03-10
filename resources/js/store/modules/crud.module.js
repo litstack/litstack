@@ -64,7 +64,7 @@ const actions = {
 
             return;
         } catch (e) {
-            console.log(e);
+            this.$bus.$emit('error', e);
         }
     },
     async loadModel({ commit }, { route, id }) {
@@ -75,7 +75,7 @@ const actions = {
 
             return;
         } catch (e) {
-            console.log(e);
+            this.$bus.$emit('error', e);
         }
     }
 };

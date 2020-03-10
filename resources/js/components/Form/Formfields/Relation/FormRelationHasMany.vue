@@ -1,8 +1,8 @@
 <template>
     <fj-form-item :field="form_field">
         <template v-if="model.id">
-            <b-card class="fjord-block no-fx mb-2">
-                <div>
+            <b-card class="fjord-block no-fx">
+                <div v-if="!!relations.length">
                     <b-table-simple outlined table-variant="light">
                         <fj-colgroup
                             :icons="['drag', 'controls']"
@@ -46,9 +46,7 @@
                                             <b-button
                                                 v-if="hasEditLink(form_field)"
                                                 :href="
-                                                    `${baseURL}${
-                                                        form_field.edit
-                                                    }/${relation.id}/edit`
+                                                    `${baseURL}${form_field.edit}/${relation.id}/edit`
                                                 "
                                                 class="btn-transparent d-flex align-items-center"
                                                 ><fa-icon icon="edit"
@@ -57,9 +55,7 @@
                                                 class="btn-transparent"
                                                 @click="
                                                     showModal(
-                                                        `modal-${
-                                                            form_field.edit
-                                                        }-${relation.id}`
+                                                        `modal-${form_field.edit}-${relation.id}`
                                                     )
                                                 "
                                                 ><fa-icon icon="trash"
@@ -67,9 +63,7 @@
                                         </b-button-group>
                                         <b-modal
                                             :id="
-                                                `modal-${form_field.edit}-${
-                                                    relation.id
-                                                }`
+                                                `modal-${form_field.edit}-${relation.id}`
                                             "
                                             title="Delete Item"
                                         >
@@ -83,9 +77,7 @@
                                                     class="float-right"
                                                     @click="
                                                         $bvModal.hide(
-                                                            `modal-${
-                                                                form_field.edit
-                                                            }-${relation.id}`
+                                                            `modal-${form_field.edit}-${relation.id}`
                                                         )
                                                     "
                                                 >
@@ -158,6 +150,12 @@ export default {
             required: true,
             type: Object
         }
+    },
+    data() {
+        return {
+            relations: [],
+            fields: []
+        };
     },
     methods: {
         showModal(id) {
@@ -271,12 +269,7 @@ export default {
             return form_field.edit != undefined;
         }
     },
-    data() {
-        return {
-            relations: [],
-            fields: []
-        };
-    },
+
     beforeMount() {
         this.setFields();
 
@@ -288,9 +281,7 @@ export default {
     },
     computed: {
         modalId() {
-            return `${this.model.route}-form-relation-table-${
-                this.form_field.id
-            }-${this.model.id}`;
+            return `${this.model.route}-form-relation-table-${this.form_field.id}-${this.model.id}`;
         },
         ...mapGetters(['baseURL', 'form'])
     }

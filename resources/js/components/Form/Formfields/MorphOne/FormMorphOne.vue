@@ -84,7 +84,7 @@ export default {
                 this.model_id = null;
                 this.rows = data.rows;
             } catch (e) {
-                console.log(e);
+                this.$bus.$emit('error', e);
             }
         },
         async storeMorphOne() {

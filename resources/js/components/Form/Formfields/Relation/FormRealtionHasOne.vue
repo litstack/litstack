@@ -1,7 +1,7 @@
 <template>
     <fj-form-item :field="field" :model="model">
         <template v-if="model.id">
-            <b-card class="fjord-block no-fx mb-2">
+            <b-card class="fjord-block no-fx">
                 <b-table-simple
                     v-if="model[`${field.id}Model`]"
                     outlined
@@ -95,7 +95,6 @@ export default {
 
         if (relation) {
             this.relation = new TableModel(relation);
-            console.log(relation, this.relation);
         }
     },
     methods: {

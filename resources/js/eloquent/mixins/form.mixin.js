@@ -136,7 +136,7 @@ let FormMixin = Base =>
                     attributes[lng][form_field.local_key] = '';
                 }
                 if (form_field.id == 'testtext') {
-                    console.log(attributes, lng, attributes[lng]);
+                    //console.log(attributes, lng, attributes[lng]);
                 }
                 return attributes[lng][form_field.local_key];
             }
