@@ -7,6 +7,7 @@
                         <option
                             :value="model"
                             v-for="(model, key) in field.models"
+                            :key="key"
                         >
                             {{ key }}
                         </option>
