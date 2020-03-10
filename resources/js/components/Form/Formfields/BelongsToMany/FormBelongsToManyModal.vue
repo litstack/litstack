@@ -3,16 +3,24 @@
         <b-button variant="secondary" size="sm" @click="visible = !visible">
             {{ $t('edit') }}
         </b-button>
-        <b-modal v-model="visible" hide-footer :title="title">
-            <b-form-input
-                v-model="filter"
-                type="search"
-                placeholder="Type to Search"
-            ></b-form-input>
+        <b-modal v-model="visible" hide-footer :title="title" size="lg">
+            <b-input-group class="mb-3">
+                <b-input-group-prepend is-text>
+                    <fa-icon icon="search" />
+                </b-input-group-prepend>
+
+                <b-form-input
+                    v-model="filter"
+                    type="search"
+                    placeholder="Type to Search"
+                ></b-form-input>
+            </b-input-group>
+
             <b-table
                 :items="relations"
                 :filter="filter"
                 :fields="fields"
+                outlined
                 @row-clicked="selected"
             >
                 <template v-slot:cell(selected)="data">
