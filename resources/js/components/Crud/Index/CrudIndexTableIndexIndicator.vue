@@ -1,7 +1,9 @@
 <template>
     <div>
         <small class="text-primary fj-crud-index-table__index-indicator"
-            >{{ from }} - {{ to }} {{ $t('of') }} {{ total }}</small
+            ><template v-if="total">
+                {{ from }} - {{ to }} {{ $t('of') }} {{ total }}
+            </template></small
         >
     </div>
 </template>
