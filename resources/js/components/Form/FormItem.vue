@@ -14,15 +14,7 @@
             <slot />
         </div>
         <div class="d-flex justify-content-between">
-            <small
-                v-if="model"
-                class="form-text text-muted"
-                v-html="
-                    _format(field.hint || '', {
-                        value: model[`${field.id}Model`]
-                    })
-                "
-            />
+            <small v-if="hint" class="form-text text-muted" v-html="hint" />
             <small class="form-text text-muted">
                 <template v-if="field.max && !field.min"
                     >{{ length }}/{{ field.max }}</template
@@ -53,6 +45,9 @@ export default {
         ...mapGetters(['language']),
         length() {
             return this.value ? this.value.length : 0;
+        },
+        hint() {
+            return this.field.hint || '';
         }
     }
 };
