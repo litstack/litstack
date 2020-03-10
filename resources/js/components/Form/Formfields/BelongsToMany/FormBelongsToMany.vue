@@ -2,7 +2,11 @@
     <fj-form-item :field="field">
         <b-card class="fjord-block no-fx" v-if="model.id">
             <div>
-                <b-table-simple outlined table-variant="light">
+                <b-table-simple
+                    outlined
+                    table-variant="light"
+                    v-if="!!relations.length"
+                >
                     <tr
                         class="draggable-tr"
                         v-for="(relation, rkey) in relations"
