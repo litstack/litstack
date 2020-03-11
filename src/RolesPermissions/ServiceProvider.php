@@ -13,16 +13,8 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function boot()
     {
-        $this->app->register('AwStudio\Fjord\RolesPermissions\RouteServiceProvider');
-    }
-
-    /**
-     * Register the application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
+        if (config('fjord.roles_permissions')) {
+            $this->app->register('AwStudio\Fjord\RolesPermissions\RouteServiceProvider');
+        }
     }
 }

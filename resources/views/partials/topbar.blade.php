@@ -11,15 +11,19 @@
                 <template v-slot:button-content>
                   <fa-icon icon="cogs" />
                 </template>
-                @if (Route::has('fjord.user-roles') && Route::has('fjord.role-permissions'))
-                    @can('read user-roles')
-                        <b-dropdown-item href="{{route('fjord.user-roles')}}">Roles</b-dropdown-item>
-                    @endcan
-                    @can('read role-permissions')
-                        <b-dropdown-item href="{{route('fjord.role-permissions')}}">Permissions</b-dropdown-item>
-                    @endcan
-                    <b-dropdown-divider></b-dropdown-divider>
-                @endif
+                
+                <fj-user-administration>
+                    @if (Route::has('fjord.users') && Route::has('fjord.permissions'))
+                        @can('read fjord-users')
+                            <b-dropdown-item href="{{route('fjord.users')}}">Users</b-dropdown-item>
+                        @endcan
+                        @can('read fjord-permissions')
+                            <b-dropdown-item href="{{route('fjord.permissions')}}">Permissions</b-dropdown-item>
+                        @endcan
+                    @endif
+                </fj-user-administration>
+                
+                
                 @foreach(fjord()->getNavigation('topbar') as $entry)
                     <b-dropdown-item href="/{{ config('fjord.route_prefix') }}/{{ $entry['link'] }}">
                         @isset($entry['text'])

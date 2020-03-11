@@ -3,6 +3,7 @@ window.collect = require('collect.js');
 window.Vue = require('vue');
 
 window.Cropper = require('cropperjs');
+window.zxcvbn = require('zxcvbn');
 
 const axios = require('axios');
 

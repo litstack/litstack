@@ -63,6 +63,7 @@
         "vue-prism-editor": "^0.3.0",
         "vue-tables-2": "^1.6.25",
         "vue2-dropzone": "^3.5.9",
-        "vuedraggable": "^2.23.2"
+        "vuedraggable": "^2.23.2",
+        "zxcvbn": "^4.4.2"
     }
 }

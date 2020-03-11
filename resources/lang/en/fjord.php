@@ -34,4 +34,6 @@ return [
     "model_loaded" => "Reloaded {model}",
     "of" => 'of',
     "edit" => 'edit',
+    "user_admin" => 'Useradministration',
+    "user_profile" => 'My Profile'
 ];

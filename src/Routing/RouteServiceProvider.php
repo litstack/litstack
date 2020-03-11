@@ -1,15 +1,16 @@
 <?php
+
 namespace AwStudio\Fjord\Routing;
 
-use AwStudio\Fjord\Support\Facades\FjordRoute;
-use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
+use Exception;
+use AwStudio\Fjord\Form\Crud;
 use Illuminate\Support\Facades\Route;
 use AwStudio\Fjord\Auth\AuthController;
-use AwStudio\Fjord\Form\Crud;
-use AwStudio\Fjord\Fjord\Controllers\FjordController;
-use AwStudio\Fjord\Fjord\Controllers\FileController;
+use AwStudio\Fjord\Support\Facades\FjordRoute;
 use App\Http\Controllers\Fjord\DashboardController;
-use Exception;
+use AwStudio\Fjord\Fjord\Controllers\FileController;
+use AwStudio\Fjord\Fjord\Controllers\FjordController;
+use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -22,25 +23,11 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     public function map()
     {
-        $this->mapAuthRoutes();
         $this->mapFjordRoutes();
         $this->mapFileRoutes();
         $this->mapDashboardRoutes();
     }
 
-    protected function mapAuthRoutes()
-    {
-        FjordRoute::public()
-            ->get('login', AuthController::class . '@login')
-            ->name('login');
-
-        FjordRoute::public()
-            ->post('login', AuthController::class . '@authenticate')
-            ->name('login.post');
-
-        FjordRoute::post('logout', AuthController::class . '@logout')
-            ->name('logout');
-    }
 
     protected function mapFjordRoutes()
     {

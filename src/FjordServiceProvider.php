@@ -23,17 +23,35 @@ class FjordServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
+        /**
+         * Load the Fjord Routes
+         *
+         */
         $this->app->register('AwStudio\Fjord\Routing\RouteServiceProvider');
-        if(config('fjord.roles_permissions')){
-            $this->app->register('AwStudio\Fjord\RolesPermissions\ServiceProvider');
-        }
+
+        /**
+         * Load the Fjord Permissions
+         *
+         */
+        $this->app->register('AwStudio\Fjord\RolesPermissions\ServiceProvider');
+
+        /**
+         * Load the Fjord Forms
+         *
+         */
         $this->app->register('AwStudio\Fjord\Form\ServiceProvider');
+
+        /**
+         * Load the Fjord Auth
+         *
+         */
+        $this->app->register('AwStudio\Fjord\Auth\ServiceProvider');
 
         /**
          * Load the Fjord views
          *
          */
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'fjord');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'fjord');
 
         /**
          * Register Fjord Auth Middleware
@@ -98,17 +116,16 @@ class FjordServiceProvider extends ServiceProvider
         }
 
         $this->addFiles();
-
     }
 
     public function addFiles()
     {
-        if(! fjord()->installed()) {
+        if (!fjord()->installed()) {
             return;
         }
 
         $this->app['fjord']->addCssFile('/' . config('fjord.route_prefix') . '/css/app.css');
-        foreach(config('fjord.assets.css') as $path) {
+        foreach (config('fjord.assets.css') as $path) {
             $this->app['fjord']->addCssFile($path);
         }
     }
@@ -131,7 +148,7 @@ class FjordServiceProvider extends ServiceProvider
          *
          */
         $this->publishes([
-            __DIR__.'/../publish/config' => config_path(),
+            __DIR__ . '/../publish/config' => config_path(),
         ], 'config');
 
         /**
@@ -139,7 +156,7 @@ class FjordServiceProvider extends ServiceProvider
          *
          */
         $this->publishes([
-            __DIR__.'/../publish/database/migrations' => database_path('migrations'),
+            __DIR__ . '/../publish/database/migrations' => database_path('migrations'),
         ], 'migrations');
     }
 }

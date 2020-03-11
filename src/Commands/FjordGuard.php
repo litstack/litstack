@@ -34,28 +34,43 @@ class FjordGuard extends Command
         $config = require config_path('auth.php');
         $replace = file_get_contents(config_path('auth.php'));
 
-        if(!array_key_exists('fjord', $config['guards'])){
+        if (!array_key_exists('fjord', $config['guards'])) {
             $this->info('generating fjord guard');
             $replace = str_replace(
                 "'guards' => [",
                 "'guards' => [
-            'fjord' => [
-                'driver' => 'session',
-                'provider' => 'fjord_users',
-            ],",
+        'fjord' => [
+            'driver' => 'session',
+            'provider' => 'fjord_users',
+        ],",
                 $replace
             );
         }
 
-        if(!array_key_exists('fjord_users', $config['providers'])){
+        if (!array_key_exists('fjord_users', $config['providers'])) {
             $this->info('generating fjord_users provider');
             $replace = str_replace(
                 "'providers' => [",
                 "'providers' => [
-            'fjord_users' => [
-                'driver' => 'eloquent',
-                'model' => AwStudio\Fjord\Fjord\Models\FjordUser::class,
-            ],",
+        'fjord_users' => [
+            'driver' => 'eloquent',
+            'model' => AwStudio\Fjord\Fjord\Models\FjordUser::class,
+        ],",
+                $replace
+            );
+        }
+
+        if (!array_key_exists('fjord_users', $config['passwords'])) {
+            $this->info('generating fjord_users broker');
+            $replace = str_replace(
+                "'passwords' => [",
+                "'passwords' => [
+        'fjord_users' => [
+            'provider' => 'fjord_users',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],",
                 $replace
             );
         }
@@ -63,6 +78,4 @@ class FjordGuard extends Command
 
         File::put(config_path('auth.php'), $replace);
     }
-
-
 }

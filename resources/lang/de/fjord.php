@@ -34,4 +34,8 @@ return [
     "model_loaded" => "{model} neu geladen",
     "of" => 'von',
     "edit" => 'editieren',
+    "user_admin" => 'Nutzerverwaltung',
+    "user_profile" => 'Mein Profil',
+    "users" => 'Fjord User',
+    "permissions" => 'Berechtigungen',
 ];
