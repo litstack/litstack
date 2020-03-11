@@ -18,10 +18,10 @@ trait RolesAndPermissions
         $admin = Role::where('name', 'admin')->first();
 
         $permissions = [
-            'read fjord-users',
-            'update fjord-users',
-            'read fjord-permissions',
-            'update fjord-permissions'
+            'read user-roles',
+            'update user-roles',
+            'read role-permissions',
+            'update role-permissions'
         ];
 
         // create permissions and give them to admin

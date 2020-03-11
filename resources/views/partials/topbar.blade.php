@@ -14,10 +14,10 @@
                 
                 <fj-user-administration>
                     @if (Route::has('fjord.users') && Route::has('fjord.permissions'))
-                        @can('read fjord-users')
+                        @can('read user-roles')
                             <b-dropdown-item href="{{route('fjord.users')}}">Users</b-dropdown-item>
                         @endcan
-                        @can('read fjord-permissions')
+                        @can('read role-permissions')
                             <b-dropdown-item href="{{route('fjord.permissions')}}">Permissions</b-dropdown-item>
                         @endcan
                     @endif
