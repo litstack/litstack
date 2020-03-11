@@ -34,11 +34,21 @@
                 label-for="password"
                 :state="passwordState"
             >
-                <b-form-input
-                    id="password"
-                    v-model="user.password"
-                    trim
-                ></b-form-input>
+                <b-input-group class="mt-3">
+                    <b-form-input
+                        id="password"
+                        v-model="user.password"
+                        trim
+                    ></b-form-input>
+                    <b-input-group-append>
+                        <b-button
+                            variant="outline-secondary"
+                            @click="makePassword"
+                            ><fa-icon icon="sync"
+                        /></b-button>
+                    </b-input-group-append>
+                </b-input-group>
+
                 <b-progress
                     class="mt-2"
                     height="2px"
@@ -127,9 +137,12 @@ export default {
             this.user = {
                 name: '',
                 email: '',
-                password: '',
+                password: this.keygen(20),
                 sendResetLink: false
             };
+        },
+        makePassword() {
+            this.user.password = this.keygen(20);
         },
         keygen(length) {
             var result = '';
