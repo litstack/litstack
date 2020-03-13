@@ -25,13 +25,18 @@
                 
                 
                 @foreach(fjord()->getNavigation('topbar') as $entry)
-                    <b-dropdown-item href="/{{ config('fjord.route_prefix') }}/{{ $entry['link'] }}">
-                        @isset($entry['text'])
-                            {{ $entry['text'] }}
-                        @else
-                            {!! $entry['icon'] !!} {{ $entry['link'] }}
-                        @endisset
-                    </b-dropdown-item>
+                    @isset($entry['link'])
+                        <b-dropdown-item href="/{{ config('fjord.route_prefix') }}/{{ $entry['link'] }}">
+                            @isset($entry['text'])
+                                {{ $entry['text'] }}
+                            @else
+                                {!! $entry['icon'] !!} {{ $entry['link'] }}
+                            @endisset
+                        </b-dropdown-item>
+                    @endisset
+                    @isset ($entry['component'])
+                        <{{ $entry['component'] }}></{{ $entry['component'] }}>
+                    @endisset
                 @endforeach
                 <b-dropdown-divider></b-dropdown-divider>
                 <fj-locales />
