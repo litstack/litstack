@@ -66,7 +66,29 @@ class FjordServiceProvider extends ServiceProvider
         $this->builder();
 
         $this->publish();
+
+        // $items = require fjord_resource_path(config('fjord.navigation_path') . "/main.php");
+
+        // dd(
+        //     $this->navigationPermission(collect($items))->toArray()
+        // );
     }
+
+    // private function navigationPermission($items)
+    // {
+    //     return $items->map(function ($item) {
+    //         if (is_array($item)) {
+    //             if (array_key_exists('link', $item)) {
+    //                 dump($item);
+    //                 if (!strpos($item['link'], '/') && !fjord_user()->can("read {$item['link']}")) {
+    //                     return;
+    //                 }
+    //             }
+    //             return $this->navigationPermission(collect($item));
+    //         }
+    //         return $item;
+    //     });
+    // }
 
     protected function builder()
     {
