@@ -42,37 +42,32 @@
 @endif
 
 @if ($show)
-    <li
+    <b-nav-item
         @isset($entry['link'])
             class="nav-{{str_replace('/', '-', $entry['link'])}}"
         @endisset
         @isset($entry['children'])
             class="@foreach ($entry['children'] as $child)@isset($child['link']) nav-{{str_replace('/', '-', $child['link'])}}@endisset @endforeach"
         @endisset
-        >
         @isset($entry['children'])
-            <a href="#" class="fj-navigation__has-children">
+            href="#" class="fj-navigation__has-children">
                 <div class="fj-navigation__icon">
                     {!!$entry['icon']!!}
                 </div>
                 {{$entry['title']}}
                 <i class="fas fa-caret-down text-muted fj-navigation__down"></i>
-            </a>
-            <ul>
+            
                 @foreach ($entry['children'] as $entry)
                     @include('fjord::partials.navitem')
                 @endforeach
-            </ul>
-
         @else
-            <a href="/{{ config('fjord.route_prefix') }}/{{$entry['link']}}">
+            href="/{{ config('fjord.route_prefix') }}/{{$entry['link']}}">
                 @isset($entry['icon'])
                     <div class="fj-navigation__icon">
                         {!!$entry['icon']!!}
                     </div>
                 @endisset
                 {{$entry['title']}}
-            </a>
         @endisset
-    </li>
+    </b-nav-item>
 @endif

@@ -26,101 +26,19 @@ div#fjord-app.vertical {
     .fj-navigation {
         grid-area: s;
         border-right: 1px solid $light;
+        padding-top: 20px;
         background: #fcfcfc;
 
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        .list-group {
-            .list-group-item {
-                border-radius: 0;
-                a {
-                    color: $blue-dark;
-                    width: 100%;
-                }
-                border-right: none;
-                border-left: none;
+        .collapse {
+            box-shadow: inset 0px 5px 7px -5px black;
+            .list-group-item:not(.active) {
+                background-color: rgba(206, 212, 218, 0.8);
             }
-        }
-        &__is-active {
-            background-color: #f1f1f1;
-            & > a {
-                font-weight: 800;
-                .fj-navigation__icon {
-                    color: $primary;
-                }
-            }
-        }
-        &__icon {
-            display: inline-block;
-            width: 36px;
-            color: $secondary;
-            padding-left: 10px;
-        }
-
-        &__down {
-            float: right;
-            line-height: 40px;
-            padding-right: 10px;
-        }
-
-        &__parent {
-            list-style-type: none;
-            padding-left: 0;
-            //border-bottom: 1px solid #dee2e6;
-            letter-spacing: 0.03rem;
-
-            a {
-                height: 40px;
-                display: inline-block;
-                width: 100%;
-                line-height: 40px;
-                color: black;
-                //border-top: 1px solid rgba(0, 0, 0, 0.1);
-
-                &:hover {
-                    text-decoration: none;
-                    background-color: $secondary;
-                    color: white;
-                    i {
-                        color: white !important;
-                    }
-                }
-            }
-            ul {
-                display: none;
-                list-style-type: none;
-                background-color: $border;
-                padding-left: 0;
-
-                li {
-                    height: 40px;
-                    &:first-child {
-                        a {
-                            box-shadow: inset 0px 8px 8px -10px rgba(0, 0, 0, 0.25),
-                                inset 0px 0px 0px 0px rgba(0, 0, 0, 0.25);
-                        }
-                    }
-                    &:last-child {
-                        a {
-                            box-shadow: inset 0px 0px 0px 0px
-                                    rgba(0, 0, 0, 0.25),
-                                inset 0px -8px 8px -10px rgba(0, 0, 0, 0.25);
-                        }
-                    }
-                }
-                a {
-                    color: $dark;
-                    padding-left: 0px;
-                    background-color: $border;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    //border-top: 1px solid rgba(118, 116, 125, 0.4);
-                    &:hover {
-                        background-color: $secondary;
-                        color: white;
-                    }
-                }
-                .fjord-navigation__is-active {
-                    background-color: #2c2b2f;
+            .list-group:last-child .list-group-item {
+                box-shadow: inset 0px -6px 8px -10px black;
+                &.active {
+                    box-shadow: inset 0px -10px 12px -15px black;
                 }
             }
         }
