@@ -27,19 +27,16 @@ div#fjord-app.vertical {
         grid-area: s;
         border-right: 1px solid $light;
         padding-top: 20px;
-        background: #fcfcfc;
+        background: white;
 
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         .collapse {
-            box-shadow: inset 0px 5px 7px -5px black;
+            box-shadow: inset 0px 5px 7px -7px black;
             .list-group-item:not(.active) {
                 background-color: rgba(206, 212, 218, 0.8);
             }
             .list-group:last-child .list-group-item {
-                box-shadow: inset 0px -6px 8px -10px black;
-                &.active {
-                    box-shadow: inset 0px -10px 12px -15px black;
-                }
+                box-shadow: inset 0px -6px 8px -13px black;
             }
         }
     }
