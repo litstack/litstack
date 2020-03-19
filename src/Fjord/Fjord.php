@@ -9,7 +9,8 @@ use Schema;
 class Fjord
 {
     use Concerns\ManagesNavigation,
-        Concerns\ManagesForms;
+        Concerns\ManagesForms,
+        Concerns\ManagesFiles;
 
     public $translatedAttributes = [];
 
@@ -33,7 +34,14 @@ class Fjord
 
     public function installed()
     {
-        return Schema::hasTable('form_fields')
-            && config()->has('fjord');
+        if(! config()->has('fjord')) {
+            return false;
+        }
+        
+        try {
+            return Schema::hasTable('form_fields');
+        } catch(\Exception $e) {
+            return false;
+        }
     }
 }

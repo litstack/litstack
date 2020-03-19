@@ -1,0 +1,14 @@
+{
+    "name": "fjord-docs",
+    "license": "MIT",
+    "scripts": {
+        "dev": "vuepress dev",
+        "build": "vuepress build"
+    },
+    "author": [
+        "Jannes Behrens"
+    ],
+    "devDependencies": {
+        "@vuepress/plugin-google-analytics": "^1.3.1"
+    }
+}

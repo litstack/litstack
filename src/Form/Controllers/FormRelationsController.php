@@ -14,9 +14,9 @@ class FormRelationsController extends FjordController
 {
     public function index(Request $request)
     {
-
         $model = with(new $request->model_type);
-        if($request->model_id) {
+
+        if ($request->model_id) {
             $model = $request->model_type::where('id', $request->model_id)->first();
         }
 
@@ -41,7 +41,7 @@ class FormRelationsController extends FjordController
             ->where('to_model_id', $request->to_model_id)
             ->exists();
 
-        if($relation) {
+        if ($relation) {
             return response()->json([
                 'message' => 'You have already selected this item.'
             ], 400);
@@ -54,11 +54,18 @@ class FormRelationsController extends FjordController
 
     public function delete(Request $request)
     {
-        FormRelation::where('from_model_type', $request->from_model_type)
+        $delete = FormRelation::where('from_model_type', $request->from_model_type)
             ->where('from_model_id', $request->from_model_id)
             ->where('to_model_type', $request->to_model_type)
             ->where('to_model_id', $request->to_model_id)
             ->delete();
+
+        if ($delete) {
+            return response()->json([
+                'message' => 'Deleted relation',
+                'request' => $request->all()
+            ], 200);
+        }
     }
 
     public function order(Request $request)
@@ -66,11 +73,11 @@ class FormRelationsController extends FjordController
         $data = $request->data;
         $ids = $request->ids;
 
-        if(! $data || ! $ids) {
+        if (! $data || ! $ids) {
             abort(404);
         }
 
-        foreach($ids as $order => $id) {
+        foreach ($ids as $order => $id) {
             $relation = FormRelation::where('from_model_type', $data['from_model_type'])
                 ->where('from_model_id', $data['from_model_id'])
                 ->where('to_model_type', $data['to_model_type'])

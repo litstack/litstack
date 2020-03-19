@@ -84,6 +84,26 @@ trait LoadFields
             return;
         }
 
+        if($field->type == 'morphOne') {
+            return;
+        }
+
+        if($field->type == 'form_header') {
+            return;
+        }
+
+        if($field->type == 'hasMany') {
+            return;
+        }
+
+        if($field->type == 'editHasMany') {
+            return;
+        }
+
+        if($field->type == 'belongsToMany') {
+            return;
+        }
+
         if(! $model->isFormFieldFillable($field)) {
             throw new Exception("You may add \"{$field->id}\" to fillables in " . get_class($model) . " to use it as a form field!");
         }

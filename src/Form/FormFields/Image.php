@@ -15,6 +15,7 @@ class Image
 
     const DEFAULTS = [
         'maxFiles' => 1,
+        'square' => true,
         'crop' => false,
         'ratio' => 4/3
     ];

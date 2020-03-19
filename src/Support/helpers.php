@@ -1,5 +1,23 @@
 <?php
 
+if(! function_exists('fjord_js')) {
+    function fjord_js() {
+        $js_path = config('fjord.assets.js') ? config('fjord.assets.js') : route('fjord.js');
+
+        if(config('fjord.assets.js')){
+            $js_path .= '?v=' . filemtime(ltrim(config('fjord.assets.js'), '/'));
+        }
+
+        return $js_path;
+    }
+}
+
+if(! function_exists('fjord_user')) {
+    function fjord_user() {
+        return Auth::guard('fjord')->user();
+    }
+}
+
 if(! function_exists('fjord_resource_path')) {
     function fjord_resource_path($path = '') {
         return resource_path(config('fjord.resource_path') . ($path ? DIRECTORY_SEPARATOR.$path : $path));
@@ -9,6 +27,12 @@ if(! function_exists('fjord_resource_path')) {
 if(! function_exists('fjord_path')) {
     function fjord_path($path = '') {
         return realpath(__DIR__ . '/../../').($path ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+}
+
+if(! function_exists('fjord_local_resource_path')) {
+    function fjord_local_resource_path($path = '') {
+        return realpath(__DIR__ . '/../../resources/').($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
 }
 
@@ -96,5 +120,37 @@ if(! function_exists('call_func')) {
 
             return call_user_func_array([$class, $method], $params);
         }
+    }
+}
+
+if(! function_exists('camel_space_case')) {
+    function camel_space_case($string) {
+        return collect(explode('_', Str::snake($string)))->map(function($item) {
+            return ucfirst($item);
+        })->implode(' ');
+    }
+}
+
+if(! function_exists('hasClassPermissions')) {
+    function hasClassPermissions($model) {
+        $config = require fjord_resource_path("crud/{$model}.php");
+
+        if(array_key_exists('controller', $config)){
+            $class_name = $config['controller'];
+        }else{
+            $controllerName = Str::studly(Str::singular($model)).'Controller';
+            $class_name = 'App\Http\Controllers\Fjord\\' . $controllerName;
+        }
+
+        // $class_name = 'App\Http\Controllers\Fjord\\' . $controllerName;
+
+        $class_reflex = new \ReflectionClass($class_name);
+        $class_constants = $class_reflex->getConstants();
+
+        if (!array_key_exists('PERMISSIONS', $class_constants)) {
+            return false;
+        }
+
+        return $class_name::PERMISSIONS;
     }
 }

@@ -17,7 +17,8 @@
                 'languages' => collect(config('translatable.locales')),
                 'fallback_locale' => config('translatable.fallback_locale'),
             ]),
-            'config' => collect(config('fjord'))
+            'config' => collect(config('fjord')),
+            'auth' => auth()->user()
         ];
 
         foreach($models ?? [] as $title => $model) {

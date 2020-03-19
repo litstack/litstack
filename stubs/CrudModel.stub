@@ -13,18 +13,22 @@ class DummyClassname extends FjordModel DummyImplement
     // be set fillable. don't forget to also set them fillable in
     // the coresponding translation-model
     protected $fillable = ['title', 'text'];
-
     DummyVars
+    DummyWiths
 
     DummySluggable
 
     DummyGetAttributes
 
-    // The getRoute function is needed when your CRUD-Model does need a
-    // preview view, which is defined in the fjord-resources crud config file.
-    // In order to use it, you should define a named route in routes/web.php
+    /**
+     * The getRoute function is needed when your CRUD-Model has a
+     * preview view, which is defined in the fjord-resources crud config file.
+     * In order to use it, you should define a named route in routes/web.php
+     *
+     */
     public function getRoute()
     {
-        return route('DummyRoutename', ['id' => $this->id]);
+        return '';
+        //return route('DummyRoutename', ['id' => $this->id]);
     }
 }

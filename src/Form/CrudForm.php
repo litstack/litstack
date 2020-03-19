@@ -2,6 +2,7 @@
 
 namespace AwStudio\Fjord\Form;
 
+use Form;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use AwStudio\Fjord\Support\Facades\FormLoader;
@@ -107,30 +108,41 @@ class CrudForm
         if(! is_translatable($this->modelInstance)) {
             return $key;
         }
-        
+
         if(in_array($key, $this->modelInstance->translatedAttributes)) {
             return 'translations.' . $key;
+        }else{
+            return $key;
         }
     }
 
     protected function setNames()
     {
-        $names = ['title' => ['singular' => '', 'plural' => '']];
+        $names = [
+            'title' => [
+                'singular' => $this->attributes['names']['singular'] ?? '',
+                'plural' => $this->attributes['names']['plural'] ?? ''
+            ]
+        ];
+
+
+        if($names['title']['singular'] == '' ){
+            $singular = Str::singular(Str::snake($this->getName()));
+            $words = explode('_', $singular);
+            foreach($words as $key => $word) {
+                $names['title']['singular'] .= ucfirst($word);
+            }
+        }
+
+        if($names['title']['plural'] == ''){
+            $plural = Str::plural($singular);
+            $words = explode('_', $plural);
+            foreach($words as $key => $word) {
+                $names['title']['plural'] .= ucfirst($word);
+            }
+        }
 
         $table = $this->modelInstance->getTable();
-        $singular = Str::singular(Str::snake($this->getName()));
-        $plural = Str::plural($singular);
-
-        $words = explode('_', $singular);
-        foreach($words as $key => $word) {
-            $names['title']['singular'] .= ucfirst($word);
-        }
-
-        $words = explode('_', $plural);
-        foreach($words as $key => $word) {
-            $names['title']['plural'] .= ucfirst($word);
-        }
-
         $names['table'] = $table;
 
         $this->attributes['names'] = $names;
@@ -268,5 +280,10 @@ class CrudForm
     public function __get($key)
     {
         return $this->getAttribute($key);
+    }
+
+    public function setAttribute($key, $value)
+    {
+        $this->attributes[$key] = $value;
     }
 }

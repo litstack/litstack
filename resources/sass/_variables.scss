@@ -1,0 +1,59 @@
+// Body
+$body-bg: #f1f1f2;
+
+// Typography
+$font-family-sans-serif: 'IBM Plex Sans', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+$headings-font-weight: 600;
+
+// Colors
+$blue: #1584ff;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66d9b;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+
+$old-purple: linear-gradient(to right, #4200b7 0%, #5c00ff 100%);
+$old-purple-gradient: linear-gradient(to right, #150d54 0%, #280969 100%);
+
+// fjord
+$border: #ced4da;
+$mid: #353535;
+$dark: #232127;
+$darker: #100f10;
+
+$muted: #6c757d;
+$light: #e1e1e1;
+$blue-dark: #081838;
+
+$draggable: #f7f7f7;
+
+$dark_transparent: rgba(34, 33, 38, 0.7);
+
+$primary: $blue;
+
+$box-shadow: 0 15px 15px -15px rgba(0, 0, 0, 0.2);
+
+$radius: 3px;
+
+// Topbar
+$topbar-bg: $dark;
+$topbar-height: 56px;
+
+// Navigation
+$navigation-height: 80px;
+$navigation-tab-height: 28px;
+
+// buttons
+$input-btn-padding-x-sm: 1rem;
+
+@import '~bootstrap/scss/_functions';
+@import '~bootstrap/scss/_variables';
+@import '~bootstrap/scss/_mixins';

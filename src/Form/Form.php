@@ -38,7 +38,10 @@ class Form
 
         if($loadingName) {
 
-            $ids = $this->getExistingFormFieldIds($items->first()->form_fields_path);
+            $ids = $items->isNotEmpty()
+                ? $this->getExistingFormFieldIds($items->first()->form_fields_path)
+                : [];
+                
             return $items->whereIn('field_id', $ids);
 
         } else if(! $loadingCollection) {

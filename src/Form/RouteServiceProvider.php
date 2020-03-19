@@ -9,8 +9,12 @@ use AwStudio\Fjord\Support\Facades\FjordRoute;
 use AwStudio\Fjord\Form\Controllers\MediaController;
 use AwStudio\Fjord\Form\Controllers\FormController;
 use AwStudio\Fjord\Form\Controllers\FormBlockController;
+use AwStudio\Fjord\Form\Controllers\FormMorphOneController;
+use AwStudio\Fjord\Form\Controllers\FormBelongsToManyController;
+use AwStudio\Fjord\Form\Controllers\FormHasManyController;
 use AwStudio\Fjord\Form\Controllers\FormRelationsController;
 use AwStudio\Fjord\Support\Facades\FormLoader;
+use AwStudio\Fjord\Fjord\Controllers\RolePermissionController;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -31,7 +35,11 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->mapCrudRoutes();
         $this->mapFormBlockRoutes();
         $this->mapFormRelationRoutes();
+        $this->mapFormMorphOneRoutes();
+        $this->mapFormBelongsToManyRoutes();
+        $this->mapFormHasManyRoutes();
         $this->mapMediaRoutes();
+
     }
 
     protected function mapCrudRoutes()
@@ -39,20 +47,25 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         foreach(Fjord::forms('crud') as $crud => $path) {
             $crudArray = require $path;
 
-
-            $controllerClass = ucfirst(Str::camel(Str::singular($crud))) . "Controller";
-            if(array_key_exists('controller', $crudArray)) {
-                $controllerClass = $crudArray['controller'];
+            if(array_key_exists('controller', $crudArray)){
+                $namespace = $crudArray['controller'];
+            }else{
+                $controllerClass = Str::studly(Str::singular($crud)).'Controller';
+                $namespace = "\\App\\Http\\Controllers\\Fjord\\{$controllerClass}";
             }
 
-            $namespace = "\\App\\Http\\Controllers\\Fjord\\{$controllerClass}";
-
-            FjordRoute::resource(config('fjord.route_prefix') . "/{$crud}", $namespace)
-                ->except(['show']);
+            FjordRoute::resource(config('fjord.route_prefix') . "/{$crud}", $namespace);
             FjordRoute::post("/{$crud}/index", $namespace . "@postIndex")
                 ->name("{$crud}.post_index");
-            FjordRoute::post("/{$crud}/delete-all", $namespace . "@deleteAll")
-                ->name("{$crud}.delete_all");
+
+            FjordRoute::get("/{$crud}/{id}/relations/{relation}", $namespace . "@relationIndex");
+            FjordRoute::get("/{$crud}/{id}/relations/{relation}/create", $namespace . "@relationStore");
+            FjordRoute::delete("/{$crud}/{id}/relations/{relation}/{foreign_id}", $namespace . "@relationDestroy");
+            FjordRoute::post("/{$crud}/{id}/relations/{relation}/{foreign_id}/remove", $namespace . "@relationRemove");
+            FjordRoute::post("/unrelated-relation", $namespace . "@unrelatedRelation");
+            FjordRoute::post("/link-relation", $namespace . "@relationLink");
+
+            FjordRoute::extensionRoutes($namespace);
         }
     }
 
@@ -95,10 +108,31 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::post('/relations/delete', FormRelationsController::class . "@delete")->name('relation.delete');
     }
 
+    protected function mapFormMorphOneRoutes()
+    {
+        FjordRoute::post('/morph-one', FormMorphOneController::class . "@index")->name('morph_one.index');
+        FjordRoute::post('/morph-one/store', FormMorphOneController::class . "@store")->name('morph_one.store');
+    }
+
+    protected function mapFormBelongsToManyRoutes()
+    {
+        FjordRoute::post('/belongs-to-many', FormBelongsToManyController::class . "@index");
+        FjordRoute::post('/belongs-to-many/relations', FormBelongsToManyController::class . "@relations");
+        FjordRoute::post('/belongs-to-many/update', FormBelongsToManyController::class . "@update");
+    }
+
+    protected function mapFormHasManyRoutes()
+    {
+        FjordRoute::post('/has-many', FormHasManyController::class . "@index");
+        FjordRoute::post('/has-many/relations', FormHasManyController::class . "@relations");
+        FjordRoute::post('/has-many/update', FormHasManyController::class . "@update");
+    }
+
     protected function mapMediaRoutes()
     {
         FjordRoute::put('/media/attributes', MediaController::class . '@attributes')->name('media.attributes');
         FjordRoute::post('/media', MediaController::class . '@store')->name('media.store');
         FjordRoute::delete('/media/{medium}', MediaController::class . '@destroy')->name('media.destroy');
     }
+
 }

@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Blade;
 use AwStudio\Fjord\Support\Facades\Fjord as FjordFacade;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use AwStudio\Fjord\Auth\Middleware\Authenticate;
 
 class FjordServiceProvider extends ServiceProvider
@@ -22,39 +23,35 @@ class FjordServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
+        /**
+         * Load the Fjord Routes
+         *
+         */
         $this->app->register('AwStudio\Fjord\Routing\RouteServiceProvider');
+
+        /**
+         * Load the Fjord Permissions
+         *
+         */
+        $this->app->register('AwStudio\Fjord\RolesPermissions\ServiceProvider');
+
+        /**
+         * Load the Fjord Forms
+         *
+         */
         $this->app->register('AwStudio\Fjord\Form\ServiceProvider');
-        $this->app->register('AwStudio\Fjord\Blade\BladeServiceProvider');
+
+        /**
+         * Load the Fjord Auth
+         *
+         */
+        $this->app->register('AwStudio\Fjord\Auth\ServiceProvider');
 
         /**
          * Load the Fjord views
          *
          */
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'fjord');
-
-        /**
-         * Publish Fjords assets
-         *
-         */
-        $this->publishes([
-            __DIR__.'/../publish/assets' => public_path('fjord'),
-        ], 'public');
-
-        /**
-         * Publish Fjords config
-         *
-         */
-        $this->publishes([
-            __DIR__.'/../publish/config' => config_path(),
-        ], 'config');
-
-        /**
-         * Publish Fjords migrations
-         *
-         */
-        $this->publishes([
-            __DIR__.'/../publish/database/migrations' => database_path('migrations'),
-        ], 'migrations');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'fjord');
 
         /**
          * Register Fjord Auth Middleware
@@ -62,11 +59,22 @@ class FjordServiceProvider extends ServiceProvider
          */
         $router->aliasMiddleware('fjord.auth', Authenticate::class);
 
+        /**
+         * Register Fjord Builder
+         *
+         */
+        $this->builder();
+
+        $this->publish();
+    }
+
+    protected function builder()
+    {
         Builder::macro('whereLike', function ($attributes, string $searchTerm) {
             $this->where(function (Builder $query) use ($attributes, $searchTerm) {
-                foreach (array_wrap($attributes) as $attribute) {
+                foreach (Arr::wrap($attributes) as $attribute) {
                     $query->when(
-                        str_contains($attribute, '.'),
+                        Str::contains($attribute, '.'),
                         function (Builder $query) use ($attribute, $searchTerm) {
                             [$relationName, $relationAttribute] = explode('.', $attribute);
 
@@ -106,12 +114,49 @@ class FjordServiceProvider extends ServiceProvider
         if (App::runningInConsole()) {
             $this->registerConsoleCommands();
         }
+
+        $this->addFiles();
+    }
+
+    public function addFiles()
+    {
+        if (!fjord()->installed()) {
+            return;
+        }
+
+        $this->app['fjord']->addCssFile('/' . config('fjord.route_prefix') . '/css/app.css');
+        foreach (config('fjord.assets.css') as $path) {
+            $this->app['fjord']->addCssFile($path);
+        }
     }
 
     private function registerConsoleCommands()
     {
         $this->commands(Commands\FjordInstall::class);
+        $this->commands(Commands\FjordGuard::class);
         $this->commands(Commands\FjordAdmin::class);
+        $this->commands(Commands\FjordUser::class);
         $this->commands(Commands\FjordCrud::class);
+        $this->commands(Commands\FjordCrudPermissions::class);
+        $this->commands(Commands\FjordDefaultPermissions::class);
+    }
+
+    protected function publish()
+    {
+        /**
+         * Publish Fjords config
+         *
+         */
+        $this->publishes([
+            __DIR__ . '/../publish/config' => config_path(),
+        ], 'config');
+
+        /**
+         * Publish Fjords migrations
+         *
+         */
+        $this->publishes([
+            __DIR__ . '/../publish/database/migrations' => database_path('migrations'),
+        ], 'migrations');
     }
 }

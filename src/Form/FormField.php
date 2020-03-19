@@ -18,9 +18,19 @@ class FormField implements ArrayAccess
         'image' => FormFields\Image::class,
         'checkboxes' => FormFields\Checkboxes::class,
         'code' => FormFields\Code::class,
-        
+
         'datetime' => FormFields\DateTime::class,
         'dt' => FormFields\DateTime::class,
+
+        'morphOne' => FormFields\MorphOne::class,
+
+        'form_header' => FormFields\FormHeader::class,
+
+        'range' => FormFields\Range::class,
+
+        'hasMany' => FormFields\HasMany::class,
+        'editHasMany' => FormFields\EditHasMany::class,
+        'belongsToMany' => FormFields\BelongsToMany::class,
     ];
 
     protected $attributes = [];

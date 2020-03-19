@@ -1,0 +1,65 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,600&display=swap');
+
+// Variables
+@import 'variables';
+
+@import '~flag-icon-css/sass/flag-icon';
+
+// Modules
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/src/index';
+@import '~cropperjs/src/index';
+
+// Atoms
+@import '_atoms/border';
+@import '_atoms/bs-buttons';
+@import '_atoms/fjord-brand';
+@import '_atoms/fjord-card';
+@import '_atoms/fjord-search';
+@import '_atoms/fjord-draggable';
+@import '_atoms/fjord-container';
+@import '_atoms/fjord-spinner';
+
+// Molecules
+@import '_molecules/fjord-topbar';
+@import '_molecules/fjord-dropzone';
+@import '_molecules/fjord-form';
+@import '_molecules/fjord-tabs';
+@import '_molecules/fjord-modal';
+@import '_molecules/fjord-block';
+@import '_molecules/fjord-cropper';
+@import '_molecules/fjord-toast';
+
+// layout
+@import 'horizontal';
+@import 'vertical';
+
+body,
+html {
+    background-color: $dark;
+}
+
+div#fjord-app {
+    background-color: $body-bg;
+    min-height: 100vh;
+
+    .btn:focus {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+}
+
+main {
+}
+
+.modal-backdrop {
+    opacity: 0.5 !important;
+}
+
+.fj-trash {
+    svg:hover {
+        cursor: pointer;
+        color: black;
+    }
+}

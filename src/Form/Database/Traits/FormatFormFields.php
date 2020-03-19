@@ -48,9 +48,12 @@ trait FormatFormFields
             case 'block':
                 return $this->getBlocks($form_field, $builder);
             case 'image':
-            return $form_field->maxFiles > 1
-                ? $this->getMedia($form_field->id)
-                : $this->getMedia($form_field->id)->first();
+                return $form_field->maxFiles > 1
+                    ? $this->getMedia($form_field->id)
+                    : $this->getMedia($form_field->id)->first();
+            case 'morphOne':
+                // TODO: 
+                return 'morphOne';
             default:
                 return $value;
         }

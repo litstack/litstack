@@ -32,15 +32,15 @@ class FormController extends Controller
         $this->form->setPreviewRoute(
             new FormFieldCollection($eloquentFormFields['data'])
         );
-
-        return view('fjord::vue')->withComponent('crud-show')
+        return view('fjord::vue')->withComponent('fj-crud-show')
             ->withModels([
                 'model' => $eloquentFormFields
             ])
             ->withTitle($this->form->title)
             ->withProps([
                 'formConfig' => $this->form->toArray(),
-                'actions' => ['crud-action-preview']
+                'actions' => ['fj-crud-show-preview'],
+                'content' => ['fj-crud-show-form']
             ]);
     }
 

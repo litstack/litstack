@@ -16,19 +16,18 @@ class DummyClassname extends Migration
         Schema::create('DummyTablename', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            // enter all non-trnslated columns here
+            // enter all non-translated columns here
             // set them to fillable in your model
-            //
+
             // $table->string('title');
 
             DummySlug
 
-            DummySortable
             $table->boolean('active')->default(true);
 
             $table->timestamps();
         });
-
+        
         DummyTranslation
     }
 
