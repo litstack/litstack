@@ -11,59 +11,33 @@ trait CrudIndex
 {
     public function postIndex(Request $request)
     {
-        // set the initial query
-        if(array_key_exists('query', $this->getForm()->index)){
-            $query = $this->getForm()->index['query'];
-        }else{
-            $query = new $this->model;
-        }
+        // Initialize query builder
+        $query = $this->initIndexQuery();
 
-        // eager load models default withs
-        $query = $query->with($this->getWiths());
+        // Eager loads
+        $query = $this->prepareIndexQuery($query);
 
-        // apply the filter
-        if($request->filter) {
-            $scope = $request->filter;
-            $query = $query->$scope();
-        }
+        // Filter
+        $query = $this->applyFilterToIndexQuery($query, $request);
 
-        // and the related models added in the crud->index->load
-        $eager = [];
-        $eagerClasses = [];
-        if(array_key_exists('load', $this->getForm()->toArray()['index'])){
-            $eagerClasses = $this->getForm()->toArray()['index']['load'];
-            $eager = array_keys($eagerClasses);
+        // Search
+        $query = $this->applySearchToIndexQuery($query, $request);
 
-            $query->with($eager);
-        }
+        // Order/Sort
+        $query = $this->applyOrderToIndexQuery($query, $request);
 
+        // Pagination
+        $query = $this->applyPaginationToIndexQuery($query, $request);
 
-        // perform search
-        $query = $this->search($request, $query);
+        // Fetch
+        $total = $query->count();
+        $items = $query->get();
 
-
-        // if sorted by eager loaded value, we need a query with ordering
-        $query = $this->orderByEager($request, $query, $eagerClasses);
-
-        // order before paginating
-        $key = explode('.', $request->sort_by)[0];
-        $order = last(explode('.', $request->sort_by));
-        if(!in_array($key, $eager)){
-            if($request->sort_by){
-                $query->orderBy($key, $order);
-            }
-        }
-
-        // pagination
-        if($request->perPage){
-            $total = $query->get()->count();
-        }
-        $items = $this->paginate($request, $query);
-
-
+        /*
+        // TODO: Check why this was needed. Sorting after fetching???
         // sort items, if needed
         $items = $this->sortItems($request, $items, $eager);
-
+        */
 
         if(is_translatable($this->model)) {
             $items->map(function($item) {
@@ -75,6 +49,132 @@ trait CrudIndex
             'count' => $total ?? 0,
             'items' => $items
         ];
+    }
+
+    /**
+     * Set the initial query builder.
+     */
+    protected function initIndexQuery()
+    {
+        if(! array_key_exists('query', $this->getForm()->index)) {
+            return new $this->model;
+        }
+
+        return $this->getForm()->index['query'];
+    }
+
+    /**
+     * Eager Loads.
+     */
+    protected function prepareIndexQuery($query)
+    {
+        // Eager load models default withs.
+        $query = $query->with($this->getWiths());
+
+        // Eager load
+        $eagerClasses = $this->getEagerClasses();
+        if($eagerClasses){
+            $query = $query->with(array_keys($eagerClasses));
+        }
+
+        return $query;
+    }
+
+    /**
+     * Get the relations that should be eager loaded.
+     *
+     * @return array
+     */
+    protected function getEagerClasses()
+    {
+        return array_key_exists('load', $this->getForm()->toArray()['index'])
+            ? $this->getForm()->toArray()['index']['load']
+            : [];
+    }
+
+    /**
+     * Apply filter to the index query builder.
+     */
+    protected function applyFilterToIndexQuery($query, Request $request)
+    {
+        if(! $request->filter) {
+            return $query;
+        }
+
+        // TODO: Apply multiple filters
+        $scope = $request->filter;
+        $query = $query->$scope();
+
+        return $query;
+    }
+
+    /**
+     * Apply search query to the index query builder.
+     */
+    protected function applySearchToIndexQuery($query, Request $request)
+    {
+        $form = $this->getForm();
+
+        if($request->search) {
+            $query->whereLike($form->index['search'], $request->search);
+        }
+
+        return $query;
+    }
+
+    /**
+     * Apply order to the index query builder.
+     */
+    protected function applyOrderToIndexQuery($query, Request $request)
+    {
+        if(!$request->sort_by){
+            return $query;
+        }
+
+        // Get order key and order direction
+        $key = $request->sort_by;
+        $order = 'asc';
+        if(strpos($key, '.') !== false) {
+            $key = explode('.', $request->sort_by)[0];
+            $order = last(explode('.', $request->sort_by));
+        }
+
+        // Order for eager keys
+        $eagerClasses = $this->getEagerClasses();
+        $eager = array_keys($eagerClasses);
+        if(in_array($key, $eager)){
+
+            // get the table names of the related models
+            $foreign_table = with(new $eagerClasses[$key])->getTable();
+            $table = with(new $this->model)->getTable();
+
+            // join the related table for ordering by a foreign column
+            $query->leftJoin($foreign_table, $foreign_table . '.id', '=', $table . '.' . rtrim($foreign_table, 's') . '_id')
+                  ->select($table . '.*', $foreign_table . '.' . explode('.', $request->sort_by)[1] . ' as eager_order_column' )
+                  ->orderBy($foreign_table.'.'.explode('.', $request->sort_by)[1], $order);
+
+        } else {
+
+            // Order
+            $query->orderBy($key, $order);
+
+        }
+
+        return $query;
+    }
+
+    /**
+     * Apply pagination limits to the index query builder.
+     */
+    protected function applyPaginationToIndexQuery($query, Request $request)
+    {
+        if($request->perPage !== 0){
+            $page = $request->page ?? 1;
+            $perPage = $request->perPage;
+            $query->skip( ($page-1) * $perPage )->take($perPage);
+        }
+
+        return $query;
     }
 
 
