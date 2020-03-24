@@ -44,6 +44,10 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapCrudRoutes()
     {
+        if (!fjord()->installed()) {
+            return;
+        }
+
         foreach(Fjord::forms('crud') as $crud => $path) {
             $crudArray = require $path;
 
