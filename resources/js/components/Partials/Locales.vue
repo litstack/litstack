@@ -1,7 +1,7 @@
 <template>
     <b-dropdown-group
         :header="$t('choose_language')"
-        v-if="config.translatable.translatable"
+        v-if="config.translatable ? config.translatable.translatable : false"
     >
         <b-dropdown-item-button
             v-for="(locale, index) in config.translatable.locales"
