@@ -74,7 +74,7 @@ export default {
                 1
             );
 
-            this.$bvToast.toast(this.$t('deleted_block'), {
+            this.$bvToast.toast(this.$t('fj.deleted_block'), {
                 variant: 'success'
             });
         },
@@ -86,7 +86,7 @@ export default {
 
             await axios.put('order', payload);
 
-            this.$bvToast.toast(this.$t('order_changed'), {
+            this.$bvToast.toast(this.$t('fj.order_changed'), {
                 variant: 'success'
             });
         }

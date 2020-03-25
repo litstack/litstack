@@ -2,7 +2,7 @@
     <div class="d-inline-block">
         <b-button size="sm" variant="primary" @click="visible = !visible">
             <fa-icon icon="plus" />
-            {{ $t('add_model', { model: 'Fjord User' }) }}
+            {{ $t('fj.add_model', { model: 'Fjord User' }) }}
         </b-button>
         <b-modal v-model="visible" :title="'Fjord User hinzufügen'">
             <b-form-group label="Enter a username" label-for="username">
@@ -118,7 +118,7 @@ export default {
                 this.visible = false;
                 this.init();
                 this.$bvToast.toast(
-                    this.$t('model_saved', { model: 'Fjord User' }),
+                    this.$t('fj.model_saved', { model: 'Fjord User' }),
                     {
                         variant: 'success'
                     }

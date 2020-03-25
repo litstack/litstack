@@ -1,5 +1,4 @@
 require('./common/bootstrap');
-require('./common/helper');
 require('./common/string');
 require('./common/axios');
 require('./common/window');

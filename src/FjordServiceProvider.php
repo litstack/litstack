@@ -67,6 +67,8 @@ class FjordServiceProvider extends ServiceProvider
 
         $this->publish();
 
+        fjord()->addLangPath(fjord_path('resources/lang/'));
+
         // $items = require fjord_resource_path(config('fjord.navigation_path') . "/main.php");
 
         // dd(

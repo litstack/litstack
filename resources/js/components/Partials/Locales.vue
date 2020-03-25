@@ -1,6 +1,6 @@
 <template>
     <b-dropdown-group
-        :header="$t('choose_language')"
+        :header="$t('fj.choose_language')"
         v-if="config.translatable ? config.translatable.translatable : false"
     >
         <b-dropdown-item-button
@@ -25,7 +25,7 @@ export default {
     methods: {
         async setAppLocale(locale) {
             let response = await this.$store.dispatch('setAppLocale', { locale });
-            this.$bvToast.toast(this.$t('locale_set'), {
+            this.$bvToast.toast(this.$t('fj.locale_set'), {
                 variant: 'success'
             });
         },

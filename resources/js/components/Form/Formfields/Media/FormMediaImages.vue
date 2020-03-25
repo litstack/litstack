@@ -65,7 +65,7 @@ export default {
                 order: _.map(this.sortable, 'id')
             };
             await axios.put('order', payload);
-            this.$bvToast.toast(this.$t('order_changed'), {
+            this.$bvToast.toast(this.$t('fj.order_changed'), {
                 variant: 'success'
             });
         },

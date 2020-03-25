@@ -1,5 +1,5 @@
 <template>
-    <b-dropdown-group :header="$t('user_admin')">
+    <b-dropdown-group :header="$t('fj.user_admin')">
         <slot />
         <fj-user-profile />
         <b-dropdown-divider></b-dropdown-divider>

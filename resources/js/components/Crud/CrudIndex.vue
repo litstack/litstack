@@ -12,7 +12,7 @@
 
                     <b-button size="sm" variant="primary" :href="createRoute">
                         <fa-icon icon="plus" />
-                        {{ $t('add_model', { model: modelNameSingular }) }}
+                        {{ $t('fj.add_model', { model: modelNameSingular }) }}
                     </b-button>
                 </div>
             </fj-base-header>

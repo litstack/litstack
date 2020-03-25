@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-button variant="secondary" size="sm" @click="visible = !visible">
-            {{ $t('edit') }}
+            {{ $t('fj.edit') }}
         </b-button>
         <b-modal v-model="visible" hide-footer :title="title">
             <b-form-input

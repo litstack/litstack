@@ -178,7 +178,7 @@ export default {
         ...mapGetters(['baseURL']),
         createText() {
             return this.field.form
-                ? this.$t('create_model', {
+                ? this.$t('fj.create_model', {
                       model: this.field.form.names.singular
                   })
                 : this.field.model.split('\\').pop();

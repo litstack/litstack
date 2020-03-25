@@ -81,7 +81,7 @@
                                                         )
                                                     "
                                                 >
-                                                    {{ $t('cancel') }}
+                                                    {{ $t('fj.cancel') }}
                                                 </b-button>
                                                 <a
                                                     href="#"
@@ -94,7 +94,7 @@
                                                     class="fj-trash btn btn-danger btn-sm"
                                                 >
                                                     <fa-icon icon="trash" />
-                                                    {{ $t('delete') }}
+                                                    {{ $t('fj.delete') }}
                                                 </a>
                                             </template>
                                         </b-modal>
@@ -176,7 +176,7 @@ export default {
                 await axios.post('relations/store', payload);
 
                 let relation = this.form_field.title;
-                this.$bvToast.toast(this.$t('relation_added', { relation }), {
+                this.$bvToast.toast(this.$t('fj.relation_added', { relation }), {
                     variant: 'success'
                 });
             } catch (e) {
@@ -208,7 +208,7 @@ export default {
 
                 this.relations.splice(index, 1);
 
-                this.$bvToast.toast(this.$t('relation_set'), {
+                this.$bvToast.toast(this.$t('fj.relation_set'), {
                     variant: 'success'
                 });
             } catch (e) {
@@ -238,7 +238,7 @@ export default {
 
             let response = await axios.put('relations/order', payload);
 
-            this.$bvToast.toast(this.$t('order_changed'), {
+            this.$bvToast.toast(this.$t('fj.order_changed'), {
                 variant: 'success'
             });
         },

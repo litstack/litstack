@@ -143,7 +143,7 @@ export default {
 
         this.$bus.$on('modelLoaded', () => {
             this.$bvToast.toast(
-                this.$t('model_loaded', {
+                this.$t('fj.model_loaded', {
                     model: this.form.config.names.title.singular
                 }),
                 {

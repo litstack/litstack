@@ -45,7 +45,7 @@ export default {
 
             this.$emit('newBlock', model);
 
-            this.$bvToast.toast(this.$t('new_block', { type }), {
+            this.$bvToast.toast(this.$t('fj.new_block', { type }), {
                 variant: 'success'
             });
         },

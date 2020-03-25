@@ -1,7 +1,7 @@
 <template>
     <b-form-input
         :placeholder="
-            $t('search_models', {
+            $t('fj.search_models', {
                 models: names.title.plural
             })
         "

@@ -1,6 +1,6 @@
 <template>
     <fj-base-container>
-        <fj-base-header :title="'Permissions'"> </fj-base-header>
+        <fj-base-header :title="$t('fj.permissions')"> </fj-base-header>
         <b-card no-body>
             <b-tabs card>
                 <b-tab
@@ -20,7 +20,7 @@
                                     index) in role_permission_operations(role)"
                                     :key="index"
                                 >
-                                    {{ $t(c) }}
+                                    {{ $t('fj.'+c) }}
                                 </th>
                                 <th>all</th>
                             </thead>
@@ -31,7 +31,7 @@
                                     :key="index"
                                 >
                                     <th scope="row">
-                                        {{ group.capitalize() }}
+                                        {{ $t(`permissions.${group}`) }}
                                     </th>
                                     <td
                                         v-for="(c,
@@ -59,7 +59,7 @@
                                             variant="secondary"
                                             size="sm"
                                             @click="toggleAll(role, group)"
-                                            >{{ $t('toggle_all') }}</b-button
+                                            >{{ $t('fj.toggle_all') }}</b-button
                                         >
                                     </td>
                                 </tr>
@@ -151,8 +151,8 @@ export default {
             let respose = await axios.put('/role_permissions', payload);
 
             this.$bvToast.toast(
-                this.$t('permission_updated', {
-                    operation: this.$t(operation),
+                this.$t('fj.permission_updated', {
+                    operation: this.$t(`fj.${operation}`),
                     group: group.capitalize()
                 }),
                 {

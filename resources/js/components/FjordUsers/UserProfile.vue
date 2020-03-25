@@ -1,7 +1,7 @@
 <template>
     <b-dropdown-item @click="visible = true" :disabled="true">
-        {{ $t('user_profile') }}
-        <b-modal v-model="visible" :title="$t('user_profile')" size="lg">
+        {{ $t('fj.user_profile') }}
+        <b-modal v-model="visible" :title="$t('fj.user_profile')" size="lg">
             <!-- todo -->
         </b-modal>
     </b-dropdown-item>

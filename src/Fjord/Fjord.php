@@ -14,6 +14,8 @@ class Fjord
 
     public $translatedAttributes = [];
 
+    protected $langPaths = [];
+
     public function __construct()
     {
 
@@ -44,6 +46,16 @@ class Fjord
     public function getLocale()
     {
         return fjord_user()->locale ?? config('fjord.fallback_locale');
+    }
+
+    public function addLangPath($path)
+    {
+        $this->langPaths []= $path;
+    }
+
+    public function getLangPaths()
+    {
+        return $this->langPaths;
     }
 
     /**

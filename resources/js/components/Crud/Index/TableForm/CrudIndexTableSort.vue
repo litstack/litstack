@@ -1,7 +1,7 @@
 <template>
     <b-dropdown
         right
-        :text="$t('sort')"
+        :text="$t('fj.sort')"
         class="btn-brl-none"
         variant="outline-secondary"
         v-if="form.config.index.sort_by"

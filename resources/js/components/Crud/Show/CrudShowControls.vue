@@ -3,13 +3,13 @@
         <b-row>
             <b-col cols="12" class="pb-3" v-if="isMultilanguage">
                 <b class="text-muted d-block pb-1">
-                    {{ $t('select_language') }}
+                    {{ $t('fj.select_language') }}
                 </b>
                 <fj-base-language />
             </b-col>
             <b-col cols="12">
                 <b class="text-muted d-block pb-1">
-                    {{ $t('save_changes') }}
+                    {{ $t('fj.save_changes') }}
                 </b>
                 <b-button
                     variant="primary"
@@ -47,7 +47,7 @@ export default {
     methods: {
         async saveAll() {
             await this.$store.dispatch('saveModels');
-            this.$bvToast.toast(this.$t('model_saved', { model: this.title }), {
+            this.$bvToast.toast(this.$t('fj.model_saved', { model: this.title }), {
                 variant: 'success'
             });
         },
@@ -82,8 +82,8 @@ export default {
         },
         buttonText() {
             return this.create
-                ? this.$t('create_model', { model: this.title })
-                : this.$t('save_model', { model: this.title });
+                ? this.$t('fj.create_model', { model: this.title })
+                : this.$t('fj.save_model', { model: this.title });
         }
     }
 };

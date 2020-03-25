@@ -1,7 +1,7 @@
 <template>
     <b-dropdown
         right
-        :text="$t('filter')"
+        :text="$t('fj.filter')"
         class="btn-br-none"
         :variant="filterVariant"
         :disabled="!form.config.index.filter"

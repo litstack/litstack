@@ -6,7 +6,7 @@
                     {{ $tc('n_items_selected', selectedItems.length) }}
                     {{
                         selectedItems.length == crud.items.length
-                            ? `(${$t('all')})`
+                            ? `(${$t('fj.all')})`
                             : ''
                     }}
                 </strong>

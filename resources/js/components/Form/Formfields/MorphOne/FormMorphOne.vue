@@ -99,7 +99,7 @@ export default {
             try {
                 const { data } = await axios.post('morph-one/store', payload);
 
-                this.$bvToast.toast(this.$t('relation_set'), {
+                this.$bvToast.toast(this.$t('fj.relation_set'), {
                     variant: 'success'
                 });
             } catch (e) {
