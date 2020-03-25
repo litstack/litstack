@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "user" => "Benutzer",
     "add_model" => "{model} hinzufügen",
     "save_model" => "{model} speichern",
     "create_model" => "{model} erstellen",

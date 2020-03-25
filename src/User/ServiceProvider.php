@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\RolesPermissions;
+namespace AwStudio\Fjord\User;
 
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
@@ -13,8 +13,6 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function boot()
     {
-        if (config('fjord.roles_permissions')) {
-            $this->app->register('AwStudio\Fjord\RolesPermissions\RouteServiceProvider');
-        }
+        $this->app->register('AwStudio\Fjord\User\RouteServiceProvider');
     }
 }

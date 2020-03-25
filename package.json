@@ -33,6 +33,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "fjord-permissions": "file:vendor/aw-studio/fjord-permissions",
         "fs": "0.0.1-security",
         "jquery": "^3.4.1",
         "vue-gtag": "^1.6.2"

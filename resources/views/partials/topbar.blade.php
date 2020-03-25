@@ -11,32 +11,38 @@
                 <template v-slot:button-content>
                   <fa-icon icon="cogs" />
                 </template>
-                
-                <fj-user-administration>
-                    @if (Route::has('fjord.users') && Route::has('fjord.permissions'))
-                        @can('read user-roles')
-                            <b-dropdown-item href="{{route('fjord.users')}}">Users</b-dropdown-item>
-                        @endcan
-                        @can('read role-permissions')
-                            <b-dropdown-item href="{{route('fjord.permissions')}}">Permissions</b-dropdown-item>
-                        @endcan
+
+                @php
+                $first = true;
+                @endphp
+                @foreach(fjord()->getNavigation('topbar') as $group)
+                    @if($first)
+
+                        @php
+                        $first = false;
+                        @endphp
+                    @else
+                        <b-dropdown-divider></b-dropdown-divider>
                     @endif
-                </fj-user-administration>
-                
-                
-                @foreach(fjord()->getNavigation('topbar') as $entry)
-                    @isset($entry['link'])
-                        <b-dropdown-item href="/{{ config('fjord.route_prefix') }}/{{ $entry['link'] }}">
-                            @isset($entry['text'])
-                                {{ $entry['text'] }}
-                            @else
-                                {!! $entry['icon'] !!} {{ $entry['link'] }}
+                    @foreach($group as $entry)
+                        @if(is_string($entry))
+                            <header role="heading" class="dropdown-header">{{ $entry }}</header>
+                        @else
+                            @isset($entry['link'])
+                                <b-dropdown-item href="/{{ config('fjord.route_prefix') }}/{{ $entry['link'] }}">
+                                    @isset($entry['text'])
+                                        {{ $entry['text'] }}
+                                    @else
+                                        {!! $entry['icon'] !!} {{ $entry['link'] }}
+                                    @endisset
+                                </b-dropdown-item>
                             @endisset
-                        </b-dropdown-item>
-                    @endisset
-                    @isset ($entry['component'])
-                        <{{ $entry['component'] }}></{{ $entry['component'] }}>
-                    @endisset
+                            @isset ($entry['component'])
+                                <{{ $entry['component'] }}></{{ $entry['component'] }}>
+                            @endisset
+                        @endif
+
+                    @endforeach
                 @endforeach
                 <b-dropdown-divider></b-dropdown-divider>
                 <fj-locales />

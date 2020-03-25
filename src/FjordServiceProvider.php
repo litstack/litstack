@@ -33,7 +33,7 @@ class FjordServiceProvider extends ServiceProvider
          * Load the Fjord Permissions
          *
          */
-        $this->app->register('AwStudio\Fjord\RolesPermissions\ServiceProvider');
+        $this->app->register('AwStudio\Fjord\User\ServiceProvider');
 
         /**
          * Load the Fjord Forms

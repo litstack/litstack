@@ -3,7 +3,7 @@
         <b-input-group v-if="selectedItems.length > 0" :size="'sm'">
             <b-input-group-prepend is-text>
                 <strong>
-                    {{ $tc('n_items_selected', selectedItems.length) }}
+                    {{ $tc('fj.n_items_selected', selectedItems.length) }}
                     {{
                         selectedItems.length == crud.items.length
                             ? `(${$t('fj.all')})`

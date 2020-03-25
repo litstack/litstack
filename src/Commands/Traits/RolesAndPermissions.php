@@ -18,6 +18,10 @@ trait RolesAndPermissions
         $admin = Role::where('name', 'admin')->first();
 
         $permissions = [
+            'read user',
+            'update user',
+            'create user',
+            'delete user',
             'read user-roles',
             'update user-roles',
             'read role-permissions',

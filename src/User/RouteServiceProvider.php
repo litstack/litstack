@@ -1,11 +1,10 @@
 <?php
 
-namespace AwStudio\Fjord\RolesPermissions;
+namespace AwStudio\Fjord\User;
 
 use AwStudio\Fjord\Support\Facades\FjordRoute;
 use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
-use AwStudio\Fjord\RolesPermissions\Controllers\FjordPermissionController;
-use AwStudio\Fjord\RolesPermissions\Controllers\FjordUserController;
+use AwStudio\Fjord\User\Controllers\FjordUserController;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -16,15 +15,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     public function map()
     {
-        $this->mapRolePermissionRoutes();
         $this->mapUserRoleRoutes();
-    }
-
-    protected function mapRolePermissionRoutes()
-    {
-        FjordRoute::get('/fjord/permissions', FjordPermissionController::class . '@index')
-            ->name('permissions');
-        FjordRoute::put('/role_permissions', FjordPermissionController::class . '@update')->name('role_permissions.update');
     }
 
     protected function mapUserRoleRoutes()

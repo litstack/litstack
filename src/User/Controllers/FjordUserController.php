@@ -1,14 +1,14 @@
 <?php
 
-namespace AwStudio\Fjord\RolesPermissions\Controllers;
+namespace AwStudio\Fjord\User\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use AwStudio\Fjord\Fjord\Models\FjordUser;
-use AwStudio\Fjord\RolesPermissions\Models\ModelRole;
-use AwStudio\Fjord\RolesPermissions\Requests\UpdateUserRoleRequest;
-use AwStudio\Fjord\RolesPermissions\Requests\IndexUserRoleRequest;
+//use AwStudio\Fjord\User\Models\ModelRole;
+use AwStudio\Fjord\User\Requests\UpdateUserRoleRequest;
+use AwStudio\Fjord\User\Requests\IndexUserRoleRequest;
 
 class FjordUserController extends Controller
 {
@@ -19,7 +19,7 @@ class FjordUserController extends Controller
             ->withProps([
                 'roles' => Role::all(),
                 'users' => FjordUser::all(),
-                'user_roles' => ModelRole::where('model_type', 'AwStudio\Fjord\Fjord\Models\FjordUser')->get(),
+                //'user_roles' => ModelRole::where('model_type', 'AwStudio\Fjord\Fjord\Models\FjordUser')->get(),
             ]);
     }
 

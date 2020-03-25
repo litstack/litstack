@@ -2,7 +2,16 @@
 
 return [
     [
-        'link' => 'collections/settings',
-        'text' =>'Settings'
+        'Nutzerverwaltung',
+        [
+            'link' => 'fjord/users',
+            'text' => 'User'
+        ],
     ],
+    [
+        [
+            'link' => 'collections/settings',
+            'text' =>'Settings'
+        ],
+    ]
 ];
