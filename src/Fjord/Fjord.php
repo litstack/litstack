@@ -18,7 +18,7 @@ class Fjord
     {
 
     }
-
+    
     protected function prepareFields($fields, $path, $setDefaults = null)
     {
         foreach($fields as $key => $field) {
@@ -32,12 +32,15 @@ class Fjord
         require fjord_path('routes/fjord.php');
     }
 
+    /**
+     * Checks if fjord has been installed.
+     */
     public function installed()
     {
         if(! config()->has('fjord')) {
             return false;
         }
-        
+
         try {
             return Schema::hasTable('form_fields');
         } catch(\Exception $e) {

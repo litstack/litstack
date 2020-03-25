@@ -101,7 +101,10 @@ module.exports = {
                 {
                     title: 'Extending Fjord',
                     collapsable: false,
-                    children: [['guide/extensions/setup', 'Setup']]
+                    children: [
+                        ['guide/extensions/setup', 'Setup'],
+                        ['guide/extensions/helpers', 'Helpers']
+                    ]
                 }
             ]
         }
