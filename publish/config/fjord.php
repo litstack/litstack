@@ -69,6 +69,27 @@ return [
 
     'default_route' => 'pages/home',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Fjord Translatable
+    |--------------------------------------------------------------------------
+    |
+    | Set the default route a user is redirected to after logging in.
+    |
+    */
+
+    'translatable' => [
+
+        'translatable' => true,
+
+        'locales' => [
+            'en',
+            'de'
+        ],
+
+        'fallback_locale' => 'en',
+    ],
+
 
     /*
     |--------------------------------------------------------------------------
