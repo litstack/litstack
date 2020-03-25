@@ -13,7 +13,7 @@ class FjordPermissionController extends Controller
 {
     public function index(IndexRolePermissionRequest $request)
     {
-        return view('fjord::vue')->withComponent('fj-fjord-permissions')
+        return view('fjord::app')->withComponent('fj-fjord-permissions')
             ->withTitle('Permissions')
             ->withProps([
                 'roles' => Role::all(),

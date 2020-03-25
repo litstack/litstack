@@ -10,7 +10,7 @@ class DashboardController extends Controller
     {
         $dashboard = require fjord_resource_path('dashboard.php');
 
-        return view('fjord::vue')->withComponent('fj-dashboard')
+        return view('fjord::app')->withComponent('fj-dashboard')
             ->withTitle('Dashboard')
             ->withProps([
                 'components' => $dashboard['components'] ?? []

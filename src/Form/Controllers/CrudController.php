@@ -66,7 +66,7 @@ class CrudController extends Controller
      */
     public function index(CrudReadRequest $request)
     {
-        return view('fjord::vue')->withComponent('fj-crud-index')
+        return view('fjord::app')->withComponent('fj-crud-index')
             ->withTitle($this->titleSingular)
             ->withProps([
                 'formConfig' => $this->getForm()->toArray(),
@@ -91,7 +91,7 @@ class CrudController extends Controller
         $className = $this->model;
         $model = new $className();
 
-        return view('fjord::vue')->withComponent('fj-crud-show')
+        return view('fjord::app')->withComponent('fj-crud-show')
             ->withTitle('edit ' . $this->titleSingular)
             ->withModels([
                 'model' => $model->eloquentJs('fjord'),
@@ -131,7 +131,7 @@ class CrudController extends Controller
         $previous = $this->model::where('id', '<', $id)->orderBy('id','desc')->select('id')->first()->id ?? null;
         $next = $this->model::where('id', '>', $id)->orderBy('id')->select('id')->first()->id ?? null;
 
-        return view('fjord::vue')->withComponent('fj-crud-show')
+        return view('fjord::app')->withComponent('fj-crud-show')
             ->withTitle('edit ' . $this->titleSingular)
             ->withModels([
                 'model' => $eloquentModel,
