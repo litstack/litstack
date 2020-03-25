@@ -6,6 +6,7 @@ import form from './modules/form.module';
 import auth from './modules/auth.module';
 import crud from './modules/crud.module';
 import actions from './modules/actions.module';
+import permissions from './modules/permissions.module';
 
 const modules = {
     config,
@@ -13,7 +14,8 @@ const modules = {
     form,
     auth,
     crud,
-    actions
+    actions,
+    permissions
 };
 
 class FjordStore {

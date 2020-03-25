@@ -34,6 +34,10 @@ export default {
         auth: {
             type: Object,
             required: true
+        },
+        permissions: {
+            type: Array,
+            required: true
         }
     },
     data() {
@@ -41,6 +45,20 @@ export default {
             preparedModels: {},
             preparedProps: {}
         };
+    },
+    beforeMount() {
+        this.$store.commit('SET_LANGUAGES', this.translatable.languages);
+        this.$store.commit('SET_LANGUAGE', this.translatable.language);
+        this.$store.commit(
+            'SET_FALLBACK_LOCALE',
+            this.translatable.fallback_locale
+        );
+        this.$store.commit('SET_CONFIG', this.config);
+        this.$store.commit('SET_PERMISSIONS', this.permissions);
+
+        this.prepareModels();
+        this.prepareProps();
+        this.setAuthData();
     },
     mounted() {
         this.$Bus.$on('error', e => {
@@ -84,19 +102,7 @@ export default {
             }
         }
     },
-    beforeMount() {
-        this.$store.commit('SET_LANGUAGES', this.translatable.languages);
-        this.$store.commit('SET_LANGUAGE', this.translatable.language);
-        this.$store.commit(
-            'SET_FALLBACK_LOCALE',
-            this.translatable.fallback_locale
-        );
-        this.$store.commit('SET_CONFIG', this.config);
 
-        this.prepareModels();
-        this.prepareProps();
-        this.setAuthData();
-    }
 };
 </script>
 

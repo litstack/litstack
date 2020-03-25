@@ -8,6 +8,19 @@
 
 @section('content')
     @php
+        //dd(->first(), auth()->user()->roles->first()->permissions->first());
+
+
+        // TODO: auslagern
+
+        // Permissions
+        $permissions = collect([]);
+        foreach(auth()->user()->roles as $role) {
+            $permissions = $permissions->merge(
+                $role->permissions->pluck('name')
+            );
+        }
+
         $fjProps = [
             'component' => $component,
             'props' => collect($props ?? []),
@@ -18,7 +31,8 @@
                 'fallback_locale' => config('translatable.fallback_locale'),
             ]),
             'config' => collect(config('fjord')),
-            'auth' => auth()->user()
+            'auth' => auth()->user(),
+            'permissions' => $permissions->unique()
         ];
 
         foreach($models ?? [] as $title => $model) {
