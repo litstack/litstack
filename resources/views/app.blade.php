@@ -10,7 +10,6 @@
     @php
         //dd(->first(), auth()->user()->roles->first()->permissions->first());
 
-
         // TODO: auslagern
 
         // Permissions
@@ -31,7 +30,7 @@
                 'fallback_locale' => config('translatable.fallback_locale'),
             ]),
             'config' => collect(config('fjord')),
-            'auth' => auth()->user(),
+            'auth' => fjord_user(),
             'permissions' => $permissions->unique()
         ];
 

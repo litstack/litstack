@@ -18,6 +18,16 @@ if(! function_exists('fjord_user')) {
     }
 }
 
+if(! function_exists('__f')) {
+    function __f($key = null, $replace = []) {
+        if (is_null($key)) {
+            return $key;
+        }
+        
+        return fjord()->trans($key, $replace);
+    }
+}
+
 if(! function_exists('fjord_resource_path')) {
     function fjord_resource_path($path = '') {
         return resource_path(config('fjord.resource_path') . ($path ? DIRECTORY_SEPARATOR.$path : $path));

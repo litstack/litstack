@@ -18,12 +18,11 @@ const mutations = {
 };
 
 const actions = {
-    async setLocale({ commit, state }, locale) {
+    async setAppLocale({ commit, state }, locale) {
         if (locale != state.locale) {
             localStorage.setItem('fj-locale', locale.locale);
-            Bus.$emit('setLocale', locale.locale);
             const { data } = await axios.post('/set-locale', locale);
-            return data;
+            window.location.reload()
         }
     }
 };

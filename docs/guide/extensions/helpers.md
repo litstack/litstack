@@ -6,6 +6,7 @@ Fjord includes a variety of global helper PHP functions and Vue mixins.
 
 - [fjord_user](#method-php-fjord_user)
 - [fjord()->installed](#method-php-fjord-installed)
+- [__f](#method-php-f)
 
 <a name="method-php-fjord_user"></a>
 #### `fjord_user()`
@@ -30,6 +31,20 @@ public function someMethod() {
     ...
 }
 
+```
+
+<a name="method-php-f"></a>
+#### `__f($key, $replace)`
+
+The `__f` method returns the translation using the fjord application locale for the authenticated user.
+
+```php
+[
+    'names' => [
+        'singular' => __f('employee'),
+        'plural' => __f('employees'),
+    ],
+]
 ```
 
 

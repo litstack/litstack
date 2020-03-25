@@ -1,4 +1,5 @@
 require('./common/bootstrap');
+require('./common/helper');
 require('./common/string');
 require('./common/axios');
 require('./common/window');
@@ -60,9 +61,5 @@ Fjord.prototype._vue = function() {
         }
     });
 };
-
-Bus.$on('setLocale', locale => {
-    i18n.locale = locale;
-});
 
 export default Fjord;

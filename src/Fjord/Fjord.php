@@ -18,7 +18,7 @@ class Fjord
     {
 
     }
-    
+
     protected function prepareFields($fields, $path, $setDefaults = null)
     {
         foreach($fields as $key => $field) {
@@ -30,6 +30,20 @@ class Fjord
     public function routes()
     {
         require fjord_path('routes/fjord.php');
+    }
+
+    public function trans($key = null, $replace = [])
+    {
+        if (is_null($key)) {
+            return $key;
+        }
+
+        return __($key, $replace, $this->getLocale());
+    }
+
+    public function getLocale()
+    {
+        return fjord_user()->locale ?? config('fjord.fallback_locale');
     }
 
     /**
