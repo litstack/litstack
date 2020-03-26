@@ -75,4 +75,20 @@ class Fjord
             return false;
         }
     }
+
+    /**
+     * Dynamically call the default driver instance.
+     *
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return mixed
+     */
+    public function __call($method, $parameters)
+    {
+        if(! method_exists($this, $method)) {
+            return $this->package('aw-studio/fjord')->{$method}(...$parameters);
+        }
+        
+        return $this->{$method}(...$parameters);
+    }
 }

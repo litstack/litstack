@@ -53,11 +53,14 @@ class Package
         return FjordRoute::package($this);
     }
 
-    public function extendable(Route $route)
+    public function extendable($route, $pattern = [])
     {
-        // TODO: Error logging if route name is not set.
-        $name = str_replace("fjord." . str_replace("/" , ".", $this->name) . ".", "", $route->getName());
-        $this->extensions[$name] = new PackageExtension($route);
+        $name = $route;
+        if($route instanceof Route) {
+            $name = $route->getName();
+        }
+        $name = str_replace("fjord." . str_replace("/" , ".", $this->name) . ".", "", $name);
+        $this->extensions[$name] = new PackageExtension($name, $this->name, $pattern);
     }
 
     public function extend($name)

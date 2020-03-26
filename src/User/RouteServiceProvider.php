@@ -20,8 +20,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapUserRoleRoutes()
     {
-        FjordRoute::get('/fjord/users', FjordUserController::class . '@index')
-            ->name('users');
+        $route = FjordRoute::get('/users', FjordUserController::class . '@index')->name('aw-studio.fjord.users');
+        fjord()->extendable($route);
         FjordRoute::put('/user_roles', FjordUserController::class . '@update')->name('user_roles.update');
     }
 }

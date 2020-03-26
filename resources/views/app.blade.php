@@ -7,6 +7,9 @@
 @endsection
 
 @section('content')
+    @php
+    //dd(fjord()->route(''));
+    @endphp
     <fjord-app
         @foreach (fjord()->getProps(get_defined_vars()) as $key => $prop)
             @if(is_string($prop))

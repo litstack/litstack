@@ -14,6 +14,9 @@ trait ManagesPackages
         foreach($packages as $name => $packageConfig) {
             $this->packages[$name] = new Package($name, $packageConfig);
         }
+
+        // Fjord Package
+        $this->packages['aw-studio/fjord'] = new Package('aw-studio/fjord', $packageConfig);;
     }
 
     public function package($name)
