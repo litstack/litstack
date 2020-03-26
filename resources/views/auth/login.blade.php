@@ -1,4 +1,4 @@
-@extends('fjord::app')
+@extends('fjord::html')
 
 @section('title')
     Login

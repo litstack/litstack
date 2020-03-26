@@ -14,12 +14,12 @@
 
         // Permissions
         $permissions = collect([]);
-        foreach(auth()->user()->roles as $role) {
+        foreach(auth()->user()->roles ?? [] as $role) {
             $permissions = $permissions->merge(
                 $role->permissions->pluck('name')
             );
         }
-
+        
         $fjProps = [
             'component' => $component,
             'props' => collect($props ?? []),

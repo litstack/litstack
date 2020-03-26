@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use AwStudio\Fjord\Auth\Middleware\Authenticate;
+use AwStduio\Fjord\Foundation\Console\PackageDiscoverCommand;
 
 class FjordServiceProvider extends ServiceProvider
 {
@@ -48,6 +49,12 @@ class FjordServiceProvider extends ServiceProvider
         $this->app->register('AwStudio\Fjord\Auth\ServiceProvider');
 
         /**
+         * Load package:discover command
+         *
+         */
+        $this->app->register('AwStudio\Fjord\Foundation\Providers\ArtisanServiceProvider');
+
+        /**
          * Load the Fjord views
          *
          */
@@ -68,29 +75,16 @@ class FjordServiceProvider extends ServiceProvider
         $this->publish();
 
         fjord()->addLangPath(fjord_path('resources/lang/'));
-
-        // $items = require fjord_resource_path(config('fjord.navigation_path') . "/main.php");
-
-        // dd(
-        //     $this->navigationPermission(collect($items))->toArray()
-        // );
     }
 
-    // private function navigationPermission($items)
-    // {
-    //     return $items->map(function ($item) {
-    //         if (is_array($item)) {
-    //             if (array_key_exists('link', $item)) {
-    //                 dump($item);
-    //                 if (!strpos($item['link'], '/') && !fjord_user()->can("read {$item['link']}")) {
-    //                     return;
-    //                 }
-    //             }
-    //             return $this->navigationPermission(collect($item));
-    //         }
-    //         return $item;
-    //     });
-    // }
+    protected function registerPackages()
+    {
+        foreach($this->app['fjord']->getPackages() as $package => $packageConfig) {
+            foreach($packageConfig['providers'] ?? [] as $provider) {
+                $this->app->register($provider);
+            }
+        }
+    }
 
     protected function builder()
     {
@@ -140,6 +134,8 @@ class FjordServiceProvider extends ServiceProvider
         }
 
         $this->addFiles();
+
+        $this->registerPackages();
     }
 
     public function addFiles()

@@ -35,5 +35,10 @@
                 "AwStudio\\Fjord\\FjordServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "AwStudio\\Fjord\\Foundation\\ComposerScripts::postAutoloadDump"
+        ]
     }
 }

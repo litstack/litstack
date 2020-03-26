@@ -8,7 +8,8 @@ use Schema;
 
 class Fjord
 {
-    use Concerns\ManagesNavigation,
+    use Concerns\ManagesPackages,
+        Concerns\ManagesNavigation,
         Concerns\ManagesForms,
         Concerns\ManagesFiles;
 
@@ -18,7 +19,7 @@ class Fjord
 
     public function __construct()
     {
-
+        $this->loadPackageManifest();
     }
 
     protected function prepareFields($fields, $path, $setDefaults = null)
