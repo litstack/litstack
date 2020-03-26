@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import Fjord from './fjord'
 import FjordModel from './eloquent/fjord.model';
 import TranslatableModel from './eloquent/translatable.model';
 import { mapGetters } from 'vuex';
@@ -35,10 +36,6 @@ export default {
             type: Object,
             required: true
         },
-        permissions: {
-            type: Array,
-            required: true
-        }
     },
     data() {
         return {
@@ -54,11 +51,12 @@ export default {
             this.translatable.fallback_locale
         );
         this.$store.commit('SET_CONFIG', this.config);
-        this.$store.commit('SET_PERMISSIONS', this.permissions);
 
         this.prepareModels();
         this.prepareProps();
         this.setAuthData();
+
+        this.callPluginMethods('beforeMount')
     },
     mounted() {
         this.$Bus.$on('error', e => {
@@ -66,8 +64,21 @@ export default {
                 variant: 'danger'
             });
         });
+
+        this.callPluginMethods('mounted')
     },
     methods: {
+        callPluginMethods(method) {
+            let plugins = Fjord.getPlugins()
+            for(let i=0;i<plugins.length;i++) {
+                let plugin = plugins[i]
+                if(!(method in plugin)) {
+                    continue
+                }
+
+                plugin[method](this)
+            }
+        },
         setAuthData() {
             this.$store.commit('SET_AUTH_DATA', this.auth);
         },

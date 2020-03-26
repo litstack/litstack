@@ -1,5 +1,4 @@
 import VueI18n from 'vue-i18n';
-import store from '@fj-js/store';
 
 export default {
     // Vue mixins that can be used in templates
@@ -14,9 +13,4 @@ export default {
             )
         );
     },
-
-    // check if the authenticated user has a permission
-    can(permission) {
-        return store.getters.permissions.permissions.includes(permission)
-    }
 };

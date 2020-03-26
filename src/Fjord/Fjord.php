@@ -4,6 +4,7 @@ namespace AwStudio\Fjord\Fjord;
 
 use AwStudio\Fjord\Models\Repeatable;
 use AwStudio\Fjord\Models\PageContent;
+use Illuminate\Support\Facades\View;
 use Schema;
 
 class Fjord
@@ -11,16 +12,28 @@ class Fjord
     use Concerns\ManagesPackages,
         Concerns\ManagesNavigation,
         Concerns\ManagesForms,
-        Concerns\ManagesFiles,
-        Concerns\ManagesProps;
+        Concerns\ManagesFiles;
 
     public $translatedAttributes = [];
 
     protected $langPaths = [];
 
+    protected $app;
+
     public function __construct()
     {
+        $this->app = new Application\Application();
         $this->loadPackageManifest();
+    }
+
+    public function app()
+    {
+        return $this->app;
+    }
+
+    public function composer($namespace)
+    {
+        View::composer(['fjord::app'], $namespace);
     }
 
     protected function prepareFields($fields, $path, $setDefaults = null)
@@ -88,7 +101,7 @@ class Fjord
         if(! method_exists($this, $method)) {
             return $this->package('aw-studio/fjord')->{$method}(...$parameters);
         }
-        
+
         return $this->{$method}(...$parameters);
     }
 }

@@ -8,10 +8,10 @@
 
 @section('content')
     @php
-    //dd(fjord()->route(''));
+    fjord()->app()->build(get_defined_vars());
     @endphp
     <fjord-app
-        @foreach (fjord()->getProps(get_defined_vars()) as $key => $prop)
+        @foreach (fjord()->app()->getProps() as $key => $prop)
             @if(is_string($prop))
                 @php
                     $prop = "'".$prop."'";
