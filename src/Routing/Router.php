@@ -7,6 +7,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
+use AwStudio\Fjord\Fjord\Extending\Package;
 
 class Router
 {
@@ -24,6 +25,13 @@ class Router
             ->middleware(['web', 'fjord.auth:fjord']);
 
         return $route->$method(...$parameters);
+    }
+
+    public function package(Package $package)
+    {
+        return Route::prefix($package->getRoutePrefix())
+            ->as($package->getRouteAs())
+            ->middleware(['web', 'fjord.auth:fjord']);
     }
 
     public function public()

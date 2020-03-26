@@ -7,39 +7,8 @@
 @endsection
 
 @section('content')
-    @php
-        //dd(->first(), auth()->user()->roles->first()->permissions->first());
-
-        // TODO: auslagern
-
-        // Permissions
-        $permissions = collect([]);
-        foreach(auth()->user()->roles ?? [] as $role) {
-            $permissions = $permissions->merge(
-                $role->permissions->pluck('name')
-            );
-        }
-        
-        $fjProps = [
-            'component' => $component,
-            'props' => collect($props ?? []),
-            'models' => collect([]),
-            'translatable' => collect([
-                'language' => app()->getLocale(),
-                'languages' => collect(config('translatable.locales')),
-                'fallback_locale' => config('translatable.fallback_locale'),
-            ]),
-            'config' => collect(config('fjord')),
-            'auth' => fjord_user(),
-            'permissions' => $permissions->unique()
-        ];
-
-        foreach($models ?? [] as $title => $model) {
-            $fjProps['models'][$title] = $model->toArray();
-        }
-    @endphp
     <fjord-app
-        @foreach ($fjProps as $key => $prop)
+        @foreach (fjord()->getProps(get_defined_vars()) as $key => $prop)
             @if(is_string($prop))
                 @php
                     $prop = "'".$prop."'";

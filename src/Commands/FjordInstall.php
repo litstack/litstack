@@ -63,6 +63,7 @@ class FjordInstall extends Command
         $this->createDefaultPermissions();
 
         $this->publishDashboardController();
+        $this->publishFjordServiceProvider();
         $this->makeModelDirs();
 
         $this->info("\n----- finished -----\n");
@@ -199,6 +200,18 @@ class FjordInstall extends Command
             File::copy(
                 fjord_path('publish/controllers/DashboardController.php'),
                 app_path('Http/Controllers/Fjord/DashboardController.php')
+            );
+        }
+    }
+
+    public function publishFjordServiceProvider()
+    {
+        if(!File::exists(app_path('Http/Providers/FjordServiceProvider.php'))){
+            $this->info('publishing FjordServiceProvider');
+
+            File::copy(
+                fjord_path('publish/providers/FjordServiceProvider.php'),
+                app_path('Providers/FjordServiceProvider.php')
             );
         }
     }

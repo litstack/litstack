@@ -8,14 +8,6 @@ use AwStudio\Fjord\Foundation\Console\PackageDiscoverCommand;
 
 class ArtisanServiceProvider extends LaravelArtisanServiceProvider
 {
-    /**
-     * The commands to be registered.
-     *
-     * @var array
-     */
-    protected $commands = [
-        'PackageDiscover' => 'command.package.discover',
-    ];
 
     /**
      * Register the command.

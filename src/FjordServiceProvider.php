@@ -55,6 +55,12 @@ class FjordServiceProvider extends ServiceProvider
         $this->app->register('AwStudio\Fjord\Foundation\Providers\ArtisanServiceProvider');
 
         /**
+         * FjordServiceProvider
+         *
+         */
+        $this->app->register('App\Providers\FjordServiceProvider');
+
+        /**
          * Load the Fjord views
          *
          */
@@ -79,8 +85,8 @@ class FjordServiceProvider extends ServiceProvider
 
     protected function registerPackages()
     {
-        foreach($this->app['fjord']->getPackages() as $package => $packageConfig) {
-            foreach($packageConfig['providers'] ?? [] as $provider) {
+        foreach($this->app['fjord']->getPackages() as $name => $package) {
+            foreach($package->getProviders() as $provider) {
                 $this->app->register($provider);
             }
         }

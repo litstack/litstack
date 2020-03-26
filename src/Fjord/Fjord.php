@@ -11,7 +11,8 @@ class Fjord
     use Concerns\ManagesPackages,
         Concerns\ManagesNavigation,
         Concerns\ManagesForms,
-        Concerns\ManagesFiles;
+        Concerns\ManagesFiles,
+        Concerns\ManagesProps;
 
     public $translatedAttributes = [];
 
