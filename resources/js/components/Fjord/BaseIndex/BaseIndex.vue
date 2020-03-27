@@ -1,0 +1,286 @@
+<template>
+    <div>
+        <b-card>
+            <div class="fj-index-table">
+                <fj-base-index-table-form>
+                    <b-input-group>
+                        <b-input-group-prepend is-text>
+                            <fa-icon icon="search" />
+                        </b-input-group-prepend>
+
+                        <fj-base-index-table-search
+                            :nameSingular="nameSingular"
+                            :namePlural="namePlural"
+                            @search="doSearch"/>
+                        <!--
+                        <template v-slot:append>
+                            <fj-base-index-table-filter />
+                            <fj-base-index-table-sort />
+                        </template>
+                        -->
+                    </b-input-group>
+
+                </fj-base-index-table-form>
+
+                <fj-base-index-table-selected-items-actions
+                    :selectedItems="selectedItems"/>
+
+                <fj-base-index-table
+                    :busy="isBusy"
+                    :tableCols="tableCols"
+                    :items="items"
+                    @selectedItemsChanged="setSelectedItems"
+                    @loadItems="_loadItems()"/>
+
+                </fj-index-table-table>
+            </div>
+            <fj-base-index-table-index-indicator />
+        </b-card>
+        <div
+            class="d-flex justify-content-center"
+            v-if="numberOfPages > 1">
+
+            <b-pagination-nav
+                class="mt-4"
+                :link-gen="linkGen"
+                :number-of-pages="numberOfPages"
+                @change="goToPage">
+            </b-pagination-nav>
+
+        </div>
+    </div>
+</template>
+
+<script>
+import TableModel from '@fj-js/eloquent/table.model';
+
+export default {
+    name: 'IndexTable',
+    props: {
+        cols: {
+            required: true,
+            type: Array
+        },
+        numberOfPages: {
+            type: Number,
+            default: () => {
+                return 1;
+            }
+        },
+        recordActions: {
+            type: Array,
+            default: () => {
+                return [];
+            }
+        },
+        items: {
+            type: Array,
+            required: true
+        },
+        loadItems: {
+            type: Function,
+            require: true
+        },
+        sortByDefault: {
+            type: Boolean
+        },
+        nameSingular: {
+            type: String
+        },
+        namePlural: {
+            type: String
+        }
+    },
+    data() {
+        return {
+            isBusy: true,
+
+            tableCols: {},
+            selectedItems: [],
+
+            search: '',
+            sort_by_key: '',
+
+            filter_scope: null,
+
+            currentPage: 1
+        };
+    },
+    watch: {
+
+    },
+    beforeMount() {
+        this.setTableCols();
+
+        this.sort_by_key = this.sortByDefault || null;
+
+        this._loadItems();
+    },
+    computed: {
+        perPage() {
+            return 20;
+        }
+    },
+    methods: {
+        setSelectedItems(selectedItems) {
+            this.selectedItems = selectedItems
+        },
+        async _loadItems() {
+            this.isBusy = true;
+
+            let payload = {
+                page: this.currentPage,
+                perPage: this.perPage,
+                search: this.search,
+                sort_by: this.sort_by_key,
+                filter: this.filter_scope
+            };
+
+            await this.loadItems(payload)
+            try {
+
+            } catch (e) {
+                this.$bus.$emit('error', e);
+            }
+
+            this.isBusy = false;
+        },
+        doSearch(query) {
+            this.search = query
+            this._loadItems();
+        },
+        goToPage(page) {
+            this.currentPage = page;
+            this._loadItems();
+        },
+        linkGen(pageNum) {
+            return { path: `#${pageNum}` };
+        },
+
+        setTableCols() {
+            this.tableCols = [];
+
+            this.tableCols.push({
+                key: 'check',
+                label: 'Check'
+            });
+
+            for (let i = 0; i < this.cols.length; i++) {
+                let col = this.cols[i];
+
+                if (typeof col == typeof '') {
+                    col = { key: col, title: col.capitalize() };
+                }
+
+                this.tableCols.push(col);
+            }
+        },
+        openItem(item) {
+            window.location.href =
+                `${this.form.config.names.table}/${item.id}` +
+                ('route' in this.form.config.index
+                    ? this.form.config.index.route
+                    : '/edit');
+        }
+    }
+};
+</script>
+
+<style lang="scss">
+@import '@fj-sass/_variables';
+.fj-index-table {
+    table.b-table {
+        width: auto;
+        margin-left: -1.25rem;
+        margin-right: -1.25rem;
+
+        &[aria-busy='true'] {
+            opacity: 0.6;
+        }
+
+        thead th {
+            border-top: none;
+
+            &:first-child {
+                padding-left: 0.75rem + 1.25rem;
+            }
+
+            &:last-child {
+                padding-right: 0.75rem + 1.25rem;
+            }
+        }
+
+        tbody {
+            td {
+                vertical-align: middle;
+                > div {
+                    white-space: nowrap;
+                }
+
+                &.pointer {
+                    cursor: pointer;
+                }
+
+                &:first-child {
+                    padding-left: 0.75rem + 1.25rem;
+                }
+
+                &:last-child {
+                    padding-right: 0.75rem + 1.25rem;
+                }
+            }
+        }
+
+        .b-table-busy-slot {
+            height: 300px;
+
+            td {
+                vertical-align: middle;
+            }
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+
+        .input-group {
+            flex: 1;
+        }
+    }
+    &__index-indicator {
+        position: absolute;
+        margin-top: -10px;
+        right: 20px;
+    }
+}
+
+.btn-brl-none {
+    button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}
+.btn-br-none {
+    button {
+        border-radius: 0;
+    }
+}
+
+.fj-index-checkbox__group {
+    width: auto;
+    margin-top: -7px;
+    transform: translateX(-0.75rem);
+
+    .input-group-prepend {
+        &:first-child {
+            .input-group-text {
+                padding-left: calc(0.75rem - 1px);
+                //width: 37px;
+                background: transparent;
+            }
+        }
+    }
+}
+</style>

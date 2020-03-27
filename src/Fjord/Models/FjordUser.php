@@ -13,7 +13,12 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class FjordUser extends Authenticatable implements CanResetPasswordContract
 {
-    use Notifiable, HasRoles, CanResetPassword, CanEloquentJs, HasFormFields;
+    use Notifiable,
+        HasRoles,
+        CanResetPassword,
+        CanEloquentJs,
+        HasFormFields,
+        Traits\HasIndex;
 
 
     protected $guard_name = 'fjord';

@@ -6,7 +6,6 @@
     </div>
     @auth('fjord')
         <div>
-
             <b-dropdown class="m-md-2" right variant="transparent" size="sm">
                 <template v-slot:button-content>
                   <fa-icon icon="cogs" />
@@ -17,7 +16,6 @@
                 @endphp
                 @foreach(fjord()->getNavigation('topbar') as $group)
                     @if($first)
-
                         @php
                         $first = false;
                         @endphp
@@ -28,6 +26,7 @@
                         @if(is_string($entry))
                             <header role="heading" class="dropdown-header">{{ $entry }}</header>
                         @else
+
                             @isset($entry['link'])
                                 <b-dropdown-item href="/{{ config('fjord.route_prefix') }}/{{ $entry['link'] }}">
                                     @isset($entry['text'])

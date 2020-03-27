@@ -7,7 +7,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
-use AwStudio\Fjord\Fjord\Extending\Package;
+use AwStudio\Fjord\Fjord\Extend\Package;
 
 class Router
 {

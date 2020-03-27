@@ -35,7 +35,7 @@ class Application
         ];
     }
 
-    public function addProp($name, $value)
+    public function prop($name, $value)
     {
         $this->props[$name] = $value;
     }
@@ -54,7 +54,7 @@ class Application
             $this->props[$prop] = $$prop;
         }
 
-        $this->props['props'] = $this->buildProps($props);
+        $this->props['props'] = $this->buildProps($props ?? []);
         $this->props['models'] = $this->buildModels($model ?? []);
     }
 

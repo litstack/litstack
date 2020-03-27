@@ -14,6 +14,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use AwStudio\Fjord\Auth\Middleware\Authenticate;
 use AwStduio\Fjord\Foundation\Console\PackageDiscoverCommand;
+use AwStudio\Fjord\Fjord\Extend\ExtensionComposer;
 
 class FjordServiceProvider extends ServiceProvider
 {
@@ -138,6 +139,8 @@ class FjordServiceProvider extends ServiceProvider
         if (App::runningInConsole()) {
             $this->registerConsoleCommands();
         }
+
+        fjord()->composer(ExtensionComposer::class);
 
         $this->addFiles();
 

@@ -151,7 +151,7 @@ export default {
             filter_scope: null,
             selectedAll: false,
 
-            page: 1
+            currentPage: 1
         };
     },
     watch: {

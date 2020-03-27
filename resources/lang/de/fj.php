@@ -2,6 +2,7 @@
 
 return [
     "user" => "Benutzer",
+    "users" => "Benutzer",
     "add_model" => "{model} hinzufügen",
     "save_model" => "{model} speichern",
     "create_model" => "{model} erstellen",
@@ -37,6 +38,5 @@ return [
     "edit" => 'editieren',
     "user_admin" => 'Nutzerverwaltung',
     "user_profile" => 'Mein Profil',
-    "users" => 'Fjord User',
     "permissions" => 'Berechtigungen',
 ];

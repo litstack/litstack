@@ -15,13 +15,11 @@ requireComponent.keys().forEach(fileName => {
     const componentConfig = requireComponent(fileName);
 
     // Get PascalCase name of component
-    const componentName = kebabCase(
-        // Gets the file name regardless of folder depth
-        fileName
-            .split('/')
-            .pop()
-            .replace(/\.\w+$/, '')
+    let componentName = kebabCase(
+        componentConfig.default.name
     );
+
+    // replace
 
     // Register component globally
     Vue.component(

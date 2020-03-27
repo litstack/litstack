@@ -2,11 +2,13 @@
 
 namespace AwStudio\Fjord\Fjord\Concerns;
 
-use AwStudio\Fjord\Fjord\Extending\Package;
+use AwStudio\Fjord\Fjord\Extend\Package;
 
 trait ManagesPackages
 {
     protected $packages = [];
+
+    protected $extensionComposer = [];
 
     protected function loadPackageManifest()
     {
@@ -38,5 +40,17 @@ trait ManagesPackages
                 }
             }
         }
+    }
+
+    public function extension($class)
+    {
+        $this->extensionComposer []= $class;
+
+        return $this;
+    }
+
+    public function getExtensionComposer()
+    {
+        return $this->extensionComposer;
     }
 }

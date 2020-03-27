@@ -2,6 +2,7 @@
 
 return [
     "user" => "User",
+    "users" => "Users",
     "add_model" => "Add {model}",
     "save_model" => "Save {model}",
     "create_model" => "Create {model}",

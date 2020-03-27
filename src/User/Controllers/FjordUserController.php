@@ -12,15 +12,20 @@ use AwStudio\Fjord\User\Requests\IndexUserRoleRequest;
 
 class FjordUserController extends Controller
 {
-    public function index(IndexUserRoleRequest $request)
+    public function showIndex(IndexUserRoleRequest $request)
     {
         return view('fjord::app')->withComponent('fj-fjord-users')
             ->withTitle('Users')
             ->withProps([
-                'roles' => Role::all(),
-                'users' => FjordUser::all(),
+                'usersCount' => FjordUser::count(),
+                //'users' => FjordUser::all(),
                 //'user_roles' => ModelRole::where('model_type', 'AwStudio\Fjord\Fjord\Models\FjordUser')->get(),
             ]);
+    }
+
+    public function fetchIndex(Request $request)
+    {
+        return FjordUser::index($request);
     }
 
     public function update(UpdateUserRoleRequest $request)

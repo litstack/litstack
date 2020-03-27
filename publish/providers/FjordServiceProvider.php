@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class FjordAppServiceProvider extends ServiceProvider
+class FjordServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -23,6 +23,6 @@ class FjordAppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+
     }
 }
