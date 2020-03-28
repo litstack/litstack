@@ -24,6 +24,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         fjord()->extendable($route);
 
         FjordRoute::post('/users-index', FjordUserController::class . '@fetchIndex')->name('aw-studio.fjord.users.index');
+        FjordRoute::post('/users/delete-all', FjordUserController::class . '@deleteAll')->name('aw-studio.fjord.users.delete');
         //FjordRoute::put('/user_roles', FjordUserController::class . '@update')->name('user_roles.update');
     }
 }

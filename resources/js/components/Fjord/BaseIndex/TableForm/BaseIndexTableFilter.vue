@@ -4,16 +4,16 @@
         :text="$t('fj.filter')"
         class="btn-br-none"
         :variant="filterVariant"
-        :disabled="!form.config.index.filter"
+        :disabled="!filter"
     >
         <b-dropdown-group
             :header="key"
-            v-for="(group, key) in form.config.index.filter"
+            v-for="(group, key) in filter"
             :key="key"
         >
             <b-dropdown-item-button
                 v-for="(item, index) in group"
-                @click="filter(index)"
+                @click="doFilter(index)"
                 :key="item"
                 :active="filterActive(index)"
             >
@@ -31,26 +31,31 @@
 import { mapGetters } from 'vuex';
 export default {
     name: 'BaseIndexTableFilter',
+    props: {
+        filter: {
+            required: true,
+            type: Object
+        }
+    },
     data() {
         return {
             filter_scope: ''
         };
     },
     methods: {
-        filter(key) {
+        doFilter(key) {
             this.filter_scope = key;
-            this.$bus.$emit('crudFilter', key);
+            this.$emit('onFilterChange', key)
         },
         resetFilter() {
             this.filter_scope = null;
-            this.$bus.$emit('crudFilter', null);
+            this.$emit('onFilterChange', null)
         },
         filterActive(key) {
             return key == this.filter_scope;
         }
     },
     computed: {
-        ...mapGetters(['form']),
         filterVariant() {
             return this.filter_scope ? 'primary' : 'outline-secondary';
         }

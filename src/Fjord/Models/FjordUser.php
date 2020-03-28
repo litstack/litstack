@@ -17,8 +17,7 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
         HasRoles,
         CanResetPassword,
         CanEloquentJs,
-        HasFormFields,
-        Traits\HasIndex;
+        HasFormFields;
 
 
     protected $guard_name = 'fjord';
@@ -57,5 +56,15 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
         $link .= '?email=' . urlencode($this->email);
 
         $this->notify(new ResetPasswordNotification($link));
+    }
+
+    public function scopeAdmin($query)
+    {
+        return $query->role('admin');
+    }
+
+    public function scopeUser($query)
+    {
+        return $query->role('user');
     }
 }

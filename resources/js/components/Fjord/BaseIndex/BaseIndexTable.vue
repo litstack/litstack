@@ -1,5 +1,5 @@
 <template>
-    <b-table-simple :aria-busy="busy">
+    <b-table-simple :aria-busy="busy" hover>
         <fj-colgroup :icons="['check']" :cols="tableCols" />
 
         <fj-crud-index-table-head
@@ -62,10 +62,10 @@
                         </td>
                         <td
                             v-else
-                            @click="openItem(item)"
-                            class="pointer"
+                            @click="openLink(col.link, item)"
+                            :class="col.link ? 'pointer' : ''"
                         >
-                            <fj-table-col
+                            <fj-base-table-col
                                 :item="item"
                                 :col="col"
                             />
@@ -87,6 +87,7 @@
     </b-table-simple>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
     name: "BaseIndexTable",
@@ -96,7 +97,7 @@ export default {
             type: Array
         },
         items: {
-            type: Array,
+            type: [Object, Array],
             required: true
         },
         busy: {
@@ -132,6 +133,7 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(['config']),
         hasRecordActions() {
             return this.recordActions.length > 0;
         },
@@ -149,6 +151,13 @@ export default {
                 this.selectedItems = [];
             }
         },
+        openLink(link, item) {
+            if(!link) {
+                return
+            }
+
+            window.location.href = `/${this.config.route_prefix}/` + this._format(link, item)
+        }
     },
 }
 </script>

@@ -36,7 +36,7 @@ class ExtensionComposer
         }
 
         $packageMatch = $extensionPackage == '*'
-            || $extensionPackage == ($package->getName() ?? '');
+            || $extensionPackage == ($package ? $package->getName() : '');
 
         $routeMatch = $route == '*'
             || Str::endsWith(Request::route()->getName(), $route);

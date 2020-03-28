@@ -5,7 +5,7 @@
                 <strong>
                     {{ $tc('fj.n_items_selected', selectedItems.length) }}
                     {{
-                        selectedItems.length == crud.items.length
+                        selectedItems.length == items.length
                             ? `(${$t('fj.all')})`
                             : ''
                     }}
@@ -19,12 +19,12 @@
                     variant="outline-secondary"
                 >
                     <component
-                        v-for="(component, key) in actions.actions"
+                        v-for="(component, key) in actions"
                         :key="key"
                         :is="component"
-                        :formConfig="form.config"
                         :selectedItems="selectedItems"
                         :sendAction="sendAction"
+                        @reload="reload"
                     />
                 </b-dropdown>
             </template>
@@ -37,13 +37,18 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'BaseIndexTableSelectedItemsActions',
     props: {
+        items: {
+            required: true,
+            type: [Object, Array],
+        },
         selectedItems: {
             type: Array,
             required: true
-        }
-    },
-    computed: {
-        ...mapGetters(['actions', 'form', 'crud'])
+        },
+        actions: {
+            required: true,
+            type: Array
+        },
     },
     methods: {
         async sendAction(route, ids) {
@@ -67,6 +72,9 @@ export default {
             this.$bvToast.toast(message, {
                 variant: 'info'
             });
+        },
+        reload() {
+            this.$emit('reload')
         }
     }
 };

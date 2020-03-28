@@ -12,23 +12,30 @@
                             :nameSingular="nameSingular"
                             :namePlural="namePlural"
                             @search="doSearch"/>
-                        <!--
                         <template v-slot:append>
-                            <fj-base-index-table-filter />
-                            <fj-base-index-table-sort />
+                            <fj-base-index-table-filter
+                                :filter="filter"
+                                @onFilterChange="filterChanged"/>
+                            <fj-base-index-table-sort
+                                :sortBy="sortBy"
+                                :sortByDefault="sortByDefault"
+                                @sort="sort"/>
                         </template>
-                        -->
                     </b-input-group>
 
                 </fj-base-index-table-form>
 
                 <fj-base-index-table-selected-items-actions
-                    :selectedItems="selectedItems"/>
+                    :actions="globalActions"
+                    :items="items"
+                    :selectedItems="selectedItems"
+                    @reload="_loadItems()"/>
 
                 <fj-base-index-table
                     :busy="isBusy"
                     :tableCols="tableCols"
                     :items="items"
+                    :recordActions="recordActions"
                     @selectedItemsChanged="setSelectedItems"
                     @loadItems="_loadItems()"/>
 
@@ -67,14 +74,26 @@ export default {
                 return 1;
             }
         },
+        searchKeys: {
+            type: Array,
+            default() {
+                return ['name']
+            },
+        },
         recordActions: {
             type: Array,
             default: () => {
                 return [];
             }
         },
-        items: {
+        globalActions: {
             type: Array,
+            default: () => {
+                return [];
+            }
+        },
+        items: {
+            type: [Object, Array],
             required: true
         },
         loadItems: {
@@ -88,6 +107,21 @@ export default {
             type: String
         },
         namePlural: {
+            type: String
+        },
+        filter: {
+            type: Object,
+            default() {
+                return {}
+            }
+        },
+        sortBy: {
+            type: Object,
+            default() {
+                return {}
+            }
+        },
+        sortByDefault: {
             type: String
         }
     },
@@ -122,6 +156,14 @@ export default {
         }
     },
     methods: {
+        filterChanged(filter) {
+            this.filter_scope = filter
+            this._loadItems()
+        },
+        sort(key) {
+            this.sort_by_key = key
+            this._loadItems()
+        },
         setSelectedItems(selectedItems) {
             this.selectedItems = selectedItems
         },
@@ -133,7 +175,8 @@ export default {
                 perPage: this.perPage,
                 search: this.search,
                 sort_by: this.sort_by_key,
-                filter: this.filter_scope
+                filter: this.filter_scope,
+                searchKeys: this.searchKeys
             };
 
             await this.loadItems(payload)
@@ -160,10 +203,14 @@ export default {
         setTableCols() {
             this.tableCols = [];
 
-            this.tableCols.push({
-                key: 'check',
-                label: 'Check'
-            });
+            // TODO: make this work
+            //if(this.recordActions.length > 0) {
+                // prepend checkbox col if table has recordActions
+                this.tableCols.push({
+                    key: 'check',
+                    label: 'Check'
+                });
+            //}
 
             for (let i = 0; i < this.cols.length; i++) {
                 let col = this.cols[i];
@@ -175,13 +222,6 @@ export default {
                 this.tableCols.push(col);
             }
         },
-        openItem(item) {
-            window.location.href =
-                `${this.form.config.names.table}/${item.id}` +
-                ('route' in this.form.config.index
-                    ? this.form.config.index.route
-                    : '/edit');
-        }
     }
 };
 </script>

@@ -4,37 +4,44 @@
         :text="$t('fj.sort')"
         class="btn-brl-none"
         variant="outline-secondary"
-        v-if="form.config.index.sort_by"
+        v-if="sortBy"
     >
         <b-dropdown-item
-            v-for="(text, key) in form.config.index.sort_by"
+            v-for="(text, key) in sortBy"
             :key="key"
-            @click="sortBy(key)"
-        >
-            <b-form-radio :checked="sort_by_key" :value="key">{{
-                text
-            }}</b-form-radio>
+            @click="sort(key)">
+
+            <b-form-radio :checked="sort_by_key" :value="key">
+                {{ text }}
+            </b-form-radio>
+
         </b-dropdown-item>
     </b-dropdown>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 export default {
     name: 'BaseIndexTableSort',
+    props: {
+        sortBy: {
+            type: Object,
+            required: true
+        },
+        sortByDefault: {
+            type: String,
+            required: true
+        }
+    },
     data() {
         return {
             sort_by_key: ''
         };
     },
     methods: {
-        sortBy(key) {
+        sort(key) {
             this.sort_by_key = key;
-            this.$bus.$emit('crudSort', key);
+            this.$emit('sort', key);
         }
     },
-    computed: {
-        ...mapGetters(['form'])
-    }
 };
 </script>

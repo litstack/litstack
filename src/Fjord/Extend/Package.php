@@ -7,6 +7,8 @@ use Illuminate\Routing\Route;
 
 class Package
 {
+    use Concerns\ManagesConfig;
+
     protected $name;
 
     protected $providers = [];
@@ -19,6 +21,8 @@ class Package
     {
         $this->name = $name;
         $this->providers = $config['providers'] ?? [];
+
+        $this->setConfigPath();
     }
 
     public function getRoutePrefix()

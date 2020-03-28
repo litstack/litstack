@@ -10,7 +10,7 @@
                             :selectedItems="selectedItems"
                         />
 
-                        <b-table-simple :aria-busy="isBusy">
+                        <b-table-simple :aria-busy="isBusy" hover>
                             <fj-colgroup :icons="['check']" :cols="tableCols" />
 
                             <fj-crud-index-table-head
