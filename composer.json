@@ -35,6 +35,12 @@
             "providers": [
                 "AwStudio\\Fjord\\FjordServiceProvider"
             ]
+        },
+        "fjord": {
+            "providers": [
+                "AwStudio\\Fjord\\User\\ServiceProvider",
+                "AwStudio\\Fjord\\Form\\ServiceProvider"
+            ]
         }
     },
     "scripts": {
