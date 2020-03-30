@@ -2,7 +2,7 @@
 
 namespace AwStudio\Fjord\User\Config;
 
-use AwStudio\Fjord\Fjord\Config\FjordConfig;
+use AwStudio\Fjord\Application\Config\FjordConfig;
 
 class TableConfig extends FjordConfig
 {

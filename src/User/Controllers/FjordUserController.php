@@ -9,17 +9,16 @@ use AwStudio\Fjord\Fjord\Models\FjordUser;
 //use AwStudio\Fjord\User\Models\ModelRole;
 use AwStudio\Fjord\User\Requests\UpdateUserRoleRequest;
 use AwStudio\Fjord\User\Requests\IndexUserRoleRequest;
-use AwStudio\Fjord\Fjord\Application\IndexTable;
+use AwStudio\Fjord\Support\IndexTable;
+use AwStudio\Fjord\Support\Facades\Package;
 
 class FjordUserController extends Controller
 {
     public function showIndex(IndexUserRoleRequest $request)
     {
-        $config = fjord()
-            ->package('aw-studio/fjord')
-            ->config('users.table');
+        $config = Package::config('aw-studio/fjord', 'users.table');
 
-        return view('fjord::app')->withComponent('fj-fjord-users')
+        return view('fjord::app')->withComponent('fj-users')
             ->withTitle('Users')
             ->withProps([
                 'usersCount' => FjordUser::count(),

@@ -14,9 +14,5 @@ class ServiceProvider extends LaravelServiceProvider
     public function boot()
     {
         $this->app->register('AwStudio\Fjord\User\RouteServiceProvider');
-
-        fjord()
-            ->package('aw-studio/fjord')
-            ->configCompiler('users.table', Config\TableConfig::class);
     }
 }

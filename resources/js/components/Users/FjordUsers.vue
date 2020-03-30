@@ -26,7 +26,7 @@
 
 <script>
 export default {
-    name: 'FjordUsers',
+    name: 'Users',
     props: {
         usersCount: {
             type: Number,

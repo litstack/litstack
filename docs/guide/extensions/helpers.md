@@ -60,6 +60,6 @@ The `can` mixin checks if the authenticated user has a permission.
 
 ```js
 <template v-if="can('read message')">
-    Message
+    {{ message }}
 </template>
 ```

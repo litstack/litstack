@@ -9,8 +9,7 @@ use Schema;
 
 class Fjord
 {
-    use Concerns\ManagesPackages,
-        Concerns\ManagesNavigation,
+    use Concerns\ManagesNavigation,
         Concerns\ManagesForms,
         Concerns\ManagesFiles;
 
@@ -20,20 +19,32 @@ class Fjord
 
     protected $app;
 
-    public function __construct()
-    {
-        $this->app = new Application\Application();
-        $this->loadPackageManifest();
-    }
-
     public function app()
     {
-        return $this->app;
+        return app()->get('fjord.app');
     }
 
-    public function composer($namespace)
+    /**
+     * Binding composer to fjord::app view.
+     * 
+     * @param string $composer
+     * @return void
+     */
+    public function composer($composer)
     {
-        View::composer(['fjord::app'], $namespace);
+        View::composer('fjord::app', $composer);
+    }
+
+    /**
+     * Register extension class.
+     * 
+     * @param string $component
+     * @param string $extension
+     * @return void
+     */
+    public function registerExtension($component, $extension)
+    {
+        app()->get('fjord.kernel')->registerExtension($component, $extension);
     }
 
     protected function prepareFields($fields, $path, $setDefaults = null)
@@ -87,21 +98,5 @@ class Fjord
         } catch(\Exception $e) {
             return false;
         }
-    }
-
-    /**
-     * Dynamically call the default driver instance.
-     *
-     * @param  string  $method
-     * @param  array  $parameters
-     * @return mixed
-     */
-    public function __call($method, $parameters)
-    {
-        if(! method_exists($this, $method)) {
-            return $this->package('aw-studio/fjord')->{$method}(...$parameters);
-        }
-
-        return $this->{$method}(...$parameters);
     }
 }

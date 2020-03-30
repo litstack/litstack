@@ -99,13 +99,21 @@ module.exports = {
                     ]
                 },
                 {
+                    title: 'Architecture Concepts',
+                    collapsable: false,
+                    children: [
+                        ['guide/architecture/lifecycle', 'Lifecycle'],
+                    ]
+                },
+                {
                     title: 'Extending Fjord',
                     collapsable: false,
                     children: [
                         ['guide/extensions/setup', 'Setup'],
-                        ['guide/extensions/helpers', 'Helpers']
+                        ['guide/extensions/helpers', 'Helpers'],
+                        ['guide/extensions/package', 'Package Development'],
                     ]
-                }
+                },
             ]
         }
     }

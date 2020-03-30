@@ -14,6 +14,7 @@ use AwStudio\Fjord\Form\Controllers\FormBelongsToManyController;
 use AwStudio\Fjord\Form\Controllers\FormHasManyController;
 use AwStudio\Fjord\Form\Controllers\FormRelationsController;
 use AwStudio\Fjord\Support\Facades\FormLoader;
+use AwStudio\Fjord\Support\Facades\Package;
 use AwStudio\Fjord\Fjord\Controllers\RolePermissionController;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
@@ -29,6 +30,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         if(! fjord()->installed()) {
             return;
         }
+        
+        $this->package = Package::get('aw-studio/fjord');
 
         $this->mapFormFieldRoutes();
         $this->mapFormRoutes();
@@ -58,21 +61,17 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 $namespace = "\\App\\Http\\Controllers\\Fjord\\{$controllerClass}";
             }
 
-            $routes = FjordRoute::as('fjord.aw-studio.fjord')->resource(config('fjord.route_prefix') . "/{$crud}", $namespace);
+            $routes = $this->package->route()->resource(config('fjord.route_prefix') . "/{$crud}", $namespace);
 
-            // Extendable routes.
-            fjord()->extendable("{$crud}.edit");
-            fjord()->extendable("{$crud}.index", ['globalActions', 'recordActions']);
-
-            FjordRoute::post("/{$crud}/index", $namespace . "@postIndex")
+            $this->package->route()->post("/{$crud}/index", $namespace . "@postIndex")
                 ->name("{$crud}.post_index");
 
-            FjordRoute::get("/{$crud}/{id}/relations/{relation}", $namespace . "@relationIndex");
-            FjordRoute::get("/{$crud}/{id}/relations/{relation}/create", $namespace . "@relationStore");
-            FjordRoute::delete("/{$crud}/{id}/relations/{relation}/{foreign_id}", $namespace . "@relationDestroy");
-            FjordRoute::post("/{$crud}/{id}/relations/{relation}/{foreign_id}/remove", $namespace . "@relationRemove");
-            FjordRoute::post("/unrelated-relation", $namespace . "@unrelatedRelation");
-            FjordRoute::post("/link-relation", $namespace . "@relationLink");
+            $this->package->route()->get("/{$crud}/{id}/relations/{relation}", $namespace . "@relationIndex");
+            $this->package->route()->get("/{$crud}/{id}/relations/{relation}/create", $namespace . "@relationStore");
+            $this->package->route()->delete("/{$crud}/{id}/relations/{relation}/{foreign_id}", $namespace . "@relationDestroy");
+            $this->package->route()->post("/{$crud}/{id}/relations/{relation}/{foreign_id}/remove", $namespace . "@relationRemove");
+            $this->package->route()->post("/unrelated-relation", $namespace . "@unrelatedRelation");
+            $this->package->route()->post("/link-relation", $namespace . "@relationLink");
 
             FjordRoute::extensionRoutes($namespace);
         }

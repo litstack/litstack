@@ -3,8 +3,10 @@
 namespace AwStudio\Fjord\Routing;
 
 use Exception;
+use Illuminate\Http\Request;
 use AwStudio\Fjord\Form\Crud;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Route as Route2;
 use AwStudio\Fjord\Auth\AuthController;
 use AwStudio\Fjord\Support\Facades\FjordRoute;
 use App\Http\Controllers\Fjord\DashboardController;
@@ -16,18 +18,12 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 {
     protected $namespace = 'AwStudio\Fjord';
 
-    public function boot()
-    {
-        parent::boot();
-    }
-
     public function map()
     {
         $this->mapFjordRoutes();
         $this->mapFileRoutes();
         $this->mapDashboardRoutes();
     }
-
 
     protected function mapFjordRoutes()
     {
@@ -39,6 +35,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             Route::put('/order', [FjordController::class, 'order'])->name('order');
         });
 
+        // TODO: Check if this is needed
         Route::prefix(config('fjord.route_prefix'))
             ->namespace($this->namespace)
             ->middleware('web')
