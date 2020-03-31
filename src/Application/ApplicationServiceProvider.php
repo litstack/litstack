@@ -13,11 +13,11 @@ class ApplicationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Router $router)
+    public function boot(Router $router): void
     {
         // Kernel method handleRoute gets executed here.
         $router->pushMiddlewareToGroup('web', Kernel\HandleRouteMiddleware::class);
-        
+
         // Kernel method handleView gets executed here.
         View::composer('fjord::app', Kernel\HandleViewComposer::class);
     }

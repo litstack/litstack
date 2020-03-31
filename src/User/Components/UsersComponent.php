@@ -7,14 +7,23 @@ use AwStudio\Fjord\Application\Vue\Component;
 class UsersComponent extends Component
 {
     /**
-     * Compare original props to extended props and do changes if needed.
+     * Pass props to extension that should be edited.
      * 
-     * @param array $original
-     * @param array $extended
-     * @return array $props
+     * @return array props
      */
-    public function handleExtension(array $original, array $extended)
+    public function passToExtension()
     {
-        return $extended;
+        return $this->props;
+    }
+
+    /**
+     * Receive props from extension and bind them to component. 
+     *
+     * @param array $data
+     * @return void
+     */
+    public function receiveFromExtension($props)
+    {
+        $this->props = $props;
     }
 }

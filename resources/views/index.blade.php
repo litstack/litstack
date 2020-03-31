@@ -27,7 +27,7 @@
 <body onload="makeVisible()">
     <div id="fjord-app" class="{{ Auth::guard('fjord')->guest() ? '' : config('fjord.layout') }}">
 
-        @include('fjord::partials.topbar')
+        @include('fjord::partials.topbar.topbar')
 
         @include('fjord::partials.navigation')
 

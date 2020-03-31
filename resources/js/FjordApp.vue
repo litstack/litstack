@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Fjord from './fjord'
+import Fjord from './fjord';
 import FjordModel from './eloquent/fjord.model';
 import TranslatableModel from './eloquent/translatable.model';
 import { mapGetters } from 'vuex';
@@ -35,7 +35,7 @@ export default {
         auth: {
             type: Object,
             required: true
-        },
+        }
     },
     data() {
         return {
@@ -56,27 +56,33 @@ export default {
         this.prepareProps();
         this.setAuthData();
 
-        this.callPluginMethods('beforeMount')
+        this.callPluginMethods('beforeMount');
     },
     mounted() {
+        this.showHiddenElements();
+
         this.$Bus.$on('error', e => {
             this.$bvToast.toast(e, {
                 variant: 'danger'
             });
         });
 
-        this.callPluginMethods('mounted')
+        this.callPluginMethods('mounted');
     },
     methods: {
+        showHiddenElements() {
+            let element = document.getElementById('fjord-topbar-right');
+            element.style.opacity = 1;
+        },
         callPluginMethods(method) {
-            let plugins = Fjord.getPlugins()
-            for(let i=0;i<plugins.length;i++) {
-                let plugin = plugins[i]
-                if(!(method in plugin)) {
-                    continue
+            let plugins = Fjord.getPlugins();
+            for (let i = 0; i < plugins.length; i++) {
+                let plugin = plugins[i];
+                if (!(method in plugin)) {
+                    continue;
                 }
 
-                plugin[method](this)
+                plugin[method](this);
             }
         },
         setAuthData() {
@@ -112,8 +118,7 @@ export default {
                     return new FjordModel(model);
             }
         }
-    },
-
+    }
 };
 </script>
 

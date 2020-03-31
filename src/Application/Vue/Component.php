@@ -19,13 +19,19 @@ abstract class Component
     protected $props;
 
     /**
-     * Compare original props to extended props and do changes if needed.
+     * Pass props to extension that should be edited.
      * 
-     * @param array $original
-     * @param array $extended
      * @return array props
      */
-    abstract public function handleExtension(array $original, array $extended);
+    abstract public function passToExtension();
+
+    /**
+     * Receive props from extension and bind them to component. 
+     *
+     * @param $props
+     * @return void
+     */
+    abstract public function receiveFromExtension($props);
 
     /**
      * Create component instance.
@@ -48,5 +54,15 @@ abstract class Component
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get component props.
+     *
+     * @return array $props
+     */
+    public function getProps()
+    {
+        return $this->props;
     }
 }

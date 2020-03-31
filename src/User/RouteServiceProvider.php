@@ -2,11 +2,9 @@
 
 namespace AwStudio\Fjord\User;
 
-use Illuminate\Support\Facades\Route;
 use AwStudio\Fjord\Support\Facades\FjordRoute;
-use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 use AwStudio\Fjord\User\Controllers\FjordUserController;
-use AwStduio\Fjord\User\Config\TableConfig;
+use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -20,9 +18,10 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->mapUserRoleRoutes();
     }
 
+
     protected function mapUserRoleRoutes()
     {
-        
+
         FjordRoute::package('aw-studio/fjord')
             ->get('/users', FjordUserController::class . '@showIndex')
             ->name('users');

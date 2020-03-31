@@ -35,15 +35,31 @@ class VueApplication
      * @var bool
      */
     protected $hasBeenBuild = false;
-    
+
+    /**
+     * Required props that need to be passed to fjord::app view.
+     *
+     * @var array
+     */
     protected $required = [
         'component',
     ];
 
+    /**
+     * Compiler for root props.
+     *
+     * @var array
+     */
     protected $compiler = [
         'model' => Props\ModelProp::class
     ];
 
+    /**
+     * Create VueApplication instance.
+     *
+     * @param \AwStudio\Fjord\Application\Application $app
+     * @return void
+     */
     public function __construct(Application $app)
     {
         $this->app = $app;
@@ -57,14 +73,14 @@ class VueApplication
      */
     public function build(View $view)
     {
-        if($view->getName() != "fjord::app") {
+        if ($view->getName() != "fjord::app") {
             throw new Exception('Fjord application can only be build for view "fjord::app".');
         }
 
         $this->setDefaultProps();
-    
+
         $this->setPropsFromViewData($view->getData());
-        
+
         $this->compileRootProps();
 
         $this->initializeComponent($this->props['component']);
@@ -72,6 +88,11 @@ class VueApplication
         $this->hasBeenBuild = true;
     }
 
+    /**
+     * Default props for Fjord Vue application are defined here.
+     *
+     * @return void
+     */
     protected function setDefaultProps()
     {
         $this->props = [
@@ -96,35 +117,40 @@ class VueApplication
      */
     public function extend(View $view, array $extensions)
     {
-        if(! $this->hasBeenBuild()) {
+        if (!$this->hasBeenBuild()) {
             throw new Exception('Fjord Vue application cannot be extended if it has not been build.');
         }
 
-        if(! $this->component) {
+        if (!$this->component) {
             return;
         }
 
-        foreach($extensions as $extension) {
+        foreach ($extensions as $extension) {
 
             // Look for extensions for the current component.
-            if($this->component->getName() != $extension['component']) {
+            if ($this->component->getName() != $extension['component']) {
                 continue;
             }
-            
+
             $this->executeExtension(
                 new $extension['extension']()
             );
         }
     }
 
+    /**
+     * Execute extension for component.
+     *
+     * @param $extension
+     * @return void
+     */
     protected function executeExtension($extension)
     {
-        $originals = $this->props['props'] ?? [];
-        $extended = $extension->handle($originals);
+        $extended = $extension->handle(
+            $this->component->passToExtension()
+        );
 
-        $this->props['props'] = $this->component->handleExtension($originals, $extended);
-
-        //$this->component->setProps($this->props['props']);
+        $this->component->receiveFromExtension($extended);
     }
 
     /**
@@ -134,10 +160,10 @@ class VueApplication
      */
     protected function initializeComponent(string $component)
     {
-        foreach($this->app->get('packages')->all() as $package) {
+        foreach ($this->app->get('packages')->all() as $package) {
             $components = $package->getComponents();
-            foreach($components as $name => $class) {
-                if($name != $component) {
+            foreach ($components as $name => $class) {
+                if ($name != $component) {
                     continue;
                 }
 
@@ -147,30 +173,47 @@ class VueApplication
         }
     }
 
+    /**
+     * Merge view data into props.
+     *
+     * @param array $data
+     * @return void
+     */
     protected function setPropsFromViewData(array $data)
     {
         $this->checkForRequiredProps($data);
 
-        foreach($data as $name => $value) {
+        foreach ($data as $name => $value) {
 
             // Do not overwrite default props.
-            if($this->propExists($name)) {
+            if ($this->propExists($name)) {
                 continue;
             }
-            
+
             $this->props[$name] = $value;
         }
     }
 
-    protected function propExists($name)
+    /**
+     * Checks if prop exists.
+     * 
+     * @param string $name
+     * @return boolean
+     */
+    protected function propExists(string $name)
     {
         return array_key_exists($name, $this->props);
     }
 
+    /**
+     * Run compiler for matching root props.
+     *
+     * @return void
+     */
     protected function compileRootProps()
     {
-        foreach($this->compiler as $prop => $compiler) {
-            if(! $this->propExists($prop)) {
+        foreach ($this->compiler as $prop => $compiler) {
+            if (!$this->propExists($prop)) {
                 continue;
             }
 
@@ -182,20 +225,42 @@ class VueApplication
         }
     }
 
+    /**
+     * Check if all required props are passed to view.
+     *
+     * @param array $data
+     * @return void
+     * 
+     * @throws \Exception
+     */
     protected function checkForRequiredProps($data)
     {
-        foreach($this->required as $name) {
-            if(! array_key_exists($name, $data)) {
+        foreach ($this->required as $name) {
+            if (!array_key_exists($name, $data)) {
                 throw new Exception("Missing required variable \"{$name}\" for view fjord::app.");
             }
         }
     }
 
+    /**
+     * Get props for Fjord Vue application.
+     *
+     * @return array $props
+     */
     public function props()
     {
+        if ($this->component) {
+            $this->props['props'] = $this->component->getProps();
+        }
+
         return $this->props;
     }
 
+    /**
+     * Checks if Fjord Vue application has been build. 
+     *
+     * @return boolean
+     */
     protected function hasBeenBuild()
     {
         return $this->hasBeenBuild;

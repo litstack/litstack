@@ -16360,6 +16360,14 @@ div#fjord-app.vertical .container {
   }
 }
 
+.fjord-hide {
+  opacity: 0;
+}
+
+.fjord-hide.show {
+  opacity: 1;
+}
+
 .fj-topbar {
   width: 100vw;
   height: 56px;
