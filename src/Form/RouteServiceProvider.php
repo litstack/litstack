@@ -1,8 +1,8 @@
 <?php
+
 namespace AwStudio\Fjord\Form;
 
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Route;
 use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 use AwStudio\Fjord\Support\Facades\Fjord;
 use AwStudio\Fjord\Support\Facades\FjordRoute;
@@ -13,9 +13,7 @@ use AwStudio\Fjord\Form\Controllers\FormMorphOneController;
 use AwStudio\Fjord\Form\Controllers\FormBelongsToManyController;
 use AwStudio\Fjord\Form\Controllers\FormHasManyController;
 use AwStudio\Fjord\Form\Controllers\FormRelationsController;
-use AwStudio\Fjord\Support\Facades\FormLoader;
 use AwStudio\Fjord\Support\Facades\Package;
-use AwStudio\Fjord\Fjord\Controllers\RolePermissionController;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -27,10 +25,10 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     public function map()
     {
-        if(! fjord()->installed()) {
+        if (!fjord()->installed()) {
             return;
         }
-        
+
         $this->package = Package::get('aw-studio/fjord');
 
         $this->mapFormFieldRoutes();
@@ -42,7 +40,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->mapFormBelongsToManyRoutes();
         $this->mapFormHasManyRoutes();
         $this->mapMediaRoutes();
-
     }
 
     protected function mapCrudRoutes()
@@ -51,17 +48,20 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             return;
         }
 
-        foreach(Fjord::forms('crud') as $crud => $path) {
-            $crudArray = require $path;
+        $configFiles = $this->package->configFiles('crud');
 
-            if(array_key_exists('controller', $crudArray)){
-                $namespace = $crudArray['controller'];
-            }else{
-                $controllerClass = Str::studly(Str::singular($crud)).'Controller';
-                $namespace = "\\App\\Http\\Controllers\\Fjord\\{$controllerClass}";
+        foreach ($configFiles as $name => $path) {
+            $crud = last(explode('.', $name));
+            $config = collect($this->package->rawConfig($name));
+
+            if ($config->has('controller')) {
+                $namespace = $config->controller;
+            } else {
+                $controller = Str::studly(Str::singular($crud)) . 'Controller';
+                $namespace = "\\App\\Http\\Controllers\\Fjord\\{$controller}";
             }
 
-            $routes = $this->package->route()->resource(config('fjord.route_prefix') . "/{$crud}", $namespace);
+            $this->package->route()->resource(config('fjord.route_prefix') . "/{$crud}", $namespace);
 
             $this->package->route()->post("/{$crud}/index", $namespace . "@postIndex")
                 ->name("{$crud}.post_index");
@@ -81,12 +81,12 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     {
         $collections = config('fjord.forms');
 
-        foreach($collections as $collectionName => $config) {
+        foreach ($collections as $collectionName => $config) {
 
             $forms = Fjord::forms($collectionName);
             $collectionRoutePrefix = $config['route_prefix'] ?? $collectionName;
 
-            foreach($forms as $formName => $path) {
+            foreach ($forms as $formName => $path) {
 
                 $formRoutePrefix = $formName;
 
@@ -142,5 +142,4 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::post('/media', MediaController::class . '@store')->name('media.store');
         FjordRoute::delete('/media/{medium}', MediaController::class . '@destroy')->name('media.destroy');
     }
-
 }

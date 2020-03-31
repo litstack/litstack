@@ -2,6 +2,7 @@
 
 namespace AwStudio\Fjord;
 
+use AwStudio\Fjord\Application\Application;
 use AwStudio\Fjord\User\Components\UsersComponent;
 use AwStudio\Fjord\Application\Package\FjordPackage as Package;
 
@@ -13,8 +14,22 @@ class FjordPackage extends Package
      * @var array
      */
     protected $providers = [
+        \AwStudio\Fjord\Application\RouteServiceProvider::class,
         \AwStudio\Fjord\User\ServiceProvider::class,
         \AwStudio\Fjord\Form\ServiceProvider::class
+    ];
+
+    /**
+     * List of all artisan commands to be registered for this package.
+     *
+     * @var array
+     */
+    protected $commands = [
+        Commands\FjordAdmin::class,
+        Commands\FjordUser::class,
+        Commands\FjordCrud::class,
+        Commands\FjordCrudPermissions::class,
+        Commands\FjordDefaultPermissions::class
     ];
 
     /**
@@ -31,7 +46,24 @@ class FjordPackage extends Package
      * 
      * @var array
      */
-    protected $configFiles = [
-        'users.table' => \AwStudio\Fjord\User\Config\TableConfig::class
+    protected $configHandler = [
+        'navigation.main' => \AwStudio\Fjord\Application\Navigation\MainConfig::class,
+        'navigation.topbar' => \AwStudio\Fjord\Application\Navigation\TopbarConfig::class,
+        'users.table' => User\Config\TableConfig::class
     ];
+
+    /**
+     * Boot application.
+     *
+     * @param Application $app
+     * @return void
+     */
+    public function boot(Application $app)
+    {
+        $app->addCssFile('/' . config('fjord.route_prefix') . '/css/app.css');
+
+        foreach (config('fjord.assets.css') as $path) {
+            $this->app['fjord']->addCssFile($path);
+        }
+    }
 }

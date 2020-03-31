@@ -6,6 +6,11 @@ use AwStudio\Fjord\Application\Config\FjordConfig;
 
 class TableConfig extends FjordConfig
 {
+    /**
+     * Default config attributes.
+     *
+     * @var array
+     */
     protected $defaults = [
         'cols' => [
             [

@@ -3,30 +3,48 @@
 namespace AwStudio\Fjord;
 
 use App\Fjord\Kernel;
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\App;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Blade;
-use AwStudio\Fjord\Support\Facades\Fjord as FjordFacade;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider;
 use AwStudio\Fjord\Auth\Middleware\Authenticate;
-use AwStduio\Fjord\Foundation\Console\PackageDiscoverCommand;
-use AwStudio\Fjord\Fjord\Extend\ExtensionComposer;
 
 class FjordServiceProvider extends ServiceProvider
 {
+    /**
+     * Service providers that should be registered without Fjord being installed.
+     * All service providers that should only be registered if Fjord is 
+     * installed are specified in \AwStudio\Fjord\FjordPackage
+     *
+     * @var array
+     */
     protected $providers = [
-        \AwStudio\Fjord\Routing\RouteServiceProvider::class,
-        //\AwStudio\Fjord\User\ServiceProvider::class,
-        //\AwStudio\Fjord\Form\ServiceProvider::class,
-        \AwStudio\Fjord\Auth\ServiceProvider::class,
-        \AwStudio\Fjord\Application\ApplicationServiceProvider::class,
-        \AwStudio\Fjord\Foundation\Providers\ArtisanServiceProvider::class,
+        Auth\ServiceProvider::class,
+        Application\ApplicationServiceProvider::class,
+        Foundation\Providers\ArtisanServiceProvider::class,
+        Support\Macros\BuilderMacros::class,
         \App\Providers\FjordServiceProvider::class
+    ];
+
+    /**
+     * Console commands that should be registered without Fjord being installed.
+     * All commands that should only be registered if Fjord is installed are 
+     * specified in \AwStudio\Fjord\FjordPackage
+     *
+     * @var array
+     */
+    protected $commands = [
+        Commands\Install\FjordInstall::class,
+        Commands\FjordGuard::class,
+    ];
+
+    /**
+     * Aliases.
+     *
+     * @var array
+     */
+    protected $aliases = [
+        'Fjord' => Support\Facades\Fjord::class
     ];
 
     /**
@@ -36,52 +54,15 @@ class FjordServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        /**
-         * Load the Fjord views
-         *
-         */
+        // Load Fjord views.
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'fjord');
 
-        /**
-         * Register Fjord Auth Middleware
-         *
-         */
+        // Middelware
         $router->aliasMiddleware('fjord.auth', Authenticate::class);
 
-        /**
-         * Register Fjord Builder
-         *
-         */
-        $this->builder();
+        fjord()->addLangPath(fjord_path('resources/lang/'));
 
         $this->publish();
-
-        fjord()->addLangPath(fjord_path('resources/lang/'));
-    }
-
-    protected function builder()
-    {
-        Builder::macro('whereLike', function ($attributes, string $searchTerm) {
-            $this->where(function (Builder $query) use ($attributes, $searchTerm) {
-                foreach (Arr::wrap($attributes) as $attribute) {
-                    $query->when(
-                        Str::contains($attribute, '.'),
-                        function (Builder $query) use ($attribute, $searchTerm) {
-                            [$relationName, $relationAttribute] = explode('.', $attribute);
-
-                            $query->orWhereHas($relationName, function (Builder $query) use ($relationAttribute, $searchTerm) {
-                                $query->where($relationAttribute, 'LIKE', "%{$searchTerm}%");
-                            });
-                        },
-                        function (Builder $query) use ($attribute, $searchTerm) {
-                            $query->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
-                        }
-                    );
-                }
-            });
-
-            return $this;
-        });
     }
 
     /**
@@ -91,35 +72,39 @@ class FjordServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->singletons();
-        $this->facades();
+        $this->alias();
         $this->fjord();
-
-        if (App::runningInConsole()) {
-            $this->registerConsoleCommands();
-        }
-
-        $this->addFiles();
+        $this->artisan();
 
         // Register providers then app last.
         $this->providers();
-        $this->app();
+        $this->lightsOn();
     }
 
+    /**
+     * Register Fjord helper singleton.
+     *
+     * @return void
+     */
     protected function fjord()
-    {        
-        $this->app->singleton('fjord.router', function ($app) {
-            return new Routing\FjordRouter($app['events'], $app);
-        });
-
+    {
         $this->app->singleton('fjord', function () {
             return new Fjord\Fjord();
         });
+
+        $this->app->singleton('fjord.router', function ($app) {
+            return new Routing\FjordRouter($app['events'], $app);
+        });
     }
 
-    protected function app()
+    /**
+     * Lights on: Fjord application comes to life.
+     *
+     * @return void
+     */
+    protected function lightsOn()
     {
-        if(! $this->app->get('fjord')->installed()) {
+        if (!$this->app->get('fjord')->installed()) {
             return;
         }
 
@@ -135,61 +120,57 @@ class FjordServiceProvider extends ServiceProvider
         $this->app->get('fjord.kernel');
     }
 
-    protected function singletons()
-    {
-
-    }
-
-    protected function facades()
+    /**
+     * Register aliases.
+     *
+     * @return void
+     */
+    protected function alias()
     {
         $loader = AliasLoader::getInstance();
-        $loader->alias('Fjord', FjordFacade::class);
+
+        foreach ($this->aliases as $alias => $class) {
+            $loader->alias($alias, $class);
+        }
     }
 
+    /**
+     * Register providers.
+     *
+     * @return void
+     */
     protected function providers()
     {
-        foreach($this->providers as $provider) {
+        foreach ($this->providers as $provider) {
             $this->app->register($provider);
         }
     }
 
-    public function addFiles()
+    /**
+     * Register artisan commands.
+     *
+     * @return void
+     */
+    protected function artisan()
     {
-        if (!fjord()->installed()) {
+        if (!App::runningInConsole()) {
             return;
         }
 
-        $this->app['fjord']->addCssFile('/' . config('fjord.route_prefix') . '/css/app.css');
-        foreach (config('fjord.assets.css') as $path) {
-            $this->app['fjord']->addCssFile($path);
-        }
+        $this->commands($this->commands);
     }
 
-    private function registerConsoleCommands()
-    {
-        $this->commands(Commands\FjordInstall::class);
-        $this->commands(Commands\FjordGuard::class);
-        $this->commands(Commands\FjordAdmin::class);
-        $this->commands(Commands\FjordUser::class);
-        $this->commands(Commands\FjordCrud::class);
-        $this->commands(Commands\FjordCrudPermissions::class);
-        $this->commands(Commands\FjordDefaultPermissions::class);
-    }
-
+    /**
+     * Define publishers.
+     *
+     * @return void
+     */
     protected function publish()
     {
-        /**
-         * Publish Fjords config
-         *
-         */
         $this->publishes([
             __DIR__ . '/../publish/config' => config_path(),
         ], 'config');
 
-        /**
-         * Publish Fjords migrations
-         *
-         */
         $this->publishes([
             __DIR__ . '/../publish/database/migrations' => database_path('migrations'),
         ], 'migrations');

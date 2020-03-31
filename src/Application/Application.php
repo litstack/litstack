@@ -6,6 +6,8 @@ use Illuminate\View\View;
 
 class Application
 {
+    use Concerns\ManagesFiles;
+
     /**
      * The application's bindings.
      *
@@ -19,7 +21,7 @@ class Application
      * @var bool
      */
     protected $hasBeenBootstrapped = false;
-    
+
     /**
      * Run the given array of bootstrap classes.
      *
@@ -46,14 +48,28 @@ class Application
     }
 
     /**
-     * Build Vue application.
+     * Boot packages and build Vue application.
      * 
      * @param Illuminate\View\View $view
      * @return void
      */
     public function build(View $view)
     {
+        $this->bootPackages();
+
         $this->get('vue')->build($view);
+    }
+
+    /**
+     * Boot all packages.
+     *
+     * @return void
+     */
+    protected function bootPackages()
+    {
+        foreach ($this->get('packages')->all() as $package) {
+            $package->boot($this);
+        }
     }
 
     /**
@@ -90,5 +106,16 @@ class Application
     public function bind($abstract, $instance)
     {
         $this->bindings[$abstract] = $instance;
+    }
+
+    /**
+     * Load config for a Fjord package.
+     * 
+     * @param string $config
+     * @return array $config
+     */
+    public function config(string $config)
+    {
+        return $this->get('packages')->config('aw-studio/fjord', $config);
     }
 }

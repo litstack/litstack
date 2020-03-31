@@ -1,28 +1,20 @@
 <?php
 
-namespace AwStudio\Fjord\Routing;
+namespace AwStudio\Fjord\Application;
 
-use Exception;
-use Illuminate\Http\Request;
-use AwStudio\Fjord\Form\Crud;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Routing\Route as Route2;
-use AwStudio\Fjord\Auth\AuthController;
 use AwStudio\Fjord\Support\Facades\FjordRoute;
 use App\Http\Controllers\Fjord\DashboardController;
-use AwStudio\Fjord\Fjord\Controllers\FileController;
+use AwStudio\Fjord\Application\Controllers\FileController;
 use AwStudio\Fjord\Fjord\Controllers\FjordController;
 use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
-    protected $namespace = 'AwStudio\Fjord';
-
     public function map()
     {
         $this->mapFjordRoutes();
         $this->mapFileRoutes();
-        $this->mapDashboardRoutes();
     }
 
     protected function mapFjordRoutes()
@@ -34,12 +26,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             Route::get('/test', 'AwStudio\Fjord\Fjord\Controllers\FjordTranslationsController@translations')->name('fjord-transssslations');
             Route::put('/order', [FjordController::class, 'order'])->name('order');
         });
-
-        // TODO: Check if this is needed
-        Route::prefix(config('fjord.route_prefix'))
-            ->namespace($this->namespace)
-            ->middleware('web')
-            ->group(fjord_path('routes/fjord.php'));
     }
 
     protected function mapFileRoutes()
@@ -59,18 +45,5 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::public()
             ->get('favicon/favicon-16x16.png', FileController::class . '@fjordFaviconSmall')
             ->name('favicon-small');
-    }
-
-    protected function mapDashboardRoutes()
-    {
-        if (\App::runningInConsole()) {
-            return;
-        }
-        if (
-            !\File::exists(app_path('Http/Controllers/Fjord/DashboardController.php'))
-        ) {
-            throw new Exception("The App/Http/Controllers/Fjord/DashboardController.php does not exist. Run php artisan fjord:install to create it.");
-        }
-        FjordRoute::extensionRoutes(\App\Http\Controllers\Fjord\DashboardController::class);
     }
 }

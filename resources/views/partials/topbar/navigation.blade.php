@@ -6,7 +6,7 @@
     @php
     $first = true;
     @endphp
-    @foreach(fjord()->getNavigation('topbar') as $group)
+    @foreach(fjord()->app()->config('navigation.topbar') as $group)
         @if($first)
             @php
             $first = false;

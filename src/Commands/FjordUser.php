@@ -39,7 +39,7 @@ class FjordUser extends Command
      */
     public function handle()
     {
-        if(! Role::where('name', 'user')->exists()) {
+        if (!Role::where('name', 'user')->exists()) {
             $this->error('You may run fjord:install before fjord:user.');
             return;
         }
@@ -58,6 +58,4 @@ class FjordUser extends Command
 
         $this->info('User has been created');
     }
-
-
 }

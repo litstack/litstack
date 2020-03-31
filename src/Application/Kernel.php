@@ -21,9 +21,10 @@ class Kernel
      * @var array
      */
     protected $bootstrappers = [
-        \AwStudio\Fjord\Application\Bootstrap\DiscoverPackages::class,
-        \AwStudio\Fjord\Application\Bootstrap\RegisterPackageProviders::class,
-        \AwStudio\Fjord\Application\Bootstrap\BootstrapVueApplication::class
+        Bootstrap\DiscoverPackages::class,
+        Bootstrap\RegisterPackageProviders::class,
+        Bootstrap\RegisterPackageCommands::class,
+        Bootstrap\BootstrapVueApplication::class
     ];
 
     /**
@@ -60,7 +61,7 @@ class Kernel
      * 
      * @return void
      */
-    public function handleRoute($route) 
+    public function handleRoute($route)
     {
         // TODO: Find something to do for here.
     }
@@ -96,7 +97,7 @@ class Kernel
      */
     protected function registerRootExtensions()
     {
-        foreach($this->extensions as $component => $extension) {
+        foreach ($this->extensions as $component => $extension) {
             $this->registerExtension($component, $extension);
         }
     }
@@ -132,7 +133,7 @@ class Kernel
      */
     public function registerExtension($component, $extension)
     {
-        $this->formattedExtensions []= [
+        $this->formattedExtensions[] = [
             "component" => $component,
             "extension" => $extension
         ];

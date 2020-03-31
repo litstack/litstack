@@ -2,8 +2,6 @@
 
 namespace AwStudio\Fjord\Fjord\Concerns;
 
-use Exception;
-use Illuminate\Support\Facades\Schema;
 use AwStudio\Fjord\Support\Facades\Form;
 
 trait ManagesForms
@@ -12,7 +10,7 @@ trait ManagesForms
 
     public function cruds()
     {
-        return collect($this->crudFiles())->map(function($path) {
+        return collect($this->crudFiles())->map(function ($path) {
             return str_replace('.php', '', basename($path));
         });
     }
@@ -26,7 +24,7 @@ trait ManagesForms
     {
         $files = glob(fjord_resource_path("{$name}/*.php"));
 
-        return collect($files)->mapWithKeys(function($path) {
+        return collect($files)->mapWithKeys(function ($path) {
             return [str_replace('.php', '', basename($path)) => $path];
         });
     }

@@ -17,7 +17,7 @@
 
     <link rel="stylesheet" href="{{route('fjord.css')}}">
 
-    @foreach(fjord()->getCssFiles() as $path)
+    @foreach(fjord()->app()->getCssFiles() as $path)
         <link href="{{ $path }}{{ config('app.env') == 'production' ? '' : '?t=' . time() }}" rel="stylesheet">
     @endforeach
 

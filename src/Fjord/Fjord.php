@@ -2,16 +2,15 @@
 
 namespace AwStudio\Fjord\Fjord;
 
+use Schema;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 use AwStudio\Fjord\Models\Repeatable;
 use AwStudio\Fjord\Models\PageContent;
-use Illuminate\Support\Facades\View;
-use Schema;
 
 class Fjord
 {
-    use Concerns\ManagesNavigation,
-        Concerns\ManagesForms,
-        Concerns\ManagesFiles;
+    use Concerns\ManagesForms;
 
     public $translatedAttributes = [];
 
@@ -49,24 +48,38 @@ class Fjord
 
     protected function prepareFields($fields, $path, $setDefaults = null)
     {
-        foreach($fields as $key => $field) {
+        foreach ($fields as $key => $field) {
             $fields[$key] = new FormFields\FormField($field, $path, $setDefaults);
         }
         return form_collect($fields);
     }
 
-    public function routes()
-    {
-        require fjord_path('routes/fjord.php');
-    }
-
-    public function trans($key = null, $replace = [])
+    /**
+     * Get translation for Fjord application.
+     *
+     * @param string $key
+     * @param array $replace
+     * @return string
+     */
+    public function trans(string $key = null, $replace = [])
     {
         if (is_null($key)) {
             return $key;
         }
 
         return __($key, $replace, $this->getLocale());
+    }
+
+    /**
+     * Get translation for Fjord application.
+     *
+     * @param string $key
+     * @param array $replace
+     * @return string
+     */
+    public function __(string $key = null, $replace = [])
+    {
+        return $this->trans($key, $replace);
     }
 
     public function getLocale()
@@ -76,7 +89,7 @@ class Fjord
 
     public function addLangPath($path)
     {
-        $this->langPaths []= $path;
+        $this->langPaths[] = $path;
     }
 
     public function getLangPaths()
@@ -89,13 +102,17 @@ class Fjord
      */
     public function installed()
     {
-        if(! config()->has('fjord')) {
+        if (!config()->has('fjord')) {
+            return false;
+        }
+
+        if (!File::exists(app_path('Fjord/Kernel.php'))) {
             return false;
         }
 
         try {
             return Schema::hasTable('form_fields');
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }

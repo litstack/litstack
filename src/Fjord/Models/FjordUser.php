@@ -49,6 +49,12 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Send password reset notification.
+     *
+     * @param string $token
+     * @return void
+     */
     public function sendPasswordResetNotification($token)
     {
         $link = route('fjord.password.reset', $token);
@@ -58,11 +64,23 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
         $this->notify(new ResetPasswordNotification($link));
     }
 
+    /**
+     * Has role admin scope.
+     *
+     * @param $query
+     * @return $query
+     */
     public function scopeAdmin($query)
     {
         return $query->role('admin');
     }
 
+    /**
+     * Has role user scope.
+     *
+     * @param  $query
+     * @return $query
+     */
     public function scopeUser($query)
     {
         return $query->role('user');

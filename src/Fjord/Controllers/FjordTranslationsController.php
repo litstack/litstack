@@ -14,7 +14,7 @@ class FjordTranslationsController extends Controller
     public function __construct()
     {
 
-        foreach(config('fjord.translatable.locales') as $locale) {
+        foreach (config('fjord.translatable.locales') as $locale) {
             $this->translations[$locale] = [];
         }
     }
@@ -29,13 +29,12 @@ class FjordTranslationsController extends Controller
 
     protected function getTranslations()
     {
-        if(! config('fjord.translatable.translatable')) {
+        if (!config('fjord.translatable.translatable')) {
             return;
         }
 
-
-        foreach(fjord()->getLangPaths() as $path) {
-            foreach(config('fjord.translatable.locales') as $locale) {
+        foreach (fjord()->getLangPaths() as $path) {
+            foreach (config('fjord.translatable.locales') as $locale) {
                 $dir = realpath($path . '/' . $locale);
                 $this->getTranslationsFromPath($locale, $dir);
             }
@@ -44,15 +43,15 @@ class FjordTranslationsController extends Controller
 
     protected function getTranslationsFromPath($locale, $path, $prefix = '')
     {
-        if(! File::isDirectory($path)) {
+        if (!File::isDirectory($path)) {
             return;
         }
 
-        foreach(glob($path . '/*.php') as $file) {
+        foreach (glob($path . '/*.php') as $file) {
             $this->addFileToTranslations($locale, $file, $prefix);
         }
 
-        foreach(glob($path . '/*' , GLOB_ONLYDIR) as $dir) {
+        foreach (glob($path . '/*', GLOB_ONLYDIR) as $dir) {
             $prefix = $prefix . ($prefix ? '.' : '') . basename($dir);
             $this->addFileToTranslations($locale, $file, $prefix);
         }

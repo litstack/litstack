@@ -55,7 +55,7 @@ class VueApplication
     ];
 
     /**
-     * Create VueApplication instance.
+     * Create new VueApplication instance.
      *
      * @param \AwStudio\Fjord\Application\Application $app
      * @return void
