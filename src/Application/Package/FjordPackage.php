@@ -45,6 +45,13 @@ abstract class FjordPackage
     protected $components = [];
 
     /**
+     * List of extensions for other packages.
+     *
+     * @var array
+     */
+    protected $extensions = [];
+
+    /**
      * List of handlers for config files.
      * 
      * @var array
@@ -136,6 +143,16 @@ abstract class FjordPackage
     public function commands()
     {
         return $this->commands;
+    }
+
+    /**
+     * Get list of extensions for other packages.
+     *
+     * @return array $extensions
+     */
+    public function extensions()
+    {
+        return $this->extensions;
     }
 
     /**

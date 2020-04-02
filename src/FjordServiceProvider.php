@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use AwStudio\Fjord\Auth\Middleware\Authenticate;
+use AwStudio\EloquentJs\EloquentJs;
 
 class FjordServiceProvider extends ServiceProvider
 {
@@ -23,7 +24,7 @@ class FjordServiceProvider extends ServiceProvider
         Application\ApplicationServiceProvider::class,
         Foundation\Providers\ArtisanServiceProvider::class,
         Support\Macros\BuilderMacros::class,
-        \App\Providers\FjordServiceProvider::class
+        \App\Providers\FjordServiceProvider::class,
     ];
 
     /**

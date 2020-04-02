@@ -1,0 +1,21 @@
+<?php
+
+namespace DummyNamespace;
+
+use AwStudio\Fjord\Application\Vue\Extension;
+
+class DummyClass extends Extension
+{
+    /**
+     * Modify props for Vue application in handle method.
+     * 
+     * @var array $props
+     * @return array $props
+     */
+    public function handle($props)
+    {
+        //
+
+        return $props;
+    }
+}

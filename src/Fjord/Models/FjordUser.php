@@ -19,7 +19,6 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
         CanEloquentJs,
         HasFormFields;
 
-
     protected $guard_name = 'fjord';
 
     /**
@@ -48,6 +47,13 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['role'];
 
     /**
      * Send password reset notification.
@@ -84,5 +90,15 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
     public function scopeUser($query)
     {
         return $query->role('user');
+    }
+
+    /**
+     * Get fjord user role.
+     *
+     * @return void
+     */
+    public function getRoleAttribute()
+    {
+        return $this->roles()->first();
     }
 }

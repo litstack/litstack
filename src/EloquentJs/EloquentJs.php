@@ -19,16 +19,16 @@ class EloquentJs
     protected function setRelations()
     {
 
-        if(! $this->model) {
+        if (!$this->model) {
             return;
         }
 
-        if(get_class($this->model) == get_class($this->infoModel)) {
-            if(! property_exists($this->model, 'eloquentRelations')) {
+        if (get_class($this->model) == get_class($this->infoModel)) {
+            if (!property_exists($this->model, 'eloquentRelations')) {
                 return;
             }
 
-            if(! $this->model->eloquentRelations) {
+            if (!$this->model->eloquentRelations) {
                 return;
             }
 
@@ -37,12 +37,12 @@ class EloquentJs
             return;
         }
 
-        foreach($this->model as $model) {
-            if(! property_exists($model, 'eloquentRelations')) {
+        foreach ($this->model as $model) {
+            if (!property_exists($model, 'eloquentRelations')) {
                 continue;
             }
 
-            if(! $model->eloquentRelations) {
+            if (!$model->eloquentRelations) {
                 continue;
             }
 
@@ -51,9 +51,9 @@ class EloquentJs
 
 
         return;
-        foreach($this->model->eloquentRelations as $name => $class) {
+        foreach ($this->model->eloquentRelations as $name => $class) {
             // TODO: only works for hasMany
-            if($this->model->$name->count() == 0) {
+            if ($this->model->$name->count() == 0) {
                 $this->relations[$name] = collect([]);
                 continue;
             }
@@ -64,7 +64,6 @@ class EloquentJs
 
     protected function setRelation($model)
     {
-
     }
 
     public function toArray()
@@ -82,7 +81,7 @@ class EloquentJs
 
     public function getFillables()
     {
-        if(! is_translatable($this->infoModel)) {
+        if (!is_translatable($this->infoModel)) {
             return $this->getFillablesFromModel($this->infoModel);
         }
         $modelName = $this->infoModel->getTranslationModelName();
@@ -92,7 +91,7 @@ class EloquentJs
     protected function getFillablesFromModel($model)
     {
         $fillables = [];
-        foreach($model->getFillable() as $key) {
+        foreach ($model->getFillable() as $key) {
             $fillables[$key] = $model->$key;
         }
         return $fillables;

@@ -44,6 +44,13 @@ export default {
         };
     },
     beforeMount() {
+        console.log(
+            this._format('Role: {{ role.name }}', {
+                role: { name: 'admin' },
+                test: 'TEST'
+            })
+        );
+
         this.$store.commit('SET_LANGUAGES', this.translatable.languages);
         this.$store.commit('SET_LANGUAGE', this.translatable.language);
         this.$store.commit(

@@ -15,6 +15,12 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     {
         $this->mapFjordRoutes();
         $this->mapFileRoutes();
+        $this->mapAppRoutes();
+    }
+
+    protected function mapAppRoutes()
+    {
+        FjordRoute::group(base_path('routes/fjord.php'));
     }
 
     protected function mapFjordRoutes()

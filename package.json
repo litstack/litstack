@@ -48,6 +48,7 @@
         "bootstrap-vue": "^2.9.0",
         "collect.js": "^4.20.3",
         "cropperjs": "^1.5.6",
+        "fjord-eloquent-js": "file:vendor/aw-studio/eloquent-js",
         "fjord-permissions": "file:vendor/aw-studio/fjord-permissions",
         "flag-icon-css": "^3.4.6",
         "fs": "0.0.1-security",

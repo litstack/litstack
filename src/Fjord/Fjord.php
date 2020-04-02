@@ -43,7 +43,7 @@ class Fjord
      */
     public function registerExtension($component, $extension)
     {
-        app()->get('fjord.kernel')->registerExtension($component, $extension);
+        app()->get('fjord.app')->registerExtension($component, $extension);
     }
 
     protected function prepareFields($fields, $path, $setDefaults = null)
@@ -80,6 +80,16 @@ class Fjord
     public function __(string $key = null, $replace = [])
     {
         return $this->trans($key, $replace);
+    }
+
+    /**
+     * Get authenticated Fjord user.
+     *
+     * @return \AwStudio\Fjord\Models\FjordUser $user
+     */
+    public function user()
+    {
+        return fjord_user();
     }
 
     public function getLocale()

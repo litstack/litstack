@@ -39,10 +39,5 @@
         "fjord": {
             "package": "AwStudio\\Fjord\\FjordPackage"
         }
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "AwStudio\\Fjord\\Foundation\\ComposerScripts::postAutoloadDump"
-        ]
     }
 }

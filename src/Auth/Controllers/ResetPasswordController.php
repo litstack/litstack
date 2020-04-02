@@ -2,15 +2,20 @@
 
 namespace AwStudio\Fjord\Auth\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class ResetPasswordController extends Controller
+class ResetPasswordController
 {
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -39,7 +44,17 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo;
+
+    /**
+     * Create new ResetPasswordController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->redirectTo = config('fjord.route_prefix') . '/login';
+    }
 
     public function showResetForm(Request $request, $token = null)
     {

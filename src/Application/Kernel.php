@@ -24,6 +24,7 @@ class Kernel
         Bootstrap\DiscoverPackages::class,
         Bootstrap\RegisterPackageProviders::class,
         Bootstrap\RegisterPackageCommands::class,
+        Bootstrap\RegisterPackageExtensions::class,
         Bootstrap\BootstrapVueApplication::class
     ];
 
@@ -110,7 +111,7 @@ class Kernel
      */
     public function extend(View $view)
     {
-        $this->app->extend($view, $this->formattedExtensions);
+        $this->app->extend($view);
     }
 
     /**
@@ -133,9 +134,6 @@ class Kernel
      */
     public function registerExtension($component, $extension)
     {
-        $this->formattedExtensions[] = [
-            "component" => $component,
-            "extension" => $extension
-        ];
+        $this->app->registerExtension($component, $extension);
     }
 }

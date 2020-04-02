@@ -16,6 +16,13 @@ class Application
     protected $bindings = [];
 
     /**
+     * The Fjord extension provided by your application.
+     *
+     * @var array
+     */
+    protected $extensions = [];
+
+    /**
      * Indicates if the application has been bootstrapped before.
      *
      * @var bool
@@ -76,12 +83,11 @@ class Application
      * Execute extensions for the given components.
      * 
      * @param Illuminate\View\View $view
-     * @param array $extensions
      * @return void
      */
-    public function extend(View $view, array $extensions)
+    public function extend(View $view)
     {
-        $this->get('vue')->extend($view, $extensions);
+        $this->get('vue')->extend($view, $this->extensions);
     }
 
     /**
@@ -117,5 +123,20 @@ class Application
     public function config(string $config)
     {
         return $this->get('packages')->config('aw-studio/fjord', $config);
+    }
+
+    /**
+     * Register extension class.
+     * 
+     * @param string $component
+     * @param string $extension
+     * @return void
+     */
+    public function registerExtension($component, $extension)
+    {
+        $this->extensions[] = [
+            "component" => $component,
+            "extension" => $extension
+        ];
     }
 }
