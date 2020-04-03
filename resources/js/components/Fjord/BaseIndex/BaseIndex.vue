@@ -1,7 +1,15 @@
 <template>
     <div>
-        <b-card>
-            <div class="fj-index-table">
+        <b-card no-body class="fj-index-table">
+            <b-tabs card v-if="hasTabs" @activate-tab="newTab">
+                <b-tab
+                    :title="'title' in tab ? tab.title : tab"
+                    :active="index == 0"
+                    v-for="(tab, index) in tabs"
+                    :key="index"
+                    no-body/>
+            </b-tabs>
+            <div class="card-body">
                 <fj-base-index-table-form>
                     <b-input-group>
                         <b-input-group-prepend is-text>
@@ -64,6 +72,13 @@ import TableModel from '@fj-js/eloquent/table.model';
 export default {
     name: 'IndexTable',
     props: {
+        tabs: {
+            required: false,
+            type: Array,
+            default() {
+                return [];
+            }
+        },
         cols: {
             required: true,
             type: Array
@@ -128,6 +143,7 @@ export default {
     data() {
         return {
             isBusy: true,
+            tab: null,
 
             tableCols: {},
             selectedItems: [],
@@ -140,12 +156,17 @@ export default {
             currentPage: 1
         };
     },
+
     watch: {
 
     },
     beforeMount() {
         this.setTableCols();
 
+        if(this.hasTabs) {
+            this.tab = this.tabs[0]
+        }
+        
         this.sort_by_key = this.sortByDefault || null;
 
         this._loadItems();
@@ -153,9 +174,16 @@ export default {
     computed: {
         perPage() {
             return 20;
+        },
+        hasTabs() {
+            return this.tabs.length > 0;
         }
     },
     methods: {
+        newTab(index) {
+            this.tab = this.tabs[index]
+            this._loadItems()
+        },
         filterChanged(filter) {
             this.filter_scope = filter
             this._loadItems()
@@ -171,6 +199,7 @@ export default {
             this.isBusy = true;
 
             let payload = {
+                tab: this.tab,
                 page: this.currentPage,
                 perPage: this.perPage,
                 search: this.search,
@@ -229,10 +258,17 @@ export default {
 <style lang="scss">
 @import '@fj-sass/_variables';
 .fj-index-table {
+    .nav-tabs {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
     table.b-table {
         width: auto;
         margin-left: -1.25rem;
         margin-right: -1.25rem;
+
+        
 
         &[aria-busy='true'] {
             opacity: 0.6;

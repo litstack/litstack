@@ -66,6 +66,11 @@ class EloquentJs
     {
     }
 
+    /**
+     * Get config for javascript.
+     *
+     * @return array
+     */
     public function toArray()
     {
         return collect([
@@ -75,8 +80,19 @@ class EloquentJs
             'data' => $this->model,
             'translatable' => is_translatable($this->infoModel),
             'model' => get_class($this->infoModel),
-            'route' => $this->infoModel->getTable()
+            'route' => $this->infoModel->getTable(),
+            'collection' => $this->isCollection(),
         ]);
+    }
+
+    /**
+     * Check if model is a collection instance.
+     *
+     * @return boolean
+     */
+    public function isCollection()
+    {
+        return $this->model instanceof Collection;
     }
 
     public function getFillables()

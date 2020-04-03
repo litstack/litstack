@@ -46,9 +46,9 @@ class CrudController extends Controller
 
         // check, if the mode is translatable
         $reflect = new \ReflectionClass($this->model);
-        if ($reflect->implementsInterface('Astrotomic\Translatable\Contracts\Translatable')){
+        if ($reflect->implementsInterface('Astrotomic\Translatable\Contracts\Translatable')) {
             $this->translatable = true;
-        }else{
+        } else {
             $this->translatable = false;
         }
 
@@ -56,7 +56,6 @@ class CrudController extends Controller
         $data = new $model();
 
         $translatedAttributes = $this->translatable ? $data->translatedAttributes() : null;
-
     }
 
     /**
@@ -71,6 +70,8 @@ class CrudController extends Controller
             ->withProps([
                 'formConfig' => $this->getForm()->toArray(),
                 'actions' => $this->getExtensions('index.actions'),
+                'globalActions' => [],
+                'recordActions' => []
                 //'globalActions' => $this->getExtensions('index.globalActions'),
                 //'recordActions' => $this->getExtensions('index.recordActions'),
             ]);
@@ -128,7 +129,7 @@ class CrudController extends Controller
         $form = $this->getForm($eloquentModel['data']);
         $form->setPreviewRoute($eloquentModel['data']);
 
-        $previous = $this->model::where('id', '<', $id)->orderBy('id','desc')->select('id')->first()->id ?? null;
+        $previous = $this->model::where('id', '<', $id)->orderBy('id', 'desc')->select('id')->first()->id ?? null;
         $next = $this->model::where('id', '>', $id)->orderBy('id')->select('id')->first()->id ?? null;
 
         return view('fjord::app')->withComponent('fj-crud-show')
@@ -160,7 +161,7 @@ class CrudController extends Controller
         $item = $this->model::with($this->getWiths())->findOrFail($id);
         $item->update($request->all());
 
-        if(is_translatable($this->model)) {
+        if (is_translatable($this->model)) {
             $item->append('translation');
         }
 
@@ -181,7 +182,7 @@ class CrudController extends Controller
 
     protected function getForm($model = null)
     {
-        if(! $model) {
+        if (!$model) {
             $model = with(new $this->model);
         }
         return FormLoader::load($model->form_fields_path, $this->model);

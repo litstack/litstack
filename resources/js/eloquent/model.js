@@ -8,6 +8,7 @@ export default class EloquentModel {
             return new EloquentCollection(config, this.constructor);
         }
 
+        this.originals = {};
         this.attributes = {};
         this.config = config;
 
@@ -25,6 +26,12 @@ export default class EloquentModel {
         return new Proxy(this, this);
     }
 
+    /**
+     * Get attribute.
+     *
+     * @param {*} target
+     * @param {*} prop
+     */
     get(target, prop) {
         return this[prop] || this.attributes[prop] || undefined;
     }
@@ -36,18 +43,34 @@ export default class EloquentModel {
     setAttributes(attributes) {
         this.attributes = attributes;
 
-        this.setOriginalAttributes();
+        this.setOriginals();
     }
 
+    /**
+     * Check if attributes have changed.
+     *
+     * @return {Boolean}
+     */
     hasChanges() {
         // TODO:
     }
 
-    setOriginalAttributes() {
+    /**
+     * Set clone of original attributes. This is used to located changes.
+     *
+     * @param {*} attributes
+     * @return {undefined}
+     */
+    setOriginals() {
         // is used to locate changes
-        this.startingAttributes = JSON.parse(JSON.stringify(this.attributes));
+        this.originals = JSON.parse(JSON.stringify(this.attributes));
     }
 
+    /**
+     * Create EloquentModel instances for relations.
+     *
+     * @return {undefined}
+     */
     _setRelations() {
         if (!this.attributes.eloquentJs) {
             return;
@@ -63,10 +86,20 @@ export default class EloquentModel {
 
     _getParent(cls) {}
 
+    /**
+     * Get payload for save request.
+     *
+     * @return {Object}
+     */
     getPayload() {
         return Object.assign({}, this.attributes);
     }
 
+    /**
+     * Send resource request store or update, depending on if the id isset.
+     *
+     * @return {undefined}
+     */
     async save() {
         let method = this.attributes.id ? 'put' : 'post';
         let route = `${this.route}/${
@@ -83,6 +116,11 @@ export default class EloquentModel {
         this._setRelations();
     }
 
+    /**
+     * Send resource request destroy.
+     *
+     * @return {Object} response
+     */
     async delete() {
         let route = `eloquent/destroy/${this.attributes.id}`;
         let response = await axios.post(route, { model: this.model });

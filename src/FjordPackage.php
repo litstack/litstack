@@ -5,6 +5,7 @@ namespace AwStudio\Fjord;
 use AwStudio\Fjord\Application\Application;
 use AwStudio\Fjord\User\Components\UsersComponent;
 use AwStudio\Fjord\Application\Package\FjordPackage as Package;
+use AwStudio\Fjord\Form\Vue\Components\CrudIndexComponent;
 
 class FjordPackage extends Package
 {
@@ -14,6 +15,7 @@ class FjordPackage extends Package
      * @var array
      */
     protected $providers = [
+        \AwStudio\Fjord\Application\Translation\TranslationServiceProvider::class,
         \AwStudio\Fjord\Application\RouteServiceProvider::class,
         \AwStudio\Fjord\User\ServiceProvider::class,
         \AwStudio\Fjord\Form\ServiceProvider::class,
@@ -30,7 +32,6 @@ class FjordPackage extends Package
         Commands\FjordCrud::class,
         Commands\FjordExtend::class,
         Commands\FjordExtension::class,
-        Commands\FjordCrudPermissions::class,
         Commands\FjordDefaultPermissions::class
     ];
 
@@ -40,7 +41,8 @@ class FjordPackage extends Package
      * @var array
      */
     protected $components = [
-        'fj-users' => UsersComponent::class
+        'fj-users' => UsersComponent::class,
+        'fj-crud-index' => CrudIndexComponent::class
     ];
 
     /**

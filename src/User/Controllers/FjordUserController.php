@@ -8,13 +8,13 @@ use Spatie\Permission\Models\Role;
 use AwStudio\Fjord\Fjord\Models\FjordUser;
 //use AwStudio\Fjord\User\Models\ModelRole;
 use AwStudio\Fjord\User\Requests\UpdateUserRoleRequest;
-use AwStudio\Fjord\User\Requests\IndexUserRoleRequest;
+use AwStudio\Fjord\User\Requests\IndexFjordUserRequest;
 use AwStudio\Fjord\Support\IndexTable;
 use AwStudio\Fjord\Support\Facades\Package;
 
 class FjordUserController extends Controller
 {
-    public function showIndex(IndexUserRoleRequest $request)
+    public function showIndex(IndexFjordUserRequest $request)
     {
         $config = Package::config('aw-studio/fjord', 'users.table');
 
@@ -22,7 +22,7 @@ class FjordUserController extends Controller
             ->withTitle('Users')
             ->withProps([
                 'usersCount' => FjordUser::count(),
-                'config' => $config
+                'config' => $config,
             ]);
     }
 

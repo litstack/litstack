@@ -21,6 +21,7 @@ class Kernel
      * @var array
      */
     protected $bootstrappers = [
+        Bootstrap\BootstrapTranslator::class,
         Bootstrap\DiscoverPackages::class,
         Bootstrap\RegisterPackageProviders::class,
         Bootstrap\RegisterPackageCommands::class,

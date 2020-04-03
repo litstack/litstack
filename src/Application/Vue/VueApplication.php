@@ -98,6 +98,7 @@ class VueApplication
         $this->props = [
             'config' => collect(config('fjord')),
             'auth' => fjord_user(),
+            'app-locale' => $this->app->get('translator')->getLocale(),
             'translatable' => collect([
                 'language' => app()->getLocale(),
                 'languages' => collect(config('translatable.locales')),
@@ -139,18 +140,20 @@ class VueApplication
     }
 
     /**
-     * Execute extension for component.
+     * Execute extension for component if user has permission.
      *
      * @param $extension
      * @return void
      */
     protected function executeExtension($extension)
     {
-        $extended = $extension->handle(
-            $this->component->passToExtension()
-        );
+        if (!$extension->authenticate(fjord_user())) {
+            return;
+        }
 
-        $this->component->receiveFromExtension($extended);
+        $extension->handle(
+            $this->component
+        );
     }
 
     /**

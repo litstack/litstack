@@ -2,8 +2,18 @@
 
 namespace AwStudio\Fjord\Application\Vue;
 
+use AwStudio\Fjord\Fjord\Models\FjordUser;
+
 abstract class Extension
 {
+    /**
+     * Has user permission for this extension.
+     * 
+     * @var \AwStudio\Fjord\Fjord\Models\FjordUser $user
+     * @return boolean
+     */
+    abstract public function authenticate(FjordUser $user);
+
     /**
      * Modify props in handle method.
      * 

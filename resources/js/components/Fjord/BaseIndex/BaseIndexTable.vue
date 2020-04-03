@@ -5,7 +5,8 @@
         <fj-crud-index-table-head
             :tableCols="tableCols"
             :hasRecordActions="hasRecordActions"
-            :selectedItems="selectedItems">
+            :selectedItems="selectedItems"
+        >
             <b-checkbox
                 slot="checkbox"
                 class="float-left"
@@ -16,16 +17,8 @@
         </fj-crud-index-table-head>
 
         <tbody>
-            <tr
-                role="row"
-                class="b-table-busy-slot"
-                v-if="busy"
-            >
-                <td
-                    :colspan="tableCols.length"
-                    role="cell"
-                    align="center"
-                >
+            <tr role="row" class="b-table-busy-slot" v-if="busy">
+                <td :colspan="tableCols.length" role="cell" align="center">
                     <fj-base-spinner class="text-center" />
                 </td>
             </tr>
@@ -34,14 +27,10 @@
                     v-for="(item, key) in items"
                     :key="key"
                     :class="
-                        selectedItems.includes(item.id)
-                            ? 'table-primary'
-                            : ''
+                        selectedItems.includes(item.id) ? 'table-primary' : ''
                     "
                 >
-                    <template
-                        v-for="(col, col_key) in tableCols"
-                    >
+                    <template v-for="(col, col_key) in tableCols">
                         <td v-if="col.key == 'check'">
                             <b-checkbox
                                 v-model="selectedItems"
@@ -49,9 +38,7 @@
                             />
                         </td>
                         <td
-                            v-else-if="
-                                col.component !== undefined
-                            "
+                            v-else-if="col.component !== undefined"
                             class="pointer"
                         >
                             <component
@@ -65,16 +52,12 @@
                             @click="openLink(col.link, item)"
                             :class="col.link ? 'pointer' : ''"
                         >
-                            <fj-base-table-col
-                                :item="item"
-                                :col="col"
-                            />
+                            <fj-base-table-col :item="item" :col="col" />
                         </td>
                     </template>
                     <td v-if="hasRecordActions">
                         <component
-                            v-for="(component,
-                            key) in recordActions"
+                            v-for="(component, key) in recordActions"
                             :key="key"
                             :is="component"
                             :item="item"
@@ -87,10 +70,10 @@
     </b-table-simple>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
 export default {
-    name: "BaseIndexTable",
+    name: 'BaseIndexTable',
     props: {
         tableCols: {
             required: true,
@@ -107,16 +90,16 @@ export default {
         recordActions: {
             type: Array,
             default() {
-                return []
+                return [];
             }
-        },
+        }
     },
     data() {
         return {
             selectedAll: false,
             indeterminate: false,
             selectedItems: []
-        }
+        };
     },
     watch: {
         selectedItems(val) {
@@ -136,11 +119,11 @@ export default {
         ...mapGetters(['config']),
         hasRecordActions() {
             return this.recordActions.length > 0;
-        },
+        }
     },
     methods: {
         _loadItems() {
-            this.$emit('loadItems')
+            this.$emit('loadItems');
         },
         changeSelectedItems(val) {
             if (val) {
@@ -152,12 +135,13 @@ export default {
             }
         },
         openLink(link, item) {
-            if(!link) {
-                return
+            if (!link) {
+                return;
             }
 
-            window.location.href = `/${this.config.route_prefix}/` + this._format(link, item)
+            window.location.href =
+                `/${this.config.route_prefix}/` + this._format(link, item);
         }
-    },
-}
+    }
+};
 </script>

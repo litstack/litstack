@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use AwStudio\Fjord\Auth\Middleware\Authenticate;
-use AwStudio\EloquentJs\EloquentJs;
 
 class FjordServiceProvider extends ServiceProvider
 {
@@ -37,6 +36,7 @@ class FjordServiceProvider extends ServiceProvider
     protected $commands = [
         Commands\Install\FjordInstall::class,
         Commands\FjordGuard::class,
+        Commands\FjordCrudPermissions::class,
     ];
 
     /**
@@ -45,7 +45,8 @@ class FjordServiceProvider extends ServiceProvider
      * @var array
      */
     protected $aliases = [
-        'Fjord' => Support\Facades\Fjord::class
+        'Fjord' => Support\Facades\Fjord::class,
+        'FjordLang' => Support\Facades\FjordLang::class,
     ];
 
     /**
@@ -60,8 +61,6 @@ class FjordServiceProvider extends ServiceProvider
 
         // Middelware
         $router->aliasMiddleware('fjord.auth', Authenticate::class);
-
-        fjord()->addLangPath(fjord_path('resources/lang/'));
 
         $this->publish();
     }

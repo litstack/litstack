@@ -11,6 +11,12 @@
             @endphp
         @endif
 
+        @if($prop === null)
+            @php
+                $prop="'NULL'";
+            @endphp
+        @endif
+
         @if(is_bool($prop))
             @if ($prop)
                 :{{$key}}=true

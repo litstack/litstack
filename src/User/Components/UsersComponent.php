@@ -7,23 +7,35 @@ use AwStudio\Fjord\Application\Vue\Component;
 class UsersComponent extends Component
 {
     /**
-     * Pass props to extension that should be edited.
-     * 
-     * @return array props
+     * Add to recordActions prop.
+     *
+     * @param string $component
+     * @return void
      */
-    public function passToExtension()
+    public function addRecordAction(string $component)
     {
-        return $this->props;
+        $this->props['config']['recordActions'][] = $component;
     }
 
     /**
-     * Receive props from extension and bind them to component. 
+     * Add to globalActions prop.
      *
-     * @param array $data
+     * @param string $component
      * @return void
      */
-    public function receiveFromExtension($props)
+    public function addGlobalAction(string $component)
     {
-        $this->props = $props;
+        $this->props['config']['globalActions'][] = $component;
+    }
+
+    /**
+     * Add table column to index table.
+     *
+     * @param array $col
+     * @return void
+     */
+    public function addTableColumn(array $col)
+    {
+        $this->props['config']['cols'][] = $col;
     }
 }

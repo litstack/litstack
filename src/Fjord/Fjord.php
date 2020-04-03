@@ -5,8 +5,7 @@ namespace AwStudio\Fjord\Fjord;
 use Schema;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
-use AwStudio\Fjord\Models\Repeatable;
-use AwStudio\Fjord\Models\PageContent;
+use Illuminate\Support\Facades\Lang;
 
 class Fjord
 {
@@ -16,8 +15,11 @@ class Fjord
 
     protected $langPaths = [];
 
-    protected $app;
-
+    /**
+     * Get Fjord application.
+     *
+     * @return \AwStudio\Fjord\Application\Application $app
+     */
     public function app()
     {
         return app()->get('fjord.app');
@@ -46,6 +48,14 @@ class Fjord
         app()->get('fjord.app')->registerExtension($component, $extension);
     }
 
+    /**
+     * Prepare form fields.
+     *
+     * @param $fields
+     * @param $path
+     * @param $setDefaults
+     * @return void
+     */
     protected function prepareFields($fields, $path, $setDefaults = null)
     {
         foreach ($fields as $key => $field) {
@@ -67,7 +77,7 @@ class Fjord
             return $key;
         }
 
-        return __($key, $replace, $this->getLocale());
+        return $this->app()->get('translator')->trans($key, $replace);
     }
 
     /**
@@ -92,23 +102,35 @@ class Fjord
         return fjord_user();
     }
 
+    /**
+     * Get locale for Fjord application.
+     *
+     * @return void
+     */
     public function getLocale()
     {
-        return fjord_user()->locale ?? config('fjord.fallback_locale');
+        return $this->app()->get('translator')->getLocale();
     }
 
-    public function addLangPath($path)
+    /**
+     * Add language path for Fjord application translation.
+     *
+     * @param string $path
+     * @return void
+     */
+    public function addLangPath(string $path)
     {
-        $this->langPaths[] = $path;
-    }
+        if (!$this->installed()) {
+            return false;
+        }
 
-    public function getLangPaths()
-    {
-        return $this->langPaths;
+        $this->app()->get('translator')->addPath($path);
     }
 
     /**
      * Checks if fjord has been installed.
+     * 
+     * @return boolean
      */
     public function installed()
     {

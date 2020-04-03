@@ -79,67 +79,69 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapFormRoutes()
     {
-        $collections = config('fjord.forms');
+        $config = config('fjord.forms');
+        $configPath = $this->package->getConfigPath('forms');
+        $directories = glob($configPath . '/*', GLOB_ONLYDIR);
 
-        foreach ($collections as $collectionName => $config) {
+        foreach ($directories as $formDirectory) {
+            $collection = str_replace("{$configPath}/", '', $formDirectory);
+            $configFiles = $this->package->configFiles("forms.{$collection}");
 
-            $forms = Fjord::forms($collectionName);
-            $collectionRoutePrefix = $config['route_prefix'] ?? $collectionName;
-
-            foreach ($forms as $formName => $path) {
-
+            foreach ($configFiles as $configName => $path) {
+                $formName = last(explode('.', $configName));
                 $formRoutePrefix = $formName;
+                $collectionRoutePrefix = $config['route_prefix'] ?? $collection;
 
-                FjordRoute::get("{$collectionRoutePrefix}/{$formRoutePrefix}", FormController::class . "@show")
-                    ->name("form.{$collectionName}.{$formName}");
+                $this->package->route()->get("{$collectionRoutePrefix}/{$formRoutePrefix}", FormController::class . "@show")
+                    ->name("form.{$collection}.$formName");
             }
         }
     }
 
     protected function mapFormFieldRoutes()
     {
-        FjordRoute::put('form_fields/{id}', FormController::class . "@update")->name('form_field.update');
+        $this->package->route()->put('form_fields/{id}', FormController::class . "@update")->name('form_field.update');
     }
 
     protected function mapFormBlockRoutes()
     {
-        FjordRoute::post('form_blocks', FormBlockController::class . "@store")->name('form_block.store');
-        FjordRoute::put('form_blocks/{id}', FormBlockController::class . "@update")->name('form_block.update');
+        $this->package->route()->post('form_blocks', FormBlockController::class . "@store")->name('form_block.store');
+        $this->package->route()->put('form_blocks/{id}', FormBlockController::class . "@update")->name('form_block.update');
     }
 
     protected function mapFormRelationRoutes()
     {
-        FjordRoute::put('/relation', FormRelationsController::class . "@updateHasOne")->name('relation.update');
-        FjordRoute::post('/relations', FormRelationsController::class . "@index")->name('relations.index');
-        FjordRoute::put('/relations/order', FormRelationsController::class . "@order")->name('relations.order');
-        FjordRoute::post('/relations/store', FormRelationsController::class . "@store")->name('relation.store');
-        FjordRoute::post('/relations/delete', FormRelationsController::class . "@delete")->name('relation.delete');
+        $this->package->route()->put('/relation', FormRelationsController::class . "@updateHasOne")->name('relation.update');
+        $this->package->route()->post('/relations', FormRelationsController::class . "@index")->name('relations.index');
+        $this->package->route()->put('/relations/order', FormRelationsController::class . "@order")->name('relations.order');
+        $this->package->route()->post('/relations/store', FormRelationsController::class . "@store")->name('relation.store');
+        $this->package->route()->post('/relations/delete', FormRelationsController::class . "@delete")->name('relation.delete');
     }
 
     protected function mapFormMorphOneRoutes()
     {
-        FjordRoute::post('/morph-one', FormMorphOneController::class . "@index")->name('morph_one.index');
-        FjordRoute::post('/morph-one/store', FormMorphOneController::class . "@store")->name('morph_one.store');
+        $this->package->route()->post('/morph-one', FormMorphOneController::class . "@index")->name('morph_one.index');
+        $this->package->route()->post('/morph-one/store', FormMorphOneController::class . "@store")->name('morph_one.store');
     }
 
     protected function mapFormBelongsToManyRoutes()
     {
-        FjordRoute::post('/belongs-to-many', FormBelongsToManyController::class . "@index");
-        FjordRoute::post('/belongs-to-many/relations', FormBelongsToManyController::class . "@relations");
-        FjordRoute::post('/belongs-to-many/update', FormBelongsToManyController::class . "@update");
+        $this->package->route()->post('/belongs-to-many', FormBelongsToManyController::class . "@index");
+        $this->package->route()->post('/belongs-to-many/relations', FormBelongsToManyController::class . "@relations");
+        $this->package->route()->post('/belongs-to-many/update', FormBelongsToManyController::class . "@update");
     }
 
     protected function mapFormHasManyRoutes()
     {
-        FjordRoute::post('/has-many', FormHasManyController::class . "@index");
-        FjordRoute::post('/has-many/relations', FormHasManyController::class . "@relations");
-        FjordRoute::post('/has-many/update', FormHasManyController::class . "@update");
+        $this->package->route()->post('/has-many', FormHasManyController::class . "@index");
+        $this->package->route()->post('/has-many/relations', FormHasManyController::class . "@relations");
+        $this->package->route()->post('/has-many/update', FormHasManyController::class . "@update");
     }
 
     protected function mapMediaRoutes()
     {
-        FjordRoute::put('/media/attributes', MediaController::class . '@attributes')->name('media.attributes');
-        FjordRoute::post('/media', MediaController::class . '@store')->name('media.store');
-        FjordRoute::delete('/media/{medium}', MediaController::class . '@destroy')->name('media.destroy');
+        $this->package->route()->put('/media/attributes', MediaController::class . '@attributes')->name('media.attributes');
+        $this->package->route()->post('/media', MediaController::class . '@store')->name('media.store');
+        $this->package->route()->delete('/media/{medium}', MediaController::class . '@destroy')->name('media.destroy');
     }
 }

@@ -80,6 +80,8 @@ return [
 
     'translatable' => [
 
+        'locale' => 'en',
+
         'translatable' => true,
 
         'locales' => [

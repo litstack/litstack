@@ -18,7 +18,9 @@
                     :sortBy="config.sortBy"
                     :sortByDefault="config.sortByDefault"
                     :filter="config.filter"
-                    :globalActions="config.globalActions"/>
+                    :globalActions="config.globalActions"
+                    :recordActions="config.recordActions"
+                />
             </b-col>
         </b-row>
     </fj-base-container>
@@ -32,30 +34,28 @@ export default {
             type: Number,
             required: true
         },
-        config: {
-
-        }
+        config: {}
     },
     data() {
         return {
             users: [],
             count: 0,
-            data: {},
+            data: {}
         };
     },
     beforeMount() {
-        this.count = this.usersCount
+        this.count = this.usersCount;
     },
     methods: {
         async loadUsers(payload) {
-            let response = await axios.post('users-index', payload)
-            this.users = response.data.items
-            this.count = response.data.count
+            let response = await axios.post('users-index', payload);
+            this.users = response.data.items;
+            this.count = response.data.count;
         },
 
         userCreated(user) {
             // TODO: better table reload
-            window.location.reload()
+            window.location.reload();
         }
     }
 };

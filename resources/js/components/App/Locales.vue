@@ -6,6 +6,7 @@
         <b-dropdown-item-button
             v-for="(locale, index) in config.translatable.locales"
             :key="index"
+            v-bind:active="isLocaleActive(locale)"
             @click="setAppLocale(locale)"
         >
             <span
@@ -18,13 +19,15 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'Locales',
     methods: {
         async setAppLocale(locale) {
-            let response = await this.$store.dispatch('setAppLocale', { locale });
+            let response = await this.$store.dispatch('setAppLocale', {
+                locale
+            });
             this.$bvToast.toast(this.$t('fj.locale_set'), {
                 variant: 'success'
             });
@@ -34,12 +37,13 @@ export default {
                 locale = 'gb';
             }
             return `flag-icon-${locale}`;
+        },
+        isLocaleActive(locale) {
+            return this.$i18n.locale == locale;
         }
     },
     computed: {
-        ...mapGetters([
-            'config'
-        ]),
+        ...mapGetters(['config'])
     }
 };
 </script>

@@ -2,16 +2,17 @@
 
 namespace AwStudio\Fjord\Form\Database;
 
-use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\Models\Media;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use AwStudio\Fjord\Support\Facades\Package;
 use AwStudio\Fjord\EloquentJs\CanEloquentJs;
 use AwStudio\Fjord\Support\NestedCollection;
 use AwStudio\Fjord\Support\Facades\FormLoader;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
 class FormField extends Model implements HasMedia, TranslatableContract
 {
@@ -30,10 +31,10 @@ class FormField extends Model implements HasMedia, TranslatableContract
 
     protected $formable = 'value';
 
-   public function isTranslatableFormFieldFillable()
-   {
-       return true;
-   }
+    public function isTranslatableFormFieldFillable()
+    {
+        return true;
+    }
 
     public function isFormFieldFillable()
     {
@@ -59,7 +60,8 @@ class FormField extends Model implements HasMedia, TranslatableContract
 
     public function getFormFieldsPathAttribute()
     {
-        return fjord_resource_path("{$this->collection}/{$this->form_name}.php");
+        return Package::get('aw-studio/fjord')
+            ->getConfigFilePath("forms.{$this->collection}.{$this->form_name}");
     }
 
     public function getTranslationAttribute()
@@ -103,7 +105,7 @@ class FormField extends Model implements HasMedia, TranslatableContract
 
     public function getTranslatedFormFieldValue($form_field)
     {
-        if($form_field->translatable) {
+        if ($form_field->translatable) {
             $value = $this->translation[app()->getLocale()] ?? [];
         } else {
             $value = $this->translation[config('translatable.fallback_locale')] ?? [];
@@ -124,28 +126,26 @@ class FormField extends Model implements HasMedia, TranslatableContract
 
         $form_field = $this->getFormFieldAttribute();
 
-        if(! $form_field) {
+        if (!$form_field) {
             return $array;
         }
 
-        if(! in_array($form_field->type, ['boolean', 'block', 'relation', 'image', 'checkboxes'])) {
+        if (!in_array($form_field->type, ['boolean', 'block', 'relation', 'image', 'checkboxes'])) {
             return $array;
         }
 
         $value = $this->getFormattedFormFieldValue($this->form_field, false, false);
 
-        if(in_array($form_field->type, ['checkboxes', 'boolean'])) {
+        if (in_array($form_field->type, ['checkboxes', 'boolean'])) {
 
             // Formated casts (json, array, boolean, etc...) must be put back to
             // their original place.
             $array['translation'][config('translatable.fallback_locale')]['value'] = $value;
-
         } else {
 
             // For relations add $form_field->id as array_key and set the
             // relation as value.
             $array[$form_field->id] = $value;
-
         }
 
         return $array;
@@ -154,14 +154,14 @@ class FormField extends Model implements HasMedia, TranslatableContract
     /**
      * Modified to return relations for type "relation" or "block".
      */
-     public function __call($method, $parameters)
-     {
-         if($method == ($this->form_field->id ?? '')) {
-             return $this->getFormattedFormFieldValue($this->form_field, true);
-         }
+    public function __call($method, $parameters)
+    {
+        if ($method == ($this->form_field->id ?? '')) {
+            return $this->getFormattedFormFieldValue($this->form_field, true);
+        }
 
-         return parent::__call($method, $parameters);
-     }
+        return parent::__call($method, $parameters);
+    }
 
     public function getFormFieldAttribute()
     {
@@ -170,13 +170,13 @@ class FormField extends Model implements HasMedia, TranslatableContract
 
     public function getFormFieldsAttribute()
     {
-        if(! array_key_exists('field_id', $this->attributes)) {
+        if (!array_key_exists('field_id', $this->attributes)) {
             return new NestedCollection([]);
         }
 
         $form = FormLoader::load($this->form_fields_path, $this);
 
-        if(! property_exists($form, 'form_fields')) {
+        if (!property_exists($form, 'form_fields')) {
             return new NestedCollection([]);
         }
 
@@ -193,11 +193,11 @@ class FormField extends Model implements HasMedia, TranslatableContract
 
     public function getAttribute($key)
     {
-        if(! array_key_exists('field_id', $this->attributes)) {
+        if (!array_key_exists('field_id', $this->attributes)) {
             return parent::getAttribute($key);
         }
 
-        if($this->attributes['field_id'] != $key) {
+        if ($this->attributes['field_id'] != $key) {
             return parent::getAttribute($key);
         }
 
@@ -208,9 +208,9 @@ class FormField extends Model implements HasMedia, TranslatableContract
     {
         foreach (config('fjord.mediaconversions.default') as $key => $value) {
             $this->addMediaConversion($key)
-                  ->width($value[0])
-                  ->height($value[1])
-                  ->sharpen($value[2]);
+                ->width($value[0])
+                ->height($value[1])
+                ->sharpen($value[2]);
         }
     }
 }

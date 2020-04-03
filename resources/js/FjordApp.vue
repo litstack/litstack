@@ -35,6 +35,10 @@ export default {
         auth: {
             type: Object,
             required: true
+        },
+        appLocale: {
+            type: String,
+            required: true
         }
     },
     data() {
@@ -44,13 +48,6 @@ export default {
         };
     },
     beforeMount() {
-        console.log(
-            this._format('Role: {{ role.name }}', {
-                role: { name: 'admin' },
-                test: 'TEST'
-            })
-        );
-
         this.$store.commit('SET_LANGUAGES', this.translatable.languages);
         this.$store.commit('SET_LANGUAGE', this.translatable.language);
         this.$store.commit(
@@ -62,7 +59,9 @@ export default {
         this.prepareModels();
         this.prepareProps();
         this.setAuthData();
+        this.setAppLocale();
 
+        this.callPluginExtensions();
         this.callPluginMethods('beforeMount');
     },
     mounted() {
@@ -77,9 +76,26 @@ export default {
         this.callPluginMethods('mounted');
     },
     methods: {
+        setAppLocale() {
+            this.$i18n.locale = this.appLocale;
+        },
         showHiddenElements() {
             let element = document.getElementById('fjord-topbar-right');
             element.style.opacity = 1;
+        },
+        callPluginExtensions() {
+            let plugins = Fjord.getPlugins();
+            for (let i = 0; i < plugins.length; i++) {
+                let plugin = plugins[i];
+                if (!('extensions' in plugin)) {
+                    continue;
+                }
+                if (!(this.component in plugin.extensions)) {
+                    continue;
+                }
+
+                plugin.extensions[this.component](this, this.props);
+            }
         },
         callPluginMethods(method) {
             let plugins = Fjord.getPlugins();

@@ -122,7 +122,7 @@ abstract class FjordPackage
      */
     public function getRouteAs()
     {
-        return 'fjord.' . str_replace('/', '.', $this->name);
+        return 'fjord.' . str_replace('/', '.', $this->name) . '.';
     }
 
     /**
@@ -181,13 +181,14 @@ abstract class FjordPackage
         return $path;
     }
 
+
     /**
      * Get path to config directory.
      * 
      * @param string $name
      * @return string
      */
-    protected function getConfigPath(string $name = '')
+    public function getConfigPath(string $name = '')
     {
         $path = $this->getConfigDirectory();
 
@@ -195,7 +196,18 @@ abstract class FjordPackage
             return $path;
         }
 
-        return $path . str_replace('.', '/', $name) . '.php';
+        return $path . str_replace('.', '/', $name);
+    }
+
+    /**
+     * Get path to config file.
+     *
+     * @param string $name
+     * @return string
+     */
+    public function getConfigFilePath(string $name = '')
+    {
+        return $this->getConfigPath($name) . '.php';
     }
 
     /**
@@ -206,7 +218,7 @@ abstract class FjordPackage
      */
     public function rawConfig(string $name)
     {
-        return require $this->getConfigPath($name);
+        return require $this->getConfigFilePath($name);
     }
 
     /**
@@ -243,7 +255,7 @@ abstract class FjordPackage
      */
     protected function requireConfig(string $name)
     {
-        $path = $this->getConfigPath($name);
+        $path = $this->getConfigFilePath($name);
 
         if (!File::exists($path)) {
             return [];

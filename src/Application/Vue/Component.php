@@ -19,21 +19,6 @@ abstract class Component
     protected $props;
 
     /**
-     * Pass props to extension that should be edited.
-     * 
-     * @return array props
-     */
-    abstract public function passToExtension();
-
-    /**
-     * Receive props from extension and bind them to component. 
-     *
-     * @param $props
-     * @return void
-     */
-    abstract public function receiveFromExtension($props);
-
-    /**
      * Create component instance.
      * 
      * @param string $name
@@ -44,6 +29,19 @@ abstract class Component
     {
         $this->name = $name;
         $this->props = $props;
+    }
+
+    /**
+     * Add prop to Vue component.
+     *
+     * @param string $name
+     * @param $value
+     * @return void
+     */
+    public function addProp(string $name, $value)
+    {
+        // TODO: Throw exception if exists.
+        $this->props[$name] = $value;
     }
 
     /**

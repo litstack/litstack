@@ -8,7 +8,6 @@ use AwStudio\Fjord\Form\Database\FormField;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Exception;
 
 class FormController extends Controller
 {
@@ -23,7 +22,9 @@ class FormController extends Controller
 
     public function show(Request $request)
     {
-        [$collection, $formName] = explode('.', str_replace('fjord.form.', '', Route::currentRouteName()));
+        $routeSplit = explode('.', Route::currentRouteName());
+        $formName = array_pop($routeSplit);
+        $collection = last($routeSplit);
 
         $this->setForm($collection, $formName);
 
@@ -48,18 +49,18 @@ class FormController extends Controller
     {
         $formFields = [];
 
-        foreach($this->form->form_fields as $key => $field) {
+        foreach ($this->form->form_fields as $key => $field) {
 
             $formFields[$key] = FormField::firstOrCreate(
                 ['collection' => $collection, 'form_name' => $form_name, 'field_id' => $field->id],
                 ['content' => $field->default ?? null]
             );
 
-            if($field->type == 'block') {
+            if ($field->type == 'block') {
                 $formFields[$key]->withRelation($field->id);
             }
 
-            if($field->type == 'relation') {
+            if ($field->type == 'relation') {
                 $formFields[$key]->setFormRelation();
             }
             /*

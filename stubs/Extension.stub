@@ -2,20 +2,30 @@
 
 namespace DummyNamespace;
 
+use AwStudio\Fjord\Fjord\Models\FjordUser;
 use AwStudio\Fjord\Application\Vue\Extension;
 
 class DummyClass extends Extension
 {
     /**
-     * Modify props for Vue application in handle method.
+     * Has user permission for this extension.
      * 
-     * @var array $props
-     * @return array $props
+     * @var \AwStudio\Fjord\Fjord\Models\FjordUser $user
+     * @return boolean
      */
-    public function handle($props)
+    public function authenticate(FjordUser $user)
+    {
+        return true;
+    }
+
+    /**
+     * Modify Vue component in handle method.
+     * 
+     * @var array $component
+     * @return void
+     */
+    public function handle($component)
     {
         //
-
-        return $props;
     }
 }

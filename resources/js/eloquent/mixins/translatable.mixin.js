@@ -31,7 +31,7 @@ let TranslatableMixin = Base =>
 
             this.setLanguageAttributes();
 
-            this.setOriginalAttributes();
+            this.setOriginals();
         }
 
         setLanguageAttributes() {

@@ -28,7 +28,7 @@ let FormMixin = Base =>
         }
 
         getOriginalModel(form_field) {
-            return this._getModel(this.startingAttributes, form_field.id);
+            return this._getModel(this.originals, form_field.id);
         }
 
         _setOriginalModels() {
@@ -152,7 +152,7 @@ let FormMixin = Base =>
         }
 
         hasFormFieldChanged(id) {
-            return this.setOriginalAttributes != this.model;
+            return this.originals != this.model;
         }
 
         isFieldTranslatable(id) {
