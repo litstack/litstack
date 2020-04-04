@@ -133,8 +133,12 @@ class VueApplication
                 continue;
             }
 
+            if (!$this->component->executeExtension($extension['name']) && $extension['name'] != '') {
+                continue;
+            }
+
             $this->executeExtension(
-                new $extension['extension']()
+                new $extension['extension']($extension['name'])
             );
         }
     }

@@ -14,7 +14,7 @@
 
             <div slot="actions" class="pt-3" v-if="actions.length > 0">
                 <components
-                    v-for="(component, key) in actions"
+                    v-for="(component, key) in headerComponents"
                     :key="key"
                     :is="component"
                     :formConfig="formConfig"

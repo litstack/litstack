@@ -41,7 +41,7 @@ export const actions = {
         try {
             let results = await Promise.all(promises);
 
-            Bus.$emit('modelsSaved');
+            Bus.$emit('modelsSaved', results[0]);
 
             commit('SAVED');
         } catch (e) {

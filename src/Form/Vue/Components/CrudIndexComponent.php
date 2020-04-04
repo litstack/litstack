@@ -40,4 +40,17 @@ class CrudIndexComponent extends Component
     {
         return $this->props['formConfig']['model'] == $model;
     }
+
+    /**
+     * Should extension be executed.
+     *
+     * @param string $name
+     * @return boolean
+     */
+    public function executeExtension(string $name = ''): bool
+    {
+        $currentName = $this->props['formConfig']['names']['table'];
+
+        return $name == $currentName;
+    }
 }

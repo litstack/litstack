@@ -3,6 +3,7 @@
 namespace AwStudio\Fjord\Application;
 
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 class Application
 {
@@ -132,10 +133,18 @@ class Application
      * @param string $extension
      * @return void
      */
-    public function registerExtension($component, $extension)
+    public function registerExtension(string $key, string $extension)
     {
+        $component = $key;
+        $name = "";
+        if (Str::contains($key, '::')) {
+            $component = explode('::', $key)[0];
+            $name = explode('::', $key)[1];
+        }
+
         $this->extensions[] = [
             "component" => $component,
+            "name" => $name,
             "extension" => $extension
         ];
     }

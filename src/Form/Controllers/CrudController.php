@@ -5,7 +5,6 @@ namespace AwStudio\Fjord\Form\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use AwStudio\Fjord\Models\ModelContent;
-use AwStudio\Fjord\Fjord\Controllers\Traits\CanHaveFjordExtensions;
 use AwStudio\Fjord\Support\Facades\FormLoader;
 use AwStudio\Fjord\Form\Requests\CrudCreateRequest;
 use AwStudio\Fjord\Form\Requests\CrudReadRequest;
@@ -14,8 +13,7 @@ use AwStudio\Fjord\Form\Requests\CrudDeleteRequest;
 
 class CrudController extends Controller
 {
-    use CanHaveFjordExtensions,
-        Traits\CrudIndex,
+    use Traits\CrudIndex,
         Traits\CrudRelations,
         Traits\EloquentModel;
 
@@ -69,7 +67,7 @@ class CrudController extends Controller
             ->withTitle($this->titleSingular)
             ->withProps([
                 'formConfig' => $this->getForm()->toArray(),
-                'actions' => $this->getExtensions('index.actions'),
+                //'actions' => $this->getExtensions('index.actions'),
                 'globalActions' => [],
                 'recordActions' => []
                 //'globalActions' => $this->getExtensions('index.globalActions'),
@@ -143,9 +141,9 @@ class CrudController extends Controller
                     'next' => $next,
                     'previous' => $previous
                 ],
-                'actions' => $this->getExtensions('show.actions'),
-                'controls' => $this->getExtensions('show.controls'),
-                'content' => $this->getExtensions('show.content')
+                'headerComponents' => [],
+                'controls' => [],
+                'content' => ['fj-crud-show-form']
             ]);
     }
 
@@ -164,6 +162,8 @@ class CrudController extends Controller
         if (is_translatable($this->model)) {
             $item->append('translation');
         }
+
+        $item->load('last_edit');
 
         return $item;
     }

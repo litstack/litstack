@@ -39,8 +39,8 @@ trait CrudIndex
         $items = $this->sortItems($request, $items, $eager);
         */
 
-        if(is_translatable($this->model)) {
-            $items->map(function($item) {
+        if (is_translatable($this->model)) {
+            $items->map(function ($item) {
                 return $item->append('translation');
             });
         }
@@ -56,7 +56,7 @@ trait CrudIndex
      */
     protected function initIndexQuery()
     {
-        if(! array_key_exists('query', $this->getForm()->index)) {
+        if (!array_key_exists('query', $this->getForm()->index)) {
             return new $this->model;
         }
 
@@ -73,7 +73,7 @@ trait CrudIndex
 
         // Eager load
         $eagerClasses = $this->getEagerClasses();
-        if($eagerClasses){
+        if ($eagerClasses) {
             $query = $query->with(array_keys($eagerClasses));
         }
 
@@ -97,7 +97,7 @@ trait CrudIndex
      */
     protected function applyFilterToIndexQuery($query, Request $request)
     {
-        if(! $request->filter) {
+        if (!$request->filter) {
             return $query;
         }
 
@@ -115,7 +115,7 @@ trait CrudIndex
     {
         $form = $this->getForm();
 
-        if($request->search) {
+        if ($request->search) {
             $query->whereLike($form->index['search'], $request->search);
         }
 
@@ -127,14 +127,14 @@ trait CrudIndex
      */
     protected function applyOrderToIndexQuery($query, Request $request)
     {
-        if(!$request->sort_by){
+        if (!$request->sort_by) {
             return $query;
         }
 
         // Get order key and order direction
         $key = $request->sort_by;
         $order = 'asc';
-        if(strpos($key, '.') !== false) {
+        if (strpos($key, '.') !== false) {
             $key = explode('.', $request->sort_by)[0];
             $order = last(explode('.', $request->sort_by));
         }
@@ -142,7 +142,7 @@ trait CrudIndex
         // Order for eager keys
         $eagerClasses = $this->getEagerClasses();
         $eager = array_keys($eagerClasses);
-        if(in_array($key, $eager)){
+        if (in_array($key, $eager)) {
 
             // get the table names of the related models
             $foreign_table = with(new $eagerClasses[$key])->getTable();
@@ -150,14 +150,12 @@ trait CrudIndex
 
             // join the related table for ordering by a foreign column
             $query->leftJoin($foreign_table, $foreign_table . '.id', '=', $table . '.' . rtrim($foreign_table, 's') . '_id')
-                  ->select($table . '.*', $foreign_table . '.' . explode('.', $request->sort_by)[1] . ' as eager_order_column' )
-                  ->orderBy($foreign_table.'.'.explode('.', $request->sort_by)[1], $order);
-
+                ->select($table . '.*', $foreign_table . '.' . explode('.', $request->sort_by)[1] . ' as eager_order_column')
+                ->orderBy($foreign_table . '.' . explode('.', $request->sort_by)[1], $order);
         } else {
 
             // Order
             $query->orderBy($key, $order);
-
         }
 
         return $query;
@@ -168,10 +166,10 @@ trait CrudIndex
      */
     protected function applyPaginationToIndexQuery($query, Request $request)
     {
-        if($request->perPage !== 0){
+        if ($request->perPage !== 0) {
             $page = $request->page ?? 1;
             $perPage = $request->perPage;
-            $query->skip( ($page-1) * $perPage )->take($perPage);
+            $query->skip(($page - 1) * $perPage)->take($perPage);
         }
 
         return $query;
@@ -183,15 +181,15 @@ trait CrudIndex
      *
      * @return Array
      */
-    protected function getWiths(): Array
+    protected function getWiths(): array
     {
-        $withs = [];
+        $withs = ['last_edit'];
 
-        if(has_media($this->model)) {
-            $withs []= 'media';
+        if (has_media($this->model)) {
+            $withs[] = 'media';
         }
-        if(is_translatable($this->model)) {
-            $withs []= 'translations';
+        if (is_translatable($this->model)) {
+            $withs[] = 'translations';
         }
 
         return $withs;
@@ -208,7 +206,7 @@ trait CrudIndex
     private function sortItems(Request $request, Collection $items, $eager): Collection
     {
         // sort
-        if(!$request->sort_by){
+        if (!$request->sort_by) {
             return $items;
         }
 
@@ -216,17 +214,17 @@ trait CrudIndex
         $order = last(explode('.', $request->sort_by));
 
         // check, if is already eager ordered
-        if(in_array($key, $eager)){
+        if (in_array($key, $eager)) {
             return $items;
         }
 
-        switch ( $order ) {
+        switch ($order) {
             case 'desc':
-                $items = $items->sortByDesc($key, SORT_NATURAL|SORT_FLAG_CASE)->values();
+                $items = $items->sortByDesc($key, SORT_NATURAL | SORT_FLAG_CASE)->values();
                 break;
             case 'asc':
             default:
-                $items = $items->sortBy($key, SORT_NATURAL|SORT_FLAG_CASE)->values();
+                $items = $items->sortBy($key, SORT_NATURAL | SORT_FLAG_CASE)->values();
                 break;
         }
 
@@ -247,14 +245,14 @@ trait CrudIndex
         $key = $request->sort_by;
         $order = 'asc';
 
-        if(strpos($key, '.') !== false) {
+        if (strpos($key, '.') !== false) {
             $key = explode('.', $request->sort_by)[0];
             $order = last(explode('.', $request->sort_by));
         }
 
         $eager = array_keys($eagerClasses);
 
-        if(in_array($key, $eager)){
+        if (in_array($key, $eager)) {
             // get the table names of the related models
 
             $foreign_table = with(new $eagerClasses[$key])->getTable();
@@ -262,8 +260,8 @@ trait CrudIndex
 
             // join the related table for ordering by a foreign column
             $query->leftJoin($foreign_table, $foreign_table . '.id', '=', $table . '.' . rtrim($foreign_table, 's') . '_id')
-                  ->select($table . '.*', $foreign_table . '.' . explode('.', $request->sort_by)[1] . ' as eager_order_column' )
-                  ->orderBy($foreign_table.'.'.explode('.', $request->sort_by)[1], $order);
+                ->select($table . '.*', $foreign_table . '.' . explode('.', $request->sort_by)[1] . ' as eager_order_column')
+                ->orderBy($foreign_table . '.' . explode('.', $request->sort_by)[1], $order);
         }
 
         return $query;
@@ -282,11 +280,11 @@ trait CrudIndex
         // if a perPage value is set, get the requested page,
         // else get all items
 
-        if($request->perPage !== 0){
+        if ($request->perPage !== 0) {
             $page = $request->page ?? 1;
             $perPage = $request->perPage;
-            $items = $query->skip( ($page-1) * $perPage )->take($perPage)->get();
-        }else{
+            $items = $query->skip(($page - 1) * $perPage)->take($perPage)->get();
+        } else {
             $items = $query->get();
         }
 
@@ -305,7 +303,7 @@ trait CrudIndex
     {
         $form = $this->getForm();
 
-        if($request->search) {
+        if ($request->search) {
             $query->whereLike($form->index['search'], $request->search);
         }
 

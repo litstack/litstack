@@ -19,6 +19,17 @@ abstract class Component
     protected $props;
 
     /**
+     * Check extension key and return true if the extension should be executed.
+     *
+     * @param string $name
+     * @return boolean
+     */
+    public function executeExtension(string $name = ''): bool
+    {
+        return true;
+    }
+
+    /**
      * Create component instance.
      * 
      * @param string $name

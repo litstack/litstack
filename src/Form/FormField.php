@@ -73,11 +73,11 @@ class FormField implements ArrayAccess
 
     protected function isValidType()
     {
-        if(! $this->attributeExists('type')) {
+        if (!$this->attributeExists('type')) {
             throw new Exception($this->getErrorMessage("Required form field key \"type\" missing"));
         }
 
-        if(! array_key_exists($this->getAttribute('type'), self::FIELDS)) {
+        if (!array_key_exists($this->getAttribute('type'), self::FIELDS)) {
             throw new Exception($this->getErrorMessage("Invalid form field type \"{$this->attributes['type']}\""));
         }
 
@@ -136,30 +136,30 @@ class FormField implements ArrayAccess
     {
 
         // Required.
-        foreach($this->getFieldClass()::REQUIRED as $key) {
-            if(! $this->attributeExists($key)) {
+        foreach ($this->getFieldClass()::REQUIRED as $key) {
+            if (!$this->attributeExists($key)) {
                 throw new Exception($this->getErrorMessage("Required form field key \"{$key}\" missing for {$this->config['type']} field"));
             }
         }
 
         // Always set $field->local_key.
-        if(! $this->attributeExists('local_key')) {
+        if (!$this->attributeExists('local_key')) {
             $this->setAttribute('local_key', $this->attributes['id']);
         }
 
         // Defaults Callback.
-        if($callback) {
+        if ($callback) {
             $callback($this);
-            if(! $this->validAttributes()) {
+            if (!$this->validAttributes()) {
                 $info = closure_info($callback);
                 throw new \Exception("FormField callback in returns invalid attributes" . $info->getFileName() . " on line " . $info->getStartLine() . " - " . $info->getEndLine());
             }
         }
 
         // Defaults.
-        foreach($this->getFieldClass()::DEFAULTS as $key => $value) {
+        foreach ($this->getFieldClass()::DEFAULTS as $key => $value) {
 
-            if($this->attributeExists($key)) {
+            if ($this->attributeExists($key)) {
                 continue;
             }
 
@@ -167,12 +167,12 @@ class FormField implements ArrayAccess
         }
 
         // Prepare
-        if(method_exists($this->getFieldClass(), 'prepare')) {
+        if (method_exists($this->getFieldClass(), 'prepare')) {
             call_user_func_array([$this->getFieldClass(), 'prepare'], [$this, $this->path]);
         }
 
         // Force
-        if(defined($this->getFieldClass() . '::TRANSLATABLE') &&! $this->getFieldClass()::TRANSLATABLE) {
+        if (defined($this->getFieldClass() . '::TRANSLATABLE') && !$this->getFieldClass()::TRANSLATABLE) {
             $this->setAttribute('translatable', false);
         }
     }

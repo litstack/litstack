@@ -46,7 +46,9 @@
     <script type="text/javascript">
         function makeVisible(){
             var d = document.getElementById("fjord-spinner");
-            d.className += " loaded";
+            if(d) {
+                d.className += " loaded";
+            }
         }
     </script>
 </body>

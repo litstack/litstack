@@ -2,12 +2,13 @@
 
 namespace AwStudio\Fjord\Form\Controllers;
 
-use AwStudio\Fjord\Support\Facades\FormLoader;
-use AwStudio\Fjord\Form\FormFieldCollection;
-use AwStudio\Fjord\Form\Database\FormField;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Route;
+use AwStudio\Fjord\TrackEdits\FormEdit;
+use AwStudio\Fjord\Form\Database\FormField;
+use AwStudio\Fjord\Form\FormFieldCollection;
+use AwStudio\Fjord\Support\Facades\FormLoader;
 
 class FormController extends Controller
 {
@@ -16,6 +17,15 @@ class FormController extends Controller
         $formField = FormField::findOrFail($id);
 
         $formField->update($request->all());
+
+        $edit = new FormEdit();
+        $edit->fjord_user_id = fjord_user()->id;
+        $edit->collection = $formField->collection;
+        $edit->form_name = $formField->form_name;
+        $edit->created_at = \Carbon\Carbon::now();
+        $edit->save();
+
+        $formField->append('last_edit');
 
         return $formField;
     }
@@ -33,6 +43,7 @@ class FormController extends Controller
         $this->form->setPreviewRoute(
             new FormFieldCollection($eloquentFormFields['data'])
         );
+
         return view('fjord::app')->withComponent('fj-crud-show')
             ->withModels([
                 'model' => $eloquentFormFields
@@ -40,7 +51,8 @@ class FormController extends Controller
             ->withTitle($this->form->title)
             ->withProps([
                 'formConfig' => $this->form->toArray(),
-                'actions' => ['fj-crud-show-preview'],
+                'headerComponents' => ['fj-crud-show-preview'],
+                'controls' => [],
                 'content' => ['fj-crud-show-form']
             ]);
     }
@@ -54,7 +66,7 @@ class FormController extends Controller
             $formFields[$key] = FormField::firstOrCreate(
                 ['collection' => $collection, 'form_name' => $form_name, 'field_id' => $field->id],
                 ['content' => $field->default ?? null]
-            );
+            )->append('last_edit');
 
             if ($field->type == 'block') {
                 $formFields[$key]->withRelation($field->id);

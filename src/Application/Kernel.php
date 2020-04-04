@@ -133,8 +133,8 @@ class Kernel
      * @param string $extension
      * @return void
      */
-    public function registerExtension($component, $extension)
+    public function registerExtension(string $key, string $extension)
     {
-        $this->app->registerExtension($component, $extension);
+        $this->app->registerExtension($key, $extension);
     }
 }

@@ -114,6 +114,8 @@ export default class EloquentModel {
 
         this.setAttributes(response.data);
         this._setRelations();
+
+        return response;
     }
 
     /**

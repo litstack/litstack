@@ -7,7 +7,7 @@
                 </b>
                 <fj-base-language />
             </b-col>
-            <b-col cols="12">
+            <b-col cols="12" class="pb-3">
                 <b class="text-muted d-block pb-1">
                     {{ $t('fj.save_changes') }}
                 </b>
@@ -22,6 +22,12 @@
                     <fa-icon icon="undo" />
                 </b-button>
             </b-col>
+            <b-col cols="12" v-if="lastEdit">
+                <span class="text-muted pb-1 d-block">
+                    Last edited <b>{{ lastEdit.time }}</b> by
+                    <b>{{ lastEdit.user.name }}</b>
+                </span>
+            </b-col>
 
             <b-col cols="12">
                 <slot name="controls" />
@@ -32,6 +38,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import FjordModel from '@fj-js/eloquent/fjord.model';
 
 export default {
     name: 'CrudShowControls',
@@ -44,18 +51,52 @@ export default {
             type: String
         }
     },
+    data() {
+        return {
+            lastEdit: null
+        };
+    },
     methods: {
         async saveAll() {
             await this.$store.dispatch('saveModels');
-            this.$bvToast.toast(this.$t('fj.model_saved', { model: this.title }), {
-                variant: 'success'
-            });
+            this.$bvToast.toast(
+                this.$t('fj.model_saved', { model: this.title }),
+                {
+                    variant: 'success'
+                }
+            );
+        },
+        onSaved(results) {
+            if (!results) {
+                return;
+            }
+
+            let item = results[0];
+            if ('last_edit' in item.data) {
+                this.lastEdit = item.data.last_edit;
+            }
+            console.log(item);
+        },
+        getLastEdit() {
+            if (this.crud.model instanceof FjordModel) {
+                this.lastEdit = this.crud.model.last_edit;
+                return;
+            } else if (this.form) {
+                this.lastEdit = this.crud.model.items.items[0].last_edit;
+                return;
+            }
+
+            this.lastEdit = null;
         },
         loadModel() {
             this.$bus.$emit('loadModel');
         }
     },
+    beforeMount() {
+        this.$bus.$on('modelsSaved', this.onSaved);
+    },
     mounted() {
+        this.getLastEdit();
         let self = this;
         document.addEventListener(
             'keydown',
@@ -76,7 +117,8 @@ export default {
         );
     },
     computed: {
-        ...mapGetters(['canSave', 'language', 'languages']),
+        ...mapGetters(['crud', 'form']),
+        ...mapGetters(['canSave', 'language', 'languages', 'crud', 'form']),
         isMultilanguage() {
             return this.languages.length > 1;
         },

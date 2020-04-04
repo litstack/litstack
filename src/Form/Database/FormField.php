@@ -2,6 +2,7 @@
 
 namespace AwStudio\Fjord\Form\Database;
 
+use Awobaz\Compoships\Compoships;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
@@ -50,6 +51,20 @@ class FormField extends Model implements HasMedia, TranslatableContract
     {
         return (new Relations\EmptyRelation($this->form_field->query, $this))
             ->where('id', $this->getTranslatedFormFieldValue($this->form_field));
+    }
+
+    /**
+     * Get last edit.
+     *
+     * @return morphOne
+     */
+    public function getLastEditAttribute()
+    {
+        return $this->hasOne('AwStudio\Fjord\TrackEdits\FormEdit', 'form_name', 'form_name')
+            ->where('collection', $this->collection)
+            ->orderByDesc('id')
+            ->with('user')
+            ->first();
     }
 
 

@@ -4,8 +4,9 @@ namespace AwStudio\Fjord;
 
 use AwStudio\Fjord\Application\Application;
 use AwStudio\Fjord\User\Components\UsersComponent;
-use AwStudio\Fjord\Application\Package\FjordPackage as Package;
+use AwStudio\Fjord\Form\Vue\Components\CrudShowComponent;
 use AwStudio\Fjord\Form\Vue\Components\CrudIndexComponent;
+use AwStudio\Fjord\Application\Package\FjordPackage as Package;
 
 class FjordPackage extends Package
 {
@@ -42,7 +43,8 @@ class FjordPackage extends Package
      */
     protected $components = [
         'fj-users' => UsersComponent::class,
-        'fj-crud-index' => CrudIndexComponent::class
+        'fj-crud-index' => CrudIndexComponent::class,
+        'fj-crud-show' => CrudShowComponent::class,
     ];
 
     /**
