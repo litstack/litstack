@@ -30,6 +30,16 @@
         </template>
 
         <div :class="`device ${device}`">
+            <div class="controls">
+                <div class="btns">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="nav">
+                    {{ showRoute }}
+                </div>
+            </div>
             <div class="display">
                 <iframe :src="route" />
             </div>
@@ -45,12 +55,12 @@ export default {
     props: {
         route: {
             required: true,
-            type: String
-        }
+            type: String,
+        },
     },
     data() {
         return {
-            device: 'desktop'
+            device: 'desktop',
         };
     },
     beforeMount() {
@@ -59,15 +69,22 @@ export default {
     methods: {
         setDevice(device) {
             this.device = device;
-        }
+        },
     },
     computed: {
-        ...mapGetters(['config'])
-    }
+        ...mapGetters(['config']),
+        showRoute() {
+            if (!this.route.includes('//')) {
+                return this.route;
+            }
+            return this.route.split('//')[1];
+        },
+    },
 };
 </script>
 
 <style lang="scss">
+@import '@fj-sass/_variables';
 #fj-page-preview {
     position: relative;
 
@@ -114,22 +131,78 @@ export default {
             }
 
             .device {
+                .controls {
+                    background: $gray-400;
+                    display: flex;
+                    height: 40px;
+
+                    .nav {
+                        height: 30px;
+                        background: $gray-600;
+                        margin: 5px 0;
+                        padding: 0 10px;
+                        color: white;
+                        border-radius: 2px;
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .btns {
+                        margin-left: 5px;
+                        margin-right: 5px;
+                        height: 40px;
+                        width: 65px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-around;
+                        div {
+                            height: 10px;
+                            width: 10px;
+                            background: #f4be41;
+                            border-radius: 100%;
+
+                            &:first-child {
+                                background: #ec664f;
+                            }
+                            &:last-child {
+                                background: #5dcb3d;
+                            }
+                        }
+                    }
+                }
                 &.mobile {
                     position: absolute;
                     width: 375px;
                     height: calc(100vh - 130px);
                     max-height: 812px;
-                    background: gray;
-                    padding: 40px 20px;
+                    background: $gray-400;
+                    padding: 20px 20px 40px 20px;
                     border-radius: 5px;
+
+                    .display {
+                        height: calc(100% - 50px);
+                    }
+
+                    .controls {
+                        height: 70px;
+                        display: block;
+
+                        .btns {
+                            height: 30px;
+                        }
+
+                        .nav {
+                            width: 100%;
+                        }
+                    }
                 }
                 &.tablet {
                     position: absolute;
                     width: 1024px;
                     height: calc(100vh - 130px);
                     max-height: 768px;
-                    background: gray;
-                    padding: 40px 20px;
+                    background: $gray-400;
+                    padding: 20px 20px 40px 20px;
                     border-radius: 5px;
                 }
                 &.desktop {
@@ -142,7 +215,7 @@ export default {
 
                 .display {
                     position: relative;
-                    height: 100%;
+                    height: calc(100% - 20px);
                     width: 100%;
                     background: white;
 

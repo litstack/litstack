@@ -12,7 +12,7 @@
                 :nearItems="nearItems"
             />
 
-            <div slot="actions" class="pt-3" v-if="actions.length > 0">
+            <div slot="actions" class="pt-3" v-if="headerComponents.length > 0">
                 <components
                     v-for="(component, key) in headerComponents"
                     :key="key"
@@ -78,6 +78,10 @@ export default {
         },
         nearItems: {
             type: Object,
+        },
+        headerComponents: {
+            type: Array,
+            required: true,
         },
         actions: {
             type: Array,

@@ -141,7 +141,7 @@ class CrudController extends Controller
                     'next' => $next,
                     'previous' => $previous
                 ],
-                'headerComponents' => [],
+                'headerComponents' => ['fj-crud-show-preview'],
                 'controls' => [],
                 'content' => ['fj-crud-show-form']
             ]);

@@ -8,6 +8,7 @@
         <fa-icon icon="eye" /> {{ $t('fj.preview') }}
 
         <fj-page-preview
+            :show="true"
             :route="form.config.preview_route"
             v-if="form.config.preview_route"
         />
@@ -19,7 +20,7 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'CrudShowPreview',
     computed: {
-        ...mapGetters(['form', 'crud'])
-    }
+        ...mapGetters(['form', 'crud']),
+    },
 };
 </script>
