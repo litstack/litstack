@@ -176,9 +176,12 @@ export default {
                 await axios.post('relations/store', payload);
 
                 let relation = this.form_field.title;
-                this.$bvToast.toast(this.$t('fj.relation_added', { relation }), {
-                    variant: 'success'
-                });
+                this.$bvToast.toast(
+                    this.$t('fj.relation_added', { relation }),
+                    {
+                        variant: 'success'
+                    }
+                );
             } catch (e) {
                 this.$bvToast.toast(e.response.data.message, {
                     variant: 'danger',

@@ -11,6 +11,7 @@
                 :type="field.input_type"
                 :maxlength="field.max"
                 :required="field.required"
+                v-bind:readonly="field.readonly"
                 @input="changed"
             />
             <b-input-group-append is-text v-if="field.append">

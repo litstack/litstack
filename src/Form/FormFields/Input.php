@@ -18,6 +18,7 @@ class Input
     const DEFAULTS = [
         'translatable' => false,
         'input_type' => 'text',
+        'readonly' => false,
     ];
 
     const ALLOWED_INPUT_TYPES = [
@@ -30,9 +31,8 @@ class Input
 
     public static function prepare($field, $path)
     {
-        if(! in_array($field->input_type, self::ALLOWED_INPUT_TYPES)) {
+        if (!in_array($field->input_type, self::ALLOWED_INPUT_TYPES)) {
             throw new Exception("Invalid form field input_type \"{$field->input_type}\", allowed input types are: " . implode(', ', self::ALLOWED_INPUT_TYPES));
         }
     }
-
 }

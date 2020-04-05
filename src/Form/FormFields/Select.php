@@ -14,6 +14,6 @@ class Select
     ];
 
     const DEFAULTS = [
-
+        'readonly' => false
     ];
 }

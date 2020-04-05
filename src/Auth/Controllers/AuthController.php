@@ -58,6 +58,8 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $user->assignRole('user');
+
         if ($request->sendResetLink) {
             $sendResetLink->execute($request);
         }

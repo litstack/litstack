@@ -23,10 +23,15 @@
                 </b-button>
             </b-col>
             <b-col cols="12" v-if="lastEdit">
-                <span class="text-muted pb-1 d-block">
-                    Last edited <b>{{ lastEdit.time }}</b> by
-                    <b>{{ lastEdit.user.name }}</b>
-                </span>
+                <span
+                    class="text-muted pb-1 d-block"
+                    v-html="
+                        $t(`fj.last_edited`, {
+                            time: lastEdit.time,
+                            user: lastEdit.user.name
+                        })
+                    "
+                />
             </b-col>
 
             <b-col cols="12">
@@ -117,7 +122,6 @@ export default {
         );
     },
     computed: {
-        ...mapGetters(['crud', 'form']),
         ...mapGetters(['canSave', 'language', 'languages', 'crud', 'form']),
         isMultilanguage() {
             return this.languages.length > 1;

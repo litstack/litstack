@@ -1,6 +1,6 @@
 <template>
     <fj-base-container>
-        <fj-base-header :title="'Fjord Users'">
+        <fj-base-header :title="'Fjord ' + $t('fj.users')">
             <div slot="actions-right">
                 <fj-user-create @userCreated="userCreated" />
             </div>
@@ -48,7 +48,7 @@ export default {
     },
     methods: {
         async loadUsers(payload) {
-            let response = await axios.post('users-index', payload);
+            let response = await axios.post('fjord/users-index', payload);
             this.users = response.data.items;
             this.count = response.data.count;
         },

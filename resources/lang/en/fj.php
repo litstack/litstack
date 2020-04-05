@@ -1,6 +1,8 @@
 <?php
 
 return [
+    "page" => "page",
+    "pages" => "pages",
     "user" => "User",
     "users" => "Users",
     "add_model" => "Add {model}",
@@ -26,6 +28,7 @@ return [
     "deleted_item" => "deleted {item}",
     "n_items_selected" => "{count} item selected | {count} items selected",
     "all" => "all",
+    "last_edited" => "Last edited <b>{time}</b> by <b>{user}</b>",
     "toggle_all" => "toggle all",
     "create" => "Create",
     "update" => "Update",

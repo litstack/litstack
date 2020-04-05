@@ -14,8 +14,15 @@ trait TrackEdits
     {
         $update = parent::update($attributes, $options);
 
+        $this->edited();
+
+        return $update;
+    }
+
+    public function edited()
+    {
         if (!fjord_user()) {
-            return $update;
+            return;
         }
 
         $edit = new ModelEdit();
@@ -24,8 +31,6 @@ trait TrackEdits
         $edit->fjord_user_id = fjord_user()->id;
         $edit->created_at = \Carbon\Carbon::now();
         $edit->save();
-
-        return $update;
     }
 
     /**

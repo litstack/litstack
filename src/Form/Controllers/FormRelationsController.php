@@ -21,7 +21,7 @@ class FormRelationsController extends FjordController
         }
 
         $field = $model->findFormField($request->id);
-        
+
         return $field['query']->get();
     }
 
@@ -73,7 +73,7 @@ class FormRelationsController extends FjordController
         $data = $request->data;
         $ids = $request->ids;
 
-        if (! $data || ! $ids) {
+        if (!$data || !$ids) {
             abort(404);
         }
 
@@ -83,6 +83,7 @@ class FormRelationsController extends FjordController
                 ->where('to_model_type', $data['to_model_type'])
                 ->where('to_model_id', $id)
                 ->first();
+
             $relation->order_column = $order;
             $relation->save();
         }

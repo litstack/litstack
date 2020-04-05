@@ -2,14 +2,17 @@
 
 namespace AwStudio\Fjord\User;
 
+use AwStudio\Fjord\Support\Facades\Package;
 use AwStudio\Fjord\Support\Facades\FjordRoute;
 use AwStudio\Fjord\User\Controllers\FjordUserController;
 use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
+
     public function boot()
     {
+
         parent::boot();
     }
 
@@ -21,13 +24,14 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapUserRoleRoutes()
     {
+        $package = Package::get('aw-studio/fjord');
 
-        FjordRoute::package('aw-studio/fjord')
-            ->get('/users', FjordUserController::class . '@showIndex')
+        $package->route()->get('/fjord/users', FjordUserController::class . '@showIndex')
             ->name('users');
 
-        FjordRoute::post('/users-index', FjordUserController::class . '@fetchIndex')->name('aw-studio.fjord.users.index');
-        FjordRoute::post('/users/delete-all', FjordUserController::class . '@deleteAll')->name('aw-studio.fjord.users.delete');
+        $package->route()->post('/fjord/users-index', FjordUserController::class . '@fetchIndex')->name('users.index');
+        $package->route()->post('/fjord/users/delete-all', FjordUserController::class . '@deleteAll')->name('users.delete');
+
         //FjordRoute::put('/user_roles', FjordUserController::class . '@update')->name('user_roles.update');
     }
 }

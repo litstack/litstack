@@ -1,10 +1,15 @@
 <template>
     <fj-form-item :field="field" :model="model">
-        <b-select
-            :value="model[`${field.id}Model`]"
-            :options="options"
-            @input="changed"
-        />
+        <template v-if="!field.readonly">
+            <b-select
+                :value="model[`${field.id}Model`]"
+                :options="options"
+                @input="changed"
+            />
+        </template>
+        <template v-else>
+            <b-input class="form-control" :value="value" type="text" readonly />
+        </template>
         <slot />
     </fj-form-item>
 </template>
@@ -34,6 +39,9 @@ export default {
     computed: {
         options() {
             return this.field.options;
+        },
+        value() {
+            return this.options[this.model[`${this.field.id}Model`]];
         }
     }
 };

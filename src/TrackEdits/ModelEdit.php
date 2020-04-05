@@ -21,7 +21,9 @@ class ModelEdit extends Model
 
     public function getTimeAttribute()
     {
-        return $this->created_at->diffForHumans();
+        return $this->created_at
+            ->locale(fjord()->getLocale())
+            ->diffForHumans();
     }
 
     public function user()

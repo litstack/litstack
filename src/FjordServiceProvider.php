@@ -3,6 +3,7 @@
 namespace AwStudio\Fjord;
 
 use App\Fjord\Kernel;
+use AwStudio\Fjord\Application\Middlewares\StopRedirectForNotFound;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
 use Illuminate\Foundation\AliasLoader;
@@ -61,6 +62,7 @@ class FjordServiceProvider extends ServiceProvider
 
         // Middelware
         $router->aliasMiddleware('fjord.auth', Authenticate::class);
+        $router->aliasMiddleware('fjord.404', StopRedirectForNotFound::class);
 
         $this->publish();
     }

@@ -19,10 +19,13 @@ export default {
     },
     methods: {
         async deleteAll() {
-            let response = await this.sendAction('users/delete-all', this.selectedItems)
+            let response = await this.sendAction(
+                'fjord/users/delete-all',
+                this.selectedItems
+            );
 
             this.$emit('reload');
         }
-    },
+    }
 };
 </script>

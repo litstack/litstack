@@ -26,7 +26,7 @@ class Kernel
         Bootstrap\RegisterPackageProviders::class,
         Bootstrap\RegisterPackageCommands::class,
         Bootstrap\RegisterPackageExtensions::class,
-        Bootstrap\BootstrapVueApplication::class
+        Bootstrap\BootstrapVueApplication::class,
     ];
 
     /**

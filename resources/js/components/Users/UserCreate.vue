@@ -2,7 +2,7 @@
     <div class="d-inline-block">
         <b-button size="sm" variant="primary" @click="visible = !visible">
             <fa-icon icon="plus" />
-            {{ $t('fj.add_model', { model: 'Fjord User' }) }}
+            {{ $t('fj.add_model', { model: 'Fjord ' + $t('fj.user') }) }}
         </b-button>
         <b-modal v-model="visible" :title="'Fjord User hinzufügen'">
             <b-form-group label="Enter a username" label-for="username">
