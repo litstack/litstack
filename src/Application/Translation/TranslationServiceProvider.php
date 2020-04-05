@@ -1,9 +1,9 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Translation;
+namespace Fjord\Application\Translation;
 
 use Illuminate\Support\ServiceProvider;
-use AwStudio\Fjord\Support\Facades\FjordLang;
+use Fjord\Support\Facades\FjordLang;
 
 class TranslationServiceProvider extends ServiceProvider
 {

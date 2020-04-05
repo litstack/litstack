@@ -1,12 +1,12 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Concerns;
+namespace Fjord\Form\Concerns;
 
 use Exception;
-use AwStudio\Fjord\Form\Form;
-use AwStudio\Fjord\Form\FormField;
-use AwStudio\Fjord\Form\CrudForm;
-use AwStudio\Fjord\Support\NestedCollection;
+use Fjord\Form\Form;
+use Fjord\Form\FormField;
+use Fjord\Form\CrudForm;
+use Fjord\Support\NestedCollection;
 use Illuminate\Support\Facades\Schema;
 
 trait LoadForms

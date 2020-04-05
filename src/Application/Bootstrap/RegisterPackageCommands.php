@@ -1,10 +1,10 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Bootstrap;
+namespace Fjord\Application\Bootstrap;
 
 use Illuminate\Console\Application as Artisan;
-use AwStudio\Fjord\Support\Facades\Package;
-use AwStudio\Fjord\Application\Application;
+use Fjord\Support\Facades\Package;
+use Fjord\Application\Application;
 use Illuminate\Support\Facades\App;
 
 class RegisterPackageCommands
@@ -12,7 +12,7 @@ class RegisterPackageCommands
     /**
      * Registers artisan commands of all fjord packages.
      * 
-     * @param \AwStudio\Fjord\Application\Application $app
+     * @param \Fjord\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app)

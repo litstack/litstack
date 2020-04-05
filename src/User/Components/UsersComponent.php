@@ -1,8 +1,8 @@
 <?php
 
-namespace AwStudio\Fjord\User\Components;
+namespace Fjord\User\Components;
 
-use AwStudio\Fjord\Application\Vue\Component;
+use Fjord\Application\Vue\Component;
 
 class UsersComponent extends Component
 {

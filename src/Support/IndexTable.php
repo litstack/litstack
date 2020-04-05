@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Support;
+namespace Fjord\Support;
 
 use Illuminate\Http\Request;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\TrackEdits;
+namespace Fjord\TrackEdits;
 
 trait TrackEdits
 {
@@ -40,7 +40,7 @@ trait TrackEdits
      */
     public function last_edit()
     {
-        return $this->morphOne('AwStudio\Fjord\TrackEdits\ModelEdit', 'model')
+        return $this->morphOne('Fjord\TrackEdits\ModelEdit', 'model')
             ->orderByDesc('id')
             ->with('user');
     }

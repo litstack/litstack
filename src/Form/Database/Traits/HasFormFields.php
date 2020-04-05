@@ -1,16 +1,16 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Database\Traits;
+namespace Fjord\Form\Database\Traits;
 
-use AwStudio\Fjord\Support\NestedCollection;
-use AwStudio\Fjord\Support\Facades\FormLoader;
+use Fjord\Support\NestedCollection;
+use Fjord\Support\Facades\FormLoader;
 use Spatie\MediaLibrary\Models\Media;
 
 trait HasFormFields
 {
     public function blocks(string $field_id = '')
     {
-        $query = $this->morphMany('AwStudio\Fjord\Form\Database\FormBlock', 'model')
+        $query = $this->morphMany('Fjord\Form\Database\FormBlock', 'model')
             ->with('translations')
             ->orderBy('order_column');
 
@@ -106,7 +106,7 @@ trait HasFormFields
      * Returns form_field if $id matches the form_field id.
      *
      * @param  string $id
-     * @return AwStudio\Fjord\Form\FormField $form_field
+     * @return Fjord\Form\FormField $form_field
      */
     public function findFormField($id)
     {

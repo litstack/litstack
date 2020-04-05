@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\EloquentJs;
+namespace Fjord\EloquentJs;
 
 class EloquentJs
 {

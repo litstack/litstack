@@ -2,7 +2,7 @@
 
 namespace App\Fjord;
 
-use AwStudio\Fjord\Application\Kernel as FjordKernel;
+use Fjord\Application\Kernel as FjordKernel;
 
 class Kernel extends FjordKernel
 {

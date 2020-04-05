@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Commands\Traits;
+namespace Fjord\Commands\Traits;
 
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;

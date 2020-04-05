@@ -1,8 +1,8 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Vue\Components;
+namespace Fjord\Form\Vue\Components;
 
-use AwStudio\Fjord\Application\Vue\Component;
+use Fjord\Application\Vue\Component;
 
 class CrudShowComponent extends Component
 {

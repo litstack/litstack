@@ -1,21 +1,21 @@
 <?php
 
-namespace AwStudio\Fjord;
+namespace Fjord;
 
 use App\Fjord\Kernel;
-use AwStudio\Fjord\Application\Middlewares\StopRedirectForNotFound;
+use Fjord\Application\Middlewares\StopRedirectForNotFound;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use AwStudio\Fjord\Auth\Middleware\Authenticate;
+use Fjord\Auth\Middleware\Authenticate;
 
 class FjordServiceProvider extends ServiceProvider
 {
     /**
      * Service providers that should be registered without Fjord being installed.
      * All service providers that should only be registered if Fjord is 
-     * installed are specified in \AwStudio\Fjord\FjordPackage
+     * installed are specified in \Fjord\FjordPackage
      *
      * @var array
      */
@@ -30,7 +30,7 @@ class FjordServiceProvider extends ServiceProvider
     /**
      * Console commands that should be registered without Fjord being installed.
      * All commands that should only be registered if Fjord is installed are 
-     * specified in \AwStudio\Fjord\FjordPackage
+     * specified in \Fjord\FjordPackage
      *
      * @var array
      */

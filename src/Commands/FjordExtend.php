@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Commands;
+namespace Fjord\Commands;
 
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;

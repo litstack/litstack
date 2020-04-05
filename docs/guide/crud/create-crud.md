@@ -29,7 +29,7 @@ Edit the created model in `app/models`. Add all fillable attributes to avoid [ma
 
 namespace App\Models;
 
-use AwStudio\Fjord\Fjord\Models\Model as FjordModel;
+use Fjord\Fjord\Models\Model as FjordModel;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 

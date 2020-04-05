@@ -1,9 +1,9 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Bootstrap;
+namespace Fjord\Application\Bootstrap;
 
-use AwStudio\Fjord\Application\Translation\Translator;
-use AwStudio\Fjord\Application\Application;
+use Fjord\Application\Translation\Translator;
+use Fjord\Application\Application;
 
 class BootstrapTranslator
 {
@@ -11,7 +11,7 @@ class BootstrapTranslator
      * Bootstrap VueApplication instance and bind it to 
      * the Fjord application.
      * 
-     * @param AwStudio\Fjord\Application\Application $app
+     * @param Fjord\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app)

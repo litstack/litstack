@@ -1,35 +1,33 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Controllers\Traits;
-
-use AwStudio\Fjord\Form\Requests\CrudUpdateRequest;
+namespace Fjord\Form\Controllers\Traits;
 
 trait EloquentModel
 {
-    public function eloquentModel(CrudUpdateRequest $request, $id)
+    public function eloquentModel($request, $id)
     {
         // initial query
-        if(array_key_exists('query', $this->getForm()->toArray()['index'])){
+        if (array_key_exists('query', $this->getForm()->toArray()['index'])) {
             $query = $this->getForm()->toArray()['index']['query'];
-        }else{
+        } else {
             $query = new $this->model;
         }
 
         $query = $query->with($this->getWiths());
 
-        if(array_key_exists('load', $this->getForm()->toArray()['index'])){
+        if (array_key_exists('load', $this->getForm()->toArray()['index'])) {
             $query->with(array_keys($this->getForm()->toArray()['index']['load']));
         }
 
         $model = $query->withFormRelations()
             ->findOrFail($id);
 
-        if(is_translatable($this->model)) {
+        if (is_translatable($this->model)) {
             $model->append('translation');
         }
 
-        foreach($model->form_fields as $form_field) {
-            if($form_field->type == 'block') {
+        foreach ($model->form_fields as $form_field) {
+            if ($form_field->type == 'block') {
                 $model->withRelation($form_field->id);
             }
         }

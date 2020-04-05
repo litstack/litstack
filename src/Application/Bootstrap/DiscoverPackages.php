@@ -1,11 +1,11 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Bootstrap;
+namespace Fjord\Application\Bootstrap;
 
 use Illuminate\Support\Facades\File;
-use AwStudio\Fjord\Application\Application;
-use AwStudio\Fjord\Application\Package\FjordPackage;
-use AwStudio\Fjord\Application\Package\Packages;
+use Fjord\Application\Application;
+use Fjord\Application\Package\FjordPackage;
+use Fjord\Application\Package\Packages;
 
 class DiscoverPackages
 {
@@ -28,7 +28,7 @@ class DiscoverPackages
      * Initialize Packages instance with all Fjord packages
      * and bind instance to the application.
      * 
-     * @param AwStudio\Fjord\Application\Application $app
+     * @param Fjord\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app)

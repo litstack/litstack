@@ -1,8 +1,8 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Navigation;
+namespace Fjord\Application\Navigation;
 
-use AwStudio\Fjord\Application\Config\FjordConfig;
+use Fjord\Application\Config\FjordConfig;
 
 class MainConfig extends FjordConfig
 {

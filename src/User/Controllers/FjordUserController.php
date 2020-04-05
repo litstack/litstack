@@ -1,16 +1,16 @@
 <?php
 
-namespace AwStudio\Fjord\User\Controllers;
+namespace Fjord\User\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use AwStudio\Fjord\Fjord\Models\FjordUser;
-//use AwStudio\Fjord\User\Models\ModelRole;
-use AwStudio\Fjord\User\Requests\UpdateUserRoleRequest;
-use AwStudio\Fjord\User\Requests\IndexFjordUserRequest;
-use AwStudio\Fjord\Support\IndexTable;
-use AwStudio\Fjord\Support\Facades\Package;
+use Fjord\Fjord\Models\FjordUser;
+//use Fjord\User\Models\ModelRole;
+use Fjord\User\Requests\UpdateUserRoleRequest;
+use Fjord\User\Requests\IndexFjordUserRequest;
+use Fjord\Support\IndexTable;
+use Fjord\Support\Facades\Package;
 
 class FjordUserController extends Controller
 {

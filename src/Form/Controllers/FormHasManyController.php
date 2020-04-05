@@ -1,9 +1,9 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Controllers;
+namespace Fjord\Form\Controllers;
 
-use AwStudio\Fjord\Fjord\Controllers\FjordController;
-use AwStudio\Fjord\Support\Facades\FormLoader;
+use Fjord\Fjord\Controllers\FjordController;
+use Fjord\Support\Facades\FormLoader;
 use Illuminate\Http\Request;
 
 class FormHasManyController extends FjordController

@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Kernel;
+namespace Fjord\Application\Kernel;
 
 use Illuminate\Support\Facades\Request;
 use App\Providers\RouteServiceProvider;
@@ -9,7 +9,7 @@ use Closure;
 class HandleRouteMiddleware
 {
     /**
-     * Execute AwStudio\Fjord\Application\Kernel method handleRoute.
+     * Execute Fjord\Application\Kernel method handleRoute.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next

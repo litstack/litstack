@@ -1,11 +1,11 @@
 <?php
 
-namespace AwStudio\Fjord\Application;
+namespace Fjord\Application;
 
 use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Request;
-use AwStudio\Fjord\Application\Kernel\HandleViewComposer;
+use Fjord\Application\Kernel\HandleViewComposer;
 
 class HttpErrorComposer
 {

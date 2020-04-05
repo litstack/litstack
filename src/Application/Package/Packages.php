@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Package;
+namespace Fjord\Application\Package;
 
 class Packages
 {

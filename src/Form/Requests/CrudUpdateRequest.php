@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Requests;
+namespace Fjord\Form\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
@@ -17,9 +17,9 @@ class CrudUpdateRequest extends FormRequest
      */
     public function authorize(Request $request)
     {
-        if($this->hasPermissions($request)){
+        if ($this->hasPermissions($request)) {
             return fjord_user()->can('update ' . $this->model());
-        }else{
+        } else {
             return true;
         }
     }

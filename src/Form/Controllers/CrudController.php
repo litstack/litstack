@@ -1,15 +1,15 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Controllers;
+namespace Fjord\Form\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use AwStudio\Fjord\Models\ModelContent;
-use AwStudio\Fjord\Support\Facades\FormLoader;
-use AwStudio\Fjord\Form\Requests\CrudCreateRequest;
-use AwStudio\Fjord\Form\Requests\CrudReadRequest;
-use AwStudio\Fjord\Form\Requests\CrudUpdateRequest;
-use AwStudio\Fjord\Form\Requests\CrudDeleteRequest;
+use Fjord\Models\ModelContent;
+use Fjord\Support\Facades\FormLoader;
+use Fjord\Form\Requests\CrudCreateRequest;
+use Fjord\Form\Requests\CrudReadRequest;
+use Fjord\Form\Requests\CrudUpdateRequest;
+use Fjord\Form\Requests\CrudDeleteRequest;
 
 class CrudController extends Controller
 {
@@ -120,7 +120,7 @@ class CrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(CrudUpdateRequest $request, $id)
+    public function edit(CrudReadRequest $request, $id)
     {
         $eloquentModel = $this->eloquentModel($request, $id);
 

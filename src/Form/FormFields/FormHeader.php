@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\FormFields;
+namespace Fjord\Form\FormFields;
 
 class FormHeader
 {
@@ -18,6 +18,7 @@ class FormHeader
     ];
 
     const DEFAULTS = [
+        'readonly' => false,
         'block_width' => 12
     ];
 }

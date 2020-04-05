@@ -1,13 +1,13 @@
 <?php
 
-namespace AwStudio\Fjord\Fjord\Models;
+namespace Fjord\Fjord\Models;
 
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
-use AwStudio\Fjord\EloquentJs\CanEloquentJs;
+use Fjord\EloquentJs\CanEloquentJs;
 use Illuminate\Auth\Passwords\CanResetPassword;
-use AwStudio\Fjord\Auth\Notifications\ResetPasswordNotification;
-use AwStudio\Fjord\Form\Database\Traits\HasFormFields;
+use Fjord\Auth\Notifications\ResetPasswordNotification;
+use Fjord\Form\Database\Traits\HasFormFields;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 

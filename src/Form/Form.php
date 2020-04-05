@@ -1,10 +1,10 @@
 <?php
 
-namespace AwStudio\Fjord\Form;
+namespace Fjord\Form;
 
 use Illuminate\Support\Collection;
-use AwStudio\Fjord\Form\Database\FormField;
-use AwStudio\Fjord\Support\Facades\FormLoader;
+use Fjord\Form\Database\FormField;
+use Fjord\Support\Facades\FormLoader;
 
 class Form
 {
@@ -104,11 +104,11 @@ class Form
      * Get groups for collection and form_name and
      * create nested Collection based on the groups.
      *
-     * @param  Illuminate\Support\Collection $items Collection of AwStudio\Fjord\Form\Database\FormField
+     * @param  Illuminate\Support\Collection $items Collection of Fjord\Form\Database\FormField
      * @param  bool $loading_collection
      * @param  bool $loading_name
      *
-     * @return AwStudio\Fjord\Form\FormFieldCollection|AwStudio\Fjord\Form\Collection
+     * @return Fjord\Form\FormFieldCollection|Fjord\Form\Collection
      */
     protected function getGroups(Collection $items, bool $loadingCollection, bool $loadingName)
     {

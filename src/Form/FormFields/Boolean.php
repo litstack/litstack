@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\FormFields;
+namespace Fjord\Form\FormFields;
 
 class Boolean
 {
@@ -14,6 +14,7 @@ class Boolean
     ];
 
     const DEFAULTS = [
+        'readonly' => false,
         'default' => true
     ];
 }

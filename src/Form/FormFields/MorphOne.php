@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\FormFields;
+namespace Fjord\Form\FormFields;
 
 use Illuminate\Support\Str;
 
@@ -18,14 +18,15 @@ class MorphOne
     ];
 
     const DEFAULTS = [
+        'readonly' => false,
     ];
 
     public static function prepare($field, $path)
     {
         //dd(get_class($field->models['Artikel']->getModel()));
-        $field->querys = collect($field->models)->map(function($model) use ($field){
+        $field->querys = collect($field->models)->map(function ($model) use ($field) {
             //return $model::query();
-            if(is_string($model)) {
+            if (is_string($model)) {
                 return $model::query();
             } else {
                 $model = get_class($model->getModel());
@@ -35,5 +36,4 @@ class MorphOne
 
         return $field;
     }
-
 }

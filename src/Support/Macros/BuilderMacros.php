@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Support\Macros;
+namespace Fjord\Support\Macros;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;

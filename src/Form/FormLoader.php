@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form;
+namespace Fjord\Form;
 
 class FormLoader
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Middlewares;
+namespace Fjord\Application\Middlewares;
 
 use Closure;
 

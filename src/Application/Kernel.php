@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Application;
+namespace Fjord\Application;
 
 use Illuminate\Routing\Route;
 use Illuminate\View\View;
@@ -10,7 +10,7 @@ class Kernel
     /**
      * Fjord application instance.
      * 
-     * @var AwStudio\Fjord\Application\Application
+     * @var Fjord\Application\Application
      */
     protected $app;
 
@@ -48,7 +48,7 @@ class Kernel
     /**
      * Create a new Fjord kernel instance.
      *
-     * @param  \AwStudio\Fjord\Application\Application  $app
+     * @param  \Fjord\Application\Application  $app
      * @return void
      */
     public function __construct(Application $app)

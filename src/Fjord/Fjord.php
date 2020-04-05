@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Fjord;
+namespace Fjord\Fjord;
 
 use Schema;
 use Illuminate\Support\Facades\File;
@@ -18,7 +18,7 @@ class Fjord
     /**
      * Get Fjord application.
      *
-     * @return \AwStudio\Fjord\Application\Application $app
+     * @return \Fjord\Application\Application $app
      */
     public function app()
     {
@@ -95,7 +95,7 @@ class Fjord
     /**
      * Get authenticated Fjord user.
      *
-     * @return \AwStudio\Fjord\Models\FjordUser $user
+     * @return \Fjord\Models\FjordUser $user
      */
     public function user()
     {

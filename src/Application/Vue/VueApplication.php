@@ -1,10 +1,10 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Vue;
+namespace Fjord\Application\Vue;
 
 use Exception;
 use Illuminate\View\View;
-use AwStudio\Fjord\Application\Application;
+use Fjord\Application\Application;
 
 class VueApplication
 {
@@ -18,14 +18,14 @@ class VueApplication
     /**
      * Fjord application instance.
      * 
-     * @var AwStudio\Fjord\Application\Application
+     * @var Fjord\Application\Application
      */
     protected $app;
 
     /**
      * Component instance.
      * 
-     * @var \AwStudio\Fjord\Application\Vue\Component
+     * @var \Fjord\Application\Vue\Component
      */
     protected $component;
 
@@ -57,7 +57,7 @@ class VueApplication
     /**
      * Create new VueApplication instance.
      *
-     * @param \AwStudio\Fjord\Application\Application $app
+     * @param \Fjord\Application\Application $app
      * @return void
      */
     public function __construct(Application $app)
@@ -261,6 +261,18 @@ class VueApplication
         }
 
         return $this->props;
+    }
+
+    /**
+     * Set prop for Fjord Vue application.
+     *
+     * @param string $name
+     * @param $value
+     * @return void
+     */
+    public function setProp(string $name, $value)
+    {
+        $this->props[$name] = $value;
     }
 
     /**

@@ -1,13 +1,13 @@
 <?php
 
-namespace AwStudio\Fjord\Routing;
+namespace Fjord\Routing;
 
 use Form;
 use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
-use AwStudio\Fjord\Support\Facades\Package;
+use Fjord\Support\Facades\Package;
 
 class FjordRouter
 {
@@ -19,7 +19,7 @@ class FjordRouter
     /**
      * Initialize defaults for a Fjord route.
      * Fjord Routes should always be created with
-     * \AwStudio\Fjord\Support\Facades\FjordRoute.
+     * \Fjord\Support\Facades\FjordRoute.
      *
      * @return Illuminate\Support\Facades\Route $route
      */
@@ -35,7 +35,7 @@ class FjordRouter
     /**
      * Initialize defaults for a Fjord package route.
      * Routes for a Fjord package should always be created 
-     * with \AwStudio\Fjord\Support\Facades\FjordRoute@package
+     * with \Fjord\Support\Facades\FjordRoute@package
      * 
      * @param string $package
      * @return Illuminate\Support\Facades\Route $route

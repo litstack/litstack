@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\User\Requests;
+namespace Fjord\User\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

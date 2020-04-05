@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\FormFields;
+namespace Fjord\Form\FormFields;
 
 class Range
 {
@@ -15,9 +15,8 @@ class Range
     ];
 
     const DEFAULTS = [
+        'readonly' => false,
         'translatable' => false,
         'step' => 1,
     ];
-
-
 }

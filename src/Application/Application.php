@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Application;
+namespace Fjord\Application;
 
 use Illuminate\View\View;
 use Illuminate\Support\Str;

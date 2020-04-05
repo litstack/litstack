@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\FormFields;
+namespace Fjord\Form\FormFields;
 
 use Illuminate\Support\Str;
 
@@ -18,6 +18,6 @@ class HasMany
     ];
 
     const DEFAULTS = [
+        'readonly' => false,
     ];
-
 }

@@ -6,7 +6,7 @@
  * Time: 16:03
  */
 
-namespace AwStudio\Fjord\Form\Database\Relations;
+namespace Fjord\Form\Database\Relations;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\Relation;

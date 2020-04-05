@@ -54,13 +54,13 @@ if(! function_exists('fjord')) {
 
 if(! function_exists('nested_collect')) {
     function nested_collect(array $array) {
-        return new \AwStudio\Fjord\Support\NestedCollection($array);
+        return new \Fjord\Support\NestedCollection($array);
     }
 }
 
 if(! function_exists('eloquentJs')) {
     function eloquentJs($model, $class, $type = 'fjord') {
-        return (new AwStudio\Fjord\EloquentJs\EloquentJs($model, $class, $type))->toArray();
+        return (new Fjord\EloquentJs\EloquentJs($model, $class, $type))->toArray();
     }
 }
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace AwStudio\Fjord\Foundation\Providers;
+namespace Fjord\Foundation\Providers;
 
 use Illuminate\Foundation\Providers\ArtisanServiceProvider as LaravelArtisanServiceProvider;
-use AwStudio\Fjord\Foundation\Console\FjordPackageDiscoverCommand;
-use AwStudio\Fjord\Foundation\Console\PackageDiscoverCommand;
+use Fjord\Foundation\Console\FjordPackageDiscoverCommand;
+use Fjord\Foundation\Console\PackageDiscoverCommand;
 
 class ArtisanServiceProvider extends LaravelArtisanServiceProvider
 {

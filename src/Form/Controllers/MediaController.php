@@ -1,8 +1,8 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Controllers;
+namespace Fjord\Form\Controllers;
 
-use AwStudio\Fjord\Fjord\Controllers\FjordController;
+use Fjord\Fjord\Controllers\FjordController;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 

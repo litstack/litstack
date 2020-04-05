@@ -1,9 +1,9 @@
 <?php
 
-namespace AwStudio\Fjord\Commands;
+namespace Fjord\Commands;
 
 use Illuminate\Console\Command;
-use AwStudio\Fjord\Fjord\Models\FjordUser;
+use Fjord\Fjord\Models\FjordUser;
 use Spatie\Permission\Models\Role;
 
 class FjordAdmin extends Command

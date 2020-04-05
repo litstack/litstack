@@ -1,11 +1,14 @@
 <?php
 
-namespace AwStudio\Fjord\Form;
+namespace Fjord\Form;
 
 use Form;
 use Illuminate\Support\Str;
+use Fjord\Form\Database\FormField;
 use Illuminate\Support\Collection;
-use AwStudio\Fjord\Support\Facades\FormLoader;
+use Fjord\Support\Facades\FormLoader;
+use Fjord\Form\Requests\CrudUpdateRequest;
+use Fjord\Form\Requests\FormUpdateRequest;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class CrudForm
@@ -49,11 +52,11 @@ class CrudForm
 
     protected function getModelClassName($model)
     {
-        if(is_string($model)) {
+        if (is_string($model)) {
             return $model;
         }
 
-        if(get_class($model) == EloquentCollection::class) {
+        if (get_class($model) == EloquentCollection::class) {
             return get_class($model->first());
         }
 
@@ -62,8 +65,8 @@ class CrudForm
 
     protected function setDefaults()
     {
-        foreach(self::DEFAULTS as $key => $default) {
-            if(! array_key_exists($key, $this->attributes)) {
+        foreach (self::DEFAULTS as $key => $default) {
+            if (!array_key_exists($key, $this->attributes)) {
                 $this->attributes[$key] = $default;
             }
         }
@@ -74,6 +77,18 @@ class CrudForm
         $this->setNames();
         $this->setBackRoute();
         $this->setIndex();
+        $this->setCanUpdate();
+    }
+
+    public function setCanUpdate()
+    {
+        if ($this->attributes['model'] == FormField::class) {
+            $request = new FormUpdateRequest;
+        } else {
+            $request = new CrudUpdateRequest;
+        }
+        $authorize = $request->authorize(app()->get('request'));
+        $this->attributes['readonly'] = !$authorize;
     }
 
     protected function setIndex()
@@ -87,17 +102,17 @@ class CrudForm
 
     protected function getSearch($index)
     {
-        if(! array_key_exists('search', $index)) {
+        if (!array_key_exists('search', $index)) {
             return $this->modelInstance->getFillable();
         }
 
-        if(! is_array($index['search'])) {
+        if (!is_array($index['search'])) {
             return $this->compileSearchKey($index['search']);
         }
 
         $keys = [];
-        foreach($index['search'] as $key) {
-            $keys []= $this->compileSearchKey($key);
+        foreach ($index['search'] as $key) {
+            $keys[] = $this->compileSearchKey($key);
         }
 
         return $keys;
@@ -105,13 +120,13 @@ class CrudForm
 
     protected function compileSearchKey($key)
     {
-        if(! is_translatable($this->modelInstance)) {
+        if (!is_translatable($this->modelInstance)) {
             return $key;
         }
 
-        if(in_array($key, $this->modelInstance->translatedAttributes)) {
+        if (in_array($key, $this->modelInstance->translatedAttributes)) {
             return 'translations.' . $key;
-        }else{
+        } else {
             return $key;
         }
     }
@@ -126,18 +141,18 @@ class CrudForm
         ];
 
 
-        if($names['title']['singular'] == '' ){
+        if ($names['title']['singular'] == '') {
             $singular = Str::singular(Str::snake($this->getName()));
             $words = explode('_', $singular);
-            foreach($words as $key => $word) {
+            foreach ($words as $key => $word) {
                 $names['title']['singular'] .= ucfirst($word);
             }
         }
 
-        if($names['title']['plural'] == ''){
+        if ($names['title']['plural'] == '') {
             $plural = Str::plural($singular);
             $words = explode('_', $plural);
-            foreach($words as $key => $word) {
+            foreach ($words as $key => $word) {
                 $names['title']['plural'] .= ucfirst($word);
             }
         }
@@ -170,19 +185,19 @@ class CrudForm
 
     protected function setLayout()
     {
-        if(count($this->attributes['form_fields']) < 1) {
+        if (count($this->attributes['form_fields']) < 1) {
             return;
         }
 
         $formFields = [];
 
-        foreach($this->attributes['form_fields'] as $array) {
-            if($this->isArrayFormField($array)) {
-                $formFields [] = $array;
-                $this->attributes['layout'] []= $this->getFormLayoutIds([$array]);
+        foreach ($this->attributes['form_fields'] as $array) {
+            if ($this->isArrayFormField($array)) {
+                $formFields[] = $array;
+                $this->attributes['layout'][] = $this->getFormLayoutIds([$array]);
             } else {
                 $formFields = array_merge($array, $formFields);
-                $this->attributes['layout'] []= $this->getFormLayoutIds($array);
+                $this->attributes['layout'][] = $this->getFormLayoutIds($array);
             }
         }
 
@@ -191,7 +206,7 @@ class CrudForm
 
     protected function setBackRoute()
     {
-        if($this->isFjordModel()) {
+        if ($this->isFjordModel()) {
             return;
         }
 
@@ -202,7 +217,7 @@ class CrudForm
 
     protected function setBackText()
     {
-        if($this->attributes['back_text']) {
+        if ($this->attributes['back_text']) {
             return;
         }
 
@@ -213,26 +228,26 @@ class CrudForm
     {
         $route = $this->attributes['preview_route'];
 
-        if(is_callable($route) && ! is_array($route)) {
+        if (is_callable($route) && !is_array($route)) {
             $route = call_user_func($route, $model);
         }
 
-        if(is_array($route)) {
+        if (is_array($route)) {
 
             $class = $route[0];
             $method = $route[1];
 
             $params = [];
 
-            if($class != $this->model) {
+            if ($class != $this->model) {
                 $params = [$model];
             }
 
-            if(method_exists($model, $method)) {
+            if (method_exists($model, $method)) {
                 $class = $model;
 
                 $methodRef = new \ReflectionMethod(get_class($class), $method);
-                if($methodRef->isStatic()) {
+                if ($methodRef->isStatic()) {
                     $params = [$model];
                 }
             }
@@ -260,7 +275,7 @@ class CrudForm
 
     public function getAttribute($key)
     {
-        if($key == 'form_fields') {
+        if ($key == 'form_fields') {
             return $this->form_fields;
         }
 

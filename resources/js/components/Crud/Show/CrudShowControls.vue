@@ -7,7 +7,7 @@
                 </b>
                 <fj-base-language />
             </b-col>
-            <b-col cols="12" class="pb-3">
+            <b-col cols="12" class="pb-3" v-if="!formConfig.readonly">
                 <b class="text-muted d-block pb-1">
                     {{ $t('fj.save_changes') }}
                 </b>
@@ -28,7 +28,7 @@
                     v-html="
                         $t(`fj.last_edited`, {
                             time: lastEdit.time,
-                            user: lastEdit.user.name
+                            user: lastEdit.user.name,
                         })
                     "
                 />
@@ -48,17 +48,21 @@ import FjordModel from '@fj-js/eloquent/fjord.model';
 export default {
     name: 'CrudShowControls',
     props: {
+        formConfig: {
+            type: Object,
+            required: true,
+        },
         create: {
             type: Boolean,
-            default: false
+            default: false,
         },
         title: {
-            type: String
-        }
+            type: String,
+        },
     },
     data() {
         return {
-            lastEdit: null
+            lastEdit: null,
         };
     },
     methods: {
@@ -67,7 +71,7 @@ export default {
             this.$bvToast.toast(
                 this.$t('fj.model_saved', { model: this.title }),
                 {
-                    variant: 'success'
+                    variant: 'success',
                 }
             );
         },
@@ -95,7 +99,7 @@ export default {
         },
         loadModel() {
             this.$bus.$emit('loadModel');
-        }
+        },
     },
     beforeMount() {
         this.$bus.$on('modelsSaved', this.onSaved);
@@ -105,7 +109,7 @@ export default {
         let self = this;
         document.addEventListener(
             'keydown',
-            function(e) {
+            function (e) {
                 if (
                     (window.navigator.platform.match('Mac')
                         ? e.metaKey
@@ -130,8 +134,8 @@ export default {
             return this.create
                 ? this.$t('fj.create_model', { model: this.title })
                 : this.$t('fj.save_model', { model: this.title });
-        }
-    }
+        },
+    },
 };
 </script>
 

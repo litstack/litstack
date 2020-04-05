@@ -1,8 +1,8 @@
 <?php
 
-namespace AwStudio\Fjord\Auth\Controllers;
+namespace Fjord\Auth\Controllers;
 
-use AwStudio\Fjord\Actions\SendPasswordResetLink;
+use Fjord\Actions\SendPasswordResetLink;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

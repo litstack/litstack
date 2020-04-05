@@ -1,9 +1,9 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Translation;
+namespace Fjord\Application\Translation;
 
 use Illuminate\Support\Facades\Lang;
-use AwStudio\Fjord\Application\Application;
+use Fjord\Application\Application;
 
 class Translator
 {
@@ -24,14 +24,14 @@ class Translator
     /**
      * Fjord application instance.
      *
-     * @var AwStudio\Fjord\Application\Application
+     * @var Fjord\Application\Application
      */
     protected $app;
 
     /**
      * Create new Translator instance.
      *
-     * @param AwStudio\Fjord\Application\Application $app
+     * @param Fjord\Application\Application $app
      */
     public function __construct(Application $app)
     {

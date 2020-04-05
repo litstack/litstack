@@ -1,10 +1,10 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Controllers;
+namespace Fjord\Form\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use AwStudio\Fjord\Form\Database\FormBlock;
+use Fjord\Form\Database\FormBlock;
 
 class FormBlockController extends Controller
 {

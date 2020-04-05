@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Config;
+namespace Fjord\Application\Config;
 
 abstract class FjordConfig
 {

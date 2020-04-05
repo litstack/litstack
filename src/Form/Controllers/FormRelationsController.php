@@ -1,13 +1,13 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Controllers;
+namespace Fjord\Form\Controllers;
 
-use AwStudio\Fjord\Fjord\Controllers\FjordController;
+use Fjord\Fjord\Controllers\FjordController;
 use Illuminate\Http\Request;
-use AwStudio\Fjord\Models\ModelContent;
-use AwStudio\Fjord\Form\Database\FormBlock;
-use AwStudio\Fjord\Form\Database\FormField;
-use AwStudio\Fjord\Form\Database\FormRelation;
+use Fjord\Models\ModelContent;
+use Fjord\Form\Database\FormBlock;
+use Fjord\Form\Database\FormField;
+use Fjord\Form\Database\FormRelation;
 use Exception;
 
 class FormRelationsController extends FjordController

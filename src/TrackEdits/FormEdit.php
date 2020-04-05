@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\TrackEdits;
+namespace Fjord\TrackEdits;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,6 +28,6 @@ class FormEdit extends Model
 
     public function user()
     {
-        return $this->belongsTo(\AwStudio\Fjord\Fjord\Models\FjordUser::class, 'fjord_user_id');
+        return $this->belongsTo(\Fjord\Fjord\Models\FjordUser::class, 'fjord_user_id');
     }
 }

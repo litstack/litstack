@@ -1,14 +1,14 @@
 <?php
 
-namespace AwStudio\Fjord\Application;
+namespace Fjord\Application;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\View;
 use Illuminate\View\View as ViewClass;
 use Illuminate\Support\ServiceProvider;
-use AwStudio\Fjord\Support\Facades\FjordRoute;
-use AwStudio\Fjord\Application\Kernel\HandleViewComposer;
-use AwStudio\Fjord\Application\Kernel\HandleRouteMiddleware;
+use Fjord\Support\Facades\FjordRoute;
+use Fjord\Application\Kernel\HandleViewComposer;
+use Fjord\Application\Kernel\HandleRouteMiddleware;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ApplicationServiceProvider extends ServiceProvider

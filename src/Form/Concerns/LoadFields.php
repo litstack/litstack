@@ -1,9 +1,9 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Concerns;
+namespace Fjord\Form\Concerns;
 
-use AwStudio\Fjord\Form\FormField;
-use AwStudio\Fjord\Support\NestedCollection;
+use Fjord\Form\FormField;
+use Fjord\Support\NestedCollection;
 use Illuminate\Support\Facades\Schema;
 use Exception;
 

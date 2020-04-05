@@ -1,13 +1,13 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Kernel;
+namespace Fjord\Application\Kernel;
 
 use Illuminate\View\View;
 
 class HandleViewComposer
 {
     /**
-     * Execute AwStudio\Fjord\Application\Kernel method handleView.
+     * Execute Fjord\Application\Kernel method handleView.
      * 
      * @param Illuminate\View\View $view
      * @return void

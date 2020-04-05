@@ -1,13 +1,13 @@
 <?php
 
-namespace AwStudio\Fjord\Form;
+namespace Fjord\Form;
 
 use Illuminate\Support\Collection;
 
 class FormFieldCollection extends Collection
 {
     /**
-     * The \AwStudio\Fjord\Form\FormField::class items contained in the collection.
+     * The \Fjord\Form\FormField::class items contained in the collection.
      *
      * @var array
      */

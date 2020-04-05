@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\FormFields;
+namespace Fjord\Form\FormFields;
 
 class Image
 {
@@ -14,9 +14,10 @@ class Image
     ];
 
     const DEFAULTS = [
+        'readonly' => false,
         'maxFiles' => 1,
         'square' => true,
         'crop' => false,
-        'ratio' => 4/3
+        'ratio' => 4 / 3
     ];
 }

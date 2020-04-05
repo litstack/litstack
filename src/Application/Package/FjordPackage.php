@@ -1,11 +1,11 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Package;
+namespace Fjord\Application\Package;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
-use AwStudio\Fjord\Application\Application;
-use AwStudio\Fjord\Support\Facades\FjordRoute;
+use Fjord\Application\Application;
+use Fjord\Support\Facades\FjordRoute;
 
 abstract class FjordPackage
 {

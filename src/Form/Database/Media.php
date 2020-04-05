@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Database;
+namespace Fjord\Form\Database;
 
 use Spatie\MediaLibrary\Models\Media as MediaModel;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Auth\Controllers;
+namespace Fjord\Auth\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

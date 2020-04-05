@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\FormFields;
+namespace Fjord\Form\FormFields;
 
 class Checkboxes
 {
@@ -14,6 +14,6 @@ class Checkboxes
     ];
 
     const DEFAULTS = [
-
+        'readonly' => false,
     ];
 }

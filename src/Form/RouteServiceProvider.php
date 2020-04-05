@@ -1,19 +1,19 @@
 <?php
 
-namespace AwStudio\Fjord\Form;
+namespace Fjord\Form;
 
 use Illuminate\Support\Str;
 use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
-use AwStudio\Fjord\Support\Facades\Fjord;
-use AwStudio\Fjord\Support\Facades\FjordRoute;
-use AwStudio\Fjord\Form\Controllers\MediaController;
-use AwStudio\Fjord\Form\Controllers\FormController;
-use AwStudio\Fjord\Form\Controllers\FormBlockController;
-use AwStudio\Fjord\Form\Controllers\FormMorphOneController;
-use AwStudio\Fjord\Form\Controllers\FormBelongsToManyController;
-use AwStudio\Fjord\Form\Controllers\FormHasManyController;
-use AwStudio\Fjord\Form\Controllers\FormRelationsController;
-use AwStudio\Fjord\Support\Facades\Package;
+use Fjord\Support\Facades\Fjord;
+use Fjord\Support\Facades\FjordRoute;
+use Fjord\Form\Controllers\MediaController;
+use Fjord\Form\Controllers\FormController;
+use Fjord\Form\Controllers\FormBlockController;
+use Fjord\Form\Controllers\FormMorphOneController;
+use Fjord\Form\Controllers\FormBelongsToManyController;
+use Fjord\Form\Controllers\FormHasManyController;
+use Fjord\Form\Controllers\FormRelationsController;
+use Fjord\Support\Facades\Package;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {

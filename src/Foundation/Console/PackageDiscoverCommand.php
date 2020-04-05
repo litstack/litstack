@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Foundation\Console;
+namespace Fjord\Foundation\Console;
 
 use Illuminate\Foundation\PackageManifest;
 use Illuminate\Support\Facades\File;
@@ -22,7 +22,7 @@ class PackageDiscoverCommand extends LaravelPackageDiscoverCommand
     /**
      * Execute the console command.
      *
-     * @param  \AwStudio\Fjord\Foundation\PackageManifest  $manifest
+     * @param  \Fjord\Foundation\PackageManifest  $manifest
      * @return void
      */
     public function handle(PackageManifest $manifest)

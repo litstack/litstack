@@ -1,8 +1,8 @@
 <?php
 
-namespace AwStudio\Fjord\Commands;
+namespace Fjord\Commands;
 
-use AwStudio\Fjord\Filesystem\StubBuilder;
+use Fjord\Filesystem\StubBuilder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;

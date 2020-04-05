@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\FormFields;
+namespace Fjord\Form\FormFields;
 
 class TextArea
 {
@@ -14,6 +14,7 @@ class TextArea
     ];
 
     const DEFAULTS = [
+        'readonly' => false,
         'translatable' => false,
         'max_rows' => 6
     ];

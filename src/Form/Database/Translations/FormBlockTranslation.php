@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Database\Translations;
+namespace Fjord\Form\Database\Translations;
 
 use Illuminate\Database\Eloquent\Model;
 

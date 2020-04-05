@@ -25,6 +25,13 @@
                                     v-for="(field, key) in fields"
                                     :key="`td-${key}`"
                                     class="position-relative"
+                                    :test="field.key"
+                                    v-if="
+                                        !(
+                                            field.key == 'drag' &&
+                                            form_field.readonly
+                                        )
+                                    "
                                     :class="
                                         field.key == 'drag'
                                             ? 'fjord-draggable__dragbar'
@@ -35,7 +42,10 @@
                                         v-if="field.key == 'drag'"
                                         class="text-center text-muted"
                                     >
-                                        <fa-icon icon="grip-vertical" />
+                                        <fa-icon
+                                            icon="grip-vertical"
+                                            v-if="!form_field.readonly"
+                                        />
                                     </div>
 
                                     <div
@@ -44,14 +54,30 @@
                                     >
                                         <b-button-group size="sm">
                                             <b-button
-                                                v-if="hasEditLink(form_field)"
-                                                :href="
-                                                    `${baseURL}${form_field.edit}/${relation.id}/edit`
+                                                v-if="
+                                                    hasEditLink(form_field) &&
+                                                    (can(
+                                                        `update ${form_field.edit}`
+                                                    ) ||
+                                                        can(
+                                                            `read ${form_field.edit}`
+                                                        ))
                                                 "
+                                                :href="`${baseURL}${form_field.edit}/${relation.id}/edit`"
                                                 class="btn-transparent d-flex align-items-center"
-                                                ><fa-icon icon="edit"
-                                            /></b-button>
+                                            >
+                                                <fa-icon
+                                                    :icon="
+                                                        can(
+                                                            `update ${form_field.edit}`
+                                                        )
+                                                            ? 'edit'
+                                                            : 'eye'
+                                                    "
+                                                />
+                                            </b-button>
                                             <b-button
+                                                v-if="!form_field.readonly"
                                                 class="btn-transparent"
                                                 @click="
                                                     showModal(
@@ -62,9 +88,7 @@
                                             /></b-button>
                                         </b-button-group>
                                         <b-modal
-                                            :id="
-                                                `modal-${form_field.edit}-${relation.id}`
-                                            "
+                                            :id="`modal-${form_field.edit}-${relation.id}`"
                                             title="Delete Item"
                                         >
                                             Please confirm that you want to
@@ -144,17 +168,17 @@ export default {
     props: {
         form_field: {
             required: true,
-            type: Object
+            type: Object,
         },
         model: {
             required: true,
-            type: Object
-        }
+            type: Object,
+        },
     },
     data() {
         return {
             relations: [],
-            fields: []
+            fields: [],
         };
     },
     methods: {
@@ -169,7 +193,7 @@ export default {
                 from_model_type: this.model.model,
                 from_model_id: this.model.id,
                 to_model_type: this.form_field.model,
-                to_model_id: item.id
+                to_model_id: item.id,
             };
 
             try {
@@ -179,13 +203,13 @@ export default {
                 this.$bvToast.toast(
                     this.$t('fj.relation_added', { relation }),
                     {
-                        variant: 'success'
+                        variant: 'success',
                     }
                 );
             } catch (e) {
                 this.$bvToast.toast(e.response.data.message, {
                     variant: 'danger',
-                    noAutoHide: true
+                    noAutoHide: true,
                 });
                 return;
             }
@@ -197,7 +221,7 @@ export default {
                 from_model_type: this.model.model,
                 from_model_id: this.model.id,
                 to_model_type: this.form_field.model,
-                to_model_id: id
+                to_model_id: id,
             };
 
             try {
@@ -206,18 +230,18 @@ export default {
                 // close modal
                 this.$bvModal.hide(`modal-${this.form_field.edit}-${id}`);
 
-                let relation = this.relations.find(r => r.id == id);
+                let relation = this.relations.find((r) => r.id == id);
                 let index = this.relations.indexOf(relation);
 
                 this.relations.splice(index, 1);
 
                 this.$bvToast.toast(this.$t('fj.relation_set'), {
-                    variant: 'success'
+                    variant: 'success',
                 });
             } catch (e) {
                 this.$bvToast.toast(e, {
                     variant: 'danger',
-                    noAutoHide: true
+                    noAutoHide: true,
                 });
             }
         },
@@ -227,7 +251,7 @@ export default {
             let relation_type = {
                 from_model_type: this.model.model,
                 from_model_id: this.model.id,
-                to_model_type: this.form_field.model
+                to_model_type: this.form_field.model,
             };
             for (let i = 0; i < this.relations.length; i++) {
                 let relation = this.relations[i];
@@ -236,13 +260,13 @@ export default {
 
             let payload = {
                 data: relation_type,
-                ids
+                ids,
             };
 
             let response = await axios.put('relations/order', payload);
 
             this.$bvToast.toast(this.$t('fj.order_changed'), {
-                variant: 'success'
+                variant: 'success',
             });
         },
         setFields() {
@@ -270,7 +294,7 @@ export default {
         },
         hasEditLink(form_field) {
             return form_field.edit != undefined;
-        }
+        },
     },
 
     beforeMount() {
@@ -286,8 +310,8 @@ export default {
         modalId() {
             return `${this.model.route}-form-relation-table-${this.form_field.id}-${this.model.id}`;
         },
-        ...mapGetters(['baseURL', 'form'])
-    }
+        ...mapGetters(['baseURL', 'form']),
+    },
 };
 </script>
 

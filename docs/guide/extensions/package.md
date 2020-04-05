@@ -24,7 +24,7 @@ Here we come to the creation of the `Package` class. It contains the main compon
 
 namespace MyPackage;
 
-use AwStudio\Fjord\Application\Package\FjordPackage;
+use Fjord\Application\Package\FjordPackage;
 
 class Package extends FjordPackage
 {

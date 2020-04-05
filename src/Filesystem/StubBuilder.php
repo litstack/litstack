@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Filesystem;
+namespace Fjord\Filesystem;
 
 use Illuminate\Support\Str;
 use Exception;

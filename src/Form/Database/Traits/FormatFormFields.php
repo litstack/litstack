@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Database\Traits;
+namespace Fjord\Form\Database\Traits;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\Relation;

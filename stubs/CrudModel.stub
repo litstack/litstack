@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use AwStudio\Fjord\Fjord\Models\Model as FjordModel;
+use Fjord\Fjord\Models\Model as FjordModel;
 DummyTraits
 
 class DummyClassname extends FjordModel DummyImplement

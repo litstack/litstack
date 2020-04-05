@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Support\Facades;
+namespace Fjord\Support\Facades;
 
 class Package extends FjordFacade
 {

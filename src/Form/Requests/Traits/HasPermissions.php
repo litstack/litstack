@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Requests\Traits;
+namespace Fjord\Form\Requests\Traits;
 
 use Illuminate\Http\Request;
 

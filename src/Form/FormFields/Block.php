@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\FormFields;
+namespace Fjord\Form\FormFields;
 
 class Block
 {
@@ -20,12 +20,14 @@ class Block
     ];
 
     const DEFAULTS = [
+        'readonly' => false,
         'block_width' => 12
     ];
 
-    public static function prepare($field, $path) {
+    public static function prepare($field, $path)
+    {
         $repeatables = [];
-        foreach($field->repeatables as $title) {
+        foreach ($field->repeatables as $title) {
             $preparedPath = str_replace('.', '/', $title);
             $repeatables[$title] = require fjord_resource_path("repeatables/{$preparedPath}.php");
         }

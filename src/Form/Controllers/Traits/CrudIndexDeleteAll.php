@@ -1,9 +1,9 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Controllers\Traits;
+namespace Fjord\Form\Controllers\Traits;
 
-use AwStudio\Fjord\Form\Requests\CrudDeleteRequest;
-use AwStudio\Fjord\Support\Facades\FjordRoute;
+use Fjord\Form\Requests\CrudDeleteRequest;
+use Fjord\Support\Facades\FjordRoute;
 use Illuminate\Http\Request;
 
 trait CrudIndexDeleteAll

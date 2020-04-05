@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Commands\Install;
+namespace Fjord\Commands\Install;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\App;
@@ -90,7 +90,7 @@ trait InstallVendorConfigs
         $content = file_get_contents(config_path('medialibrary.php'));
         $content = str_replace(
             'Spatie\MediaLibrary\Models\Media::class',
-            'AwStudio\Fjord\Form\Database\Media::class',
+            'Fjord\Form\Database\Media::class',
             $content
         );
         File::put(config_path('medialibrary.php'), $content);

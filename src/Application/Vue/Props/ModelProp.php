@@ -1,8 +1,8 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Vue\Props;
+namespace Fjord\Application\Vue\Props;
 
-use AwStudio\Fjord\Application\Vue\VueProp;
+use Fjord\Application\Vue\VueProp;
 
 class ModelProp extends VueProp
 {

@@ -27,17 +27,17 @@
             "src/Support/helpers.php"
         ],
         "psr-4": {
-            "AwStudio\\Fjord\\": "src"
+            "Fjord\\": "src"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "AwStudio\\Fjord\\FjordServiceProvider"
+                "Fjord\\FjordServiceProvider"
             ]
         },
         "fjord": {
-            "package": "AwStudio\\Fjord\\FjordPackage"
+            "package": "Fjord\\FjordPackage"
         }
     }
 }

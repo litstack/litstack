@@ -1,12 +1,12 @@
 <?php
 
-namespace AwStudio\Fjord;
+namespace Fjord;
 
-use AwStudio\Fjord\Application\Application;
-use AwStudio\Fjord\User\Components\UsersComponent;
-use AwStudio\Fjord\Form\Vue\Components\CrudShowComponent;
-use AwStudio\Fjord\Form\Vue\Components\CrudIndexComponent;
-use AwStudio\Fjord\Application\Package\FjordPackage as Package;
+use Fjord\Application\Application;
+use Fjord\User\Components\UsersComponent;
+use Fjord\Form\Vue\Components\CrudShowComponent;
+use Fjord\Form\Vue\Components\CrudIndexComponent;
+use Fjord\Application\Package\FjordPackage as Package;
 
 class FjordPackage extends Package
 {
@@ -16,10 +16,10 @@ class FjordPackage extends Package
      * @var array
      */
     protected $providers = [
-        \AwStudio\Fjord\Application\Translation\TranslationServiceProvider::class,
-        \AwStudio\Fjord\Application\RouteServiceProvider::class,
-        \AwStudio\Fjord\User\ServiceProvider::class,
-        \AwStudio\Fjord\Form\ServiceProvider::class,
+        \Fjord\Application\Translation\TranslationServiceProvider::class,
+        \Fjord\Application\RouteServiceProvider::class,
+        \Fjord\User\ServiceProvider::class,
+        \Fjord\Form\ServiceProvider::class,
     ];
 
     /**
@@ -53,8 +53,8 @@ class FjordPackage extends Package
      * @var array
      */
     protected $configHandler = [
-        'navigation.main' => \AwStudio\Fjord\Application\Navigation\MainConfig::class,
-        'navigation.topbar' => \AwStudio\Fjord\Application\Navigation\TopbarConfig::class,
+        'navigation.main' => \Fjord\Application\Navigation\MainConfig::class,
+        'navigation.topbar' => \Fjord\Application\Navigation\TopbarConfig::class,
         'users.table' => User\Config\TableConfig::class
     ];
 

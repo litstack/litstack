@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Fjord\Controllers;
+namespace Fjord\Fjord\Controllers;
 
 use Illuminate\Routing\Controller;
 

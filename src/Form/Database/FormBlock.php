@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Database;
+namespace Fjord\Form\Database;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -9,8 +9,8 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Spatie\MediaLibrary\Models\Media;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use AwStudio\Fjord\EloquentJs\CanEloquentJs;
-use AwStudio\Fjord\Support\Facades\FormLoader;
+use Fjord\EloquentJs\CanEloquentJs;
+use Fjord\Support\Facades\FormLoader;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class FormBlock extends Model implements HasMedia, TranslatableContract

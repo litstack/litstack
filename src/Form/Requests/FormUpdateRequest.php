@@ -5,11 +5,8 @@ namespace Fjord\Form\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
-class CrudDeleteRequest extends FormRequest
+class FormUpdateRequest extends FormRequest
 {
-    use Traits\ModelName,
-        Traits\HasPermissions;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -17,11 +14,8 @@ class CrudDeleteRequest extends FormRequest
      */
     public function authorize(Request $request)
     {
-        if($this->hasPermissions($request)){
-            return fjord_user()->can('delete ' . $this->model());
-        }else{
-            return true;
-        }
+        return true;
+        return fjord_user()->can('read ');
     }
 
     /**

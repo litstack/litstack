@@ -7,7 +7,7 @@ Fjord is an admin interface for editing and managing data, a content management 
 ## Lifecycle Overview
 ### First Things
 
-Fjord comes to life in its main ServiceProvider `AwStudio\Fjord\FjordServiceProvider` when the Fjord application instance gets created in the `register` method of the provider.
+Fjord comes to life in its main ServiceProvider `Fjord\FjordServiceProvider` when the Fjord application instance gets created in the `register` method of the provider.
 
 ### Kernel
 

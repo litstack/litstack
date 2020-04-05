@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Auth\Middleware;
+namespace Fjord\Auth\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 

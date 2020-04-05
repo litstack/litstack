@@ -59,7 +59,7 @@ Inside the class:
 
 namespace App\Models;
 
-use AwStudio\Fjord\Fjord\Models\Model as FjordModel;
+use Fjord\Fjord\Models\Model as FjordModel;
 
 class Article extends FjordModel
 {
@@ -145,7 +145,7 @@ Form fields used for a CRUD model may in some cases come with requirements descr
 
 namespace App\Models;
 
-use AwStudio\Fjord\Fjord\Models\Model as FjordModel;
+use Fjord\Fjord\Models\Model as FjordModel;
 
 class Article extends FjordModel
 {
@@ -168,7 +168,7 @@ class Article extends FjordModel
 
 namespace App\Models;
 
-use AwStudio\Fjord\Fjord\Models\Model as FjordModel;
+use Fjord\Fjord\Models\Model as FjordModel;
 
 class Article extends FjordModel
 {

@@ -1,16 +1,16 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Database;
+namespace Fjord\Form\Database;
 
 use Awobaz\Compoships\Compoships;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
-use AwStudio\Fjord\Support\Facades\Package;
-use AwStudio\Fjord\EloquentJs\CanEloquentJs;
-use AwStudio\Fjord\Support\NestedCollection;
-use AwStudio\Fjord\Support\Facades\FormLoader;
+use Fjord\Support\Facades\Package;
+use Fjord\EloquentJs\CanEloquentJs;
+use Fjord\Support\NestedCollection;
+use Fjord\Support\Facades\FormLoader;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
@@ -60,7 +60,7 @@ class FormField extends Model implements HasMedia, TranslatableContract
      */
     public function getLastEditAttribute()
     {
-        return $this->hasOne('AwStudio\Fjord\TrackEdits\FormEdit', 'form_name', 'form_name')
+        return $this->hasOne('Fjord\TrackEdits\FormEdit', 'form_name', 'form_name')
             ->where('collection', $this->collection)
             ->orderByDesc('id')
             ->with('user')

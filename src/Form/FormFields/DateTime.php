@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\FormFields;
+namespace Fjord\Form\FormFields;
 
 class DateTime
 {
@@ -13,6 +13,7 @@ class DateTime
     ];
 
     const DEFAULTS = [
+        'readonly' => false,
         'formatted' => 'llll',
         'no_label' => false,
         'inline' => false,

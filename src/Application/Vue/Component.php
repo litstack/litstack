@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Vue;
+namespace Fjord\Application\Vue;
 
 abstract class Component
 {

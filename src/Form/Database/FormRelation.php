@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Database;
+namespace Fjord\Form\Database;
 
 use Illuminate\Database\Eloquent\Model;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Concerns;
+namespace Fjord\Application\Concerns;
 
 trait ManagesFiles
 {

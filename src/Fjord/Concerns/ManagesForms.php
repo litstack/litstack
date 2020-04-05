@@ -1,8 +1,8 @@
 <?php
 
-namespace AwStudio\Fjord\Fjord\Concerns;
+namespace Fjord\Fjord\Concerns;
 
-use AwStudio\Fjord\Support\Facades\Form;
+use Fjord\Support\Facades\Form;
 
 trait ManagesForms
 {

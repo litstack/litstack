@@ -1,8 +1,8 @@
 <?php
 
-namespace AwStudio\Fjord\Commands\Install;
+namespace Fjord\Commands\Install;
 
-use AwStudio\Fjord\Commands\Traits\RolesAndPermissions;
+use Fjord\Commands\Traits\RolesAndPermissions;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
@@ -116,7 +116,7 @@ class FjordInstall extends Command
         $this->info('publishing fjord config & migrations');
 
         $this->callSilent('vendor:publish', [
-            '--provider' => "AwStudio\Fjord\FjordServiceProvider"
+            '--provider' => "Fjord\FjordServiceProvider"
         ]);
 
         // migrate tables

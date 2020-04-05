@@ -39,6 +39,7 @@
 
             <b-col cols="12" md="3" order-md="2" class="pb-4 mb-md-0">
                 <fj-crud-show-controls
+                    :formConfig="formConfig"
                     :create="create"
                     :title="formConfig.names.title.singular"
                 >
@@ -69,38 +70,38 @@ export default {
     name: 'CrudShow',
     props: {
         models: {
-            type: Object
+            type: Object,
         },
         formConfig: {
             type: [Array, Object],
-            required: true
+            required: true,
         },
         nearItems: {
-            type: Object
+            type: Object,
         },
         actions: {
             type: Array,
             default: () => {
                 return [];
-            }
+            },
         },
         controls: {
             type: Array,
             default: () => {
                 return [];
-            }
+            },
         },
         content: {
             type: Array,
             default: () => {
                 return [];
-            }
-        }
+            },
+        },
     },
     data() {
         return {
             id: this.models.model.id,
-            route: null
+            route: null,
         };
     },
     methods: {
@@ -114,17 +115,17 @@ export default {
         async loadModel() {
             await this.$store.dispatch('loadModel', {
                 route: this.crud.model.route,
-                id: this.id
+                id: this.id,
             });
             this.$store.commit('FLUSH_SAVINGS');
             this.$bus.$emit('modelLoaded');
-        }
+        },
     },
     computed: {
         ...mapGetters(['crud', 'form']),
         create() {
             return window.location.pathname.split('/').pop() == 'create';
-        }
+        },
     },
     beforeMount() {
         //this.crud.model = this.crud.models.model;
@@ -144,13 +145,13 @@ export default {
         this.$bus.$on('modelLoaded', () => {
             this.$bvToast.toast(
                 this.$t('fj.model_loaded', {
-                    model: this.form.config.names.title.singular
+                    model: this.form.config.names.title.singular,
                 }),
                 {
-                    variant: 'success'
+                    variant: 'success',
                 }
             );
         });
-    }
+    },
 };
 </script>

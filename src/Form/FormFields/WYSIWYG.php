@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form\FormFields;
+namespace Fjord\Form\FormFields;
 
 class WYSIWYG
 {
@@ -12,6 +12,7 @@ class WYSIWYG
     ];
 
     const DEFAULTS = [
+        'readonly' => false,
         'translatable' => false
     ];
 }

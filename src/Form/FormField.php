@@ -1,9 +1,12 @@
 <?php
 
-namespace AwStudio\Fjord\Form;
+namespace Fjord\Form;
 
 use Exception;
 use ArrayAccess;
+use Illuminate\Support\Str;
+use Fjord\Form\Requests\CrudUpdateRequest;
+use Fjord\Form\Requests\FormUpdateRequest;
 
 class FormField implements ArrayAccess
 {
@@ -174,6 +177,18 @@ class FormField implements ArrayAccess
         // Force
         if (defined($this->getFieldClass() . '::TRANSLATABLE') && !$this->getFieldClass()::TRANSLATABLE) {
             $this->setAttribute('translatable', false);
+        }
+
+        if (!$this->attributes['readonly']) {
+            if (Str::startsWith($this->path, fjord_resource_path('forms'))) {
+                $request = new FormUpdateRequest;
+            } else {
+                $request = new CrudUpdateRequest;
+            }
+            $authorize = $request->authorize(app()->get('request'));
+            if (!$authorize) {
+                $this->attributes['readonly'] = true;
+            }
         }
     }
 

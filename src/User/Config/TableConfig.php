@@ -1,8 +1,8 @@
 <?php
 
-namespace AwStudio\Fjord\User\Config;
+namespace Fjord\User\Config;
 
-use AwStudio\Fjord\Application\Config\FjordConfig;
+use Fjord\Application\Config\FjordConfig;
 
 class TableConfig extends FjordConfig
 {

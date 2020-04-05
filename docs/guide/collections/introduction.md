@@ -59,7 +59,7 @@ Data can now easily be retrieved:
 
 namespace App\Http\Controllers;
 
-use AwStudio\Fjord\Support\Facades\Form;
+use Fjord\Support\Facades\Form;
 
 class YourController extends Controller
 {

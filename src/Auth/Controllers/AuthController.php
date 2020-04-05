@@ -1,13 +1,13 @@
 <?php
 
-namespace AwStudio\Fjord\Auth\Controllers;
+namespace Fjord\Auth\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use AwStudio\Fjord\Fjord\Models\FjordUser;
-use AwStudio\Fjord\Auth\Controllers\ForgotPasswordController;
+use Fjord\Fjord\Models\FjordUser;
+use Fjord\Auth\Controllers\ForgotPasswordController;
 
 class AuthController extends Controller
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace AwStudio\Fjord\Form\Controllers;
+namespace Fjord\Form\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
-use AwStudio\Fjord\TrackEdits\FormEdit;
-use AwStudio\Fjord\Form\Database\FormField;
-use AwStudio\Fjord\Form\FormFieldCollection;
-use AwStudio\Fjord\Support\Facades\FormLoader;
+use Fjord\TrackEdits\FormEdit;
+use Fjord\Form\Database\FormField;
+use Fjord\Form\FormFieldCollection;
+use Fjord\Support\Facades\FormLoader;
 
 class FormController extends Controller
 {

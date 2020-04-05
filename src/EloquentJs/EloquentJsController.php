@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\EloquentJs;
+namespace Fjord\EloquentJs;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;

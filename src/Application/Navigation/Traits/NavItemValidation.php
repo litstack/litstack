@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Application\Navigation\Traits;
+namespace Fjord\Application\Navigation\Traits;
 
 trait NavItemValidation
 {

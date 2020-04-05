@@ -38,7 +38,7 @@ The options for a select form field can be set dynamically for a model like this
 
 namespace App\Models;
 
-use AwStudio\Fjord\Fjord\Models\Model as FjordModel;
+use Fjord\Fjord\Models\Model as FjordModel;
 use App\Models\Color;
 
 class Article extends FjordModel
