@@ -20,10 +20,10 @@
             @else
 
                 @isset($entry['link'])
-                    <b-dropdown-item href="/{{ config('fjord.route_prefix') }}/{{ $entry['link'] }}">
-                        @isset($entry['text'])
-                            {{ $entry['text'] }}
-                        @else
+                    <b-dropdown-item href="{{ $entry['link'] }}">
+                        @isset($entry['title'])
+                            {{ $entry['title'] }}
+                        @elseif(isset($entry['icon']))
                             {!! $entry['icon'] !!} {{ $entry['link'] }}
                         @endisset
                     </b-dropdown-item>

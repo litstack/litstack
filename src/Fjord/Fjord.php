@@ -3,9 +3,10 @@
 namespace Fjord\Fjord;
 
 use Schema;
+use Fjord\Support\Facades\Package;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\View;
 
 class Fjord
 {
@@ -34,6 +35,19 @@ class Fjord
     public function composer($composer)
     {
         View::composer('fjord::app', $composer);
+    }
+
+    /**
+     * Get navigation entry preset.
+     *
+     * @param string $name
+     * @param array $entry
+     * @param array $merge
+     * @return void
+     */
+    public function navEntry(string $package, $name = null, array $merge = [])
+    {
+        return Package::navEntry($package, $name, $merge);
     }
 
     /**

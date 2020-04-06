@@ -6,10 +6,12 @@
     </div>
     <div>
         <div class="fjord-hide" id="fjord-topbar-right">
+        
             @auth('fjord')
                 @include('fjord::partials.topbar.navigation')
                 @include('fjord::partials.topbar.logout')
             @endauth
+            
         </div>
     </div>
 </nav>

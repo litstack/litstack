@@ -11,21 +11,21 @@ export default {
     props: {
         selectedItems: {
             type: Array,
-            required: true
+            required: true,
         },
-        sendAction: {
-            required: true
-        }
     },
     methods: {
         async deleteAll() {
-            let response = await this.sendAction(
-                'fjord/users/delete-all',
-                this.selectedItems
-            );
+            try {
+                let response = await axios.post('fjord/users/delete-all', {
+                    ids: this.selectedItems,
+                });
+            } catch (e) {
+                return;
+            }
 
             this.$emit('reload');
-        }
-    }
+        },
+    },
 };
 </script>

@@ -2,6 +2,8 @@
 
 namespace Fjord\Application\Navigation\Traits;
 
+use Illuminate\Support\Str;
+
 trait NavItemValidation
 {
     /**
@@ -64,6 +66,10 @@ trait NavItemValidation
                 continue;
             }
 
+            if (array_key_exists('link', $item)) {
+                $item['link'] = $this->getLink($item['link']);
+            }
+
             $validatedItems[] = $item;
         }
 
@@ -111,5 +117,28 @@ trait NavItemValidation
         }
 
         return $item;
+    }
+
+    /**
+     * Create link for Fjord navigation.
+     *
+     * @param string $link
+     * @return string $link
+     */
+    protected function getLink(string $link)
+    {
+        if (Str::contains($link, '://')) {
+            $split = explode('/', str_replace('://', '', $link));
+            array_shift($split);
+            return "/" . implode('/', $split);
+        }
+
+        $fjordPrefix = preg_replace('#/+#', '/', "/" . config('fjord.route_prefix'));
+        $link = preg_replace('#/+#', '/', "/" . $link);
+        if (Str::startsWith($link, $fjordPrefix)) {
+            return $link;
+        }
+
+        return $fjordPrefix . $link;
     }
 }

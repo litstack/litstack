@@ -39,36 +39,17 @@ export default {
     props: {
         selectedItems: {
             type: Array,
-            required: true
-        }
+            required: true,
+        },
     },
     computed: {
-        ...mapGetters(['actions', 'form', 'crud'])
+        ...mapGetters(['actions', 'form', 'crud']),
     },
     methods: {
         async sendAction(route, ids) {
-            let response = null;
-            let message = '';
-            let type = 'success';
-            try {
-                response = await _axios({
-                    method: 'post',
-                    url: route,
-                    data: { ids }
-                });
-
-                message = response.data.message;
-            } catch (e) {
-                response = e.response;
-                message = response.data.message;
-                type = 'danger';
-            }
-
-            this.$bvToast.toast(message, {
-                variant: 'info'
-            });
-        }
-    }
+            return await axios.post(route, { ids });
+        },
+    },
 };
 </script>
 

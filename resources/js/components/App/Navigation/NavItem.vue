@@ -8,7 +8,7 @@
             <hr class="fj-navitem-devider" />
         </template>
         <template v-else>
-            <component :is="item.component" v-if="hasComponent"/>
+            <component :is="item.component" v-if="hasComponent" />
             <b-list-group-item
                 size="sm"
                 :active="active"
@@ -34,8 +34,9 @@
                     v-for="(item, index) in item.children"
                     :item="item"
                     :key="index"
-                /> </b-collapse
-        ></template>
+                />
+            </b-collapse>
+        </template>
     </b-list-group>
 </template>
 
@@ -45,18 +46,18 @@ export default {
     name: 'NavItem',
     props: {
         item: {
-            type: [Array, Object, String]
-        }
+            type: [Array, Object, String],
+        },
     },
     data() {
         return {
             visible: false,
-            active: false
+            active: false,
         };
     },
     mounted() {
         // make children visible
-        const link = window.location.pathname.replace(this.baseURL, '');
+        const link = window.location.pathname;
 
         if (this.hasChildren) {
             for (let i = 0; i < this.item.children.length; i++) {
@@ -78,7 +79,7 @@ export default {
     computed: {
         ...mapGetters(['baseURL']),
         link() {
-            return this.hasChildren ? '#' : `${this.baseURL}${this.item.link}`;
+            return this.hasChildren ? '#' : this.item.link;
         },
         hasLink() {
             return this.item.hasOwnProperty('link');
@@ -94,8 +95,8 @@ export default {
         },
         isString() {
             return typeof this.item === 'string';
-        }
-    }
+        },
+    },
 };
 </script>
 

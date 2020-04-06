@@ -3,13 +3,15 @@
         <b-card no-body class="fj-index-table">
             <b-tabs card v-if="hasTabs" @activate-tab="newTab">
                 <b-tab
-                    :title="'title' in tab ? tab.title : tab"
-                    :active="index == 0"
-                    v-for="(tab, index) in tabs"
+                    :title="'title' in t ? t.title : t"
+                    :active="t == tab"
+                    v-for="(t, index) in tabs"
                     :key="index"
                     no-body/>
             </b-tabs>
             <div class="card-body">
+                <slot name="header" v-bind:tab="tab"/>
+                
                 <fj-base-index-table-form>
                     <b-input-group>
                         <b-input-group-prepend is-text>
@@ -158,7 +160,14 @@ export default {
     },
 
     watch: {
-
+        tabs() {
+            if(!this.hasTabs) {
+                return
+            }
+            if(!this.tabs.includes(this.tab)) {
+                this.tab = this.tabs[0]
+            }
+        }
     },
     beforeMount() {
         this.setTableCols();
@@ -168,6 +177,8 @@ export default {
         }
         
         this.sort_by_key = this.sortByDefault || null;
+
+        this.$on('reload', this._loadItems)
 
         this._loadItems();
     },

@@ -119,23 +119,26 @@ export default {
     methods: {
         async storeFjordUser() {
             this.busy = true;
+            let response = null;
             try {
-                const { data } = await axios.post('/fjord/register', this.user);
-
-                this.$emit('userCreated', data);
-
-                this.visible = false;
-                this.init();
-                this.$bvToast.toast(
-                    this.$t('fj.model_saved', { model: 'Fjord User' }),
-                    {
-                        variant: 'success',
-                    }
-                );
+                response = await axios.post('/fjord/register', this.user);
             } catch (e) {
                 this.errors = e.response.data.errors;
+                this.busy = false;
+                return;
             }
+
+            this.$emit('userCreated', response.data);
             this.busy = false;
+
+            this.visible = false;
+            this.init();
+            this.$bvToast.toast(
+                this.$t('fj.model_saved', { model: 'Fjord User' }),
+                {
+                    variant: 'success',
+                }
+            );
         },
         error(key) {
             if (this.errors.hasOwnProperty(key)) {

@@ -6,7 +6,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Fjord\Fjord\Models\FjordUser;
-//use Fjord\User\Models\ModelRole;
 use Fjord\User\Requests\UpdateUserRoleRequest;
 use Fjord\User\Requests\IndexFjordUserRequest;
 use Fjord\Support\IndexTable;
@@ -28,7 +27,8 @@ class FjordUserController extends Controller
 
     public function deleteAll(Request $request)
     {
-        return IndexTable::deleteSelected(FjordUser::class, $request);
+        IndexTable::deleteSelected(FjordUser::class, $request);
+        return response(['message' => __f('fj.deleted_all', ['count' => count($request->ids)])]);
     }
 
     public function fetchIndex(Request $request)

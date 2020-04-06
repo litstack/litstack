@@ -38,7 +38,7 @@ class TranslationsController extends Controller
             $translations[$locale] = $this->translations[$locale];
         }
 
-        $js = 'window.i18n = ' . json_encode($translations) . ';';
+        $js = 'window.i18n_m = ' . json_encode($translations) . ';';
         return response($js, 200)
             ->header('Content-Type', 'text/javascript');
     }

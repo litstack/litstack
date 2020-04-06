@@ -67,6 +67,7 @@ class CrudController extends Controller
             ->withTitle($this->titleSingular)
             ->withProps([
                 'formConfig' => $this->getForm()->toArray(),
+                'actions' => ['fj-crud-index-delete-all'],
                 //'actions' => $this->getExtensions('index.actions'),
                 'globalActions' => [],
                 'recordActions' => []

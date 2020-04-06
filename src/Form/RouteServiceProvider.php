@@ -21,6 +21,43 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     public function boot()
     {
         parent::boot();
+        $provider = $this;
+        $this->app->booted(function () use ($provider) {
+            $provider->addNavPresets();
+        });
+    }
+
+    public function addNavPresets()
+    {
+        $configFiles = $this->package->configFiles('crud');
+
+        foreach ($configFiles as $name => $path) {
+            $crud = last(explode('.', $name));
+            $this->package->addNavPreset("crud.{$crud}", [
+                'link' => route("fjord.aw-studio.fjord.crud.{$crud}.index"),
+                'title' => ucfirst($crud),
+                'permission' => "read {$crud}"
+            ]);
+        }
+
+        $config = config('fjord.forms');
+        $configPath = $this->package->getConfigPath('forms');
+        $directories = glob($configPath . '/*', GLOB_ONLYDIR);
+
+        foreach ($directories as $formDirectory) {
+            $collection = str_replace("{$configPath}/", '', $formDirectory);
+            $configFiles = $this->package->configFiles("forms.{$collection}");
+
+            foreach ($configFiles as $configName => $path) {
+                $formName = last(explode('.', $configName));
+
+                $this->package->addNavPreset("{$collection}.{$formName}", [
+                    'link' => route("fjord.aw-studio.fjord.form.{$collection}.{$formName}"),
+                    'title' => ucfirst($formName),
+                    //'permission' => "read {$crud}"
+                ]);
+            }
+        }
     }
 
     public function map()
@@ -61,10 +98,10 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 $namespace = "\\App\\Http\\Controllers\\Fjord\\{$controller}";
             }
 
-            $this->package->route()->resource(config('fjord.route_prefix') . "/{$crud}", $namespace);
+            $this->package->route()->as($this->package->getRouteAs() . 'crud')->resource(config('fjord.route_prefix') . "/{$crud}", $namespace);
 
             $this->package->route()->post("/{$crud}/index", $namespace . "@postIndex")
-                ->name("{$crud}.post_index");
+                ->name("crud.{$crud}.post_index");
 
             $this->package->route()->get("/{$crud}/{id}/relations/{relation}", $namespace . "@relationIndex");
             $this->package->route()->get("/{$crud}/{id}/relations/{relation}/create", $namespace . "@relationStore");
@@ -93,7 +130,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 $collectionRoutePrefix = $config['route_prefix'] ?? $collection;
 
                 $this->package->route()->get("{$collectionRoutePrefix}/{$formRoutePrefix}", FormController::class . "@show")
-                    ->name("form.{$collection}.$formName");
+                    ->name("form.{$collection}.{$formName}");
             }
         }
     }

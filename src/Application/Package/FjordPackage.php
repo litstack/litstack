@@ -66,6 +66,13 @@ abstract class FjordPackage
     protected $loadedConfigFiles = [];
 
     /**
+     * Fjord navigation entry presets for this package.
+     *
+     * @var array
+     */
+    protected $navPresets = [];
+
+    /**
      * Create a new Package instance.
      * 
      * @param array $config
@@ -80,6 +87,41 @@ abstract class FjordPackage
         }
 
         $this->extra = $extra;
+    }
+
+    /**
+     * Add navigation entry preset.
+     *
+     * @param string $name
+     * @param array $entry
+     * @return void
+     */
+    public function addNavPreset(string $name, array $entry)
+    {
+        $this->navPresets[$name] = $entry;
+    }
+
+    /**
+     * Get navigation entry preset.
+     *
+     * @param string $name
+     * @param array $merge
+     * @return void
+     */
+    public function navEntry(string $name, array $merge = [])
+    {
+        return array_merge($this->navPresets[$name], $merge);
+    }
+
+    /**
+     * Check if navigation entry preset exists.
+     *
+     * @param string $name
+     * @return boolean
+     */
+    public function hasNavPreset(string $name)
+    {
+        return array_key_exists($name, $this->navPresets);
     }
 
     /**

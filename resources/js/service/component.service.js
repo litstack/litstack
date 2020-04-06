@@ -10,16 +10,12 @@ const requireComponent = require.context(
     /[A-Z]\w+\.(vue)$/
 );
 
-requireComponent.keys().forEach(fileName => {
+requireComponent.keys().forEach((fileName) => {
     // Get component config
     const componentConfig = requireComponent(fileName);
 
     // Get PascalCase name of component
-    let componentName = kebabCase(
-        componentConfig.default.name
-    );
-
-    // replace
+    let componentName = kebabCase(componentConfig.default.name);
 
     // Register component globally
     Vue.component(

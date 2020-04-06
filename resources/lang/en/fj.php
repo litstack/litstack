@@ -2,8 +2,10 @@
 
 return [
     "enter_username" => "Enter a username",
+    "enter_name" => "Enter a {name}",
     "enter_email" => "Enter the email",
     "enter_password" => "Enter a strong password",
+    "confirm_delete" => "Are you sure you want to delete \"{model}\"?",
     "user_reset_link" => "Send password-reset link",
     "page" => "page",
     "pages" => "pages",
@@ -12,6 +14,8 @@ return [
     "add_model" => "Add {model}",
     "save_model" => "Save {model}",
     "create_model" => "Create {model}",
+    "delete_model" => "Delete {model}",
+    "deleted_all" => "Deleted :count items.",
     "search_models" => "Search {models}",
     "model_saved" => "{model} saved",
     "filter" => "Filter",
@@ -46,4 +50,10 @@ return [
     "user_admin" => 'Useradministration',
     "user_profile" => 'My Profile',
     "permissions" => 'Permissions',
+    "errors" => [
+        "not_found" => "Not found.",
+        "no_permission" => "This action is unauthorized!",
+        "server_error" => "Server Error.",
+        "too_many_requests" => "Too many requests.",
+    ]
 ];

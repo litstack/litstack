@@ -26,10 +26,7 @@ export default {
     methods: {
         async setAppLocale(locale) {
             let response = await this.$store.dispatch('setAppLocale', {
-                locale
-            });
-            this.$bvToast.toast(this.$t('fj.locale_set'), {
-                variant: 'success'
+                locale,
             });
         },
         flagIcon(locale) {
@@ -40,11 +37,11 @@ export default {
         },
         isLocaleActive(locale) {
             return this.$i18n.locale == locale;
-        }
+        },
     },
     computed: {
-        ...mapGetters(['config'])
-    }
+        ...mapGetters(['config']),
+    },
 };
 </script>
 

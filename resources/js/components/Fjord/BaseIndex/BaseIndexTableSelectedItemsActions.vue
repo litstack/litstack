@@ -23,7 +23,6 @@
                         :key="key"
                         :is="component"
                         :selectedItems="selectedItems"
-                        :sendAction="sendAction"
                         @reload="reload"
                     />
                 </b-dropdown>
@@ -43,40 +42,18 @@ export default {
         },
         selectedItems: {
             type: Array,
-            required: true
+            required: true,
         },
         actions: {
             required: true,
-            type: Array
+            type: Array,
         },
     },
     methods: {
-        async sendAction(route, ids) {
-            let response = null;
-            let message = '';
-            let type = 'success';
-            try {
-                response = await _axios({
-                    method: 'post',
-                    url: route,
-                    data: { ids }
-                });
-
-                message = response.data.message;
-            } catch (e) {
-                response = e.response;
-                message = response.data.message;
-                type = 'danger';
-            }
-
-            this.$bvToast.toast(message, {
-                variant: 'info'
-            });
-        },
         reload() {
-            this.$emit('reload')
-        }
-    }
+            this.$emit('reload');
+        },
+    },
 };
 </script>
 

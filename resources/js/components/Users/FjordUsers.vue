@@ -9,6 +9,7 @@
         <b-row>
             <b-col>
                 <fj-index-table
+                    ref="indexTable"
                     :cols="config.cols"
                     :items="users"
                     :count="count"
@@ -32,21 +33,24 @@ export default {
     props: {
         usersCount: {
             type: Number,
-            required: true
+            required: true,
         },
-        config: {}
+        config: {},
     },
     data() {
         return {
             users: [],
             count: 0,
-            data: {}
+            data: {},
         };
     },
     beforeMount() {
         this.count = this.usersCount;
     },
     methods: {
+        reload() {
+            this.$refs.indexTable.$emit('reload');
+        },
         async loadUsers(payload) {
             let response = await axios.post('fjord/users-index', payload);
             this.users = response.data.items;
@@ -54,9 +58,8 @@ export default {
         },
 
         userCreated(user) {
-            // TODO: better table reload
-            window.location.reload();
-        }
-    }
+            this.reload();
+        },
+    },
 };
 </script>

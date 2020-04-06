@@ -1,9 +1,11 @@
 <?php
 
 return [
-    "enter_username" => "Gib einen Benutzernamen ein",
-    "enter_email" => "Gib die E-Mail Adresse ein",
+    "enter_username" => "Benutzernamen eingeben",
+    "enter_email" => "E-Mail Adresse eingeben",
     "enter_password" => "Gib ein starkes Passwort ein",
+    "enter_name" => "{name} eingeben",
+    "confirm_delete" => "Sind Sie sicher, dass Sie \"{model}\" löschen möchten?",
     "user_reset_link" => "Sende Passwort zurücksetzen link",
     "page" => "Seite",
     "pages" => "Seiten",
@@ -12,6 +14,8 @@ return [
     "add_model" => "{model} hinzufügen",
     "save_model" => "{model} speichern",
     "create_model" => "{model} erstellen",
+    "delete_model" => "{model} löschen",
+    "deleted_all" => ":count Items gelöscht.",
     "search_models" => "{models} durchsuchen",
     "model_saved" => "{model} gespeichert",
     "filter" => "filtern",
@@ -46,4 +50,10 @@ return [
     "user_admin" => 'Nutzerverwaltung',
     "user_profile" => 'Mein Profil',
     "permissions" => 'Berechtigungen',
+    "errors" => [
+        "not_found" => "Nicht gefunden.",
+        "no_permission" => "Diese Aktion ist nicht autorisiert.",
+        "server_error" => "Server Fehler.",
+        "too_many_requests" => "Zu viele Anfragen.",
+    ]
 ];
