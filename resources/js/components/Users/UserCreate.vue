@@ -4,8 +4,11 @@
             <fa-icon icon="plus" />
             {{ $t('fj.add_model', { model: 'Fjord ' + $t('fj.user') }) }}
         </b-button>
-        <b-modal v-model="visible" :title="'Fjord User hinzufügen'">
-            <b-form-group label="Enter a username" label-for="username">
+        <b-modal
+            v-model="visible"
+            :title="$t('fj.add_model', { model: 'Fjord ' + $t('fj.user') })"
+        >
+            <b-form-group :label="$t('fj.enter_username')" label-for="username">
                 <b-form-input
                     id="username"
                     v-model="user.name"
@@ -16,7 +19,7 @@
                 </b-form-invalid-feedback>
             </b-form-group>
             <b-form-group
-                label="Enter the email"
+                :label="$t('fj.enter_email')"
                 label-for="email"
                 :state="emailState"
             >
@@ -30,7 +33,7 @@
                 </b-form-invalid-feedback>
             </b-form-group>
             <b-form-group
-                label="Enter a strong password"
+                :label="$t('fj.enter_password')"
                 label-for="password"
                 :state="passwordState"
             >
@@ -44,8 +47,9 @@
                         <b-button
                             variant="outline-secondary"
                             @click="makePassword"
-                            ><fa-icon icon="sync"
-                        /></b-button>
+                        >
+                            <fa-icon icon="sync" />
+                        </b-button>
                     </b-input-group-append>
                 </b-input-group>
 
@@ -65,7 +69,7 @@
                 name="check-button"
                 switch
             >
-                Send password-reset link
+                {{ $t('fj.user_reset_link') }}
             </b-form-checkbox>
             <template v-slot:modal-footer>
                 <div class="w-100">
@@ -78,7 +82,12 @@
                             !passwordState || !emailState || !usernameState
                         "
                     >
-                        <fa-icon icon="user" /> Create User
+                        <fa-icon icon="user" />
+                        {{
+                            $t(`fj.create_model`, {
+                                model: 'Fjord ' + $t('fj.user'),
+                            })
+                        }}
                         <b-spinner
                             label="Loading..."
                             small
@@ -101,10 +110,10 @@ export default {
                 name: '',
                 email: '',
                 password: this.keygen(20),
-                sendResetLink: true
+                sendResetLink: true,
             },
             errors: [],
-            busy: false
+            busy: false,
         };
     },
     methods: {
@@ -120,7 +129,7 @@ export default {
                 this.$bvToast.toast(
                     this.$t('fj.model_saved', { model: 'Fjord User' }),
                     {
-                        variant: 'success'
+                        variant: 'success',
                     }
                 );
             } catch (e) {
@@ -138,7 +147,7 @@ export default {
                 name: '',
                 email: '',
                 password: this.keygen(20),
-                sendResetLink: false
+                sendResetLink: false,
             };
         },
         makePassword() {
@@ -155,7 +164,7 @@ export default {
                 );
             }
             return result;
-        }
+        },
     },
     computed: {
         score() {
@@ -203,7 +212,7 @@ export default {
         },
         name() {
             return this.user.name;
-        }
+        },
     },
     watch: {
         email(val) {
@@ -215,8 +224,8 @@ export default {
             if (this.errors.hasOwnProperty('name')) {
                 Vue.delete(this.errors, 'name');
             }
-        }
-    }
+        },
+    },
 };
 </script>
 

@@ -5,7 +5,9 @@
         v-if="form.config.preview_route"
         v-b-modal.fj-page-preview
     >
-        <fa-icon icon="eye" /> {{ $t('fj.preview') }}
+        <fa-icon icon="eye" />
+
+        {{ $t('fj.preview') }}
 
         <fj-page-preview
             :show="true"

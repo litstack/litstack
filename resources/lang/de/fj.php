@@ -1,6 +1,10 @@
 <?php
 
 return [
+    "enter_username" => "Gib einen Benutzernamen ein",
+    "enter_email" => "Gib die E-Mail Adresse ein",
+    "enter_password" => "Gib ein starkes Passwort ein",
+    "user_reset_link" => "Sende Passwort zurücksetzen link",
     "page" => "Seite",
     "pages" => "Seiten",
     "user" => "Benutzer",
