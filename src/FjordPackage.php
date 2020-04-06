@@ -28,12 +28,13 @@ class FjordPackage extends Package
      * @var array
      */
     protected $commands = [
+        Commands\FjordNav::class,
         Commands\FjordAdmin::class,
         Commands\FjordUser::class,
         Commands\FjordCrud::class,
         Commands\FjordExtend::class,
         Commands\FjordExtension::class,
-        Commands\FjordDefaultPermissions::class
+        Commands\FjordDefaultPermissions::class,
     ];
 
     /**

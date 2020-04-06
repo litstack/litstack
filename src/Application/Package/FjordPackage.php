@@ -114,6 +114,16 @@ abstract class FjordPackage
     }
 
     /**
+     * Get all navigation entry presets.
+     *
+     * @return array
+     */
+    public function getNavPresets()
+    {
+        return $this->navPresets;
+    }
+
+    /**
      * Check if navigation entry preset exists.
      *
      * @param string $name
