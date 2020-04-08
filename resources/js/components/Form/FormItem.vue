@@ -16,13 +16,13 @@
         <div class="d-flex justify-content-between">
             <small v-if="hint" class="form-text text-muted" v-html="hint" />
             <small class="form-text text-muted">
-                <template v-if="field.max && !field.min"
-                    >{{ length }}/{{ field.max }}</template
-                >
+                <template v-if="field.max && !field.min">
+                    {{ length }}/{{ field.max }}
+                </template>
                 <template v-if="field.max && field.min">{{ value }}</template>
-                <template v-if="field.maxFiles"
-                    >{{ value.length }}/{{ field.maxFiles }}</template
-                >
+                <template v-if="field.maxFiles">
+                    {{ value.length }}/{{ field.maxFiles }}
+                </template>
             </small>
         </div>
     </div>

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class FormUpdateRequest extends FormRequest
 {
+    use Traits\AuthorizeController;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -14,8 +16,7 @@ class FormUpdateRequest extends FormRequest
      */
     public function authorize(Request $request)
     {
-        return true;
-        return fjord_user()->can('read ');
+        return $this->authorizeController($request, 'update');
     }
 
     /**

@@ -32,6 +32,7 @@ class FjordPackage extends Package
         Commands\FjordAdmin::class,
         Commands\FjordUser::class,
         Commands\FjordCrud::class,
+        Commands\FjordForm::class,
         Commands\FjordExtend::class,
         Commands\FjordExtension::class,
         Commands\FjordDefaultPermissions::class,

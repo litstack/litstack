@@ -3,7 +3,7 @@ import EloquentModel from '@fj-js/eloquent/model';
 import Bus from '@fj-js/common/event.bus';
 import store from '@fj-js/store';
 
-let FormMixin = (Base) =>
+let FormMixin = Base =>
     class extends Base {
         constructor(config) {
             let proxy = super(config);
@@ -22,8 +22,8 @@ let FormMixin = (Base) =>
 
         isFjordModel() {
             return [
-                'AwStudio\\Fjord\\Form\\Database\\FormField',
-                'AwStudio\\Fjord\\Form\\Database\\FormBlock',
+                'Fjord\\Form\\Database\\FormField',
+                'Fjord\\Form\\Database\\FormBlock'
             ].includes(this.model);
         }
 
@@ -100,9 +100,9 @@ let FormMixin = (Base) =>
                 return;
             }
 
+            // Form field is translatable.
             if (form_field.translatable) {
                 // set not existing object keys
-
                 if (!attributes[lng]) {
                     attributes[lng] = {};
                 }
@@ -112,6 +112,7 @@ let FormMixin = (Base) =>
                 }
             }
 
+            // Model is translatable.
             if (this.translatable) {
                 // set not existing object keys
                 if (

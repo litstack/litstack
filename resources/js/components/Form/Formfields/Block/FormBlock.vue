@@ -13,6 +13,7 @@
                         :key="repeatable.id"
                         :repeatable="repeatable"
                         :field="field"
+                        :model="model"
                         @deleteBlock="deleteBlock"
                     />
                 </draggable>
@@ -26,10 +27,11 @@
             </div>
         </div>
         <template v-else>
-            <b-alert show variant="warning"
-                >{{ form.config.names.title.singular }} has to be created in
-                order to add <i>{{ field.title }}</i></b-alert
-            >
+            <b-alert show variant="warning">
+                {{ form.config.names.title.singular }} has to be created in
+                order to add
+                <i>{{ field.title }}</i>
+            </b-alert>
         </template>
     </fj-form-item>
 </template>

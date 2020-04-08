@@ -1,0 +1,13 @@
+<?php
+
+use App\Http\Controllers\Fjord\Form\DummyCollection\DummyController;
+
+/**
+ * Config for DummyCollection DummyFormName.
+ */
+return [
+    'controller' => DummyController::class,
+    'form_fields' => [
+        //
+    ]
+];

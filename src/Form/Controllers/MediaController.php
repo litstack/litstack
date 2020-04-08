@@ -33,8 +33,8 @@ class MediaController extends FjordController
             : $properties;
 
         $model->addMedia($request->media)
-              ->withCustomProperties($customProperties)
-              ->toMediaCollection($request->collection);
+            ->withCustomProperties($customProperties)
+            ->toMediaCollection($request->collection);
 
         return response()->json('success', 200);
     }

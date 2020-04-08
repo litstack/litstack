@@ -37,7 +37,6 @@ class FjordServiceProvider extends ServiceProvider
     protected $commands = [
         Commands\Install\FjordInstall::class,
         Commands\FjordGuard::class,
-        Commands\FjordCrudPermissions::class,
     ];
 
     /**
@@ -176,5 +175,9 @@ class FjordServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../publish/database/migrations' => database_path('migrations'),
         ], 'migrations');
+
+        $this->publishes([
+            __DIR__ . '/../publish/routes' => base_path('routes'),
+        ], 'routes');
     }
 }

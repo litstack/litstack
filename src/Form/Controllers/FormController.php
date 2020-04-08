@@ -2,19 +2,44 @@
 
 namespace Fjord\Form\Controllers;
 
-use Illuminate\Http\Request;
 use Fjord\TrackEdits\FormEdit;
+use Fjord\Fjord\Models\FjordUser;
+use Fjord\Form\Database\FormBlock;
 use Fjord\Form\Database\FormField;
 use Fjord\Form\FormFieldCollection;
-use App\Http\Controllers\Controller;
 use Fjord\Form\Database\FormRelation;
 use Fjord\Support\Facades\FormLoader;
 use Illuminate\Support\Facades\Route;
+use Fjord\Form\Requests\FormReadRequest;
 use Fjord\Form\Requests\FormUpdateRequest;
 
-class FormController extends Controller
+abstract class FormController
 {
-    public function update(Request $request, $id)
+    /**
+     * Authorize request for operation.
+     *
+     * @param FjordUser $user
+     * @param string $operation
+     * @return boolean
+     */
+    abstract public function authorize(FjordUser $user, string $operation): bool;
+
+    /**
+     * Create new FormController instance.
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Update form_field.
+     *
+     * @param FormUpdateRequest $request
+     * @param int $id
+     * @return FormField $formField
+     */
+    public function update(FormUpdateRequest $request, $id)
     {
         $formField = FormField::findOrFail($id);
 
@@ -32,7 +57,13 @@ class FormController extends Controller
         return $formField;
     }
 
-    public function show(Request $request)
+    /**
+     * Show form.
+     *
+     * @param FormReadRequest $request
+     * @return View $view
+     */
+    public function show(FormReadRequest $request)
     {
         $routeSplit = explode('.', Route::currentRouteName());
         $formName = array_pop($routeSplit);
@@ -59,7 +90,14 @@ class FormController extends Controller
             ]);
     }
 
-    protected function getFormFields($collection, $form_name)
+    /**
+     * Get form fields.
+     *
+     * @param string $collection
+     * @param string $form_name
+     * @return void
+     */
+    protected function getFormFields(string $collection, string $form_name)
     {
         $formFields = [];
 
@@ -87,7 +125,14 @@ class FormController extends Controller
         return eloquentJs(collect($formFields), FormField::class);
     }
 
-    protected function setForm($collection, $formName)
+    /**
+     * Set form.
+     *
+     * @param string $collection
+     * @param string $formName
+     * @return void
+     */
+    protected function setForm(string $collection, string $formName)
     {
         $formFieldInstance = new FormField();
         $formFieldInstance->collection = $collection;
@@ -97,6 +142,15 @@ class FormController extends Controller
         $this->form = FormLoader::load($this->formPath, FormField::class);
     }
 
+    /**
+     * Delete relation.
+     *
+     * @param FormUpdateRequest $request
+     * @param int $id
+     * @param string $relation
+     * @param int $relation_id
+     * @return void
+     */
     public function deleteRelation(FormUpdateRequest $request, $id, $relation, $relation_id)
     {
         // First we check if both crud model with the ID and relation model with 
@@ -116,6 +170,15 @@ class FormController extends Controller
             ->delete();
     }
 
+    /**
+     * Create relation
+     *
+     * @param FormUpdateRequest $request
+     * @param int $id
+     * @param string $relation
+     * @param int $relation_id
+     * @return void
+     */
     public function createRelation(FormUpdateRequest $request, $id, $relation, $relation_id)
     {
         // First we check if both crud model with the ID and relation model with 
@@ -138,5 +201,60 @@ class FormController extends Controller
             abort(422, __f("fj.already_selected"));
         }
         return FormRelation::create($query);
+    }
+
+    /**
+     * Store new form_block.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return void
+     */
+    public function storeBlock(FormUpdateRequest $request, $id)
+    {
+        $model = FormField::findOrFail($id);
+
+        $block = new FormBlock();
+        $block->type = $request->type;
+        $block->model_type = FormField::class;
+        $block->model_id = $model->id;
+        $block->field_id = $request->field_id;
+        $block->value = $request->value;
+        $block->order_column = $request->order_column;
+        $block->save();
+
+        return $block->eloquentJs();
+    }
+
+    /**
+     * Update form_block.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return void
+     */
+    public function updateBlock(FormUpdateRequest $request, $id, $block_id)
+    {
+        $block = FormBlock::where('model_type', FormField::class)
+            ->where('model_id', $id)->findOrFail($block_id);
+
+        $block->update($request->all());
+
+        return $block;
+    }
+
+    /**
+     * Update form_block.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return void
+     */
+    public function destroyBlock(FormUpdateRequest $request, $id, $block_id)
+    {
+        $block = FormBlock::where('model_type', FormField::class)
+            ->where('model_id', $id)->findOrFail($block_id);
+
+        return $block->delete();
     }
 }

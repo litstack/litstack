@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="form_field">
+    <fj-form-item :field="field">
         <template v-if="model.id">
             <b-card class="fjord-block no-fx">
                 <div v-if="!!relations.length">
@@ -27,10 +27,7 @@
                                     class="position-relative"
                                     :test="field.key"
                                     v-if="
-                                        !(
-                                            field.key == 'drag' &&
-                                            form_field.readonly
-                                        )
+                                        !(field.key == 'drag' && field.readonly)
                                     "
                                     :class="
                                         field.key == 'drag'
@@ -44,7 +41,7 @@
                                     >
                                         <fa-icon
                                             icon="grip-vertical"
-                                            v-if="!form_field.readonly"
+                                            v-if="!field.readonly"
                                         />
                                     </div>
 
@@ -55,21 +52,23 @@
                                         <b-button-group size="sm">
                                             <b-button
                                                 v-if="
-                                                    hasEditLink(form_field) &&
-                                                    (can(
-                                                        `update ${form_field.edit}`
-                                                    ) ||
-                                                        can(
-                                                            `read ${form_field.edit}`
-                                                        ))
+                                                    hasEditLink(field) &&
+                                                        (can(
+                                                            `update ${field.edit}`
+                                                        ) ||
+                                                            can(
+                                                                `read ${field.edit}`
+                                                            ))
                                                 "
-                                                :href="`${baseURL}${form_field.edit}/${relation.id}/edit`"
+                                                :href="
+                                                    `${baseURL}${field.edit}/${relation.id}/edit`
+                                                "
                                                 class="btn-transparent d-flex align-items-center"
                                             >
                                                 <fa-icon
                                                     :icon="
                                                         can(
-                                                            `update ${form_field.edit}`
+                                                            `update ${field.edit}`
                                                         )
                                                             ? 'edit'
                                                             : 'eye'
@@ -77,11 +76,11 @@
                                                 />
                                             </b-button>
                                             <b-button
-                                                v-if="!form_field.readonly"
+                                                v-if="!field.readonly"
                                                 class="btn-transparent"
                                                 @click="
                                                     showModal(
-                                                        `modal-${form_field.edit}-${relation.id}`
+                                                        `modal-${field.edit}-${relation.id}`
                                                     )
                                                 "
                                             >
@@ -89,7 +88,9 @@
                                             </b-button>
                                         </b-button-group>
                                         <b-modal
-                                            :id="`modal-${form_field.edit}-${relation.id}`"
+                                            :id="
+                                                `modal-${field.edit}-${relation.id}`
+                                            "
                                             title="Delete Item"
                                         >
                                             Please confirm that you want to
@@ -102,7 +103,7 @@
                                                     class="float-right"
                                                     @click="
                                                         $bvModal.hide(
-                                                            `modal-${form_field.edit}-${relation.id}`
+                                                            `modal-${field.edit}-${relation.id}`
                                                         )
                                                     "
                                                 >
@@ -113,7 +114,7 @@
                                                     @click.prevent="
                                                         removeRelation(
                                                             relation.id,
-                                                            form_field.edit
+                                                            field.edit
                                                         )
                                                     "
                                                     class="fj-trash btn btn-danger btn-sm"
@@ -135,34 +136,33 @@
                         </draggable>
                     </b-table-simple>
                 </div>
+                <div v-else>
+                    <fj-form-relation-empty :field="field" />
+                </div>
 
                 <b-button
                     variant="secondary"
                     size="sm"
                     v-b-modal="modalId"
-                    v-if="!form_field.readonly"
+                    v-if="!field.readonly"
                 >
-                    Add {{ form_field.id }}
+                    Add {{ field.id }}
                 </b-button>
             </b-card>
 
             <slot />
 
             <fj-form-relation-modal
-                v-if="!form_field.readonly"
-                :field="form_field"
+                v-if="!field.readonly"
+                :field="field"
                 :model="model"
-                :selectedModels="{ [form_field.model]: relations }"
+                :selectedModels="{ [field.model]: relations }"
                 @selected="selected"
                 @remove="removeRelation"
             />
         </template>
         <template v-else>
-            <b-alert show variant="warning">
-                {{ form.config.names.title.singular }} has to be created in
-                order to add
-                <i>{{ field.title }}</i>
-            </b-alert>
+            <fj-form-relation-not-created :field="field" />
         </template>
     </fj-form-item>
 </template>
@@ -174,30 +174,30 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'FormRelationMany',
     props: {
-        form_field: {
+        field: {
             required: true,
-            type: Object,
+            type: Object
         },
         model: {
             required: true,
-            type: Object,
+            type: Object
         },
         type: {
             required: true,
-            type: String,
-        },
+            type: String
+        }
     },
     data() {
         return {
             selectedItems: {},
             relations: [],
-            fields: [],
+            fields: []
         };
     },
     beforeMount() {
         this.setFields();
 
-        let items = this.model[this.form_field.id] || [];
+        let items = this.model[this.field.id] || [];
 
         for (let i = 0; i < items.length; i++) {
             this.addRelation(items[i]);
@@ -215,29 +215,23 @@ export default {
             try {
                 switch (this.type) {
                     case 'hasMany':
-                        response = axios.put(
-                            `${this.form_field.route}/${item.id}`,
-                            {
-                                [this.form_field.foreign_key]: this.model.id,
-                            }
-                        );
+                        response = axios.put(`${this.field.route}/${item.id}`, {
+                            [this.field.foreign_key]: this.model.id
+                        });
                         break;
                     case 'morphMany':
-                        response = axios.put(
-                            `${this.form_field.route}/${item.id}`,
-                            {
-                                [this.form_field.morph_type]: this.form_field
-                                    .morph_type_value,
-                                [this.form_field.foreign_key]: this.model.id,
-                            }
-                        );
+                        response = axios.put(`${this.field.route}/${item.id}`, {
+                            [this.field.morph_type]: this.field
+                                .morph_type_value,
+                            [this.field.foreign_key]: this.model.id
+                        });
                         break;
                     case 'morphedByMany':
                     case 'morphToMany':
                     case 'belongsToMany':
                     case 'relation':
                         response = await axios.post(
-                            `${this.model.route}/${this.model.id}/relation/${this.form_field.id}/${item.id}`
+                            `${this.form.config.route}/${this.model.id}/relation/${this.field.id}/${item.id}`
                         );
                         break;
                 }
@@ -245,9 +239,9 @@ export default {
                 console.log(e);
                 return;
             }
-            let relation = this.form_field.title;
+            let relation = this.field.title;
             this.$bvToast.toast(this.$t('fj.relation_added', { relation }), {
-                variant: 'success',
+                variant: 'success'
             });
 
             this.relations.push(item);
@@ -260,16 +254,16 @@ export default {
                 switch (this.type) {
                     case 'hasMany':
                         response = await axios.put(
-                            `${this.form_field.route}/${id}`,
+                            `${this.field.route}/${id}`,
                             {
-                                [this.form_field.foreign_key]: null,
+                                [this.field.foreign_key]: null
                             }
                         );
                         break;
                     case 'morphMany':
-                        response = axios.put(`${this.form_field.route}/${id}`, {
-                            [this.form_field.morph_type]: null,
-                            [this.form_field.foreign_key]: null,
+                        response = axios.put(`${this.field.route}/${id}`, {
+                            [this.field.morph_type]: null,
+                            [this.field.foreign_key]: null
                         });
                         break;
                     case 'morphedByMany':
@@ -277,7 +271,7 @@ export default {
                     case 'belongsToMany':
                     case 'relation':
                         response = await axios.delete(
-                            `${this.model.route}/${this.model.id}/relation/${this.form_field.id}/${id}`
+                            `${this.form.config.route}/${this.model.id}/relation/${this.field.id}/${id}`
                         );
                         break;
                 }
@@ -286,15 +280,15 @@ export default {
                 return;
             }
             // close modal
-            this.$bvModal.hide(`modal-${this.form_field.edit}-${id}`);
+            this.$bvModal.hide(`modal-${this.field.edit}-${id}`);
 
-            let relation = this.relations.find((r) => r.id == id);
+            let relation = this.relations.find(r => r.id == id);
             let index = this.relations.indexOf(relation);
 
             this.relations.splice(index, 1);
 
             this.$bvToast.toast(this.$t('fj.relation_set'), {
-                variant: 'success',
+                variant: 'success'
             });
         },
         async newOrder() {
@@ -303,7 +297,7 @@ export default {
             let relation_type = {
                 from_model_type: this.model.model,
                 from_model_id: this.model.id,
-                to_model_type: this.form_field.model,
+                to_model_type: this.field.model
             };
             for (let i = 0; i < this.relations.length; i++) {
                 let relation = this.relations[i];
@@ -312,22 +306,22 @@ export default {
 
             let payload = {
                 data: relation_type,
-                ids,
+                ids
             };
 
             let response = await axios.put('relations/order', payload);
 
             this.$bvToast.toast(this.$t('fj.order_changed'), {
-                variant: 'success',
+                variant: 'success'
             });
         },
         setFields() {
-            if (!this.readonly && this.form_field.type == 'relation') {
+            if (!this.readonly && this.field.type == 'relation') {
                 this.fields.push({ key: 'drag' });
             }
 
-            for (let i = 0; i < this.form_field.preview.length; i++) {
-                let field = this.form_field.preview[i];
+            for (let i = 0; i < this.field.preview.length; i++) {
+                let field = this.field.preview[i];
 
                 if (typeof field == typeof '') {
                     field = { key: field };
@@ -347,17 +341,17 @@ export default {
 
             return '100%';
         },
-        hasEditLink(form_field) {
-            return form_field.edit != undefined;
-        },
+        hasEditLink(field) {
+            return field.edit != undefined;
+        }
     },
 
     computed: {
         modalId() {
-            return `${this.model.route}-form-relation-table-${this.form_field.id}-${this.model.id}`;
+            return `${this.model.route}-form-relation-table-${this.field.id}-${this.model.id}`;
         },
-        ...mapGetters(['baseURL', 'form']),
-    },
+        ...mapGetters(['baseURL', 'form'])
+    }
 };
 </script>
 

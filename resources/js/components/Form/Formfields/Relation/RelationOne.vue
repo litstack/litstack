@@ -33,10 +33,8 @@
                         </tr>
                     </b-table-simple>
                 </div>
-                <div v-else class="text-center">
-                    <span class="text-muted">
-                        No {{ field.title }} selected.
-                    </span>
+                <div v-else>
+                    <fj-form-relation-empty :field="field" />
                 </div>
 
                 <b-button variant="secondary" size="sm" v-b-modal="modalId">
@@ -55,11 +53,7 @@
             />
         </template>
         <template v-else>
-            <b-alert show variant="warning">
-                {{ form.config.names.title.singular }} has to be created in
-                order to add
-                <i>{{ field.title }}</i>
-            </b-alert>
+            <fj-form-relation-not-created :field="field" />
         </template>
     </fj-form-item>
 </template>
@@ -74,18 +68,18 @@ export default {
     props: {
         field: {
             required: true,
-            type: Object,
+            type: Object
         },
         model: {
             required: true,
-            type: Object,
-        },
+            type: Object
+        }
     },
     data() {
         return {
             relation: {},
             cols: [],
-            selectedModel: '',
+            selectedModel: ''
         };
     },
     beforeMount() {
@@ -137,7 +131,7 @@ export default {
                                 `${this.field.route}/${this.relation.id}`,
                                 {
                                     [this.field.morph_type]: null,
-                                    [this.field.foreign_key]: null,
+                                    [this.field.foreign_key]: null
                                 }
                             );
                         }
@@ -147,17 +141,17 @@ export default {
                                 .morph_type_value,
                             [this.field.foreign_key]: this.model[
                                 this.field.local_key_name
-                            ],
+                            ]
                         });
                     } catch (e) {
                         console.log(e);
                     }
                     this.$bvToast.toast(
                         this.$t('fj.relation_added', {
-                            relation: this.field.title,
+                            relation: this.field.title
                         }),
                         {
-                            variant: 'success',
+                            variant: 'success'
                         }
                     );
                     break;
@@ -182,7 +176,7 @@ export default {
                             `${this.field.route}/${this.relation.id}`,
                             {
                                 [this.field.morph_type]: null,
-                                [this.field.foreign_key]: null,
+                                [this.field.foreign_key]: null
                             }
                         );
                     } catch (e) {
@@ -201,14 +195,14 @@ export default {
         setItem(item) {
             item.trash = '';
             return item;
-        },
+        }
     },
     computed: {
         ...mapGetters(['form']),
         modalId() {
             return `${this.model.route}-form-relation-table-${this.field.id}-${this.model.id}`;
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>

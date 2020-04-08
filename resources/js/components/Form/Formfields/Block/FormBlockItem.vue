@@ -20,9 +20,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
     name: 'FormBlockItem',
     props: {
+        model: {
+            type: Object,
+            required: true
+        },
         repeatable: {
             type: Object,
             required: true
@@ -32,9 +37,14 @@ export default {
             required: true
         }
     },
+    computed: {
+        ...mapGetters(['form'])
+    },
     methods: {
         async deleteRepeatable(repeatable) {
-            await repeatable.delete();
+            let response = await axios.delete(
+                `${this.form.config.route}/${this.model.id}/blocks/${repeatable.id}`
+            );
             this.$emit('deleteBlock', repeatable);
         }
     }

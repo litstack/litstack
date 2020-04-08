@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "no_relation_selected" => "Keine <i>{relation}</i> ausgewählt.",
     "already_selected" => "Dieses Item wurde bereits ausgewählt.",
     "settings" => "Einstellungen",
     "user_administration" => "Nutzerverwaltung",

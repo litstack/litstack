@@ -3,6 +3,8 @@ import EloquentCollection from '@fj-js/eloquent/collection';
 import FjordModel from '@fj-js/eloquent/fjord.model';
 import Bus from '@fj-js/common/event.bus';
 import { ToastPlugin } from 'bootstrap-vue';
+import store from '@fj-js/store';
+
 Vue.use(ToastPlugin);
 
 const initialState = {
@@ -27,11 +29,23 @@ export const actions = {
             promises.push(promise);
         }
 
-        // save eloquent models
-        if (state.modelsToSave.length > 0) {
-            let collection = new EloquentCollection({ data: [] }, FjordModel);
-            collection.items = collect(state.modelsToSave);
+        let collection = new EloquentCollection({ data: [] }, FjordModel);
+        let items = [];
+        for (let key in state.modelsToSave) {
+            let model = state.modelsToSave[key];
+            if (model.route == 'form_blocks') {
+                let promise = axios.put(
+                    `${store.state.form.config.route}/${model.model_id}/blocks/${model.id}`,
+                    model.getPayload()
+                );
+            } else {
+                items.push(model);
+            }
+        }
+        collection.items = collect(items);
 
+        // save eloquent models
+        if (items.length > 0) {
             let promise = collection.save();
 
             promises.push(promise);

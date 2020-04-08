@@ -3,6 +3,7 @@
 namespace Fjord\Commands\Install;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 
@@ -99,8 +100,19 @@ trait InstallVendorConfigs
     protected function vendorPermissions()
     {
         $this->callSilent('vendor:publish', [
-            '--provider' => "Spatie\Permission\PermissionServiceProvider",
+            '--provider' => \Spatie\Permission\PermissionServiceProvider::class,
             '--tag' => "migrations"
         ]);
+
+        $migrationsPath = app()->databasePath() . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR;
+        $migration = Collection::make($migrationsPath)
+            ->flatMap(function ($path) {
+                return File::glob($path . '*_create_permission_tables.php');
+            })->first();
+        $name = '2020_00_00_000000_create_permission_tables.php';
+        if ($name == basename($migration)) {
+            return;
+        }
+        File::move($migration, $migrationsPath . $name);
     }
 }

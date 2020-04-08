@@ -6,13 +6,16 @@
             v-for="(repeatables, type) in field.repeatables"
             :key="type"
             @click.prevent="add(type)"
-            ><fa-icon icon="plus" /> add {{ type }}</b-button
         >
+            <fa-icon icon="plus" />
+            add {{ type }}
+        </b-button>
     </div>
 </template>
 
 <script>
 import FjordModel from '@fj-js/eloquent/fjord.model';
+import { mapGetters } from 'vuex';
 export default {
     name: 'FormBlockAddButtons',
     props: {
@@ -29,18 +32,28 @@ export default {
             required: true
         }
     },
+    computed: {
+        ...mapGetters(['form'])
+    },
     methods: {
         async add(type) {
-            let data = {
+            let payload = {
                 type: type,
-                model_type: this.model ? this.model.model : '',
-                model_id: this.model ? this.model.id : '',
                 field_id: this.field.id,
                 value: this.newBlock(type),
                 order_column: this.sortableRepeatables.length
             };
 
-            let response = await axios.post(`form_blocks`, data);
+            let response = null;
+            try {
+                response = await axios.post(
+                    `${this.form.config.route}/${this.model.id}/blocks`,
+                    payload
+                );
+            } catch (e) {
+                console.log(e);
+                return;
+            }
             let model = new FjordModel(response.data);
 
             this.$emit('newBlock', model);

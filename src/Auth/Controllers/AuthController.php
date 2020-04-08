@@ -23,7 +23,7 @@ class AuthController extends Controller
     public function login()
     {
         if (fjord_user()) {
-            return redirect()->route('fjord.dashboard');
+            return redirect(config('fjord.route_prefix') . "/" . config("fjord.default_route"));
         }
 
         return view('fjord::auth.login');

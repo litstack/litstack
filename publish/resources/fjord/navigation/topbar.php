@@ -1,17 +1,16 @@
 <?php
 
+// Type artisan command fjord:nav to see all navEntry presets.
+
 return [
     [
-        'Nutzerverwaltung',
-        [
-            'link' => 'fjord/users',
-            'text' => 'User'
-        ],
+        __f('fj.user_administration'),
+        fjord()->navEntry('users'),
+        fjord()->navEntry('permissions'),
     ],
     [
-        [
-            'link' => 'collections/settings',
-            'text' =>'Settings'
-        ],
+        fjord()->navEntry('collections.settings', [
+            'title' => __f('fj.settings')
+        ])
     ]
 ];

@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 
 class CrudReadRequest extends FormRequest
 {
-    use Traits\ModelName,
-        Traits\HasPermissions;
+    use Traits\AuthorizeController;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -17,11 +16,7 @@ class CrudReadRequest extends FormRequest
      */
     public function authorize(Request $request)
     {
-        if ($this->hasPermissions($request)) {
-            return fjord_user()->can('read ' . $this->model());
-        } else {
-            return true;
-        }
+        return $this->authorizeController($request, 'read');
     }
 
     /**

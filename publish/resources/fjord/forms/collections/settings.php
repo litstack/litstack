@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\Fjord\Form\Collection\SettingsController;
+
+/**
+ * Config for Collection Settings.
+ */
 return [
-    'route_prefix' => 'settings',
+    'controller' => SettingsController::class,
     'form_fields' => [
         [
             'translatable' => false,

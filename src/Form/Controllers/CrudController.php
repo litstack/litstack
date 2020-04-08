@@ -2,58 +2,80 @@
 
 namespace Fjord\Form\Controllers;
 
-use Illuminate\Routing\Controller;
+use ReflectionClass;
 use Illuminate\Http\Request;
 use Fjord\Models\ModelContent;
+use Fjord\Fjord\Models\FjordUser;
+use Fjord\Form\Database\FormBlock;
 use Fjord\Support\Facades\FormLoader;
-use Fjord\Form\Requests\CrudCreateRequest;
 use Fjord\Form\Requests\CrudReadRequest;
-use Fjord\Form\Requests\CrudUpdateRequest;
+use Fjord\Form\Requests\CrudCreateRequest;
 use Fjord\Form\Requests\CrudDeleteRequest;
+use Fjord\Form\Requests\CrudUpdateRequest;
 
-class CrudController extends Controller
+abstract class CrudController
 {
     use Traits\CrudIndex,
         Traits\CrudRelations,
         Traits\EloquentModel;
-
-    // The Model (Class)Name, e.g. Post
-    protected $modelName;
-
-    // The Model Class e.g. App\Models\Post
+    /**
+     * The Model Class e.g. App\Models\Post
+     *
+     * @var string
+     */
     protected $model;
 
-    // The Model's singular lowercase title
+    /**
+     * The Model's singular lowercase title.
+     *
+     * @var string
+     */
     protected $titleSingular;
 
-    // The Model's plural lowercase title
+    /**
+     * The Model's plural lowercase title.
+     *
+     * @var string
+     */
     protected $titlePlural;
 
-    // Is the Model translatable
+    /**
+     * Is the Model translatable.
+     *
+     * @var boolean
+     */
     protected $translatable;
 
-    // The Model's config
+    /**
+     * The Model's config.
+     *
+     * @var array
+     */
     protected $config;
 
+    /**
+     * Authorize request for operation.
+     *
+     * @param FjordUser $user
+     * @param string $operation
+     * @return boolean
+     */
+    abstract public function authorize(FjordUser $user, string $operation): bool;
+
+    /**
+     * Create new CrudController instance.
+     */
     public function __construct()
     {
-        $this->titleSingular = $this->titleSingular ?? lcfirst($this->modelName);
-        $this->titlePlural = $this->titlePlural ?? \Str::snake(\Str::plural($this->modelName));
+        $reflect = new ReflectionClass($this->model);
+        $modelBaseName = $reflect->getShortName();
 
-        $this->model = "App\\Models\\" . ucfirst($this->modelName);
+        // Names.
+        $this->titleSingular = $this->titleSingular ?? lcfirst($modelBaseName);
+        $this->titlePlural = $this->titlePlural ?? \Str::snake(\Str::plural($modelBaseName));
 
-        // check, if the mode is translatable
-        $reflect = new \ReflectionClass($this->model);
-        if ($reflect->implementsInterface('Astrotomic\Translatable\Contracts\Translatable')) {
-            $this->translatable = true;
-        } else {
-            $this->translatable = false;
-        }
-
-        $model = $this->model;
-        $data = new $model();
-
-        $translatedAttributes = $this->translatable ? $data->translatedAttributes() : null;
+        // Translatable.
+        $this->translatable = is_translatable($this->model);
     }
 
     public function all(CrudReadRequest $request)
@@ -192,5 +214,60 @@ class CrudController extends Controller
             $model = with(new $this->model);
         }
         return FormLoader::load($model->form_fields_path, $this->model);
+    }
+
+    /**
+     * Store new form_block.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return void
+     */
+    public function storeBlock(CrudUpdateRequest $request, $id)
+    {
+        $model = $this->model::findOrFail($id);
+
+        $block = new FormBlock();
+        $block->type = $request->type;
+        $block->model_type = $this->model;
+        $block->model_id = $model->id;
+        $block->field_id = $request->field_id;
+        $block->value = $request->value;
+        $block->order_column = $request->order_column;
+        $block->save();
+
+        return $block->eloquentJs();
+    }
+
+    /**
+     * Update form_block.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return void
+     */
+    public function updateBlock(CrudUpdateRequest $request, $id, $block_id)
+    {
+        $block = FormBlock::where('model_type', $this->model)
+            ->where('model_id', $id)->findOrFail($block_id);
+
+        $block->update($request->all());
+
+        return $block;
+    }
+
+    /**
+     * Update form_block.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return void
+     */
+    public function destroyBlock(CrudUpdateRequest $request, $id, $block_id)
+    {
+        $block = FormBlock::where('model_type', $this->model)
+            ->where('model_id', $id)->findOrFail($block_id);
+
+        return $block->delete();
     }
 }

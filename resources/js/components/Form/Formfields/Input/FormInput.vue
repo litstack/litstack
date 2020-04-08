@@ -11,7 +11,7 @@
                 :type="field.input_type"
                 :maxlength="field.max"
                 :required="field.required"
-                v-bind:readonly="field.readonly"
+                v-bind:readonly="readonly"
                 @input="changed"
             />
             <b-input-group-append is-text v-if="field.append">
@@ -34,6 +34,10 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        readonly: {
+            required: true,
+            type: Boolean
         }
     },
     data() {

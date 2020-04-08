@@ -39,27 +39,4 @@ trait RolesAndPermissions
             $admin->givePermissionTo($permission);
         }
     }
-
-    public function createCrudPermissions()
-    {
-        $cruds = glob(fjord_resource_path("crud/*.php"));
-
-        foreach ($cruds as $crud) {
-            $name = str_replace('.php', '', basename($crud));
-
-            $this->info("Making {$name} permissions");
-
-            $permissions = [
-                'create ' . $name,
-                'read ' . $name,
-                'update ' . $name,
-                'delete ' . $name
-            ];
-
-            // create permissions and give them to admin
-            foreach ($permissions as $permission) {
-                Permission::firstOrCreate(['guard_name' => 'fjord', 'name' => $permission]);
-            }
-        }
-    }
 }

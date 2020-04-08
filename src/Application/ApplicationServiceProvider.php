@@ -9,6 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use Fjord\Support\Facades\FjordRoute;
 use Fjord\Application\Kernel\HandleViewComposer;
 use Fjord\Application\Kernel\HandleRouteMiddleware;
+use Fjord\Commands\FjordFormPermissions;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ApplicationServiceProvider extends ServiceProvider
@@ -30,6 +31,11 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->fjordErrorPages();
     }
 
+    public function register()
+    {
+        $this->registerFormPermissionsCommand();
+    }
+
     public function viewMacros()
     {
         ViewClass::macro('setView', function (string $view) {
@@ -47,5 +53,18 @@ class ApplicationServiceProvider extends ServiceProvider
         });
 
         View::composer('errors::*', HttpErrorComposer::class);
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerFormPermissionsCommand()
+    {
+        $this->app->singleton('fjord.command.form-permissions', function ($app) {
+            return new FjordFormPermissions($app['migrator']);
+        });
+        $this->commands(['fjord.command.form-permissions']);
     }
 }

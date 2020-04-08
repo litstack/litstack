@@ -16,7 +16,7 @@ class StubBuilder
 
     public function __construct($stub)
     {
-        if(is_valid_path($stub)) {
+        if (is_valid_path($stub)) {
             $this->loadStub($stub);
         } else {
             $this->setStubString($stub);
@@ -37,10 +37,10 @@ class StubBuilder
 
     public function with(array $attributes)
     {
-        foreach($attributes as $key => $value) {
+        foreach ($attributes as $key => $value) {
             $dummyKey = 'Dummy' . ucfirst($key);
 
-            if(array_key_exists($dummyKey, $this->attributes)) {
+            if (array_key_exists($dummyKey, $this->attributes)) {
                 $this->attributes[$dummyKey] .= "\n$value";
             } else {
                 $this->attributes[$dummyKey] = $value;
@@ -59,12 +59,16 @@ class StubBuilder
     {
         $fileContents = $this->stubString;
 
-        foreach($this->neededDummies as $dummy) {
-            if(! array_key_exists($dummy, $this->attributes)) {
+        foreach ($this->neededDummies as $dummy) {
+            if (!array_key_exists($dummy, $this->attributes)) {
                 $fileContents = str_replace($dummy, '', $fileContents);
             } else {
                 $fileContents = str_replace($dummy, $this->attributes[$dummy], $fileContents);
             }
+        }
+
+        if (File::exists($path)) {
+            return false;
         }
 
         return File::put($path, $fileContents);
@@ -72,7 +76,7 @@ class StubBuilder
 
     public function __call($method, $parameters = [])
     {
-        if(Str::startsWith($method, 'with')) {
+        if (Str::startsWith($method, 'with')) {
             $attributeName = lcfirst(str_replace('with', '', $method));
 
             $this->with([

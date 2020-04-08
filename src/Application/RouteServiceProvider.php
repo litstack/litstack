@@ -2,11 +2,12 @@
 
 namespace Fjord\Application;
 
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
 use Fjord\Support\Facades\FjordRoute;
-use App\Http\Controllers\Fjord\DashboardController;
-use Fjord\Application\Controllers\FileController;
+use Illuminate\Support\Facades\Route;
 use Fjord\Fjord\Controllers\FjordController;
+use Fjord\Application\Controllers\FileController;
+use App\Http\Controllers\Fjord\DashboardController;
 use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
@@ -20,13 +21,14 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapAppRoutes()
     {
-        FjordRoute::group(base_path('routes/fjord.php'));
+        if (File::exists(base_path('routes/fjord.php'))) {
+            FjordRoute::group(base_path('routes/fjord.php'));
+        }
     }
 
     protected function mapFjordRoutes()
     {
         FjordRoute::group(function () {
-            Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
             Route::post('/set-locale', 'Fjord\Actions\SetLocale')->name('set-locale');
             Route::get('/lang.js', 'Fjord\Application\Controllers\TranslationsController@i18n')->name('fjord-translations');
             Route::put('/order', [FjordController::class, 'order'])->name('order');

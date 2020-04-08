@@ -72,7 +72,7 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
 
     public function getTranslationAttribute()
     {
-        return collect($this->getTranslationsArray())->map(function($item) {
+        return collect($this->getTranslationsArray())->map(function ($item) {
             return array_pop($item);
         })->toArray();
     }
@@ -87,13 +87,24 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
         return $this->formFieldIds;
     }
 
-    public function update(array $attributes = array(), array $options = array()) {
-        foreach(config('translatable.locales') as $locale) {
-            if(! array_key_exists($locale, $attributes)) {
+    public function update(array $attributes = array(), array $options = array())
+    {
+        /*
+        foreach ($attributes['value'] as $key => $valuel) {
+            if (!array_key_exists($key, $attributes)) {
+                continue;
+            }
+            $attributes[config('translatable.fallback_locale')][$key] = $attributes[$key];
+        }
+        */
+
+        foreach (config('translatable.locales') as $locale) {
+            if (!array_key_exists($locale, $attributes)) {
                 continue;
             }
             $attributes[$locale] = ['value' => $attributes[$locale]];
         }
+
         return parent::update($attributes, $options);
     }
 
@@ -113,9 +124,9 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
     {
         foreach (config('fjord.mediaconversions.default') as $key => $value) {
             $this->addMediaConversion($key)
-                  ->width($value[0])
-                  ->height($value[1])
-                  ->sharpen($value[2]);
+                ->width($value[0])
+                ->height($value[1])
+                ->sharpen($value[2]);
         }
     }
 
@@ -123,26 +134,24 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
     {
         $array = parent::toArray();
 
-        foreach($this->form_fields as $form_field) {
+        foreach ($this->form_fields as $form_field) {
 
-            if(! in_array($form_field->type, ['boolean', 'relation', 'image', 'checkboxes'])) {
+            if (!in_array($form_field->type, ['boolean', 'relation', 'image', 'checkboxes'])) {
                 continue;
             }
 
             $value = $this->getFormattedFormFieldValue($form_field, false, false);
 
-            if(in_array($form_field->type, ['checkboxes', 'boolean'])) {
+            if (in_array($form_field->type, ['checkboxes', 'boolean'])) {
 
                 // Formated casts (json, array, boolean, etc...) must be put back to
                 // their original place.
                 $array['translation'][config('translatable.fallback_locale')][$form_field->id] = $value;
-
             } else {
 
                 // For relations add $form_field->id as array_key and set the
                 // relation as value.
                 $array[$form_field->id] = $value;
-
             }
             //$array[$form_field->id] = $this->getMedia($form_field->id)->toArray();
         }
@@ -152,7 +161,7 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
 
     public function getTranslatedFormFieldValue($form_field)
     {
-        if($form_field->translatable) {
+        if ($form_field->translatable) {
             $values = $this->translation[app()->getLocale()] ?? [];
         } else {
             $values = $this->translation[config('translatable.fallback_locale')] ?? [];
@@ -163,12 +172,11 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
 
     public function getAttribute($key)
     {
-        if(in_array($key, $this->formFieldIds) && ! array_key_exists($key, $this->attributes)) {
+        if (in_array($key, $this->formFieldIds) && !array_key_exists($key, $this->attributes)) {
 
             return $this->getFormattedFormFieldValue(
                 $this->findFormField($key)
             );
-
         }
 
         return parent::getAttribute($key);

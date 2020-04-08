@@ -2,11 +2,14 @@
 
 namespace Fjord\Form\Requests;
 
+use Fjord\Form\Requests\Traits\FormHasPermissions;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
 class FormReadRequest extends FormRequest
 {
+    use Traits\AuthorizeController;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -14,8 +17,7 @@ class FormReadRequest extends FormRequest
      */
     public function authorize(Request $request)
     {
-        return true;
-        return fjord_user()->can('read ');
+        return $this->authorizeController($request, 'read');
     }
 
     /**

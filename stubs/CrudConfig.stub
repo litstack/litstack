@@ -1,8 +1,13 @@
 <?php
 
 //use \App\Models\DummyClassname;
+use \App\Http\Controllers\Fjord\Crud\DummyClassnameController;
 
+/**
+ * Crud config for DummyTablename.
+ */
 return [
+    'controller' => DummyClassnameController::class,
     //'preview_route' => [DummyClassname::class, 'getRoute'],
     'index' => [
         'preview' => [

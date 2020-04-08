@@ -7,12 +7,18 @@ use Illuminate\Support\Str;
 use Fjord\Form\Database\FormField;
 use Illuminate\Support\Collection;
 use Fjord\Support\Facades\FormLoader;
+use Illuminate\Support\Facades\Request;
 use Fjord\Form\Requests\CrudUpdateRequest;
 use Fjord\Form\Requests\FormUpdateRequest;
+use Fjord\Form\Requests\Traits\CrudHasPermission;
+use Fjord\Form\Requests\Traits\FormHasPermission;
+use Fjord\Form\Requests\Traits\AuthorizeController;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class CrudForm
 {
+    use AuthorizeController;
+
     const DEFAULTS = [
         'form_fields' => [],
         'layout' => [],
@@ -77,18 +83,38 @@ class CrudForm
         $this->setNames();
         $this->setBackRoute();
         $this->setIndex();
-        $this->setCanUpdate();
+        $this->setPermissions();
+        $this->setRoute();
     }
 
-    public function setCanUpdate()
+    public function setRoute()
     {
-        if ($this->attributes['model'] == FormField::class) {
-            $request = new FormUpdateRequest;
+        $route = str_replace(config('fjord.route_prefix') . "/", "", Request::route()->uri());
+        if ($this->attributes['model'] != FormField::class) {
+            $this->attributes['route'] = explode('/', $route)[0];
         } else {
-            $request = new CrudUpdateRequest;
+            $this->attributes['route'] = $route;
         }
-        $authorize = $request->authorize(app()->get('request'));
-        $this->attributes['readonly'] = !$authorize;
+    }
+
+    public function setPermissions()
+    {
+        $permissions = [
+            'create' => false,
+            'read' => false,
+            'update' => false,
+            'delete' => false,
+        ];
+
+        $request = app()->get('request');
+
+        $permissions['read'] = $this->authorizeController($request, 'read');
+        $permissions['update'] = $this->authorizeController($request, 'update');
+        if ($this->attributes['model'] != FormField::class) {
+            $permissions['create'] = $this->authorizeController($request, 'create');
+            $permissions['delete'] = $this->authorizeController($request, 'delete');
+        }
+        $this->attributes['permissions'] = $permissions;
     }
 
     protected function setIndex()
