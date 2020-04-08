@@ -18,11 +18,11 @@ trait LoadFields
     {
         $this->currentPath = $path;
 
-        if(array_key_exists($path, $this->fields)) {
+        if (array_key_exists($path, $this->fields)) {
             return $this->fields[$path];
         }
 
-        if(! file_exists($path)) {
+        if (!file_exists($path)) {
             return (object) [];
         }
 
@@ -35,9 +35,11 @@ trait LoadFields
 
     public function getFields($fields, $model, $location = 'fields')
     {
+
         return $this->getFormFieldObjects(
             $fields,
-            function($field) use ($model, $location) {
+            function ($field) use ($model, $location) {
+                $field->setModel(get_class($model));
                 return $this->setFormFieldDefaults($field, $model, $location);
             }
         );
@@ -45,10 +47,9 @@ trait LoadFields
 
     protected function getFormFieldObjects($fields, $setDefaults)
     {
-        foreach($fields as $key => $field) {
+        foreach ($fields as $key => $field) {
 
             $fields[$key] = new FormField($field, $this->currentPath, $setDefaults);
-
         }
 
         return new NestedCollection($fields);
@@ -59,13 +60,12 @@ trait LoadFields
         // Basic Checks.
         $this->isFieldFillable($field, $model);
 
-        if(! $field->attributeExists('translatable')) {
+        if (!$field->attributeExists('translatable')) {
 
             $field->setAttribute(
                 'translatable',
                 $this->isFieldTranslatable($field, $model)
             );
-
         }
 
         $field->setAttribute('location', $location);
@@ -75,40 +75,32 @@ trait LoadFields
 
     protected function isFieldFillable($field, $model)
     {
+        if (in_array($field->type, [
+            'block',
+            'image',
+            'form_header',
 
-        if($field->type == 'block') {
+            'hasOne',
+            'belongsTo',
+            'morphOne',
+            'morphTo',
+
+            'hasMany',
+            'editHasMany',
+            'belongsToMany',
+            'morphMany',
+            'morphToMany',
+            'morphedByMany',
+            'relation',
+        ])) {
             return;
         }
 
-        if($field->type == 'image') {
-            return;
-        }
-
-        if($field->type == 'morphOne') {
-            return;
-        }
-
-        if($field->type == 'form_header') {
-            return;
-        }
-
-        if($field->type == 'hasMany') {
-            return;
-        }
-
-        if($field->type == 'editHasMany') {
-            return;
-        }
-
-        if($field->type == 'belongsToMany') {
-            return;
-        }
-
-        if(! $model->isFormFieldFillable($field)) {
+        if (!$model->isFormFieldFillable($field)) {
             throw new Exception("You may add \"{$field->id}\" to fillables in " . get_class($model) . " to use it as a form field!");
         }
 
-        if(! $field->translatable) {
+        if (!$field->translatable) {
             return;
         }
 
@@ -116,19 +108,17 @@ trait LoadFields
         $translationClass = $model->getTranslationModelName();
         $fillable = with(new $translationClass)->getFillable();
 
-        if(! $model->isTranslatableFormFieldFillable($field)) {
+        if (!$model->isTranslatableFormFieldFillable($field)) {
             throw new Exception("You may add \"{$field->id}\" to fillables in " . $translationClass . " to use it as a form field!");
         }
     }
 
     protected function isFieldTranslatable($field, $model)
     {
-        if(! is_translatable($model)) {
+        if (!is_translatable($model)) {
             return false;
         }
 
         return in_array($field->id, $model->translatedAttributes);
     }
-
-
 }

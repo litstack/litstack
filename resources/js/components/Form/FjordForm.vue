@@ -83,50 +83,60 @@
                         :repeatables="m.relations[field.id]"
                         :model="m"
                         @newRepeatable="
-                            repeatable => {
+                            (repeatable) => {
                                 newRepeatable(m, repeatable);
                             }
                         "
                     />
 
+                    <!--
                     <fj-form-morph-one
                         v-if="field.type == 'morphOne'"
                         :field="field"
                         :model="m"
                     />
-
                     <fj-form-has-many
                         v-if="field.type == 'hasMany'"
                         :field="field"
                         :model="m"
                     />
-
                     <fj-form-edit-has-many
                         v-if="field.type == 'editHasMany'"
                         :field="field"
                         :model="m"
                     />
-
                     <fj-form-belongs-to-many
                         v-if="field.type == 'belongsToMany'"
                         :field="field"
                         :model="m"
                     />
+                    -->
 
-                    <template v-if="field.type == 'relation'">
-                        <fj-form-relation-has-many
-                            v-if="field.many"
-                            :form_field="field"
-                            :model="m"
-                        />
-
-                        <fj-form-relation-has-one
-                            v-else
-                            :field="field"
-                            :model="m"
-                            @changed="changed(field, m)"
-                        />
-                    </template>
+                    <fj-form-relation-many
+                        v-if="
+                            (field.type == 'relation' && field.many) ||
+                            field.type == 'hasMany' ||
+                            field.type == 'belongsToMany' ||
+                            field.type == 'morphMany' ||
+                            field.type == 'morphToMany' ||
+                            field.type == 'morphedByMany'
+                        "
+                        :form_field="field"
+                        :model="m"
+                        :type="field.type"
+                    />
+                    <fj-form-relation-one
+                        v-if="
+                            (field.type == 'relation' && !field.many) ||
+                            field.type == 'hasOne' ||
+                            field.type == 'belongsTo' ||
+                            field.type == 'morphOne' ||
+                            field.type == 'morphTo'
+                        "
+                        :field="field"
+                        :model="m"
+                        @changed="changed(field, m)"
+                    />
                 </div>
             </template>
         </template>
@@ -144,14 +154,14 @@ export default {
     props: {
         // the model prop is only used in blocks
         model: {
-            type: Object
+            type: Object,
         },
         ids: {
             type: Array,
             default() {
                 return [];
-            }
-        }
+            },
+        },
     },
     beforeMount() {
         this.init();
@@ -162,7 +172,7 @@ export default {
     },
     data() {
         return {
-            preparedModels: []
+            preparedModels: [],
         };
     },
     methods: {
@@ -179,12 +189,12 @@ export default {
             if (model.getOriginalModel(field) == model[`${field.id}Model`]) {
                 this.$store.commit('REMOVE_MODELS_FROM_SAVE', {
                     model,
-                    id: field.id
+                    id: field.id,
                 });
             } else {
                 this.$store.commit('ADD_MODELS_TO_SAVE', {
                     model,
-                    id: field.id
+                    id: field.id,
                 });
             }
         },
@@ -196,10 +206,10 @@ export default {
         },
         fieldWidth(field) {
             return field.width !== undefined ? `col-${field.width}` : 'col-12';
-        }
+        },
     },
     computed: {
-        ...mapGetters(['crud'])
-    }
+        ...mapGetters(['crud']),
+    },
 };
 </script>

@@ -12,6 +12,7 @@ use Exception;
 
 class FormRelationsController extends FjordController
 {
+    /*
     public function index(Request $request)
     {
         $model = with(new $request->model_type);
@@ -24,6 +25,7 @@ class FormRelationsController extends FjordController
 
         return $field['query']->get();
     }
+    */
 
     public function updateHasOne(Request $request)
     {

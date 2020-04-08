@@ -41,7 +41,9 @@ export default class EloquentModel {
     }
 
     setAttributes(attributes) {
-        this.attributes = attributes;
+        for (let key in attributes) {
+            this.attributes[key] = attributes[key];
+        }
 
         this.setOriginals();
     }

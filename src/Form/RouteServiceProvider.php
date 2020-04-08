@@ -40,7 +40,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             ]);
         }
 
-        $config = config('fjord.forms');
         $configPath = $this->package->getConfigPath('forms');
         $directories = glob($configPath . '/*', GLOB_ONLYDIR);
 
@@ -98,7 +97,13 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 $namespace = "\\App\\Http\\Controllers\\Fjord\\{$controller}";
             }
 
+            $this->package->route()->get("/{$crud}/all", $namespace . "@all");
             $this->package->route()->as($this->package->getRouteAs() . 'crud')->resource(config('fjord.route_prefix') . "/{$crud}", $namespace);
+
+            $this->package->route()->delete("/{$crud}/{id}/relation/{relation}/{relation_id}", $namespace . "@deleteRelation")
+                ->name("crud.{$crud}.relation.delete");
+            $this->package->route()->post("/{$crud}/{id}/relation/{relation}/{relation_id}", $namespace . "@createRelation")
+                ->name("crud.{$crud}.relation.create");
 
             $this->package->route()->post("/{$crud}/index", $namespace . "@postIndex")
                 ->name("crud.{$crud}.post_index");
@@ -137,17 +142,24 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapFormFieldRoutes()
     {
+        $this->package->route()->delete("/form_fields/{id}/relation/{relation}/{relation_id}",  FormController::class . "@deleteRelation")
+            ->name("form_fields.relation.delete");
+        $this->package->route()->post("/form_fields/{id}/relation/{relation}/{relation_id}", FormController::class . "@createRelation")
+            ->name("form_fields.relation.create");
+
         $this->package->route()->put('form_fields/{id}', FormController::class . "@update")->name('form_field.update');
     }
 
     protected function mapFormBlockRoutes()
     {
+        return;
         $this->package->route()->post('form_blocks', FormBlockController::class . "@store")->name('form_block.store');
         $this->package->route()->put('form_blocks/{id}', FormBlockController::class . "@update")->name('form_block.update');
     }
 
     protected function mapFormRelationRoutes()
     {
+        return;
         $this->package->route()->put('/relation', FormRelationsController::class . "@updateHasOne")->name('relation.update');
         $this->package->route()->post('/relations', FormRelationsController::class . "@index")->name('relations.index');
         $this->package->route()->put('/relations/order', FormRelationsController::class . "@order")->name('relations.order');
@@ -157,12 +169,14 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapFormMorphOneRoutes()
     {
+        return;
         $this->package->route()->post('/morph-one', FormMorphOneController::class . "@index")->name('morph_one.index');
         $this->package->route()->post('/morph-one/store', FormMorphOneController::class . "@store")->name('morph_one.store');
     }
 
     protected function mapFormBelongsToManyRoutes()
     {
+        return;
         $this->package->route()->post('/belongs-to-many', FormBelongsToManyController::class . "@index");
         $this->package->route()->post('/belongs-to-many/relations', FormBelongsToManyController::class . "@relations");
         $this->package->route()->post('/belongs-to-many/update', FormBelongsToManyController::class . "@update");
@@ -170,6 +184,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapFormHasManyRoutes()
     {
+        return;
         $this->package->route()->post('/has-many', FormHasManyController::class . "@index");
         $this->package->route()->post('/has-many/relations', FormHasManyController::class . "@relations");
         $this->package->route()->post('/has-many/update', FormHasManyController::class . "@update");

@@ -5,40 +5,71 @@ namespace Fjord\Form;
 use Exception;
 use ArrayAccess;
 use Illuminate\Support\Str;
+use Fjord\Form\FormFields\Code;
+use Fjord\Form\FormFields\Block;
+use Fjord\Form\FormFields\Image;
+use Fjord\Form\FormFields\Input;
+use Fjord\Form\FormFields\Range;
+use Fjord\Form\FormFields\HasOne;
+use Fjord\Form\FormFields\Select;
+use Fjord\Form\FormFields\Boolean;
+use Fjord\Form\FormFields\HasMany;
+use Fjord\Form\FormFields\MorphTo;
+use Fjord\Form\FormFields\WYSIWYG;
+use Fjord\Form\FormFields\DateTime;
+use Fjord\Form\FormFields\MorphOne;
+use Fjord\Form\FormFields\Relation;
+use Fjord\Form\FormFields\TextArea;
+use Fjord\Form\FormFields\BelongsTo;
+use Fjord\Form\FormFields\MorphMany;
+use Fjord\Form\FormFields\Checkboxes;
+use Fjord\Form\FormFields\FormHeader;
+use Fjord\Form\FormFields\EditHasMany;
+use Fjord\Form\FormFields\MorphToMany;
+use Fjord\Form\FormFields\BelongsToMany;
+use Fjord\Form\FormFields\MorphedByMany;
 use Fjord\Form\Requests\CrudUpdateRequest;
 use Fjord\Form\Requests\FormUpdateRequest;
 
 class FormField implements ArrayAccess
 {
     const FIELDS = [
-        'input' => FormFields\Input::class,
-        'wysiwyg' => FormFields\WYSIWYG::class,
-        'textarea' => FormFields\TextArea::class,
-        'boolean' => FormFields\Boolean::class,
-        'block' => FormFields\Block::class,
-        'relation' => FormFields\Relation::class,
-        'select' => FormFields\Select::class,
-        'image' => FormFields\Image::class,
-        'checkboxes' => FormFields\Checkboxes::class,
-        'code' => FormFields\Code::class,
+        'input' => Input::class,
+        'wysiwyg' => WYSIWYG::class,
+        'textarea' => TextArea::class,
+        'boolean' => Boolean::class,
+        'block' => Block::class,
+        'relation' => Relation::class,
+        'select' => Select::class,
+        'image' => Image::class,
+        'checkboxes' => Checkboxes::class,
+        'code' => Code::class,
 
-        'datetime' => FormFields\DateTime::class,
-        'dt' => FormFields\DateTime::class,
+        'datetime' => DateTime::class,
+        'dt' => DateTime::class,
 
-        'morphOne' => FormFields\MorphOne::class,
+        'form_header' => FormHeader::class,
 
-        'form_header' => FormFields\FormHeader::class,
+        'range' => Range::class,
 
-        'range' => FormFields\Range::class,
+        'hasOne' => HasOne::class,
+        'belongsTo' => BelongsTo::class,
+        'morphOne' => MorphOne::class,
+        'morphTo' => MorphTo::class,
 
-        'hasMany' => FormFields\HasMany::class,
-        'editHasMany' => FormFields\EditHasMany::class,
-        'belongsToMany' => FormFields\BelongsToMany::class,
+        'hasMany' => HasMany::class,
+        'editHasMany' => EditHasMany::class,
+        'belongsToMany' => BelongsToMany::class,
+        'morphMany' => MorphMany::class,
+        'morphToMany' => MorphToMany::class,
+        'morphedByMany' => MorphedByMany::class
     ];
 
     protected $attributes = [];
 
     protected $path;
+
+    protected $model;
 
     /**
      * @var Array  $config
@@ -127,6 +158,16 @@ class FormField implements ArrayAccess
     public function getFieldClass()
     {
         return self::FIELDS[$this->type];
+    }
+
+    public function setModel(string $model)
+    {
+        $this->model = $model;
+    }
+
+    public function getModel()
+    {
+        return $this->model;
     }
 
     /**

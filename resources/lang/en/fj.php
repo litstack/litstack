@@ -1,6 +1,9 @@
 <?php
 
 return [
+    "already_selected" => "This item has already been selected.",
+    "settings" => "Settings",
+    "user_administration" => "User Administration",
     "enter_username" => "Enter a username",
     "enter_name" => "Enter a {name}",
     "enter_email" => "Enter the email",
@@ -32,7 +35,7 @@ return [
     "order_changed" => "Order changed successfully",
     "image_uploaded" => "Image uploaded",
     "relation_set" => "Relation set successfully",
-    "relation_added" => "{relation} added",
+    "relation_added" => "{relation} successfully linked",
     "deleted_item" => "deleted {item}",
     "n_items_selected" => "{count} item selected | {count} items selected",
     "all" => "all",

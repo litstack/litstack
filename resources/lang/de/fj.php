@@ -1,6 +1,9 @@
 <?php
 
 return [
+    "already_selected" => "Dieses Item wurde bereits ausgewählt.",
+    "settings" => "Einstellungen",
+    "user_administration" => "Nutzerverwaltung",
     "enter_username" => "Benutzernamen eingeben",
     "enter_email" => "E-Mail Adresse eingeben",
     "enter_password" => "Gib ein starkes Passwort ein",

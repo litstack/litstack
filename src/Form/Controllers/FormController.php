@@ -3,12 +3,14 @@
 namespace Fjord\Form\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Route;
 use Fjord\TrackEdits\FormEdit;
 use Fjord\Form\Database\FormField;
 use Fjord\Form\FormFieldCollection;
+use App\Http\Controllers\Controller;
+use Fjord\Form\Database\FormRelation;
 use Fjord\Support\Facades\FormLoader;
+use Illuminate\Support\Facades\Route;
+use Fjord\Form\Requests\FormUpdateRequest;
 
 class FormController extends Controller
 {
@@ -93,5 +95,48 @@ class FormController extends Controller
 
         $this->formPath = $formFieldInstance->form_fields_path;
         $this->form = FormLoader::load($this->formPath, FormField::class);
+    }
+
+    public function deleteRelation(FormUpdateRequest $request, $id, $relation, $relation_id)
+    {
+        // First we check if both crud model with the ID and relation model with 
+        // the ID exist, no relations should be deleted for non existing records.
+        $model = FormField::findOrFail($id);
+        $formField = $model->findFormField($relation);
+        if (!$formField) {
+            abort(404);
+        }
+        $relationModel = $model->$relation()->findOrFail($relation_id);
+
+        // Delete relation for form field "relation"
+        return FormRelation::where('from_model_type', get_class($model))
+            ->where('from_model_id', $id)
+            ->where('to_model_type', get_class($relationModel))
+            ->where('to_model_id', $relation_id)
+            ->delete();
+    }
+
+    public function createRelation(FormUpdateRequest $request, $id, $relation, $relation_id)
+    {
+        // First we check if both crud model with the ID and relation model with 
+        // the ID exist, no relations should be created for non existing records.
+        $model = FormField::findOrFail($id);
+        $formField = $model->findFormField($relation);
+        if (!$formField) {
+            abort(404);
+        }
+        $relationModel = $formField->query->findOrFail($relation_id);
+
+        // Create relation for form field "relation"
+        $query = [
+            'from_model_type' => FormField::class,
+            'from_model_id' => $id,
+            'to_model_type' => $formField->model,
+            'to_model_id' => $relation_id,
+        ];
+        if (FormRelation::where($query)->exists()) {
+            abort(422, __f("fj.already_selected"));
+        }
+        return FormRelation::create($query);
     }
 }

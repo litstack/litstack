@@ -3,7 +3,7 @@ import EloquentModel from '@fj-js/eloquent/model';
 import Bus from '@fj-js/common/event.bus';
 import store from '@fj-js/store';
 
-let FormMixin = Base =>
+let FormMixin = (Base) =>
     class extends Base {
         constructor(config) {
             let proxy = super(config);
@@ -23,7 +23,7 @@ let FormMixin = Base =>
         isFjordModel() {
             return [
                 'AwStudio\\Fjord\\Form\\Database\\FormField',
-                'AwStudio\\Fjord\\Form\\Database\\FormBlock'
+                'AwStudio\\Fjord\\Form\\Database\\FormBlock',
             ].includes(this.model);
         }
 

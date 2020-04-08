@@ -14,7 +14,7 @@ trait HasFormFields
             ->with('translations')
             ->orderBy('order_column');
 
-        if($field_id) {
+        if ($field_id) {
             $query->where('field_id', $field_id);
         }
 
@@ -33,7 +33,7 @@ trait HasFormFields
 
     public function getBlocks($form_field, $builder = false)
     {
-        if($form_field->type != 'block') {
+        if ($form_field->type != 'block') {
             return;
         }
 
@@ -44,7 +44,7 @@ trait HasFormFields
 
     public function setFormRelation($form_field)
     {
-        if(! in_array($form_field->type, ['relation', 'block'])) {
+        if (!in_array($form_field->type, ['relation', 'block'])) {
             return $this;
         }
 
@@ -63,8 +63,8 @@ trait HasFormFields
 
     public function setFormRelations()
     {
-        foreach($this->form_fields as $form_field) {
-            if(! in_array($form_field->type, ['relation', 'block'])) {
+        foreach ($this->form_fields as $form_field) {
+            if (!in_array($form_field->type, ['relation', 'block'])) {
                 continue;
             }
 
@@ -83,7 +83,7 @@ trait HasFormFields
     {
         $fillable = $this->getFillable();
 
-        if($form_field->type == 'relation' && $form_field->many) {
+        if ($form_field->type == 'relation' && $form_field->many) {
             return true;
         }
 
@@ -95,7 +95,7 @@ trait HasFormFields
         $translationClass = $this->getTranslationModelName();
         $fillable = with(new $translationClass)->getFillable();
 
-        if($field->type == 'relation') {
+        if ($field->type == 'relation') {
             return true;
         }
 
@@ -110,9 +110,9 @@ trait HasFormFields
      */
     public function findFormField($id)
     {
-        foreach($this->form_fields as $form_field) {
+        foreach ($this->form_fields as $form_field) {
 
-            if($form_field->id == $id) {
+            if ($form_field->id == $id) {
                 return $form_field;
             }
         }
@@ -125,16 +125,16 @@ trait HasFormFields
 
     protected function getDynamicFieldValues($fields)
     {
-        foreach($fields as $key => $field) {
+        foreach ($fields as $key => $field) {
 
             $methodName = "set" . ucfirst($field->id) . "Field";
 
-            if(! method_exists($this, $methodName)) {
+            if (!method_exists($this, $methodName)) {
                 continue;
             }
 
             call_user_func_array([$this, $methodName], [$fields[$key]]);
-         }
+        }
 
         return $fields;
     }
@@ -150,12 +150,23 @@ trait HasFormFields
 
     public function scopewithFormRelations($query)
     {
-        foreach($this->form_fields as $form_field) {
-            if($form_field->type != 'relation') {
+        foreach ($this->form_fields as $form_field) {
+            if (!in_array($form_field->type, [
+                'relation',
+                'hasMany',
+                'hasOne',
+                'morphOne',
+                'morphMany',
+                'belongsToMany',
+                'morphToMany',
+                'morphedByMany',
+                'belongsTo',
+                'morphTo',
+            ])) {
                 continue;
             }
 
-            $query->with($form_field->relationship);
+            $query->with($form_field->id);
         }
 
         return $query;

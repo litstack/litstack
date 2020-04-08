@@ -3,18 +3,22 @@
 namespace Fjord\Form\FormFields;
 
 use Illuminate\Support\Str;
+use Fjord\Form\FormFields\Traits\Relation;
+use Illuminate\Database\Eloquent\Relations\MorphOne as RelationMorphOne;
+
 
 class MorphOne
 {
+    use Relation;
+
     const TRANSLATABLE = false;
 
     const REQUIRED = [
         'type',
         'id',
-        'models',
+        'model',
         'preview',
         'title',
-        'morph'
     ];
 
     const DEFAULTS = [
@@ -23,16 +27,17 @@ class MorphOne
 
     public static function prepare($field, $path)
     {
-        //dd(get_class($field->models['Artikel']->getModel()));
-        $field->querys = collect($field->models)->map(function ($model) use ($field) {
-            //return $model::query();
-            if (is_string($model)) {
-                return $model::query();
-            } else {
-                $model = get_class($model->getModel());
-                return $model::query();
-            }
-        })->toArray();
+        $field = self::prepareRelation($field, $path);
+
+        $model = $field->getModel();
+        $relation = with(new $model)->{$field->id}();
+
+        self::verifyRelation("morphOne", $relation, RelationMorphOne::class);
+
+        $field->setAttribute('morph_type', $relation->getMorphType());
+        $field->setAttribute('morph_type_value', $model);
+        $field->setAttribute('foreign_key', $relation->getForeignKeyName());
+        $field->setAttribute('local_key_name', $relation->getLocalKeyName());
 
         return $field;
     }

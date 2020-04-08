@@ -56,6 +56,11 @@ class CrudController extends Controller
         $translatedAttributes = $this->translatable ? $data->translatedAttributes() : null;
     }
 
+    public function all(CrudReadRequest $request)
+    {
+        return $this->model::all();
+    }
+
     /**
      * Display a listing of the resource.
      *

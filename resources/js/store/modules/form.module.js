@@ -1,32 +1,35 @@
 import Vue from 'vue';
 
 const state = {
-    config: null
+    config: null,
 };
 
 const getters = {
     form(state) {
         return state;
-    }
+    },
+    formConfig(state) {
+        return state.config;
+    },
 };
 
 const mutations = {
     SET_FORM_CONFIG(state, config) {
         state.config = config;
-    }
+    },
 };
 
 const actions = {
     setFormConfig({ commit }, config) {
         commit('SET_FORM_CONFIG', config);
-    }
+    },
 };
 
 const module = {
     state,
     getters,
     mutations,
-    actions
+    actions,
 };
 
 export default module;

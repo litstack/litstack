@@ -3,9 +3,12 @@
 namespace Fjord\Form\FormFields;
 
 use Illuminate\Support\Str;
+use Fjord\Form\FormFields\Traits\Relation;
 
 class BelongsToMany
 {
+    use Relation;
+
     const TRANSLATABLE = false;
 
     const REQUIRED = [
@@ -19,4 +22,11 @@ class BelongsToMany
     const DEFAULTS = [
         'readonly' => false,
     ];
+
+    public static function prepare($field, $path)
+    {
+        $field = self::prepareRelation($field, $path);
+
+        return $field;
+    }
 }
