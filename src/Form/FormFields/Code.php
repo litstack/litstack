@@ -16,7 +16,7 @@ class Code
     const DEFAULTS = [
         'readonly' => false,
         'tab_size' => 4,
-        'theme' => 'paraiso-light',
+        'theme' => 'default',
         'line_numbers' => true,
         'line' => true,
         'language' => 'text/html'

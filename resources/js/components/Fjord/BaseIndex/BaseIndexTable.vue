@@ -1,11 +1,12 @@
 <template>
     <b-table-simple :aria-busy="busy" hover>
-        <fj-colgroup :icons="['check']" :cols="tableCols" />
+        <fj-base-colgroup :icons="['check']" :cols="tableCols" />
 
-        <fj-crud-index-table-head
+        <fj-base-index-table-head
             :tableCols="tableCols"
             :hasRecordActions="hasRecordActions"
             :selectedItems="selectedItems"
+            @sort="sort"
         >
             <b-checkbox
                 slot="checkbox"
@@ -14,7 +15,7 @@
                 :indeterminate.sync="indeterminate"
                 @change="changeSelectedItems"
             />
-        </fj-crud-index-table-head>
+        </fj-base-index-table-head>
 
         <tbody>
             <tr role="row" class="b-table-busy-slot" v-if="busy">
@@ -31,7 +32,7 @@
                     "
                 >
                     <template v-for="(col, col_key) in tableCols">
-                        <td v-if="col.key == 'check'">
+                        <td v-if="col.value == 'check'">
                             <b-checkbox
                                 v-model="selectedItems"
                                 :value="item.id"
@@ -45,6 +46,7 @@
                                 :is="col.component"
                                 :item="item"
                                 :col="col"
+                                v-bind="getColComponentProps(col.props, item)"
                             />
                         </td>
                         <td
@@ -52,7 +54,7 @@
                             @click="openLink(col.link, item)"
                             :class="col.link ? 'pointer' : ''"
                         >
-                            <fj-base-table-col :item="item" :col="col" />
+                            <fj-table-col :item="item" :col="col" />
                         </td>
                     </template>
                     <td v-if="hasRecordActions">
@@ -104,13 +106,11 @@ export default {
     watch: {
         selectedItems(val) {
             this.$emit('selectedItemsChanged', val);
-
             if (val.length == this.items.length) {
                 this.selectedAll = true;
                 this.indeterminate = false;
                 return;
             }
-
             this.selectedAll = false;
             this.indeterminate = val.length > 0 ? true : false;
         }
@@ -122,6 +122,23 @@ export default {
         }
     },
     methods: {
+        sort(sort) {
+            this.$emit('sort', sort);
+        },
+        getColComponentProps(props, item) {
+            if (!props) {
+                return {};
+            }
+
+            let compiled = {};
+
+            for (let name in props) {
+                let prop = props[name];
+                compiled[name] = this._format(prop, item);
+            }
+
+            return compiled;
+        },
         _loadItems() {
             this.$emit('loadItems');
         },

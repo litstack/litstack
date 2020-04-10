@@ -4,10 +4,21 @@
             <template v-for="(field, index) in m.form_fields">
                 <div
                     :class="fieldWidth(field)"
-                    v-if="ids.length < 1 || ids.includes(field.id)"
+                    v-if="
+                        ids.length < 1 ||
+                            (ids.includes(field.id) && field.authorize)
+                    "
                 >
                     <fj-form-input
                         v-if="field.type == 'input'"
+                        :model="m"
+                        :field="field"
+                        :readonly="readonly(field)"
+                        @changed="changed(field, m)"
+                    />
+
+                    <fj-form-icon
+                        v-if="field.type == 'icon'"
                         :model="m"
                         :field="field"
                         :readonly="readonly(field)"
@@ -198,7 +209,9 @@ export default {
             return field.width !== undefined ? `col-${field.width}` : 'col-12';
         },
         readonly(field) {
-            return field.readonly || !this.form.config.permissions.update;
+            return (
+                field.readonly === true || !this.form.config.permissions.update
+            );
         }
     },
     computed: {

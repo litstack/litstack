@@ -30,12 +30,12 @@ class FjordForm extends Command
      */
     public function handle()
     {
-        $this->info("    ______ _                   __   ______ ____   __  __ ____  ");
-        $this->info("   / ____/(_)____   _____ ____/ /  / ____// __ \ / / / // __ \ ");
-        $this->info("  / /_   / // __ \ / ___// __  /  / /    / /_/ // / / // / / / ");
-        $this->info(" / __/  / // /_/ // /   / /_/ /  / /___ / _, _// /_/ // /_/ /  ");
-        $this->info("/_/  __/ / \____//_/    \__,_/   \____//_/ |_| \____//_____/   ");
-        $this->info("    /___/                                                      ");
+        $this->info("    _______                __   ______                   ");
+        $this->info("   / ____(_)___  _________/ /  / ____/___  _________ ___ ");
+        $this->line("<info>  / /_  / / __ \/ ___/ __  /  / /_  / __ \/ ___/ __ `__ \\");
+        $this->info(" / __/ / / /_/ / /  / /_/ /  / __/ / /_/ / /  / / / / / /");
+        $this->info("/_/ __/ /\____/_/   \__,_/  /_/    \____/_/  /_/ /_/ /_/ ");
+        $this->info("   /___/                                                 ");
 
         $collection = $this->ask('enter the collection name (snake_case, plural)');
         $formName = $this->ask('enter the form name (snake_case)');

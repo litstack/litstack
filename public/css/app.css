@@ -16138,6 +16138,52 @@ input[type=color].form-control:disabled {
   color: #6c757d !important;
 }
 
+.btn-input {
+  color: #212529;
+  background-color: white;
+  border-color: #ced4da;
+  color: #495057;
+}
+
+.btn-input:hover {
+  color: #212529;
+  background-color: #f8f9fa;
+  border-color: #ced4da;
+}
+
+.btn-input:focus,
+.btn-input.focus {
+  color: #212529;
+  background-color: #f8f9fa;
+  border-color: #ced4da;
+  box-shadow: 0 0 0 0.2rem rgba(180, 186, 191, 0.5);
+}
+
+.btn-input.disabled,
+.btn-input:disabled {
+  color: #212529;
+  background-color: white;
+  border-color: #ced4da;
+}
+
+.btn-input:not(:disabled):not(.disabled):active,
+.btn-input:not(:disabled):not(.disabled).active,
+.show > .btn-input.dropdown-toggle {
+  color: #212529;
+  background-color: #f8f9fa;
+  border-color: #ced4da;
+}
+
+.btn-input:not(:disabled):not(.disabled):active:focus,
+.btn-input:not(:disabled):not(.disabled).active:focus,
+.show > .btn-input.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(180, 186, 191, 0.5);
+}
+
+.btn-input:active {
+  color: #495057 !important;
+}
+
 .fjord-brand {
   padding-top: 1px;
   height: 26px;

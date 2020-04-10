@@ -19,6 +19,10 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        readonly: {
+            required: true,
+            type: Boolean
         }
     },
     data() {

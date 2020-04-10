@@ -20,6 +20,7 @@
                     </b-badge>
 
                     <b-input
+                        v-bind:readonly="readonly"
                         :size="'sm'"
                         :value="getCustomProperty(image, 'title')"
                         @input="changed($event, 'title', image)"
@@ -31,6 +32,7 @@
                         <small>{{ language }}</small>
                     </b-badge>
                     <b-input
+                        v-bind:readonly="readonly"
                         :size="'sm'"
                         :value="getCustomProperty(image, 'alt')"
                         @input="changed($event, 'alt', image)"
@@ -42,10 +44,12 @@
             <button
                 @click.prevent="destroy(image.id, index)"
                 class="btn btn-danger btn-sm"
+                v-if="!readonly"
             >
                 <i class="far fa-trash-alt"></i>
                 delete
             </button>
+            <div v-else />
             <button
                 @click.prevent="
                     $bvModal.hide(`fjord-image-${field.id}-${image.id}`)
@@ -78,6 +82,14 @@ export default {
         imgPath: {
             type: Function,
             required: true
+        },
+        model: {
+            required: true,
+            type: Object
+        },
+        readonly: {
+            required: true,
+            type: Boolean
         }
     },
     methods: {
@@ -118,12 +130,22 @@ export default {
             return image.custom_properties[this.language][key];
         },
         async destroy(id, index) {
-            let response = await axios.delete(`media/${id}`);
+            let model_id =
+                this.model.route == 'form_blocks'
+                    ? this.model.model_id
+                    : this.model.id;
+            let response = await axios.delete(
+                `${this.form.config.route}/${model_id}/media/${id}`
+            );
+            console.log(
+                'DELETED',
+                this.$t('fj.deleted_item', { item: 'Item' })
+            );
             this.$emit('delete', index);
         }
     },
     computed: {
-        ...mapGetters(['language'])
+        ...mapGetters(['language', 'form'])
     }
 };
 </script>

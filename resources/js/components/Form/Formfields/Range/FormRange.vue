@@ -1,14 +1,20 @@
 <template>
-    <fj-form-item :field="field" :model="model" :value="value">
-
-        <b-form-input
-            :value="model[`${field.id}Model`]"
-            @input="changed"
-            type="range"
-            :min="field.min"
-            :max="field.max"
-            :step="field.step">
-        </b-form-input>
+    <fj-form-item :field="field" :model="model">
+        <b-input-group>
+            <b-form-input
+                :value="model[`${field.id}Model`]"
+                @input="changed"
+                type="range"
+                number
+                :min="field.min"
+                :max="field.max"
+                :step="field.step"
+                v-bind:disabled="readonly"
+            />
+            <b-input-group-append is-text class="text-monospace">
+                {{ value }}
+            </b-input-group-append>
+        </b-input-group>
 
         <slot />
     </fj-form-item>
@@ -25,6 +31,10 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        readonly: {
+            required: true,
+            type: Boolean
         }
     },
     data() {

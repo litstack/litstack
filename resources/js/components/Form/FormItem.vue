@@ -1,5 +1,5 @@
 <template>
-    <div class="pb-4 fjord-form">
+    <div :class="`pb-4 fjord-form fj-form-item-${field.id}`">
         <h5 class="mb-0">
             <label :for="field.id">{{ field.title }}</label>
             <b-badge v-if="field.translatable" variant="primary">

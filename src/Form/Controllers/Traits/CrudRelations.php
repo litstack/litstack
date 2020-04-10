@@ -2,7 +2,6 @@
 
 namespace Fjord\Form\Controllers\Traits;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Fjord\Form\Database\FormRelation;
 use Fjord\Form\Requests\CrudReadRequest;
@@ -23,6 +22,42 @@ trait CrudRelations
         $model = $this->model::findOrFail($id);
 
         return $model->$relation()->get();
+    }
+
+    public function orderRelation(CrudUpdateRequest $request, $id, $relation)
+    {
+        $ids = $request->ids;
+
+        if (!$ids) {
+            abort(404);
+        }
+
+        $model = $this->model::findOrFail($id);
+        $formField = $model->findFormField($relation);
+        if (!$formField) {
+            abort(404);
+        }
+        $relations = $model->$relation()->get();
+
+        $relationInstance = $model->$relation();
+
+        foreach ($ids as $order => $id) {
+            //dd($relationInstance);
+            $table = $relationInstance->getTable();
+            //DB::table($table)->where('id', $id)->update('order_col');
+            $relation = $relations->where('id', $id)->first();
+
+            if (!$relation) {
+                continue;
+            }
+            if ($relation->pivot) {
+                $relation->pivot->order_column = $order;
+                $relation->pivot->save();
+            } else {
+                $relation->order_column = $order;
+                $relation->save();
+            }
+        }
     }
 
     public function deleteRelation(CrudUpdateRequest $request, $id, $relation, $relation_id)
@@ -131,110 +166,4 @@ trait CrudRelations
             ]);
         }
     }
-
-    /*
-    public function relationIndex(Int $id, $relation)
-    {
-        // TODO: Kann weg.
-        $className = $this->model;
-        $model = new $className();
-
-        $relations = $model->find($id)->$relation()->get();
-
-        $eloquentModels = [];
-        foreach ($relations as $relation) {
-            $eloquentModels[] = ($relation->eloquentJs('fjord'));
-        }
-        return $eloquentModels;
-    }
-    */
-    /*
-    public function relationStore(Int $id, $relation)
-    {
-        $className = $this->model;
-        $model = new $className();
-
-
-        $foreign_key = $this->getForm($model)->form_fields->firstWhere('id', $relation)->foreign_key;
-
-        $relationName = $model->find($id)->$relation();
-
-        $relationClassName = get_class($relationName->getRelated());
-        $relation = new $relationClassName();
-
-        $relation[$foreign_key] = $id;
-
-        return $relation->eloquentJs('fjord');
-    }
-
-    public function relationRemove(Int $id, $relation, Int $foreign_id)
-    {
-        $className = $this->model;
-        $model = new $className();
-
-        $foreign_key = $this->getForm($model)->form_fields->firstWhere('id', $relation)->foreign_key;
-
-        $relationName = $model->find($id)->$relation();
-
-        $relationClassName = get_class($relationName->getRelated());
-        $relation = new $relationClassName();
-
-        $relation = $relation::find($foreign_id)->update([
-            $foreign_key => null
-        ]);
-
-        return response()->json([
-            'success' => true
-        ]);
-    }
-
-    public function relationDestroy(Int $id, $relation, Int $foreign_id)
-    {
-        $className = $this->model;
-        $model = new $className();
-
-        $foreign_key = $this->getForm($model)->form_fields->firstWhere('id', $relation)->foreign_key;
-
-        $relationName = $model->find($id)->$relation();
-
-        $relationClassName = get_class($relationName->getRelated());
-        $relation = new $relationClassName();
-
-        $relation = $relation::find($foreign_id)->delete();
-
-        return response()->json([
-            'success' => true
-        ]);
-    }
-
-    public function unrelatedRelation(Request $request)
-    {
-        $className = $request->model;
-        $model = new $className();
-
-        $relations = $model->where($request->foreign_key,  '')
-            ->orWhereNull($request->foreign_key)
-            ->get();
-
-        $eloquentModels = [];
-        foreach ($relations as $relation) {
-            $eloquentModels[] = ($relation->eloquentJs('fjord'));
-        }
-        return $eloquentModels;
-    }
-
-    public function relationLink(Request $request)
-    {
-        $className = $request->model;
-        $model = new $className();
-
-        $relations = $model->find($request->id)->update([
-            $request->foreign_key => $request->foreign_id
-        ]);
-
-        return response()->json([
-            'success' => true
-        ]);
-    }
-    */
 }

@@ -37,6 +37,7 @@ export default class EloquentModel {
     }
 
     isCollection(config) {
+        console.log('data:', config.data);
         return Array.isArray(config.data) || !config.data;
     }
 
@@ -104,6 +105,11 @@ export default class EloquentModel {
      */
     async save() {
         let method = this.attributes.id ? 'put' : 'post';
+
+        if (this.route == 'form_fields') {
+            this.route = store.state.form.config.route;
+        }
+
         let route = `${this.route}/${
             this.attributes.id ? this.attributes.id : ''
         }`;

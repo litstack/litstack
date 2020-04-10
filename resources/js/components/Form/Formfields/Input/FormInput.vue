@@ -46,6 +46,12 @@ export default {
         };
     },
     beforeMount() {
+        if (
+            this.model[`${this.field.id}Model`] === null &&
+            this.field.default
+        ) {
+            this.model[`${this.field.id}Model`] = this.field.default;
+        }
         this.init();
         this.$bus.$on('modelLoaded', () => {
             this.init();

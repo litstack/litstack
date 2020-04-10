@@ -4,15 +4,7 @@ namespace Fjord\Form;
 
 use Illuminate\Support\Str;
 use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
-use Fjord\Support\Facades\Fjord;
 use Fjord\Support\Facades\FjordRoute;
-use Fjord\Form\Controllers\MediaController;
-use Fjord\Form\Controllers\FormController;
-use Fjord\Form\Controllers\FormBlockController;
-use Fjord\Form\Controllers\FormMorphOneController;
-use Fjord\Form\Controllers\FormBelongsToManyController;
-use Fjord\Form\Controllers\FormHasManyController;
-use Fjord\Form\Controllers\FormRelationsController;
 use Fjord\Support\Facades\Package;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
@@ -36,7 +28,11 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             $this->package->addNavPreset("crud.{$crud}", [
                 'link' => route("fjord.aw-studio.fjord.crud.{$crud}.index"),
                 'title' => ucfirst($crud),
-                'permission' => "read {$crud}"
+                'permission' => "read {$crud}",
+                'authorize' => function () use ($crud) {
+                    $config = collect($this->package->rawConfig('crud' . $crud));
+                    $controller = $config['controller'];
+                }
             ]);
         }
 
@@ -67,11 +63,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
         $this->package = Package::get('aw-studio/fjord');
 
-        $this->mapFormFieldRoutes();
         $this->mapFormRoutes();
         $this->mapCrudRoutes();
-        $this->mapFormBlockRoutes();
-        $this->mapMediaRoutes();
     }
 
     protected function mapCrudRoutes()
@@ -103,6 +96,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             $this->package->route()->delete("{$crud}/{id}/blocks/{block_id}", $config['controller'] . "@destroyBlock")
                 ->name("crud.{$crud}.blocks.destroy");
 
+            $this->package->route()->put("/{$crud}/{id}/relation/{relation}/order", $namespace . "@orderRelation")
+                ->name("crud.{$crud}.relation.order");
             $this->package->route()->delete("/{$crud}/{id}/relation/{relation}/{relation_id}", $namespace . "@deleteRelation")
                 ->name("crud.{$crud}.relation.delete");
             $this->package->route()->post("/{$crud}/{id}/relation/{relation}/{relation_id}", $namespace . "@createRelation")
@@ -110,6 +105,14 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
             $this->package->route()->post("/{$crud}/index", $namespace . "@postIndex")
                 ->name("crud.{$crud}.post_index");
+
+            $this->package->route()->put("/{$crud}/{id}/media/{media_id}", $namespace . '@updateMedia')
+                ->name("crud.{$crud}.media.update");
+            $this->package->route()->post("/{$crud}/{id}/media", $namespace . '@storeMedia')
+                ->name("crud.{$crud}.media.store");
+            $this->package->route()->delete("/{$crud}/{id}/media/{media_id}", $namespace . '@destroyMedia')
+                ->name("crud.{$crud}.media.destroy");
+
 
             /*
             $this->package->route()->get("/{$crud}/{id}/relations/{relation}", $namespace . "@relationIndex");
@@ -150,30 +153,22 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 $this->package->route()->delete("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/blocks/{block_id}", $config['controller'] . "@destroyBlock")
                     ->name("form.{$collection}.{$formName}.blocks.destroy");
 
+                $this->package->route()->put("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/relation/{relation}/order", $config['controller'] . "@orderRelation")
+                    ->name("form.{$collection}.{$formName}.relation.order");
                 $this->package->route()->delete("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/relation/{relation}/{relation_id}",  $config['controller'] . "@deleteRelation")
-                    ->name("form_fields.relation.delete");
+                    ->name("form.{$collection}.{$formName}.relation.delete");
                 $this->package->route()->post("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/relation/{relation}/{relation_id}", $config['controller'] . "@createRelation")
-                    ->name("form_fields.relation.store");
+                    ->name("form.{$collection}.{$formName}.relation.store");
+
+                $this->package->route()->put("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/media/{media_id}", $config['controller'] . '@updateMedia')
+                    ->name("form.{$collection}.{$formName}.media.update");
+                $this->package->route()->post("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/media", $config['controller'] . '@storeMedia')
+                    ->name("form.{$collection}.{$formName}.media.store");
+                $this->package->route()->delete("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/media/{media_id}", $config['controller'] . '@destroyMedia')
+                    ->name("form.{$collection}.{$formName}.media.destroy");
 
                 $this->package->route()->put("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}", $config['controller'] . "@update")->name('form_field.update');
             }
         }
-    }
-
-    protected function mapFormFieldRoutes()
-    {
-    }
-
-    protected function mapFormBlockRoutes()
-    {
-        $this->package->route()->post('form_blocks', FormBlockController::class . "@store")->name('form_block.store');
-        $this->package->route()->put('form_blocks/{id}', FormBlockController::class . "@update")->name('form_block.update');
-    }
-
-    protected function mapMediaRoutes()
-    {
-        $this->package->route()->put('/media/attributes', MediaController::class . '@attributes')->name('media.attributes');
-        $this->package->route()->post('/media', MediaController::class . '@store')->name('media.store');
-        $this->package->route()->delete('/media/{medium}', MediaController::class . '@destroy')->name('media.destroy');
     }
 }

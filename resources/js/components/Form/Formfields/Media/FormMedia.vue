@@ -3,7 +3,7 @@
         <template v-if="model.id">
             <div class="w-100">
                 <b-row>
-                    <div class="col-12 order-2">
+                    <div class="col-12 order-2" v-if="!readonly">
                         <vue-dropzone
                             class="fjord-dropzone"
                             :ref="`dropzone-${field.id}`"
@@ -15,7 +15,18 @@
                         ></vue-dropzone>
                     </div>
                     <div class="col-12 order-1">
-                        <fj-form-media-images :field="field" :images="images" />
+                        <fj-form-media-images
+                            :field="field"
+                            :images="images"
+                            :model="model"
+                            :readonly="readonly"
+                            v-if="images.length > 0"
+                        />
+                        <fj-form-alert-empty
+                            v-else
+                            :field="field"
+                            :class="{ 'mb-0': readonly }"
+                        />
                     </div>
                 </b-row>
             </div>
@@ -58,10 +69,7 @@
             </b-modal>
         </template>
         <template v-else>
-            <b-alert show variant="warning"
-                >{{ form.config.names.title.singular }} has to be created in
-                order to add <i>{{ field.title }}</i></b-alert
-            >
+            <fj-form-alert-not-created :field="field" class="mb-0" />
         </template>
     </fj-form-item>
 </template>
@@ -89,6 +97,10 @@ export default {
             default: function() {
                 return [];
             }
+        },
+        readonly: {
+            required: true,
+            type: Boolean
         }
     },
     components: {
@@ -100,7 +112,7 @@ export default {
             images: [],
             uploads: 0,
             dropzoneOptions: {
-                url: `${this.baseURL}media`,
+                url: '',
                 transformFile: this.transformFile,
                 parallelUploads: 1,
                 autoProcessQueue: false,
@@ -118,7 +130,7 @@ export default {
                     'X-Requested-With': 'XMLHttpRequest'
                 },
                 params: {
-                    id: this.id,
+                    model_id: this.id,
                     collection: this.field.id,
                     model: this.model.model
                 }
@@ -133,7 +145,12 @@ export default {
         }
     },
     beforeMount() {
-        this.dropzoneOptions.url = `${this.baseURL}media`;
+        console.log(this.model);
+        let id =
+            this.model.route == 'form_blocks'
+                ? this.model.model_id
+                : this.model.id;
+        this.dropzoneOptions.url = `${this.baseURL}${this.form.config.route}/${id}/media`;
 
         this.images = this.media;
         // TODO: FIX FOR BLOCK
@@ -199,7 +216,7 @@ export default {
             });
         },
         uploadError(file, errorMessage, xhr) {
-            this.$bvToast.toast(errorMessage, {
+            this.$bvToast.toast(errorMessage.message, {
                 variant: 'danger',
                 noAutoHide: true
             });
@@ -293,3 +310,8 @@ export default {
     }
 };
 </script>
+<style>
+.dz-error-message {
+    disaply: none !important;
+}
+</style>

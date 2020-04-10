@@ -4,6 +4,7 @@
             :class="`fj-code-${field.id}`"
             :value="model[`${field.id}Model`]"
             :options="options"
+            v-bind:readonly="readonly"
             @input="changed"
             @blur="blur"
             @focus="focus"
@@ -43,6 +44,10 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        readonly: {
+            required: true,
+            type: Boolean
         }
     },
     beforeMount() {
@@ -50,6 +55,11 @@ export default {
         this.$bus.$on('modelLoaded', () => {
             this.init();
         });
+    },
+    mounted() {
+        if (this.readonly) {
+            this.options.readOnly = true;
+        }
     },
     methods: {
         init() {
@@ -75,7 +85,9 @@ export default {
                 mode: this.field.language,
                 theme: this.field.theme,
                 lineNumbers: this.field.line_numbers,
-                line: this.field.line
+                line: this.field.line,
+                readOnly: false,
+                tabSize: 4
             }
         };
     }
@@ -149,7 +161,7 @@ export default {
 
 .vue-codemirror {
     width: 100%;
-    font-size: 1rem;
+    //font-size: 1rem;
 
     @include border-radius($input-border-radius, 0);
 
@@ -169,6 +181,23 @@ export default {
     .CodeMirror {
         @include border-radius($input-border-radius, 0);
         height: auto;
+
+        @include font-size($input-font-size);
+        border: $input-border-width solid $input-border-color;
+        font-weight: $input-font-weight;
+
+        .CodeMirror-gutters {
+            padding: $input-padding-y 0;
+        }
+        .CodeMirror-lines {
+            padding: $input-padding-y 0;
+        }
+    }
+
+    &[readonly] {
+        .CodeMirror {
+            background-color: $input-disabled-bg;
+        }
     }
 }
 </style>

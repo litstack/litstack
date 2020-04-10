@@ -1,7 +1,6 @@
 <template>
     <fj-form-item :field="field" :model="model">
-        <b-form-checkbox v-model="selected" name="check-button" switch>
-        </b-form-checkbox>
+        <b-form-checkbox v-model="selected" name="check-button" switch />
 
         <slot />
     </fj-form-item>
@@ -17,6 +16,10 @@ export default {
         },
         model: {
             required: true
+        },
+        readonly: {
+            required: true,
+            type: Boolean
         }
     },
     data() {

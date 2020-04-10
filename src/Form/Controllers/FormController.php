@@ -10,11 +10,15 @@ use Fjord\Form\FormFieldCollection;
 use Fjord\Form\Database\FormRelation;
 use Fjord\Support\Facades\FormLoader;
 use Illuminate\Support\Facades\Route;
+
 use Fjord\Form\Requests\FormReadRequest;
 use Fjord\Form\Requests\FormUpdateRequest;
 
 abstract class FormController
 {
+    use Traits\FormMedia,
+        Traits\FormRelations;
+
     /**
      * Authorize request for operation.
      *
@@ -101,25 +105,29 @@ abstract class FormController
     {
         $formFields = [];
 
+        $i = 0;
         foreach ($this->form->form_fields as $key => $field) {
-
-            $formFields[$key] = FormField::firstOrCreate(
+            if (!$field['authorize']) {
+                continue;
+            }
+            $formFields[$i] = FormField::firstOrCreate(
                 ['collection' => $collection, 'form_name' => $form_name, 'field_id' => $field->id],
                 ['content' => $field->default ?? null]
             )->append('last_edit');
 
             if ($field->type == 'block') {
-                $formFields[$key]->withRelation($field->id);
+                $formFields[$i]->withRelation($field->id);
             }
 
             if ($field->type == 'relation') {
-                $formFields[$key]->setFormRelation();
+                $formFields[$i]->setFormRelation();
             }
             /*
             if($field['type'] == 'image') {
                 $formFields[$key]->withRelation($field['id']);
             }
             */
+            $i++;
         }
 
         return eloquentJs(collect($formFields), FormField::class);
@@ -140,121 +148,5 @@ abstract class FormController
 
         $this->formPath = $formFieldInstance->form_fields_path;
         $this->form = FormLoader::load($this->formPath, FormField::class);
-    }
-
-    /**
-     * Delete relation.
-     *
-     * @param FormUpdateRequest $request
-     * @param int $id
-     * @param string $relation
-     * @param int $relation_id
-     * @return void
-     */
-    public function deleteRelation(FormUpdateRequest $request, $id, $relation, $relation_id)
-    {
-        // First we check if both crud model with the ID and relation model with 
-        // the ID exist, no relations should be deleted for non existing records.
-        $model = FormField::findOrFail($id);
-        $formField = $model->findFormField($relation);
-        if (!$formField) {
-            abort(404);
-        }
-        $relationModel = $model->$relation()->findOrFail($relation_id);
-
-        // Delete relation for form field "relation"
-        return FormRelation::where('from_model_type', get_class($model))
-            ->where('from_model_id', $id)
-            ->where('to_model_type', get_class($relationModel))
-            ->where('to_model_id', $relation_id)
-            ->delete();
-    }
-
-    /**
-     * Create relation
-     *
-     * @param FormUpdateRequest $request
-     * @param int $id
-     * @param string $relation
-     * @param int $relation_id
-     * @return void
-     */
-    public function createRelation(FormUpdateRequest $request, $id, $relation, $relation_id)
-    {
-        // First we check if both crud model with the ID and relation model with 
-        // the ID exist, no relations should be created for non existing records.
-        $model = FormField::findOrFail($id);
-        $formField = $model->findFormField($relation);
-        if (!$formField) {
-            abort(404);
-        }
-        $relationModel = $formField->query->findOrFail($relation_id);
-
-        // Create relation for form field "relation"
-        $query = [
-            'from_model_type' => FormField::class,
-            'from_model_id' => $id,
-            'to_model_type' => $formField->model,
-            'to_model_id' => $relation_id,
-        ];
-        if (FormRelation::where($query)->exists()) {
-            abort(422, __f("fj.already_selected"));
-        }
-        return FormRelation::create($query);
-    }
-
-    /**
-     * Store new form_block.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return void
-     */
-    public function storeBlock(FormUpdateRequest $request, $id)
-    {
-        $model = FormField::findOrFail($id);
-
-        $block = new FormBlock();
-        $block->type = $request->type;
-        $block->model_type = FormField::class;
-        $block->model_id = $model->id;
-        $block->field_id = $request->field_id;
-        $block->value = $request->value;
-        $block->order_column = $request->order_column;
-        $block->save();
-
-        return $block->eloquentJs();
-    }
-
-    /**
-     * Update form_block.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return void
-     */
-    public function updateBlock(FormUpdateRequest $request, $id, $block_id)
-    {
-        $block = FormBlock::where('model_type', FormField::class)
-            ->where('model_id', $id)->findOrFail($block_id);
-
-        $block->update($request->all());
-
-        return $block;
-    }
-
-    /**
-     * Update form_block.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return void
-     */
-    public function destroyBlock(FormUpdateRequest $request, $id, $block_id)
-    {
-        $block = FormBlock::where('model_type', FormField::class)
-            ->where('model_id', $id)->findOrFail($block_id);
-
-        return $block->delete();
     }
 }

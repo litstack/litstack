@@ -3,10 +3,14 @@
         <template v-if="model.id">
             <b-card class="fjord-block no-fx">
                 <div v-if="!!relations.length">
-                    <b-table-simple outlined table-variant="light">
-                        <fj-colgroup
+                    <b-table-simple
+                        outlined
+                        table-variant="light"
+                        :class="{ 'mb-0': readonly }"
+                    >
+                        <fj-base-colgroup
                             :icons="['drag', 'controls']"
-                            :cols="fields"
+                            :cols="cols"
                         />
 
                         <draggable
@@ -22,21 +26,21 @@
                             >
                                 <b-td
                                     style="vertical-align: middle;"
-                                    v-for="(field, key) in fields"
+                                    v-for="(col, key) in cols"
                                     :key="`td-${key}`"
                                     class="position-relative"
-                                    :test="field.key"
+                                    :test="col.value"
                                     v-if="
-                                        !(field.key == 'drag' && field.readonly)
+                                        !(col.value == 'drag' && field.readonly)
                                     "
                                     :class="
-                                        field.key == 'drag'
+                                        col.value == 'drag'
                                             ? 'fjord-draggable__dragbar'
                                             : ''
                                     "
                                 >
                                     <div
-                                        v-if="field.key == 'drag'"
+                                        v-if="col.value == 'drag'"
                                         class="text-center text-muted"
                                     >
                                         <fa-icon
@@ -46,29 +50,28 @@
                                     </div>
 
                                     <div
-                                        v-else-if="field.key == 'controls'"
+                                        v-else-if="col.value == 'controls'"
                                         class="d-flex table-controls"
                                     >
                                         <b-button-group size="sm">
                                             <b-button
                                                 v-if="
-                                                    hasEditLink(field) &&
-                                                        (can(
-                                                            `update ${field.edit}`
-                                                        ) ||
-                                                            can(
-                                                                `read ${field.edit}`
-                                                            ))
+                                                    can(
+                                                        `update ${field.route}`
+                                                    ) ||
+                                                        can(
+                                                            `read ${field.route}`
+                                                        )
                                                 "
                                                 :href="
-                                                    `${baseURL}${field.edit}/${relation.id}/edit`
+                                                    `${baseURL}${field.route}/${relation.id}/edit`
                                                 "
                                                 class="btn-transparent d-flex align-items-center"
                                             >
                                                 <fa-icon
                                                     :icon="
                                                         can(
-                                                            `update ${field.edit}`
+                                                            `update ${field.route}`
                                                         )
                                                             ? 'edit'
                                                             : 'eye'
@@ -76,25 +79,28 @@
                                                 />
                                             </b-button>
                                             <b-button
-                                                v-if="!field.readonly"
+                                                v-if="!readonly"
                                                 class="btn-transparent"
                                                 @click="
-                                                    showModal(
-                                                        `modal-${field.edit}-${relation.id}`
-                                                    )
+                                                    field.confirm_unlink
+                                                        ? showModal(
+                                                              `modal-${field.route}-${relation.id}`
+                                                          )
+                                                        : removeRelation(
+                                                              relation.id
+                                                          )
                                                 "
                                             >
-                                                <fa-icon icon="trash" />
+                                                <fa-icon icon="unlink" />
                                             </b-button>
                                         </b-button-group>
                                         <b-modal
                                             :id="
-                                                `modal-${field.edit}-${relation.id}`
+                                                `modal-${field.route}-${relation.id}`
                                             "
-                                            title="Delete Item"
+                                            title="Unlink Item"
                                         >
-                                            Please confirm that you want to
-                                            delete the item
+                                            {{ $t('fj.confirm_unlink') }}
 
                                             <template v-slot:modal-footer>
                                                 <b-button
@@ -103,24 +109,32 @@
                                                     class="float-right"
                                                     @click="
                                                         $bvModal.hide(
-                                                            `modal-${field.edit}-${relation.id}`
+                                                            `modal-${field.route}-${relation.id}`
                                                         )
                                                     "
                                                 >
-                                                    {{ $t('fj.cancel') }}
+                                                    {{
+                                                        $t(
+                                                            'fj.cancel'
+                                                        ).capitalize()
+                                                    }}
                                                 </b-button>
                                                 <a
                                                     href="#"
                                                     @click.prevent="
                                                         removeRelation(
                                                             relation.id,
-                                                            field.edit
+                                                            field.route
                                                         )
                                                     "
                                                     class="fj-trash btn btn-danger btn-sm"
                                                 >
-                                                    <fa-icon icon="trash" />
-                                                    {{ $t('fj.delete') }}
+                                                    <fa-icon icon="unlink" />
+                                                    {{
+                                                        $t(
+                                                            'fj.delete'
+                                                        ).capitalize()
+                                                    }}
                                                 </a>
                                             </template>
                                         </b-modal>
@@ -128,7 +142,7 @@
                                     <div v-else>
                                         <fj-table-col
                                             :item="relation"
-                                            :col="field"
+                                            :col="col"
                                         />
                                     </div>
                                 </b-td>
@@ -137,7 +151,10 @@
                     </b-table-simple>
                 </div>
                 <div v-else>
-                    <fj-form-relation-empty :field="field" />
+                    <fj-form-alert-empty
+                        :field="field"
+                        :class="{ 'mb-0': readonly }"
+                    />
                 </div>
 
                 <b-button
@@ -162,7 +179,7 @@
             />
         </template>
         <template v-else>
-            <fj-form-relation-not-created :field="field" />
+            <fj-form-alert-not-created :field="field" class="mb-0" />
         </template>
     </fj-form-item>
 </template>
@@ -185,17 +202,21 @@ export default {
         type: {
             required: true,
             type: String
+        },
+        readonly: {
+            required: true,
+            type: Boolean
         }
     },
     data() {
         return {
             selectedItems: {},
             relations: [],
-            fields: []
+            cols: []
         };
     },
     beforeMount() {
-        this.setFields();
+        this.setCols();
 
         let items = this.model[this.field.id] || [];
 
@@ -280,58 +301,55 @@ export default {
                 return;
             }
             // close modal
-            this.$bvModal.hide(`modal-${this.field.edit}-${id}`);
+            this.$bvModal.hide(`modal-${this.field.route}-${id}`);
 
             let relation = this.relations.find(r => r.id == id);
             let index = this.relations.indexOf(relation);
 
             this.relations.splice(index, 1);
 
-            this.$bvToast.toast(this.$t('fj.relation_set'), {
+            this.$bvToast.toast(this.$t('fj.relation_unlinked'), {
                 variant: 'success'
             });
         },
         async newOrder() {
             let ids = [];
 
-            let relation_type = {
-                from_model_type: this.model.model,
-                from_model_id: this.model.id,
-                to_model_type: this.field.model
-            };
             for (let i = 0; i < this.relations.length; i++) {
                 let relation = this.relations[i];
                 ids.push(relation.id);
             }
 
             let payload = {
-                data: relation_type,
                 ids
             };
 
-            let response = await axios.put('relations/order', payload);
+            let response = await axios.put(
+                `${this.form.config.route}/${this.model.id}/relation/${this.field.id}/order`,
+                payload
+            );
 
             this.$bvToast.toast(this.$t('fj.order_changed'), {
                 variant: 'success'
             });
         },
-        setFields() {
-            if (!this.readonly && this.field.type == 'relation') {
-                this.fields.push({ key: 'drag' });
+        setCols() {
+            if (!this.readonly && this.field.sortable) {
+                this.cols.push({ value: 'drag' });
             }
 
             for (let i = 0; i < this.field.preview.length; i++) {
-                let field = this.field.preview[i];
+                let col = this.field.preview[i];
 
-                if (typeof field == typeof '') {
-                    field = { key: field };
+                if (typeof col == typeof '') {
+                    col = { value: col };
                 }
-                this.fields.push(field);
+                this.cols.push(col);
             }
-            this.fields.push({ key: 'controls' });
+            this.cols.push({ value: 'controls' });
         },
         colSize(field) {
-            if (field.key == 'trash' || field.key == 'drag') {
+            if (field.value == 'trash' || field.value == 'drag') {
                 return '10px';
             }
 
@@ -340,9 +358,6 @@ export default {
             }
 
             return '100%';
-        },
-        hasEditLink(field) {
-            return field.edit != undefined;
         }
     },
 

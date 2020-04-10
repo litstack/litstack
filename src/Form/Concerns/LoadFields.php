@@ -47,12 +47,18 @@ trait LoadFields
 
     protected function getFormFieldObjects($fields, $setDefaults)
     {
-        foreach ($fields as $key => $field) {
+        $formFields = [];
 
-            $fields[$key] = new FormField($field, $this->currentPath, $setDefaults);
+        foreach ($fields as $key => $field) {
+            $authorize = true;
+            if (array_key_exists('authorize', $field)) {
+                $authorize = $field['authorize'](fjord_user());
+            }
+            $field['authorize'] = $authorize;
+            $formFields[$key] = new FormField($field, $this->currentPath, $setDefaults);
         }
 
-        return new NestedCollection($fields);
+        return new NestedCollection($formFields);
     }
 
     protected function setFormFieldDefaults($field, $model, $location)

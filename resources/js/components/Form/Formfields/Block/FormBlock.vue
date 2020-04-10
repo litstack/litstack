@@ -7,6 +7,8 @@
                     @end="newOrder"
                     handle=".fjord-draggable__dragbar"
                     tag="b-row"
+                    :class="{ 'mb-0': readonly }"
+                    v-if="sortableRepeatables.length > 0"
                 >
                     <fj-form-block-item
                         v-for="(repeatable, index) in sortableRepeatables"
@@ -14,11 +16,20 @@
                         :repeatable="repeatable"
                         :field="field"
                         :model="model"
+                        :readonly="readonly"
                         @deleteBlock="deleteBlock"
                     />
                 </draggable>
 
+                <div v-else>
+                    <fj-form-alert-empty
+                        :field="field"
+                        :class="{ 'mb-0': readonly }"
+                    />
+                </div>
+
                 <fj-form-block-add-buttons
+                    v-if="!readonly"
                     :field="field"
                     :model="model"
                     :sortableRepeatables="sortableRepeatables"
@@ -27,11 +38,7 @@
             </div>
         </div>
         <template v-else>
-            <b-alert show variant="warning">
-                {{ form.config.names.title.singular }} has to be created in
-                order to add
-                <i>{{ field.title }}</i>
-            </b-alert>
+            <fj-form-alert-not-created :field="field" class="mb-0" />
         </template>
     </fj-form-item>
 </template>
@@ -54,6 +61,10 @@ export default {
         },
         pageName: {
             type: String
+        },
+        readonly: {
+            required: true,
+            type: Boolean
         }
     },
     data() {
@@ -82,11 +93,17 @@ export default {
         },
         async newOrder() {
             let payload = {
-                model: 'AwStudio\\Fjord\\Form\\Database\\FormBlock',
-                order: this.sortableRepeatables.map(item => item.id)
+                ids: this.sortableRepeatables.map(item => item.id)
             };
-
-            await axios.put('order', payload);
+            try {
+                let response = await axios.put(
+                    `${this.form.config.route}/${this.model.id}/relation/${this.field.id}/order`,
+                    payload
+                );
+            } catch (e) {
+                console.log(e);
+                return;
+            }
 
             this.$bvToast.toast(this.$t('fj.order_changed'), {
                 variant: 'success'

@@ -1,11 +1,21 @@
 <template>
     <fj-form-item :field="field" :model="model" :value="value">
-        <ckeditor
-            :editor="editor"
-            :config="editorConfig"
-            :value="model[`${field.id}Model`]"
-            @input="changed"
-        />
+        <template v-if="!readonly">
+            <ckeditor
+                :editor="editor"
+                :config="editorConfig"
+                :value="model[`${field.id}Model`]"
+                @input="changed"
+            />
+        </template>
+        <template v-else>
+            <div class="form-control" style="height: auto;" readonly>
+                <div
+                    v-html="model[`${field.id}Model`]"
+                    class="ck-blurred ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline"
+                ></div>
+            </div>
+        </template>
 
         <slot />
     </fj-form-item>
@@ -24,6 +34,10 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        readonly: {
+            required: true,
+            type: Boolean
         }
     },
     methods: {

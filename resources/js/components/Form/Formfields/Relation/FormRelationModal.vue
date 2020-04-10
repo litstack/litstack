@@ -35,7 +35,7 @@
                 </b-input-group>
 
                 <b-table-simple outlined hover id="relations">
-                    <fj-colgroup :icons="['check']" :cols="cols[m]" />
+                    <fj-base-colgroup :icons="['check']" :cols="cols[m]" />
 
                     <tbody>
                         <tr
@@ -48,15 +48,10 @@
                                 style="vertical-align: middle;"
                                 v-for="(col, ckey) in cols[m]"
                                 :key="ckey"
-                                :class="
-                                    col.key == 'drag'
-                                        ? 'fjord-draggable__dragbar'
-                                        : ''
-                                "
                             >
                                 <div
                                     class="custom-control custom-radio"
-                                    v-if="col.key == 'check' && !hasMany"
+                                    v-if="col.value == 'check' && !hasMany"
                                 >
                                     <input
                                         type="radio"
@@ -69,7 +64,7 @@
                                 </div>
                                 <b-checkbox
                                     class="pointer-events-none"
-                                    v-else-if="col.key == 'check' && hasMany"
+                                    v-else-if="col.value == 'check' && hasMany"
                                     :checked="itemChecked(item, m)"
                                 />
                                 <fj-table-col v-else :item="item" :col="col" />
@@ -92,22 +87,22 @@ export default {
     props: {
         field: {
             type: Object,
-            required: true,
+            required: true
         },
         model: {
             required: true,
-            type: Object,
+            type: Object
         },
         hasMany: {
             type: Boolean,
-            default: true,
+            default: true
         },
         selectedModels: {
             type: [Object, Array],
             default: () => {
                 return {};
-            },
-        },
+            }
+        }
     },
     data() {
         return {
@@ -117,7 +112,7 @@ export default {
             search: null,
             models: [],
             routes: {},
-            currentModel: '',
+            currentModel: ''
         };
     },
     beforeMount() {
@@ -144,7 +139,7 @@ export default {
             for (let key in this.models) {
                 let model = this.models[key];
                 this.cols[model] = [];
-                this.cols[model].push({ key: 'check' });
+                this.cols[model].push({ value: 'check' });
 
                 let preview = this.field.preview;
                 if ('models' in this.field) {
@@ -154,7 +149,7 @@ export default {
                     let col = preview[i];
 
                     if (typeof col == typeof '') {
-                        col = { key: col };
+                        col = { value: col };
                     }
                     this.cols[model].push(col);
                 }
@@ -164,7 +159,7 @@ export default {
             if (!(m in this.selectedModels)) {
                 return false;
             }
-            return this.selectedModels[m].find((model) =>
+            return this.selectedModels[m].find(model =>
                 model ? model.id == item.id : false
             )
                 ? true
@@ -200,11 +195,11 @@ export default {
                 this.items[model] = items;
             }
             this.$forceUpdate();
-        },
+        }
     },
     watch: {
         search(needle) {
-            $('#relations tbody tr').each(function () {
+            $('#relations tbody tr').each(function() {
                 let row = $(this);
                 let haystack = row.text();
 
@@ -214,14 +209,14 @@ export default {
                     row.hide();
                 }
             });
-        },
+        }
     },
     computed: {
         ...mapGetters(['baseURL', 'formConfig']),
         createText() {
             return this.field.form
                 ? this.$t('fj.create_model', {
-                      model: this.field.form.names.singular,
+                      model: this.field.form.names.singular
                   })
                 : this.field.model.split('\\').pop();
         },
@@ -229,8 +224,8 @@ export default {
             return this.field.form
                 ? this.field.form.names.plural
                 : this.field.title;
-        },
-    },
+        }
+    }
 };
 </script>
 

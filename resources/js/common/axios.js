@@ -42,10 +42,10 @@ const methods = {
         this.$bvToast.toast(message, { variant: 'danger' });
 
         return Promise.reject(error);
-    },
+    }
 };
 
-const setBaseUrl = (config) => {
+const setBaseUrl = config => {
     window.axios.defaults.baseURL = store.state.config.baseURL;
 };
 

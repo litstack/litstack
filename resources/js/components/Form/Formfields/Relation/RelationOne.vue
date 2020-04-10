@@ -3,28 +3,106 @@
         <template v-if="model.id">
             <b-card class="fjord-block no-fx">
                 <div v-if="model[`${field.id}Model`]">
-                    <b-table-simple outlined table-variant="light">
-                        <fj-colgroup :icons="['drag', 'trash']" :cols="cols" />
+                    <b-table-simple
+                        outlined
+                        table-variant="light"
+                        :class="{ 'mb-0': readonly }"
+                    >
+                        <fj-base-colgroup
+                            :icons="['drag', 'controls']"
+                            :cols="cols"
+                        />
 
                         <tr>
                             <b-td
                                 style="vertical-align: middle;"
+                                class="position-relative"
                                 v-for="(col, key) in cols"
                                 :key="`td-${key}`"
                             >
                                 <div
-                                    v-if="col.key == 'trash'"
-                                    class="text-center"
+                                    v-if="col.value == 'controls'"
+                                    class="d-flex table-controls"
                                 >
-                                    <a
-                                        href="#"
-                                        @click.prevent="
-                                            removeRelation(relation.id)
-                                        "
-                                        class="fj-trash text-muted"
-                                    >
-                                        <fa-icon icon="trash" />
-                                    </a>
+                                    <b-button-group size="sm">
+                                        <b-button
+                                            v-if="
+                                                can(`update ${route}`) ||
+                                                    can(`read ${route}`)
+                                            "
+                                            :href="
+                                                `${baseURL}${route}/${relation.id}/edit`
+                                            "
+                                            class="btn-transparent d-flex align-items-center"
+                                        >
+                                            <fa-icon
+                                                :icon="
+                                                    can(`update ${route}`)
+                                                        ? 'edit'
+                                                        : 'eye'
+                                                "
+                                            />
+                                        </b-button>
+                                        <b-button
+                                            v-if="!readonly"
+                                            class="btn-transparent"
+                                            @click="
+                                                field.confirm_unlink
+                                                    ? showModal(
+                                                          `modal-${route}-${relation.id}`
+                                                      )
+                                                    : removeRelation(
+                                                          relation.id,
+                                                          relation
+                                                      )
+                                            "
+                                        >
+                                            <fa-icon icon="unlink" />
+                                        </b-button>
+                                        <b-modal
+                                            :id="
+                                                `modal-${route}-${relation.id}`
+                                            "
+                                            title="Unlink Item"
+                                        >
+                                            {{ $t('fj.confirm_unlink') }}
+
+                                            <template v-slot:modal-footer>
+                                                <b-button
+                                                    variant="secondary"
+                                                    size="sm"
+                                                    class="float-right"
+                                                    @click="
+                                                        $bvModal.hide(
+                                                            `modal-${route}-${relation.id}`
+                                                        )
+                                                    "
+                                                >
+                                                    {{
+                                                        $t(
+                                                            'fj.cancel'
+                                                        ).capitalize()
+                                                    }}
+                                                </b-button>
+                                                <a
+                                                    href="#"
+                                                    @click.prevent="
+                                                        removeRelation(
+                                                            relation.id
+                                                        )
+                                                    "
+                                                    class="fj-trash btn btn-danger btn-sm"
+                                                >
+                                                    <fa-icon icon="unlink" />
+                                                    {{
+                                                        $t(
+                                                            'fj.delete'
+                                                        ).capitalize()
+                                                    }}
+                                                </a>
+                                            </template>
+                                        </b-modal>
+                                    </b-button-group>
                                 </div>
                                 <div v-else>
                                     <fj-table-col :item="relation" :col="col" />
@@ -34,10 +112,18 @@
                     </b-table-simple>
                 </div>
                 <div v-else>
-                    <fj-form-relation-empty :field="field" />
+                    <fj-form-alert-empty
+                        :field="field"
+                        :class="{ 'mb-0': readonly }"
+                    />
                 </div>
 
-                <b-button variant="secondary" size="sm" v-b-modal="modalId">
+                <b-button
+                    variant="secondary"
+                    size="sm"
+                    v-b-modal="modalId"
+                    v-if="!readonly"
+                >
                     Select {{ field.title }}
                 </b-button>
             </b-card>
@@ -53,7 +139,7 @@
             />
         </template>
         <template v-else>
-            <fj-form-relation-not-created :field="field" />
+            <fj-form-alert-not-created :field="field" class="mb-0" />
         </template>
     </fj-form-item>
 </template>
@@ -73,6 +159,10 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        readonly: {
+            required: true,
+            type: Boolean
         }
     },
     data() {
@@ -96,8 +186,16 @@ export default {
         }
 
         this.selectedModels = { [this.selectedModel]: [relation] };
+        this.route = this.field.route;
+        if ('routes' in this.field) {
+            this.route = this.field.routes[this.selectedModel];
+        }
     },
     methods: {
+        showModal(id) {
+            console.log('sjow');
+            this.$bvModal.show(id);
+        },
         setCols() {
             this.cols = [];
             let preview = this.field.preview;
@@ -108,11 +206,11 @@ export default {
                 let col = preview[i];
 
                 if (typeof col == typeof '') {
-                    col = { key: col };
+                    col = { value: col };
                 }
                 this.cols.push(col);
             }
-            this.cols.push({ key: 'trash' });
+            this.cols.push({ value: 'controls' });
         },
         async selected(item, modelName) {
             switch (this.field.type) {
@@ -164,7 +262,9 @@ export default {
             this.selectedModel = modelName;
             this.relation = item;
             this.selectedModels = { [this.selectedModel]: [this.relation] };
-
+            if ('routes' in this.field) {
+                this.route = this.field.routes[this.selectedModel];
+            }
             this.$bvModal.hide(this.modalId);
         },
         async removeRelation(item, modelName) {
@@ -191,6 +291,7 @@ export default {
                     this.$emit('changed');
                     break;
             }
+            this.$bvModal.hide(`modal-${this.route}-${item.id}`);
         },
         setItem(item) {
             item.trash = '';
@@ -198,7 +299,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['form']),
+        ...mapGetters(['form', 'baseURL']),
         modalId() {
             return `${this.model.route}-form-relation-table-${this.field.id}-${this.model.id}`;
         }

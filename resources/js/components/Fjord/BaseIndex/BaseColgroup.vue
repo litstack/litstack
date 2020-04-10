@@ -1,9 +1,6 @@
 <template>
     <colgroup>
-        <col
-            v-for="col in cols"
-            :style="{ width: colSize(col) }"
-            />
+        <col v-for="col in cols" :style="{ width: colSize(col) }" />
     </colgroup>
 </template>
 
@@ -22,46 +19,52 @@ export default {
     },
     data() {
         return {
-            widths: {
-                image: '70px'
+            componentWidths: {
+                'fj-col-image': '50px'
             }
-        }
+        };
     },
     computed: {
         percentageColsCount() {
-            let count = 0
-            for(let i=0;i<this.cols.length;i++) {
-                let col = this.cols[i]
+            let count = 0;
+            for (let i = 0; i < this.cols.length; i++) {
+                let col = this.cols[i];
 
-                if(col.type in this.widths) {
-                    continue
+                if ('width' in col) {
+                    continue;
                 }
 
-                if(this.icons.includes(col.key)) {
-                    continue
+                if (col.component in this.componentWidths) {
+                    continue;
                 }
 
-                count++
+                if (this.icons.includes(col.value)) {
+                    continue;
+                }
+
+                count++;
             }
-            return count
+            return count;
         }
     },
     methods: {
         colSize(col) {
-            if(this.icons.includes(col.key)) {
-                return '10px'
+            if (this.icons.includes(col.value)) {
+                return '10px';
             }
 
-            if(col.type in this.widths) {
-                return this.widths[col.key]
+            if ('width' in col) {
+                return col.width;
             }
 
-            return (100 / this.percentageColsCount) + '%'
+            if (col.component in this.componentWidths) {
+                return this.componentWidths[col.component];
+            }
 
+            return 100 / this.percentageColsCount + '%';
         }
     }
-}
+};
 </script>
 
-<style lang="css" scoped>
-</style>
+<style lang="css" scoped></style>

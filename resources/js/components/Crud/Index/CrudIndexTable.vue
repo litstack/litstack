@@ -11,9 +11,12 @@
                         />
 
                         <b-table-simple :aria-busy="isBusy" hover>
-                            <fj-colgroup :icons="['check']" :cols="tableCols" />
+                            <fj-base-colgroup
+                                :icons="['check']"
+                                :cols="tableCols"
+                            />
 
-                            <fj-crud-index-table-head
+                            <fj-base-index-table-head
                                 :tableCols="tableCols"
                                 :hasRecordActions="hasRecordActions"
                                 :selectedItems="selectedItems"
@@ -27,7 +30,7 @@
                                     "
                                     @change="changeSelectedItems"
                                 />
-                            </fj-crud-index-table-head>
+                            </fj-base-index-table-head>
 
                             <tbody>
                                 <tr
@@ -56,33 +59,45 @@
                                         <template
                                             v-for="(col, col_key) in tableCols"
                                         >
-                                            <td v-if="col.key == 'check'">
+                                            <td v-if="col.value == 'check'">
                                                 <b-checkbox
                                                     v-model="selectedItems"
                                                     :value="item.id"
                                                 />
                                             </td>
                                             <td
-                                                v-else-if="
-                                                    col.component !== undefined
-                                                "
-                                                class="pointer"
-                                            >
-                                                <component
-                                                    :is="col.component"
-                                                    :item="item"
-                                                    :col="col"
-                                                />
-                                            </td>
-                                            <td
                                                 v-else
-                                                @click="openItem(item)"
-                                                class="pointer"
+                                                @click="openItem(item, col)"
+                                                :class="
+                                                    col.link !== false
+                                                        ? 'pointer'
+                                                        : ''
+                                                "
                                             >
-                                                <fj-table-col
-                                                    :item="item"
-                                                    :col="col"
-                                                />
+                                                <template
+                                                    v-if="
+                                                        col.component !==
+                                                            undefined
+                                                    "
+                                                >
+                                                    <component
+                                                        :is="col.component"
+                                                        :item="item"
+                                                        :col="col"
+                                                        v-bind="
+                                                            getColComponentProps(
+                                                                col.props,
+                                                                item
+                                                            )
+                                                        "
+                                                    />
+                                                </template>
+                                                <template v-else>
+                                                    <fj-table-col
+                                                        :item="item"
+                                                        :col="col"
+                                                    />
+                                                </template>
                                             </td>
                                         </template>
                                         <td v-if="hasRecordActions">
@@ -205,7 +220,7 @@ export default {
         });
     },
     computed: {
-        ...mapGetters(['form', 'crud']),
+        ...mapGetters(['form', 'crud', 'baseURL']),
         hasRecordActions() {
             return this.recordActions.length > 0;
         },
@@ -214,6 +229,20 @@ export default {
         }
     },
     methods: {
+        getColComponentProps(props, item) {
+            if (!props) {
+                return {};
+            }
+
+            let compiled = {};
+
+            for (let name in props) {
+                let prop = props[name];
+                compiled[name] = this._format(prop, item);
+            }
+
+            return compiled;
+        },
         async loadItems() {
             this.isBusy = true;
             try {
@@ -255,7 +284,7 @@ export default {
             this.tableCols = [];
 
             this.tableCols.push({
-                key: 'check',
+                value: 'check',
                 label: 'Check'
             });
 
@@ -263,18 +292,21 @@ export default {
                 let col = this.cols[i];
 
                 if (typeof col == typeof '') {
-                    col = { key: col, title: col.capitalize() };
+                    col = { value: col, label: col.capitalize() };
                 }
 
                 this.tableCols.push(col);
             }
         },
-        openItem(item) {
-            window.location.href =
-                `${this.form.config.names.table}/${item.id}` +
-                ('route' in this.form.config.index
-                    ? this.form.config.index.route
-                    : '/edit');
+        openItem(item, col) {
+            if (col.link === false) {
+                return;
+            }
+
+            window.location.href = `${this.baseURL}${this._format(
+                col.link,
+                item
+            )}`;
         }
     }
 };

@@ -3,6 +3,7 @@
 namespace Fjord\Form;
 
 use Form;
+use Closure;
 use Illuminate\Support\Str;
 use Fjord\Form\Database\FormField;
 use Illuminate\Support\Collection;
@@ -27,7 +28,8 @@ class CrudForm
         'back_route' => null,
         'back_text' => null,
         'index' => [],
-        'sort_by' => null
+        'sort_by' => null,
+        'readonly' => false,
     ];
 
     protected $path;
@@ -122,10 +124,32 @@ class CrudForm
         $index = $this->attributes['index'];
 
         $index['search'] = $this->getSearch($index);
+        if ($this->attributes['model'] != FormField::class) {
+            $index['preview'] = $this->getCols($index['preview']);
+        }
 
         $this->attributes['index'] = $index;
     }
 
+    public function getCols($cols)
+    {
+        foreach ($cols as $key => $col) {
+            if (!array_key_exists('link', $col)) {
+                $col['link'] = $this->modelInstance->getTable() . '/{id}/edit';
+            }
+
+            $cols[$key] = $col;
+        }
+
+        return $cols;
+    }
+
+    /**
+     * Get keys that sould be searched for.
+     *
+     * @param array $index
+     * @return array $keys
+     */
     protected function getSearch($index)
     {
         if (!array_key_exists('search', $index)) {

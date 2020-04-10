@@ -6,9 +6,9 @@
             :rows="field.rows"
             :max-rows="field.max_rows"
             :maxlength="field.max"
+            v-bind:readonly="readonly"
             @input="changed"
-        >
-        </b-form-textarea>
+        ></b-form-textarea>
 
         <slot />
     </fj-form-item>
@@ -25,6 +25,10 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        readonly: {
+            required: true,
+            type: Boolean
         }
     },
     data() {

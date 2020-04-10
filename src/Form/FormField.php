@@ -2,10 +2,12 @@
 
 namespace Fjord\Form;
 
+use Closure;
 use Exception;
 use ArrayAccess;
 use Illuminate\Support\Str;
 use Fjord\Form\FormFields\Code;
+use Fjord\Form\FormFields\Icon;
 use Fjord\Form\FormFields\Block;
 use Fjord\Form\FormFields\Image;
 use Fjord\Form\FormFields\Input;
@@ -13,27 +15,28 @@ use Fjord\Form\FormFields\Range;
 use Fjord\Form\FormFields\HasOne;
 use Fjord\Form\FormFields\Select;
 use Fjord\Form\FormFields\Boolean;
-use Fjord\Form\FormFields\HasMany;
-use Fjord\Form\FormFields\MorphTo;
 use Fjord\Form\FormFields\WYSIWYG;
 use Fjord\Form\FormFields\DateTime;
-use Fjord\Form\FormFields\MorphOne;
-use Fjord\Form\FormFields\Relation;
 use Fjord\Form\FormFields\TextArea;
-use Fjord\Form\FormFields\BelongsTo;
-use Fjord\Form\FormFields\MorphMany;
 use Fjord\Form\FormFields\Checkboxes;
 use Fjord\Form\FormFields\FormHeader;
 use Fjord\Form\FormFields\EditHasMany;
-use Fjord\Form\FormFields\MorphToMany;
-use Fjord\Form\FormFields\BelongsToMany;
-use Fjord\Form\FormFields\MorphedByMany;
 use Fjord\Form\Requests\CrudUpdateRequest;
 use Fjord\Form\Requests\FormUpdateRequest;
+use Fjord\Form\FormFields\Relations\HasMany;
+use Fjord\Form\FormFields\Relations\MorphTo;
+use Fjord\Form\FormFields\Relations\MorphOne;
+use Fjord\Form\FormFields\Relations\Relation;
+use Fjord\Form\FormFields\Relations\BelongsTo;
+use Fjord\Form\FormFields\Relations\MorphMany;
+use Fjord\Form\FormFields\Relations\MorphToMany;
+use Fjord\Form\FormFields\Relations\BelongsToMany;
+use Fjord\Form\FormFields\Relations\MorphedByMany;
 
 class FormField implements ArrayAccess
 {
     const FIELDS = [
+        'icon' => Icon::class,
         'input' => Input::class,
         'wysiwyg' => WYSIWYG::class,
         'textarea' => TextArea::class,
@@ -220,6 +223,7 @@ class FormField implements ArrayAccess
             $this->setAttribute('translatable', false);
         }
 
+        // Readonly
         if (!$this->attributes['readonly']) {
             if (Str::startsWith($this->path, fjord_resource_path('forms'))) {
                 $request = new FormUpdateRequest;
@@ -230,6 +234,9 @@ class FormField implements ArrayAccess
             if (!$authorize) {
                 $this->attributes['readonly'] = true;
             }
+        } else if (is_closure($this->attributes['readonly'])) {
+            $closure = Closure::bind($this->attributes['readonly'], $this, self::class);
+            $this->attributes['readonly'] = $closure(fjord_user());
         }
     }
 

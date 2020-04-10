@@ -1,16 +1,21 @@
 <template>
     <fj-form-item :field="field" :model="model">
-        <vue-ctk-date-time-picker
-            :id="`${field.id}-${makeid(10)}`"
-            v-model="value"
-            :label="field.label"
-            :format="'YYYY-MM-DD HH:mm:ss'"
-            :no-label="true"
-            :inline="field.inline"
-            :formatted="field.formatted"
-            :onlyDate="field.only_date"
-            color="var(--primary)"
-        />
+        <template v-if="!readonly">
+            <vue-ctk-date-time-picker
+                :id="`${field.id}-${makeid(10)}`"
+                v-model="value"
+                :label="field.label"
+                :format="'YYYY-MM-DD HH:mm:ss'"
+                :no-label="true"
+                :inline="field.inline"
+                :formatted="field.formatted"
+                :onlyDate="field.only_date"
+                color="var(--primary)"
+            />
+        </template>
+        <template v-else>
+            <b-input class="form-control" :value="value" type="text" readonly />
+        </template>
     </fj-form-item>
 </template>
 
@@ -25,11 +30,16 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        readonly: {
+            required: true,
+            type: Boolean
         }
     },
     data() {
         return {
-            value: null
+            value: null,
+            datetimeString: ''
         };
     },
     beforeMount() {

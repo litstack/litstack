@@ -5,8 +5,9 @@
             :key="index"
             @click="setLanguage(lang)"
             :variant="variant(lang)"
-            >{{ lang }}</b-button
         >
+            {{ lang }}
+        </b-button>
     </b-button-group>
 </template>
 

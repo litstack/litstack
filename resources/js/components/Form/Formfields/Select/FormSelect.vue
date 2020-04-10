@@ -4,6 +4,7 @@
             <b-select
                 :value="model[`${field.id}Model`]"
                 :options="options"
+                v-bind:readonly="readonly"
                 @input="changed"
             />
         </template>
@@ -25,6 +26,10 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        readonly: {
+            required: true,
+            type: Boolean
         }
     },
     methods: {

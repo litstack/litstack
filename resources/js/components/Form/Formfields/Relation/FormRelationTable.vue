@@ -4,23 +4,20 @@
             <b-table
                 v-bind:hover="select"
                 :items="tableItems"
-                :thead-class="{'hidden-header': true}"
+                :thead-class="{ 'hidden-header': true }"
                 :tbody-class="select ? 'fj-select-table' : ''"
                 class="mb-0"
                 :busy="busy"
-                @row-clicked="rowClicked">
-
+                @row-clicked="rowClicked"
+            >
                 <div slot="table-busy" class="text-center my-2">
                     <b-spinner class="align-middle"></b-spinner>
                     <strong>Loading...</strong>
                 </div>
 
-                <template
-                    :slot="'trash'"
-                    slot-scope="data">
-                    <slot :name="'trash'" :data="data"/>
+                <template :slot="'trash'" slot-scope="data">
+                    <slot :name="'trash'" :data="data" />
                 </template>
-
             </b-table>
         </slot>
     </div>
@@ -39,9 +36,9 @@ export default {
             required: true
         },
         setItem: {
-            type: Function,
+            type: Function
         },
-        select:{
+        select: {
             type: Boolean,
             default: false
         },
@@ -52,58 +49,57 @@ export default {
     },
     methods: {
         rowClicked(item, index, $event) {
-            if(!this.select) {
-                return
+            if (!this.select) {
+                return;
             }
-            this.$emit('selected', this.items[index])
+            this.$emit('selected', this.items[index]);
         },
         getTableItem(model) {
-            let item = {}
+            let item = {};
 
-            for(let i=0;i<this.field.preview.length;i++) {
-                let key = this.field.preview[i]
-                item[key] = model
+            for (let i = 0; i < this.field.preview.length; i++) {
+                let key = this.field.preview[i];
+                item[key] = model;
             }
 
-            if(this.setItem) {
-                item = this.setItem(item, model)
+            if (this.setItem) {
+                item = this.setItem(item, model);
             }
 
-            return item
-        },
+            return item;
+        }
     },
     computed: {
         tableItems() {
-            let items = []
+            let items = [];
 
-            for(let i=0;i<this.items.length;i++) {
-                items.push(this.getTableItem(this.items[i]))
+            for (let i = 0; i < this.items.length; i++) {
+                items.push(this.getTableItem(this.items[i]));
             }
 
-            return items
-        },
-
+            return items;
+        }
     }
-}
+};
 </script>
 
 <style lang="scss">
 .fj-relation {
-    table.fj-relation-table{
-        tr:first-child{
-            td:first-child{
+    table.fj-relation-table {
+        tr:first-child {
+            td:first-child {
                 border-top-left-radius: 5px;
             }
-            td:last-child{
+            td:last-child {
                 border-top-right-radius: 5px;
             }
         }
     }
 }
 .hidden-header {
-  display: none;
+    display: none;
 }
-.fj-select-table tr:not(.b-table-busy-slot){
+.fj-select-table tr:not(.b-table-busy-slot) {
     cursor: pointer;
 }
 </style>

@@ -17,7 +17,8 @@ abstract class CrudController
 {
     use Traits\CrudIndex,
         Traits\CrudRelations,
-        Traits\EloquentModel;
+        Traits\EloquentModel,
+        Traits\CrudMedia;
     /**
      * The Model Class e.g. App\Models\Post
      *
@@ -125,6 +126,8 @@ abstract class CrudController
             ])
             ->withProps([
                 'formConfig' => $this->getForm($model)->toArray(),
+                'headerComponents' => [],
+                'controls' => [],
                 'content' => ['fj-crud-show-form']
             ]);
     }

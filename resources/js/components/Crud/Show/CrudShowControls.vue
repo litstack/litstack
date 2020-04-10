@@ -16,8 +16,10 @@
                     size="sm"
                     :disabled="!canSave"
                     @click="saveAll"
-                    ><i class="fas fa-save"></i> {{ buttonText }}</b-button
                 >
+                    <i class="fas fa-save"></i>
+                    {{ buttonText }}
+                </b-button>
                 <b-button size="sm" @click="loadModel">
                     <fa-icon icon="undo" />
                 </b-button>
@@ -28,7 +30,7 @@
                     v-html="
                         $t(`fj.last_edited`, {
                             time: lastEdit.time,
-                            user: lastEdit.user.name,
+                            user: lastEdit.user.name
                         })
                     "
                 />
@@ -50,19 +52,19 @@ export default {
     props: {
         formConfig: {
             type: Object,
-            required: true,
+            required: true
         },
         create: {
             type: Boolean,
-            default: false,
+            default: false
         },
         title: {
-            type: String,
-        },
+            type: String
+        }
     },
     data() {
         return {
-            lastEdit: null,
+            lastEdit: null
         };
     },
     methods: {
@@ -71,7 +73,7 @@ export default {
             this.$bvToast.toast(
                 this.$t('fj.model_saved', { model: this.title }),
                 {
-                    variant: 'success',
+                    variant: 'success'
                 }
             );
         },
@@ -99,7 +101,7 @@ export default {
         },
         loadModel() {
             this.$bus.$emit('loadModel');
-        },
+        }
     },
     beforeMount() {
         this.$bus.$on('modelsSaved', this.onSaved);
@@ -109,7 +111,7 @@ export default {
         let self = this;
         document.addEventListener(
             'keydown',
-            function (e) {
+            function(e) {
                 if (
                     (window.navigator.platform.match('Mac')
                         ? e.metaKey
@@ -134,8 +136,8 @@ export default {
             return this.create
                 ? this.$t('fj.create_model', { model: this.title })
                 : this.$t('fj.save_model', { model: this.title });
-        },
-    },
+        }
+    }
 };
 </script>
 

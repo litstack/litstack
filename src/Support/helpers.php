@@ -1,5 +1,12 @@
 <?php
 
+if (!function_exists('is_closure')) {
+    function is_closure($t)
+    {
+        return $t instanceof Closure;
+    }
+}
+
 if (!function_exists('fjord_js')) {
     function fjord_js()
     {
@@ -12,6 +19,8 @@ if (!function_exists('fjord_js')) {
         return $js_path;
     }
 }
+
+
 
 if (!function_exists('fjord_user')) {
     function fjord_user()

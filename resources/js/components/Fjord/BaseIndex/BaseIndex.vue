@@ -47,6 +47,7 @@
                     :items="items"
                     :recordActions="recordActions"
                     @selectedItemsChanged="setSelectedItems"
+                    @sort="sort"
                     @loadItems="_loadItems()"/>
 
                 </fj-index-table-table>
@@ -191,6 +192,10 @@ export default {
         }
     },
     methods: {
+        sort(sort) {
+            this.sort_by_key = sort
+            this._loadItems()
+        },
         newTab(index) {
             this.tab = this.tabs[index]
             this._loadItems()
@@ -247,7 +252,7 @@ export default {
             //if(this.recordActions.length > 0) {
                 // prepend checkbox col if table has recordActions
                 this.tableCols.push({
-                    key: 'check',
+                    value: 'check',
                     label: 'Check'
                 });
             //}
@@ -256,7 +261,7 @@ export default {
                 let col = this.cols[i];
 
                 if (typeof col == typeof '') {
-                    col = { key: col, title: col.capitalize() };
+                    col = { value: col, label: col.capitalize() };
                 }
 
                 this.tableCols.push(col);
