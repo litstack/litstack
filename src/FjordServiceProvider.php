@@ -144,6 +144,12 @@ class FjordServiceProvider extends ServiceProvider
         foreach ($this->providers as $provider) {
             $this->app->register($provider);
         }
+
+        if (!fjord()->installed()) {
+            return;
+        }
+
+        $this->app->register(\App\Providers\FjordServiceProvider::class);
     }
 
     /**
