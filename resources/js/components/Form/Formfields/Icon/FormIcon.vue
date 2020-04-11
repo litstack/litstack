@@ -84,6 +84,7 @@ export default {
             width: calc(20px + #{2 * $btn-padding-x});
             height: calc(20px + #{2 * $btn-padding-x});
             text-align: center;
+            font-size: 20px;
         }
     }
 }
