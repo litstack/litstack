@@ -60,7 +60,6 @@ class CrudShowComponent extends Component
      */
     public function executeExtension(string $name = ''): bool
     {
-        return true;
         $currentName = $this->props['formConfig']['names']['table'];
 
         return $name == $currentName;
