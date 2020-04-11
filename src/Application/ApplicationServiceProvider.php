@@ -2,6 +2,7 @@
 
 namespace Fjord\Application;
 
+use Fjord\Application\Controllers\NotFoundController;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\View;
 use Illuminate\View\View as ViewClass;
@@ -47,9 +48,9 @@ class ApplicationServiceProvider extends ServiceProvider
     public function fjordErrorPages()
     {
         $this->app->booted(function () {
-            FjordRoute::get('{any}', function () {
-                throw new NotFoundHttpException;
-            })->where('any', '.*')->name('not_found');
+            FjordRoute::get('{any}', NotFoundController::class)
+                ->where('any', '.*')
+                ->name('not_found');
         });
 
         View::composer('errors::*', HttpErrorComposer::class);
