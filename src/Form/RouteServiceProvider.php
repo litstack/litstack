@@ -51,7 +51,10 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 $this->package->addNavPreset("{$collection}.{$formName}", [
                     'link' => route("fjord.aw-studio.fjord.form.{$collection}.{$formName}"),
                     'title' => ucfirst($formName),
-                    //'permission' => "read {$crud}"
+                    'authorize' => function (FjordUser $user) use ($collection, $formName) {
+                        $config = collect($this->package->rawConfig("forms.{$collection}.{$formName}"));
+                        return $this->authorizeController(app()->get('request'), 'read', $config['controller']);
+                    }
                 ]);
             }
         }
