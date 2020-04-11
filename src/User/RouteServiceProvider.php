@@ -26,7 +26,9 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->package->addNavPreset('users', [
             'link' => route('fjord.aw-studio.fjord.users'),
             'title' => __f('fj.users'),
-            'permission' => 'read fjord-users',
+            'authorize' => function ($user) {
+                return $user->can('read fjord-users');
+            },
             'icon' => '<i class="fas fa-users">',
         ]);
     }
