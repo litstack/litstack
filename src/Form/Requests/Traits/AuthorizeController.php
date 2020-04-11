@@ -13,9 +13,11 @@ trait AuthorizeController
      * @param string $operation
      * @return bool
      */
-    public function authorizeController(Request $request, string $operation): bool
+    public function authorizeController(Request $request, string $operation, $controller = null): bool
     {
-        $controller = $request->route()->controller;
+        if (!$controller) {
+            $controller = $request->route()->controller;
+        }
 
         return with(new $controller)
             ->authorize(fjord_user(), $operation);

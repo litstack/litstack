@@ -3,12 +3,15 @@
 namespace Fjord\Form;
 
 use Illuminate\Support\Str;
-use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
-use Fjord\Support\Facades\FjordRoute;
+use Fjord\Fjord\Models\FjordUser;
 use Fjord\Support\Facades\Package;
+use Fjord\Support\Facades\FjordRoute;
+use Fjord\Form\Requests\Traits\AuthorizeController;
+use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
+    use AuthorizeController;
 
     public function boot()
     {
@@ -28,10 +31,9 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             $this->package->addNavPreset("crud.{$crud}", [
                 'link' => route("fjord.aw-studio.fjord.crud.{$crud}.index"),
                 'title' => ucfirst($crud),
-                'permission' => "read {$crud}",
-                'authorize' => function () use ($crud) {
-                    $config = collect($this->package->rawConfig('crud' . $crud));
-                    $controller = $config['controller'];
+                'authorize' => function (FjordUser $user) use ($crud) {
+                    $config = collect($this->package->rawConfig('crud.' . $crud));
+                    return $this->authorizeController(app()->get('request'), 'read', $config['controller']);
                 }
             ]);
         }

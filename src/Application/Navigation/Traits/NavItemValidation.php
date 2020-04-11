@@ -108,10 +108,11 @@ trait NavItemValidation
             return $item;
         }
 
-        if (array_key_exists('permission', $item)) {
+        if (array_key_exists('authorize', $item)) {
 
             // Dont allow item if authenticated user doesnt have permission.
-            if (!fjord_user()->can($item['permission'])) {
+            $authorize = $item['authorize'](fjord_user());
+            if (!$authorize) {
                 return false;
             }
         }
