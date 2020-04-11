@@ -51,10 +51,6 @@ class TranslationsController extends Controller
      */
     protected function loadTranslations()
     {
-        if (!config('fjord.translatable.translatable')) {
-            return;
-        }
-
         foreach (fjord()->app()->get('translator')->getPaths() as $path) {
             foreach (config('fjord.translatable.locales') as $locale) {
                 $dir = realpath($path . '/' . $locale);
