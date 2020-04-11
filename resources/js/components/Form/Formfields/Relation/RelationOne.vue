@@ -1,7 +1,7 @@
 <template>
-    <fj-form-item :field="field" :model="model">
+    <fj-form-item :field="field" :model="model" v-bind:no-hint="!readonly">
         <template v-if="model.id">
-            <b-card class="fjord-block no-fx">
+            <div class="form-control-expand">
                 <div v-if="model[`${field.id}Model`]">
                     <b-table-simple
                         outlined
@@ -126,7 +126,7 @@
                 >
                     Select {{ field.title }}
                 </b-button>
-            </b-card>
+            </div>
 
             <slot />
 

@@ -13,8 +13,15 @@
         >
             <slot />
         </div>
-        <div class="d-flex justify-content-between">
-            <small v-if="hint" class="form-text text-muted" v-html="hint" />
+        <div
+            class="d-flex justify-content-between"
+            v-if="(hint && !noHint) || field.max || field.min || field.maxFiles"
+        >
+            <small
+                v-if="hint && !noHint"
+                class="form-text text-muted"
+                v-html="hint"
+            />
             <small class="form-text text-muted">
                 <template v-if="field.max && !field.min">
                     {{ length }}/{{ field.max }}
@@ -39,7 +46,13 @@ export default {
             required: true
         },
         model: {},
-        value: {}
+        value: {},
+        noHint: {
+            type: Boolean,
+            default() {
+                return false;
+            }
+        }
     },
     computed: {
         ...mapGetters(['language']),

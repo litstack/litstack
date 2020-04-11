@@ -7,7 +7,7 @@
                 </b>
                 <fj-base-language />
             </b-col>
-            <b-col cols="12" class="pb-3" v-if="!formConfig.readonly">
+            <b-col cols="12" class="pb-3" v-if="formConfig.permissions.update">
                 <b class="text-muted d-block pb-1">
                     {{ $t('fj.save_changes') }}
                 </b>

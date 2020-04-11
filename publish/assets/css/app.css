@@ -16276,6 +16276,10 @@ input[type=color].form-control:disabled {
   color: #1584ff;
 }
 
+.form-control-expand {
+  flex-grow: 1;
+}
+
 #app .fjord-search {
   display: inline-block;
   width: 360px;
@@ -16289,7 +16293,7 @@ input[type=color].form-control:disabled {
   border: 1px solid #ced4da;
   border-radius: 3px;
   background: #f7f7f7;
-  margin-bottom: 20px;
+  margin-bottom: 0.5rem;
 }
 
 .fjord-draggable__dragbar {

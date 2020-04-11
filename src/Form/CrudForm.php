@@ -185,7 +185,7 @@ class CrudForm
     {
         $names = [
             'title' => [
-                'singular' => $this->attributes['names']['singular'] ?? '',
+                'singular' => $this->attributes['names']['singular'] ?? $this->attributes['title'] ?? '',
                 'plural' => $this->attributes['names']['plural'] ?? ''
             ]
         ];
@@ -200,7 +200,7 @@ class CrudForm
         }
 
         if ($names['title']['plural'] == '') {
-            $plural = Str::plural($singular);
+            $plural = Str::plural($singular ?? $names['title']['singular']);
             $words = explode('_', $plural);
             foreach ($words as $key => $word) {
                 $names['title']['plural'] .= ucfirst($word);

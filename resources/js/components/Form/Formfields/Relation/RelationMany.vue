@@ -1,11 +1,11 @@
 <template>
-    <fj-form-item :field="field">
+    <fj-form-item :field="field" v-bind:no-hint="!readonly">
         <template v-if="model.id">
-            <b-card class="fjord-block no-fx">
+            <div class="form-control-expand">
                 <div v-if="!!relations.length">
                     <b-table-simple
                         outlined
-                        table-variant="light"
+                        hover
                         :class="{ 'mb-0': readonly }"
                     >
                         <fj-base-colgroup
@@ -165,7 +165,7 @@
                 >
                     Add {{ field.id }}
                 </b-button>
-            </b-card>
+            </div>
 
             <slot />
 

@@ -1,41 +1,39 @@
 <template>
     <fj-form-item :field="field" :model="model">
-        <div class="fjord-block card no-fx" v-if="model.id">
-            <div class="card-body">
-                <draggable
-                    v-model="sortableRepeatables"
-                    @end="newOrder"
-                    handle=".fjord-draggable__dragbar"
-                    tag="b-row"
-                    :class="{ 'mb-0': readonly }"
-                    v-if="sortableRepeatables.length > 0"
-                >
-                    <fj-form-block-item
-                        v-for="(repeatable, index) in sortableRepeatables"
-                        :key="repeatable.id"
-                        :repeatable="repeatable"
-                        :field="field"
-                        :model="model"
-                        :readonly="readonly"
-                        @deleteBlock="deleteBlock"
-                    />
-                </draggable>
-
-                <div v-else>
-                    <fj-form-alert-empty
-                        :field="field"
-                        :class="{ 'mb-0': readonly }"
-                    />
-                </div>
-
-                <fj-form-block-add-buttons
-                    v-if="!readonly"
+        <div class="form-control-expand" v-if="model.id">
+            <draggable
+                v-model="sortableRepeatables"
+                @end="newOrder"
+                handle=".fjord-draggable__dragbar"
+                tag="b-row"
+                :class="{ 'mb-0': readonly }"
+                v-if="sortableRepeatables.length > 0"
+            >
+                <fj-form-block-item
+                    v-for="(repeatable, index) in sortableRepeatables"
+                    :key="repeatable.id"
+                    :repeatable="repeatable"
                     :field="field"
                     :model="model"
-                    :sortableRepeatables="sortableRepeatables"
-                    @newBlock="newBlock"
+                    :readonly="readonly"
+                    @deleteBlock="deleteBlock"
+                />
+            </draggable>
+
+            <div v-else>
+                <fj-form-alert-empty
+                    :field="field"
+                    :class="{ 'mb-0': readonly }"
                 />
             </div>
+
+            <fj-form-block-add-buttons
+                v-if="!readonly"
+                :field="field"
+                :model="model"
+                :sortableRepeatables="sortableRepeatables"
+                @newBlock="newBlock"
+            />
         </div>
         <template v-else>
             <fj-form-alert-not-created :field="field" class="mb-0" />
