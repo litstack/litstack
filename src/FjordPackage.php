@@ -16,6 +16,7 @@ class FjordPackage extends Package
      * @var array
      */
     protected $providers = [
+        \App\Providers\FjordServiceProvider::class,
         \Fjord\Application\Translation\TranslationServiceProvider::class,
         \Fjord\Application\RouteServiceProvider::class,
         \Fjord\User\ServiceProvider::class,

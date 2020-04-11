@@ -24,7 +24,6 @@ class FjordServiceProvider extends ServiceProvider
         Application\ApplicationServiceProvider::class,
         Foundation\Providers\ArtisanServiceProvider::class,
         Support\Macros\BuilderMacros::class,
-        \App\Providers\FjordServiceProvider::class,
     ];
 
     /**
