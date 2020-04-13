@@ -7,7 +7,7 @@ use Fjord\Fjord\Models\FjordUser;
 use Fjord\Support\Facades\Package;
 use Fjord\Support\Facades\FjordRoute;
 use Fjord\Form\Requests\Traits\AuthorizeController;
-use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {

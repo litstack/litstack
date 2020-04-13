@@ -5,7 +5,7 @@ namespace Fjord\User;
 use Fjord\Support\Facades\Package;
 use Fjord\Support\Facades\FjordRoute;
 use Fjord\User\Controllers\FjordUserController;
-use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {

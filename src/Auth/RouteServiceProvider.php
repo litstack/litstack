@@ -5,7 +5,7 @@ namespace Fjord\Auth;
 use Fjord\Support\Facades\FjordRoute;
 use Fjord\Auth\Controllers\AuthController;
 use Fjord\Auth\Controllers\ResetPasswordController;
-use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Fjord\Fjord\Controllers\FjordController;
 use Fjord\Application\Controllers\FileController;
 use App\Http\Controllers\Fjord\DashboardController;
-use App\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
