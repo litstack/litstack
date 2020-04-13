@@ -21,8 +21,6 @@ use Fjord\Form\FormFields\TextArea;
 use Fjord\Form\FormFields\Checkboxes;
 use Fjord\Form\FormFields\FormHeader;
 use Fjord\Form\FormFields\EditHasMany;
-use Fjord\Form\Requests\CrudUpdateRequest;
-use Fjord\Form\Requests\FormUpdateRequest;
 use Fjord\Form\FormFields\Relations\HasMany;
 use Fjord\Form\FormFields\Relations\MorphTo;
 use Fjord\Form\FormFields\Relations\MorphOne;
@@ -224,17 +222,7 @@ class FormField implements ArrayAccess
         }
 
         // Readonly
-        if (!$this->attributes['readonly']) {
-            if (Str::startsWith($this->path, fjord_resource_path('forms'))) {
-                $request = new FormUpdateRequest;
-            } else {
-                $request = new CrudUpdateRequest;
-            }
-            $authorize = $request->authorize(app()->get('request'));
-            if (!$authorize) {
-                $this->attributes['readonly'] = true;
-            }
-        } else if (is_closure($this->attributes['readonly'])) {
+        if (is_closure($this->attributes['readonly'])) {
             $closure = Closure::bind($this->attributes['readonly'], $this, self::class);
             $this->attributes['readonly'] = $closure(fjord_user());
         }

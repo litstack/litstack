@@ -50,7 +50,7 @@
         "bootstrap-vue": "^2.9.0",
         "collect.js": "^4.20.3",
         "cropperjs": "^1.5.6",
-        "fjord-permissions": "file:vendor/aw-studio/fjord-permissions",
+        "fjord-permissions": "file:../fjord-permissions",
         "flag-icon-css": "^3.4.6",
         "fs": "0.0.1-security",
         "highlight.js": "^9.18.1",
