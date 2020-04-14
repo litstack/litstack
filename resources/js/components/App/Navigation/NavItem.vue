@@ -4,7 +4,12 @@
             <small class="text-secondary pl-3 pt-2 pb-1">{{ this.item }}</small>
         </template>
         <template v-else-if="isGroup">
-            <fj-nav-item v-for="(i, index) in item" :item="i" :key="index" />
+            <fj-nav-item
+                v-for="(i, index) in item"
+                :item="i"
+                :key="index"
+                v-if="!(i instanceof String) && i !== null"
+            />
             <hr class="fj-navitem-devider" />
         </template>
         <template v-else>
@@ -46,13 +51,13 @@ export default {
     name: 'NavItem',
     props: {
         item: {
-            type: [Array, Object, String],
-        },
+            type: [Array, Object, String]
+        }
     },
     data() {
         return {
             visible: false,
-            active: false,
+            active: false
         };
     },
     mounted() {
@@ -95,8 +100,8 @@ export default {
         },
         isString() {
             return typeof this.item === 'string';
-        },
-    },
+        }
+    }
 };
 </script>
 
