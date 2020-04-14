@@ -1,8 +1,10 @@
-# Create a CRUD-Model
+# Create CRUD-Models
+
+The `resources/fjord/crud` directory contains all configuration-files for your CRUD-Models. Each model has its own file and is set up individually.
 
 ## CRUD-Wizard
 
-A CRUD-Model can be created with the following artisan command:
+A CRUD-Model can be created using the following artisan command:
 
 ```shell
 php artisan fjord:crud
@@ -12,9 +14,32 @@ A wizard will take you through all required steps for setting up da fresh CRUD-M
 
 ## Prepare Migration
 
-Edit the newly created migration and add all table fields you need. Pay attention to translatable and non-translatable fields.
+Edit the newly created migration and add all table fields you need. For the translation of models [laravel-translatable](https://docs.astrotomic.info/laravel-translatable/installation#migrations) from `astronomic` is used. Pay attention to translatable and non-translatable fields.
 
-After all fields have been defined, the migration can be executed.
+In the migration the permissions for the corresponding model are created in the `permissions` array. It can happen that the permissions are used by another model. For example, it makes sense not to give extra permissions for `article_states` but to use the permissions from permission. In this case the array can simply be left empty.
+
+```php
+class CreateArticlesTable extends Migration
+{
+    ...
+
+    /**
+     * Permissions that should be created for this crud.
+     *
+     * @var array
+     */
+    protected $permissions = [
+        'create articles',
+        'read articles',
+        'update articles',
+        'delete articles',
+    ];
+
+    ...
+}
+```
+
+After all fields and permissions have been defined, the migration can be executed.
 
 ```shell
 php aritsan migrate
@@ -80,19 +105,36 @@ class ArticleTranslation extends Model
 }
 ```
 
+## Prepare Controller (authorization)
+
+A controller has been created in which the authorization is specified.
+
+```php
+/**
+ * Authorize request for permission operation and authenticated fjord-user.
+ * Operations: create, read, update, delete
+ *
+ * @param FjordUser $user
+ * @param string $operation
+ * @return boolean
+ */
+public function authorize(FjordUser $user, string $operation): bool
+{
+    return $user->can("{$operation} articles");
+}
+```
+
 ## Add to Navigation
 
-Add a link to your main navigation by adding an array to the main navigation config at `resources/fjord/navigation/main.php`.
+Add the navigation entry by adding the `crud.{table_name}` preset to `resources/fjord/navigation/main.php`.
 
 ```php
 [
-    'title' => 'Articles',
-    'link' => 'articles',
-    'icon' =>'<i class="fas fa-newspaper"></i>'
-],
+    fjord()->navEntry('crud.articles', [
+        'icon' => '<i class="fas fa-newspaper"></i>'
+    ]),
+]
 ```
-
-The link should be your model's plural name, snake_cased. For the icon, you can chose any FontAwesome-icon.
 
 ## Edit CRUD-Config
 

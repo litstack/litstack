@@ -53,14 +53,20 @@ module.exports = {
                     ]
                 },
                 {
-                    title: 'Resources',
+                    title: 'Frontend',
                     collapsable: false,
                     children: [
-                        ['guide/resources/crud', 'Crud'],
-                        ['guide/resources/navigation', 'Navigation'],
-                        ['guide/resources/pages', 'Pages'],
-                        ['guide/resources/repeatables', 'Repeatables'],
-                        ['guide/resources/dashboard', 'Dashboard']
+                        ['guide/frontend/navigation', 'Navigation'],
+                        ['guide/frontend/localization', 'Localization']
+                    ]
+                },
+                {
+                    title: 'CRUD',
+                    collapsable: false,
+                    children: [
+                        ['guide/crud/create-crud', 'Create CRUD-Models']
+                        //['guide/resources/forms', 'Forms'],
+                        //['guide/resources/repeatables', 'Repeatables']
                     ]
                 },
                 {
@@ -101,9 +107,7 @@ module.exports = {
                 {
                     title: 'Architecture Concepts',
                     collapsable: false,
-                    children: [
-                        ['guide/architecture/lifecycle', 'Lifecycle'],
-                    ]
+                    children: [['guide/architecture/lifecycle', 'Lifecycle']]
                 },
                 {
                     title: 'Extending Fjord',
@@ -111,9 +115,9 @@ module.exports = {
                     children: [
                         ['guide/extensions/setup', 'Setup'],
                         ['guide/extensions/helpers', 'Helpers'],
-                        ['guide/extensions/package', 'Package Development'],
+                        ['guide/extensions/package', 'Package Development']
                     ]
-                },
+                }
             ]
         }
     }
