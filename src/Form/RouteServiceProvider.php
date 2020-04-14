@@ -91,7 +91,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 $namespace = "\\App\\Http\\Controllers\\Fjord\\Crud\\{$controller}";
             }
 
-            $this->package->route()->get("/{$crud}/all", $namespace . "@all");
             $this->package->route()->as($this->package->getRouteAs() . 'crud')->resource(config('fjord.route_prefix') . "/{$crud}", $namespace);
 
             $this->package->route()->post("{$crud}/{id}/blocks", $config['controller'] . "@storeBlock")
@@ -101,6 +100,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             $this->package->route()->delete("{$crud}/{id}/blocks/{block_id}", $config['controller'] . "@destroyBlock")
                 ->name("crud.{$crud}.blocks.destroy");
 
+            $this->package->route()->get("/{$crud}/{id}/relation/{relation}/all", $namespace . "@relationIndex")
+                ->name("crud.{$crud}.relation.all");
             $this->package->route()->put("/{$crud}/{id}/relation/{relation}/order", $namespace . "@orderRelation")
                 ->name("crud.{$crud}.relation.order");
             $this->package->route()->delete("/{$crud}/{id}/relation/{relation}/{relation_id}", $namespace . "@deleteRelation")
@@ -117,7 +118,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 ->name("crud.{$crud}.media.store");
             $this->package->route()->delete("/{$crud}/{id}/media/{media_id}", $namespace . '@destroyMedia')
                 ->name("crud.{$crud}.media.destroy");
-
 
             /*
             $this->package->route()->get("/{$crud}/{id}/relations/{relation}", $namespace . "@relationIndex");
@@ -158,6 +158,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 $this->package->route()->delete("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/blocks/{block_id}", $config['controller'] . "@destroyBlock")
                     ->name("form.{$collection}.{$formName}.blocks.destroy");
 
+                $this->package->route()->get("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/relation/{relation}/all", $config['controller'] . "@relationIndex")
+                    ->name("form.{$collection}.{$formName}.relation.all");
                 $this->package->route()->put("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/relation/{relation}/order", $config['controller'] . "@orderRelation")
                     ->name("form.{$collection}.{$formName}.relation.order");
                 $this->package->route()->delete("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/relation/{relation}/{relation_id}",  $config['controller'] . "@deleteRelation")

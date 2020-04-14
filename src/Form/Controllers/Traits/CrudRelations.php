@@ -21,7 +21,12 @@ trait CrudRelations
     {
         $model = $this->model::findOrFail($id);
 
-        return $model->$relation()->get();
+        $formField = $model->findFormField($relation);
+        if (!$formField) {
+            abort(404);
+        }
+
+        return $formField->query->get();
     }
 
     public function orderRelation(CrudUpdateRequest $request, $id, $relation)

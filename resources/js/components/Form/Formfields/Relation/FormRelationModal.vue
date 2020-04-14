@@ -186,7 +186,10 @@ export default {
         async _loadRelations() {
             for (let model in this.routes) {
                 let route = this.routes[model];
-                let response = await axios.get(`${route}/all`);
+
+                let response = await axios.get(
+                    `${this.formConfig.route}/${this.model.id}/relation/${this.field.id}/all`
+                );
 
                 let items = [];
                 for (let i = 0; i < response.data.length; i++) {

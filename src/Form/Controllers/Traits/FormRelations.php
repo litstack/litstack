@@ -5,10 +5,31 @@ namespace Fjord\Form\Controllers\Traits;
 use Fjord\Form\Database\FormBlock;
 use Fjord\Form\Database\FormField;
 use Fjord\Form\Database\FormRelation;
+use Fjord\Form\Requests\FormReadRequest;
 use Fjord\Form\Requests\FormUpdateRequest;
 
 trait FormRelations
 {
+    /**
+     * Get relations for model.
+     *
+     * @param CrudReadRequest $request
+     * @param [type] $id
+     * @param [type] $relation
+     * @return void
+     */
+    public function relationIndex(FormReadRequest $request, $id, $relation)
+    {
+        $model = FormField::findOrFail($id);
+
+        $formField = $model->findFormField($relation);
+        if (!$formField) {
+            abort(404);
+        }
+
+        return $formField->query->get();
+    }
+
     public function orderRelation(FormUpdateRequest $request, $id, $relation)
     {
         $ids = $request->ids;
