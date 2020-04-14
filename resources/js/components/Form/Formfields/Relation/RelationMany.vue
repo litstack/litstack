@@ -55,28 +55,12 @@
                                     >
                                         <b-button-group size="sm">
                                             <b-button
-                                                v-if="
-                                                    can(
-                                                        `update ${field.route}`
-                                                    ) ||
-                                                        can(
-                                                            `read ${field.route}`
-                                                        )
-                                                "
                                                 :href="
                                                     `${baseURL}${field.route}/${relation.id}/edit`
                                                 "
                                                 class="btn-transparent d-flex align-items-center"
                                             >
-                                                <fa-icon
-                                                    :icon="
-                                                        can(
-                                                            `update ${field.route}`
-                                                        )
-                                                            ? 'edit'
-                                                            : 'eye'
-                                                    "
-                                                />
+                                                <fa-icon icon="eye" />
                                             </b-button>
                                             <b-button
                                                 v-if="!readonly"
