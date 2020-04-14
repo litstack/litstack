@@ -101,14 +101,20 @@ class CrudForm
 
     public function setPermissions()
     {
+
         $permissions = [
-            'create' => false,
-            'read' => false,
-            'update' => false,
-            'delete' => false,
+            'create' => null,
+            'read' => null,
+            'update' => null,
+            'delete' => null,
         ];
 
         $request = app()->get('request');
+
+        // Execute only for the correct controller.
+        if (get_class($request->route()->controller) != $this->attributes['controller']) {
+            return;
+        }
 
         $permissions['read'] = $this->authorizeController($request, 'read');
         $permissions['update'] = $this->authorizeController($request, 'update');
