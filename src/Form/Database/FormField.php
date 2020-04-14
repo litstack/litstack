@@ -42,9 +42,17 @@ class FormField extends Model implements HasMedia, TranslatableContract
         return true;
     }
 
+    /**
+     * Get many relations for form field. Set eager loads from form field query builder.
+     *
+     * @return belongsToMany
+     */
     public function form_field_relations()
     {
-        return $this->formMany($this->form_field->model ?? '');
+        return $this->formMany($this->form_field->model ?? '')
+            ->setEagerLoads(
+                $this->form_field->query->getEagerLoads()
+            );
     }
 
     public function form_field_relation()
