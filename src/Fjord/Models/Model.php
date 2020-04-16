@@ -3,12 +3,12 @@
 namespace Fjord\Fjord\Models;
 
 use Spatie\MediaLibrary\Models\Media;
-use Illuminate\Database\Eloquent\Model as LaravelModel;
+use Fjord\Crud\Models\Model as CrudModel;
 use Fjord\Form\Database\Traits\HasFormFields;
 use Fjord\EloquentJs\CanEloquentJs;
 use Fjord\TrackEdits\TrackEdits;
 
-class Model extends LaravelModel
+class Model extends CrudModel
 {
     use CanEloquentJs, HasFormFields, TrackEdits;
 

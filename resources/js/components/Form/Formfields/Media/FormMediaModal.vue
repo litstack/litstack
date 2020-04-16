@@ -137,10 +137,6 @@ export default {
             let response = await axios.delete(
                 `${this.form.config.route}/${model_id}/media/${id}`
             );
-            console.log(
-                'DELETED',
-                this.$t('fj.deleted_item', { item: 'Item' })
-            );
             this.$emit('delete', index);
         }
     },

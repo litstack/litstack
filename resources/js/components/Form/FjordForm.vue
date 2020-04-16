@@ -1,7 +1,7 @@
 <template>
     <form class="row" style="margin-bottom: -1.5em;">
         <template v-for="m in preparedModels">
-            <template v-for="(field, index) in m.form_fields">
+            <template v-for="(field, index) in m.fields">
                 <div
                     :class="fieldWidth(field)"
                     v-if="

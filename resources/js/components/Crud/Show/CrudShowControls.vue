@@ -7,7 +7,7 @@
                 </b>
                 <fj-base-language />
             </b-col>
-            <b-col cols="12" class="pb-3" v-if="formConfig.permissions.update">
+            <b-col cols="12" class="pb-3" v-if="config.permissions.update">
                 <b class="text-muted d-block pb-1">
                     {{ $t('fj.save_changes') }}
                 </b>
@@ -50,7 +50,7 @@ import FjordModel from '@fj-js/eloquent/fjord.model';
 export default {
     name: 'CrudShowControls',
     props: {
-        formConfig: {
+        config: {
             type: Object,
             required: true
         },
@@ -69,9 +69,14 @@ export default {
     },
     methods: {
         async saveAll() {
-            await this.$store.dispatch('saveModels');
+            try {
+                await this.$store.dispatch('saveModels');
+            } catch (e) {
+                console.log(e);
+                return;
+            }
             this.$bvToast.toast(
-                this.$t('fj.model_saved', { model: this.title }),
+                this.$t('fj.model_saved', { model: this.config.names.title }),
                 {
                     variant: 'success'
                 }
@@ -86,7 +91,6 @@ export default {
             if ('last_edit' in item.data) {
                 this.lastEdit = item.data.last_edit;
             }
-            console.log(item);
         },
         getLastEdit() {
             if (this.crud.model instanceof FjordModel) {

@@ -1,5 +1,6 @@
 require('./common/bootstrap');
 require('./common/string');
+require('./common/array');
 require('./common/axios');
 require('./common/window');
 
@@ -36,25 +37,28 @@ function Fjord(options) {
 }
 
 Fjord.use = function(plugin) {
-    plugins.push(plugin)
+    plugins.push(plugin);
 
-    return this
-}
+    return this;
+};
 
 Fjord.getPlugins = function() {
-    return plugins
-}
+    return plugins;
+};
 
 Fjord.prototype._init = function(options) {
     if ('store' in options) {
         this._store_modules = Object.assign(options.store, this._store_modules);
 
-        for(let i=0;i<plugins.length;i++) {
-            let plugin = plugins[0]
-            if(!('store' in plugin)) {
+        for (let i = 0; i < plugins.length; i++) {
+            let plugin = plugins[0];
+            if (!('store' in plugin)) {
                 continue;
             }
-            this._store_modules = Object.assign(plugin.store, this._store_modules);
+            this._store_modules = Object.assign(
+                plugin.store,
+                this._store_modules
+            );
         }
     }
 
@@ -71,7 +75,6 @@ Fjord.prototype._init = function(options) {
 };
 
 Fjord.prototype._vue = function() {
-
     this.app = new Vue({
         el: '#fjord-app',
         i18n,
@@ -81,7 +84,7 @@ Fjord.prototype._vue = function() {
         },
         data: {
             fjPlugins: plugins
-        },
+        }
     });
 };
 

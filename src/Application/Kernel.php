@@ -27,6 +27,7 @@ class Kernel
         Bootstrap\RegisterPackageCommands::class,
         Bootstrap\RegisterPackageExtensions::class,
         Bootstrap\BootstrapVueApplication::class,
+        Bootstrap\RegisterSingletons::class,
     ];
 
     /**

@@ -145,7 +145,6 @@ export default {
         }
     },
     beforeMount() {
-        console.log(this.model);
         let id =
             this.model.route == 'form_blocks'
                 ? this.model.model_id

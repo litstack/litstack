@@ -12,40 +12,41 @@ import axiosMethods from './common/axios';
 export default {
     name: 'FjordApp',
     computed: {
-        ...mapGetters(['canSave']),
+        ...mapGetters(['canSave'])
     },
     props: {
         models: {
-            type: [Object, Array],
+            type: [Object, Array]
         },
         component: {
             type: String,
-            required: true,
+            required: true
         },
         props: {
-            type: [Object, Array],
+            type: [Object, Array]
         },
         translatable: {
             type: Object,
-            required: true,
+            required: true
         },
         config: {
             type: Object,
-            required: true,
+            required: true
         },
         auth: {
             type: Object,
-            required: true,
+            required: true
         },
         appLocale: {
             type: String,
-            required: true,
-        },
+            required: true
+        }
     },
     data() {
         return {
             preparedModels: {},
             preparedProps: {},
+            preparedCruds: {}
         };
     },
     beforeMount() {
@@ -73,9 +74,9 @@ export default {
     mounted() {
         this.showHiddenElements();
 
-        this.$Bus.$on('error', (e) => {
+        this.$Bus.$on('error', e => {
             this.$bvToast.toast(e, {
-                variant: 'danger',
+                variant: 'danger'
             });
         });
 
@@ -147,8 +148,8 @@ export default {
                 default:
                     return new FjordModel(model);
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

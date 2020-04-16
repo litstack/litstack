@@ -11,20 +11,20 @@ class NestedCollection extends Collection
      */
     public function toArray()
     {
-        $array = parent::toArray();
-
-        $array = $this->getArrays($array);
+        $array = $this->getArrays(
+            parent::toArray()
+        );
 
         return $array;
     }
 
-    protected function getArrays($array) {
-
-        if(! is_array($array)) {
+    protected function getArrays($array)
+    {
+        if (!is_array($array)) {
             return $this->compileValue($array);
         }
 
-        foreach($array as $key => $value) {
+        foreach ($array as $key => $value) {
             $array[$key] = $this->getArrays($value);
         }
 
@@ -33,11 +33,11 @@ class NestedCollection extends Collection
 
     protected function compileValue($value)
     {
-        if(gettype($value) != gettype((object) [])) {
+        if (gettype($value) != gettype((object) [])) {
             return $value;
         }
 
-        if(! method_exists($value, 'toArray')) {
+        if (!method_exists($value, 'toArray')) {
             return $value;
         }
 

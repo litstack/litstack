@@ -2,6 +2,8 @@
 
 namespace Fjord\EloquentJs;
 
+use Throwable;
+
 class EloquentJs
 {
     private $infoModel;
@@ -80,9 +82,19 @@ class EloquentJs
             'data' => $this->model,
             'translatable' => is_translatable($this->infoModel),
             'model' => get_class($this->infoModel),
-            'route' => $this->infoModel->getTable(),
+            'route' => $this->getRoute(),
             'collection' => $this->isCollection(),
         ]);
+    }
+
+    public function getRoute()
+    {
+        try {
+            $config = @$this->infoModel->config();
+        } catch (Throwable $e) {
+            return 'crud/' . $this->infoModel->getTable();
+        }
+        return $config->route_prefix;
     }
 
     /**

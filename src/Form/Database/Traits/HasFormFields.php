@@ -126,7 +126,6 @@ trait HasFormFields
     protected function getDynamicFieldValues($fields)
     {
         foreach ($fields as $key => $field) {
-
             $methodName = "set" . ucfirst($field->id) . "Field";
 
             if (!method_exists($this, $methodName)) {

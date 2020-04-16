@@ -3,9 +3,11 @@
 namespace Fjord\Form;
 
 use Illuminate\Support\Str;
+use Illuminate\Routing\Router;
 use Fjord\Fjord\Models\FjordUser;
 use Fjord\Support\Facades\Package;
 use Fjord\Support\Facades\FjordRoute;
+use Illuminate\Support\Facades\Route;
 use Fjord\Form\Requests\Traits\AuthorizeController;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
@@ -47,15 +49,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
             foreach ($configFiles as $configName => $path) {
                 $formName = last(explode('.', $configName));
-
-                $this->package->addNavPreset("{$collection}.{$formName}", [
-                    'link' => route("fjord.aw-studio.fjord.form.{$collection}.{$formName}"),
-                    'title' => ucfirst($formName),
-                    'authorize' => function (FjordUser $user) use ($collection, $formName) {
-                        $config = collect($this->package->rawConfig("forms.{$collection}.{$formName}"));
-                        return $this->authorizeController(app()->get('request'), 'read', $config['controller']);
-                    }
-                ]);
             }
         }
     }
@@ -91,32 +84,34 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 $namespace = "\\App\\Http\\Controllers\\Fjord\\Crud\\{$controller}";
             }
 
-            $this->package->route()->as($this->package->getRouteAs() . 'crud')->resource(config('fjord.route_prefix') . "/{$crud}", $namespace);
+            $this->package->route()
+                ->as($this->package->getRouteAs() . 'crud')
+                ->resource(config('fjord.route_prefix') . "/crud/{$crud}", $namespace);
 
-            $this->package->route()->post("{$crud}/{id}/blocks", $config['controller'] . "@storeBlock")
+            $this->package->route()->post("crud/{$crud}/{id}/blocks", $config['controller'] . "@storeBlock")
                 ->name("crud.{$crud}.blocks.store");
-            $this->package->route()->put("{$crud}/{id}/blocks/{block_id}", $config['controller'] . "@updateBlock")
+            $this->package->route()->put("crud/{$crud}/{id}/blocks/{block_id}", $config['controller'] . "@updateBlock")
                 ->name("crud.{$crud}.blocks.update");
-            $this->package->route()->delete("{$crud}/{id}/blocks/{block_id}", $config['controller'] . "@destroyBlock")
+            $this->package->route()->delete("crud/{$crud}/{id}/blocks/{block_id}", $config['controller'] . "@destroyBlock")
                 ->name("crud.{$crud}.blocks.destroy");
 
-            $this->package->route()->get("/{$crud}/{id}/relation/{relation}/all", $namespace . "@relationIndex")
+            $this->package->route()->get("crud/{$crud}/{id}/relation/{relation}/all", $namespace . "@relationIndex")
                 ->name("crud.{$crud}.relation.all");
-            $this->package->route()->put("/{$crud}/{id}/relation/{relation}/order", $namespace . "@orderRelation")
+            $this->package->route()->put("crud/{$crud}/{id}/relation/{relation}/order", $namespace . "@orderRelation")
                 ->name("crud.{$crud}.relation.order");
-            $this->package->route()->delete("/{$crud}/{id}/relation/{relation}/{relation_id}", $namespace . "@deleteRelation")
+            $this->package->route()->delete("crud/{$crud}/{id}/relation/{relation}/{relation_id}", $namespace . "@deleteRelation")
                 ->name("crud.{$crud}.relation.delete");
-            $this->package->route()->post("/{$crud}/{id}/relation/{relation}/{relation_id}", $namespace . "@createRelation")
+            $this->package->route()->post("crud/{$crud}/{id}/relation/{relation}/{relation_id}", $namespace . "@createRelation")
                 ->name("crud.{$crud}.relation.create");
 
-            $this->package->route()->post("/{$crud}/index", $namespace . "@postIndex")
+            $this->package->route()->post("crud/{$crud}/index", $namespace . "@postIndex")
                 ->name("crud.{$crud}.post_index");
 
-            $this->package->route()->put("/{$crud}/{id}/media/{media_id}", $namespace . '@updateMedia')
+            $this->package->route()->put("crud/{$crud}/{id}/media/{media_id}", $namespace . '@updateMedia')
                 ->name("crud.{$crud}.media.update");
-            $this->package->route()->post("/{$crud}/{id}/media", $namespace . '@storeMedia')
+            $this->package->route()->post("crud/{$crud}/{id}/media", $namespace . '@storeMedia')
                 ->name("crud.{$crud}.media.store");
-            $this->package->route()->delete("/{$crud}/{id}/media/{media_id}", $namespace . '@destroyMedia')
+            $this->package->route()->delete("crud/{$crud}/{id}/media/{media_id}", $namespace . '@destroyMedia')
                 ->name("crud.{$crud}.media.destroy");
 
             /*
@@ -132,50 +127,65 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         }
     }
 
+    /**
+     * Map form routes.
+     *
+     * @return void
+     */
     protected function mapFormRoutes()
     {
-        $config = config('fjord.forms');
-        $configPath = $this->package->getConfigPath('forms');
+        $configPath = fjord_config_path('Form');
         $directories = glob($configPath . '/*', GLOB_ONLYDIR);
+        //dd($configPath, $directories);
 
         foreach ($directories as $formDirectory) {
-            $collection = str_replace("{$configPath}/", '', $formDirectory);
-            $configFiles = $this->package->configFiles("forms.{$collection}");
+            $collection = strtolower(str_replace("{$configPath}/", '', $formDirectory));
+            $configFiles = glob("{$formDirectory}/*.php");;
+            foreach ($configFiles as $path) {
+                $formName = strtolower(str_replace('Config.php', '', str_replace($formDirectory . '/', '', $path)));
+                $config = fjord()->config("form.{$collection}.{$formName}");
 
-            foreach ($configFiles as $configName => $path) {
-                $config = $this->package->rawConfig($configName);
-                $formName = last(explode('.', $configName));
-                $formRoutePrefix = $formName;
-                $collectionRoutePrefix = $config['route_prefix'] ?? $collection;
+                $controller = $config->controller;
+                $self = $this;
 
-                $this->package->route()->get("{$collectionRoutePrefix}/{$formRoutePrefix}", $config['controller'] . "@show")
-                    ->name("form.{$collection}.{$formName}");
+                $group = $this->package->route()->group(function () use ($config, $controller, $self) {
+                    $group = Route::group([
+                        'prefix' => $config->route_prefix,
+                        'as' => "form.{$config->collection}.{$config->formName}.",
+                    ], function () use ($config, $controller, $self) {
+                        $type = 'form';
+                        require fjord_path('src/Crud/routes.php');
 
-                $this->package->route()->post("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/blocks", $config['controller'] . "@storeBlock")
-                    ->name("form.{$collection}.{$formName}.blocks.store");
-                $this->package->route()->put("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/blocks/{block_id}", $config['controller'] . "@updateBlock")
-                    ->name("form.{$collection}.{$formName}.blocks.update");
-                $this->package->route()->delete("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/blocks/{block_id}", $config['controller'] . "@destroyBlock")
-                    ->name("form.{$collection}.{$formName}.blocks.destroy");
-
-                $this->package->route()->get("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/relation/{relation}/all", $config['controller'] . "@relationIndex")
-                    ->name("form.{$collection}.{$formName}.relation.all");
-                $this->package->route()->put("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/relation/{relation}/order", $config['controller'] . "@orderRelation")
-                    ->name("form.{$collection}.{$formName}.relation.order");
-                $this->package->route()->delete("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/relation/{relation}/{relation_id}",  $config['controller'] . "@deleteRelation")
-                    ->name("form.{$collection}.{$formName}.relation.delete");
-                $this->package->route()->post("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/relation/{relation}/{relation_id}", $config['controller'] . "@createRelation")
-                    ->name("form.{$collection}.{$formName}.relation.store");
-
-                $this->package->route()->put("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/media/{media_id}", $config['controller'] . '@updateMedia')
-                    ->name("form.{$collection}.{$formName}.media.update");
-                $this->package->route()->post("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/media", $config['controller'] . '@storeMedia')
-                    ->name("form.{$collection}.{$formName}.media.store");
-                $this->package->route()->delete("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}/media/{media_id}", $config['controller'] . '@destroyMedia')
-                    ->name("form.{$collection}.{$formName}.media.destroy");
-
-                $this->package->route()->put("{$collectionRoutePrefix}/{$formRoutePrefix}/{id}", $config['controller'] . "@update")->name('form_field.update');
+                        $self->addFormNavPreset($config, app()->get('router'));
+                    });
+                });
             }
         }
+    }
+
+    /**
+     * Register form navigation preset.
+     *
+     * @param FormConfig $config
+     * @param \Illuminate\Routing\Router $router
+     * @return void
+     */
+    public function addFormNavPreset($config, Router $router)
+    {
+        $groupStack = last($router->getGroupStack());
+        $link = '/' . $groupStack['prefix'] . '/';
+
+
+        $this->package->addNavPreset("{$config->collection}.{$config->formName}", [
+            'link' => $link,
+            'title' => ucfirst($config->formName),
+            'authorize' => function (FjordUser $user) use ($config) {
+                return $this->authorizeController(
+                    app()->get('request'),
+                    'read',
+                    $config->controller
+                );
+            }
+        ]);
     }
 }

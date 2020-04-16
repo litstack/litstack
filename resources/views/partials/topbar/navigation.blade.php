@@ -6,7 +6,7 @@
     @php
     $first = true;
     @endphp
-    @foreach(fjord()->app()->config('navigation.topbar') as $group)
+    @foreach(fjord()->config('navigation')->topbar as $section)
         @if($first)
             @php
             $first = false;
@@ -14,11 +14,10 @@
         @else
             <b-dropdown-divider></b-dropdown-divider>
         @endif
-        @foreach($group as $entry)
-            @if(is_string($entry))
-                <header role="heading" class="dropdown-header">{{ $entry }}</header>
+        @foreach($section as $entry)
+            @if($entry['type'] == 'title')
+                <header role="heading" class="dropdown-header">{{ $entry['title'] }}</header>
             @else
-
                 @isset($entry['link'])
                     <b-dropdown-item href="{{ $entry['link'] }}">
                         @isset($entry['title'])

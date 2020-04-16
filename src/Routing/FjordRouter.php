@@ -3,11 +3,12 @@
 namespace Fjord\Routing;
 
 use Form;
+use Closure;
 use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Route;
 use Fjord\Support\Facades\Package;
+use Illuminate\Support\Facades\Route;
 
 class FjordRouter
 {
@@ -21,15 +22,44 @@ class FjordRouter
      * Fjord Routes should always be created with
      * \Fjord\Support\Facades\FjordRoute.
      *
-     * @return Illuminate\Support\Facades\Route $route
+     * @return Illuminate\Support\Facades\Route
      */
     public function __call($method, $parameters)
     {
-        $route = Route::prefix(config('fjord.route_prefix'))
-            ->as('fjord.')
-            ->middleware($this->middlewares);
+        $route = $this->getRoutePreset();
+
 
         return $route->$method(...$parameters);
+    }
+
+    /**
+     * Get route preset.
+     *
+     * @return Illuminate\Support\Facades\Route
+     */
+    protected function getRoutePreset()
+    {
+        return Route::prefix(config('fjord.route_prefix'))
+            ->as('fjord.')
+            ->middleware($this->middlewares);
+    }
+
+    /**
+     * Create a route group with shared attributes.
+     *
+     * @param  Closure|array|string  $attributes
+     * @param  Closure  $closure
+     * @return void
+     */
+    public function group($attributes, Closure $closure = null)
+    {
+        if (is_callable($attributes) || is_string($attributes)) {
+            return $this->getRoutePreset()->group($attributes);
+        }
+        $attributes['prefix'] = config('fjord.route_prefix') . '/' . ($attributes['prefix'] ?? '');
+        $attributes['as'] = 'fjord.' . ($attributes['as'] ?? '');
+        $attributes['middleware'] = array_merge($attributes['middlewares'] ?? [], $this->middlewares);
+        Route::group($attributes, $closure);
     }
 
     /**
@@ -73,8 +103,8 @@ class FjordRouter
     {
         $reflection = new ReflectionClass($class);
 
-        foreach($reflection->getMethods() as $method) {
-            if(! Str::startsWith($method->name, 'make') && ! Str::endsWith($method->name, 'Route')) {
+        foreach ($reflection->getMethods() as $method) {
+            if (!Str::startsWith($method->name, 'make') && !Str::endsWith($method->name, 'Route')) {
                 continue;
             }
 

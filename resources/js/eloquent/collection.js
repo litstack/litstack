@@ -40,11 +40,11 @@ export default class EloquentCollection {
         }
     }
 
-    async save() {
+    async save(ids) {
         let promises = [];
 
         this.items.map(item => {
-            promises.push(item.save());
+            promises.push(item.save(ids[item.route]));
         });
 
         let results = await Promise.all(promises);

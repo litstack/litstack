@@ -31,6 +31,15 @@ class Application
     protected $hasBeenBootstrapped = false;
 
     /**
+     * Singleton classes.
+     *
+     * @var array
+     */
+    protected $singletons = [
+        'config.loader' => \Fjord\Application\Config\ConfigLoader::class
+    ];
+
+    /**
      * Run the given array of bootstrap classes.
      *
      * @param  string[]  $bootstrappers
@@ -147,5 +156,15 @@ class Application
             "name" => $name,
             "extension" => $extension
         ];
+    }
+
+    /**
+     * Get singletons.
+     *
+     * @return array $singletons
+     */
+    public function singletons()
+    {
+        return $this->singletons;
     }
 }

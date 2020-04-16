@@ -116,7 +116,6 @@ export default {
         };
     },
     beforeMount() {
-        console.log(this.field.models);
         if ('models' in this.field) {
             this.models = this.field.models;
         } else {

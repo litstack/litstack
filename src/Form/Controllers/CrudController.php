@@ -4,7 +4,6 @@ namespace Fjord\Form\Controllers;
 
 use ReflectionClass;
 use Illuminate\Http\Request;
-use Fjord\Models\ModelContent;
 use Fjord\Fjord\Models\FjordUser;
 use Fjord\Form\Database\FormBlock;
 use Fjord\Support\Facades\FormLoader;
@@ -91,16 +90,21 @@ abstract class CrudController
      */
     public function index(CrudReadRequest $request)
     {
-        return view('fjord::app')->withComponent('fj-crud-index')
-            ->withTitle($this->titleSingular)
+        $config = $this->model::config()
+            ->get(
+                'search',
+                'sortByDefault',
+                'filter',
+                'index',
+                'names',
+                'route_prefix'
+            );
+
+        return view('fjord::app')
+            ->withComponent('fj-new-crud-index')
             ->withProps([
-                'formConfig' => $this->getForm()->toArray(),
-                'actions' => ['fj-crud-index-delete-all'],
-                //'actions' => $this->getExtensions('index.actions'),
-                'globalActions' => [],
-                'recordActions' => []
-                //'globalActions' => $this->getExtensions('index.globalActions'),
-                //'recordActions' => $this->getExtensions('index.recordActions'),
+                'config' => $config,
+                'headerComponents' => [],
             ]);
     }
 
@@ -155,8 +159,15 @@ abstract class CrudController
     {
         $eloquentModel = $this->eloquentModel($request, $id);
 
-        $form = $this->getForm($eloquentModel['data']);
-        $form->setPreviewRoute($eloquentModel['data']);
+        //$form = $this->getForm($eloquentModel['data']);
+        //$form->setPreviewRoute($eloquentModel['data']);
+
+        $config = $this->model::config()->get(
+            'form',
+            'route_prefix',
+            'names',
+            'permissions'
+        );
 
         $previous = $this->model::where('id', '<', $id)->orderBy('id', 'desc')->select('id')->first()->id ?? null;
         $next = $this->model::where('id', '>', $id)->orderBy('id')->select('id')->first()->id ?? null;
@@ -167,7 +178,7 @@ abstract class CrudController
                 'model' => $eloquentModel,
             ])
             ->withProps([
-                'formConfig' => $form->toArray(),
+                'config' => $config,
                 'nearItems' => [
                     'next' => $next,
                     'previous' => $previous

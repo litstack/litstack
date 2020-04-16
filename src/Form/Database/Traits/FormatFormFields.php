@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 trait FormatFormFields
 {
+    public function getFieldValue($field, $builder = false, $transform = true)
+    {
+        $value = $this->getTranslatedFieldValue($field);
+    }
+
     /**
      * Get formatted values for the given form_field type.
      *
@@ -18,7 +23,7 @@ trait FormatFormFields
 
         $value = $this->transformFormFieldValues($form_field, $value, $builder);
 
-        if($form_field->attributeExists('transform') && $transform) {
+        if ($form_field->attributeExists('transform') && $transform) {
             return $this->getTransformedFormFieldValueFromConfigCallback($form_field, $value, $builder);
         }
 
@@ -28,7 +33,7 @@ trait FormatFormFields
     protected function transformFormFieldValues($form_field, $value, $builder)
     {
         $isJson = ($this->casts['value'] ?? null) == 'json';
-        switch($form_field->type ?? null) {
+        switch ($form_field->type ?? null) {
             case 'dt':
             case 'datetime':
                 return Carbon::parse($value);
@@ -41,7 +46,7 @@ trait FormatFormFields
             case 'boolean':
                 return (bool) $value;
             case 'select':
-                if($form_field->attributeExists('transform_value')) {
+                if ($form_field->attributeExists('transform_value')) {
                     return call_user_func($form_field->transform_value, $value);
                 }
                 return $form_field->options[$value] ?? $value;

@@ -1,14 +1,14 @@
 <template>
     <fj-base-container>
         <fj-base-header
-            :title="formConfig.names.title.singular"
-            :back="formConfig.back_route"
-            :back-text="formConfig.back_text"
+            :title="config.names.singular"
+            :back="config.back_route"
+            :back-text="config.back_text"
         >
             <fj-crud-show-near-items
                 slot="navigation"
                 v-if="nearItems"
-                :formConfig="formConfig"
+                :config="config"
                 :nearItems="nearItems"
             />
 
@@ -17,7 +17,7 @@
                     v-for="(component, key) in headerComponents"
                     :key="key"
                     :is="component"
-                    :formConfig="formConfig"
+                    :config="config"
                     v-if="crud.model"
                     :model="crud.model"
                 />
@@ -26,22 +26,22 @@
         <b-row>
             <b-col cols="12" md="9" order-md="1">
                 <b-row class="fjord-form">
-                    <component
-                        v-for="(component, key) in content"
+                    <components
+                        v-for="(component, key) in config.form.components"
                         :key="key"
-                        :is="component"
-                        :formConfig="formConfig"
-                        v-if="crud.model"
+                        :is="component.name"
+                        v-bind="component.props"
                         :model="crud.model"
+                        :config="config"
                     />
                 </b-row>
             </b-col>
 
             <b-col cols="12" md="3" order-md="2" class="pb-4 mb-md-0">
                 <fj-crud-show-controls
-                    :formConfig="formConfig"
+                    :config="config"
                     :create="create"
-                    :title="formConfig.names.title.singular"
+                    :title="config.names.singular"
                 >
                     <div
                         slot="controls"
@@ -53,7 +53,7 @@
                             v-for="(component, key) in controls"
                             :key="key"
                             :is="component"
-                            :formConfig="formConfig"
+                            :nearItems="nearItems"
                             v-if="crud.model"
                             :model="crud.model"
                         />
@@ -72,7 +72,7 @@ export default {
         models: {
             type: Object
         },
-        formConfig: {
+        config: {
             type: [Array, Object],
             required: true
         },
@@ -159,7 +159,7 @@ export default {
 
         this.$store.commit('SET_MODEL', this.models.model);
 
-        this.$store.dispatch('setFormConfig', this.formConfig);
+        this.$store.dispatch('setFormConfig', this.config);
 
         this.$bus.$on('modelsSaved', () => {
             this.saved();
@@ -172,7 +172,7 @@ export default {
         this.$bus.$on('modelLoaded', () => {
             this.$bvToast.toast(
                 this.$t('fj.model_loaded', {
-                    model: this.form.config.names.title.singular
+                    model: this.form.config.names.singular
                 }),
                 {
                     variant: 'success'

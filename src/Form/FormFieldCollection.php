@@ -47,13 +47,13 @@ class FormFieldCollection extends Collection
     {
         // Return values for array key if items is not a list.
         // This returns FormFields models
-        if(array_key_exists($key, $this->items)) {
+        if (array_key_exists($key, $this->items)) {
             return $this->items[$key];
         }
 
         $form_field = $this->where('field_id', $key)->first();
 
-        if(! $form_field) {
+        if (!$form_field) {
             return;
         }
 

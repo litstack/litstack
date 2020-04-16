@@ -7,7 +7,7 @@
         @endif
         @if(is_array($prop))
             @php
-                $prop=collect($prop);
+                $prop= collect($prop);
             @endphp
         @endif
 

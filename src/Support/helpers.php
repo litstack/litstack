@@ -49,6 +49,13 @@ if (!function_exists('__f_')) {
     }
 }
 
+if (!function_exists('fjord_config_path')) {
+    function fjord_config_path($path = '')
+    {
+        return app_path('Fjord/Config' . ($path ? DIRECTORY_SEPARATOR . $path : $path));
+    }
+}
+
 if (!function_exists('fjord_resource_path')) {
     function fjord_resource_path($path = '')
     {
@@ -74,6 +81,13 @@ if (!function_exists('fjord')) {
     function fjord()
     {
         return app()->get('fjord');
+    }
+}
+
+if (!function_exists('fjord_app')) {
+    function fjord_app()
+    {
+        return app()->get('fjord.app');
     }
 }
 

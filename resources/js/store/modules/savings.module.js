@@ -42,25 +42,24 @@ export const actions = {
                 items.push(model);
             }
         }
+
         collection.items = collect(items);
 
         // save eloquent models
         if (items.length > 0) {
-            let promise = collection.save();
+            let promise = collection.save(state.saveModelIds);
 
             promises.push(promise);
         }
 
         // parallel map flow
-        try {
-            let results = await Promise.all(promises);
+        let results = await Promise.all(promises);
 
-            Bus.$emit('modelsSaved', results[0]);
+        Bus.$emit('modelsSaved', results[0]);
 
-            commit('SAVED');
-        } catch (e) {
-            Bus.$emit('error', e);
-        }
+        commit('SAVED');
+
+        return results;
     },
     saveJob({ commit }, job) {
         commit('ADD_SAVE_JOB', job);
@@ -85,27 +84,26 @@ export const mutations = {
         }
     },
     ADD_MODELS_TO_SAVE(state, { model, id }) {
-        // TODO: hasModel Changes???
         if (!state.modelsToSave.includes(model)) {
             state.modelsToSave.push(model);
-            state.saveModelIds[model.model] = [];
+            state.saveModelIds[model.route] = [];
         }
-        if (!state.saveModelIds[model.model].includes(id)) {
-            state.saveModelIds[model.model].push(id);
+        if (!state.saveModelIds[model.route].includes(id)) {
+            state.saveModelIds[model.route].push(id);
         }
     },
     REMOVE_MODELS_FROM_SAVE(state, { model, id }) {
         if (!state.modelsToSave.includes(model)) {
             return;
         }
-        if (!state.saveModelIds[model.model].includes(id)) {
+        if (!state.saveModelIds[model.route].includes(id)) {
             return;
         }
-        state.saveModelIds[model.model].splice(
-            state.saveModelIds[model.model].indexOf(id),
+        state.saveModelIds[model.route].splice(
+            state.saveModelIds[model.route].indexOf(id),
             1
         );
-        if (state.saveModelIds[model.model].length > 0) {
+        if (state.saveModelIds[model.route].length > 0) {
             return;
         }
         state.modelsToSave.splice(state.modelsToSave.indexOf(model), 1);

@@ -12,8 +12,9 @@ let FormMixin = Base =>
                 return;
             }
 
-            this.form_fields = [];
-            this._setFormFields(this.attributes.form_fields);
+            this.fields = [];
+
+            this._setFields(this.attributes.fields);
 
             this.originalModels = {};
             //this._setOriginalModels();
@@ -22,44 +23,77 @@ let FormMixin = Base =>
 
         isFjordModel() {
             return [
-                'Fjord\\Form\\Database\\FormField',
-                'Fjord\\Form\\Database\\FormBlock'
+                'Fjord\\Crud\\Models\\FormField',
+                'Fjord\\Crud\\Models\\FormBlock'
             ].includes(this.model);
         }
 
-        getOriginalModel(form_field) {
-            return this._getModel(this.originals, form_field.id);
+        getPayload(ids) {
+            let attributes = {};
+            for (let key in ids) {
+                let fallback_locale = store.state.config.fallback_locale;
+                let currentLng = store.state.config.language;
+                let field = this.getFieldById(ids[key]);
+                if (!this.translatable) {
+                    attributes[field.local_key] = this.attributes[
+                        field.local_key
+                    ];
+                }
+                if (field.translatable && this.translatable) {
+                    for (let i in store.state.config.languages) {
+                        let lng = store.state.config.languages[i];
+                        attributes[lng] = this.attributes[lng];
+                    }
+                }
+
+                if (this.translatable && this.isFjordModel()) {
+                    attributes[fallback_locale] = this.attributes[
+                        fallback_locale
+                    ];
+                }
+                if (this.translatable && !this.isFjordModel()) {
+                    attributes[field.local_key] = this.attributes[
+                        field.local_key
+                    ];
+                }
+            }
+
+            return attributes;
+        }
+
+        getOriginalModel(field) {
+            return this._getModel(this.originals, field.id);
         }
 
         _setOriginalModels() {
-            if (!this.form_fields) {
+            if (!this.fields) {
                 return;
             }
 
-            for (let i = 0; i < this.form_fields.length; i++) {
-                let form_field = this.form_fields[i];
-                this.originalModels[form_field.id] =
-                    this[`${form_field.id}Model`] || null;
+            for (let i = 0; i < this.fields.length; i++) {
+                let field = this.fields[i];
+                this.originalModels[field.id] =
+                    this[`${field.id}Model`] || null;
             }
         }
 
-        _setFormFields(form_fields) {
-            this.form_fields = [];
-            for (let index in form_fields) {
-                this.form_fields.push(form_fields[index]);
+        _setFields(fields) {
+            this.fields = [];
+            for (let index in fields) {
+                this.fields.push(fields[index]);
             }
         }
 
         set(obj, prop, value) {
             let id = prop.replace('Model', '');
 
-            if (!String(prop).endsWith('Model') || !this.formFieldExists(id)) {
+            if (!String(prop).endsWith('Model') || !this.fieldExists(id)) {
                 return Reflect.set(...arguments);
             }
 
-            let form_field = this.getFormFieldById(id);
+            let field = this.getFieldById(id);
 
-            if (form_field.translatable) {
+            if (field.translatable) {
                 // translatable field
                 obj = this.attributes[store.state.config.language];
             } else if (this.translatable && this.isFjordModel()) {
@@ -71,14 +105,14 @@ let FormMixin = Base =>
                 obj = this.attributes;
             }
 
-            return Reflect.set(obj, form_field.local_key, value);
+            return Reflect.set(obj, field.local_key, value);
         }
 
         get(target, prop) {
             if (String(prop).endsWith('Model')) {
                 let id = prop.replace('Model', '');
 
-                if (this.formFieldExists(id)) {
+                if (this.fieldExists(id)) {
                     return this._getModel(this.attributes, id);
                 }
             }
@@ -89,26 +123,26 @@ let FormMixin = Base =>
         _getModel(attributes, id) {
             let fallback_locale = store.state.config.fallback_locale;
             let lng = store.state.config.language;
-            let form_field = this.getFormFieldById(id);
+            let field = this.getFieldById(id);
 
-            if (form_field.type == 'relation' && form_field.many == true) {
+            if (field.type == 'relation' && field.many == true) {
                 // TODO: return relations
                 return;
             }
 
-            if (form_field.type == 'block') {
+            if (field.type == 'block') {
                 return;
             }
 
             // Form field is translatable.
-            if (form_field.translatable) {
+            if (field.translatable) {
                 // set not existing object keys
                 if (!attributes[lng]) {
                     attributes[lng] = {};
                 }
 
-                if (!(form_field.local_key in attributes[lng])) {
-                    attributes[lng][form_field.local_key] = null;
+                if (!(field.local_key in attributes[lng])) {
+                    attributes[lng][field.local_key] = null;
                 }
             }
 
@@ -122,37 +156,37 @@ let FormMixin = Base =>
                     attributes[fallback_locale] = {};
                 }
 
-                if (!(form_field.local_key in attributes[fallback_locale])) {
-                    attributes[fallback_locale][form_field.local_key] = null;
+                if (!(field.local_key in attributes[fallback_locale])) {
+                    attributes[fallback_locale][field.local_key] = null;
                 }
             }
 
             // translatable field
-            if (form_field.translatable) {
+            if (field.translatable) {
                 // ckeditor is not able to work with null values
                 if (
-                    attributes[lng][form_field.local_key] === null &&
-                    form_field.type == ('wysiwyg' || 'textarea')
+                    attributes[lng][field.local_key] === null &&
+                    field.type == ('wysiwyg' || 'textarea')
                 ) {
-                    attributes[lng][form_field.local_key] = '';
+                    attributes[lng][field.local_key] = '';
                 }
-                if (form_field.id == 'testtext') {
+                if (field.id == 'testtext') {
                     //console.log(attributes, lng, attributes[lng]);
                 }
-                return attributes[lng][form_field.local_key];
+                return attributes[lng][field.local_key];
             }
 
             // not translatable field but translatable model
             // using fallback_locale
             if (this.translatable && this.isFjordModel()) {
-                return attributes[fallback_locale][form_field.local_key];
+                return attributes[fallback_locale][field.local_key];
             }
 
             // not translatable model
-            return attributes[form_field.local_key];
+            return attributes[field.local_key];
         }
 
-        hasFormFieldChanged(id) {
+        hasFieldChanged(id) {
             return this.originals != this.model;
         }
 
@@ -166,19 +200,19 @@ let FormMixin = Base =>
             ).includes(id);
         }
 
-        formFieldExists(id) {
-            for (let i = 0; i < this.form_fields.length; i++) {
-                if (this.form_fields[i].id == id) {
+        fieldExists(id) {
+            for (let i = 0; i < this.fields.length; i++) {
+                if (this.fields[i].id == id) {
                     return true;
                 }
             }
             return false;
         }
 
-        getFormFieldById(id) {
-            for (let i = 0; i < this.form_fields.length; i++) {
-                if (this.form_fields[i].id == id) {
-                    return this.form_fields[i];
+        getFieldById(id) {
+            for (let i = 0; i < this.fields.length; i++) {
+                if (this.fields[i].id == id) {
+                    return this.fields[i];
                 }
             }
         }

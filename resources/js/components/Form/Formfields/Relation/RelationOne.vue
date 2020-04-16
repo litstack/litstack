@@ -183,7 +183,6 @@ export default {
     },
     methods: {
         showModal(id) {
-            console.log('sjow');
             this.$bvModal.show(id);
         },
         setCols() {

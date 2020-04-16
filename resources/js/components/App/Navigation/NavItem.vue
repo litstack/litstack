@@ -1,9 +1,11 @@
 <template>
     <b-list-group flush>
-        <template v-if="isString">
-            <small class="text-secondary pl-3 pt-2 pb-1">{{ this.item }}</small>
+        <template v-if="isTitle">
+            <small class="text-secondary pl-3 pt-2 pb-1">
+                {{ this.item.title }}
+            </small>
         </template>
-        <template v-else-if="isGroup">
+        <template v-else-if="isSection">
             <fj-nav-item
                 v-for="(i, index) in item"
                 :item="i"
@@ -68,7 +70,7 @@ export default {
             for (let i = 0; i < this.item.children.length; i++) {
                 const element = this.item.children[i];
 
-                if (link.includes(element.link)) {
+                if (element.link.includes(link)) {
                     this.visible = true;
                 }
             }
@@ -76,7 +78,7 @@ export default {
 
         // set active state
         if (this.hasLink) {
-            if (link.includes(this.item.link)) {
+            if (this.item.link.includes(link)) {
                 this.active = true;
             }
         }
@@ -95,11 +97,11 @@ export default {
         hasComponent() {
             return this.item.hasOwnProperty('component');
         },
-        isGroup() {
+        isSection() {
             return Array.isArray(this.item);
         },
-        isString() {
-            return typeof this.item === 'string';
+        isTitle() {
+            return this.item.type === 'title';
         }
     }
 };

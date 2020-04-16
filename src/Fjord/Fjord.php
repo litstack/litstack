@@ -107,6 +107,18 @@ class Fjord
     }
 
     /**
+     * Load config.
+     *
+     * @param string $key
+     * @param array $params
+     * @return $config
+     */
+    public function config($key, ...$params)
+    {
+        return $this->app()->get('config.loader')->get($key, ...$params);
+    }
+
+    /**
      * Get authenticated Fjord user.
      *
      * @return \Fjord\Models\FjordUser $user

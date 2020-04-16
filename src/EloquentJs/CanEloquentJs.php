@@ -21,8 +21,8 @@ trait CanEloquentJs
 
     public function eloquentJs(String $type = 'fjord')
     {
-        if (!array_key_exists('form_fields', $this->appends)) {
-            $this->append('form_fields');
+        if (!array_key_exists('fields', $this->appends)) {
+            $this->append('fields');
         }
 
         return eloquentJs($this, get_class($this), $type);
@@ -41,13 +41,13 @@ trait CanEloquentJs
         if ($type == 'fjord') {
             if (get_class($model) == Collection::class) {
                 $model->map(function ($item) {
-                    if (!array_key_exists('form_fields', $item->appends)) {
-                        $item->append('form_fields');
+                    if (!array_key_exists('fields', $item->appends)) {
+                        $item->append('fields');
                     }
                 });
             } else {
-                if (!array_key_exists('form_fields', $model->appends)) {
-                    $model->append('form_fields');
+                if (!array_key_exists('fields', $model->appends)) {
+                    $model->append('fields');
                 }
             }
         }

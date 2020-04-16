@@ -1,67 +1,132 @@
 <template>
-    <b-col cols="12">
-        <b-card
-            v-for="(ids, key) in form.config.layout"
-            :key="key"
-            class="mb-5"
-            header-class="d-flex justify-content-between align-items-center"
-        >
-            <template v-slot:header v-if="formTitle(ids)">
-                <b>
-                    {{ formTitle(ids) }}
-                </b>
-                <button
-                    v-b-toggle="`accordion-${key}`"
-                    class="fjord-fjorm-collapse"
-                >
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-            </template>
-            <b-collapse :id="`accordion-${key}`" visible>
-                <fj-fjord-form :ids="ids" :model="model" />
-            </b-collapse>
+    <b-col :cols="cols">
+        <b-card :title="title" class="mb-4">
+            <form class="row" style="margin-bottom: -1.5em;">
+                <template v-for="id in fieldIds">
+                    <div
+                        :class="fieldWidth(getFieldById(id))"
+                        v-if="getFieldById(id)"
+                    >
+                        <component
+                            :is="getFieldById(id).component"
+                            :readonly="readonly(getFieldById(id))"
+                            :field="getFieldById(id)"
+                            :model="getModelByFieldId(id)"
+                            @changed="
+                                changed(getFieldById(id), getModelByFieldId(id))
+                            "
+                        />
+                    </div>
+                </template>
+            </form>
+            <!--<fj-fjord-form :ids="fieldIds" :model="model" />-->
         </b-card>
     </b-col>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import FjordModel from '@fj-js/eloquent/fjord.model';
+
 export default {
     name: 'CrudShowForm',
     props: {
         model: {
             required: true,
             type: Object
+        },
+        config: {
+            required: true,
+            type: Object
+        },
+        fieldIds: {
+            type: Array,
+            required: true
+        },
+        title: {
+            type: String
+        },
+        cols: {
+            type: Number,
+            default() {
+                return 12;
+            }
         }
     },
-    methods: {
-        formTitle(ids) {
-            let form_header = null;
-            for (var i = 0; i < ids.length; i++) {
-                form_header = ids[i].includes('form_header')
-                    ? ids[i]
-                    : form_header;
-            }
+    data() {
+        return {
+            preparedModels: []
+        };
+    },
+    beforeMount() {
+        this.init();
 
-            if (form_header) {
-                if (this.model.attributes !== undefined) {
-                    return _.filter(this.model.form_fields, [
-                        'id',
-                        form_header
-                    ])[0].title;
-                }
-                if (this.model.items !== undefined) {
-                    return _.filter(this.model.items.items, [
-                        'attributes.field_id',
-                        form_header
-                    ])[0].form_fields[0].title;
+        this.$bus.$on('modelLoaded', () => {
+            this.init();
+        });
+    },
+    methods: {
+        init() {
+            let model = this.model || this.crud.model;
+
+            if (model instanceof FjordModel) {
+                this.preparedModels = [model];
+            } else {
+                this.preparedModels = model.items.items;
+            }
+        },
+        changed(field, model) {
+            if (!this.hasChanged(model, field)) {
+                this.$store.commit('REMOVE_MODELS_FROM_SAVE', {
+                    model,
+                    id: field.id
+                });
+            } else {
+                this.$store.commit('ADD_MODELS_TO_SAVE', {
+                    model,
+                    id: field.id
+                });
+            }
+        },
+        hasChanged(model, field) {
+            if (
+                Array.isArray(model[`${field.id}Model`]) &&
+                Array.isArray(model.getOriginalModel(field))
+            ) {
+                return !Array.equals(
+                    model[`${field.id}Model`],
+                    model.getOriginalModel(field)
+                );
+            }
+            return model.getOriginalModel(field) != model[`${field.id}Model`];
+        },
+        getFieldById(id) {
+            for (let i in this.preparedModels) {
+                let field = this.preparedModels[i].getFieldById(id);
+                if (field) {
+                    return field;
                 }
             }
-            return null;
+        },
+        getModelByFieldId(id) {
+            for (let i in this.preparedModels) {
+                let field = this.preparedModels[i].getFieldById(id);
+                if (field) {
+                    return this.preparedModels[i];
+                }
+            }
+        },
+        fieldWidth(field) {
+            return field.cols !== undefined ? `col-${field.cols}` : 'col-12';
+        },
+        readonly(field) {
+            return (
+                field.readonly === true || !this.form.config.permissions.update
+            );
         }
     },
     computed: {
-        ...mapGetters(['form'])
+        ...mapGetters(['crud', 'form'])
     }
 };
 </script>

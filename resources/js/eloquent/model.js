@@ -94,8 +94,22 @@ export default class EloquentModel {
      *
      * @return {Object}
      */
-    getPayload() {
-        return Object.assign({}, this.attributes);
+    getPayload(ids) {
+        if (!ids) {
+            return Object.assign({}, this.attributes);
+        }
+
+        let attributes = _.reduce(
+            this.attributes,
+            function(result, value, key) {
+                if (ids.includes(key)) {
+                    result[key] = value;
+                }
+                return result;
+            },
+            {}
+        );
+        return Object.assign({}, attributes);
     }
 
     /**
@@ -103,7 +117,7 @@ export default class EloquentModel {
      *
      * @return {undefined}
      */
-    async save() {
+    async save(ids) {
         let method = this.attributes.id ? 'put' : 'post';
 
         if (this.route == 'form_fields') {
@@ -117,7 +131,7 @@ export default class EloquentModel {
         // strip trailing slashes
         let response = await axios[method](
             route.replace(/\/$/, ''),
-            this.getPayload()
+            this.getPayload(ids)
         );
 
         this.setAttributes(response.data);
