@@ -4,8 +4,8 @@ namespace Fjord;
 
 use Fjord\Application\Application;
 use Fjord\User\Components\UsersComponent;
-use Fjord\Form\Vue\Components\CrudShowComponent;
-use Fjord\Form\Vue\Components\CrudIndexComponent;
+use Fjord\Crud\Vue\Components\CrudShowComponent;
+use Fjord\Crud\Vue\Components\CrudIndexComponent;
 use Fjord\Application\Package\FjordPackage as Package;
 
 class FjordPackage extends Package
@@ -19,7 +19,7 @@ class FjordPackage extends Package
         \Fjord\Application\Translation\TranslationServiceProvider::class,
         \Fjord\Application\RouteServiceProvider::class,
         \Fjord\User\ServiceProvider::class,
-        \Fjord\Form\ServiceProvider::class,
+        \Fjord\Crud\ServiceProvider::class,
     ];
 
     /**

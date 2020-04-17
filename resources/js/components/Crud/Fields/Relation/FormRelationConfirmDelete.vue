@@ -39,7 +39,7 @@ export default {
         },
         relation: {
             required: true,
-            type: String
+            type: Object
         },
         routePrefix: {
             required: true,

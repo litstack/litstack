@@ -6,14 +6,16 @@ use Fjord\TrackEdits\FormEdit;
 use Fjord\Crud\Models\FormField;
 use Fjord\Fjord\Models\FjordUser;
 use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Requests\CrudUpdateRequest;
 use Illuminate\Support\Facades\Route;
-use Fjord\Form\Requests\FormReadRequest;
-use Fjord\Form\Requests\FormUpdateRequest;
+use Fjord\Crud\Requests\FormReadRequest;
+use Fjord\Crud\Requests\FormUpdateRequest;
 
 abstract class FormController
 {
-    use Api\HasBlocks,
-        Api\HasRelations;
+    use Api\HasRelations,
+        Api\HasBlocks,
+        Concerns\HasConfig;
 
     /**
      * Crud model class name.
@@ -38,9 +40,9 @@ abstract class FormController
      * @param int $id
      * @return FormField $formField
      */
-    public function update(FormUpdateRequest $request, $id)
+    public function update(CrudUpdateRequest $request, $id)
     {
-        $formField = FormField::findOrFail($id);
+        $formField = $this->query()->findOrFail($id);
 
         $formField->update($request->all());
 
@@ -62,7 +64,7 @@ abstract class FormController
      * @param FormReadRequest $request
      * @return View $view
      */
-    public function show(FormReadRequest $request)
+    public function show(CrudUpdateRequest $request)
     {
         // Getting collection and formName from route.
         $routeSplit = explode('.', Route::currentRouteName());

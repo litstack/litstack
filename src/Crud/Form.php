@@ -2,12 +2,14 @@
 
 namespace Fjord\Crud;
 
+use ReflectionClass;
 use BadMethodCallException;
 use Fjord\Crud\Fields\Code;
 use Fjord\Crud\Fields\Icon;
 use Fjord\Crud\Fields\Input;
 use Fjord\Crud\Fields\Range;
 use Fjord\Crud\Fields\Boolean;
+use Fjord\Crud\Fields\Select;
 use Fjord\Crud\Fields\Wysiwyg;
 use Fjord\Crud\Fields\Datetime;
 use Fjord\Crud\Fields\Textarea;
@@ -17,7 +19,6 @@ use Fjord\Application\Config\ConfigItem;
 use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Exceptions\MethodNotFoundException;
-use ReflectionClass;
 
 class Form extends ConfigItem
 {
@@ -28,6 +29,7 @@ class Form extends ConfigItem
      */
     protected $fields = [
         'input' => Input::class,
+        'select' => Select::class,
         'boolean' => Boolean::class,
         'code' => Code::class,
         'icon' => Icon::class,

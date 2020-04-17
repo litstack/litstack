@@ -1,6 +1,13 @@
 <?php
 
-Route::get("/", [$controller, "show"])->name('edit');
+if ($type == 'crud') {
+    Route::get("/create", [$controller, "create"])->name('create');
+    $route = Route::get("/index", [$controller, "index"])->name('index');
+    Route::post("/{id}", [$controller, "store"])->name('store');
+    Route::delete("/{id}", [$controller, "destroy"])->name('destroy');
+}
+
+Route::get("/edit", [$controller, "show"])->name('edit');
 Route::put("/{id}", [$controller, "update"])->name('update');
 
 // Media
@@ -16,5 +23,5 @@ Route::delete("/{id}/blocks/{field_id}/{block_id}", [$controller, "destroyBlock"
 // Relations
 Route::get("/{id}/{relation}/index", [$controller, "relationIndex"])->name("relation.index");
 Route::put("/{id}/{relation}/order", [$controller, "orderRelation"])->name("relation.order");
-Route::delete("/{id}/{relation}/{relation_id}",  [$controller, "deleteRelation"])->name("relation.delete");
+Route::delete("/{id}/{relation}/{relation_id}",  [$controller, "destroyRelation"])->name("relation.delete");
 Route::post("/{id}/{relation}/{relation_id}", [$controller, "createRelation"])->name("relation.store");

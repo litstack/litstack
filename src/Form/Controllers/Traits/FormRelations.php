@@ -5,8 +5,8 @@ namespace Fjord\Form\Controllers\Traits;
 use Fjord\Form\Database\FormBlock;
 use Fjord\Form\Database\FormField;
 use Fjord\Form\Database\FormRelation;
-use Fjord\Form\Requests\FormReadRequest;
-use Fjord\Form\Requests\FormUpdateRequest;
+use Fjord\Crud\Requests\FormReadRequest;
+use Fjord\Crud\Requests\FormUpdateRequest;
 
 trait FormRelations
 {

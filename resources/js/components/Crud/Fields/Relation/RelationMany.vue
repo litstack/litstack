@@ -3,6 +3,15 @@
         <template v-if="model.id">
             <div class="form-control-expand">
                 <div v-if="!!relations.length">
+                    <fj-form-relation-index
+                        :model="model"
+                        :field="field"
+                        :items="{ [field.model]: relations }"
+                        :readonly="readonly"
+                        :routePrefixes="{ [field.model]: field.route_prefix }"
+                        @removeRelation="removeRelation"
+                    />
+                    <!--
                     <b-table-simple
                         outlined
                         hover
@@ -133,6 +142,7 @@
                             </tr>
                         </draggable>
                     </b-table-simple>
+                    -->
                 </div>
                 <div v-else>
                     <fj-form-alert-empty
@@ -183,10 +193,6 @@ export default {
             required: true,
             type: Object
         },
-        type: {
-            required: true,
-            type: String
-        },
         readonly: {
             required: true,
             type: Boolean
@@ -218,25 +224,31 @@ export default {
         async selected(item) {
             let response = null;
             try {
-                switch (this.type) {
+                switch (this.field.type) {
                     case 'hasMany':
-                        response = axios.put(`${this.field.route}/${item.id}`, {
-                            [this.field.foreign_key]: this.model.id
-                        });
+                        response = axios.put(
+                            `${this.field.route_prefix}/${item.id}`,
+                            {
+                                [this.field.foreign_key]: this.model.id
+                            }
+                        );
                         break;
                     case 'morphMany':
-                        response = axios.put(`${this.field.route}/${item.id}`, {
-                            [this.field.morph_type]: this.field
-                                .morph_type_value,
-                            [this.field.foreign_key]: this.model.id
-                        });
+                        response = axios.put(
+                            `${this.field.route_prefix}/${item.id}`,
+                            {
+                                [this.field.morph_type]: this.field
+                                    .morph_type_value,
+                                [this.field.foreign_key]: this.model.id
+                            }
+                        );
                         break;
                     case 'morphedByMany':
                     case 'morphToMany':
                     case 'belongsToMany':
-                    case 'relation':
+                    case 'manyRelation':
                         response = await axios.post(
-                            `${this.form.config.route}/${this.model.id}/relation/${this.field.id}/${item.id}`
+                            `${this.form.config.route_prefix}/${this.model.id}/${this.field.id}/${item.id}`
                         );
                         break;
                 }
@@ -293,27 +305,6 @@ export default {
             this.relations.splice(index, 1);
 
             this.$bvToast.toast(this.$t('fj.relation_unlinked'), {
-                variant: 'success'
-            });
-        },
-        async newOrder() {
-            let ids = [];
-
-            for (let i = 0; i < this.relations.length; i++) {
-                let relation = this.relations[i];
-                ids.push(relation.id);
-            }
-
-            let payload = {
-                ids
-            };
-
-            let response = await axios.put(
-                `${this.form.config.route}/${this.model.id}/relation/${this.field.id}/order`,
-                payload
-            );
-
-            this.$bvToast.toast(this.$t('fj.order_changed'), {
                 variant: 'success'
             });
         },

@@ -3,6 +3,7 @@
 namespace Fjord\Crud;
 
 use Closure;
+use Exception;
 use Fjord\Crud\Models\FormField;
 use Fjord\Application\Config\ConfigItem;
 use Fjord\Exceptions\MethodNotFoundException;
@@ -50,7 +51,7 @@ class Field extends ConfigItem
      * @var array
      */
     protected $required = [
-        'width',
+        'cols',
     ];
 
     /**
@@ -150,7 +151,7 @@ class Field extends ConfigItem
      *
      * @return boolean
      * 
-     * @throws
+     * @throws \Exception
      */
     public function checkComplete()
     {
@@ -166,6 +167,13 @@ class Field extends ConfigItem
         if (empty($missing)) {
             return true;
         }
+
+        throw new Exception(sprintf(
+            'Missing required attributes: %s for %s field "%s"',
+            implode(', ', $missing),
+            lcfirst(last(explode('\\', static::class))),
+            $this->attributes['id']
+        ));
     }
 
     /**
@@ -227,7 +235,7 @@ class Field extends ConfigItem
     }
 
     /**
-     * Throw a method not allowed HTTP exception.
+     * Throw a MethodNotFoundException.
      *
      * @param  array  $others
      * @param  string  $method
@@ -235,7 +243,7 @@ class Field extends ConfigItem
      *
      * @throws \Fjord\Exceptions\MethodNotFoundException
      */
-    protected function methodNotAllowed($method)
+    protected function methodNotFound($method)
     {
         $allowed = $this->getAllowedMethods();
         throw new MethodNotFoundException(
@@ -331,7 +339,7 @@ class Field extends ConfigItem
             return $this->setAttribute($method, ...$params);
         }
 
-        $this->methodNotAllowed($method);
+        $this->methodNotFound($method);
     }
 
     /**

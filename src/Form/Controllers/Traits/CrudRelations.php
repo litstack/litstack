@@ -4,8 +4,8 @@ namespace Fjord\Form\Controllers\Traits;
 
 use Illuminate\Support\Facades\DB;
 use Fjord\Form\Database\FormRelation;
-use Fjord\Form\Requests\CrudReadRequest;
-use Fjord\Form\Requests\CrudUpdateRequest;
+use Fjord\Crud\Requests\CrudReadRequest;
+use Fjord\Crud\Requests\CrudUpdateRequest;
 
 trait CrudRelations
 {

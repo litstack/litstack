@@ -33,6 +33,7 @@ class OneRelation extends OneRelationField
     protected $required = [
         'title',
         'model',
+        'index'
     ];
 
     /**
@@ -54,7 +55,6 @@ class OneRelation extends OneRelationField
      * @var array
      */
     protected $defaults = [
-        'many' => false,
         'confirm' => true
     ];
 

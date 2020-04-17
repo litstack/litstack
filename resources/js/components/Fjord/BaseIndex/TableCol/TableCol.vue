@@ -1,7 +1,8 @@
 <template>
     <b-td
-        :class="{ reduce: col.component !== undefined, 'fj-table-col': true }"
+        :class="{ reduce: col.reduce, 'fj-table-col': true, pointer: col.link }"
         :style="colWidth"
+        @click="openLink(col.link)"
     >
         <component
             v-if="col.component !== undefined"
@@ -15,6 +16,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
     name: 'TableCol',
     props: {
@@ -32,12 +34,13 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(['baseURL']),
         percentageColsCount() {
             let count = 0;
             for (let i = 0; i < this.cols.length; i++) {
                 let col = this.cols[i];
 
-                if (col.component !== undefined) {
+                if (!col.reduce) {
                     continue;
                 }
 
@@ -75,13 +78,18 @@ export default {
             }
 
             return compiled;
+        },
+        openLink(link, item) {
+            console.log(link, 'lol');
+            if (!link) {
+                return;
+            }
+
+            window.location.href = `${this.baseURL}${this._format(
+                link,
+                this.item
+            )}`;
         }
     }
 };
 </script>
-
-<style scoped>
-.fj-table-col {
-    vertical-align: middle;
-}
-</style>

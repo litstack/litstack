@@ -43,7 +43,7 @@
 
                 <fj-base-index-table
                     :busy="isBusy"
-                    :tableCols="tableCols"
+                    :cols="cols"
                     :items="items"
                     :recordActions="recordActions"
                     @selectedItemsChanged="setSelectedItems"
@@ -147,15 +147,10 @@ export default {
         return {
             isBusy: true,
             tab: null,
-
-            tableCols: {},
             selectedItems: [],
-
             search: '',
             sort_by_key: '',
-
             filter_scope: null,
-
             currentPage: 1
         };
     },
@@ -171,7 +166,6 @@ export default {
         }
     },
     beforeMount() {
-        this.setTableCols();
 
         if(this.hasTabs) {
             this.tab = this.tabs[0]
@@ -243,29 +237,6 @@ export default {
         },
         linkGen(pageNum) {
             return { path: `#${pageNum}` };
-        },
-
-        setTableCols() {
-            this.tableCols = [];
-
-            // TODO: make this work
-            //if(this.recordActions.length > 0) {
-                // prepend checkbox col if table has recordActions
-                this.tableCols.push({
-                    value: 'check',
-                    label: 'Check'
-                });
-            //}
-
-            for (let i = 0; i < this.cols.length; i++) {
-                let col = this.cols[i];
-
-                if (typeof col == typeof '') {
-                    col = { value: col, label: col.capitalize() };
-                }
-
-                this.tableCols.push(col);
-            }
         },
     }
 };

@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use Fjord\Fjord\Models\FjordUser;
 use Fjord\Form\Database\FormBlock;
 use Fjord\Support\Facades\FormLoader;
-use Fjord\Form\Requests\CrudReadRequest;
-use Fjord\Form\Requests\CrudCreateRequest;
-use Fjord\Form\Requests\CrudDeleteRequest;
-use Fjord\Form\Requests\CrudUpdateRequest;
+use Fjord\Crud\Requests\CrudReadRequest;
+use Fjord\Crud\Requests\CrudCreateRequest;
+use Fjord\Crud\Requests\CrudDeleteRequest;
+use Fjord\Crud\Requests\CrudUpdateRequest;
 
 abstract class CrudController
 {

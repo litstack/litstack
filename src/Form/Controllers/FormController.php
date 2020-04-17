@@ -11,13 +11,15 @@ use Fjord\Form\Database\FormRelation;
 use Fjord\Support\Facades\FormLoader;
 use Illuminate\Support\Facades\Route;
 
-use Fjord\Form\Requests\FormReadRequest;
-use Fjord\Form\Requests\FormUpdateRequest;
+use Fjord\Crud\Requests\FormReadRequest;
+use Fjord\Crud\Requests\FormUpdateRequest;
 
 abstract class FormController
 {
     use Traits\FormMedia,
         Traits\FormRelations;
+    //Traits\HasResource,
+    //Concerns\HasConfig;
 
     /**
      * Authorize request for operation.
@@ -39,15 +41,15 @@ abstract class FormController
     /**
      * Update form_field.
      *
-     * @param FormUpdateRequest $request
+     * @param CrudUpdateRequest $request
      * @param int $id
-     * @return FormField $formField
+     * @return mixed $model
      */
-    public function update(FormUpdateRequest $request, $id)
+    public function update(CrudUpdateRequest $request, $id)
     {
-        $formField = FormField::findOrFail($id);
+        $model = $this->query()->findOrFail($id);
 
-        $formField->update($request->all());
+        $model->update($request->all());
 
         $edit = new FormEdit();
         $edit->fjord_user_id = fjord_user()->id;

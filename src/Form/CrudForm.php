@@ -9,11 +9,11 @@ use Fjord\Form\Database\FormField;
 use Illuminate\Support\Collection;
 use Fjord\Support\Facades\FormLoader;
 use Illuminate\Support\Facades\Request;
-use Fjord\Form\Requests\CrudUpdateRequest;
-use Fjord\Form\Requests\FormUpdateRequest;
-use Fjord\Form\Requests\Traits\CrudHasPermission;
-use Fjord\Form\Requests\Traits\FormHasPermission;
-use Fjord\Form\Requests\Traits\AuthorizeController;
+use Fjord\Crud\Requests\CrudUpdateRequest;
+use Fjord\Crud\Requests\FormUpdateRequest;
+use Fjord\Crud\Requests\Traits\CrudHasPermission;
+use Fjord\Crud\Requests\Traits\FormHasPermission;
+use Fjord\Crud\Requests\Traits\AuthorizeController;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class CrudForm

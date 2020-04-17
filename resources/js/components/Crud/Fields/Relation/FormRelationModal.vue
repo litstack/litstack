@@ -42,10 +42,19 @@
                         @click="selected(item, m)"
                     >
                         <b-td style="vertical-align: middle;" class="reduce">
-                            <b-form-radio
+                            <div
+                                class="custom-control custom-radio"
                                 v-if="!hasMany"
-                                :value="itemChecked(item, m)"
-                            />
+                            >
+                                <input
+                                    type="radio"
+                                    autocomplete="off"
+                                    class="custom-control-input pointer-events-none"
+                                    value=""
+                                    :checked="itemChecked(item, m)"
+                                />
+                                <label class="custom-control-label"></label>
+                            </div>
                             <b-checkbox
                                 class="pointer-events-none"
                                 v-else="hasMany"
@@ -142,18 +151,18 @@ export default {
                 }
             }
         },
-        itemChecked(item, m) {
-            if (!(m in this.selectedModels)) {
+        itemChecked(item, modelName) {
+            if (!(modelName in this.selectedModels)) {
                 return false;
             }
-            return this.selectedModels[m].find(model =>
-                model ? model.id == item.id : false
-            )
+            return this.selectedModels[modelName].find(model => {
+                return model ? model.id == item.id : false;
+            })
                 ? true
                 : false;
         },
         selected(item, m) {
-            if (this.itemChecked(item) && this.hasMany) {
+            if (this.itemChecked(item, m) && this.hasMany) {
                 this.$emit('remove', item.id, m);
             } else {
                 this.$emit('selected', item, m);

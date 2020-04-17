@@ -4,7 +4,7 @@ namespace Fjord\Crud\Controllers\Api;
 
 use Fjord\Crud\Models\FormBlock;
 use Fjord\Crud\Fields\Blocks\Blocks;
-use Fjord\Form\Requests\CrudUpdateRequest;
+use Fjord\Crud\Requests\CrudUpdateRequest;
 
 trait HasBlocks
 {
@@ -18,7 +18,7 @@ trait HasBlocks
      */
     public function storeBlock(CrudUpdateRequest $request, $id, $field_id)
     {
-        $model = $this->model::findOrFail($id);
+        $model = $this->query()->findOrFail($id);
         $field = $model->findField($field_id);
 
         if (!$field instanceof Blocks) {
@@ -52,7 +52,7 @@ trait HasBlocks
      */
     public function updateBlock(CrudUpdateRequest $request, $id, $field_id, $block_id)
     {
-        $model = $this->model::findOrFail($id);
+        $model = $this->query()->findOrFail($id);
         $field = $model->findField($field_id);
 
         if (!$field instanceof Blocks) {
@@ -76,7 +76,7 @@ trait HasBlocks
      */
     public function destroyBlock(CrudUpdateRequest $request, $id, $field_id, $block_id)
     {
-        $model = $this->model::findOrFail($id);
+        $model = $this->query()->findOrFail($id);
         $field = $model->findField($field_id);
 
         if (!$field instanceof Blocks) {

@@ -3,7 +3,7 @@
 namespace Fjord\Form\Controllers\Traits;
 
 use Spatie\MediaLibrary\Models\Media;
-use Fjord\Form\Requests\CrudUpdateRequest;
+use Fjord\Crud\Requests\CrudUpdateRequest;
 
 trait CrudMedia
 {

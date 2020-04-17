@@ -16420,8 +16420,11 @@ div#fjord-app.vertical .container {
 
 table.b-table td.reduce {
   width: auto;
-  text-align: right;
   white-space: nowrap;
+}
+
+table.b-table td.fj-table-col {
+  vertical-align: middle;
 }
 
 .fj-topbar {

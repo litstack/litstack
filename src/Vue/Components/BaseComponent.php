@@ -21,4 +21,14 @@ abstract class BaseComponent
     {
         return in_array($name, $this->props);
     }
+
+    /**
+     * Get props.
+     *
+     * @return array
+     */
+    public function getProps()
+    {
+        return $this->props;
+    }
 }

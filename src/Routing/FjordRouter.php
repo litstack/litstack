@@ -90,26 +90,4 @@ class FjordRouter
             ->as('fjord.')
             ->middleware('web');
     }
-
-    /**
-     * Register crud action routes.
-     *
-     * @param  string $crud
-     * @param  string $namespace
-     *
-     * @return
-     */
-    public function extensionRoutes(string $class)
-    {
-        $reflection = new ReflectionClass($class);
-
-        foreach ($reflection->getMethods() as $method) {
-            if (!Str::startsWith($method->name, 'make') && !Str::endsWith($method->name, 'Route')) {
-                continue;
-            }
-
-            $instance = with(new $class());
-            call_user_func_array([$instance, $method->name], []);
-        }
-    }
 }

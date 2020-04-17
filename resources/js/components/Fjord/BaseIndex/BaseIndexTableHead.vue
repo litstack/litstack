@@ -1,34 +1,27 @@
 <template>
     <thead>
         <tr>
-            <th v-for="(col, key) in tableCols" :key="key">
-                <template v-if="col.value == 'check'">
-                    <slot name="checkbox" />
-                </template>
-                <template v-else>
-                    <div
-                        @click="sortCol(col.value, col.sort_by, key)"
-                        :class="{
-                            'text-muted': key != activeCol && activeCol != null,
-                            ['pointer']: col.sort_by ? true : false
-                        }"
-                    >
-                        <span v-html="col.label" />
-                        <span
-                            class="d-inline-block ml-2"
-                            v-if="key == activeCol"
-                        >
-                            <fa-icon
-                                icon="sort-amount-down-alt"
-                                v-if="sort == 'asc'"
-                            />
-                            <fa-icon
-                                icon="sort-amount-down"
-                                v-if="sort == 'desc'"
-                            />
-                        </span>
-                    </div>
-                </template>
+            <th><slot name="checkbox" /></th>
+            <th v-for="(col, key) in cols" :key="key">
+                <div
+                    @click="sortCol(col.value, col.sort_by, key)"
+                    :class="{
+                        'text-muted': key != activeCol && activeCol != null,
+                        ['pointer']: col.sort_by ? true : false
+                    }"
+                >
+                    <span v-html="col.label" />
+                    <span class="d-inline-block ml-2" v-if="key == activeCol">
+                        <fa-icon
+                            icon="sort-amount-down-alt"
+                            v-if="sort == 'asc'"
+                        />
+                        <fa-icon
+                            icon="sort-amount-down"
+                            v-if="sort == 'desc'"
+                        />
+                    </span>
+                </div>
             </th>
             <th v-if="hasRecordActions"></th>
         </tr>
@@ -39,7 +32,7 @@
 export default {
     name: 'BaseIndexTableHead',
     props: {
-        tableCols: {
+        cols: {
             type: Array,
             required: true
         },

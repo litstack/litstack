@@ -2,7 +2,7 @@
     <fj-form-item :field="field" :model="model" v-bind:no-hint="!readonly">
         <template v-if="model.id">
             <div class="form-control-expand">
-                <div v-if="selectedModels">
+                <div v-if="relation && Object.keys(relation).length > 0">
                     <fj-form-relation-index
                         :field="field"
                         :items="selectedModels"
@@ -86,27 +86,45 @@ export default {
             this.selectedModel = this.model[this.field.morph_type];
         }
 
-        this.selectedModels = { [this.selectedModel]: [this.relation] };
         this.routePrefixes = { [this.selectedModel]: this.field.route_prefix };
-        this.routePrefix = this.field.route_prefix;
         if ('route_prefixes' in this.field) {
             this.routePrefixes = this.field.routePrefixes;
-            this.routePrefix = this.field.routePrefixes[this.selectedModel];
         }
+        this.setRelation();
     },
+
     methods: {
+        setRelation() {
+            this.selectedModels = { [this.selectedModel]: [this.relation] };
+            this.routePrefix = this.field.route_prefix;
+            if ('route_prefixes' in this.field) {
+                this.routePrefix = this.field.routePrefixes[this.selectedModel];
+            }
+        },
         async selected(item, modelName) {
             console.log(item, modelName);
+            let response = null;
             switch (this.field.type) {
                 case 'oneRelation':
                     try {
-                        response = axios.post(
+                        response = await axios.post(
                             `${this.form.config.route_prefix}/${this.model.id}/${this.field.id}/${item.id}`
                         );
                     } catch (e) {
                         console.log(e);
                         return;
                     }
+
+                    this.relation = new TableModel(response.data);
+                    console.log(this.relation);
+                    this.$bvToast.toast(
+                        this.$t('fj.relation_added', {
+                            relation: this.field.title
+                        }),
+                        {
+                            variant: 'success'
+                        }
+                    );
                     break;
                 case 'morphTo':
                     this.model.attributes[this.field.morph_type] = modelName;
@@ -116,7 +134,6 @@ export default {
                     this.$emit('changed', this.field, this.model);
                     break;
                 case 'morphOne':
-                    let response = null;
                     try {
                         if (this.relation) {
                             response = axios.put(
@@ -153,20 +170,23 @@ export default {
                     this.$emit('changed');
                     break;
             }
-            this.selectedModel = modelName;
-            this.relation = item;
-            this.selectedModels = { [this.selectedModel]: [this.relation] };
-            if ('routes' in this.field) {
-                this.route = this.field.routes[this.selectedModel];
-            }
+            this.setRelation();
             this.$bvModal.hide(this.modalId);
         },
         async removeRelation({ id, modelName }) {
             switch (this.field.type) {
                 case 'oneRelation':
-                    response = axios.delete(
-                        `${this.form.config.route_prefix}/${this.model.id}/${this.field.id}/${id}`
-                    );
+                    try {
+                        response = axios.delete(
+                            `${this.form.config.route_prefix}/${this.model.id}/${this.field.id}/${id}`
+                        );
+                    } catch (e) {
+                        console.log(e);
+                        return;
+                    }
+                    this.$bvToast.toast(this.$t('fj.relation_unlinked'), {
+                        variant: 'success'
+                    });
                     break;
                 case 'morphOne':
                     let response = null;
@@ -180,17 +200,17 @@ export default {
                         );
                     } catch (e) {
                         console.log(e);
+                        return;
                     }
-
                     break;
                 case 'belongsTo':
                 case 'hasOne':
                     this.model[`${this.field.id}Model`] = null;
-                    this.relation = null;
                     this.$emit('changed');
                     break;
             }
-            this.$bvModal.hide(`modal-${this.route}-${item.id}`);
+            this.relation = null;
+            this.setRelation();
         },
         setItem(item) {
             item.trash = '';
@@ -205,16 +225,3 @@ export default {
     }
 };
 </script>
-<style lang="scss" scoped>
-.table-controls {
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    .btn-group {
-        .btn {
-            border-radius: 0 !important;
-        }
-    }
-}
-</style>

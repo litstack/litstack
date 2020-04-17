@@ -2,7 +2,7 @@
 
 namespace Fjord\Crud\Config\Traits;
 
-use Fjord\Vue\CrudTable;
+use Fjord\Vue\Crud\CrudTable;
 
 trait HasIndex
 {
@@ -23,7 +23,7 @@ trait HasIndex
     /**
      * Setup index table.
      *
-     * @param \Fjord\Vue\CrudTable $table
+     * @param \Fjord\Vue\Crud\CrudTable $table
      * @return void
      */
     abstract protected function index(CrudTable $table);

@@ -5,6 +5,7 @@ namespace Fjord\Vue;
 use BadMethodCallException;
 use Illuminate\Support\Str;
 use Fjord\Application\Config\ConfigItem;
+use Fjord\Exceptions\MethodNotFoundException;
 
 class Component extends ConfigItem
 {
@@ -93,13 +94,50 @@ class Component extends ConfigItem
     }
 
     /**
+     * Throw a MethodNotFoundException.
+     *
+     * @param  array  $others
+     * @param  string  $method
+     * @return void
+     *
+     * @throws \Fjord\Exceptions\MethodNotFoundException
+     */
+    protected function methodNotFound($method)
+    {
+        $message = sprintf(
+            '"%s" is not a supported prop for the Vue component "%s". Supported methods: %s.',
+            $method,
+            $this->name,
+            implode(', ', $this->getSupportedMethods())
+        );
+        if ($this->class) {
+            $message .= sprintf(
+                ' Supported props: %s',
+                implode(', ', $this->class->getProps())
+            );
+        }
+
+        throw new MethodNotFoundException($message);
+    }
+
+    /**
+     * Get supported methods.
+     *
+     * @return array
+     */
+    protected function getSupportedMethods()
+    {
+        return ['props', 'prop'];
+    }
+
+    /**
      * Call component method.
      *
      * @param string $method
      * @param array $params
      * @return void
      * 
-     * @throws BadMethodCallException
+     * @throws \Fjord\Exceptions\MethodNotFoundException
      */
     public function __call($method, $params = [])
     {
@@ -109,10 +147,6 @@ class Component extends ConfigItem
             }
         }
 
-        throw new BadMethodCallException(sprintf(
-            'Method %s::%s does not exist.',
-            static::class,
-            $method
-        ));
+        $this->methodNotFound($method);
     }
 }

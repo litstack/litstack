@@ -2,7 +2,7 @@
 
 namespace Fjord\Form\Controllers\Traits;
 
-use Fjord\Form\Requests\CrudDeleteRequest;
+use Fjord\Crud\Requests\CrudDeleteRequest;
 use Fjord\Support\Facades\FjordRoute;
 use Illuminate\Http\Request;
 

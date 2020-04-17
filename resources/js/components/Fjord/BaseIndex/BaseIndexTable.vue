@@ -1,9 +1,7 @@
 <template>
     <b-table-simple :aria-busy="busy" hover>
-        <fj-base-colgroup :icons="['check']" :cols="tableCols" />
-
         <fj-base-index-table-head
-            :tableCols="tableCols"
+            :cols="cols"
             :hasRecordActions="hasRecordActions"
             :selectedItems="selectedItems"
             @sort="sort"
@@ -19,7 +17,7 @@
 
         <tbody>
             <tr role="row" class="b-table-busy-slot" v-if="busy">
-                <td :colspan="tableCols.length" role="cell" align="center">
+                <td :colspan="cols.length" role="cell" align="center">
                     <fj-base-spinner class="text-center" />
                 </td>
             </tr>
@@ -31,13 +29,18 @@
                         selectedItems.includes(item.id) ? 'table-primary' : ''
                     "
                 >
+                    <td class="reduce">
+                        <b-checkbox v-model="selectedItems" :value="item.id" />
+                    </td>
+                    <fj-table-col
+                        v-for="(col, col_key) in cols"
+                        :col="col"
+                        :key="col_key"
+                        :item="item"
+                        :cols="cols"
+                    />
+                    <!--
                     <template v-for="(col, col_key) in tableCols">
-                        <td v-if="col.value == 'check'">
-                            <b-checkbox
-                                v-model="selectedItems"
-                                :value="item.id"
-                            />
-                        </td>
                         <td
                             v-else
                             @click="openLink(col.link, item)"
@@ -46,6 +49,8 @@
                             <fj-table-col :item="item" :col="col" />
                         </td>
                     </template>
+                    -->
+                    <!--
                     <td v-if="hasRecordActions">
                         <component
                             v-for="(component, key) in recordActions"
@@ -55,6 +60,7 @@
                             @reload="_loadItems"
                         />
                     </td>
+                    -->
                 </tr>
             </template>
         </tbody>
@@ -66,7 +72,7 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'BaseIndexTable',
     props: {
-        tableCols: {
+        cols: {
             required: true,
             type: Array
         },
@@ -125,14 +131,6 @@ export default {
             } else {
                 this.selectedItems = [];
             }
-        },
-        openLink(link, item) {
-            if (!link) {
-                return;
-            }
-
-            window.location.href =
-                `/${this.config.route_prefix}/` + this._format(link, item);
         }
     }
 };

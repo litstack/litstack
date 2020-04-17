@@ -30,6 +30,18 @@ class Col extends BaseCol
     }
 
     /**
+     * Small column.
+     *
+     * @return self
+     */
+    public function small()
+    {
+        $this->attributes['reduce'] = true;
+
+        return $this;
+    }
+
+    /**
      * Set sort_by.
      *
      * @param string $key
