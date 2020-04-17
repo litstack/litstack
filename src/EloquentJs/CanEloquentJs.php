@@ -6,13 +6,18 @@ use Illuminate\Database\Eloquent\Collection;
 
 trait CanEloquentJs
 {
-    public $eloquentRelations = [];
+    protected $eloquentJsRelations = [];
+
+    public function getEloquentJsRelations()
+    {
+        return $this->eloquentJsRelations;
+    }
 
     public function getEloquentJsAttribute()
     {
         $relations = [];
 
-        foreach ($this->eloquentRelations as $relationName => $class) {
+        foreach ($this->eloquentJsRelations as $relationName => $class) {
             $relations[$relationName] = eloquentJs($this->$relationName, $class);
         }
 
@@ -30,7 +35,7 @@ trait CanEloquentJs
 
     public function scopeEloquentJs($query, String $type = 'fjord', $method, $data = null)
     {
-        $eloquentRelations = $this->eloquentRelations;
+        $eloquentJsRelations = $this->eloquentJsRelations;
         if ($data) {
             $model = $query->$method($data);
         } else {
@@ -52,7 +57,7 @@ trait CanEloquentJs
             }
         }
 
-        $model->eloquentRelations = $eloquentRelations;
+        $model->eloquentJsRelations = $eloquentJsRelations;
 
         return eloquentJs($model, get_class($this), $type);
     }
@@ -61,7 +66,7 @@ trait CanEloquentJs
     {
         $query->with($key);
 
-        $this->eloquentRelations[$key] = get_class($this->$key()->getRelated());
+        $this->eloquentJsRelations[$key] = get_class($this->$key()->getRelated());
 
         return $query;
     }
@@ -70,7 +75,7 @@ trait CanEloquentJs
     {
         $this->with($key);
 
-        $this->eloquentRelations[$key] = get_class($this->$key()->getRelated());
+        $this->eloquentJsRelations[$key] = get_class($this->$key()->getRelated());
 
         return $this;
     }

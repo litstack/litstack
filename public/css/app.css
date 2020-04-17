@@ -16418,6 +16418,12 @@ div#fjord-app.vertical .container {
   opacity: 1;
 }
 
+table.b-table td.reduce {
+  width: auto;
+  text-align: right;
+  white-space: nowrap;
+}
+
 .fj-topbar {
   width: 100vw;
   height: 56px;

@@ -39,17 +39,6 @@
                             />
                         </td>
                         <td
-                            v-else-if="col.component !== undefined"
-                            class="pointer"
-                        >
-                            <component
-                                :is="col.component"
-                                :item="item"
-                                :col="col"
-                                v-bind="getColComponentProps(col.props, item)"
-                            />
-                        </td>
-                        <td
                             v-else
                             @click="openLink(col.link, item)"
                             :class="col.link ? 'pointer' : ''"
@@ -124,20 +113,6 @@ export default {
     methods: {
         sort(sort) {
             this.$emit('sort', sort);
-        },
-        getColComponentProps(props, item) {
-            if (!props) {
-                return {};
-            }
-
-            let compiled = {};
-
-            for (let name in props) {
-                let prop = props[name];
-                compiled[name] = this._format(prop, item);
-            }
-
-            return compiled;
         },
         _loadItems() {
             this.$emit('loadItems');

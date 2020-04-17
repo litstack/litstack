@@ -84,7 +84,7 @@ class Component extends ConfigItem
      *
      * @return array
      */
-    public function toArray()
+    public function getArray(): array
     {
         return [
             'name' => $this->name,

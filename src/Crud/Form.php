@@ -14,7 +14,10 @@ use Fjord\Crud\Fields\Textarea;
 use Fjord\Crud\Fields\Checkboxes;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Application\Config\ConfigItem;
-
+use Fjord\Crud\Fields\Relations\OneRelation;
+use Fjord\Crud\Fields\Relations\ManyRelation;
+use Fjord\Exceptions\MethodNotFoundException;
+use ReflectionClass;
 
 class Form extends ConfigItem
 {
@@ -35,7 +38,9 @@ class Form extends ConfigItem
         'textarea' => Textarea::class,
         'text' => Textarea::class,
         'wysiwyg' => Wysiwyg::class,
-        'blocks' => Blocks::class
+        'blocks' => Blocks::class,
+        'oneRelation' => OneRelation::class,
+        'manyRelation' => ManyRelation::class,
     ];
 
     /**
@@ -45,7 +50,13 @@ class Form extends ConfigItem
      */
     protected $model;
 
-
+    /**
+     * Field that is being registered is stored in here. When the next 
+     * field is called this field will be checked for required properties. 
+     *
+     * @var Field
+     */
+    protected $registrar;
 
     /**
      * Registered fields.
@@ -76,8 +87,14 @@ class Form extends ConfigItem
      */
     protected function registerField(string $name, string $id, $params = [])
     {
+        if ($this->registrar) {
+            // Check if all required properties are set.
+            $this->registrar->checkComplete();
+        }
+
         $field = new $this->fields[$name]($id, $this->model);
 
+        $this->registrar = $field;
         $this->registeredFields[] = $field;
 
         return $field;
@@ -108,11 +125,31 @@ class Form extends ConfigItem
      *
      * @return array
      */
-    public function toArray()
+    public function getArray(): array
     {
         return [
             'fields' => $this->registeredFields
         ];
+    }
+
+    /**
+     * Throw a method not allowed HTTP exception.
+     *
+     * @param  array  $others
+     * @param  string  $method
+     * @return void
+     *
+     * @throws \Fjord\Exceptions\MethodNotFoundException
+     */
+    protected function methodNotAllowed($method)
+    {
+        throw new MethodNotFoundException(
+            sprintf(
+                "The %s method is not found for this form. Supported fields: %s.",
+                $method,
+                implode(', ', array_keys($this->fields)),
+            )
+        );
     }
 
     /**
@@ -122,7 +159,7 @@ class Form extends ConfigItem
      * @param array $params
      * @return void
      * 
-     * @throws BadMethodCallException
+     * @throws \Fjord\Exceptions\MethodNotFoundException
      */
     public function __call($method, $params = [])
     {
@@ -130,10 +167,6 @@ class Form extends ConfigItem
             return $this->registerField($method, ...$params);
         }
 
-        throw new BadMethodCallException(sprintf(
-            'Method %s::%s does not exist.',
-            static::class,
-            $method
-        ));
+        $this->methodNotAllowed($method);
     }
 }

@@ -93,7 +93,7 @@ class CrudForm extends Form
      *
      * @return array
      */
-    public function toArray()
+    public function getArray(): array
     {
         return [
             'components' => $this->components,

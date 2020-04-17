@@ -9,13 +9,6 @@ use Fjord\Crud\ManyRelationField;
 class Blocks extends ManyRelationField
 {
     /**
-     * Field is relation.
-     *
-     * @var boolean
-     */
-    protected $relation = true;
-
-    /**
      * Field Vue component.
      *
      * @var string
@@ -67,18 +60,6 @@ class Blocks extends ManyRelationField
         }
 
         $this->attributes['repeatables'] = $repeatables;
-    }
-
-    /**
-     * Cast field value.
-     *
-     * @param mixed $value
-     * @return boolean
-     */
-    public function cast($value)
-    {
-        dd($value);
-        return json_decode($value, 0);
     }
 
     /**

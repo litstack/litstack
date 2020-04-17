@@ -33,10 +33,10 @@ export const actions = {
         let items = [];
         for (let key in state.modelsToSave) {
             let model = state.modelsToSave[key];
-            if (model.route == 'form_blocks') {
+            if (model.model == 'Fjord\\Crud\\Models\\FormBlock') {
                 let promise = axios.put(
-                    `${store.state.form.config.route}/${model.model_id}/blocks/${model.id}`,
-                    model.getPayload()
+                    `${store.state.form.config.route_prefix}/${model.model_id}/blocks/${model.field_id}/${model.id}`,
+                    model.getPayload(state.saveModelIds[model.route])
                 );
             } else {
                 items.push(model);

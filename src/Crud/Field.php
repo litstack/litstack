@@ -3,10 +3,9 @@
 namespace Fjord\Crud;
 
 use Closure;
-use BadMethodCallException;
 use Fjord\Crud\Models\FormField;
 use Fjord\Application\Config\ConfigItem;
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Fjord\Exceptions\MethodNotFoundException;
 
 class Field extends ConfigItem
 {
@@ -37,6 +36,13 @@ class Field extends ConfigItem
      * @var Closure
      */
     protected $authorize;
+
+    /**
+     * Properties passed to Vue component.
+     *
+     * @var array
+     */
+    protected $props = [];
 
     /**
      * Required attributes.
@@ -95,8 +101,6 @@ class Field extends ConfigItem
             return;
         }
 
-        $this->attributes = collect([]);
-
         $this->attributes['id'] = $id;
         $this->attributes['local_key'] = $id;
         $this->model = $model;
@@ -107,20 +111,6 @@ class Field extends ConfigItem
 
         $this->setDefaults();
         $this->attributes['component'] = $this->component;
-    }
-
-    /**
-     * Get value for model FormField.
-     *
-     * @param FormField $formField
-     * @param string $locale
-     * @return mixed
-     */
-    public function getFormFieldValue(FormField $formField, string $locale)
-    {
-        $value = $formField->translation[$locale] ?? [];
-
-        return $value['value'] ?? null;
     }
 
     /**
@@ -153,6 +143,29 @@ class Field extends ConfigItem
     public function isRelation()
     {
         return false;
+    }
+
+    /**
+     * Check if all required props have been set.
+     *
+     * @return boolean
+     * 
+     * @throws
+     */
+    public function checkComplete()
+    {
+        $missing = [];
+        foreach ($this->required as $prop) {
+            if (array_key_exists($prop, $this->attributes)) {
+                continue;
+            }
+
+            $missing[] = $prop;
+        }
+
+        if (empty($missing)) {
+            return true;
+        }
     }
 
     /**
@@ -201,8 +214,6 @@ class Field extends ConfigItem
      * @param string $name
      * @param string|int|closure $value
      * @return self
-     * 
-     * @throws MethodNotAllowedHttpException
      */
     public function setAttribute(string $name, $value)
     {
@@ -222,15 +233,14 @@ class Field extends ConfigItem
      * @param  string  $method
      * @return void
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
+     * @throws \Fjord\Exceptions\MethodNotFoundException
      */
     protected function methodNotAllowed($method)
     {
         $allowed = $this->getAllowedMethods();
-        throw new MethodNotAllowedHttpException(
-            $allowed,
+        throw new MethodNotFoundException(
             sprintf(
-                'The %s method is not supported for this field. Supported methods: %s.',
+                'The %s method is not found for this field. Supported methods: %s.',
                 $method,
                 implode(', ', $allowed)
             )
@@ -297,9 +307,13 @@ class Field extends ConfigItem
      *
      * @return array
      */
-    public function toArray()
+    public function getArray(): array
     {
-        return $this->attributes->toArray();
+        foreach ($this->props as $name => $value) {
+            $this->attributes[$name] = $value;
+        }
+
+        return $this->attributes;
     }
 
     /**
@@ -309,7 +323,7 @@ class Field extends ConfigItem
      * @param array $params
      * @return static|void
      * 
-     * @throws MethodNotAllowedHttpException
+     * @throws \Fjord\Exceptions\MethodNotFoundException
      */
     public function __call($method, $params = [])
     {

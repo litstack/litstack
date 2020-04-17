@@ -1,5 +1,5 @@
 <template>
-    <b-col :cols="field.width">
+    <b-col :cols="field.cols">
         <div class="fjord-draggable">
             <div
                 v-if="!readonly"
@@ -8,14 +8,16 @@
                 <i class="fas fa-grip-horizontal text-muted"></i>
             </div>
 
-            <fj-fjord-form :model="repeatable" />
+            <fj-crud-show-form-item
+                v-for="(field, key) in block.fields"
+                :key="key"
+                :field="field"
+                :model="block"
+            />
 
             <b-row v-if="!readonly">
                 <b-col sm="12" class="text-center fj-trash text-muted">
-                    <fa-icon
-                        icon="trash"
-                        @click="deleteRepeatable(repeatable)"
-                    />
+                    <fa-icon icon="trash" @click="deleteBlock(block)" />
                 </b-col>
             </b-row>
         </div>
@@ -31,7 +33,7 @@ export default {
             type: Object,
             required: true
         },
-        repeatable: {
+        block: {
             type: Object,
             required: true
         },
@@ -48,11 +50,11 @@ export default {
         ...mapGetters(['form'])
     },
     methods: {
-        async deleteRepeatable(repeatable) {
+        async deleteBlock(block) {
             let response = await axios.delete(
-                `${this.form.config.route}/${this.model.id}/blocks/${repeatable.id}`
+                `${this.form.config.route_prefix}/${this.model.id}/blocks/${block.field_id}/${block.id}`
             );
-            this.$emit('deleteBlock', repeatable);
+            this.$emit('deleteBlock', block);
         }
     }
 };

@@ -4,7 +4,6 @@ namespace Fjord\Crud\Models;
 
 use Fjord\EloquentJs\CanEloquentJs;
 use Fjord\Crud\Fields\Blocks\Blocks;
-use Fjord\Support\Facades\FormLoader;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
@@ -25,6 +24,7 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
 
     public $timestamps = false;
     public $translatedAttributes = ['value'];
+    protected $fieldIds = [];
 
     protected $fillable = ['field_id', 'model_type', 'model_id', 'type', 'content', 'order_column'];
     protected $appends = ['fields', 'translation'];
@@ -67,7 +67,6 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
             }
         }
     }
-
 
     public function field_relations($form_field)
     {
@@ -112,12 +111,6 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
         return parent::update($attributes, $options);
     }
 
-    public function getFormFieldsAttribute()
-    {
-        $fields = clone FormLoader::loadFields($this->form_fields_path, $this);
-
-        return $this->getDynamicFieldValues($fields);
-    }
 
     public function registerMediaConversions(Media $media = null)
     {
@@ -129,33 +122,92 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
         }
     }
 
-    public function toArray()
+    /**
+     * Get field value.
+     *
+     * @param Field $field
+     * @return mixed
+     */
+    public function getFieldValue($field)
     {
-        $array = parent::toArray();
+        if ($field->isRelation()) {
+            return $field->relation($this, $query = false);
+        }
 
-        foreach ($this->form_fields as $form_field) {
+        if ($this->translatable) {
+            $locale = app()->getLocale();
+        } else {
+            $locale = config('translatable.fallback_locale');
+        }
 
-            if (!in_array($form_field->type, ['boolean', 'relation', 'image', 'checkboxes'])) {
+        return $this->getTranslatedFieldValue($field, $locale);
+    }
+
+    /**
+     * Get translated field value.
+     *
+     * @param Field $field
+     * @param string $locale
+     * @return void
+     */
+    public function getTranslatedFieldValue($field, string $locale)
+    {
+        $value = $this->translation[$locale] ?? [];
+
+        return $value[$field->id] ?? null;
+    }
+
+    /**
+     * Convert the model's attributes to an array.
+     *
+     * @return array
+     */
+    public function attributesToArray()
+    {
+        $attributes = parent::attributesToArray();
+
+        foreach ($this->fields as $field) {
+            foreach ($attributes['translation'] as $locale => $values) {
+                $attributes['translation'][$locale][$field->id] = $this->getFormattedFieldValue($field);
+            }
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Get an attribute array of all arrayable relations.
+     *
+     * @return array
+     */
+    protected function getArrayableRelations()
+    {
+        $items = $this->getArrayableItems($this->relations);
+
+        // Removing model relation from arrayable items to avoid infinite loop.
+        unset($items['model']);
+
+        return $items;
+    }
+
+    /**
+     * Get the model's relationships in array form.
+     *
+     * @return array
+     */
+    public function relationsToArray()
+    {
+        $attributes = parent::relationsToArray();
+
+        foreach ($this->fields as $field) {
+            if (!$field->isRelation()) {
                 continue;
             }
 
-            $value = $this->getFormattedFormFieldValue($form_field, false, false);
-
-            if (in_array($form_field->type, ['checkboxes', 'boolean'])) {
-
-                // Formated casts (json, array, boolean, etc...) must be put back to
-                // their original place.
-                $array['translation'][config('translatable.fallback_locale')][$form_field->id] = $value;
-            } else {
-
-                // For relations add $form_field->id as array_key and set the
-                // relation as value.
-                $array[$form_field->id] = $value;
-            }
-            //$array[$form_field->id] = $this->getMedia($form_field->id)->toArray();
+            $attributes[$field->id] = $this->getFormattedFieldValue($field);
         }
 
-        return $array;
+        return $attributes;
     }
 
     public function getTranslatedFormFieldValue($form_field)
@@ -177,16 +229,41 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
      */
     public function getAttribute($key)
     {
-        if (array_key_exists($key, $this->attributes)) {
-            return parent::getAttribute($key);
-        }
-
-        if (!$this->fieldExists($key)) {
+        if (!in_array($key, $this->fieldIds)) {
             return parent::getAttribute($key);
         }
 
         return $this->getFormattedFieldValue(
             $this->findField($key)
         );
+    }
+
+    /**
+     * Set field ids to be able to check if field exists in getAttribute method.
+     *
+     * @param array $ids
+     * @return void
+     */
+    public function setFieldIds(array $ids)
+    {
+        $this->fieldIds = $ids;
+    }
+
+    /**
+     * Create a new model instance that is existing.
+     *
+     * @param  array  $attributes
+     * @param  string|null  $connection
+     * @return static
+     */
+    public function newFromBuilder($attributes = [], $connection = null)
+    {
+        $model = parent::newFromBuilder($attributes, $connection);
+
+        $model->setFieldIds($model->fields->map(function ($field) {
+            return $field->id;
+        })->toArray());
+
+        return $model;
     }
 }

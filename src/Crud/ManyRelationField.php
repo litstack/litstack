@@ -7,9 +7,9 @@ class ManyRelationField extends Field
     use Concerns\ManagesRelationField;
 
     /**
-     * Resolve query from 
+     * Resolve query for many relations.
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function resolveQuery($query)
     {

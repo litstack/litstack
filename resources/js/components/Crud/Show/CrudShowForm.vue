@@ -3,20 +3,11 @@
         <b-card :title="title" class="mb-4">
             <form class="row" style="margin-bottom: -1.5em;">
                 <template v-for="id in fieldIds">
-                    <div
-                        :class="fieldWidth(getFieldById(id))"
+                    <fj-crud-show-form-item
                         v-if="getFieldById(id)"
-                    >
-                        <component
-                            :is="getFieldById(id).component"
-                            :readonly="readonly(getFieldById(id))"
-                            :field="getFieldById(id)"
-                            :model="getModelByFieldId(id)"
-                            @changed="
-                                changed(getFieldById(id), getModelByFieldId(id))
-                            "
-                        />
-                    </div>
+                        :field="getFieldById(id)"
+                        :model="getModelByFieldId(id)"
+                    />
                 </template>
             </form>
             <!--<fj-fjord-form :ids="fieldIds" :model="model" />-->
@@ -75,31 +66,6 @@ export default {
                 this.preparedModels = model.items.items;
             }
         },
-        changed(field, model) {
-            if (!this.hasChanged(model, field)) {
-                this.$store.commit('REMOVE_MODELS_FROM_SAVE', {
-                    model,
-                    id: field.id
-                });
-            } else {
-                this.$store.commit('ADD_MODELS_TO_SAVE', {
-                    model,
-                    id: field.id
-                });
-            }
-        },
-        hasChanged(model, field) {
-            if (
-                Array.isArray(model[`${field.id}Model`]) &&
-                Array.isArray(model.getOriginalModel(field))
-            ) {
-                return !Array.equals(
-                    model[`${field.id}Model`],
-                    model.getOriginalModel(field)
-                );
-            }
-            return model.getOriginalModel(field) != model[`${field.id}Model`];
-        },
         getFieldById(id) {
             for (let i in this.preparedModels) {
                 let field = this.preparedModels[i].getFieldById(id);
@@ -115,14 +81,6 @@ export default {
                     return this.preparedModels[i];
                 }
             }
-        },
-        fieldWidth(field) {
-            return field.cols !== undefined ? `col-${field.cols}` : 'col-12';
-        },
-        readonly(field) {
-            return (
-                field.readonly === true || !this.form.config.permissions.update
-            );
         }
     },
     computed: {

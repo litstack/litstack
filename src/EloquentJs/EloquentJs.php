@@ -20,7 +20,6 @@ class EloquentJs
 
     protected function setRelations()
     {
-
         if (!$this->model) {
             return;
         }
@@ -30,7 +29,7 @@ class EloquentJs
                 return;
             }
 
-            if (!$this->model->eloquentRelations) {
+            if (empty($model->getEloquentJsRelations())) {
                 return;
             }
 
@@ -40,27 +39,11 @@ class EloquentJs
         }
 
         foreach ($this->model as $model) {
-            if (!property_exists($model, 'eloquentRelations')) {
-                continue;
-            }
-
-            if (!$model->eloquentRelations) {
+            if (empty($model->getEloquentJsRelations())) {
                 continue;
             }
 
             $model->append('eloquentJs');
-        }
-
-
-        return;
-        foreach ($this->model->eloquentRelations as $name => $class) {
-            // TODO: only works for hasMany
-            if ($this->model->$name->count() == 0) {
-                $this->relations[$name] = collect([]);
-                continue;
-            }
-
-            $this->relations[$name] = eloquentJs($this->model->$name, $class);
         }
     }
 

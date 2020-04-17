@@ -1,11 +1,17 @@
 <template>
-    <div>
-        <div
-            v-if="'values' in col"
-            v-html="getColValue(col, item[col.value])"
+    <b-td
+        :class="{ reduce: col.component !== undefined, 'fj-table-col': true }"
+        :style="colWidth"
+    >
+        <component
+            v-if="col.component !== undefined"
+            :is="col.component.name"
+            :item="item"
+            :col="col"
+            v-bind="getColComponentProps()"
         />
-        <div v-else v-html="_format(col.value, item)" />
-    </div>
+        <div v-else v-html="getColValue(col.value)" />
+    </b-td>
 </template>
 
 <script>
@@ -19,24 +25,63 @@ export default {
         col: {
             required: true,
             type: Object
+        },
+        cols: {
+            required: true,
+            type: Array
+        }
+    },
+    computed: {
+        percentageColsCount() {
+            let count = 0;
+            for (let i = 0; i < this.cols.length; i++) {
+                let col = this.cols[i];
+
+                if (col.component !== undefined) {
+                    continue;
+                }
+
+                count++;
+            }
+            return count;
+        },
+        colWidth() {
+            if (this.col.component !== undefined) {
+                return;
+            }
+            return 'width: ' + 100 / this.percentageColsCount + '%;';
         }
     },
     methods: {
-        getColValue(col, value) {
-            let checkValue = value;
-            checkValue = checkValue === true ? '1' : checkValue;
-            checkValue = checkValue === false ? '0' : checkValue;
-
-            if (checkValue in col.values) {
-                return col.values[checkValue];
+        getColValue(col) {
+            // Regex for has {value} pattern.
+            if (/{(.*?)}/.test(col)) {
+                return this._format(col, this.item);
+            } else if (this.item[col] !== undefined) {
+                return this.item[col];
+            }
+            return col;
+        },
+        getColComponentProps() {
+            if (!this.col.component.props) {
+                return {};
             }
 
-            if ('default' in col.values) {
-                return col.values.default;
+            let compiled = {};
+
+            for (let name in this.col.component.props) {
+                let prop = this.col.component.props[name];
+                compiled[name] = this.getColValue(prop);
             }
 
-            return value;
+            return compiled;
         }
     }
 };
 </script>
+
+<style scoped>
+.fj-table-col {
+    vertical-align: middle;
+}
+</style>

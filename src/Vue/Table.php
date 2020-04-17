@@ -44,7 +44,7 @@ class Table extends ConfigItem
      *
      * @return array $cols
      */
-    public function toArray()
+    public function getArray(): array
     {
         return $this->cols;
     }

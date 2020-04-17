@@ -12,7 +12,8 @@ use Fjord\Form\Requests\FormUpdateRequest;
 
 abstract class FormController
 {
-    use Api\HasBlocks;
+    use Api\HasBlocks,
+        Api\HasRelations;
 
     /**
      * Crud model class name.
@@ -97,31 +98,22 @@ abstract class FormController
     protected function initializeFields($config)
     {
         $fields = [];
-        $i = 0;
 
-        foreach ($config->form->getRegisteredFields() as $key => $field) {
+        foreach ($config->form->getRegisteredFields() as $field) {
             if (!$field->authorized) {
                 continue;
             }
 
-            $fields[$i] = FormField::firstOrCreate(
+            $formField = FormField::firstOrCreate(
                 ['collection' => $config->collection, 'form_name' => $config->formName, 'field_id' => $field->id],
                 ['content' => $field->default ?? null]
             )->append('last_edit');
 
             if ($field instanceof Blocks) {
-                dd($fields[$i]->toArray());
-            }
-            /*
-            if ($field->type == 'block') {
-                $fields[$i]->withRelation($field->id);
+                $formField->withRelation($field->id);
             }
 
-            if ($field->type == 'relation') {
-                $fields[$i]->setFormRelation();
-            }
-            */
-            $i++;
+            $fields[] = $formField;
         }
 
         return eloquentJs(collect($fields), FormField::class);

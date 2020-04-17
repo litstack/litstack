@@ -27,7 +27,7 @@ export default {
             type: Object,
             required: true
         },
-        sortableRepeatables: {
+        sortableBlocks: {
             type: Array,
             required: true
         }
@@ -38,9 +38,7 @@ export default {
     methods: {
         async add(type) {
             let payload = {
-                type: type,
-                value: this.newBlock(type),
-                order_column: this.sortableRepeatables.length
+                type: type
             };
 
             let response = null;
@@ -61,17 +59,6 @@ export default {
             this.$bvToast.toast(this.$t('fj.new_block', { type }), {
                 variant: 'success'
             });
-        },
-        newBlock(type) {
-            let obj = {};
-
-            for (var i = 0; i < this.field.repeatables[type].length; i++) {
-                if (this.field.repeatables[type][i].id != 'image') {
-                    obj[this.field.repeatables[type][i].id] = '';
-                }
-            }
-
-            return obj;
         }
     }
 };

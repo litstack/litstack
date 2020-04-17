@@ -2,17 +2,17 @@
     <fj-form-item :field="field" :model="model">
         <div class="form-control-expand" v-if="model.id">
             <draggable
-                v-model="sortableRepeatables"
+                v-model="sortableBlocks"
                 @end="newOrder"
                 handle=".fjord-draggable__dragbar"
                 tag="b-row"
                 :class="{ 'mb-0': readonly }"
-                v-if="sortableRepeatables.length > 0"
+                v-if="sortableBlocks.length > 0"
             >
                 <fj-form-blocks-item
-                    v-for="(repeatable, index) in sortableRepeatables"
-                    :key="repeatable.id"
-                    :repeatable="repeatable"
+                    v-for="(block, index) in sortableBlocks"
+                    :key="index"
+                    :block="block"
                     :field="field"
                     :model="model"
                     :readonly="readonly"
@@ -31,7 +31,7 @@
                 v-if="!readonly"
                 :field="field"
                 :model="model"
-                :sortableRepeatables="sortableRepeatables"
+                :sortableBlocks="sortableBlocks"
                 @newBlock="newBlock"
             />
         </div>
@@ -51,9 +51,6 @@ export default {
         field: {
             type: Object
         },
-        repeatables: {
-            type: Object
-        },
         model: {
             type: Object
         },
@@ -67,23 +64,18 @@ export default {
     },
     data() {
         return {
-            sortableRepeatables: []
+            sortableBlocks: []
         };
     },
     beforeMount() {
-        if (!!this.repeatables) {
-            this.sortableRepeatables = this.repeatables.items.items;
-        }
+        this.sortableBlocks = this.model[this.field.id].items.items;
     },
     methods: {
         newBlock(block) {
-            this.sortableRepeatables.push(block);
+            this.sortableBlocks.push(block);
         },
-        deleteBlock(repeatable) {
-            this.sortableRepeatables.splice(
-                this.sortableRepeatables.indexOf(repeatable),
-                1
-            );
+        deleteBlock(block) {
+            this.sortableBlocks.splice(this.sortableBlocks.indexOf(block), 1);
 
             this.$bvToast.toast(this.$t('fj.deleted_block'), {
                 variant: 'success'
@@ -91,7 +83,7 @@ export default {
         },
         async newOrder() {
             let payload = {
-                ids: this.sortableRepeatables.map(item => item.id)
+                ids: this.sortableBlocks.map(item => item.id)
             };
             try {
                 let response = await axios.put(

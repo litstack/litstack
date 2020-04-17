@@ -24,6 +24,8 @@ class FormField extends Model implements HasMedia, TranslatableContract
     protected $translationModel = Translations\FormFieldTranslation::class;
     public $translatedAttributes = ['value'];
 
+    protected $fieldId;
+
     public $fillable = ['collection', 'form_name', 'field_id', 'value'];
     protected $appends = ['translation', 'fields'];
     protected $with = ['translations'];
@@ -166,6 +168,20 @@ class FormField extends Model implements HasMedia, TranslatableContract
     }
 
     /**
+     * Get value for model FormField.
+     *
+     * @param FormField $formField
+     * @param string $locale
+     * @return mixed
+     */
+    public function getFormFieldValue(FormField $formField, string $locale)
+    {
+        $value = $formField->translation[$locale] ?? [];
+
+        return $value['value'] ?? null;
+    }
+
+    /**
      * Get field value.
      *
      * @param Field $field
@@ -173,48 +189,65 @@ class FormField extends Model implements HasMedia, TranslatableContract
      */
     public function getFieldValue($field)
     {
-        if ($this->translatable) {
-            return $field->getFormFieldValue($this, app()->getLocale());
+        if ($field->isRelation()) {
+            return $field->relation($this, $query = false);
         }
 
-        return $field->getFormFieldValue($this, config('translatable.fallback_locale'));
+        if ($this->translatable) {
+            $locale = app()->getLocale();
+        } else {
+            $locale = config('translatable.fallback_locale');
+        }
+
+        return $this->getTranslatedFieldValue($locale);
     }
 
     /**
-     * Modify field values for vuejs.
-     * For Example: transform boolean form_field to boolean value.
-     
-     * @return array
+     * Get translated field value.
+     *
+     * @param string $locale
+     * @return void
      */
-    public function toArray()
+    public function getTranslatedFieldValue(string $locale)
     {
-        $array = parent::toArray();
+        $value = $this->translation[$locale] ?? [];
 
-        $field = $this->getFieldAttribute();
-
-        if (!$field) {
-            return $array;
-        }
-
-        // Cast relation form fields.
-        if ($field->isRelation()) {
-            $array[$field->id] = $field->cast(
-                $field->relation($this, $query = false)
-            );
-
-            return $array;
-        }
-
-        // Cast non relation fields.
-        foreach ($array['translation'] as $locale => $values) {
-            $array['translation'][$locale]['value'] = $field->cast(
-                $field->getFormFieldValue($this, $locale)
-            );
-        }
-
-        return $array;
+        return $value['value'] ?? null;
     }
 
+    /**
+     * Convert the model's attributes to an array.
+     *
+     * @return array
+     */
+    public function attributesToArray()
+    {
+        $attributes = parent::attributesToArray();
+
+        foreach ($attributes['translation'] as $locale => $values) {
+            $attributes['translation'][$locale]['value'] = $this->getFormattedFieldValue($this->field);
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Get the model's relationships in array form.
+     *
+     * @return array
+     */
+    public function relationsToArray()
+    {
+        $attributes = parent::relationsToArray();
+
+        if (!$this->field->isRelation()) {
+            return $attributes;
+        }
+
+        $attributes[$this->field->id] = $this->getFormattedFieldValue($this->field);
+
+        return $attributes;
+    }
 
     /**
      * Get field instance for model.
@@ -248,7 +281,10 @@ class FormField extends Model implements HasMedia, TranslatableContract
 
         $fields = $this->getDynamicFieldValues($fields);
 
-        $fields->first()->local_key = 'value';
+        $field = $fields->first();
+        if (!$field->isRelation()) {
+            $field->local_key = 'value';
+        }
 
         return $fields;
     }
@@ -261,12 +297,14 @@ class FormField extends Model implements HasMedia, TranslatableContract
      */
     public function getAttribute($key)
     {
-        if (!array_key_exists('field_id', $this->attributes)) {
+        if ($key != $this->fieldId) {
             return parent::getAttribute($key);
         }
 
-        if ($this->attributes['field_id'] != $key) {
-            return parent::getAttribute($key);
+        if (!$this->fieldId) {
+            if ($this->field->id == $key) {
+                return parent::getAttribute($key);
+            }
         }
 
         return $this->getFormattedFieldValue($this->field);
@@ -283,6 +321,33 @@ class FormField extends Model implements HasMedia, TranslatableContract
     }
 
     /**
+     * Set field id to be able to check if field exists in getAttribute method.
+     *
+     * @param string $id
+     * @return void
+     */
+    public function setFieldId(string $id)
+    {
+        $this->fieldId = $id;
+    }
+
+    /**
+     * Create a new model instance that is existing.
+     *
+     * @param  array  $attributes
+     * @param  string|null  $connection
+     * @return static
+     */
+    public function newFromBuilder($attributes = [], $connection = null)
+    {
+        $model = parent::newFromBuilder($attributes, $connection);
+
+        $model->setFieldId($model->field->id);
+
+        return $model;
+    }
+
+    /**
      * Modified to return relations for type "relation" or "block".
      * 
      * @param string $method
@@ -291,10 +356,14 @@ class FormField extends Model implements HasMedia, TranslatableContract
      */
     public function __call($method, $params = [])
     {
-        if ($method == ($this->field->id ?? '')) {
-            return $this->getFormattedFormFieldValue($this->field, true);
+        if ($method != ($this->field->id ?? '')) {
+            return parent::__call($method, $params);
         }
 
-        return parent::__call($method, $params);
+        if (!$this->field->isRelation()) {
+            return parent::__call($method, $params);
+        }
+
+        return $this->field->relation($this, $query = true);
     }
 }

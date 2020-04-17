@@ -26,6 +26,38 @@ trait HasFields
     }
 
     /**
+     * Form manyRelation.
+     *
+     * @param string $related
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function manyRelation($related)
+    {
+        $instance = $this->newRelatedInstance($related);
+
+        return $this->belongsToMany($related, 'form_relations', 'from_model_id', 'to_model_id', $this->getKeyName(), $instance->getKeyName())
+            ->where('form_relations.from_model_type', get_class($this))
+            ->where('form_relations.to_model_type', $related)
+            ->orderBy('form_relations.order_column');
+    }
+
+    /**
+     * Form oneRelation.
+     *
+     * @param string $related
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function oneRelation($related)
+    {
+        $instance = $this->newRelatedInstance($related);
+
+        return $this->belongsToMany($related, 'form_relations', 'from_model_id', 'to_model_id', $this->getKeyName(), $instance->getKeyName())
+            ->where('form_relations.from_model_type', get_class($this))
+            ->where('form_relations.to_model_type', $related)
+            ->orderBy('form_relations.order_column');
+    }
+
+    /**
      * Get fields from config.
      *
      * @return Field
@@ -43,7 +75,7 @@ trait HasFields
      */
     public function fieldExists(string $id)
     {
-        return $this->findFormField($id) ? true : false;
+        return $this->findField($id) ? true : false;
     }
 
     /**

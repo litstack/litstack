@@ -7,9 +7,9 @@ class OneRelationField extends Field
     use Concerns\ManagesRelationField;
 
     /**
-     * Resolve query from 
+     * Resolve query for one relations.
      *
-     * @return void
+     * @return mixed
      */
     public function resolveQuery($query)
     {

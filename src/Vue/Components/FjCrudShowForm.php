@@ -2,7 +2,7 @@
 
 namespace Fjord\Vue\Components;
 
-class FjCrudShowForm extends Component
+class FjCrudShowForm extends BaseComponent
 {
     /**
      * Available component properties.
