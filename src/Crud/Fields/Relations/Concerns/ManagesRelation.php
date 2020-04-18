@@ -3,7 +3,7 @@
 namespace Fjord\Crud\Fields\Relations\Concerns;
 
 use Closure;
-use Fjord\Vue\RelationTable;
+use Fjord\Vue\Crud\RelationTable;
 use Illuminate\Database\Eloquent\Builder;
 
 trait ManagesRelation
@@ -60,6 +60,11 @@ trait ManagesRelation
 
         // Set model route_prefix for api calls.
         $this->attributes['route_prefix'] = $model::config()->route_prefix;
+
+        // Set relation attributes
+        if (method_exists($this, 'setRelationAttributes')) {
+            $this->setRelationAttributes($model);
+        }
 
         return $this;
     }

@@ -32,7 +32,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::post('logout', AuthController::class . '@logout')
             ->name('logout');
 
-        FjordRoute::post('/fjord/register', AuthController::class . '@register');
+        FjordRoute::post('/fjord/register', AuthController::class . '@register')
+            ->name('register');
 
         FjordRoute::public()
             ->get('/fjord/password/reset/{token}', ResetPasswordController::class . '@showResetForm')->name('password.reset');

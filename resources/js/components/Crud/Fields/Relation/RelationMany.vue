@@ -11,138 +11,6 @@
                         :routePrefixes="{ [field.model]: field.route_prefix }"
                         @removeRelation="removeRelation"
                     />
-                    <!--
-                    <b-table-simple
-                        outlined
-                        hover
-                        :class="{ 'mb-0': readonly }"
-                    >
-                        <fj-base-colgroup
-                            :icons="['drag', 'controls']"
-                            :cols="cols"
-                        />
-
-                        <draggable
-                            v-model="relations"
-                            @end="newOrder(relations)"
-                            tag="tbody"
-                            handle=".fjord-draggable__dragbar"
-                        >
-                            <tr
-                                class="draggable-tr"
-                                v-for="(relation, rkey) in relations"
-                                :key="rkey"
-                            >
-                                <b-td
-                                    style="vertical-align: middle;"
-                                    v-for="(col, key) in cols"
-                                    :key="`td-${key}`"
-                                    class="position-relative"
-                                    :test="col.value"
-                                    v-if="
-                                        !(col.value == 'drag' && field.readonly)
-                                    "
-                                    :class="
-                                        col.value == 'drag'
-                                            ? 'fjord-draggable__dragbar'
-                                            : ''
-                                    "
-                                >
-                                    <div
-                                        v-if="col.value == 'drag'"
-                                        class="text-center text-muted"
-                                    >
-                                        <fa-icon
-                                            icon="grip-vertical"
-                                            v-if="!field.readonly"
-                                        />
-                                    </div>
-
-                                    <div
-                                        v-else-if="col.value == 'controls'"
-                                        class="d-flex table-controls"
-                                    >
-                                        <b-button-group size="sm">
-                                            <b-button
-                                                :href="
-                                                    `${baseURL}${field.route}/${relation.id}/edit`
-                                                "
-                                                class="btn-transparent d-flex align-items-center"
-                                            >
-                                                <fa-icon icon="eye" />
-                                            </b-button>
-                                            <b-button
-                                                v-if="!readonly"
-                                                class="btn-transparent"
-                                                @click="
-                                                    field.confirm_unlink
-                                                        ? showModal(
-                                                              `modal-${field.route}-${relation.id}`
-                                                          )
-                                                        : removeRelation(
-                                                              relation.id
-                                                          )
-                                                "
-                                            >
-                                                <fa-icon icon="unlink" />
-                                            </b-button>
-                                        </b-button-group>
-                                        <b-modal
-                                            :id="
-                                                `modal-${field.route}-${relation.id}`
-                                            "
-                                            title="Unlink Item"
-                                        >
-                                            {{ $t('fj.confirm_unlink') }}
-
-                                            <template v-slot:modal-footer>
-                                                <b-button
-                                                    variant="secondary"
-                                                    size="sm"
-                                                    class="float-right"
-                                                    @click="
-                                                        $bvModal.hide(
-                                                            `modal-${field.route}-${relation.id}`
-                                                        )
-                                                    "
-                                                >
-                                                    {{
-                                                        $t(
-                                                            'fj.cancel'
-                                                        ).capitalize()
-                                                    }}
-                                                </b-button>
-                                                <a
-                                                    href="#"
-                                                    @click.prevent="
-                                                        removeRelation(
-                                                            relation.id,
-                                                            field.route
-                                                        )
-                                                    "
-                                                    class="fj-trash btn btn-danger btn-sm"
-                                                >
-                                                    <fa-icon icon="unlink" />
-                                                    {{
-                                                        $t(
-                                                            'fj.delete'
-                                                        ).capitalize()
-                                                    }}
-                                                </a>
-                                            </template>
-                                        </b-modal>
-                                    </div>
-                                    <div v-else>
-                                        <fj-table-col
-                                            :item="relation"
-                                            :col="col"
-                                        />
-                                    </div>
-                                </b-td>
-                            </tr>
-                        </draggable>
-                    </b-table-simple>
-                    -->
                 </div>
                 <div v-else>
                     <fj-form-alert-empty
@@ -263,12 +131,12 @@ export default {
 
             this.relations.push(item);
         },
-        async removeRelation(id, $event) {
+        async removeRelation({ id }) {
             let response = null;
             // TODO: create resource crud/relation for create delete
 
             try {
-                switch (this.type) {
+                switch (this.field.type) {
                     case 'hasMany':
                         response = await axios.put(
                             `${this.field.route}/${id}`,
@@ -288,7 +156,7 @@ export default {
                     case 'belongsToMany':
                     case 'relation':
                         response = await axios.delete(
-                            `${this.form.config.route}/${this.model.id}/relation/${this.field.id}/${id}`
+                            `${this.form.config.route_prefix}/${this.model.id}/${this.field.id}/${id}`
                         );
                         break;
                 }

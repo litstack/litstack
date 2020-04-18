@@ -68,7 +68,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     public function addCrudNavPreset(string $name, $config, Router $router)
     {
         $groupStack = last($router->getGroupStack());
-        $link = '/' . $groupStack['prefix'] . '/';
+        $link = '/' . $groupStack['prefix'];
 
         $this->package->addNavPreset("crud.{$name}", [
             'link' => $link,
@@ -129,7 +129,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     public function addFormNavPreset($config, Router $router)
     {
         $groupStack = last($router->getGroupStack());
-        $link = '/' . $groupStack['prefix'] . '/';
+        $link = '/' . $groupStack['prefix'];
 
 
         $this->package->addNavPreset("{$config->collection}.{$config->formName}", [

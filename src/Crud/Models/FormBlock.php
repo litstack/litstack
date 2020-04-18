@@ -17,8 +17,9 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
     use HasMediaTrait,
         Translatable,
         CanEloquentJs,
-        Traits\HasConfig,
-        Traits\HasFields;
+        Concerns\HasConfig,
+        Concerns\HasFields,
+        Concerns\HasMedia;
 
     protected $translationModel = Translations\FormBlockTranslation::class;
 
@@ -38,6 +39,17 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
     public function model(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    /**
+     * Register media conversions for field.
+     *
+     * @param Media $media
+     * @return void
+     */
+    public function registerMediaConversions(Media $media = null)
+    {
+        return $this->registerCrudMediaConversions($media);
     }
 
     /**
@@ -68,30 +80,11 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
         }
     }
 
-    public function field_relations($form_field)
-    {
-        return $this->formMany($form_field->model ?? '');
-    }
-
-    public function field_relation($form_field)
-    {
-        return (new Relations\EmptyRelation($form_field->query, $this))
-            ->where('id', $this->getTranslatedFormFieldValue($form_field));
-    }
-
-    public function getFieldRelation($form_field, $getQuery = false)
-    {
-        if ($form_field->many) {
-            return $getQuery
-                ? $this->form_field_relations($form_field)
-                : $this->form_field_relations($form_field)->get();
-        }
-
-        return $getQuery
-            ? $this->form_field_relation($form_field)
-            : $this->form_field_relation($form_field)->first();
-    }
-
+    /**
+     * Get translation attribute.
+     *
+     * @return \Illuminate\Support\Collection
+     */
     public function getTranslationAttribute()
     {
         return collect($this->getTranslationsArray())->map(function ($item) {
@@ -99,6 +92,13 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
         })->toArray();
     }
 
+    /**
+     * Update FormBlock.
+     *
+     * @param array $attributes
+     * @param array $options
+     * @return void
+     */
     public function update(array $attributes = array(), array $options = array())
     {
         foreach (config('translatable.locales') as $locale) {
@@ -109,17 +109,6 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
         }
 
         return parent::update($attributes, $options);
-    }
-
-
-    public function registerMediaConversions(Media $media = null)
-    {
-        foreach (config('fjord.mediaconversions.default') as $key => $value) {
-            $this->addMediaConversion($key)
-                ->width($value[0])
-                ->height($value[1])
-                ->sharpen($value[2]);
-        }
     }
 
     /**
@@ -210,17 +199,6 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
         return $attributes;
     }
 
-    public function getTranslatedFormFieldValue($form_field)
-    {
-        if ($form_field->translatable) {
-            $values = $this->translation[app()->getLocale()] ?? [];
-        } else {
-            $values = $this->translation[config('translatable.fallback_locale')] ?? [];
-        }
-
-        return $values[$form_field->id] ?? null;
-    }
-
     /**
      * Get attribute.
      *
@@ -229,6 +207,8 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
      */
     public function getAttribute($key)
     {
+        // Using fieldIds instead of fieldExists to avoid infinite loop 
+        // when calling getAttribute('field').
         if (!in_array($key, $this->fieldIds)) {
             return parent::getAttribute($key);
         }

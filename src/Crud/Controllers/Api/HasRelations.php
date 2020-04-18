@@ -2,12 +2,14 @@
 
 namespace Fjord\Crud\Controllers\Api;
 
+use Illuminate\Support\Facades\DB;
 use Fjord\Crud\Models\FormRelation;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
+use Fjord\Crud\Fields\Relations\BelongsToMany;
 
 trait HasRelations
 {
@@ -56,6 +58,30 @@ trait HasRelations
         if ($field instanceof OneRelation) {
             return $this->destroyOneRelation($request, $field, $model, $relation);
         }
+        if ($field instanceof BelongsToMany) {
+            return $this->destroyBelongsToMany($request, $field, $model, $relation);
+        }
+
+        abort(404);
+    }
+
+    /**
+     * Remove oneRelation relation.
+     *
+     * @param CrudUpdateRequest $request
+     * @param BelongsToMany $field
+     * @param mixed $model
+     * @param mixed $relation
+     * @return void
+     */
+    protected function destroyBelongsToMany(CrudUpdateRequest $request, BelongsToMany $field, $model, $relation)
+    {
+        $belongsToMany = $field->relation($model, $query = true);
+        $table = $belongsToMany->getTable();
+        return DB::table($table)->where([
+            $belongsToMany->getForeignPivotKeyName() => $model->id,
+            $belongsToMany->getRelatedPivotKeyName() => $relation->id
+        ])->delete();
     }
 
     /**
@@ -106,6 +132,29 @@ trait HasRelations
         if ($field instanceof ManyRelation) {
             return $this->createManyRelation($request, $field, $model, $relation);
         }
+        if ($field instanceof BelongsToMany) {
+            return $this->createBelongsToMany($request, $field, $model, $relation);
+        }
+
+        abort(404);
+    }
+
+    /**
+     * Add BelongsToMany relation.
+     *
+     * @param CrudUpdateRequest $request
+     * @param BelongsToMany $field
+     * @param mixed $model
+     * @param mixed $relation
+     * @return mixed
+     */
+    public function createBelongsToMany(CrudUpdateRequest $request, BelongsToMany $field, $model, $relation)
+    {
+        $belongsToMany = $field->relation($model, $query = true);
+        return DB::table($belongsToMany->getTable())->insert([
+            $belongsToMany->getForeignPivotKeyName() => $model->id,
+            $belongsToMany->getRelatedPivotKeyName() => $relation->id
+        ]);
     }
 
     /**

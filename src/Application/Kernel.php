@@ -2,7 +2,6 @@
 
 namespace Fjord\Application;
 
-use Illuminate\Routing\Route;
 use Illuminate\View\View;
 
 class Kernel
@@ -25,6 +24,7 @@ class Kernel
         Bootstrap\DiscoverPackages::class,
         Bootstrap\RegisterPackageProviders::class,
         Bootstrap\RegisterPackageCommands::class,
+        Bootstrap\RegisterConfigHandler::class,
         Bootstrap\RegisterPackageExtensions::class,
         Bootstrap\BootstrapVueApplication::class,
         Bootstrap\RegisterSingletons::class,

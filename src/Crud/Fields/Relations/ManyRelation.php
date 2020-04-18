@@ -33,7 +33,7 @@ class ManyRelation extends ManyRelationField
     protected $required = [
         'title',
         'model',
-        'index'
+        'preview'
     ];
 
     /**
@@ -45,7 +45,7 @@ class ManyRelation extends ManyRelationField
         'title',
         'model',
         'hint',
-        'index',
+        'preview',
         'confirm',
         'sortable',
         'orderColumn'
@@ -75,6 +75,9 @@ class ManyRelation extends ManyRelationField
             return parent::getRelation($model);
         }
 
-        return $model->manyRelation($this->relationModel);
+        return $model->manyRelation($this->relationModel)
+            ->setEagerLoads(
+                $this->query->getEagerLoads()
+            );
     }
 }

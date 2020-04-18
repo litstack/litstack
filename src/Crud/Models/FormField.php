@@ -4,12 +4,9 @@ namespace Fjord\Crud\Models;
 
 use Fjord\EloquentJs\CanEloquentJs;
 use Spatie\MediaLibrary\Models\Media;
-use Fjord\Crud\Models\Traits\HasFields;
-use Fjord\Crud\Models\Traits\HasConfig;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Fjord\Crud\Models\Relations\EmptyRelation;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
@@ -18,19 +15,51 @@ class FormField extends Model implements HasMedia, TranslatableContract
     use Translatable,
         CanEloquentJs,
         HasMediaTrait,
-        HasConfig,
-        HasFields;
+        Concerns\HasConfig,
+        Concerns\HasFields,
+        Concerns\HasMedia;
 
+    /**
+     * Translation model class.
+     *
+     * @var string
+     */
     protected $translationModel = Translations\FormFieldTranslation::class;
+
+    /**
+     * Translated attributes
+     *
+     * @var array
+     */
     public $translatedAttributes = ['value'];
 
+    /**
+     * Field id.
+     *
+     * @var string
+     */
     protected $fieldId;
 
+    /**
+     * Fillable attributes.
+     *
+     * @var array
+     */
     public $fillable = ['collection', 'form_name', 'field_id', 'value'];
-    protected $appends = ['translation', 'fields'];
-    protected $with = ['translations'];
 
-    protected $formable = 'value';
+    /**
+     * Appends.
+     *
+     * @var array
+     */
+    protected $appends = ['translation', 'fields'];
+
+    /**
+     * Eager loads.
+     *
+     * @var array
+     */
+    protected $with = ['translations'];
 
     /**
      * Get config key.
@@ -42,39 +71,15 @@ class FormField extends Model implements HasMedia, TranslatableContract
         return "form.{$this->collection}.{$this->form_name}";
     }
 
-    public function isTranslatableFieldFillable()
-    {
-        return true;
-    }
-
-    public function isFieldFillable()
-    {
-        return true;
-    }
-
     /**
-     * Get many relations for relation field. Set eager loads from form field 
-     * query builder.
+     * Register media conversions for field.
      *
-     * @return belongsToMany
-     */
-    public function form_field_relations()
-    {
-        return $this->formMany($this->form_field->model ?? '')
-            ->setEagerLoads(
-                $this->form_field->query->getEagerLoads()
-            );
-    }
-
-    /**
-     * Get single relation for relation field.
-     *
+     * @param Media $media
      * @return void
      */
-    public function form_field_relation()
+    public function registerMediaConversions(Media $media = null)
     {
-        return (new EmptyRelation($this->form_field->query, $this))
-            ->where('id', $this->getTranslatedFormFieldValue($this->form_field));
+        return $this->registerCrudMediaConversions($media);
     }
 
     /**
@@ -92,16 +97,6 @@ class FormField extends Model implements HasMedia, TranslatableContract
     }
 
     /**
-     * Media relation.
-     *
-     * @return void
-     */
-    public function media_relation()
-    {
-        return $this->media()->where('media.collection_name', $this->form_field->id);
-    }
-
-    /**
      * Get trainslations attribute
      *
      * @return array
@@ -109,18 +104,6 @@ class FormField extends Model implements HasMedia, TranslatableContract
     public function getTranslationAttribute()
     {
         return $this->getTranslationsArray();
-    }
-
-    /**
-     * Set relation attribute for field.
-     *
-     * @return self
-     */
-    public function setFormRelation()
-    {
-        $this->setAttribute($this->field_id, $this->getFieldRelation());
-
-        return $this;
     }
 
     /**
@@ -146,25 +129,6 @@ class FormField extends Model implements HasMedia, TranslatableContract
         return $getQuery
             ? $this->media_relation()
             : $this->media_relation;
-    }
-
-    /**
-     * Get field relation.
-     *
-     * @param boolean $getQuery
-     * @return void
-     */
-    public function getFieldRelation($getQuery = false)
-    {
-        if ($this->field->many) {
-            return $getQuery
-                ? $this->form_field_relations()
-                : $this->form_field_relations;
-        }
-
-        return $getQuery
-            ? $this->form_field_relation()
-            : $this->form_field_relation()->first();
     }
 
     /**
@@ -270,17 +234,22 @@ class FormField extends Model implements HasMedia, TranslatableContract
             return collect([]);
         }
 
+        // Get all registered fields for form.
         $fields = $this->config->form->getRegisteredFields();
 
         if (empty($fields)) {
             return collect([]);
         }
+
+        // Filter registerd fields for matching field_id.
         $fields = $fields->filter(function ($field) {
             return $this->attributes['field_id'] == $field->id;
         });
 
+        // TODO: Check cases for this method.
         $fields = $this->getDynamicFieldValues($fields);
 
+        // Set local key for field.
         $field = $fields->first();
         if (!$field->isRelation()) {
             $field->local_key = 'value';
@@ -308,16 +277,6 @@ class FormField extends Model implements HasMedia, TranslatableContract
         }
 
         return $this->getFormattedFieldValue($this->field);
-    }
-
-    public function registerMediaConversions(Media $media = null)
-    {
-        foreach (config('fjord.mediaconversions.default') as $key => $value) {
-            $this->addMediaConversion($key)
-                ->width($value[0])
-                ->height($value[1])
-                ->sharpen($value[2]);
-        }
     }
 
     /**

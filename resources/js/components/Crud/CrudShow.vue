@@ -2,8 +2,8 @@
     <fj-base-container>
         <fj-base-header
             :title="config.names.singular"
-            :back="config.back_route"
-            :back-text="config.back_text"
+            :back="backRoute"
+            :back-text="config.names.plural"
         >
             <fj-crud-show-near-items
                 slot="navigation"
@@ -82,6 +82,12 @@ export default {
         headerComponents: {
             type: Array,
             required: true
+        },
+        backRoute: {
+            type: [String, Boolean],
+            default() {
+                return false;
+            }
         },
         actions: {
             type: Array,

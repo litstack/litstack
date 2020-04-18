@@ -6,9 +6,10 @@ use Fjord\TrackEdits\FormEdit;
 use Fjord\Crud\Models\FormField;
 use Fjord\Fjord\Models\FjordUser;
 use Fjord\Crud\Fields\Blocks\Blocks;
-use Fjord\Crud\Requests\CrudUpdateRequest;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
 use Fjord\Crud\Requests\FormReadRequest;
+use Fjord\Crud\Requests\CrudUpdateRequest;
 use Fjord\Crud\Requests\FormUpdateRequest;
 
 abstract class FormController
@@ -32,6 +33,32 @@ abstract class FormController
      * @return boolean
      */
     abstract public function authorize(FjordUser $user, string $operation): bool;
+
+    /**
+     * Get config.
+     *
+     * @return Config
+     */
+    public function config()
+    {
+        $split = explode(
+            '.',
+            last(explode('aw-studio.fjord.form.', Request::route()->getName()))
+        );
+        $collection = array_shift($split);
+        $formName = array_shift($split);
+        return fjord()->config("form.{$collection}.{$formName}", $this->model);
+    }
+
+    /**
+     * Get query builder
+     *
+     * @return Builder
+     */
+    public function query()
+    {
+        return $this->model::query();
+    }
 
     /**
      * Update form_field.
@@ -59,12 +86,12 @@ abstract class FormController
     }
 
     /**
-     * Show form.
+     * Edit form.
      *
      * @param FormReadRequest $request
      * @return View $view
      */
-    public function show(CrudUpdateRequest $request)
+    public function edit(CrudUpdateRequest $request)
     {
         // Getting collection and formName from route.
         $routeSplit = explode('.', Route::currentRouteName());

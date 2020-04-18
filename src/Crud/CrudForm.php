@@ -36,14 +36,14 @@ class CrudForm extends Form
     /**
      * Register new Field.
      *
-     * @param string $name
+     * @param mixed $name
      * @param string $id
      * @param array $params
      * @return Field $field
      */
-    protected function registerField(string $name, string $id, $params = [])
+    protected function registerField($field, string $id, $params = [])
     {
-        $field = parent::registerField($name, $id, $params);
+        $field = parent::registerField($field, $id, $params);
 
         $this->card[] = $field;
 
@@ -82,6 +82,11 @@ class CrudForm extends Form
         });
 
         $card = $this->component('fj-crud-show-form')->prop('fieldIds', $ids);
+
+        if ($this->registrar) {
+            // Check if all required properties are set.
+            $this->registrar->checkComplete();
+        }
 
         $this->card = [];
 

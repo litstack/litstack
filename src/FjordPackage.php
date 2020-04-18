@@ -3,9 +3,11 @@
 namespace Fjord;
 
 use Fjord\Application\Application;
+use Fjord\Configuration\Types\CrudConfig;
 use Fjord\User\Components\UsersComponent;
 use Fjord\Crud\Vue\Components\CrudShowComponent;
 use Fjord\Crud\Vue\Components\CrudIndexComponent;
+use Fjord\Configuration\Handler\CrudConfigHandler;
 use Fjord\Application\Package\FjordPackage as Package;
 
 class FjordPackage extends Package
@@ -17,7 +19,7 @@ class FjordPackage extends Package
      */
     protected $providers = [
         \Fjord\Application\Translation\TranslationServiceProvider::class,
-        \Fjord\Application\RouteServiceProvider::class,
+        \Fjord\Application\ApplicationRouteServiceProvider::class,
         \Fjord\User\ServiceProvider::class,
         \Fjord\Crud\ServiceProvider::class,
     ];
@@ -39,7 +41,7 @@ class FjordPackage extends Package
     ];
 
     /**
-     * List of components this package contains.
+     * List of extendable root Vue components this package contains.
      * 
      * @var array
      */
@@ -55,9 +57,7 @@ class FjordPackage extends Package
      * @var array
      */
     protected $configHandler = [
-        'navigation.main' => \Fjord\Application\Navigation\MainConfig::class,
-        'navigation.topbar' => \Fjord\Application\Navigation\TopbarConfig::class,
-        'users.table' => User\Config\TableConfig::class
+        CrudConfig::class => CrudConfigHandler::class,
     ];
 
     /**

@@ -35,7 +35,6 @@ class Wysiwyg extends Field
      * @var array
      */
     protected $available = [
-        'max',
         'title',
         'placeholder',
         'hint',
@@ -46,7 +45,5 @@ class Wysiwyg extends Field
      *
      * @var array
      */
-    protected $defaults = [
-        'max' => 250,
-    ];
+    protected $defaults = [];
 }

@@ -1,13 +1,16 @@
 <?php
 
 if ($type == 'crud') {
+    Route::get("/", [$controller, "index"])->name('index');
+    Route::post("/index", [$controller, "indexTable"])->name('index.items');
     Route::get("/create", [$controller, "create"])->name('create');
-    $route = Route::get("/index", [$controller, "index"])->name('index');
     Route::post("/{id}", [$controller, "store"])->name('store');
     Route::delete("/{id}", [$controller, "destroy"])->name('destroy');
+    Route::get("/{id}/edit", [$controller, "edit"])->name('edit');
+} else {
+    Route::get("/", [$controller, "edit"])->name('edit');
 }
 
-Route::get("/edit", [$controller, "show"])->name('edit');
 Route::put("/{id}", [$controller, "update"])->name('update');
 
 // Media

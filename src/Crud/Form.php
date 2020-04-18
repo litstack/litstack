@@ -2,23 +2,24 @@
 
 namespace Fjord\Crud;
 
-use ReflectionClass;
-use BadMethodCallException;
 use Fjord\Crud\Fields\Code;
 use Fjord\Crud\Fields\Icon;
 use Fjord\Crud\Fields\Input;
 use Fjord\Crud\Fields\Range;
-use Fjord\Crud\Fields\Boolean;
 use Fjord\Crud\Fields\Select;
+use InvalidArgumentException;
+use Fjord\Crud\Fields\Boolean;
 use Fjord\Crud\Fields\Wysiwyg;
 use Fjord\Crud\Fields\Datetime;
 use Fjord\Crud\Fields\Textarea;
+use Fjord\Crud\Models\FormField;
 use Fjord\Crud\Fields\Checkboxes;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Application\Config\ConfigItem;
 use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Exceptions\MethodNotFoundException;
+use Fjord\Crud\Fields\Relations\BelongsToMany;
 
 class Form extends ConfigItem
 {
@@ -43,6 +44,15 @@ class Form extends ConfigItem
         'blocks' => Blocks::class,
         'oneRelation' => OneRelation::class,
         'manyRelation' => ManyRelation::class,
+    ];
+
+    /**
+     * Available relations.
+     *
+     * @var array
+     */
+    protected $relations = [
+        \Illuminate\Database\Eloquent\Relations\BelongsToMany::class => BelongsToMany::class
     ];
 
     /**
@@ -82,24 +92,53 @@ class Form extends ConfigItem
     /**
      * Register new Field.
      *
-     * @param string $name
+     * @param mixed $field
      * @param string $id
      * @param array $params
      * @return Field $field
      */
-    protected function registerField(string $name, string $id, $params = [])
+    protected function registerField($field, string $id, $params = [])
     {
         if ($this->registrar) {
             // Check if all required properties are set.
             $this->registrar->checkComplete();
         }
 
-        $field = new $this->fields[$name]($id, $this->model);
+        $fieldInstance = new $field($id, $this->model);
 
-        $this->registrar = $field;
-        $this->registeredFields[] = $field;
+        $this->registrar = $fieldInstance;
+        $this->registeredFields[] = $fieldInstance;
 
-        return $field;
+        return $fieldInstance;
+    }
+
+    /**
+     * Register new Relation.
+     *
+     * @param string $name
+     * @return mixed
+     * 
+     * @throws \InvalidArgumentException
+     */
+    public function relation(string $name)
+    {
+        if ($this->model == FormField::class) {
+            throw new InvalidArgumentException('Relation field is not available for forms. Use oneRelation or manyRelation instead to create a relation.');
+        }
+
+        $relationType = get_class((new $this->model)->$name());
+
+        if (array_key_exists($relationType, $this->relations)) {
+            return $this->registerField($this->relations[$relationType], $name);
+        }
+
+        throw new InvalidArgumentException(sprintf(
+            'Relation %s not supported. Supported relations: %s',
+            class_basename($relationType),
+            implode(', ', collect($this->relations)->mapWithKeys(function ($relation, $key) {
+                return [class_basename($key)];
+            })->toArray())
+        ));
     }
 
     /**
@@ -149,7 +188,7 @@ class Form extends ConfigItem
             sprintf(
                 "The %s method is not found for this form. Supported fields: %s.",
                 $method,
-                implode(', ', array_keys($this->fields)),
+                implode(', ', array_merge(['relation'], array_keys($this->fields))),
             )
         );
     }
@@ -166,7 +205,7 @@ class Form extends ConfigItem
     public function __call($method, $params = [])
     {
         if (array_key_exists($method, $this->fields)) {
-            return $this->registerField($method, ...$params);
+            return $this->registerField($this->fields[$method], ...$params);
         }
 
         $this->methodNotAllowed($method);

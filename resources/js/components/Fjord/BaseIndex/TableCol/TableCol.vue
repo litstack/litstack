@@ -40,7 +40,7 @@ export default {
             for (let i = 0; i < this.cols.length; i++) {
                 let col = this.cols[i];
 
-                if (!col.reduce) {
+                if (col.reduce === true) {
                     continue;
                 }
 
@@ -52,7 +52,11 @@ export default {
             if (this.col.component !== undefined) {
                 return;
             }
-            return 'width: ' + 100 / this.percentageColsCount + '%;';
+            let percentage = 100;
+            if (this.percentageColsCount > 0) {
+                percentage = 100 / this.percentageColsCount;
+            }
+            return 'width: ' + percentage + '%;';
         }
     },
     methods: {

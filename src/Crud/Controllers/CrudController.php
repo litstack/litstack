@@ -65,7 +65,13 @@ abstract class CrudController
      */
     public function create(CrudCreateRequest $request)
     {
-        $config = $this->config()->get('form', 'names', 'permissions', 'route_prefix');
+        $config = $this->config()->get(
+            'form',
+            'names',
+            'permissions',
+            'route_prefix'
+        );
+
         $model = new $this->model;
 
         return view('fjord::app')
@@ -87,7 +93,15 @@ abstract class CrudController
      */
     public function edit(CrudReadRequest $request, $id)
     {
-        $model = $this->query()->findOrFail($id);
+        // Eager loads relations.
+        $query = $this->query();
+        foreach ($this->config()->form->getRegisteredFields() as $field) {
+            if ($field->isRelation()) {
+                $query->with($field->id);
+            }
+        }
+
+        $model = $query->findOrFail($id);
 
         // Load eloquentJs blocks.
         foreach ($model->fields as $field) {
@@ -113,6 +127,7 @@ abstract class CrudController
             ])
             ->withProps([
                 'config' => $config,
+                'backRoute' => $this->config()->route_prefix,
                 'nearItems' => [
                     'next' => $next,
                     'previous' => $previous

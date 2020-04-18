@@ -36,6 +36,11 @@ abstract class CrudConfig extends FjordConfig
         $this->model = $model;
     }
 
+    /**
+     * Load permissions.
+     *
+     * @return array
+     */
     public function permissions()
     {
         return [

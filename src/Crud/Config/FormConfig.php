@@ -2,11 +2,9 @@
 
 namespace Fjord\Crud\Config;
 
-use Fjord\Vue\CrudTable;
 use Illuminate\Support\Str;
-use Fjord\Form\Database\FormField;
+use Fjord\Crud\Models\FormField;
 use Fjord\Support\Config as FjordConfig;
-use Illuminate\Database\Eloquent\Builder;
 
 abstract class FormConfig extends FjordConfig
 {

@@ -33,7 +33,7 @@ class OneRelation extends OneRelationField
     protected $required = [
         'title',
         'model',
-        'index'
+        'preview'
     ];
 
     /**
@@ -72,6 +72,9 @@ class OneRelation extends OneRelationField
         }
         $relation = $model->oneRelation($this->relationModel);
 
-        return $model->oneRelation($this->relationModel);
+        return $model->oneRelation($this->relationModel)
+            ->setEagerLoads(
+                $this->query->getEagerLoads()
+            );;
     }
 }

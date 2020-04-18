@@ -3,18 +3,31 @@
 namespace Fjord\Fjord;
 
 use Schema;
-use Fjord\Support\Facades\Package;
+use Fjord\Application\Application;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\View;
+use Illuminate\Support\Traits\ForwardsCalls;
 
 class Fjord
 {
-    use Concerns\ManagesForms;
+    use ForwardsCalls;
 
-    public $translatedAttributes = [];
+    /**
+     * Fjord Application.
+     *
+     * @var \Fjord\Application\Application
+     */
+    protected $app;
 
-    protected $langPaths = [];
+    /**
+     * Bind Fjord Application instance when Fjord is installed.
+     *
+     * @param Application $app
+     * @return void
+     */
+    public function bindApp(Application $app)
+    {
+        $this->app = $app;
+    }
 
     /**
      * Get Fjord application.
@@ -24,58 +37,6 @@ class Fjord
     public function app()
     {
         return app()->get('fjord.app');
-    }
-
-    /**
-     * Binding composer to fjord::app view.
-     * 
-     * @param string $composer
-     * @return void
-     */
-    public function composer($composer)
-    {
-        View::composer('fjord::app', $composer);
-    }
-
-    /**
-     * Get navigation entry preset.
-     *
-     * @param string $name
-     * @param array $entry
-     * @param array $merge
-     * @return void
-     */
-    public function navEntry(string $package, $name = null, array $merge = [])
-    {
-        return Package::navEntry($package, $name, $merge);
-    }
-
-    /**
-     * Register extension class.
-     * 
-     * @param string $component
-     * @param string $extension
-     * @return void
-     */
-    public function registerExtension($component, $extension)
-    {
-        app()->get('fjord.app')->registerExtension($component, $extension);
-    }
-
-    /**
-     * Prepare form fields.
-     *
-     * @param $fields
-     * @param $path
-     * @param $setDefaults
-     * @return void
-     */
-    protected function prepareFields($fields, $path, $setDefaults = null)
-    {
-        foreach ($fields as $key => $field) {
-            $fields[$key] = new FormFields\FormField($field, $path, $setDefaults);
-        }
-        return form_collect($fields);
     }
 
     /**
@@ -139,21 +100,6 @@ class Fjord
     }
 
     /**
-     * Add language path for Fjord application translation.
-     *
-     * @param string $path
-     * @return void
-     */
-    public function addLangPath(string $path)
-    {
-        if (!$this->installed()) {
-            return false;
-        }
-
-        $this->app()->get('translator')->addPath($path);
-    }
-
-    /**
      * Checks if fjord has been installed.
      * 
      * @return boolean
@@ -173,5 +119,17 @@ class Fjord
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    /**
+     * Forward call to Fjord Application.
+     *
+     * @param string $method
+     * @param array $params
+     * @return mixed
+     */
+    public function __call($method, $params = [])
+    {
+        return $this->forwardCallTo($this->app, $method, $params);
     }
 }

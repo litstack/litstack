@@ -2,9 +2,18 @@
 
 namespace Fjord\Application;
 
-use Illuminate\View\View;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\View;
 
+/**
+ * The Application class manages all depencies for the view fjord::app:
+ * Bootstrapping Application,
+ * Registering and booting packages,
+ * Registering and executing extensions,
+ * Registering and calling config handlers,
+ * Binding css files for fjord,
+ * Bind composer to the fjord::app view
+ */
 class Application
 {
     use Concerns\ManagesFiles;
@@ -24,6 +33,13 @@ class Application
     protected $extensions = [];
 
     /**
+     * Registered config handlers;
+     *
+     * @var array
+     */
+    protected $configHandler = [];
+
+    /**
      * Indicates if the application has been bootstrapped before.
      *
      * @var bool
@@ -36,8 +52,19 @@ class Application
      * @var array
      */
     protected $singletons = [
-        'config.loader' => \Fjord\Application\Config\ConfigLoader::class
+        'config.loader' => \Fjord\Configuration\ConfigLoader::class
     ];
+
+    /**
+     * Binding composer to fjord::app view.
+     * 
+     * @param string $composer
+     * @return void
+     */
+    public function composer($composer)
+    {
+        View::composer('fjord::app', $composer);
+    }
 
     /**
      * Run the given array of bootstrap classes.
@@ -112,7 +139,7 @@ class Application
     }
 
     /**
-     * Register a binding with the container.
+     * Register a binding with the application.
      *
      * @param  string  $abstract
      * @param  Instance  $instance
@@ -122,17 +149,6 @@ class Application
     public function bind($abstract, $instance)
     {
         $this->bindings[$abstract] = $instance;
-    }
-
-    /**
-     * Load config for a Fjord package.
-     * 
-     * @param string $config
-     * @return array $config
-     */
-    public function config(string $config)
-    {
-        return $this->get('packages')->config('aw-studio/fjord', $config);
     }
 
     /**
@@ -159,7 +175,29 @@ class Application
     }
 
     /**
-     * Get singletons.
+     * Register config handler.
+     * 
+     * @param string $dependency
+     * @param string $handler
+     * @return void
+     */
+    public function registerConfigHandler(string $dependency, string $handler)
+    {
+        $this->configHandler[$dependency] = $handler;
+    }
+
+    /**
+     * Get config handler.
+     *
+     * @return array
+     */
+    public function getConfigHandler()
+    {
+        return $this->configHandler;
+    }
+
+    /**
+     * Get all singleton classes.
      *
      * @return array $singletons
      */

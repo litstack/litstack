@@ -13,7 +13,7 @@ trait ManagesRelationField
      */
     protected function getRelation($model)
     {
-        return $model->{$this->id};
+        return $model->{$this->id}();
     }
 
     /**

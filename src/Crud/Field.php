@@ -169,7 +169,7 @@ class Field extends ConfigItem
         }
 
         throw new Exception(sprintf(
-            'Missing required attributes: %s for %s field "%s"',
+            'Missing required attributes: [%s] for %s field "%s"',
             implode(', ', $missing),
             lcfirst(last(explode('\\', static::class))),
             $this->attributes['id']

@@ -3,8 +3,9 @@
 namespace Fjord\Application\Navigation;
 
 use Fjord\Support\Facades\Package;
+use Fjord\Application\Config\ConfigItem;
 
-class FjordNavigation
+class FjordNavigation extends ConfigItem
 {
     /**
      * Navigation entries.
@@ -105,6 +106,12 @@ class FjordNavigation
         return $this->entries;
     }
 
+    /**
+     * Authorize navigation entry.
+     *
+     * @param array $params
+     * @return boolean
+     */
     protected function authorize(array $params)
     {
         if (!array_key_exists('authorize', $params)) {

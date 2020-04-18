@@ -59,13 +59,6 @@ abstract class FjordPackage
     protected $configHandler = [];
 
     /**
-     * List of all config files that have already been loaded.
-     *
-     * @var array
-     */
-    protected $loadedConfigFiles = [];
-
-    /**
      * Fjord navigation entry presets for this package.
      *
      * @var array
@@ -218,129 +211,13 @@ abstract class FjordPackage
     }
 
     /**
-     * Get config directory path.
+     * Get config handler.
      *
-     * @return string $path
+     * @return array
      */
-    protected function getConfigDirectory()
+    public function getConfigHandler()
     {
-        $path = resource_path(config('fjord.resource_path') . '/');
-
-        $path .= $this->hasRootAccess()
-            ? ""
-            : "packages/{$this->name}/";
-
-        return $path;
-    }
-
-
-    /**
-     * Get path to config directory.
-     * 
-     * @param string $name
-     * @return string
-     */
-    public function getConfigPath(string $name = '')
-    {
-        $path = $this->getConfigDirectory();
-
-        if (!$name) {
-            return $path;
-        }
-
-        return $path . str_replace('.', '/', $name);
-    }
-
-    /**
-     * Get path to config file.
-     *
-     * @param string $name
-     * @return string
-     */
-    public function getConfigFilePath(string $name = '')
-    {
-        return $this->getConfigPath($name) . '.php';
-    }
-
-    /**
-     * Get raw uncompiled config.
-     *
-     * @param string $name
-     * @return void
-     */
-    public function rawConfig(string $name)
-    {
-        return require $this->getConfigFilePath($name);
-    }
-
-    /**
-     * Load config once.
-     * 
-     * @param string $name
-     * @return array $config
-     */
-    public function config(string $name)
-    {
-        if (!array_key_exists($name, $this->loadedConfigFiles)) {
-            return $this->loadConfig($name);
-        }
-
-        return $this->loadedConfigFiles[$name];
-    }
-
-    /**
-     * Load config regardless of whether it has been loaded before.
-     *
-     * @param string $name
-     * @return array $config
-     */
-    public function loadConfig(string $name)
-    {
-        return $this->loadedConfigFiles = $this->requireConfig($name);
-    }
-
-    /**
-     * Require config file and execute config handler.
-     *
-     * @param string $name
-     * @return array $config
-     */
-    protected function requireConfig(string $name)
-    {
-        $path = $this->getConfigFilePath($name);
-
-        if (!File::exists($path)) {
-            return [];
-        }
-
-        $attributes = require $path;
-
-        // Find handler for config file.
-        foreach ($this->configHandler as $location => $handler) {
-            if (Str::is($location, $name)) {
-                return with(new $handler($attributes))->getAttributes();
-            }
-        }
-
-        // No handler found, return config attributes.
-        return $attributes;
-    }
-
-    /**
-     * Get list of config files in directory.
-     *
-     * @param string $name
-     * @return array $files
-     */
-    public function configFiles(string $name)
-    {
-        $path = $this->getConfigDirectory() . '/' . str_replace('.', '/', $name);
-
-        $files = glob("{$path}/*.php");
-
-        return collect($files)->mapWithKeys(function ($path) use ($name) {
-            return ["{$name}." . str_replace('.php', '', basename($path)) => $path];
-        });
+        return $this->configHandler;
     }
 
     /**

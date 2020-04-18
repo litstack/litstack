@@ -39,28 +39,6 @@
                         :item="item"
                         :cols="cols"
                     />
-                    <!--
-                    <template v-for="(col, col_key) in tableCols">
-                        <td
-                            v-else
-                            @click="openLink(col.link, item)"
-                            :class="col.link ? 'pointer' : ''"
-                        >
-                            <fj-table-col :item="item" :col="col" />
-                        </td>
-                    </template>
-                    -->
-                    <!--
-                    <td v-if="hasRecordActions">
-                        <component
-                            v-for="(component, key) in recordActions"
-                            :key="key"
-                            :is="component"
-                            :item="item"
-                            @reload="_loadItems"
-                        />
-                    </td>
-                    -->
                 </tr>
             </template>
         </tbody>

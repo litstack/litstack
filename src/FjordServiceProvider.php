@@ -3,19 +3,21 @@
 namespace Fjord;
 
 use App\Fjord\Kernel;
-use Fjord\Application\Middlewares\StopRedirectForNotFound;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Fjord\Auth\Middleware\Authenticate;
 
+/**
+ * Service providers and console commands that should be registered without 
+ * Fjord being installed. All services that should only be registered if Fjord 
+ * is installed are specified in \Fjord\FjordPackage. 
+ */
 class FjordServiceProvider extends ServiceProvider
 {
     /**
-     * Service providers that should be registered without Fjord being installed.
-     * All service providers that should only be registered if Fjord is 
-     * installed are specified in \Fjord\FjordPackage
+     * Service providers.
      *
      * @var array
      */
@@ -27,9 +29,7 @@ class FjordServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Console commands that should be registered without Fjord being installed.
-     * All commands that should only be registered if Fjord is installed are 
-     * specified in \Fjord\FjordPackage
+     * Console commands.
      *
      * @var array
      */
@@ -60,7 +60,6 @@ class FjordServiceProvider extends ServiceProvider
 
         // Middelware
         $router->aliasMiddleware('fjord.auth', Authenticate::class);
-        $router->aliasMiddleware('fjord.404', StopRedirectForNotFound::class);
 
         $this->publish();
     }
@@ -115,6 +114,9 @@ class FjordServiceProvider extends ServiceProvider
         $this->app->singleton('fjord.kernel', function ($app) {
             return new Kernel($app->get('fjord.app'));
         });
+
+        // Bind fjord
+        $this->app['fjord']->bindApp($this->app['fjord.app']);
 
         // Initialize kernel singleton.
         $this->app->get('fjord.kernel');
