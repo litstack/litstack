@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud;
 
+use Fjord\Support\VueProp;
 use Fjord\Crud\Fields\Code;
 use Fjord\Crud\Fields\Icon;
 use Fjord\Crud\Fields\Input;
@@ -15,13 +16,18 @@ use Fjord\Crud\Fields\Textarea;
 use Fjord\Crud\Models\FormField;
 use Fjord\Crud\Fields\Checkboxes;
 use Fjord\Crud\Fields\Blocks\Blocks;
-use Fjord\Application\Config\ConfigItem;
+use Fjord\Crud\Fields\Relations\HasOne;
+use Fjord\Crud\Fields\Relations\HasMany;
+use Fjord\Crud\Fields\Relations\MorphOne;
+use Fjord\Crud\Fields\Relations\BelongsTo;
+use Fjord\Crud\Fields\Relations\MorphMany;
+use Fjord\Crud\Fields\Relations\MorphToMany;
 use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Exceptions\MethodNotFoundException;
 use Fjord\Crud\Fields\Relations\BelongsToMany;
 
-class Form extends ConfigItem
+class Form extends VueProp
 {
     /**
      * Available fields.
@@ -52,8 +58,21 @@ class Form extends ConfigItem
      * @var array
      */
     protected $relations = [
-        \Illuminate\Database\Eloquent\Relations\BelongsToMany::class => BelongsToMany::class
+        \Illuminate\Database\Eloquent\Relations\BelongsToMany::class => BelongsToMany::class,
+        \Illuminate\Database\Eloquent\Relations\BelongsTo::class => BelongsTo::class,
+        \Illuminate\Database\Eloquent\Relations\MorphOne::class => MorphOne::class,
+        \Illuminate\Database\Eloquent\Relations\MorphToMany::class => MorphToMany::class,
+        \Illuminate\Database\Eloquent\Relations\MorphMany::class => MorphMany::class,
+        \Illuminate\Database\Eloquent\Relations\HasMany::class => HasMany::class,
+        \Illuminate\Database\Eloquent\Relations\HasOne::class => HasOne::class,
     ];
+
+    /**
+     * Config instance.
+     *
+     * @var string
+     */
+    protected $config;
 
     /**
      * Model class.
@@ -80,11 +99,12 @@ class Form extends ConfigItem
     /**
      * Create new Form instance.
      *
-     * @param string $model
+     * @param CrudConfig|FormConfig $config
      */
-    public function __construct(string $model)
+    public function __construct($config)
     {
-        $this->model = $model;
+        $this->config = $config;
+        $this->model = $config->model;
 
         $this->registeredFields = collect([]);
     }
@@ -134,9 +154,9 @@ class Form extends ConfigItem
 
         throw new InvalidArgumentException(sprintf(
             'Relation %s not supported. Supported relations: %s',
-            class_basename($relationType),
-            implode(', ', collect($this->relations)->mapWithKeys(function ($relation, $key) {
-                return [class_basename($key)];
+            lcfirst(class_basename($relationType)),
+            implode(', ', collect(array_keys($this->relations))->map(function ($relation) {
+                return lcfirst(class_basename($relation));
             })->toArray())
         ));
     }
@@ -159,6 +179,21 @@ class Form extends ConfigItem
     public function getRegisteredFields()
     {
         return $this->registeredFields;
+    }
+
+    /**
+     * Find registered field.
+     *
+     * @param string $fieldId
+     * @return Field|void
+     */
+    public function findField(string $fieldId)
+    {
+        foreach ($this->registeredFields as $field) {
+            if ($field->id == $fieldId) {
+                return $field;
+            }
+        }
     }
 
     /**

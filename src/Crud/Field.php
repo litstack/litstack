@@ -4,11 +4,10 @@ namespace Fjord\Crud;
 
 use Closure;
 use Exception;
-use Fjord\Crud\Models\FormField;
-use Fjord\Application\Config\ConfigItem;
+use Fjord\Support\VueProp;
 use Fjord\Exceptions\MethodNotFoundException;
 
-class Field extends ConfigItem
+class Field extends VueProp
 {
     /**
      * Is field translatable.

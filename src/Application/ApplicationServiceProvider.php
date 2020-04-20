@@ -74,6 +74,8 @@ class ApplicationServiceProvider extends ServiceProvider
         ViewClass::macro('setView', function (string $view) {
             $this->view = $view;
             $this->setPath(view('fjord::app')->getPath());
+
+            return $this;
         });
     }
 

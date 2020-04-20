@@ -7,6 +7,7 @@ use Fjord\Crud\Models\FormRelation;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
+use Fjord\Crud\Fields\Relations\MorphToMany;
 use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Crud\Fields\Relations\BelongsToMany;
@@ -25,13 +26,13 @@ trait HasRelations
     {
         $model = $this->query()->findOrFail($id);
 
-        $field = $model->findField($relation) ?? abort(404);
+        $field = $this->config->form->findField($relation) ?? abort(404);
 
         if (!$field->isRelation() || $field instanceof Blocks) {
             abort(404);
         }
 
-        return $field->query()->get();
+        return $field->getQuery()->get();
     }
 
     /**
@@ -47,26 +48,49 @@ trait HasRelations
     {
         $model = $this->query()->findOrFail($id);
 
-        $field = $model->findField($relation) ?? abort(404);
+        $field = $this->config->form->findField($relation) ?? abort(404);
 
         if (!$field->isRelation() || $field instanceof Blocks) {
             abort(404);
         }
 
-        $relation = $field->query()->findOrFail($relation_id);
+        $relation = $field->getQuery()->findOrFail($relation_id);
 
-        if ($field instanceof OneRelation) {
-            return $this->destroyOneRelation($request, $field, $model, $relation);
+        if ($field instanceof OneRelation || $field instanceof ManyRelation) {
+            return $this->destroyFormRelation($request, $field, $model, $relation);
         }
         if ($field instanceof BelongsToMany) {
             return $this->destroyBelongsToMany($request, $field, $model, $relation);
         }
+        if ($field instanceof MorphToMany) {
+            return $this->destroyMorphToMany($request, $field, $model, $relation);
+        }
 
-        abort(404);
+        abort(405);
+    }
+
+
+    /**
+     * Remove morphToMany relation.
+     *
+     * @param CrudUpdateRequest $request
+     * @param MorphToMany $field
+     * @param mixed $model
+     * @param mixed $relation
+     * @return void
+     */
+    protected function destroyMorphToMany(CrudUpdateRequest $request, MorphToMany $field, $model, $relation)
+    {
+        $morphToMany = $field->relation($model, $query = true);
+        return DB::table($morphToMany->getTable())->where([
+            $morphToMany->getRelatedPivotKeyName() => $relation->id,
+            $morphToMany->getForeignPivotKeyName() => $model->id,
+            $morphToMany->getMorphType() => get_class($relation)
+        ])->delete();
     }
 
     /**
-     * Remove oneRelation relation.
+     * Remove BelongsToMany relation.
      *
      * @param CrudUpdateRequest $request
      * @param BelongsToMany $field
@@ -88,12 +112,12 @@ trait HasRelations
      * Remove oneRelation relation.
      *
      * @param CrudUpdateRequest $request
-     * @param OneRelation $field
+     * @param OneRelation|ManyRelation $field
      * @param mixed $model
      * @param mixed $relation
      * @return void
      */
-    protected function destroyOneRelation(CrudUpdateRequest $request, OneRelation $field, $model, $relation)
+    protected function destroyFormRelation(CrudUpdateRequest $request, $field, $model, $relation)
     {
         $query = [
             'from_model_type' => $this->model,
@@ -118,13 +142,13 @@ trait HasRelations
     {
         $model = $this->query()->findOrFail($id);
 
-        $field = $model->findField($relation) ?? abort(404);
+        $field = $this->config->form->findField($relation) ?? abort(404);
 
         if (!$field->isRelation() || $field instanceof Blocks) {
             abort(404);
         }
 
-        $relation = $field->query()->findOrFail($relation_id);
+        $relation = $field->getQuery()->findOrFail($relation_id);
 
         if ($field instanceof OneRelation) {
             return $this->createOneRelation($request, $field, $model, $relation);
@@ -135,8 +159,48 @@ trait HasRelations
         if ($field instanceof BelongsToMany) {
             return $this->createBelongsToMany($request, $field, $model, $relation);
         }
+        if ($field instanceof MorphToMany) {
+            return $this->createMorphToMany($request, $field, $model, $relation);
+        }
 
-        abort(404);
+        abort(405);
+    }
+
+    /**
+     * Create MorphToMany relation.
+     *
+     * @param CrudUpdateRequest $request
+     * @param MorphToMany $field
+     * @param mixed $model
+     * @param mixed $relation
+     * @return mixed
+     */
+    public function createMorphToMany(CrudUpdateRequest $request, MorphToMany $field, $model, $relation)
+    {
+        $morphToMany = $field->relation($model, $query = true);
+        return DB::table($morphToMany->getTable())->insert([
+            $morphToMany->getRelatedPivotKeyName() => $relation->id,
+            $morphToMany->getForeignPivotKeyName() => $model->id,
+            $morphToMany->getMorphType() => get_class($relation)
+        ]);
+    }
+
+    /**
+     * Add BelongsToMany relation.
+     *
+     * @param CrudUpdateRequest $request
+     * @param BelongsToMany $field
+     * @param mixed $model
+     * @param mixed $relation
+     * @return mixed
+     */
+    public function createBelongsTo(CrudUpdateRequest $request, BelongsToMany $field, $model, $relation)
+    {
+        $belongsToMany = $field->relation($model, $query = true);
+        return DB::table($belongsToMany->getTable())->insert([
+            $belongsToMany->getForeignPivotKeyName() => $model->id,
+            $belongsToMany->getRelatedPivotKeyName() => $relation->id
+        ]);
     }
 
     /**
@@ -222,7 +286,7 @@ trait HasRelations
     {
         $ids = $request->ids ?? abort(404);
         $model = $this->query()->findOrFail($id);
-        $field = $model->findField($relation) ?? abort(404);
+        $field = $this->config->form->findField($relation) ?? abort(404);
 
         $relations = $model->$relation()->get();
 

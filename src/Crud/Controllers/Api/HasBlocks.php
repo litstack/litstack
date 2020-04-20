@@ -19,7 +19,7 @@ trait HasBlocks
     public function storeBlock(CrudUpdateRequest $request, $id, $field_id)
     {
         $model = $this->query()->findOrFail($id);
-        $field = $model->findField($field_id);
+        $field = $this->config->form->findField($field_id);
 
         if (!$field instanceof Blocks) {
             abort(404);
@@ -40,7 +40,7 @@ trait HasBlocks
         $block->order_column = $order_column;
         $block->save();
 
-        return $block->eloquentJs();
+        return eloquentJs($block, '');
     }
 
     /**
@@ -53,7 +53,7 @@ trait HasBlocks
     public function updateBlock(CrudUpdateRequest $request, $id, $field_id, $block_id)
     {
         $model = $this->query()->findOrFail($id);
-        $field = $model->findField($field_id);
+        $field = $this->config->form->findField($field_id);
 
         if (!$field instanceof Blocks) {
             abort(404);
@@ -77,7 +77,7 @@ trait HasBlocks
     public function destroyBlock(CrudUpdateRequest $request, $id, $field_id, $block_id)
     {
         $model = $this->query()->findOrFail($id);
-        $field = $model->findField($field_id);
+        $field = $this->config->form->findField($field_id);
 
         if (!$field instanceof Blocks) {
             abort(404);

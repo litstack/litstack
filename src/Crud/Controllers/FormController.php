@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud\Controllers;
 
+use Illuminate\Support\Str;
 use Fjord\TrackEdits\FormEdit;
 use Fjord\Crud\Models\FormField;
 use Fjord\Fjord\Models\FjordUser;
@@ -16,7 +17,16 @@ abstract class FormController
 {
     use Api\HasRelations,
         Api\HasBlocks,
-        Concerns\HasConfig;
+        Concerns\HasConfig,
+        Concerns\HasForm;
+
+    /**
+     * Create new CrudController instance.
+     */
+    public function __construct()
+    {
+        $this->config = $this->loadConfig();
+    }
 
     /**
      * Crud model class name.
@@ -33,22 +43,6 @@ abstract class FormController
      * @return boolean
      */
     abstract public function authorize(FjordUser $user, string $operation): bool;
-
-    /**
-     * Get config.
-     *
-     * @return Config
-     */
-    public function config()
-    {
-        $split = explode(
-            '.',
-            last(explode('aw-studio.fjord.form.', Request::route()->getName()))
-        );
-        $collection = array_shift($split);
-        $formName = array_shift($split);
-        return fjord()->config("form.{$collection}.{$formName}", $this->model);
-    }
 
     /**
      * Get query builder
@@ -111,7 +105,7 @@ abstract class FormController
             ])
             ->withTitle("Form " . $config->names['singular'])
             ->withProps([
-                'config' => $config->get('names', 'form', 'previewRoute', 'permissions', 'route_prefix'),
+                'config' => $config->get('names', 'form', 'preview_route', 'permissions', 'route_prefix'),
                 'headerComponents' => ['fj-crud-show-preview'],
                 'controls' => [],
                 'content' => ['fj-crud-show-form']
@@ -128,7 +122,7 @@ abstract class FormController
     {
         $fields = [];
 
-        foreach ($config->form->getRegisteredFields() as $field) {
+        foreach ($this->fields() as $field) {
             if (!$field->authorized) {
                 continue;
             }
@@ -145,6 +139,6 @@ abstract class FormController
             $fields[] = $formField;
         }
 
-        return eloquentJs(collect($fields), FormField::class);
+        return eloquentJs(collect($fields), $this->config->route_prefix);
     }
 }

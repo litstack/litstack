@@ -15,6 +15,6 @@ trait HasIndex
      */
     public function indexTable(Request $request)
     {
-        return IndexTable::get($this->config()->indexQuery, $request);
+        return IndexTable::get($this->config->indexQuery, $request);
     }
 }

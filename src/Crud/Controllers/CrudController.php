@@ -2,6 +2,8 @@
 
 namespace Fjord\Crud\Controllers;
 
+use App\Models\Department;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Fjord\Fjord\Models\FjordUser;
 use Fjord\Crud\Fields\Blocks\Blocks;
@@ -14,7 +16,16 @@ abstract class CrudController
     use Api\HasIndex,
         Api\HasRelations,
         Api\HasBlocks,
-        Concerns\HasConfig;
+        Concerns\HasConfig,
+        Concerns\HasForm;
+
+    /**
+     * Create new CrudController instance.
+     */
+    public function __construct()
+    {
+        $this->config = $this->loadConfig();
+    }
 
     /**
      * The Model Class e.g. App\Models\Post
@@ -40,14 +51,13 @@ abstract class CrudController
      */
     public function index(CrudReadRequest $request)
     {
-        $config = $this->model::config()
-            ->get(
-                'index',
-                'route_prefix',
-                'names',
-                'search',
-                'sortByDefault'
-            );
+        $config = $this->config->get(
+            'index',
+            'route_prefix',
+            'names',
+            'search',
+            'sortByDefault'
+        );
 
         return view('fjord::app')
             ->withComponent('fj-crud-index')
@@ -65,7 +75,7 @@ abstract class CrudController
      */
     public function create(CrudCreateRequest $request)
     {
-        $config = $this->config()->get(
+        $config = $this->config->get(
             'form',
             'names',
             'permissions',
@@ -73,11 +83,12 @@ abstract class CrudController
         );
 
         $model = new $this->model;
+        $model->setAttribute('fields', $this->fields());
 
         return view('fjord::app')
             ->withComponent('fj-crud-show')
             ->withModels([
-                'model' => $model->eloquentJs()
+                'model' => eloquentJs($model, $this->config->route_prefix)
             ])
             ->withProps([
                 'config' => $config,
@@ -95,22 +106,24 @@ abstract class CrudController
     {
         // Eager loads relations.
         $query = $this->query();
-        foreach ($this->config()->form->getRegisteredFields() as $field) {
+        foreach ($this->fields() as $field) {
             if ($field->isRelation()) {
                 $query->with($field->id);
             }
         }
 
+        // Find model.
         $model = $query->findOrFail($id);
+        $model->setAttribute('fields', $this->fields());
 
         // Load eloquentJs blocks.
-        foreach ($model->fields as $field) {
+        foreach ($this->fields() as $field) {
             if ($field instanceof Blocks) {
                 $model->withRelation($field->id);
             }
         }
 
-        $config = $this->model::config()->get(
+        $config = $this->config->get(
             'form',
             'route_prefix',
             'names',
@@ -121,13 +134,13 @@ abstract class CrudController
         $next = $this->model::where('id', '>', $id)->orderBy('id')->select('id')->first()->id ?? null;
 
         return view('fjord::app')->withComponent('fj-crud-show')
-            ->withTitle('Edit ' . $this->model::config()->names['singular'])
+            ->withTitle('Edit ' . $this->config->names['singular'])
             ->withModels([
-                'model' => $model->eloquentJs(),
+                'model' => eloquentJs($model, $this->config->route_prefix),
             ])
             ->withProps([
                 'config' => $config,
-                'backRoute' => $this->config()->route_prefix,
+                'backRoute' => $this->config->route_prefix,
                 'nearItems' => [
                     'next' => $next,
                     'previous' => $previous

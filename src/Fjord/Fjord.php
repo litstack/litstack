@@ -2,9 +2,9 @@
 
 namespace Fjord\Fjord;
 
-use Schema;
 use Fjord\Application\Application;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 class Fjord
@@ -21,7 +21,7 @@ class Fjord
     /**
      * Bind Fjord Application instance when Fjord is installed.
      *
-     * @param Application $app
+     * @param \Fjord\Application\Application $app
      * @return void
      */
     public function bindApp(Application $app)
@@ -36,7 +36,7 @@ class Fjord
      */
     public function app()
     {
-        return app()->get('fjord.app');
+        return $this->app;
     }
 
     /**
@@ -52,7 +52,7 @@ class Fjord
             return $key;
         }
 
-        return $this->app()->get('translator')->trans($key, $replace);
+        return $this->app->get('translator')->trans($key, $replace);
     }
 
     /**
@@ -76,7 +76,7 @@ class Fjord
      */
     public function config($key, ...$params)
     {
-        return $this->app()->get('config.loader')->get($key, ...$params);
+        return $this->app->get('config.loader')->get($key, ...$params);
     }
 
     /**

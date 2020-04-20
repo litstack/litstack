@@ -7,20 +7,20 @@ use Fjord\Vue\Table;
 class CrudTable extends Table
 {
     /**
-     * Crud model class.
+     * Config instance.
      *
      * @var string
      */
-    protected $model;
+    protected $config;
 
     /**
      * Create new CrudTable instance.
      *
-     * @param string $model
+     * @param Instance $config
      */
-    public function __construct(string $model)
+    public function __construct($config)
     {
-        $this->model = $model;
+        $this->config = $config;
     }
 
     /**
@@ -33,7 +33,7 @@ class CrudTable extends Table
     {
         $col = parent::col();
 
-        $route_prefix = (new $this->model)->config()->route_prefix;
+        $route_prefix = $this->config->routePrefix();
 
         // Default link.
         $col->link("{$route_prefix}/{id}/edit");

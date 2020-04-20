@@ -2,12 +2,11 @@
 
 namespace Fjord\Vue;
 
-use BadMethodCallException;
+use Fjord\Support\VueProp;
 use Illuminate\Support\Str;
-use Fjord\Application\Config\ConfigItem;
 use Fjord\Exceptions\MethodNotFoundException;
 
-class Component extends ConfigItem
+class Component extends VueProp
 {
     /**
      * Vue component name.

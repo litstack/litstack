@@ -24,7 +24,7 @@ class Kernel
         Bootstrap\DiscoverPackages::class,
         Bootstrap\RegisterPackageProviders::class,
         Bootstrap\RegisterPackageCommands::class,
-        Bootstrap\RegisterConfigHandler::class,
+        Bootstrap\RegisterConfigFactories::class,
         Bootstrap\RegisterPackageExtensions::class,
         Bootstrap\BootstrapVueApplication::class,
         Bootstrap\RegisterSingletons::class,

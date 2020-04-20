@@ -2,8 +2,17 @@
 
 namespace Fjord\Crud\Controllers\Concerns;
 
+use Illuminate\Support\Facades\Request;
+
 trait HasConfig
 {
+    /**
+     * Config instance.
+     *
+     * @var Instance
+     */
+    protected $config;
+
     /**
      * Get query builder
      *
@@ -11,7 +20,7 @@ trait HasConfig
      */
     public function query()
     {
-        return $this->config()->query;
+        return $this->config->query;
     }
 
     /**
@@ -19,8 +28,8 @@ trait HasConfig
      *
      * @return Config
      */
-    public function config()
+    public function loadConfig()
     {
-        return $this->model::config();
+        return Request::route()->getConfig();
     }
 }

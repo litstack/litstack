@@ -2,8 +2,6 @@
 
 namespace Fjord\Application\Package;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
 use Fjord\Application\Application;
 use Fjord\Support\Facades\FjordRoute;
 
@@ -52,11 +50,11 @@ abstract class FjordPackage
     protected $extensions = [];
 
     /**
-     * List of handlers for config files.
+     * List of factories for config files.
      * 
      * @var array
      */
-    protected $configHandler = [];
+    protected $configFactories = [];
 
     /**
      * Fjord navigation entry presets for this package.
@@ -134,7 +132,7 @@ abstract class FjordPackage
      */
     public function hasRootAccess()
     {
-        return fjord()->app()->get('packages')->hasRootAccess($this->name);
+        return fjord()->get('packages')->hasRootAccess($this->name);
     }
 
 
@@ -215,9 +213,9 @@ abstract class FjordPackage
      *
      * @return array
      */
-    public function getConfigHandler()
+    public function getConfigFactories()
     {
-        return $this->configHandler;
+        return $this->configFactories;
     }
 
     /**

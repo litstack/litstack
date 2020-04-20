@@ -2,9 +2,9 @@
 
 namespace Fjord\Vue;
 
-use Fjord\Application\Config\ConfigItem;
+use Fjord\Support\VueProp;
 
-class BaseCol extends ConfigItem
+class BaseCol extends VueProp
 {
     use Traits\HasComponent;
 

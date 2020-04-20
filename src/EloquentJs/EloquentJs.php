@@ -3,21 +3,65 @@
 namespace Fjord\EloquentJs;
 
 use Throwable;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Collection;
+
 
 class EloquentJs
 {
+    /**
+     * Model instance.
+     *
+     * @var mixed
+     */
     private $infoModel;
 
+    /**
+     * Relations.
+     *
+     * @var array
+     */
     private $relations = [];
 
-    public function __construct($model, $class, string $type = 'fjord')
+    /**
+     * Create new EloquentJs instance.
+     *
+     * @param mixed $model
+     * @param string $route
+     * @param string $type
+     */
+    public function __construct($model, string $route, string $type = 'fjord')
     {
+        $this->route = $route;
         $this->type = $type;
-        $this->infoModel = with(new $class());
+        $this->setInfoModel($model);
         $this->model = $model;
         $this->setRelations();
     }
 
+    /**
+     * Set info model instance.
+     *
+     * @param mixed $model
+     * @return void
+     */
+    public function setInfoModel($model)
+    {
+        if (is_string($model)) {
+            return $this->infoModel = new $model;
+        }
+        if ($model instanceof Collection || $model instanceof EloquentCollection) {
+            return $this->infoModel = $model->first();
+        }
+
+        $this->infoModel = $model;
+    }
+
+    /**
+     * Set relations.
+     *
+     * @return void
+     */
     protected function setRelations()
     {
         if (!$this->model) {
@@ -47,10 +91,6 @@ class EloquentJs
         }
     }
 
-    protected function setRelation($model)
-    {
-    }
-
     /**
      * Get config for javascript.
      *
@@ -60,7 +100,6 @@ class EloquentJs
     {
         return collect([
             'type' => $this->type,
-            'fillable' => $this->getFillables(),
             'relations' => $this->relations,
             'data' => $this->model,
             'translatable' => is_translatable($this->infoModel),
@@ -70,6 +109,11 @@ class EloquentJs
         ]);
     }
 
+    /**
+     * Get route.
+     *
+     * @return void
+     */
     public function getRoute()
     {
         try {
@@ -88,23 +132,5 @@ class EloquentJs
     public function isCollection()
     {
         return $this->model instanceof Collection;
-    }
-
-    public function getFillables()
-    {
-        if (!is_translatable($this->infoModel)) {
-            return $this->getFillablesFromModel($this->infoModel);
-        }
-        $modelName = $this->infoModel->getTranslationModelName();
-        return $this->getFillablesFromModel(new $modelName());
-    }
-
-    protected function getFillablesFromModel($model)
-    {
-        $fillables = [];
-        foreach ($model->getFillable() as $key) {
-            $fillables[$key] = $model->$key;
-        }
-        return $fillables;
     }
 }

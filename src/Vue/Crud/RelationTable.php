@@ -3,9 +3,9 @@
 namespace Fjord\Vue\Crud;
 
 use Fjord\Vue\BaseCol;
-use Fjord\Application\Config\ConfigItem;
+use Fjord\Support\VueProp;
 
-class RelationTable extends ConfigItem
+class RelationTable extends VueProp
 {
     /**
      * Column stack.

@@ -4,39 +4,39 @@ namespace Fjord\Crud\Config;
 
 use Illuminate\Support\Str;
 use Fjord\Crud\Models\FormField;
-use Fjord\Support\Config as FjordConfig;
+use Fjord\Crud\Config\Traits\HasCrudForm;
 
-abstract class FormConfig extends FjordConfig
+abstract class FormConfig
 {
-    use Traits\HasForm;
+    use HasCrudForm;
 
     /**
      * Form field model class.
      *
      * @var string
      */
-    protected $model;
+    public $model = FormField::class;
 
     /**
      * Controller class.
      *
      * @var string
      */
-    protected $controller;
+    public $controller;
 
     /**
      * Form collection name.
      *
      * @var string
      */
-    protected $collection;
+    public $collection;
 
     /**
      * Form name, is used for routing.
      *
      * @var string
      */
-    protected $formName;
+    public $formName;
 
     /**
      * Create new FormConfig instance.
@@ -57,7 +57,7 @@ abstract class FormConfig extends FjordConfig
      *
      * @return string $route
      */
-    public function route_prefix()
+    public function routePrefix()
     {
         $collection = strtolower($this->collection);
         $formName = strtolower($this->formName);
@@ -90,7 +90,7 @@ abstract class FormConfig extends FjordConfig
      *
      * @return string|null
      */
-    protected function previewRoute()
+    public function previewRoute()
     {
         return null;
     }

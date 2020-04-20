@@ -47,6 +47,7 @@ trait HasFields
      * @param string $related
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+    /*
     public function oneRelation($related)
     {
         $instance = $this->newRelatedInstance($related);
@@ -56,6 +57,7 @@ trait HasFields
             ->where('form_relations.to_model_type', $related)
             ->orderBy('form_relations.order_column');
     }
+    */
 
     /**
      * Get fields from config.

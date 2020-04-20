@@ -99,9 +99,9 @@ if (!function_exists('nested_collect')) {
 }
 
 if (!function_exists('eloquentJs')) {
-    function eloquentJs($model, $class, $type = 'fjord')
+    function eloquentJs($model, string $route, $type = 'fjord')
     {
-        return (new Fjord\EloquentJs\EloquentJs($model, $class, $type))->toArray();
+        return (new Fjord\EloquentJs\EloquentJs($model, $route, $type))->toArray();
     }
 }
 

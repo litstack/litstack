@@ -134,26 +134,29 @@ export default {
         async removeRelation({ id }) {
             let response = null;
             // TODO: create resource crud/relation for create delete
-
             try {
                 switch (this.field.type) {
                     case 'hasMany':
                         response = await axios.put(
-                            `${this.field.route}/${id}`,
+                            `${this.field.route_prefix}/${id}`,
                             {
                                 [this.field.foreign_key]: null
                             }
                         );
                         break;
                     case 'morphMany':
-                        response = axios.put(`${this.field.route}/${id}`, {
-                            [this.field.morph_type]: null,
-                            [this.field.foreign_key]: null
-                        });
+                        response = axios.put(
+                            `${this.field.route_prefix}/${id}`,
+                            {
+                                [this.field.morph_type]: 'null',
+                                [this.field.foreign_key]: 0
+                            }
+                        );
                         break;
                     case 'morphedByMany':
                     case 'morphToMany':
                     case 'belongsToMany':
+                    case 'manyRelation':
                     case 'relation':
                         response = await axios.delete(
                             `${this.form.config.route_prefix}/${this.model.id}/${this.field.id}/${id}`

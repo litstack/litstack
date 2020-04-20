@@ -2,22 +2,68 @@
 
 namespace Fjord\Crud;
 
+use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Fjord\Fjord\Models\FjordUser;
 use Fjord\Support\Facades\Package;
-use Illuminate\Support\Facades\Route;
 use Fjord\Crud\Requests\Traits\AuthorizeController;
+use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
     use AuthorizeController;
 
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
     public function boot()
     {
         parent::boot();
     }
 
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->macros();
+    }
+
+    /**
+     * Register macros.
+     *
+     * @return void
+     */
+    public function macros()
+    {
+        RouteFacade::macro('config', function ($class) {
+            $this->config = $class;
+
+            if (isset($this->groupStack[0])) {
+                $this->groupStack[0]['config'] = $this->config;
+            }
+            return $this;
+        });
+
+        Route::macro('getConfig', function () {
+            $key = $this->action['config'] ?? null;
+            if (!$key) {
+                return;
+            }
+            return fjord()->config($key);
+        });
+    }
+
+    /**
+     * Map routes.
+     *
+     * @return void
+     */
     public function map()
     {
         $this->package = Package::get('aw-studio/fjord');
@@ -26,39 +72,44 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->mapCrudRoutes();
     }
 
+    /**
+     * Map crud routes.
+     *
+     * @return void
+     */
     protected function mapCrudRoutes()
     {
         if (!fjord()->installed()) {
             return;
         }
         $configPath = fjord_config_path('Crud');
-        $configFiles = glob("{$configPath}/*.php");;
+        $configFiles = glob("{$configPath}/*.php");
 
         foreach ($configFiles as $path) {
             $crudName = strtolower(str_replace('Config.php', '', str_replace($configPath . '/', '', $path)));
-            $model = "App\\Models\\{$crudName}";
-            $config = $model::config();
+            $configKey = "crud.{$crudName}";
+            $config = fjord()->config($configKey);
             $controller = $config->controller;
             $self = $this;
 
-
-            $this->package->route()->group(function () use ($config, $controller, $self, $model) {
-                $table = (new $model)->getTable();
-                Route::group([
+            $this->package->route()->group(function () use ($config, $configKey, $controller, $self, $crudName) {
+                $tableName = (new $config->model)->getTable();
+                RouteFacade::group([
+                    'config' => $configKey,
                     'prefix' => $config->route_prefix,
-                    'as' => "crud.{$table}.",
-                ], function () use ($config, $controller, $self, $table) {
+                    'as' => "crud.{$tableName}",
+                ], function () use ($config, $controller, $self, $tableName) {
                     $type = 'crud';
                     require fjord_path('src/Crud/routes.php');
 
-                    $self->addCrudNavPreset($table, $config, app()->get('router'));
+                    $self->addCrudNavPreset($tableName, $config, app()->get('router'));
                 });
             });
         }
     }
 
     /**
-     * Register form navigation preset.
+     * Register crud navigation preset.
      *
      * @param string $name
      * @param FormConfig $config
@@ -92,22 +143,23 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     {
         $configPath = fjord_config_path('Form');
         $directories = glob($configPath . '/*', GLOB_ONLYDIR);
-        //dd($configPath, $directories);
 
         foreach ($directories as $formDirectory) {
             $collection = strtolower(str_replace("{$configPath}/", '', $formDirectory));
             $configFiles = glob("{$formDirectory}/*.php");;
             foreach ($configFiles as $path) {
                 $formName = strtolower(str_replace('Config.php', '', str_replace($formDirectory . '/', '', $path)));
-                $config = fjord()->config("form.{$collection}.{$formName}");
+                $configKey = "form.{$collection}.{$formName}";
+                $config = fjord()->config($configKey);
 
                 $controller = $config->controller;
                 $self = $this;
 
-                $this->package->route()->group(function () use ($config, $controller, $self) {
-                    Route::group([
+                $this->package->route()->group(function () use ($config, $configKey, $controller, $self) {
+                    RouteFacade::group([
                         'prefix' => $config->route_prefix,
-                        'as' => "form.{$config->collection}.{$config->formName}.",
+                        'as' => $configKey . ".",
+                        'config' => $configKey
                     ], function () use ($config, $controller, $self) {
                         $type = 'form';
                         require fjord_path('src/Crud/routes.php');

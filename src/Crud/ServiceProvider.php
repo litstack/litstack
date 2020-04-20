@@ -2,10 +2,10 @@
 
 namespace Fjord\Crud;
 
-use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\Facades\App;
 use Fjord\Support\Facades\Form as FormFacade;
+use Fjord\Crud\Models\Relations\CrudRelations;
+use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class ServiceProvider extends LaravelServiceProvider
 {
@@ -16,6 +16,7 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function boot()
     {
+        $this->app->register(CrudRelations::class);
         $this->app->register(RouteServiceProvider::class);
     }
 
@@ -31,7 +32,7 @@ class ServiceProvider extends LaravelServiceProvider
 
         /*
         $this->app->singleton('fjord.form', function () {
-            return new Form();
+            return new FormFieldLoader;
         });
 
         $this->app->singleton('fjord.form.loader', function () {

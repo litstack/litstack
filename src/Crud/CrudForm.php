@@ -22,18 +22,6 @@ class CrudForm extends Form
     protected $card = [];
 
     /**
-     * Create new CrudForm instance.
-     *
-     * @param string $model
-     */
-    public function __construct(string $model)
-    {
-        parent::__construct($model);
-
-        $this->components = collect([]);
-    }
-
-    /**
      * Register new Field.
      *
      * @param mixed $name
@@ -101,7 +89,7 @@ class CrudForm extends Form
     public function getArray(): array
     {
         return [
-            'components' => $this->components,
+            'components' => collect($this->components),
             'fields' => $this->registeredFields
         ];
     }

@@ -48,7 +48,8 @@ class ManyRelation extends ManyRelationField
         'preview',
         'confirm',
         'sortable',
-        'orderColumn'
+        'orderColumn',
+        'query'
     ];
 
     /**
@@ -75,9 +76,28 @@ class ManyRelation extends ManyRelationField
             return parent::getRelation($model);
         }
 
-        return $model->manyRelation($this->relationModel)
+        return $model->manyRelation($this->related)
             ->setEagerLoads(
                 $this->query->getEagerLoads()
             );
+    }
+
+    /**
+     * Set related model.
+     *
+     * @param string $mode
+     * @return void
+     */
+    public function model(string $model)
+    {
+        $this->related = $model;
+
+        $this->attributes['model'] = $model;
+
+        if (!$this->query) {
+            $this->query = $model::query();
+        }
+
+        return $this;
     }
 }

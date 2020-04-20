@@ -2,9 +2,9 @@
 
 namespace Fjord\Vue;
 
-use Fjord\Application\Config\ConfigItem;
+use Fjord\Support\VueProp;
 
-class Table extends ConfigItem
+class Table extends VueProp
 {
     /**
      * Column stack.

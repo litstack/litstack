@@ -2,13 +2,19 @@
 
 namespace Fjord;
 
+use Fjord\Crud\Config\CrudConfig;
 use Fjord\Application\Application;
-use Fjord\Configuration\Types\CrudConfig;
+use Fjord\Crud\Config\Traits\HasCrudForm;
 use Fjord\User\Components\UsersComponent;
+use Fjord\Crud\Config\Traits\HasCrudIndex;
 use Fjord\Crud\Vue\Components\CrudShowComponent;
 use Fjord\Crud\Vue\Components\CrudIndexComponent;
-use Fjord\Configuration\Handler\CrudConfigHandler;
+use Fjord\Crud\Config\Factories\CrudConfigFactory;
 use Fjord\Application\Package\FjordPackage as Package;
+use Fjord\Crud\Config\Factories\CrudFormConfigFactory;
+use Fjord\Crud\Config\Factories\CrudIndexConfigFactory;
+use Fjord\Application\Navigation\NavigationConfigFactory;
+use Fjord\Application\Navigation\Config as NavigationConfig;
 
 class FjordPackage extends Package
 {
@@ -52,12 +58,15 @@ class FjordPackage extends Package
     ];
 
     /**
-     * List of handlers for config files.
+     * List of config classes with their associated factories.
      * 
      * @var array
      */
-    protected $configHandler = [
-        CrudConfig::class => CrudConfigHandler::class,
+    protected $configFactories = [
+        NavigationConfig::class => NavigationConfigFactory::class,
+        CrudConfig::class => CrudConfigFactory::class,
+        HasCrudForm::class => CrudFormConfigFactory::class,
+        HasCrudIndex::class => CrudIndexConfigFactory::class,
     ];
 
     /**

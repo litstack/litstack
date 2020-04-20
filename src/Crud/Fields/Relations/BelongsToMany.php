@@ -9,13 +9,6 @@ class BelongsToMany extends ManyRelationField
     use Concerns\ManagesRelation;
 
     /**
-     * Field Vue component.
-     *
-     * @var string
-     */
-    protected $component = 'fj-form-relation-many';
-
-    /**
      * Properties passed to Vue component.
      *
      * @var array
@@ -47,7 +40,8 @@ class BelongsToMany extends ManyRelationField
         'preview',
         'confirm',
         'sortable',
-        'orderColumn'
+        'orderColumn',
+        'query'
     ];
 
     /**
@@ -60,15 +54,4 @@ class BelongsToMany extends ManyRelationField
         'sortable' => false,
         'orderColumn' => 'order_column'
     ];
-
-    /**
-     * Set relation attributes.
-     *
-     * @param string $model
-     * @return self
-     */
-    protected function setRelationAttributes($model)
-    {
-        //
-    }
 }

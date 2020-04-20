@@ -3,7 +3,8 @@
 namespace Fjord\Application;
 
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\View;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\View as ViewFactory;
 
 /**
  * The Application class manages all depencies for the view fjord::app:
@@ -33,11 +34,11 @@ class Application
     protected $extensions = [];
 
     /**
-     * Registered config handlers;
+     * Registered config factories.
      *
      * @var array
      */
-    protected $configHandler = [];
+    protected $configFactories = [];
 
     /**
      * Indicates if the application has been bootstrapped before.
@@ -52,18 +53,18 @@ class Application
      * @var array
      */
     protected $singletons = [
-        'config.loader' => \Fjord\Configuration\ConfigLoader::class
+        'config.loader' => \Fjord\Config\ConfigLoader::class
     ];
 
     /**
-     * Binding composer to fjord::app view.
+     * Bind composer to fjord::app view.
      * 
      * @param string $composer
-     * @return void
+     * @return \Illuminate\View\Factory
      */
-    public function composer($composer)
+    public function composer(string $composer)
     {
-        View::composer('fjord::app', $composer);
+        return ViewFactory::composer('fjord::app', $composer);
     }
 
     /**
@@ -181,9 +182,9 @@ class Application
      * @param string $handler
      * @return void
      */
-    public function registerConfigHandler(string $dependency, string $handler)
+    public function registerConfigFactory(string $dependency, string $factory)
     {
-        $this->configHandler[$dependency] = $handler;
+        $this->configFactories[$dependency] = $factory;
     }
 
     /**
@@ -191,9 +192,9 @@ class Application
      *
      * @return array
      */
-    public function getConfigHandler()
+    public function getConfigFactories()
     {
-        return $this->configHandler;
+        return $this->configFactories;
     }
 
     /**

@@ -46,7 +46,8 @@ class OneRelation extends OneRelationField
         'model',
         'hint',
         'preview',
-        'confirm'
+        'confirm',
+        'query',
     ];
 
     /**
@@ -70,11 +71,29 @@ class OneRelation extends OneRelationField
         if (!$model instanceof FormField) {
             return parent::getRelation($model);
         }
-        $relation = $model->oneRelation($this->relationModel);
 
-        return $model->oneRelation($this->relationModel)
+        return $model->oneRelation($this->related)
             ->setEagerLoads(
                 $this->query->getEagerLoads()
-            );;
+            );
+    }
+
+    /**
+     * Set related model.
+     *
+     * @param string $mode
+     * @return void
+     */
+    public function model(string $model)
+    {
+        $this->related = $model;
+
+        $this->attributes['model'] = $model;
+
+        if (!$this->query) {
+            $this->query = $model::query();
+        }
+
+        return $this;
     }
 }

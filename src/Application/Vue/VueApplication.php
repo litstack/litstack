@@ -46,15 +46,6 @@ class VueApplication
     ];
 
     /**
-     * Compiler for root props.
-     *
-     * @var array
-     */
-    protected $compiler = [
-        'model' => Props\ModelProp::class
-    ];
-
-    /**
      * Create new VueApplication instance.
      *
      * @param \Fjord\Application\Application $app
@@ -80,8 +71,6 @@ class VueApplication
         $this->setDefaultProps();
 
         $this->setPropsFromViewData($view->getData());
-
-        $this->compileRootProps();
 
         $this->initializeComponent($this->props['component']);
 
@@ -210,26 +199,6 @@ class VueApplication
     protected function propExists(string $name)
     {
         return array_key_exists($name, $this->props);
-    }
-
-    /**
-     * Run compiler for matching root props.
-     *
-     * @return void
-     */
-    protected function compileRootProps()
-    {
-        foreach ($this->compiler as $prop => $compiler) {
-            if (!$this->propExists($prop)) {
-                continue;
-            }
-
-            $instance = with(new $compiler(
-                $this->props[$prop]
-            ));
-
-            $this->props[$prop] = $instance->getValue();
-        }
     }
 
     /**

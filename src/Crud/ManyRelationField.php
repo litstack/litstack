@@ -7,6 +7,13 @@ class ManyRelationField extends Field
     use Concerns\ManagesRelationField;
 
     /**
+     * Field Vue component.
+     *
+     * @var string
+     */
+    protected $component = 'fj-form-relation-many';
+
+    /**
      * Resolve query for many relations.
      *
      * @return \Illuminate\Database\Eloquent\Collection

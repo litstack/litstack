@@ -98,6 +98,14 @@ export default {
             sortableRelations: []
         };
     },
+    watch: {
+        items() {
+            this.selectedItems = this.items;
+            if (this.field.model) {
+                this.sortableRelations = this.items[this.field.model];
+            }
+        }
+    },
     beforeMount() {
         this.selectedItems = this.items;
         if (this.field.model) {
