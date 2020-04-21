@@ -58,16 +58,19 @@ class ConfigHandler
     public function findConfigFactories()
     {
         $reflector = new ReflectionClass($this->config);
+        $parent = $reflector->getParentClass();
         $uses = array_merge(
             class_uses($this->config),
-            class_uses($reflector->getParentClass()->name)
+            $parent ? class_uses($parent->name) : []
         );
 
         foreach (fjord()->getConfigFactories() as $dependency => $factory) {
 
             // Matching parent class.
-            if ($reflector->getParentClass()->name == $dependency) {
-                $this->registerFactory($factory);
+            if ($parent) {
+                if ($parent->name == $dependency) {
+                    $this->registerFactory($factory);
+                }
             }
 
             if (in_array($dependency, $uses)) {
@@ -116,6 +119,19 @@ class ConfigHandler
      */
     public function get(...$keys)
     {
+        if (count($keys) == 1 && trait_exists($keys[0])) {
+            $trait = new ReflectionClass($keys[0]);
+            $keys = collect(array_merge($trait->getProperties(), $trait->getMethods()))->map(function ($reflect) {
+                // Looking for abstract public or public methods or properties.
+                if (
+                    $reflect->getModifiers() != ReflectionMethod::IS_PUBLIC
+                    && $reflect->getModifiers() != ReflectionMethod::IS_PUBLIC + ReflectionMethod::IS_ABSTRACT
+                ) {
+                    return;
+                }
+                return $reflect->name;
+            })->filter()->toArray();
+        }
         $attributes = [];
 
         foreach ($keys as $key) {

@@ -1,0 +1,107 @@
+<?php
+
+namespace Fjord\User\Models;
+
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Fjord\EloquentJs\CanEloquentJs;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Fjord\Auth\Notifications\ResetPasswordNotification;
+use Fjord\Form\Database\Traits\HasFormFields;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+
+class FjordUser extends Authenticatable implements CanResetPasswordContract
+{
+    use Notifiable,
+        HasRoles,
+        CanResetPassword;
+
+    /**
+     * Guard name.
+     *
+     * @var string
+     */
+    protected $guard_name = 'fjord';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'email', 'password', 'locale'
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['role'];
+
+    /**
+     * Send password reset notification.
+     *
+     * @param string $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $link = route('fjord.password.reset', $token);
+
+        $link .= '?email=' . urlencode($this->email);
+
+        $this->notify(new ResetPasswordNotification($link));
+    }
+
+    /**
+     * Has role admin scope.
+     *
+     * @param $query
+     * @return $query
+     */
+    public function scopeAdmin($query)
+    {
+        return $query->role('admin');
+    }
+
+    /**
+     * Has role user scope.
+     *
+     * @param  $query
+     * @return $query
+     */
+    public function scopeUser($query)
+    {
+        return $query->role('user');
+    }
+
+    /**
+     * Get fjord user role.
+     *
+     * @return void
+     */
+    public function getRoleAttribute()
+    {
+        return $this->roles()->first();
+    }
+}

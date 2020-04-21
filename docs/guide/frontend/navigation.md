@@ -59,7 +59,7 @@ Nested indentations are indicated in `children` as in the following example:
 To hide navigation entries from users without the necessary permission, an `authorization` closure can be specified in which permissions for the logged in fjord user can be queried.
 
 ```php
-use Fjord\Fjord\Models\FjordUser;
+use Fjord\User\Models\FjordUser;
 ...
 [
     'title' => 'Home',

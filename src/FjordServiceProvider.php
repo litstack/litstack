@@ -2,7 +2,7 @@
 
 namespace Fjord;
 
-use App\Fjord\Kernel;
+use FjordApp\Kernel;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
 use Illuminate\Foundation\AliasLoader;
@@ -23,7 +23,6 @@ class FjordServiceProvider extends ServiceProvider
      */
     protected $providers = [
         Auth\ServiceProvider::class,
-        Application\ApplicationServiceProvider::class,
         Foundation\Providers\ArtisanServiceProvider::class,
         Support\Macros\BuilderMacros::class,
     ];
@@ -106,6 +105,8 @@ class FjordServiceProvider extends ServiceProvider
         if (!$this->app->get('fjord')->installed()) {
             return;
         }
+
+        $this->app->register(Application\ApplicationServiceProvider::class);
 
         $this->app->singleton('fjord.app', function () {
             return new Application\Application();

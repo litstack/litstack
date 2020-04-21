@@ -53,7 +53,8 @@ class Application
      * @var array
      */
     protected $singletons = [
-        'config.loader' => \Fjord\Config\ConfigLoader::class
+        'config.loader' => \Fjord\Config\ConfigLoader::class,
+        'components' => Vue\Components::class,
     ];
 
     /**
@@ -136,7 +137,7 @@ class Application
      */
     public function get($binding)
     {
-        return $this->bindings[$binding] ?? null;
+        return $this->bindings[$binding] ??  null;
     }
 
     /**

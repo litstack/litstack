@@ -2,7 +2,7 @@
 
 namespace Fjord\Crud\Models\Traits;
 
-use Fjord\TrackEdits\ModelEdit;
+use Fjord\Crud\Models\ModelEdit;
 
 trait TrackEdits
 {
@@ -38,6 +38,11 @@ trait TrackEdits
         $edit->fjord_user_id = fjord_user()->id;
         $edit->created_at = \Carbon\Carbon::now();
         $edit->save();
+
+        // Reload relation.
+        if ($this->relationLoaded('last_edit')) {
+            $this->load('last_edit');
+        }
     }
 
     /**
@@ -47,7 +52,7 @@ trait TrackEdits
      */
     public function last_edit()
     {
-        return $this->morphOne('Fjord\TrackEdits\ModelEdit', 'model')
+        return $this->morphOne(ModelEdit::class, 'model')
             ->orderByDesc('id')
             ->with('user');
     }

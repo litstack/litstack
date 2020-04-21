@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud\Models;
 
+use Fjord\Crud\Models\FormEdit;
 use Fjord\EloquentJs\CanEloquentJs;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,6 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 class FormField extends Model implements HasMedia, TranslatableContract
 {
     use Translatable,
-        CanEloquentJs,
         HasMediaTrait,
         Concerns\HasConfig,
         Concerns\HasFields,
@@ -83,13 +83,15 @@ class FormField extends Model implements HasMedia, TranslatableContract
     }
 
     /**
-     * Get last edit.
+     * Get last edit attribute.
      *
      * @return morphOne
      */
     public function getLastEditAttribute()
     {
-        return $this->hasOne('Fjord\TrackEdits\FormEdit', 'form_name', 'form_name')
+        // Must be an attribute because relations dont have access to 
+        // $this->collection.
+        return $this->hasOne(FormEdit::class, 'form_name', 'form_name')
             ->where('collection', $this->collection)
             ->orderByDesc('id')
             ->with('user')

@@ -2,7 +2,7 @@
 
 namespace Fjord\Application\Vue;
 
-use Fjord\Fjord\Models\FjordUser;
+use Fjord\User\Models\FjordUser;
 
 abstract class Extension
 {
@@ -16,7 +16,7 @@ abstract class Extension
     /**
      * Has user permission for this extension.
      * 
-     * @var \Fjord\Fjord\Models\FjordUser $user
+     * @var \Fjord\User\Models\FjordUser $user
      * @return boolean
      */
     abstract public function authenticate(FjordUser $user);

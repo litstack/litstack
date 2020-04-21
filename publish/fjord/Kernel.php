@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Fjord;
+namespace FjordApp;
 
 use Fjord\Application\Kernel as FjordKernel;
 

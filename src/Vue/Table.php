@@ -36,7 +36,11 @@ class Table extends VueProp
      */
     public function component(string $component)
     {
-        return $this->col()->component($component);
+        $component = component($component, TableComponent::class);
+
+        $this->cols[] = $component;
+
+        return $component;
     }
 
     /**

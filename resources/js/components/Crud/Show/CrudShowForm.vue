@@ -1,18 +1,13 @@
 <template>
-    <b-col :cols="cols">
-        <b-card :title="title" class="mb-4">
-            <form class="row" style="margin-bottom: -1.5em;">
-                <template v-for="id in fieldIds">
-                    <fj-crud-show-form-item
-                        v-if="getFieldById(id)"
-                        :field="getFieldById(id)"
-                        :model="getModelByFieldId(id)"
-                    />
-                </template>
-            </form>
-            <!--<fj-fjord-form :ids="fieldIds" :model="model" />-->
-        </b-card>
-    </b-col>
+    <form class="row" style="margin-bottom: -1.5em;">
+        <template v-for="id in fieldIds">
+            <fj-crud-show-form-item
+                v-if="getFieldById(id)"
+                :field="getFieldById(id)"
+                :model="getModelByFieldId(id)"
+            />
+        </template>
+    </form>
 </template>
 
 <script>

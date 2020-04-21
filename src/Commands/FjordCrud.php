@@ -2,7 +2,7 @@
 
 namespace Fjord\Commands;
 
-use Fjord\Filesystem\StubBuilder;
+use Fjord\Support\StubBuilder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;

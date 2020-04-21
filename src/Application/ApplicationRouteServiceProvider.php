@@ -5,7 +5,6 @@ namespace Fjord\Application;
 use Illuminate\Support\Facades\File;
 use Fjord\Support\Facades\FjordRoute;
 use Illuminate\Support\Facades\Route;
-use Fjord\Fjord\Controllers\FjordController;
 use Fjord\Application\Controllers\FileController;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
@@ -20,8 +19,8 @@ class ApplicationRouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapAppRoutes()
     {
-        if (File::exists(base_path('routes/fjord.php'))) {
-            FjordRoute::group(base_path('routes/fjord.php'));
+        if (File::exists(base_path('fjord/routes/fjord.php'))) {
+            FjordRoute::group(base_path('fjord/routes/fjord.php'));
         }
     }
 
@@ -30,7 +29,6 @@ class ApplicationRouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::group(function () {
             Route::post('/set-locale', 'Fjord\Actions\SetLocale')->name('set-locale');
             Route::get('/lang.js', 'Fjord\Application\Controllers\TranslationsController@i18n')->name('fjord-translations');
-            Route::put('/order', [FjordController::class, 'order'])->name('order');
         });
     }
 

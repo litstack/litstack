@@ -4,16 +4,13 @@ namespace Fjord\Crud;
 
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
-use Fjord\Fjord\Models\FjordUser;
+use Fjord\User\Models\FjordUser;
 use Fjord\Support\Facades\Package;
-use Fjord\Crud\Requests\Traits\AuthorizeController;
 use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
-    use AuthorizeController;
-
     /**
      * Bootstrap any application services.
      *
@@ -125,11 +122,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             'link' => $link,
             'title' => ucfirst($config->names['plural']),
             'authorize' => function (FjordUser $user) use ($config) {
-                return $this->authorizeController(
-                    app()->get('request'),
-                    'read',
-                    $config->controller
-                );
+                return (new $config->controller)->authorize($user, 'read');
             }
         ]);
     }
@@ -188,11 +181,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             'link' => $link,
             'title' => ucfirst($config->formName),
             'authorize' => function (FjordUser $user) use ($config) {
-                return $this->authorizeController(
-                    app()->get('request'),
-                    'read',
-                    $config->controller
-                );
+                return (new $config->controller)->authorize($user, 'read');
             }
         ]);
     }

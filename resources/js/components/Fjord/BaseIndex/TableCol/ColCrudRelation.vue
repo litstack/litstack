@@ -1,7 +1,7 @@
 <template>
-    <div class="fj-col-relation">
-        {{ item[relation][value] }}
-        <a :href="`${baseURL}${relationLink}/${item[relation].id}/edit`">
+    <div class="fj-col-relation" v-if="relation">
+        {{ relation[value] }}
+        <a :href="`${baseURL}${relationLink}/${relation.id}/edit`">
             <fa-icon icon="external-link-alt" />
         </a>
     </div>
@@ -17,8 +17,7 @@ export default {
             type: Object
         },
         relation: {
-            required: true,
-            type: String
+            type: [Object, Boolean]
         },
         value: {
             required: true,

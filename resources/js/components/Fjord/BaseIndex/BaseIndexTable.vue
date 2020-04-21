@@ -38,6 +38,7 @@
                         :key="col_key"
                         :item="item"
                         :cols="cols"
+                        @reload="$emit('loadItems')"
                     />
                 </tr>
             </template>

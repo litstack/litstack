@@ -2,6 +2,7 @@
 
 namespace Fjord\Vue;
 
+use Exception;
 use Fjord\Support\VueProp;
 use Illuminate\Support\Str;
 use Fjord\Exceptions\MethodNotFoundException;
@@ -20,7 +21,28 @@ class Component extends VueProp
      *
      * @var array
      */
+    protected $available = [];
+
+    /**
+     * Required Vue component props.
+     *
+     * @var array
+     */
+    protected $required = [];
+
+    /**
+     * Vue component props.
+     *
+     * @var array
+     */
     protected $props = [];
+
+    /**
+     * Default component properties.
+     *
+     * @var array
+     */
+    protected $defaults = [];
 
     /**
      * Instance of component class.
@@ -38,18 +60,19 @@ class Component extends VueProp
     {
         $this->name = $name;
 
-        $this->loadClass();
+        $this->setDefaults();
     }
 
-    protected function loadClass()
+    /**
+     * Set defaults.
+     *
+     * @return void
+     */
+    public function setDefaults()
     {
-        $className = 'Fjord\Vue\Components\\' . ucfirst(Str::camel($this->name));
-
-        if (!class_exists($className)) {
-            return;
+        foreach ($this->defaults as $name => $value) {
+            $this->props[$name] = $value;
         }
-
-        $this->class = new $className;
     }
 
     /**
@@ -80,16 +103,83 @@ class Component extends VueProp
     }
 
     /**
+     * Get missing props and attributes
+     *
+     * @return array
+     */
+    protected function getMissing()
+    {
+        $missing = [];
+        foreach (array_merge($this->required, $this->required()) as $prop) {
+            if (array_key_exists($prop, $this->props)) {
+                continue;
+            }
+
+            $missing[] = $prop;
+        }
+
+        return $missing;
+    }
+
+    public function required()
+    {
+        // TODO: make better.
+        return [];
+    }
+
+    /**
+     * Check if all required props have been set.
+     *
+     * @return boolean
+     * 
+     * @throws \Exception
+     */
+    public function checkComplete()
+    {
+        if (empty($missing = $this->getMissing())) {
+            return true;
+        }
+
+        throw new Exception(sprintf(
+            'Missing required attributes: [%s] for component "%s"',
+            implode(', ', $missing),
+            $this->name
+        ));
+    }
+
+    /**
      * Get array.
      *
      * @return array
      */
     public function getArray(): array
     {
+        $this->checkComplete();
+
         return [
             'name' => $this->name,
-            'props' => $this->props,
+            'props' => collect($this->props),
         ];
+    }
+
+    /**
+     * Get component name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get props.
+     *
+     * @return array
+     */
+    public function getProps()
+    {
+        return $this->props;
     }
 
     /**
@@ -112,7 +202,7 @@ class Component extends VueProp
         if ($this->class) {
             $message .= sprintf(
                 ' Supported props: %s',
-                implode(', ', $this->class->getProps())
+                implode(', ', $this->available)
             );
         }
 
@@ -140,10 +230,8 @@ class Component extends VueProp
      */
     public function __call($method, $params = [])
     {
-        if ($this->class !== null) {
-            if ($this->class->hasProp($method)) {
-                return $this->prop($method, ...$params);
-            }
+        if (in_array($method, $this->available)) {
+            return $this->prop($method, ...$params);
         }
 
         $this->methodNotFound($method);

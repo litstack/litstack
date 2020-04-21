@@ -2,10 +2,8 @@
 
 namespace Fjord\Crud\Controllers;
 
-use App\Models\Department;
-use App\Models\Employee;
-use Illuminate\Http\Request;
-use Fjord\Fjord\Models\FjordUser;
+use Fjord\Crud\MediaField;
+use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudCreateRequest;
@@ -13,9 +11,10 @@ use Fjord\Crud\Requests\CrudUpdateRequest;
 
 abstract class CrudController
 {
-    use Api\HasIndex,
-        Api\HasRelations,
-        Api\HasBlocks,
+    use Api\CrudHasIndex,
+        Api\CrudHasRelations,
+        Api\CrudHasBlocks,
+        Api\CrudHasMedia,
         Concerns\HasConfig,
         Concerns\HasForm;
 
@@ -37,7 +36,7 @@ abstract class CrudController
     /**
      * Authorize request for operation.
      *
-     * @param \Fjord\Fjord\Models\FjordUser $user
+     * @param \Fjord\User\Models\FjordUser $user
      * @param string $operation
      * @return boolean
      */
@@ -46,7 +45,7 @@ abstract class CrudController
     /**
      * Show Crud index.
      *
-     * @param Request $request
+     * @param CrudReadRequest $request
      * @return View
      */
     public function index(CrudReadRequest $request)
@@ -116,10 +115,14 @@ abstract class CrudController
         $model = $query->findOrFail($id);
         $model->setAttribute('fields', $this->fields());
 
-        // Load eloquentJs blocks.
+        // Load eloquentJs blocks and append media fields.
+        $blocks = [];
         foreach ($this->fields() as $field) {
             if ($field instanceof Blocks) {
-                $model->withRelation($field->id);
+                $blocks[] = $field->id;
+            }
+            if ($field instanceof MediaField) {
+                $model->append($field->id);
             }
         }
 
@@ -136,7 +139,7 @@ abstract class CrudController
         return view('fjord::app')->withComponent('fj-crud-show')
             ->withTitle('Edit ' . $this->config->names['singular'])
             ->withModels([
-                'model' => eloquentJs($model, $this->config->route_prefix),
+                'model' => eloquentJs($model, $this->config->route_prefix, $blocks),
             ])
             ->withProps([
                 'config' => $config,

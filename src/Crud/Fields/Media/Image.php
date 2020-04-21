@@ -1,18 +1,24 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Fjord\Crud\Fields\Media;
 
-use Fjord\Crud\Models\FormField;
-use Fjord\Crud\ManyRelationField;
+use Fjord\Crud\MediaField;
 
-class Image extends ManyRelationField
+class Image extends MediaField
 {
     /**
      * Field Vue component.
      *
      * @var string
      */
-    protected $component = 'fj-form-image';
+    protected $component = 'fj-form-media';
+
+    /**
+     * Is field translatable.
+     *
+     * @var boolean
+     */
+    protected $translatable = true;
 
     /**
      * Required attributes.
@@ -31,7 +37,11 @@ class Image extends ManyRelationField
     protected $available = [
         'title',
         'hint',
-        'icons',
+        'imageSize',
+        'maxFiles',
+        'crop',
+        'ratio',
+        'square'
     ];
 
     /**
@@ -39,22 +49,10 @@ class Image extends ManyRelationField
      *
      * @var array
      */
-    protected $defaults = [];
-
-    /**
-     * Get relation for model.
-     *
-     * @param mixed $model
-     * @param boolean $query
-     * @return mixed
-     */
-    protected function getRelation($model)
-    {
-        if (!$model instanceof FormField) {
-            return parent::getRelation($model);
-        }
-
-        return $model->media()
-            ->where('media.collection_name', $this->id);
-    }
+    protected $defaults = [
+        'imageSize' => 12,
+        'maxFiles' => 5,
+        'crop' => false,
+        'square' => false
+    ];
 }

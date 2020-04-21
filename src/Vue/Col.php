@@ -2,8 +2,13 @@
 
 namespace Fjord\Vue;
 
-class Col extends BaseCol
+use Exception;
+use Fjord\Support\VueProp;
+
+class Col extends VueProp
 {
+    use Concerns\IsTableCol;
+
     /**
      * Create new Col instance.
      *
@@ -17,53 +22,46 @@ class Col extends BaseCol
     }
 
     /**
-     * Set link.
+     * Get attributes
      *
-     * @param string|boolean $link
+     * @return array
+     */
+    public function getArray(): array
+    {
+        $this->checkComplete();
+
+        return $this->attributes;
+    }
+
+    /**
+     * Set value.
+     *
+     * @param string $value
      * @return self
      */
-    public function link($link)
+    public function value(string $value)
     {
-        $this->attributes['link'] = $link;
+        $this->attributes['value'] = $value;
 
         return $this;
     }
 
     /**
-     * Small column.
+     * Check if all required props have been set.
      *
-     * @return self
+     * @return boolean
+     * 
+     * @throws \Exception
      */
-    public function small()
+    public function checkComplete()
     {
-        $this->attributes['reduce'] = true;
+        if (array_key_exists('label', $this->attributes)) {
+            return true;
+        }
 
-        return $this;
-    }
-
-    /**
-     * Set sort_by.
-     *
-     * @param string $key
-     * @return self
-     */
-    public function sortBy(string $key)
-    {
-        $this->attributes['sort_by'] = $key;
-
-        return $this;
-    }
-
-    /**
-     * Set label.
-     *
-     * @param string $label
-     * @return self
-     */
-    public function label(string $label)
-    {
-        $this->attributes['label'] = $label;
-
-        return $this;
+        throw new Exception(sprintf(
+            'Missing required attributes: [%s] for table column.',
+            implode(', ', ['label']),
+        ));
     }
 }

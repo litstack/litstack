@@ -82,7 +82,7 @@ class Fjord
     /**
      * Get authenticated Fjord user.
      *
-     * @return \Fjord\Models\FjordUser $user
+     * @return \Fjord\User\Models\FjordUser $user
      */
     public function user()
     {
@@ -110,7 +110,7 @@ class Fjord
             return false;
         }
 
-        if (!File::exists(app_path('Fjord/Kernel.php'))) {
+        if (!File::exists(base_path('fjord/app/Kernel.php'))) {
             return false;
         }
 

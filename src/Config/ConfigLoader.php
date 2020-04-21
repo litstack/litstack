@@ -11,7 +11,7 @@ class ConfigLoader
      *
      * @var string
      */
-    protected $namespace = "App\Fjord\Config";
+    protected $namespace = "FjordApp\Config";
 
     /**
      * Stack of loaded instances.

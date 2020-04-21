@@ -41,12 +41,14 @@ class CrudForm extends Form
     /**
      * Add Vue component
      *
-     * @param string $name
+     * @param string|\Fjord\Vue\Component $component
      * @return \Fjord\Vue\Component
      */
-    public function component(string $name)
+    public function component($component)
     {
-        $component = new Component($name);
+        if (is_string($component)) {
+            $component = component($component);
+        }
 
         $this->components[] = $component;
 
@@ -69,7 +71,10 @@ class CrudForm extends Form
             return $field->id;
         });
 
-        $card = $this->component('fj-crud-show-form')->prop('fieldIds', $ids);
+        $card = $this->component('fj-card');
+
+        $card->component('fj-crud-show-form')
+            ->prop('fieldIds', $ids);
 
         if ($this->registrar) {
             // Check if all required properties are set.

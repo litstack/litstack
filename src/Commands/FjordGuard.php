@@ -54,7 +54,7 @@ class FjordGuard extends Command
                 "'providers' => [
         'fjord_users' => [
             'driver' => 'eloquent',
-            'model' => Fjord\Fjord\Models\FjordUser::class,
+            'model' => Fjord\User\Models\FjordUser::class,
         ],",
                 $replace
             );

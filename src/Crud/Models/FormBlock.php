@@ -16,7 +16,6 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
 {
     use HasMediaTrait,
         Translatable,
-        CanEloquentJs,
         Concerns\HasConfig,
         Concerns\HasFields,
         Concerns\HasMedia;
@@ -59,7 +58,11 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
      */
     public function getConfigKey()
     {
-        return $this->model->getConfigKey();
+        if ($this->model instanceof FormField) {
+            return $this->model->getConfigKey();
+        }
+
+        return "crud." . lcfirst(class_basename(get_class($this->model)));
     }
 
     /**

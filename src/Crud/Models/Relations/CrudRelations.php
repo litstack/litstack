@@ -15,9 +15,30 @@ class CrudRelations extends ServiceProvider
      */
     public function register()
     {
+        $this->media();
         $this->blocks();
         $this->manyRelation();
         $this->oneRelation();
+    }
+
+    /**
+     * Media macros.
+     *
+     * @return void
+     */
+    public function media()
+    {
+        Builder::macro('oneMedia', function (string $fieldId) {
+            return $this->getModel()
+                ->morphOne(config('medialibrary.media_model'), 'model')
+                ->where('collection_name', $fieldId);
+        });
+
+        Builder::macro('manyMedia', function (string $fieldId) {
+            return $this->getModel()
+                ->morphMany(config('medialibrary.media_model'), 'model')
+                ->where('collection_name', $fieldId);
+        });
     }
 
     /**
@@ -27,15 +48,15 @@ class CrudRelations extends ServiceProvider
      */
     public function blocks()
     {
-        Builder::macro('blocks', function ($field_id) {
+        Builder::macro('blocks', function ($fieldId = null) {
             $model = $this->getModel();
 
             $relation = $model->morphMany(FormBlock::class, 'model')
                 ->with('translations')
                 ->orderBy('order_column');
 
-            if ($field_id) {
-                $relation->where('field_id', $field_id);
+            if ($fieldId) {
+                $relation->where('field_id', $fieldId);
             }
 
             return $relation;

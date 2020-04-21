@@ -2,21 +2,19 @@
 
 namespace Fjord\Crud\Controllers;
 
-use Illuminate\Support\Str;
 use Fjord\TrackEdits\FormEdit;
 use Fjord\Crud\Models\FormField;
-use Fjord\Fjord\Models\FjordUser;
+use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Request;
 use Fjord\Crud\Requests\FormReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 use Fjord\Crud\Requests\FormUpdateRequest;
 
 abstract class FormController
 {
-    use Api\HasRelations,
-        Api\HasBlocks,
+    use Api\CrudHasRelations,
+        Api\CrudHasBlocks,
         Concerns\HasConfig,
         Concerns\HasForm;
 
@@ -121,6 +119,7 @@ abstract class FormController
     protected function initializeFields($config)
     {
         $fields = [];
+        $blocks = [];
 
         foreach ($this->fields() as $field) {
             if (!$field->authorized) {
@@ -133,12 +132,12 @@ abstract class FormController
             )->append('last_edit');
 
             if ($field instanceof Blocks) {
-                $formField->withRelation($field->id);
+                $blocks[] = $field->id;
             }
 
             $fields[] = $formField;
         }
 
-        return eloquentJs(collect($fields), $this->config->route_prefix);
+        return eloquentJs(collect($fields), $this->config->route_prefix, $blocks);
     }
 }

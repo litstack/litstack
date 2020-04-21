@@ -18,7 +18,7 @@ class CrudFormConfigFactory extends ConfigFactory
      */
     public function form(ConfigHandler $config, Closure $method)
     {
-        $form = new CrudForm($config);
+        $form = new CrudForm($config->model);
 
         $method($form);
 

@@ -3,6 +3,11 @@
     "description": "Fjord is a multilanguage admin-panel/cms scaffolding package that helps you creating CRUD in seconds via Artisan-commands. It also lets you manage the \"static\" content of each of your websites pages (Headlines, Text, Images), as well repetitive mixed contents you define. Generating content as well as passing it to your views and retrieving it is super simple.",
     "version": "0.0.1",
     "main": "./resources/js/index.js",
+    "config": {
+        "exportAliases": {
+            "mix": "./resources/js/mix.js"
+        }
+    },
     "keywords": [
         "fjord",
         "cms",
@@ -13,11 +18,7 @@
         "Lennart Carstens-Behrens"
     ],
     "scripts": {
-        "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch": "npm run development -- --watch",
-        "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "prepublish": "generate-export-aliases"
     },
     "license": "MIT",
     "devDependencies": {
@@ -50,7 +51,6 @@
         "bootstrap-vue": "^2.9.0",
         "collect.js": "^4.20.3",
         "cropperjs": "^1.5.6",
-        "fjord-permissions": "file:../fjord-permissions",
         "flag-icon-css": "^3.4.6",
         "fs": "0.0.1-security",
         "highlight.js": "^9.18.1",
@@ -70,6 +70,7 @@
         "vue2-dropzone": "^3.5.9",
         "vuedraggable": "^2.23.2",
         "vuex": "^3.1.3",
-        "zxcvbn": "^4.4.2"
+        "zxcvbn": "^4.4.2",
+        "fjord-permissions": "file:../fjord-permissions"
     }
 }

@@ -2,20 +2,26 @@
 
 namespace Fjord\User\Controllers;
 
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use Fjord\Fjord\Models\FjordUser;
-use Fjord\User\Requests\UpdateUserRoleRequest;
-use Fjord\User\Requests\IndexFjordUserRequest;
 use Fjord\Support\IndexTable;
-use Fjord\Support\Facades\Package;
+use Fjord\User\Models\FjordUser;
+use Fjord\Config\Traits\HasIndex;
+use Illuminate\Routing\Controller;
+use Spatie\Permission\Models\Role;
+use Fjord\User\Requests\IndexFjordUserRequest;
+use Fjord\User\Requests\UpdateUserRoleRequest;
 
 class FjordUserController extends Controller
 {
+    /**
+     * Show user index.
+     *
+     * @param IndexFjordUserRequest $request
+     * @return void
+     */
     public function showIndex(IndexFjordUserRequest $request)
     {
-        $config = Package::config('aw-studio/fjord', 'users.table');
+        $config = fjord()->config('user.user_index')->get(HasIndex::class);
 
         return view('fjord::app')->withComponent('fj-users')
             ->withTitle('Users')

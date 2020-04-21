@@ -15,6 +15,7 @@ use Fjord\Crud\Fields\Datetime;
 use Fjord\Crud\Fields\Textarea;
 use Fjord\Crud\Models\FormField;
 use Fjord\Crud\Fields\Checkboxes;
+use Fjord\Crud\Fields\Media\Image;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Crud\Fields\Relations\HasOne;
 use Fjord\Crud\Fields\Relations\HasMany;
@@ -48,6 +49,7 @@ class Form extends VueProp
         'text' => Textarea::class,
         'wysiwyg' => Wysiwyg::class,
         'blocks' => Blocks::class,
+        'image' => Image::class,
         'oneRelation' => OneRelation::class,
         'manyRelation' => ManyRelation::class,
     ];
@@ -66,13 +68,6 @@ class Form extends VueProp
         \Illuminate\Database\Eloquent\Relations\HasMany::class => HasMany::class,
         \Illuminate\Database\Eloquent\Relations\HasOne::class => HasOne::class,
     ];
-
-    /**
-     * Config instance.
-     *
-     * @var string
-     */
-    protected $config;
 
     /**
      * Model class.
@@ -99,12 +94,11 @@ class Form extends VueProp
     /**
      * Create new Form instance.
      *
-     * @param CrudConfig|FormConfig $config
+     * @param string $model
      */
-    public function __construct($config)
+    public function __construct(string $model)
     {
-        $this->config = $config;
-        $this->model = $config->model;
+        $this->model = $model;
 
         $this->registeredFields = collect([]);
     }

@@ -48,7 +48,7 @@ export default {
             type: String
         },
         back: {
-            type: String
+            type: [String, Boolean]
         },
         backText: {
             type: String

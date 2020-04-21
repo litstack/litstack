@@ -2,13 +2,17 @@
 
 namespace Fjord;
 
+use Fjord\Config\Traits\HasIndex;
 use Fjord\Crud\Config\CrudConfig;
 use Fjord\Application\Application;
 use Fjord\Crud\Config\Traits\HasCrudForm;
 use Fjord\User\Components\UsersComponent;
+use Fjord\Vue\Components\FjCardComponent;
 use Fjord\Crud\Config\Traits\HasCrudIndex;
-use Fjord\Crud\Vue\Components\CrudShowComponent;
-use Fjord\Crud\Vue\Components\CrudIndexComponent;
+use Fjord\Crud\Components\CrudShowComponent;
+use Fjord\Crud\Components\CrudIndexComponent;
+use Fjord\Config\Factories\IndexConfigFactory;
+use Fjord\Vue\Components\Index\ColImageComponent;
 use Fjord\Crud\Config\Factories\CrudConfigFactory;
 use Fjord\Application\Package\FjordPackage as Package;
 use Fjord\Crud\Config\Factories\CrudFormConfigFactory;
@@ -52,9 +56,14 @@ class FjordPackage extends Package
      * @var array
      */
     protected $components = [
+        // Root
         'fj-users' => UsersComponent::class,
         'fj-crud-index' => CrudIndexComponent::class,
         'fj-crud-show' => CrudShowComponent::class,
+
+        // Other
+        'fj-card' => FjCardComponent::class,
+        'fj-col-image' => ColImageComponent::class,
     ];
 
     /**
@@ -63,7 +72,13 @@ class FjordPackage extends Package
      * @var array
      */
     protected $configFactories = [
+        // Main
+        HasIndex::class => IndexConfigFactory::class,
+
+        // Navigation
         NavigationConfig::class => NavigationConfigFactory::class,
+
+        // Crud
         CrudConfig::class => CrudConfigFactory::class,
         HasCrudForm::class => CrudFormConfigFactory::class,
         HasCrudIndex::class => CrudIndexConfigFactory::class,

@@ -3,6 +3,7 @@
 namespace Fjord\Vue\Crud;
 
 use Fjord\Vue\Table;
+use Fjord\Vue\TableComponent;
 
 class CrudTable extends Table
 {
@@ -31,12 +32,9 @@ class CrudTable extends Table
      */
     public function col(string $label = '')
     {
-        $col = parent::col();
+        $col = parent::col($label);
 
-        $route_prefix = $this->config->routePrefix();
-
-        // Default link.
-        $col->link("{$route_prefix}/{id}/edit");
+        $col->link($this->defaultLink());
 
         return $col;
     }
@@ -49,10 +47,18 @@ class CrudTable extends Table
      */
     public function component(string $component)
     {
-        $col = new CrudTableComponent($component);
+        $component = parent::component($component);
 
-        $this->cols[] = $col;
+        //$component->link($this->defaultLink());
 
-        return $col;
+        return $component;
+    }
+
+    public function defaultLink()
+    {
+        $route_prefix = $this->config->routePrefix();
+
+        // Default link.
+        return "{$route_prefix}/{id}/edit";
     }
 }

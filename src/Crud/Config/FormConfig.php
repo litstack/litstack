@@ -66,9 +66,11 @@ abstract class FormConfig
 
     public function permissions()
     {
+        $user = fjord_user();
+        $controller = new $this->controller;
         return [
-            'read' => true,
-            'update' => true,
+            'read' => $controller->authorize($user, 'read'),
+            'update' => $controller->authorize($user, 'update'),
         ];
     }
 

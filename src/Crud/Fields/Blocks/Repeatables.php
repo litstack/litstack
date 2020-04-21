@@ -4,10 +4,10 @@ namespace Fjord\Crud\Fields\Blocks;
 
 use Closure;
 use Fjord\Crud\Form;
+use Fjord\Support\VueProp;
 use Fjord\Crud\Models\FormBlock;
-use Fjord\Application\Config\ConfigItem;
 
-class Repeatables extends ConfigItem
+class Repeatables extends VueProp
 {
     /**
      * Registered forms.
@@ -39,7 +39,7 @@ class Repeatables extends ConfigItem
      *
      * @return array
      */
-    public function toArray()
+    public function getArray(): array
     {
         $array = $this->forms;
 

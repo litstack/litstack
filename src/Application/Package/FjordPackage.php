@@ -189,6 +189,16 @@ abstract class FjordPackage
     }
 
     /**
+     * Get components.
+     * 
+     * @return array $commands
+     */
+    public function components()
+    {
+        return $this->components;
+    }
+
+    /**
      * Get list of extensions for other packages.
      *
      * @return array $extensions
@@ -196,16 +206,6 @@ abstract class FjordPackage
     public function extensions()
     {
         return $this->extensions;
-    }
-
-    /**
-     * Get components.
-     * 
-     * @return array $components
-     */
-    public function getComponents()
-    {
-        return $this->components;
     }
 
     /**

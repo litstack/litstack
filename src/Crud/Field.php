@@ -222,7 +222,7 @@ class Field extends VueProp
      * @param string|int|closure $value
      * @return self
      */
-    public function setAttribute(string $name, $value)
+    public function setAttribute(string $name, $value = true)
     {
         if ($value instanceof Closure) {
             $value = Closure::bind($value, $this)();

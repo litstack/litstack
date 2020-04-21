@@ -3,6 +3,7 @@
 namespace Fjord\Crud\Controllers\Concerns;
 
 use Illuminate\Support\Facades\Request;
+use Fjord\Crud\Models\Traits\TrackEdits;
 
 trait HasConfig
 {
@@ -20,7 +21,13 @@ trait HasConfig
      */
     public function query()
     {
-        return $this->config->query;
+        $query = $this->config->query;
+
+        if (in_array(TrackEdits::class, class_uses(new $this->model))) {
+            $query->with('last_edit');
+        }
+
+        return $query;
     }
 
     /**

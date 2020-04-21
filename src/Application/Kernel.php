@@ -20,14 +20,12 @@ class Kernel
      * @var array
      */
     protected $bootstrappers = [
+        Bootstrap\RegisterSingletons::class,
         Bootstrap\BootstrapTranslator::class,
         Bootstrap\DiscoverPackages::class,
-        Bootstrap\RegisterPackageProviders::class,
-        Bootstrap\RegisterPackageCommands::class,
         Bootstrap\RegisterConfigFactories::class,
-        Bootstrap\RegisterPackageExtensions::class,
         Bootstrap\BootstrapVueApplication::class,
-        Bootstrap\RegisterSingletons::class,
+        Bootstrap\RegisterPackages::class,
     ];
 
     /**

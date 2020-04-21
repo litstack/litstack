@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Fjord\Form\DummyNamespace;
 
-use Fjord\Fjord\Models\FjordUser;
+use Fjord\User\Models\FjordUser;
 use Fjord\Form\Controllers\FormController;
 
 class DummyClassname extends FormController

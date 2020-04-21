@@ -6,12 +6,32 @@ use Illuminate\Http\Request;
 
 class IndexTable
 {
+    /**
+     * Query builder
+     *
+     * @var \Illuminate\Database\Eloquent\Builder
+     */
     protected $query;
 
+    /**
+     * Request
+     *
+     * @var Request
+     */
     protected $request;
 
+    /**
+     * Only.
+     *
+     * @var array
+     */
     protected $only = [];
 
+    /**
+     * Except.
+     *
+     * @var array
+     */
     protected $except = [];
 
     public function __construct($query, Request $request)
@@ -20,11 +40,24 @@ class IndexTable
         $this->request = $request;
     }
 
+    /**
+     * Delete selected items.
+     *
+     * @param string $class
+     * @param Request $request
+     * @return void
+     */
     public static function deleteSelected($class, Request $request)
     {
         $class::whereIn('id', $request->ids)->delete();
     }
 
+    /**
+     * Except.
+     *
+     * @param array $except
+     * @return void
+     */
     public function except(array $except)
     {
         $this->except = $except;
@@ -114,29 +147,23 @@ class IndexTable
             $order = last(explode('.', $this->request->sort_by));
         }
 
-        // TODO: Sortable for eager
-        // Order for eager keys
-        /*
-        $eagerClasses = $this->getEagerClasses();
-        $eager = array_keys($eagerClasses);
-        if(in_array($key, $eager)){
+        // Order for eager loads
+        foreach ($this->query->getEagerLoads() as $eager => $closure) {
+            if ($key != $eager) {
+                continue;
+            }
 
-            // get the table names of the related models
-            $foreign_table = with(new $eagerClasses[$key])->getTable();
-            $table = with(new $this->model)->getTable();
+            $model = $this->query->getModel();
+            $table = $model->getTable();
+            $foreignTable = $model->$eager()->getRelated()->getTable();
 
-            // join the related table for ordering by a foreign column
-            $query->leftJoin($foreign_table, $foreign_table . '.id', '=', $table . '.' . rtrim($foreign_table, 's') . '_id')
-                  ->select($table . '.*', $foreign_table . '.' . explode('.', $request->sort_by)[1] . ' as eager_order_column' )
-                  ->orderBy($foreign_table.'.'.explode('.', $request->sort_by)[1], $order);
-
-        } else {
-        */
-        // Order
-        $this->query->orderBy($key, $order);
-        /*
+            $this->query->leftJoin($foreignTable, $foreignTable . '.id', '=', $table . '.' . rtrim($foreignTable, 's') . '_id')
+                ->select($table . '.*', $foreignTable . '.' . explode('.', $this->request->sort_by)[1] . ' as eager_order_column')
+                ->orderBy($foreignTable . '.' . explode('.', $this->request->sort_by)[1], $order);
+            return;
         }
-        */
+
+        $this->query->orderBy($key, $order);
     }
 
     protected function applyPaginationToIndex()

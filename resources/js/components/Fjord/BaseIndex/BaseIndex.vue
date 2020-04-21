@@ -25,9 +25,11 @@
                         <template v-slot:append>
                             <fj-base-index-table-filter
                                 :filter="filter"
+                                v-if="Object.keys(filter).length !== 0"
                                 @onFilterChange="filterChanged"/>
                             <fj-base-index-table-sort
                                 :sortBy="sortBy"
+                                v-if="Object.keys(sortBy).length !== 0"
                                 :sortByDefault="sortByDefault"
                                 @sort="sort"/>
                         </template>

@@ -4,7 +4,7 @@ namespace Fjord\Commands;
 
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
-use Fjord\Filesystem\StubBuilder;
+use Fjord\Support\StubBuilder;
 use Illuminate\Support\Facades\File;
 
 class FjordForm extends Command

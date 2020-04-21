@@ -3,7 +3,7 @@
 namespace Fjord\Commands;
 
 use Illuminate\Console\Command;
-use Fjord\Fjord\Models\FjordUser as User;
+use Fjord\User\Models\FjordUser as User;
 use Spatie\Permission\Models\Role;
 
 class FjordUser extends Command

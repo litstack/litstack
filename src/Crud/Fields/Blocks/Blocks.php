@@ -22,7 +22,6 @@ class Blocks extends ManyRelationField
      */
     protected $required = [
         'title',
-        'options',
         'repeatables'
     ];
 
@@ -33,7 +32,6 @@ class Blocks extends ManyRelationField
      */
     protected $available = [
         'title',
-        'options',
         'hint',
         'repeatables'
     ];
@@ -76,5 +74,17 @@ class Blocks extends ManyRelationField
         }
 
         return $model->blocks($this->id);
+    }
+
+    /**
+     * Set defaults.
+     *
+     * @return void
+     */
+    public function setDefaults()
+    {
+        parent::setDefaults();
+
+        $this->attributes['orderColumn'] = 'order_column';
     }
 }

@@ -10,7 +10,7 @@
             <b-col>
                 <fj-index-table
                     ref="indexTable"
-                    :cols="config.cols"
+                    :cols="config.index"
                     :items="users"
                     :count="count"
                     :loadItems="loadUsers"
@@ -33,15 +33,15 @@ export default {
     props: {
         usersCount: {
             type: Number,
-            required: true,
+            required: true
         },
-        config: {},
+        config: {}
     },
     data() {
         return {
             users: [],
             count: 0,
-            data: {},
+            data: {}
         };
     },
     beforeMount() {
@@ -59,7 +59,7 @@ export default {
 
         userCreated(user) {
             this.reload();
-        },
-    },
+        }
+    }
 };
 </script>

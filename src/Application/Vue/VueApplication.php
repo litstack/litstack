@@ -3,6 +3,7 @@
 namespace Fjord\Application\Vue;
 
 use Exception;
+use Fjord\Vue\Component;
 use Illuminate\View\View;
 use Fjord\Application\Application;
 
@@ -122,8 +123,14 @@ class VueApplication
                 continue;
             }
 
-            if (!$this->component->executeExtension($extension['name']) && $extension['name'] != '') {
-                continue;
+            // Resolve extension in component.
+            if (method_exists($this->component, 'resolveExtension')) {
+                if (
+                    !$this->component->resolveExtension($extension['name'])
+                    && $extension['name'] != ''
+                ) {
+                    continue;
+                }
             }
 
             $this->executeExtension(
@@ -144,6 +151,8 @@ class VueApplication
             return;
         }
 
+
+
         $extension->handle(
             $this->component
         );
@@ -152,21 +161,16 @@ class VueApplication
     /**
      * Initialize component class for the given vue component.
      * 
-     * @var string $component
+     * @var string|Component $component
      */
-    protected function initializeComponent(string $component)
+    protected function initializeComponent($component)
     {
-        foreach ($this->app->get('packages')->all() as $package) {
-            $components = $package->getComponents();
-            foreach ($components as $name => $class) {
-                if ($name != $component) {
-                    continue;
-                }
-
-                $this->component = new $class($component, $this->props['props'] ?? []);
-                return;
-            }
+        if ($component instanceof Component) {
+            return $this->component = $component->props($this->props['props']);
         }
+
+        $this->component = component($component)
+            ->props($this->props['props']);
     }
 
     /**

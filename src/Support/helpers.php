@@ -1,5 +1,20 @@
 <?php
 
+if (!function_exists('component')) {
+    function component(string $name, $fallback = null)
+    {
+        if (fjord()->get('components')->isRegistered($name)) {
+            return fjord()->get('components')->component($name);
+        }
+
+        if ($fallback) {
+            return new $fallback($name);
+        }
+
+        return new \Fjord\Vue\Component($name);
+    }
+}
+
 if (!function_exists('is_closure')) {
     function is_closure($t)
     {
@@ -52,7 +67,7 @@ if (!function_exists('__f_')) {
 if (!function_exists('fjord_config_path')) {
     function fjord_config_path($path = '')
     {
-        return app_path('Fjord/Config' . ($path ? DIRECTORY_SEPARATOR . $path : $path));
+        return base_path('fjord/app/Config' . ($path ? DIRECTORY_SEPARATOR . $path : $path));
     }
 }
 
@@ -91,17 +106,10 @@ if (!function_exists('fjord_app')) {
     }
 }
 
-if (!function_exists('nested_collect')) {
-    function nested_collect(array $array)
-    {
-        return new \Fjord\Support\NestedCollection($array);
-    }
-}
-
 if (!function_exists('eloquentJs')) {
-    function eloquentJs($model, string $route, $type = 'fjord')
+    function eloquentJs($model, string $route, array $with = [], $type = 'fjord')
     {
-        return (new Fjord\EloquentJs\EloquentJs($model, $route, $type))->toArray();
+        return (new Fjord\Crud\EloquentJs\EloquentJs($model, $route, $with, $type))->toArray();
     }
 }
 

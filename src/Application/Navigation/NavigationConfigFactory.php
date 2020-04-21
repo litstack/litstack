@@ -44,6 +44,6 @@ class NavigationConfigFactory extends ConfigFactory
 
         $method($nav);
 
-        return $nav;
+        return $nav->toArray();
     }
 }

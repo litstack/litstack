@@ -87,7 +87,7 @@ export default {
             };
             try {
                 let response = await axios.put(
-                    `${this.form.config.route}/${this.model.id}/relation/${this.field.id}/order`,
+                    `${this.form.config.route_prefix}/${this.model.id}/${this.field.id}/order`,
                     payload
                 );
             } catch (e) {
