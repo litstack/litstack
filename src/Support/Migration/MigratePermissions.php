@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Migration;
+namespace Fjord\Support\Migration;
 
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
