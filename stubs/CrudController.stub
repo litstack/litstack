@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Fjord\Crud;
+namespace FjordApp\Controllers\Crud;
 
 use Fjord\User\Models\FjordUser;
-use Fjord\Form\Controllers\CrudController;
+use Fjord\Crud\Controllers\CrudController;
 
 class DummyClassname extends CrudController
 {

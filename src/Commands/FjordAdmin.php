@@ -51,8 +51,10 @@ class FjordAdmin extends Command
         $user = FjordUser::firstOrCreate([
             'name' => $name,
             'email' => $email,
-            'password' => bcrypt($password)
         ]);
+
+        $user->password = bcrypt($password);
+        $user->save();
 
         $user->assignRole('admin');
 

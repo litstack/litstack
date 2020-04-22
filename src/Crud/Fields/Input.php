@@ -39,6 +39,9 @@ class Input extends Field
         'title',
         'placeholder',
         'hint',
+        'type',
+        'prepend',
+        'append'
     ];
 
     /**

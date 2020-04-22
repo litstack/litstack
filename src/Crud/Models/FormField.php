@@ -4,6 +4,7 @@ namespace Fjord\Crud\Models;
 
 use Fjord\Crud\Models\FormEdit;
 use Fjord\EloquentJs\CanEloquentJs;
+use Fjord\Crud\Fields\Blocks\Blocks;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
@@ -45,7 +46,7 @@ class FormField extends Model implements HasMedia, TranslatableContract
      *
      * @var array
      */
-    public $fillable = ['collection', 'form_name', 'field_id', 'value'];
+    public $fillable = ['collection', 'form_name', 'field_id', 'value', 'field_type'];
 
     /**
      * Appends.
@@ -222,42 +223,25 @@ class FormField extends Model implements HasMedia, TranslatableContract
      */
     public function getFieldAttribute()
     {
-        return $this->getAttribute('fields')->first() ?? null;
+        if (!array_key_exists('field_id', $this->attributes)) {
+            return null;
+        }
+
+        $field = $this->config->form->findField($this->field_id);
+
+        $field->local_key = 'value';
+
+        return $field;
     }
 
     /**
-     * Filter fields from config.
+     * Get fields.
      *
-     * @return Field
+     * @return Collection
      */
     public function getFieldsAttribute()
     {
-        if (!array_key_exists('field_id', $this->attributes)) {
-            return collect([]);
-        }
-
-        // Get all registered fields for form.
-        $fields = $this->config->form->getRegisteredFields();
-
-        if (empty($fields)) {
-            return collect([]);
-        }
-
-        // Filter registerd fields for matching field_id.
-        $fields = $fields->filter(function ($field) {
-            return $this->attributes['field_id'] == $field->id;
-        });
-
-        // TODO: Check cases for this method.
-        $fields = $this->getDynamicFieldValues($fields);
-
-        // Set local key for field.
-        $field = $fields->first();
-        if (!$field->isRelation()) {
-            $field->local_key = 'value';
-        }
-
-        return $fields;
+        return collect([$this->field]);
     }
 
     /**

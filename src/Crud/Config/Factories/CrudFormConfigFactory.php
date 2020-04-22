@@ -22,10 +22,6 @@ class CrudFormConfigFactory extends ConfigFactory
 
         $method($form);
 
-        if (!empty($form->getCard())) {
-            $form->card();
-        }
-
         return $form;
     }
 }

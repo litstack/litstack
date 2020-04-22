@@ -41,7 +41,8 @@ class Image extends MediaField
         'maxFiles',
         'crop',
         'ratio',
-        'square'
+        'square',
+        'override'
     ];
 
     /**
@@ -53,6 +54,7 @@ class Image extends MediaField
         'imageSize' => 12,
         'maxFiles' => 5,
         'crop' => false,
-        'square' => false
+        'square' => false,
+        'override' => false
     ];
 }

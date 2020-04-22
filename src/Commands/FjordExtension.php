@@ -18,7 +18,7 @@ class FjordExtension extends GeneratorCommand
      *
      * @var string
      */
-    protected $description = 'This wizard will generate all the files needed for a new crud module';
+    protected $description = 'Create a new extension for any Fjord modules.';
 
     /**
      * The type of class being generated.
@@ -38,6 +38,26 @@ class FjordExtension extends GeneratorCommand
     }
 
     /**
+     * Get the root namespace for the class.
+     *
+     * @return string
+     */
+    protected function rootNamespace()
+    {
+        return 'FjordApp';
+    }
+
+    /**
+     * Get the desired class name from the input.
+     *
+     * @return string
+     */
+    protected function getNameInput()
+    {
+        return trim($this->argument('name') . 'Extension');
+    }
+
+    /**
      * Get the default namespace for the class.
      *
      * @param  string  $rootNamespace
@@ -45,6 +65,18 @@ class FjordExtension extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Fjord\Extensions';
+        return $rootNamespace . '\Extensions';
+    }
+
+    /**
+     * Get the destination class path.
+     *
+     * @param  string  $name
+     * @return string
+     */
+    public function getPath($name)
+    {
+        $name = $this->getNameInput();
+        return base_path("fjord/app/Extensions/{$name}.php");
     }
 }

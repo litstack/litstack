@@ -1,13 +1,5 @@
 <template>
-    <form class="row" style="margin-bottom: -1.5em;">
-        <template v-for="id in fieldIds">
-            <fj-crud-show-form-item
-                v-if="getFieldById(id)"
-                :field="getFieldById(id)"
-                :model="getModelByFieldId(id)"
-            />
-        </template>
-    </form>
+    <fj-crud-show-form-item :field="field" :model="getModel()" />
 </template>
 
 <script>
@@ -25,8 +17,8 @@ export default {
             required: true,
             type: Object
         },
-        fieldIds: {
-            type: Array,
+        field: {
+            type: Object,
             required: true
         },
         title: {
@@ -61,17 +53,9 @@ export default {
                 this.preparedModels = model.items.items;
             }
         },
-        getFieldById(id) {
+        getModel() {
             for (let i in this.preparedModels) {
-                let field = this.preparedModels[i].getFieldById(id);
-                if (field) {
-                    return field;
-                }
-            }
-        },
-        getModelByFieldId(id) {
-            for (let i in this.preparedModels) {
-                let field = this.preparedModels[i].getFieldById(id);
+                let field = this.preparedModels[i].getFieldById(this.field.id);
                 if (field) {
                     return this.preparedModels[i];
                 }

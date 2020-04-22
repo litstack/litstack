@@ -4,7 +4,9 @@
             <ckeditor
                 :editor="editor"
                 :config="editorConfig"
-                :value="model[`${field.id}Model`]"
+                :value="
+                    model[`${field.id}Model`] ? model[`${field.id}Model`] : ''
+                "
                 @input="changed"
             />
         </template>

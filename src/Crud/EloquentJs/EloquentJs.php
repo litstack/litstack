@@ -115,7 +115,7 @@ class EloquentJs extends VueProp
      */
     public function getRoute()
     {
-        $this->route;
+        return $this->route;
     }
 
     /**

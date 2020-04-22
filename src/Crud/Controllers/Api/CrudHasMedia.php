@@ -51,11 +51,23 @@ trait CrudHasMedia
             ->where('collection_name', $field->id)
             ->count();
 
+        if (!$field->override) {
+            if ($mediaCount >= $field->maxFiles) {
+                abort(405);
+            }
+            return;
+        }
+
         if ($mediaCount < $field->maxFiles) {
             return;
         }
 
-        $media = $model->media()->where('collection_name', $field->id)->take($mediaCount - $field->maxFiles + 1)->orderBy('id')->get();
+        $media = $model->media()
+            ->where('collection_name', $field->id)
+            ->take($mediaCount - $field->maxFiles + 1)
+            ->orderBy('id')
+            ->get();
+
         foreach ($media as $m) {
             $m->delete();
         }

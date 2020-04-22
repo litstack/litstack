@@ -4,6 +4,7 @@ namespace Fjord\Crud;
 
 use Closure;
 use Exception;
+use Fjord\Crud\Models\FormField;
 use Fjord\Support\VueProp;
 use Fjord\Exceptions\MethodNotFoundException;
 
@@ -60,7 +61,8 @@ class Field extends VueProp
      */
     protected $available = [
         'readonly',
-        'cols'
+        'cols',
+        'info'
     ];
 
     /**
@@ -70,7 +72,7 @@ class Field extends VueProp
      */
     protected $defaults = [
         'readonly' => false,
-        'cols' => 12
+        'cols' => 12,
     ];
 
     /**
@@ -133,6 +135,16 @@ class Field extends VueProp
     public function transform($value)
     {
         return $value;
+    }
+
+    /**
+     * Is field component.
+     *
+     * @return boolean
+     */
+    public function isComponent()
+    {
+        return false;
     }
 
     /**
@@ -212,7 +224,27 @@ class Field extends VueProp
             $this->attributes[$name] = $value;
         }
 
+        $this->setTranslatable();
+    }
+
+    /**
+     * Translatable.
+     *
+     * @return void
+     */
+    public function setTranslatable()
+    {
+        // Translatable
         $this->attributes['translatable'] = false;
+
+        if (!$this->translatable) {
+            return;
+        }
+        if ($this->model == FormField::class) {
+            return;
+        }
+
+        $this->attributes['translatable'] = is_translatable($this->model);
     }
 
     /**

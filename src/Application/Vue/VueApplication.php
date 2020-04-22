@@ -166,11 +166,13 @@ class VueApplication
     protected function initializeComponent($component)
     {
         if ($component instanceof Component) {
-            return $this->component = $component->props($this->props['props']);
+            $this->component = $component;
+        } else {
+            $this->component = component($component);
         }
 
-        $this->component = component($component)
-            ->props($this->props['props']);
+
+        $this->component->props($this->props['props']);
     }
 
     /**
@@ -191,6 +193,11 @@ class VueApplication
             }
 
             $this->props[$name] = $value;
+        }
+
+        // Default props.
+        if (!array_key_exists('props', $this->props)) {
+            $this->props['props'] = [];
         }
     }
 

@@ -110,7 +110,7 @@ class Fjord
             return false;
         }
 
-        if (!File::exists(base_path('fjord/app/Kernel.php'))) {
+        if (!class_exists(\FjordApp\Kernel::class)) {
             return false;
         }
 
@@ -119,6 +119,8 @@ class Fjord
         } catch (\Exception $e) {
             return false;
         }
+
+        return true;
     }
 
     /**

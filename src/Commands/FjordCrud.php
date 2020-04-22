@@ -92,14 +92,14 @@ class FjordCrud extends Command
         // model has media
         if ($m) {
             $builder->withTraits("use Spatie\MediaLibrary\Models\Media;");
-            $builder->withTraits("use Spatie\MediaLibrary\HasMedia\HasMedia;");
-            $builder->withTraits("use Spatie\MediaLibrary\HasMedia\HasMediaTrait;");
+            $builder->withTraits("use Spatie\MediaLibrary\HasMedia\HasMedia as HasMediaContract;");
+            $builder->withTraits("use Fjord\Crud\Models\Traits\HasMedia;");
 
             $attributeContents = file_get_contents(fjord_path('stubs/CrudModelMediaAttribute.stub'));
             $builder->withGetAttributes($attributeContents);
 
-            $implements[] = 'HasMedia';
-            $uses[] = 'HasMediaTrait';
+            $implements[] = 'HasMediaContract';
+            $uses[] = 'HasMedia';
             $appends[] = 'image';
             $with[] = 'media';
         }
@@ -108,7 +108,7 @@ class FjordCrud extends Command
         if ($s) {
             // if is not translated
             if (!$t) {
-                $builder->withTraits("use Cviebrock\EloquentSluggable\Sluggable;");
+                $builder->withTraits("use Fjord\Crud\Models\Traits\Sluggable;");
 
                 $sluggableContents = file_get_contents(fjord_path('stubs/CrudModelSluggable.stub'));
                 $builder->withSluggable($sluggableContents);
@@ -120,7 +120,7 @@ class FjordCrud extends Command
         // model is translatable
         if ($t) {
             $builder->withTraits("use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;");
-            $builder->withTraits("use Astrotomic\Translatable\Translatable;");
+            $builder->withTraits("use Fjord\Crud\Models\Traits\Translatable;");
             $builder->withVars('public $translatedAttributes' . " = ['title', 'text'];");
 
             $attributeContents = file_get_contents(fjord_path('stubs/CrudModelTranslationAttribute.stub'));
@@ -166,7 +166,7 @@ class FjordCrud extends Command
 
             // if the model is sluggable, add sluggable trait
             if ($s) {
-                $fileContents = str_replace('DummyTraits', "use Cviebrock\EloquentSluggable\Sluggable;\nDummyTraits", $fileContents);
+                $fileContents = str_replace('DummyTraits', "use Fjord\Crud\Models\Traits\Sluggable;\nDummyTraits", $fileContents);
                 $fileContents = str_replace('DummyTraits', "use Illuminate\Database\Eloquent\Builder;\nDummyTraits", $fileContents);
 
                 $sluggableContents = file_get_contents(__DIR__ . '/../../stubs/CrudModelSluggable.stub');
@@ -233,7 +233,7 @@ class FjordCrud extends Command
     {
         $tableName = Str::snake(Str::plural($modelName));
 
-        $controllerPath = app_path('Http/Controllers/Fjord/Crud/' . $modelName . 'Controller.php');
+        $controllerPath = base_path('fjord/app/Controllers/Crud/' . $modelName . 'Controller.php');
 
         $fileContents = file_get_contents(__DIR__ . '/../../stubs/CrudController.stub');
 
@@ -252,7 +252,7 @@ class FjordCrud extends Command
     private function makeConfig($modelName)
     {
         $tableName = Str::snake(Str::plural($modelName));
-        $config = fjord_resource_path('crud/' . $tableName . '.php');
+        $config = base_path('fjord/app/Config/Crud/' . ucfirst($modelName) . 'Config.php');
 
         $fileContents = file_get_contents(__DIR__ . '/../../stubs/CrudConfig.stub');
         $fileContents = str_replace('DummyClassname', $modelName, $fileContents);

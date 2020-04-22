@@ -5,9 +5,10 @@ namespace Fjord;
 use Fjord\Config\Traits\HasIndex;
 use Fjord\Crud\Config\CrudConfig;
 use Fjord\Application\Application;
+use Fjord\Vue\Components\CardComponent;
+use Fjord\Vue\Components\InfoComponent;
 use Fjord\Crud\Config\Traits\HasCrudForm;
 use Fjord\User\Components\UsersComponent;
-use Fjord\Vue\Components\FjCardComponent;
 use Fjord\Crud\Config\Traits\HasCrudIndex;
 use Fjord\Crud\Components\CrudShowComponent;
 use Fjord\Crud\Components\CrudIndexComponent;
@@ -62,7 +63,8 @@ class FjordPackage extends Package
         'fj-crud-show' => CrudShowComponent::class,
 
         // Other
-        'fj-card' => FjCardComponent::class,
+        'fj-card' => CardComponent::class,
+        'fj-info' => InfoComponent::class,
         'fj-col-image' => ColImageComponent::class,
     ];
 

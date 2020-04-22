@@ -8,7 +8,18 @@ class DummyClassname extends Model
 {
     DummyUses
 
+    /**
+     * Timestamps
+     *
+     * @var boolean
+     */
     public $timestamps = false;
+
+    /**
+     * Fillable attributes.
+     *
+     * @var array
+     */
     protected $fillable = ['title'];
 
     DummySluggable

@@ -131,25 +131,4 @@ trait HasFields
 
         return $value['value'] ?? null;
     }
-
-    /**
-     * Call set{id}Field methods to get dymanic values.
-     *
-     * @param Field $fields
-     * @return mixed
-     */
-    protected function getDynamicFieldValues($fields)
-    {
-        foreach ($fields as $key => $field) {
-            $methodName = "set" . ucfirst($field->id) . "Field";
-
-            if (!method_exists($this, $methodName)) {
-                continue;
-            }
-
-            call_user_func_array([$this, $methodName], [$field]);
-        }
-
-        return $fields;
-    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Fjord\Support\Facades\FjordLang;
 use Illuminate\Support\ServiceProvider;
 
 class FjordServiceProvider extends ServiceProvider
@@ -13,7 +14,7 @@ class FjordServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        fjord()->addLangPath(resource_path('lang/'));
+        FjordLang::addPath(base_path('fjord/resources/lang/'));
     }
 
     /**

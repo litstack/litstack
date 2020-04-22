@@ -4,7 +4,7 @@ if ($type == 'crud') {
     Route::get("/", [$controller, "index"])->name('index');
     Route::post("/index", [$controller, "indexTable"])->name('index.items');
     Route::get("/create", [$controller, "create"])->name('create');
-    Route::post("/{id}", [$controller, "store"])->name('store');
+    Route::post("/", [$controller, "store"])->name('store');
     Route::delete("/{id}", [$controller, "destroy"])->name('destroy');
     Route::get("/{id}/edit", [$controller, "edit"])->name('edit');
 } else {

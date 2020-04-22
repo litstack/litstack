@@ -1,5 +1,5 @@
 /**
-     * Append the image column to each query.
+     * Example image field.
      *
      */
     public function getImageAttribute()
@@ -7,6 +7,12 @@
         return $this->getMedia('image');
     }
 
+    /**
+     * Register media conversions.
+     *
+     * @param Media $media
+     * @return void
+     */
     public function registerMediaConversions(Media $media = null)
     {
         foreach (config('fjord.mediaconversions.default') as $key => $value) {

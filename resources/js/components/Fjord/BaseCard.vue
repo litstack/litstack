@@ -1,10 +1,14 @@
 <template>
     <b-col :cols="cols">
         <b-card :title="title">
-            <component
-                :is="component.name"
-                v-bind="{ ...component.props, ...$attrs }"
-            />
+            <b-row>
+                <component
+                    v-for="(c, key) in component"
+                    :key="key"
+                    :is="c.name"
+                    v-bind="{ ...c.props, ...$attrs }"
+                />
+            </b-row>
         </b-card>
     </b-col>
 </template>
@@ -18,11 +22,10 @@ export default {
             required: true
         },
         title: {
-            type: String,
-            required: true
+            type: String
         },
         component: {
-            type: Object,
+            type: Array,
             required: true
         }
     }

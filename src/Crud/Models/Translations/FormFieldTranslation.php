@@ -6,7 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class FormFieldTranslation extends Model
 {
+    /**
+     * Timestamps
+     *
+     * @var boolean
+     */
     public $timestamps = false;
+
+    /**
+     * Fillable attributes
+     *
+     * @var array
+     */
     protected $fillable = ['value'];
 
     /*

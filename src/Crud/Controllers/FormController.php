@@ -2,7 +2,7 @@
 
 namespace Fjord\Crud\Controllers;
 
-use Fjord\TrackEdits\FormEdit;
+use Fjord\Crud\Models\FormEdit;
 use Fjord\Crud\Models\FormField;
 use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Fields\Blocks\Blocks;
@@ -15,6 +15,7 @@ abstract class FormController
 {
     use Api\CrudHasRelations,
         Api\CrudHasBlocks,
+        Api\CrudHasMedia,
         Concerns\HasConfig,
         Concerns\HasForm;
 
@@ -111,9 +112,9 @@ abstract class FormController
     }
 
     /**
-     * Initilaly load or create FormFields.
+     * Initialy load or create FormFields.
      *
-     * @param [type] $config
+     * @param mixed $config
      * @return void
      */
     protected function initializeFields($config)
@@ -122,14 +123,27 @@ abstract class FormController
         $blocks = [];
 
         foreach ($this->fields() as $field) {
+            if ($field->isComponent()) {
+                continue;
+            }
+
             if (!$field->authorized) {
                 continue;
             }
 
             $formField = FormField::firstOrCreate(
-                ['collection' => $config->collection, 'form_name' => $config->formName, 'field_id' => $field->id],
-                ['content' => $field->default ?? null]
+                [
+                    'collection' => $config->collection,
+                    'form_name' => $config->formName,
+                    'field_id' => $field->id
+                ],
+                [
+                    'value' => $field->default ?? null,
+                    'field_type' => get_class($field)
+                ]
             )->append('last_edit');
+
+            $field->local_key = 'value';
 
             if ($field instanceof Blocks) {
                 $blocks[] = $field->id;

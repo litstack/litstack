@@ -13,6 +13,7 @@ use Fjord\Crud\Fields\Boolean;
 use Fjord\Crud\Fields\Wysiwyg;
 use Fjord\Crud\Fields\Datetime;
 use Fjord\Crud\Fields\Textarea;
+use Fjord\Crud\Fields\Component;
 use Fjord\Crud\Models\FormField;
 use Fjord\Crud\Fields\Checkboxes;
 use Fjord\Crud\Fields\Media\Image;
@@ -50,6 +51,7 @@ class Form extends VueProp
         'wysiwyg' => Wysiwyg::class,
         'blocks' => Blocks::class,
         'image' => Image::class,
+        'component' => Component::class,
         'oneRelation' => OneRelation::class,
         'manyRelation' => ManyRelation::class,
     ];
@@ -156,13 +158,14 @@ class Form extends VueProp
     }
 
     /**
-     * Get current card.
+     * Add Vue component field.
      *
-     * @return array $card
+     * @param string $component
+     * @return \Fjord\Vue\Component
      */
-    public function getCard()
+    public function component(string $component)
     {
-        return $this->card;
+        return $this->registerField($this->fields['component'], $component);
     }
 
     /**
@@ -184,6 +187,10 @@ class Form extends VueProp
     public function findField(string $fieldId)
     {
         foreach ($this->registeredFields as $field) {
+            if ($field->isComponent()) {
+                continue;
+            }
+
             if ($field->id == $fieldId) {
                 return $field;
             }

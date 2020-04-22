@@ -1,12 +1,13 @@
 <template>
     <b-col :cols="fieldCols">
         <div :class="`pb-4 fjord-form fj-form-item-${field.id}`">
-            <h6 class="mb-0">
+            <h6 class="mb-0" v-if="field.title">
                 <label :for="field.id">{{ field.title }}</label>
                 <b-badge v-if="field.translatable" variant="primary">
                     <small>{{ language }}</small>
                 </b-badge>
             </h6>
+            <p class="text-secondary" v-if="field.info">{{ field.info }}</p>
             <div
                 :class="{
                     'input-group':

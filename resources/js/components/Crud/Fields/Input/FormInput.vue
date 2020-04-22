@@ -8,7 +8,7 @@
                 class="form-control"
                 :value="model[`${field.id}Model`]"
                 :placeholder="field.placeholder"
-                :type="field.input_type"
+                :type="field.type"
                 :maxlength="field.max"
                 :required="field.required"
                 v-bind:readonly="readonly"

@@ -51,7 +51,11 @@ let FormMixin = Base =>
                         fallback_locale
                     ];
                 }
-                if (this.translatable && !this.isFjordModel()) {
+                if (
+                    this.translatable &&
+                    !this.isFjordModel() &&
+                    !field.translatable
+                ) {
                     attributes[field.local_key] = this.attributes[
                         field.local_key
                     ];
@@ -125,15 +129,6 @@ let FormMixin = Base =>
             let lng = store.state.config.language;
             let field = this.getFieldById(id);
 
-            if (field.type == 'relation' && field.many == true) {
-                // TODO: return relations
-                return;
-            }
-
-            if (field.type == 'block') {
-                return;
-            }
-
             // Form field is translatable.
             if (field.translatable) {
                 // set not existing object keys
@@ -145,7 +140,6 @@ let FormMixin = Base =>
                     attributes[lng][field.local_key] = null;
                 }
             }
-
             // Model is translatable.
             if (this.translatable) {
                 // set not existing object keys
@@ -211,6 +205,9 @@ let FormMixin = Base =>
 
         getFieldById(id) {
             for (let i = 0; i < this.fields.length; i++) {
+                if ('comp' in this.fields[i]) {
+                    continue;
+                }
                 if (this.fields[i].id == id) {
                     return this.fields[i];
                 }

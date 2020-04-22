@@ -4,6 +4,7 @@
         :readonly="readonly"
         :field="field"
         :model="model"
+        v-bind="field.props ? field.props : {}"
         @changed="changed(field, model)"
     />
 </template>
@@ -16,8 +17,7 @@ export default {
     name: 'CrudShowFormItem',
     props: {
         model: {
-            required: true,
-            type: Object
+            required: true
         },
         field: {
             required: true,

@@ -191,7 +191,7 @@ class Component extends VueProp
      *
      * @throws \Fjord\Exceptions\MethodNotFoundException
      */
-    protected function methodNotFound($method)
+    public function methodNotFound($method)
     {
         $message = sprintf(
             '"%s" is not a supported prop for the Vue component "%s". Supported methods: %s.',

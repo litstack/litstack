@@ -20,48 +20,19 @@ class FjordExtend extends Command
      *
      * @var string
      */
-    protected $description = 'This wizard will generate all the files needed for a new crud module';
+    protected $description = 'This will install npm packages fjord and fjord-permissions and extend your webpack.mix.js to extend your Fjord Application.';
 
     public function handle()
     {
         $this->runNpmInstall();
-        $this->publishJs();
         $this->extendWebpack();
-        $this->makeExampleRoute();
-        $this->makeExampleController();
-    }
-
-    protected function makeController()
-    {
-        File::copy(
-            fjord_path('publish/extend/controller/ExampleController.php'),
-            app_path('Http/Controllers/Fjord/ExampleController.php')
-        );
-    }
-
-    protected function makeRoute()
-    {
-        File::append(
-            base_path('routes/fjord.php'),
-            "\nRoute::get('/example', \App\Http\Controllers\Fjord\ExampleController::class)->name('example');"
-        );
     }
 
     protected function runNpmInstall()
     {
+        $this->line("build npm packages");
         $base = base_path();
         shell_exec("cd {$base}; npm i vendor/aw-studio/fjord vendor/aw-studio/fjord-permissions");
-    }
-
-    protected function publishJs()
-    {
-        if (File::exists(resource_path('js/fjord'))) {
-            return;
-        }
-
-        $this->line('publish fjord js app');
-
-        File::copyDirectory(fjord_path('publish/extend/js/fjord'), resource_path('js/fjord'));
     }
 
     protected function extendWebpack()
@@ -74,6 +45,6 @@ class FjordExtend extends Command
 
         $this->line("build webpack.mix");
 
-        File::append(base_path('webpack.mix.js'), "\n" . $extension);
+        File::prepend(base_path('webpack.mix.js'), "\n" . $extension);
     }
 }
