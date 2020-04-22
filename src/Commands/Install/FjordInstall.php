@@ -81,10 +81,7 @@ class FjordInstall extends Command
         $user = FjordUser::firstOrCreate([
             'name' => 'admin',
             'email' => 'admin@admin.com',
-        ]);
-
-        $user->password = bcrypt('secret');
-        $user->save();
+        ], ['password' => bcrypt('secret')]);
 
         $user->assignRole('admin');
 
