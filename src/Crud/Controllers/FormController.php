@@ -7,6 +7,7 @@ use Fjord\Crud\Models\FormField;
 use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Illuminate\Support\Facades\Route;
+use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\FormReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 use Fjord\Crud\Requests\FormUpdateRequest;
@@ -84,7 +85,7 @@ abstract class FormController
      * @param FormReadRequest $request
      * @return View $view
      */
-    public function edit(CrudUpdateRequest $request)
+    public function edit(CrudReadRequest $request)
     {
         // Getting collection and formName from route.
         $routeSplit = explode('.', Route::currentRouteName());

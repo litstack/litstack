@@ -48,8 +48,8 @@ trait HasIndex
     public function sortBy()
     {
         return [
-            'id.desc' => 'New first',
-            'id.asc' => 'Old first',
+            'id.desc' => __f('fj.sort_new_to_old'),
+            'id.asc' => __f('fj.sort_old_to_new'),
         ];
     }
 
