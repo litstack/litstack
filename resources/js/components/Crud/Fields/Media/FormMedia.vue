@@ -141,11 +141,8 @@ export default {
     },
     beforeMount() {
         this.media = this.model[this.field.id] || [];
-        let id =
-            this.model.route == 'form_blocks'
-                ? this.model.model_id
-                : this.model.id;
-        this.dropzoneOptions.url = `${this.baseURL}${this.form.config.route_prefix}/${id}/media`;
+
+        this.dropzoneOptions.url = this.getUploadUrl();
 
         this.images = this.media;
         // TODO: FIX FOR BLOCK
@@ -171,6 +168,12 @@ export default {
         }
     },
     methods: {
+        getUploadUrl() {
+            if (this.model.model != 'Fjord\\Crud\\Models\\FormBlock') {
+                return `${this.baseURL}${this.form.config.route_prefix}/${this.model.id}/media`;
+            }
+            return `${this.baseURL}${this.form.config.route_prefix}/${this.model.model_id}/blocks/${this.model.id}/media`;
+        },
         getCustomProperty(image, key) {
             if (!this.field.translatable) {
                 return image.custom_properties[key];

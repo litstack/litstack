@@ -24,7 +24,7 @@
                     v-b-modal="modalId"
                     v-if="!readonly"
                 >
-                    Select {{ field.title }}
+                    {{ $t('fj.select_item', { model: field.title }) }}
                 </b-button>
             </div>
 

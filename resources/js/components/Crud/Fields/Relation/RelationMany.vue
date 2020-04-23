@@ -25,7 +25,7 @@
                     v-b-modal="modalId"
                     v-if="!field.readonly"
                 >
-                    Add {{ field.id }}
+                    {{ $t('fj.add_model', { model: field.title }) }}
                 </b-button>
             </div>
 

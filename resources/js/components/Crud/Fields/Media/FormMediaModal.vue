@@ -108,7 +108,7 @@ export default {
             }
 
             let job = {
-                route: `${this.form.config.route_prefix}/${this.model.id}/media/${image.id}`,
+                route: this.getMediaUrl(image.id),
                 method: 'put',
                 data: { custom_properties: image.custom_properties }
             };
@@ -130,14 +130,14 @@ export default {
             return image.custom_properties[this.language][key];
         },
         async destroy(id, index) {
-            let model_id =
-                this.model.route == 'form_blocks'
-                    ? this.model.model_id
-                    : this.model.id;
-            let response = await axios.delete(
-                `${this.form.config.route_prefix}/${model_id}/media/${id}`
-            );
+            let response = await axios.delete(this.getMediaUrl(id));
             this.$emit('delete', index);
+        },
+        getMediaUrl(id) {
+            if (this.model.model != 'Fjord\\Crud\\Models\\FormBlock') {
+                return `${this.form.config.route_prefix}/${this.model.id}/media/${id}`;
+            }
+            return `${this.form.config.route_prefix}/${this.model.model_id}/blocks/${this.model.id}/media/${id}`;
         }
     },
     computed: {

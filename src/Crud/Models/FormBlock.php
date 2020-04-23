@@ -2,7 +2,6 @@
 
 namespace Fjord\Crud\Models;
 
-use Fjord\EloquentJs\CanEloquentJs;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
@@ -20,14 +19,60 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
         Concerns\HasFields,
         Concerns\HasMedia;
 
+    /**
+     * Translation model.
+     *
+     * @var string
+     */
     protected $translationModel = Translations\FormBlockTranslation::class;
 
+    /**
+     * No timestamps.
+     *
+     * @var boolean
+     */
     public $timestamps = false;
+
+    /**
+     * Translated attributes.
+     *
+     * @var array
+     */
     public $translatedAttributes = ['value'];
+
+    /**
+     * Field ids.
+     *
+     * @var array
+     */
     protected $fieldIds = [];
 
+    /**
+     * Fillable attributes.
+     *
+     * @var array
+     */
     protected $fillable = ['field_id', 'model_type', 'model_id', 'type', 'content', 'order_column'];
+
+    /**
+     * Appends.
+     *
+     * @var array
+     */
     protected $appends = ['fields', 'translation'];
+
+    /**
+     * Eager loads.
+     *
+     * @var array
+     */
+    protected $with = ['media'];
+
+    /**
+     * Casts.
+     *
+     * @var array
+     */
     protected $casts = ['value' => 'json'];
 
     /**

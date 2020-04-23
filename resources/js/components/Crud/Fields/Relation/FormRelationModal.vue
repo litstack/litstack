@@ -163,7 +163,7 @@ export default {
         },
         selected(item, m) {
             if (this.itemChecked(item, m) && this.hasMany) {
-                this.$emit('remove', item.id, m);
+                this.$emit('remove', { id: item.id, model: m });
             } else {
                 this.$emit('selected', item, m);
             }

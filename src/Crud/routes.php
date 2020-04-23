@@ -23,6 +23,11 @@ Route::post("/{id}/blocks/{field_id}", [$controller, "storeBlock"])->name("block
 Route::put("/{id}/blocks/{field_id}/{block_id}", [$controller, "updateBlock"])->name("blocks.update");
 Route::delete("/{id}/blocks/{field_id}/{block_id}", [$controller, "destroyBlock"])->name("blocks.destroy");
 
+// Blocks Media
+Route::post("/{id}/blocks/{block_id}/media", [$controller, "storeBlockMedia"])->name("blocks.media.store");
+Route::put("/{id}/blocks/{block_id}/media/{media_id}", [$controller, "updateBlockMedia"])->name("blocks.media.update");
+Route::delete("/{id}/blocks/{block_id}/media/{media_id}", [$controller, "destroyBlockMedia"])->name("blocks.media.destroy");
+
 // Relations
 Route::get("/{id}/{relation}/index", [$controller, "relationIndex"])->name("relation.index");
 Route::put("/{id}/{relation}/order", [$controller, "orderRelation"])->name("relation.order");

@@ -60,7 +60,7 @@ class FormField extends Model implements HasMedia, TranslatableContract
      *
      * @var array
      */
-    protected $with = ['translations'];
+    protected $with = ['translations', 'media'];
 
     /**
      * Get config key.
