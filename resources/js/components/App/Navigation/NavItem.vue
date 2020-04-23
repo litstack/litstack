@@ -64,13 +64,9 @@ export default {
     },
     mounted() {
         // make children visible
-        const link = window.location.pathname;
-
         if (this.hasChildren) {
             for (let i = 0; i < this.item.children.length; i++) {
-                const element = this.item.children[i];
-
-                if (element.link.includes(link)) {
+                if (this.isActive(this.item.children[i])) {
                     this.visible = true;
                 }
             }
@@ -78,9 +74,16 @@ export default {
 
         // set active state
         if (this.hasLink) {
-            if (this.item.link.includes(link)) {
-                this.active = true;
+            this.active = this.isActive(this.item);
+        }
+    },
+    methods: {
+        isActive(item) {
+            const link = window.location.pathname;
+            if (this.baseURL.includes(link)) {
+                return link.includes(item.link);
             }
+            return item.link.includes(link);
         }
     },
     computed: {
