@@ -74,7 +74,7 @@ class FjordCrud extends Command
         $model = app_path('Models/' . $modelName . '.php');
 
         $implements = [];
-        $uses = [];
+        $uses = ['TrackEdits'];
         $appends = [];
         $with = [];
 
@@ -88,6 +88,8 @@ class FjordCrud extends Command
 
         // getRoute routename
         $builder->withRoutename(Str::snake(Str::plural($modelName)));
+
+        $builder->withTraits("use Fjord\Crud\Models\Traits\TrackEdits;");
 
         // model has media
         if ($m) {

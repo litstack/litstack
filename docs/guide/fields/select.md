@@ -1,0 +1,37 @@
+# Select
+
+A select field.
+
+## Examples
+
+```php
+$form->input('article_type')
+    ->title('Type')
+    ->options([
+        1 => 'News',
+        2 => 'Info',
+    ])
+    ->hint('Select the article type.');
+```
+
+A select can be used for `belongsTo` relations.
+
+```php
+$form->input('article_id')
+    ->title('Article')
+    ->options(
+        Article::all()->mapWithKeys(function($item, $key){
+            return [$item->id => $item->title];
+        })->toArray()
+    )
+    ->hint('Select Article.');
+```
+
+## Methods
+
+| Methods   | Description                                                            |
+| --------- | ---------------------------------------------------------------------- |
+| `title`   | The title description for this field.                                  |
+| `options` | An array with the options, can be a simple array or key => value pairs |
+| `hint`    | A short hint that should describe how to use the field.`               |
+| `cols`    | Cols of the field.                                                     |

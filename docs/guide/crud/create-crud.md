@@ -1,8 +1,8 @@
-# Create CRUD-Models
+# CRUD-Models
 
-The `resources/fjord/crud` directory contains all configuration-files for your CRUD-Models. Each model has its own file and is set up individually.
+The `fjord/app/Config/Crud` directory contains all configuration-files for your CRUD-Models. Each model has its own file and is set up individually. Configurations can be created for existing Models.
 
-## CRUD-Wizard
+## Create
 
 A CRUD-Model can be created using the following artisan command:
 
@@ -12,7 +12,7 @@ php artisan fjord:crud
 
 A wizard will take you through all required steps for setting up da fresh CRUD-Model.
 
-## Prepare Migration
+## Migrate
 
 Edit the newly created migration and add all table fields you need. For the translation of models [laravel-translatable](https://docs.astrotomic.info/laravel-translatable/installation#migrations) from `astronomic` is used. Pay attention to translatable and non-translatable fields.
 
@@ -45,7 +45,7 @@ After all fields and permissions have been defined, the migration can be execute
 php aritsan migrate
 ```
 
-## Prepare Model(s)
+## Model(s)
 
 Edit the created model in `app/models`. Add all fillable attributes to avoid [mass assignment](https://laravel.com/docs/5.8/eloquent#mass-assignment). If the Model is translatable you have to set the fillable attributes on the corresponding translation-model in the `App\Models\Translations` directory and add all translatable attributes like in the given example:
 
@@ -54,22 +54,21 @@ Edit the created model in `app/models`. Add all fillable attributes to avoid [ma
 
 namespace App\Models;
 
-use Fjord\Fjord\Models\Model as FjordModel;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Model;
 
-class Article extends FjordModel implements TranslatableContract
+...
+
+class Article extends Model implements HasMediaContract, TranslatableContract
 {
-  use HasMediaTrait, Translatable;
+    use TrackEdits, HasMedia, Translatable;
 
-  // enter all fillable columns. translated columns must also
-  // be set fillable. don't forget to also set them fillable in
-  // the coresponding translation-model
-  protected $fillable = ['title', 'text'];
-
-  public $translatedAttributes = ['title', 'text', 'slug'];
-
-  ...
+    /**
+     * Setup Model:
+     *
+     * Enter all fillable columns. Translated columns must also be set fillable.
+     * Don't forget to also set them fillable in the coresponding translation-model!
+     */
+    ...
 }
 ```
 
@@ -79,35 +78,19 @@ class Article extends FjordModel implements TranslatableContract
 namespace App\Models\Translations;
 
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
+
+...
 
 class ArticleTranslation extends Model
 {
     use Sluggable;
-
-    public $timestamps = false;
-    protected $fillable = ['title', 'text'];
-
-    /**
-     * Return the sluggable configuration array for this model.
-     *
-     * @return array
-     */
-    public function sluggable()
-    {
-        return [
-            'slug' => [
-                'source' => 'title'
-            ]
-        ];
-    }
-
+    ...
 }
 ```
 
-## Prepare Controller (authorization)
+## Controller (authorization)
 
-A controller has been created in which the authorization is specified.
+A controller has been created in which the authorization for all operation is specified. Operations can be `create`, `read`, `update`, `delete`.
 
 ```php
 /**
@@ -124,18 +107,38 @@ public function authorize(FjordUser $user, string $operation): bool
 }
 ```
 
-## Add to Navigation
+## Navigation
 
-Add the navigation entry by adding the `crud.{table_name}` preset to `resources/fjord/navigation/main.php`.
+Add the navigation entry by adding the `crud.{table_name}` preset to your navigation.
 
 ```php
-[
-    fjord()->navEntry('crud.articles', [
-        'icon' => '<i class="fas fa-newspaper"></i>'
-    ]),
-]
+$nav->preset('crud.articles', [
+    'title' => 'Articles',
+    'icon' => '<i class="fas fa-newspaper">',
+]),
 ```
 
-## Edit CRUD-Config
+## Configuration
 
-Define the CRUD-Config in the created resource file: `resources/fjord/crud/{table_name}.php`. Learn how to set up a config file in the next chapter.
+Define the CRUD-Config in the created config file: `Config/Crud/{model}Config.php`. First the model and the controller must be specified in the config:
+
+```php
+use App\Models\Article;
+use FjordApp\Controllers\Crud\ArticleController;
+
+/**
+ * Model class.
+ *
+ * @var string
+ */
+public $model = Article::class;
+
+/**
+ * Controller class.
+ *
+ * @var string
+ */
+public $controller = ArticleController::class;
+```
+
+Next, the configuration for the [index table](/guide/crud/config-index.html) and the create and update [form](/guide/crud/config-form.html) can be adjusted.

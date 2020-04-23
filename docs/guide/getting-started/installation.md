@@ -6,7 +6,7 @@ An existing Laravel project is required to install Fjord. In addition, an existi
 
 ## Server Requirements
 
-The server requirements for the Fjord package come with the requirements of `Laravel v6` and some required composer packages.
+The server requirements for the Fjord package come with the requirements of `Laravel v7` and some required composer packages.
 
 ## Installing Fjord
 

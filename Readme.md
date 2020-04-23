@@ -1,8 +1,8 @@
-# Fjord: A Laravel CMS/Admin-Panel
+# Fjord: Laravel Content-Administration
 
-Fjord is a multilanguage CMS/Admin-Panel based on the Laravel framework.
+Fjord is a multilanguage package for building and maintaining the data of your Laravel applications. It provides an intuitive interface and the tools needed to manage your project's content.
 
-It offers Artisan-Commands for generating CRUD-Modelst and Users. Manage CRUD-Models as well as all Page-Content of your website on a modern yet super simple interface.
+It offers Artisan-Commands for generating CRUD-Models and Users. Manage CRUD-Models as well as all Page-Content of your website on a modern yet super simple interface.
 
 ![Fjord Interface](https://raw.githubusercontent.com/aw-studio/fjord/master/fjord.png 'Fjord Interface')
 

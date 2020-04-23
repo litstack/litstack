@@ -1,0 +1,38 @@
+# Relation
+
+A relation picker. Relation picker can be created for any relation of your model.
+
+## Example
+
+```php
+$form->relation('articles')
+    ->title('Articles')
+    // An optional query builder can be defined:
+    ->query(Articles::where('created_by', fjord_user()->id))
+    ->sortable()
+    ->preview(function ($table) {
+        // Build the preview table in here.
+        $table->col('title'); // In this case we are showing the article title.
+    });
+```
+
+In the Model:
+
+```php
+public function articles()
+{
+    return $this->hasMany('App/Models/Article');
+}
+```
+
+## Methods
+
+| Method        | Description                                                          |
+| ------------- | -------------------------------------------------------------------- |
+| `title`       | The title description for this field.                                |
+| `hint`        | A short hint that should describe how to use the field.`             |
+| `cols`        | Cols of the field.                                                   |
+| `query`       | Initial query builder for the selectable relations. (optional)       |
+| `preview`     | A closure to define the table preview of the corresponding relation. |
+| `sortable`    | Sortable relation (only works for `many` relations).                 |
+| `orderColumn` | Order column. Default: `order_column`                                |

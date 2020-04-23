@@ -1,8 +1,6 @@
 # Package Development
 
-## Introduction
-
-Packages can extend the functionality and the Fjorduser interface. You can use them to integrate your own Vue components into the application or extend existing components.
+Packages can extend the functionality and the Fjord interface. You can use them to integrate your own Vue components into the application or extend existing components.
 
 ## Setup
 
@@ -30,7 +28,7 @@ class Package extends FjordPackage
 {
     /**
      * List of service providers to be registered for this package.
-     * 
+     *
      * @var array
      */
     protected $providers = [
@@ -39,7 +37,7 @@ class Package extends FjordPackage
 
     /**
      * List of components this package contains.
-     * 
+     *
      * @var array
      */
     protected $components = [
@@ -48,7 +46,7 @@ class Package extends FjordPackage
 
     /**
      * List of handlers for config files.
-     * 
+     *
      * @var array
      */
     protected $configFiles = [

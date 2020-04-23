@@ -53,69 +53,52 @@ module.exports = {
                     ]
                 },
                 {
-                    title: 'Frontend',
+                    title: 'Basics',
                     collapsable: false,
                     children: [
-                        ['guide/frontend/navigation', 'Navigation'],
-                        ['guide/frontend/localization', 'Localization']
+                        ['guide/basics/navigation', 'Navigation'],
+                        ['guide/basics/localization', 'Localization'],
+                        ['guide/basics/helpers', 'Helpers'],
+                        ['guide/basics/vue', 'Extend Vue']
                     ]
                 },
                 {
                     title: 'CRUD',
-                    collapsable: false,
-                    children: [
-                        ['guide/crud/create-crud', 'Create CRUD-Models']
-                        //['guide/resources/forms', 'Forms'],
-                        //['guide/resources/repeatables', 'Repeatables']
-                    ]
-                },
-                {
-                    title: 'CRUD',
-                    collapsable: false,
-                    children: [
-                        ['guide/crud/create-crud', 'Create CRUD-Models'],
-                        ['guide/crud/crud-config', 'Configure CRUD-Models']
-                    ]
-                },
-                {
-                    title: 'Collections',
-                    collapsable: false,
-                    children: [
-                        ['guide/collections/introduction', 'Introduction'],
-                        ['guide/collections/pages', 'Pages']
-                    ]
-                },
-                {
-                    title: 'Formfields',
                     collapsable: true,
                     children: [
-                        ['guide/formfields/input', 'Input'],
-                        ['guide/formfields/textarea', 'Textarea'],
-                        ['guide/formfields/wysiwyg', 'WYSIWYG'],
-                        ['guide/formfields/select', 'Select'],
-                        ['guide/formfields/date-time', 'Date/Time'],
-                        ['guide/formfields/boolean', 'Boolean'],
-                        ['guide/formfields/range', 'Range'],
-                        ['guide/formfields/image', 'Image'],
-                        ['guide/formfields/block', 'Block'],
-                        ['guide/formfields/belongs-to-many', 'BelongsToMany'],
-                        ['guide/formfields/has-many', 'HasMany'],
-                        ['guide/formfields/edit-has-many', 'EditHasMany'],
-                        ['guide/formfields/relation', 'Relation']
+                        ['guide/crud/introduction', 'Introduction'],
+                        ['guide/crud/create-crud', 'CRUD-Models'],
+                        ['guide/crud/create-forms', 'Forms'],
+                        ['guide/crud/config-index', 'Index Config'],
+                        ['guide/crud/config-form', 'Form Config']
                     ]
                 },
                 {
-                    title: 'Architecture Concepts',
-                    collapsable: false,
-                    children: [['guide/architecture/lifecycle', 'Lifecycle']]
+                    title: 'Fields',
+                    collapsable: true,
+                    children: [
+                        ['guide/fields/introduction', 'Introduction'],
+                        ['guide/fields/input', 'Input'],
+                        ['guide/fields/textarea', 'Textarea'],
+                        ['guide/fields/wysiwyg', 'WYSIWYG'],
+                        ['guide/fields/boolean', 'Boolean'],
+                        ['guide/fields/checkboxes', 'Checkboxes'],
+                        ['guide/fields/range', 'Range'],
+                        ['guide/fields/select', 'Select'],
+                        ['guide/fields/icon', 'Icon'],
+                        ['guide/fields/date-time', 'Date/Time'],
+                        ['guide/fields/image', 'Image'],
+                        ['guide/fields/block', 'Block'],
+                        ['guide/fields/relation', 'Relation'],
+                        ['guide/fields/component', 'Component']
+                    ]
                 },
                 {
-                    title: 'Extending Fjord',
+                    title: 'Digging Deeper',
                     collapsable: false,
                     children: [
-                        ['guide/extensions/setup', 'Setup'],
-                        ['guide/extensions/helpers', 'Helpers'],
-                        ['guide/extensions/package', 'Package Development']
+                        ['guide/deeper/package', 'Package Development'],
+                        ['guide/deeper/lifecycle', 'Lifecycle']
                     ]
                 }
             ]
