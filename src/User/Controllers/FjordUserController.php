@@ -7,19 +7,18 @@ use Fjord\Support\IndexTable;
 use Fjord\User\Models\FjordUser;
 use Fjord\Config\Traits\HasIndex;
 use Illuminate\Routing\Controller;
-use Spatie\Permission\Models\Role;
-use Fjord\User\Requests\IndexFjordUserRequest;
-use Fjord\User\Requests\UpdateUserRoleRequest;
+use Fjord\User\Requests\FjordUserReadRequest;
+use Fjord\User\Requests\FjordUserDeleteRequest;
 
 class FjordUserController extends Controller
 {
     /**
      * Show user index.
      *
-     * @param IndexFjordUserRequest $request
+     * @param FjordUserReadRequest $request
      * @return void
      */
-    public function showIndex(IndexFjordUserRequest $request)
+    public function showIndex(FjordUserReadRequest $request)
     {
         $config = fjord()->config('user.user_index')->get(HasIndex::class);
 
@@ -31,26 +30,34 @@ class FjordUserController extends Controller
             ]);
     }
 
-    public function deleteAll(Request $request)
+    /**
+     * Delete multiple users.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function deleteAll(FjordUserDeleteRequest $request)
     {
         IndexTable::deleteSelected(FjordUser::class, $request);
-        return response(['message' => __f('fj.deleted_all', ['count' => count($request->ids)])]);
+
+        return response([
+            'message' => __f('fj.deleted_all', [
+                'count' => count($request->ids)
+            ])
+        ]);
     }
 
-    public function fetchIndex(Request $request)
+    /**
+     * Fetch index.
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function fetchIndex(FjordUserReadRequest $request)
     {
-        return IndexTable::get(FjordUser::query(), $request);
-    }
-
-    public function update(UpdateUserRoleRequest $request)
-    {
-        $user = FjordUser::findOrFail($request->user['id']);
-        $role = Role::findOrFail($request->role['id']);
-
-        if ($user->hasRole($role)) {
-            $user->removeRole($role);
-        } else {
-            $user->syncRoles([$role]);
-        }
+        return IndexTable::get(
+            fjord()->config('user.user_index')->index_query,
+            $request
+        );
     }
 }

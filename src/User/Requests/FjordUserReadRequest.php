@@ -4,7 +4,7 @@ namespace Fjord\User\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class IndexFjordUserRequest extends FormRequest
+class FjordUserReadRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

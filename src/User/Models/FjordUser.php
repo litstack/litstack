@@ -52,11 +52,13 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
     ];
 
     /**
-     * The accessors to append to the model's array form.
+     * Eager loads.
      *
      * @var array
      */
-    protected $appends = ['role'];
+    protected $with = [
+        'ordered_roles'
+    ];
 
     /**
      * Send password reset notification.
@@ -96,12 +98,12 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
     }
 
     /**
-     * Get fjord user role.
+     * Ordered Roles by permission count.
      *
-     * @return void
+     * @return MorphToMany
      */
-    public function getRoleAttribute()
+    public function ordered_roles()
     {
-        return $this->roles()->first();
+        return $this->roles()->withCount('permissions')->orderByDesc('permissions_count');
     }
 }

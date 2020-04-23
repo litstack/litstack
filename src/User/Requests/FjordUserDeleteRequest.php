@@ -4,7 +4,7 @@ namespace Fjord\User\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUserRoleRequest extends FormRequest
+class FjordUserDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdateUserRoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return fjord_user()->can('update user-roles');
+        return fjord_user()->can('delete fjord-users');
     }
 
     /**
