@@ -21,3 +21,53 @@ In order to load the custom `app.js` you have to include it in your `config/fjor
 ```
 
 Run `npm run watch` and you are good to go.
+
+## Bootstrap Vue
+
+To make it easy to build uniform Fjord pages, Fjord uses [Bootstrap Vue](https://bootstrap-vue.org/docs/components) for all frontend components. Bootstrap Vue comes with a large number of components to cover all the necessary areas needed to build a site.
+
+## Build Your Own Page
+
+To build a new page for your Fjord application you have to view your root component. This is done by giving the View `fjord::app` the name of your `Vue` component and passing the required data as props like so.
+
+```php
+use App\Models\Post;
+
+return view('fjord::app')
+    ->withComponent('my-component') // Name of your Vue component.
+    ->withTitle('My Component') // Html title.
+    ->props([
+        'posts' => Post::all()
+    ]);
+```
+
+In this case `posts` is passed as prop to the component `my-component`.
+
+The following example shows how to build a root component of a page for a Fjord application.
+
+```javascript
+<template>
+    <fj-container>
+        <fj-header title="Posts"/>
+
+        <b-row>
+            <b-col cols="3" v-for="(post, key) in posts" :key="key">
+                <b-card :title="post.title">
+                    {{ post.text }}
+                </b-card>
+            </b-col>
+        </b-row>
+    </fj-container>
+</template>
+<script>
+export default {
+    name: 'MyComponent',
+    props: {
+        posts: {
+            required: true,
+            type: Array
+        }
+    }
+}
+</script>
+```
