@@ -58,8 +58,8 @@ module.exports = {
                     children: [
                         ['guide/basics/navigation', 'Navigation'],
                         ['guide/basics/localization', 'Localization'],
-                        ['guide/basics/helpers', 'Helpers'],
-                        ['guide/basics/vue', 'Extend Vue']
+                        ['guide/basics/vue', 'Extend Vue'],
+                        ['guide/basics/helpers', 'Helpers']
                     ]
                 },
                 {
