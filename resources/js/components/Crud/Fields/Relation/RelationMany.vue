@@ -5,6 +5,7 @@
                 <div v-if="!!relations.length">
                     <fj-form-relation-index
                         :model="model"
+                        :model-id="modelId"
                         :field="field"
                         :items="{ [field.model]: relations }"
                         :readonly="readonly"
@@ -35,6 +36,7 @@
                 v-if="!field.readonly"
                 :field="field"
                 :model="model"
+                :model-id="modelId"
                 :selectedModels="{ [field.model]: relations }"
                 @selected="selected"
                 @remove="removeRelation"
@@ -60,6 +62,9 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        modelId: {
+            required: true
         },
         readonly: {
             required: true,
@@ -116,7 +121,7 @@ export default {
                     case 'belongsToMany':
                     case 'manyRelation':
                         response = await axios.post(
-                            `${this.form.config.route_prefix}/${this.model.id}/${this.field.id}/${item.id}`
+                            `${this.form.config.route_prefix}/${this.modelId}/${this.field.id}/${item.id}`
                         );
                         break;
                 }

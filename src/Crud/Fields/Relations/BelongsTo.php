@@ -36,6 +36,7 @@ class BelongsTo extends OneRelationField
     protected $available = [
         'title',
         'model',
+        'edit',
         'hint',
         'preview',
         'confirm',

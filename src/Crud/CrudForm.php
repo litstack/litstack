@@ -6,7 +6,7 @@ use Closure;
 use Exception;
 use Fjord\Vue\Component;
 
-class CrudForm extends Form
+class CrudForm extends BaseForm
 {
     /**
      * List of Vue components and its props.

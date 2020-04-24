@@ -3,7 +3,6 @@
 namespace Fjord\Crud\Fields\Blocks;
 
 use Closure;
-use Fjord\Crud\Form;
 use Fjord\Support\VueProp;
 use Fjord\Crud\Models\FormBlock;
 
@@ -17,6 +16,23 @@ class Repeatables extends VueProp
     protected $forms = [];
 
     /**
+     * Route prefix.
+     *
+     * @var string
+     */
+    protected $routePrefix;
+
+    /**
+     * Create new Repeatables instance.
+     *
+     * @param string|null $routePrefix
+     */
+    public function __construct($routePrefix)
+    {
+        $this->routePrefix = strip_slashes($routePrefix . '/blocks/{block_id}');
+    }
+
+    /**
      * Undocumented function
      *
      * @param string $name
@@ -25,7 +41,11 @@ class Repeatables extends VueProp
      */
     public function add(string $name, Closure $closure)
     {
-        $form = new Form(FormBlock::class);
+        $form = new BlockForm(FormBlock::class);
+
+        $form->setRoutePrefix(
+            $this->routePrefix
+        );
 
         $closure($form);
 

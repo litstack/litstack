@@ -4,6 +4,7 @@
         :readonly="readonly"
         :field="field"
         :model="model"
+        :model-id="id"
         v-bind="field.props ? field.props : {}"
         @changed="changed(field, model)"
     />
@@ -22,7 +23,18 @@ export default {
         field: {
             required: true,
             type: Object
+        },
+        modelId: {
+            type: Number
         }
+    },
+    data() {
+        return {
+            id: null
+        };
+    },
+    beforeMount() {
+        this.id = this.modelId ? this.modelId : this.model.id;
     },
     methods: {
         changed(field, model) {

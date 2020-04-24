@@ -75,6 +75,9 @@ export default {
         model: {
             type: Object
         },
+        modelId: {
+            required: true
+        },
         items: {
             required: true,
             type: Object

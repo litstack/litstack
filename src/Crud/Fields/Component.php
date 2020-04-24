@@ -43,10 +43,11 @@ class Component extends Field
      *
      * @param string $id
      * @param string $model
+     * @param string|null $routePrefix
      */
-    public function __construct(string $id, string $model)
+    public function __construct(string $id, string $model, $routePrefix)
     {
-        parent::__construct($id, $model);
+        parent::__construct($id, $model, $routePrefix);
 
         $this->attributes['comp'] = component($id);
     }

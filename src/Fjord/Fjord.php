@@ -40,6 +40,30 @@ class Fjord
     }
 
     /**
+     * Get Fjord url.
+     *
+     * @param string $url
+     * @return string
+     */
+    public function url(string $url)
+    {
+        return strip_slashes(
+            config('fjord.route_prefix') . '/' . $url
+        );
+    }
+
+    /**
+     * Get Fjord route by name.
+     *
+     * @param string $name
+     * @return string
+     */
+    public function route(string $name)
+    {
+        return route("fjord.{$name}");
+    }
+
+    /**
      * Get translation for Fjord application.
      *
      * @param string $key

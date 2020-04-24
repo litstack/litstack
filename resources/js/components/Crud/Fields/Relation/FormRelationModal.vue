@@ -91,6 +91,9 @@ export default {
             required: true,
             type: Object
         },
+        modelId: {
+            required: true
+        },
         hasMany: {
             type: Boolean,
             default: true
@@ -184,7 +187,7 @@ export default {
                 let route = this.routes[model];
 
                 let response = await axios.get(
-                    `${this.formConfig.route_prefix}/${this.model.id}/${this.field.id}/index`
+                    `${this.formConfig.route_prefix}/${this.modelId}/${this.field.id}/index`
                 );
 
                 let items = [];

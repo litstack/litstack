@@ -37,6 +37,7 @@ class HasOne extends OneRelationField
         'title',
         'model',
         'hint',
+        'edit',
         'preview',
         'confirm',
         'query'

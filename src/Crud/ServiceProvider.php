@@ -34,5 +34,7 @@ class ServiceProvider extends LaravelServiceProvider
         $this->app->singleton('fjord.form', function () {
             return new FormFieldLoader;
         });
+
+        $this->app['fjord.app']->singleton('crud', new Crud);
     }
 }

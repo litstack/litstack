@@ -36,6 +36,7 @@ class HasMany extends ManyRelationField
     protected $available = [
         'title',
         'model',
+        'edit',
         'hint',
         'preview',
         'confirm',

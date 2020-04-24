@@ -20,6 +20,10 @@ class CrudFormConfigFactory extends ConfigFactory
     {
         $form = new CrudForm($config->model);
 
+        $form->setRoutePrefix(
+            strip_slashes($config->route_prefix . '/{id}')
+        );
+
         $method($form);
 
         return $form;

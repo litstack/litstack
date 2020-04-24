@@ -13,7 +13,7 @@ class NavigationConfig extends Config
      * @param \Fjord\Application\Navigation\Navigation $nav
      * @return void
      */
-    protected function topbar(Navigation $nav)
+    public function topbar(Navigation $nav)
     {
         $nav->section([
             $nav->title(__f('fj.user_administration')),
@@ -35,7 +35,7 @@ class NavigationConfig extends Config
      * @param \Fjord\Application\Navigation\Navigation $nav
      * @return void
      */
-    protected function main(Navigation $nav)
+    public function main(Navigation $nav)
     {
         $nav->section([
             $nav->group([

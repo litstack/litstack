@@ -53,7 +53,7 @@ class Blocks extends ManyRelationField
     {
         $repeatables = $closure;
         if (!$closure instanceof Repeatables) {
-            $repeatables = new Repeatables;
+            $repeatables = new Repeatables($this->route_prefix);
             $closure($repeatables);
         }
 

@@ -57,6 +57,10 @@ export default {
             for (let i in this.preparedModels) {
                 let field = this.preparedModels[i].getFieldById(this.field.id);
                 if (field) {
+                    this.field.route_prefix = this.field.route_prefix.replace(
+                        '{id}',
+                        this.preparedModels[i].id
+                    );
                     return this.preparedModels[i];
                 }
             }

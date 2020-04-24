@@ -36,6 +36,7 @@
                     :image="image"
                     :imgPath="imgPath"
                     :model="model"
+                    :model-id="modelId"
                     :readonly="readonly"
                     @delete="deleteImage"
                 />
@@ -55,6 +56,9 @@ export default {
         field: {
             required: true,
             type: Object
+        },
+        modelId: {
+            required: true
         },
         model: {
             required: true,
@@ -85,10 +89,7 @@ export default {
             });
         },
         getMediaUrl() {
-            if (this.model.model != 'Fjord\\Crud\\Models\\FormBlock') {
-                return `${this.form.config.route_prefix}/${this.model.id}/media/order`;
-            }
-            return `${this.form.config.route_prefix}/${this.model.model_id}/blocks/${this.model.id}/media/order`;
+            return `${this.field.route_prefix}/media/order`;
         },
         imgCols(size = 3) {
             return `col-${size}`;

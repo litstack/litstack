@@ -68,4 +68,17 @@ class ConfigLoader
 
         return $this->namespace . $name . "Config";
     }
+
+    /**
+     * Check if config class exists.
+     *
+     * @param string $key
+     * @return boolean
+     */
+    public function exists(string $key)
+    {
+        return class_exists(
+            $this->getClassName($key)
+        );
+    }
 }

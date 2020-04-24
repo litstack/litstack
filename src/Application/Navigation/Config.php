@@ -2,9 +2,7 @@
 
 namespace Fjord\Application\Navigation;
 
-use Fjord\Support\Config as FjordConfig;
-
-abstract class Config extends FjordConfig
+abstract class Config
 {
     /**
      * Build topbar navigation.
@@ -12,7 +10,7 @@ abstract class Config extends FjordConfig
      * @param FjordNavigation $nav
      * @return void
      */
-    abstract protected function topbar(Navigation $nav);
+    abstract public function topbar(Navigation $nav);
 
     /**
      * Build main navigation.
@@ -20,5 +18,5 @@ abstract class Config extends FjordConfig
      * @param FjordNavigation $nav
      * @return void
      */
-    abstract protected function main(Navigation $nav);
+    abstract public function main(Navigation $nav);
 }

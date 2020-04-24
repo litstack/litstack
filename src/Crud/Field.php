@@ -62,7 +62,7 @@ class Field extends VueProp
     protected $available = [
         'readonly',
         'cols',
-        'info'
+        'info',
     ];
 
     /**
@@ -80,13 +80,13 @@ class Field extends VueProp
      *
      * @param string $id
      * @param string $model
+     * @param string|null $routePrefix
      */
-    public function __construct(string $id, string $model)
+    public function __construct(string $id, string $model, $routePrefix)
     {
-        // Merge available, default and required properties of parent and child 
-        // class.
+        // Merge available, default and required properties of parent and child class.
         if (static::class != self::class) {
-            $parent = new self($id, $model);
+            $parent = new self($id, $model, $routePrefix);
             $this->available = array_merge(
                 $parent->getAvailableAttributes(),
                 $this->available,
@@ -105,6 +105,7 @@ class Field extends VueProp
 
         $this->attributes['id'] = $id;
         $this->attributes['local_key'] = $id;
+        $this->attributes['route_prefix'] = $routePrefix;
         $this->model = $model;
 
         if ($this->translatable) {

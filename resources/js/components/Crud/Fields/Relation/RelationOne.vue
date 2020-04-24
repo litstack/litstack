@@ -7,6 +7,7 @@
                         :field="field"
                         :items="selectedModels"
                         :readonly="readonly"
+                        :model-id="modelId"
                         :routePrefixes="routePrefixes"
                         @removeRelation="removeRelation"
                     />
@@ -33,6 +34,7 @@
             <fj-form-relation-modal
                 :field="field"
                 :model="model"
+                :model-id="modelId"
                 :hasMany="false"
                 :selectedModels="selectedModels"
                 @selected="selected"
@@ -59,6 +61,9 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        modelId: {
+            required: true
         },
         readonly: {
             required: true,

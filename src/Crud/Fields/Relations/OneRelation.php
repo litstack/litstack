@@ -44,6 +44,7 @@ class OneRelation extends OneRelationField
     protected $available = [
         'title',
         'model',
+        'edit',
         'hint',
         'preview',
         'confirm',
@@ -68,7 +69,7 @@ class OneRelation extends OneRelationField
      */
     protected function getRelation($model)
     {
-        if (!$model instanceof FormField) {
+        if (method_exists($model, $this->id)) {
             return parent::getRelation($model);
         }
 

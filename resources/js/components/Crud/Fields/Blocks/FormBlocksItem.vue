@@ -12,6 +12,7 @@
                 v-for="(field, key) in block.fields"
                 :key="key"
                 :field="field"
+                :model-id="model.id"
                 :model="block"
             />
 
@@ -46,6 +47,9 @@ export default {
             type: Boolean
         }
     },
+    beforeMount() {
+        this.setFieldsRoutePrefixBlockId();
+    },
     computed: {
         ...mapGetters(['form'])
     },
@@ -55,6 +59,14 @@ export default {
                 `${this.form.config.route_prefix}/${this.model.id}/blocks/${block.field_id}/${block.id}`
             );
             this.$emit('deleteBlock', block);
+        },
+        setFieldsRoutePrefixBlockId() {
+            for (let i in this.block.fields) {
+                let field = this.block.fields[i];
+                this.block.fields[i].route_prefix = field.route_prefix
+                    .replace('{block_id}', this.block.id)
+                    .replace('{id}', this.model.id);
+            }
         }
     }
 };

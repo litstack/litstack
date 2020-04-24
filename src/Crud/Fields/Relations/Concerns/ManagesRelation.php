@@ -3,7 +3,9 @@
 namespace Fjord\Crud\Fields\Relations\Concerns;
 
 use Closure;
+use Fjord\Crud\BaseForm;
 use InvalidArgumentException;
+use Fjord\Support\Facades\Config;
 use Fjord\Vue\Crud\RelationTable;
 use Illuminate\Database\Eloquent\Builder;
 use Fjord\Crud\Fields\Relations\OneRelation;
@@ -30,12 +32,30 @@ trait ManagesRelation
      *
      * @param string $id
      * @param string $model
+     * @param string|null $routePrefix
      */
-    public function __construct(string $id, string $model)
+    public function __construct(string $id, string $model, $routePrefix)
     {
-        parent::__construct($id, $model);
+        parent::__construct($id, $model, $routePrefix);
 
         $this->initializeRelationField();
+    }
+
+    /**
+     * Add edit form.
+     *
+     * @param Closure $closure
+     * @return void
+     */
+    public function edit(Closure $closure)
+    {
+        $form = new BaseForm($this->related);
+
+        $closure($form);
+
+        $this->attributes['edit'] = $form;
+
+        return $this;
     }
 
     /**
@@ -78,9 +98,7 @@ trait ManagesRelation
         $model = get_class($related);
 
         $this->query = $related::query();
-
         $this->related = $model;
-
         $this->attributes['model'] = $model;
 
         // Set model route_prefix for api calls.
@@ -115,22 +133,15 @@ trait ManagesRelation
         );
     }
 
+    /**
+     * Get model config.
+     *
+     * @param mixed $model
+     * @return mixed
+     */
     protected function getModelConfig($model)
     {
-        // Try model name.
-        $modelName = lcfirst(last(explode('\\', $model)));;
-        if ($config = fjord()->config("crud.{$modelName}")) {
-            return $config;
-        }
-
-        // TODO: Talk about this.
-        // Try table name.
-        /*
-        $tableName = (new $model)->getTable();
-        if ($config = fjord()->config("crud.{$tableName}")) {
-            return $config;
-        }
-        */
+        return fjord_app()->get('crud')->config($model);
     }
 
     /**

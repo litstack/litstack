@@ -2,7 +2,6 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
-use Fjord\Crud\Models\FormField;
 use Fjord\Crud\ManyRelationField;
 
 class ManyRelation extends ManyRelationField
@@ -45,6 +44,7 @@ class ManyRelation extends ManyRelationField
         'title',
         'model',
         'hint',
+        'edit',
         'preview',
         'confirm',
         'sortable',
@@ -72,7 +72,7 @@ class ManyRelation extends ManyRelationField
      */
     protected function getRelation($model)
     {
-        if (!$model instanceof FormField) {
+        if (method_exists($model, $this->id)) {
             return parent::getRelation($model);
         }
 

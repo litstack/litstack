@@ -150,7 +150,9 @@ trait CrudHasMedia
     public function destroyMedia(CrudUpdateRequest $request, $id, $media_id)
     {
         $model = $this->query()->findOrFail($id);
-        return $model->media()->findOrFail($media_id)->delete();
+        if ($model->media()->findOrFail($media_id)->delete()) {
+            return response()->json(['message' => __f('fj.image_deleted')], 200);
+        }
     }
 
     /**

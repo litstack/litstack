@@ -87,6 +87,9 @@ export default {
             required: true,
             type: Object
         },
+        modelId: {
+            required: true
+        },
         readonly: {
             required: true,
             type: Boolean
@@ -134,10 +137,7 @@ export default {
             this.$emit('delete', index);
         },
         getMediaUrl(id) {
-            if (this.model.model != 'Fjord\\Crud\\Models\\FormBlock') {
-                return `${this.form.config.route_prefix}/${this.model.id}/media/${id}`;
-            }
-            return `${this.form.config.route_prefix}/${this.model.model_id}/blocks/${this.model.id}/media/${id}`;
+            return `${this.field.route_prefix}/media/${id}`;
         }
     },
     computed: {

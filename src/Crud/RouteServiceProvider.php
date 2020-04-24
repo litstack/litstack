@@ -176,7 +176,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $groupStack = last($router->getGroupStack());
         $link = strip_slashes('/' . $groupStack['prefix']);
 
-
         $this->package->addNavPreset("{$config->collection}.{$config->formName}", [
             'link' => $link,
             'title' => ucfirst($config->formName),

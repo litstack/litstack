@@ -207,4 +207,16 @@ class Application
     {
         return $this->singletons;
     }
+
+    /**
+     * Register a shared binding in the application.
+     *
+     * @param string $abstract
+     * @param Instance $instance
+     * @return void
+     */
+    public function singleton(string $abstract, $instance)
+    {
+        return $this->bind($abstract, $instance);
+    }
 }

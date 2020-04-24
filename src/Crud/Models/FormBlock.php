@@ -294,4 +294,26 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
 
         return $model;
     }
+
+    /**
+     * Modified to return relations for type "relation" or "block".
+     * 
+     * @param string $method
+     * @param array $params
+     * @return mixed
+     */
+    public function __call($method, $params = [])
+    {
+        if (!in_array($method, $this->fieldIds)) {
+            return parent::__call($method, $params);
+        }
+
+        $field = $this->findField($method);
+
+        if (!$field->isRelation()) {
+            return parent::__call($method, $params);
+        }
+
+        return $field->relation($this, $query = true);
+    }
 }

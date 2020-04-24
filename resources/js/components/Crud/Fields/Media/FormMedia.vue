@@ -19,6 +19,7 @@
                             :field="field"
                             :images="images"
                             :model="model"
+                            :model-id="modelId"
                             :readonly="readonly"
                             v-if="images.length > 0"
                         />
@@ -89,7 +90,7 @@ export default {
             required: true,
             type: Object
         },
-        id: {
+        modelId: {
             type: [Boolean, Number]
         },
         readonly: {
@@ -125,19 +126,10 @@ export default {
                     'X-Requested-With': 'XMLHttpRequest'
                 },
                 params: {
-                    model_id: this.id,
-                    collection: this.field.id,
-                    model: this.model.model
+                    collection: this.field.id
                 }
             }
         };
-    },
-    watch: {
-        id() {
-            if (this.id) {
-                this.dropzoneOptions.params.id = this.id;
-            }
-        }
     },
     beforeMount() {
         this.media = this.model[this.field.id] || [];
@@ -169,10 +161,7 @@ export default {
     },
     methods: {
         getUploadUrl() {
-            if (this.model.model != 'Fjord\\Crud\\Models\\FormBlock') {
-                return `${this.baseURL}${this.form.config.route_prefix}/${this.model.id}/media`;
-            }
-            return `${this.baseURL}${this.form.config.route_prefix}/${this.model.model_id}/blocks/${this.model.id}/media`;
+            return `${this.baseURL}${this.field.route_prefix}/media`;
         },
         getCustomProperty(image, key) {
             if (!this.field.translatable) {
