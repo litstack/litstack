@@ -15,6 +15,18 @@ if (!function_exists('component')) {
     }
 }
 
+if (!function_exists('fa')) {
+    function fa(string $group, $icon = null)
+    {
+        if (!$icon) {
+            $icon = $group;
+            $group = 'fas';
+        }
+
+        return "<i class=\"{$group} fa-$icon\"></i>";
+    }
+}
+
 if (!function_exists('strip_slashes')) {
     function strip_slashes(string $string)
     {
