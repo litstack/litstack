@@ -45,7 +45,7 @@ abstract class FormConfig
     {
         $split = explode(
             '\\',
-            last(explode('Form\\', static::class))
+            last(explode('Config\\Form\\', static::class))
         );
         $this->collection = strtolower($split[0]);
 

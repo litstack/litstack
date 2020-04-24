@@ -4,11 +4,13 @@ Fjord includes a variety of global helper PHP functions and Vue mixins.
 
 ## PHP helpers
 
-- [fjord_user](#method-php-fjord_user)
-- [fjord()->installed](#method-php-fjord-installed)
-- [__f](#method-php-f)
+-   [fjord_user](#method-php-fjord_user)
+-   [fjord()->installed](#method-php-fjord-installed)
+-   [\_\_f](#method-php-f)
+-   [fa](#method-php-fa)
 
 <a name="method-php-fjord_user"></a>
+
 #### `fjord_user()`
 
 The `fjord_user` method returns the authenticated Fjord user model.
@@ -18,6 +20,7 @@ The `fjord_user` method returns the authenticated Fjord user model.
 ```
 
 <a name="method-php-fjord-installed"></a>
+
 #### `fjord()->installed()`
 
 The `fjord()->installed` method checks if fjord has been installed. This can be usefull in service providers.
@@ -34,6 +37,7 @@ public function someMethod() {
 ```
 
 <a name="method-php-f"></a>
+
 #### `__f($key, $replace)`
 
 The `__f` method returns the translation using the fjord application locale for the authenticated user.
@@ -47,19 +51,25 @@ The `__f` method returns the translation using the fjord application locale for 
 ]
 ```
 
+#### `fa($group, $icon)`
 
+The `fa` helper makes it easy to create [Fontawesome](https://fontawesome.com/icons?d=gallery) icons.
+
+```php
+fa('home') // <i class="fas fa-home"></i>
+fa('fal', 'abacus') // <i class="fal fa-abacus"></i>
+```
 
 ## Vue mixins
 
-- [can](#method-vue-can)
+-   [can](#method-vue-can)
 
 <a name="method-vue-can"></a>
+
 #### `can('permission')`
 
 The `can` mixin checks if the authenticated user has a permission.
 
 ```js
-<template v-if="can('read message')">
-    {{ message }}
-</template>
+<template v-if="can('read message')">{{ message }}</template>
 ```
