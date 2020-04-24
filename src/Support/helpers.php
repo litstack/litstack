@@ -15,6 +15,13 @@ if (!function_exists('component')) {
     }
 }
 
+if (!function_exists('strip_slashes')) {
+    function strip_slashes(string $string)
+    {
+        return preg_replace('#/+#', '/', $string);
+    }
+}
+
 if (!function_exists('is_closure')) {
     function is_closure($t)
     {

@@ -17,7 +17,7 @@ class HttpErrorComposer
      */
     public function compose(View $view)
     {
-        $fjordPrefix = preg_replace('#/+#', '/', "/" . config('fjord.route_prefix') . "/");
+        $fjordPrefix = strip_slashes("/" . config('fjord.route_prefix') . "/");
         if (!Str::startsWith(Request::getRequestUri(), $fjordPrefix)) {
             return;
         }
