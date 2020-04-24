@@ -5,23 +5,25 @@ A DateTime-Picker.
 ## Example
 
 ```php
-$form->input('publish_at')
+$form->datetime('publish_at')
     ->title('Date')
     ->formatted('l')
-    ->placeholder('Date')
     ->hint('Chose a date.')
     ->cols(6);
 ```
 
+```php
+$form->dt('publish_at') // dt and datetime work the same
+```
+
 ## Methods
 
-| Method        | Description                                        |
-| ------------- | -------------------------------------------------- |
-| `title`       | The title description for this field.              |
-| `formatted`   | The shown datetime format.                         |
-| `placeholder` | The placeholder for this form field.               |
-| `hint`        | A closure where all repeatable blocks are defined. |
-| `cols`        | Cols of the field.                                 |
+| Method      | Description                                        |
+| ----------- | -------------------------------------------------- |
+| `title`     | The title description for this field.              |
+| `formatted` | The shown datetime format.                         |
+| `hint`      | A closure where all repeatable blocks are defined. |
+| `cols`      | Cols of the field.                                 |
 
 ## Formats
 

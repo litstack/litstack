@@ -49,6 +49,9 @@ abstract class FormConfig
             return;
         }
 
+        // The collection property is used for the route. If the collection is 
+        // not specified in the config, it will be set to the lowercase folder 
+        // name of the collection.
         $split = explode(
             '\\',
             last(explode('Config\\Form\\', static::class))

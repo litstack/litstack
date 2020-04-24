@@ -5,7 +5,7 @@ A select field.
 ## Examples
 
 ```php
-$form->input('article_type')
+$form->select('article_type')
     ->title('Type')
     ->options([
         1 => 'News',
@@ -17,7 +17,7 @@ $form->input('article_type')
 A select can be used for `belongsTo` relations.
 
 ```php
-$form->input('article_id')
+$form->select('article_id')
     ->title('Article')
     ->options(
         Article::all()->mapWithKeys(function($item, $key){

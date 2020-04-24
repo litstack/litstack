@@ -5,7 +5,7 @@ Basic textarea field.
 ## Example
 
 ```php
-$form->input('text')
+$form->textarea('text')
     ->translatable()
     ->title('Description')
     ->placeholder('Type something...')
