@@ -275,7 +275,7 @@ trait CrudHasRelations
     }
 
     /**
-     * Order relation.
+     * Order relations.
      *
      * @param CrudUpdateRequest $request
      * @param int $id
@@ -290,19 +290,6 @@ trait CrudHasRelations
 
         $relations = $model->$relation()->get();
 
-        foreach ($ids as $order => $id) {
-            $relation = $relations->where('id', $id)->first();
-
-            if (!$relation) {
-                continue;
-            }
-            if ($relation->pivot) {
-                $relation->pivot->{$field->orderColumn} = $order;
-                $relation->pivot->save();
-            } else {
-                $relation->{$field->orderColumn} = $order;
-                $relation->save();
-            }
-        }
+        return $this->order($relations, $field, $ids);
     }
 }

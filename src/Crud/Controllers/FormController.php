@@ -17,6 +17,7 @@ abstract class FormController
     use Api\CrudHasRelations,
         Api\CrudHasBlocks,
         Api\CrudHasMedia,
+        Api\CrudHasOrder,
         Concerns\HasConfig,
         Concerns\HasForm;
 

@@ -16,6 +16,7 @@ abstract class CrudController
         Api\CrudHasRelations,
         Api\CrudHasBlocks,
         Api\CrudHasMedia,
+        Api\CrudHasOrder,
         Concerns\HasConfig,
         Concerns\HasForm;
 

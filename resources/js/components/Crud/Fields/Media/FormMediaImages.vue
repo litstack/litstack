@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
     name: 'FormMediaImages',
     props: {
@@ -69,16 +70,25 @@ export default {
             sortable: this.images
         };
     },
+    computed: {
+        ...mapGetters(['form'])
+    },
     methods: {
         async newOrder() {
             let payload = {
-                model: 'Spatie\\MediaLibrary\\Models\\Media',
-                order: _.map(this.sortable, 'id')
+                collection: this.field.id,
+                ids: _.map(this.sortable, 'id')
             };
-            await axios.put('order', payload);
+            await axios.put(this.getMediaUrl(), payload);
             this.$bvToast.toast(this.$t('fj.order_changed'), {
                 variant: 'success'
             });
+        },
+        getMediaUrl() {
+            if (this.model.model != 'Fjord\\Crud\\Models\\FormBlock') {
+                return `${this.form.config.route_prefix}/${this.model.id}/media/order`;
+            }
+            return `${this.form.config.route_prefix}/${this.model.model_id}/blocks/${this.model.id}/media/order`;
         },
         imgCols(size = 3) {
             return `col-${size}`;

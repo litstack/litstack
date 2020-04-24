@@ -169,4 +169,40 @@ trait CrudHasMedia
             return response()->json(['message' => __f('fj.image_deleted')], 200);
         }
     }
+
+    /**
+     * Order media.
+     *
+     * @param CrudUpdateRequest $request
+     * @param int $id
+     * @return void
+     */
+    public function orderMedia(CrudUpdateRequest $request, $id)
+    {
+        $model = $this->query()->findOrFail($id);
+        $ids = $request->ids ?? abort(404);
+        $field = $this->config->form->findField($request->collection) ?? abort(404);
+        $media = $model->media()->where('collection_name', $field->id)->get();
+
+        return $this->order($media, $field, $ids);
+    }
+
+    /**
+     * Order block media.
+     *
+     * @param CrudUpdateRequest $request
+     * @param int $id
+     * @param int $blockId
+     * @return void
+     */
+    public function orderBlockMedia(CrudUpdateRequest $request, $id, $blockId)
+    {
+        $ids = $request->ids ?? abort(404);
+        $model = $this->query()->findOrFail($id);
+        $block = $model->blocks()->findOrFail($blockId);
+        $field = $this->config->form->findField($request->collection) ?? abort(404);
+        $media = $block->media()->where('collection_name', $field->id)->get();
+
+        return $this->order($media, $field, $ids);
+    }
 }
