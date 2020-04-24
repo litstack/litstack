@@ -9,6 +9,7 @@ $form->relation('articles')
     ->title('Articles')
     // An optional query builder can be defined:
     ->query(Articles::where('created_by', fjord_user()->id))
+    ->confirm() // User gets asked to confirm unlinking the relation.
     ->sortable()
     ->preview(function ($table) {
         // Build the preview table in here.
@@ -34,5 +35,6 @@ public function articles()
 | `cols`        | Cols of the field.                                                   |
 | `query`       | Initial query builder for the selectable relations. (optional)       |
 | `preview`     | A closure to define the table preview of the corresponding relation. |
+| `confirm`     | Modal pops when unlinkin the relation and asks to confirm.           |
 | `sortable`    | Sortable relation (only works for `many` relations).                 |
 | `orderColumn` | Order column. Default: `order_column`                                |
