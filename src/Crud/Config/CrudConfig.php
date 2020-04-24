@@ -67,14 +67,4 @@ abstract class CrudConfig
             'plural' => ucfirst($tableName),
         ];
     }
-
-    /**
-     * Get preview route.
-     *
-     * @return string|null
-     */
-    public function previewRoute()
-    {
-        return null;
-    }
 }

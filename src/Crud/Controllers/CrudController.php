@@ -141,6 +141,11 @@ abstract class CrudController
             'permissions'
         );
 
+        // Get preview route.
+        if ($this->config->hasMethod('previewRoute')) {
+            $config['preview_route'] = $this->config->previewRoute($model);
+        }
+
         $previous = $this->model::where('id', '<', $id)->orderBy('id', 'desc')->select('id')->first()->id ?? null;
         $next = $this->model::where('id', '>', $id)->orderBy('id')->select('id')->first()->id ?? null;
 

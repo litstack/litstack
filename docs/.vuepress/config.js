@@ -1,8 +1,8 @@
 const meta = {
-    title: 'Fjord | Laravel base CMS/Admin-Panel',
+    title: 'Fjord | Laravel Content-Administration',
     description:
         'Fjord is a multilanguage admin-panel/cms scaffolding package that helps you creating CRUD in seconds via Artisan-commands. It also lets you manage the "static" content of each of your websites pages (Headlines, Text, Images), as well repetitive mixed contents you define. Generating content as well as passing it to your views and retrieving it is super simple.',
-    url: 'https://fjord-cms.com'
+    url: 'https://laravel-fjord.com'
 };
 
 let head = [

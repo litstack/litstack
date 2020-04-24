@@ -229,7 +229,9 @@ class FormField extends Model implements HasMedia, TranslatableContract
 
         $field = $this->config->form->findField($this->field_id);
 
-        $field->local_key = 'value';
+        if ($field) {
+            $field->local_key = 'value';
+        }
 
         return $field;
     }
@@ -287,7 +289,7 @@ class FormField extends Model implements HasMedia, TranslatableContract
     {
         $model = parent::newFromBuilder($attributes, $connection);
 
-        $model->setFieldId($model->field->id);
+        $model->setFieldId($model->field->id ?? '');
 
         return $model;
     }

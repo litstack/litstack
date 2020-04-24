@@ -147,7 +147,7 @@ class ConfigHandler
      * @param string $method
      * @return boolean
      */
-    public function configHasMethod(string $method)
+    public function hasMethod(string $method)
     {
         return method_exists($this->config, $method);
     }
@@ -167,7 +167,7 @@ class ConfigHandler
         // Check for existing method.
         $method = $this->getMethodName($name);
 
-        if ($this->configHasMethod($method)) {
+        if ($this->hasMethod($method)) {
             return $this->resolveMethod($method);
         }
 
@@ -276,7 +276,7 @@ class ConfigHandler
     {
         $method = $this->getMethodName($method);
 
-        if ($this->configHasMethod($method)) {
+        if ($this->hasMethod($method)) {
             return $this->resolveMethod($method, $parameters);
         }
 

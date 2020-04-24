@@ -1,6 +1,6 @@
 # Form Config
 
-In the `form` function of a `Form` or a `CRUD` config all components and fields are configured for editing the data.
+In the `form` function of a **Form** or a **CRUD** config all components and fields are configured for editing the data.
 
 ```php
 use Fjord\Crud\CrudForm;
@@ -30,11 +30,10 @@ $form->card(function ($form) {
 Fields to edit are defined with `$form->{field}(...)`, like shown in the example:
 
 ```php
-$form->input('first_name')
-    ->title('First Name');
+$form->input('first_name')->title('First Name');
 ```
 
-All fields can be found in the documentation under [Fields](/guide/fields/introduction.html).
+All available fields can be found in the documentation under [Fields](/guide/fields/introduction.html).
 
 ## Component
 
@@ -61,4 +60,26 @@ Another help to create clear forms is to separate sections with lines. Fjord com
 
 ```php
 $form->line();
+```
+
+## Preview
+
+There is the possibility to get a `preview` of the stored data directly in the update form. The **route** for this can be easily specified using the method `previewRoute`. For a CRUD Model, the corresponding Model is also passed as a parameter.
+
+```php
+public function previewRoute($article)
+{
+    return route('article', $article->id);
+}
+```
+
+Now the page can be previewed for the devices **desktop**, **tablet** or **mobile**. The default device can be changed in the config `fjord.php` under 'crud.preview.default_device'.
+
+```php
+'crud' => [
+    'preview' => [
+        // Available devices: mobile, tablet, desktop
+        'default_device' => 'desktop'
+    ]
+],
 ```

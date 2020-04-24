@@ -93,19 +93,26 @@ abstract class FormController
         $formName = array_pop($routeSplit);
         $collection = last($routeSplit);
 
-        $config = fjord()->config("form.{$collection}.{$formName}");
+        $configInstance = fjord()->config("form.{$collection}.{$formName}");
+
+        $config = $configInstance->get('names', 'form', 'preview_route', 'permissions', 'route_prefix');
+
+        // Get preview route.
+        if ($configInstance->hasMethod('previewRoute')) {
+            $config['preview_route'] = $configInstance->previewRoute();
+        }
 
         // form_fields entries are loaded or created here.
         $eloquent = $this->initializeFields($config);
-        $eloquent['route'] = $config->route_prefix;
+        $eloquent['route'] = $configInstance->route_prefix;
 
         return view('fjord::app')->withComponent('fj-crud-show')
             ->withModels([
                 'model' => $eloquent
             ])
-            ->withTitle("Form " . $config->names['singular'])
+            ->withTitle("Form " . $configInstance->names['singular'])
             ->withProps([
-                'config' => $config->get('names', 'form', 'preview_route', 'permissions', 'route_prefix'),
+                'config' => $config,
                 'headerComponents' => ['fj-crud-show-preview'],
                 'controls' => [],
                 'content' => ['fj-crud-show-form']

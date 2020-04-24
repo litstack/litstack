@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Form;
+namespace Fjord\Crud;
 
 use Illuminate\Support\Collection;
 
@@ -57,10 +57,10 @@ class FormFieldCollection extends Collection
      * Get attribute.
      *
      * @param string $key
-     * @param boolean $builder
+     * @param boolean $query
      * @return void
      */
-    public function getAttribute(string $key, $builder = false)
+    public function getAttribute(string $key, $query = false)
     {
         // Return values for array key if items is not a list.
         // This returns FormFields models
@@ -68,13 +68,17 @@ class FormFieldCollection extends Collection
             return $this->items[$key];
         }
 
-        $form_field = $this->where('field_id', $key)->first();
+        $formField = $this->where('field_id', $key)->first();
 
-        if (!$form_field) {
+        if (!$formField) {
             return;
         }
 
-        return $form_field->getFormattedFormFieldValue($form_field->form_field, $builder);
+        if ($query) {
+            return $formField->$key();
+        }
+
+        return $formField->getFormattedFieldValue($formField->field);
     }
 
     /**
@@ -92,11 +96,11 @@ class FormFieldCollection extends Collection
      * Get query builder.
      *
      * @param string $method
-     * @param array $params
+     * @param array $parameters
      * @return mixed
      */
-    public function __call(string $method, $params = [])
+    public function __call($method, $parameters)
     {
-        return $this->getAttribute($method, true);
+        return $this->getAttribute($method, $query = true);
     }
 }

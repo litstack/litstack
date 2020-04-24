@@ -1,61 +1,27 @@
 <?php
 
-namespace AwStudio\Fjord\Form;
+namespace Fjord\Crud;
 
+use Fjord\Crud\Models\FormField;
 use Illuminate\Support\Collection;
-use AwStudio\Fjord\Form\Database\FormField;
-use AwStudio\Fjord\Support\Facades\FormLoader;
 
 class FormFieldLoader
 {
     /**
-     * Returns form_field ids from form config.
-     *
-     * @param  string $path
-     * @return array $ids
-     */
-    protected function getExistingFormFieldIds(string $path)
-    {
-        $form = FormLoader::load($path, FormField::class);
-
-        return $form
-            ->form_fields
-            ->pluck('id')
-            ->toArray();
-    }
-
-    /**
-     * Remove form_fields that do not exist in form config.
+     * Remove FormField's that do not exist in form config.
      *
      * @param  FormFieldCollection $items
      * @param  bool                $loadingCollection
      * @param  bool                $loadingName
      * @return FormFieldCollection $items
      */
-    protected function filterByExistingFormFields(FormFieldCollection $items, bool $loadingCollection, bool $loadingName)
+    protected function filterByExistingFields(FormFieldCollection $items, bool $loadingCollection, bool $loadingForm)
     {
         $filteredItems = new FormFieldCollection([]);
 
-        if ($loadingName) {
-
-            $ids = $items->isNotEmpty()
-                ? $this->getExistingFormFieldIds($items->first()->form_fields_path)
-                : [];
-
-            return $items->whereIn('field_id', $ids);
-        } else if (!$loadingCollection) {
-
-            foreach ($items->groupBy('collection') as $name => $collectionItems) {
-                foreach ($collectionItems->groupBy('form_name') as $name => $nameItems) {
-                    $ids = $this->getExistingFormFieldIds($nameItems->first()->form_fields_path);
-                    $filteredItems = $filteredItems->concat($nameItems->whereIn('field_id', $ids));
-                }
-            }
-        } else {
-
-            foreach ($items->groupBy('form_name') as $name => $nameItems) {
-                $ids = $this->getExistingFormFieldIds($nameItems->first()->form_fields_path);
-                $filteredItems = $filteredItems->concat($nameItems->whereIn('field_id', $ids));
+        foreach ($items as $item) {
+            if ($item->field) {
+                $filteredItems->push($item);
             }
         }
 
@@ -63,7 +29,7 @@ class FormFieldLoader
     }
 
     /**
-     * Load form_field entries from database by collection name and|or for
+     * Load FormField entries from database by collection name and|or for
      * form_name. If the collection name or the form_name was not set a group is
      * returned where the respective collection or form can be called with the
      * name.
@@ -75,9 +41,9 @@ class FormFieldLoader
     public function load(string $collection = null, string $name = null)
     {
         $loadingCollection = $collection ? true : false;
-        $loadingName = $name ? true : false;
+        $loadingForm = $name ? true : false;
 
-        $query = Database\FormField::query();
+        $query = FormField::query();
 
         if ($collection) {
             $query->where('collection', $collection);
@@ -89,10 +55,10 @@ class FormFieldLoader
 
         $items = new FormFieldCollection($query->get());
 
-        // Remove form_fields from collection that do not exist in config.
-        $items = $this->filterByExistingFormFields($items, $loadingCollection, $loadingName);
+        // Remove FormField's from collection that do not exist in config.
+        $items = $this->filterByExistingFields($items, $loadingCollection, $loadingForm);
 
-        $items = $this->getGroups($items, $loadingCollection, $loadingName);
+        $items = $this->getGroups($items, $loadingCollection, $loadingForm);
 
         return $items;
     }

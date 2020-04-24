@@ -86,14 +86,4 @@ abstract class FormConfig
             'plural' => ucfirst(Str::plural($this->formName)),
         ];
     }
-
-    /**
-     * Get preview route.
-     *
-     * @return string|null
-     */
-    public function previewRoute()
-    {
-        return null;
-    }
 }
