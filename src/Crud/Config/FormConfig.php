@@ -43,13 +43,17 @@ abstract class FormConfig
      */
     public function __construct()
     {
+        $this->model = FormField::class;
+
+        if ($this->collection) {
+            return;
+        }
+
         $split = explode(
             '\\',
             last(explode('Config\\Form\\', static::class))
         );
         $this->collection = strtolower($split[0]);
-
-        $this->model = FormField::class;
     }
 
     /**
