@@ -10,22 +10,6 @@ use Fjord\Config\ConfigHandler;
 class CrudIndexConfigFactory extends ConfigFactory
 {
     /**
-     * Resolve index query.
-     *
-     * @param \Fjord\Config\ConfigHandler $config
-     * @param Closure $method
-     * @return Builder
-     */
-    public function indexQuery(ConfigHandler $config, Closure $method)
-    {
-        $indexQuery = clone $config->query;
-
-        $method($indexQuery);
-
-        return $indexQuery;
-    }
-
-    /**
      * Setup index table.
      *
      * @param \Fjord\Config\Types\CrudConfig $config

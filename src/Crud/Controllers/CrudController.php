@@ -6,6 +6,7 @@ use Fjord\Crud\MediaField;
 use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Crud\Requests\CrudReadRequest;
+use Illuminate\Database\Eloquent\Builder;
 use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 
@@ -41,6 +42,13 @@ abstract class CrudController
      * @return boolean
      */
     abstract public function authorize(FjordUser $user, string $operation): bool;
+
+    /**
+     * Initial query.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    abstract public function query(): Builder;
 
     /**
      * Show Crud index.

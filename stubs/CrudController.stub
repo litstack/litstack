@@ -2,6 +2,8 @@
 
 namespace FjordApp\Controllers\Crud;
 
+use Illuminate\Database\Eloquent\Builder;
+
 use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Controllers\CrudController;
 
@@ -25,5 +27,15 @@ class DummyClassname extends CrudController
     public function authorize(FjordUser $user, string $operation): bool
     {
         return $user->can("{$operation} DummyTableName");
+    }
+
+    /**
+     * Initial query.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function query(): Builder
+    {
+        return $this->model::query();
     }
 }

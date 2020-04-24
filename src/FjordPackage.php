@@ -3,7 +3,6 @@
 namespace Fjord;
 
 use Fjord\Config\Traits\HasIndex;
-use Fjord\Crud\Config\CrudConfig;
 use Fjord\Application\Application;
 use Fjord\Vue\Components\CardComponent;
 use Fjord\Vue\Components\InfoComponent;
@@ -14,7 +13,6 @@ use Fjord\Crud\Components\CrudShowComponent;
 use Fjord\Crud\Components\CrudIndexComponent;
 use Fjord\Config\Factories\IndexConfigFactory;
 use Fjord\Vue\Components\Index\ColImageComponent;
-use Fjord\Crud\Config\Factories\CrudConfigFactory;
 use Fjord\Application\Package\FjordPackage as Package;
 use Fjord\Crud\Config\Factories\CrudFormConfigFactory;
 use Fjord\Crud\Config\Factories\CrudIndexConfigFactory;
@@ -81,7 +79,6 @@ class FjordPackage extends Package
         NavigationConfig::class => NavigationConfigFactory::class,
 
         // Crud
-        CrudConfig::class => CrudConfigFactory::class,
         HasCrudForm::class => CrudFormConfigFactory::class,
         HasCrudIndex::class => CrudIndexConfigFactory::class,
     ];

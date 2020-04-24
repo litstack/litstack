@@ -26,10 +26,10 @@ class ConfigFactory
      *
      * @param Instance $config
      * @param string $method
-     * @param params ...$parameters
+     * @param array $parameters
      * @return mixed
      */
-    public function handle($method, ...$parameters)
+    public function handle($method, $parameters)
     {
         $closure = function (...$params) use ($method, $parameters) {
             // Merge parameters coming from the factory and from calling the 

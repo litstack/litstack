@@ -54,17 +54,6 @@ abstract class CrudConfig
     }
 
     /**
-     * Get initial query builder.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function query(Builder $query)
-    {
-        //
-    }
-
-    /**
      * Model singular and plural name.
      *
      * @return array $names

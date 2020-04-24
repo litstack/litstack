@@ -2,19 +2,23 @@
 
 namespace Fjord\Crud\Controllers\Api;
 
-use Illuminate\Http\Request;
 use Fjord\Support\IndexTable;
+use Fjord\Crud\Requests\CrudReadRequest;
 
 trait CrudHasIndex
 {
     /**
      * Load index table items.
      *
-     * @param Request $request
+     * @param CrudReadRequest $request
      * @return array $items
      */
-    public function indexTable(Request $request)
+    public function indexTable(CrudReadRequest $request)
     {
-        return IndexTable::get($this->config->indexQuery, $request);
+        $query = $this->config->indexQuery(
+            $this->query()
+        );
+
+        return IndexTable::get($query, $request);
     }
 }

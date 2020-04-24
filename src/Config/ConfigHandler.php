@@ -181,7 +181,7 @@ class ConfigHandler
      * @param array ...$parameters
      * @return mixed
      */
-    public function callMethod($method, ...$parameters)
+    public function callMethod($method, $parameters)
     {
         $attributes = $this->config->$method(...$parameters);
 
@@ -231,15 +231,15 @@ class ConfigHandler
      * @param array $parameters
      * @return array
      */
-    protected function resolveMethod($method, ...$parameters)
+    protected function resolveMethod($method, $parameters = [])
     {
         if (!$this->methodHasFactory($method)) {
-            return $this->callMethod($method, ...$parameters);
+            return $this->callMethod($method, $parameters);
         }
 
         $factory = $this->getMethodFactory($method);
 
-        return $factory->handle($method, ...$parameters);
+        return $factory->handle($method, $parameters);
     }
 
     /**

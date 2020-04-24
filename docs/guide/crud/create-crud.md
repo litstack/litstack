@@ -93,17 +93,18 @@ class ArticleTranslation extends Model
 A controller has been created in which the authorization for all operation is specified. Operations can be `create`, `read`, `update`, `delete`.
 
 ```php
-/**
- * Authorize request for permission operation and authenticated fjord-user.
- * Operations: create, read, update, delete
- *
- * @param FjordUser $user
- * @param string $operation
- * @return boolean
- */
 public function authorize(FjordUser $user, string $operation): bool
 {
     return $user->can("{$operation} articles");
+}
+```
+
+In order to assign authorizations for individual models, the initial query can simply be edited in the controller:
+
+```php
+public function query()
+{
+    return $this->model::where('created_by', fjord_user()->id);
 }
 ```
 
