@@ -39,7 +39,7 @@
     </div>
 
     <!-- fjord translations -->
-    <script src="/admin/lang.js"></script>
+    <script src="{{ config('fjord.route_prefix') }}/lang.js"></script>
     <!-- fjord app -->
     <script src="{{ fjord_js() }}" defer></script>
 
