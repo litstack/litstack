@@ -91,6 +91,17 @@ class Translator
         return fjord_user()->locale;
     }
 
+    /** 
+     * Check if the Fjord application is running in a locale.
+     * 
+     * @param string $locale
+     * @return boolean
+     */
+    public function isLocale(string $locale)
+    {
+        return $locale == $this->getLocale();
+    }
+
     /**
      * Get namespace from path.
      *

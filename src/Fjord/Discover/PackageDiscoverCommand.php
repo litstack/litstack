@@ -1,17 +1,12 @@
 <?php
 
-namespace Fjord\Foundation\Console;
+namespace Fjord\Fjord\Discover;
 
 use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Foundation\PackageManifest;
 use Illuminate\Foundation\Console\PackageDiscoverCommand as LaravelPackageDiscoverCommand;
 
-/**
- * Discover Fjord packages.
- * 
- * 
- */
 class PackageDiscoverCommand extends LaravelPackageDiscoverCommand
 {
     /**

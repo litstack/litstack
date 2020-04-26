@@ -219,4 +219,25 @@ class Application
     {
         return $this->bind($abstract, $instance);
     }
+
+    /**
+     * Get locale for Fjord application.
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->get('translator')->getLocale();
+    }
+
+    /** 
+     * Check if the Fjord application is running in a locale.
+     * 
+     * @param string $locale
+     * @return boolean
+     */
+    public function isLocale(string $locale)
+    {
+        return $this->get('translator')->isLocale($locale);
+    }
 }

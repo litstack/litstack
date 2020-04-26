@@ -12,22 +12,26 @@ use Illuminate\Support\Facades\Route;
 
 class FjordRouter
 {
+    /**
+     * Middlewares that are used by Fjord routes for authenticated users.
+     *
+     * @var array
+     */
     protected $middlewares = [
         'web',
         'fjord.auth:fjord'
     ];
 
     /**
-     * Initialize defaults for a Fjord route.
-     * Fjord Routes should always be created with
-     * \Fjord\Support\Facades\FjordRoute.
+     * Initialize defaults for a Fjord route. 
+     * Fjord Routes should always be created 
+     * with \Fjord\Support\Facades\FjordRoute.
      *
-     * @return Illuminate\Support\Facades\Route
+     * @return \Illuminate\Support\Facades\Route
      */
     public function __call($method, $parameters)
     {
         $route = $this->getRoutePreset();
-
 
         return $route->$method(...$parameters);
     }
@@ -35,7 +39,7 @@ class FjordRouter
     /**
      * Get route preset.
      *
-     * @return Illuminate\Support\Facades\Route
+     * @return \Illuminate\Support\Facades\Route
      */
     protected function getRoutePreset()
     {
@@ -82,7 +86,7 @@ class FjordRouter
     /**
      * Public route using Fjord route prefix.
      * 
-     * @return Illuminate\Support\Facades\Route $route
+     * @return \Illuminate\Support\Facades\Route
      */
     public function public()
     {

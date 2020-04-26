@@ -4,7 +4,7 @@ namespace Fjord\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class App extends Facade
+class FjordApp extends Facade
 {
     /**
      * Get the registered name of the component.

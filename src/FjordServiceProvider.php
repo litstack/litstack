@@ -6,8 +6,8 @@ use FjordApp\Kernel;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\ServiceProvider;
 use Fjord\Auth\Middleware\Authenticate;
+use Illuminate\Support\ServiceProvider;
 
 /**
  * Service providers and console commands that should be registered without 
@@ -23,7 +23,7 @@ class FjordServiceProvider extends ServiceProvider
      */
     protected $providers = [
         Auth\ServiceProvider::class,
-        Foundation\Providers\ArtisanServiceProvider::class,
+        Fjord\Discover\PackageDiscoverServiceProvider::class,
         Support\Macros\BuilderMacros::class,
     ];
 
@@ -44,8 +44,22 @@ class FjordServiceProvider extends ServiceProvider
      */
     protected $aliases = [
         'Fjord' => Support\Facades\Fjord::class,
+        'FjordApp' => Support\Facades\FjordApp::class,
         'FjordLang' => Support\Facades\FjordLang::class,
     ];
+
+    /**
+     * Create a new FjordServiceProvider instance.
+     *
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @return void
+     */
+    public function __construct($app)
+    {
+        parent::__construct($app);
+
+        $this->aliasLoader = AliasLoader::getInstance();
+    }
 
     /**
      * Bootstrap the application services.

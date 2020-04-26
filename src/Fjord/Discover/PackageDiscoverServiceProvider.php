@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Foundation\Providers;
+namespace Fjord\Fjord\Discover;
 
-use Illuminate\Foundation\Providers\ArtisanServiceProvider as LaravelArtisanServiceProvider;
+use Illuminate\Foundation\Providers\ArtisanServiceProvider;
 use Fjord\Foundation\Console\PackageDiscoverCommand;
 
-class ArtisanServiceProvider extends LaravelArtisanServiceProvider
+class PackageDiscoverServiceProvider extends ArtisanServiceProvider
 {
     /**
      * Override Laravel package:discover command to add discover Fjord packages.

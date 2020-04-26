@@ -2,12 +2,24 @@
 
 In Fjord can be managed multilingual. The translation in the frontend can be done in `php` using [laravel's localization](https://laravel.com/docs/7.x/localization) service or in `vue` using [vue-i18n](https://kazupon.github.io/vue-i18n/guide/formatting.html). It uses the format of `laravel`, all translation strings are formatted to use them in `vue-i18n`.
 
-## PHP
+In Laravel applications that include Fjord, there are **two** different locales, one for your website and one for the Fjord application. So a user can manage German content in the Fjord application and still see the interface in an English version.
 
-To compile for the locale of the Fjord interface the `__f()` method is used, just like `__()` from laravel's [localization](https://laravel.com/docs/7.x/localization#retrieving-translation-strings).
+The following examples refer to the translations which look like this:
 
 ```php
-__f('fjord.title')
+// fjord/resources/lang/{locale}/messages.php
+
+return [
+    "welcome": "Welcome to Fjord"
+];
+```
+
+## PHP
+
+To compile for the locale of the Fjord interface the `__f()` helper method is used, just like `__()` from laravel's [localization](https://laravel.com/docs/7.x/localization#retrieving-translation-strings).
+
+```php
+__f('messages.welcome')
 ```
 
 ## Vue
@@ -17,9 +29,21 @@ In `Vue` the [vue-i18n](https://kazupon.github.io/vue-i18n/introduction.html) fo
 ```vue
 <template>
     <div>
-        {{ $t('fjord.title') }}
+        {{ $t('messages.welcome') }}
     </div>
 </template>
+```
+
+## Determine Locale
+
+To determine the locale the function `getLocale` can be used on the `FjordApp` facade like so:
+
+```php
+$fjordLocale = FjordApp::getLocale();
+
+if (FjordApp::isLocale('en')) {
+    //
+}
 ```
 
 ## Add Path
