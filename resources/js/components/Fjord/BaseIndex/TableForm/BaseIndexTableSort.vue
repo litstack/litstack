@@ -9,12 +9,11 @@
         <b-dropdown-item
             v-for="(text, key) in sortBy"
             :key="key"
-            @click="sort(key)">
-
+            @click="sort(key)"
+        >
             <b-form-radio :checked="sort_by_key" :value="key">
                 {{ text }}
             </b-form-radio>
-
         </b-dropdown-item>
     </b-dropdown>
 </template>
@@ -42,6 +41,6 @@ export default {
             this.sort_by_key = key;
             this.$emit('sort', key);
         }
-    },
+    }
 };
 </script>

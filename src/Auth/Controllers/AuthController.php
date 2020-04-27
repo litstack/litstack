@@ -8,6 +8,7 @@ use Fjord\User\Models\FjordUser;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use Fjord\Auth\Controllers\ForgotPasswordController;
 
 class AuthController extends Controller
@@ -46,6 +47,7 @@ class AuthController extends Controller
         }
 
         // TODO: Show login error message.
+        //return Redirect::back()->withErrors(['message', 'Login failed.']);
     }
 
     /**
@@ -91,13 +93,15 @@ class AuthController extends Controller
 
         $user = FjordUser::create([
             'name' => $request->name,
-            'locale' => $request->locale ?? 'de',
+            'locale' => $request->locale ?? config('fjord.locale'),
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
+        // Assign default role.
         $user->assignRole('user');
 
+        // Send reset link.
         if ($request->sendResetLink) {
             $sendResetLink->execute($request);
         }

@@ -20,6 +20,27 @@ class UserIndexConfig implements IndexAble
     public $model = FjordUser::class;
 
     /**
+     * Index table search keys.
+     *
+     * @var array
+     */
+    public $search = ['name', 'email'];
+
+    /**
+     * Index table sort by default.
+     *
+     * @var string
+     */
+    public $sortByDefault = 'id.desc';
+
+    /**
+     * Items per page.
+     *
+     * @var integer
+     */
+    public $perPage = 20;
+
+    /**
      * Initialize index query.
      *
      * @param Builder $query

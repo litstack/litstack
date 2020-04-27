@@ -22,6 +22,13 @@ trait HasCrudIndex
     public $sortByDefault = 'id.desc';
 
     /**
+     * Items per page.
+     *
+     * @var integer
+     */
+    public $perPage = 20;
+
+    /**
      * Setup index table.
      *
      * @param \Fjord\Vue\Crud\CrudTable $table

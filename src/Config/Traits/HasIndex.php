@@ -5,22 +5,13 @@ namespace Fjord\Config\Traits;
 use Fjord\Vue\Table;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * @property-read array $search
+ * @property-read string $sortByDefault
+ * @property-read integer $perPage
+ */
 trait HasIndex
 {
-    /**
-     * Index table search keys.
-     *
-     * @var array
-     */
-    public $search = ['title'];
-
-    /**
-     * Index table sort by default.
-     *
-     * @var string
-     */
-    public $sortByDefault = 'id.desc';
-
     /**
      * Setup index table.
      *

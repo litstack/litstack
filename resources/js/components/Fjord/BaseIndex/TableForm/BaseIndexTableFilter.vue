@@ -2,7 +2,7 @@
     <b-dropdown
         right
         :text="$t('fj.filter')"
-        class="btn-br-none"
+        class="btn-brl-none"
         :variant="filterVariant"
         :disabled="!filter"
     >
@@ -45,11 +45,11 @@ export default {
     methods: {
         doFilter(key) {
             this.filter_scope = key;
-            this.$emit('onFilterChange', key)
+            this.$emit('onFilterChange', key);
         },
         resetFilter() {
             this.filter_scope = null;
-            this.$emit('onFilterChange', null)
+            this.$emit('onFilterChange', null);
         },
         filterActive(key) {
             return key == this.filter_scope;

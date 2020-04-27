@@ -63,8 +63,10 @@ abstract class CrudController
             'index',
             'route_prefix',
             'names',
-            'search',
-            'sortByDefault'
+            'sortBy',
+            'sortByDefault',
+            'perPage',
+            'filter'
         );
 
         return view('fjord::app')

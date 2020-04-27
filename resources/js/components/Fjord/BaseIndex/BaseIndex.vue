@@ -22,17 +22,21 @@
                             :nameSingular="nameSingular"
                             :namePlural="namePlural"
                             @search="doSearch"/>
-                        <template v-slot:append>
+
+                        <template v-slot:append v-if="hasFilter || hasSort">
                             <fj-base-index-table-filter
                                 :filter="filter"
-                                v-if="Object.keys(filter).length !== 0"
+                                v-if="hasFilter"
+                                :class="{'btn-br-none': hasSort}"
                                 @onFilterChange="filterChanged"/>
+
                             <fj-base-index-table-sort
-                                :sortBy="sortBy"
-                                v-if="Object.keys(sortBy).length !== 0"
-                                :sortByDefault="sortByDefault"
+                               :sortBy="sortBy"
+                                v-if="hasSort"
+                              :sortByDefault="sortByDefault"
                                 @sort="sort"/>
-                        </template>
+                        </template>                
+
                     </b-input-group>
 
                 </fj-base-index-table-form>
@@ -63,9 +67,9 @@
             <b-pagination-nav
                 class="mt-4"
                 :link-gen="linkGen"
+                v-model="currentPage"
                 :number-of-pages="numberOfPages"
-                @change="goToPage">
-            </b-pagination-nav>
+                @change="goToPage"/>
 
         </div>
     </div>
@@ -87,12 +91,6 @@ export default {
         cols: {
             required: true,
             type: Array
-        },
-        numberOfPages: {
-            type: Number,
-            default: () => {
-                return 1;
-            }
         },
         searchKeys: {
             type: Array,
@@ -129,6 +127,12 @@ export default {
         namePlural: {
             type: String
         },
+        perPage: {
+            type: Number,
+            default() {
+                return 20;
+            }
+        },
         filter: {
             type: Object,
             default() {
@@ -153,7 +157,8 @@ export default {
             search: '',
             sort_by_key: '',
             filter_scope: null,
-            currentPage: 1
+            currentPage: 1,
+            numberOfPages: 1
         };
     },
 
@@ -168,7 +173,6 @@ export default {
         }
     },
     beforeMount() {
-
         if(this.hasTabs) {
             this.tab = this.tabs[0]
         }
@@ -180,8 +184,11 @@ export default {
         this._loadItems();
     },
     computed: {
-        perPage() {
-            return 20;
+        hasFilter() {
+            return Object.keys(this.filter).length !== 0
+        },
+        hasSort() {
+            return Object.keys(this.sortBy).length !== 0
         },
         hasTabs() {
             return this.tabs.length > 0;
@@ -194,10 +201,12 @@ export default {
         },
         newTab(index) {
             this.tab = this.tabs[index]
+            this.resetCurrentPage()
             this._loadItems()
         },
         filterChanged(filter) {
             this.filter_scope = filter
+            this.resetCurrentPage()
             this._loadItems()
         },
         sort(key) {
@@ -220,17 +229,23 @@ export default {
                 searchKeys: this.searchKeys
             };
 
-            await this.loadItems(payload)
-            try {
-
-            } catch (e) {
-                this.$bus.$emit('error', e);
-            }
+            let response = await this.loadItems(payload)
+            console.log('R', response)
 
             this.isBusy = false;
+
+            if(!response) return
+            if(!'data' in response) return
+            if(!'count' in response.data) return
+
+            this.numberOfPages =  Math.ceil(response.data.count / this.perPage)
+        },
+        resetCurrentPage() {
+            this.currentPage = 1
         },
         doSearch(query) {
             this.search = query
+            this.resetCurrentPage()
             this._loadItems();
         },
         goToPage(page) {

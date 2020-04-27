@@ -3,6 +3,8 @@
 namespace Fjord\Support;
 
 use Illuminate\Http\Request;
+use InvalidArgumentException;
+use Illuminate\Database\Eloquent\Builder;
 
 class IndexTable
 {
@@ -34,10 +36,61 @@ class IndexTable
      */
     protected $except = [];
 
-    public function __construct($query, Request $request)
+    /**
+     * Search keys.
+     *
+     * @var array
+     */
+    protected $searchKeys = [];
+
+    /**
+     * Create new IndexTable instance.
+     *
+     * @param Builder $query
+     * @param Request|null $request
+     * @return void
+     */
+    public function __construct(Builder $query, $request = null)
     {
         $this->query = $query;
         $this->request = $request;
+    }
+
+    /**
+     * Create new IndexTable with query.
+     *
+     * @param Builder $query
+     * @return void
+     */
+    public static function query(Builder $query)
+    {
+        return new self($query);
+    }
+
+    /**
+     * Set request.
+     *
+     * @param Request $request
+     * @return self
+     */
+    public function request(Request $request)
+    {
+        $this->request = $request;
+
+        return $this;
+    }
+
+    /**
+     * Set search keys.
+     *
+     * @param array $keys
+     * @return self
+     */
+    public function search(array $keys)
+    {
+        $this->searchKeys = $keys;
+
+        return $this;
     }
 
     /**
@@ -65,6 +118,12 @@ class IndexTable
         return $this;
     }
 
+    /**
+     * Only.
+     *
+     * @param array $only
+     * @return void
+     */
     public function only(array $only)
     {
         $this->only = $only;
@@ -72,8 +131,19 @@ class IndexTable
         return $this;
     }
 
-    public function items()
+    /**
+     * Fetch items.
+     *
+     * @return array
+     * 
+     * @throws \InvalidArgumentException
+     */
+    public function get()
     {
+        if (!$this->request) {
+            throw new InvalidArgumentException('Missing argument request for IndexTable.');
+        }
+
         $actions = ['filter', 'search', 'order', 'paginate'];
         if (!empty($this->only)) {
             $actions = $this->only;
@@ -86,23 +156,26 @@ class IndexTable
         }
 
         if (in_array('filter', $actions)) {
-            self::applyFilterToIndex();
+            self::applyFilterToQuery();
         }
 
         if (in_array('search', $actions)) {
-            self::applySearchToIndex();
+            self::applySearchToQuery();
         }
 
         if (in_array('order', $actions)) {
-            self::applyOrderToIndex();
+            self::applyOrderToQuery();
         }
 
+        $itemsQuery = clone $this->query;
+
         if (in_array('paginate', $actions)) {
-            self::applyPaginationToIndex();
+            $itemsQuery = self::applyPaginationToQuery($itemsQuery);
         }
 
         $total = $this->query->count();
-        $items = $this->query->get();
+
+        $items = $itemsQuery->get();
 
         return [
             'count' => $total ?? 0,
@@ -110,12 +183,12 @@ class IndexTable
         ];
     }
 
-    public static function get($query, Request $request)
-    {
-        return with(new self($query, $request))->items();
-    }
-
-    protected function applyFilterToIndex()
+    /**
+     * Apply filter to query.
+     *
+     * @return void
+     */
+    protected function applyFilterToQuery()
     {
         if (!$this->request->filter) {
             return;
@@ -126,14 +199,29 @@ class IndexTable
         $this->query = $this->query->$scope();
     }
 
-    protected function applySearchToIndex()
+    /**
+     * Apply search to query.
+     *
+     * @return void
+     */
+    protected function applySearchToQuery()
     {
-        if ($this->request->search) {
-            $this->query->whereLike($this->request->searchKeys, $this->request->search);
+        if (!$this->request->search) {
+            return;
         }
+
+        $this->query->whereLike(
+            $this->searchKeys,
+            $this->request->search
+        );
     }
 
-    protected function applyOrderToIndex()
+    /**
+     * Apply order to query.
+     *
+     * @return void
+     */
+    protected function applyOrderToQuery()
     {
         if (!$this->request->sort_by) {
             return;
@@ -166,12 +254,23 @@ class IndexTable
         $this->query->orderBy($key, $order);
     }
 
-    protected function applyPaginationToIndex()
+    /**
+     * Apply pagination to query. An instance of the Builder is passed here 
+     * because this part should not be applied to the count query.
+     *
+     * @param Builder $query
+     * @return Buider
+     */
+    protected function applyPaginationToQuery(Builder $query)
     {
-        if ($this->request->perPage !== 0) {
-            $page = $this->request->page ?? 1;
-            $perPage = $this->request->perPage;
-            $this->query->skip(($page - 1) * $perPage)->take($perPage);
+        if ($this->request->perPage === 0) {
+            return $query;
         }
+
+        $page = $this->request->page ?? 1;
+        $perPage = $this->request->perPage ?? 20;
+        $query->skip(($page - 1) * $perPage)->take($perPage);
+
+        return $query;
     }
 }

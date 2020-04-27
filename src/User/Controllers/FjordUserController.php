@@ -5,13 +5,21 @@ namespace Fjord\User\Controllers;
 use Illuminate\Http\Request;
 use Fjord\Support\IndexTable;
 use Fjord\User\Models\FjordUser;
-use Fjord\Config\Traits\HasIndex;
-use Illuminate\Routing\Controller;
 use Fjord\User\Requests\FjordUserReadRequest;
 use Fjord\User\Requests\FjordUserDeleteRequest;
 
-class FjordUserController extends Controller
+class FjordUserController
 {
+    /**
+     * Create new FjordUserController instance.
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->config = fjord()->config('user.user_index');
+    }
+
     /**
      * Show user index.
      *
@@ -20,12 +28,17 @@ class FjordUserController extends Controller
      */
     public function showIndex(FjordUserReadRequest $request)
     {
-        $config = fjord()->config('user.user_index')->get(HasIndex::class);
+        $config = $this->config->get(
+            'sortBy',
+            'sortByDefault',
+            'perPage',
+            'index',
+            'filter'
+        );
 
         return view('fjord::app')->withComponent('fj-users')
             ->withTitle('Users')
             ->withProps([
-                'usersCount' => FjordUser::count(),
                 'config' => $config,
             ]);
     }
@@ -55,9 +68,9 @@ class FjordUserController extends Controller
      */
     public function fetchIndex(FjordUserReadRequest $request)
     {
-        return IndexTable::get(
-            fjord()->config('user.user_index')->index_query,
-            $request
-        );
+        return IndexTable::query($this->config->index_query)
+            ->request($request)
+            ->search($this->config->search)
+            ->get();
     }
 }

@@ -27,15 +27,15 @@
                     :cols="config.index"
                     :items="items"
                     :count="count"
-                    :searchKeys="config.search"
-                    :loadItems="loadItems"
-                    :nameSingular="config.names.singular"
-                    :namePlural="config.names.plural"
-                    :sortBy="config.sortBy"
-                    :sortByDefault="config.sortByDefault"
+                    :per-page="config.perPage"
+                    :load-items="loadItems"
+                    :name-singular="config.names.singular"
+                    :name-plural="config.names.plural"
+                    :sort-by="config.sortBy"
+                    :sort-by-default="config.sortByDefault"
                     :filter="config.filter"
-                    :globalActions="config.globalActions"
-                    :recordActions="config.recordActions"
+                    :global-actions="config.globalActions"
+                    :record-actions="config.recordActions"
                 />
             </b-col>
         </b-row>
@@ -76,6 +76,8 @@ export default {
             );
             this.items = response.data.items;
             this.count = response.data.count;
+
+            return response;
         }
     }
 };

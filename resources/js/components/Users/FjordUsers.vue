@@ -12,15 +12,15 @@
                     ref="indexTable"
                     :cols="config.index"
                     :items="users"
-                    :count="count"
-                    :loadItems="loadUsers"
-                    :nameSingular="$t('fj.user')"
-                    :namePlural="$t('fj.users')"
-                    :sortBy="config.sortBy"
-                    :sortByDefault="config.sortByDefault"
+                    :load-items="loadUsers"
+                    :name-singular="$t('fj.user')"
+                    :name-plural="$t('fj.users')"
+                    :per-page="config.perPage"
+                    :sort-by="config.sortBy"
+                    :sort-by-default="config.sortByDefault"
                     :filter="config.filter"
-                    :globalActions="config.globalActions"
-                    :recordActions="config.recordActions"
+                    :global-actions="config.globalActions"
+                    :record-actions="config.recordActions"
                 />
             </b-col>
         </b-row>
@@ -31,21 +31,16 @@
 export default {
     name: 'Users',
     props: {
-        usersCount: {
-            type: Number,
-            required: true
-        },
-        config: {}
+        config: {
+            required: true,
+            type: Object
+        }
     },
     data() {
         return {
             users: [],
-            count: 0,
             data: {}
         };
-    },
-    beforeMount() {
-        this.count = this.usersCount;
     },
     methods: {
         reload() {
@@ -54,7 +49,8 @@ export default {
         async loadUsers(payload) {
             let response = await axios.post('fjord/users-index', payload);
             this.users = response.data.items;
-            this.count = response.data.count;
+
+            return response;
         },
 
         userCreated(user) {
