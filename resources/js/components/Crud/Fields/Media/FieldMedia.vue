@@ -212,7 +212,6 @@ export default {
                 this.dropzone.processQueue();
             });
         },
-
         transformFile(file, done) {
             // If image doesn't require cropping, return bare image
             //

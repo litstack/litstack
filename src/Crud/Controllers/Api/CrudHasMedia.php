@@ -25,25 +25,6 @@ trait CrudHasMedia
     }
 
     /**
-     * Store a newly created block resource in storage.
-     *
-     * @param CrudUpdateRequest $request
-     * @param int $id
-     * @param int $blockId
-     * @return response
-     */
-    public function storeBlockMedia(CrudUpdateRequest $request, $id, $blockId)
-    {
-        $model = $this->model::findOrFail($id);
-
-        $block = $model->blocks()->findOrFail($blockId);
-
-        $field = $block->findField($request->collection) ?? abort(404);
-
-        return $this->storeMediaToModel($request, $block, $field);
-    }
-
-    /**
      * Store media to model.
      *
      * @param CrudUpdateRequest $request

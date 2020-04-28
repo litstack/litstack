@@ -4,6 +4,7 @@ namespace Fjord\Crud\Fields\Media;
 
 use Fjord\Crud\MediaField;
 use Fjord\Crud\Models\FormField;
+use Spatie\MediaLibrary\Models\Media;
 
 class Image extends MediaField
 {
@@ -58,4 +59,11 @@ class Image extends MediaField
         'square' => false,
         'override' => false
     ];
+
+    /**
+     * Media form for custom_properties.
+     *
+     * @var MediaForm
+     */
+    protected $form;
 }
