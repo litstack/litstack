@@ -15,3 +15,5 @@ const setConfig = config => {
 };
 
 Bus.$on('configSet', setConfig);
+
+export default Fjord;

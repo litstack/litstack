@@ -49,7 +49,7 @@ class CrudTable extends Table
     {
         $component = parent::component($component);
 
-        //$component->link($this->defaultLink());
+        $component->link($this->defaultLink());
 
         return $component;
     }

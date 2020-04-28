@@ -3,7 +3,6 @@
 namespace Fjord\Crud\Fields\Relations\Concerns;
 
 use Closure;
-use Fjord\Crud\BaseForm;
 use Fjord\Vue\Crud\RelationTable;
 use Illuminate\Database\Eloquent\Builder;
 use Fjord\Crud\Fields\Relations\OneRelation;
@@ -48,7 +47,7 @@ trait ManagesRelation
      */
     public function edit(Closure $closure)
     {
-        $form = new BaseForm($this->related);
+        $form = new RelationForm($this->related);
 
         $closure($form);
 

@@ -64,10 +64,10 @@ module.exports = {
                 },
                 {
                     title: 'CRUD',
-                    collapsable: true,
+                    collapsable: false,
                     children: [
                         ['guide/crud/introduction', 'Introduction'],
-                        ['guide/crud/create-crud', 'CRUD-Models'],
+                        ['guide/crud/create-crud', 'Models'],
                         ['guide/crud/create-forms', 'Forms'],
                         ['guide/crud/config-index', 'Index Config'],
                         ['guide/crud/config-form', 'Form Config']
@@ -91,7 +91,18 @@ module.exports = {
                         ['guide/fields/image', 'Image'],
                         ['guide/fields/block', 'Block'],
                         ['guide/fields/relation', 'Relation'],
+                        ['guide/fields/one_relation', 'oneRelation'],
+                        ['guide/fields/many_relation', 'manyRelation'],
                         ['guide/fields/component', 'Component']
+                    ]
+                },
+                {
+                    title: 'Frontend',
+                    collapsable: false,
+                    children: [
+                        ['guide/frontend/javascript', 'Javascript'],
+                        ['guide/frontend/vue', 'Vue'],
+                        ['guide/frontend/style_guideline', 'Style Guideline']
                     ]
                 },
                 {

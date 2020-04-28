@@ -103,12 +103,15 @@ All available methods are:
 | Method | Description |
 | -------- | ------------------- |
 | `value` | Table column value. |
+| `small` | Reduces the column to the minimum width. |
 | `sortBy` | Sort key. |
 
 In the Value you can use the `i18n` syntax to enclose attributes in text or append several attributes together like so:
 
 ```php
-$table->col('Name')->value('{first_name} {last_name}')->sortBy('last_name');
+$table->col('Name')
+    ->value('{first_name} {last_name}')
+    ->sortBy('last_name');
 ```
 
 ### `component`
@@ -138,3 +141,41 @@ All available methods for the component are:
 | `prop({name}, {value})` | Add component prop. |
 | `props({array})` | Add multiple component props. |
 | `sortBy` | Sort key. |
+
+### Existing Component
+
+Fjord brings some useful components that can be used in tables.
+
+-   `fj-col-image`
+-   `fj-col-crud-relation`
+
+#### `fj-col-image`
+
+Displays an image. The `src` attribute specifies the url to the image. The urls for the conversions set in the config **fjord.php** can be retrieved from the image using the `conversion_urls` attribute. If your image would be the `image` attribute in your Model, `src` could be `image.conversion_urls.sm`.
+
+Furthermore a `maxWidth` and a `minWidth` can be specified.
+
+```php
+$table->component('fj-col-image')
+    ->src('{image.conversion_urls.sm}')
+    ->maxWidth('50px')
+    ->label('Image')
+    ->small();
+```
+
+#### `fj-col-crud-relation`
+
+Shows a relation and a button with the link to the crud page.
+
+```php
+use Fjord\Support\Facades\Fjord;
+
+$table->component('fj-col-crud-relation')
+    ->props([
+        'related' => 'department',
+        'value' => 'name',
+        'route_prefix' => Fjord::config('crud.department')->route_prefix
+    ])
+    ->label('Department')
+    ->sortBy('department.name');
+```

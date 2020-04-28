@@ -16,6 +16,7 @@ use Fjord\Vue\Components\Index\ColImageComponent;
 use Fjord\Application\Package\FjordPackage as Package;
 use Fjord\Crud\Config\Factories\CrudFormConfigFactory;
 use Fjord\Crud\Config\Factories\CrudIndexConfigFactory;
+use Fjord\Vue\Components\Index\ColCrudRelationComponent;
 use Fjord\Application\Navigation\NavigationConfigFactory;
 use Fjord\Application\Navigation\Config as NavigationConfig;
 
@@ -64,6 +65,7 @@ class FjordPackage extends Package
         'fj-card' => CardComponent::class,
         'fj-info' => InfoComponent::class,
         'fj-col-image' => ColImageComponent::class,
+        'fj-col-crud-relation' => ColCrudRelationComponent::class
     ];
 
     /**

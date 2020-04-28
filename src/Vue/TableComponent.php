@@ -42,4 +42,14 @@ class TableComponent extends Component
 
         return $missing;
     }
+
+    /**
+     * Set defaults.
+     *
+     * @return void
+     */
+    protected function setDefault()
+    {
+        parent::setDefaults();
+    }
 }

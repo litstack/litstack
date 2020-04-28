@@ -68,7 +68,7 @@ class Component extends VueProp
      *
      * @return void
      */
-    public function setDefaults()
+    protected function setDefaults()
     {
         foreach ($this->defaults as $name => $value) {
             $this->props[$name] = $value;

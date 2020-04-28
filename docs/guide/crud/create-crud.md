@@ -1,4 +1,4 @@
-# CRUD-Models
+# Models
 
 The `fjord/app/Config/Crud` directory contains all configuration-files for your CRUD-Models. Each model has its own file and is set up individually. Configurations can be created for existing Models.
 

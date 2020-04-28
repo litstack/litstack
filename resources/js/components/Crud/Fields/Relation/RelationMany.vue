@@ -4,12 +4,20 @@
             <div class="form-control-expand">
                 <div v-if="!!relations.length">
                     <fj-field-relation-index
+                        v-if="!'edit' in field"
                         :model="model"
                         :model-id="modelId"
                         :field="field"
                         :items="{ [field.model]: relations }"
                         :routePrefixes="{ [field.model]: field.route_prefix }"
                         @removeRelation="removeRelation"
+                    />
+                    <fj-field-relation-edit
+                        v-else
+                        :model="model"
+                        :model-id="modelId"
+                        :field="field"
+                        :items="{ [field.model]: relations }"
                     />
                 </div>
                 <div v-else>
