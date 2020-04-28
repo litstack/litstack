@@ -4,8 +4,6 @@
 
 <script>
 import Fjord from './fjord';
-import FjordModel from './eloquent/fjord.model';
-import TranslatableModel from './eloquent/translatable.model';
 import { mapGetters } from 'vuex';
 import axiosMethods from './common/axios';
 
@@ -44,9 +42,7 @@ export default {
     },
     data() {
         return {
-            preparedModels: {},
-            preparedProps: {},
-            preparedCruds: {}
+            preparedProps: {}
         };
     },
     beforeMount() {
@@ -63,7 +59,6 @@ export default {
         );
         this.$store.commit('SET_FJORD_CONFIG', this.config);
 
-        this.prepareModels();
         this.prepareProps();
         this.setAuthData();
         this.setAppLocale();
@@ -119,17 +114,6 @@ export default {
         setAuthData() {
             this.$store.commit('SET_AUTH_DATA', this.auth);
         },
-        prepareModels() {
-            if (typeof this.models != typeof {}) {
-                return;
-            }
-
-            for (name in this.models) {
-                this.preparedModels[name] = this.prepareModel(
-                    this.models[name]
-                );
-            }
-        },
         prepareProps() {
             if (typeof this.props == typeof {}) {
                 this.preparedProps = Object.assign({}, this.props);
@@ -138,19 +122,7 @@ export default {
             if (this.preparedModels) {
                 this.preparedProps.models = this.preparedModels;
             }
-        },
-        prepareModel(model) {
-            switch (model.type) {
-                case 'fjord':
-                    return new FjordModel(model);
-                case 'translatable':
-                    return new TranslatableModel(model);
-                default:
-                    return new FjordModel(model);
-            }
         }
     }
 };
 </script>
-
-<style lang="css" scoped></style>

@@ -17,6 +17,12 @@ const getters = {
     language(state) {
         return state.language;
     },
+    locale(state) {
+        return state.language;
+    },
+    fallback_locale(state) {
+        return state.fallback_locale;
+    },
     config(state) {
         return state.config;
     },

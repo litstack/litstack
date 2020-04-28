@@ -5,11 +5,10 @@
             :back="backRoute"
             :back-text="config.names.plural"
         >
-            <!--
             <fj-crud-show-near-items
                 slot="navigation"
                 v-if="nearItems"
-                :config="config"
+                :route-prefix="config.route_prefix"
                 :nearItems="nearItems"
             />
 
@@ -23,7 +22,6 @@
                     :model="model"
                 />
             </div>
-            -->
         </fj-base-header>
         <b-row>
             <b-col cols="12" md="9" order-md="1">

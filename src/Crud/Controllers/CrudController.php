@@ -161,9 +161,8 @@ abstract class CrudController
                     'next' => $next,
                     'previous' => $previous
                 ],
-                'headerComponents' => ['fj-crud-show-preview'],
+                'headerComponents' => ['fj-crud-preview'],
                 'controls' => [],
-                'content' => ['fj-crud-show-form']
             ]);
     }
 

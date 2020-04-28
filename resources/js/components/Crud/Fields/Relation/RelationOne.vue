@@ -51,8 +51,7 @@
 
 <script>
 import methods from '../methods';
-import TranslatableEloquent from '@fj-js/eloquent/translatable';
-import TableModel from '@fj-js/eloquent/table.model';
+import TableModel from '@fj-js/crud/table.model';
 import { mapGetters } from 'vuex';
 
 export default {

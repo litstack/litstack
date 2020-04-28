@@ -1,9 +1,7 @@
 <template>
     <div class="indent sm">
         <b-button
-            :href="
-                `${baseURL}${config.route_prefix}/${nearItems.previous}/edit`
-            "
+            :href="`${baseURL}${routePrefix}/${nearItems.previous}/edit`"
             :disabled="!nearItems.previous"
             variant="transparent"
             size="sm"
@@ -11,7 +9,7 @@
             <fa-icon icon="arrow-left" />
         </b-button>
         <b-button
-            :href="`${baseURL}${config.route_prefix}/${nearItems.next}/edit`"
+            :href="`${baseURL}${routePrefix}/${nearItems.next}/edit`"
             :disabled="!nearItems.next"
             variant="transparent"
             size="sm"
@@ -29,7 +27,7 @@ export default {
         nearItems: {
             type: Object
         },
-        config: {
+        routePrefix: {
             type: Object,
             required: true
         }

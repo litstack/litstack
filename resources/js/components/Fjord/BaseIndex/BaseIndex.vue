@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import TableModel from '@fj-js/eloquent/table.model';
+import TableModel from '@fj-js/crud/table.model';
 
 export default {
     name: 'IndexTable',

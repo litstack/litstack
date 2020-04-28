@@ -11,18 +11,20 @@ require('./service/library.service');
 
 /**
  * The Fjord Application
- *
- *
  */
 import FjordApp from './FjordApp';
 
 /**
  * A simple event-bus
- *
- *
  */
 import Bus from './common/event.bus';
 Vue.prototype.$Bus = Bus;
+
+/**
+ * Fjord helper
+ */
+import FjordHelper from './common/fjord';
+Vue.prototype.Fjord = FjordHelper;
 
 import store from './store';
 import mixins from './common/mixins';

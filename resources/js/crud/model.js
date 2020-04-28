@@ -1,3 +1,5 @@
+import store from '@fj-js/store';
+
 /**
  * Crud Model.
  */

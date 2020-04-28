@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import FjordModel from '@fj-js/eloquent/fjord.model';
 import { mapGetters } from 'vuex';
 export default {
     name: 'FieldBlocksAddButtons',

@@ -113,9 +113,8 @@ abstract class FormController
             ->withProps([
                 'crud-model' => crud($model),
                 'config' => $config,
-                'header-components' => ['fj-crud-show-preview'],
+                'header-components' => ['fj-crud-preview'],
                 'controls' => [],
-                'content' => ['fj-crud-show-form']
             ]);
     }
 }

@@ -7,11 +7,13 @@
                 :key="index"
             >
                 <div class="card-body">
+                    <!--
                     <fj-fjord-form
                         :ids="ids"
                         :model="fjModel(m)"
                         :key="rerenderKey(m, index)"
                     />
+                    -->
                     <div class="d-flex justify-content-end">
                         <b-button-group>
                             <b-button
@@ -38,7 +40,8 @@
                 @click="createRelation"
                 class="mr-1"
             >
-                <fa-icon icon="plus" /> {{ field.form.names.singular }}
+                <fa-icon icon="plus" />
+                {{ field.form.names.singular }}
             </b-button>
             <b-button
                 variant="secondary"
@@ -46,7 +49,8 @@
                 @click="addRelation"
                 v-b-modal.add-frelation
             >
-                <fa-icon icon="link" /> {{ field.form.names.singular }}
+                <fa-icon icon="link" />
+                {{ field.form.names.singular }}
             </b-button>
             <b-modal id="add-frelation" size="lg" title="Add Relation">
                 <b-table-simple outlined>
@@ -100,16 +104,16 @@
             </b-modal>
         </template>
         <template v-else>
-            <b-alert show variant="warning"
-                >{{ form.config.names.title.singular }} has to be created in
-                order to add <i>{{ field.title }}</i></b-alert
-            >
+            <b-alert show variant="warning">
+                {{ form.config.names.title.singular }} has to be created in
+                order to add
+                <i>{{ field.title }}</i>
+            </b-alert>
         </template>
     </fj-form-item>
 </template>
 
 <script>
-import FjordModel from '@fj-js/eloquent/fjord.model';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -187,9 +191,6 @@ export default {
                 foreign_key: this.field.foreign_key
             });
             this.unrelatedEloquentModels = data;
-        },
-        fjModel(model) {
-            return new FjordModel(model);
         },
         rerenderKey(model, index) {
             return `${model.data.id}-${index}`;

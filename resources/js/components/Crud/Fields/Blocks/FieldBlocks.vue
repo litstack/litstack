@@ -44,8 +44,6 @@
 </template>
 
 <script>
-import FjordModel from '@fj-js/eloquent/fjord.model';
-
 export default {
     name: 'FieldBlocks',
     props: {

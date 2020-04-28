@@ -31,12 +31,9 @@ class Component extends Field
      */
     protected $required = [
         'comp',
-        'model'
     ];
 
-    protected $available = [
-        'model'
-    ];
+    protected $available = [];
 
     /**
      * Create new info instance.
@@ -50,20 +47,6 @@ class Component extends Field
         parent::__construct($id, $model, $routePrefix);
 
         $this->attributes['comp'] = component($id);
-    }
-
-    /**
-     * Set model.
-     *
-     * @param string $id
-     * @return void
-     */
-    public function model(string $id)
-    {
-        $this->attributes['id'] = $id;
-        $this->attributes['model'] = $id;
-
-        return $this;
     }
 
     /**

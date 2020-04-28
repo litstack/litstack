@@ -1,6 +1,4 @@
 import Vue from 'vue';
-import EloquentCollection from '@fj-js/eloquent/collection';
-import FjordModel from '@fj-js/eloquent/fjord.model';
 import Bus from '@fj-js/common/event.bus';
 import { ToastPlugin } from 'bootstrap-vue';
 import store from '@fj-js/store';

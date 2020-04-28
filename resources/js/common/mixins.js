@@ -27,21 +27,20 @@ export default {
     },
 
     /**
-     * Logged in
-     */
-    loggedIn() {
-        if (!store.getters.auth) {
-            return false;
-        }
-        return true;
-    },
-
-    /**
      * Create new CrudModel instance.
      *
      * @param {Object} model
      */
     crud(model) {
         return new CrudModel(model);
+    },
+
+    /**
+     *
+     *
+     * @return {Object}
+     */
+    user() {
+        return store.getters.auth;
     }
 };
