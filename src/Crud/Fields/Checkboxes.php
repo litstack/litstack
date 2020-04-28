@@ -11,7 +11,7 @@ class Checkboxes extends Field
      *
      * @var string
      */
-    protected $component = 'fj-form-checkboxes';
+    protected $component = 'fj-field-checkboxes';
 
     /**
      * Required attributes.

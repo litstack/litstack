@@ -11,7 +11,7 @@ class Icon extends Field
      *
      * @var string
      */
-    protected $component = 'fj-form-icon';
+    protected $component = 'fj-field-icon';
 
     /**
      * Required attributes.

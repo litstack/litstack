@@ -86,6 +86,7 @@ module.exports = {
                         ['guide/fields/range', 'Range'],
                         ['guide/fields/select', 'Select'],
                         ['guide/fields/icon', 'Icon'],
+                        ['guide/fields/code', 'Code Editor'],
                         ['guide/fields/date-time', 'Date/Time'],
                         ['guide/fields/image', 'Image'],
                         ['guide/fields/block', 'Block'],

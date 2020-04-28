@@ -73,7 +73,7 @@ class OneRelation extends OneRelationField
             return parent::getRelation($model);
         }
 
-        return $model->oneRelation($this->related)
+        return $model->oneRelation($this->related, $this->id)
             ->setEagerLoads(
                 $this->query->getEagerLoads()
             );

@@ -3,7 +3,6 @@
 namespace Fjord\Fjord\Discover;
 
 use Illuminate\Foundation\Providers\ArtisanServiceProvider;
-use Fjord\Foundation\Console\PackageDiscoverCommand;
 
 class PackageDiscoverServiceProvider extends ArtisanServiceProvider
 {

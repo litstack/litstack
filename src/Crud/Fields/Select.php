@@ -11,7 +11,7 @@ class Select extends Field
      *
      * @var string
      */
-    protected $component = 'fj-form-select';
+    protected $component = 'fj-field-select';
 
     /**
      * Required attributes.

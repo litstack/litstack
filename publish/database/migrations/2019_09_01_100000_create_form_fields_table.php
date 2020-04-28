@@ -18,9 +18,6 @@ class CreateFormFieldsTable extends Migration
 
             $table->string('collection')->nullable();
             $table->string('form_name')->nullable();
-            $table->string('field_id')->nullable();
-            $table->string('field_type')->nullable();
-            $table->string('relations_type')->nullable();
 
             $table->text('value')->nullable();
 

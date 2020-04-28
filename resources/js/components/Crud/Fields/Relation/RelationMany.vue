@@ -1,22 +1,21 @@
 <template>
-    <fj-form-item :field="field" v-bind:no-hint="!readonly">
+    <fj-form-item :field="field" v-bind:no-hint="!field.readonly">
         <template v-if="model.id">
             <div class="form-control-expand">
                 <div v-if="!!relations.length">
-                    <fj-form-relation-index
+                    <fj-field-relation-index
                         :model="model"
                         :model-id="modelId"
                         :field="field"
                         :items="{ [field.model]: relations }"
-                        :readonly="readonly"
                         :routePrefixes="{ [field.model]: field.route_prefix }"
                         @removeRelation="removeRelation"
                     />
                 </div>
                 <div v-else>
-                    <fj-form-alert-empty
+                    <fj-field-alert-empty
                         :field="field"
-                        :class="{ 'mb-0': readonly }"
+                        :class="{ 'mb-0': field.readonly }"
                     />
                 </div>
 
@@ -32,7 +31,7 @@
 
             <slot />
 
-            <fj-form-relation-modal
+            <fj-field-relation-modal
                 v-if="!field.readonly"
                 :field="field"
                 :model="model"
@@ -43,7 +42,7 @@
             />
         </template>
         <template v-else>
-            <fj-form-alert-not-created :field="field" class="mb-0" />
+            <fj-field-alert-not-created :field="field" class="mb-0" />
         </template>
     </fj-form-item>
 </template>
@@ -65,10 +64,6 @@ export default {
         },
         modelId: {
             required: true
-        },
-        readonly: {
-            required: true,
-            type: Boolean
         }
     },
     data() {
@@ -121,7 +116,7 @@ export default {
                     case 'belongsToMany':
                     case 'manyRelation':
                         response = await axios.post(
-                            `${this.form.config.route_prefix}/${this.modelId}/${this.field.id}/${item.id}`
+                            `${this.field.route_prefix}/${this.field.id}/${item.id}`
                         );
                         break;
                 }
@@ -164,7 +159,7 @@ export default {
                     case 'manyRelation':
                     case 'relation':
                         response = await axios.delete(
-                            `${this.form.config.route_prefix}/${this.model.id}/${this.field.id}/${id}`
+                            `${this.field.route_prefix}/${this.field.id}/${id}`
                         );
                         break;
                 }

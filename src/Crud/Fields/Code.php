@@ -11,7 +11,7 @@ class Code extends Field
      *
      * @var string
      */
-    protected $component = 'fj-form-code';
+    protected $component = 'fj-field-code';
 
     /**
      * Required attributes.

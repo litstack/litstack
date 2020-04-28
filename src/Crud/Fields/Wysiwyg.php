@@ -11,7 +11,7 @@ class Wysiwyg extends Field
      *
      * @var string
      */
-    protected $component = 'fj-form-wysiwyg';
+    protected $component = 'fj-field-wysiwyg';
 
     /**
      * Is field translatable.

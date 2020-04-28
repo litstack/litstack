@@ -103,64 +103,19 @@ abstract class FormController
             $config['preview_route'] = $configInstance->previewRoute();
         }
 
-        // form_fields entries are loaded or created here.
-        $eloquent = $this->initializeFields($configInstance);
-        $eloquent['route'] = $configInstance->route_prefix;
+        $model = FormField::firstOrCreate([
+            'collection' => $configInstance->collection,
+            'form_name' => $configInstance->formName,
+        ]);
 
         return view('fjord::app')->withComponent('fj-crud-show')
-            ->withModels([
-                'model' => $eloquent
-            ])
             ->withTitle("Form " . $configInstance->names['singular'])
             ->withProps([
+                'crud-model' => crud($model),
                 'config' => $config,
-                'headerComponents' => ['fj-crud-show-preview'],
+                'header-components' => ['fj-crud-show-preview'],
                 'controls' => [],
                 'content' => ['fj-crud-show-form']
             ]);
-    }
-
-    /**
-     * Initialy load or create FormFields.
-     *
-     * @param mixed $config
-     * @return void
-     */
-    protected function initializeFields($config)
-    {
-        $fields = [];
-        $blocks = [];
-
-        foreach ($this->fields() as $field) {
-            if ($field->isComponent()) {
-                continue;
-            }
-
-            if (!$field->authorized) {
-                continue;
-            }
-
-            $formField = FormField::firstOrCreate(
-                [
-                    'collection' => $config->collection,
-                    'form_name' => $config->formName,
-                    'field_id' => $field->id
-                ],
-                [
-                    'value' => $field->default ?? null,
-                    'field_type' => get_class($field)
-                ]
-            )->append('last_edit');
-
-            $field->local_key = 'value';
-
-            if ($field instanceof Blocks) {
-                $blocks[] = $field->id;
-            }
-
-            $fields[] = $formField;
-        }
-
-        return eloquentJs(collect($fields), $this->config->route_prefix, $blocks);
     }
 }

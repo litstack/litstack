@@ -11,7 +11,7 @@ class Textarea extends Field
      *
      * @var string
      */
-    protected $component = 'fj-form-textarea';
+    protected $component = 'fj-field-textarea';
 
     /**
      * Is field translatable.

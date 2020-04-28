@@ -11,7 +11,7 @@ class Datetime extends Field
      *
      * @var string
      */
-    protected $component = 'fj-form-date-time';
+    protected $component = 'fj-field-date-time';
 
     /**
      * Required attributes.

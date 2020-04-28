@@ -59,7 +59,7 @@ class CrudForm extends BaseForm
 
         if ($this->inCard()) {
             $this->card
-                ->component('fj-crud-show-form')
+                ->component('fj-field')
                 ->prop('field', $field);
         }
 

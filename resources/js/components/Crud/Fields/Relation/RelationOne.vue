@@ -1,21 +1,24 @@
 <template>
-    <fj-form-item :field="field" :model="model" v-bind:no-hint="!readonly">
+    <fj-form-item
+        :field="field"
+        :model="model"
+        v-bind:no-hint="!field.readonly"
+    >
         <template v-if="model.id">
             <div class="form-control-expand">
                 <div v-if="relation && Object.keys(relation).length > 0">
-                    <fj-form-relation-index
+                    <fj-field-relation-index
                         :field="field"
                         :items="selectedModels"
-                        :readonly="readonly"
                         :model-id="modelId"
                         :routePrefixes="routePrefixes"
                         @removeRelation="removeRelation"
                     />
                 </div>
                 <div v-else>
-                    <fj-form-alert-empty
+                    <fj-field-alert-empty
                         :field="field"
-                        :class="{ 'mb-0': readonly }"
+                        :class="{ 'mb-0': field.readonly }"
                     />
                 </div>
 
@@ -23,7 +26,7 @@
                     variant="secondary"
                     size="sm"
                     v-b-modal="modalId"
-                    v-if="!readonly"
+                    v-if="!field.readonly"
                 >
                     {{ $t('fj.select_item', { model: field.title }) }}
                 </b-button>
@@ -31,7 +34,7 @@
 
             <slot />
 
-            <fj-form-relation-modal
+            <fj-field-relation-modal
                 :field="field"
                 :model="model"
                 :model-id="modelId"
@@ -41,12 +44,13 @@
             />
         </template>
         <template v-else>
-            <fj-form-alert-not-created :field="field" class="mb-0" />
+            <fj-field-alert-not-created :field="field" class="mb-0" />
         </template>
     </fj-form-item>
 </template>
 
 <script>
+import methods from '../methods';
 import TranslatableEloquent from '@fj-js/eloquent/translatable';
 import TableModel from '@fj-js/eloquent/table.model';
 import { mapGetters } from 'vuex';
@@ -64,14 +68,11 @@ export default {
         },
         modelId: {
             required: true
-        },
-        readonly: {
-            required: true,
-            type: Boolean
         }
     },
     data() {
         return {
+            value: null,
             relation: {},
             routePrefixes: [],
             routePrefix: '',
@@ -99,6 +100,7 @@ export default {
     },
 
     methods: {
+        ...methods,
         setRelation() {
             this.selectedModels = { [this.selectedModel]: [this.relation] };
             this.routePrefix = this.field.route_prefix;
@@ -121,7 +123,7 @@ export default {
                 case 'oneRelation':
                     try {
                         response = await axios.post(
-                            `${this.form.config.route_prefix}/${this.model.id}/${this.field.id}/${item.id}`
+                            `${this.field.route_prefix}/${this.field.id}/${item.id}`
                         );
                     } catch (e) {
                         console.log(e);
@@ -183,9 +185,8 @@ export default {
                     break;
                 case 'belongsTo':
                 case 'hasOne':
-                    this.model[`${this.field.id}Model`] = item.id;
-                    this.$emit('changed');
-
+                    this.setValue(item.id);
+                    this.$emit('changed', item.id);
                     break;
             }
             this.relation = item;
@@ -210,7 +211,7 @@ export default {
                 case 'oneRelation':
                     try {
                         response = axios.delete(
-                            `${this.form.config.route_prefix}/${this.model.id}/${this.field.id}/${id}`
+                            `${this.field.route_prefix}/${this.field.id}/${id}`
                         );
                     } catch (e) {
                         console.log(e);
@@ -224,7 +225,7 @@ export default {
                     let response = null;
                     try {
                         response = axios.put(
-                            `${this.field.route}/${this.relation.id}`,
+                            `${this.field.route_prefix}/${this.relation.id}`,
                             {
                                 [this.field.morph_type]: null,
                                 [this.field.foreign_key]: null
@@ -237,8 +238,8 @@ export default {
                     break;
                 case 'belongsTo':
                 case 'hasOne':
-                    this.model[`${this.field.id}Model`] = null;
-                    this.$emit('changed');
+                    this.setValue(null);
+                    this.$emit('changed', null);
                     break;
             }
             this.relation = null;

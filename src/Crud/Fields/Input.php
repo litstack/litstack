@@ -11,7 +11,7 @@ class Input extends Field
      *
      * @var string
      */
-    protected $component = 'fj-form-input';
+    protected $component = 'fj-field-input';
 
     /**
      * Is field translatable.

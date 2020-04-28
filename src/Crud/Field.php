@@ -280,8 +280,9 @@ class Field extends VueProp
         $allowed = $this->getAllowedMethods();
         throw new MethodNotFoundException(
             sprintf(
-                'The %s method is not found for this field. Supported methods: %s.',
+                'The %s method is not found for the %s field. Supported methods: %s.',
                 $method,
+                class_basename(static::class),
                 implode(', ', $allowed)
             )
         );

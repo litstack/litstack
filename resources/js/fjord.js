@@ -3,6 +3,7 @@ require('./common/string');
 require('./common/array');
 require('./common/axios');
 require('./common/window');
+require('./common/fjord');
 
 require('./service/component.service');
 require('./service/page.service');

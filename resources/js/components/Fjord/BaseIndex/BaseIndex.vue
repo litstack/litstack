@@ -58,7 +58,12 @@
 
                 </fj-index-table-table>
             </div>
-            <fj-base-index-table-index-indicator />
+            <fj-base-index-table-index-indicator 
+                :per-page="perPage" 
+                :total="total" 
+                :items="items"
+                :current-page="currentPage"
+                />
         </b-card>
         <div
             class="d-flex justify-content-center"
@@ -158,7 +163,8 @@ export default {
             sort_by_key: '',
             filter_scope: null,
             currentPage: 1,
-            numberOfPages: 1
+            numberOfPages: 1,
+            total: 0
         };
     },
 
@@ -239,6 +245,7 @@ export default {
             if(!'count' in response.data) return
 
             this.numberOfPages =  Math.ceil(response.data.count / this.perPage)
+            this.total = response.data.count
         },
         resetCurrentPage() {
             this.currentPage = 1

@@ -15,7 +15,7 @@ class Component extends Field
      *
      * @var string
      */
-    protected $component = 'fj-form-component';
+    protected $component = 'fj-field-component';
 
     /**
      * Is field translatable.

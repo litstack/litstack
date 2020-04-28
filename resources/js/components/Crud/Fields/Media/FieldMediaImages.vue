@@ -1,0 +1,107 @@
+<template>
+    <draggable
+        v-model="sortable"
+        class="row"
+        :options="{ disabled: field.readonly }"
+        @end="newOrder"
+        v-if="sortable.length > 0"
+    >
+        <div
+            :class="imgCols(field.image_size)"
+            v-for="(image, index) in sortable"
+            :key="image.id"
+        >
+            <div
+                :class="{
+                    'mb-3': !field.readonly,
+                    'card no-fx fjord-card': true
+                }"
+            >
+                <div
+                    :class="{
+                        'fjord-card__1x1': field.square,
+                        'fjord-card__image': true
+                    }"
+                >
+                    <img :src="imgPath(image)" class />
+                </div>
+                <div class="text-right">
+                    <b-button
+                        size="sm"
+                        variant="link"
+                        class="text-secondary"
+                        v-b-modal="`fjord-image-${field.id}-${image.id}`"
+                    >
+                        <i
+                            :class="`fas fa-${field.readonly ? 'eye' : 'edit'}`"
+                        ></i>
+                    </b-button>
+                </div>
+                <fj-field-media-modal
+                    :index="index"
+                    :field="field"
+                    :image="image"
+                    :imgPath="imgPath"
+                    :model="model"
+                    :model-id="modelId"
+                    @delete="deleteImage"
+                />
+            </div>
+        </div>
+    </draggable>
+</template>
+
+<script>
+import { mapGetters } from 'vuex';
+export default {
+    name: 'FieldMediaImages',
+    props: {
+        images: {
+            type: Array
+        },
+        field: {
+            required: true,
+            type: Object
+        },
+        modelId: {
+            required: true
+        },
+        model: {
+            required: true,
+            type: Object
+        }
+    },
+    data() {
+        return {
+            sortable: this.images
+        };
+    },
+    computed: {
+        ...mapGetters(['form'])
+    },
+    methods: {
+        async newOrder() {
+            let payload = {
+                collection: this.field.id,
+                ids: _.map(this.sortable, 'id')
+            };
+            await axios.put(this.getMediaUrl(), payload);
+            this.$bvToast.toast(this.$t('fj.order_changed'), {
+                variant: 'success'
+            });
+        },
+        getMediaUrl() {
+            return `${this.field.route_prefix}/media/order`;
+        },
+        imgCols(size = 3) {
+            return `col-${size}`;
+        },
+        imgPath(image) {
+            return `/storage/${image.id}/${image.file_name}`;
+        },
+        deleteImage(index) {
+            this.$delete(this.sortable, index);
+        }
+    }
+};
+</script>

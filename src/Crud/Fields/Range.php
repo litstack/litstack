@@ -11,7 +11,7 @@ class Range extends Field
      *
      * @var string
      */
-    protected $component = 'fj-form-range';
+    protected $component = 'fj-field-range';
 
     /**
      * Required attributes.

@@ -65,11 +65,11 @@ trait CrudHasMedia
             ? [app()->getLocale() => $properties]
             : $properties;
 
-        $model->addMedia($request->media)
+        $media = $model->addMedia($request->media)
             ->withCustomProperties($customProperties)
             ->toMediaCollection($request->collection);
 
-        return response()->json(['message' => __f('fj.image_uploaded')], 200);
+        return response()->json($media, 200);
     }
 
     /**

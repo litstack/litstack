@@ -5,6 +5,7 @@
             :back="backRoute"
             :back-text="config.names.plural"
         >
+            <!--
             <fj-crud-show-near-items
                 slot="navigation"
                 v-if="nearItems"
@@ -18,10 +19,11 @@
                     :key="key"
                     :is="component"
                     :config="config"
-                    v-if="crud.model"
-                    :model="crud.model"
+                    v-if="model"
+                    :model="model"
                 />
             </div>
+            -->
         </fj-base-header>
         <b-row>
             <b-col cols="12" md="9" order-md="1">
@@ -31,7 +33,7 @@
                         :key="key"
                         :is="component.name"
                         v-bind="component.props"
-                        :model="crud.model"
+                        :model="model"
                         :config="config"
                     />
                 </b-row>
@@ -40,7 +42,7 @@
             <b-col cols="12" md="3" order-md="2" class="pb-4 mb-md-0">
                 <fj-crud-show-controls
                     :config="config"
-                    :create="create"
+                    :create="isCreate"
                     :title="config.names.singular"
                 >
                     <div
@@ -54,8 +56,8 @@
                             :key="key"
                             :is="component"
                             :nearItems="nearItems"
-                            v-if="crud.model"
-                            :model="crud.model"
+                            v-if="model"
+                            :model="model"
                         />
                     </div>
                 </fj-crud-show-controls>
@@ -69,8 +71,9 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'CrudShow',
     props: {
-        models: {
-            type: Object
+        crudModel: {
+            type: Object,
+            required: true
         },
         config: {
             type: [Array, Object],
@@ -110,8 +113,7 @@ export default {
     },
     data() {
         return {
-            id: this.models.model.id,
-            route: null
+            model: {}
         };
     },
     methods: {
@@ -155,36 +157,15 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['crud', 'form']),
-        create() {
+        isCreate() {
             return window.location.pathname.split('/').pop() == 'create';
         }
     },
     beforeMount() {
+        this.model = this.crud(this.crudModel);
+
+        this.$store.commit('SET_CONFIG', this.config);
         //this.crud.model = this.crud.models.model;
-
-        this.$store.commit('SET_MODEL', this.models.model);
-
-        this.$store.dispatch('setFormConfig', this.config);
-
-        this.$bus.$on('modelsSaved', () => {
-            this.saved();
-        });
-
-        this.$bus.$on('loadModel', () => {
-            this.loadModel();
-        });
-
-        this.$bus.$on('modelLoaded', () => {
-            this.$bvToast.toast(
-                this.$t('fj.model_loaded', {
-                    model: this.form.config.names.singular
-                }),
-                {
-                    variant: 'success'
-                }
-            );
-        });
     },
     mounted() {
         this.scrollToFormFieldFromHash();

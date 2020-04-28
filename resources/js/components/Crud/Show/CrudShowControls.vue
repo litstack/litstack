@@ -24,6 +24,7 @@
                     <fa-icon icon="undo" />
                 </b-button>
             </b-col>
+            <!--
             <b-col cols="12" v-if="lastEdit">
                 <span
                     class="text-muted pb-1 d-block"
@@ -35,6 +36,7 @@
                     "
                 />
             </b-col>
+            -->
 
             <b-col cols="12">
                 <slot name="controls" />
@@ -70,7 +72,7 @@ export default {
     methods: {
         async saveAll() {
             try {
-                await this.$store.dispatch('saveModels');
+                await this.$store.dispatch('save');
             } catch (e) {
                 console.log(e);
                 return;
@@ -82,36 +84,11 @@ export default {
                 }
             );
         },
-        onSaved(results) {
-            if (!results) {
-                return;
-            }
-
-            let item = results[0];
-            if ('last_edit' in item.data) {
-                this.lastEdit = item.data.last_edit;
-            }
-        },
-        getLastEdit() {
-            if (this.crud.model instanceof FjordModel) {
-                this.lastEdit = this.crud.model.last_edit;
-                return;
-            } else if (this.form) {
-                this.lastEdit = this.crud.model.items.items[0].last_edit;
-                return;
-            }
-
-            this.lastEdit = null;
-        },
         loadModel() {
             this.$bus.$emit('loadModel');
         }
     },
-    beforeMount() {
-        this.$bus.$on('modelsSaved', this.onSaved);
-    },
     mounted() {
-        this.getLastEdit();
         let self = this;
         document.addEventListener(
             'keydown',
@@ -132,7 +109,7 @@ export default {
         );
     },
     computed: {
-        ...mapGetters(['canSave', 'language', 'languages', 'crud', 'form']),
+        ...mapGetters(['canSave', 'language', 'languages']),
         isMultilanguage() {
             return this.languages.length > 1;
         },

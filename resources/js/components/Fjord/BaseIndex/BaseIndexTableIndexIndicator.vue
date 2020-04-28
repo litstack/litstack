@@ -1,10 +1,10 @@
 <template>
     <div>
-        <small class="text-primary fj-crud-index-table__index-indicator"
-            ><template v-if="total">
+        <small class="text-primary fj-crud-index-table__index-indicator">
+            <template v-if="total">
                 {{ from }} - {{ to }} {{ $t('fj.of') }} {{ total }}
-            </template></small
-        >
+            </template>
+        </small>
     </div>
 </template>
 
@@ -12,27 +12,34 @@
 import { mapGetters } from 'vuex';
 export default {
     name: 'BaseIndexTableIndexIndicator',
-    computed: {
-        ...mapGetters(['form', 'crud']),
-        perPage() {
-            return this.form.config.index.per_page || 0;
+    props: {
+        perPage: {
+            required: true,
+            type: Number
         },
+        currentPage: {
+            required: true,
+            type: Number
+        },
+        total: {
+            required: true,
+            type: Number
+        },
+        items: {
+            required: true,
+            type: Array
+        }
+    },
+    computed: {
         from() {
             return (
-                this.crud.page * (this.perPage || 1) -
+                this.currentPage * (this.perPage || 1) -
                     (this.perPage || 1) +
                     1 || 1
             );
         },
         to() {
-            return (
-                (this.crud.page * (this.perPage || 1) > this.crud.total
-                    ? this.crud.total || this.crud.items.length
-                    : this.crud.page * (this.perPage || 1)) || this.total
-            );
-        },
-        total() {
-            return this.crud.total || this.crud.items.length;
+            return this.from + this.items.length - 1;
         }
     }
 };

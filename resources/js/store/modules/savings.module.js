@@ -8,56 +8,35 @@ import store from '@fj-js/store';
 Vue.use(ToastPlugin);
 
 const initialState = {
-    modelsToSave: [],
-    saveJobs: [],
-    saveModelIds: {}
+    jobs: []
 };
 
 const getters = {
     canSave(state) {
-        return state.modelsToSave.length > 0 || state.saveJobs.length > 0;
+        return state.jobs.length > 0;
     }
 };
 
 export const actions = {
-    async saveModels({ commit, state }) {
-        // save jobs
+    async save({ commit, state }) {
+        // Run save jobs.
         let promises = [];
-        for (let i = 0; i < state.saveJobs.length; i++) {
-            let saveJob = state.saveJobs[i];
-            let promise = axios[saveJob.method](saveJob.route, saveJob.data);
+        for (let i = 0; i < state.jobs.length; i++) {
+            let job = state.jobs[i];
+            let promise = axios({
+                method: job.method,
+                url: job.route,
+                data: job.params
+            });
             promises.push(promise);
         }
 
-        let collection = new EloquentCollection({ data: [] }, FjordModel);
-        let items = [];
-        for (let key in state.modelsToSave) {
-            let model = state.modelsToSave[key];
-            if (model.model == 'Fjord\\Crud\\Models\\FormBlock') {
-                let promise = axios.put(
-                    `${store.state.form.config.route_prefix}/${model.model_id}/blocks/${model.field_id}/${model.id}`,
-                    model.getPayload(state.saveModelIds[model.route])
-                );
-            } else {
-                items.push(model);
-            }
-        }
-
-        collection.items = collect(items);
-
-        // save eloquent models
-        if (items.length > 0) {
-            let promise = collection.save(state.saveModelIds);
-
-            promises.push(promise);
-        }
-
-        // parallel map flow
+        // Parallel map flow.
         let results = await Promise.all(promises);
 
-        Bus.$emit('modelsSaved', results[0]);
+        Fjord.event.$emit('saved', results[0]);
 
-        commit('SAVED');
+        commit('FLUSH_SAVE_JOBS');
 
         return results;
     },
@@ -70,53 +49,41 @@ export const state = Object.assign({}, initialState);
 
 export const mutations = {
     ADD_SAVE_JOB(state, job) {
-        let saveJob = state.saveJobs.find(saveJob => {
-            return (
-                saveJob.route == job.route &&
-                saveJob.method == job.method &&
-                saveJob.data.id == job.data.id
-            );
+        let saveJob = null;
+        let index = state.jobs.findIndex(j => {
+            return j.method == job.method && j.route == job.route;
         });
-        if (!saveJob) {
-            state.saveJobs.push(job);
+
+        if (index > -1) {
+            saveJob = state.jobs[index];
         } else {
-            state.saveJobs[state.saveJobs.indexOf(saveJob)] = job;
+            saveJob = job;
+        }
+
+        // Merge params.
+        saveJob.params = _.merge(saveJob.params, job.params);
+
+        if (index > -1) {
+            state.jobs[index] = saveJob;
+        } else {
+            state.jobs.push(saveJob);
         }
     },
-    ADD_MODELS_TO_SAVE(state, { model, id }) {
-        if (!state.modelsToSave.includes(model)) {
-            state.modelsToSave.push(model);
-            state.saveModelIds[model.route] = [];
-        }
-        if (!state.saveModelIds[model.route].includes(id)) {
-            state.saveModelIds[model.route].push(id);
-        }
-    },
-    REMOVE_MODELS_FROM_SAVE(state, { model, id }) {
-        if (!state.modelsToSave.includes(model)) {
+    REMOVE_SAVE_JOB(state, job) {
+        let index = state.jobs.findIndex(j => {
+            return j.method == job.method && j.route == job.route;
+        });
+
+        if (index == -1) {
             return;
         }
-        if (!state.saveModelIds[model.route].includes(id)) {
-            return;
-        }
-        state.saveModelIds[model.route].splice(
-            state.saveModelIds[model.route].indexOf(id),
-            1
-        );
-        if (state.saveModelIds[model.route].length > 0) {
-            return;
-        }
-        state.modelsToSave.splice(state.modelsToSave.indexOf(model), 1);
+        let saveJob = state.jobs[index];
+        saveJob.params = _.omit(saveJob.params, job.params);
+
+        state.jobs[index] = saveJob;
     },
-    SAVED(state) {
-        state.modelsToSave = [];
-        state.saveModelIds = {};
-        state.saveJobs = [];
-    },
-    FLUSH_SAVINGS(state) {
-        state.modelsToSave = [];
-        state.saveJobs = [];
-        state.saveModelIds = {};
+    FLUSH_SAVE_JOBS(state) {
+        state.jobs = [];
     }
 };
 

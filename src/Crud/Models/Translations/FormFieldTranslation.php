@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class FormFieldTranslation extends Model
 {
     /**
-     * Timestamps
+     * No timestamps
      *
      * @var boolean
      */
@@ -20,10 +20,12 @@ class FormFieldTranslation extends Model
      */
     protected $fillable = ['value'];
 
-    /*
-    public function model()
-    {
-        return $this->belongsTo('Fjord\Models\PageContent', 'form_field_id');
-    }
-    */
+    /**
+     * Casts.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'value' => 'json'
+    ];
 }

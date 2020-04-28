@@ -49,13 +49,14 @@ class CrudRelations extends ServiceProvider
      */
     public function manyRelation()
     {
-        Builder::macro('manyRelation', function (string $related) {
+        Builder::macro('manyRelation', function (string $related, string $fieldId) {
             $instance = new $related;
             $model = $this->getModel();
 
             return $model->belongsToMany($related, 'form_relations', 'from_model_id', 'to_model_id', $model->getKeyName(), $instance->getKeyName())
                 ->where('form_relations.from_model_type', get_class($model))
                 ->where('form_relations.to_model_type', $related)
+                ->where('field_id', $fieldId)
                 ->orderBy('form_relations.order_column');
         });
     }
@@ -67,13 +68,14 @@ class CrudRelations extends ServiceProvider
      */
     public function oneRelation()
     {
-        Builder::macro('oneRelation', function (string $related) {
+        Builder::macro('oneRelation', function (string $related, string $fieldId) {
             $instance = new $related;
             $model = $this->getModel();
 
             return $model->belongsToMany($related, 'form_relations', 'from_model_id', 'to_model_id', $model->getKeyName(), $instance->getKeyName())
                 ->where('form_relations.from_model_type', get_class($model))
                 ->where('form_relations.to_model_type', $related)
+                ->where('field_id', $fieldId)
                 ->orderBy('form_relations.order_column');
         });
     }

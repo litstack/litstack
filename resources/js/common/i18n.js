@@ -7,7 +7,7 @@ Vue.use(VueI18n);
 
 const i18n = new VueI18n({
     locale: localStorage.getItem('fj-locale') || 'en',
-    messages,
+    messages
 });
 
 window.i18n = i18n;

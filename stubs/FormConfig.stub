@@ -31,7 +31,9 @@ class DummyConfigClassName extends FormConfig
      */
     public function form(CrudForm $form)
     {
-        $form->input('text')
+        $form->card(function($form) {
+            $form->input('text')
             ->title('text');
+        })->cols(12)->title(ucfirst($this->formName));
     }
 }

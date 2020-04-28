@@ -12,7 +12,7 @@ class Image extends MediaField
      *
      * @var string
      */
-    protected $component = 'fj-form-media';
+    protected $component = 'fj-field-media';
 
     /**
      * Is field translatable.

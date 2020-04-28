@@ -8,7 +8,6 @@ A drag and drop image uploader using Spatie's [medialibary](https://docs.spatie.
 $form->image('images') // images is the corresponding media collection.
     ->translatable()
     ->title('Images')
-    ->placeholder('Title')
     ->hint('Image Collection.')
     ->maxFiles(5)
     ->crop(true) // Should the image be cropped before upload.

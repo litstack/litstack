@@ -52,21 +52,34 @@ class FormBlock extends Model implements HasMedia, TranslatableContract
      *
      * @var array
      */
-    protected $fillable = ['field_id', 'model_type', 'model_id', 'type', 'content', 'order_column'];
+    protected $fillable = [
+        'field_id',
+        'model_type',
+        'model_id',
+        'type',
+        'content',
+        'order_column'
+    ];
 
     /**
      * Appends.
      *
      * @var array
      */
-    protected $appends = ['fields', 'translation'];
+    protected $appends = [
+        'fields',
+        'translation'
+    ];
 
     /**
      * Eager loads.
      *
      * @var array
      */
-    protected $with = ['media'];
+    protected $with = [
+        'translations',
+        'media'
+    ];
 
     /**
      * Casts.

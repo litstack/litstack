@@ -154,10 +154,8 @@ abstract class CrudController
 
         return view('fjord::app')->withComponent('fj-crud-show')
             ->withTitle('Edit ' . $this->config->names['singular'])
-            ->withModels([
-                'model' => eloquentJs($model, $this->config->route_prefix, $blocks),
-            ])
             ->withProps([
+                'crud-model' => crud($model),
                 'config' => $config,
                 'backRoute' => $this->config->route_prefix,
                 'nearItems' => [

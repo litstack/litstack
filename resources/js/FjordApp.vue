@@ -61,7 +61,7 @@ export default {
             'SET_FALLBACK_LOCALE',
             this.translatable.fallback_locale
         );
-        this.$store.commit('SET_CONFIG', this.config);
+        this.$store.commit('SET_FJORD_CONFIG', this.config);
 
         this.prepareModels();
         this.prepareProps();

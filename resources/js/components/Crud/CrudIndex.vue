@@ -62,6 +62,9 @@ export default {
             count: 0
         };
     },
+    beforeMount() {
+        this.$store.commit('SET_CONFIG', this.config);
+    },
     computed: {
         ...mapGetters(['baseURL'])
     },

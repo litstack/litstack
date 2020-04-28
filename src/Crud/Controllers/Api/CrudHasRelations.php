@@ -123,7 +123,8 @@ trait CrudHasRelations
             'from_model_type' => $this->model,
             'from_model_id' => $model->id,
             'to_model_type' => get_class($relation),
-            'to_model_id' => $relation->id
+            'to_model_id' => $relation->id,
+            'field_id' => $field->id
         ];
 
         return FormRelation::where($query)->delete();
@@ -236,6 +237,7 @@ trait CrudHasRelations
             'from_model_type' => $this->model,
             'from_model_id' => $model->id,
             'to_model_type' => get_class($relation),
+            'field_id' => $field->id
         ];
 
         // Replace previous relation with new one.
@@ -262,6 +264,7 @@ trait CrudHasRelations
             'from_model_id' => $model->id,
             'to_model_type' => get_class($relation),
             'to_model_id' => $relation->id,
+            'field_id' => $field->id
         ];
 
         // Check if relation already exists.

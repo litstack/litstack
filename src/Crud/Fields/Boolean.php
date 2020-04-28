@@ -11,7 +11,7 @@ class Boolean extends Field
      *
      * @var string
      */
-    protected $component = 'fj-form-boolean';
+    protected $component = 'fj-field-boolean';
 
     /**
      * Required attributes.

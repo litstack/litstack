@@ -1,6 +1,38 @@
 <?php
 
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+
+
+if (!function_exists('crud')) {
+    /**
+     * Create new CrudJs instance.
+     *
+     * @param mixed $model
+     * @return \Fjord\Crud\CrudJs|array
+     */
+    function crud($model)
+    {
+        if ($model instanceof EloquentCollection && $model instanceof Collection) {
+            $cruds = [];
+            foreach ($model as $m) {
+                $cruds[] = crud($m);
+            }
+            return $cruds;
+        }
+
+        return new \Fjord\Crud\CrudJs($model);
+    }
+}
+
 if (!function_exists('component')) {
+    /**
+     * Get a new Vue component instance.
+     *
+     * @param string $name
+     * @param mixed $fallback
+     * @return \Fjord\Vue\Component|mixed
+     */
     function component(string $name, $fallback = null)
     {
         if (fjord()->get('components')->isRegistered($name)) {
@@ -16,6 +48,13 @@ if (!function_exists('component')) {
 }
 
 if (!function_exists('fa')) {
+    /**
+     * Get a fontawesome icon.
+     *
+     * @param string $group
+     * @param string $icon
+     * @return string
+     */
     function fa(string $group, $icon = null)
     {
         if (!$icon) {
@@ -28,6 +67,12 @@ if (!function_exists('fa')) {
 }
 
 if (!function_exists('strip_slashes')) {
+    /**
+     * Strip slashes for routes. Make /admin//route => /admin/route
+     *
+     * @param string $string
+     * @return void
+     */
     function strip_slashes(string $string)
     {
         return preg_replace('#/+#', '/', $string);
@@ -35,6 +80,12 @@ if (!function_exists('strip_slashes')) {
 }
 
 if (!function_exists('is_closure')) {
+    /**
+     * Is Closure.
+     *
+     * @param mixed $t
+     * @return boolean
+     */
     function is_closure($t)
     {
         return $t instanceof Closure;
@@ -42,6 +93,11 @@ if (!function_exists('is_closure')) {
 }
 
 if (!function_exists('fjord_js')) {
+    /**
+     * Get the Fjord app.js file path.
+     *
+     * @return string
+     */
     function fjord_js()
     {
         $js_path = config('fjord.assets.js')
@@ -57,6 +113,11 @@ if (!function_exists('fjord_js')) {
 }
 
 if (!function_exists('fjord_user')) {
+    /**
+     * Get the authenticated Fjord user.
+     *
+     * @return \Fjord\User\Models\FjordUser
+     */
     function fjord_user()
     {
         return Auth::guard('fjord')->user();
@@ -64,6 +125,13 @@ if (!function_exists('fjord_user')) {
 }
 
 if (!function_exists('__f')) {
+    /**
+     * Translate by key.
+     *
+     * @param string $key
+     * @param array $replace
+     * @return void
+     */
     function __f($key = null, $replace = [])
     {
         if (is_null($key)) {
@@ -75,6 +143,14 @@ if (!function_exists('__f')) {
 }
 
 if (!function_exists('__f_')) {
+    /**
+     * Translate if key exists or returns default.
+     *
+     * @param string $key
+     * @param string $default
+     * @param array $replace
+     * @return string
+     */
     function __f_($key, $default, $replace = [])
     {
         return __f($key, $replace) !== $key
@@ -84,6 +160,12 @@ if (!function_exists('__f_')) {
 }
 
 if (!function_exists('fjord_config_path')) {
+    /**
+     * Path to Fjord config files.
+     *
+     * @param string $path
+     * @return void
+     */
     function fjord_config_path($path = '')
     {
         return base_path('fjord/app/Config' . ($path ? DIRECTORY_SEPARATOR . $path : $path));
@@ -91,27 +173,37 @@ if (!function_exists('fjord_config_path')) {
 }
 
 if (!function_exists('fjord_resource_path')) {
+    /**
+     * Path to Fjord resources.
+     *
+     * @param string $path
+     * @return void
+     */
     function fjord_resource_path($path = '')
     {
-        return resource_path(config('fjord.resource_path') . ($path ? DIRECTORY_SEPARATOR . $path : $path));
+        return base_path('fjord/resources' . ($path ? DIRECTORY_SEPARATOR . $path : $path));
     }
 }
 
 if (!function_exists('fjord_path')) {
-    function fjord_path($path = '')
+    /**
+     * Path to Fjord composer package.
+     *
+     * @param string $path
+     * @return string
+     */
+    function fjord_path(string $path = '')
     {
         return realpath(__DIR__ . '/../../') . ($path ? DIRECTORY_SEPARATOR . $path : $path);
     }
 }
 
-if (!function_exists('fjord_local_resource_path')) {
-    function fjord_local_resource_path($path = '')
-    {
-        return realpath(__DIR__ . '/../../resources/') . ($path ? DIRECTORY_SEPARATOR . $path : $path);
-    }
-}
-
 if (!function_exists('fjord')) {
+    /**
+     * Get Fjord facade.
+     *
+     * @return Fjord\Fjord\Fjord
+     */
     function fjord()
     {
         return app()->get('fjord');
@@ -119,20 +211,24 @@ if (!function_exists('fjord')) {
 }
 
 if (!function_exists('fjord_app')) {
+    /**
+     * Get Fjord application instance.
+     *
+     * @return \Fjord\Application\Application
+     */
     function fjord_app()
     {
         return app()->get('fjord.app');
     }
 }
 
-if (!function_exists('eloquentJs')) {
-    function eloquentJs($model, string $route, array $with = [], $type = 'fjord')
-    {
-        return (new Fjord\Crud\EloquentJs\EloquentJs($model, $route, $with, $type))->toArray();
-    }
-}
-
 if (!function_exists('is_translatable')) {
+    /**
+     * Is a Model translatable.
+     *
+     * @param mixed $model
+     * @return boolean
+     */
     function is_translatable($model)
     {
         $reflect = new \ReflectionClass($model);
@@ -144,6 +240,12 @@ if (!function_exists('is_translatable')) {
 }
 
 if (!function_exists('has_media')) {
+    /**
+     * Does a Model has media.
+     *
+     * @param mixed $model
+     * @return boolean
+     */
     function has_media($model)
     {
         $reflect = new \ReflectionClass($model);
@@ -154,83 +256,15 @@ if (!function_exists('has_media')) {
     }
 }
 
-if (!function_exists('closure_info')) {
-    function closure_info(callable $closure)
-    {
-        return new \ReflectionFunction($closure);
-    }
-}
-
 if (!function_exists('is_valid_path')) {
-    function is_valid_path($path)
+    /**
+     * Does a file exists.
+     *
+     * @param string $path
+     * @return boolean
+     */
+    function is_valid_path(string $path)
     {
         return (bool) file_exists($path);
-    }
-}
-
-if (!function_exists('fjord_view')) {
-    function fjord_view($name, $layout = false)
-    {
-        return $layout
-            ? 'fjord::layouts.' . config('fjord.layout') . '.' . $name
-            : 'fjord::' . $name;
-    }
-}
-
-if (!function_exists('call_func')) {
-    function call_func($method, array $params)
-    {
-        if (is_callable($method) && !is_array($method)) {
-            return call_user_func_array($method, $params);
-        }
-
-        if (is_array($method)) {
-            $class = $method[0];
-            $method = $method[1];
-
-            return call_user_func_array([$class, $method], $params);
-        }
-
-        if (is_string($method)) {
-            $split = explode('@', $method);
-            $class = $split[0];
-            $method = $split[1];
-
-            return call_user_func_array([$class, $method], $params);
-        }
-    }
-}
-
-if (!function_exists('camel_space_case')) {
-    function camel_space_case($string)
-    {
-        return collect(explode('_', Str::snake($string)))->map(function ($item) {
-            return ucfirst($item);
-        })->implode(' ');
-    }
-}
-
-if (!function_exists('hasClassPermissions')) {
-    function hasClassPermissions($model)
-    {
-        $config = require fjord_resource_path("crud/{$model}.php");
-
-        if (array_key_exists('controller', $config)) {
-            $class_name = $config['controller'];
-        } else {
-            $controllerName = Str::studly(Str::singular($model)) . 'Controller';
-            $class_name = 'App\Http\Controllers\Fjord\\' . $controllerName;
-        }
-
-        // $class_name = 'App\Http\Controllers\Fjord\\' . $controllerName;
-
-        $class_reflex = new \ReflectionClass($class_name);
-        $class_constants = $class_reflex->getConstants();
-
-        if (!array_key_exists('PERMISSIONS', $class_constants)) {
-            return false;
-        }
-
-        return $class_name::PERMISSIONS;
     }
 }

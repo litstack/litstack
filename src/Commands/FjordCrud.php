@@ -260,10 +260,6 @@ class FjordCrud extends Command
         $fileContents = str_replace('DummyClassname', $modelName, $fileContents);
         $fileContents = str_replace('DummyTablename', $tableName, $fileContents);
 
-        if (!is_dir(fjord_resource_path('crud'))) {
-            \File::makeDirectory(fjord_resource_path('crud'));
-        }
-
         if (\File::put($config, $fileContents)) {
             $this->info('config created');
         }

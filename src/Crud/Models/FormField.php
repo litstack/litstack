@@ -3,8 +3,6 @@
 namespace Fjord\Crud\Models;
 
 use Fjord\Crud\Models\FormEdit;
-use Fjord\EloquentJs\CanEloquentJs;
-use Fjord\Crud\Fields\Blocks\Blocks;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
@@ -39,28 +37,39 @@ class FormField extends Model implements HasMedia, TranslatableContract
      *
      * @var string
      */
-    protected $fieldId;
+    protected $fieldIds = [];
 
     /**
      * Fillable attributes.
      *
      * @var array
      */
-    public $fillable = ['collection', 'form_name', 'field_id', 'value', 'field_type'];
-
-    /**
-     * Appends.
-     *
-     * @var array
-     */
-    protected $appends = ['translation', 'fields'];
+    public $fillable = [
+        'collection',
+        'form_name',
+        'field_id',
+        'value',
+        'field_type'
+    ];
 
     /**
      * Eager loads.
      *
      * @var array
      */
-    protected $with = ['translations', 'media'];
+    protected $with = [
+        'translations',
+        'media'
+    ];
+
+    /**
+     * Casts.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'value' => 'json'
+    ];
 
     /**
      * Get config key.
@@ -100,16 +109,6 @@ class FormField extends Model implements HasMedia, TranslatableContract
     }
 
     /**
-     * Get trainslations attribute
-     *
-     * @return array
-     */
-    public function getTranslationAttribute()
-    {
-        return $this->getTranslationsArray();
-    }
-
-    /**
      * Set image relation attribute for field.
      *
      * @return self
@@ -134,18 +133,43 @@ class FormField extends Model implements HasMedia, TranslatableContract
             : $this->media_relation;
     }
 
-    /**
-     * Get value for model FormField.
-     *
-     * @param FormField $formField
-     * @param string $locale
-     * @return mixed
-     */
-    public function getFormFieldValue(FormField $formField, string $locale)
-    {
-        $value = $formField->translation[$locale] ?? [];
 
-        return $value['value'] ?? null;
+    /**
+     * Update FormField.
+     *
+     * @param array $attributes
+     * @param array $options
+     * @return void
+     */
+    public function update(array $attributes = array(), array $options = array())
+    {
+        $translations = $this->getTranslationsArray();
+        foreach (config('translatable.locales') as $locale) {
+            if (!array_key_exists($locale, $attributes)) {
+                continue;
+            }
+            $translation = array_merge($translations[$locale] ?? [], $attributes[$locale]);
+
+            $attributes[$locale] = ['value' => $translation];
+        }
+
+        return parent::update($attributes, $options);
+    }
+
+    /**
+     * Get translations array.
+     *
+     * @return array
+     */
+    public function getTranslationsArray(): array
+    {
+        $translations = [];
+
+        foreach ($this->translations as $translation) {
+            $translations[$translation->{$this->getLocaleKey()}] = $translation->value;
+        }
+
+        return $translations;
     }
 
     /**
@@ -166,36 +190,21 @@ class FormField extends Model implements HasMedia, TranslatableContract
             $locale = config('translatable.fallback_locale');
         }
 
-        return $this->getTranslatedFieldValue($locale);
+        return $this->getTranslatedFieldValue($field, $locale);
     }
 
     /**
      * Get translated field value.
      *
+     * @param Field $field
      * @param string $locale
      * @return void
      */
-    public function getTranslatedFieldValue(string $locale)
+    public function getTranslatedFieldValue($field, string $locale)
     {
         $value = $this->translation[$locale] ?? [];
 
-        return $value['value'] ?? null;
-    }
-
-    /**
-     * Convert the model's attributes to an array.
-     *
-     * @return array
-     */
-    public function attributesToArray()
-    {
-        $attributes = parent::attributesToArray();
-
-        foreach ($attributes['translation'] as $locale => $values) {
-            $attributes['translation'][$locale]['value'] = $this->getFormattedFieldValue($this->field);
-        }
-
-        return $attributes;
+        return $value[$field->id] ?? null;
     }
 
     /**
@@ -207,43 +216,15 @@ class FormField extends Model implements HasMedia, TranslatableContract
     {
         $attributes = parent::relationsToArray();
 
-        if (!$this->field->isRelation()) {
-            return $attributes;
-        }
+        foreach ($this->fields as $field) {
+            if (!$field->isRelation()) {
+                continue;
+            }
 
-        $attributes[$this->field->id] = $this->getFormattedFieldValue($this->field);
+            $attributes[$field->id] = $this->getFormattedFieldValue($field);
+        }
 
         return $attributes;
-    }
-
-    /**
-     * Get field instance for model.
-     *
-     * @return Field
-     */
-    public function getFieldAttribute()
-    {
-        if (!array_key_exists('field_id', $this->attributes)) {
-            return null;
-        }
-
-        $field = $this->config->form->findField($this->field_id);
-
-        if ($field) {
-            $field->local_key = 'value';
-        }
-
-        return $field;
-    }
-
-    /**
-     * Get fields.
-     *
-     * @return Collection
-     */
-    public function getFieldsAttribute()
-    {
-        return collect([$this->field]);
     }
 
     /**
@@ -254,28 +235,26 @@ class FormField extends Model implements HasMedia, TranslatableContract
      */
     public function getAttribute($key)
     {
-        if ($key != $this->fieldId) {
+        // Using fieldIds instead of fieldExists to avoid infinite loop 
+        // when calling getAttribute('field').
+        if (!in_array($key, $this->fieldIds)) {
             return parent::getAttribute($key);
         }
 
-        if (!$this->fieldId) {
-            if ($this->field->id == $key) {
-                return parent::getAttribute($key);
-            }
-        }
-
-        return $this->getFormattedFieldValue($this->field);
+        return $this->getFormattedFieldValue(
+            $this->findField($key)
+        );
     }
 
     /**
-     * Set field id to be able to check if field exists in getAttribute method.
+     * Set field ids to be able to check if field exists in getAttribute method.
      *
-     * @param string $id
+     * @param array $ids
      * @return void
      */
-    public function setFieldId(string $id)
+    public function setFieldIds(array $ids)
     {
-        $this->fieldId = $id;
+        $this->fieldIds = $ids;
     }
 
     /**
@@ -289,7 +268,9 @@ class FormField extends Model implements HasMedia, TranslatableContract
     {
         $model = parent::newFromBuilder($attributes, $connection);
 
-        $model->setFieldId($model->field->id ?? '');
+        $model->setFieldIds($model->fields->map(function ($field) {
+            return $field->id;
+        })->toArray());
 
         return $model;
     }
@@ -303,14 +284,16 @@ class FormField extends Model implements HasMedia, TranslatableContract
      */
     public function __call($method, $params = [])
     {
-        if ($method != ($this->field->id ?? '')) {
+        if (!in_array($method, $this->fieldIds)) {
             return parent::__call($method, $params);
         }
 
-        if (!$this->field->isRelation()) {
+        $field = $this->findField($method);
+
+        if (!$field->isRelation()) {
             return parent::__call($method, $params);
         }
 
-        return $this->field->relation($this, $query = true);
+        return $field->relation($this, $query = true);
     }
 }
