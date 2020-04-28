@@ -10,7 +10,7 @@ The following examples refer to the translations which look like this:
 // fjord/resources/lang/{locale}/messages.php
 
 return [
-    "welcome": "Welcome to Fjord"
+    "welcome": "Welcome, :name"
 ];
 ```
 
@@ -19,7 +19,15 @@ return [
 To compile for the locale of the Fjord interface the `__f()` helper method is used, just like `__()` from laravel's [localization](https://laravel.com/docs/7.x/localization#retrieving-translation-strings).
 
 ```php
-__f('messages.welcome')
+__f('messages.welcome', ['name', 'Jannes'])
+```
+
+```php
+'apples' => '{0} There are none|[1,19] There are some|[20,*] There are many',
+
+...
+
+__f_choice('apples', 10)
 ```
 
 ## Vue
@@ -29,7 +37,7 @@ In `Vue` the [vue-i18n](https://kazupon.github.io/vue-i18n/introduction.html) fo
 ```vue
 <template>
     <div>
-        {{ $t('messages.welcome') }}
+        {{ $t('messages.welcome', { name: 'Jannes' }) }}
     </div>
 </template>
 ```

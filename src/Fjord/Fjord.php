@@ -80,6 +80,22 @@ class Fjord
     }
 
     /**
+     * Get choice translation for Fjord application.
+     *
+     * @param string $key
+     * @param array $replace
+     * @return string
+     */
+    public function trans_choice(string $key = null, $number, $replace = [])
+    {
+        if (is_null($key)) {
+            return $key;
+        }
+
+        return $this->app->get('translator')->choice($key, $number, $replace);
+    }
+
+    /**
      * Get translation for Fjord application.
      *
      * @param string $key

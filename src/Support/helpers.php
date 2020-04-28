@@ -134,11 +134,35 @@ if (!function_exists('__f')) {
      */
     function __f($key = null, $replace = [])
     {
-        if (is_null($key)) {
-            return $key;
-        }
-
         return fjord()->trans($key, $replace);
+    }
+}
+
+if (!function_exists('__f_choice')) {
+    /**
+     * Translate choice by key.
+     *
+     * @param string $key
+     * @param array $replace
+     * @return void
+     */
+    function __f_choice($key = null, $number, $replace = [])
+    {
+        return fjord()->trans_choice($key, $number, $replace);
+    }
+}
+
+if (!function_exists('__f_c')) {
+    /**
+     * Translate choice by key.
+     *
+     * @param string $key
+     * @param array $replace
+     * @return void
+     */
+    function __f_c($key = null, $number, $replace = [])
+    {
+        return fjord()->trans_choice($key, $number, $replace);
     }
 }
 

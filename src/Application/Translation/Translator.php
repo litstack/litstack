@@ -47,6 +47,41 @@ class Translator
      */
     public function trans(string $key = null, $replace = [])
     {
+        $langKey = $this->getLangKey($key);
+
+        if ($langKey === false) {
+            return $key;
+        }
+
+        return __($langKey, $replace, $this->getLocale());
+    }
+
+    /**
+     * Get choice translation for Fjord application.
+     *
+     * @param string $key
+     * @param array $replace
+     * @return string
+     */
+    public function choice(string $key = null, $number, $replace = [])
+    {
+        $langKey = $this->getLangKey($key);
+
+        if ($langKey === false) {
+            return $key;
+        }
+
+        return trans_choice($langKey, $number, $replace, $this->getLocale());
+    }
+
+    /**
+     * Get language key.
+     *
+     * @param string $key
+     * @return string|boolean
+     */
+    protected function getLangKey(string $key = null)
+    {
         foreach ($this->paths as $path) {
 
             // Look through all registered paths and return the translation if 
@@ -58,10 +93,10 @@ class Translator
                 continue;
             }
 
-            return __($langKey, $replace, $this->getLocale());
+            return $langKey;
         }
 
-        return $key;
+        return false;
     }
 
     /**
