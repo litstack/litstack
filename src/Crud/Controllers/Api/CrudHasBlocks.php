@@ -4,10 +4,63 @@ namespace Fjord\Crud\Controllers\Api;
 
 use Fjord\Crud\Models\FormBlock;
 use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
+use Fjord\Crud\Controllers\Api\Blocks\ManagesBlocksMedia;
+use Fjord\Crud\Controllers\Api\Blocks\ManagesBlocksRelations;
 
 trait CrudHasBlocks
 {
+    use ManagesBlocksMedia,
+        ManagesBlocksRelations;
+
+    /**
+     * Load blocks relation index.
+     *
+     * @param CrudReadRequest $request
+     * @param int $id
+     * @param string $relation
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function blockRelationIndex(CrudReadRequest $request, $id, $field_id, $block_id, $relation)
+    {
+        $model = $this->query()->findOrFail($id);
+
+        $blockField = $this->config->form->findField($field_id) ?? abort(404);
+
+        $block = $blockField->relation($model, $query = true)->findOrFail($block_id);
+
+        $field = $block->findField($relation);
+
+        if (!$field->isRelation() || $field instanceof Blocks) {
+            abort(404);
+        }
+
+        return $field->getQuery()->get();
+    }
+
+    /**
+     * Fetch all blocks.
+     *
+     * @param CrudReadRequest $request
+     * @param int $id
+     * @param int $field_id
+     * @return void
+     */
+    public function blockIndex(CrudReadRequest $request, $id, $field_id)
+    {
+        $model = $this->query()->findOrFail($id);
+        $field = $this->config->form->findField($field_id);
+
+        if (!$field instanceof Blocks) {
+            abort(404);
+        }
+
+        return crud(
+            $field->relation($model)
+        );
+    }
+
     /**
      * Store new block.
      *
@@ -19,7 +72,7 @@ trait CrudHasBlocks
     public function storeBlock(CrudUpdateRequest $request, $id, $field_id)
     {
         $model = $this->query()->findOrFail($id);
-        $field = $this->config->form->findField($field_id);
+        $field = $this->config->form->findField($field_id) ?? abort(404);
 
         if (!$field instanceof Blocks) {
             abort(404);
@@ -40,7 +93,7 @@ trait CrudHasBlocks
         $block->order_column = $order_column;
         $block->save();
 
-        return eloquentJs($block, '');
+        return crud($block);
     }
 
     /**

@@ -4,12 +4,11 @@ namespace Fjord\Crud\Fields\Relations\Concerns;
 
 use Closure;
 use Fjord\Crud\BaseForm;
-use InvalidArgumentException;
-use Fjord\Support\Facades\Config;
 use Fjord\Vue\Crud\RelationTable;
 use Illuminate\Database\Eloquent\Builder;
 use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
+use InvalidArgumentException;
 
 trait ManagesRelation
 {
@@ -79,6 +78,8 @@ trait ManagesRelation
      * Set model and query builder.
      *
      * @return self
+     * 
+     * @throws \InvalidArgumentException
      */
     protected function initializeRelationField()
     {
@@ -95,15 +96,15 @@ trait ManagesRelation
 
         $related = $relation->getRelated();
 
+        if ($relation->getTable() == 'form_relations') {
+            throw new InvalidArgumentException("The relation Field should be used for Laravel relations, for Fjord relations use oneRelation or manyRelation.");
+        }
+
         $model = get_class($related);
 
         $this->query = $related::query();
         $this->related = $model;
         $this->attributes['model'] = $model;
-
-        // Set model route_prefix for api calls.
-        $config = $this->getModelConfig($model);
-        $this->attributes['route_prefix'] = $config->route_prefix ?? null;
 
         // Set relation attributes.
         if (method_exists($this, 'setRelationAttributes')) {
@@ -111,37 +112,6 @@ trait ManagesRelation
         }
 
         return $this;
-    }
-
-    /**
-     * Throw missing config exception.
-     *
-     * @return void
-     * 
-     * @throws \InvalidArgumentException
-     */
-    protected function throwMissingConfigException()
-    {
-        throw new InvalidArgumentException(
-            sprintf(
-                "%s relation on %s::%s requires missing Crud config for model %s.",
-                class_basename(static::class),
-                $this->model,
-                $this->attributes['id'],
-                $this->related
-            )
-        );
-    }
-
-    /**
-     * Get model config.
-     *
-     * @param mixed $model
-     * @return mixed
-     */
-    protected function getModelConfig($model)
-    {
-        return fjord_app()->get('crud')->config($model);
     }
 
     /**

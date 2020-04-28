@@ -21,14 +21,6 @@ abstract class CrudController
         Concerns\HasForm;
 
     /**
-     * Create new CrudController instance.
-     */
-    public function __construct()
-    {
-        $this->config = $this->loadConfig();
-    }
-
-    /**
      * The Model Class e.g. App\Models\Post
      *
      * @var string
@@ -50,6 +42,16 @@ abstract class CrudController
      * @return \Illuminate\Database\Eloquent\Builder
      */
     abstract public function query(): Builder;
+
+    /**
+     * Create new CrudController instance.
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->config = $this->loadConfig();
+    }
 
     /**
      * Show Crud index.
@@ -126,17 +128,14 @@ abstract class CrudController
         $model = $query->findOrFail($id);
         $model->setAttribute('fields', $this->fields());
 
-        // Load eloquentJs blocks and append media fields.
-        $blocks = [];
+        // Append media.
         foreach ($this->fields() as $field) {
-            if ($field instanceof Blocks) {
-                $blocks[] = $field->id;
-            }
             if ($field instanceof MediaField) {
                 $model->append($field->id);
             }
         }
 
+        // Load config attributes.
         $config = $this->config->get(
             'form',
             'route_prefix',

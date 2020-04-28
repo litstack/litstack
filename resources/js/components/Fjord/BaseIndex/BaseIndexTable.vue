@@ -18,7 +18,7 @@
         <tbody>
             <tr role="row" class="b-table-busy-slot" v-if="busy">
                 <td :colspan="cols.length" role="cell" align="center">
-                    <fj-base-spinner class="text-center" />
+                    <fj-spinner class="text-center" />
                 </td>
             </tr>
             <template v-else>

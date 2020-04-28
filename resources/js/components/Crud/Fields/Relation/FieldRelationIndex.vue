@@ -143,7 +143,7 @@ export default {
             let payload = { ids };
 
             let response = await axios.put(
-                `${this.field.route_prefix}/${this.model.id}/${this.field.id}/order`,
+                `${this.field.route_prefix}/${this.field.id}/order`,
                 payload
             );
 

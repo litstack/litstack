@@ -9,12 +9,12 @@ if (!function_exists('crud')) {
      * Create new CrudJs instance.
      *
      * @param mixed $model
-     * @return \Fjord\Crud\CrudJs|array
+     * @return \Fjord\Crud\CrudJs|Collection
      */
     function crud($model)
     {
         if ($model instanceof EloquentCollection && $model instanceof Collection) {
-            $cruds = [];
+            $cruds = collect([]);
             foreach ($model as $m) {
                 $cruds[] = crud($m);
             }

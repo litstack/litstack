@@ -64,6 +64,7 @@ class MorphMany extends ManyRelationField
      */
     protected function setRelationAttributes($relation)
     {
+        return;
         if (!$this->getModelConfig($this->related)) {
             $this->throwMissingConfigException();
         }

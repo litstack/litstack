@@ -18,23 +18,22 @@ const methods = {
         }
 
         if (this.shouldUseFallback()) {
-            return this.model[fallbackLocale][this.field.local_key];
+            return this.model[fallbackLocale][this.field.id];
         }
 
-        return this.model[locale][this.field.local_key];
+        return this.model[locale][this.field.id];
     },
     setValue(value) {
         this._setValue(value);
         this.getValue();
-
-        this.addSaveJob();
+        this.addSaveJob(value);
     },
     _setValue(value) {
         let locale = this.$store.state.config.language;
         let fallbackLocale = this.$store.state.config.fallback_locale;
 
         if (!this.shouldStoreToTranslation()) {
-            return (this.model[this.field.id] = value);
+            return (this.model[this.field.local_key] = value);
         }
 
         if (this.shouldUseFallback()) {
@@ -80,7 +79,7 @@ const methods = {
 
         return true;
     },
-    addSaveJob() {
+    addSaveJob(value) {
         let locale = this.$store.state.config.language;
         let params = {};
         let removeParams = '';
@@ -90,14 +89,13 @@ const methods = {
             if (this.shouldUseFallback()) {
                 locale = this.$store.state.config.fallback_locale;
             }
-            console.log(this.model.attributes);
             removeParams = `${locale}.${this.field.local_key}`;
             params[locale] = {
-                [this.field.local_key]: this.value
+                [this.field.local_key]: value
             };
         } else {
             removeParams = `${this.field.local_key}`;
-            params[this.field.local_key] = this.value;
+            params[this.field.local_key] = value;
         }
 
         let job = {

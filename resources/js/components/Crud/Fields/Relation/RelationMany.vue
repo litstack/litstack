@@ -93,24 +93,8 @@ export default {
             let response = null;
             try {
                 switch (this.field.type) {
-                    case 'hasMany':
-                        response = axios.put(
-                            `${this.field.route_prefix}/${item.id}`,
-                            {
-                                [this.field.foreign_key]: this.model.id
-                            }
-                        );
-                        break;
                     case 'morphMany':
-                        response = axios.put(
-                            `${this.field.route_prefix}/${item.id}`,
-                            {
-                                [this.field.morph_type]: this.field
-                                    .morph_type_value,
-                                [this.field.foreign_key]: this.model.id
-                            }
-                        );
-                        break;
+                    case 'hasMany':
                     case 'morphedByMany':
                     case 'morphToMany':
                     case 'belongsToMany':
@@ -136,23 +120,8 @@ export default {
             // TODO: create resource crud/relation for create delete
             try {
                 switch (this.field.type) {
-                    case 'hasMany':
-                        response = await axios.put(
-                            `${this.field.route_prefix}/${id}`,
-                            {
-                                [this.field.foreign_key]: null
-                            }
-                        );
-                        break;
                     case 'morphMany':
-                        response = axios.put(
-                            `${this.field.route_prefix}/${id}`,
-                            {
-                                [this.field.morph_type]: 'null',
-                                [this.field.foreign_key]: 0
-                            }
-                        );
-                        break;
+                    case 'hasMany':
                     case 'morphedByMany':
                     case 'morphToMany':
                     case 'belongsToMany':

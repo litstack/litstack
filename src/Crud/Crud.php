@@ -4,6 +4,11 @@ namespace Fjord\Crud;
 
 use Fjord\Support\Facades\Config;
 
+/**
+ * Crud Singleton.
+ * 
+ * @see \Fjord\Support\Facades\Crud
+ */
 class Crud
 {
     /**

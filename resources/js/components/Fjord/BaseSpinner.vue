@@ -7,6 +7,6 @@
 
 <script>
 export default {
-    name: 'BaseSpinner'
+    name: 'Spinner'
 };
 </script>

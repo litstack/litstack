@@ -13,7 +13,7 @@ class Blocks extends ManyRelationField
      *
      * @var string
      */
-    protected $component = 'fj-form-blocks';
+    protected $component = 'fj-field-blocks';
 
     /**
      * Required attributes.
@@ -53,7 +53,7 @@ class Blocks extends ManyRelationField
     {
         $repeatables = $closure;
         if (!$closure instanceof Repeatables) {
-            $repeatables = new Repeatables($this->route_prefix);
+            $repeatables = new Repeatables($this);
             $closure($repeatables);
         }
 

@@ -109,18 +109,12 @@ export default {
             }
         },
         async selected(item, modelName) {
-            console.log(item, modelName);
             let response = null;
             switch (this.field.type) {
                 case 'hasOne':
-                    response = await axios.put(
-                        `${this.field.route_prefix}/${item.id}`,
-                        {
-                            [this.field.foreign_key]: this.model.id
-                        }
-                    );
-                    break;
+                case 'morphOne':
                 case 'oneRelation':
+                    console.log('GOO');
                     try {
                         response = await axios.post(
                             `${this.field.route_prefix}/${this.field.id}/${item.id}`
@@ -130,8 +124,6 @@ export default {
                         return;
                     }
 
-                    this.relation = new TableModel(response.data);
-                    console.log(this.relation);
                     this.$bvToast.toast(
                         this.$t('fj.relation_added', {
                             relation: this.field.title
@@ -148,43 +140,7 @@ export default {
                     this.setCols();
                     this.$emit('changed', this.field, this.model);
                     break;
-                case 'morphOne':
-                    try {
-                        console.log(this.relation);
-                        if (this.relation) {
-                            response = axios.put(
-                                `${this.field.route_prefix}/${this.relation.id}`,
-                                {
-                                    [this.field.morph_type]: 'n',
-                                    [this.field.foreign_key]: 0
-                                }
-                            );
-                        }
-
-                        response = axios.put(
-                            `${this.field.route_prefix}/${item.id}`,
-                            {
-                                [this.field.morph_type]: this.field
-                                    .morph_type_value,
-                                [this.field.foreign_key]: this.model[
-                                    this.field.local_key_name
-                                ]
-                            }
-                        );
-                    } catch (e) {
-                        console.log(e);
-                    }
-                    this.$bvToast.toast(
-                        this.$t('fj.relation_added', {
-                            relation: this.field.title
-                        }),
-                        {
-                            variant: 'success'
-                        }
-                    );
-                    break;
                 case 'belongsTo':
-                case 'hasOne':
                     this.setValue(item.id);
                     this.$emit('changed', item.id);
                     break;
@@ -192,22 +148,14 @@ export default {
             this.relation = item;
             this.selectedModel = modelName;
             this.setRelation();
-            console.log(this.relation);
+
             this.$bvModal.hide(this.modalId);
         },
         async removeRelation({ id, modelName }) {
+            let response = null;
             switch (this.field.type) {
                 case 'hasOne':
-                    response = await axios.put(
-                        `${this.field.route_prefix}/${id}`,
-                        {
-                            [this.field.foreign_key]: null
-                        }
-                    );
-                    this.$bvToast.toast(this.$t('fj.relation_unlinked'), {
-                        variant: 'success'
-                    });
-                    break;
+                case 'morphOne':
                 case 'oneRelation':
                     try {
                         response = axios.delete(
@@ -221,23 +169,7 @@ export default {
                         variant: 'success'
                     });
                     break;
-                case 'morphOne':
-                    let response = null;
-                    try {
-                        response = axios.put(
-                            `${this.field.route_prefix}/${this.relation.id}`,
-                            {
-                                [this.field.morph_type]: null,
-                                [this.field.foreign_key]: null
-                            }
-                        );
-                    } catch (e) {
-                        console.log(e);
-                        return;
-                    }
-                    break;
                 case 'belongsTo':
-                case 'hasOne':
                     this.setValue(null);
                     this.$emit('changed', null);
                     break;

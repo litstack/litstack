@@ -214,7 +214,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['baseURL', 'formConfig']),
+        ...mapGetters(['baseURL']),
         createText() {
             return this.field.form
                 ? this.$t('fj.create_model', {
