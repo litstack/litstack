@@ -52,6 +52,7 @@ return [
     "update" => "Update",
     "read" => "Read",
     "delete" => "Delete",
+    "profile" => "Profile",
     "permission_updated" => "Permission updated: :operation :group",
     "preview" => "Preview",
     "model_loaded" => "Reloaded :model",

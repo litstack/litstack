@@ -16,7 +16,6 @@
 @import '_atoms/fjord-card';
 @import '_atoms/fjord-search';
 @import '_atoms/fjord-draggable';
-@import '_atoms/fjord-container';
 @import '_atoms/fjord-spinner';
 @import '_atoms/fjord-hide';
 @import '_atoms/fjord-table';
@@ -51,6 +50,7 @@ div#fjord-app {
 }
 
 main {
+    //
 }
 
 .modal-backdrop {

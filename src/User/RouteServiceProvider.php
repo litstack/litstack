@@ -4,6 +4,7 @@ namespace Fjord\User;
 
 use Fjord\Support\Facades\Package;
 use Fjord\Support\Facades\FjordRoute;
+use Fjord\User\Controllers\ProfileController;
 use Fjord\User\Controllers\FjordUserController;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
@@ -29,7 +30,13 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             'authorize' => function ($user) {
                 return $user->can('read fjord-users');
             },
-            'icon' => '<i class="fas fa-users">',
+            'icon' => fa('users'),
+        ]);
+
+        $this->package->addNavPreset('profile', [
+            'link' => route('fjord.aw-studio.fjord.profile'),
+            'title' => __f('fj.profile'),
+            'icon' => fa('user'),
         ]);
     }
 
@@ -41,9 +48,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapUserRoleRoutes()
     {
-
-        $this->package->route()->get('/fjord/users', FjordUserController::class . '@showIndex')
-            ->name('users');
+        $this->package->route()->get('/profile/settings', ProfileController::class . '@show')->name('profile');
+        $this->package->route()->get('/fjord/users', FjordUserController::class . '@showIndex')->name('users');
 
         $this->package->route()->post('/fjord/users-index', FjordUserController::class . '@fetchIndex')->name('users.index');
         $this->package->route()->post('/fjord/users/delete-all', FjordUserController::class . '@deleteAll')->name('users.delete');

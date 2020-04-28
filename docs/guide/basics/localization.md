@@ -22,12 +22,15 @@ To compile for the locale of the Fjord interface the `__f()` helper method is us
 __f('messages.welcome', ['name', 'Jannes'])
 ```
 
+Pluralization can be used with the `__f_choice` function or the short version `__f_c`.
+
 ```php
 'apples' => '{0} There are none|[1,19] There are some|[20,*] There are many',
 
 ...
 
 __f_choice('apples', 10)
+__f_c('apples', 10)
 ```
 
 ## Vue

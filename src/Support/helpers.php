@@ -100,15 +100,29 @@ if (!function_exists('fjord_js')) {
      */
     function fjord_js()
     {
-        $js_path = config('fjord.assets.js')
-            ? config('fjord.assets.js')
+        $js_path = config('fjord.assets.app.js')
+            ? config('fjord.assets.app.js')
             : route('fjord.js');
 
-        if (config('fjord.assets.js')) {
-            $js_path .= '?v=' . filemtime(ltrim(config('fjord.assets.js'), '/'));
+        if (config('fjord.assets.app.js')) {
+            $js_path .= '?v=' . filemtime(ltrim(config('fjord.assets.app.js'), '/'));
         }
 
         return $js_path;
+    }
+}
+
+if (!function_exists('fjord_css')) {
+    /**
+     * Get the Fjord app.css file path.
+     *
+     * @return string
+     */
+    function fjord_css()
+    {
+        return config('fjord.assets.app.css')
+            ? config('fjord.assets.app.css')
+            : route('fjord.css');
     }
 }
 
@@ -121,6 +135,18 @@ if (!function_exists('fjord_user')) {
     function fjord_user()
     {
         return Auth::guard('fjord')->user();
+    }
+}
+
+if (!function_exists('asset_time')) {
+    /**
+     * Appends ?t={time} to files to disable caching.
+     *
+     * @return string
+     */
+    function asset_time()
+    {
+        return config('app.env') == 'production' ? '' : '?t=' . time();
     }
 }
 

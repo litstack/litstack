@@ -1,7 +1,7 @@
 const mix = require('laravel-mix');
 
 mix.js('fjord/resources/js/app.js', 'public/fjord/js').sass(
-    'vendor/aw-studio/fjord/resources/sass/app.scss',
+    'fjord/resources/sass/app.scss',
     'public/fjord/css'
 );
 
