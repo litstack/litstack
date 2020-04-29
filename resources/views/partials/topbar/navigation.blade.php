@@ -1,6 +1,6 @@
-<b-dropdown class="m-md-2" right variant="transparent" size="sm">
+<b-dropdown class="m-md-2" dropright variant="transparent" size="sm">
     <template v-slot:button-content>
-        <fa-icon icon="cogs" />
+        <fa-icon icon="bars" />
     </template>
     
     @php
@@ -35,5 +35,8 @@
         @endforeach
     @endforeach
     <b-dropdown-divider></b-dropdown-divider>
-    <fj-locales />
+    <fj-locales ></fj-locales>
+    <b-dropdown-divider></b-dropdown-divider>
+    <fj-logout :url="'{{route('fjord.logout')}}'"></fj-logout>
+    
 </b-dropdown>

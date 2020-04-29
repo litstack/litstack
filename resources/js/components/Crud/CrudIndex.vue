@@ -1,45 +1,49 @@
 <template>
-    <fj-base-container>
-        <fj-base-header :title="config.names.plural">
-            <div slot="actions-right">
-                <component
-                    v-for="(component, key) in headerComponents"
-                    :key="key"
-                    :is="component"
-                    :config="config"
-                />
+    <fj-page :fluid="config.expand ? 'fluid' : 'lg'">
+        <fj-navigation :back="backRoute" :back-text="config.names.plural">
+            <b-button
+                size="md"
+                variant="primary"
+                slot="right"
+                :href="`${baseURL}${config.route_prefix}/create`"
+            >
+                <fa-icon icon="plus" />
+                {{ $t('fj.add_model', { model: config.names.singular }) }}
+            </b-button>
+        </fj-navigation>
+        <fj-container>
+            <fj-header :title="config.names.plural">
+                <div slot="actions-right">
+                    <component
+                        v-for="(component, key) in headerComponents"
+                        :key="key"
+                        :is="component"
+                        :config="config"
+                    />
+                </div>
+            </fj-header>
 
-                <b-button
-                    size="sm"
-                    variant="primary"
-                    :href="`${baseURL}${config.route_prefix}/create`"
-                >
-                    <fa-icon icon="plus" />
-                    {{ $t('fj.add_model', { model: config.names.singular }) }}
-                </b-button>
-            </div>
-        </fj-base-header>
-
-        <b-row>
-            <b-col>
-                <fj-index-table
-                    ref="indexTable"
-                    :cols="config.index"
-                    :items="items"
-                    :count="count"
-                    :per-page="config.perPage"
-                    :load-items="loadItems"
-                    :name-singular="config.names.singular"
-                    :name-plural="config.names.plural"
-                    :sort-by="config.sortBy"
-                    :sort-by-default="config.sortByDefault"
-                    :filter="config.filter"
-                    :global-actions="config.globalActions"
-                    :record-actions="config.recordActions"
-                />
-            </b-col>
-        </b-row>
-    </fj-base-container>
+            <b-row>
+                <b-col>
+                    <fj-index-table
+                        ref="indexTable"
+                        :cols="config.index"
+                        :items="items"
+                        :count="count"
+                        :per-page="config.perPage"
+                        :load-items="loadItems"
+                        :name-singular="config.names.singular"
+                        :name-plural="config.names.plural"
+                        :sort-by="config.sortBy"
+                        :sort-by-default="config.sortByDefault"
+                        :filter="config.filter"
+                        :global-actions="config.globalActions"
+                        :record-actions="config.recordActions"
+                    />
+                </b-col>
+            </b-row>
+        </fj-container>
+    </fj-page>
 </template>
 
 <script>

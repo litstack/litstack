@@ -43,21 +43,6 @@ return [
 
     'navigation_path' => 'navigation',
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Fjord Navigation-Layout
-    |--------------------------------------------------------------------------
-    |
-    | With this option you may set the fjord navigation layout.
-    |
-    | Supported: "horizontal", "vertical"
-    |
-    */
-
-    'layout' => env('FJORD_LAYOUT', 'vertical'),
-
-
     /*
     |--------------------------------------------------------------------------
     | Fjord Default-Route

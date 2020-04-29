@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "save" => "Speichern",
     "no_relation_selected" => "Keine <i>:relation</i> ausgewählt.",
     "already_selected" => "Dieses Item wurde bereits ausgewählt.",
     "settings" => "Einstellungen",

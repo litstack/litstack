@@ -1,11 +1,17 @@
 <template>
     <b-col :cols="fieldCols">
         <div :class="`pb-4 fjord-form fj-form-item-${field.id}`">
-            <h6 class="mb-0" v-if="field.title">
+            <h6 class="mb-0 d-flex justify-content-between" v-if="field.title">
                 <label :for="field.id">{{ field.title }}</label>
-                <b-badge v-if="field.translatable" variant="primary">
-                    <small>{{ language }}</small>
-                </b-badge>
+                <div>
+                    <b-badge
+                        v-if="field.translatable"
+                        variant="secondary"
+                        class="mr-2"
+                    >
+                        <small>{{ language }}</small>
+                    </b-badge>
+                </div>
             </h6>
             <p class="text-secondary" v-if="field.info">{{ field.info }}</p>
             <div

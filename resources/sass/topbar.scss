@@ -1,0 +1,19 @@
+// Topbar above main navigation.
+//
+//
+
+div#fjord-app nav.fj-topbar {
+    grid-area: t;
+    height: $topbar-height;
+    background: $topbar-bg;
+    padding: 0 $topbar-padding;
+    display: flex;
+    z-index: 9;
+    border-right: $border-width solid $border-color;
+
+    #fj-topbar-right {
+        .btn {
+            color: $topbar-button-color;
+        }
+    }
+}

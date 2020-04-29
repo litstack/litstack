@@ -83,8 +83,15 @@ export default {
             this.$i18n.locale = this.appLocale;
         },
         showHiddenElements() {
-            let element = document.getElementById('fjord-topbar-right');
-            element.style.opacity = 1;
+            let elements = document.getElementsByClassName('fj-hide');
+
+            for (let i in elements) {
+                let element = elements[i];
+                if (!element.classList) {
+                    continue;
+                }
+                element.classList.add('show');
+            }
         },
         callPluginExtensions() {
             let plugins = Fjord.getPlugins();

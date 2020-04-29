@@ -7,7 +7,7 @@
             <draggable
                 v-model="sortableBlocks"
                 @end="newOrder"
-                handle=".fjord-draggable__dragbar"
+                handle=".fj-draggable__dragbar"
                 tag="b-row"
                 :class="{ 'mb-0': field.readonly }"
                 v-else-if="sortableBlocks.length > 0"

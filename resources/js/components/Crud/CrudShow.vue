@@ -1,67 +1,62 @@
 <template>
-    <fj-base-container :fluid="config.expand ? 'fluid' : 'lg'">
-        <fj-base-header
-            :title="config.names.singular"
-            :back="backRoute"
-            :back-text="config.names.plural"
-        >
+    <fj-page :fluid="config.expand ? 'fluid' : 'lg'">
+        <fj-navigation :back="backRoute" :back-text="config.names.plural">
             <fj-crud-show-near-items
-                slot="navigation"
+                slot="left"
                 v-if="nearItems"
-                :route-prefix="config.route_prefix"
+                :config="config"
                 :nearItems="nearItems"
             />
-
-            <div slot="actions" class="pt-3" v-if="headerComponents.length > 0">
-                <components
-                    v-for="(component, key) in headerComponents"
-                    :key="key"
-                    :is="component"
-                    :config="config"
-                    v-if="model"
-                    :model="model"
-                />
-            </div>
-        </fj-base-header>
-        <b-row>
-            <b-col cols="12" md="9" order-md="1">
-                <b-row class="fjord-form">
+            <fj-crud-language slot="right"/>
+                <!--
+                <div slot="controls" class="pt-1" v-if="controls.length > 0">
+                    <hr />
                     <components
-                        v-for="(component, key) in config.form.components"
+                        v-for="(component, key) in controls"
                         :key="key"
-                        :is="component.name"
-                        v-bind="component.props"
-                        :model="model"
-                        :config="config"
+                        :is="component"
+                        :nearItems="nearItems"
+                        v-if="crud.model"
+                        :model="crud.model"
                     />
-                </b-row>
-            </b-col>
+                </div>
+                -->
+            </fj-crud-show-controls>
+        </fj-navigation>
 
-            <b-col cols="12" md="3" order-md="2" class="pb-4 mb-md-0">
-                <fj-crud-show-controls
-                    :config="config"
-                    :create="isCreate"
-                    :title="config.names.singular"
+        <fj-container>
+            <fj-header :title="config.names.singular">
+                <div
+                    slot="actions"
+                    class="pt-3"
+                    v-if="headerComponents.length > 0"
                 >
-                    <div
-                        slot="controls"
-                        class="pt-1"
-                        v-if="controls.length > 0"
-                    >
-                        <hr />
+                    <components
+                        v-for="(component, key) in headerComponents"
+                        :key="key"
+                        :is="component"
+                        :config="config"
+                        v-if="model"
+                        :model="model"
+                    />
+                </div>
+            </fj-header>
+            <b-row>
+                <b-col cols="12">
+                    <b-row class="fjord-form">
                         <components
-                            v-for="(component, key) in controls"
+                            v-for="(component, key) in config.form.components"
                             :key="key"
-                            :is="component"
-                            :nearItems="nearItems"
-                            v-if="model"
+                            :is="component.name"
+                            v-bind="component.props"
                             :model="model"
+                            :config="config"
                         />
-                    </div>
-                </fj-crud-show-controls>
-            </b-col>
-        </b-row>
-    </fj-base-container>
+                    </b-row>
+                </b-col>
+            </b-row>
+        </fj-container>
+    </fj-page>
 </template>
 
 <script>

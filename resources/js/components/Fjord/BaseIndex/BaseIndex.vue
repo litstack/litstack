@@ -22,22 +22,20 @@
                             :nameSingular="nameSingular"
                             :namePlural="namePlural"
                             @search="doSearch"/>
+                        </b-input-group>
 
-                        <template v-slot:append v-if="hasFilter || hasSort">
-                            <fj-base-index-table-filter
-                                :filter="filter"
-                                v-if="hasFilter"
-                                :class="{'btn-br-none': hasSort}"
-                                @onFilterChange="filterChanged"/>
+                        <fj-base-index-table-filter
+                            :filter="filter"
+                            v-if="hasFilter"
+                            @onFilterChange="filterChanged"/>
 
-                            <fj-base-index-table-sort
-                               :sortBy="sortBy"
-                                v-if="hasSort"
-                              :sortByDefault="sortByDefault"
-                                @sort="sort"/>
-                        </template>                
+                        <fj-base-index-table-sort
+                            :sortBy="sortBy"
+                            v-if="hasSort"
+                            :sortByDefault="sortByDefault"
+                            @sort="sort"/>
 
-                    </b-input-group>
+                    
 
                 </fj-base-index-table-form>
 
@@ -276,10 +274,8 @@ export default {
 
     table.b-table {
         width: auto;
-        margin-left: -1.25rem;
-        margin-right: -1.25rem;
-
-        
+        margin-left: -$card-spacer-x;
+        margin-right: -$card-spacer-x;
 
         &[aria-busy='true'] {
             opacity: 0.6;
@@ -287,17 +283,19 @@ export default {
 
         thead th {
             border-top: none;
+            border-bottom: 1px solid $gray-300;
 
             &:first-child {
-                padding-left: 0.75rem + 1.25rem;
+                padding-left: 0.75rem + $card-spacer-x;
             }
 
             &:last-child {
-                padding-right: 0.75rem + 1.25rem;
+                padding-right: 0.75rem + $card-spacer-x;
             }
         }
 
         tbody {
+            
             td {
                 vertical-align: middle;
                 > div {
@@ -309,11 +307,11 @@ export default {
                 }
 
                 &:first-child {
-                    padding-left: 0.75rem + 1.25rem;
+                    padding-left: 0.75rem + $card-spacer-x;
                 }
 
                 &:last-child {
-                    padding-right: 0.75rem + 1.25rem;
+                    padding-right: 0.75rem + $card-spacer-x;
                 }
             }
         }

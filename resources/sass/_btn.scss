@@ -1,0 +1,16 @@
+.btn-transparent {
+    @include button-variant(
+        transparent,
+        transparent,
+        map-get($theme-colors, 'light')
+    );
+    color: $text-muted;
+
+    &:active {
+        color: $text-muted !important;
+    }
+
+    &.disabled {
+        color: $gray-400;
+    }
+}

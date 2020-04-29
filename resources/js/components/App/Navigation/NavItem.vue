@@ -1,10 +1,8 @@
 <template>
     <b-list-group flush>
-        <template v-if="isTitle">
-            <small class="text-secondary pl-3 pt-2 pb-1">
-                {{ this.item.title }}
-            </small>
-        </template>
+        <b-list-group-item v-if="isTitle" class="fj-nav-title">
+            {{ this.item.title }}
+        </b-list-group-item>
         <template v-else-if="isSection">
             <fj-nav-item
                 v-for="(i, index) in item"
@@ -12,7 +10,7 @@
                 :key="index"
                 v-if="!(i instanceof String) && i !== null"
             />
-            <hr class="fj-navitem-devider" />
+            <hr class="fj-navitem-divider" />
         </template>
         <template v-else>
             <component :is="item.component" v-if="hasComponent" />
@@ -29,7 +27,7 @@
                     {{ item.title }}
                 </div>
                 <div
-                    class="fj-navigation-hasChildren"
+                    class="fj-navigation-hasChildren fj-nav-item_icon"
                     :class="{ active: visible }"
                     v-if="hasChildren"
                 >
@@ -111,22 +109,43 @@ export default {
 </script>
 
 <style lang="scss">
-.fj-nav-item_icon {
-    margin-left: -4px;
-    margin-right: 10px;
-    opacity: 0.9;
-}
-.fj-navigation .list-group-item {
-    border: none;
-}
-.fj-navitem-devider {
-    margin: 8px 0;
-}
-.fj-navigation-hasChildren {
-    transform: rotate(0);
-    transition: 0.2s all ease;
-    &.active {
-        transform: rotate(90deg);
+@import '@fj-sass/_variables';
+
+.fj-navigation {
+    .fj-nav-title {
+        text-transform: uppercase;
+        color: $nav-title-color;
+        letter-spacing: $nav-title-letter-spacing;
+        font-size: $nav-title-font-size;
+        border-bottom: none;
+    }
+
+    .list-group-item {
+        &.active {
+            .fj-nav-item_icon {
+                color: $nav-item-active-color !important;
+            }
+        }
+    }
+
+    .fj-nav-item_icon {
+        color: $nav-item-icon-color;
+        margin-left: -4px;
+        margin-right: 10px;
+    }
+    .fj-navigation .list-group-item {
+        border: none;
+    }
+    .fj-navitem-divider {
+        margin: 0 0 $nav-padding-top 0;
+        border-width: 0;
+    }
+    .fj-navigation-hasChildren {
+        transform: rotate(0);
+        transition: 0.2s all ease;
+        &.active {
+            transform: rotate(90deg);
+        }
     }
 }
 </style>

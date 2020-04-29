@@ -15,7 +15,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
 
-    <link href="{{ fjord_css() }}{{ asset_time() }}" rel="stylesheet"/>
+    <link href="{{ route('fjord.css') }}" rel="stylesheet"/>
     
     @foreach(fjord_app()->getCssFiles() as $path)
         <link href="{{ $path }}{{ asset_time() }}" rel="stylesheet">
@@ -25,7 +25,7 @@
 
 
 <body onload="makeVisible()">
-    <div id="fjord-app" class="{{ Auth::guard('fjord')->guest() ? '' : config('fjord.layout') }}">
+    <div id="fjord-app">
 
         @include('fjord::partials.topbar.topbar')
 
@@ -49,6 +49,19 @@
             if(d) {
                 d.className += " loaded";
             }
+
+            let main = document.querySelector('main');
+        
+            main.addEventListener('scroll', e => {
+                let header = document.querySelector('.fj-page-navigation');
+                
+                if(header.getBoundingClientRect().top == 0){
+                    header.classList.add('sticky')
+                }else{
+                    header.classList.remove('sticky')
+                }
+                
+            });
         }
     </script>
 </body>

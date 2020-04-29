@@ -55,21 +55,21 @@ export default {
     props: {
         route: {
             required: true,
-            type: String,
-        },
+            type: String
+        }
     },
     data() {
         return {
-            device: 'desktop',
+            device: 'desktop'
         };
     },
     beforeMount() {
-        this.device = this.config.crud.preview.default_device;
+        this.device = Fjord.config.crud.preview.default_device;
     },
     methods: {
         setDevice(device) {
             this.device = device;
-        },
+        }
     },
     computed: {
         ...mapGetters(['config']),
@@ -78,8 +78,8 @@ export default {
                 return this.route;
             }
             return this.route.split('//')[1];
-        },
-    },
+        }
+    }
 };
 </script>
 

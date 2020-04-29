@@ -2,7 +2,6 @@
     <b-dropdown
         right
         :text="$t('fj.filter')"
-        class="btn-brl-none"
         :variant="filterVariant"
         :disabled="!filter"
     >

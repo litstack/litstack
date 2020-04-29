@@ -1,0 +1,15 @@
+div#fjord-app {
+    display: grid;
+    grid-template:
+        't m'
+        's m';
+    grid-template-columns: 290px 1fr;
+    grid-template-rows: $topbar_height auto;
+
+    main {
+        grid-area: m;
+        height: 100vh;
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+}

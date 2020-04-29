@@ -1,28 +1,21 @@
 <template>
-    <b-container :fluid="fluid" :class="`fjord-container`">
+    <b-container :class="`fj-container`">
         <slot />
     </b-container>
 </template>
 
 <script>
 export default {
-    name: 'BaseContainer',
-    props: {
-        fluid: {
-            type: String,
-            default() {
-                return 'lg';
-            }
-        }
-    }
+    name: 'Container'
 };
 </script>
 
 <style lang="scss">
 @import '@fj-sass/_variables';
 
-.fjord-container {
+.fj-container {
     margin: 0 auto;
-    padding: 30px !important;
+    padding: ($container-padding-y - $page-nav-padding-y) $container-padding-x
+        $container-padding-y $container-padding-x !important;
 }
 </style>

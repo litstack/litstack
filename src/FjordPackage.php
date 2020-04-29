@@ -93,10 +93,6 @@ class FjordPackage extends Package
      */
     public function boot(Application $app)
     {
-        $app->addCssFile('/' . config('fjord.route_prefix') . '/css/app.css');
-
-        foreach (config('fjord.assets.css') as $path) {
-            $app->addCssFile($path);
-        }
+        //
     }
 }

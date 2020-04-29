@@ -1,6 +1,6 @@
 <template>
     <transition name="slide">
-        <b-input-group v-if="selectedItems.length > 0" :size="'sm'">
+        <b-input-group v-if="selectedItems.length > 0" size="sm">
             <b-input-group-prepend is-text>
                 <strong>
                     {{ $tc('fj.n_items_selected', selectedItems.length) }}
@@ -14,6 +14,7 @@
 
             <template v-slot:append>
                 <b-dropdown
+                    size="sm"
                     text="Actions"
                     class="btn-brl-none"
                     variant="outline-secondary"
@@ -38,22 +39,22 @@ export default {
     props: {
         items: {
             required: true,
-            type: [Object, Array],
+            type: [Object, Array]
         },
         selectedItems: {
             type: Array,
-            required: true,
+            required: true
         },
         actions: {
             required: true,
-            type: Array,
-        },
+            type: Array
+        }
     },
     methods: {
         reload() {
             this.$emit('reload');
-        },
-    },
+        }
+    }
 };
 </script>
 

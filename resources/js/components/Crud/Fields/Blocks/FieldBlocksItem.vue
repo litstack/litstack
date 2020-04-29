@@ -1,9 +1,9 @@
 <template>
     <b-col :cols="field.cols">
-        <div class="fjord-draggable">
+        <div class="fj-draggable fj-block mb-4">
             <div
                 v-if="!field.readonly"
-                class="fjord-draggable__dragbar d-flex justify-content-center"
+                class="fj-draggable__dragbar d-flex justify-content-center"
             >
                 <i class="fas fa-grip-horizontal text-muted"></i>
             </div>

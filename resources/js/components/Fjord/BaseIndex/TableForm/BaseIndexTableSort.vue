@@ -2,7 +2,6 @@
     <b-dropdown
         right
         :text="$t('fj.sort')"
-        class="btn-brl-none"
         variant="outline-secondary"
         v-if="sortBy"
     >

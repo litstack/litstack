@@ -1,7 +1,7 @@
 const methods = {
     init() {
         this.getValue();
-        Fjord.event.$on('languageChanged', this.getValue);
+        Fjord.bus.$on('languageChanged', this.getValue);
     },
     getValue() {
         this.value = this._getValue();

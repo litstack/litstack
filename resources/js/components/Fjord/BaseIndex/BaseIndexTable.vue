@@ -1,5 +1,5 @@
 <template>
-    <b-table-simple :aria-busy="busy" hover>
+    <b-table-simple :aria-busy="busy" hover borderless striped>
         <fj-base-index-table-head
             :cols="cols"
             :hasRecordActions="hasRecordActions"

@@ -1,23 +1,5 @@
 <template>
-    <b-row class="fj-base-container-header mb-4">
-        <b-col
-            cols="12"
-            class="fj-base-container-header__navigations d-flex justify-content-between"
-        >
-            <div class="indent sm">
-                <b-button
-                    size="sm"
-                    variant="transparent"
-                    v-if="back"
-                    :href="`${baseURL}${back}`"
-                >
-                    <fa-icon icon="angle-left" />
-                    {{ backText ? backText : 'back' }}
-                </b-button>
-            </div>
-
-            <slot name="navigation" />
-        </b-col>
+    <b-row class="fj-container-header mb-4">
         <b-col cols="12" class="d-flex justify-content-between">
             <div>
                 <h3 class="mt-2 mb-2" v-if="title">
@@ -39,23 +21,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
-    name: 'BaseHeader',
+    name: 'Header',
     props: {
         title: {
             type: String
-        },
-        back: {
-            type: [String, Boolean]
-        },
-        backText: {
-            type: String
         }
-    },
-    computed: {
-        ...mapGetters(['baseURL'])
     }
 };
 </script>
@@ -63,7 +34,7 @@ export default {
 <style lang="scss">
 @import '@fj-sass/_variables';
 
-.fj-base-container-header {
+.fj-container-header {
     a {
         &:hover {
             text-decoration: none;
