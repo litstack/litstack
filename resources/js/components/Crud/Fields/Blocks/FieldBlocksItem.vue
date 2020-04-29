@@ -63,6 +63,9 @@ export default {
                 this.block.fields[i].route_prefix = field.route_prefix
                     .replace('{block_id}', this.block.id)
                     .replace('{id}', this.model.id);
+                if (this.field.readonly) {
+                    this.block.fields[i].readonly = true;
+                }
             }
         }
     }

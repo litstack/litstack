@@ -143,6 +143,13 @@ abstract class CrudController
             'permissions'
         );
 
+        // Set readonly if the user has no update permission for this crud.
+        foreach ($config['form']->getRegisteredFields() as $field) {
+            if (!$config['permissions']['update']) {
+                $field->readonly();
+            }
+        }
+
         // Get preview route.
         if ($this->config->hasMethod('previewRoute')) {
             $config['preview_route'] = $this->config->previewRoute($model);

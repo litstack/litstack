@@ -96,11 +96,23 @@ abstract class FormController
 
         $configInstance = fjord()->config("form.{$collection}.{$formName}");
 
-        $config = $configInstance->get('names', 'form', 'permissions', 'route_prefix');
+        $config = $configInstance->get(
+            'names',
+            'form',
+            'permissions',
+            'route_prefix'
+        );
 
         // Get preview route.
         if ($configInstance->hasMethod('previewRoute')) {
             $config['preview_route'] = $configInstance->previewRoute();
+        }
+
+        // Set readonly if the user has no update permission for this crud.
+        foreach ($config['form']->getRegisteredFields() as $field) {
+            if (!$config['permissions']['update']) {
+                $field->readonly();
+            }
         }
 
         $model = FormField::firstOrCreate([

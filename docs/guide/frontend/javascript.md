@@ -58,6 +58,6 @@ Fjord.bus.$emit(event, callback);
 
 ## Events
 
-Some useful event:
+Some useful events:
 
 -   `saved` - Executed when saved.
