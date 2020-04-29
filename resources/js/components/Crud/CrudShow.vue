@@ -1,5 +1,5 @@
 <template>
-    <fj-base-container>
+    <fj-base-container :fluid="config.expand ? 'fluid' : 'lg'">
         <fj-base-header
             :title="config.names.singular"
             :back="backRoute"
@@ -122,14 +122,6 @@ export default {
                 }, 1);
             }
         },
-        async loadModel() {
-            await this.$store.dispatch('loadModel', {
-                route: this.crud.model.route,
-                id: this.id
-            });
-            this.$store.commit('FLUSH_SAVINGS');
-            this.$bus.$emit('modelLoaded');
-        },
         scrollToFormFieldFromHash() {
             if (!window.location.hash) {
                 return;
@@ -142,7 +134,6 @@ export default {
                 return;
             }
             // Scroll to first one.
-            //elements[0].scrollIntoView();
             let element = elements[0];
             let pos = element.style.position;
             let top = element.style.top;
@@ -151,7 +142,6 @@ export default {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
             element.style.top = top;
             element.style.position = pos;
-            //console.log(docs);
         }
     },
     computed: {
@@ -163,7 +153,6 @@ export default {
         this.model = this.crud(this.crudModel);
 
         this.$store.commit('SET_CONFIG', this.config);
-        //this.crud.model = this.crud.models.model;
     },
     mounted() {
         this.scrollToFormFieldFromHash();

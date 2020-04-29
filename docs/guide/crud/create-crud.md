@@ -142,4 +142,26 @@ public $model = Article::class;
 public $controller = ArticleController::class;
 ```
 
+### Container Size
+
+By default, the containers for the index table and the create & update form have a maximum width. If you want the containers to expand to the maximum width for a better overview, this can be achieved with `expandIndexContainer` and `expandFormContainer`.
+
+```php
+/**
+ * Set bootstrap container on index page to fluid.
+ *
+ * @var boolean
+ */
+public $expandIndexContainer = true;
+
+/**
+ * Set bootstrap container on create and update page to fluid.
+ *
+ * @var boolean
+ */
+public $expandFormContainer = true;
+```
+
+### Index, Create & Update Form
+
 Next, the configuration for the [index table](/guide/crud/config-index.html) and the create and update [form](/guide/crud/config-form.html) can be adjusted.

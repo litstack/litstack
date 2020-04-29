@@ -1,5 +1,5 @@
 <template>
-    <b-container :fluid="size" :class="`fjord-container`">
+    <b-container :fluid="fluid" :class="`fjord-container`">
         <slot />
     </b-container>
 </template>
@@ -8,7 +8,7 @@
 export default {
     name: 'BaseContainer',
     props: {
-        size: {
+        fluid: {
             type: String,
             default() {
                 return 'lg';

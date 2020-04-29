@@ -100,8 +100,10 @@ abstract class FormController
             'names',
             'form',
             'permissions',
-            'route_prefix'
+            'route_prefix',
+            'expandContainer'
         );
+        $config['expand'] = $config['expandContainer'];
 
         // Get preview route.
         if ($configInstance->hasMethod('previewRoute')) {

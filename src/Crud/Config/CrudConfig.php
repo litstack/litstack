@@ -27,6 +27,20 @@ abstract class CrudConfig
     public $model;
 
     /**
+     * Set bootstrap container on index page to fluid.
+     *
+     * @var boolean
+     */
+    public $expandIndexContainer = false;
+
+    /**
+     * Set bootstrap container on create and update page to fluid.
+     *
+     * @var boolean
+     */
+    public $expandFormContainer = false;
+
+    /**
      * Load permissions.
      *
      * @return array

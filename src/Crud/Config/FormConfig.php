@@ -39,6 +39,13 @@ abstract class FormConfig
     public $formName;
 
     /**
+     * Set bootstrap container to fluid.
+     *
+     * @var boolean
+     */
+    public $expandContainer = false;
+
+    /**
      * Create new FormConfig instance.
      */
     public function __construct()

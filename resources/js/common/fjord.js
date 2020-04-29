@@ -2,7 +2,7 @@ import Bus from './event.bus';
 import store from '@fj-js/store';
 
 const Fjord = {
-    event: Bus,
+    bus: Bus,
     config: {},
     baseURL: null
 };

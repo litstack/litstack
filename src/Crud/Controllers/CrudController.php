@@ -68,8 +68,10 @@ abstract class CrudController
             'sortBy',
             'sortByDefault',
             'perPage',
-            'filter'
+            'filter',
+            'expandIndexContainer'
         );
+        $config['expand'] = $config['expandIndexContainer'];
 
         return view('fjord::app')
             ->withComponent('fj-crud-index')
@@ -140,8 +142,10 @@ abstract class CrudController
             'form',
             'route_prefix',
             'names',
-            'permissions'
+            'permissions',
+            'expandFormContainer'
         );
+        $config['expand'] = $config['expandFormContainer'];
 
         // Set readonly if the user has no update permission for this crud.
         foreach ($config['form']->getRegisteredFields() as $field) {

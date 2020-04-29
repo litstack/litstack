@@ -78,6 +78,21 @@ use FjordApp\Controllers\Form\Pages\HomeController;
 public $controller = HomeController::class;
 ```
 
+### Container Size
+
+By default, the containers for the update Form have a maximum width. If you want the containers to expand to the maximum width for a better overview, this can be achieved with `expandContainer`.
+
+```php
+/**
+ * Set bootstrap container to fluid.
+ *
+ * @var boolean
+ */
+public $expandContainer = false;
+```
+
+## Update Form
+
 Next, the configuration for the [form](/guide/crud/config-form.html) can be adjusted.
 
 ## Retrieve Data
