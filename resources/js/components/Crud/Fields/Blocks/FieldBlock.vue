@@ -1,13 +1,21 @@
 <template>
     <b-col :cols="field.cols">
-        <div class="fj-draggable fj-block mb-4">
+        <div class="fj-draggable fj-block mb-2">
             <fj-field-block-header
-                @toggleExpand="expand = !expand"
                 :expand="expand"
+                :block="block"
+                :field="field"
+                :model="model"
+                @deleteBlock="deleteBlock"
+                @toggleExpand="expand = !expand"
             />
 
             <div :class="`fj-block-form ${expand ? 'show' : ''}`">
-                <fj-field-block-form />
+                <fj-field-block-form
+                    :block="block"
+                    :field="field"
+                    :model="model"
+                />
             </div>
         </div>
     </b-col>
@@ -39,15 +47,16 @@ export default {
         this.setFieldsRoutePrefixBlockId();
     },
     methods: {
-        async deleteBlock(block) {
+        async deleteBlock() {
             try {
                 let response = await axios.delete(
-                    `${this.field.route_prefix}/blocks/${block.field_id}/${block.id}`
+                    `${this.field.route_prefix}/blocks/${this.block.field_id}/${this.block.id}`
                 );
             } catch (e) {
                 console.log(e);
                 return;
             }
+            this.$emit('deleteBlock', this.block);
         },
         setFieldsRoutePrefixBlockId() {
             for (let i in this.block.fields) {
@@ -65,11 +74,15 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@fj-sass/_variables';
 .fj-block-form {
     display: none;
 
     &.show {
         display: block;
+    }
+    .fj-form-item-title {
+        font-weight: $font-weight-normal;
     }
 }
 </style>

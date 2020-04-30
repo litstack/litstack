@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-2">
         <b-button
             class="mr-2"
             size="sm"

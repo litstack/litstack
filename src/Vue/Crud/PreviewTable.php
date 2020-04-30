@@ -5,7 +5,7 @@ namespace Fjord\Vue\Crud;
 use Fjord\Vue\Col;
 use Fjord\Support\VueProp;
 
-class RelationTable extends VueProp
+class PreviewTable extends VueProp
 {
     /**
      * Column stack.

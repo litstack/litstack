@@ -14575,6 +14575,33 @@ input[type=color].form-control:disabled {
   box-shadow: 0 0 19px 0 rgba(235, 235, 235, 0.5);
 }
 
+.fj-card__1x1 {
+  height: 0;
+  padding: 0 !important;
+  padding-bottom: 100% !important;
+  position: relative;
+}
+
+.fj-card__1x1 img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.fj-card__image {
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.fj-card__image img {
+  width: 100%;
+  border-top-left-radius: 0.6rem;
+  border-top-right-radius: 0.6rem;
+  border: 3px solid white;
+}
+
 .list-group .collapse .list-group-item:not(.active) {
   background-color: #f5f8fb;
 }
@@ -14584,19 +14611,14 @@ input[type=color].form-control:disabled {
   font-weight: 400;
 }
 
-.b-toaster.b-toaster-top-right .b-toaster-slot,
-.b-toaster.b-toaster-top-left .b-toaster-slot,
-.b-toaster.b-toaster-top-center .b-toaster-slot,
-.b-toaster.b-toaster-top-full .b-toaster-slot {
-  top: calc(86px + 3.5rem);
-  right: 1rem;
+.b-toaster {
+  left: 0 !important;
+  right: 0 !important;
 }
 
-.b-toaster.b-toaster-top-right .b-toaster-slot.sticky,
-.b-toaster.b-toaster-top-left .b-toaster-slot.sticky,
-.b-toaster.b-toaster-top-center .b-toaster-slot.sticky,
-.b-toaster.b-toaster-top-full .b-toaster-slot.sticky {
-  top: calc(86px + 1rem);
+.b-toaster-bottom-right .b-toaster-slot {
+  bottom: 1rem !important;
+  right: 1rem !important;
 }
 
 .toast {
@@ -14785,6 +14807,15 @@ div#fj-spinner.fj-spinner.loaded {
   opacity: 1;
 }
 
+table td.reduce {
+  width: 1%;
+  white-space: nowrap;
+}
+
+table td.fj-table-col {
+  vertical-align: middle;
+}
+
 div#fjord-app {
   display: grid;
   grid-template: "t m" "s m";
@@ -14879,10 +14910,12 @@ div#fjord-app nav.fj-topbar #fj-topbar-right .btn {
 div#fjord-app nav.fj-topbar .dropdown-menu {
   background-color: #4f4e52;
   min-width: 300px;
+  font-size: 0.875rem;
 }
 
 div#fjord-app nav.fj-topbar .dropdown-menu .dropdown-header {
   color: #f5f8fb;
+  font-size: 0.74375rem;
 }
 
 div#fjord-app nav.fj-topbar .dropdown-menu .dropdown-divider {

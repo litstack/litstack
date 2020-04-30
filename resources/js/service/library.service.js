@@ -27,7 +27,11 @@ Vue.component('fa-icon', FontAwesomeIcon);
 
 // Modules
 Vue.use(Vuex);
-Vue.use(BootstrapVue);
+Vue.use(BootstrapVue, {
+    BToast: {
+        toaster: 'b-toaster-bottom-right'
+    }
+});
 Vue.use(CKEditor);
 Vue.use(VueCodemirror);
 Vue.use(Draggable);

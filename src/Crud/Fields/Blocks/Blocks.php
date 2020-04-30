@@ -22,7 +22,7 @@ class Blocks extends ManyRelationField
      */
     protected $required = [
         'title',
-        'repeatables'
+        'repeatables',
     ];
 
     /**
@@ -33,7 +33,7 @@ class Blocks extends ManyRelationField
     protected $available = [
         'title',
         'hint',
-        'repeatables'
+        'repeatables',
     ];
 
     /**

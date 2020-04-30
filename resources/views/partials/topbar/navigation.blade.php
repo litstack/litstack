@@ -20,11 +20,10 @@
             @else
                 @isset($entry['link'])
                     <b-dropdown-item href="{{ $entry['link'] }}">
-                        @isset($entry['title'])
-                            {{ $entry['title'] }}
-                        @elseif(isset($entry['icon']))
-                            {!! $entry['icon'] !!} {{ $entry['link'] }}
-                        @endisset
+                        @if(array_key_exists('icon', $entry))
+                            <div class="mr-3 d-inline-block">{!! $entry['icon'] !!}</div>
+                        @endif
+                         {{ $entry['title'] }}
                     </b-dropdown-item>
                 @endisset
                 @isset ($entry['component'])

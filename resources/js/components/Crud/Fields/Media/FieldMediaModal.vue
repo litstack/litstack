@@ -1,8 +1,8 @@
 <template>
     <b-modal
-        :id="`fjord-image-${field.id}-${image.id}`"
+        :id="`fj-image-${field.id}-${image.id}`"
         size="xl"
-        class="fjord-image-modal"
+        class="fj-image-modal"
         :title="`${image.name}`"
         :static="true"
     >
@@ -52,7 +52,7 @@
             <div v-else />
             <button
                 @click.prevent="
-                    $bvModal.hide(`fjord-image-${field.id}-${image.id}`)
+                    $bvModal.hide(`fj-image-${field.id}-${image.id}`)
                 "
                 class="btn btn-secondary btn-sm"
             >

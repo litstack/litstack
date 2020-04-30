@@ -1,14 +1,11 @@
-.b-toaster.b-toaster-top-right,
-.b-toaster.b-toaster-top-left,
-.b-toaster.b-toaster-top-center,
-.b-toaster.b-toaster-top-full {
+.b-toaster {
+    left: 0 !important;
+    right: 0 !important;
+}
+.b-toaster-bottom-right {
     .b-toaster-slot {
-        top: calc(86px + #{$toast-margin + $container-padding-y});
-        right: $toast-margin;
-
-        &.sticky {
-            top: calc(86px + #{$toast-margin});
-        }
+        bottom: $toast-margin !important;
+        right: $toast-margin !important;
     }
 }
 

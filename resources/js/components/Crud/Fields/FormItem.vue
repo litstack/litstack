@@ -1,7 +1,10 @@
 <template>
     <b-col :cols="fieldCols">
         <div :class="`pb-4 fjord-form fj-form-item-${field.id}`">
-            <h6 class="mb-0 d-flex justify-content-between" v-if="field.title">
+            <h6
+                class="fj-form-item-title mb-0 d-flex justify-content-between"
+                v-if="field.title"
+            >
                 <label :for="field.id">{{ field.title }}</label>
                 <div>
                     <b-badge

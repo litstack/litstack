@@ -35,7 +35,7 @@
                 </b-row>
             </div>
             <b-modal
-                :id="`fjord-cropper-${field.id}`"
+                :id="`fj-cropper-${field.id}`"
                 size="xl"
                 title="Crop Image"
                 :static="true"
@@ -43,14 +43,14 @@
                 <div class="row">
                     <div class="col-8">
                         <div class="card no-fx">
-                            <div class="fjord-cropper__canvas-wrapper r4x3">
-                                <div class="fjord-cropper__canvas"></div>
+                            <div class="fj-cropper__canvas-wrapper r4x3">
+                                <div class="fj-cropper__canvas"></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="r4x3">
-                            <div class="fjord-cropper__preview"></div>
+                            <div class="fj-cropper__preview"></div>
                         </div>
                     </div>
                 </div>
@@ -228,14 +228,14 @@ export default {
             //
             const DROPZONE = this.dropzone;
             const CANVAS = $(
-                `#fjord-cropper-${this.field.id} .fjord-cropper__canvas`
+                `#fj-cropper-${this.field.id} .fj-cropper__canvas`
             );
             let uploadable = true;
 
             // Show the cropping modal
             //
             //
-            this.$bvModal.show(`fjord-cropper-${this.field.id}`);
+            this.$bvModal.show(`fj-cropper-${this.field.id}`);
 
             // Create an image node for Cropper.js
             //
@@ -251,7 +251,7 @@ export default {
                 aspectRatio: this.field.ratio,
                 viewMode: 2,
                 preview: $(
-                    `#fjord-cropper-${this.field.id} .fjord-cropper__preview`
+                    `#fj-cropper-${this.field.id} .fj-cropper__preview`
                 )[0]
             });
 
@@ -274,7 +274,7 @@ export default {
                 // Cancel current uploads
                 this.dropzone.removeAllFiles(true);
                 CANVAS.html('');
-                this.$bvModal.hide(`fjord-cropper-${this.field.id}`);
+                this.$bvModal.hide(`fj-cropper-${this.field.id}`);
             });
 
             $('body').on('click', '#cropper-save', () => {
@@ -291,7 +291,7 @@ export default {
                 }
 
                 CANVAS.html('');
-                this.$bvModal.hide(`fjord-cropper-${this.field.id}`);
+                this.$bvModal.hide(`fj-cropper-${this.field.id}`);
             });
         }
     }
@@ -317,6 +317,40 @@ div#fjord-app .fj-dropzone {
 
     i {
         color: $nav-item-icon-color;
+    }
+}
+
+.fj-cropper {
+    position: fixed;
+    display: none;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 10;
+
+    &__modal {
+        width: 80vw;
+        height: 70vh;
+        background-color: white;
+        border-radius: 5px;
+        margin: auto;
+        margin-top: 10vh;
+        padding: 20px;
+    }
+    &__canvas,
+    &__preview {
+        &-wrapper {
+            height: 0px;
+            position: relative;
+        }
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 }
 </style>

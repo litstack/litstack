@@ -5,6 +5,7 @@ namespace Fjord\Crud\Fields\Blocks;
 use Closure;
 use Fjord\Support\VueProp;
 use Fjord\Crud\Models\FormBlock;
+use Fjord\Vue\Crud\PreviewTable;
 use Fjord\Crud\Fields\Blocks\Blocks;
 
 class Repeatables extends VueProp
@@ -15,6 +16,13 @@ class Repeatables extends VueProp
      * @var array
      */
     protected $forms = [];
+
+    /**
+     * Preview tables.
+     *
+     * @var array
+     */
+    protected $previews = [];
 
     /**
      * Route prefix.
@@ -48,9 +56,12 @@ class Repeatables extends VueProp
             $this->routePrefix
         );
 
-        $closure($form);
+        $preview = new PreviewTable;
+
+        $closure($form, $preview);
 
         $this->forms[$name] = $form;
+        $this->previews[$name] = $preview;
 
         return $this;
     }
@@ -65,7 +76,10 @@ class Repeatables extends VueProp
         $array = $this->forms;
 
         foreach ($array as $name => $form) {
-            $array[$name] = $form->toArray();
+            $array[$name] = [
+                'fields' => $form->toArray(),
+                'preview' => $this->previews[$name]->toArray()
+            ];
         }
 
         return $array;

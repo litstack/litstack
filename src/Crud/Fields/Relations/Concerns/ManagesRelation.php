@@ -3,7 +3,7 @@
 namespace Fjord\Crud\Fields\Relations\Concerns;
 
 use Closure;
-use Fjord\Vue\Crud\RelationTable;
+use Fjord\Vue\Crud\PreviewTable;
 use Illuminate\Database\Eloquent\Builder;
 use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
@@ -64,7 +64,7 @@ trait ManagesRelation
      */
     public function preview(Closure $closure)
     {
-        $table = new RelationTable;
+        $table = new PreviewTable;
 
         $this->attributes['preview'] = $table;
 

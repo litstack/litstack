@@ -1,6 +1,6 @@
 <template>
     <b-dropdown-item @click="logout">
-        <fa-icon icon="sign-out-alt" />
+        <fa-icon icon="sign-out-alt" class="mr-3" />
         logout
     </b-dropdown-item>
 </template>

@@ -10,7 +10,11 @@
                 $prop= collect($prop);
             @endphp
         @endif
-
+        @if($prop instanceof Illuminate\Contracts\Support\Jsonable)
+            @php
+                $prop=$prop->toJson();
+            @endphp
+        @endif
         @if($prop === null)
             @php
                 $prop="'NULL'";

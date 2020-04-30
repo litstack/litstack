@@ -14,13 +14,13 @@
             <div
                 :class="{
                     'mb-3': !field.readonly,
-                    'card no-fx fjord-card': true
+                    'card no-fx fj-card': true
                 }"
             >
                 <div
                     :class="{
-                        'fjord-card__1x1': field.square,
-                        'fjord-card__image': true
+                        'fj-card__1x1': field.square,
+                        'fj-card__image': true
                     }"
                 >
                     <img :src="imgPath(image)" class />
@@ -30,7 +30,7 @@
                         size="sm"
                         variant="link"
                         class="text-secondary"
-                        v-b-modal="`fjord-image-${field.id}-${image.id}`"
+                        v-b-modal="`fj-image-${field.id}-${image.id}`"
                     >
                         <i
                             :class="`fas fa-${field.readonly ? 'eye' : 'edit'}`"
