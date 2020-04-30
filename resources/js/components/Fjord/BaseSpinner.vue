@@ -1,5 +1,9 @@
 <template>
-    <div class="lds-ripple d-flex justify-content-center align-items-center">
+    <div
+        :class="
+            `lds-ripple lds-ripple-${variant} d-flex justify-content-center align-items-center`
+        "
+    >
         <div></div>
         <div></div>
     </div>
@@ -7,6 +11,14 @@
 
 <script>
 export default {
-    name: 'Spinner'
+    name: 'Spinner',
+    props: {
+        variant: {
+            type: String,
+            default() {
+                return 'primary';
+            }
+        }
+    }
 };
 </script>

@@ -65,17 +65,14 @@ export default {
     methods: {
         async saveAll() {
             try {
-                await this.$store.dispatch('saveModels');
+                await this.$store.dispatch('save');
             } catch (e) {
                 console.log(e);
                 return;
             }
-            this.$bvToast.toast(
-                this.$t('fj.model_saved', { model: this.config.names.title }),
-                {
-                    variant: 'success'
-                }
-            );
+            this.$bvToast.toast(this.$t('fj.saved'), {
+                variant: 'success'
+            });
         }
     },
     mounted() {
@@ -136,7 +133,7 @@ $row-margin-x: -$grid-gutter-width / 2;
     position: sticky;
     top: 0;
     background: $body-bg;
-    z-index: 10;
+    z-index: 1;
     box-shadow: 0 0 0 0 rgba(188, 188, 188, 0.51);
     transition: 0.2s all ease-in;
 

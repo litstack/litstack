@@ -9,17 +9,20 @@
 @import '~bootstrap-vue/src/index';
 @import '~cropperjs/src/index';
 
-// Components
-@import '_btn';
-@import '_blocks';
-@import '_card';
-@import '_hide';
-@import '_list-group';
-@import '_spinner';
-@import '_table';
+// Bootstrap Components
+@import '_bs/_btn';
+@import '_bs/_card';
+@import '_bs/_list-group';
+@import '_bs/_table';
+@import '_bs/_toasts';
+// Fjord Components
+@import '_fj/_blocks';
+@import '_fj/_spinner';
+@import '_fj/_hide';
 
 // Layout
 @import 'layout';
+@import 'landing';
 @import 'brand';
 @import 'navigation';
 @import 'topbar';
@@ -58,6 +61,10 @@ div#fjord-app {
         outline: none !important;
         box-shadow: none !important;
     }
+}
+
+.form-control-expand {
+    flex-grow: 1;
 }
 
 .modal-backdrop {

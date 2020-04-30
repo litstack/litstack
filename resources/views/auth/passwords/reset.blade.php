@@ -1,13 +1,12 @@
-@extends('fjord::app')
+@extends('fjord::landing')
 
-@section('title')
+@section('l-title')
     Reset Password ({{ $email }})
 @endsection
 
-@section('content')
-<div class="fjord-container container sm">
+@section('l-content')
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">{{ __('Reset Password') }}</div>
 
@@ -75,5 +74,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

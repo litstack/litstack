@@ -1,6 +1,6 @@
 <template>
     <fj-page :fluid="config.expand ? 'fluid' : 'lg'">
-        <fj-navigation :back="backRoute" :back-text="config.names.plural">
+        <fj-navigation>
             <b-button
                 size="md"
                 variant="primary"

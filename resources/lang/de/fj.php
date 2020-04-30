@@ -1,6 +1,8 @@
 <?php
 
 return [
+    "drag_and_drop" => "Drag and Drop",
+    "saved" => "Gespeichert",
     "save" => "Speichern",
     "no_relation_selected" => "Keine <i>:relation</i> ausgewählt.",
     "already_selected" => "Dieses Item wurde bereits ausgewählt.",

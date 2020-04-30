@@ -1,7 +1,7 @@
 <template>
     <div class="indent sm">
         <b-button
-            :href="`${baseURL}${routePrefix}/${nearItems.previous}/edit`"
+            :href="`${Fjord.baseURL}${routePrefix}/${nearItems.previous}/edit`"
             :disabled="!nearItems.previous"
             variant="transparent"
             size="sm"
@@ -9,7 +9,7 @@
             <fa-icon icon="arrow-left" />
         </b-button>
         <b-button
-            :href="`${baseURL}${routePrefix}/${nearItems.next}/edit`"
+            :href="`${Fjord.baseURL}${routePrefix}/${nearItems.next}/edit`"
             :disabled="!nearItems.next"
             variant="transparent"
             size="sm"
@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 export default {
     name: 'CrudShowNearItems',
     props: {
@@ -28,12 +27,9 @@ export default {
             type: Object
         },
         routePrefix: {
-            type: Object,
+            type: String,
             required: true
         }
-    },
-    computed: {
-        ...mapGetters(['baseURL'])
     }
 };
 </script>

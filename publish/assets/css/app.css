@@ -5014,7 +5014,7 @@ input[type=button].btn-block {
 .card-header {
   padding: 2.5rem 2.5rem;
   margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: #e5eaef;
   border-bottom: 0 solid rgba(0, 0, 0, 0.125);
 }
 
@@ -5028,7 +5028,7 @@ input[type=button].btn-block {
 
 .card-footer {
   padding: 2.5rem 2.5rem;
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: #e5eaef;
   border-top: 0 solid rgba(0, 0, 0, 0.125);
 }
 
@@ -6166,15 +6166,15 @@ a.close.disabled {
 .toast {
   max-width: 350px;
   overflow: hidden;
-  font-size: 0.875rem;
-  background-color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  background-color: rgba(108, 129, 153, 0.8);
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 0 solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
   opacity: 0;
-  border-radius: 0.25rem;
+  border-radius: 0.6rem;
 }
 
 .toast:not(:last-child) {
@@ -6201,7 +6201,7 @@ a.close.disabled {
   color: #676569;
   background-color: rgba(255, 255, 255, 0.85);
   background-clip: padding-box;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 0 solid rgba(0, 0, 0, 0.05);
 }
 
 .toast-body {
@@ -7073,7 +7073,7 @@ a.close.disabled {
   width: 2rem;
   height: 2rem;
   vertical-align: text-bottom;
-  border: 0.25em solid currentColor;
+  border: 5px solid currentColor;
   border-right-color: transparent;
   border-radius: 50%;
   -webkit-animation: spinner-border 0.75s linear infinite;
@@ -13420,11 +13420,11 @@ input[type=color].form-control:disabled {
           backface-visibility: hidden;
   background-clip: padding-box;
   z-index: 1;
-  border-radius: 0.25rem;
+  border-radius: 0.6rem;
 }
 
 .b-toast .toast {
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(108, 129, 153, 0.8);
 }
 
 .b-toast:not(:last-child) {
@@ -13432,7 +13432,7 @@ input[type=color].form-control:disabled {
 }
 
 .b-toast.b-toast-solid .toast {
-  background-color: white;
+  background-color: #6c8199;
 }
 
 .b-toast .toast {
@@ -13448,15 +13448,15 @@ input[type=color].form-control:disabled {
 }
 
 .b-toast-primary .toast {
-  background-color: rgba(243, 243, 254, 0.85);
-  border-color: rgba(204, 206, 251, 0.85);
+  background-color: rgba(243, 243, 254, 0.8);
+  border-color: rgba(204, 206, 251, 0.8);
   color: #262a7e;
 }
 
 .b-toast-primary .toast .toast-header {
   color: #262a7e;
-  background-color: rgba(219, 220, 252, 0.85);
-  border-bottom-color: rgba(204, 206, 251, 0.85);
+  background-color: rgba(219, 220, 252, 0.8);
+  border-bottom-color: rgba(204, 206, 251, 0.8);
 }
 
 .b-toast-primary.b-toast-solid .toast {
@@ -13464,15 +13464,15 @@ input[type=color].form-control:disabled {
 }
 
 .b-toast-secondary .toast {
-  background-color: rgba(241, 243, 245, 0.85);
-  border-color: rgba(215, 221, 227, 0.85);
+  background-color: rgba(241, 243, 245, 0.8);
+  border-color: rgba(215, 221, 227, 0.8);
   color: #3a4551;
 }
 
 .b-toast-secondary .toast .toast-header {
   color: #3a4551;
-  background-color: rgba(226, 231, 235, 0.85);
-  border-bottom-color: rgba(215, 221, 227, 0.85);
+  background-color: rgba(226, 231, 235, 0.8);
+  border-bottom-color: rgba(215, 221, 227, 0.8);
 }
 
 .b-toast-secondary.b-toast-solid .toast {
@@ -13480,15 +13480,15 @@ input[type=color].form-control:disabled {
 }
 
 .b-toast-success .toast {
-  background-color: rgba(255, 255, 255, 0.85);
-  border-color: rgba(228, 251, 232, 0.85);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-color: rgba(228, 251, 232, 0.8);
   color: #537e5a;
 }
 
 .b-toast-success .toast .toast-header {
   color: #537e5a;
-  background-color: rgba(236, 252, 239, 0.85);
-  border-bottom-color: rgba(228, 251, 232, 0.85);
+  background-color: rgba(236, 252, 239, 0.8);
+  border-bottom-color: rgba(228, 251, 232, 0.8);
 }
 
 .b-toast-success.b-toast-solid .toast {
@@ -13496,15 +13496,15 @@ input[type=color].form-control:disabled {
 }
 
 .b-toast-info .toast {
-  background-color: rgba(255, 255, 255, 0.85);
-  border-color: rgba(220, 238, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-color: rgba(220, 238, 255, 0.8);
   color: #446585;
 }
 
 .b-toast-info .toast .toast-header {
   color: #446585;
-  background-color: rgba(230, 243, 255, 0.85);
-  border-bottom-color: rgba(220, 238, 255, 0.85);
+  background-color: rgba(230, 243, 255, 0.8);
+  border-bottom-color: rgba(220, 238, 255, 0.8);
 }
 
 .b-toast-info.b-toast-solid .toast {
@@ -13512,15 +13512,15 @@ input[type=color].form-control:disabled {
 }
 
 .b-toast-warning .toast {
-  background-color: rgba(255, 255, 252, 0.85);
-  border-color: rgba(252, 250, 217, 0.85);
+  background-color: rgba(255, 255, 252, 0.8);
+  border-color: rgba(252, 250, 217, 0.8);
   color: #807b3d;
 }
 
 .b-toast-warning .toast .toast-header {
   color: #807b3d;
-  background-color: rgba(253, 251, 228, 0.85);
-  border-bottom-color: rgba(252, 250, 217, 0.85);
+  background-color: rgba(253, 251, 228, 0.8);
+  border-bottom-color: rgba(252, 250, 217, 0.8);
 }
 
 .b-toast-warning.b-toast-solid .toast {
@@ -13528,15 +13528,15 @@ input[type=color].form-control:disabled {
 }
 
 .b-toast-danger .toast {
-  background-color: rgba(255, 252, 252, 0.85);
-  border-color: rgba(252, 217, 225, 0.85);
+  background-color: rgba(255, 252, 252, 0.8);
+  border-color: rgba(252, 217, 225, 0.8);
   color: #803d4c;
 }
 
 .b-toast-danger .toast .toast-header {
   color: #803d4c;
-  background-color: rgba(253, 228, 233, 0.85);
-  border-bottom-color: rgba(252, 217, 225, 0.85);
+  background-color: rgba(253, 228, 233, 0.8);
+  border-bottom-color: rgba(252, 217, 225, 0.8);
 }
 
 .b-toast-danger.b-toast-solid .toast {
@@ -13544,15 +13544,15 @@ input[type=color].form-control:disabled {
 }
 
 .b-toast-light .toast {
-  background-color: rgba(255, 255, 255, 0.85);
-  border-color: rgba(242, 244, 247, 0.85);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-color: rgba(242, 244, 247, 0.8);
   color: #6c7176;
 }
 
 .b-toast-light .toast .toast-header {
   color: #6c7176;
-  background-color: rgba(245, 247, 249, 0.85);
-  border-bottom-color: rgba(242, 244, 247, 0.85);
+  background-color: rgba(245, 247, 249, 0.8);
+  border-bottom-color: rgba(242, 244, 247, 0.8);
 }
 
 .b-toast-light.b-toast-solid .toast {
@@ -13560,15 +13560,15 @@ input[type=color].form-control:disabled {
 }
 
 .b-toast-dark .toast {
-  background-color: rgba(224, 224, 225, 0.85);
-  border-color: rgba(193, 193, 195, 0.85);
+  background-color: rgba(224, 224, 225, 0.8);
+  border-color: rgba(193, 193, 195, 0.8);
   color: #121114;
 }
 
 .b-toast-dark .toast .toast-header {
   color: #121114;
-  background-color: rgba(211, 211, 212, 0.85);
-  border-bottom-color: rgba(193, 193, 195, 0.85);
+  background-color: rgba(211, 211, 212, 0.8);
+  border-bottom-color: rgba(193, 193, 195, 0.8);
 }
 
 .b-toast-dark.b-toast-solid .toast {
@@ -13576,15 +13576,15 @@ input[type=color].form-control:disabled {
 }
 
 .b-toast-gray .toast {
-  background-color: rgba(238, 237, 238, 0.85);
-  border-color: rgba(212, 212, 213, 0.85);
+  background-color: rgba(238, 237, 238, 0.8);
+  border-color: rgba(212, 212, 213, 0.8);
   color: #363537;
 }
 
 .b-toast-gray .toast .toast-header {
   color: #363537;
-  background-color: rgba(225, 224, 225, 0.85);
-  border-bottom-color: rgba(212, 212, 213, 0.85);
+  background-color: rgba(225, 224, 225, 0.8);
+  border-bottom-color: rgba(212, 212, 213, 0.8);
 }
 
 .b-toast-gray.b-toast-solid .toast {
@@ -14571,6 +14571,104 @@ input[type=color].form-control:disabled {
   color: #ccd7e1;
 }
 
+.card {
+  box-shadow: 0 0 19px 0 rgba(235, 235, 235, 0.5);
+}
+
+.list-group .collapse .list-group-item:not(.active) {
+  background-color: #f5f8fb;
+}
+
+.table.b-table th {
+  color: #70859c;
+  font-weight: 400;
+}
+
+.b-toaster.b-toaster-top-right .b-toaster-slot,
+.b-toaster.b-toaster-top-left .b-toaster-slot,
+.b-toaster.b-toaster-top-center .b-toaster-slot,
+.b-toaster.b-toaster-top-full .b-toaster-slot {
+  top: calc(86px + 3.5rem);
+  right: 1rem;
+}
+
+.b-toaster.b-toaster-top-right .b-toaster-slot.sticky,
+.b-toaster.b-toaster-top-left .b-toaster-slot.sticky,
+.b-toaster.b-toaster-top-center .b-toaster-slot.sticky,
+.b-toaster.b-toaster-top-full .b-toaster-slot.sticky {
+  top: calc(86px + 1rem);
+}
+
+.toast {
+  background: rgba(108, 129, 153, 0.8) !important;
+  color: white !important;
+  border: none !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+          backdrop-filter: blur(5px) !important;
+}
+
+.toast .close {
+  font-weight: 400 !important;
+  color: white !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+.toast .toast-header {
+  padding: 0 !important;
+  position: absolute !important;
+  right: 7px !important;
+  top: 2px !important;
+}
+
+.b-toast .toast .toast-body,
+.toast .toast-header {
+  background: transparent !important;
+  color: white !important;
+  border: none !important;
+}
+
+.toast-body::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  padding-right: 10px;
+}
+
+.b-toast-success .toast-body::before {
+  content: "\F058";
+  color: #9ff2ae;
+}
+
+.b-toast-danger .toast-body::before {
+  content: "\F057";
+  color: #f67693;
+}
+
+.b-toast-default .toast-body::before {
+  padding: 0;
+  display: none;
+}
+
+.b-toast-primary .toast-body::before {
+  content: "\F05A";
+  color: #4951f2;
+}
+
+.b-toast-secondary .toast-body::before {
+  content: "\F05A";
+  color: #cfd9e2;
+}
+
+.b-toast-warning .toast-body::before {
+  content: "\F06A";
+  color: #f6ed76;
+}
+
+.b-toast-info .toast-body::before {
+  content: "\F05A";
+  color: #4951f2;
+}
+
 .fj-block {
   background: #f5f8fb;
   border-radius: 0.6rem;
@@ -14582,37 +14680,16 @@ input[type=color].form-control:disabled {
   cursor: grab;
 }
 
-.card {
-  box-shadow: 0 0 19px 0 rgba(235, 235, 235, 0.5);
-}
-
-.fj-hide {
-  opacity: 0;
-}
-
-.fj-hide.show {
-  opacity: 1;
-}
-
-.list-group .collapse .list-group-item:not(.active) {
-  background-color: #f5f8fb;
-}
-
-.fj-spinner {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: white;
+div#fj-spinner.fj-spinner {
+  margin-top: calc(50vh - 100px);
   pointer-events: none;
   opacity: 1;
   transition: 0.2s all ease;
   z-index: 8;
 }
 
-.fj-spinner.loaded {
-  opacity: 0;
+div#fj-spinner.fj-spinner.loaded {
+  display: none !important;
 }
 
 .lds-ripple {
@@ -14620,6 +14697,42 @@ input[type=color].form-control:disabled {
   position: relative;
   width: 200px;
   height: 200px;
+}
+
+.lds-ripple.lds-ripple-primary div {
+  border-color: #4951f2;
+}
+
+.lds-ripple.lds-ripple-secondary div {
+  border-color: #70859c;
+}
+
+.lds-ripple.lds-ripple-success div {
+  border-color: #9ff2ae;
+}
+
+.lds-ripple.lds-ripple-info div {
+  border-color: #83c2ff;
+}
+
+.lds-ripple.lds-ripple-warning div {
+  border-color: #f6ed76;
+}
+
+.lds-ripple.lds-ripple-danger div {
+  border-color: #f67693;
+}
+
+.lds-ripple.lds-ripple-light div {
+  border-color: #cfd9e2;
+}
+
+.lds-ripple.lds-ripple-dark div {
+  border-color: #232127;
+}
+
+.lds-ripple.lds-ripple-gray div {
+  border-color: #676569;
 }
 
 .lds-ripple div {
@@ -14664,9 +14777,12 @@ input[type=color].form-control:disabled {
   }
 }
 
-.table.b-table th {
-  color: #70859c;
-  font-weight: 400;
+.fj-hide {
+  opacity: 0;
+}
+
+.fj-hide.show {
+  opacity: 1;
 }
 
 div#fjord-app {
@@ -14676,11 +14792,34 @@ div#fjord-app {
   grid-template-rows: 56px auto;
 }
 
+div#fjord-app.no-nav {
+  grid-template: "m" "m";
+}
+
 div#fjord-app main {
   grid-area: m;
   height: 100vh;
   overflow: hidden;
   overflow-y: scroll;
+}
+
+div#fjord-app main > .fj-content {
+  display: none;
+}
+
+div#fjord-app main.loaded > .fj-content {
+  display: block;
+}
+
+.fj-landing-page .fj-brand {
+  margin-top: 5rem;
+  margin-bottom: 6rem;
+}
+
+.fj-landing-page .fj-brand img {
+  width: 150px !important;
+  -webkit-filter: invert(100%);
+          filter: invert(100%);
 }
 
 .fj-brand {
@@ -14755,6 +14894,10 @@ div#fjord-app {
 div#fjord-app .btn:focus {
   outline: none !important;
   box-shadow: none !important;
+}
+
+.form-control-expand {
+  flex-grow: 1;
 }
 
 .modal-backdrop {

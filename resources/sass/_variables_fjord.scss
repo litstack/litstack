@@ -6,6 +6,18 @@
 // Variables should follow the `$component-state-property-size` formula for
 // consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
 
+// Spinner
+//
+//
+$spinner-size: 200px;
+$spinner-border-width: 5px;
+$spinner-theme-default: $primary;
+
+// Toasts
+//
+//
+$toast-margin: map-get($spacers, 3);
+
 // Topbar
 //
 // Topbar above main navigation.

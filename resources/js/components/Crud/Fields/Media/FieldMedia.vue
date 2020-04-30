@@ -8,7 +8,7 @@
                         v-if="!field.readonly && images.length < field.maxFiles"
                     >
                         <vue-dropzone
-                            class="fjord-dropzone"
+                            class="fj-dropzone"
                             :ref="`dropzone-${field.id}`"
                             :id="`dropzone-${field.id}`"
                             :options="dropzoneOptions"
@@ -117,7 +117,9 @@ export default {
                 method: 'POST',
                 paramName: 'media',
                 acceptedFiles: 'image/*, application/pdf',
-                dictDefaultMessage: `<i class="fas fa-file-import"></i> Drag and drop`,
+                dictDefaultMessage: `<i class="fas fa-file-import mr-2"></i> ${this.$t(
+                    'fj.drag_and_drop'
+                )}`,
                 headers: {
                     'X-CSRF-TOKEN': document.head.querySelector(
                         'meta[name="csrf-token"]'
@@ -295,8 +297,26 @@ export default {
     }
 };
 </script>
-<style>
+<style lang="scss">
+@import '@fj-sass/_variables';
+
 .dz-error-message {
-    disaply: none !important;
+    display: none !important;
+}
+
+div#fjord-app .fj-dropzone {
+    border: $input-border-width solid $input-border-color;
+    border-radius: $input-border-radius;
+    background-color: $input-bg;
+    color: $input-color;
+    font-size: $input-font-size;
+
+    &:hover {
+        background-color: $light;
+    }
+
+    i {
+        color: $nav-item-icon-color;
+    }
 }
 </style>

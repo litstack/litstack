@@ -6,10 +6,24 @@ div#fjord-app {
     grid-template-columns: 290px 1fr;
     grid-template-rows: $topbar_height auto;
 
+    &.no-nav {
+        grid-template:
+            'm'
+            'm';
+    }
+
     main {
         grid-area: m;
         height: 100vh;
         overflow: hidden;
         overflow-y: scroll;
+
+        > .fj-content {
+            display: none;
+        }
+
+        &.loaded > .fj-content {
+            display: block;
+        }
     }
 }

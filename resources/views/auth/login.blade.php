@@ -1,15 +1,15 @@
-@extends('fjord::index')
+@extends('fjord::landing')
 
-@section('title')
+@section('l-title')
     Login
 @endsection
 
-@section('content')
-<div class="fjord-container container sm">
+@section('l-content')
+
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header"><h3>{{ __('Login') }}</h3></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('fjord.login') }}">
@@ -73,5 +73,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

@@ -191,9 +191,9 @@ $embed-responsive-aspect-ratios: join(
 //$font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
 
-//$font-size-base:              1rem !default; // Assumes the browser default, typically `16px`
-//$font-size-lg:                $font-size-base * 1.25 !default;
-//$font-size-sm:                $font-size-base * .875 !default;
+$font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
+$font-size-lg: $font-size-base * 1.25 !default;
+$font-size-sm: $font-size-base * 0.875 !default;
 
 //$font-weight-lighter:         lighter !default;
 //$font-weight-light:           300 !default;
@@ -324,7 +324,7 @@ $card-border-width: 0 !default;
 //$card-border-radius:                $border-radius !default;
 //$card-border-color:                 rgba($black, .125) !default;
 //$card-inner-border-radius:          subtract($card-border-radius, $card-border-width) !default;
-//$card-cap-bg:                       rgba($black, .03) !default;
+$card-cap-bg: $gray-300 !default;
 //$card-cap-color:                    null !default;
 //$card-height:                       null !default;
 //$card-color:                        null !default;
@@ -365,6 +365,23 @@ $list-group-item-padding-x: $spacer-x !default;
 //$list-group-action-active-bg:       $gray-200 !default;
 
 $list-group-collapsed-bg: $body-bg;
+
+// Toasts
+
+//$toast-max-width:                   350px !default;
+//$toast-padding-x:                   .75rem !default;
+//$toast-padding-y:                   .25rem !default;
+$toast-font-size: $font-size-base !default;
+//$toast-color:                       null !default;
+$toast-background-color: rgba($gray-500, 0.8) !default;
+$toast-border-width: 0 !default;
+//$toast-border-color:                rgba(0, 0, 0, .1) !default;
+$toast-border-radius: $border-radius !default;
+//$toast-box-shadow:                  0 .25rem .75rem rgba($black, .1) !default;
+
+//$toast-header-color:                $gray-600 !default;
+//$toast-header-background-color:     rgba($white, .85) !default;
+//$toast-header-border-color:         rgba(0, 0, 0, .05) !default;
 
 // Badges
 

@@ -4,11 +4,11 @@
             <fj-crud-show-near-items
                 slot="left"
                 v-if="nearItems"
-                :config="config"
+                :route-prefix="config.route_prefix"
                 :nearItems="nearItems"
             />
-            <fj-crud-language slot="right"/>
-                <!--
+            <fj-crud-language slot="right" />
+            <!--
                 <div slot="controls" class="pt-1" v-if="controls.length > 0">
                     <hr />
                     <components
@@ -21,7 +21,6 @@
                     />
                 </div>
                 -->
-            </fj-crud-show-controls>
         </fj-navigation>
 
         <fj-container>

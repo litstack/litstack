@@ -25,16 +25,21 @@
 
 
 <body onload="makeVisible()">
-    <div id="fjord-app">
+    <div id="fjord-app" class="{{ $noNav ?? false ? 'no-nav' : '' }}">
 
-        @include('fjord::partials.topbar.topbar')
-
-        @include('fjord::partials.navigation')
+        @if($noNav ?? true) 
+            @include('fjord::partials.topbar.topbar')
+            @include('fjord::partials.navigation')
+        @endif
 
         <main>
-            @yield('content')
-            @include('fjord::partials.spinner')
+            <div class="fj-content">
+                @yield('content') 
+            </div>
+            
+             @include('fjord::partials.spinner')
         </main>
+        
 
     </div>
 
@@ -45,20 +50,32 @@
 
     <script type="text/javascript">
         function makeVisible(){
-            var d = document.getElementById("fjord-spinner");
-            if(d) {
-                d.className += " loaded";
+            let spinner = document.getElementById("fj-spinner");
+            let main = document.querySelector("div#fjord-app > main");
+            if(spinner && main) {
+                spinner.classList.add('loaded');
+                main.classList.add('loaded');
             }
-
-            let main = document.querySelector('main');
         
             main.addEventListener('scroll', e => {
                 let header = document.querySelector('.fj-page-navigation');
+                let toasterSlot = document.querySelector('.b-toaster-slot');
+
+                if(!header) {
+                    return;
+                }
                 
                 if(header.getBoundingClientRect().top == 0){
                     header.classList.add('sticky')
+                    if(toasterSlot){
+                        toasterSlot.classList.add('sticky')
+                    }
+                    
                 }else{
                     header.classList.remove('sticky')
+                    if(toasterSlot){
+                        toasterSlot.classList.remove('sticky')
+                    }
                 }
                 
             });
