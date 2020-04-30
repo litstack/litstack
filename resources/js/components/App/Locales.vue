@@ -1,7 +1,7 @@
 <template>
     <b-dropdown-group
         :header="$t('fj.choose_language')"
-        v-if="config.translatable ? config.translatable.translatable : false"
+        v-if="config.translatable"
     >
         <b-select
             :value="$i18n.locale"
@@ -12,10 +12,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
     name: 'Locales',
+    props: {
+        config: {
+            type: Object,
+            default() {
+                return Fjord.config.translatable;
+            }
+        }
+    },
     methods: {
         async setAppLocale(locale) {
             let response = await this.$store.dispatch('setAppLocale', {
@@ -33,11 +39,10 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['config']),
         options() {
             let options = {};
-            for (let i in this.config.translatable.locales) {
-                let locale = this.config.translatable.locales[i];
+            for (let i in this.config.locales) {
+                let locale = this.config.locales[i];
                 options[locale] = this.localeTranslations[locale].nativeName;
             }
             return options;

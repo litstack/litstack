@@ -2,7 +2,7 @@
     @include button-variant(
         transparent,
         transparent,
-        map-get($theme-colors, 'light')
+        rgba(map-get($theme-colors, 'light'), 0.5)
     );
     color: $text-muted;
 

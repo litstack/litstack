@@ -12,7 +12,7 @@
                 :class="{ 'mb-0': field.readonly }"
                 v-else-if="sortableBlocks.length > 0"
             >
-                <fj-field-blocks-item
+                <fj-field-block
                     v-for="(block, index) in sortableBlocks"
                     :key="index"
                     :block="block"

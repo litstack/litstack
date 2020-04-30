@@ -1,10 +1,10 @@
 <template>
-    <b-dropdown
-        right
-        :text="$t('fj.sort')"
-        variant="outline-secondary"
-        v-if="sortBy"
-    >
+    <b-dropdown right variant="outline-secondary" v-if="sortBy">
+        <template v-slot:button-content>
+            <fa-icon icon="sort-amount-down" />
+            {{ $t('fj.sort') }}
+        </template>
+
         <b-dropdown-item
             v-for="(text, key) in sortBy"
             :key="key"

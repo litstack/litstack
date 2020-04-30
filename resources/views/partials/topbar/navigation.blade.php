@@ -1,4 +1,4 @@
-<b-dropdown class="m-md-2" dropright variant="transparent" size="sm">
+<b-dropdown class="m-md-2" dropbottom no-caret variant="transparent" size="sm">
     <template v-slot:button-content>
         <fa-icon icon="bars" />
     </template>
@@ -34,8 +34,10 @@
 
         @endforeach
     @endforeach
-    <b-dropdown-divider></b-dropdown-divider>
-    <fj-locales ></fj-locales>
+    @if(config('fjord.translatable.translatable'))
+        <b-dropdown-divider></b-dropdown-divider>
+        <fj-locales :config={{ json_encode(config('fjord.translatable')) }}></fj-locales>
+    @endif
     <b-dropdown-divider></b-dropdown-divider>
     <fj-logout :url="'{{route('fjord.logout')}}'"></fj-logout>
     

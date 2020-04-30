@@ -1,5 +1,5 @@
-@extends('fjord::index'[
-    'noNav' => true
+@extends('fjord::index', [
+    'nav' => false
 ])
 
 @section('title')
@@ -11,7 +11,7 @@
 
         <div class="text-center">
             <div class="fj-brand">
-                <img src="{{ route('fjord.logo') }}" class="img-fluid">
+                @include('fjord::partials.logo')
             </div>
         </div>
         

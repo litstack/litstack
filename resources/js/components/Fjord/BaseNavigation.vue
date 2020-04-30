@@ -95,14 +95,16 @@ export default {
             false
         );
 
-        let ww = window.innerWidth;
-        let button = document
-            .querySelector('.fj-save-button')
-            .getBoundingClientRect();
-        let offset = ww - button.right;
+        this.$nextTick(function() {
+            let ww = window.innerWidth;
+            let button = document
+                .querySelector('.fj-save-button')
+                .getBoundingClientRect();
+            let offset = ww - button.right;
 
-        this.b = button;
-        this.offset = Math.ceil(offset);
+            this.b = button;
+            this.offset = Math.ceil(offset);
+        });
     },
     computed: {
         ...mapGetters(['canSave']),

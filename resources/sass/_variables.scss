@@ -13,7 +13,7 @@ $gray-400: #ccd7e1 !default;
 $gray-500: #6c8199 !default;
 //$gray-600: #6c757d !default;
 $gray-600: #676569 !default;
-//$gray-700: #495057 !default;
+$gray-700: #4f4e52 !default;
 //$gray-800: #343a40 !default;
 $gray-900: #232127 !default;
 $black: #000 !default;
@@ -149,7 +149,7 @@ $grid-gutter-width: 30px !default;
 //$line-height-sm: 1.5 !default;
 
 //$border-width: 1px !default;
-$border-color: $gray-400 !default;
+$border-color: $secondary !default;
 
 $border-radius: 0.6rem !default;
 $border-radius-lg: 0.8rem !default;
@@ -316,6 +316,60 @@ $input-btn-padding-x-sm: $input-btn-padding-x * 0.625 !default;
 
 //$input-btn-border-width:      $border-width !default;
 
+// Forms
+
+//$label-margin-bottom:                   .5rem !default;
+//
+//$input-padding-y:                       $input-btn-padding-y !default;
+//$input-padding-x:                       $input-btn-padding-x !default;
+//$input-font-family:                     $input-btn-font-family !default;
+//$input-font-size:                       $input-btn-font-size !default;
+//$input-font-weight:                     $font-weight-base !default;
+//$input-line-height:                     $input-btn-line-height !default;
+//
+//$input-padding-y-sm:                    $input-btn-padding-y-sm !default;
+//$input-padding-x-sm:                    $input-btn-padding-x-sm !default;
+//$input-font-size-sm:                    $input-btn-font-size-sm !default;
+//$input-line-height-sm:                  $input-btn-line-height-sm !default;
+//
+//$input-padding-y-lg:                    $input-btn-padding-y-lg !default;
+//$input-padding-x-lg:                    $input-btn-padding-x-lg !default;
+//$input-font-size-lg:                    $input-btn-font-size-lg !default;
+//$input-line-height-lg:                  $input-btn-line-height-lg !default;
+//
+//$input-bg:                              $white !default;
+//$input-disabled-bg:                     $gray-200 !default;
+//
+//$input-color:                           $gray-700 !default;
+$input-border-color: $border-color !default;
+//$input-border-width:                    $input-btn-border-width !default;
+//$input-box-shadow:                      inset 0 1px 1px rgba($black, .075) !default;
+//
+//$input-border-radius:                   $border-radius !default;
+//$input-border-radius-lg:                $border-radius-lg !default;
+//$input-border-radius-sm:                $border-radius-sm !default;
+//
+//$input-focus-bg:                        $input-bg !default;
+//$input-focus-border-color:              lighten($component-active-bg, 25%) !default;
+//$input-focus-color:                     $input-color !default;
+//$input-focus-width:                     $input-btn-focus-width !default;
+//$input-focus-box-shadow:                $input-btn-focus-box-shadow !default;
+//
+//$input-placeholder-color:               $gray-600 !default;
+//$input-plaintext-color:                 $body-color !default;
+//
+//$input-height-border:                   $input-border-width * 2 !default;
+//
+//$input-height-inner:                    add($input-line-height * 1em, $input-padding-y * 2) !default;
+//$input-height-inner-half:               add($input-line-height * .5em, $input-padding-y) !default;
+//$input-height-inner-quarter:            add($input-line-height * .25em, $input-padding-y / 2) !default;
+//
+//$input-height:                          add($input-line-height * 1em, add($input-padding-y * 2, $input-height-border, false)) !default;
+//$input-height-sm:                       add($input-line-height-sm * 1em, add($input-padding-y-sm * 2, $input-height-border, false)) !default;
+//$input-height-lg:                       add($input-line-height-lg * 1em, add($input-padding-y-lg * 2, $input-height-border, false)) !default;
+//
+//$input-transition:                      border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+
 // Cards
 
 $card-spacer-y: 2.5rem !default;
@@ -369,8 +423,8 @@ $list-group-collapsed-bg: $body-bg;
 // Toasts
 
 //$toast-max-width:                   350px !default;
-//$toast-padding-x:                   .75rem !default;
-//$toast-padding-y:                   .25rem !default;
+$toast-padding-x: $input-btn-padding-x !default;
+$toast-padding-y: $input-btn-padding-y !default;
 $toast-font-size: $font-size-base !default;
 //$toast-color:                       null !default;
 $toast-background-color: rgba($gray-500, 0.8) !default;

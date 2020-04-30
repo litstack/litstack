@@ -1,10 +1,10 @@
 <template>
-    <b-dropdown
-        right
-        :text="$t('fj.filter')"
-        :variant="filterVariant"
-        :disabled="!filter"
-    >
+    <b-dropdown right :variant="filterVariant" :disabled="!filter">
+        <template v-slot:button-content>
+            <fa-icon icon="filter" />
+            {{ $t('fj.filter') }}
+        </template>
+
         <b-dropdown-group
             :header="key"
             v-for="(group, key) in filter"

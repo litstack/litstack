@@ -1,30 +1,31 @@
 <template>
-    <fj-base-container>
-        <fj-base-header :title="'Fjord ' + $t('fj.users')">
-            <div slot="actions-right">
-                <fj-user-create @userCreated="userCreated" />
-            </div>
-        </fj-base-header>
+    <fj-page>
+        <fj-navigation>
+            <fj-user-create @userCreated="userCreated" slot="right" />
+        </fj-navigation>
+        <fj-container>
+            <fj-header :title="'Fjord ' + $t('fj.users')" />
 
-        <b-row>
-            <b-col>
-                <fj-index-table
-                    ref="indexTable"
-                    :cols="config.index"
-                    :items="users"
-                    :load-items="loadUsers"
-                    :name-singular="$t('fj.user')"
-                    :name-plural="$t('fj.users')"
-                    :per-page="config.perPage"
-                    :sort-by="config.sortBy"
-                    :sort-by-default="config.sortByDefault"
-                    :filter="config.filter"
-                    :global-actions="config.globalActions"
-                    :record-actions="config.recordActions"
-                />
-            </b-col>
-        </b-row>
-    </fj-base-container>
+            <b-row>
+                <b-col>
+                    <fj-index-table
+                        ref="indexTable"
+                        :cols="config.index"
+                        :items="users"
+                        :load-items="loadUsers"
+                        :name-singular="$t('fj.user')"
+                        :name-plural="$t('fj.users')"
+                        :per-page="config.perPage"
+                        :sort-by="config.sortBy"
+                        :sort-by-default="config.sortByDefault"
+                        :filter="config.filter"
+                        :global-actions="config.globalActions"
+                        :record-actions="config.recordActions"
+                    />
+                </b-col>
+            </b-row>
+        </fj-container>
+    </fj-page>
 </template>
 
 <script>

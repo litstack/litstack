@@ -1,6 +1,6 @@
 <template>
     <div class="d-inline-block">
-        <b-button size="sm" variant="primary" @click="visible = !visible">
+        <b-button variant="primary" @click="visible = !visible">
             <fa-icon icon="plus" />
             {{ $t('fj.add_model', { model: 'Fjord ' + $t('fj.user') }) }}
         </b-button>
@@ -85,7 +85,7 @@
                         <fa-icon icon="user" />
                         {{
                             $t(`fj.create_model`, {
-                                model: 'Fjord ' + $t('fj.user'),
+                                model: 'Fjord ' + $t('fj.user')
                             })
                         }}
                         <b-spinner
@@ -110,10 +110,10 @@ export default {
                 name: '',
                 email: '',
                 password: this.keygen(20),
-                sendResetLink: true,
+                sendResetLink: true
             },
             errors: [],
-            busy: false,
+            busy: false
         };
     },
     methods: {
@@ -136,7 +136,7 @@ export default {
             this.$bvToast.toast(
                 this.$t('fj.model_saved', { model: 'Fjord User' }),
                 {
-                    variant: 'success',
+                    variant: 'success'
                 }
             );
         },
@@ -150,7 +150,7 @@ export default {
                 name: '',
                 email: '',
                 password: this.keygen(20),
-                sendResetLink: false,
+                sendResetLink: false
             };
         },
         makePassword() {
@@ -167,7 +167,7 @@ export default {
                 );
             }
             return result;
-        },
+        }
     },
     computed: {
         score() {
@@ -215,7 +215,7 @@ export default {
         },
         name() {
             return this.user.name;
-        },
+        }
     },
     watch: {
         email(val) {
@@ -227,8 +227,8 @@ export default {
             if (this.errors.hasOwnProperty('name')) {
                 Vue.delete(this.errors, 'name');
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

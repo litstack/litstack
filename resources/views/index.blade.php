@@ -25,9 +25,9 @@
 
 
 <body onload="makeVisible()">
-    <div id="fjord-app" class="{{ $noNav ?? false ? 'no-nav' : '' }}">
+    <div id="fjord-app" class="{{ $nav ?? true ? '' : 'no-nav' }}">
 
-        @if($noNav ?? true) 
+        @if($nav ?? true) 
             @include('fjord::partials.topbar.topbar')
             @include('fjord::partials.navigation')
         @endif
