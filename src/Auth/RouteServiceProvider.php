@@ -9,16 +9,31 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRoute
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
+    /**
+     * Boot application services.
+     *
+     * @return void
+     */
     public function boot()
     {
         parent::boot();
     }
 
+    /**
+     * Map routes.
+     *
+     * @return void
+     */
     public function map()
     {
         $this->mapAuthRoutes();
     }
 
+    /**
+     * Map auth routes.
+     *
+     * @return void
+     */
     protected function mapAuthRoutes()
     {
         FjordRoute::public()

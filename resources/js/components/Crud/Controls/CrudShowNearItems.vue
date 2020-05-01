@@ -6,7 +6,7 @@
             variant="transparent"
             size="sm"
         >
-            <fa-icon icon="arrow-left" />
+            <fa-icon icon="chevron-left" />
         </b-button>
         <b-button
             :href="`${Fjord.baseURL}${routePrefix}/${nearItems.next}/edit`"
@@ -14,7 +14,7 @@
             variant="transparent"
             size="sm"
         >
-            <fa-icon icon="arrow-right" />
+            <fa-icon icon="chevron-right" />
         </b-button>
     </div>
 </template>

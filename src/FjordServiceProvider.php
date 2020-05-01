@@ -5,8 +5,8 @@ namespace Fjord;
 use FjordApp\Kernel;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Foundation\AliasLoader;
-use Fjord\Auth\Middleware\Authenticate;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -24,6 +24,7 @@ class FjordServiceProvider extends ServiceProvider
     protected $providers = [
         Auth\ServiceProvider::class,
         Fjord\Discover\PackageDiscoverServiceProvider::class,
+        Application\Translation\TranslationServiceProvider::class,
         Support\Macros\BuilderMacros::class,
     ];
 
@@ -49,6 +50,15 @@ class FjordServiceProvider extends ServiceProvider
     ];
 
     /**
+     * Middlewares.
+     *
+     * @var array
+     */
+    protected $middlewares = [
+        'fjord.auth' => Auth\Middleware\Authenticate::class,
+    ];
+
+    /**
      * Create a new FjordServiceProvider instance.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
@@ -64,6 +74,7 @@ class FjordServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application services.
      *
+     * @param Router $router
      * @return void
      */
     public function boot(Router $router)
@@ -71,10 +82,22 @@ class FjordServiceProvider extends ServiceProvider
         // Load Fjord views.
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'fjord');
 
-        // Middelware
-        $router->aliasMiddleware('fjord.auth', Authenticate::class);
+        $this->middlewares($router);
 
         $this->publish();
+    }
+
+    /**
+     * Register middlewares.
+     *
+     * @param Router $router
+     * @return void
+     */
+    protected function middlewares(Router $router)
+    {
+        foreach ($this->middlewares as $alias => $middleware) {
+            $router->aliasMiddleware($alias, $middleware);
+        }
     }
 
     /**

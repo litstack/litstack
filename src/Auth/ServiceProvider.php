@@ -13,6 +13,6 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function boot()
     {
-        $this->app->register('Fjord\Auth\RouteServiceProvider');
+        $this->app->register(\Fjord\Auth\RouteServiceProvider::class);
     }
 }

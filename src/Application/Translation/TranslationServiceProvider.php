@@ -7,6 +7,11 @@ use Fjord\Support\Facades\FjordLang;
 
 class TranslationServiceProvider extends ServiceProvider
 {
+    /**
+     * Boot application services.
+     *
+     * @return void
+     */
     public function boot()
     {
         // Language path

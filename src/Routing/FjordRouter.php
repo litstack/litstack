@@ -19,7 +19,16 @@ class FjordRouter
      */
     protected $middlewares = [
         'web',
-        'fjord.auth:fjord'
+        'fjord.auth:fjord',
+    ];
+
+    /**
+     * Public middlewares.
+     *
+     * @var array
+     */
+    protected $publicMiddlewares = [
+        'web',
     ];
 
     /**
@@ -92,6 +101,6 @@ class FjordRouter
     {
         return Route::prefix(config('fjord.route_prefix'))
             ->as('fjord.')
-            ->middleware('web');
+            ->middleware($this->publicMiddlewares);
     }
 }

@@ -113,17 +113,27 @@ class Translator
             return $fallback;
         }
 
-        // Not logged in.
-        if (!fjord_user()) {
-            return $fallback;
-        }
+        $locale = fjord_user()
+            ? fjord_user()->locale
+            : $this->getBrowserLocale();
 
         // Locale not allowed.
-        if (!in_array(fjord_user()->locale, config('fjord.translatable.locales'))) {
+        if (!in_array($locale, config('fjord.translatable.locales'))) {
             return $fallback;
         }
 
-        return fjord_user()->locale;
+        return $locale;
+    }
+
+    /**
+     * Get locale from browser.
+     *
+     * @return void
+     */
+    protected function getBrowserLocale()
+    {
+        return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2)
+            ?? config('fjord.translatable.fallback_locale');
     }
 
     /** 
