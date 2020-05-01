@@ -10,7 +10,7 @@
                 handle=".fj-draggable__dragbar"
                 tag="b-row"
                 :class="{ 'mb-0': field.readonly }"
-                v-if="sortableBlocks.length > 0"
+                v-else-if="sortableBlocks.length > 0"
             >
                 <fj-field-block
                     v-for="(block, index) in sortableBlocks"
@@ -18,8 +18,8 @@
                     :block="block"
                     :field="field"
                     :model="model"
-                    :preview="block.repeatables[block.type].preview"
-                    :fields="block.fields"
+                    :preview="field.repeatables[block.type].preview"
+                    :fields="field.repeatables[block.type].form.fields"
                     :set-route-prefix="setFieldsRoutePrefixBlockId"
                     @deleteItem="deleteBlock"
                 />
@@ -67,16 +67,17 @@ export default {
         this.loadBlocks();
     },
     methods: {
-        setFieldsRoutePrefixBlockId(block) {
-            for (let i in block.fields) {
-                let field = block.fields[i];
-                block.fields[i].route_prefix = field.route_prefix
+        setFieldsRoutePrefixBlockId(fields, block) {
+            for (let i in fields) {
+                let field = fields[i];
+                fields[i].route_prefix = field.route_prefix
                     .replace('{block_id}', block.id)
                     .replace('{id}', this.model.id);
                 if (this.field.readonly) {
-                    block.fields[i].readonly = true;
+                    fields[i].readonly = true;
                 }
             }
+            return fields;
         },
         async loadBlocks() {
             this.busy = true;

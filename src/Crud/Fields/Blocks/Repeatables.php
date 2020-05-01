@@ -77,7 +77,7 @@ class Repeatables extends VueProp
 
         foreach ($array as $name => $form) {
             $array[$name] = [
-                'fields' => $form->toArray(),
+                'form' => $form->toArray(),
                 'preview' => $this->previews[$name]->toArray()
             ];
         }

@@ -11,7 +11,7 @@
                 handle=".fj-draggable__dragbar"
                 tag="b-row"
                 :class="{ 'mb-0': field.readonly }"
-                v-if="selectedRelations.length > 0"
+                v-else-if="selectedRelations.length > 0"
             >
                 <fj-field-block
                     v-for="(relation, index) in selectedRelations"
@@ -37,6 +37,7 @@
             <b-button
                 variant="secondary"
                 size="sm"
+                class="mt-2"
                 v-b-modal="modalId"
                 v-if="!field.readonly"
             >
