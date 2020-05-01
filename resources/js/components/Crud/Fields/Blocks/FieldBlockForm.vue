@@ -1,7 +1,7 @@
 <template>
     <b-row class="mt-3">
         <fj-field
-            v-for="(field, key) in block.fields"
+            v-for="(field, key) in fields"
             :key="key"
             :field="field"
             :model-id="model.id"
@@ -25,6 +25,10 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        fields: {
+            type: Array,
+            required: true
         }
     }
 };

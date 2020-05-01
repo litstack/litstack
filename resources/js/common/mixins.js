@@ -1,6 +1,7 @@
 import VueI18n from 'vue-i18n';
 import store from '@fj-js/store';
 import CrudModel from '../crud/model';
+import { translate } from 'i18n-js';
 
 /**
  * Vue mixed that can be used in components.
@@ -32,15 +33,62 @@ export default {
      * @param {Object} model
      */
     crud(model) {
-        return new CrudModel(model);
+        if (!Array.isArray(model)) {
+            return new CrudModel(model);
+        }
+
+        let models = [];
+        for (let i = 0; i < model.length; i++) {
+            models.push(new CrudModel(model[i]));
+        }
+        return models;
     },
 
     /**
-     *
+     * Get authenticated user.
      *
      * @return {Object}
      */
     user() {
         return store.getters.auth;
+    },
+
+    /**
+     * Translate by key.
+     *
+     * @param  {...any} params
+     * @return {string}
+     */
+    trans(...params) {
+        return i18n.t(...params);
+    },
+
+    /**
+     * Translate choice by key.
+     *
+     * @param  {...any} params
+     * @return {string}
+     */
+    trans_choice(...params) {
+        return i18n.tc(...params);
+    },
+
+    /**
+     * Translate by key.
+     *
+     * @param  {...any} params
+     * @return {string}
+     */
+    __(...params) {
+        return i18n.t(...params);
+    },
+
+    /**
+     * Clone an object.
+     *
+     * @param {Object} obj
+     */
+    clone(obj) {
+        return JSON.parse(JSON.stringify(obj));
     }
 };

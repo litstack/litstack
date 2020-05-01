@@ -23,7 +23,6 @@
                     </span>
                 </div>
             </th>
-            <th v-if="hasRecordActions"></th>
         </tr>
     </thead>
 </template>
@@ -34,10 +33,6 @@ export default {
     props: {
         cols: {
             type: Array,
-            required: true
-        },
-        hasRecordActions: {
-            type: Boolean,
             required: true
         },
         selectedItems: {

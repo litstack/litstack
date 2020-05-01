@@ -1,33 +1,41 @@
 <template>
     <transition name="slide">
-        <b-input-group v-if="selectedItems.length > 0" size="sm">
+        <b-input-group
+            class="mb-4 mt-4"
+            v-if="selectedItems.length > 0"
+            size="sm"
+        >
             <b-input-group-prepend is-text>
                 <strong>
-                    {{ $tc('fj.n_items_selected', selectedItems.length) }}
+                    {{
+                        trans_choice(
+                            'fj.n_items_selected',
+                            selectedItems.length
+                        )
+                    }}
                     {{
                         selectedItems.length == items.length
-                            ? `(${$t('fj.all')})`
+                            ? `(${__('fj.all')})`
                             : ''
                     }}
                 </strong>
             </b-input-group-prepend>
 
-            <template v-slot:append>
-                <b-dropdown
-                    size="sm"
-                    text="Actions"
-                    class="btn-brl-none"
-                    variant="outline-secondary"
-                >
-                    <component
-                        v-for="(component, key) in actions"
-                        :key="key"
-                        :is="component"
-                        :selectedItems="selectedItems"
-                        @reload="reload"
-                    />
-                </b-dropdown>
-            </template>
+            <b-dropdown
+                v-slot:append
+                size="sm"
+                :text="trans_choice('base.action', actions.length)"
+                class="btn-brl-none"
+                variant="outline-secondary"
+            >
+                <component
+                    v-for="(component, key) in actions"
+                    :key="key"
+                    :is="component"
+                    :selectedItems="selectedItems"
+                    @reload="reload"
+                />
+            </b-dropdown>
         </b-input-group>
     </transition>
 </template>

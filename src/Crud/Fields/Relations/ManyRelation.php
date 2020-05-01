@@ -9,13 +9,6 @@ class ManyRelation extends ManyRelationField
     use Concerns\ManagesRelation;
 
     /**
-     * Field Vue component.
-     *
-     * @var string
-     */
-    protected $component = 'fj-form-relation-many';
-
-    /**
      * Properties passed to Vue component.
      *
      * @var array
@@ -91,6 +84,8 @@ class ManyRelation extends ManyRelationField
     public function model(string $model)
     {
         $this->related = $model;
+
+        $this->loadRelatedConfig($model);
 
         $this->attributes['model'] = $model;
 

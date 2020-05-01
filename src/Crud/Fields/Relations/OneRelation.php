@@ -10,13 +10,6 @@ class OneRelation extends OneRelationField
     use Concerns\ManagesRelation;
 
     /**
-     * Field Vue component.
-     *
-     * @var string
-     */
-    protected $component = 'fj-form-relation-one';
-
-    /**
      * Properties passed to Vue component.
      *
      * @var array
@@ -88,6 +81,8 @@ class OneRelation extends OneRelationField
     public function model(string $model)
     {
         $this->related = $model;
+
+        $this->loadRelatedConfig($model);
 
         $this->attributes['model'] = $model;
 

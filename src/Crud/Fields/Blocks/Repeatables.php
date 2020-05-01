@@ -15,14 +15,14 @@ class Repeatables extends VueProp
      *
      * @var array
      */
-    protected $forms = [];
+    public $forms = [];
 
     /**
      * Preview tables.
      *
      * @var array
      */
-    protected $previews = [];
+    public $previews = [];
 
     /**
      * Route prefix.

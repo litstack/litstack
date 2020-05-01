@@ -35,9 +35,9 @@ Route::put("/{id}/blocks/{field_id}/{block_id}/{relation}/order", [$controller, 
 Route::delete("/{id}/blocks/{field_id}/{block_id}/{relation}/{relation_id}",  [$controller, "destroyBlockRelation"])->name("blocks.relation.delete");
 Route::post("/{id}/blocks/{field_id}/{block_id}/{relation}/{relation_id}", [$controller, "createBlockRelation"])->name("blocks.relation.store");
 
-
 // Relations
-Route::get("/{id}/{relation}/index", [$controller, "relationIndex"])->name("relation.index");
+Route::post("/{id}/{relation}/index", [$controller, "relationIndex"])->name("relation.index");
+Route::get("/{id}/{relation}", [$controller, "loadRelations"])->name("relation.load");
 Route::put("/{id}/{relation}/order", [$controller, "orderRelation"])->name("relation.order");
 Route::delete("/{id}/{relation}/{relation_id}",  [$controller, "destroyRelation"])->name("relation.delete");
 Route::post("/{id}/{relation}/{relation_id}", [$controller, "createRelation"])->name("relation.store");

@@ -1770,7 +1770,7 @@ pre code {
 
 .table-sm th,
 .table-sm td {
-  padding: 0.3rem;
+  padding: 0.78125rem;
 }
 
 .table-bordered {
@@ -1800,7 +1800,7 @@ pre code {
 
 .table-hover tbody tr:hover {
   color: #232127;
-  background-color: #70859c;
+  background-color: #c8d6fb;
 }
 
 .table-primary,
@@ -2004,16 +2004,16 @@ pre code {
 .table-active,
 .table-active > th,
 .table-active > td {
-  background-color: #70859c;
+  background-color: #acc2fe;
 }
 
 .table-hover .table-active:hover {
-  background-color: #63788f;
+  background-color: #93affe;
 }
 
 .table-hover .table-active:hover > td,
 .table-hover .table-active:hover > th {
-  background-color: #63788f;
+  background-color: #93affe;
 }
 
 .table .thead-dark th {
@@ -4482,7 +4482,7 @@ input[type=button].btn-block {
 
 .nav-link {
   display: block;
-  padding: 0.5rem 1rem;
+  padding: 0.625rem 1.25rem;
 }
 
 .nav-link:hover,
@@ -4497,15 +4497,15 @@ input[type=button].btn-block {
 }
 
 .nav-tabs {
-  border-bottom: 1px solid #e5eaef;
+  border-bottom: 0 solid #e5eaef;
 }
 
 .nav-tabs .nav-item {
-  margin-bottom: -1px;
+  margin-bottom: 0;
 }
 
 .nav-tabs .nav-link {
-  border: 1px solid transparent;
+  border: 0 solid transparent;
   border-top-left-radius: 0.6rem;
   border-top-right-radius: 0.6rem;
 }
@@ -4529,7 +4529,7 @@ input[type=button].btn-block {
 }
 
 .nav-tabs .dropdown-menu {
-  margin-top: -1px;
+  margin-top: 0;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
@@ -4582,8 +4582,8 @@ input[type=button].btn-block {
 
 .navbar-brand {
   display: inline-block;
-  padding-top: 0.3125rem;
-  padding-bottom: 0.3125rem;
+  padding-top: 0.4375rem;
+  padding-bottom: 0.4375rem;
   margin-right: 1rem;
   font-size: 1.25rem;
   line-height: inherit;
@@ -4615,8 +4615,8 @@ input[type=button].btn-block {
 
 .navbar-text {
   display: inline-block;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
 }
 
 .navbar-collapse {
@@ -5235,7 +5235,7 @@ input[type=button].btn-block {
   line-height: 1.25;
   color: #4951f2;
   background-color: #fff;
-  border: 1px solid #e5eaef;
+  border: 1px solid #70859c;
 }
 
 .page-link:hover {
@@ -5243,7 +5243,7 @@ input[type=button].btn-block {
   color: #101adf;
   text-decoration: none;
   background-color: #f5f8fb;
-  border-color: #e5eaef;
+  border-color: #70859c;
 }
 
 .page-link:focus {
@@ -5275,7 +5275,7 @@ input[type=button].btn-block {
   pointer-events: none;
   cursor: auto;
   background-color: #fff;
-  border-color: #e5eaef;
+  border-color: #70859c;
 }
 
 .pagination-lg .page-link {
@@ -5523,7 +5523,7 @@ a.badge-gray.focus {
 
 .alert {
   position: relative;
-  padding: 0.75rem 1.25rem;
+  padding: 1.5rem 2.5rem;
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: 0.6rem;
@@ -5538,14 +5538,14 @@ a.badge-gray.focus {
 }
 
 .alert-dismissible {
-  padding-right: 4rem;
+  padding-right: 6.5rem;
 }
 
 .alert-dismissible .close {
   position: absolute;
   top: 0;
   right: 0;
-  padding: 0.75rem 1.25rem;
+  padding: 1.5rem 2.5rem;
   color: inherit;
 }
 
@@ -6335,15 +6335,15 @@ a.close.disabled {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 1rem 1rem;
+  padding: 2rem 2rem;
   border-bottom: 1px solid #70859c;
   border-top-left-radius: calc(0.8rem - 1px);
   border-top-right-radius: calc(0.8rem - 1px);
 }
 
 .modal-header .close {
-  padding: 1rem 1rem;
-  margin: -1rem -1rem -1rem auto;
+  padding: 2rem 2rem;
+  margin: -2rem -2rem -2rem auto;
 }
 
 .modal-title {
@@ -6354,7 +6354,7 @@ a.close.disabled {
 .modal-body {
   position: relative;
   flex: 1 1 auto;
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .modal-footer {
@@ -6362,7 +6362,7 @@ a.close.disabled {
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
-  padding: 0.75rem;
+  padding: 1.75rem;
   border-top: 1px solid #70859c;
   border-bottom-right-radius: calc(0.8rem - 1px);
   border-bottom-left-radius: calc(0.8rem - 1px);
@@ -12816,13 +12816,13 @@ input[type=color].form-control:disabled {
 .table.b-table > tbody > .table-active,
 .table.b-table > tbody > .table-active > th,
 .table.b-table > tbody > .table-active > td {
-  background-color: #70859c;
+  background-color: #acc2fe;
 }
 
 .table.b-table.table-hover > tbody > tr.table-active:hover td,
 .table.b-table.table-hover > tbody > tr.table-active:hover th {
   color: #232127;
-  background-image: linear-gradient(#70859c, #70859c);
+  background-image: linear-gradient(#c8d6fb, #c8d6fb);
   background-repeat: no-repeat;
 }
 
@@ -12926,7 +12926,7 @@ input[type=color].form-control:disabled {
 
   .table.b-table.table-hover > tbody > tr:hover > .table-b-table-default {
     color: #232127;
-    background-image: linear-gradient(#70859c, #70859c);
+    background-image: linear-gradient(#c8d6fb, #c8d6fb);
     background-repeat: no-repeat;
   }
 
@@ -13007,14 +13007,14 @@ input[type=color].form-control:disabled {
 
 .table.b-table.table-sm > thead > tr > [aria-sort]:not(.b-table-sort-icon-left),
 .table.b-table.table-sm > tfoot > tr > [aria-sort]:not(.b-table-sort-icon-left) {
-  background-position: right calc(0.3rem / 2) center;
-  padding-right: calc(0.3rem + 0.65em);
+  background-position: right calc(0.78125rem / 2) center;
+  padding-right: calc(0.78125rem + 0.65em);
 }
 
 .table.b-table.table-sm > thead > tr > [aria-sort].b-table-sort-icon-left,
 .table.b-table.table-sm > tfoot > tr > [aria-sort].b-table-sort-icon-left {
-  background-position: left calc(0.3rem / 2) center;
-  padding-left: calc(0.3rem + 0.65em);
+  background-position: left calc(0.78125rem / 2) center;
+  padding-left: calc(0.78125rem + 0.65em);
 }
 
 .table.b-table.b-table-selectable:not(.b-table-selectable-no-click) > tbody > tr {
@@ -14571,6 +14571,10 @@ input[type=color].form-control:disabled {
   color: #ccd7e1;
 }
 
+.btn-primary {
+  box-shadow: 0px 6px 15px 1px rgba(0, 0, 0, 0.2);
+}
+
 .card {
   box-shadow: 0 0 19px 0 rgba(235, 235, 235, 0.5);
 }
@@ -14609,6 +14613,10 @@ input[type=color].form-control:disabled {
 .table.b-table th {
   color: #70859c;
   font-weight: 400;
+}
+
+.table.b-table .table-primary {
+  background-color: #acc2fe !important;
 }
 
 .b-toaster {
@@ -14694,7 +14702,7 @@ input[type=color].form-control:disabled {
 .fj-block {
   background: #f5f8fb;
   border-radius: 0.6rem;
-  padding: 1.25rem 2.5rem;
+  padding: 1.5rem 2.5rem;
 }
 
 .fj-block .fj-draggable__dragbar {

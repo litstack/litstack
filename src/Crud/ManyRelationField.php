@@ -11,7 +11,7 @@ class ManyRelationField extends Field
      *
      * @var string
      */
-    protected $component = 'fj-form-relation-many';
+    protected $component = 'fj-field-relation';
 
     /**
      * Resolve query for many relations.

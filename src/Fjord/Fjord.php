@@ -48,7 +48,7 @@ class Fjord
     public function url(string $url)
     {
         return strip_slashes(
-            config('fjord.route_prefix') . '/' . $url
+            '/' . config('fjord.route_prefix') . '/' . $url
         );
     }
 

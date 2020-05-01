@@ -1,7 +1,7 @@
 .fj-block {
     background: $body-bg;
     border-radius: $border-radius;
-    padding: $card-spacer-x / 2 $card-spacer-x;
+    padding: $block-spacer-y $block-spacer-x;
 
     .fj-draggable__dragbar {
         cursor: grab;

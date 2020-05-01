@@ -78,14 +78,13 @@ export default {
     methods: {
         isActive(item) {
             const link = window.location.pathname;
-            if (this.baseURL.includes(link)) {
+            if (Fjord.baseURL.includes(link)) {
                 return link.includes(item.link);
             }
-            return item.link.includes(link);
+            return link.includes(item.link);
         }
     },
     computed: {
-        ...mapGetters(['baseURL']),
         link() {
             return this.hasChildren ? '#' : this.item.link;
         },

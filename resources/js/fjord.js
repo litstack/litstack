@@ -1,6 +1,5 @@
 require('./common/bootstrap');
-require('./common/string');
-require('./common/array');
+require('./common/helpers');
 require('./common/axios');
 require('./common/window');
 require('./common/fjord');

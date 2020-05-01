@@ -11,7 +11,7 @@ class OneRelationField extends Field
      *
      * @var string
      */
-    protected $component = 'fj-form-relation-one';
+    protected $component = 'fj-field-relation';
 
     /**
      * Resolve query for one relations.

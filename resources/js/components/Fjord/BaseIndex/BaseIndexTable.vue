@@ -1,10 +1,16 @@
 <template>
-    <b-table-simple :aria-busy="busy" hover borderless striped>
+    <b-table-simple
+        :aria-busy="busy"
+        hover
+        borderless
+        striped
+        v-bind:small="small"
+    >
         <fj-base-index-table-head
             :cols="cols"
-            :hasRecordActions="hasRecordActions"
             :selectedItems="selectedItems"
             @sort="sort"
+            v-if="!noHead"
         >
             <b-checkbox
                 slot="checkbox"
@@ -17,7 +23,7 @@
 
         <tbody>
             <tr role="row" class="b-table-busy-slot" v-if="busy">
-                <td :colspan="cols.length" role="cell" align="center">
+                <td :colspan="colspan" role="cell" align="center">
                     <fj-spinner class="text-center" />
                 </td>
             </tr>
@@ -25,12 +31,27 @@
                 <tr
                     v-for="(item, key) in items"
                     :key="key"
-                    :class="
-                        selectedItems.includes(item.id) ? 'table-primary' : ''
-                    "
+                    :class="isItemSelected(item) ? 'table-primary' : ''"
                 >
-                    <td class="reduce">
-                        <b-checkbox v-model="selectedItems" :value="item.id" />
+                    <td class="reduce fj-table-select">
+                        <div class="custom-control custom-radio" v-if="radio">
+                            <input
+                                type="radio"
+                                autocomplete="off"
+                                class="custom-control-input pointer-events-none"
+                                value=""
+                                :checked="isItemSelected(item)"
+                            />
+                            <label
+                                class="custom-control-label"
+                                @click="selected(item)"
+                            ></label>
+                        </div>
+                        <b-checkbox
+                            v-else
+                            :checked="isItemSelected(item)"
+                            @input="selected(item)"
+                        />
                     </td>
                     <fj-table-col
                         v-for="(col, col_key) in cols"
@@ -59,22 +80,37 @@ export default {
             type: [Object, Array],
             required: true
         },
+        radio: {
+            type: Boolean,
+            default() {
+                return false;
+            }
+        },
+        noHead: {
+            type: Boolean,
+            default() {
+                return false;
+            }
+        },
+        small: {
+            type: Boolean,
+            default() {
+                return false;
+            }
+        },
         busy: {
             type: Boolean,
             required: true
         },
-        recordActions: {
+        selectedItems: {
             type: Array,
-            default() {
-                return [];
-            }
+            required: true
         }
     },
     data() {
         return {
             selectedAll: false,
-            indeterminate: false,
-            selectedItems: []
+            indeterminate: false
         };
     },
     watch: {
@@ -91,26 +127,43 @@ export default {
     },
     computed: {
         ...mapGetters(['config']),
-        hasRecordActions() {
-            return this.recordActions.length > 0;
+        colspan() {
+            // Adding one for the checkbox field.
+            return this.cols.length + 1;
         }
     },
     methods: {
+        selected(item) {
+            if (this.isItemSelected(item)) {
+                if (!this.radio) {
+                    this.$emit('unselect', item);
+                }
+            } else {
+                this.$emit('select', item);
+            }
+            this.$forceUpdate();
+        },
         sort(sort) {
             this.$emit('sort', sort);
         },
         _loadItems() {
             this.$emit('loadItems');
         },
-        changeSelectedItems(val) {
-            if (val) {
-                this.selectedItems = this.items.map(item => {
-                    return item.id;
-                });
-            } else {
-                this.selectedItems = [];
-            }
+        isItemSelected(item) {
+            return this.selectedItems.find(model => {
+                return model ? model.id == item.id : false;
+            })
+                ? true
+                : false;
         }
     }
 };
 </script>
+
+<style lang="scss">
+.b-table-busy-slot {
+    &:hover {
+        background: transparent;
+    }
+}
+</style>

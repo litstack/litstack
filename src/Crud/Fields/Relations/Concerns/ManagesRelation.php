@@ -3,14 +3,18 @@
 namespace Fjord\Crud\Fields\Relations\Concerns;
 
 use Closure;
+use InvalidArgumentException;
+use Fjord\Support\Facades\Crud;
+use Fjord\Support\Facades\Fjord;
 use Fjord\Vue\Crud\PreviewTable;
 use Illuminate\Database\Eloquent\Builder;
 use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
-use InvalidArgumentException;
 
 trait ManagesRelation
 {
+    use ManagesRelatedConfig;
+
     /**
      * Relation query builder.
      *
@@ -49,6 +53,10 @@ trait ManagesRelation
     {
         $form = new RelationForm($this->related);
 
+        $form->setRoutePrefix(
+            strip_slashes($this->getRelatedConfig()->routePrefix . '/{id}')
+        );
+
         $closure($form);
 
         $this->attributes['edit'] = $form;
@@ -66,9 +74,16 @@ trait ManagesRelation
     {
         $table = new PreviewTable;
 
-        $this->attributes['preview'] = $table;
-
         $closure($table);
+
+
+        // Add open relation edit page if user has permission.
+        if ($this->relatedConfig->permissions['read']) {
+            $route = Fjord::url($this->relatedConfig->routePrefix . '/{id}/edit');
+            $table->col("<a href=\"{$route}\"><i class=\"ml-4 fas fa-eye text-secondary\"></i></a>")->small();
+        }
+
+        $this->attributes['preview'] = $table;
 
         return $this;
     }
@@ -104,6 +119,8 @@ trait ManagesRelation
         $this->query = $related::query();
         $this->related = $model;
         $this->attributes['model'] = $model;
+
+        $this->loadRelatedConfig($model);
 
         // Set relation attributes.
         if (method_exists($this, 'setRelationAttributes')) {

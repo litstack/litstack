@@ -10,7 +10,7 @@
                 handle=".fj-draggable__dragbar"
                 tag="b-row"
                 :class="{ 'mb-0': field.readonly }"
-                v-else-if="sortableBlocks.length > 0"
+                v-if="sortableBlocks.length > 0"
             >
                 <fj-field-block
                     v-for="(block, index) in sortableBlocks"
@@ -18,7 +18,10 @@
                     :block="block"
                     :field="field"
                     :model="model"
-                    @deleteBlock="deleteBlock"
+                    :preview="block.repeatables[block.type].preview"
+                    :fields="block.fields"
+                    :set-route-prefix="setFieldsRoutePrefixBlockId"
+                    @deleteItem="deleteBlock"
                 />
             </draggable>
 
@@ -52,9 +55,6 @@ export default {
         },
         model: {
             type: Object
-        },
-        pageName: {
-            type: String
         }
     },
     data() {
@@ -67,6 +67,17 @@ export default {
         this.loadBlocks();
     },
     methods: {
+        setFieldsRoutePrefixBlockId(block) {
+            for (let i in block.fields) {
+                let field = block.fields[i];
+                block.fields[i].route_prefix = field.route_prefix
+                    .replace('{block_id}', block.id)
+                    .replace('{id}', this.model.id);
+                if (this.field.readonly) {
+                    block.fields[i].readonly = true;
+                }
+            }
+        },
         async loadBlocks() {
             this.busy = true;
             let response = await axios.get(
@@ -82,7 +93,15 @@ export default {
         newBlock(block) {
             this.sortableBlocks.push(this.crud(block));
         },
-        deleteBlock(block) {
+        async deleteBlock(block) {
+            try {
+                let response = await axios.delete(
+                    `${this.field.route_prefix}/blocks/${this.block.field_id}/${this.block.id}`
+                );
+            } catch (e) {
+                console.log(e);
+                return;
+            }
             this.sortableBlocks.splice(this.sortableBlocks.indexOf(block), 1);
 
             this.$bvToast.toast(this.$t('fj.deleted_block'), {

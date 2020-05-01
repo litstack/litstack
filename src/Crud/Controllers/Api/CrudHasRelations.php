@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud\Controllers\Api;
 
+use Fjord\Support\IndexTable;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Crud\Fields\Relations\HasOne;
 use Fjord\Crud\Fields\Relations\HasMany;
@@ -40,7 +41,34 @@ trait CrudHasRelations
 
         $this->validateRelationField($field);
 
-        return $field->getQuery()->get();
+        $index = IndexTable::query($field->getQuery())
+            ->request($request)
+            ->search($field->getRelatedConfig()->search)
+            ->get();
+
+        $index['items'] = crud($index['items']);
+
+        return $index;
+    }
+
+    /**
+     * Fetch existing relations.
+     *
+     * @param CrudReadRequest $request
+     * @param int $id
+     * @param int $field_id
+     * @return void
+     */
+    public function loadRelations(CrudReadRequest $request, $id, $relation)
+    {
+        $model = $this->query()->findOrFail($id);
+        $field = $this->config->form->findField($relation) ?? abort(404);
+
+        $this->validateRelationField($field);
+
+        return crud(
+            $field->relation($model, $query = true)->get()
+        );
     }
 
     /**
@@ -61,7 +89,9 @@ trait CrudHasRelations
 
         $relation = $field->getQuery()->findOrFail($relation_id);
 
-        return $this->createFieldRelation($request, $field, $model, $relation);
+        $this->createFieldRelation($request, $field, $model, $relation);
+
+        return crud($relation);
     }
 
     /**

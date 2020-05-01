@@ -152,6 +152,10 @@ class BaseForm extends VueProp
 
         $fieldInstance = new $field($id, $this->model, $this->routePrefix);
 
+        if ($fieldInstance->isRelation()) {
+            $fieldInstance->setAttribute('many', $fieldInstance instanceof ManyRelationField);
+        }
+
         $this->registrar = $fieldInstance;
         $this->registeredFields[] = $fieldInstance;
 

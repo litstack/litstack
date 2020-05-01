@@ -138,9 +138,9 @@ export default {
     --ck-color-base-active: #{$primary};
     --ck-color-base-active-focus: var(--ck-color-base-active);
 
-    --ck-spacing-standard: #{$input-padding-x};
-    --ck-spacing-small: 0;
-    --ck-spacing-tiny: #{$input-padding-y};
+    --ck-spacing-standard: #{$input-padding-x-sm};
+    --ck-spacing-small: #{$input-padding-y-sm};
+    --ck-spacing-tiny: #{$input-padding-y-sm};
     --ck-color-base-border: var(--ck-custom-border);
 
     /* -- Overrides generic colors. ------------------------------------------------------------- */
@@ -155,13 +155,13 @@ export default {
 
     --ck-color-button-default-background: var(--ck-custom-background);
     //--ck-color-button-default-hover-background: hsl(270, 1%, 22%);
-    //--ck-color-button-default-active-background: hsl(270, 2%, 20%);
-    //--ck-color-button-default-active-shadow: hsl(270, 2%, 23%);
+    --ck-color-button-default-active-background: $secondary;
+    --ck-color-button-default-active-shadow: transparent;
     --ck-color-button-default-disabled-background: var(--ck-custom-background);
 
     //--ck-color-button-on-background: var(--ck-custom-foreground);
     //--ck-color-button-on-hover-background: hsl(255, 4%, 16%);
-    //--ck-color-button-on-active-background: hsl(255, 4%, 14%);
+    --ck-color-button-on-active-background: $secondary;
     //--ck-color-button-on-active-shadow: hsl(240, 3%, 19%);
     //--ck-color-button-on-disabled-background: var(--ck-custom-foreground);
 
@@ -246,7 +246,23 @@ export default {
     padding: $input-padding-y $input-padding-x !important;
 }
 
-.ck-toolbar {
+.ck.ck-toolbar {
+    padding-left: ($input-padding-x - $input-padding-x-sm) !important;
+    padding-right: ($input-padding-x - $input-padding-x-sm) !important;
+    padding-top: ($input-padding-y - $input-padding-y-sm) !important;
+    padding-bottom: ($input-padding-y - $input-padding-y-sm) !important;
+
+    &__separator {
+        margin-left: ($input-padding-x - $input-padding-x-sm) !important;
+        margin-right: ($input-padding-x - $input-padding-x-sm) !important;
+        margin-top: -($input-padding-y - $input-padding-y-sm) !important;
+        margin-bottom: -($input-padding-y - $input-padding-y-sm) !important;
+    }
+
+    > * {
+        margin: 0 map-get($spacers, 2) 0 0;
+    }
+
     > div:first-child {
         &.ck-button,
         > .ck-button {
@@ -254,10 +270,30 @@ export default {
         }
     }
 
-    > .ck-button,
-    > .ck-dropdown > .ck-button {
-        border-radius: 0 !important;
+    .ck.ck-button:not(.ck-disabled):hover,
+    a.ck.ck-button:not(.ck-disabled):hover {
+        cursor: pointer;
+        background: transparent;
+        border: $border-width solid $secondary;
     }
+    .ck.ck-button.ck-on:not(.ck-disabled),
+    a.ck.ck-button.ck-on:not(.ck-disabled) {
+        background: $secondary;
+        color: $white;
+
+        &:hover {
+            background: $secondary;
+            color: $white;
+        }
+    }
+}
+
+.ck.ck-button.ck-button_with-text,
+a.ck.ck-button.ck-button_with-text {
+    //margin: -$input-btn-padding-y-sm -$input-btn-padding-x-sm;
+}
+.ck.ck-button {
+    //margin: -$input-btn-padding-y-sm;
 }
 
 .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {

@@ -20,7 +20,8 @@ trait ManagesBelongsToMany
     protected function createBelongsToMany(CrudUpdateRequest $request, BelongsToMany $field, $model, $relation)
     {
         $belongsToMany = $field->relation($model, $query = true);
-        return DB::table($belongsToMany->getTable())->insert([
+
+        DB::table($belongsToMany->getTable())->insert([
             $belongsToMany->getForeignPivotKeyName() => $model->{$belongsToMany->getParentKeyName()},
             $belongsToMany->getRelatedPivotKeyName() => $relation->{$belongsToMany->getRelatedKeyName()}
         ]);

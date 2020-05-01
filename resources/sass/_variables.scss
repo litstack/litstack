@@ -260,15 +260,15 @@ $font-size-sm: $font-size-base * 0.875 !default;
 // Customizes the `.table` component with basic values, each used across all table variations.
 
 $table-cell-padding: 1.25rem !default;
-//$table-cell-padding-sm:       .3rem !default;
+$table-cell-padding-sm: 1.25rem * 0.625 !default;
 
 //$table-color:                 $body-color !default;
 //$table-bg:                    null !default;
 $table-thead-color: $secondary;
 $table-accent-bg: $body-bg !default;
 //$table-hover-color:           $table-color !default;
-$table-hover-bg: $border-color !default;
-//$table-active-bg:             $table-hover-bg !default;
+$table-hover-bg: #c8d6fb !default;
+$table-active-bg: #acc2fe !default;
 
 //$table-border-width:          $border-width !default;
 //$table-border-color:          $border-color !default;
@@ -486,6 +486,117 @@ $dropdown-item-padding-y: $input-btn-padding-y !default;
 $dropdown-item-padding-x: $input-btn-padding-x !default;
 
 //$dropdown-header-color:             $gray-600 !default;
+
+// Modals
+
+// Padding applied to the modal body
+$modal-inner-padding: 2rem !default;
+//
+//// Margin between elements in footer, must be lower than or equal to 2 * $modal-inner-padding
+//$modal-footer-margin-between: 0.5rem !default;
+//
+//$modal-dialog-margin: 0.5rem !default;
+//$modal-dialog-margin-y-sm-up: 1.75rem !default;
+//
+//$modal-title-line-height: $line-height-base !default;
+//
+//$modal-content-color: null !default;
+//$modal-content-bg: $white !default;
+//$modal-content-border-color: rgba($black, 0.2) !default;
+//$modal-content-border-width: $border-width !default;
+//$modal-content-border-radius: $border-radius-lg !default;
+//$modal-content-inner-border-radius: subtract(
+//    $modal-content-border-radius,
+//    $modal-content-border-width
+//) !default;
+//$modal-content-box-shadow-xs: 0 0.25rem 0.5rem rgba($black, 0.5) !default;
+//$modal-content-box-shadow-sm-up: 0 0.5rem 1rem rgba($black, 0.5) !default;
+//
+//$modal-backdrop-bg: $black !default;
+//$modal-backdrop-opacity: 0.5 !default;
+//$modal-header-border-color: $border-color !default;
+//$modal-footer-border-color: $modal-header-border-color !default;
+//$modal-header-border-width: $modal-content-border-width !default;
+//$modal-footer-border-width: $modal-header-border-width !default;
+$modal-header-padding-y: $modal-inner-padding !default;
+$modal-header-padding-x: $modal-inner-padding !default;
+//$modal-header-padding: $modal-header-padding-y $modal-header-padding-x !default; // Keep this for backwards compatibility
+//
+//$modal-xl: 1140px !default;
+//$modal-lg: 800px !default;
+//$modal-md: 500px !default;
+//$modal-sm: 300px !default;
+//
+//$modal-fade-transform: translate(0, -50px) !default;
+//$modal-show-transform: none !default;
+//$modal-transition: transform 0.3s ease-out !default;
+//$modal-scale-transform: scale(1.02) !default;
+
+// Navs
+
+$nav-link-padding-y: $input-btn-padding-y !default;
+$nav-link-padding-x: $input-btn-padding-x !default;
+//$nav-link-disabled-color: $gray-600 !default;
+//
+//$nav-tabs-border-color: $gray-300 !default;
+$nav-tabs-border-width: 0 !default;
+//$nav-tabs-border-radius: $border-radius !default;
+//$nav-tabs-link-hover-border-color: $gray-200 $gray-200 $nav-tabs-border-color !default;
+//$nav-tabs-link-active-color: $gray-700 !default;
+//$nav-tabs-link-active-bg: $body-bg !default;
+//$nav-tabs-link-active-border-color: $gray-300 $gray-300 $nav-tabs-link-active-bg !default;
+//
+//$nav-pills-border-radius: $border-radius !default;
+//$nav-pills-link-active-color: $component-active-color !default;
+//$nav-pills-link-active-bg: $component-active-bg !default;
+//
+//$nav-divider-color: $gray-200 !default;
+//$nav-divider-margin-y: $spacer / 2 !default;
+
+// Pagination
+
+//$pagination-padding-y: 0.5rem !default;
+//$pagination-padding-x: 0.75rem !default;
+//$pagination-padding-y-sm: 0.25rem !default;
+//$pagination-padding-x-sm: 0.5rem !default;
+//$pagination-padding-y-lg: 0.75rem !default;
+//$pagination-padding-x-lg: 1.5rem !default;
+//$pagination-line-height: 1.25 !default;
+//
+//$pagination-color: $link-color !default;
+//$pagination-bg: $white !default;
+//$pagination-border-width: $border-width !default;
+$pagination-border-color: $border-color !default;
+//
+//$pagination-focus-box-shadow: $input-btn-focus-box-shadow !default;
+//$pagination-focus-outline: 0 !default;
+//
+//$pagination-hover-color: $link-hover-color !default;
+//$pagination-hover-bg: $gray-200 !default;
+$pagination-hover-border-color: $pagination-border-color !default;
+//
+//$pagination-active-color: $component-active-color !default;
+//$pagination-active-bg: $component-active-bg !default;
+//$pagination-active-border-color: $pagination-active-bg !default;
+//
+//$pagination-disabled-color: $gray-600 !default;
+//$pagination-disabled-bg: $white !default;
+$pagination-disabled-border-color: $pagination-border-color !default;
+
+// Alerts
+//
+// Define alert colors, border radius, and padding.
+
+$alert-padding-y: 1.5rem !default;
+$alert-padding-x: 2.5rem !default;
+//$alert-margin-bottom: 1rem !default;
+//$alert-border-radius: $border-radius !default;
+//$alert-link-font-weight: $font-weight-bold !default;
+//$alert-border-width: $border-width !default;
+//
+//$alert-bg-level: -10 !default;
+//$alert-border-level: -9 !default;
+//$alert-color-level: 6 !default;
 
 // Bootstrap and Fjord
 //

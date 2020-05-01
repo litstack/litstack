@@ -2,11 +2,14 @@
     <b-col :cols="field.cols">
         <div class="fj-draggable fj-block mb-2">
             <fj-field-block-header
+                :sortable="sortable"
                 :expand="expand"
                 :block="block"
                 :field="field"
                 :model="model"
-                @deleteBlock="deleteBlock"
+                :fields="_fields"
+                :preview="preview"
+                @deleteItem="$emit('deleteItem')"
                 @toggleExpand="expand = !expand"
             />
 
@@ -15,6 +18,7 @@
                     :block="block"
                     :field="field"
                     :model="model"
+                    :fields="_fields"
                 />
             </div>
         </div>
@@ -25,6 +29,12 @@
 export default {
     name: 'FieldBlock',
     props: {
+        sortable: {
+            type: Boolean,
+            default() {
+                return true;
+            }
+        },
         block: {
             required: true,
             type: Object
@@ -36,39 +46,29 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        setRoutePrefix: {
+            required: true
+        },
+        preview: {
+            type: Array,
+            required: true
+        },
+        fields: {
+            type: Array,
+            default() {
+                return [];
+            }
         }
     },
     data() {
         return {
-            expand: false
+            expand: false,
+            _fields: []
         };
     },
     beforeMount() {
-        this.setFieldsRoutePrefixBlockId();
-    },
-    methods: {
-        async deleteBlock() {
-            try {
-                let response = await axios.delete(
-                    `${this.field.route_prefix}/blocks/${this.block.field_id}/${this.block.id}`
-                );
-            } catch (e) {
-                console.log(e);
-                return;
-            }
-            this.$emit('deleteBlock', this.block);
-        },
-        setFieldsRoutePrefixBlockId() {
-            for (let i in this.block.fields) {
-                let field = this.block.fields[i];
-                this.block.fields[i].route_prefix = field.route_prefix
-                    .replace('{block_id}', this.block.id)
-                    .replace('{id}', this.model.id);
-                if (this.field.readonly) {
-                    this.block.fields[i].readonly = true;
-                }
-            }
-        }
+        this._fields = this.setRoutePrefix(this.clone(this.fields), this.block);
     }
 };
 </script>

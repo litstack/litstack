@@ -3,7 +3,7 @@
         <table class="form-control-expand">
             <b-tr>
                 <b-td class="reduce" v-if="!field.readonly">
-                    <div class="fj-draggable__dragbar">
+                    <div class="fj-draggable__dragbar" v-if="sortable">
                         <i class="fas fa-grip-horizontal text-muted"></i>
                     </div>
                 </b-td>
@@ -14,14 +14,14 @@
                     :col="col"
                     :cols="preview"
                 />
-                <b-td class="reduce text-secondary px-4" v-if="!field.readonly">
+                <b-td class="reduce text-secondary pl-4" v-if="!field.readonly">
                     <fa-icon
                         icon="trash"
-                        @click="$emit('deleteBlock')"
+                        @click="$emit('deleteItem')"
                         class="fj-block-delete"
                     />
                 </b-td>
-                <b-td class="reduce">
+                <b-td class="reduce pl-4" v-if="fields.length > 0">
                     <b-button
                         variant="outline-secondary"
                         size="sm"
@@ -39,6 +39,10 @@
 export default {
     name: 'FieldBlockHeader',
     props: {
+        sortable: {
+            type: Boolean,
+            required: true
+        },
         expand: {
             required: true,
             type: Boolean
@@ -51,14 +55,17 @@ export default {
             required: true,
             type: Object
         },
+        fields: {
+            required: true,
+            type: Array
+        },
         model: {
             required: true,
             type: Object
-        }
-    },
-    computed: {
-        preview() {
-            return this.field.repeatables[this.block.type].preview;
+        },
+        preview: {
+            type: Array,
+            required: true
         }
     }
 };

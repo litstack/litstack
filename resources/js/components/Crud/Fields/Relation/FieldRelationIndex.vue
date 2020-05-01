@@ -1,4 +1,23 @@
 <template>
+    <div>
+        <draggable
+            v-model="sortableRelations"
+            @end="newOrder(relations)"
+            tag="tbody"
+            handle=".fj-draggable__dragbar"
+        >
+            <fj-field-block
+                v-for="(relation, key) in relations"
+                :key="key"
+                :block="relation"
+                :field="field"
+                :model="model"
+                :set-route-prefix="setFieldsRoutePrefixBlockId"
+                @deleteItem="deleteBlock"
+            />
+        </draggable>
+    </div>
+    <!--
     <b-table-simple outlined hover :class="{ 'mb-0': field.readonly }">
         <template v-for="(relations, model) in selectedItems">
             <draggable
@@ -65,6 +84,7 @@
             </draggable>
         </template>
     </b-table-simple>
+    -->
 </template>
 
 <script>
@@ -127,7 +147,6 @@ export default {
             return this.routePrefixes[model];
         },
         removeRelation(payload) {
-            console.log(payload);
             this.$emit('removeRelation', payload);
         },
         async newOrder(relations) {
