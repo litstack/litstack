@@ -11,13 +11,15 @@
             :selectedItems="selectedItems"
             @sort="sort"
             v-if="!noHead"
+            :no-select="noSelect"
         >
             <b-checkbox
+                v-if="!radio"
                 slot="checkbox"
                 class="float-left"
                 v-model="selectedAll"
                 :indeterminate.sync="indeterminate"
-                @change="changeSelectedItems"
+                @change="toggleSelectAll"
             />
         </fj-base-index-table-head>
 
@@ -33,7 +35,7 @@
                     :key="key"
                     :class="isItemSelected(item) ? 'table-primary' : ''"
                 >
-                    <td class="reduce fj-table-select">
+                    <td class="reduce fj-table-select" v-if="!noSelect">
                         <div class="custom-control custom-radio" v-if="radio">
                             <input
                                 type="radio"
@@ -86,6 +88,12 @@ export default {
                 return false;
             }
         },
+        noSelect: {
+            type: Boolean,
+            default() {
+                return false;
+            }
+        },
         noHead: {
             type: Boolean,
             default() {
@@ -133,6 +141,9 @@ export default {
         }
     },
     methods: {
+        toggleSelectAll() {
+            this.$emit('selectAll');
+        },
         selected(item) {
             if (this.isItemSelected(item)) {
                 if (!this.radio) {

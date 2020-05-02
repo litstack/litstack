@@ -1,7 +1,7 @@
 <template>
     <thead>
         <tr>
-            <th><slot name="checkbox" /></th>
+            <th v-if="!noSelect"><slot name="checkbox" /></th>
             <th v-for="(col, key) in cols" :key="key">
                 <div
                     @click="sortCol(col.value, col.sort_by, key)"
@@ -38,6 +38,12 @@ export default {
         selectedItems: {
             type: Array,
             required: true
+        },
+        noSelect: {
+            type: Boolean,
+            default() {
+                return false;
+            }
         }
     },
     data() {

@@ -2,6 +2,7 @@
 
 namespace Fjord\User\Controllers;
 
+use Illuminate\Http\Request;
 use Fjord\User\Models\FjordUser;
 use Fjord\Support\Facades\Config;
 use Fjord\User\Requests\FjordUserReadRequest;
@@ -24,5 +25,18 @@ class ProfileController
                 'model' => crud(fjord_user()),
                 'config' => $config
             ]);
+    }
+
+    /**
+     * Update profile.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function update(Request $request)
+    {
+        $user = fjord_user() ?? abort(404);
+
+        $user->update($request->all());
     }
 }

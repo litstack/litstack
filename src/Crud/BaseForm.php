@@ -6,6 +6,7 @@ use Closure;
 use Fjord\Support\VueProp;
 use Fjord\Crud\Fields\Code;
 use Fjord\Crud\Fields\Icon;
+use Illuminate\Support\Str;
 use Fjord\Crud\Fields\Input;
 use Fjord\Crud\Fields\Range;
 use Fjord\Crud\Fields\Select;
@@ -17,6 +18,7 @@ use Fjord\Crud\Fields\Textarea;
 use Fjord\Crud\Fields\Component;
 use Fjord\Crud\Models\FormBlock;
 use Fjord\Crud\Models\FormField;
+use Fjord\Support\Facades\Fjord;
 use Fjord\Crud\Fields\Checkboxes;
 use Fjord\Crud\Fields\Media\Image;
 use Fjord\Crud\Fields\Blocks\Blocks;
@@ -115,13 +117,16 @@ class BaseForm extends VueProp
     }
 
     /**
-     * Undocumented function
+     * Set form route prefix.
      *
      * @param string $prefix
      * @return void
      */
     public function setRoutePrefix(string $prefix)
     {
+        if (Str::startsWith($prefix, Fjord::url(''))) {
+            $prefix = Str::replaceFirst(Fjord::url(''), '', $prefix);
+        }
         $this->routePrefix = $prefix;
     }
 

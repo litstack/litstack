@@ -27,6 +27,13 @@ String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
+String.prototype.capitalizeAll = function(lower = false) {
+    return (lower ? this.toLowerCase() : this).replace(
+        /(?:^|\s|["'([{])+\S/g,
+        match => match.toUpperCase()
+    );
+};
+
 String.prototype.rawText = function() {
     return this.replace(/<[^>]*>?/gm, '').replace('&nbsp;', ' ');
 };

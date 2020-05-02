@@ -1,6 +1,13 @@
 <template>
-    <fj-base-container size="lg">
-        <fj-base-header title="Konto Einstellungen" />
+    <fj-container size="lg">
+        <fj-navigation />
+        <fj-header
+            :title="
+                __('base.item_settings', {
+                    item: __('base.profile').capitalize()
+                })
+            "
+        />
 
         <b-row>
             <components
@@ -8,11 +15,11 @@
                 :key="key"
                 :is="component.name"
                 v-bind="component.props"
-                :model="user"
+                :model="profile"
                 :config="config"
             />
         </b-row>
-    </fj-base-container>
+    </fj-container>
 </template>
 
 <script>
@@ -30,11 +37,11 @@ export default {
     },
     data() {
         return {
-            user: {}
+            profile: {}
         };
     },
     beforeMount() {
-        this.user = this.crud(this.model);
+        this.profile = this.crud(this.model);
     }
 };
 </script>

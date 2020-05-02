@@ -1,6 +1,6 @@
 <template>
     <b-col :cols="cols">
-        <component :is="heading">{{ title }}</component>
+        <component :is="heading" v-html="title" />
         <p v-for="info in text" v-html="info" class="text-secondary"></p>
     </b-col>
 </template>

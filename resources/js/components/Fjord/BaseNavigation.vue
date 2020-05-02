@@ -73,6 +73,42 @@ export default {
             this.$bvToast.toast(this.$t('fj.saved'), {
                 variant: 'success'
             });
+        },
+        // Used with elementIsRendered
+        waitUntil(selector, scope, resolve, reject) {
+            let loopCount = 0;
+            let maxLoops = 100;
+
+            // Loops until element exists in DOM or loop times out
+            function checkForElement() {
+                if (loopCount === maxLoops) {
+                    loopCount = 0;
+                    return reject('Timed out waiting for element to render');
+                }
+
+                let el = scope.querySelector(selector);
+
+                setTimeout(() => {
+                    if (el) {
+                        loopCount = 0;
+                        return resolve(el);
+                    } else {
+                        loopCount++;
+                        checkForElement();
+                    }
+                }, 100);
+            }
+
+            checkForElement();
+        },
+
+        // Returns a resolved Promise once the selector returns an element
+        // Useful for when we need to perform an action only when an element is in the DOM
+        elementIsRendered(selector, scope = document) {
+            return new Promise((resolve, reject) => {
+                //start the loop
+                return this.waitUntil(selector, scope, resolve, reject);
+            });
         }
     },
     mounted() {
@@ -95,7 +131,8 @@ export default {
             false
         );
 
-        this.$nextTick(function() {
+        this.$nextTick(async function() {
+            await this.elementIsRendered('.fj-save-button');
             let ww = window.innerWidth;
             let button = document
                 .querySelector('.fj-save-button')
@@ -115,9 +152,9 @@ export default {
             };
         },
         buttonStyle() {
-            let offset = this.canSave ? 0 : this.offset;
+            let offset = this.canSave ? 0 : '50vw';
             return {
-                transform: `translateX(${offset}px)`
+                transform: `translateX(${offset})`
             };
         }
     }
@@ -127,15 +164,15 @@ export default {
 <style lang="scss">
 @import '@fj-sass/_variables';
 
-$row-margin-x: -$grid-gutter-width / 2;
+$row-margin-x: $grid-gutter-width / 2.5;
 
 .fj-page-navigation {
-    margin: 0 calc(#{$container-padding-x} + #{$row-margin-x});
-    padding: $page-nav-padding-y 0;
+    margin: 0 -$row-margin-x;
+    padding: $page-nav-padding-y $row-margin-x;
     position: sticky;
     top: 0;
     background: $body-bg;
-    z-index: 1;
+    z-index: 5;
     box-shadow: 0 0 0 0 rgba(188, 188, 188, 0.51);
     transition: 0.2s all ease-in;
 
@@ -144,6 +181,7 @@ $row-margin-x: -$grid-gutter-width / 2;
     }
 
     .fj-save-button {
+        transform: translateX(50vw);
         box-shadow: 0px 13px 12px -7px rgba(102, 123, 144, 0.5);
     }
     .fj-save-animate {

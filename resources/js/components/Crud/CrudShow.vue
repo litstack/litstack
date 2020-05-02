@@ -1,5 +1,5 @@
 <template>
-    <fj-page :fluid="config.expand ? 'fluid' : 'lg'">
+    <fj-container :fluid="config.expand ? 'fluid' : 'lg'">
         <fj-navigation :back="backRoute" :back-text="config.names.plural">
             <fj-crud-show-near-items
                 slot="left"
@@ -23,39 +23,33 @@
                 -->
         </fj-navigation>
 
-        <fj-container>
-            <fj-header :title="config.names.singular">
-                <div
-                    slot="actions"
-                    class="pt-3"
-                    v-if="headerComponents.length > 0"
-                >
+        <fj-header :title="config.names.singular">
+            <div slot="actions" class="pt-3" v-if="headerComponents.length > 0">
+                <components
+                    v-for="(component, key) in headerComponents"
+                    :key="key"
+                    :is="component"
+                    :config="config"
+                    v-if="model"
+                    :model="model"
+                />
+            </div>
+        </fj-header>
+        <b-row>
+            <b-col cols="12">
+                <b-row class="fjord-form">
                     <components
-                        v-for="(component, key) in headerComponents"
+                        v-for="(component, key) in config.form.components"
                         :key="key"
-                        :is="component"
-                        :config="config"
-                        v-if="model"
+                        :is="component.name"
+                        v-bind="component.props"
                         :model="model"
+                        :config="config"
                     />
-                </div>
-            </fj-header>
-            <b-row>
-                <b-col cols="12">
-                    <b-row class="fjord-form">
-                        <components
-                            v-for="(component, key) in config.form.components"
-                            :key="key"
-                            :is="component.name"
-                            v-bind="component.props"
-                            :model="model"
-                            :config="config"
-                        />
-                    </b-row>
-                </b-col>
-            </b-row>
-        </fj-container>
-    </fj-page>
+                </b-row>
+            </b-col>
+        </b-row>
+    </fj-container>
 </template>
 
 <script>

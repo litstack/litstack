@@ -9,6 +9,7 @@
                 :model="model"
                 :fields="_fields"
                 :preview="preview"
+                :delete-icon="deleteIcon"
                 @deleteItem="$emit('deleteItem')"
                 @toggleExpand="expand = !expand"
             />
@@ -29,6 +30,12 @@
 export default {
     name: 'FieldBlock',
     props: {
+        deleteIcon: {
+            type: String,
+            default() {
+                return 'trash';
+            }
+        },
         sortable: {
             type: Boolean,
             default() {

@@ -49,6 +49,10 @@ class Checkboxes extends Field
      */
     public function cast($value)
     {
+        if (is_array($value)) {
+            return $value;
+        }
+
         return json_decode($value, 0);
     }
 }

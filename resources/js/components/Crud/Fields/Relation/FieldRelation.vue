@@ -23,6 +23,7 @@
                     :sortable="field.many ? field.sortable : false"
                     :preview="field.preview"
                     :set-route-prefix="setFieldsRoutePrefixId"
+                    delete-icon="unlink"
                     @deleteItem="removeRelation(relation)"
                 />
             </draggable>

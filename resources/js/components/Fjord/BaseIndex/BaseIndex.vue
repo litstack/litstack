@@ -59,6 +59,7 @@
                     :items="items"
                     :radio="radio"
                     :no-head="noHead"
+                    :no-select="noSelect"
                     :small="small"
                     :selectedItems="selectedItems"
                     @select="select"
@@ -116,6 +117,12 @@ export default {
                 return false;
             }
         },
+        noSelect: {
+            type: Boolean,
+            default() {
+                return false;
+            }
+        },
         noHead: {
             type: Boolean,
             default() {
@@ -152,9 +159,6 @@ export default {
             type: Function,
             require: true
         },
-        sortByDefault: {
-            type: Boolean
-        },
         nameSingular: {
             type: String
         },
@@ -180,7 +184,10 @@ export default {
             }
         },
         sortByDefault: {
-            type: String
+            type: String,
+            default() {
+                return 'id.desc';
+            }
         },
         selected: {
             type: Array,

@@ -1,14 +1,12 @@
 <template>
-    <b-dropdown-group
-        :header="$t('fj.choose_language')"
-        v-if="config.translatable"
-    >
+    <b-col cols="12">
+        <h6>{{ __('base.system_language').capitalizeAll() }}</h6>
         <b-select
             :value="$i18n.locale"
             :options="options"
             @change="setAppLocale"
         />
-    </b-dropdown-group>
+    </b-col>
 </template>
 
 <script>

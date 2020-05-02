@@ -33,10 +33,6 @@
 
         @endforeach
     @endforeach
-    @if(config('fjord.translatable.translatable'))
-        <b-dropdown-divider></b-dropdown-divider>
-        <fj-locales :config={{ json_encode(config('fjord.translatable')) }}></fj-locales>
-    @endif
     <b-dropdown-divider></b-dropdown-divider>
     <fj-logout :url="'{{route('fjord.logout')}}'"></fj-logout>
     

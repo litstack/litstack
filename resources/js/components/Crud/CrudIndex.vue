@@ -1,5 +1,5 @@
 <template>
-    <fj-page :fluid="config.expand ? 'fluid' : 'lg'">
+    <fj-container :fluid="config.expand ? 'fluid' : 'lg'">
         <fj-navigation>
             <b-button
                 size="md"
@@ -11,39 +11,37 @@
                 {{ $t('fj.add_model', { model: config.names.singular }) }}
             </b-button>
         </fj-navigation>
-        <fj-container>
-            <fj-header :title="config.names.plural">
-                <div slot="actions-right">
-                    <component
-                        v-for="(component, key) in headerComponents"
-                        :key="key"
-                        :is="component"
-                        :config="config"
-                    />
-                </div>
-            </fj-header>
+        <fj-header :title="config.names.plural">
+            <div slot="actions-right">
+                <component
+                    v-for="(component, key) in headerComponents"
+                    :key="key"
+                    :is="component"
+                    :config="config"
+                />
+            </div>
+        </fj-header>
 
-            <b-row>
-                <b-col>
-                    <fj-index-table
-                        ref="indexTable"
-                        :cols="config.index"
-                        :items="items"
-                        :count="count"
-                        :per-page="config.perPage"
-                        :load-items="loadItems"
-                        :name-singular="config.names.singular"
-                        :name-plural="config.names.plural"
-                        :sort-by="config.sortBy"
-                        :sort-by-default="config.sortByDefault"
-                        :filter="config.filter"
-                        :global-actions="config.globalActions"
-                        :record-actions="config.recordActions"
-                    />
-                </b-col>
-            </b-row>
-        </fj-container>
-    </fj-page>
+        <b-row>
+            <b-col>
+                <fj-index-table
+                    ref="indexTable"
+                    :cols="config.index"
+                    :items="items"
+                    :count="count"
+                    :per-page="config.perPage"
+                    :load-items="loadItems"
+                    :name-singular="config.names.singular"
+                    :name-plural="config.names.plural"
+                    :sort-by="config.sortBy"
+                    :sort-by-default="config.sortByDefault"
+                    :filter="config.filter"
+                    :global-actions="config.globalActions"
+                    :record-actions="config.recordActions"
+                />
+            </b-col>
+        </b-row>
+    </fj-container>
 </template>
 
 <script>

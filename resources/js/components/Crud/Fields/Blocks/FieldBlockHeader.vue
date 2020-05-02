@@ -16,7 +16,7 @@
                 />
                 <b-td class="reduce text-secondary pl-4" v-if="!field.readonly">
                     <fa-icon
-                        icon="trash"
+                        :icon="deleteIcon"
                         @click="$emit('deleteItem')"
                         class="fj-block-delete"
                     />
@@ -39,6 +39,10 @@
 export default {
     name: 'FieldBlockHeader',
     props: {
+        deleteIcon: {
+            type: String,
+            required: true
+        },
         sortable: {
             type: Boolean,
             required: true

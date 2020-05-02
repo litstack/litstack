@@ -1,12 +1,20 @@
 <template>
-    <b-container :class="`fj-container`">
+    <b-container :class="`fj-container`" :fluid="fluid">
         <slot />
     </b-container>
 </template>
 
 <script>
 export default {
-    name: 'Container'
+    name: 'Container',
+    props: {
+        fluid: {
+            type: String,
+            default() {
+                return 'sm';
+            }
+        }
+    }
 };
 </script>
 
