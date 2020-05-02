@@ -18,6 +18,11 @@ $spinner-theme-default: $primary;
 //
 $toast-margin: map-get($spacers, 3);
 
+// Dropdown
+//
+//
+$dropdown-shadow: 0 0 40px 0 rgba($secondary, 0.15);
+
 // Topbar
 //
 // Topbar above main navigation.
@@ -42,7 +47,7 @@ $nav-height: 80px;
 $nav-tab-height: 28px;
 $nav-padding-top: 20px;
 
-// Nav Title
+// Title
 $nav-title-color: $primary;
 $nav-title-font-size: $font-size-sm * 0.875;
 $nav-title-letter-spacing: 0.125rem;

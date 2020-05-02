@@ -1,9 +1,14 @@
 <template>
     <b-col :cols="fieldCols">
         <div :class="`pb-4 fjord-form fj-form-item-${field.id}`">
+            <fj-slot
+                v-if="'title' in field.slots"
+                :component="field.slots.title"
+                :props="{ field, model }"
+            />
             <h6
                 class="fj-form-item-title mb-0 d-flex justify-content-between"
-                v-if="field.title"
+                v-else
             >
                 <label :for="field.id">{{ field.title }}</label>
                 <div>

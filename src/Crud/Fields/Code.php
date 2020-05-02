@@ -23,6 +23,13 @@ class Code extends Field
     ];
 
     /**
+     * Available slots.
+     *
+     * @var array
+     */
+    protected $availableSlots = [];
+
+    /**
      * Available Field attributes.
      *
      * @var array
@@ -30,11 +37,12 @@ class Code extends Field
     protected $available = [
         'title',
         'hint',
-        'tab_size',
+        'tabSize',
         'theme',
-        'line_numbers',
+        'lineNumbers',
         'line',
         'language',
+        'options'
     ];
 
     /**
@@ -43,10 +51,11 @@ class Code extends Field
      * @var array
      */
     protected $defaults = [
-        'tab_size' => 4,
+        'tabSize' => 4,
         'theme' => 'default',
-        'line_numbers' => true,
+        'lineNumbers' => true,
         'line' => true,
-        'language' => 'text/html'
+        'language' => 'text/html',
+        'options' => []
     ];
 }

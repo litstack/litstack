@@ -74,13 +74,14 @@ export default {
         return {
             value: null,
             options: {
-                tabSize: this.field.tab_size,
+                tabSize: this.field.tabSize,
                 mode: this.field.language,
                 theme: this.field.theme,
-                lineNumbers: this.field.line_numbers,
+                lineNumbers: this.field.lineNumbers,
                 line: this.field.line,
                 readOnly: false,
-                tabSize: 4
+                tabSize: 4,
+                ...this.field.options
             }
         };
     }
@@ -179,10 +180,10 @@ export default {
         border: $input-border-width solid $input-border-color;
         font-weight: $input-font-weight;
 
-        .CodeMirror-gutters {
+        &-gutters {
             padding: $input-padding-y 0;
         }
-        .CodeMirror-lines {
+        &-lines {
             padding: $input-padding-y 0;
         }
     }

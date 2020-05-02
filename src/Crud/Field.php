@@ -7,6 +7,7 @@ use Exception;
 use Fjord\Crud\Models\FormField;
 use Fjord\Support\VueProp;
 use Fjord\Exceptions\MethodNotFoundException;
+use InvalidArgumentException;
 
 class Field extends VueProp
 {
@@ -55,6 +56,15 @@ class Field extends VueProp
     ];
 
     /**
+     * Available slots.
+     *
+     * @var array
+     */
+    protected $availableSlots = [
+        'title',
+    ];
+
+    /**
      * Available field attributes.
      *
      * @var array
@@ -73,6 +83,7 @@ class Field extends VueProp
     protected $defaults = [
         'readonly' => false,
         'cols' => 12,
+        'slots' => []
     ];
 
     /**
@@ -94,6 +105,10 @@ class Field extends VueProp
             $this->defaults = array_merge(
                 $parent->getDefaults(),
                 $this->defaults,
+            );
+            $this->availableSlots = array_merge(
+                $parent->getAvailableSlots(),
+                $this->availableSlots,
             );
             $this->required = array_merge(
                 $parent->getRequiredAttributes(),
@@ -186,6 +201,38 @@ class Field extends VueProp
             lcfirst(last(explode('\\', static::class))),
             $this->attributes['id']
         ));
+    }
+
+    /**
+     * Set slot component.
+     *
+     * @param string $slot
+     * @param string $component
+     * @return void
+     * 
+     * @throws \InvalidArgumentException
+     */
+    public function slot(string $slot, string $component)
+    {
+        if (!$this->slotExists($slot)) {
+            $field = class_basename(static::class);
+            throw new InvalidArgumentException("Slot {$slot} does not exist for Field {$field}. Available slots: " . implode(', ', $this->getAvailableSlots()));
+        }
+
+        $this->attributes['slots'][$slot] = $component;
+
+        return $this;
+    }
+
+    /**
+     * Check if slot exists.
+     *
+     * @param string $slot
+     * @return void
+     */
+    public function slotExists(string $slot)
+    {
+        return in_array($slot, $this->availableSlots);
     }
 
     /**
@@ -306,6 +353,16 @@ class Field extends VueProp
     public function getAvailableAttributes()
     {
         return $this->available;
+    }
+
+    /**
+     * Get avaliable slots.
+     *
+     * @return array
+     */
+    public function getAvailableSlots()
+    {
+        return $this->availableSlots;
     }
 
     /**

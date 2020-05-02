@@ -21,7 +21,7 @@
                     :preview="field.repeatables[block.type].preview"
                     :fields="field.repeatables[block.type].form.fields"
                     :set-route-prefix="setFieldsRoutePrefixBlockId"
-                    @deleteItem="deleteBlock"
+                    @deleteItem="deleteBlock(block)"
                 />
             </draggable>
 
@@ -97,7 +97,7 @@ export default {
         async deleteBlock(block) {
             try {
                 let response = await axios.delete(
-                    `${this.field.route_prefix}/blocks/${this.block.field_id}/${this.block.id}`
+                    `${this.field.route_prefix}/blocks/${block.field_id}/${block.id}`
                 );
             } catch (e) {
                 console.log(e);

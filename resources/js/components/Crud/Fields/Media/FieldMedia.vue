@@ -322,7 +322,7 @@ div#fjord-app .fj-dropzone {
 
 .fj-cropper {
     position: fixed;
-    display: none;
+    //display: none;
     top: 0;
     bottom: 0;
     left: 0;
