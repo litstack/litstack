@@ -41,7 +41,6 @@ class ManyRelation extends ManyRelationField
         'preview',
         'confirm',
         'sortable',
-        'orderColumn',
         'query'
     ];
 

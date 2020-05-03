@@ -1,11 +1,11 @@
 <template>
     <b-row class="fj-container-header mb-4">
-        <b-col cols="12" class="d-flex justify-content-between">
-            <div>
-                <h3 class="mt-2 mb-2" v-if="title">
+        <b-col cols="12" class="mt-2 mb-2">
+            <slot>
+                <h3 v-if="title">
                     {{ title }}
                 </h3>
-            </div>
+            </slot>
         </b-col>
         <b-col
             cols="12"
@@ -25,7 +25,10 @@ export default {
     name: 'Header',
     props: {
         title: {
-            type: String
+            type: String,
+            default() {
+                return '';
+            }
         }
     }
 };
@@ -38,6 +41,16 @@ export default {
     a {
         &:hover {
             text-decoration: none;
+        }
+    }
+
+    h3 {
+        position: relative;
+        &.d-flex > * {
+            align-self: flex-end;
+        }
+        small {
+            font-size: $font-size-base;
         }
     }
 

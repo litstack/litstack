@@ -127,10 +127,10 @@ $body-bg: $gray-200 !default;
 // Define the maximum width of `.container` for different screen sizes.
 
 $container-max-widths: (
-    //sm: 540px,
-        //md: 720px,
-        //lg: 960px,
-        //xl: 1140px
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1140px
 ) !default;
 
 // Grid columns
@@ -239,7 +239,7 @@ $font-size-sm: $font-size-base * 0.875 !default;
 //$blockquote-small-font-size:  $small-font-size !default;
 //$blockquote-font-size:        $font-size-base * 1.25 !default;
 
-//$hr-border-color:             rgba($black, .1) !default;
+$hr-border-color: $gray-300 !default;
 //$hr-border-width: $border-width !default;
 
 //$mark-padding: 0.2em !default;

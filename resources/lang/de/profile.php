@@ -5,7 +5,10 @@ return [
     'new_password_confirm' => 'Neues Password bestätigen',
     'current_password' => 'Aktuelles Passwort',
     'change_password' => 'Passwort ändern',
+    'last_activity' => 'Letzte Aktiviät',
+    'logged_in_devices' => 'Eingeloggte Geräte',
+    'current_session' => 'Diese Sitzung',
     'messages' => [
-        'language' => 'Dies ist die Sprache in der sie die Verwaltungsoberflache sehen.'
+        'language' => 'Dies ist die Sprache in der Sie die Verwaltungsoberflache sehen.'
     ]
 ];

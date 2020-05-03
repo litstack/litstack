@@ -10,6 +10,8 @@ return [
     'system_language' => 'Systemsprache',
     'general' => 'allgemein',
     'security' => 'Sicherheit',
+    'device' => 'Gerät',
+    'logout' => 'ausloggen',
+    'location' => 'Standort',
     'action' => 'Aktion|Aktionen',
-
 ];

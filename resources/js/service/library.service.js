@@ -41,3 +41,4 @@ Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 
 // prototypes
 Vue.prototype.$bus = Bus;
+Vue.prototype._ = window._;

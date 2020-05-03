@@ -67,17 +67,9 @@ abstract class FormController
         $formField = $this->query()->findOrFail($id);
 
         $formField->update($request->all());
+        $formField->load('last_edit');
 
-        $edit = new FormEdit();
-        $edit->fjord_user_id = fjord_user()->id;
-        $edit->collection = $formField->collection;
-        $edit->form_name = $formField->form_name;
-        $edit->created_at = \Carbon\Carbon::now();
-        $edit->save();
-
-        $formField->append('last_edit');
-
-        return $formField;
+        return crud($formField);
     }
 
     /**

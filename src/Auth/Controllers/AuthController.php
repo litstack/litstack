@@ -8,7 +8,9 @@ use Fjord\User\Models\FjordUser;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use Fjord\Auth\Requests\FjordSessionLogoutRequest;
 use Fjord\Auth\Controllers\ForgotPasswordController;
 
 class AuthController extends Controller
@@ -74,6 +76,25 @@ class AuthController extends Controller
         Auth::logout();
 
         return view('fjord::auth.login');
+    }
+
+    /**
+     * Logout session.
+     *
+     * @param FjordSessionLogoutRequest $request
+     * @return void
+     */
+    public function logoutSession(FjordSessionLogoutRequest $request)
+    {
+        $session = fjord_user()->sessions()->findOrFail($request->id);
+
+        Session::getHandler()->destroy($session->session_id);
+
+        if ($session->session_id == Session::getId()) {
+            $this->logout();
+        }
+
+        $session->delete();
     }
 
     /**

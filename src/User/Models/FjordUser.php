@@ -2,6 +2,7 @@
 
 namespace Fjord\User\Models;
 
+use Fjord\Auth\Models\FjordSession;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Fjord\EloquentJs\CanEloquentJs;
@@ -73,6 +74,16 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
         $link .= '?email=' . urlencode($this->email);
 
         $this->notify(new ResetPasswordNotification($link));
+    }
+
+    /**
+     * Fjord sessions.
+     *
+     * @return hasMany
+     */
+    public function sessions()
+    {
+        return $this->hasMany(FjordSession::class)->orderByDesc('last_activity');
     }
 
     /**

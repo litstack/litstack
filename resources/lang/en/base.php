@@ -10,5 +10,8 @@ return [
     'system_language' => 'System language',
     'general' => 'general',
     'security' => 'security',
+    'device' => 'device',
+    'logout' => 'logout',
+    'location' => 'location',
     'action' => 'action|actions',
 ];

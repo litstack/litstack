@@ -23,7 +23,20 @@
                 -->
         </fj-navigation>
 
-        <fj-header :title="config.names.singular">
+        <fj-header>
+            <h3 class="d-flex justify-content-between">
+                {{ config.names.singular }}
+                <small
+                    class="text-secondary"
+                    v-if="model.last_edit"
+                    v-html="
+                        __('crud.last_edited', {
+                            time: model.last_edit.time,
+                            user: model.last_edit.user.name
+                        })
+                    "
+                />
+            </h3>
             <div slot="actions" class="pt-3" v-if="headerComponents.length > 0">
                 <components
                     v-for="(component, key) in headerComponents"
@@ -130,6 +143,18 @@ export default {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
             element.style.top = top;
             element.style.position = pos;
+        },
+        setSavedModel(responses) {
+            for (let i in responses) {
+                let response = responses[i];
+                if (
+                    response.config.url ==
+                        `${this.config.route_prefix}/${this.model.id}` &&
+                    response.config.method == 'put'
+                ) {
+                    this.model = this.crud(response.data);
+                }
+            }
         }
     },
     computed: {
@@ -141,6 +166,8 @@ export default {
         this.model = this.crud(this.crudModel);
 
         this.$store.commit('SET_CONFIG', this.config);
+
+        Fjord.bus.$on('saved', this.setSavedModel);
     },
     mounted() {
         this.scrollToFormFieldFromHash();

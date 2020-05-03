@@ -2,6 +2,8 @@ import VueI18n from 'vue-i18n';
 import store from '@fj-js/store';
 import CrudModel from '../crud/model';
 import { translate } from 'i18n-js';
+import languages from '../lang/languages';
+import countries from '../lang/countries';
 
 /**
  * Vue mixed that can be used in components.
@@ -90,5 +92,34 @@ export default {
      */
     clone(obj) {
         return JSON.parse(JSON.stringify(obj));
+    },
+
+    /**
+     * Get language name translation for locale.
+     *
+     * @param {string} locale
+     */
+    __language(locale) {
+        return languages[locale.toLowerCase()].nativeName;
+    },
+
+    /**
+     * Get country name translation for locale.
+     *
+     * @param {string} locale
+     */
+    __country(locale) {
+        if (!Fjord.getLocale() in countries) {
+            return;
+        }
+
+        locale = locale.toLowerCase();
+
+        for (let i in countries[Fjord.getLocale()]) {
+            let t = countries[Fjord.getLocale()][i];
+            if (t.alpha2 == locale) {
+                return t.name;
+            }
+        }
     }
 };

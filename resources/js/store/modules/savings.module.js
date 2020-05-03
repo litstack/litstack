@@ -32,7 +32,7 @@ export const actions = {
         // Parallel map flow.
         let results = await Promise.all(promises);
 
-        Fjord.bus.$emit('saved', results[0]);
+        Fjord.bus.$emit('saved', results);
 
         commit('FLUSH_SAVE_JOBS');
 

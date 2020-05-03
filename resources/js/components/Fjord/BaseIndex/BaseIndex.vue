@@ -17,7 +17,13 @@
             <div class="card-body">
                 <slot name="header" v-bind:tab="tab" />
 
-                <fj-base-index-table-form>
+                <fj-base-index-table-form
+                    v-if="
+                        searchKeys.length != 0 ||
+                            !_.isEmpty(sortBy) ||
+                            !_.isEmpty(filter)
+                    "
+                >
                     <b-input-group>
                         <b-input-group-prepend is-text>
                             <fa-icon icon="search" />
@@ -73,6 +79,7 @@
                     :total="total"
                     :items="items"
                     :current-page="currentPage"
+                    v-if="total > items.length"
                 />
 
                 <div
@@ -142,7 +149,7 @@ export default {
         searchKeys: {
             type: Array,
             default() {
-                return ['name'];
+                return [];
             }
         },
         actions: {
@@ -157,7 +164,9 @@ export default {
         },
         loadItems: {
             type: Function,
-            require: true
+            default() {
+                null;
+            }
         },
         nameSingular: {
             type: String
@@ -198,7 +207,7 @@ export default {
     },
     data() {
         return {
-            isBusy: true,
+            isBusy: false,
             tab: null,
             search: '',
             sort_by_key: '',
@@ -280,6 +289,9 @@ export default {
             this.$emit('select', item);
         },
         async _loadItems() {
+            if (!this.loadItems) {
+                return;
+            }
             this.isBusy = true;
 
             let payload = {

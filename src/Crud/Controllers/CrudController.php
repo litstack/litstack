@@ -74,6 +74,7 @@ abstract class CrudController
         $config['expand'] = $config['expandIndexContainer'];
 
         return view('fjord::app')
+            ->withTitle($config['names']['plural'])
             ->withComponent('fj-crud-index')
             ->withProps([
                 'config' => $config,
@@ -102,7 +103,7 @@ abstract class CrudController
         return view('fjord::app')
             ->withComponent('fj-crud-show')
             ->withModels([
-                'model' => eloquentJs($model, $this->config->route_prefix)
+                'model' => crud($model)
             ])
             ->withProps([
                 'config' => $config,
@@ -128,7 +129,8 @@ abstract class CrudController
 
         // Find model.
         $model = $query->findOrFail($id);
-        $model->setAttribute('fields', $this->fields());
+        // Set last_edit attribute.
+        $model->last_edit;
 
         // Append media.
         foreach ($this->fields() as $field) {
@@ -189,8 +191,11 @@ abstract class CrudController
         $model = $this->query()->findOrFail($id);
 
         $model->update($request->all());
+        if ($model->last_edit) {
+            $model->load('last_edit');
+        }
 
-        return $model;
+        return crud($model);
     }
 
     /**
