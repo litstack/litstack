@@ -1,8 +1,10 @@
 <template>
     <span>
-        <fa-icon :icon="item.device" />
+        <fa-icon :icon="item.device" class="mr-1" />
 
-        {{ item.os }}
+        {{
+            __('profile.browser_on_os', { browser: item.browser, os: item.os })
+        }}
     </span>
 </template>
 

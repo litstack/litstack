@@ -8,6 +8,7 @@ return [
     'last_activity' => 'last activity',
     'logged_in_devices' => 'Logged in devices',
     'current_session' => 'This session',
+    'browser_on_os' => ':browser on :os',
     'messages' => [
         'language' => 'This is the language in which you see the administration interface.'
     ]

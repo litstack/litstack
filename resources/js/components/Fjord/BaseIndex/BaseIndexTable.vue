@@ -4,6 +4,7 @@
         hover
         borderless
         striped
+        responsive
         v-bind:small="small"
     >
         <fj-base-index-table-head

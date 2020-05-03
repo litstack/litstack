@@ -343,12 +343,14 @@ export default {
         margin-right: 0;
     }
 
-    table.b-table {
+    .table-responsive {
         width: auto;
-        min-width: calc(100% + #{2 * $card-spacer-x});
         margin-left: -$card-spacer-x;
         margin-right: -$card-spacer-x;
+        min-width: calc(100% + #{2 * $card-spacer-x});
+    }
 
+    table.b-table {
         &[aria-busy='true'] {
             opacity: 0.6;
         }

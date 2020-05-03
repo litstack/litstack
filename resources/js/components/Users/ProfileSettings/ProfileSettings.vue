@@ -1,11 +1,11 @@
 <template>
-    <fj-container size="lg">
+    <fj-container fluid="fluid">
         <fj-navigation />
         <fj-header
             :title="
                 __('base.item_settings', {
-                    item: __('base.profile').capitalize()
-                })
+                    item: __('base.profile')
+                }).capitalizeAll()
             "
         />
 
