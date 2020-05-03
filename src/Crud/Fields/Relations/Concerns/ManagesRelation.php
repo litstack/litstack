@@ -49,7 +49,7 @@ trait ManagesRelation
      * @param Closure $closure
      * @return void
      */
-    public function edit(Closure $closure)
+    public function form(Closure $closure)
     {
         $form = new RelationForm($this->related);
 
@@ -59,7 +59,7 @@ trait ManagesRelation
 
         $closure($form);
 
-        $this->attributes['edit'] = $form;
+        $this->attributes['form'] = $form;
 
         return $this;
     }

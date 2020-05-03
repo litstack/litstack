@@ -37,7 +37,7 @@ class OneRelation extends OneRelationField
     protected $available = [
         'title',
         'model',
-        'edit',
+        'form',
         'hint',
         'preview',
         'confirm',

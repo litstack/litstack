@@ -37,7 +37,7 @@ class MorphOne extends OneRelationField
         'title',
         'model',
         'hint',
-        'edit',
+        'form',
         'preview',
         'confirm',
         'sortable',

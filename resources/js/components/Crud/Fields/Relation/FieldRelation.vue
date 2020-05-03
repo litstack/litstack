@@ -18,7 +18,7 @@
                     :key="index"
                     :block="relation"
                     :field="field"
-                    :fields="field.edit ? field.edit.fields : []"
+                    :fields="field.form ? field.form.fields : []"
                     :model="model"
                     :sortable="field.many ? field.sortable : false"
                     :preview="field.preview"
