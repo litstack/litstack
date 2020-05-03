@@ -67,6 +67,7 @@ export default {
         this.callPluginMethods('beforeMount');
     },
     mounted() {
+        document.querySelector('.fj-nav-loader').remove();
         this.showHiddenElements();
 
         this.$Bus.$on('error', e => {
@@ -90,7 +91,7 @@ export default {
                 if (!element.classList) {
                     continue;
                 }
-                element.classList.add('show');
+                element.classList.toggle('show');
             }
         },
         callPluginExtensions() {

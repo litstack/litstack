@@ -18,6 +18,8 @@ import BootstrapVue from 'bootstrap-vue';
 import VueCodemirror from 'vue-codemirror';
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import Draggable from 'vuedraggable';
+import VueLodash from 'vue-lodash';
+import lodash from 'lodash';
 
 // FontAwesome
 library.add(far);
@@ -36,9 +38,9 @@ Vue.use(CKEditor);
 Vue.use(VueCodemirror);
 Vue.use(Draggable);
 Vue.use(VueDropzone);
+Vue.use(VueLodash, { lodash });
 
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 
 // prototypes
 Vue.prototype.$bus = Bus;
-Vue.prototype._ = window._;

@@ -16,6 +16,10 @@ class NavigationConfig extends Config
     public function topbar(Navigation $nav)
     {
         $nav->section([
+            $nav->preset('profile'),
+        ]);
+
+        $nav->section([
             $nav->title(__f('fj.user_administration')),
 
             $nav->preset('users'),
@@ -24,7 +28,8 @@ class NavigationConfig extends Config
 
         $nav->section([
             $nav->preset('collections.settings', [
-                'title' => __f('fj.settings')
+                'title' => __f('fj.settings'),
+                'icon' => fa('cog')
             ])
         ]);
     }

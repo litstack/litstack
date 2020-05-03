@@ -318,3 +318,21 @@ if (!function_exists('is_valid_path')) {
         return (bool) file_exists($path);
     }
 }
+
+if (!function_exists('ph_cols')) {
+    /**
+     * Get ph cols from string length.
+     *
+     * @param string $path
+     * @return boolean
+     */
+    function ph_cols(string $string, $max = 12)
+    {
+        $length = strlen($string);
+        $cols = ceil($length / 2);
+        if ($cols > $max) {
+            return $max;
+        }
+        return $cols;
+    }
+}

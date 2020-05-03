@@ -25,8 +25,9 @@
                     variant="outline-secondary"
                     size="md"
                     class="fj-page-navigation__controls"
+                    v-if="!_.isEmpty(actions)"
                 >
-                    <fa-icon icon="ellipsis-h" style="margin: 0 4px;" />
+                    <fa-icon icon="ellipsis-h" />
                 </b-button>
                 <slot name="right" />
                 <b-button
@@ -54,6 +55,12 @@ export default {
         },
         backText: {
             type: String
+        },
+        actions: {
+            type: Array,
+            default() {
+                return [];
+            }
         }
     },
     data() {
