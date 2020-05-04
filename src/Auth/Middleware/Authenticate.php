@@ -35,11 +35,13 @@ class Authenticate extends Middleware
 
         // Store fjord session.
         FjordSession::updateOrCreate(
-            ['session_id' => Session::getId()],
             [
-                'fjord_user_id' => fjord_user()->id,
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->server('HTTP_USER_AGENT'),
+            ],
+            [
+                'session_id' => Session::getId(),
+                'fjord_user_id' => fjord_user()->id,
                 'last_activity' => Carbon::now()
             ]
         );
@@ -77,14 +79,14 @@ class Authenticate extends Middleware
             $session->payload = [];
         }
 
+        // Only if location hasn't been set before.
         if (array_key_exists('location', $session->payload)) {
             return;
         }
 
-        try {
-            $response = (new \GuzzleHttp\Client())->request('GET', 'https://ipinfo.io/json');
-            $location = json_decode($response->getBody(), true);
-        } catch (Throwable $e) {
+        $location = $this->fetchLocation();
+
+        if (!$location) {
             return;
         }
 
@@ -94,5 +96,20 @@ class Authenticate extends Middleware
                 'country' => $location['country'] ?? '',
             ]]
         ]);
+    }
+
+    /**
+     * Fetch ip location from ipinfo.io.
+     *
+     * @return array|false
+     */
+    public function fetchLocation()
+    {
+        try {
+            $response = (new \GuzzleHttp\Client())->request('GET', 'https://ipinfo.io/json');
+            return json_decode($response->getBody(), true);
+        } catch (Throwable $e) {
+            return false;
+        }
     }
 }
