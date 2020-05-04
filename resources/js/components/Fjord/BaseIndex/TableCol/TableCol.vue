@@ -1,7 +1,7 @@
 <template>
     <b-td
         :class="{
-            reduce: shouldReduce(col),
+            small: isSmall(col),
             'fj-table-col': true,
             pointer: col.link
         }"
@@ -45,7 +45,7 @@ export default {
             for (let i = 0; i < this.cols.length; i++) {
                 let col = this.cols[i];
 
-                if (this.shouldReduce(col)) {
+                if (this.isSmall(col)) {
                     continue;
                 }
 
@@ -54,7 +54,7 @@ export default {
             return count;
         },
         colWidth() {
-            if (this.shouldReduce(this.col)) {
+            if (this.isSmall(this.col)) {
                 return;
             }
             let percentage = 100;
@@ -101,8 +101,8 @@ export default {
                 this.item
             )}`;
         },
-        shouldReduce(col) {
-            return col.reduce === true;
+        isSmall(col) {
+            return col.small === true;
         }
     }
 };

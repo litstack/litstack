@@ -7,26 +7,32 @@ use Fjord\Vue\TableComponent;
 class ColCrudRelationComponent extends TableComponent
 {
     /**
-     * Available component props.
+     * Prop options.
      *
-     * @var array
+     * @return array
      */
-    protected $available = [
-        'related',
-        'value',
-        'route_prefix'
-    ];
+    protected function props()
+    {
+        $props = [
+            'related' => [
+                'type' => 'string',
+                'required' => true
+            ],
+            'value' => [
+                'type' => 'string',
+                'required' => true
+            ],
+            'route_prefix' => [
+                'type' => 'string',
+                'required' => true
+            ],
+        ];
 
-    /**
-     * Required props.
-     *
-     * @var array
-     */
-    protected $required = [
-        'related',
-        'value',
-        'route_prefix'
-    ];
+        return array_merge(
+            parent::props(),
+            $props
+        );
+    }
 
     /**
      * Deny to set link.

@@ -5,9 +5,21 @@ const Fjord = {
     bus: Bus,
     config: {},
     baseURL: null,
+
+    /**
+     * Get Fjord application locale.
+     *
+     * @param {Object} obj
+     */
     getLocale() {
         return i18n.locale;
     },
+
+    /**
+     * Check if Fjord application locale is locale.
+     *
+     * @param {Object} obj
+     */
     isLocale(locale) {
         return i18n.locale == locale;
     }

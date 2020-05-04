@@ -24,4 +24,20 @@ class CrudIndexConfigFactory extends ConfigFactory
 
         return $table;
     }
+
+    /**
+     * Setup fj-crud-index component form.
+     *
+     * @param \Fjord\Config\ConfigHandler $config
+     * @param Closure $method
+     * @return \Fjord\Vue\Component
+     */
+    public function indexComponent(ConfigHandler $config, Closure $method)
+    {
+        $component = component('fj-crud-index');
+
+        $method($component);
+
+        return $component;
+    }
 }

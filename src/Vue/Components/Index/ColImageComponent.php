@@ -7,22 +7,28 @@ use Fjord\Vue\TableComponent;
 class ColImageComponent extends TableComponent
 {
     /**
-     * Available component props.
+     * Prop options.
      *
-     * @var array
+     * @return array
      */
-    protected $available = [
-        'src',
-        'maxWidth',
-        'maxHeight'
-    ];
+    protected function props()
+    {
+        $props = [
+            'src' => [
+                'type' => 'string',
+                'required' => true
+            ],
+            'maxWidth' => [
+                'type' => 'string'
+            ],
+            'maxHeight' => [
+                'type' => 'string'
+            ],
+        ];
 
-    /**
-     * Required props.
-     *
-     * @var array
-     */
-    protected $required = [
-        'src'
-    ];
+        return array_merge(
+            parent::props(),
+            $props
+        );
+    }
 }

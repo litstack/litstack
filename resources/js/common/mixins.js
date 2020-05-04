@@ -86,15 +86,6 @@ export default {
     },
 
     /**
-     * Clone an object.
-     *
-     * @param {Object} obj
-     */
-    clone(obj) {
-        return JSON.parse(JSON.stringify(obj));
-    },
-
-    /**
      * Get language name translation for locale.
      *
      * @param {string} locale

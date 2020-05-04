@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud\Controllers\Api\Blocks;
 
+use Fjord\Support\IndexTable;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
@@ -21,18 +22,44 @@ trait ManagesBlocksRelations
     public function blockRelationIndex(CrudReadRequest $request, $id, $field_id, $block_id, $relation)
     {
         $model = $this->query()->findOrFail($id);
-
         $blockField = $this->config->form->findField($field_id) ?? abort(404);
-
         $block = $blockField->relation($model, $query = true)->findOrFail($block_id);
-
         $field = $block->findField($relation) ?? abort(404);
 
         if (!$field->isRelation() || $field instanceof Blocks) {
             abort(404);
         }
 
-        return $field->getQuery()->get();
+        $index = IndexTable::query($field->getQuery())
+            ->request($request)
+            ->search($field->getRelatedConfig()->search)
+            ->get();
+
+        $index['items'] = crud($index['items']);
+
+        return $index;
+    }
+
+    /**
+     * Fetch existing relations.
+     *
+     * @param CrudReadRequest $request
+     * @param int $id
+     * @param int $field_id
+     * @return void
+     */
+    public function loadBlockRelations(CrudReadRequest $request, $id, $field_id, $block_id, $relation)
+    {
+        $model = $this->query()->findOrFail($id);
+        $blockField = $this->config->form->findField($field_id) ?? abort(404);
+        $block = $blockField->relation($model, $query = true)->findOrFail($block_id);
+        $field = $block->findField($relation) ?? abort(404);
+
+        $this->validateRelationField($field);
+
+        return crud(
+            $field->relation($block, $query = true)->get()
+        );
     }
 
     /**

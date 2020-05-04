@@ -7,36 +7,36 @@ use Fjord\Vue\Component;
 class CardComponent extends Component
 {
     /**
-     * Available component properties.
+     * Available props.
      *
-     * @var array
+     * @return array
      */
-    protected $available = [
-        'title',
-        'cols',
-        'component',
-        'class'
-    ];
-
-    /**
-     * Required component properties.
-     *
-     * @var array
-     */
-    protected $required = [
-        'component'
-    ];
-
-    /**
-     * Default component properties.
-     *
-     * @var array
-     */
-    protected $defaults = [
-        'cols' => 12,
-        'class' => 'mb-4',
-        'component' => []
-    ];
+    protected function props()
+    {
+        return [
+            'title' => [
+                'type' => 'string',
+                'required' => false,
+            ],
+            'cols' => [
+                'type' => 'integer',
+                'required' => false,
+                'default' => 12
+            ],
+            'component' => [
+                'type' => ['string', 'object'],
+                'required' => true,
+                'default' => function () {
+                    return collect([]);
+                }
+            ],
+            'class' => [
+                'type' => 'string',
+                'required' => false,
+                'default' => 'mb-4'
+            ],
+        ];
+    }
 
     /**
      * Set component.
@@ -51,18 +51,5 @@ class CardComponent extends Component
         $this->props['component'][] = $component;
 
         return $component;
-    }
-
-
-    /**
-     * Set defaults.
-     *
-     * @return void
-     */
-    public function setDefaults()
-    {
-        parent::setDefaults();
-
-        $this->props['component'] = collect([]);
     }
 }

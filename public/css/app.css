@@ -14992,9 +14992,13 @@ input[type=color].form-control:disabled {
 }
 
 .fj-block {
-  background: #f5f8fb;
+  background-color: #f5f8fb;
   border-radius: 0.6rem;
   padding: 1.5rem 2.5rem;
+}
+
+.fj-block .fj-block {
+  background-color: #fff;
 }
 
 .fj-block .fj-draggable__dragbar {
@@ -15107,7 +15111,7 @@ div#fj-spinner.fj-spinner.loaded {
   display: unset;
 }
 
-table td.reduce {
+table td.small {
   width: 1%;
   white-space: nowrap;
 }
@@ -15162,6 +15166,8 @@ div#fjord-app .fj-navigation {
   border-right: 1px solid #70859c;
   padding-top: 20px;
   background: #fff;
+  overflow-y: auto;
+  height: calc(100vh - 56px);
 }
 
 div#fjord-app .fj-navigation .list-group-item {

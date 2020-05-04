@@ -41,7 +41,7 @@
                         style="cursor: pointer;"
                         @click="selected(item, m)"
                     >
-                        <b-td style="vertical-align: middle;" class="reduce">
+                        <b-td style="vertical-align: middle;" class="small">
                             <div
                                 class="custom-control custom-radio"
                                 v-if="!field.many"

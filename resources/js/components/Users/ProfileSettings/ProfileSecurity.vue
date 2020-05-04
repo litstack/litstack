@@ -36,7 +36,7 @@ export default {
                 {
                     component: 'fj-profile-security-session-device',
                     label: this.__('base.device').capitalize(),
-                    reduce: true
+                    small: true
                 },
                 {
                     component: 'fj-profile-security-session-current',
@@ -53,7 +53,7 @@ export default {
                 {
                     component: 'fj-profile-security-session-logout',
                     label: '',
-                    reduce: true
+                    small: true
                 }
             ]
         };

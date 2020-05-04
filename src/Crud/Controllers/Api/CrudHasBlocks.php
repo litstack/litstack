@@ -15,31 +15,6 @@ trait CrudHasBlocks
         ManagesBlocksRelations;
 
     /**
-     * Load blocks relation index.
-     *
-     * @param CrudReadRequest $request
-     * @param int $id
-     * @param string $relation
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function blockRelationIndex(CrudReadRequest $request, $id, $field_id, $block_id, $relation)
-    {
-        $model = $this->query()->findOrFail($id);
-
-        $blockField = $this->config->form->findField($field_id) ?? abort(404);
-
-        $block = $blockField->relation($model, $query = true)->findOrFail($block_id);
-
-        $field = $block->findField($relation);
-
-        if (!$field->isRelation() || $field instanceof Blocks) {
-            abort(404);
-        }
-
-        return $field->getQuery()->get();
-    }
-
-    /**
      * Fetch all blocks.
      *
      * @param CrudReadRequest $request
@@ -47,7 +22,7 @@ trait CrudHasBlocks
      * @param int $field_id
      * @return void
      */
-    public function blockIndex(CrudReadRequest $request, $id, $field_id)
+    public function loadBlocks(CrudReadRequest $request, $id, $field_id)
     {
         $model = $this->query()->findOrFail($id);
         $field = $this->config->form->findField($field_id);

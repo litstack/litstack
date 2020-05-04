@@ -1,6 +1,6 @@
 <template>
     <b-col :cols="field.cols">
-        <div class="fj-draggable fj-block mb-2">
+        <div class="fj-draggable fj-block mb-2 mt-2">
             <fj-field-block-header
                 :sortable="sortable"
                 :expand="expand"
@@ -75,7 +75,11 @@ export default {
         };
     },
     beforeMount() {
-        this._fields = this.setRoutePrefix(this.clone(this.fields), this.block);
+        this._fields = this.setRoutePrefix(_.clone(this.fields), this.block);
+
+        this.$on('expand', expand => {
+            this.expand = expand;
+        });
     }
 };
 </script>

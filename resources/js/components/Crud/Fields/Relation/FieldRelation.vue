@@ -1,5 +1,17 @@
 <template>
     <fj-form-item :field="field" :model="model">
+        <template slot="title-right">
+            <a href="#" @click="toggleExpand">
+                <fa-icon :icon="expandedAll ? 'compress-alt' : 'expand-alt'" />
+                {{
+                    __(
+                        `crud.fields.blocks.${
+                            expandedAll ? 'collapse_all' : 'expand_all'
+                        }`
+                    ).toLowerCase()
+                }}
+            </a>
+        </template>
         <div class="form-control-expand" v-if="model.id">
             <div v-if="busy" class="d-flex justify-content-around">
                 <fj-spinner />
@@ -14,6 +26,7 @@
                 v-else-if="selectedRelations.length > 0"
             >
                 <fj-field-block
+                    ref="block"
                     v-for="(relation, index) in selectedRelations"
                     :key="index"
                     :block="relation"
@@ -83,7 +96,8 @@ export default {
     data() {
         return {
             selectedRelations: [],
-            busy: true
+            busy: true,
+            expandedAll: false
         };
     },
     beforeMount() {
@@ -103,6 +117,14 @@ export default {
                 }
             }
             return fields;
+        },
+        toggleExpand() {
+            for (let i in this.$refs.block) {
+                let block = this.$refs.block[i];
+                block.$emit('expand', !this.expandedAll);
+            }
+
+            this.expandedAll = !this.expandedAll;
         },
         async loadRelations() {
             this.busy = true;
@@ -181,16 +203,12 @@ export default {
                     break;
             }
 
-            if (this.field.many) {
-                this.selectedRelations.push(relation);
-            } else {
+            if (!this.field.many) {
                 this.selectedRelations = [relation];
+                this.$bvModal.hide(this.modalId);
             }
-
-            this.$bvModal.hide(this.modalId);
         },
         async removeRelation(relation) {
-            console.log('REM', relation);
             let response = null;
             switch (this.field.type) {
                 case 'morphMany':

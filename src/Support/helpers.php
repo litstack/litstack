@@ -29,12 +29,16 @@ if (!function_exists('component')) {
     /**
      * Get a new Vue component instance.
      *
-     * @param string $name
+     * @param \Fjord\Vue\Component|string $name
      * @param mixed $fallback
      * @return \Fjord\Vue\Component|mixed
      */
-    function component(string $name, $fallback = null)
+    function component($name, $fallback = null)
     {
+        if ($name instanceof \Fjord\Vue\Component) {
+            return $name;
+        }
+
         if (fjord()->get('components')->isRegistered($name)) {
             return fjord()->get('components')->component($name);
         }

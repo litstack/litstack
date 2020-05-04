@@ -10,6 +10,7 @@
             :cols="field.preview"
             :items="items"
             :load-items="loadItems"
+            :search-keys="field.config.search"
             :per-page="10"
             :name-singular="field.config.names.singular"
             :name-plural="field.config.names.plural"

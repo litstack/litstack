@@ -172,7 +172,7 @@ class VueApplication
         }
 
 
-        $this->component->props($this->props['props']);
+        $this->component->bind($this->props['props']);
     }
 
     /**

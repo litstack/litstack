@@ -2,25 +2,40 @@
 
 namespace Fjord\Application\Vue;
 
+use Fjord\Vue\Component;
+
 class Components
 {
     /**
-     * Registered components.
+     * Registered component classes.
      *
      * @var array
      */
-    protected $components = [];
+    protected $componentClasses = [];
+
+    /**
+     * Registered component classes.
+     *
+     * @var array
+     */
+    protected $componentArrays = [];
 
     /**
      * Register component.
      *
      * @param string $name
-     * @param string $class
+     * @param string|array $class
      * @return void
      */
-    public function register(string $name, string $class)
+    public function register(string $name, $class)
     {
-        $this->components[$name] = $class;
+        if (is_array($class)) {
+            $this->componentArrays[$name] = $class;
+
+            return;
+        }
+
+        $this->componentClasses[$name] = $class;
     }
 
     /**
@@ -31,7 +46,8 @@ class Components
      */
     public function isRegistered(string $name)
     {
-        return array_key_exists($name, $this->components);
+        return array_key_exists($name, $this->componentClasses)
+            || array_key_exists($name, $this->componentArrays);
     }
 
     /**
@@ -42,6 +58,10 @@ class Components
      */
     public function component(string $name)
     {
-        return new $this->components[$name]($name);
+        if (array_key_exists($name, $this->componentClasses)) {
+            return new $this->componentClasses[$name]($name);
+        }
+
+        return new Component($name, $this->componentArrays[$name]);
     }
 }

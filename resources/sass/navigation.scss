@@ -7,6 +7,8 @@ div#fjord-app .fj-navigation {
     border-right: $border-width solid $border-color;
     padding-top: $nav-padding-top;
     background: $nav-bg;
+    overflow-y: auto;
+    height: calc(100vh - #{$topbar-height});
 
     .list-group-item {
         border-bottom-width: 0;

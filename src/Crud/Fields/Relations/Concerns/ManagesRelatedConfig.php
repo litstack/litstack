@@ -31,7 +31,8 @@ trait ManagesRelatedConfig
         }
 
         $config = $this->relatedConfig->get(
-            'names'
+            'names',
+            'search'
         );
 
         $this->setAttribute('config', $config);

@@ -171,11 +171,9 @@ export default {
 <style lang="scss">
 @import '@fj-sass/_variables';
 
-$row-margin-x: $grid-gutter-width / 2.5;
-
 .fj-page-navigation {
-    margin: 0 -$row-margin-x;
-    padding: $page-nav-padding-y $row-margin-x;
+    padding-top: $page-nav-padding-y;
+    padding-bottom: $page-nav-padding-y;
     position: sticky;
     top: 0;
     background: $body-bg;

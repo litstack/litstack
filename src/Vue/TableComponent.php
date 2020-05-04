@@ -6,7 +6,35 @@ namespace Fjord\Vue;
 
 class TableComponent extends Component
 {
-    use Concerns\IsTableCol;
+    /**
+     * Prop options.
+     *
+     * @return array
+     */
+    protected function props()
+    {
+        return [
+            'link' => [
+                'type' => ['boolean', 'string'],
+                'default' => false,
+            ],
+            'small' => [
+                'type' => 'boolean',
+                'default' => false,
+            ],
+            'sortBy' => [
+                'type' => 'string',
+                'default' => 'id.desc'
+            ],
+            'label' => [
+                'type' => 'string',
+                'default' => ''
+            ],
+            'value' => [
+                'type' => ['string', 'integer'],
+            ]
+        ];
+    }
 
     /**
      * Get array.
@@ -18,29 +46,7 @@ class TableComponent extends Component
         $array = parent::getArray();
         unset($array['name']);
         $array['component'] = $this->name;
-        return array_merge(
-            $this->attributes,
-            $array
-        );
-    }
-
-    /**
-     * Get missing props and attributes
-     *
-     * @return array
-     */
-    protected function getMissing()
-    {
-        $missing = [];
-        foreach (array_merge($this->required, $this->required()) as $prop) {
-            if (array_key_exists($prop, $this->props) || array_key_exists($prop, $this->attributes)) {
-                continue;
-            }
-
-            $missing[] = $prop;
-        }
-
-        return $missing;
+        return $array;
     }
 
     /**

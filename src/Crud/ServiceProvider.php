@@ -19,6 +19,21 @@ class ServiceProvider extends LaravelServiceProvider
     {
         $this->app->register(CrudRelations::class);
         $this->app->register(RouteServiceProvider::class);
+
+        $this->app['fjord.app']->get('components')->register('fj-crud-index', [
+            'props' => [
+                'test' => [
+                    'required' => true,
+                    'type' => 'integer',
+
+                ]
+            ],
+            'slots' => [
+                'abc' => [
+                    'required' => true
+                ]
+            ],
+        ]);
     }
 
     /**

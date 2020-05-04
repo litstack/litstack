@@ -44,7 +44,7 @@
                         :col="col"
                         :cols="field.preview"
                     />
-                    <b-td class="reduce position-relative">
+                    <b-td class="small position-relative">
                         <div class="d-flex table-controls">
                             <b-button-group size="sm">
                                 <b-button

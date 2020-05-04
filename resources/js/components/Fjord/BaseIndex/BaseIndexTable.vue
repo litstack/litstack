@@ -36,7 +36,7 @@
                     :key="key"
                     :class="isItemSelected(item) ? 'table-primary' : ''"
                 >
-                    <td class="reduce fj-table-select" v-if="!noSelect">
+                    <td class="small fj-table-select" v-if="!noSelect">
                         <div class="custom-control custom-radio" v-if="radio">
                             <input
                                 type="radio"

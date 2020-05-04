@@ -20,7 +20,7 @@ Route::post("/{id}/media", [$controller, 'storeMedia'])->name("media.store");
 Route::delete("{id}/media/{media_id}", [$controller, 'destroyMedia'])->name("media.destroy");
 
 // Blocks
-Route::get("/{id}/blocks/{field_id}", [$controller, "blockIndex"])->name("blocks.index");
+Route::get("/{id}/blocks/{field_id}", [$controller, "loadBlocks"])->name("blocks.index");
 Route::post("/{id}/blocks/{field_id}", [$controller, "storeBlock"])->name("blocks.store");
 Route::put("/{id}/blocks/{field_id}/{block_id}", [$controller, "updateBlock"])->name("blocks.update");
 Route::delete("/{id}/blocks/{field_id}/{block_id}", [$controller, "destroyBlock"])->name("blocks.destroy");
@@ -30,7 +30,8 @@ Route::put("/{id}/blocks/{field_id}/{block_id}/media/order", [$controller, 'orde
 Route::put("/{id}/blocks/{field_id}/{block_id}/media/{media_id}", [$controller, "updateBlockMedia"])->name("blocks.media.update");
 Route::delete("/{id}/blocks/{field_id}/{block_id}/media/{media_id}", [$controller, "destroyBlockMedia"])->name("blocks.media.destroy");
 // Blocks Relations
-Route::get("/{id}/blocks/{field_id}/{block_id}/{relation}/index", [$controller, "blockRelationIndex"])->name("blocks.relation.index");
+Route::post("/{id}/blocks/{field_id}/{block_id}/{relation}/index", [$controller, "blockRelationIndex"])->name("blocks.relation.index");
+Route::get("/{id}/blocks/{field_id}/{block_id}/{relation}", [$controller, "loadBlockRelations"])->name("blocks.relation.load");
 Route::put("/{id}/blocks/{field_id}/{block_id}/{relation}/order", [$controller, "orderBlockRelation"])->name("blocks.relation.order");
 Route::delete("/{id}/blocks/{field_id}/{block_id}/{relation}/{relation_id}",  [$controller, "destroyBlockRelation"])->name("blocks.relation.delete");
 Route::post("/{id}/blocks/{field_id}/{block_id}/{relation}/{relation_id}", [$controller, "createBlockRelation"])->name("blocks.relation.store");

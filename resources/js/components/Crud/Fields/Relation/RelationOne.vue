@@ -113,7 +113,6 @@ export default {
                 case 'hasOne':
                 case 'morphOne':
                 case 'oneRelation':
-                    console.log('GOO');
                     try {
                         response = await axios.post(
                             `${this.field.route_prefix}/${this.field.id}/${item.id}`

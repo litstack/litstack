@@ -1,5 +1,17 @@
 <template>
     <fj-form-item :field="field" :model="model">
+        <template slot="title-right">
+            <a href="#" @click="toggleExpand">
+                <fa-icon :icon="expandedAll ? 'compress-alt' : 'expand-alt'" />
+                {{
+                    __(
+                        `crud.fields.blocks.${
+                            expandedAll ? 'collapse_all' : 'expand_all'
+                        }`
+                    ).toLowerCase()
+                }}
+            </a>
+        </template>
         <div class="form-control-expand" v-if="model.id">
             <div v-if="busy" class="d-flex justify-content-around">
                 <fj-spinner />
@@ -13,6 +25,7 @@
                 v-else-if="sortableBlocks.length > 0"
             >
                 <fj-field-block
+                    ref="block"
                     v-for="(block, index) in sortableBlocks"
                     :key="index"
                     :block="block"
@@ -60,13 +73,23 @@ export default {
     data() {
         return {
             sortableBlocks: [],
-            busy: true
+            busy: true,
+            expandedAll: false
         };
     },
     beforeMount() {
         this.loadBlocks();
     },
     methods: {
+        toggleExpand() {
+            console.log(this.$refs);
+            for (let i in this.$refs.block) {
+                let block = this.$refs.block[i];
+                block.$emit('expand', !this.expandedAll);
+            }
+
+            this.expandedAll = !this.expandedAll;
+        },
         setFieldsRoutePrefixBlockId(fields, block) {
             for (let i in fields) {
                 let field = fields[i];

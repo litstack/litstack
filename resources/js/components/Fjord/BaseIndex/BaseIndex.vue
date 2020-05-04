@@ -305,7 +305,6 @@ export default {
             };
 
             let response = await this.loadItems(payload);
-            console.log('R', response);
 
             this.isBusy = false;
 

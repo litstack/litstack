@@ -7,38 +7,34 @@ use Fjord\Vue\Component;
 class InfoComponent extends Component
 {
     /**
-     * Available component properties.
+     * Available props.
      *
-     * @var array
+     * @return array
      */
-    protected $available = [
-        'title',
-        'text',
-        'cols',
-        'heading',
-        'class'
-    ];
-
-    /**
-     * Required component properties.
-     *
-     * @var array
-     */
-    protected $required = [
-        'title',
-        'text'
-    ];
-
-    /**
-     * Default component properties.
-     *
-     * @var array
-     */
-    protected $defaults = [
-        'text' => [],
-        'cols' => 4,
-        'heading' => 'h4'
-    ];
+    protected function props()
+    {
+        return [
+            'title' => [
+                'type' => 'string',
+                'required' => false,
+            ],
+            'text' => [
+                'type' => 'array',
+                'required' => true,
+                'default' => []
+            ],
+            'cols' => [
+                'type' => 'integer',
+                'required' => false,
+                'default' => 4
+            ],
+            'heading' => [
+                'type' => 'string',
+                'required' => true,
+                'default' => 'h4'
+            ],
+        ];
+    }
 
     /**
      * Set component.
