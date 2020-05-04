@@ -36,6 +36,30 @@ class CrudIndexConfigFactory extends ConfigFactory
     {
         $component = component('fj-crud-index');
 
+        $deleteAll = component('fj-index-delete-all')
+            ->prop('routePrefix', $config->routePrefix);
+
+        $component->slot(
+            'indexControls',
+            $deleteAll
+        );
+
+        $method($component);
+
+        return $component;
+    }
+
+    /**
+     * Setup fj-crud-form component form.
+     *
+     * @param \Fjord\Config\ConfigHandler $config
+     * @param Closure $method
+     * @return \Fjord\Vue\Component
+     */
+    public function formComponent(ConfigHandler $config, Closure $method)
+    {
+        $component = component('fj-crud-form');
+
         $method($component);
 
         return $component;

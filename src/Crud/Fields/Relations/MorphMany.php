@@ -42,7 +42,8 @@ class MorphMany extends ManyRelationField
         'confirm',
         'sortable',
         'orderColumn',
-        'query'
+        'query',
+        'relatedCols',
     ];
 
     /**
@@ -53,7 +54,8 @@ class MorphMany extends ManyRelationField
     protected $defaults = [
         'confirm' => false,
         'sortable' => false,
-        'orderColumn' => 'order_column'
+        'orderColumn' => 'order_column',
+        'relatedCols' => 12,
     ];
 
     /**

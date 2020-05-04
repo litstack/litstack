@@ -2,18 +2,22 @@
 
 namespace Fjord\Crud\Controllers\Api;
 
+use Illuminate\Database\Eloquent\Builder;
+
 trait CrudHasOrder
 {
     /**
      * Order models.
      *
-     * @param Collection $models
+     * @param Builder $query
      * @param Field $field
      * @param array $ids
      * @return void
      */
-    public function order($models, $field, $ids)
+    protected function orderField(Builder $query, $field, $ids)
     {
+        $models = $query->whereIn('ids', $ids)->get();
+
         $oderColumn = $field->orderColumn ?? 'order_column';
 
         foreach ($ids as $order => $id) {

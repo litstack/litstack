@@ -47,15 +47,6 @@ export default {
     },
 
     /**
-     * Get authenticated user.
-     *
-     * @return {Object}
-     */
-    user() {
-        return store.getters.auth;
-    },
-
-    /**
      * Translate by key.
      *
      * @param  {...any} params

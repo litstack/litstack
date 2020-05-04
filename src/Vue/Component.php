@@ -89,6 +89,7 @@ class Component extends VueProp
      */
     protected function setDefaults()
     {
+        // Props.
         foreach ($this->availableProps as $name => $options) {
             if (!array_key_exists('default', $options)) {
                 continue;
@@ -100,6 +101,13 @@ class Component extends VueProp
             }
 
             $this->prop($name, $default);
+        }
+        // Slots.
+        foreach ($this->availableSlots as $name => $options) {
+            if (!$this->hasSlotMany($name)) {
+                continue;
+            }
+            $this->slots[$name] = collect([]);
         }
     }
 
@@ -132,7 +140,32 @@ class Component extends VueProp
             throw new InvalidArgumentException($message);
         }
 
-        $this->slots[$name] = component($component);
+        if ($this->hasSlotMany($name)) {
+            $this->slots[$name][] = component($component);
+        } else {
+            $this->slots[$name] = component($component);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Has slot many components
+     * 
+     * @param string $slot
+     * @return boolean
+     */
+    public function hasSlotMany(string $slot)
+    {
+        if (!array_key_exists($slot, $this->availableSlots)) {
+            return;
+        }
+
+        $options = $this->availableSlots[$slot];
+        if (!array_key_exists('many', $options)) {
+            return false;
+        }
+        return $options['many'];
     }
 
     /**
@@ -351,12 +384,24 @@ class Component extends VueProp
     }
 
     /**
+     * Execute extensions for component.
+     *
+     * @return void
+     */
+    public function extend()
+    {
+        fjord_app()->get('vue')->extend($this);
+    }
+
+    /**
      * Get array.
      *
      * @return array
      */
     public function getArray(): array
     {
+        $this->extend();
+
         $this->checkComplete();
 
         return [
@@ -384,6 +429,26 @@ class Component extends VueProp
     public function getProps()
     {
         return $this->props;
+    }
+
+    /**
+     * Get available props.
+     *
+     * @return array
+     */
+    public function getAvailableProps()
+    {
+        return $this->availableProps;
+    }
+
+    /**
+     * Get available slots.
+     *
+     * @return array
+     */
+    public function getAvailableSlots()
+    {
+        return $this->availableSlots;
     }
 
     /**

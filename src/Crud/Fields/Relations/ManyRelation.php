@@ -41,7 +41,8 @@ class ManyRelation extends ManyRelationField
         'preview',
         'confirm',
         'sortable',
-        'query'
+        'query',
+        'relatedCols',
     ];
 
     /**
@@ -52,7 +53,8 @@ class ManyRelation extends ManyRelationField
     protected $defaults = [
         'confirm' => false,
         'sortable' => true,
-        'orderColumn' => 'order_column'
+        'orderColumn' => 'order_column',
+        'relatedCols' => 12,
     ];
 
     /**

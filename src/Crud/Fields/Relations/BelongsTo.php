@@ -40,7 +40,8 @@ class BelongsTo extends OneRelationField
         'hint',
         'preview',
         'confirm',
-        'query'
+        'query',
+        'relatedCols',
     ];
 
     /**
@@ -50,6 +51,7 @@ class BelongsTo extends OneRelationField
      */
     protected $defaults = [
         'confirm' => false,
+        'relatedCols' => 12,
     ];
 
     /**

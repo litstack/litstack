@@ -3,8 +3,9 @@
 namespace Fjord\Support;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 
-abstract class VueProp implements Arrayable
+abstract class VueProp implements Arrayable, Jsonable
 {
     /**
      * Return array that should be passed to Vue.
@@ -25,5 +26,16 @@ abstract class VueProp implements Arrayable
         // all nested objects are converted, we convert the array to a 
         // collection instance, which is then also converted to an array.
         return collect($this->getArray());
+    }
+
+    /**
+     * To json.
+     *
+     * @param integer $options
+     * @return void
+     */
+    public function toJson($options = 0)
+    {
+        return $this->toArray()->toJson($options);
     }
 }

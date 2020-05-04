@@ -6,12 +6,19 @@ if ($type == 'crud') {
     Route::get("/create", [$controller, "create"])->name('create');
     Route::post("/", [$controller, "store"])->name('store');
     Route::delete("/{id}", [$controller, "destroy"])->name('destroy');
+    Route::post("/delete-all", [$controller, "destroyAll"])->name('destroy.all');
     Route::get("/{id}/edit", [$controller, "edit"])->name('edit');
+
+    if ($config->sortable) {
+        Route::post("/order", [$controller, "order"])->name('order');
+    }
 } else {
     Route::get("/", [$controller, "edit"])->name('edit');
 }
 
 Route::put("/{id}", [$controller, "update"])->name('update');
+
+
 
 // Media
 Route::put("/{id}/media/order", [$controller, 'orderMedia'])->name("media.order");

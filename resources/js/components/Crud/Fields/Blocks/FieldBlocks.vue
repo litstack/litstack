@@ -31,6 +31,7 @@
                     :block="block"
                     :field="field"
                     :model="model"
+                    :cols="field.blockCols"
                     :preview="field.repeatables[block.type].preview"
                     :fields="field.repeatables[block.type].form.fields"
                     :set-route-prefix="setFieldsRoutePrefixBlockId"

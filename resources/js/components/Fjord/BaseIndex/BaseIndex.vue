@@ -50,16 +50,17 @@
                     />
                 </fj-base-index-table-form>
 
-                <fj-base-index-table-selected-items-actions
-                    :actions="actions"
+                <fj-base-index-table-selected-items-controls
+                    :controls="controls"
                     :items="items"
                     :selectedItems="selectedItems"
-                    @reload="_loadItems()"
-                    v-if="!!actions.length"
+                    @reload="executedControls"
+                    v-if="!!controls.length"
                 />
 
                 <fj-base-index-table
                     ref="table"
+                    :sortable="canSort"
                     :busy="isBusy"
                     :cols="cols"
                     :items="items"
@@ -72,6 +73,7 @@
                     @unselect="unselect"
                     @sort="sort"
                     @loadItems="_loadItems()"
+                    @sorted="sorted"
                 />
 
                 <fj-base-index-table-index-indicator
@@ -105,6 +107,18 @@ import TableModel from '@fj-js/crud/table.model';
 export default {
     name: 'IndexTable',
     props: {
+        sortable: {
+            type: Boolean,
+            default() {
+                return false;
+            }
+        },
+        orderColumn: {
+            type: String,
+            default() {
+                return 'order_column';
+            }
+        },
         tabs: {
             required: false,
             type: Array,
@@ -152,7 +166,7 @@ export default {
                 return [];
             }
         },
-        actions: {
+        controls: {
             type: Array,
             default: () => {
                 return [];
@@ -218,7 +232,6 @@ export default {
             total: 0
         };
     },
-
     watch: {
         tabs() {
             if (!this.hasTabs) {
@@ -242,6 +255,15 @@ export default {
         this._loadItems();
     },
     computed: {
+        canSort() {
+            if (!this.sortable) {
+                return;
+            }
+            return (
+                this.sort_by_key == `${this.orderColumn}.asc` ||
+                this.sort_by_key == `${this.orderColumn}.desc`
+            );
+        },
         hasFilter() {
             return Object.keys(this.filter).length !== 0;
         },
@@ -253,6 +275,21 @@ export default {
         }
     },
     methods: {
+        sorted(sortedItems) {
+            let ids = {};
+            let start = this.currentPage * this.perPage - this.perPage;
+            if (this.sort_by_key.endsWith('desc')) {
+                start = this.total - start;
+            }
+            for (let i in sortedItems) {
+                if (this.sort_by_key.endsWith('desc')) {
+                    ids[start - parseInt(i)] = sortedItems[i].id;
+                } else {
+                    ids[start + parseInt(i)] = sortedItems[i].id;
+                }
+            }
+            this.$emit('sorted', { sortedItems, ids });
+        },
         sort(sort) {
             this.sort_by_key = sort;
             this._loadItems();
@@ -288,6 +325,17 @@ export default {
             }
             this.$emit('select', item);
         },
+        isItemSelected(item) {
+            return this.selectedItems.find(model => {
+                return model ? model == item : false;
+            })
+                ? true
+                : false;
+        },
+        executedControls() {
+            this.selectedItems = [];
+            this._loadItems();
+        },
         async _loadItems() {
             if (!this.loadItems) {
                 return;
@@ -305,6 +353,8 @@ export default {
             };
 
             let response = await this.loadItems(payload);
+
+            this.$refs.table.$emit('loaded');
 
             this.isBusy = false;
 

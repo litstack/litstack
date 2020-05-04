@@ -114,7 +114,7 @@ abstract class FormController
             'form_name' => $configInstance->formName,
         ]);
 
-        return view('fjord::app')->withComponent('fj-crud-show')
+        return view('fjord::app')->withComponent($this->config->component)
             ->withTitle("Form " . $configInstance->names['singular'])
             ->withProps([
                 'crud-model' => crud($model),

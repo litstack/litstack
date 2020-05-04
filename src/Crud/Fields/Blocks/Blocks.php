@@ -34,6 +34,7 @@ class Blocks extends ManyRelationField
         'title',
         'hint',
         'repeatables',
+        'blockCols'
     ];
 
     /**
@@ -41,7 +42,9 @@ class Blocks extends ManyRelationField
      *
      * @var array
      */
-    protected $defaults = [];
+    protected $defaults = [
+        'blockCols' => 12
+    ];
 
     /**
      * Add repeatables.

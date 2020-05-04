@@ -207,9 +207,9 @@ trait CrudHasRelations
         $model = $this->query()->findOrFail($id);
         $field = $this->config->form->findField($relation) ?? abort(404);
 
-        $relations = $model->$relation()->get();
+        $query = $model->$relation();
 
-        return $this->order($relations, $field, $ids);
+        return $this->orderField($query, $field, $ids);
     }
 
     /**

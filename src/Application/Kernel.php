@@ -76,7 +76,7 @@ class Kernel
     {
         $this->build($view);
 
-        $this->extend($view);
+        //$this->extend($view);
     }
 
     /**
@@ -111,7 +111,7 @@ class Kernel
      */
     public function extend(View $view)
     {
-        $this->app->extend($view);
+        //
     }
 
     /**

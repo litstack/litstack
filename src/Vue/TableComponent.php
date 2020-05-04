@@ -46,6 +46,7 @@ class TableComponent extends Component
         $array = parent::getArray();
         unset($array['name']);
         $array['component'] = $this->name;
+        $array = array_merge($array['props']->toArray(), $array);
         return $array;
     }
 

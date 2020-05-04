@@ -198,7 +198,7 @@ export default {
         },
         uploadSuccess(file, response) {
             this.uploads++;
-            this.$bvToast.toast(this.$t('fj.image_uploaded'), {
+            this.$bvToast.toast(this.__('fj.image_uploaded'), {
                 variant: 'success'
             });
             this.images.push(response);

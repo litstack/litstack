@@ -98,35 +98,48 @@ class VueApplication
     }
 
     /**
+     * Get extensions for component name-
+     *
+     * @param Component $component
+     * @return void
+     */
+    protected function getExtensions(Component $component)
+    {
+        $extensions = [];
+        foreach ($this->app->getExtensions() as $extension) {
+            if ($extension['component'] == $component->getName()) {
+                $extensions[] = $extension;
+            }
+        }
+
+        return $extensions;
+    }
+
+    /**
      * Execute extensions for the given components.
      * 
-     * @param Illuminate\View\View $view
-     * @param array $extensions
+     * @param \Fjord\Vue\Component $component
      * @return void
      * 
      * @throws \Exception
      */
-    public function extend(View $view, array $extensions)
+    public function extend(Component $component)
     {
         if (!$this->hasBeenBuild()) {
             throw new Exception('Fjord Vue application cannot be extended if it has not been build.');
         }
 
-        if (!$this->component) {
-            return;
-        }
-
-        foreach ($extensions as $extension) {
+        foreach ($this->getExtensions($component) as $extension) {
 
             // Look for extensions for the current component.
-            if ($this->component->getName() != $extension['component']) {
+            if ($component->getName() != $extension['component']) {
                 continue;
             }
 
             // Resolve extension in component.
-            if (method_exists($this->component, 'resolveExtension')) {
+            if (method_exists($component, 'resolveExtension')) {
                 if (
-                    !$this->component->resolveExtension($extension['name'])
+                    !$component->resolveExtension($extension['name'])
                     && $extension['name'] != ''
                 ) {
                     continue;
@@ -134,6 +147,7 @@ class VueApplication
             }
 
             $this->executeExtension(
+                $component,
                 new $extension['extension']($extension['name'])
             );
         }
@@ -142,19 +156,18 @@ class VueApplication
     /**
      * Execute extension for component if user has permission.
      *
+     * @param Component $component
      * @param $extension
      * @return void
      */
-    protected function executeExtension($extension)
+    public function executeExtension(Component $component, $extension)
     {
         if (!$extension->authenticate(fjord_user())) {
             return;
         }
 
-
-
         $extension->handle(
-            $this->component
+            $component
         );
     }
 
@@ -170,7 +183,6 @@ class VueApplication
         } else {
             $this->component = component($component);
         }
-
 
         $this->component->bind($this->props['props']);
     }
@@ -236,11 +248,21 @@ class VueApplication
      */
     public function props()
     {
+
+        $component = $this->component->toArray();
+        $component['component'] = $component['name'];
+        unset($component['name']);
+
+        $props = array_merge($this->props, $component->toArray());
+
+        /*
         if ($this->component) {
             $this->props['props'] = $this->component->getProps();
+            $this->props['slots'] = $this->component->getSlots();
+            $this->props['component'] = $this->component->getName();
         }
-
-        return $this->props;
+        */
+        return $props;
     }
 
     /**

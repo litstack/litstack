@@ -110,9 +110,12 @@ trait ManagesRelation
 
         $related = $relation->getRelated();
 
-        if ($relation->getTable() == 'form_relations') {
-            throw new InvalidArgumentException("The relation Field should be used for Laravel relations, for Fjord relations use oneRelation or manyRelation.");
+        if (method_exists($relation, 'getTable')) {
+            if ($relation->getTable() == 'form_relations') {
+                throw new InvalidArgumentException("The relation Field should be used for Laravel relations, for Fjord relations use oneRelation or manyRelation.");
+            }
         }
+
 
         $model = get_class($related);
 

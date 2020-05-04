@@ -38,7 +38,7 @@ class CrudFormConfigFactory extends ConfigFactory
      */
     public function component(ConfigHandler $config, Closure $method)
     {
-        $component = component('fj-crud-show');
+        $component = component('fj-crud-form');
 
         $method($component);
 

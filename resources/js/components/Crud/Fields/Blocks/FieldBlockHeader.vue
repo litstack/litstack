@@ -4,7 +4,7 @@
             <b-tr>
                 <b-td class="small" v-if="!field.readonly">
                     <div class="fj-draggable__dragbar" v-if="sortable">
-                        <i class="fas fa-grip-horizontal text-muted"></i>
+                        <i class="fas fa-grip-horizontal text-secondary"></i>
                     </div>
                 </b-td>
                 <fj-table-col

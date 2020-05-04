@@ -80,8 +80,8 @@ trait ManagesBlocksMedia
         $blockField = $this->config->form->findField($field_id) ?? abort(404);
         $block = $blockField->relation($model, $query = true)->findOrFail($block_id);
         $field = $block->findField($request->collection) ?? abort(404);
-        $media = $block->media()->where('collection_name', $field->id)->get();
+        $query = $block->media()->where('collection_name', $field->id);
 
-        return $this->order($media, $field, $ids);
+        return $this->orderField($query, $field, $ids);
     }
 }

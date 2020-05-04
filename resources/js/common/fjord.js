@@ -7,9 +7,19 @@ const Fjord = {
     baseURL: null,
 
     /**
+     * Get authenticated fjord-user model.
+     *
+     * @return {Object}
+     */
+    user() {
+        return store.getters.auth;
+    },
+
+    /**
      * Get Fjord application locale.
      *
      * @param {Object} obj
+     * @return {String}
      */
     getLocale() {
         return i18n.locale;
@@ -19,6 +29,7 @@ const Fjord = {
      * Check if Fjord application locale is locale.
      *
      * @param {Object} obj
+     * @return {Boolean}
      */
     isLocale(locale) {
         return i18n.locale == locale;

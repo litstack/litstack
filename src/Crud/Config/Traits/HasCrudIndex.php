@@ -8,6 +8,20 @@ use Illuminate\Database\Eloquent\Builder;
 trait HasCrudIndex
 {
     /**
+     * Is index table sortable.
+     *
+     * @var boolean
+     */
+    public $sortable = false;
+
+    /**
+     * Order column for model.
+     *
+     * @var string
+     */
+    public $orderColumn = 'order_column';
+
+    /**
      * Index table search keys.
      *
      * @var array

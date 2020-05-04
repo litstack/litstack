@@ -39,6 +39,16 @@ class Components
     }
 
     /**
+     * Get all components.
+     *
+     * @return array
+     */
+    public function all()
+    {
+        return array_merge($this->componentClasses, $this->componentArrays);
+    }
+
+    /**
      * Is component name registered.
      *
      * @param string $name

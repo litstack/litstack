@@ -1,5 +1,5 @@
 <template>
-    <b-col :cols="field.cols">
+    <b-col :cols="cols">
         <div class="fj-draggable fj-block mb-2 mt-2">
             <fj-field-block-header
                 :sortable="sortable"
@@ -53,6 +53,12 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        cols: {
+            type: [String, Number],
+            default() {
+                return 12;
+            }
         },
         setRoutePrefix: {
             required: true

@@ -21,14 +21,23 @@
             </div>
 
             <div class="d-flex fj-save-animate" :style="wrapperStyle">
-                <b-button
+                <b-dropdown
                     variant="outline-secondary"
                     size="md"
                     class="fj-page-navigation__controls"
-                    v-if="!_.isEmpty(actions)"
+                    v-bind:disabled="_.isEmpty(controls)"
+                    no-caret
                 >
-                    <fa-icon icon="ellipsis-h" />
-                </b-button>
+                    <template v-slot:button-content>
+                        <fa-icon icon="ellipsis-h" />
+                    </template>
+
+                    <fj-slot
+                        v-for="(component, key) in controls"
+                        :key="key"
+                        v-bind="component"
+                    />
+                </b-dropdown>
                 <slot name="right" />
                 <b-button
                     class="fj-save-button fj-save-animate"
@@ -56,7 +65,7 @@ export default {
         backText: {
             type: String
         },
-        actions: {
+        controls: {
             type: Array,
             default() {
                 return [];
@@ -194,11 +203,12 @@ export default {
     }
 
     .fj-page-navigation__controls {
-        width: 46px;
-
-        padding-left: 0;
-        padding-right: 0;
-        text-align: center;
+        .btn {
+            width: 46px;
+            padding-left: 0;
+            padding-right: 0;
+            text-align: center;
+        }
     }
 
     .fj-page-navigation__container {

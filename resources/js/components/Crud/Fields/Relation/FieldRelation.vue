@@ -33,6 +33,7 @@
                     :field="field"
                     :fields="field.form ? field.form.fields : []"
                     :model="model"
+                    :cols="field.relatedCols"
                     :sortable="field.many ? field.sortable : false"
                     :preview="field.preview"
                     :set-route-prefix="setFieldsRoutePrefixId"

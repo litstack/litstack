@@ -8,6 +8,7 @@ use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Fjord\Crud\Requests\CrudCreateRequest;
+use Fjord\Crud\Requests\CrudDeleteRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 
 abstract class CrudController
@@ -54,6 +55,48 @@ abstract class CrudController
     }
 
     /**
+     * Delete by query.
+     *
+     * @param Builder $query
+     * @return void
+     */
+    public function delete(Builder $query)
+    {
+        $query->delete();
+    }
+
+    /**
+     * Delete one.
+     *
+     * @param CrudDeleteRequest $request
+     * @return void
+     */
+    public function destroy(CrudDeleteRequest $request, $id)
+    {
+        $this->delete($this->query()->findOrFail($id));
+    }
+
+    /**
+     * Delete all.
+     *
+     * @param CrudDeleteRequest $request
+     * @return void
+     */
+    public function destroyAll(CrudDeleteRequest $request)
+    {
+        if (!is_array($request->ids)) {
+            abort(405);
+        }
+
+        $this->delete($this->query()->whereIn('id', $request->ids));
+
+        return response()->json([
+
+            'message' => __f('messages.deleted_items', ['count' => count($request->ids)])
+        ], 200);
+    }
+
+    /**
      * Show Crud index.
      *
      * @param CrudReadRequest $request
@@ -69,13 +112,15 @@ abstract class CrudController
             'sortByDefault',
             'perPage',
             'filter',
-            'expandIndexContainer'
+            'expandIndexContainer',
+            'sortable',
+            'orderColumn'
         );
         $config['expand'] = $config['expandIndexContainer'];
 
         return view('fjord::app')
             ->withTitle($config['names']['plural'])
-            ->withComponent('fj-crud-index')
+            ->withComponent($this->config->indexComponent)
             ->withProps([
                 'config' => $config,
                 'headerComponents' => [],
@@ -101,7 +146,7 @@ abstract class CrudController
         $model->setAttribute('fields', $this->fields());
 
         return view('fjord::app')
-            ->withComponent('fj-crud-show')
+            ->withComponent($this->config->formComponent)
             ->withModels([
                 'model' => crud($model)
             ])
@@ -164,7 +209,7 @@ abstract class CrudController
         $previous = $this->model::where('id', '<', $id)->orderBy('id', 'desc')->select('id')->first()->id ?? null;
         $next = $this->model::where('id', '>', $id)->orderBy('id')->select('id')->first()->id ?? null;
 
-        return view('fjord::app')->withComponent('fj-crud-show')
+        return view('fjord::app')->withComponent($this->config->formComponent)
             ->withTitle('Edit ' . $this->config->names['singular'])
             ->withProps([
                 'crud-model' => crud($model),
@@ -206,8 +251,39 @@ abstract class CrudController
      */
     public function store(CrudCreateRequest $request)
     {
-        $model = $this->model::create($request->all());
+        $params = $request->all();
+
+        if ($this->config->sortable) {
+            $params[$this->config->orderColumn] = $this->query()->count() + 1;
+        }
+
+        $model = $this->model::create($params);
 
         return $model;
+    }
+
+    /**
+     * Sort.
+     *
+     * @param CrudUpdateRequest $request
+     * @return void
+     */
+    public function order(CrudUpdateRequest $request)
+    {
+        $ids = $request->ids ?? abort(404);
+
+        $models = $this->query()
+            ->whereIn('id', $ids)
+            ->get();
+
+        foreach ($ids as $order => $id) {
+            $model = $models->where('id', $id)->first();
+
+            if (!$model) {
+                continue;
+            }
+            $model->{$this->config->orderColumn} = $order;
+            $model->save();
+        }
     }
 }

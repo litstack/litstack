@@ -7,6 +7,7 @@
                     :key="key"
                     :is="c.name"
                     v-bind="{ ...c.props, ...$attrs }"
+                    v-on="$listeners"
                 />
             </b-row>
         </b-card>

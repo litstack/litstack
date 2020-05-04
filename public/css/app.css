@@ -15267,3 +15267,7 @@ div#fjord-app .btn:focus {
   color: black;
 }
 
+.fj-draggable__dragbar {
+  cursor: pointer;
+}
+

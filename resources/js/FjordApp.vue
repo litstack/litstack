@@ -1,5 +1,5 @@
 <template>
-    <component :is="component" v-bind="preparedProps" />
+    <component :is="component" v-bind="preparedProps" :slots="slots" />
 </template>
 
 <script>
@@ -38,6 +38,12 @@ export default {
         appLocale: {
             type: String,
             required: true
+        },
+        slots: {
+            type: Object,
+            default() {
+                return {};
+            }
         }
     },
     data() {

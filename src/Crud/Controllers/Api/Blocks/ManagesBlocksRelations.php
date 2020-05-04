@@ -130,8 +130,8 @@ trait ManagesBlocksRelations
 
         $this->validateRelationField($field);
 
-        $relations = $field->relation($block);
+        $query = $field->relation($block, $query = true);
 
-        return $this->order($relations, $field, $ids);
+        return $this->orderField($query, $field, $ids);
     }
 }

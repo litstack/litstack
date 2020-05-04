@@ -9,8 +9,9 @@ use Fjord\Vue\Components\InfoComponent;
 use Fjord\Crud\Config\Traits\HasCrudForm;
 use Fjord\User\Components\UsersComponent;
 use Fjord\Crud\Config\Traits\HasCrudIndex;
-use Fjord\Crud\Components\CrudShowComponent;
+use Fjord\Crud\Components\CrudFormComponent;
 use Fjord\Crud\Components\CrudIndexComponent;
+use Fjord\User\Config\UserIndexConfigFactory;
 use Fjord\Config\Factories\IndexConfigFactory;
 use Fjord\Vue\Components\Index\ColImageComponent;
 use Fjord\Application\Package\FjordPackage as Package;
@@ -46,6 +47,7 @@ class FjordPackage extends Package
         Commands\FjordForm::class,
         Commands\FjordExtend::class,
         Commands\FjordExtension::class,
+        Commands\FjordComponents::class,
         Commands\FjordDefaultPermissions::class,
     ];
 
@@ -58,7 +60,7 @@ class FjordPackage extends Package
         // Root
         'fj-users' => UsersComponent::class,
         'fj-crud-index' => CrudIndexComponent::class,
-        'fj-crud-show' => CrudShowComponent::class,
+        'fj-crud-form' => CrudFormComponent::class,
 
         // Other
         'fj-card' => CardComponent::class,
@@ -82,6 +84,9 @@ class FjordPackage extends Package
         // Crud
         HasCrudForm::class => CrudFormConfigFactory::class,
         HasCrudIndex::class => CrudIndexConfigFactory::class,
+
+        // Users
+        User\Config\IndexConfig::class => UserIndexConfigFactory::class
     ];
 
     /**

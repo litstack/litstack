@@ -119,14 +119,13 @@ class Application
     }
 
     /**
-     * Execute extensions for the given components.
-     * 
-     * @param Illuminate\View\View $view
-     * @return void
+     * Get extensions.
+     *
+     * @return array
      */
-    public function extend(View $view)
+    public function getExtensions()
     {
-        $this->get('vue')->extend($view, $this->extensions);
+        return $this->extensions;
     }
 
     /**

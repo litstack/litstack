@@ -1,6 +1,7 @@
 <template>
     <thead>
         <tr>
+            <th v-if="sortable"></th>
             <th v-if="!noSelect"><slot name="checkbox" /></th>
             <th v-for="(col, key) in cols" :key="key">
                 <div
@@ -31,6 +32,10 @@
 export default {
     name: 'BaseIndexTableHead',
     props: {
+        sortable: {
+            type: Boolean,
+            required: true
+        },
         cols: {
             type: Array,
             required: true

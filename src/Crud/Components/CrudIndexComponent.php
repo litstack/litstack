@@ -3,33 +3,26 @@
 namespace Fjord\Crud\Components;
 
 use Closure;
-use Fjord\Vue\Component;
 use Illuminate\Support\Str;
+use Fjord\Vue\RootComponent;
 
-class CrudIndexComponent extends Component
+class CrudIndexComponent extends RootComponent
 {
-    // Add methods that should be used in extensions.
-
     /**
-     * Add to recordActions prop.
+     * Available slots.
      *
-     * @param string $component
-     * @return void
+     * @return array
      */
-    public function addRecordAction(string $component)
+    public function slots()
     {
-        $this->props['recordActions'][] = $component;
-    }
-
-    /**
-     * Add to headerComponent prop.
-     *
-     * @param string $component
-     * @return void
-     */
-    public function headerComponent(string $component)
-    {
-        $this->props['headerComponents'][] = $component;
+        return array_merge(parent::slots(), [
+            'indexControls' => [
+                'many' => true
+            ],
+            'index' => [
+                'many' => true
+            ]
+        ]);
     }
 
     /**
@@ -49,9 +42,9 @@ class CrudIndexComponent extends Component
      * @param string $model
      * @return boolean
      */
-    public function is(string $model)
+    public function isModel(string $model)
     {
-        return $this->props['formConfig']['model'] == $model;
+        return $this->props['config']['model'] == $model;
     }
 
     /**

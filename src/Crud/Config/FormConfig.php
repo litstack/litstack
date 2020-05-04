@@ -100,4 +100,15 @@ abstract class FormConfig
             'plural' => ucfirst(Str::plural($this->formName)),
         ];
     }
+
+    /**
+     * Form component.
+     *
+     * @param Component $component
+     * @return void
+     */
+    public function component($component)
+    {
+        //
+    }
 }

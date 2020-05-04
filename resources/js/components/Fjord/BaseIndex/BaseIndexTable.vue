@@ -9,6 +9,7 @@
     >
         <fj-base-index-table-head
             :cols="cols"
+            :sortable="sortable"
             :selectedItems="selectedItems"
             @sort="sort"
             v-if="!noHead"
@@ -24,49 +25,60 @@
             />
         </fj-base-index-table-head>
 
-        <tbody>
+        <draggable
+            v-model="sortableItems"
+            @end="newOrder"
+            handle=".fj-draggable__dragbar"
+            tag="tbody"
+        >
             <tr role="row" class="b-table-busy-slot" v-if="busy">
                 <td :colspan="colspan" role="cell" align="center">
                     <fj-spinner class="text-center" />
                 </td>
             </tr>
-            <template v-else>
-                <tr
-                    v-for="(item, key) in items"
-                    :key="key"
-                    :class="isItemSelected(item) ? 'table-primary' : ''"
-                >
-                    <td class="small fj-table-select" v-if="!noSelect">
-                        <div class="custom-control custom-radio" v-if="radio">
-                            <input
-                                type="radio"
-                                autocomplete="off"
-                                class="custom-control-input pointer-events-none"
-                                value=""
-                                :checked="isItemSelected(item)"
-                            />
-                            <label
-                                class="custom-control-label"
-                                @click="selected(item)"
-                            ></label>
-                        </div>
-                        <b-checkbox
-                            v-else
-                            :checked="isItemSelected(item)"
-                            @input="selected(item)"
-                        />
-                    </td>
-                    <fj-table-col
-                        v-for="(col, col_key) in cols"
-                        :col="col"
-                        :key="col_key"
-                        :item="item"
-                        :cols="cols"
-                        @reload="$emit('loadItems')"
+
+            <tr
+                v-else
+                v-for="(item, key) in sortableItems"
+                :key="key"
+                :class="isItemSelected(item) ? 'table-primary' : ''"
+            >
+                <td v-if="sortable">
+                    <fa-icon
+                        icon="grip-horizontal"
+                        class="text-secondary fj-draggable__dragbar"
                     />
-                </tr>
-            </template>
-        </tbody>
+                </td>
+                <td class="small fj-table-select" v-if="!noSelect">
+                    <div class="custom-control custom-radio" v-if="radio">
+                        <input
+                            type="radio"
+                            autocomplete="off"
+                            class="custom-control-input pointer-events-none"
+                            value=""
+                            :checked="isItemSelected(item)"
+                        />
+                        <label
+                            class="custom-control-label"
+                            @click="selected(item)"
+                        ></label>
+                    </div>
+                    <b-checkbox
+                        v-else
+                        :checked="isItemSelected(item)"
+                        @input="toggleSelect(item)"
+                    />
+                </td>
+                <fj-table-col
+                    v-for="(col, col_key) in cols"
+                    :col="col"
+                    :key="col_key"
+                    :item="item"
+                    :cols="cols"
+                    @reload="$emit('loadItems')"
+                />
+            </tr>
+        </draggable>
     </b-table-simple>
 </template>
 <script>
@@ -75,6 +87,10 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'BaseIndexTable',
     props: {
+        sortable: {
+            type: Boolean,
+            required: true
+        },
         cols: {
             required: true,
             type: Array
@@ -116,10 +132,17 @@ export default {
             required: true
         }
     },
+    beforeMount() {
+        this.sortableItems = this.items;
+        this.$on('loaded', () => {
+            this.sortableItems = this.items;
+        });
+    },
     data() {
         return {
             selectedAll: false,
-            indeterminate: false
+            indeterminate: false,
+            sortableItems: []
         };
     },
     watch: {
@@ -138,14 +161,24 @@ export default {
         ...mapGetters(['config']),
         colspan() {
             // Adding one for the checkbox field.
-            return this.cols.length + 1;
+            let span = this.cols.length;
+            if (this.sortable) {
+                span++;
+            }
+            if (!this.noSelect) {
+                span++;
+            }
+            return span;
         }
     },
     methods: {
-        toggleSelectAll() {
-            this.$emit('selectAll');
+        newOrder(items) {
+            this.$emit('sorted', this.sortableItems);
         },
-        selected(item) {
+        toggleSelectAll() {
+            // TODO:
+        },
+        toggleSelect(item) {
             if (this.isItemSelected(item)) {
                 if (!this.radio) {
                     this.$emit('unselect', item);
@@ -163,7 +196,7 @@ export default {
         },
         isItemSelected(item) {
             return this.selectedItems.find(model => {
-                return model ? model.id == item.id : false;
+                return model ? model == item : false;
             })
                 ? true
                 : false;

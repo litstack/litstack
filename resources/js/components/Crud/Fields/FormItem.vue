@@ -4,7 +4,7 @@
             <h6 class="fj-form-item-title mb-0 d-flex justify-content-between">
                 <fj-slot
                     v-if="'title' in field.slots"
-                    :component="field.slots.title"
+                    :name="field.slots.title"
                     :props="{ field, model }"
                 />
                 <label :for="field.id" v-else>{{ field.title }}</label>

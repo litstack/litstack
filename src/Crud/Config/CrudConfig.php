@@ -81,4 +81,26 @@ abstract class CrudConfig
             'plural' => ucfirst($tableName),
         ];
     }
+
+    /**
+     * Index component.
+     *
+     * @param Component $component
+     * @return void
+     */
+    public function indexComponent($component)
+    {
+        //
+    }
+
+    /**
+     * Form component.
+     *
+     * @param Component $component
+     * @return void
+     */
+    public function formComponent($component)
+    {
+        //
+    }
 }

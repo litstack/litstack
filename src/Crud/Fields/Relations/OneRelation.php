@@ -42,6 +42,7 @@ class OneRelation extends OneRelationField
         'preview',
         'confirm',
         'query',
+        'relatedCols',
     ];
 
     /**
@@ -50,7 +51,8 @@ class OneRelation extends OneRelationField
      * @var array
      */
     protected $defaults = [
-        'confirm' => true
+        'confirm' => true,
+        'relatedCols' => 12,
     ];
 
     /**

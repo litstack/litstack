@@ -1,6 +1,6 @@
 <template>
     <fj-container :fluid="config.expand ? 'fluid' : 'lg'">
-        <fj-navigation>
+        <fj-navigation :controls="slots.navControls">
             <b-button
                 size="md"
                 variant="primary"
@@ -13,11 +13,10 @@
         </fj-navigation>
         <fj-header :title="config.names.plural">
             <div slot="actions-right">
-                <component
-                    v-for="(component, key) in headerComponents"
+                <fj-slot
+                    v-for="(component, key) in slots.headerControls"
                     :key="key"
-                    :is="component"
-                    :config="config"
+                    v-bind="component"
                 />
             </div>
         </fj-header>
@@ -29,6 +28,8 @@
                     :cols="config.index"
                     :items="items"
                     :count="count"
+                    :sortable="config.sortable"
+                    :order-column="config.orderColumn"
                     :per-page="config.perPage"
                     :load-items="loadItems"
                     :name-singular="config.names.singular"
@@ -36,8 +37,8 @@
                     :sort-by="config.sortBy"
                     :sort-by-default="config.sortByDefault"
                     :filter="config.filter"
-                    :global-actions="config.globalActions"
-                    :record-actions="config.recordActions"
+                    :controls="slots.indexControls"
+                    @sorted="sorted"
                 />
             </b-col>
         </b-row>
@@ -53,9 +54,9 @@ export default {
             required: true,
             type: Object
         },
-        headerComponents: {
+        slots: {
             required: true,
-            type: Array
+            type: Object
         }
     },
     data() {
@@ -71,6 +72,21 @@ export default {
         ...mapGetters(['baseURL'])
     },
     methods: {
+        async sorted({ sortedItems, ids }) {
+            this.items = sortedItems;
+            try {
+                let response = axios.post(`${this.config.route_prefix}/order`, {
+                    ids: ids
+                });
+            } catch (e) {
+                console.log(e);
+                return;
+            }
+
+            this.$bvToast.toast(this.__('fj.order_changed'), {
+                variant: 'success'
+            });
+        },
         reload() {
             this.$refs.indexTable.$emit('reload');
         },
@@ -87,5 +103,3 @@ export default {
     }
 };
 </script>
-
-<style></style>

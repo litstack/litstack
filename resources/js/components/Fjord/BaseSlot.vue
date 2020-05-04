@@ -1,5 +1,10 @@
 <template>
-    <component :is="component" v-bind="props" />
+    <component
+        :is="name"
+        v-bind="{ ...props, ...$attrs }"
+        :slots="slots"
+        v-on="$listeners"
+    />
 </template>
 
 <script>
@@ -7,13 +12,20 @@ export default {
     name: 'Slot',
     props: {
         props: {
-            type: Object,
+            type: [Object, Array],
             default() {
                 return {};
             }
         },
-        component: {
-            type: String
+        slots: {
+            type: [Object, Array],
+            default() {
+                return {};
+            }
+        },
+        name: {
+            type: String,
+            required: true
         }
     }
 };

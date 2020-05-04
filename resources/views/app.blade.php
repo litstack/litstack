@@ -8,7 +8,7 @@
 
 @section('content')
     @php
-        //dd(collect(\Fjord\Support\Facades\VueApp::props())->__toString());
+        //dd(\Fjord\Support\Facades\VueApp::props());
     @endphp
     @include('fjord::vue.component', [
         'component' => 'fjord-app',
