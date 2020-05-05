@@ -28,15 +28,6 @@ class FormBlock extends FjordFormModel
     public $timestamps = false;
 
     /**
-     * Translated attributes.
-     *
-     * @var array
-     */
-    public $translatedAttributes = ['value'];
-
-
-
-    /**
      * Fillable attributes.
      *
      * @var array

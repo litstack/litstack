@@ -1,16 +1,17 @@
 const methods = {
     init() {
         this.getValue();
-        console.log('VALUE', this.value);
-
-        if (this.value) {
-            this.original = Fjord.clone(this.value);
-        }
+        this.setOriginalValue();
 
         Fjord.bus.$on('languageChanged', this.getValue);
         Fjord.bus.$on('saved', () => {
-            this.original = Fjord.clone(this.value);
+            this.setOriginalValue();
         });
+    },
+    setOriginalValue() {
+        if (this.value) {
+            this.original = Fjord.clone(this.value);
+        }
     },
     getLocale() {
         return this.$store.state.config.language;

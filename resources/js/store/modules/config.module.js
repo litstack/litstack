@@ -58,7 +58,7 @@ export const mutations = {
     },
     SET_LANGUAGE(state, lng) {
         state.language = lng;
-        Bus.$emit('languageChanged', state.language);
+        Fjord.bus.$emit('languageChanged', state.language);
     }
 };
 

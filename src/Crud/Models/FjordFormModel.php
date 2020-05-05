@@ -18,6 +18,15 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
         Concerns\HasMedia;
 
     /**
+     * value is translatable but since non translatable fields are stored in 
+     * the value field it is important to not set value as a translatedAttribute 
+     * here, because the translator would store it to the fallback locale.
+     *
+     * @var array
+     */
+    public $translatedAttributes = [];
+
+    /**
      * Field ids.
      *
      * @var array
@@ -66,7 +75,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
             if (!$translation) {
                 continue;
             }
-            $value = $translation->value;
+            $value = $translation->value ?? [];
 
             foreach ($this->fields as $field) {
                 if (!$field->translatable) {

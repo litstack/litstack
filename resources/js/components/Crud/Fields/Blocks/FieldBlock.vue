@@ -2,6 +2,7 @@
     <b-col :cols="cols">
         <div class="fj-draggable fj-block mb-2 mt-2">
             <fj-field-block-header
+                ref="header"
                 :sortable="sortable"
                 :expand="expand"
                 :block="block"
@@ -20,6 +21,7 @@
                     :field="field"
                     :model="model"
                     :fields="_fields"
+                    @changed="changed"
                 />
             </div>
         </div>
@@ -89,6 +91,14 @@ export default {
         this.$on('expand', expand => {
             this.expand = expand;
         });
+    },
+    methods: {
+        /**
+         * Refresh table cols on change.
+         */
+        changed() {
+            this.$refs.header.$emit('refresh');
+        }
     }
 };
 </script>

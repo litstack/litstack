@@ -5,6 +5,7 @@
         :model="model"
         :model-id="modelId === 0 ? model.id : modelId"
         v-bind="field.props ? field.props : {}"
+        v-on="$listeners"
     />
 </template>
 

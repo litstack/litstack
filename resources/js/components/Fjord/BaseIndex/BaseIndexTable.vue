@@ -134,9 +134,6 @@ export default {
     },
     beforeMount() {
         this.sortableItems = this.items;
-        this.$on('loaded', () => {
-            this.sortableItems = this.items;
-        });
     },
     data() {
         return {
@@ -146,6 +143,16 @@ export default {
         };
     },
     watch: {
+        /**
+         * Reset sortableItems when items array has changed.
+         */
+        items(val) {
+            this.sortableItems = this.items;
+            this.$forceUpdate();
+        },
+        /**
+         * Watch selected items to set indeterminate for table header checkbox.
+         */
         selectedItems(val) {
             this.$emit('selectedItemsChanged', val);
             if (val.length == this.items.length) {
@@ -174,6 +181,7 @@ export default {
     methods: {
         newOrder(items) {
             this.$emit('sorted', this.sortableItems);
+            console.log('base-index-table newOrder', this.sortableItems[0].id);
         },
         toggleSelectAll() {
             // TODO:
@@ -196,7 +204,7 @@ export default {
         },
         isItemSelected(item) {
             return this.selectedItems.find(model => {
-                return model ? model == item : false;
+                return model ? model.id == item.id : false;
             })
                 ? true
                 : false;

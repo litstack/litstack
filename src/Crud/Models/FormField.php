@@ -23,15 +23,6 @@ class FormField extends FjordFormModel
     protected $translationModel = Translations\FormFieldTranslation::class;
 
     /**
-     * value is translatable but since non translatable fields are stored in 
-     * the value field it is important to not set value as a translatedAttribute 
-     * here, because the translator would store it to the fallback locale.
-     *
-     * @var array
-     */
-    public $translatedAttributes = [];
-
-    /**
      * Appends.
      *
      * @var array

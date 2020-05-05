@@ -6,6 +6,7 @@
             :field="field"
             :model-id="model.id"
             :model="block"
+            v-on="$listeners"
         />
     </b-row>
 </template>

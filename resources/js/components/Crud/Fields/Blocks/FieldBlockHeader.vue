@@ -8,6 +8,7 @@
                     </div>
                 </b-td>
                 <fj-table-col
+                    ref="cols"
                     v-for="(col, i) in preview"
                     :key="i"
                     :item="block"
@@ -70,6 +71,19 @@ export default {
         preview: {
             type: Array,
             required: true
+        }
+    },
+    beforeMount() {
+        this.$on('refresh', this.refresh);
+    },
+    methods: {
+        /**
+         * Pass refresh event to fj-table-col components.
+         */
+        refresh() {
+            for (let i in this.$refs.cols) {
+                this.$refs.cols[i].$emit('refresh');
+            }
         }
     }
 };

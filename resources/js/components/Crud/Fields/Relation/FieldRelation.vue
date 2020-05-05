@@ -1,7 +1,7 @@
 <template>
     <fj-form-item :field="field" :model="model">
         <template slot="title-right">
-            <a href="#" @click="toggleExpand">
+            <a href="#" @click="toggleExpand" v-if="field.form">
                 <fa-icon :icon="expandedAll ? 'compress-alt' : 'expand-alt'" />
                 {{
                     __(
@@ -17,30 +17,41 @@
                 <fj-spinner />
             </div>
 
-            <draggable
-                v-model="selectedRelations"
-                @end="newOrder"
-                handle=".fj-draggable__dragbar"
-                tag="b-row"
-                :class="{ 'mb-0': field.readonly }"
-                v-else-if="selectedRelations.length > 0"
-            >
-                <fj-field-block
-                    ref="block"
+            <template v-else-if="selectedRelations.length > 0">
+                <draggable
+                    v-model="selectedRelations"
+                    @end="newOrder"
+                    handle=".fj-draggable__dragbar"
+                    tag="b-row"
+                    :class="{ 'mb-0': field.readonly }"
+                >
+                    <fj-field-block
+                        ref="block"
+                        v-for="(relation, index) in selectedRelations"
+                        :key="index"
+                        :block="relation"
+                        :field="field"
+                        :fields="field.form ? field.form.fields : []"
+                        :model="model"
+                        :cols="field.relatedCols"
+                        :sortable="field.many ? field.sortable : false"
+                        :preview="field.preview"
+                        :set-route-prefix="setFieldsRoutePrefixId"
+                        delete-icon="unlink"
+                        @deleteItem="removeRelation(relation)"
+                    />
+                </draggable>
+                <!--
+                <fj-field-relation-confirm-delete
                     v-for="(relation, index) in selectedRelations"
                     :key="index"
-                    :block="relation"
-                    :field="field"
-                    :fields="field.form ? field.form.fields : []"
                     :model="model"
-                    :cols="field.relatedCols"
-                    :sortable="field.many ? field.sortable : false"
-                    :preview="field.preview"
-                    :set-route-prefix="setFieldsRoutePrefixId"
-                    delete-icon="unlink"
-                    @deleteItem="removeRelation(relation)"
+                    :relation="relation"
+                    :route-prefix="field.route_prefix"
+                    @confirm="_removeRelation(relation)"
                 />
-            </draggable>
+                -->
+            </template>
 
             <div v-else>
                 <fj-field-alert-empty
@@ -209,7 +220,10 @@ export default {
                 this.$bvModal.hide(this.modalId);
             }
         },
-        async removeRelation(relation) {
+        removeRelation(relation) {},
+        async _removeRelation(relation) {
+            console.log('REMOVE');
+            return;
             let response = null;
             switch (this.field.type) {
                 case 'morphMany':

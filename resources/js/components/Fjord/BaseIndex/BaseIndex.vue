@@ -102,8 +102,6 @@
 </template>
 
 <script>
-import TableModel from '@fj-js/crud/table.model';
-
 export default {
     name: 'IndexTable',
     props: {
@@ -257,7 +255,7 @@ export default {
     computed: {
         canSort() {
             if (!this.sortable) {
-                return;
+                return false;
             }
             return (
                 this.sort_by_key == `${this.orderColumn}.asc` ||
@@ -288,6 +286,7 @@ export default {
                     ids[start + parseInt(i)] = sortedItems[i].id;
                 }
             }
+            console.log('base-index', sortedItems[0].id);
             this.$emit('sorted', { sortedItems, ids });
         },
         sort(sort) {
@@ -327,7 +326,7 @@ export default {
         },
         isItemSelected(item) {
             return this.selectedItems.find(model => {
-                return model ? model == item : false;
+                return model ? model.id == item.id : false;
             })
                 ? true
                 : false;

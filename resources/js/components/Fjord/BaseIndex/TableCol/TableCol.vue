@@ -16,7 +16,7 @@
             @reload="reload"
             v-bind="getColComponentProps()"
         />
-        <div v-else v-html="getColValue(col.value)" />
+        <div v-else v-html="value" />
     </b-td>
 </template>
 
@@ -37,6 +37,19 @@ export default {
             required: true,
             type: Array
         }
+    },
+    data() {
+        return {
+            value: ''
+        };
+    },
+    beforeMount() {
+        this.setValue();
+
+        // Can be called from parents to refresh value.
+        this.$on('refresh', this.setValue);
+
+        Fjord.bus.$on('languageChanged', this.setValue);
     },
     computed: {
         ...mapGetters(['baseURL']),
@@ -65,6 +78,9 @@ export default {
         }
     },
     methods: {
+        setValue() {
+            this.value = this.getColValue(this.col.value);
+        },
         reload() {
             this.$emit('reload');
         },
