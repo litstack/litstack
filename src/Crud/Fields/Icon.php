@@ -51,4 +51,15 @@ class Icon extends Field
 
         $this->attributes['icons'] = require fjord_path('src/Crud/Fields/defaults/fontawesome_icons.php');
     }
+
+    /**
+     * Cast field value.
+     *
+     * @param mixed $value
+     * @return boolean
+     */
+    public function cast($value)
+    {
+        return (string) $value;
+    }
 }

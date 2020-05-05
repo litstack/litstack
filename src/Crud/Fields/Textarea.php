@@ -49,4 +49,15 @@ class Textarea extends Field
     protected $defaults = [
         'max' => 250,
     ];
+
+    /**
+     * Cast field value.
+     *
+     * @param mixed $value
+     * @return boolean
+     */
+    public function cast($value)
+    {
+        return (string) $value;
+    }
 }

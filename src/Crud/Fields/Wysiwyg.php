@@ -46,4 +46,15 @@ class Wysiwyg extends Field
      * @var array
      */
     protected $defaults = [];
+
+    /**
+     * Cast field value.
+     *
+     * @param mixed $value
+     * @return boolean
+     */
+    public function cast($value)
+    {
+        return (string) $value;
+    }
 }

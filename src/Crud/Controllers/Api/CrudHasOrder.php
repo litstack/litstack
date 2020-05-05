@@ -14,9 +14,10 @@ trait CrudHasOrder
      * @param array $ids
      * @return void
      */
-    protected function orderField(Builder $query, $field, $ids)
+    protected function orderField(Builder $query, $field, array $ids)
     {
-        $models = $query->whereIn('ids', $ids)->get();
+        $idKey = $query->getModel()->getTable() . '.id';
+        $models = $query->whereIn($idKey, $ids)->get();
 
         $oderColumn = $field->orderColumn ?? 'order_column';
 

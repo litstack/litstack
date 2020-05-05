@@ -21,10 +21,15 @@ export const actions = {
         let promises = [];
         for (let i = 0; i < state.jobs.length; i++) {
             let job = state.jobs[i];
+            let params = {};
+            for (let key in job.params) {
+                params = { ...params, ...job.params[key] };
+            }
+
             let promise = axios({
                 method: job.method,
                 url: job.route,
-                data: job.params
+                data: params
             });
             promises.push(promise);
         }
@@ -55,11 +60,15 @@ export const mutations = {
         if (index > -1) {
             saveJob = state.jobs[index];
         } else {
-            saveJob = job;
+            saveJob = {
+                route: job.route,
+                method: job.method,
+                params: {}
+            };
         }
 
         // Merge params.
-        saveJob.params = _.merge(saveJob.params, job.params);
+        saveJob.params[job.key] = job.params;
 
         if (index > -1) {
             state.jobs[index] = saveJob;
@@ -76,9 +85,14 @@ export const mutations = {
             return;
         }
         let saveJob = state.jobs[index];
-        saveJob.params = _.omit(saveJob.params, job.params);
 
-        state.jobs[index] = saveJob;
+        delete saveJob.params[job.key];
+
+        if (_.isEmpty(saveJob.params)) {
+            state.jobs.splice(index, 1);
+        } else {
+            state.jobs[index] = saveJob;
+        }
     },
     FLUSH_SAVE_JOBS(state) {
         state.jobs = [];

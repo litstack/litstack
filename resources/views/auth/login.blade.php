@@ -7,11 +7,11 @@
 @section('l-content')
 
     <div class="row justify-content-center">
-        <div class="col-xl-5 col-lg-8 col-md-10 col-sm-12">
+        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-center">
-                        <div class="col-sm-9">
+                        <div class="col-sm-10">
                             <form method="POST" action="{{ route('fjord.login') }}" class="mt-4 mb-4">
                                 @csrf
                                 <h6 class="mb-3">{{ __f('login.login') }}</h6>

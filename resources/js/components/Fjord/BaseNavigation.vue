@@ -91,7 +91,7 @@ export default {
             });
         },
         // Used with elementIsRendered
-        waitUntil(selector, scope, resolve, reject) {
+        waitUntilSaveButton(selector, scope, resolve, reject) {
             let loopCount = 0;
             let maxLoops = 100;
 
@@ -105,7 +105,7 @@ export default {
                 let el = scope.querySelector(selector);
 
                 setTimeout(() => {
-                    if (el) {
+                    if (el.getBoundingClientRect().width > 0) {
                         loopCount = 0;
                         return resolve(el);
                     } else {
@@ -120,10 +120,15 @@ export default {
 
         // Returns a resolved Promise once the selector returns an element
         // Useful for when we need to perform an action only when an element is in the DOM
-        elementIsRendered(selector, scope = document) {
+        saveButtonIsRendered(selector, scope = document) {
             return new Promise((resolve, reject) => {
                 //start the loop
-                return this.waitUntil(selector, scope, resolve, reject);
+                return this.waitUntilSaveButton(
+                    selector,
+                    scope,
+                    resolve,
+                    reject
+                );
             });
         }
     },
@@ -148,7 +153,7 @@ export default {
         );
 
         this.$nextTick(async function() {
-            await this.elementIsRendered('.fj-save-button');
+            await this.saveButtonIsRendered('.fj-save-button');
             let ww = window.innerWidth;
             let button = document
                 .querySelector('.fj-save-button')
@@ -162,9 +167,9 @@ export default {
     computed: {
         ...mapGetters(['canSave']),
         wrapperStyle() {
-            let offset = this.canSave ? 0 : this.b.width + 16;
+            let offset = this.canSave ? 0 : this.b.width;
             return {
-                transform: `translateX(${offset}px)`
+                transform: `translateX(calc(${offset}px + 0.5rem))`
             };
         },
         buttonStyle() {

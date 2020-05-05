@@ -47,10 +47,10 @@ trait HasFields
      *
      * @return void
      */
-    public function getFormattedFieldValue($field)
+    public function getFormattedFieldValue($field,  $locale = null)
     {
         return $field->cast(
-            $this->getFieldValue($field)
+            $this->getFieldValue($field, $locale)
         );
     }
 

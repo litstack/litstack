@@ -27,7 +27,8 @@ export default {
     },
     data() {
         return {
-            value: false
+            value: false,
+            original: false
         };
     },
     beforeMount() {

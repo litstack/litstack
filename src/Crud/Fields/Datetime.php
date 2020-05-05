@@ -2,7 +2,9 @@
 
 namespace Fjord\Crud\Fields;
 
+use Carbon\CarbonInterface;
 use Fjord\Crud\Field;
+use Illuminate\Support\Carbon;
 
 class Datetime extends Field
 {
@@ -46,4 +48,19 @@ class Datetime extends Field
         'inline' => false,
         'only_date' => true
     ];
+
+    /**
+     * Cast field value.
+     *
+     * @param mixed $value
+     * @return boolean
+     */
+    public function cast($value)
+    {
+        if ($value instanceof CarbonInterface) {
+            return $value;
+        }
+
+        return new Carbon($value);
+    }
 }

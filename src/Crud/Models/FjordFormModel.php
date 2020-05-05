@@ -61,8 +61,24 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     {
         $translations = [];
 
-        foreach ($this->translations as $translation) {
-            $translations[$translation->{$this->getLocaleKey()}] = $translation->value;
+        foreach (config('translatable.locales') as $locale) {
+            $translation = $this->translations->where('locale', $locale)->first();
+            if (!$translation) {
+                continue;
+            }
+            $value = $translation->value;
+
+            foreach ($this->fields as $field) {
+                if (!$field->translatable) {
+                    continue;
+                }
+
+                if (!array_key_exists($field->local_key, $value)) {
+                    $value[$field->local_key] = $this->getFormattedFieldValue($field, $locale);
+                }
+
+                $translations[$translation->{$this->getLocaleKey()}] = $value;
+            }
         }
 
         return $translations;
@@ -87,6 +103,15 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
             $attributes[$locale] = ['value' => $translation];
         }
 
+        $attributes['value'] = $this->value ?? [];
+        foreach ($attributes as $key => $value) {
+
+            if (!in_array($key, $this->fillable) && !in_array($key, config('translatable.locales'))) {
+
+                $attributes['value'][$key] = $value;
+            }
+        }
+
         return parent::update($attributes, $options);
     }
 
@@ -96,19 +121,21 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
      * @param Field $field
      * @return mixed
      */
-    public function getFieldValue($field)
+    public function getFieldValue($field, $locale = null)
     {
         if ($field->isRelation()) {
             return $field->relation($this, $query = false);
         }
 
-        if ($this->translatable) {
+        if (!$locale) {
             $locale = app()->getLocale();
-        } else {
-            $locale = config('translatable.fallback_locale');
         }
 
-        return $this->getTranslatedFieldValue($field, $locale);
+        if ($field->translatable) {
+            return $this->getTranslatedFieldValue($field, app()->getLocale());
+        }
+
+        return $this->value[$field->local_key] ?? null;
     }
 
     /**
@@ -122,7 +149,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     {
         $value = $this->translation[$locale] ?? [];
 
-        return $value[$field->id] ?? null;
+        return $value[$field->local_key] ?? null;
     }
 
     /**
@@ -134,11 +161,16 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     {
         $attributes = parent::attributesToArray();
 
+        $attributes['value'] = $attributes['value'] ?? [];
         foreach ($this->fields as $field) {
-            foreach ($attributes['translation'] as $locale => $values) {
-                $attributes['translation'][$locale][$field->id] = $this->getFormattedFieldValue($field);
+            if ($field->translatable) {
+                continue;
             }
+            $attributes['value'][$field->local_key] = $this->getFormattedFieldValue($field);
         }
+
+        // For not translated fields.
+        $attributes = array_merge($attributes['value'], $attributes);
 
         return $attributes;
     }

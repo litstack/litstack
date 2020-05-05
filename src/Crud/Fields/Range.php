@@ -45,4 +45,15 @@ class Range extends Field
     protected $defaults = [
         'step' => 1,
     ];
+
+    /**
+     * Cast field value.
+     *
+     * @param mixed $value
+     * @return boolean
+     */
+    public function cast($value)
+    {
+        return (int) $value;
+    }
 }

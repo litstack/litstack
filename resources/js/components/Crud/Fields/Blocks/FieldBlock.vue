@@ -81,7 +81,10 @@ export default {
         };
     },
     beforeMount() {
-        this._fields = this.setRoutePrefix(_.clone(this.fields), this.block);
+        this._fields = this.setRoutePrefix(
+            Fjord.clone(this.fields),
+            this.block
+        );
 
         this.$on('expand', expand => {
             this.expand = expand;

@@ -52,4 +52,15 @@ class Input extends Field
     protected $defaults = [
         'max' => 60,
     ];
+
+    /**
+     * Cast field value.
+     *
+     * @param mixed $value
+     * @return boolean
+     */
+    public function cast($value)
+    {
+        return (string) $value;
+    }
 }

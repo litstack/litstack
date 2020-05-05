@@ -1,6 +1,7 @@
 <template>
     <fj-form-item :field="field" :model="model">
         <codemirror
+            ref="editor"
             :class="`fj-code-${field.id}`"
             :value="value"
             :options="options"
@@ -48,14 +49,16 @@ export default {
             type: Object
         }
     },
-    data() {
-        return {
-            value: null
-        };
-    },
     beforeMount() {
         this.init();
-        this.options.readOnly = this.readonly;
+    },
+    mounted() {
+        this.$nextTick(() => {
+            // TODO: find better way
+            setTimeout(() => {
+                this.$refs.editor.codemirror.refresh();
+            }, 350);
+        });
     },
     methods: {
         ...methods,
@@ -72,14 +75,15 @@ export default {
     },
     data() {
         return {
-            value: null,
+            value: '',
+            original: '',
             options: {
                 tabSize: this.field.tabSize,
                 mode: this.field.language,
                 theme: this.field.theme,
                 lineNumbers: this.field.lineNumbers,
                 line: this.field.line,
-                readOnly: false,
+                readOnly: this.field.readonly,
                 tabSize: 4,
                 ...this.field.options
             }

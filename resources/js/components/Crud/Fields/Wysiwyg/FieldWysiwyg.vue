@@ -49,7 +49,8 @@ export default {
     },
     data() {
         return {
-            value: null,
+            value: false,
+            original: false,
             editor: ClassicEditor,
             editorConfig: {
                 removePlugins: [],

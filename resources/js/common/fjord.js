@@ -33,6 +33,15 @@ const Fjord = {
      */
     isLocale(locale) {
         return i18n.locale == locale;
+    },
+
+    /**
+     * Clone object.
+     *
+     * @param {Object} obj
+     */
+    clone(obj) {
+        return JSON.parse(JSON.stringify(obj));
     }
 };
 

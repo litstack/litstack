@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud;
 
+use Carbon\CarbonInterface;
 use Fjord\Support\VueProp;
 use Fjord\Crud\Models\FormBlock;
 use Fjord\Crud\Models\FormField;
@@ -46,7 +47,9 @@ class CrudJs extends VueProp
      */
     public function getModelAttributes()
     {
-        $array = $this->model->toArray();
+        $array = $this->castAttributes(
+            $this->model->toArray()
+        );
 
         if (!array_key_exists('translations', $array)) {
             return $array;
@@ -54,7 +57,28 @@ class CrudJs extends VueProp
 
         // Setting translation attributes that are used for updating the model.
         // (de, en, ...)
-        $array = array_merge($this->model->getTranslationsArray(), $array);
+        $translationsArray = $this->castAttributes(
+            $this->model->getTranslationsArray()
+        );
+
+        $array = array_merge($translationsArray, $array);
+
+        return $array;
+    }
+
+    /**
+     * Cast attributes for Fields.
+     *
+     * @param array $array
+     * @return array
+     */
+    public function castAttributes(array $array)
+    {
+        foreach ($array as $key => $value) {
+            if ($value instanceof CarbonInterface) {
+                $array[$key] = $value->toDateTimeString();
+            }
+        }
 
         return $array;
     }

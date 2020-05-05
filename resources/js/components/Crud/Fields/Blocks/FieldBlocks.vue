@@ -83,7 +83,6 @@ export default {
     },
     methods: {
         toggleExpand() {
-            console.log(this.$refs);
             for (let i in this.$refs.block) {
                 let block = this.$refs.block[i];
                 block.$emit('expand', !this.expandedAll);

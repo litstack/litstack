@@ -67,23 +67,43 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@fj-sass/_variables';
 @import '~vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
+
 .date-time-picker {
     input {
         display: inline-block !important;
         width: 100% !important;
         height: calc(1.6em + 0.75rem + 2px) !important;
         min-height: calc(1.6em + 0.75rem + 2px) !important;
-        padding: 0.375rem 1.75rem 0.375rem 0.75rem !important;
-        font-size: 0.9rem !important;
+        padding: $input-padding-x $input-padding-y !important;
+        font-size: $input-font-size !important;
         font-weight: 400 !important;
         line-height: 1.6 !important;
-        color: #495057 !important;
+        color: $input-color !important;
         vertical-align: middle !important;
-        background-color: #fff !important;
-        border: 1px solid #ced4da !important;
-        border-radius: 0.25rem !important;
+        background-color: $input-bg !important;
+        border: $input-border-width solid $input-border-color !important;
+        border-radius: $input-border-radius !important;
         -webkit-appearance: none !important;
+    }
+    .datepicker-buttons-container {
+        .datepicker-button {
+            &.now {
+                .datepicker-button-effect {
+                    background: $primary;
+                }
+                .datepicker-button-content {
+                    color: $primary;
+                }
+            }
+            .datepicker-button-effect {
+                background: $success;
+            }
+            svg {
+                fill: $success;
+            }
+        }
     }
 }
 </style>

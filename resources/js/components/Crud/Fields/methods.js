@@ -1,27 +1,36 @@
 const methods = {
     init() {
         this.getValue();
+        console.log('VALUE', this.value);
+
+        if (this.value) {
+            this.original = Fjord.clone(this.value);
+        }
+
         Fjord.bus.$on('languageChanged', this.getValue);
+        Fjord.bus.$on('saved', () => {
+            this.original = Fjord.clone(this.value);
+        });
+    },
+    getLocale() {
+        return this.$store.state.config.language;
     },
     getValue() {
         this.value = this._getValue();
         this.$forceUpdate();
     },
     _getValue() {
-        let locale = this.$store.state.config.language;
-        let fallbackLocale = this.$store.state.config.fallback_locale;
+        let locale = this.getLocale();
 
-        this.setDefaultCastValues();
+        this.setDefaultValues();
 
-        if (!this.shouldStoreToTranslation()) {
-            return this.model[this.field.id];
+        if (this.field.translatable) {
+            return this.model[locale][this.field.id];
         }
-
-        if (this.shouldUseFallback()) {
-            return this.model[fallbackLocale][this.field.id];
+        if (this.model.usesJsonCast()) {
+            this.model.attributes[this.field.local_key];
         }
-
-        return this.model[locale][this.field.id];
+        return this.model[this.field.id];
     },
     setValue(value) {
         this._setValue(value);
@@ -29,82 +38,61 @@ const methods = {
         this.addSaveJob(value);
     },
     _setValue(value) {
-        let locale = this.$store.state.config.language;
-        let fallbackLocale = this.$store.state.config.fallback_locale;
+        let locale = this.getLocale();
 
-        if (!this.shouldStoreToTranslation()) {
-            return (this.model[this.field.local_key] = value);
+        if (this.field.translatable) {
+            return (this.model[locale][this.field.local_key] = value);
         }
-
-        if (this.shouldUseFallback()) {
-            return (this.model[fallbackLocale][this.field.local_key] = value);
+        if (this.model.usesJsonCast()) {
+            return (this.model.attributes[this.field.local_key] = value);
         }
-
-        this.model[locale][this.field.local_key] = value;
+        return (this.model[this.field.local_key] = value);
     },
-    setDefaultCastValues() {
-        let locale = this.$store.state.config.language;
-        let fallbackLocale = this.$store.state.config.fallback_locale;
+    setDefaultValues() {
+        let locale = this.getLocale();
 
-        if (!this.shouldStoreToTranslation()) {
-            return;
-        }
-
-        if (!this.model[locale]) {
-            this.model[locale] = {
-                [this.field.local_key]: null
-            };
-        }
-        if (!this.model[fallbackLocale]) {
-            this.model[fallbackLocale] = {
-                [this.field.local_key]: null
-            };
-        }
-    },
-    shouldUseFallback() {
-        return (
-            !this.field.translatable &&
-            this.model.usesJsonCast() &&
-            this.model.translatable
-        );
-    },
-    shouldStoreToTranslation() {
-        if (!this.field.translatable && !this.model.translatable) {
-            return false;
+        if (this.model.translatable && !(locale in this.model.attributes)) {
+            this.model[locale] = {};
         }
 
-        if (!this.field.translatable && !this.model.usesJsonCast()) {
-            return false;
+        if (
+            this.field.translatable &&
+            !this.field.locale_key in this.model[locale]
+        ) {
+            this.model[locale][this.field.local_key] = null;
         }
 
-        return true;
+        if (!this.field.translatable && !this.field.locale_key in this.model) {
+            this.model[this.field.local_key] = null;
+        }
     },
     addSaveJob(value) {
-        let locale = this.$store.state.config.language;
+        let locale = this.getLocale();
         let params = {};
-        let removeParams = '';
+        let jobKey = '';
 
-        if (this.shouldStoreToTranslation()) {
-            let locale = this.$store.state.config.language;
-            if (this.shouldUseFallback()) {
-                locale = this.$store.state.config.fallback_locale;
-            }
-            removeParams = `${locale}.${this.field.local_key}`;
+        if (this.field.translatable) {
+            jobKey = `${locale}.${this.field.local_key}`;
             params[locale] = {
                 [this.field.local_key]: value
             };
         } else {
-            removeParams = `${this.field.local_key}`;
+            jobKey = `${this.field.local_key}`;
             params[this.field.local_key] = value;
         }
 
         let job = {
             route: this.field.route_prefix,
             method: 'PUT',
-            params
+            params,
+            key: jobKey
         };
 
-        this.$store.commit('ADD_SAVE_JOB', job);
+        if (this.original == this.value) {
+            this.$store.commit('REMOVE_SAVE_JOB', job);
+        } else {
+            this.$store.commit('ADD_SAVE_JOB', job);
+        }
 
         // TODO: Remove save job if has no changes:
 

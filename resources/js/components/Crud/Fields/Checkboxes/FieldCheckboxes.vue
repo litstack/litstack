@@ -25,7 +25,8 @@ export default {
     },
     data() {
         return {
-            value: []
+            value: [],
+            original: []
         };
     },
     beforeMount() {

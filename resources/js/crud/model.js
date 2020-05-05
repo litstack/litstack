@@ -23,6 +23,10 @@ export default class CrudModel {
     _getTranslatedAttribute(key, attributes) {
         let lng = store.state.config.language;
 
+        if (!this.translatable) {
+            return;
+        }
+
         if (!('translation' in attributes)) {
             return attributes[key] || null;
         }
@@ -39,6 +43,24 @@ export default class CrudModel {
     }
 
     /**
+     * Set attribute
+     *
+     * @param {*} obj
+     * @param {*} prop
+     * @param {*} value
+     */
+    set(obj, prop, value) {
+        obj = this.attributes;
+
+        return Reflect.set(obj, prop, value);
+    }
+
+    setAttribute(key, value) {
+        console.log('SET', key, value);
+        this.attributes[key] = value;
+    }
+
+    /**
      * Get attribute.
      *
      * @param {*} target
@@ -46,12 +68,15 @@ export default class CrudModel {
      */
     get(target, prop) {
         let attribute =
-            this[prop] || this._getTranslatedAttribute(prop, this.attributes);
+            this[prop] ||
+            this.attributes[prop] ||
+            this._getTranslatedAttribute(prop, this.attributes);
 
         if (attribute) {
             return attribute;
         }
 
+        // Get props for relation keys like department.name
         prop = String(prop);
         if (!prop.includes('.')) {
             return;
@@ -69,19 +94,6 @@ export default class CrudModel {
             attribute = this._getTranslatedAttribute(key, attribute);
         }
         return attribute;
-    }
-
-    /**
-     * Set attribute
-     *
-     * @param {*} obj
-     * @param {*} prop
-     * @param {*} value
-     */
-    set(obj, prop, value) {
-        obj = this.attributes;
-
-        return Reflect.set(obj, prop, value);
     }
 
     /**

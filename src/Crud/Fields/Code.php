@@ -58,4 +58,15 @@ class Code extends Field
         'language' => 'text/html',
         'options' => []
     ];
+
+    /**
+     * Cast field value.
+     *
+     * @param mixed $value
+     * @return boolean
+     */
+    public function cast($value)
+    {
+        return (string) $value;
+    }
 }
