@@ -66,6 +66,7 @@ class MorphOne extends OneRelationField
      */
     protected function setRelationAttributes($relation)
     {
+        return;
         if (!$this->getModelConfig($this->related)) {
             $this->throwMissingConfigException();
         }

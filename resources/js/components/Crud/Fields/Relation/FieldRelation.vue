@@ -216,7 +216,9 @@ export default {
             }
 
             if (!this.field.many) {
-                this.selectedRelations = [relation];
+                this.selectedRelations = [];
+                this.selectedRelations.push(relation);
+
                 this.$bvModal.hide(this.modalId);
             } else {
                 this.selectedRelations.push(relation);

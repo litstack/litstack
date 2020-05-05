@@ -68,7 +68,7 @@
                         />
                         <label
                             class="custom-control-label"
-                            @click="selected(item)"
+                            @click="select(item)"
                         ></label>
                     </div>
                     <a href="#" v-else @click.prevent="toggleSelect(item)">
@@ -163,12 +163,10 @@ export default {
             if (val.length == this.items.length) {
                 this.selectedAll = true;
                 this.indeterminate = false;
-                this.$refs.headerCheckbox.$forceUpdate();
                 return;
             }
             this.selectedAll = false;
             this.indeterminate = val.length > 0 ? true : false;
-            this.$refs.headerCheckbox.$forceUpdate();
         }
     },
     computed: {
@@ -215,6 +213,12 @@ export default {
                 }
             }
             return true;
+        },
+        select(item) {
+            if (this.isItemSelected(item)) {
+                return;
+            }
+            this.$emit('select', item);
         },
         toggleSelect(item) {
             if (this.isItemSelected(item)) {

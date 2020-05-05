@@ -19,6 +19,10 @@ class ModelEdit extends Model
 
     protected $appends = ['time'];
 
+    protected $casts = [
+        'payload' => 'json'
+    ];
+
     public function getTimeAttribute()
     {
         return $this->created_at

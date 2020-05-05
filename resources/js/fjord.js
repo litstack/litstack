@@ -5,7 +5,6 @@ require('./common/window');
 require('./common/fjord');
 
 require('./service/component.service');
-require('./service/page.service');
 require('./service/library.service');
 
 /**

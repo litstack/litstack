@@ -131,6 +131,9 @@ export default {
         color: $nav-item-icon-color;
         margin-left: -4px;
         margin-right: 10px;
+        display: inline-block;
+        width: 20px;
+        text-align: center;
     }
     .fj-navigation .list-group-item {
         border: none;

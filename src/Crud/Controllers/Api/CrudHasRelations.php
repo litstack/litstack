@@ -203,13 +203,18 @@ trait CrudHasRelations
      */
     public function orderRelation(CrudUpdateRequest $request, $id, $relation)
     {
+
         $ids = $request->ids ?? abort(404);
         $model = $this->query()->findOrFail($id);
         $field = $this->config->form->findField($relation) ?? abort(404);
 
         $query = $model->$relation()->getQuery();
 
-        return $this->orderField($query, $field, $ids);
+        $order = $this->orderField($query, $field, $ids);
+
+        $model->edited('order relation');
+
+        return $order;
     }
 
     /**

@@ -1,12 +1,15 @@
 <template>
-    <fj-base-container class="flex-center position-ref full-height">
-        <div class="code">
-            {{ code }}
+    <fj-container
+        class="d-flex justify-content-around align-items-center"
+        style="height: 100vh"
+    >
+        <div class="text-center">
+            <fj-fjord-lightning />
+            <div class="text-muted" style="padding: 10px;">
+                {{ message }}
+            </div>
         </div>
-        <div class="message" style="padding: 10px;">
-            {{ message }}
-        </div>
-    </fj-base-container>
+    </fj-container>
 </template>
 <script>
 export default {
@@ -14,30 +17,15 @@ export default {
     props: {
         code: {
             type: String,
-            required: true,
+            required: true
         },
         message: {
             type: String,
-            required: true,
-        },
-    },
+            required: true
+        }
+    }
 };
 </script>
-<style scoped>
-.fjord-container {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.code {
-    font-size: 26px;
-    padding: 0 15px 0 15px;
-    text-align: center;
-    border-right: 2px solid;
-}
-.message {
-    font-size: 18px;
-    text-align: center;
-}
+<style lang="scss">
+@import '@fj-sass/_variables';
 </style>

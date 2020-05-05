@@ -19,6 +19,17 @@ class FileController extends Controller
     }
 
     /**
+     * app2.js
+     *
+     * @return response
+     */
+    public function fjord2Js()
+    {
+        return $this->sendFile(fjord_path('public/js/app2.js'))
+            ->header('Content-Type', 'application/javascript; charset=utf-8');
+    }
+
+    /**
      * app.css
      *
      * @return response

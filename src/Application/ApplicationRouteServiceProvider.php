@@ -39,9 +39,11 @@ class ApplicationRouteServiceProvider extends LaravelRouteServiceProvider
      */
     protected function mapFileRoutes()
     {
-        FjordRoute::public()
-            ->get('js/app.js', FileController::class . '@fjordJs')
+        FjordRoute::get('js/app.js', FileController::class . '@fjordJs')
             ->name('js');
+        FjordRoute::public()
+            ->get('js/app2.js', FileController::class . '@fjord2Js')
+            ->name('app2.js');
         FjordRoute::public()
             ->get('css/app.css', FileController::class . '@fjordCss')
             ->name('css');

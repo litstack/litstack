@@ -18,6 +18,7 @@ class CreateModelEditsTable extends Migration
             $table->unsignedBigInteger('fjord_user_id');
             $table->string('model_type');
             $table->string('model_id');
+            $table->text('payload');
             $table->timestamp('created_at');
 
             $table->foreign('fjord_user_id')->references('id')->on('fjord_users');

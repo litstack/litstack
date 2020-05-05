@@ -82,6 +82,13 @@ export default {
             _fields: []
         };
     },
+    watch: {
+        block(val) {
+            setTimeout(() => {
+                this.$refs.header.$emit('refresh');
+            }, 1);
+        }
+    },
     beforeMount() {
         this._fields = this.setRoutePrefix(
             Fjord.clone(this.fields),
@@ -90,6 +97,9 @@ export default {
 
         this.$on('expand', expand => {
             this.expand = expand;
+        });
+        this.$on('refresh', expand => {
+            this.$refs.header.$emit('refresh');
         });
     },
     methods: {

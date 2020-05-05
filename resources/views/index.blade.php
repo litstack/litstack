@@ -25,12 +25,10 @@
 
 
 <body onload="makeVisible()">
-    <div id="fjord-app" class="{{ $nav ?? true ? '' : 'no-nav' }}">
+    <div id="fjord-app">
 
-        @if($nav ?? true) 
             @include('fjord::partials.topbar.topbar')
             @include('fjord::partials.navigation')
-        @endif
 
         <main>
             <div class="fj-content">

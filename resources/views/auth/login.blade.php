@@ -1,10 +1,10 @@
 @extends('fjord::landing')
 
-@section('l-title')
+@section('title')
     Login
 @endsection
 
-@section('l-content')
+@section('content')
 
     <div class="row justify-content-center">
         <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
@@ -12,19 +12,23 @@
                 <div class="card-body">
                     <div class="row justify-content-center">
                         <div class="col-sm-10">
-                            <form method="POST" action="{{ route('fjord.login') }}" class="mt-4 mb-4">
+                            <form method="POST" id="login" onsubmit="doLogin(event)" class="mt-4 mb-4">
                                 @csrf
                                 <h6 class="mb-3">{{ __f('login.login') }}</h6>
                                 <div class="form-group">
                                     <input 
-                                        placeholder="{{ ucfirst(__f('base.email')) }}"
                                         id="email" 
-                                        type="email" 
                                         class="form-control @error('email') is-invalid @enderror" 
                                         name="email" 
-                                        value="{{ old('email') }}" 
                                         required 
+                                        @if(config('fjord.login.username'))
+                                        placeholder="{{ ucfirst(__f('login.email_or_username')) }} "
+                                        type="text"
+                                        @else
+                                        placeholder="{{ ucfirst(__f('base.email')) }}"
                                         autocomplete="email" 
+                                        type="email"
+                                        @endif
                                         autofocus>
 
                                     @error('email')
@@ -52,17 +56,21 @@
 
                                 <div class="form-group d-flex justify-content-between">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                        <input class="form-check-input" type="checkbox" name="remember" id="remember">
 
                                         <label class="form-check-label" for="remember">
                                             {{ __f('login.remember_me') }}
                                         </label>
                                     </div>
-                                    @if (Route::has('password.request'))
-                                        <a href="{{ route('password.request') }}">
-                                            {{ __f('login.forgot_password') }}
-                                        </a>
-                                    @endif
+                                    {{--
+                                    <a href="{{ route('password.request') }}" id="forgot-password" style="display:none;">
+                                        {{ __f('login.forgot_password') }}
+                                    </a>
+                                    --}}                                    
+                                </div>
+
+                                <div class="text-danger text-center" id="login-failed" style="display:none;">
+                                    {{ __f('login.failed') }}
                                 </div>
 
                                 <div class="form-group row mt-4 justify-content-center d-flex">
@@ -77,4 +85,20 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        function doLogin(e) {
+            e.preventDefault()
+
+            const data = new FormData(document.forms.login);
+
+            let promise = axios.post('{{ Fjord::route('login.post') }}', data)
+            promise.then(function(response) {
+                window.location = response.data
+            })
+            promise.catch(function(error) {
+                document.getElementById('login-failed').style.display = 'block';
+                document.getElementById('forgot-password').style.display = 'block';
+            })
+        }
+    </script>
 @endsection

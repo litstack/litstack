@@ -43,11 +43,24 @@ class AuthController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');
+        $remember = $request->remember == 'on' || $request->remember;
 
-        if (Auth::guard('fjord')->attempt($credentials)) {
-            return redirect($this->defaultUrl);
+        if (Auth::guard('fjord')->attempt($credentials, $remember)) {
+            return $this->defaultUrl;
         }
 
+        // Try using username.
+        if (config('fjord.login.username')) {
+            $credentials['username'] = $credentials['email'];
+            unset($credentials['email']);
+            if (Auth::guard('fjord')->attempt($credentials, $remember)) {
+                return $this->defaultUrl;
+            }
+        }
+
+        return response()->json([
+            'message' => __f('login.failed')
+        ], 401);
         // TODO: Show login error message.
         //return Redirect::back()->withErrors(['message', 'Login failed.']);
     }

@@ -26,7 +26,7 @@ trait TrackEdits
      *
      * @return void
      */
-    public function edited()
+    public function edited($action = 'update')
     {
         if (!fjord_user()) {
             return;
@@ -37,6 +37,7 @@ trait TrackEdits
         $edit->model_id = $this->id;
         $edit->fjord_user_id = fjord_user()->id;
         $edit->created_at = \Carbon\Carbon::now();
+        $edit->payload = ['action' => $action];
         $edit->save();
 
         // Reload relation.

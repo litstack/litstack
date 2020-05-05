@@ -5,7 +5,7 @@
         v-html="
             $t('fj.not_created', {
                 relation: field.title,
-                model: config.names.title.singular
+                model: ''
             })
         "
     />
@@ -21,9 +21,6 @@ export default {
             type: Object,
             required: true
         }
-    },
-    computed: {
-        ...mapGetters(['config'])
     }
 };
 </script>
