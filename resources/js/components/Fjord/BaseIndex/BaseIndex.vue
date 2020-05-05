@@ -244,11 +244,14 @@ export default {
         if (this.hasTabs) {
             this.tab = this.tabs[0];
         }
-        this.selectedItems = this.selected;
+        this.selectedItems = _.clone(this.selected);
 
         this.sort_by_key = this.sortByDefault || null;
 
         this.$on('reload', this._loadItems);
+        this.$on('refreshSelected', () => {
+            this.selectedItems = _.clone(this.selected);
+        });
 
         this._loadItems();
     },
@@ -286,7 +289,6 @@ export default {
                     ids[start + parseInt(i)] = sortedItems[i].id;
                 }
             }
-            console.log('base-index', sortedItems[0].id);
             this.$emit('sorted', { sortedItems, ids });
         },
         sort(sort) {

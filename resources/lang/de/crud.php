@@ -6,6 +6,11 @@ return [
         'blocks' => [
             'expand_all' => 'Alle ausklappen',
             'collapse_all' => 'Alle einklappen'
+        ],
+        'relation' => [
+            'messages' => [
+                'confirm_unlink' => 'Bitte bestätigen Sie, dass Sie die Verknüpfung aufheben möchten.',
+            ]
         ]
     ]
 ];

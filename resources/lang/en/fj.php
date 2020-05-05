@@ -30,7 +30,6 @@ return [
     "sort" => "Sort",
     "select_item" => "Select :item",
     "select_language" => "Select language",
-    "confirm_unlink" => 'Please confirm that you wish to unlink the item.',
     "save_changes" => "Save changes",
     "delete" => "delete",
     "cancel" => "cancel",

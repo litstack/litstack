@@ -16,11 +16,19 @@
             :no-select="noSelect"
         >
             <b-checkbox
-                v-if="!radio"
+                ref="headerCheckbox"
+                v-if="!radio && indeterminate"
+                slot="checkbox"
+                class="float-left"
+                indeterminate
+                @change="toggleSelectAll"
+            />
+            <b-checkbox
+                ref="headerCheckbox"
+                v-else="!radio && !indeterminate"
                 slot="checkbox"
                 class="float-left"
                 v-model="selectedAll"
-                :indeterminate.sync="indeterminate"
                 @change="toggleSelectAll"
             />
         </fj-base-index-table-head>
@@ -63,11 +71,9 @@
                             @click="selected(item)"
                         ></label>
                     </div>
-                    <b-checkbox
-                        v-else
-                        :checked="isItemSelected(item)"
-                        @input="toggleSelect(item)"
-                    />
+                    <a href="#" v-else @click.prevent="toggleSelect(item)">
+                        <b-checkbox :checked="isItemSelected(item)" />
+                    </a>
                 </td>
                 <fj-table-col
                     v-for="(col, col_key) in cols"
@@ -154,14 +160,15 @@ export default {
          * Watch selected items to set indeterminate for table header checkbox.
          */
         selectedItems(val) {
-            this.$emit('selectedItemsChanged', val);
             if (val.length == this.items.length) {
                 this.selectedAll = true;
                 this.indeterminate = false;
+                this.$refs.headerCheckbox.$forceUpdate();
                 return;
             }
             this.selectedAll = false;
             this.indeterminate = val.length > 0 ? true : false;
+            this.$refs.headerCheckbox.$forceUpdate();
         }
     },
     computed: {
@@ -181,10 +188,33 @@ export default {
     methods: {
         newOrder(items) {
             this.$emit('sorted', this.sortableItems);
-            console.log('base-index-table newOrder', this.sortableItems[0].id);
         },
         toggleSelectAll() {
-            // TODO:
+            if (this.allItemsAreSelected()) {
+                for (let i in this.items) {
+                    let item = this.items[i];
+                    if (!this.isItemSelected(item)) {
+                        continue;
+                    }
+                    this.$emit('unselect', item);
+                }
+            } else {
+                for (let i in this.items) {
+                    let item = this.items[i];
+                    if (this.isItemSelected(item)) {
+                        continue;
+                    }
+                    this.$emit('select', item);
+                }
+            }
+        },
+        allItemsAreSelected() {
+            for (let i in this.items) {
+                if (!this.isItemSelected(this.items[i])) {
+                    return false;
+                }
+            }
+            return true;
         },
         toggleSelect(item) {
             if (this.isItemSelected(item)) {

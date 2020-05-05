@@ -73,7 +73,6 @@ export default {
     },
     methods: {
         async sorted({ sortedItems, ids }) {
-            console.log('crud-index', sortedItems[0].id);
             this.items = sortedItems;
             try {
                 let response = axios.post(`${this.config.route_prefix}/order`, {

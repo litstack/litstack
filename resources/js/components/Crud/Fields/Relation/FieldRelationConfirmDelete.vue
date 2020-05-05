@@ -1,29 +1,32 @@
 <template>
-    <b-modal :id="`modal-${routePrefix}-${relation.id}`" title="Unlink Item">
-        {{ $t('fj.confirm_unlink') }}
+    <b-modal
+        :id="`modal-${field.id}-${relation.id}`"
+        :title="__('base.item_remove', { item: field.config.names.singular })"
+    >
+        {{ __('crud.fields.relation.messages.confirm_unlink') }}
 
         <template v-slot:modal-footer>
             <b-button
                 variant="secondary"
                 size="sm"
                 class="float-right"
-                @click="$bvModal.hide(`modal-${routePrefix}-${relation.id}`)"
+                @click="
+                    $emit('canceled');
+                    $bvModal.hide(`modal-${field.id}-${relation.id}`);
+                "
             >
-                {{ $t('fj.cancel').capitalize() }}
+                {{ __('base.cancel').capitalize() }}
             </b-button>
             <a
                 href="#"
                 @click.prevent="
-                    $emit('confirmed', {
-                        id: relation.id,
-                        modelName: model
-                    });
-                    $bvModal.hide(`modal-${routePrefix}-${relation.id}`);
+                    $emit('confirmed', relation);
+                    $bvModal.hide(`modal-${field.id}-${relation.id}`);
                 "
                 class="fj-trash btn btn-danger btn-sm"
             >
                 <fa-icon icon="unlink" />
-                {{ $t('fj.delete').capitalize() }}
+                {{ __('base.delete').capitalize() }}
             </a>
         </template>
     </b-modal>
@@ -33,17 +36,13 @@
 export default {
     name: 'FieldRelationConfirmDelete',
     props: {
-        model: {
+        field: {
             required: true,
-            type: String
+            type: Object
         },
         relation: {
             required: true,
             type: Object
-        },
-        routePrefix: {
-            required: true,
-            type: String
         }
     }
 };

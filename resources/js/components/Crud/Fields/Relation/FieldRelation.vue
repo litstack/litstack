@@ -41,16 +41,15 @@
                         @deleteItem="removeRelation(relation)"
                     />
                 </draggable>
-                <!--
                 <fj-field-relation-confirm-delete
                     v-for="(relation, index) in selectedRelations"
                     :key="index"
-                    :model="model"
+                    :field="field"
                     :relation="relation"
                     :route-prefix="field.route_prefix"
-                    @confirm="_removeRelation(relation)"
+                    @confirmed="_removeRelation"
+                    @canceled="$refs.modal.$emit('refresh')"
                 />
-                -->
             </template>
 
             <div v-else>
@@ -75,6 +74,7 @@
             </b-button>
 
             <fj-field-relation-modal
+                ref="modal"
                 :field="field"
                 :model="model"
                 :modal-id="modalId"
@@ -218,12 +218,18 @@ export default {
             if (!this.field.many) {
                 this.selectedRelations = [relation];
                 this.$bvModal.hide(this.modalId);
+            } else {
+                this.selectedRelations.push(relation);
             }
         },
-        removeRelation(relation) {},
+        removeRelation(relation) {
+            if (!this.field.confirm) {
+                return this._removeRelation(relation);
+            }
+
+            this.$bvModal.show(`modal-${this.field.id}-${relation.id}`);
+        },
         async _removeRelation(relation) {
-            console.log('REMOVE');
-            return;
             let response = null;
             switch (this.field.type) {
                 case 'morphMany':

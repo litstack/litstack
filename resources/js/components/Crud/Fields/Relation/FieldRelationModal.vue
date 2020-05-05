@@ -7,6 +7,7 @@
         content-class="fj-relation-modal"
     >
         <fj-index-table
+            ref="table"
             :cols="field.preview"
             :items="items"
             :load-items="loadItems"
@@ -47,6 +48,11 @@ export default {
                 return {};
             }
         }
+    },
+    beforeMount() {
+        this.$on('refresh', () => {
+            this.$refs.table.$emit('refreshSelected');
+        });
     },
     data() {
         return {

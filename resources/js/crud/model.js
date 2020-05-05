@@ -55,11 +55,6 @@ export default class CrudModel {
         return Reflect.set(obj, prop, value);
     }
 
-    setAttribute(key, value) {
-        console.log('SET', key, value);
-        this.attributes[key] = value;
-    }
-
     /**
      * Get attribute.
      *

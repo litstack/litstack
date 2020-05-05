@@ -35,7 +35,6 @@ return [
     "cancel" => "abbrechen",
     "navigation" => "Navigation",
     "choose_language" => "Systemprache wählen",
-    "confirm_unlink" => 'Bitte bestätigen Sie, dass Sie die Verknüpfung aufheben möchten.',
     "locale_set" => "Die Sprache wurde erfolgreich eingestellt",
     "new_block" => "Neuen Block hinzugefügt (:type)",
     "deleted_block" => "Block gelöscht",
