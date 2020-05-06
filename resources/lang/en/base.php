@@ -20,6 +20,7 @@ return [
     'search' => 'search',
     'first_name' => 'Firstname',
     'last_name' => 'Lastname',
+    'username' => 'username',
     "cancel" => "cancel",
     'location' => 'location',
     'action' => 'action|actions',

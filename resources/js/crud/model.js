@@ -23,6 +23,10 @@ export default class CrudModel {
     _getTranslatedAttribute(key, attributes) {
         let lng = store.state.config.language;
 
+        if (key in attributes) {
+            return attributes[key];
+        }
+
         if (!this.translatable) {
             return;
         }
@@ -82,12 +86,13 @@ export default class CrudModel {
         let keys = String(prop).split('.');
         for (let i = 0; i < keys.length; i++) {
             let key = keys[i];
-
             if (!attribute) {
                 return;
             }
+
             attribute = this._getTranslatedAttribute(key, attribute);
         }
+
         return attribute;
     }
 

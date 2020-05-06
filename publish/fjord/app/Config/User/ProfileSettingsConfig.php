@@ -43,13 +43,21 @@ class ProfileSettingsConfig
 
         $form->card(function ($form) {
 
-            $form->input('name')
+            $form->input('first_name')
                 ->cols(6)
-                ->title(ucwords(__f('base.name')));
+                ->title(ucwords(__f('base.first_name')));
+
+            $form->input('first_name')
+                ->cols(6)
+                ->title(ucwords(__f('base.first_name')));
 
             $form->input('email')
                 ->cols(6)
                 ->title('E-Mail');
+
+            $form->input('username')
+                ->cols(6)
+                ->title(ucwords(__f('base.username')));
         })->cols(8)->class('mb-5');
 
         if (config('fjord.translatable.translatable')) {

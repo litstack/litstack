@@ -20,6 +20,7 @@ return [
     'search' => 'Durchsurchen',
     'first_name' => 'Vorname',
     'last_name' => 'Nachname',
+    'username' => 'Benutzername',
     'logout' => 'ausloggen',
     'location' => 'Standort',
     'action' => 'Aktion|Aktionen',

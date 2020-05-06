@@ -13,7 +13,8 @@ use Fjord\Crud\Requests\CrudUpdateRequest;
 
 abstract class CrudController
 {
-    use Api\CrudHasIndex,
+    use Api\CrudUpdate,
+        Api\CrudHasIndex,
         Api\CrudHasRelations,
         Api\CrudHasBlocks,
         Api\CrudHasMedia,
@@ -249,7 +250,8 @@ abstract class CrudController
     {
         $model = $this->query()->findOrFail($id);
 
-        $model->update($request->all());
+        $this->updateModel($request, $model);
+
         if ($model->last_edit) {
             $model->load('last_edit');
         }

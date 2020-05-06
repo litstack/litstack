@@ -14,7 +14,8 @@ use Fjord\Crud\Requests\FormUpdateRequest;
 
 abstract class FormController
 {
-    use Api\CrudHasRelations,
+    use Api\CrudUpdate,
+        Api\CrudHasRelations,
         Api\CrudHasBlocks,
         Api\CrudHasMedia,
         Api\CrudHasOrder,
@@ -83,7 +84,7 @@ abstract class FormController
     {
         $formField = $this->query()->findOrFail($id);
 
-        $formField->update($request->all());
+        $this->updateModel($request, $formField);
         $formField->load('last_edit');
 
         return crud($formField);
