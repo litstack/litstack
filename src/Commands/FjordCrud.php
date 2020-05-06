@@ -204,6 +204,15 @@ class FjordCrud extends Command
         $tableName = Str::snake(Str::plural($modelName));
         $translationTableName = Str::singular($tableName) . '_translations';
 
+        $files = scandir(base_path('database/migrations'));
+        $migrationName = 'create_' . $tableName . '_table.php';
+        foreach ($files as $file) {
+            if (Str::endsWith($file, $migrationName)) {
+                $this->info('Migration for ' . $tableName . ' already exists.');
+                return;
+            }
+        }
+
         $fileContents = file_get_contents(__DIR__ . '/../../stubs/CrudMigration.stub');
 
         // model is translatable
