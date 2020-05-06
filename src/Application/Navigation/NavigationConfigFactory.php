@@ -44,6 +44,49 @@ class NavigationConfigFactory extends ConfigFactory
 
         $method($nav);
 
-        return $nav->toArray();
+        $nav = $nav->toArray();
+
+        // Unset empty entries.
+        foreach ($nav as $i => $section) {
+            foreach ($section as $key => $entry) {
+                if (!$entry) {
+                    unset($nav[$i][$key]);
+                } else if ($entry['type'] == 'group') {
+                    foreach ($entry['children'] as $ci => $child) {
+                        if (!$child) {
+                            unset($nav[$i][$key]['children'][$ci]);
+                        }
+                    }
+                    if (empty($nav[$i][$key]['children'])) {
+                        unset($nav[$i][$key]);
+                    }
+                }
+            }
+            if ($this->isSectionEmpty($nav[$i])) {
+                unset($nav[$i]);
+            }
+        }
+
+        return $nav;
+    }
+
+    /**
+     * Is section emtpy. True when it only has titles.
+     *
+     * @param array $section
+     * @return boolean
+     */
+    protected function isSectionEmpty($section)
+    {
+        if (empty($section)) {
+            return;
+        }
+
+        foreach ($section as $entry) {
+            if ($entry['type'] != 'title') {
+                return false;
+            }
+        }
+        return true;
     }
 }

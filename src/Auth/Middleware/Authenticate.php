@@ -54,18 +54,35 @@ class Authenticate extends Middleware
      */
     protected function storeFjordSession($request)
     {
+        $query = [
+            'user_agent' => $request->server('HTTP_USER_AGENT'),
+            'ip_address' => $request->ip(),
+        ];
+        if (FjordSession::exists($query)) {
+            FjordSession::where($query)->update(
+                [
+                    'user_agent' => $request->server('HTTP_USER_AGENT'),
+                    'ip_address' => $request->ip(),
+                    'session_id' => Session::getId(),
+                    'fjord_user_id' => fjord_user()->id,
+                    'last_activity' => Carbon::now()
+                ],
+            );
+        } else {
+            FjordSession::updateOrCreate(
+                [
+                    'session_id' => Session::getId(),
+                ],
+                [
+                    'user_agent' => $request->server('HTTP_USER_AGENT'),
+                    'ip_address' => $request->ip(),
+                    'fjord_user_id' => fjord_user()->id,
+                    'last_activity' => Carbon::now()
+                ],
+            );
+        }
         // Store fjord session.
-        FjordSession::updateOrCreate(
-            [
-                'ip_address' => $request->ip(),
-                'user_agent' => $request->server('HTTP_USER_AGENT'),
-            ],
-            [
-                'session_id' => Session::getId(),
-                'fjord_user_id' => fjord_user()->id,
-                'last_activity' => Carbon::now()
-            ]
-        );
+
     }
 
     /**
