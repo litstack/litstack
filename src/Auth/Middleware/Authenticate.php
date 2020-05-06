@@ -6,6 +6,7 @@ use Closure;
 use Throwable;
 use Illuminate\Support\Carbon;
 use Fjord\Auth\Models\FjordSession;
+use Fjord\Support\Facades\FjordLang;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
@@ -33,6 +34,26 @@ class Authenticate extends Middleware
             throw $e;
         }
 
+        $this->storeFjordSession($request);
+        $this->setUserLocale();
+    }
+
+    protected function setUserLocale()
+    {
+        if (fjord_user()->locale === null) {
+            fjord_user()->locale = FjordLang::getBrowserLocale();
+            fjord_user()->save();
+        }
+    }
+
+    /**
+     * Store Fjord session.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     */
+    protected function storeFjordSession($request)
+    {
         // Store fjord session.
         FjordSession::updateOrCreate(
             [

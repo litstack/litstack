@@ -46,7 +46,7 @@ class AuthController extends Controller
         $remember = $request->remember == 'on' || $request->remember;
 
         if (Auth::guard('fjord')->attempt($credentials, $remember)) {
-            return $this->defaultUrl;
+            return $this->loginSucceeded();
         }
 
         // Try using username.
@@ -54,15 +54,23 @@ class AuthController extends Controller
             $credentials['username'] = $credentials['email'];
             unset($credentials['email']);
             if (Auth::guard('fjord')->attempt($credentials, $remember)) {
-                return $this->defaultUrl;
+                return $this->loginSucceeded();
             }
         }
 
         return response()->json([
             'message' => __f('login.failed')
         ], 401);
-        // TODO: Show login error message.
-        //return Redirect::back()->withErrors(['message', 'Login failed.']);
+    }
+
+    /**
+     * Gets executed when the login succeeded.
+     *
+     * @return string
+     */
+    public function loginSucceeded()
+    {
+        return $this->defaultUrl;
     }
 
     /**
@@ -119,14 +127,20 @@ class AuthController extends Controller
      */
     public function register(Request $request, ForgotPasswordController $sendResetLink)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:fjord_users'],
+        $rules = [
+            'username' => ['string', 'max:255', 'unique:fjord_users'],
+            'first_name' => ['string', 'max:255'],
+            'last_name' => ['string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:fjord_users'],
             'password' => ['required', 'string', 'min:8'],
-        ]);
+        ];
+
+        $request->validate($rules);
 
         $user = FjordUser::create([
-            'name' => $request->name,
+            'username' => $request->username,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'locale' => $request->locale ?? config('fjord.locale'),
             'email' => $request->email,
             'password' => Hash::make($request->password),

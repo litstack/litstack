@@ -5,10 +5,8 @@ namespace Fjord\User\Models;
 use Fjord\Auth\Models\FjordSession;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
-use Fjord\EloquentJs\CanEloquentJs;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Fjord\Auth\Notifications\ResetPasswordNotification;
-use Fjord\Form\Database\Traits\HasFormFields;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
@@ -31,7 +29,7 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'locale'
+        'username', 'first_name', 'last_name', 'email', 'password', 'locale',
     ];
 
     /**

@@ -130,7 +130,7 @@ class Translator
      *
      * @return void
      */
-    protected function getBrowserLocale()
+    public function getBrowserLocale()
     {
         if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             return config('fjord.translatable.fallback_locale');

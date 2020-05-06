@@ -3,28 +3,16 @@
 namespace FjordApp\Config\User;
 
 use Fjord\Vue\Table;
-use Fjord\User\Models\FjordUser;
-use Fjord\Config\Traits\HasIndex;
-use Fjord\Config\Contracts\IndexAble;
-use Illuminate\Database\Eloquent\Builder;
+use Fjord\User\Config\IndexConfig;
 
-class UserIndexConfig implements IndexAble
+class UserIndexConfig extends IndexConfig
 {
-    use HasIndex;
-
-    /**
-     * Fjord user model.
-     *
-     * @var string
-     */
-    public $model = FjordUser::class;
-
     /**
      * Index table search keys.
      *
      * @var array
      */
-    public $search = ['name', 'email'];
+    public $search = ['username', 'first_name', 'last_name', 'email'];
 
     /**
      * Index table sort by default.
@@ -32,24 +20,6 @@ class UserIndexConfig implements IndexAble
      * @var string
      */
     public $sortByDefault = 'id.desc';
-
-    /**
-     * Items per page.
-     *
-     * @var integer
-     */
-    public $perPage = 20;
-
-    /**
-     * Initialize index query.
-     *
-     * @param Builder $query
-     * @return Builder $query
-     */
-    public function indexQuery(Builder $query)
-    {
-        //
-    }
 
     /**
      * Build user index table.
@@ -60,7 +30,7 @@ class UserIndexConfig implements IndexAble
     public function index(Table $table)
     {
         $table->col()
-            ->value('name')
+            ->value('{first_name} {last_name}')
             ->label('Name');
 
         $table->col()

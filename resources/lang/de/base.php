@@ -17,6 +17,8 @@ return [
     "cancel" => "abbrechen",
     'delete' => 'löschen',
     'image' => 'Bild',
+    'first_name' => 'Vorname',
+    'last_name' => 'Nachname',
     'logout' => 'ausloggen',
     'location' => 'Standort',
     'action' => 'Aktion|Aktionen',
