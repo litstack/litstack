@@ -36,7 +36,7 @@
                     v-html="
                         __('crud.last_edited', {
                             time: model.last_edit.time,
-                            user: model.last_edit.user.name
+                            user: `${model.last_edit.user.first_name} ${model.last_edit.user.last_name}`
                         })
                     "
                 />
@@ -123,6 +123,18 @@ export default {
         };
     },
     methods: {
+        async reloadModel() {
+            let response;
+            try {
+                response = await axios.get(
+                    `${this.config.route_prefix}/${this.model.id}/load`
+                );
+            } catch (e) {
+                console.log(e);
+                return;
+            }
+            this.model = this.crud(response.data);
+        },
         saved(responses) {
             for (let i in responses) {
                 let response = responses[i];
@@ -133,7 +145,6 @@ export default {
                     (response.config.url == `${this.config.route_prefix}` &&
                         response.config.method == 'post')
                 ) {
-                    console.log('JO');
                     this.model = this.crud(response.data);
                 }
             }
@@ -176,6 +187,7 @@ export default {
         this.$store.commit('SET_CONFIG', this.config);
 
         Fjord.bus.$on('saved', this.saved);
+        Fjord.bus.$on('field:updated', this.reloadModel);
     },
     mounted() {
         this.scrollToFormFieldFromHash();

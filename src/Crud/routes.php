@@ -16,6 +16,7 @@ if ($type == 'crud') {
     Route::get("/", [$controller, "edit"])->name('edit');
 }
 
+Route::get("/{id}/load", [$controller, "load"])->name('load');
 Route::put("/{id}", [$controller, "update"])->name('update');
 
 

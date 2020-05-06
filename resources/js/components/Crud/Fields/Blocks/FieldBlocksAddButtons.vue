@@ -55,6 +55,8 @@ export default {
 
             this.$emit('newBlock', model);
 
+            Fjord.bus.$emit('field:updated', 'block:added');
+
             this.$bvToast.toast(this.$t('fj.new_block', { type }), {
                 variant: 'success'
             });

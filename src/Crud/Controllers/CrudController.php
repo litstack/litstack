@@ -55,6 +55,23 @@ abstract class CrudController
     }
 
     /**
+     * Load model.
+     *
+     * @param CrudReadRequest $request
+     * @param int $id
+     * @return array
+     */
+    public function load(CrudReadRequest $request, $id)
+    {
+        $model = $this->query()->findOrFail($id);
+        $model->last_edit;
+
+        return crud(
+            $model
+        );
+    }
+
+    /**
      * Delete by query.
      *
      * @param Builder $query

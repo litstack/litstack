@@ -217,6 +217,7 @@ export default {
                 variant: 'success'
             });
             this.images.push(response);
+            Fjord.bus.$emit('field:updated', 'image:uploaded');
         },
         uploadError(file, errorMessage, xhr) {
             this.$bvToast.toast(errorMessage.message, {

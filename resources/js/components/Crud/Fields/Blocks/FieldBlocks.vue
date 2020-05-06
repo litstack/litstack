@@ -128,6 +128,8 @@ export default {
             }
             this.sortableBlocks.splice(this.sortableBlocks.indexOf(block), 1);
 
+            Fjord.bus.$emit('field:updated', 'block:deleted');
+
             this.$bvToast.toast(this.$t('fj.deleted_block'), {
                 variant: 'success'
             });
@@ -145,6 +147,8 @@ export default {
                 console.log(e);
                 return;
             }
+
+            Fjord.bus.$emit('field:updated', 'block:ordered');
 
             this.$bvToast.toast(this.$t('fj.order_changed'), {
                 variant: 'success'

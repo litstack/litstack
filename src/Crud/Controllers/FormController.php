@@ -22,14 +22,6 @@ abstract class FormController
         Concerns\HasForm;
 
     /**
-     * Create new CrudController instance.
-     */
-    public function __construct()
-    {
-        $this->config = $this->loadConfig();
-    }
-
-    /**
      * Crud model class name.
      *
      * @var string
@@ -44,6 +36,31 @@ abstract class FormController
      * @return boolean
      */
     abstract public function authorize(FjordUser $user, string $operation): bool;
+
+    /**
+     * Create new CrudController instance.
+     */
+    public function __construct()
+    {
+        $this->config = $this->loadConfig();
+    }
+
+    /**
+     * Load model.
+     *
+     * @param CrudReadRequest $request
+     * @param int $id
+     * @return array
+     */
+    public function load(CrudReadRequest $request, $id)
+    {
+        $model = $this->query()->findOrFail($id);
+        $model->last_edit;
+
+        return crud(
+            $model
+        );
+    }
 
     /**
      * Get query builder

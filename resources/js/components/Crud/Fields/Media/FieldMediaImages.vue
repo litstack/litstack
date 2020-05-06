@@ -139,6 +139,7 @@ export default {
             this.$bvToast.toast(this.$t('fj.order_changed'), {
                 variant: 'success'
             });
+            Fjord.bus.$emit('field:updated', 'image:ordered');
         },
         getMediaUrl(key) {
             return `${this.field.route_prefix}/media/${key}`;
@@ -155,6 +156,7 @@ export default {
         async _deleteImage(image, index) {
             let response = await axios.delete(this.getMediaUrl(image.id));
             this.$delete(this.sortable, index);
+            Fjord.bus.$emit('field:updated', 'image:deleted');
         },
         deleteImageModalId(image) {
             return `fj-delete-image-${this.field.id}-${image.id}`;

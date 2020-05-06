@@ -84,7 +84,11 @@ trait ManagesBlocksRelations
 
         $relation = $field->getQuery()->findOrFail($relation_id);
 
-        return $this->createFieldRelation($request, $field, $block, $relation);
+        $response = $this->createFieldRelation($request, $field, $block, $relation);
+
+        $this->edited($model, 'relation:created');
+
+        return $response;
     }
 
     /**
@@ -109,7 +113,11 @@ trait ManagesBlocksRelations
 
         $relation = $field->getQuery()->findOrFail($relation_id);
 
-        return $this->destroyFieldRelation($request, $field, $block, $relation);
+        $response = $this->destroyFieldRelation($request, $field, $block, $relation);
+
+        $this->edited($model, 'relation:ordered');
+
+        return $response;
     }
 
     /**
@@ -132,6 +140,10 @@ trait ManagesBlocksRelations
 
         $query = $field->relation($block, $query = true);
 
-        return $this->orderField($query->getQuery(), $field, $ids);
+        $response = $this->orderField($query->getQuery(), $field, $ids);
+
+        $this->edited($model, 'relation:ordered');
+
+        return $response;
     }
 }

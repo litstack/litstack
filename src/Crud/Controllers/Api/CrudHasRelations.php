@@ -91,6 +91,8 @@ trait CrudHasRelations
 
         $this->createFieldRelation($request, $field, $model, $relation);
 
+        $this->edited($model, 'relation:created');
+
         return crud($relation);
     }
 
@@ -151,7 +153,11 @@ trait CrudHasRelations
 
         $relation = $field->getQuery()->findOrFail($relation_id);
 
-        return $this->destroyFieldRelation($request, $field, $model, $relation);
+        $response = $this->destroyFieldRelation($request, $field, $model, $relation);
+
+        $this->edited($model, 'relation:deleted');
+
+        return $response;
     }
 
     /**
@@ -212,7 +218,7 @@ trait CrudHasRelations
 
         $order = $this->orderField($query, $field, $ids);
 
-        // TODO: Model edit.
+        $this->edited($model, 'relation:ordered');
 
         return $order;
     }

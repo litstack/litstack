@@ -223,6 +223,8 @@ export default {
             } else {
                 this.selectedRelations.push(relation);
             }
+
+            Fjord.bus.$emit('field:updated', 'relation:selected');
         },
         removeRelation(relation) {
             if (!this.field.confirm) {
@@ -283,6 +285,8 @@ export default {
             } else {
                 this.selectedRelations = [];
             }
+
+            Fjord.bus.$emit('field:updated', 'relation:removed');
         },
         async newOrder() {
             let payload = {
@@ -297,6 +301,8 @@ export default {
                 console.log(e);
                 return;
             }
+
+            Fjord.bus.$emit('field:updated', 'relation:ordered');
 
             this.$bvToast.toast(this.$t('fj.order_changed'), {
                 variant: 'success'

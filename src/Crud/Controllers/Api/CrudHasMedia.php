@@ -22,6 +22,8 @@ trait CrudHasMedia
             ?? abort(404);
 
         return $this->storeMediaToModel($request, $model, $field);
+
+        $this->edited($model, 'media:uploaded');
     }
 
     /**
@@ -48,6 +50,8 @@ trait CrudHasMedia
         $media = $model->addMedia($request->media)
             ->withCustomProperties($customProperties)
             ->toMediaCollection($request->collection);
+
+        $this->edited($model, 'media:uploaded');
 
         return response()->json($media, 200);
     }
@@ -100,6 +104,9 @@ trait CrudHasMedia
         $model = $this->query()->findOrFail($id);
         $media = $model->media()->findOrFail($media_id);
         $media->custom_properties = $request->custom_properties;
+
+        $this->edited($model, 'media:updated');
+
         return $media->save();
     }
 
@@ -114,6 +121,9 @@ trait CrudHasMedia
     {
         $model = $this->query()->findOrFail($id);
         if ($model->media()->findOrFail($media_id)->delete()) {
+
+            $this->edited($model, 'media:deleted');
+
             return response()->json(['message' => __f('fj.image_deleted')], 200);
         }
     }
@@ -132,6 +142,10 @@ trait CrudHasMedia
         $field = $this->config->form->findField($request->collection) ?? abort(404);
         $query = $model->media()->where('collection_name', $field->id);
 
-        return $this->orderField($query->getQuery(), $field, $ids);
+        $response = $this->orderField($query->getQuery(), $field, $ids);
+
+        $this->edited($model, 'media:ordered');
+
+        return $response;
     }
 }
