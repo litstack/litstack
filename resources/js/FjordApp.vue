@@ -40,7 +40,7 @@ export default {
             required: true
         },
         slots: {
-            type: Object,
+            type: [Object, Array],
             default() {
                 return {};
             }
