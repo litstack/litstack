@@ -104,12 +104,12 @@ if (!function_exists('fjord_js')) {
      */
     function fjord_js()
     {
-        $js_path = config('fjord.assets.app.js')
-            ? config('fjord.assets.app.js')
+        $js_path = config('fjord.assets.js')
+            ? config('fjord.assets.js')
             : route('fjord.js');
 
-        if (config('fjord.assets.app.js')) {
-            $js_path .= '?v=' . filemtime(ltrim(config('fjord.assets.app.js'), '/'));
+        if (config('fjord.assets.js')) {
+            $js_path .= '?v=' . filemtime(ltrim(config('fjord.assets.js'), '/'));
         }
 
         return $js_path;
