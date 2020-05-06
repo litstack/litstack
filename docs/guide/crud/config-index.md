@@ -20,7 +20,7 @@ public function indexQuery(Builder $query)
 
 ## Search
 
-For the search, all model `attributes` to be searched for are specified. You can also specify `relations` and their `attributes`.
+All attributes to be searched for are specified in `search`. You can also specify `relations` and their attributes.
 
 ```php
 public $search = ['title', 'department.name'];
@@ -78,6 +78,31 @@ public function scopeMarketing()
 }
 ```
 
+## Pagination
+
+The maximum number of items to be displayed on a page is defined in `perPage`. The default is `20`.
+
+```php
+public $perPage = 10;
+```
+
+## Sortable
+
+A model can be made sortable in the index table. For this purpose, `sortable` must be set to true and an `orderColumn` must be specified.
+The default `orderColumn` is `order_column`.
+
+```php
+public $sortable = false;
+
+public $orderColumn = 'order_column';
+```
+
+Now a draghandle is displayed for each item. So that the records are not mixed up, the draghandle is only shown if the items that are loaded are sorted by `orderColumn` and **no filter** or **search value** is set. If the draghandle should be displayed directly the `sortByDefault` key must be set to the `orderColumn`.
+
+```php
+public $sortByDefault = 'order_column.asc';
+```
+
 ## Columns
 
 All columns are defined in the `index` function.
@@ -93,7 +118,7 @@ public function index(CrudTable $table)
 
 ### `col`
 
-Normal columns are added with the function `col({title})`. Attached are all methods for configuring the column.
+Casual text columns are added with the function `col({title})`. Attached are all methods for configuring the column.
 
 ```php
 $table->col('Name')->value('name')->sortBy('name');

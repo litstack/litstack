@@ -54,14 +54,6 @@ $form->info('Adress')
     ->text(...);
 ```
 
-## Line
-
-Another help to create clear forms is to separate sections with lines. Fjord comes with a helper to easily integrate them.
-
-```php
-$form->line();
-```
-
 ## Preview
 
 There is the possibility to get a `preview` of the stored data directly in the update form. The **route** for this can be easily specified using the method `previewRoute`. For a CRUD Model, the corresponding Model is also passed as a parameter.
