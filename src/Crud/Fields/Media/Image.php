@@ -42,7 +42,6 @@ class Image extends MediaField
         'imageSize',
         'maxFiles',
         'crop',
-        'ratio',
         'override',
         'firstBig',
         'sortable'
@@ -62,10 +61,24 @@ class Image extends MediaField
         'sortable' => true
     ];
 
+
     /**
      * Media form for custom_properties.
      *
      * @var MediaForm
      */
     protected $form;
+
+    /**
+     * Set crop ratio.
+     *
+     * @param integer $ratio
+     * @return void
+     */
+    /*
+    public function crop(int $ratio)
+    {
+        //
+    }
+    */
 }

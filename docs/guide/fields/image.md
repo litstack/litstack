@@ -10,8 +10,7 @@ $form->image('images') // images is the corresponding media collection.
     ->title('Images')
     ->hint('Image Collection.')
     ->maxFiles(5)
-    ->crop(true) // Should the image be cropped before upload.
-    ->ratio(16/9) // Crop ratio.
+    ->crop(16/9) // Should the image be cropped before upload.
 ```
 
 For the case that the first image from the list should be used as a preview image, you can use `firstBig` to display the first image bigger to show that the first image has a bigger meaning.
@@ -46,6 +45,5 @@ public function getImagesAttribute()
 | `cols`         | Cols of the form field.                                       |
 | `sortable`     | Should the images be sortable? (default: `true`)              |
 | `maxFiles`     | Maxmium number of uploadable images. (default: `5`)           |
-| `crop`         | Opens a Crop-Tool before the upload if set to `true`          |
-| `ratio`        | The crop-ratio.                                               |
+| `crop`         | Opens a Crop-Tool before the upload. (default: `false`)       |
 | `firstBig`     | Display's the first image bigger.                             |
