@@ -74,6 +74,7 @@ class FjordCrud extends Command
         $model = app_path('Models/' . $modelName . '.php');
 
         if (\File::exists($model)) {
+            $this->info('Model App\\Models\\' . $modelName . ' already exists.');
             return;
         }
 
