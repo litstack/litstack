@@ -59,4 +59,17 @@ class TableComponent extends Component
     {
         parent::setDefaults();
     }
+
+    /**
+     * Set sort_by key.
+     *
+     * @param string $key
+     * @return void
+     */
+    public function sortBy(string $key)
+    {
+        $this->props['sort_by'] = $key;
+
+        return $this;
+    }
 }
