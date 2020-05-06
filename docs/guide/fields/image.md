@@ -12,7 +12,15 @@ $form->image('images') // images is the corresponding media collection.
     ->maxFiles(5)
     ->crop(true) // Should the image be cropped before upload.
     ->ratio(16/9) // Crop ratio.
-    ->square();
+```
+
+For the case that the first image from the list should be used as a preview image, you can use `firstBig` to display the first image bigger to show that the first image has a bigger meaning.
+
+```php
+$form->image('images') // images is the corresponding media collection.
+    ->title('Images')
+    ->firstBig()
+    ->hint('The first image is the preview image.')
 ```
 
 ### Preparing the Model
@@ -37,4 +45,4 @@ public function getImagesAttribute()
 | `maxFiles`     | Maxmium number of uploadable images.                          |
 | `crop`         | Opens a Crop-Tool before the upload if set to `true`          |
 | `ratio`        | The crop-ratio.                                               |
-| `square`       | Display a square thumbnail, recommended for multiple images   |
+| `firstBig`     | Display's the first image bigger.                             |

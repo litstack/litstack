@@ -169,8 +169,7 @@ export default {
         },
         fileCount() {
             let c = [];
-            let length = this.images.length + this.uploads;
-            for (var i = 0; i < length; i++) {
+            for (var i = 0; i < this.images.length; i++) {
                 c.push(1);
             }
             return c;

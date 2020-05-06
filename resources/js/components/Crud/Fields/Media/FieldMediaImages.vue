@@ -1,7 +1,10 @@
 <template>
     <draggable
         v-model="sortable"
-        class="fj-image-list mb-4"
+        :class="{
+            'fj-image-list': true,
+            'mb-4': field.readonly || images.length == 0
+        }"
         :options="{ disabled: field.readonly }"
         @end="newOrder"
         handle=".fj-draggable__dragbar"
