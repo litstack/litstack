@@ -29,8 +29,8 @@
                             <vue-dropzone
                                 v-if="
                                     !field.readonly &&
-                                        images.length > 0 &&
-                                        images.length < field.maxFiles
+                                    images.length > 0 &&
+                                    images.length < field.maxFiles
                                 "
                                 slot="drop"
                                 class="fj-dropzone"
@@ -51,7 +51,7 @@
                 </b-row>
             </div>
             <b-modal
-                :id="`fj-cropper-${field.id}`"
+                :id="getCropperId()"
                 size="xl"
                 title="Crop Image"
                 :static="true"
@@ -103,18 +103,18 @@ export default {
     props: {
         model: {
             required: true,
-            type: Object
+            type: Object,
         },
         field: {
             required: true,
-            type: Object
+            type: Object,
         },
         modelId: {
-            type: [Boolean, Number]
-        }
+            type: [Boolean, Number],
+        },
     },
     components: {
-        vueDropzone: vue2Dropzone
+        vueDropzone: vue2Dropzone,
     },
     data() {
         let self = this;
@@ -140,12 +140,12 @@ export default {
                     'X-CSRF-TOKEN': document.head.querySelector(
                         'meta[name="csrf-token"]'
                     ).content,
-                    'X-Requested-With': 'XMLHttpRequest'
+                    'X-Requested-With': 'XMLHttpRequest',
                 },
                 params: {
-                    collection: this.field.id
-                }
-            }
+                    collection: this.field.id,
+                },
+            },
         };
     },
     beforeMount() {
@@ -173,9 +173,12 @@ export default {
                 c.push(1);
             }
             return c;
-        }
+        },
     },
     methods: {
+        getCropperId() {
+            return `fj-cropper-${this.field.route_prefix.replace(/\//g, '-')}`;
+        },
         getUploadUrl() {
             return `${this.baseURL}${this.field.route_prefix}/media`;
         },
@@ -187,7 +190,7 @@ export default {
             if (!(this.language in image.custom_properties)) {
                 image.custom_properties[this.language] = {
                     alt: '',
-                    title: ''
+                    title: '',
                 };
             }
 
@@ -214,7 +217,7 @@ export default {
         uploadSuccess(file, response) {
             this.uploads++;
             this.$bvToast.toast(this.__('fj.image_uploaded'), {
-                variant: 'success'
+                variant: 'success',
             });
             this.images.push(response);
             Fjord.bus.$emit('field:updated', 'image:uploaded');
@@ -222,7 +225,7 @@ export default {
         uploadError(file, errorMessage, xhr) {
             this.$bvToast.toast(errorMessage.message, {
                 variant: 'danger',
-                noAutoHide: true
+                noAutoHide: true,
             });
         },
         processQueue() {
@@ -243,38 +246,37 @@ export default {
             //
             //
             const DROPZONE = this.dropzone;
-            const CANVAS = $(
-                `#fj-cropper-${this.field.id} .fj-cropper__canvas`
-            );
+            const CANVAS = $(`#${this.getCropperId()} .fj-cropper__canvas`);
             let uploadable = true;
 
             // Show the cropping modal
             //
             //
-            this.$bvModal.show(`fj-cropper-${this.field.id}`);
+            this.$bvModal.show(`${this.getCropperId()}`);
 
             // Create an image node for Cropper.js
             //
             //
             var image = new Image();
             image.src = URL.createObjectURL(file);
+
             CANVAS.append(image);
 
             // Create Cropper
             //
             //
+            console.log(CANVAS, 'sleeping', image);
             var cropper = new Cropper(image, {
                 aspectRatio: this.field.ratio,
                 viewMode: 2,
-                preview: $(
-                    `#fj-cropper-${this.field.id} .fj-cropper__preview`
-                )[0]
+                preview: $(`#${this.getCropperId()} .fj-cropper__preview`)[0],
             });
+            console.log(cropper);
 
             // User Actions
             //
             //
-            $(document).keydown(e => {
+            $(document).keydown((e) => {
                 if (e.keyCode == 27) {
                     uploadable = false;
                     this.dropzone.removeAllFiles();
@@ -290,7 +292,7 @@ export default {
                 // Cancel current uploads
                 this.dropzone.removeAllFiles(true);
                 CANVAS.html('');
-                this.$bvModal.hide(`fj-cropper-${this.field.id}`);
+                this.$bvModal.hide(`${this.getCropperId()}`);
             });
 
             $('body').on('click', '#cropper-save', () => {
@@ -298,19 +300,19 @@ export default {
                     // Get the canvas with image data from Cropper.js
                     var canvas = cropper.getCroppedCanvas({
                         width: 1400,
-                        height: 1000
+                        height: 1000,
                     });
                     // Turn the canvas into a Blob (file object without a name)
-                    canvas.toBlob(function(blob) {
+                    canvas.toBlob(function (blob) {
                         done(blob);
                     });
                 }
 
                 CANVAS.html('');
-                this.$bvModal.hide(`fj-cropper-${this.field.id}`);
+                this.$bvModal.hide(`${this.getCropperId()}`);
             });
-        }
-    }
+        },
+    },
 };
 </script>
 <style lang="scss">
@@ -338,7 +340,7 @@ div#fjord-app .fj-dropzone {
 
 .fj-cropper {
     position: fixed;
-    //display: none;
+    display: none;
     top: 0;
     bottom: 0;
     left: 0;
@@ -368,5 +370,21 @@ div#fjord-app .fj-dropzone {
         width: 100%;
         height: 100%;
     }
+}
+.r2x1 {
+    position: relative;
+    padding-bottom: 50%;
+}
+.r4x3 {
+    position: relative;
+    padding-bottom: 75%;
+}
+.r16x9 {
+    position: relative;
+    padding-bottom: 56.25%;
+}
+.r16x10 {
+    position: relative;
+    padding-bottom: 62.5%;
 }
 </style>
