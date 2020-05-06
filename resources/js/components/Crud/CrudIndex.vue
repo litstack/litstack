@@ -17,6 +17,7 @@
                     v-for="(component, key) in slots.headerControls"
                     :key="key"
                     v-bind="component"
+                    :config="config"
                 />
             </div>
         </fj-header>

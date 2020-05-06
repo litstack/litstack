@@ -738,7 +738,7 @@ kbd {
   font-size: 87.5%;
   color: #fff;
   background-color: #232127;
-  border-radius: 0.3rem;
+  border-radius: 0.4rem;
 }
 
 kbd kbd {
@@ -2487,7 +2487,7 @@ select.form-control:focus::-ms-value {
   padding: 0.390625rem 0.78125rem;
   font-size: 0.875rem;
   line-height: 1.5;
-  border-radius: 0.3rem;
+  border-radius: 0.4rem;
 }
 
 .form-control-lg {
@@ -3635,7 +3635,7 @@ fieldset:disabled a.btn {
   padding: 0.390625rem 0.78125rem;
   font-size: 0.875rem;
   line-height: 1.5;
-  border-radius: 0.3rem;
+  border-radius: 0.4rem;
 }
 
 .btn-block {
@@ -4223,7 +4223,7 @@ input[type=button].btn-block {
   padding: 0.390625rem 0.78125rem;
   font-size: 0.875rem;
   line-height: 1.5;
-  border-radius: 0.3rem;
+  border-radius: 0.4rem;
 }
 
 .input-group-lg > .custom-select,
@@ -4333,7 +4333,7 @@ input[type=button].btn-block {
 }
 
 .custom-checkbox .custom-control-label::before {
-  border-radius: 0.3rem;
+  border-radius: 0.4rem;
 }
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
@@ -5589,13 +5589,13 @@ input[type=button].btn-block {
 }
 
 .pagination-sm .page-item:first-child .page-link {
-  border-top-left-radius: 0.3rem;
-  border-bottom-left-radius: 0.3rem;
+  border-top-left-radius: 0.4rem;
+  border-bottom-left-radius: 0.4rem;
 }
 
 .pagination-sm .page-item:last-child .page-link {
-  border-top-right-radius: 0.3rem;
-  border-bottom-right-radius: 0.3rem;
+  border-top-right-radius: 0.4rem;
+  border-bottom-right-radius: 0.4rem;
 }
 
 .badge {
@@ -5607,7 +5607,7 @@ input[type=button].btn-block {
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  border-radius: 0.3rem;
+  border-radius: 0.4rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -7623,7 +7623,7 @@ button.bg-gray:focus {
 }
 
 .rounded-sm {
-  border-radius: 0.3rem !important;
+  border-radius: 0.4rem !important;
 }
 
 .rounded {
@@ -11754,7 +11754,7 @@ a.text-gray:focus {
   left: -1.3125rem;
   width: 0.875rem;
   height: 0.875rem;
-  border-radius: 0.3rem;
+  border-radius: 0.4rem;
 }
 
 .custom-checkbox.b-custom-control-sm .custom-control-label::after,
@@ -11900,14 +11900,14 @@ a.text-gray:focus {
 
 .b-custom-control-sm .custom-file-label,
 .input-group-sm .custom-file-label {
-  border-radius: 0.3rem;
+  border-radius: 0.4rem;
 }
 
 .b-custom-control-sm .custom-file-label::after,
 .input-group-sm .custom-file-label::after {
   font-size: inherit;
   height: calc( 1.5em + 0.78125rem );
-  border-radius: 0 0.3rem 0.3rem 0;
+  border-radius: 0 0.4rem 0.4rem 0;
 }
 
 .was-validated .form-control:invalid,
@@ -12015,7 +12015,7 @@ input[type=color].form-control:disabled {
 .input-group-sm > .custom-range {
   height: calc(1.5em + 0.78125rem + 2px);
   padding: 0 0.78125rem;
-  border-radius: 0.3rem;
+  border-radius: 0.4rem;
 }
 
 .was-validated .input-group .custom-range:valid,

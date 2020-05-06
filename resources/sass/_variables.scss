@@ -153,7 +153,7 @@ $border-color: $secondary !default;
 
 $border-radius: 0.6rem !default;
 $border-radius-lg: 0.8rem !default;
-$border-radius-sm: $border-radius * 0.5 !default;
+$border-radius-sm: 0.4rem !default;
 
 //$rounded-pill: 50rem !default;
 
@@ -347,7 +347,7 @@ $input-border-color: $border-color !default;
 //
 //$input-border-radius:                   $border-radius !default;
 //$input-border-radius-lg:                $border-radius-lg !default;
-//$input-border-radius-sm:                $border-radius-sm !default;
+$input-border-radius-sm: $border-radius-sm !default;
 //
 //$input-focus-bg:                        $input-bg !default;
 //$input-focus-border-color:              lighten($component-active-bg, 25%) !default;

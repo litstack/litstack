@@ -33,7 +33,7 @@ export default {
     props: {
         filter: {
             required: true,
-            type: Object
+            type: [Object, Array]
         }
     },
     data() {

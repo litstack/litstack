@@ -193,7 +193,7 @@ export default {
             }
         },
         filter: {
-            type: Object,
+            type: [Object, Array],
             default() {
                 return {};
             }

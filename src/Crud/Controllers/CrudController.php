@@ -91,7 +91,9 @@ abstract class CrudController
      */
     public function destroy(CrudDeleteRequest $request, $id)
     {
-        $this->delete($this->query()->findOrFail($id));
+        $this->delete(
+            $this->query()->where('id', $id)
+        );
     }
 
     /**
