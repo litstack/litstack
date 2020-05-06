@@ -180,6 +180,12 @@ export default {
         grid-column: 1 / 1;
     }
 }
+.dropzone.dz-started .dz-message {
+    display: block !important;
+}
+.dz-image-preview {
+    display: none !important;
+}
 
 .fj-image-card {
     border-radius: $border-radius;
