@@ -73,6 +73,10 @@ class FjordCrud extends Command
     {
         $model = app_path('Models/' . $modelName . '.php');
 
+        if (\File::exists($model)) {
+            return;
+        }
+
         $implements = [];
         $uses = ['TrackEdits'];
         $appends = [];
