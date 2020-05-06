@@ -243,8 +243,8 @@ class FjordCrud extends Command
         $fileContents = str_replace('DummyModelClass', "\\App\\Models\\{$modelName}", $fileContents);
         $fileContents = str_replace('DummyTableName', $tableName, $fileContents);
 
-        if (!\File::exists('app/Http/Controllers/Fjord/Crud')) {
-            \File::makeDirectory('app/Http/Controllers/Fjord/Crud');
+        if (!\File::exists(base_path('fjord/app/Controllers/Crud'))) {
+            \File::makeDirectory(base_path('fjord/app/Controllers/Crud'));
         }
         if (\File::put($controllerPath, $fileContents)) {
             $this->info('controller created');

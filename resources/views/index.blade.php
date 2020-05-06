@@ -37,7 +37,6 @@
             
              @include('fjord::partials.spinner')
         </main>
-        
 
     </div>
 
