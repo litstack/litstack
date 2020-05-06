@@ -14867,33 +14867,6 @@ input[type=color].form-control:disabled {
   box-shadow: 0 0 19px 0 rgba(235, 235, 235, 0.5);
 }
 
-.fj-card__1x1 {
-  height: 0;
-  padding: 0 !important;
-  padding-bottom: 100% !important;
-  position: relative;
-}
-
-.fj-card__1x1 img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
-.fj-card__image {
-  cursor: -webkit-grab;
-  cursor: grab;
-}
-
-.fj-card__image img {
-  width: 100%;
-  border-top-left-radius: 0.6rem;
-  border-top-right-radius: 0.6rem;
-  border: 3px solid white;
-}
-
 .dropdown .dropdown-menu {
   box-shadow: 0 0 40px 0 rgba(112, 133, 156, 0.15);
 }

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'item_delete' => 'delete :item',
     'item_remove' => 'remove :item',
     'item_settings' => ':item settings',
     'profile' => 'profile',
@@ -14,6 +15,7 @@ return [
     'device' => 'device',
     'logout' => 'logout',
     'delete' => 'löschen',
+    'image' => 'image',
     "cancel" => "cancel",
     'location' => 'location',
     'action' => 'action|actions',

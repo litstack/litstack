@@ -129,8 +129,7 @@ export default {
             return image.custom_properties[this.language][key];
         },
         async destroy(id, index) {
-            let response = await axios.delete(this.getMediaUrl(id));
-            this.$emit('delete', index);
+            this.$emit('delete');
         },
         getMediaUrl(id) {
             return `${this.field.route_prefix}/media/${id}`;

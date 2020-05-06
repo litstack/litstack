@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'item_delete' => ':item löschen',
     'item_remove' => ':item entfernen',
     'item_settings' => ':item Einstellungen',
     'profile' => 'Konto',
@@ -14,6 +15,7 @@ return [
     'device' => 'Gerät',
     "cancel" => "abbrechen",
     'delete' => 'löschen',
+    'image' => 'Bild',
     'logout' => 'ausloggen',
     'location' => 'Standort',
     'action' => 'Aktion|Aktionen',

@@ -5,7 +5,7 @@
                 <b-row>
                     <div
                         class="col-12 order-2"
-                        v-if="!field.readonly && images.length < field.maxFiles"
+                        v-if="!field.readonly && images.length == 0"
                     >
                         <vue-dropzone
                             class="fj-dropzone"
@@ -15,7 +15,7 @@
                             @vdropzone-success="uploadSuccess"
                             @vdropzone-error="uploadError"
                             @vdropzone-files-added="processQueue"
-                        ></vue-dropzone>
+                        />
                     </div>
                     <div class="col-12 order-1">
                         <fj-field-media-images
@@ -25,7 +25,23 @@
                             :model-id="modelId"
                             :readonly="field.readonly"
                             v-if="images.length > 0"
-                        />
+                        >
+                            <vue-dropzone
+                                v-if="
+                                    !field.readonly &&
+                                        images.length > 0 &&
+                                        images.length < field.maxFiles
+                                "
+                                slot="drop"
+                                class="fj-dropzone"
+                                :ref="`dropzone-${field.id}`"
+                                :id="`dropzone-${field.id}`"
+                                :options="dropzoneOptions"
+                                @vdropzone-success="uploadSuccess"
+                                @vdropzone-error="uploadError"
+                                @vdropzone-files-added="processQueue"
+                            />
+                        </fj-field-media-images>
                         <fj-field-alert-empty
                             v-else
                             :field="field"
@@ -117,7 +133,7 @@ export default {
                 method: 'POST',
                 paramName: 'media',
                 acceptedFiles: 'image/*, application/pdf',
-                dictDefaultMessage: `<i class="fas fa-file-import mr-2"></i> ${this.$t(
+                dictDefaultMessage: `<i class="fas fa-file-import mr-2"></i> ${this.__(
                     'fj.drag_and_drop'
                 )}`,
                 headers: {

@@ -132,6 +132,6 @@ trait CrudHasMedia
         $field = $this->config->form->findField($request->collection) ?? abort(404);
         $query = $model->media()->where('collection_name', $field->id);
 
-        return $this->orderField($query, $field, $ids);
+        return $this->orderField($query->getQuery(), $field, $ids);
     }
 }

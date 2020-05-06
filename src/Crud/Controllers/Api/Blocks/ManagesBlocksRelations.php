@@ -132,6 +132,6 @@ trait ManagesBlocksRelations
 
         $query = $field->relation($block, $query = true);
 
-        return $this->orderField($query, $field, $ids);
+        return $this->orderField($query->getQuery(), $field, $ids);
     }
 }

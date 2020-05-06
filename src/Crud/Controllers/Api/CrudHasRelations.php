@@ -212,7 +212,7 @@ trait CrudHasRelations
 
         $order = $this->orderField($query, $field, $ids);
 
-        $model->edited('order relation');
+        // TODO: Model edit.
 
         return $order;
     }
