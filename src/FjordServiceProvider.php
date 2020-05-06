@@ -24,7 +24,6 @@ class FjordServiceProvider extends ServiceProvider
     protected $providers = [
         Auth\ServiceProvider::class,
         Fjord\Discover\PackageDiscoverServiceProvider::class,
-        Application\Translation\TranslationServiceProvider::class,
         Support\Macros\BuilderMacros::class,
     ];
 
