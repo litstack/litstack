@@ -166,6 +166,11 @@ class FjordCrud extends Command
     {
         $model = app_path('Models/Translations/' . $modelName . 'Translation.php');
 
+        if (\File::exists($model)) {
+            $this->info("Translation Model already exists.");
+            return;
+        }
+
         if (!file_exists($model)) {
             $fileContents = file_get_contents(__DIR__ . '/../../stubs/CrudTranslationModel.stub');
 
@@ -251,6 +256,11 @@ class FjordCrud extends Command
 
         $controllerPath = base_path('fjord/app/Controllers/Crud/' . $modelName . 'Controller.php');
 
+        if (\File::exists($controllerPath)) {
+            $this->info("Controller {$modelName}Controller already exists.");
+            return;
+        }
+
         $fileContents = file_get_contents(__DIR__ . '/../../stubs/CrudController.stub');
 
         $fileContents = str_replace('DummyClassname', $modelName . 'Controller', $fileContents);
@@ -269,6 +279,12 @@ class FjordCrud extends Command
     {
         $tableName = Str::snake(Str::plural($modelName));
         $config = base_path('fjord/app/Config/Crud/' . ucfirst($modelName) . 'Config.php');
+
+        $name = ucfirst($modelName);
+        if (\File::exists($config)) {
+            $this->info("Controller {$name}Controller already exists.");
+            return;
+        }
 
         $fileContents = file_get_contents(__DIR__ . '/../../stubs/CrudConfig.stub');
         $fileContents = str_replace('DummyClassname', $modelName, $fileContents);
