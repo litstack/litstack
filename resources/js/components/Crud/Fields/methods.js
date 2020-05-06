@@ -84,7 +84,7 @@ const methods = {
 
         let job = {
             route: this.field.route_prefix,
-            method: 'PUT',
+            method: this.field._method,
             params,
             key: jobKey
         };

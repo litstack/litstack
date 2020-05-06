@@ -12,7 +12,7 @@
             </b-button>
         </fj-navigation>
         <fj-header :title="config.names.plural">
-            <div slot="actions-right">
+            <div slot="actions">
                 <fj-slot
                     v-for="(component, key) in slots.headerControls"
                     :key="key"

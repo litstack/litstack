@@ -60,6 +60,8 @@ class CrudIndexConfigFactory extends ConfigFactory
     {
         $component = component('fj-crud-form');
 
+        $component->slot('headerControls', 'fj-crud-preview');
+
         $method($component);
 
         return $component;

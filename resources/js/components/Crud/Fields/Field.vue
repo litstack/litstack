@@ -34,9 +34,17 @@ export default {
         // For e.g: In a Block the model of the Block would be passed but the
         // route Model id is not the id for the Block but for the Crud Model.
         let modelId = this.modelId ? this.modelId : this.model.id;
+        let replace = '{id}';
+        this.field._method = 'PUT';
+
+        if (modelId === undefined) {
+            this.field._method = 'POST';
+            modelId = '';
+            replace = '/{id}';
+        }
 
         this.field.route_prefix = this.field.route_prefix.replace(
-            '{id}',
+            replace,
             modelId
         );
     }

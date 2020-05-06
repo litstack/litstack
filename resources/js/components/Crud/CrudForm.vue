@@ -1,6 +1,10 @@
 <template>
     <fj-container :fluid="config.expand ? 'fluid' : 'lg'">
-        <fj-navigation :back="backRoute" :back-text="config.names.plural">
+        <fj-navigation
+            :back="backRoute"
+            :back-text="config.names.plural"
+            :controls="slots.navControls"
+        >
             <fj-crud-show-near-items
                 slot="left"
                 v-if="nearItems"
@@ -37,13 +41,16 @@
                     "
                 />
             </h3>
-            <div slot="actions" class="pt-3" v-if="headerComponents.length > 0">
-                <components
-                    v-for="(component, key) in headerComponents"
+            <div
+                slot="actions"
+                class="pt-3"
+                v-if="slots.headerControls.length > 0"
+            >
+                <fj-slot
+                    v-for="(component, key) in slots.headerControls"
                     :key="key"
-                    :is="component"
+                    v-bind="component"
                     :config="config"
-                    v-if="model"
                     :model="model"
                 />
             </div>
@@ -78,12 +85,12 @@ export default {
             type: [Array, Object],
             required: true
         },
-        nearItems: {
+        slots: {
+            required: true,
             type: Object
         },
-        headerComponents: {
-            type: Array,
-            required: true
+        nearItems: {
+            type: Object
         },
         backRoute: {
             type: [String, Boolean],
@@ -116,10 +123,23 @@ export default {
         };
     },
     methods: {
-        saved() {
+        saved(responses) {
+            for (let i in responses) {
+                let response = responses[i];
+                if (
+                    (response.config.url ==
+                        `${this.config.route_prefix}/${this.model.id}` &&
+                        response.config.method == 'put') ||
+                    (response.config.url == `${this.config.route_prefix}` &&
+                        response.config.method == 'post')
+                ) {
+                    console.log('JO');
+                    this.model = this.crud(response.data);
+                }
+            }
             if (window.location.pathname.split('/').pop() == 'create') {
                 setTimeout(() => {
-                    window.location.replace(`${this.crud.model.id}/edit`);
+                    window.location.replace(`${this.model.id}/edit`);
                 }, 1);
             }
         },
@@ -143,18 +163,6 @@ export default {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
             element.style.top = top;
             element.style.position = pos;
-        },
-        setSavedModel(responses) {
-            for (let i in responses) {
-                let response = responses[i];
-                if (
-                    response.config.url ==
-                        `${this.config.route_prefix}/${this.model.id}` &&
-                    response.config.method == 'put'
-                ) {
-                    this.model = this.crud(response.data);
-                }
-            }
         }
     },
     computed: {
@@ -167,7 +175,7 @@ export default {
 
         this.$store.commit('SET_CONFIG', this.config);
 
-        Fjord.bus.$on('saved', this.setSavedModel);
+        Fjord.bus.$on('saved', this.saved);
     },
     mounted() {
         this.scrollToFormFieldFromHash();

@@ -2,6 +2,7 @@
 
 return [
     'item_delete' => ':item löschen',
+    'item_create' => ':item erstellen',
     'item_remove' => ':item entfernen',
     'item_settings' => ':item Einstellungen',
     'profile' => 'Konto',

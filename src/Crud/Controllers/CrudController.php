@@ -142,15 +142,13 @@ abstract class CrudController
             'route_prefix'
         );
 
-        $model = new $this->model;
-        $model->setAttribute('fields', $this->fields());
-
         return view('fjord::app')
             ->withComponent($this->config->formComponent)
-            ->withModels([
-                'model' => crud($model)
-            ])
+            ->withTitle(__f('base.item_create', [
+                'item' => $config['names']['singular']
+            ]))
             ->withProps([
+                'crud-model' => crud(new $this->model),
                 'config' => $config,
                 'headerComponents' => []
             ]);
@@ -210,7 +208,7 @@ abstract class CrudController
         $next = $this->model::where('id', '>', $id)->orderBy('id')->select('id')->first()->id ?? null;
 
         return view('fjord::app')->withComponent($this->config->formComponent)
-            ->withTitle('Edit ' . $this->config->names['singular'])
+            ->withTitle($this->config->names['singular'])
             ->withProps([
                 'crud-model' => crud($model),
                 'config' => $config,
@@ -219,7 +217,6 @@ abstract class CrudController
                     'next' => $next,
                     'previous' => $previous
                 ],
-                'headerComponents' => ['fj-crud-preview'],
                 'controls' => [],
             ]);
     }
@@ -259,7 +256,7 @@ abstract class CrudController
 
         $model = $this->model::create($params);
 
-        return $model;
+        return crud($model);
     }
 
     /**

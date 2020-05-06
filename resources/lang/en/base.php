@@ -2,6 +2,7 @@
 
 return [
     'item_delete' => 'delete :item',
+    'item_create' => 'create :item',
     'item_remove' => 'remove :item',
     'item_settings' => ':item settings',
     'profile' => 'profile',
