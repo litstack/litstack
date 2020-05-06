@@ -273,7 +273,9 @@ class FjordCrud extends Command
         $fileContents = file_get_contents(__DIR__ . '/../../stubs/CrudConfig.stub');
         $fileContents = str_replace('DummyClassname', $modelName, $fileContents);
         $fileContents = str_replace('DummyTablename', $tableName, $fileContents);
-
+        if (!\File::exists(base_path('fjord/app/Config/Crud'))) {
+            \File::makeDirectory(base_path('fjord/app/Config/Crud'));
+        }
         if (\File::put($config, $fileContents)) {
             $this->info('config created');
         }
