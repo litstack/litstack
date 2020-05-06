@@ -8,15 +8,33 @@
                 v-bind:disabled="field.readonly"
             >
                 <div slot="button-content" v-html="value" />
-                <div class="icons">
-                    <b-button
-                        class="icon"
-                        v-for="(icon, key) in field.icons"
-                        :key="key"
-                        v-html="icon"
-                        @click="setIcon(icon)"
-                        :variant="value == icon ? 'primary' : 'input'"
-                    />
+                <div class="fj-icon-search" v-if="field.search">
+                    <b-input-group size="sm">
+                        <b-input
+                            v-model="search"
+                            :placeholder="__('base.search').capitalize()"
+                        />
+                        <template v-slot:prepend>
+                            <b-input-group-text>
+                                <fa-icon icon="search" />
+                            </b-input-group-text>
+                        </template>
+                    </b-input-group>
+                </div>
+                <div
+                    class="fj-icons-wrapper"
+                    :style="field.search ? '' : 'top: 0;'"
+                >
+                    <div class="icons">
+                        <b-button
+                            class="icon"
+                            v-for="(icon, key) in searched"
+                            :key="key"
+                            v-html="icon"
+                            @click="setIcon(icon)"
+                            :variant="value == icon ? 'primary' : 'input'"
+                        />
+                    </div>
                 </div>
             </b-dropdown>
         </template>
@@ -49,11 +67,22 @@ export default {
     data() {
         return {
             value: null,
-            original: null
+            original: null,
+            search: '',
+            searched: []
         };
+    },
+    watch: {
+        search(val) {
+            console.log(val);
+            this.searched = _.filter(this.field.icons, icon => {
+                return icon.includes(val);
+            });
+        }
     },
     beforeMount() {
         this.init();
+        this.searched = this.field.icons;
     },
     methods: {
         ...methods,
@@ -69,19 +98,62 @@ export default {
 @import '@fj-sass/_variables';
 
 .fj-icon-picker {
+    position: relative;
+    .fj-icon-search {
+        margin-bottom: $field-icon-spacer;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: $field-icon-spacer;
+        background: $white;
+        z-index: 1;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+    }
     .dropdown-menu {
         width: calc(100px + 10.625rem);
-        max-height: 300px;
+        height: 300px;
+        position: relative;
+    }
+    .fj-icons-wrapper {
+        position: absolute;
+        top: 3.25rem;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: $field-icon-spacer;
         overflow-y: scroll;
-        padding: $dropdown-item-padding-y;
     }
     .icons {
+        display: grid;
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax($field-icon-btn-width, 1fr)
+        );
+        grid-auto-rows: 1fr;
+        grid-gap: $field-icon-spacer;
+
+        .icon:first-child {
+            grid-row: 1 / 1;
+            grid-column: 1 / 1;
+        }
+        &::before {
+            content: '';
+            width: 0;
+            padding-bottom: 100%;
+            grid-row: 1 / 1;
+            grid-column: 1 / 1;
+        }
         .icon {
-            margin: $dropdown-item-padding-y;
-            width: calc(20px + #{2 * $btn-padding-x});
-            height: calc(20px + #{2 * $btn-padding-x});
+            padding: 0 !important;
+            width: 100%;
+            height: 100%;
             text-align: center;
-            font-size: 20px;
+            font-size: $font-size-base;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
 }

@@ -14863,6 +14863,48 @@ input[type=color].form-control:disabled {
   box-shadow: 0px 6px 15px 1px rgba(0, 0, 0, 0.2);
 }
 
+.btn-input {
+  border: 1px solid #70859c;
+  color: #232127;
+  background-color: #fff;
+  border-color: #70859c;
+}
+
+.btn-input:hover {
+  color: #232127;
+  background-color: rgba(207, 217, 226, 0.5);
+  border-color: #596c80;
+}
+
+.btn-input:focus,
+.btn-input.focus {
+  color: #232127;
+  background-color: rgba(207, 217, 226, 0.5);
+  border-color: #596c80;
+  box-shadow: 0 0 0 0.2rem rgba(100, 118, 138, 0.5);
+}
+
+.btn-input.disabled,
+.btn-input:disabled {
+  color: #232127;
+  background-color: #fff;
+  border-color: #70859c;
+}
+
+.btn-input:not(:disabled):not(.disabled):active,
+.btn-input:not(:disabled):not(.disabled).active,
+.show > .btn-input.dropdown-toggle {
+  color: #232127;
+  background-color: #e6e6e6;
+  border-color: #546579;
+}
+
+.btn-input:not(:disabled):not(.disabled):active:focus,
+.btn-input:not(:disabled):not(.disabled).active:focus,
+.show > .btn-input.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(100, 118, 138, 0.5);
+}
+
 .card {
   box-shadow: 0 0 19px 0 rgba(235, 235, 235, 0.5);
 }

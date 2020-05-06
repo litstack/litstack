@@ -76,6 +76,12 @@ $container-padding-x: $card-spacer-x;
 // Page Navigation
 $page-nav-padding-y: $container-padding-y / 2;
 
+// Field Icon
+//
+//
+$field-icon-spacer: map-get($spacers, 3);
+$field-icon-btn-width: 2.5rem;
+
 // Blocks
 //
 //

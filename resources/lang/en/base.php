@@ -17,6 +17,7 @@ return [
     'logout' => 'logout',
     'delete' => 'löschen',
     'image' => 'image',
+    'search' => 'search',
     'first_name' => 'Firstname',
     'last_name' => 'Lastname',
     "cancel" => "cancel",

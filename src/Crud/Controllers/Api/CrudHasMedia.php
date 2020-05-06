@@ -142,6 +142,10 @@ trait CrudHasMedia
         $field = $this->config->form->findField($request->collection) ?? abort(404);
         $query = $model->media()->where('collection_name', $field->id);
 
+        if (!$field->sortable) {
+            abort(404);
+        }
+
         $response = $this->orderField($query->getQuery(), $field, $ids);
 
         $this->edited($model, 'media:ordered');

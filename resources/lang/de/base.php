@@ -17,6 +17,7 @@ return [
     "cancel" => "abbrechen",
     'delete' => 'löschen',
     'image' => 'Bild',
+    'search' => 'Durchsurchen',
     'first_name' => 'Vorname',
     'last_name' => 'Nachname',
     'logout' => 'ausloggen',

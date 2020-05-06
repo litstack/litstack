@@ -82,6 +82,10 @@ trait ManagesBlocksMedia
         $field = $block->findField($request->collection) ?? abort(404);
         $query = $block->media()->where('collection_name', $field->id);
 
+        if (!$field->sortable) {
+            abort(404);
+        }
+
         return $this->orderField($query->getQuery(), $field, $ids);
     }
 }

@@ -23,6 +23,8 @@ $form->image('images') // images is the corresponding media collection.
     ->hint('The first image is the preview image.')
 ```
 
+![Image firstBig](./screens/image/first_big.png 'Logo Title Text 1')
+
 ### Preparing the Model
 
 Add the image attribute to your model:
@@ -42,7 +44,8 @@ public function getImagesAttribute()
 | `translatable` | Should the field be translatable.                             |
 | `hint`         | A short hint that should describe how to use the form field.` |
 | `cols`         | Cols of the form field.                                       |
-| `maxFiles`     | Maxmium number of uploadable images.                          |
+| `sortable`     | Should the images be sortable? (default: `true`)              |
+| `maxFiles`     | Maxmium number of uploadable images. (default: `5`)           |
 | `crop`         | Opens a Crop-Tool before the upload if set to `true`          |
 | `ratio`        | The crop-ratio.                                               |
 | `firstBig`     | Display's the first image bigger.                             |

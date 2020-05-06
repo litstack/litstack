@@ -18,3 +18,12 @@
 .btn-primary {
     box-shadow: 0px 6px 15px 1px rgba(0, 0, 0, 0.2);
 }
+
+.btn-input {
+    border: $input-border-width solid $input-border-color;
+    @include button-variant(
+        $input-bg,
+        $input-border-color,
+        rgba(map-get($theme-colors, 'light'), 0.5)
+    );
+}

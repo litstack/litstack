@@ -31,6 +31,7 @@ class Icon extends Field
         'title',
         'hint',
         'icons',
+        'search'
     ];
 
     /**
@@ -38,7 +39,9 @@ class Icon extends Field
      *
      * @var array
      */
-    protected $defaults = [];
+    protected $defaults = [
+        'search' => true
+    ];
 
     /**
      * Set default attributes.

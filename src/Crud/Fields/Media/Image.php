@@ -44,7 +44,8 @@ class Image extends MediaField
         'crop',
         'ratio',
         'override',
-        'firstBig'
+        'firstBig',
+        'sortable'
     ];
 
     /**
@@ -57,7 +58,8 @@ class Image extends MediaField
         'maxFiles' => 5,
         'crop' => false,
         'override' => false,
-        'firstBig' => false
+        'firstBig' => false,
+        'sortable' => true
     ];
 
     /**
