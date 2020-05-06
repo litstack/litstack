@@ -3,7 +3,10 @@
         <table class="form-control-expand">
             <b-tr>
                 <b-td class="small" v-if="!field.readonly">
-                    <div class="fj-draggable__dragbar" v-if="sortable">
+                    <div
+                        class="fj-draggable__dragbar fj-block__dragbar"
+                        v-if="sortable"
+                    >
                         <i class="fas fa-grip-horizontal text-secondary"></i>
                     </div>
                 </b-td>
@@ -108,7 +111,7 @@ export default {
     .fj-block-delete {
         cursor: pointer;
     }
-    .fj-draggable__dragbar {
+    .fj-draggable__dragbar.fj-block__dragbar {
         float: left;
         transform: translateX(calc(-#{$card-spacer-x / 2} - 4px));
     }

@@ -10,7 +10,7 @@ $form->icon('icon')
     ->icons([
         '<i class="fas fa-address-book"></i>',
         '<i class="fas fa-address-card"></i>',
-        ...
+        // ...
     ])
     ->hint('Choose your icon.')
     ->cols(2);

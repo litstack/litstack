@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud\Models;
 
+use Fjord\Crud\Fields\Media\Image;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
@@ -171,6 +172,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
         $attributes = parent::attributesToArray();
 
         $attributes['value'] = $attributes['value'] ?? [];
+
         foreach ($this->fields as $field) {
             if ($field->translatable) {
                 continue;
