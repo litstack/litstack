@@ -50,7 +50,7 @@ export default {
             align-self: flex-end;
         }
         small {
-            font-size: $font-size-base;
+            font-size: $font-size-base * 0.75;
         }
     }
 

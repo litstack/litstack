@@ -1,12 +1,12 @@
 <template>
-    <div class="indent sm">
+    <div class="fj-near-items">
         <b-button
             :href="`${Fjord.baseURL}${routePrefix}/${nearItems.previous}/edit`"
             :disabled="!nearItems.previous"
             variant="outline-secondary"
             size="sm"
         >
-            <fa-icon icon="chevron-left" />
+            <fa-icon icon="chevron-left" class="fj-near-items__prev" />
         </b-button>
         <b-button
             :href="`${Fjord.baseURL}${routePrefix}/${nearItems.next}/edit`"
@@ -14,7 +14,7 @@
             variant="outline-secondary"
             size="sm"
         >
-            <fa-icon icon="chevron-right" />
+            <fa-icon icon="chevron-right" class="fj-near-items__next" />
         </b-button>
     </div>
 </template>
@@ -33,3 +33,20 @@ export default {
     }
 };
 </script>
+
+<style lang="scss" scoped>
+.fj-near-items {
+    .btn {
+        height: 24px;
+        width: 24px;
+        padding: 0;
+        line-height: 24px;
+    }
+    &__prev {
+        margin-right: 4px;
+    }
+    &__next {
+        margin-left: 4px;
+    }
+}
+</style>

@@ -23,7 +23,7 @@ export default {
 
 .fj-container {
     margin: 0 auto;
-    padding: ($container-padding-y - $page-nav-padding-y) $container-padding-x
-        $container-padding-y $container-padding-x !important;
+    padding: (/*$container-padding-y*/ $nav-height - $page-nav-padding-y)
+        $container-padding-x $container-padding-y $container-padding-x !important;
 }
 </style>

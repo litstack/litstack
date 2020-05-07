@@ -151,9 +151,9 @@ $grid-gutter-width: 30px !default;
 //$border-width: 1px !default;
 $border-color: $secondary !default;
 
-$border-radius: 0.6rem !default;
+$border-radius: 0.625rem !default;
 $border-radius-lg: 0.8rem !default;
-$border-radius-sm: 0.4rem !default;
+$border-radius-sm: 0.4375rem !default;
 
 //$rounded-pill: 50rem !default;
 
@@ -294,19 +294,19 @@ $table-striped-order: even !default;
 //
 // Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
 
-$input-btn-padding-y: 0.625rem !default;
+$input-btn-padding-y: 0.3125rem !default;
 $input-btn-padding-x: 1.25rem !default;
 //$input-btn-font-family:       null !default;
-//$input-btn-font-size:         $font-size-base !default;
-//$input-btn-line-height:       $line-height-base !default;
+$input-btn-font-size: $font-size-base * 0.875 !default;
+$input-btn-line-height: 2;
 
 //$input-btn-focus-width:       .2rem !default;
 //$input-btn-focus-color:       rgba($component-active-bg, .25) !default;
 //$input-btn-focus-box-shadow:  0 0 0 $input-btn-focus-width $input-btn-focus-color !default;
 
-$input-btn-padding-y-sm: $input-btn-padding-y * 0.625 !default;
-$input-btn-padding-x-sm: $input-btn-padding-x * 0.625 !default;
-//$input-btn-font-size-sm:      $font-size-sm !default;
+$input-btn-padding-y-sm: $input-btn-padding-y * 0.875 !default;
+$input-btn-padding-x-sm: $input-btn-padding-x * 0.875 !default;
+$input-btn-font-size-sm: $font-size-sm * 0.875 !default;
 //$input-btn-line-height-sm:    $line-height-sm !default;
 
 //$input-btn-padding-y-lg:      .5rem !default;

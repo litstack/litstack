@@ -167,13 +167,13 @@ export default {
     computed: {
         ...mapGetters(['canSave']),
         wrapperStyle() {
-            let offset = this.canSave ? 0 : this.b.width;
+            let offset = this.canSave ? 0 : `calc(${this.b.width}px + 1rem)`;
             return {
-                transform: `translateX(calc(${offset}px + 0.5rem))`
+                transform: `translateX(${offset})`
             };
         },
         buttonStyle() {
-            let offset = this.canSave ? 0 : '50vw';
+            let offset = this.canSave ? '0' : '50vw';
             return {
                 transform: `translateX(${offset})`
             };
@@ -216,9 +216,9 @@ export default {
         transition: 0.25s all cubic-bezier(0.91, -0.13, 0.68, 0.79);
     }
 
-    .fj-page-navigation__controls {
+    &__controls {
         .btn {
-            width: 46px;
+            width: 40px;
             padding-left: 0;
             padding-right: 0;
             text-align: center;
@@ -230,13 +230,13 @@ export default {
             &:first-child {
                 > div,
                 > .btn {
-                    margin-right: map-get($spacers, 2);
+                    margin-right: map-get($spacers, 3);
                 }
             }
             &:last-child {
                 > div,
                 > .btn {
-                    margin-left: map-get($spacers, 2);
+                    margin-left: map-get($spacers, 3);
                 }
             }
         }
