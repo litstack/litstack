@@ -3,7 +3,7 @@
         v-model="sortable"
         :class="{
             'fj-image-list': true,
-            'mb-4': field.readonly || images.length == 0
+            'mb-4': field.readonly || images.length == 0,
         }"
         :options="{ disabled: field.readonly }"
         @end="newOrder"
@@ -13,7 +13,7 @@
         <div
             :class="{
                 'fj-image-card': true,
-                'fj-image-card__first-big': field.firstBig && index == 0
+                'fj-image-card__first-big': field.firstBig && index == 0,
             }"
             v-for="(image, index) in sortable"
             :key="image.id"
@@ -47,7 +47,7 @@
             </div>
             <div
                 :class="{
-                    'fj-image-card__image': true
+                    'fj-image-card__image': true,
                 }"
             >
                 <img :src="imgPath(image)" class />
@@ -66,7 +66,7 @@
                 size="md"
                 :title="
                     __('base.item_delete', {
-                        item: __('base.image')
+                        item: __('base.image'),
                     }).capitalize() + '?'
                 "
                 :static="true"
@@ -107,37 +107,37 @@ export default {
     name: 'FieldMediaImages',
     props: {
         images: {
-            type: Array
+            type: Array,
         },
         field: {
             required: true,
-            type: Object
+            type: Object,
         },
         modelId: {
-            required: true
+            required: true,
         },
         model: {
             required: true,
-            type: Object
-        }
+            type: Object,
+        },
     },
     data() {
         return {
-            sortable: this.images
+            sortable: this.images,
         };
     },
     computed: {
-        ...mapGetters(['form'])
+        ...mapGetters(['form']),
     },
     methods: {
         async newOrder() {
             let payload = {
                 collection: this.field.id,
-                ids: _.map(this.sortable, 'id')
+                ids: _.map(this.sortable, 'id'),
             };
             await axios.put(this.getMediaUrl('order'), payload);
             this.$bvToast.toast(this.$t('fj.order_changed'), {
-                variant: 'success'
+                variant: 'success',
             });
             Fjord.bus.$emit('field:updated', 'image:ordered');
         },
@@ -160,8 +160,8 @@ export default {
         },
         deleteImageModalId(image) {
             return `fj-delete-image-${this.field.id}-${image.id}`;
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -196,7 +196,8 @@ export default {
     border-radius: $border-radius;
     overflow: hidden;
     position: relative;
-    border: $input-border-width solid $input-border-color;
+    //border: $input-border-width solid $input-border-color;
+    border: none;
     background: $body-bg;
     display: flex;
 
@@ -216,8 +217,9 @@ export default {
         img {
             position: absolute;
             z-index: 1;
-            max-width: 100%;
-            max-height: 100%;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
         }
     }
 
