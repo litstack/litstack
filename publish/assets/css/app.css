@@ -15139,7 +15139,7 @@ div#fjord-app {
   display: grid;
   grid-template: "t m" "s m";
   grid-template-columns: 290px 1fr;
-  grid-template-rows: 80px auto;
+  grid-template-rows: 85px auto;
 }
 
 div#fjord-app.no-nav {
@@ -15182,7 +15182,7 @@ div#fjord-app .fj-navigation {
   padding-top: 20px;
   background: #fff;
   overflow-y: auto;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 85px);
 }
 
 div#fjord-app .fj-navigation .list-group-item {
@@ -15215,7 +15215,7 @@ div#fjord-app .fj-navigation .collapse .list-group-item {
 
 div#fjord-app nav.fj-topbar {
   grid-area: t;
-  height: 80px;
+  height: 85px;
   background: #232127;
   padding-left: 20px;
   padding-right: 5px;

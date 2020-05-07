@@ -3,7 +3,7 @@
         <b-button
             :href="`${Fjord.baseURL}${routePrefix}/${nearItems.previous}/edit`"
             :disabled="!nearItems.previous"
-            variant="transparent"
+            variant="outline-secondary"
             size="sm"
         >
             <fa-icon icon="chevron-left" />
@@ -11,7 +11,7 @@
         <b-button
             :href="`${Fjord.baseURL}${routePrefix}/${nearItems.next}/edit`"
             :disabled="!nearItems.next"
-            variant="transparent"
+            variant="outline-secondary"
             size="sm"
         >
             <fa-icon icon="chevron-right" />

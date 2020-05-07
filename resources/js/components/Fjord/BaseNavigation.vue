@@ -2,12 +2,12 @@
     <b-row class="fj-page-navigation">
         <b-col
             cols="12"
-            class="d-flex justify-content-between fj-page-navigation__container"
+            class="d-flex justify-content-between align-items-center fj-page-navigation__container"
         >
             <div>
                 <b-button
                     size="sm"
-                    variant="transparent"
+                    variant="link"
                     v-if="back"
                     class="mr-2 fj-page-navigation__go_back"
                     :href="`${Fjord.baseURL}${back}`"
@@ -186,8 +186,9 @@ export default {
 @import '@fj-sass/_variables';
 
 .fj-page-navigation {
-    padding-top: $page-nav-padding-y;
-    padding-bottom: $page-nav-padding-y;
+    height: $topbar-height;
+    // padding-top: $page-nav-padding-y;
+    // padding-bottom: $page-nav-padding-y;
     position: sticky;
     top: 0;
     background: $body-bg;
@@ -197,6 +198,14 @@ export default {
 
     &.sticky {
         box-shadow: 0 17px 14px -16px rgba(188, 188, 188, 0.51);
+    }
+
+    &__go_back {
+        color: $secondary;
+        &:hover {
+            color: $gray-700;
+            text-decoration: none;
+        }
     }
 
     .fj-save-button {
