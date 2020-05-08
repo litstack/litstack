@@ -26,12 +26,13 @@ const methods = {
         this.setDefaultValues();
 
         if (this.field.translatable) {
-            return this.model[locale][this.field.id];
+            return this.model[locale][this.field.local_key];
         }
         if (this.model.usesJsonCast()) {
             this.model.attributes[this.field.local_key];
         }
-        return this.model[this.field.id];
+
+        return this.model[this.field.local_key];
     },
     setValue(value) {
         this._setValue(value);
@@ -47,6 +48,7 @@ const methods = {
         if (this.model.usesJsonCast()) {
             return (this.model.attributes[this.field.local_key] = value);
         }
+
         return (this.model[this.field.local_key] = value);
     },
     setDefaultValues() {
@@ -58,12 +60,15 @@ const methods = {
 
         if (
             this.field.translatable &&
-            !this.field.locale_key in this.model[locale]
+            !(this.field.local_key in this.model[locale])
         ) {
             this.model[locale][this.field.local_key] = null;
         }
 
-        if (!this.field.translatable && !this.field.locale_key in this.model) {
+        if (
+            !this.field.translatable &&
+            !(this.field.local_key in this.model.attributes)
+        ) {
             this.model[this.field.local_key] = null;
         }
     },

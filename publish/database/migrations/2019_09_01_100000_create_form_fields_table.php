@@ -22,7 +22,6 @@ class CreateFormFieldsTable extends Migration
             $table->text('value')->nullable();
 
             $table->unsignedInteger('order_column')->nullable();
-            $table->boolean('active')->default(true);
 
             $table->timestamps();
         });

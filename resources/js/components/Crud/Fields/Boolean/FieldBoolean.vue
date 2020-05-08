@@ -5,6 +5,7 @@
             name="check-button"
             switch
             @input="changed"
+            class="fj-form-item-boolean"
         />
 
         <slot />
@@ -27,8 +28,8 @@ export default {
     },
     data() {
         return {
-            value: false,
-            original: false
+            value: null,
+            original: null
         };
     },
     beforeMount() {
@@ -37,6 +38,8 @@ export default {
     methods: {
         ...methods,
         changed(value) {
+            if (value === null) return;
+            if (value === undefined) value = false;
             this.setValue(value);
             this.$emit('changed', value);
         }
@@ -44,4 +47,10 @@ export default {
 };
 </script>
 
-<style lang="css"></style>
+<style lang="scss" scoped>
+@import '@fj-sass/_variables';
+.fj-form-item-boolean {
+    height: $button-md-height / 1.5;
+    align-items: center;
+}
+</style>

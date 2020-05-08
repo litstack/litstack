@@ -145,6 +145,7 @@ $border-color: $secondary !default;
 $border-radius: 0.625rem !default;
 $border-radius-lg: 0.8rem !default;
 $border-radius-sm: 0.4375rem !default;
+$border-radius-xs: 0.25rem !default;
 
 //$rounded-pill: 50rem !default;
 
@@ -437,7 +438,7 @@ $toast-border-radius: $border-radius !default;
 //$badge-font-weight:                 $font-weight-bold !default;
 //$badge-padding-y:                   .25em !default;
 //$badge-padding-x:                   .4em !default;
-$badge-border-radius: $border-radius-sm !default;
+$badge-border-radius: $border-radius-xs !default;
 
 //$badge-transition:                  $btn-transition !default;
 //$badge-focus-width:                 $input-btn-focus-width !default;
@@ -447,7 +448,7 @@ $badge-border-radius: $border-radius-sm !default;
 // customizing padding or font-size on labels.
 //$badge-pill-border-radius:          10rem !default;
 
-$custom-checkbox-indicator-border-radius: $border-radius-sm !default;
+$custom-checkbox-indicator-border-radius: $border-radius-xs !default;
 
 // Dropdowns
 //
