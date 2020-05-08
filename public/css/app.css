@@ -2357,7 +2357,7 @@ pre code {
 .form-control {
   display: block;
   width: 100%;
-  height: calc(2em + 0.625rem + 2px);
+  height: 2.5rem;
   padding: 0.3125rem 0.75rem;
   font-size: 0.875rem;
   font-weight: 400;
@@ -4403,7 +4403,7 @@ input[type=button].btn-block {
 .custom-select {
   display: inline-block;
   width: 100%;
-  height: calc(2em + 0.625rem + 2px);
+  height: 2.5rem;
   padding: 0.3125rem 1.75rem 0.3125rem 0.75rem;
   font-size: 0.875rem;
   font-weight: 400;
@@ -4470,7 +4470,7 @@ input[type=button].btn-block {
   position: relative;
   display: inline-block;
   width: 100%;
-  height: calc(2em + 0.625rem + 2px);
+  height: 2.5rem;
   margin-bottom: 0;
 }
 
@@ -4478,7 +4478,7 @@ input[type=button].btn-block {
   position: relative;
   z-index: 2;
   width: 100%;
-  height: calc(2em + 0.625rem + 2px);
+  height: 2.5rem;
   margin: 0;
   opacity: 0;
 }
@@ -4507,7 +4507,7 @@ input[type=button].btn-block {
   right: 0;
   left: 0;
   z-index: 1;
-  height: calc(2em + 0.625rem + 2px);
+  height: 2.5rem;
   padding: 0.3125rem 0.75rem;
   font-weight: 400;
   line-height: 2;
@@ -11497,7 +11497,7 @@ a.text-gray:focus {
   border: 0;
   font-size: inherit;
   cursor: pointer;
-  min-height: calc(calc(2em + 0.625rem + 2px) - 2px);
+  min-height: calc(2.5rem - 2px);
 }
 
 .b-form-btn-label-control.form-control > label.form-control-sm {
@@ -11934,7 +11934,7 @@ a.text-gray:focus {
 }
 
 input[type=color].form-control {
-  height: calc(2em + 0.625rem + 2px);
+  height: 2.5rem;
   padding: 0.125rem 0.5rem;
 }
 
@@ -11993,12 +11993,12 @@ input[type=color].form-control:disabled {
 }
 
 .input-group > .custom-range {
-  height: calc(2em + 0.625rem + 2px);
+  height: 2.5rem;
   padding: 0 0.75rem;
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #70859c;
-  height: calc(2em + 0.625rem + 2px);
+  height: 2.5rem;
   border-radius: 0.625rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }

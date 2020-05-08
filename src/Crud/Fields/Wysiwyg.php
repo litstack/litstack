@@ -38,6 +38,9 @@ class Wysiwyg extends Field
         'title',
         'placeholder',
         'hint',
+        'toolbar',
+        'toolbarFormat',
+        'formats'
     ];
 
     /**
@@ -45,7 +48,18 @@ class Wysiwyg extends Field
      *
      * @var array
      */
-    protected $defaults = [];
+    protected $defaults = [
+        'toolbar' => [
+            'heading',
+            '|',
+            'bold',
+            'italic',
+            'link',
+            'bulletedList',
+            'numberedList',
+            'blockQuote',
+        ]
+    ];
 
     /**
      * Cast field value.

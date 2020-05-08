@@ -42,6 +42,58 @@ export default {
         changed(value) {
             this.setValue(value);
             this.$emit('changed', value);
+        },
+        defaultFormats() {
+            return [
+                {
+                    model: 'paragraph',
+                    title: 'Paragraph',
+                    class: 'p'
+                },
+                {
+                    model: 'Headline 2',
+                    view: {
+                        name: 'h2',
+                        classes: 'h2'
+                    },
+                    title: 'Headline 2',
+                    class: 'h2',
+
+                    converterPriority: 'high'
+                },
+                {
+                    model: 'Headline 3',
+                    view: {
+                        name: 'h3',
+                        classes: 'h3'
+                    },
+                    title: 'Headline 3',
+                    class: 'h3',
+
+                    converterPriority: 'high'
+                },
+                {
+                    model: 'Headline 4',
+                    view: {
+                        name: 'h4',
+                        classes: 'h4'
+                    },
+                    title: 'Headline 4',
+                    class: 'h4',
+
+                    converterPriority: 'high'
+                },
+                {
+                    model: 'Custom',
+                    view: {
+                        name: 'span',
+                        classes: 'h1'
+                    },
+                    title: 'Custom',
+
+                    converterPriority: 'high'
+                }
+            ];
         }
     },
     beforeMount() {
@@ -53,62 +105,14 @@ export default {
             original: false,
             editor: ClassicEditor,
             editorConfig: {
-                removePlugins: [],
                 heading: {
-                    options: [
-                        {
-                            model: 'paragraph',
-                            title: 'Paragraph',
-                            class: 'p'
-                        },
-                        {
-                            model: 'Headline 2',
-                            view: {
-                                name: 'h2',
-                                classes: 'h2'
-                            },
-                            title: 'Headline 2',
-                            class: 'h2',
-
-                            converterPriority: 'high'
-                        },
-                        {
-                            model: 'Headline 3',
-                            view: {
-                                name: 'h3',
-                                classes: 'h3'
-                            },
-                            title: 'Headline 3',
-                            class: 'h3',
-
-                            converterPriority: 'high'
-                        },
-                        {
-                            model: 'Headline 4',
-                            view: {
-                                name: 'h4',
-                                classes: 'h4'
-                            },
-                            title: 'Headline 4',
-                            class: 'h4',
-
-                            converterPriority: 'high'
-                        }
-                    ]
+                    options: this.field.formats
+                        ? this.field.formats
+                        : this.defaultFormats()
                 },
                 toolbar: {
-                    items: [
-                        'heading',
-                        '|',
-                        'bold',
-                        'italic',
-                        'link',
-                        'undo',
-                        'redo',
-                        'bulletedList',
-                        'numberedList',
-                        'blockQuote'
-                    ]
+                    items: this.field.toolbar,
+                    shouldGroupWhenFull: true
                 }
             }
         };
@@ -117,257 +121,131 @@ export default {
 </script>
 <style lang="scss">
 @import '@fj-sass/_variables';
-
-/**
- * CKEditor Theme variables.
- *
- * https://ckeditor.com/docs/ckeditor5/latest/framework/guides/deep-dive/ui/theme-customization.html
- */
-:root {
-    /* Overrides the border radius setting in the theme. */
-    --ck-border-radius: #{$input-border-radius};
-
-    /* Overrides the default font size in the theme. */
-    --ck-font-size-base: #{$input-font-size};
-
-    /* Helper variables to avoid duplication in the colors. */
-    --ck-custom-background: #{$input-bg};
-    //--ck-custom-foreground: hsl(255, 3%, 18%);
-    --ck-custom-border: #{$input-border-color};
-    //--ck-custom-white: hsl(0, 0%, 100%);
-
-    --ck-color-base-active: #{$primary};
-    --ck-color-base-active-focus: var(--ck-color-base-active);
-
-    --ck-spacing-standard: #{$input-padding-x-sm};
-    --ck-spacing-small: #{$input-padding-y-sm};
-    --ck-spacing-tiny: #{$input-padding-y-sm};
-    --ck-color-base-border: var(--ck-custom-border);
-
-    /* -- Overrides generic colors. ------------------------------------------------------------- */
-
-    --ck-color-base-foreground: var(--ck-custom-background);
-    //--ck-color-focus-border: hsl(208, 90%, 62%);
-    //--ck-color-text: hsl(0, 0%, 98%);
-    //--ck-color-shadow-drop: hsla(0, 0%, 0%, 0.2);
-    //--ck-color-shadow-inner: hsla(0, 0%, 0%, 0.1);
-
-    /* -- Overrides the default .ck-button class colors. ---------------------------------------- */
-
-    --ck-color-button-default-background: var(--ck-custom-background);
-    //--ck-color-button-default-hover-background: hsl(270, 1%, 22%);
-    --ck-color-button-default-active-background: $secondary;
-    --ck-color-button-default-active-shadow: transparent;
-    --ck-color-button-default-disabled-background: var(--ck-custom-background);
-
-    //--ck-color-button-on-background: var(--ck-custom-foreground);
-    //--ck-color-button-on-hover-background: hsl(255, 4%, 16%);
-    --ck-color-button-on-active-background: $secondary;
-    //--ck-color-button-on-active-shadow: hsl(240, 3%, 19%);
-    //--ck-color-button-on-disabled-background: var(--ck-custom-foreground);
-
-    //--ck-color-button-action-background: hsl(168, 76%, 42%);
-    //--ck-color-button-action-hover-background: hsl(168, 76%, 38%);
-    //--ck-color-button-action-active-background: hsl(168, 76%, 36%);
-    //--ck-color-button-action-active-shadow: hsl(168, 75%, 34%);
-    //--ck-color-button-action-disabled-background: hsl(168, 76%, 42%);
-    //--ck-color-button-action-text: var(--ck-custom-white);
-
-    //--ck-color-button-save: hsl(120, 100%, 46%);
-    //--ck-color-button-cancel: hsl(15, 100%, 56%);
-
-    /* -- Overrides the default .ck-dropdown class colors. -------------------------------------- */
-
-    --ck-color-dropdown-panel-background: var(--ck-custom-background);
-    //--ck-color-dropdown-panel-border: var(--ck-custom-foreground);
-
-    /* -- Overrides the default .ck-splitbutton class colors. ----------------------------------- */
-
-    //--ck-color-split-button-hover-background: var(
-    //--ck-color-button-default-hover-background
-    //);
-    //--ck-color-split-button-hover-border: var(--ck-custom-foreground);
-
-    /* -- Overrides the default .ck-input class colors. ----------------------------------------- */
-
-    //--ck-color-input-background: var(--ck-custom-foreground);
-    //--ck-color-input-border: hsl(257, 3%, 43%);
-    //--ck-color-input-text: hsl(0, 0%, 98%);
-    //--ck-color-input-disabled-background: hsl(255, 4%, 21%);
-    //--ck-color-input-disabled-border: hsl(250, 3%, 38%);
-    //--ck-color-input-disabled-text: hsl(0, 0%, 46%);
-
-    /* -- Overrides the default .ck-list class colors. ------------------------------------------ */
-
-    --ck-color-list-background: var(--ck-custom-background);
-    //--ck-color-list-button-hover-background: var(--ck-color-base-foreground);
-    --ck-color-list-button-on-background: var(--ck-color-base-active);
-    --ck-color-list-button-on-background-focus: var(
-        --ck-color-base-active-focus
-    );
-    //--ck-color-list-button-on-text: var(--ck-color-base-background);
-
-    /* -- Overrides the default .ck-balloon-panel class colors. --------------------------------- */
-
-    --ck-color-panel-background: var(--ck-custom-background);
-    --ck-color-panel-border: var(--ck-custom-border);
-
-    /* -- Overrides the default .ck-toolbar class colors. --------------------------------------- */
-
-    --ck-color-toolbar-background: var(--ck-custom-background);
-    --ck-color-toolbar-border: var(--ck-custom-border);
-
-    /* -- Overrides the default .ck-tooltip class colors. --------------------------------------- */
-
-    //--ck-color-tooltip-background: hsl(252, 7%, 14%);
-    //--ck-color-tooltip-text: hsl(0, 0%, 93%);
-
-    /* -- Overrides the default colors used by the ckeditor5-image package. --------------------- */
-
-    //--ck-color-image-caption-background: hsl(0, 0%, 97%);
-    //--ck-color-image-caption-text: hsl(0, 0%, 20%);
-
-    /* -- Overrides the default colors used by the ckeditor5-widget package. -------------------- */
-
-    //--ck-color-widget-blurred-border: hsl(0, 0%, 87%);
-    //--ck-color-widget-hover-border: hsl(43, 100%, 68%);
-    //--ck-color-widget-editable-focus-background: var(--ck-custom-white);
-
-    /* -- Overrides the default colors used by the ckeditor5-link package. ---------------------- */
-
-    //--ck-color-link-default: hsl(190, 100%, 75%);
+.ck.ck-editor {
+    width: 100%;
+}
+.ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar,
+.ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners {
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    border-color: $border-color;
+    background: white;
+    height: $input-height;
 }
 
-.ck-editor {
-    width: calc(100%);
-    min-width: calc(100%);
+.ck-rounded-corners .ck.ck-editor__main > .ck-editor__editable,
+.ck.ck-editor__main > .ck-editor__editable.ck-rounded-corners {
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    border-color: $border-color;
+    padding: 0.25rem 0.75rem;
 }
 
-.ck-content {
-    padding: $input-padding-y $input-padding-x !important;
+.ck.ck-button:not(.ck-disabled):hover,
+a.ck.ck-button:not(.ck-disabled):hover {
+    border: 1px solid $secondary;
+    background: white;
 }
 
-.ck.ck-toolbar {
-    padding-left: ($input-padding-x - $input-padding-x-sm) !important;
-    padding-right: ($input-padding-x - $input-padding-x-sm) !important;
-    padding-top: ($input-padding-y - $input-padding-y-sm) !important;
-    padding-bottom: ($input-padding-y - $input-padding-y-sm) !important;
-
-    &__separator {
-        margin-left: ($input-padding-x - $input-padding-x-sm) !important;
-        margin-right: ($input-padding-x - $input-padding-x-sm) !important;
-        margin-top: -($input-padding-y - $input-padding-y-sm) !important;
-        margin-bottom: -($input-padding-y - $input-padding-y-sm) !important;
-    }
-
-    > * {
-        margin: 0 map-get($spacers, 2) 0 0;
-    }
-
-    > div:first-child {
-        &.ck-button,
-        > .ck-button {
-            border-top-left-radius: var(--ck-border-radius) !important;
-        }
-    }
-
-    .ck.ck-button:not(.ck-disabled):hover,
-    a.ck.ck-button:not(.ck-disabled):hover {
-        cursor: pointer;
-        background: transparent;
-        border: $border-width solid $secondary;
-    }
-    .ck.ck-button.ck-on:not(.ck-disabled),
-    a.ck.ck-button.ck-on:not(.ck-disabled) {
-        background: $secondary;
-        color: $white;
-
-        &:hover {
-            background: $secondary;
-            color: $white;
-        }
-    }
-}
-
-.ck.ck-button.ck-button_with-text,
-a.ck.ck-button.ck-button_with-text {
-    //margin: -$input-btn-padding-y-sm -$input-btn-padding-x-sm;
+// color of icons
+.ck.ck-icon :not([fill]) {
+    fill: $secondary;
 }
 .ck.ck-button {
-    //margin: -$input-btn-padding-y-sm;
+    &:hover {
+        .ck.ck-icon :not([fill]) {
+            //fill: white;
+        }
+    }
+}
+.ck.ck-button.ck-on,
+a.ck.ck-button.ck-on {
+    background: $secondary;
+    .ck.ck-icon :not([fill]) {
+        fill: white;
+    }
+}
+.ck.ck-icon {
+    transform: scale(0.9);
+}
+
+.ck-rounded-corners .ck.ck-button,
+.ck-rounded-corners a.ck.ck-button,
+.ck.ck-button.ck-rounded-corners,
+a.ck.ck-button.ck-rounded-corners {
+    border-radius: $border-radius-sm;
+}
+
+// format button font color
+.ck.ck-dropdown .ck-button.ck-dropdown__button {
+    color: $secondary;
+    font-family: 'Inter';
+    &:hover {
+        color: $secondary;
+    }
+}
+
+.ck.ck-toolbar__separator {
+    background: $secondary;
 }
 
 .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
-    @include form-control-focus($ignore-warning: true);
+    border-color: $input-btn-focus-color;
+    box-shadow: $input-btn-focus-box-shadow;
 }
 
-.ck-rounded-corners
-    .ck.ck-dropdown
-    .ck-dropdown__panel
-    .ck-list
-    .ck-list__item:first-child
-    .ck-button,
-.ck.ck-dropdown
-    .ck-dropdown__panel
-    .ck-list
-    .ck-list__item:first-child
-    .ck-button.ck-rounded-corners,
-.ck-rounded-corners .ck.ck-dropdown .ck-dropdown__panel .ck-list,
-.ck.ck-dropdown .ck-dropdown__panel .ck-list.ck-rounded-corners,
-.ck-rounded-corners .ck.ck-dropdown__panel,
-.ck.ck-dropdown__panel.ck-rounded-corners {
-    border-top-left-radius: var(--ck-border-radius) !important;
+// dropdown
+//
+.ck.ck-button.ck-on.ck.ck-dropdown .ck-button.ck-dropdown__button {
+    background: white;
 }
-
-/*
-.ck
-.ck.ck-toolbar {
-    border: $border-width solid $border-color !important;
-    border-top-left-radius: $input-border-radius !important;
-    border-top-right-radius: $input-border-radius !important;
-    padding: 0 !important;
-    & > * {
-        margin: 0 !important;
-        > .ck-button:first-child {
-            border-top-left-radius: $input-border-radius !important;
-        }
+.ck.ck-dropdown .ck-button.ck-dropdown__button {
+    border: 1px solid transparent !important;
+    outline: none;
+    background: white !important;
+    box-shadow: none !important;
+    &:hover,
+    &.ck-on {
+        cursor: pointer;
+        border: 1px solid $secondary !important;
     }
 }
-.ck.ck-editor__main > .ck-editor__editable {
-    border: $border-width solid $border-color !important;
-    border-top: none !important;
-    border-bottom-left-radius: $input-border-radius !important;
-    border-bottom-right-radius: $input-border-radius !important;
-}
-.cl.ck-dropdown {
-    padding: 0 !important;
-    margin: 0 !important;
-    border-bottom-left-radius: $input-border-radius !important;
-}
-.ck.ck-button {
-    padding: $btn-padding-y-sm $btn-padding-x-sm !important;
-    height: 38px !important;
-}
-/*
-    &.ck-editor {
-        display: block;
-        width: 100%;
-        height: $input-height;
-        padding: $input-padding-y $input-padding-x;
-        font-family: $input-font-family;
-        @include font-size($input-font-size);
-        font-weight: $input-font-weight;
-        line-height: $input-line-height;
-        color: $input-color;
-        background-color: $input-bg;
-        background-clip: padding-box;
-        border: $input-border-width solid $input-border-color;
-
-        // Note: This has no effect on <select>s in some browsers, due to the limited stylability of `<select>`s in CSS.
-        @include border-radius($input-border-radius, 0);
-
-        @include box-shadow($input-box-shadow);
-        @include transition($input-transition);
+.ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_ne,
+.ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_se {
+    .ck.ck-button:not(.ck-disabled):hover,
+    a.ck.ck-button:not(.ck-disabled):hover {
+        border: none;
+        background: $gray-300;
     }
-    */
+}
+.ck.ck-dropdown .ck-button.ck-dropdown__button.ck-on {
+    border-radius: $border-radius-sm;
+}
+
+.ck.ck-dropdown .ck-button.ck-dropdown__button.ck-on .ck.ck-icon :not([fill]),
+a.ck.ck-dropdown .ck-button.ck-dropdown__button.ck-on .ck.ck-icon :not([fill]) {
+    fill: $secondary;
+}
+.ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_se {
+    border-radius: $border-radius;
+    border: none;
+    box-shadow: $dropdown-shadow;
+    & > ul {
+        border-radius: $border-radius !important;
+        overflow: hidden;
+    }
+}
+
+.ck.ck-list__item .ck-button.ck-on {
+    background: white;
+    color: $secondary;
+}
+// active dropdown item
+.ck.ck-list__item .ck-button.ck-on {
+    background: $primary;
+    color: white;
+    &:hover {
+        color: $secondary;
+    }
+}
 </style>
