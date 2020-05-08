@@ -78,6 +78,46 @@ class Col extends VueProp
     }
 
     /**
+     * Regular expression for column value.
+     *
+     * @param string $regex
+     * @return void
+     */
+    public function regex($regex, string $replace = '')
+    {
+        $this->attributes['regex'] = $regex;
+        $this->attributes['regex_replace'] = $replace;
+
+        return $this;
+    }
+
+    /**
+     * Max characters for field
+     *
+     * @param boolean $strip
+     * @return void
+     */
+    public function stripHtml(bool $strip = true)
+    {
+        $this->attributes['strip_html'] = $strip;
+
+        return $this;
+    }
+
+    /**
+     * Max characters for field
+     *
+     * @param int $max
+     * @return void
+     */
+    public function maxChars(int $max = 100)
+    {
+        $this->attributes['max_chars'] = $max;
+
+        return $this;
+    }
+
+    /**
      * Get attributes
      *
      * @return array

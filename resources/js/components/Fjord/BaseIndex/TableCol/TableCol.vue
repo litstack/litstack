@@ -85,13 +85,37 @@ export default {
             this.$emit('reload');
         },
         getColValue(col) {
+            let value = '';
+
             // Regex for has {value} pattern.
             if (/{(.*?)}/.test(col)) {
-                return this._format(col, this.item);
+                value = this._format(col, this.item);
             } else if (this.item[col] !== undefined) {
-                return this.item[col];
+                value = this.item[col];
+            } else {
+                value = col;
             }
-            return col;
+
+            return this.format(value);
+        },
+        format(value) {
+            if (this.col.regex) {
+                value = value.replace(
+                    eval(this.col.regex),
+                    this.col.regex_replace
+                );
+            }
+            if (this.col.strip_html) {
+                console.log(value);
+                value = value.replace(/<[^>]*>?/gm, ' ');
+            }
+            if (this.col.max_chars) {
+                if (value.length > this.col.max_chars) {
+                    value = value.substring(0, this.col.max_chars) + '...';
+                }
+            }
+
+            return value;
         },
         getColComponentProps() {
             if (!this.col.component) {
