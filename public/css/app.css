@@ -11448,94 +11448,73 @@ a.text-gray:focus {
   box-shadow: 0 0 0 0.2rem rgba(246, 118, 147, 0.25);
 }
 
-.b-form-btn-label-control.form-control {
+.b-form-btn-label-control {
   background-image: none;
   padding: 0;
 }
 
-.input-group .b-form-btn-label-control.form-control {
-  padding: 0;
-}
-
-[dir=rtl] .b-form-btn-label-control.form-control,
-.b-form-btn-label-control.form-control[dir=rtl] {
+[dir=rtl] .b-form-btn-label-control,
+.b-form-btn-label-control[dir=rtl] {
   flex-direction: row-reverse;
 }
 
-[dir=rtl] .b-form-btn-label-control.form-control > label,
-.b-form-btn-label-control.form-control[dir=rtl] > label {
+[dir=rtl] .b-form-btn-label-control > label,
+.b-form-btn-label-control[dir=rtl] > label {
   text-align: right;
 }
 
-.b-form-btn-label-control.form-control > .btn {
+.b-form-btn-label-control > .btn {
   line-height: 1;
   font-size: inherit;
   box-shadow: none !important;
   border: 0;
 }
 
-.b-form-btn-label-control.form-control > .btn:disabled {
+.b-form-btn-label-control > .btn:disabled {
   pointer-events: none;
 }
 
-.b-form-btn-label-control.form-control.is-valid > .btn {
+.b-form-btn-label-control.is-valid > .btn {
   color: #9ff2ae;
 }
 
-.b-form-btn-label-control.form-control.is-invalid > .btn {
+.b-form-btn-label-control.is-invalid > .btn {
   color: #f67693;
 }
 
-.b-form-btn-label-control.form-control > .dropdown-menu {
+.b-form-btn-label-control > .dropdown-menu {
   padding: 0.5rem;
 }
 
-.b-form-btn-label-control.form-control > label {
+.b-form-btn-label-control > label {
   outline: 0;
   padding-left: 0.25rem;
   margin: 0;
   border: 0;
-  font-size: inherit;
   cursor: pointer;
   min-height: calc(calc(2em + 0.625rem + 2px) - 2px);
 }
 
-.b-form-btn-label-control.form-control > label.form-control-sm {
+.b-form-btn-label-control > label.form-control-sm {
   min-height: calc(calc(1.5em + 0.5rem + 2px) - 2px);
 }
 
-.b-form-btn-label-control.form-control > label.form-control-lg {
+.b-form-btn-label-control > label.form-control-lg {
   min-height: calc(calc(1.5em + 1rem + 2px) - 2px);
 }
 
-.input-group.input-group-sm .b-form-btn-label-control.form-control > label {
-  min-height: calc(calc(1.5em + 0.5rem + 2px) - 2px);
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-}
-
-.input-group.input-group-lg .b-form-btn-label-control.form-control > label {
-  min-height: calc(calc(1.5em + 1rem + 2px) - 2px);
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
-.b-form-btn-label-control.form-control[aria-disabled=true],
-.b-form-btn-label-control.form-control[aria-readonly=true] {
+.b-form-btn-label-control[aria-disabled=true],
+.b-form-btn-label-control[aria-readonly=true] {
   background-color: #f5f8fb;
   opacity: 1;
 }
 
-.b-form-btn-label-control.form-control[aria-disabled=true] {
+.b-form-btn-label-control[aria-disabled=true] {
   pointer-events: none;
 }
 
-.b-form-btn-label-control.form-control[aria-disabled=true] > label {
+.b-form-btn-label-control[aria-disabled=true] > label {
   cursor: default;
-}
-
-.b-form-btn-label-control.btn-group > .dropdown-menu {
-  padding: 0.5rem;
 }
 
 .b-avatar {
@@ -11586,12 +11565,16 @@ a.text-gray:focus {
   overflow: hidden;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .b-avatar .b-avatar-text {
   text-transform: uppercase;
   white-space: nowrap;
+  align-items: center;
+}
+
+.b-avatar .b-avatar-custom {
+  vertical-align: middle;
 }
 
 .b-avatar > .b-icon {
@@ -11655,10 +11638,6 @@ a.text-gray:focus {
   padding: 0;
   margin: 0;
   overflow: hidden;
-}
-
-.b-calendar .b-calendar-grid .row {
-  flex-wrap: nowrap;
 }
 
 .b-calendar .b-calendar-grid-caption {

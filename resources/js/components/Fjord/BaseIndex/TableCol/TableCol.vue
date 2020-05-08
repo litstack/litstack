@@ -91,13 +91,11 @@ export default {
             // Regex for has {value} pattern.
             if (/{(.*?)}/.test(col)) {
                 value = this._format(col, item);
-            } else if (item[col] !== undefined) {
+            } else if (item[col] !== undefined && item[col] !== null) {
                 value = item[col];
             } else {
                 value = col;
             }
-
-            console.log(col, value);
 
             return this.format(value);
         },

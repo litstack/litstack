@@ -2,6 +2,8 @@
 
 namespace Fjord\Crud\Concerns;
 
+use Closure;
+
 trait ManagesRelationField
 {
     /**
@@ -13,7 +15,27 @@ trait ManagesRelationField
      */
     protected function getRelation($model)
     {
-        return $model->{$this->id}();
+        return $this->modifyQuery(
+            $model->{$this->id}()
+        );
+    }
+
+    /**
+     * Modify preview query with eager loads and accessors to append.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    protected function modifyQuery($query)
+    {
+        if (!$this->previewModifier instanceof Closure) {
+            return $query;
+        }
+
+        $modifier = $this->previewModifier;
+        $modifier($query);
+
+        return $query;
     }
 
     /**

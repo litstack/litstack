@@ -38,6 +38,7 @@ class BelongsTo extends OneRelationField
         'model',
         'form',
         'hint',
+        'previewQuery',
         'preview',
         'confirm',
         'query',

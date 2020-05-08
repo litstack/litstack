@@ -30,6 +30,13 @@ trait ManagesRelation
     protected $related;
 
     /**
+     * Index query modifier.
+     *
+     * @var Closure|null
+     */
+    protected $previewModifier;
+
+    /**
      * Create new Field instance.
      *
      * @param string $id
@@ -41,6 +48,19 @@ trait ManagesRelation
         parent::__construct($id, $model, $routePrefix);
 
         $this->initializeRelationField();
+    }
+
+    /**
+     * Set index query modifier.
+     *
+     * @param Closure $closure
+     * @return self
+     */
+    public function previewQuery(Closure $closure)
+    {
+        $this->previewModifier = $closure;
+
+        return $this;
     }
 
     /**

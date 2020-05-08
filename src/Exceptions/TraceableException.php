@@ -18,23 +18,19 @@ class TraceableException extends Exception implements Traceable
     public function __construct($message = null, array $options = [], $code = 0, Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
-        $this->setTrace($options);
+        $this->setTrace(
+            $this->findTrace($options)
+        );
     }
 
     /**
      * Set trace.
      *
-     * @param array $options
+     * @param array $trace
      * @return void
      */
-    public function setTrace(array $options)
+    public function setTrace($trace)
     {
-        if (empty($options)) {
-            return;
-        }
-
-        $trace = $this->findTrace($options);
-
         if (!$trace) {
             return;
         }
@@ -59,6 +55,10 @@ class TraceableException extends Exception implements Traceable
      */
     public function findTrace(array $options)
     {
+        if (empty($options)) {
+            return;
+        }
+
         foreach ($this->getTrace() as $trace) {
             if (!array_key_exists('class', $trace)) {
                 continue;

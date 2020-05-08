@@ -38,6 +38,7 @@ class ManyRelation extends ManyRelationField
         'model',
         'hint',
         'form',
+        'previewQuery',
         'preview',
         'confirm',
         'sortable',
@@ -70,10 +71,9 @@ class ManyRelation extends ManyRelationField
             return parent::getRelation($model);
         }
 
-        return $model->manyRelation($this->related, $this->id)
-            ->setEagerLoads(
-                $this->query->getEagerLoads()
-            );
+        return $this->modifyQuery(
+            $model->manyRelation($this->related, $this->id)
+        );
     }
 
     /**

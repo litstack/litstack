@@ -3,6 +3,8 @@
 namespace Fjord\Vue;
 
 use Exception;
+use ErrorException;
+use Fjord\Exceptions\InvalidArgumentException;
 use Fjord\Support\VueProp;
 
 class Col extends VueProp
@@ -83,11 +85,23 @@ class Col extends VueProp
      *
      * @param string $regex
      * @return void
+     * 
+     * @throws InvalidArgumentException
      */
     public function regex($regex, string $replace = '')
     {
         $this->attributes['regex'] = $regex;
         $this->attributes['regex_replace'] = $replace;
+
+        // Test regular expression:
+        try {
+            preg_match($regex, '');
+        } catch (ErrorException $e) {
+            throw new InvalidArgumentException($e->getMessage(), [
+                'function' => 'regex',
+                'class' => self::class
+            ]);
+        }
 
         return $this;
     }

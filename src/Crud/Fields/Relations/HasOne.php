@@ -38,6 +38,7 @@ class HasOne extends OneRelationField
         'model',
         'hint',
         'form',
+        'previewQuery',
         'preview',
         'confirm',
         'query',

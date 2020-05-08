@@ -39,6 +39,7 @@ class OneRelation extends OneRelationField
         'model',
         'form',
         'hint',
+        'previewQuery',
         'preview',
         'confirm',
         'query',
@@ -68,10 +69,9 @@ class OneRelation extends OneRelationField
             return parent::getRelation($model);
         }
 
-        return $model->oneRelation($this->related, $this->id)
-            ->setEagerLoads(
-                $this->query->getEagerLoads()
-            );
+        return $this->modifyQuery(
+            $model->oneRelation($this->related, $this->id)
+        );
     }
 
     /**

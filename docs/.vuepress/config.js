@@ -70,7 +70,8 @@ module.exports = {
                         ['guide/crud/create-crud', 'Models'],
                         ['guide/crud/create-forms', 'Forms'],
                         ['guide/crud/config-index', 'Index Config'],
-                        ['guide/crud/config-form', 'Form Config']
+                        ['guide/crud/config-form', 'Form Config'],
+                        ['guide/crud/config-table', 'Table']
                     ]
                 },
                 {
