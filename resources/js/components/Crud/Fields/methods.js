@@ -1,5 +1,6 @@
 const methods = {
     init() {
+        this._values = {};
         this.getValue();
         this.setOriginalValue();
 
@@ -8,6 +9,10 @@ const methods = {
             this.setOriginalValue();
         });
     },
+
+    /**
+     * Set original values. This is used to locate changes.
+     */
     setOriginalValue() {
         if (!this.field.translatable) {
             if (this.value) {
@@ -28,13 +33,28 @@ const methods = {
             this.original[locale] = value;
         }
     },
+
+    /**
+     * Get current locale.
+     */
     getLocale() {
         return this.$store.state.config.language;
     },
+
+    /**
+     * Set value.
+     */
     getValue() {
         this.value = this._getValue(this.getLocale());
         this.$forceUpdate();
     },
+
+    /**
+     * Get value from model by locale.
+     *
+     * @param {String} locale
+     * @return {*}
+     */
     _getValue(locale) {
         this.setDefaultValues(locale);
 
@@ -47,11 +67,24 @@ const methods = {
 
         return this.model[this.field.local_key];
     },
+
+    /**
+     * Set new value to model, receive value from model after and add or remove
+     * saveJob.
+     *
+     * @param {*} value
+     */
     setValue(value) {
         this._setValue(value);
         this.getValue();
         this.addSaveJob(value);
     },
+
+    /**
+     * Set value to model.
+     *
+     * @param {*} value
+     */
     _setValue(value) {
         let locale = this.getLocale();
 
@@ -64,6 +97,12 @@ const methods = {
 
         return (this.model[this.field.local_key] = value);
     },
+
+    /**
+     * Initialize default values for missing object keys.
+     *
+     * @param {String} locale
+     */
     setDefaultValues(locale) {
         if (this.model.translatable && !(locale in this.model.attributes)) {
             this.model[locale] = {};
@@ -83,6 +122,25 @@ const methods = {
             this.model[this.field.local_key] = null;
         }
     },
+
+    /**
+     * Has value changed.
+     *
+     * @return {Boolean}
+     */
+    hasValueChanged() {
+        if (!this.field.translatable) {
+            return this.original != this.value;
+        }
+
+        return this.original[this.getLocale()] != this.value;
+    },
+
+    /**
+     * Add save job to store.
+     *
+     * @param {*} value
+     */
     addSaveJob(value) {
         let locale = this.getLocale();
         let params = {};
@@ -105,22 +163,11 @@ const methods = {
             key: jobKey
         };
 
-        if (this.original == this.value) {
+        if (!this.hasValueChanged()) {
             this.$store.commit('REMOVE_SAVE_JOB', job);
         } else {
             this.$store.commit('ADD_SAVE_JOB', job);
         }
-
-        // TODO: Remove save job if has no changes:
-
-        /*
-        if (this.model.hasChanges()) {
-            this.$store.commit('ADD_SAVE_JOB', job);
-        } else {
-            job.params = removeParams;
-            this.$store.commit('REMOVE_SAVE_JOB', job);
-        }
-        */
     }
 };
 

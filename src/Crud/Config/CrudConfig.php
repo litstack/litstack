@@ -47,14 +47,18 @@ abstract class CrudConfig
      */
     public function permissions()
     {
-        $user = fjord_user();
+        $permissions = [];
+        $operations = ['create', 'read', 'update', 'delete'];
         $controller = new $this->controller;
-        return [
-            'create' => $controller->authorize($user, 'create'),
-            'read' => $controller->authorize($user, 'read'),
-            'update' => $controller->authorize($user, 'update'),
-            'delete' => $controller->authorize($user, 'delete'),
-        ];
+        $user = fjord_user();
+
+        foreach ($operations as $operation) {
+            $permissions[$operation] = $user
+                ? $controller->authorize($user, $operation)
+                : false;
+        }
+
+        return $permissions;
     }
 
     /**
