@@ -24,7 +24,7 @@
                 <b-dropdown
                     variant="outline-secondary"
                     size="md"
-                    class="fj-page-navigation__controls"
+                    class="dropdown-md-square"
                     v-bind:disabled="_.isEmpty(controls)"
                     no-caret
                 >
@@ -214,15 +214,6 @@ export default {
     }
     .fj-save-animate {
         transition: 0.25s all cubic-bezier(0.91, -0.13, 0.68, 0.79);
-    }
-
-    &__controls {
-        .btn {
-            width: 40px;
-            padding-left: 0;
-            padding-right: 0;
-            text-align: center;
-        }
     }
 
     .fj-page-navigation__container {

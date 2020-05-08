@@ -5,6 +5,7 @@
             :disabled="!nearItems.previous"
             variant="outline-secondary"
             size="sm"
+            class="btn-sm-square"
         >
             <fa-icon icon="chevron-left" class="fj-near-items__prev" />
         </b-button>
@@ -13,6 +14,7 @@
             :disabled="!nearItems.next"
             variant="outline-secondary"
             size="sm"
+            class="btn-sm-square"
         >
             <fa-icon icon="chevron-right" class="fj-near-items__next" />
         </b-button>
@@ -36,17 +38,11 @@ export default {
 
 <style lang="scss" scoped>
 .fj-near-items {
-    .btn {
-        height: 24px;
-        width: 24px;
-        padding: 0;
-        line-height: 24px;
-    }
     &__prev {
-        margin-right: 4px;
+        margin-right: 2px;
     }
     &__next {
-        margin-left: 4px;
+        margin-left: 2px;
     }
 }
 </style>

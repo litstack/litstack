@@ -2457,9 +2457,9 @@ select.form-control:focus::-ms-value {
 }
 
 .col-form-label-sm {
-  padding-top: calc(0.2734375rem + 1px);
-  padding-bottom: calc(0.2734375rem + 1px);
-  font-size: 0.765625rem;
+  padding-top: calc(0.25rem + 1px);
+  padding-bottom: calc(0.25rem + 1px);
+  font-size: 0.7rem;
   line-height: 1.5;
 }
 
@@ -2483,9 +2483,9 @@ select.form-control:focus::-ms-value {
 }
 
 .form-control-sm {
-  height: calc(1.5em + 0.546875rem + 2px);
-  padding: 0.2734375rem 1.09375rem;
-  font-size: 0.765625rem;
+  height: calc(1.5em + 0.5rem + 2px);
+  padding: 0.25rem 1rem;
+  font-size: 0.7rem;
   line-height: 1.5;
   border-radius: 0.4375rem;
 }
@@ -3632,8 +3632,8 @@ fieldset:disabled a.btn {
 
 .btn-sm,
 .btn-group-sm > .btn {
-  padding: 0.2734375rem 1.09375rem;
-  font-size: 0.765625rem;
+  padding: 0.25rem 1rem;
+  font-size: 0.7rem;
   line-height: 1.5;
   border-radius: 0.4375rem;
 }
@@ -4013,8 +4013,8 @@ input[type=button].btn-block {
 
 .btn-sm + .dropdown-toggle-split,
 .btn-group-sm > .btn + .dropdown-toggle-split {
-  padding-right: 0.8203125rem;
-  padding-left: 0.8203125rem;
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
 }
 
 .btn-lg + .dropdown-toggle-split,
@@ -4211,7 +4211,7 @@ input[type=button].btn-block {
 
 .input-group-sm > .form-control:not(textarea),
 .input-group-sm > .custom-select {
-  height: calc(1.5em + 0.546875rem + 2px);
+  height: calc(1.5em + 0.5rem + 2px);
 }
 
 .input-group-sm > .form-control,
@@ -4220,8 +4220,8 @@ input[type=button].btn-block {
 .input-group-sm > .input-group-append > .input-group-text,
 .input-group-sm > .input-group-prepend > .btn,
 .input-group-sm > .input-group-append > .btn {
-  padding: 0.2734375rem 1.09375rem;
-  font-size: 0.765625rem;
+  padding: 0.25rem 1rem;
+  font-size: 0.7rem;
   line-height: 1.5;
   border-radius: 0.4375rem;
 }
@@ -4456,11 +4456,11 @@ input[type=button].btn-block {
 }
 
 .custom-select-sm {
-  height: calc(1.5em + 0.546875rem + 2px);
-  padding-top: 0.2734375rem;
-  padding-bottom: 0.2734375rem;
-  padding-left: 1.09375rem;
-  font-size: 0.765625rem;
+  height: calc(1.5em + 0.5rem + 2px);
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 1rem;
+  font-size: 0.7rem;
 }
 
 .custom-select-lg {
@@ -11501,7 +11501,7 @@ a.text-gray:focus {
 }
 
 .b-form-btn-label-control > label.form-control-sm {
-  min-height: calc(calc(1.5em + 0.546875rem + 2px) - 2px);
+  min-height: calc(calc(1.5em + 0.5rem + 2px) - 2px);
 }
 
 .b-form-btn-label-control > label.form-control-lg {
@@ -11886,15 +11886,15 @@ a.text-gray:focus {
 .input-group-sm.custom-file,
 .input-group-sm .custom-file-input,
 .input-group-sm .custom-file-label {
-  font-size: 0.765625rem;
-  height: calc(1.5em + 0.546875rem + 2px);
+  font-size: 0.7rem;
+  height: calc(1.5em + 0.5rem + 2px);
 }
 
 .b-custom-control-sm .custom-file-label,
 .b-custom-control-sm .custom-file-label:after,
 .input-group-sm .custom-file-label,
 .input-group-sm .custom-file-label:after {
-  padding: 0.2734375rem 1.09375rem;
+  padding: 0.25rem 1rem;
   line-height: 1.5;
 }
 
@@ -11906,7 +11906,7 @@ a.text-gray:focus {
 .b-custom-control-sm .custom-file-label::after,
 .input-group-sm .custom-file-label::after {
   font-size: inherit;
-  height: calc( 1.5em + 0.546875rem );
+  height: calc( 1.5em + 0.5rem );
   border-radius: 0 0.4375rem 0.4375rem 0;
 }
 
@@ -11919,19 +11919,19 @@ a.text-gray:focus {
 
 input[type=color].form-control {
   height: calc(2em + 0.625rem + 2px);
-  padding: 0.13671875rem 0.546875rem;
+  padding: 0.125rem 0.5rem;
 }
 
 input[type=color].form-control.form-control-sm,
 .input-group-sm input[type=color].form-control {
-  height: calc(1.5em + 0.546875rem + 2px);
-  padding: 0.13671875rem 0.546875rem;
+  height: calc(1.5em + 0.5rem + 2px);
+  padding: 0.125rem 0.5rem;
 }
 
 input[type=color].form-control.form-control-lg,
 .input-group-lg input[type=color].form-control {
   height: calc(1.5em + 1rem + 2px);
-  padding: 0.13671875rem 0.546875rem;
+  padding: 0.125rem 0.5rem;
 }
 
 input[type=color].form-control:disabled {
@@ -12013,8 +12013,8 @@ input[type=color].form-control:disabled {
 }
 
 .input-group-sm > .custom-range {
-  height: calc(1.5em + 0.546875rem + 2px);
-  padding: 0 1.09375rem;
+  height: calc(1.5em + 0.5rem + 2px);
+  padding: 0 1rem;
   border-radius: 0.4375rem;
 }
 
@@ -14905,12 +14905,77 @@ input[type=color].form-control:disabled {
   box-shadow: 0 0 0 0.2rem rgba(100, 118, 138, 0.5);
 }
 
+.btn-sm,
+.btn-group-sm > .btn {
+  height: 1.75rem;
+  max-height: 1.75rem;
+}
+
+.btn-sm-square {
+  width: 1.75rem;
+}
+
+.btn-md {
+  height: 2.5rem;
+  max-height: 2.5rem;
+}
+
+.btn-md-square {
+  width: 2.5rem;
+}
+
+.btn-lg,
+.btn-group-lg > .btn {
+  height: 3.125rem;
+  max-height: 3.125rem;
+}
+
+.btn-lg-square {
+  width: 3.125rem;
+}
+
+.btn-sm-square,
+.btn-md-square,
+.btn-lg-square {
+  padding: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .card {
   box-shadow: 0 0 19px 0 rgba(235, 235, 235, 0.5);
 }
 
 .dropdown .dropdown-menu {
   box-shadow: 0 0 40px 0 rgba(112, 133, 156, 0.15);
+}
+
+.dropdown-sm-square > .btn {
+  height: 1.75rem;
+  max-height: 1.75rem;
+  width: 1.75rem;
+}
+
+.dropdown-md-square > .btn {
+  height: 2.5rem;
+  max-height: 2.5rem;
+  width: 2.5rem;
+}
+
+.dropdown-lg-square > .btn {
+  height: 3.125rem;
+  max-height: 3.125rem;
+  width: 3.125rem;
+}
+
+.dropdown-sm-square > .btn,
+.dropdown-md-square > .btn,
+.dropdown-lg-square > .btn {
+  padding: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .list-group .collapse .list-group-item:not(.active) {
@@ -15226,6 +15291,10 @@ div#fjord-app nav.fj-topbar {
 
 div#fjord-app nav.fj-topbar #fj-topbar-right .btn {
   color: #676569;
+}
+
+div#fjord-app nav.fj-topbar #fj-topbar-right .show .btn {
+  color: white;
 }
 
 div#fjord-app nav.fj-topbar .dropdown-menu {

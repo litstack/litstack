@@ -29,6 +29,7 @@
                     <b-button
                         variant="outline-secondary"
                         size="sm"
+                        class="btn-sm-square"
                         @click="$emit('toggleExpand')"
                     >
                         <fa-icon :icon="expand ? 'angle-up' : 'angle-down'" />
@@ -101,19 +102,26 @@ export default {
             height: 100%;
             td {
                 font-weight: 500;
-
-                &:nth-child(2) {
-                    transform: translateX(-16px);
+                &:first-child {
+                    width: 0;
+                    padding: 0px;
+                    position: relative;
+                    div {
+                        position: absolute;
+                        top: 0;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 2.5rem;
+                        left: -2.5rem;
+                    }
                 }
             }
         }
     }
     .fj-block-delete {
         cursor: pointer;
-    }
-    .fj-draggable__dragbar.fj-block__dragbar {
-        float: left;
-        transform: translateX(calc(-#{$card-spacer-x / 2} - 4px));
     }
 }
 </style>

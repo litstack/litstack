@@ -1,4 +1,4 @@
-<b-dropdown class="m-md-2" dropbottom no-caret variant="transparent" size="sm">
+<b-dropdown class="m-md-2 dropdown-sm-square" dropbottom no-caret variant="transparent" size="sm">
     <template v-slot:button-content>
         <fa-icon icon="bars" />
     </template>

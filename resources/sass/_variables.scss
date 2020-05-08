@@ -41,20 +41,16 @@ $gray: $gray-600 !default;
 
 $theme-colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
-$theme-colors: map-merge(
-    (
-        //'primary': $primary,
-            //'secondary': $secondary,
-            //'success': $success,
-            //'info': $info,
-            //'warning': $warning,
-            //'danger': $danger,
-            //'light': $light,
-            //'dark': $dark,
-            'gray': $gray
-    ),
-    $theme-colors
-);
+$theme-colors: map-merge(( //'primary': $primary,
+        //'secondary': $secondary,
+        //'success': $success,
+        //'info': $info,
+        //'warning': $warning,
+        //'danger': $danger,
+        //'light': $light,
+        //'dark': $dark,
+        'gray': $gray),
+    $theme-colors);
 
 // Options
 //
@@ -87,16 +83,13 @@ $spacer-x: 2rem;
 // This variable affects the `.h-*` and `.w-*` classes.
 $sizes: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
-$sizes: map-merge(
-    (
-        //25: 25%,
-            //50: 50%,
-            //75: 75%,
-            //100: 100%,
-            //auto: auto
+$sizes: map-merge(( //25: 25%,
+        //50: 50%,
+        //75: 75%,
+        //100: 100%,
+        //auto: auto
     ),
-    $sizes
-);
+    $sizes);
 
 // Body
 //
@@ -126,12 +119,10 @@ $body-bg: $gray-200 !default;
 //
 // Define the maximum width of `.container` for different screen sizes.
 
-$container-max-widths: (
-    sm: 540px,
+$container-max-widths: (sm: 540px,
     md: 720px,
     lg: 960px,
-    xl: 1140px
-) !default;
+    xl: 1140px) !default;
 
 // Grid columns
 //
@@ -293,6 +284,9 @@ $table-striped-order: even !default;
 // Buttons + Forms
 //
 // Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
+//
+//
+// The Button height is defined explicitly in _bs.scss
 
 $input-btn-padding-y: 0.3125rem !default;
 $input-btn-padding-x: 1.25rem !default;
@@ -304,9 +298,9 @@ $input-btn-line-height: 2;
 //$input-btn-focus-color:       rgba($component-active-bg, .25) !default;
 //$input-btn-focus-box-shadow:  0 0 0 $input-btn-focus-width $input-btn-focus-color !default;
 
-$input-btn-padding-y-sm: $input-btn-padding-y * 0.875 !default;
-$input-btn-padding-x-sm: $input-btn-padding-x * 0.875 !default;
-$input-btn-font-size-sm: $font-size-sm * 0.875 !default;
+//$input-btn-padding-y-sm: $input-btn-padding-y * 0.8 !default;
+$input-btn-padding-x-sm: $input-btn-padding-x * 0.8 !default;
+$input-btn-font-size-sm: $font-size-sm * 0.8 !default;
 //$input-btn-line-height-sm:    $line-height-sm !default;
 
 //$input-btn-padding-y-lg:      .5rem !default;

@@ -16,6 +16,12 @@ div#fjord-app nav.fj-topbar {
         .btn {
             color: $topbar-button-color;
         }
+
+        .show {
+            .btn {
+                color: white;
+            }
+        }
     }
 
     .dropdown-menu {
