@@ -86,7 +86,10 @@ class Component extends Field
             try {
                 return parent::__call($method, $params);
             } catch (MethodNotFoundException $e) {
-                $this->attributes['comp']->methodNotFound($method);
+                $this->attributes['comp']->methodNotFound($method, [
+                    'function' => '__call',
+                    'class' => self::class
+                ]);
             }
         }
 

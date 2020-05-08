@@ -264,7 +264,11 @@ class BaseForm extends VueProp
                 "The %s method is not found for this form. Supported fields: %s.",
                 $method,
                 implode(', ', array_merge(['relation'], array_keys($this->fields))),
-            )
+            ),
+            [
+                'function' => '__call',
+                'class' => self::class
+            ]
         );
     }
 
