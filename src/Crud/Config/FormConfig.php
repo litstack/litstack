@@ -89,15 +89,14 @@ abstract class FormConfig
     }
 
     /**
-     * Model singular and plural name.
+     * Form singular name.
      *
-     * @return array $names
+     * @return array
      */
     public function names()
     {
         return [
-            'singular' => ucfirst(Str::singular($this->formName)),
-            'plural' => ucfirst(Str::plural($this->formName)),
+            'singular' => ucfirst(Str::singular($this->formName))
         ];
     }
 

@@ -2,9 +2,7 @@
 
 namespace Fjord\Exceptions;
 
-use LogicException;
-
-class MethodNotFoundException extends LogicException
+class MethodNotFoundException extends TraceableException
 {
     //
 }

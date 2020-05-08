@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Fjord\Exceptions\MethodNotFoundException;
 
+use function Psy\debug;
+
 class Component extends VueProp
 {
     const PROP_TYPES = [
@@ -470,8 +472,15 @@ class Component extends VueProp
      *
      * @throws \Fjord\Exceptions\MethodNotFoundException
      */
-    public function methodNotFound($method)
+    public function methodNotFound($method, $options = [])
     {
+        if (empty($options)) {
+            $options = [
+                'function' => '__call',
+                'class' => self::class
+            ];
+        }
+
         $message = sprintf(
             '"%s" is not a supported method for the Vue component "%s". Supported methods: %s.',
             $method,
@@ -479,7 +488,7 @@ class Component extends VueProp
             implode(', ', $this->getSupportedMethods())
         );
 
-        throw new MethodNotFoundException($message);
+        throw new MethodNotFoundException($message, $options);
     }
 
     /**
