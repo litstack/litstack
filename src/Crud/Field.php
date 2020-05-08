@@ -4,13 +4,16 @@ namespace Fjord\Crud;
 
 use Closure;
 use Exception;
-use Fjord\Crud\Models\FormField;
 use Fjord\Support\VueProp;
-use Fjord\Exceptions\MethodNotFoundException;
 use InvalidArgumentException;
+use Fjord\Crud\Models\FormField;
+use Fjord\Crud\Exceptions\ThrowsFieldException;
+use Fjord\Crud\Exceptions\FieldMethodNotFoundException;
 
 class Field extends VueProp
 {
+    use ThrowsFieldException;
+
     /**
      * Is field translatable.
      *
@@ -320,17 +323,20 @@ class Field extends VueProp
      * @param  string  $method
      * @return void
      *
-     * @throws \Fjord\Exceptions\MethodNotFoundException
+     * @throws \Fjord\Crud\Exceptions\FieldMethodNotFoundException
      */
     protected function methodNotFound($method)
     {
         $allowed = $this->getAllowedMethods();
-        throw new MethodNotFoundException(
-            sprintf(
-                'The %s method is not found for the %s field. Supported methods: %s.',
-                $method,
-                class_basename(static::class),
-                implode(', ', $allowed)
+
+        $this->throwFieldException(
+            new FieldMethodNotFoundException(
+                sprintf(
+                    'The %s method is not found for the %s field. Supported methods: %s.',
+                    $method,
+                    class_basename(static::class),
+                    implode(', ', $allowed)
+                )
             )
         );
     }
