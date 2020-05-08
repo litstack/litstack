@@ -1,11 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,600&display=swap);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@300;
 
-/*
-$embed-responsive-aspect-ratios: join(
-    ((21 9), (16 9), (4 3), (1 1)),
-    $embed-responsive-aspect-ratios
-);
-*/
+400;600&display=swap);@charset "UTF-8";
 
 .ph-col-1 {
   flex: 0 0 8.3333333333%;
@@ -2363,7 +2358,7 @@ pre code {
   display: block;
   width: 100%;
   height: calc(2em + 0.625rem + 2px);
-  padding: 0.3125rem 1.25rem;
+  padding: 0.3125rem 0.75rem;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 2;
@@ -2619,8 +2614,8 @@ textarea.form-control.is-valid {
 .was-validated .custom-select:valid,
 .custom-select.is-valid {
   border-color: #9ff2ae;
-  padding-right: calc(0.75em + 2.71875rem);
-  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 1.25rem center/8px 10px, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='%239ff2ae' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e") #fff no-repeat center right 2.25rem/calc(1em + 0.3125rem) calc(1em + 0.3125rem);
+  padding-right: calc(0.75em + 2.21875rem);
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='%239ff2ae' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e") #fff no-repeat center right 1.75rem/calc(1em + 0.3125rem) calc(1em + 0.3125rem);
 }
 
 .was-validated .custom-select:valid:focus,
@@ -2733,8 +2728,8 @@ textarea.form-control.is-invalid {
 .was-validated .custom-select:invalid,
 .custom-select.is-invalid {
   border-color: #f67693;
-  padding-right: calc(0.75em + 2.71875rem);
-  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 1.25rem center/8px 10px, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23f67693' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23f67693' stroke='none'/%3e%3c/svg%3e") #fff no-repeat center right 2.25rem/calc(1em + 0.3125rem) calc(1em + 0.3125rem);
+  padding-right: calc(0.75em + 2.21875rem);
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23f67693' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23f67693' stroke='none'/%3e%3c/svg%3e") #fff no-repeat center right 1.75rem/calc(1em + 0.3125rem) calc(1em + 0.3125rem);
 }
 
 .was-validated .custom-select:invalid:focus,
@@ -4174,7 +4169,7 @@ input[type=button].btn-block {
 .input-group-text {
   display: flex;
   align-items: center;
-  padding: 0.3125rem 1.25rem;
+  padding: 0.3125rem 0.75rem;
   margin-bottom: 0;
   font-size: 0.875rem;
   font-weight: 400;
@@ -4228,7 +4223,7 @@ input[type=button].btn-block {
 
 .input-group-lg > .custom-select,
 .input-group-sm > .custom-select {
-  padding-right: 2.25rem;
+  padding-right: 1.75rem;
 }
 
 .input-group > .input-group-prepend > .btn,
@@ -4409,13 +4404,13 @@ input[type=button].btn-block {
   display: inline-block;
   width: 100%;
   height: calc(2em + 0.625rem + 2px);
-  padding: 0.3125rem 2.25rem 0.3125rem 1.25rem;
+  padding: 0.3125rem 1.75rem 0.3125rem 0.75rem;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 2;
   color: #4f4e52;
   vertical-align: middle;
-  background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 1.25rem center/8px 10px;
+  background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px;
   border: 1px solid #70859c;
   border-radius: 0.625rem;
   -webkit-appearance: none;
@@ -4437,7 +4432,7 @@ input[type=button].btn-block {
 .custom-select[multiple],
 .custom-select[size]:not([size="1"]) {
   height: auto;
-  padding-right: 1.25rem;
+  padding-right: 0.75rem;
   background-image: none;
 }
 
@@ -4513,7 +4508,7 @@ input[type=button].btn-block {
   left: 0;
   z-index: 1;
   height: calc(2em + 0.625rem + 2px);
-  padding: 0.3125rem 1.25rem;
+  padding: 0.3125rem 0.75rem;
   font-weight: 400;
   line-height: 2;
   color: #4f4e52;
@@ -4530,7 +4525,7 @@ input[type=button].btn-block {
   z-index: 3;
   display: block;
   height: calc(2em + 0.625rem);
-  padding: 0.3125rem 1.25rem;
+  padding: 0.3125rem 0.75rem;
   line-height: 2;
   color: #4f4e52;
   content: "Browse";
@@ -11978,7 +11973,7 @@ input[type=color].form-control:disabled {
 
 .input-group > .custom-range {
   height: calc(2em + 0.625rem + 2px);
-  padding: 0 1.25rem;
+  padding: 0 0.75rem;
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #70859c;
@@ -15326,6 +15321,13 @@ div#fjord-app nav.fj-topbar .dropdown-menu .dropdown-item:focus {
 body,
 html {
   background-color: #f5f8fb;
+  font-family: "Inter", sans-serif;
+}
+
+body *,
+html * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 div#fjord-app {

@@ -1,5 +1,5 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
 // Variables
 @import '_variables';
@@ -54,6 +54,12 @@
 body,
 html {
     background-color: $body-bg;
+    font-family: 'Inter', sans-serif;
+
+    * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 }
 
 div#fjord-app {
