@@ -63,6 +63,6 @@ import Fjord from 'fjord';
 const store = {};
 
 new Fjord({
-    store
+    store,
 });
 ```

@@ -4,6 +4,7 @@
             :checked="value"
             :options="field.options"
             @input="changed"
+            class="fj-form-item-checkboxes"
         />
     </fj-form-item>
 </template>
@@ -41,3 +42,11 @@ export default {
     }
 };
 </script>
+
+<style lang="scss" scoped>
+@import '@fj-sass/_variables';
+.fj-form-item-checkboxes {
+    height: $button-md-height / 1.5;
+    align-items: center;
+}
+</style>

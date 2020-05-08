@@ -71,7 +71,7 @@ export default class CrudModel {
             this.attributes[prop] ||
             this._getTranslatedAttribute(prop, this.attributes);
 
-        if (attribute) {
+        if (attribute !== undefined) {
             return attribute;
         }
 

@@ -23,8 +23,11 @@
 
 </head>
 
-
 <body onload="makeVisible()">
+    @php
+        fjord()->config('navigation')->topbar;
+        fjord()->config('navigation')->main;
+    @endphp
     <div id="fjord-app">
 
             @include('fjord::partials.topbar.topbar')

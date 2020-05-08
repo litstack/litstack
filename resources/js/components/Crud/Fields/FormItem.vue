@@ -10,11 +10,7 @@
                 <label :for="field.id" v-else>{{ field.title }}</label>
                 <div>
                     <slot name="title-right" />
-                    <b-badge
-                        v-if="field.translatable"
-                        variant="secondary"
-                        class="mr-2"
-                    >
+                    <b-badge v-if="field.translatable" variant="secondary">
                         <small>{{ language }}</small>
                     </b-badge>
                 </div>
