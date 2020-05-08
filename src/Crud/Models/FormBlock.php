@@ -38,7 +38,8 @@ class FormBlock extends FjordFormModel
         'model_id',
         'type',
         'content',
-        'order_column'
+        'order_column',
+        'value'
     ];
 
     /**

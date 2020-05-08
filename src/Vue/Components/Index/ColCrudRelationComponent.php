@@ -22,7 +22,7 @@ class ColCrudRelationComponent extends TableComponent
                 'type' => 'string',
                 'required' => true
             ],
-            'route_prefix' => [
+            'routePrefix' => [
                 'type' => 'string',
                 'required' => true
             ],

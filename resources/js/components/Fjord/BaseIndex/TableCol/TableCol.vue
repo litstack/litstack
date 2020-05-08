@@ -13,6 +13,7 @@
             :is="col.component"
             :item="item"
             :col="col"
+            :format="getColValue"
             @reload="reload"
             v-bind="getColComponentProps()"
         />
@@ -79,26 +80,32 @@ export default {
     },
     methods: {
         setValue() {
-            this.value = this.getColValue(this.col.value);
+            this.value = this.getColValue(this.col.value, this.item);
         },
         reload() {
             this.$emit('reload');
         },
-        getColValue(col) {
+        getColValue(col, item) {
             let value = '';
 
             // Regex for has {value} pattern.
             if (/{(.*?)}/.test(col)) {
-                value = this._format(col, this.item);
-            } else if (this.item[col] !== undefined) {
-                value = this.item[col];
+                value = this._format(col, item);
+            } else if (item[col] !== undefined) {
+                value = item[col];
             } else {
                 value = col;
             }
 
+            console.log(col, value);
+
             return this.format(value);
         },
         format(value) {
+            if (!value) {
+                return value;
+            }
+
             if (this.col.regex) {
                 value = value.replace(
                     eval(this.col.regex),
@@ -106,7 +113,6 @@ export default {
                 );
             }
             if (this.col.strip_html) {
-                console.log(value);
                 value = value.replace(/<[^>]*>?/gm, ' ');
             }
             if (this.col.max_chars) {
@@ -126,7 +132,7 @@ export default {
 
             for (let name in this.col.props) {
                 let prop = this.col.props[name];
-                compiled[name] = this.getColValue(prop);
+                compiled[name] = prop;
             }
 
             return compiled;

@@ -32,6 +32,7 @@
                     :field="field"
                     :model="model"
                     :cols="field.blockCols"
+                    :reload="reloadBlock"
                     :preview="field.repeatables[block.type].preview"
                     :fields="field.repeatables[block.type].form.fields"
                     :set-route-prefix="setFieldsRoutePrefixBlockId"
@@ -80,8 +81,25 @@ export default {
     },
     beforeMount() {
         this.loadBlocks();
+
+        Fjord.bus.$on('saved', () => {
+            console.log('SAVED');
+            this.reloadBlocks();
+        });
     },
     methods: {
+        async reloadBlock(block) {
+            let response = await axios.get(
+                `${this.field.route_prefix}/blocks/${this.field.id}/${block.id}`
+            );
+            let newBlock = this.crud(response.data);
+            for (let i in this.sortableBlocks) {
+                let block = this.sortableBlocks[i];
+                if (block.id == newBlock.id) {
+                    this.sortableBlocks[i] = newBlock;
+                }
+            }
+        },
         toggleExpand() {
             for (let i in this.$refs.block) {
                 let block = this.$refs.block[i];
@@ -102,20 +120,34 @@ export default {
             }
             return fields;
         },
+        reloadBlocks() {
+            this._loadBlocks();
+        },
         async loadBlocks() {
             this.busy = true;
+            await this._loadBlocks();
+            this.busy = false;
+        },
+        async _loadBlocks() {
             let response = await axios.get(
                 `${this.field.route_prefix}/blocks/${this.field.id}`
             );
             this.sortableBlocks = [];
             for (let i in response.data) {
                 let block = response.data[i];
-                this.newBlock(block);
+                this.newBlock(block, false);
             }
-            this.busy = false;
         },
-        newBlock(block) {
+        newBlock(block, open = true) {
             this.sortableBlocks.push(this.crud(block));
+            if (open) {
+                this.$nextTick(() => {
+                    this.$refs.block[this.$refs.block.length - 1].$emit(
+                        'expand',
+                        true
+                    );
+                });
+            }
         },
         async deleteBlock(block) {
             try {

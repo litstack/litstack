@@ -23,6 +23,7 @@ class Col extends VueProp
     {
         if ($label) {
             $this->label($label);
+            $this->value($label);
         }
     }
 

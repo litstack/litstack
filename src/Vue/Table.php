@@ -29,10 +29,38 @@ class Table extends VueProp
     }
 
     /**
+     * Add image column.
+     *
+     * @return ColImageComponent
+     */
+    public function image(string $label = '')
+    {
+        $component = $this->component('fj-col-image');
+
+        $component->label($label);
+
+        return $component;
+    }
+
+    /**
+     * Add relation column.
+     *
+     * @return ColCrudRelationComponent
+     */
+    public function relation(string $label = '')
+    {
+        $component = $this->component('fj-col-crud-relation');
+
+        $component->label($label);
+
+        return $component;
+    }
+
+    /**
      * Add table column to cols stack and set component.
      *
      * @param string $component
-     * @return \Fjord\Vue\Col $col
+     * @return mixed
      */
     public function component(string $component)
     {

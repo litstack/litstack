@@ -24,6 +24,9 @@ class ColImageComponent extends TableComponent
             'maxHeight' => [
                 'type' => 'string'
             ],
+            'square' => [
+                'type' => 'string'
+            ]
         ];
 
         return array_merge(

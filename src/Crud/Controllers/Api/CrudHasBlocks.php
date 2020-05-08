@@ -22,6 +22,28 @@ trait CrudHasBlocks
      * @param int $field_id
      * @return void
      */
+    public function loadBlock(CrudReadRequest $request, $id, $field_id, $block_id)
+    {
+        $model = $this->query()->findOrFail($id);
+        $field = $this->config->form->findField($field_id);
+
+        if (!$field instanceof Blocks) {
+            abort(404);
+        }
+
+        return crud(
+            $field->relation($model, $query = true)->findOrFail($block_id)
+        );
+    }
+
+    /**
+     * Fetch all blocks.
+     *
+     * @param CrudReadRequest $request
+     * @param int $id
+     * @param int $field_id
+     * @return void
+     */
     public function loadBlocks(CrudReadRequest $request, $id, $field_id)
     {
         $model = $this->query()->findOrFail($id);

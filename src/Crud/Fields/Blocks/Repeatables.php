@@ -3,6 +3,7 @@
 namespace Fjord\Crud\Fields\Blocks;
 
 use Closure;
+use Fjord\Vue\Table;
 use Fjord\Support\VueProp;
 use Fjord\Crud\Models\FormBlock;
 use Fjord\Vue\Crud\PreviewTable;
@@ -56,7 +57,7 @@ class Repeatables extends VueProp
             $this->routePrefix
         );
 
-        $preview = new PreviewTable;
+        $preview = new Table;
 
         $closure($form, $preview);
 
