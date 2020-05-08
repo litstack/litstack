@@ -151,13 +151,6 @@ a.ck.ck-button:not(.ck-disabled):hover {
 .ck.ck-icon :not([fill]) {
     fill: $secondary;
 }
-.ck.ck-button {
-    &:hover {
-        .ck.ck-icon :not([fill]) {
-            //fill: white;
-        }
-    }
-}
 .ck.ck-button.ck-on,
 a.ck.ck-button.ck-on {
     background: $secondary;

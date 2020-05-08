@@ -9,21 +9,34 @@ const methods = {
         });
     },
     setOriginalValue() {
-        if (this.value) {
-            this.original = Fjord.clone(this.value);
+        if (!this.field.translatable) {
+            if (this.value) {
+                this.original = Fjord.clone(this.value);
+            }
+            return;
+        }
+
+        this.original = {};
+        let locales = this.$store.state.config.languages;
+        for (let i in locales) {
+            let locale = locales[i];
+            let value = this._getValue(locale);
+            this.original[locale] = null;
+            if (!value) {
+                continue;
+            }
+            this.original[locale] = value;
         }
     },
     getLocale() {
         return this.$store.state.config.language;
     },
     getValue() {
-        this.value = this._getValue();
+        this.value = this._getValue(this.getLocale());
         this.$forceUpdate();
     },
-    _getValue() {
-        let locale = this.getLocale();
-
-        this.setDefaultValues();
+    _getValue(locale) {
+        this.setDefaultValues(locale);
 
         if (this.field.translatable) {
             return this.model[locale][this.field.local_key];
@@ -51,9 +64,7 @@ const methods = {
 
         return (this.model[this.field.local_key] = value);
     },
-    setDefaultValues() {
-        let locale = this.getLocale();
-
+    setDefaultValues(locale) {
         if (this.model.translatable && !(locale in this.model.attributes)) {
             this.model[locale] = {};
         }
