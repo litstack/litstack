@@ -1,7 +1,7 @@
 <template>
-    <div class="fj-col-relation" v-if="related">
-        {{ related[value] }}
-        <a :href="`${Fjord.baseURL}${relationLink}/${related.id}/edit`">
+    <div class="fj-col-relation" v-if="relation">
+        {{ format(value, relation) }}
+        <a :href="`${Fjord.baseURL}${relationLink}/${relation.id}/edit`">
             <fa-icon icon="external-link-alt" />
         </a>
     </div>
@@ -17,21 +17,28 @@ export default {
             type: Object
         },
         related: {
-            type: [Object, Boolean]
+            type: [String]
         },
         value: {
             required: true,
             type: String
         },
-        route_prefix: {
+        routePrefix: {
             required: false,
             type: String
+        },
+        format: {
+            type: Function,
+            required: true
         }
     },
     computed: {
+        relation() {
+            return this.item[this.related];
+        },
         relationLink() {
-            if (this.route_prefix) {
-                return this.route_prefix;
+            if (this.routePrefix) {
+                return this.routePrefix;
             }
             return this.relation;
         }

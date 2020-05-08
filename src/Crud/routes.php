@@ -29,6 +29,7 @@ Route::delete("{id}/media/{media_id}", [$controller, 'destroyMedia'])->name("med
 
 // Blocks
 Route::get("/{id}/blocks/{field_id}", [$controller, "loadBlocks"])->name("blocks.index");
+Route::get("/{id}/blocks/{field_id}/{block_id}", [$controller, "loadBlock"])->name("blocks.index");
 Route::post("/{id}/blocks/{field_id}", [$controller, "storeBlock"])->name("blocks.store");
 Route::put("/{id}/blocks/{field_id}/{block_id}", [$controller, "updateBlock"])->name("blocks.update");
 Route::delete("/{id}/blocks/{field_id}/{block_id}", [$controller, "destroyBlock"])->name("blocks.destroy");

@@ -66,6 +66,10 @@ export default class CrudModel {
      * @param {*} prop
      */
     get(target, prop) {
+        if (String(prop).startsWith('Symbol(Symbol.')) {
+            return Reflect.get(...arguments);
+        }
+
         let attribute =
             this[prop] ||
             this.attributes[prop] ||
@@ -86,7 +90,7 @@ export default class CrudModel {
         let keys = String(prop).split('.');
         for (let i = 0; i < keys.length; i++) {
             let key = keys[i];
-            if (!attribute) {
+            if (!attribute || typeof attribute != typeof {}) {
                 return;
             }
 

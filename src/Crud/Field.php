@@ -288,11 +288,11 @@ class Field extends VueProp
         if (!$this->translatable) {
             return;
         }
-        if ($this->model == FormField::class) {
+        if (!is_translatable($this->model)) {
             return;
         }
 
-        $this->attributes['translatable'] = is_translatable($this->model);
+        $this->attributes['translatable'] = in_array($this->id, (new $this->model)->translatedAttributes);
     }
 
     /**

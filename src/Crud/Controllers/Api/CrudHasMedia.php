@@ -146,7 +146,7 @@ trait CrudHasMedia
             abort(404);
         }
 
-        $response = $this->orderField($query->getQuery(), $field, $ids);
+        $response = $this->orderField($query, $field, $ids);
 
         $this->edited($model, 'media:ordered');
 

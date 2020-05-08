@@ -13,6 +13,7 @@
             :is="col.component"
             :item="item"
             :col="col"
+            :format="getColValue"
             @reload="reload"
             v-bind="getColComponentProps()"
         />
@@ -79,19 +80,48 @@ export default {
     },
     methods: {
         setValue() {
-            this.value = this.getColValue(this.col.value);
+            this.value = this.getColValue(this.col.value, this.item);
         },
         reload() {
             this.$emit('reload');
         },
-        getColValue(col) {
+        getColValue(col, item) {
+            let value = '';
+
             // Regex for has {value} pattern.
             if (/{(.*?)}/.test(col)) {
-                return this._format(col, this.item);
-            } else if (this.item[col] !== undefined) {
-                return this.item[col];
+                value = this._format(col, item);
+            } else if (item[col] !== undefined) {
+                value = item[col];
+            } else {
+                value = col;
             }
-            return col;
+
+            console.log(col, value);
+
+            return this.format(value);
+        },
+        format(value) {
+            if (!value) {
+                return value;
+            }
+
+            if (this.col.regex) {
+                value = value.replace(
+                    eval(this.col.regex),
+                    this.col.regex_replace
+                );
+            }
+            if (this.col.strip_html) {
+                value = value.replace(/<[^>]*>?/gm, ' ');
+            }
+            if (this.col.max_chars) {
+                if (value.length > this.col.max_chars) {
+                    value = value.substring(0, this.col.max_chars) + '...';
+                }
+            }
+
+            return value;
         },
         getColComponentProps() {
             if (!this.col.component) {
@@ -102,7 +132,7 @@ export default {
 
             for (let name in this.col.props) {
                 let prop = this.col.props[name];
-                compiled[name] = this.getColValue(prop);
+                compiled[name] = prop;
             }
 
             return compiled;

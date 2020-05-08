@@ -25,12 +25,14 @@
                             :model-id="modelId"
                             :readonly="field.readonly"
                             v-if="images.length > 0"
+                            @deleted="$emit('reload')"
+                            @newOrder="$emit('reload')"
                         >
                             <vue-dropzone
                                 v-if="
                                     !field.readonly &&
-                                    images.length > 0 &&
-                                    images.length < field.maxFiles
+                                        images.length > 0 &&
+                                        images.length < field.maxFiles
                                 "
                                 slot="drop"
                                 class="fj-dropzone"
@@ -104,18 +106,18 @@ export default {
     props: {
         model: {
             required: true,
-            type: Object,
+            type: Object
         },
         field: {
             required: true,
-            type: Object,
+            type: Object
         },
         modelId: {
-            type: [Boolean, Number],
-        },
+            type: [Boolean, Number]
+        }
     },
     components: {
-        vueDropzone: vue2Dropzone,
+        vueDropzone: vue2Dropzone
     },
     data() {
         let self = this;
@@ -141,12 +143,12 @@ export default {
                     'X-CSRF-TOKEN': document.head.querySelector(
                         'meta[name="csrf-token"]'
                     ).content,
-                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 params: {
-                    collection: this.field.id,
-                },
-            },
+                    collection: this.field.id
+                }
+            }
         };
     },
     beforeMount() {
@@ -174,7 +176,7 @@ export default {
                 c.push(1);
             }
             return c;
-        },
+        }
     },
     methods: {
         getCropperId() {
@@ -191,7 +193,7 @@ export default {
             if (!(this.language in image.custom_properties)) {
                 image.custom_properties[this.language] = {
                     alt: '',
-                    title: '',
+                    title: ''
                 };
             }
 
@@ -218,15 +220,16 @@ export default {
         uploadSuccess(file, response) {
             this.uploads++;
             this.$bvToast.toast(this.__('fj.image_uploaded'), {
-                variant: 'success',
+                variant: 'success'
             });
             this.images.push(response);
+            this.$emit('reload');
             Fjord.bus.$emit('field:updated', 'image:uploaded');
         },
         uploadError(file, errorMessage, xhr) {
             this.$bvToast.toast(errorMessage.message, {
                 variant: 'danger',
-                noAutoHide: true,
+                noAutoHide: true
             });
         },
         processQueue() {
@@ -270,14 +273,14 @@ export default {
             var cropper = new Cropper(image, {
                 aspectRatio: this.field.crop,
                 viewMode: 2,
-                preview: $(`#${this.getCropperId()} .fj-cropper__preview`)[0],
+                preview: $(`#${this.getCropperId()} .fj-cropper__preview`)[0]
             });
             console.log(cropper);
 
             // User Actions
             //
             //
-            $(document).keydown((e) => {
+            $(document).keydown(e => {
                 if (e.keyCode == 27) {
                     uploadable = false;
                     this.dropzone.removeAllFiles();
@@ -301,10 +304,10 @@ export default {
                     // Get the canvas with image data from Cropper.js
                     var canvas = cropper.getCroppedCanvas({
                         width: 1400,
-                        height: 1000,
+                        height: 1000
                     });
                     // Turn the canvas into a Blob (file object without a name)
-                    canvas.toBlob(function (blob) {
+                    canvas.toBlob(function(blob) {
                         done(blob);
                     });
                 }
@@ -312,8 +315,8 @@ export default {
                 CANVAS.html('');
                 this.$bvModal.hide(`${this.getCropperId()}`);
             });
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss">

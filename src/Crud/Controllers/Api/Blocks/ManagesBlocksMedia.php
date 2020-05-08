@@ -86,6 +86,6 @@ trait ManagesBlocksMedia
             abort(404);
         }
 
-        return $this->orderField($query->getQuery(), $field, $ids);
+        return $this->orderField($query, $field, $ids);
     }
 }

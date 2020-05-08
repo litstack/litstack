@@ -14,10 +14,11 @@ trait CrudHasOrder
      * @param array $ids
      * @return void
      */
-    protected function orderField(Builder $query, $field, array $ids)
+    protected function orderField($query, $field, array $ids)
     {
         $idKey = $query->getModel()->getTable() . '.id';
         $models = $query->whereIn($idKey, $ids)->get();
+
 
         $oderColumn = $field->orderColumn ?? 'order_column';
 
@@ -27,6 +28,7 @@ trait CrudHasOrder
             if (!$model) {
                 continue;
             }
+
             if ($model->pivot) {
                 $model->pivot->{$oderColumn} = $order;
                 $model->pivot->save();

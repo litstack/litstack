@@ -39,6 +39,7 @@
                         :set-route-prefix="setFieldsRoutePrefixId"
                         delete-icon="unlink"
                         @deleteItem="removeRelation(relation)"
+                        @changed="$emit('changed')"
                     />
                 </draggable>
                 <fj-field-relation-confirm-delete
@@ -211,7 +212,6 @@ export default {
                 */
                 case 'belongsTo':
                     this.setValue(relation.id);
-                    this.$emit('changed', relation.id);
                     break;
             }
 
@@ -223,7 +223,16 @@ export default {
             } else {
                 this.selectedRelations.push(relation);
             }
-
+            this.$nextTick(() => {
+                if (!this.field.form) {
+                    return;
+                }
+                this.$refs.block[this.$refs.block.length - 1].$emit(
+                    'expand',
+                    true
+                );
+            });
+            this.$emit('reload', relation);
             Fjord.bus.$emit('field:updated', 'relation:selected');
         },
         removeRelation(relation) {
@@ -272,7 +281,6 @@ export default {
                     break;
                 case 'belongsTo':
                     this.setValue(null);
-                    this.$emit('changed', null);
                     break;
             }
 
@@ -285,7 +293,7 @@ export default {
             } else {
                 this.selectedRelations = [];
             }
-
+            this.$emit('reload');
             Fjord.bus.$emit('field:updated', 'relation:removed');
         },
         async newOrder() {
@@ -302,6 +310,7 @@ export default {
                 return;
             }
 
+            this.$emit('reload');
             Fjord.bus.$emit('field:updated', 'relation:ordered');
 
             this.$bvToast.toast(this.$t('fj.order_changed'), {

@@ -140,7 +140,7 @@ trait ManagesBlocksRelations
 
         $query = $field->relation($block, $query = true);
 
-        $response = $this->orderField($query->getQuery(), $field, $ids);
+        $response = $this->orderField($query, $field, $ids);
 
         $this->edited($model, 'relation:ordered');
 

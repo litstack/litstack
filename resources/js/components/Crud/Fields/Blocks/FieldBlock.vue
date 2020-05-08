@@ -22,6 +22,7 @@
                     :model="model"
                     :fields="_fields"
                     @changed="changed"
+                    @reload="_reload"
                 />
             </div>
         </div>
@@ -74,6 +75,12 @@ export default {
             default() {
                 return [];
             }
+        },
+        reload: {
+            type: Function,
+            default() {
+                return;
+            }
         }
     },
     data() {
@@ -107,6 +114,13 @@ export default {
          * Refresh table cols on change.
          */
         changed() {
+            this.$refs.header.$emit('refresh');
+            this.$emit('changed');
+        },
+        async _reload() {
+            if (this.reload) {
+                await this.reload(this.block);
+            }
             this.$refs.header.$emit('refresh');
         }
     }

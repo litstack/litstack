@@ -9,6 +9,7 @@ use Astrotomic\Translatable\Translatable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Fjord\Crud\ManyRelationField;
 
 class FjordFormModel extends Model implements HasMedia, TranslatableContract
 {
@@ -115,9 +116,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
 
         $attributes['value'] = $this->value ?? [];
         foreach ($attributes as $key => $value) {
-
             if (!in_array($key, $this->fillable) && !in_array($key, config('translatable.locales'))) {
-
                 $attributes['value'][$key] = $value;
             }
         }
@@ -249,6 +248,13 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
             }
 
             $attributes[$field->id] = $this->getFormattedFieldValue($field);
+
+            if ($field instanceof ManyRelationField) {
+                if ($field instanceof Image && $field->maxFiles == 1) {
+                    continue;
+                }
+                $attributes["first_{$field->id}"] = $this->getFormattedFieldValue($field)->first();
+            }
         }
 
         return $attributes;
