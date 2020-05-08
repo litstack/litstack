@@ -2,12 +2,12 @@
     <b-row class="fj-page-navigation">
         <b-col
             cols="12"
-            class="d-flex justify-content-between fj-page-navigation__container"
+            class="d-flex justify-content-between align-items-center fj-page-navigation__container"
         >
             <div>
                 <b-button
                     size="sm"
-                    variant="transparent"
+                    variant="link"
                     v-if="back"
                     class="mr-2 fj-page-navigation__go_back"
                     :href="`${Fjord.baseURL}${back}`"
@@ -167,13 +167,13 @@ export default {
     computed: {
         ...mapGetters(['canSave']),
         wrapperStyle() {
-            let offset = this.canSave ? 0 : this.b.width;
+            let offset = this.canSave ? 0 : `calc(${this.b.width}px + 1rem)`;
             return {
-                transform: `translateX(calc(${offset}px + 0.5rem))`
+                transform: `translateX(${offset})`
             };
         },
         buttonStyle() {
-            let offset = this.canSave ? 0 : '50vw';
+            let offset = this.canSave ? '0' : '50vw';
             return {
                 transform: `translateX(${offset})`
             };
@@ -186,8 +186,9 @@ export default {
 @import '@fj-sass/_variables';
 
 .fj-page-navigation {
-    padding-top: $page-nav-padding-y;
-    padding-bottom: $page-nav-padding-y;
+    height: $topbar-height;
+    // padding-top: $page-nav-padding-y;
+    // padding-bottom: $page-nav-padding-y;
     position: sticky;
     top: 0;
     background: $body-bg;
@@ -199,6 +200,14 @@ export default {
         box-shadow: 0 17px 14px -16px rgba(188, 188, 188, 0.51);
     }
 
+    &__go_back {
+        color: $secondary;
+        &:hover {
+            color: $gray-700;
+            text-decoration: none;
+        }
+    }
+
     .fj-save-button {
         transform: translateX(50vw);
         box-shadow: 0px 13px 12px -7px rgba(102, 123, 144, 0.5);
@@ -207,9 +216,9 @@ export default {
         transition: 0.25s all cubic-bezier(0.91, -0.13, 0.68, 0.79);
     }
 
-    .fj-page-navigation__controls {
+    &__controls {
         .btn {
-            width: 46px;
+            width: 40px;
             padding-left: 0;
             padding-right: 0;
             text-align: center;
@@ -221,13 +230,13 @@ export default {
             &:first-child {
                 > div,
                 > .btn {
-                    margin-right: map-get($spacers, 2);
+                    margin-right: map-get($spacers, 3);
                 }
             }
             &:last-child {
                 > div,
                 > .btn {
-                    margin-left: map-get($spacers, 2);
+                    margin-left: map-get($spacers, 3);
                 }
             }
         }
