@@ -14,7 +14,7 @@ class FjordForm extends Command
      *
      * @var string
      */
-    protected $signature = 'fjord:form';
+    protected $signature = 'fjord:form {--collection=} {--form=}';
 
     /**
      * The console command description.
@@ -37,8 +37,14 @@ class FjordForm extends Command
         $this->info("/_/ __/ /\____/_/   \__,_/  /_/    \____/_/  /_/ /_/ /_/ ");
         $this->info("   /___/                                                 ");
 
-        $collection = $this->ask('enter the collection name (snake_case, plural)');
-        $formName = $this->ask('enter the form name (snake_case)');
+        $collection = $this->option('collection');
+        if (!$collection) {
+            $collection = $this->ask('enter the collection name (snake_case, plural)');
+        }
+        $formName = $this->option('form');
+        if (!$formName) {
+            $formName = $this->ask('enter the form name (snake_case)');
+        }
 
         $collection = Str::snake($collection);
         $formName = Str::snake($formName);
