@@ -96,7 +96,7 @@ export default {
                 `${this.config.route_prefix}/index`,
                 payload
             );
-            this.items = response.data.items;
+            this.items = this.crud(response.data.items);
             this.count = response.data.count;
 
             return response;

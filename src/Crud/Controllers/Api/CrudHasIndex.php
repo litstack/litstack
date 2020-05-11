@@ -19,9 +19,13 @@ trait CrudHasIndex
             $this->query()
         );
 
-        return IndexTable::query($query)
+        $index = IndexTable::query($query)
             ->request($request)
             ->search($this->config->search)
             ->get();
+
+        $index['items'] = crud($index['items']);
+
+        return $index;
     }
 }
