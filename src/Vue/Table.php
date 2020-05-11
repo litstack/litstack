@@ -29,6 +29,22 @@ class Table extends VueProp
     }
 
     /**
+     * Add toggle column.
+     *
+     * @param string $key
+     * @return ColImageComponent
+     */
+    public function toggle(string $key)
+    {
+        $component = $this->component('fj-col-toggle');
+
+        $component->link(false);
+        $component->prop('local_key', $key);
+
+        return $component;
+    }
+
+    /**
      * Add image column.
      *
      * @return ColImageComponent
