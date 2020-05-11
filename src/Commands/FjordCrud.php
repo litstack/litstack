@@ -15,7 +15,7 @@ class FjordCrud extends Command
      *
      * @var string
      */
-    protected $signature = 'fjord:crud';
+    protected $signature = 'fjord:crud {--model=} {--media=} {--translatable=} {--slug=}';
 
     /**
      * The console command description.
@@ -49,24 +49,38 @@ class FjordCrud extends Command
         $this->info("    /___/                                                      ");
 
 
-        $modelName = $this->ask('enter the model name (PascalCase, singular)');
+        $modelName = $this->option('model');
+        if (!$modelName) {
+            $modelName = $this->ask('enter the model name (PascalCase, singular)');
+        }
+
         $modelName = ucfirst(Str::singular($modelName));
-        $m = $this->choice('does the model have media?', ['y', 'n'], 0) == 'y' ? true : false;
-        $s = $this->choice('does the model have a slug?', ['y', 'n'], 0) == 'y' ? true : false;
-        $t = $this->choice('is the model translatable?', ['y', 'n'], 0) == 'y' ? true : false;
+
+        $m = $this->option('media');
+        $s = $this->option('slug');
+        $t = $this->option('translatable');
+        if ($m !== "0") {
+            $m = $this->choice('does the model have media?', ['y', 'n'], 0) == 'y' ? true : false;
+        }
+        if ($s !== "0") {
+            $s = $this->choice('does the model have a slug?', ['y', 'n'], 0) == 'y' ? true : false;
+        }
+        if ($t !== "0") {
+            $t = $this->choice('is the model translatable?', ['y', 'n'], 0) == 'y' ? true : false;
+        }
 
         $this->makeModel($modelName, $m, $s, $t);
         $this->makeMigration($modelName, $s, $t);
         $this->makeController($modelName);
         $this->makeConfig($modelName);
 
-        $fjordResourcesPath = 'resources/' . config('fjord.resource_path');
+        $fjordConfigPath = 'fjord/app/Config/';
 
         $this->info("\n----- finished -----\n");
         $this->info('1) edit the generated migration and migrate');
         $this->info('2) set the fillable fields in your model' . ($t ? ' and in your translation model' : ''));
-        $this->info('3) configure the crud-model in ' . $fjordResourcesPath . '/crud/' . Str::snake(Str::plural($modelName)) . '.php');
-        $this->info('4) add a navigation entry in ' . $fjordResourcesPath . 'navigation/main.php');
+        $this->info('3) configure the crud-model in ' . $fjordConfigPath . 'Crud/' . $modelName . 'Config.php');
+        $this->info('4) add a navigation entry in ' . $fjordConfigPath . 'NavigationConfig.php');
     }
 
     private function makeModel($modelName, $m, $s, $t)
