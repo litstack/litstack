@@ -48,7 +48,6 @@ class FjordCrud extends Command
         $this->info("/_/  __/ / \____//_/    \__,_/   \____//_/ |_| \____//_____/   ");
         $this->info("    /___/                                                      ");
 
-
         $modelName = $this->option('model');
         if (!$modelName) {
             $modelName = $this->ask('enter the model name (PascalCase, singular)');

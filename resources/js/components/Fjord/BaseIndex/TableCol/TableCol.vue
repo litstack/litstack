@@ -6,20 +6,19 @@
             pointer: col.link
         }"
         :style="colWidth"
+        @click="openItem"
     >
-        <a :href="link" :is="link ? 'a' : 'div'">
-            <component
-                v-if="col.component !== undefined"
-                :is="col.component"
-                :item="item"
-                :col="col"
-                :format="getColValue"
-                @reload="reload"
-                v-on="$listeners"
-                v-bind="getColComponentProps()"
-            />
-            <span v-else v-html="value" />
-        </a>
+        <component
+            v-if="col.component !== undefined"
+            :is="col.component"
+            :item="item"
+            :col="col"
+            :format="getColValue"
+            @reload="reload"
+            v-on="$listeners"
+            v-bind="getColComponentProps()"
+        />
+        <span v-else v-html="value" />
     </b-td>
 </template>
 
@@ -93,6 +92,12 @@ export default {
         }
     },
     methods: {
+        openItem() {
+            if (!this.link) {
+                return;
+            }
+            window.location.href = this.link;
+        },
         setValue() {
             this.value = this.getColValue(this.col.value, this.item);
         },
