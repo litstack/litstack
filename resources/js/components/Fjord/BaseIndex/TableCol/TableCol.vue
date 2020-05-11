@@ -94,7 +94,6 @@ export default {
     },
     methods: {
         setValue() {
-            console.log('set value');
             this.value = this.getColValue(this.col.value, this.item);
         },
         reload() {

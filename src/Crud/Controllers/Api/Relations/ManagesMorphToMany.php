@@ -21,11 +21,18 @@ trait ManagesMorphToMany
     {
         $morphToMany = $field->relation($model, $query = true);
 
-        DB::table($morphToMany->getTable())->insert([
+        $query = [
             $morphToMany->getRelatedPivotKeyName() => $relation->{$morphToMany->getRelatedKeyName()},
             $morphToMany->getForeignPivotKeyName() => $model->{$morphToMany->getParentKeyName()},
             $morphToMany->getMorphType() => get_class($model)
-        ]);
+        ];
+
+        // Sortable
+        if ($field->sortable) {
+            $query[$field->orderColumn] = $morphToMany->count();
+        }
+
+        DB::table($morphToMany->getTable())->insert($query);
     }
 
     /**

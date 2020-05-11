@@ -2,8 +2,6 @@
 
 A **W**hat-**Y**ou-**S**ee-**I**s-**W**hat-You-**G**et editor using [CKEditor](https://ckeditor.com/).
 
-## Example
-
 ```php
 $form->wysiwyg('text')
     ->translatable()

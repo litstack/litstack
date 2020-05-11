@@ -93,6 +93,7 @@ class ManyRelation extends ManyRelationField
         $this->related = $model;
 
         $this->loadRelatedConfig($model);
+        $this->setRelation();
 
         $this->attributes['model'] = $model;
 

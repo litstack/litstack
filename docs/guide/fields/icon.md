@@ -2,8 +2,6 @@
 
 An icon picker field.
 
-## Example
-
 ```php
 $form->icon('icon')
     ->title('Icon')

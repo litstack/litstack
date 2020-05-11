@@ -2,8 +2,6 @@
 
 A boolean field.
 
-## Example
-
 ```php
 $form->boolean('active')
     ->title('Live')

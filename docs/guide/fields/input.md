@@ -2,15 +2,19 @@
 
 A basic text input field.
 
-## Examples
-
 ```php
 $form->input('title')
     ->title('Title')
     ->placeholder('Title')
     ->hint('The Title is shown at the top of the page.')
     ->cols(6);
+```
 
+## Prepend & Append
+
+For units or similar, values can be appended or prepended to the input field.
+
+```php
 $form->input('length')
     ->title('Length')
     ->type('number')

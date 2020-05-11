@@ -287,9 +287,8 @@ export default {
             let ids = {};
             let start = this.currentPage * this.perPage - this.perPage;
             if (this.sort_by_key.endsWith('desc')) {
-                start = this.total - start;
+                start = this.total - start - 1;
             }
-            console.log(sortedItems);
             for (let i in sortedItems) {
                 if (this.sort_by_key.endsWith('desc')) {
                     ids[start - parseInt(i)] = sortedItems[i].id;
@@ -297,6 +296,7 @@ export default {
                     ids[start + parseInt(i)] = sortedItems[i].id;
                 }
             }
+            console.log(ids);
             this.$emit('sorted', { sortedItems, ids });
         },
         sort(sort) {

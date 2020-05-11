@@ -2,8 +2,6 @@
 
 A range slider.
 
-## Example
-
 ```php
  $form->range('range')
     ->title('Range')

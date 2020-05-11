@@ -21,10 +21,16 @@ trait ManagesBelongsToMany
     {
         $belongsToMany = $field->relation($model, $query = true);
 
-        DB::table($belongsToMany->getTable())->insert([
+        $query = [
             $belongsToMany->getForeignPivotKeyName() => $model->{$belongsToMany->getParentKeyName()},
             $belongsToMany->getRelatedPivotKeyName() => $relation->{$belongsToMany->getRelatedKeyName()}
-        ]);
+        ];
+
+        if ($field->sortable) {
+            $query[$field->orderColumn] = $belongsToMany->count();
+        }
+
+        DB::table($belongsToMany->getTable())->insert($query);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 A drag and drop image uploader using Spatie's [medialibary](https://docs.spatie.be/laravel-medialibrary/v7/introduction/).
 
-## Example
+For all images that are uploaded an input field for `alt` and `title` is displayed, with `translatable` these two fields are made translatable.
 
 ```php
 $form->image('images') // images is the corresponding media collection.
@@ -10,8 +10,28 @@ $form->image('images') // images is the corresponding media collection.
     ->title('Images')
     ->hint('Image Collection.')
     ->maxFiles(5)
-    ->crop(16/9) // Should the image be cropped before upload.
 ```
+
+Add the image attribute to your model:
+
+```php
+public function getImagesAttribute()
+{
+    return $this->getMedia('images');
+}
+```
+
+## Crop
+
+To crop the image to a desired ratio when uploading it, a crop-ratio in crop can be defined using the method `crop`.
+
+```php
+$form->image('images') // images is the corresponding media collection.
+    ->title('Images')
+    ->crop(16 / 9)
+```
+
+## Preview Image
 
 For the case that the first image from the list should be used as a preview image, you can use `firstBig` to display the first image bigger to show that the first image has a bigger meaning.
 
@@ -23,17 +43,6 @@ $form->image('images') // images is the corresponding media collection.
 ```
 
 ![Image firstBig](./screens/image/first_big.png 'Logo Title Text 1')
-
-### Preparing the Model
-
-Add the image attribute to your model:
-
-```php
-public function getImagesAttribute()
-{
-    return $this->getMedia('images');
-}
-```
 
 ## Methods
 

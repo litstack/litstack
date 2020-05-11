@@ -31,6 +31,9 @@
                     :load-items="loadRelations"
                     no-card
                     no-select
+                    :sort-by-default="
+                        field.sortable ? field.order_column + '.asc' : null
+                    "
                     :name-singular="field.config.names.singular"
                     :name-plural="field.config.names.plural"
                     :searchKeys="field.searchable ? field.config.search : []"
@@ -342,7 +345,7 @@ export default {
         async newOrder({ ids, sortedItems }) {
             this.selectedRelations = sortedItems;
             let payload = {
-                ids: this.selectedRelations.map(item => item.id)
+                ids
             };
             try {
                 let response = await axios.put(

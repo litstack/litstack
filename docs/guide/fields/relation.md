@@ -6,15 +6,12 @@ For the relation Field only the name of the relation must be specified, the type
 
 The relations Field can only be used for **Crud Models** and not in **Forms** or **Blocks**. For Forms or Blocks the [oneRelation](/guide/fields/one_relation.html) or [manyRelation](/guide/fields/many_relation.html) field can be used.
 
-## Example
-
 ```php
 $form->relation('articles')
     ->title('Articles')
     // An optional query builder can be defined:
     ->query(Articles::where('created_by', fjord_user()->id))
     ->confirm() // User gets asked to confirm unlinking the relation.
-    ->sortable()
     ->preview(function ($table) {
         // Build the preview table in here.
         $table->col('title'); // In this case we are showing the article title.
@@ -30,6 +27,28 @@ public function articles()
 }
 ```
 
+## Sortable
+
+If the relation should be sortable, the related query in your Model must be sorted by an `orderColumn`.
+
+```php
+public function articles()
+{
+    return $this->hasMany('App/Models/Article')->orderBy('order_column');
+}
+```
+
+Now the sortable attribute can be added:
+
+```php
+$form->relation('articles')
+    ->title('Articles')
+    ->sortable()
+    ->preview(function ($table) {
+        $table->col('title');
+    });
+```
+
 ## Methods
 
 | Method         | Description                                                                   |
@@ -43,4 +62,3 @@ public function articles()
 | `previewQuery` | Modify preview query with eager loads and accessors that should be displayed. |
 | `confirm`      | Modal pops when unlinkin the relation and asks to confirm.                    |
 | `sortable`     | Sortable relation (only works for `many` relations).                          |
-| `orderColumn`  | Name of order column. Default: `order_column`                                 |

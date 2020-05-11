@@ -2,8 +2,6 @@
 
 A DateTime-Picker.
 
-## Example
-
 ```php
 $form->datetime('publish_at')
     ->title('Date')

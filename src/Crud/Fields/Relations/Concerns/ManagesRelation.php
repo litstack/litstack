@@ -37,6 +37,13 @@ trait ManagesRelation
     protected $previewModifier;
 
     /**
+     * Relation builder instance.
+     *
+     * @var mixed
+     */
+    protected $relation;
+
+    /**
      * Create new Field instance.
      *
      * @param string $id
@@ -143,6 +150,7 @@ trait ManagesRelation
         $this->attributes['model'] = $model;
 
         $this->loadRelatedConfig($model);
+        $this->setRelation();
 
         // Set relation attributes.
         if (method_exists($this, 'setRelationAttributes')) {
@@ -150,6 +158,32 @@ trait ManagesRelation
         }
 
         return $this;
+    }
+
+    /**
+     * Set relation instance.
+     *
+     * @return void
+     */
+    protected function setRelation()
+    {
+        $this->relation = $this->relation(new $this->model, $query = true);
+
+        $orders = $this->relation->getQuery()->getQuery()->orders;
+
+        if (empty($orders)) {
+            return;
+        }
+
+        $order = $orders[0];
+        if (method_exists($this->relation, 'getTable')) {
+            $orderColumn = str_replace($this->relation->getTable() . '.', '', $order['column']);
+        } else {
+            $orderColumn = $order['column'];
+        }
+
+        $this->setAttribute('orderColumn', $orderColumn);
+        $this->setAttribute('orderDirection', $order['direction']);
     }
 
     /**

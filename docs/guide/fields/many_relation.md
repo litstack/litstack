@@ -2,15 +2,12 @@
 
 A relation picker multiple relations. This relation can easily be appended to a model without a necessary database structure.
 
-## Example
-
 ```php
 use App\Models\Article;
 
 $form->manyRelation('articles')
     ->title('Articles')
     ->model(Article::class)
-    ->sortable()
     ->preview(function ($table) {
         $table->col('title');
     });

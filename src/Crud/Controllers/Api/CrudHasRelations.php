@@ -71,6 +71,7 @@ trait CrudHasRelations
         $relations = IndexTable::query($query)
             ->request($request)
             ->search($field->getRelatedConfig()->search)
+            ->only(['filter', 'paginate'])
             ->get();
 
         $relations['items'] = crud(

@@ -2,8 +2,6 @@
 
 Basic textarea field.
 
-## Example
-
 ```php
 $form->textarea('text')
     ->translatable()

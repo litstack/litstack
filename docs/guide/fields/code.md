@@ -2,8 +2,6 @@
 
 A code editor using [Codemirror](https://codemirror.net/).
 
-## Example
-
 ```php
 $form->code('code')
     ->title('Google Analytics Id')

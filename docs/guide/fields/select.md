@@ -2,8 +2,6 @@
 
 A select field.
 
-## Examples
-
 ```php
 $form->select('article_type')
     ->title('Type')
@@ -13,6 +11,8 @@ $form->select('article_type')
     ])
     ->hint('Select the article type.');
 ```
+
+## BelongsTo
 
 A select can be used for `belongsTo` relations.
 

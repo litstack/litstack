@@ -5,8 +5,6 @@ Blocks can be added to CRUD-Models as well as to Collections like Pages. Blocks 
 Blocks are used to map repetitive content. They can contain any number of so called repeatables, which you can string together in any order.
 A Repeatable can be regarded as a separate individual form. As well a preview table can be set for every block. If Field values are to be displayed as preview, they must be written in **curly brackets**.
 
-## Example
-
 ```php
 $form->block('content')
     ->title('Content')

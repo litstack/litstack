@@ -2,8 +2,6 @@
 
 Add your own `Vue` component.
 
-## Example
-
 ```php
 $form->component('my-component')
     ->cols(3);

@@ -89,6 +89,7 @@ class OneRelation extends OneRelationField
         $this->related = $model;
 
         $this->loadRelatedConfig($model);
+        $this->setRelation();
 
         $this->attributes['model'] = $model;
 

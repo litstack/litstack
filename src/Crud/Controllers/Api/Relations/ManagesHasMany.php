@@ -20,10 +20,14 @@ trait ManagesHasMany
     {
         $hasMany = $field->relation($model, $query = true);
 
-        // Create new relation.
-        $relation->update([
-            $hasMany->getForeignKeyName() => $model->{$hasMany->getLocalKeyName()}
-        ]);
+        $relation->{$hasMany->getForeignKeyName()} = $model->{$hasMany->getLocalKeyName()};
+
+        // Sortable
+        if ($field->sortable) {
+            $relation->{$field->orderColumn} = $hasMany->count();
+        }
+
+        $relation->update();
     }
 
     /**

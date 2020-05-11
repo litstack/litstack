@@ -2,8 +2,6 @@
 
 Multiple checkboxes.
 
-## Example
-
 ```php
 $form->checkboxes('fruits')
     ->title('Fruits')

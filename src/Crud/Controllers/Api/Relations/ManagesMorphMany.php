@@ -20,10 +20,15 @@ trait ManagesMorphMany
     {
         $morphMany = $field->relation($model, $query = true);
 
-        $relation->update([
-            $morphMany->getMorphType() => get_class($model),
-            $morphMany->getForeignKeyName() => $model->{$morphMany->getLocalKeyName()}
-        ]);
+        $relation->{$morphMany->getMorphType()} = get_class($model);
+        $relation->{$morphMany->getForeignKeyName()} = $model->{$morphMany->getLocalKeyName()};
+
+        // Sortable
+        if ($field->sortable) {
+            $relation->{$field->orderColumn} = $morphMany->count();
+        }
+
+        $relation->update();
     }
 
     /**

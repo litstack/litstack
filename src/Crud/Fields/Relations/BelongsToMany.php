@@ -42,7 +42,6 @@ class BelongsToMany extends ManyRelationField
         'preview',
         'confirm',
         'sortable',
-        'orderColumn',
         'query',
         'relatedCols',
         'small',
@@ -58,7 +57,6 @@ class BelongsToMany extends ManyRelationField
     protected $defaults = [
         'confirm' => false,
         'sortable' => false,
-        'orderColumn' => 'order_column',
         'relatedCols' => 12,
         'small' => false,
         'perPage' => 10,
