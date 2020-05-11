@@ -45,6 +45,7 @@ class MorphOne extends OneRelationField
         'orderColumn',
         'query',
         'relatedCols',
+        'small',
     ];
 
     /**
@@ -57,6 +58,9 @@ class MorphOne extends OneRelationField
         'sortable' => false,
         'orderColumn' => 'order_column',
         'relatedCols' => 12,
+        'small' => false,
+        'perPage' => 1,
+        'searchable' => false,
     ];
 
     /**

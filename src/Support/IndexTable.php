@@ -50,7 +50,7 @@ class IndexTable
      * @param Request|null $request
      * @return void
      */
-    public function __construct(Builder $query, $request = null)
+    public function __construct($query, $request = null)
     {
         $this->query = $query;
         $this->request = $request;
@@ -62,7 +62,7 @@ class IndexTable
      * @param Builder $query
      * @return void
      */
-    public static function query(Builder $query)
+    public static function query($query)
     {
         return new self($query);
     }
@@ -261,7 +261,7 @@ class IndexTable
      * @param Builder $query
      * @return Buider
      */
-    protected function applyPaginationToQuery(Builder $query)
+    protected function applyPaginationToQuery($query)
     {
         if ($this->request->perPage === 0) {
             return $query;

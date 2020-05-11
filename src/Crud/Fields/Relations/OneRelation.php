@@ -44,6 +44,7 @@ class OneRelation extends OneRelationField
         'confirm',
         'query',
         'relatedCols',
+        'small',
     ];
 
     /**
@@ -54,6 +55,9 @@ class OneRelation extends OneRelationField
     protected $defaults = [
         'confirm' => true,
         'relatedCols' => 12,
+        'small' => false,
+        'perPage' => 1,
+        'searchable' => false,
     ];
 
     /**

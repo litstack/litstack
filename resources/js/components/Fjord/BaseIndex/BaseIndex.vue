@@ -73,7 +73,8 @@
                     @unselect="unselect"
                     @sort="sort"
                     @loadItems="_loadItems()"
-                    @sorted="sorted"
+                    @_sorted="sorted"
+                    v-on="$listeners"
                 />
 
                 <fj-base-index-table-index-indicator
@@ -106,7 +107,7 @@ export default {
     name: 'IndexTable',
     props: {
         sortable: {
-            type: Boolean,
+            type: [Boolean, String],
             default() {
                 return false;
             }
@@ -252,6 +253,9 @@ export default {
         this.$on('refreshSelected', () => {
             this.selectedItems = _.clone(this.selected);
         });
+        this.$on('refresh', () => {
+            this.$refs.table.$forceUpdate();
+        });
 
         this._loadItems();
     },
@@ -259,6 +263,9 @@ export default {
         canSort() {
             if (!this.sortable) {
                 return false;
+            }
+            if (this.sortable == 'force') {
+                return true;
             }
             return (
                 this.sort_by_key == `${this.orderColumn}.asc` ||
@@ -282,6 +289,7 @@ export default {
             if (this.sort_by_key.endsWith('desc')) {
                 start = this.total - start;
             }
+            console.log(sortedItems);
             for (let i in sortedItems) {
                 if (this.sort_by_key.endsWith('desc')) {
                     ids[start - parseInt(i)] = sortedItems[i].id;
@@ -315,7 +323,6 @@ export default {
                     this.selectedItems.splice(i, 1);
                 }
             }
-            this.$emit('remove', item);
         },
         select(item) {
             if (this.radio) {
@@ -324,7 +331,6 @@ export default {
             } else {
                 this.selectedItems.push(item);
             }
-            this.$emit('select', item);
         },
         isItemSelected(item) {
             return this.selectedItems.find(model => {
@@ -410,11 +416,11 @@ export default {
             border-bottom: 1px solid $gray-300;
 
             &:first-child {
-                padding-left: 0.75rem + $card-spacer-x;
+                padding-left: $card-spacer-x;
             }
 
             &:last-child {
-                padding-right: 0.75rem + $card-spacer-x;
+                padding-right: $card-spacer-x;
             }
         }
 
@@ -430,11 +436,11 @@ export default {
                 }
 
                 &:first-child {
-                    padding-left: 0.75rem + $card-spacer-x;
+                    padding-left: $card-spacer-x;
                 }
 
                 &:last-child {
-                    padding-right: 0.75rem + $card-spacer-x;
+                    padding-right: $card-spacer-x;
                 }
             }
         }

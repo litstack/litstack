@@ -6,18 +6,20 @@
             pointer: col.link
         }"
         :style="colWidth"
-        @click="openLink(col.link)"
     >
-        <component
-            v-if="col.component !== undefined"
-            :is="col.component"
-            :item="item"
-            :col="col"
-            :format="getColValue"
-            @reload="reload"
-            v-bind="getColComponentProps()"
-        />
-        <div v-else v-html="value" />
+        <a :href="link" :is="link ? 'a' : 'div'">
+            <component
+                v-if="col.component !== undefined"
+                :is="col.component"
+                :item="item"
+                :col="col"
+                :format="getColValue"
+                @reload="reload"
+                v-on="$listeners"
+                v-bind="getColComponentProps()"
+            />
+            <span v-else v-html="value" />
+        </a>
     </b-td>
 </template>
 
@@ -43,6 +45,11 @@ export default {
         return {
             value: ''
         };
+    },
+    watch: {
+        item() {
+            this.setValue();
+        }
     },
     beforeMount() {
         this.setValue();
@@ -76,6 +83,13 @@ export default {
                 percentage = 100 / this.percentageColsCount;
             }
             return 'width: ' + percentage + '%;';
+        },
+        link() {
+            if (!this.col.link) {
+                return;
+            }
+
+            return `${this.baseURL}${this._format(this.col.link, this.item)}`;
         }
     },
     methods: {
@@ -134,16 +148,6 @@ export default {
             }
 
             return compiled;
-        },
-        openLink(link, item) {
-            if (!link) {
-                return;
-            }
-
-            window.location.href = `${this.baseURL}${this._format(
-                link,
-                this.item
-            )}`;
         },
         isSmall(col) {
             return col.small === true;

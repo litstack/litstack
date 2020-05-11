@@ -66,9 +66,18 @@ trait CrudHasRelations
 
         $this->validateRelationField($field);
 
-        return crud(
-            $field->relation($model, $query = true)->get()
+        $query = $field->relation($model, $query = true);
+
+        $relations = IndexTable::query($query)
+            ->request($request)
+            ->search($field->getRelatedConfig()->search)
+            ->get();
+
+        $relations['items'] = crud(
+            $relations['items']
         );
+
+        return $relations;
     }
 
     /**
@@ -214,7 +223,7 @@ trait CrudHasRelations
         $model = $this->query()->findOrFail($id);
         $field = $this->config->form->findField($relation) ?? abort(404);
 
-        $query = $model->$relation()->getQuery();
+        $query = $field->relation($model, $query = true);
 
         $order = $this->orderField($query, $field, $ids);
 

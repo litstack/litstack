@@ -96,11 +96,10 @@ trait ManagesRelation
 
         $closure($table);
 
-
         // Add open relation edit page if user has permission.
         if ($this->relatedConfig->permissions['read']) {
             $route = Fjord::url($this->relatedConfig->routePrefix . '/{id}/edit');
-            $table->col("<a href=\"{$route}\"><i class=\"ml-4 fas fa-eye text-secondary\"></i></a>")->small();
+            //$table->col("<a href=\"{$route}\"><i class=\"ml-4 fas fa-eye text-secondary\"></i></a>")->small();
         }
 
         $this->attributes['preview'] = $table;

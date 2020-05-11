@@ -16,7 +16,8 @@ class FormRelation extends Model
         'from_model_type',
         'to_model_id',
         'to_model_type',
-        'field_id'
+        'field_id',
+        'order_column'
     ];
 
     /**

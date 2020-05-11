@@ -82,6 +82,7 @@
                     :item="item"
                     :cols="cols"
                     @reload="$emit('loadItems')"
+                    v-on="$listeners"
                 />
             </tr>
         </draggable>
@@ -145,7 +146,8 @@ export default {
         return {
             selectedAll: false,
             indeterminate: false,
-            sortableItems: []
+            sortableItems: [],
+            test: true
         };
     },
     watch: {
@@ -185,7 +187,7 @@ export default {
     },
     methods: {
         newOrder(items) {
-            this.$emit('sorted', this.sortableItems);
+            this.$emit('_sorted', this.sortableItems);
         },
         toggleSelectAll() {
             if (this.allItemsAreSelected()) {

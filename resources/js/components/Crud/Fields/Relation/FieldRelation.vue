@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field" :model="model">
+    <fj-form-item :field="field" :model="model" class="">
         <template slot="title-right">
             <a href="#" @click="toggleExpand" v-if="field.form">
                 <fa-icon :icon="expandedAll ? 'compress-alt' : 'expand-alt'" />
@@ -11,13 +11,46 @@
                     ).toLowerCase()
                 }}
             </a>
+            <b-button
+                variant="secondary"
+                size="sm"
+                v-b-modal="modalId"
+                v-if="!field.readonly"
+            >
+                <fa-icon icon="plus" />
+                {{
+                    field.many
+                        ? __('fj.add_model', { model: field.title })
+                        : __('fj.select_item', { item: field.title })
+                }}
+            </b-button>
         </template>
-        <div class="form-control-expand" v-if="model.id">
+
+        <div class="form-control-expand fj-field-relation" v-if="model.id">
+            <!--
             <div v-if="busy" class="d-flex justify-content-around">
                 <fj-spinner />
             </div>
+            -->
 
-            <template v-else-if="selectedRelations.length > 0">
+            <template>
+                <fj-index-table
+                    ref="table"
+                    :cols="field.preview"
+                    :items="selectedRelations"
+                    :load-items="loadRelations"
+                    no-card
+                    no-select
+                    :name-singular="field.config.names.singular"
+                    :name-plural="field.config.names.plural"
+                    :searchKeys="field.searchable ? field.config.search : []"
+                    :per-page="field.perPage"
+                    v-bind:small="field.small"
+                    :sortable="field.sortable ? 'force' : false"
+                    @sorted="newOrder"
+                    @unlink="removeRelation"
+                />
+                <!--
                 <draggable
                     v-model="selectedRelations"
                     @end="newOrder"
@@ -42,6 +75,8 @@
                         @changed="$emit('changed')"
                     />
                 </draggable>
+                -->
+
                 <fj-field-relation-confirm-delete
                     v-for="(relation, index) in selectedRelations"
                     :key="index"
@@ -52,34 +87,21 @@
                     @canceled="$refs.modal.$emit('refresh')"
                 />
             </template>
-
-            <div v-else>
+            <!--
+            <div v-if>
                 <fj-field-alert-empty
                     :field="field"
                     :class="{ 'mb-0': field.readonly }"
                 />
             </div>
-
-            <b-button
-                variant="secondary"
-                size="sm"
-                class="mt-2"
-                v-b-modal="modalId"
-                v-if="!field.readonly"
-            >
-                {{
-                    field.many
-                        ? __('fj.add_model', { model: field.title })
-                        : __('fj.select_item', { item: field.title })
-                }}
-            </b-button>
+            -->
 
             <fj-field-relation-modal
                 ref="modal"
                 :field="field"
                 :model="model"
                 :modal-id="modalId"
-                :selectedRelations="selectedRelations"
+                :selectedRelations="allSelectedRelations"
                 @select="selectRelation"
                 @remove="removeRelation"
             />
@@ -108,13 +130,27 @@ export default {
     },
     data() {
         return {
+            allSelectedRelations: [],
             selectedRelations: [],
             busy: true,
-            expandedAll: false
+            expandedAll: false,
+            cols: []
         };
     },
     beforeMount() {
-        this.loadRelations();
+        this.cols = this.field.preview;
+        this.cols.push({
+            label: '',
+            link: `${this.field.config.route_prefix}/{id}/edit`,
+            value: '<i class="ml-4 fas fa-eye text-secondary"></i>',
+            small: true
+        });
+        this.cols.push({
+            label: '',
+            component: 'fj-field-relation-col-unlink',
+            small: true
+        });
+        this.loadAllRelations();
     },
     methods: {
         ...methods,
@@ -139,17 +175,36 @@ export default {
 
             this.expandedAll = !this.expandedAll;
         },
-        async loadRelations() {
+        async loadAllRelations() {
+            let payload = {
+                perPage: 999999,
+                page: 1,
+                sort_by: 'id.desc'
+            };
+            let response = await axios.post(
+                `${this.field.route_prefix}/${this.field.id}`,
+                payload
+            );
+            for (let i in response.data.items) {
+                let relation = response.data.items[i];
+                this.allSelectedRelations.push({
+                    id: relation.attributes.id
+                });
+            }
+        },
+        async loadRelations(payload) {
             this.busy = true;
-            let response = await axios.get(
-                `${this.field.route_prefix}/${this.field.id}`
+            let response = await axios.post(
+                `${this.field.route_prefix}/${this.field.id}`,
+                payload
             );
             this.selectedRelations = [];
-            for (let i in response.data) {
-                let block = response.data[i];
+            for (let i in response.data.items) {
+                let block = response.data.items[i];
                 this.newRelation(block);
             }
             this.busy = false;
+            return response;
         },
         newRelation(relation) {
             this.selectedRelations.push(this.crud(relation));
@@ -216,12 +271,12 @@ export default {
             }
 
             if (!this.field.many) {
-                this.selectedRelations = [];
-                this.selectedRelations.push(relation);
+                this.allSelectedRelations = [];
+                this.allSelectedRelations.push(relation);
 
                 this.$bvModal.hide(this.modalId);
             } else {
-                this.selectedRelations.push(relation);
+                this.allSelectedRelations.push(relation);
             }
             this.$nextTick(() => {
                 if (!this.field.form) {
@@ -232,6 +287,7 @@ export default {
                     true
                 );
             });
+            this.$refs.table.$emit('reload');
             this.$emit('reload', relation);
             Fjord.bus.$emit('field:updated', 'relation:selected');
         },
@@ -285,18 +341,20 @@ export default {
             }
 
             if (this.field.many) {
-                for (let i in this.selectedRelations) {
-                    if (this.selectedRelations[i].id == relation.id) {
-                        this.selectedRelations.splice(i, 1);
+                for (let i in this.allSelectedRelations) {
+                    if (this.allSelectedRelations[i].id == relation.id) {
+                        this.allSelectedRelations.splice(i, 1);
                     }
                 }
             } else {
-                this.selectedRelations = [];
+                this.allSelectedRelations = [];
             }
+            this.$refs.table.$emit('reload');
             this.$emit('reload');
             Fjord.bus.$emit('field:updated', 'relation:removed');
         },
-        async newOrder() {
+        async newOrder({ ids, sortedItems }) {
+            this.selectedRelations = sortedItems;
             let payload = {
                 ids: this.selectedRelations.map(item => item.id)
             };
@@ -320,8 +378,19 @@ export default {
     },
     computed: {
         modalId() {
-            return `form-relation-table-${this.field.id}-${this.model.id}`;
+            return `form-relation-table-${this.field.route_prefix.replace(
+                /\//g,
+                '-'
+            )}`;
         }
     }
 };
 </script>
+
+<style lang="scss">
+@import '@fj-sass/_variables';
+.fj-field-relation {
+    margin-left: -$card-spacer-x;
+    margin-right: -$card-spacer-x;
+}
+</style>

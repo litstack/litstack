@@ -44,6 +44,9 @@ class ManyRelation extends ManyRelationField
         'sortable',
         'query',
         'relatedCols',
+        'small',
+        'perPage',
+        'searchable',
     ];
 
     /**
@@ -56,6 +59,9 @@ class ManyRelation extends ManyRelationField
         'sortable' => true,
         'orderColumn' => 'order_column',
         'relatedCols' => 12,
+        'small' => false,
+        'perPage' => 10,
+        'searchable' => false,
     ];
 
     /**

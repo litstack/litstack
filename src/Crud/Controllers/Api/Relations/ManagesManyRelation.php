@@ -19,12 +19,15 @@ trait ManagesManyRelation
      */
     public function createManyRelation(CrudUpdateRequest $request, ManyRelation $field, $model, $relation)
     {
+        $order_column = $field->relation($model, $query = true)->count();
+
         $query = [
             'from_model_type' => get_class($model),
             'from_model_id' => $model->id,
             'to_model_type' => get_class($relation),
             'to_model_id' => $relation->id,
-            'field_id' => $field->id
+            'field_id' => $field->id,
+            'order_column' => $order_column
         ];
 
         // Check if relation already exists.

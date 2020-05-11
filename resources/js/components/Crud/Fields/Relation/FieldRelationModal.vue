@@ -64,6 +64,7 @@ export default {
             this.$emit('remove', item);
         },
         select(item) {
+            console.log('SELECT_relation_modal', this.modalId);
             this.$emit('select', item);
         },
         async loadItems(payload) {

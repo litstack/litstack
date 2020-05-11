@@ -43,6 +43,7 @@ class HasOne extends OneRelationField
         'confirm',
         'query',
         'relatedCols',
+        'small',
     ];
 
     /**
@@ -53,6 +54,9 @@ class HasOne extends OneRelationField
     protected $defaults = [
         'confirm' => false,
         'relatedCols' => 12,
+        'small' => false,
+        'perPage' => 1,
+        'searchable' => false,
     ];
 
     /**

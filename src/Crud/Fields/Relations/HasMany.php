@@ -45,6 +45,9 @@ class HasMany extends ManyRelationField
         'orderColumn',
         'query',
         'relatedCols',
+        'small',
+        'perPage',
+        'searchable',
     ];
 
     /**
@@ -57,6 +60,9 @@ class HasMany extends ManyRelationField
         'sortable' => false,
         'orderColumn' => 'order_column',
         'relatedCols' => 12,
+        'small' => false,
+        'perPage' => 10,
+        'searchable' => false,
     ];
 
     /**

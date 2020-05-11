@@ -32,7 +32,8 @@ trait ManagesRelatedConfig
 
         $config = $this->relatedConfig->get(
             'names',
-            'search'
+            'search',
+            'route_prefix'
         );
 
         $this->setAttribute('config', $config);
