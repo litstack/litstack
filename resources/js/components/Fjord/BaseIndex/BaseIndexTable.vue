@@ -45,46 +45,48 @@
                 </td>
             </tr>
 
-            <tr
-                v-else
-                v-for="(item, key) in sortableItems"
-                :key="key"
-                :class="isItemSelected(item) ? 'table-primary' : ''"
-            >
-                <td v-if="sortable">
-                    <fa-icon
-                        icon="grip-horizontal"
-                        class="text-secondary fj-draggable__dragbar"
-                    />
-                </td>
-                <td class="small fj-table-select" v-if="!noSelect">
-                    <div class="custom-control custom-radio" v-if="radio">
-                        <input
-                            type="radio"
-                            autocomplete="off"
-                            class="custom-control-input pointer-events-none"
-                            value=""
-                            :checked="isItemSelected(item)"
+            <template v-else v-for="(item, key) in sortableItems">
+                <tr
+                    :key="key"
+                    :class="isItemSelected(item) ? 'table-primary' : ''"
+                >
+                    <td v-if="sortable">
+                        <fa-icon
+                            icon="grip-horizontal"
+                            class="text-secondary fj-draggable__dragbar"
                         />
-                        <label
-                            class="custom-control-label"
-                            @click="select(item)"
-                        ></label>
-                    </div>
-                    <a href="#" v-else @click.prevent="toggleSelect(item)">
-                        <b-checkbox :checked="isItemSelected(item)" />
-                    </a>
-                </td>
-                <fj-table-col
-                    v-for="(col, col_key) in cols"
-                    :col="col"
-                    :key="col_key"
-                    :item="item"
-                    :cols="cols"
-                    @reload="$emit('loadItems')"
-                    v-on="$listeners"
-                />
-            </tr>
+                    </td>
+                    <td class="small fj-table-select" v-if="!noSelect">
+                        <div class="custom-control custom-radio" v-if="radio">
+                            <input
+                                type="radio"
+                                autocomplete="off"
+                                class="custom-control-input pointer-events-none"
+                                value=""
+                                :checked="isItemSelected(item)"
+                            />
+                            <label
+                                class="custom-control-label"
+                                @click="select(item)"
+                            ></label>
+                        </div>
+                        <a href="#" v-else @click.prevent="toggleSelect(item)">
+                            <b-checkbox :checked="isItemSelected(item)" />
+                        </a>
+                    </td>
+                    <fj-table-col
+                        :ref="`row-${key}`"
+                        v-for="(col, col_key) in cols"
+                        :col="col"
+                        :key="`${key}-${col_key}`"
+                        :item="item"
+                        :cols="cols"
+                        @reload="$emit('loadItems')"
+                        @update="updateRow(key)"
+                        v-on="$listeners"
+                    />
+                </tr>
+            </template>
         </draggable>
     </b-table-simple>
 </template>
@@ -146,8 +148,7 @@ export default {
         return {
             selectedAll: false,
             indeterminate: false,
-            sortableItems: [],
-            test: true
+            sortableItems: []
         };
     },
     watch: {
@@ -186,6 +187,11 @@ export default {
         }
     },
     methods: {
+        updateRow(row) {
+            for (let i in this.$refs[`row-${row}`]) {
+                this.$refs[`row-${row}`][i].$emit('refresh');
+            }
+        },
         newOrder(items) {
             this.$emit('_sorted', this.sortableItems);
         },
@@ -252,7 +258,12 @@ export default {
 <style lang="scss">
 .b-table-busy-slot {
     &:hover {
-        background: transparent;
+        background-color: transparent !important;
+    }
+}
+.fj-table-details {
+    &:hover {
+        background-color: transparent !important;
     }
 }
 </style>

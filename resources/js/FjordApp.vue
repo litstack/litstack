@@ -71,6 +71,8 @@ export default {
 
         this.callPluginExtensions();
         this.callPluginMethods('beforeMount');
+
+        this.$Bus.$on('save', this.save);
     },
     mounted() {
         document.querySelector('.fj-nav-loader').remove();
@@ -86,6 +88,17 @@ export default {
     },
     methods: {
         ...axiosMethods,
+        async save() {
+            try {
+                await this.$store.dispatch('save');
+            } catch (e) {
+                console.log(e);
+                return;
+            }
+            this.$bvToast.toast(this.$t('fj.saved'), {
+                variant: 'success'
+            });
+        },
         setAppLocale() {
             this.$i18n.locale = this.appLocale;
         },

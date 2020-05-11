@@ -37,3 +37,15 @@ String.prototype.capitalizeAll = function(lower = false) {
 String.prototype.rawText = function() {
     return this.replace(/<[^>]*>?/gm, '').replace('&nbsp;', ' ');
 };
+
+String.prototype.hash = function() {
+    var hash = 0,
+        i,
+        chr;
+    for (i = 0; i < this.length; i++) {
+        chr = this.charCodeAt(i);
+        hash = (hash << 5) - hash + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+};

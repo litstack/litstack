@@ -57,9 +57,18 @@ trait ManagesBlocksRelations
 
         $this->validateRelationField($field);
 
-        return crud(
-            $field->relation($block, $query = true)->get()
+        $query = $field->relation($block, $query = true);
+
+        $relations = IndexTable::query($query)
+            ->request($request)
+            ->search($field->getRelatedConfig()->search)
+            ->get();
+
+        $relations['items'] = crud(
+            $relations['items']
         );
+
+        return $relations;
     }
 
     /**

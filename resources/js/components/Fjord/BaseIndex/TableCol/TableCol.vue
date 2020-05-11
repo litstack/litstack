@@ -94,6 +94,7 @@ export default {
     },
     methods: {
         setValue() {
+            console.log('set value');
             this.value = this.getColValue(this.col.value, this.item);
         },
         reload() {
@@ -124,9 +125,11 @@ export default {
                     this.col.regex_replace
                 );
             }
+
             if (this.col.strip_html) {
                 value = value.replace(/<[^>]*>?/gm, ' ');
             }
+
             if (this.col.max_chars) {
                 if (value.length > this.col.max_chars) {
                     value = value.substring(0, this.col.max_chars) + '...';

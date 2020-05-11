@@ -1,16 +1,6 @@
 <template>
     <fj-form-item :field="field" :model="model" class="">
         <template slot="title-right">
-            <a href="#" @click="toggleExpand" v-if="field.form">
-                <fa-icon :icon="expandedAll ? 'compress-alt' : 'expand-alt'" />
-                {{
-                    __(
-                        `crud.fields.blocks.${
-                            expandedAll ? 'collapse_all' : 'expand_all'
-                        }`
-                    ).toLowerCase()
-                }}
-            </a>
             <b-button
                 variant="secondary"
                 size="sm"
@@ -133,7 +123,6 @@ export default {
             allSelectedRelations: [],
             selectedRelations: [],
             busy: true,
-            expandedAll: false,
             cols: []
         };
     },
@@ -150,23 +139,20 @@ export default {
             component: 'fj-field-relation-col-unlink',
             small: true
         });
+        if (!_.isEmpty(this.field.form)) {
+            this.cols.push({
+                label: '',
+                component: 'fj-field-relation-col-edit',
+                props: {
+                    field: this.field
+                },
+                small: true
+            });
+        }
         this.loadAllRelations();
     },
     methods: {
         ...methods,
-        setFieldsRoutePrefixId(fields, relation) {
-            for (let i in fields) {
-                let field = fields[i];
-                fields[i].route_prefix = field.route_prefix.replace(
-                    '{id}',
-                    relation.id
-                );
-                if (this.field.readonly) {
-                    fields[i].readonly = true;
-                }
-            }
-            return fields;
-        },
         toggleExpand() {
             for (let i in this.$refs.block) {
                 let block = this.$refs.block[i];
@@ -392,5 +378,9 @@ export default {
 .fj-field-relation {
     margin-left: -$card-spacer-x;
     margin-right: -$card-spacer-x;
+
+    .fj-index-table {
+        background-color: transparent;
+    }
 }
 </style>

@@ -80,15 +80,7 @@ export default {
     },
     methods: {
         async saveAll() {
-            try {
-                await this.$store.dispatch('save');
-            } catch (e) {
-                console.log(e);
-                return;
-            }
-            this.$bvToast.toast(this.$t('fj.saved'), {
-                variant: 'success'
-            });
+            Fjord.bus.$emit('save');
         },
         // Used with elementIsRendered
         waitUntilSaveButton(selector, scope, resolve, reject) {
