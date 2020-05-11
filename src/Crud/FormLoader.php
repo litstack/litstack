@@ -5,29 +5,8 @@ namespace Fjord\Crud;
 use Fjord\Crud\Models\FormField;
 use Illuminate\Support\Collection;
 
-class FormFieldLoader
+class FormLoader
 {
-    /**
-     * Remove FormField's that do not exist in form config.
-     *
-     * @param  FormFieldCollection $items
-     * @param  bool                $loadingCollection
-     * @param  bool                $loadingName
-     * @return FormFieldCollection $items
-     */
-    protected function filterByExistingFields(FormFieldCollection $items, bool $loadingCollection, bool $loadingForm)
-    {
-        $filteredItems = new FormFieldCollection([]);
-
-        foreach ($items as $item) {
-            if ($item->field) {
-                $filteredItems->push($item);
-            }
-        }
-
-        return $filteredItems;
-    }
-
     /**
      * Load FormField entries from database by collection name and|or for
      * form_name. If the collection name or the form_name was not set a group is
@@ -55,9 +34,6 @@ class FormFieldLoader
 
         $items = new FormFieldCollection($query->get());
 
-        // Remove FormField's from collection that do not exist in config.
-        $items = $this->filterByExistingFields($items, $loadingCollection, $loadingForm);
-
         $items = $this->getGroups($items, $loadingCollection, $loadingForm);
 
         return $items;
@@ -76,21 +52,39 @@ class FormFieldLoader
     protected function getGroups(Collection $items, bool $loadingCollection, bool $loadingName)
     {
         if ($loadingCollection && $loadingName) {
-            return $items;
+            return $items->first();
         }
 
         if (!$loadingCollection) {
-            $items = new FormFieldCollection($items->groupBy('collection'));
-
-            foreach ($items as $collection => $item) {
-                $items[$collection] = new FormFieldCollection($item->groupBy('form_name'));
-            }
-
-            return $items;
+            return $this->getCollectionGroups($items);
         }
 
         if (!$loadingName) {
-            return new FormFieldCollection($items->groupBy('form_name'));
+            return $this->getFormGroups($items);
+        }
+
+        return $items;
+    }
+
+    protected function getCollectionGroups(Collection $items)
+    {
+        $items = new FormFieldCollection($items->groupBy('collection'));
+
+        foreach ($items as $collection => $item) {
+            $items[$collection] = new FormFieldCollection(
+                $this->getFormGroups($item)
+            );
+        }
+
+        return $items;
+    }
+
+    protected function getFormGroups(Collection $items)
+    {
+        $items = new FormFieldCollection($items->groupBy('form_name'));
+
+        foreach ($items as $collection => $item) {
+            $items[$collection] = $item->first();
         }
 
         return $items;
