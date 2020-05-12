@@ -1,7 +1,7 @@
 <template>
     <b-td
         :class="{
-            small: isSmall(col),
+            'col-sm': isSmall(col),
             'fj-table-col': true,
             pointer: col.link
         }"
