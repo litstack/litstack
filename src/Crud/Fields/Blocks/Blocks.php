@@ -50,7 +50,7 @@ class Blocks extends ManyRelationField
      * Add repeatables.
      *
      * @param Closure|Repeatables $closure
-     * @return void
+     * @return self
      */
     public function repeatables($closure)
     {
@@ -61,6 +61,8 @@ class Blocks extends ManyRelationField
         }
 
         $this->attributes['repeatables'] = $repeatables;
+
+        return $this;
     }
 
     /**
