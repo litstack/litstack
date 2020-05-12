@@ -41,23 +41,35 @@
             </div>
         </div>
         <div slot="modal-footer" class="w-100 d-flex justify-content-between">
-            <button
-                @click.prevent="destroy(image.id, index)"
-                class="btn btn-danger btn-sm"
-                v-if="!field.readonly"
-            >
-                <i class="far fa-trash-alt"></i>
-                delete
-            </button>
-            <div v-else />
-            <button
-                @click.prevent="
-                    $bvModal.hide(`fj-image-${field.id}-${image.id}`)
-                "
-                class="btn btn-secondary btn-sm"
-            >
-                close
-            </button>
+            <div>
+                <button
+                    @click.prevent="destroy(image.id, index)"
+                    class="btn btn-danger btn-sm"
+                    v-if="!field.readonly"
+                >
+                    <i class="far fa-trash-alt"></i>
+                    delete
+                </button>
+            </div>
+            <div>
+                <b-button
+                    class="fj-save-button"
+                    variant="primary"
+                    size="sm"
+                    :disabled="!canSave"
+                    @click="Fjord.bus.$emit('save')"
+                >
+                    {{ $t('fj.save') }}
+                </b-button>
+                <button
+                    @click.prevent="
+                        $bvModal.hide(`fj-image-${field.id}-${image.id}`)
+                    "
+                    class="btn btn-secondary btn-sm"
+                >
+                    close
+                </button>
+            </div>
         </div>
     </b-modal>
 </template>
@@ -136,7 +148,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['language', 'form'])
+        ...mapGetters(['language', 'canSave'])
     }
 };
 </script>

@@ -53,7 +53,7 @@ export default {
     beforeMount() {
         this.relation = this.item;
         this.fields = this.setFieldsRoutePrefixId(
-            this.field.form.fields,
+            Fjord.clone(this.field.form.fields),
             this.relation
         );
     },
@@ -61,6 +61,7 @@ export default {
         setFieldsRoutePrefixId(fields, relation) {
             for (let i in fields) {
                 let field = fields[i];
+                console.log(field.route_prefix, relation.id);
                 fields[i].route_prefix = field.route_prefix.replace(
                     '{id}',
                     relation.id
