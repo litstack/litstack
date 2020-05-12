@@ -32,7 +32,9 @@
                     no-card
                     no-select
                     :sort-by-default="
-                        field.sortable ? field.order_column + '.asc' : null
+                        field.sortable
+                            ? `${field.orderColumn}.${field.orderDirection}`
+                            : null
                     "
                     :name-singular="field.config.names.singular"
                     :name-plural="field.config.names.plural"
@@ -158,14 +160,6 @@ export default {
     },
     methods: {
         ...methods,
-        toggleExpand() {
-            for (let i in this.$refs.block) {
-                let block = this.$refs.block[i];
-                block.$emit('expand', !this.expandedAll);
-            }
-
-            this.expandedAll = !this.expandedAll;
-        },
         async loadAllRelations() {
             let payload = {
                 perPage: 999999,
@@ -269,15 +263,6 @@ export default {
             } else {
                 this.allSelectedRelations.push(relation);
             }
-            this.$nextTick(() => {
-                if (!this.field.form) {
-                    return;
-                }
-                this.$refs.block[this.$refs.block.length - 1].$emit(
-                    'expand',
-                    true
-                );
-            });
             this.$refs.table.$emit('reload');
             this.$emit('reload', relation);
             Fjord.bus.$emit('field:updated', 'relation:selected');
