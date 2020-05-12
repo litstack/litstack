@@ -28,13 +28,16 @@ export default {
         square: {
             type: String
         },
+        item: {
+            type: Object
+        },
         format: {
             type: Function
         }
     },
     computed: {
         srcValue() {
-            return this.format(this.src);
+            return this.format(this.src, this.item);
         },
         style() {
             if (this.square) {
