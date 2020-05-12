@@ -60,6 +60,7 @@
 
                 <fj-base-index-table
                     ref="table"
+                    :namePlural="namePlural"
                     :sortable="canSort"
                     :busy="isBusy"
                     :cols="cols"

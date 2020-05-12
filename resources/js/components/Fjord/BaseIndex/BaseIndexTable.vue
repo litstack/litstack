@@ -45,6 +45,12 @@
                 </td>
             </tr>
 
+            <fj-base-index-table-empty
+                v-else-if="sortableItems.length < 1"
+                :colspan="colspan"
+                :namePlural="namePlural"
+            />
+
             <template v-else v-for="(item, key) in sortableItems">
                 <tr
                     :key="key"
@@ -96,6 +102,10 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'BaseIndexTable',
     props: {
+        namePlural: {
+            type: String,
+            required: true
+        },
         sortable: {
             type: Boolean,
             required: true
@@ -261,7 +271,7 @@ export default {
         background-color: transparent !important;
     }
 }
-.fj-table-details {
+.fj-table-row-no-hover {
     &:hover {
         background-color: transparent !important;
     }
