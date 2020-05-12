@@ -137,11 +137,13 @@ export default {
             value: '<i class="ml-4 fas fa-eye text-secondary"></i>',
             small: true
         });
-        this.cols.push({
-            label: '',
-            component: 'fj-field-relation-col-unlink',
-            small: true
-        });
+        if (!this.field.readonly) {
+            this.cols.push({
+                label: '',
+                component: 'fj-field-relation-col-unlink',
+                small: true
+            });
+        }
         if (!_.isEmpty(this.field.form)) {
             this.cols.push({
                 label: '',

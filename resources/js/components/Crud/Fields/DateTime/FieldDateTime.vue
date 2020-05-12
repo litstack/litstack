@@ -76,7 +76,7 @@ export default {
         width: 100% !important;
         height: calc(1.6em + 0.75rem + 2px) !important;
         min-height: calc(1.6em + 0.75rem + 2px) !important;
-        padding: $input-padding-x $input-padding-y !important;
+        padding: $input-padding-y $input-padding-x !important;
         font-size: $input-font-size !important;
         font-weight: 400 !important;
         line-height: 1.6 !important;
