@@ -1,7 +1,7 @@
 <template>
-    <div :class="`fj-col-image ${!src ? 'empty' : ''}`" :style="style">
-        <fa-icon icon="image" v-if="!src" />
-        <img :src="src" :style="style" v-else />
+    <div :class="`fj-col-image ${!srcValue ? 'empty' : ''}`" :style="style">
+        <fa-icon icon="image" v-if="!srcValue" />
+        <img :src="srcValue" :style="style" v-else />
     </div>
 </template>
 
@@ -27,9 +27,15 @@ export default {
         },
         square: {
             type: String
+        },
+        format: {
+            type: Function
         }
     },
     computed: {
+        srcValue() {
+            return this.format(this.src);
+        },
         style() {
             if (this.square) {
                 return `width: ${this.square};height:${this.square};object-fit:cover;`;
