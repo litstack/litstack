@@ -12,6 +12,10 @@ div#fjord-app nav.fj-topbar {
     z-index: 9;
     border-right: $border-width solid $border-color;
 
+    .fj-topbar__icon {
+        width: 23px;
+    }
+
     #fj-topbar-right {
         .btn {
             color: $topbar-button-color;

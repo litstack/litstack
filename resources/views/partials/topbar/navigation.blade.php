@@ -21,7 +21,7 @@
                 @isset($entry['link'])
                     <b-dropdown-item href="{{ $entry['link'] }}">
                         @if(array_key_exists('icon', $entry))
-                            <div class="mr-3 d-inline-block">{!! $entry['icon'] !!}</div>
+                            <div class="mr-2 d-inline-block fj-topbar__icon">{!! $entry['icon'] !!}</div>
                         @endif
                          {{ $entry['title'] }}
                     </b-dropdown-item>

@@ -15284,6 +15284,10 @@ div#fjord-app nav.fj-topbar {
   border-right: 1px solid #70859c;
 }
 
+div#fjord-app nav.fj-topbar .fj-topbar__icon {
+  width: 23px;
+}
+
 div#fjord-app nav.fj-topbar #fj-topbar-right .btn {
   color: #676569;
 }
