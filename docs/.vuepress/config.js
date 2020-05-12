@@ -103,9 +103,15 @@ module.exports = {
                     children: [
                         ['guide/frontend/javascript', 'Javascript'],
                         ['guide/frontend/vue', 'Vue'],
-                        ['guide/frontend/style_guideline', 'Style Guideline']
+                        ['guide/frontend/components', 'Vue Components']
                     ]
                 },
+                {
+                    title: 'Package Development',
+                    collapsable: true,
+                    children: [['guide/package/basics', 'Basics']]
+                }
+                /*
                 {
                     title: 'Digging Deeper',
                     collapsable: false,
@@ -114,6 +120,7 @@ module.exports = {
                         ['guide/deeper/lifecycle', 'Lifecycle']
                     ]
                 }
+                */
             ]
         }
     }

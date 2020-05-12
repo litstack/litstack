@@ -91,24 +91,34 @@ $table->image('Image')
 
 ## Relation
 
-If relations are displayed, a link to the corresponding `CRUD` config can be displayed directly like so:
+In a normal table column you can directly display attributes for relations. With the relation method, a link to the corresponding CRUD form can be displayed as well. Therefore the `related` name of the relation and `routePrefix` of the corresponding CRUD config must be specified.
 
 ```php
 use App\Models\Product;
 
 $table->relation('Product')
     ->related('product') // Relation name.
-    ->value('{name}') // Related attribute.
+    ->value('{name}') // Related attribute to be displayed.
     ->routePrefix(
-        // The route_prefix of the CRUD config must be specified.
         Crud::config(Product::class)->route_prefix
     )
     ->sortBy('product.name');
 ```
 
+## Toggle
+
+To edit the boolean state of a moddle directly in a table, a **switch** can be displayed in a column using `toggle`. The name of the corresponding attribute must be specified as the first parameter. In addition, the `routePrefix` for the update route must be specified, if the table is built in a CRUD or Form config, simply use the config function `routePrefix`.
+
+```php
+$table->toggle('active')
+    ->label('Live')
+    ->routePrefix($this->routePrefix())
+    ->sortBy('active');
+```
+
 ## Component
 
-You can also integrate your own Vue components. The component **name** is specified as parameter, the label must be specified separately. Additionally props can be defined.
+You can also integrate your own Vue components into columns. The component **name** is specified as the first parameter, the label must be specified separately. Additionally props can be defined.
 
 ```php
 $table->component('my-table-component')

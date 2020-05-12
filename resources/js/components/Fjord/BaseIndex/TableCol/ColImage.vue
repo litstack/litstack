@@ -34,7 +34,7 @@ export default {
             if (this.square) {
                 return `width: ${this.square};height:${this.square};object-fit:cover;`;
             }
-            return `max-width: ${maxWidth}; max-height: ${maxHeight};`;
+            return `max-width: ${this.maxWidth}; max-height: ${this.maxHeight};`;
         }
     }
 };

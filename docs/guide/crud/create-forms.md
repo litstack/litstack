@@ -40,7 +40,7 @@ A controller has been created in `Controllers/Form/{collection}` in which the au
 ```php
 /**
  * Authorize request for permission operation and authenticated fjord-user.
- * Operations: create, read, update, delete
+ * Operations: read, update
  *
  * @param FjordUser $user
  * @param string $operation
@@ -59,7 +59,7 @@ Add the navigation entry by adding the `form.{collection}.{form}` preset to your
 ```php
 $nav->preset('form.pages.home', [
     'title' => 'Home',
-    'icon' => '<i class="fas fa-home">',
+    'icon' => fa('home'),
 ]),
 ```
 
@@ -91,26 +91,32 @@ By default, the containers for the update Form have a maximum width. If you want
 public $expandContainer = false;
 ```
 
-## Update Form
+### Update Form
 
 Next, the configuration for the [form](/guide/crud/config-form.html) can be adjusted.
 
 ## Retrieve Data
 
 In order to retrieve the Form data, you have to add the **Form Facade** to your controller.
-Data can now easily be retrieved:
+Data can now be easily retrieved with the `load` function like so:
 
 ```php
-<?php
-
 use Fjord\Support\Facades\Form;
 
-return view('featured')->with([
+$form = Form::load('pages', 'home');
+```
+
+This allows the data to be passed directly to a [View](https://laravel.com/docs/7.x/blade#displaying-data).
+
+```php
+use Fjord\Support\Facades\Form;
+
+return view('home')->with([
     'home' => Form::load('pages', 'home')
 ]);
 ```
 
-and be used in a view:
+and be used in a Blade:
 
 ```php
 <h1>{{ $home->title }}</h1>
@@ -121,7 +127,7 @@ It is also possible to load all data for a collection as shown in the example:
 ```php
 use Fjord\Support\Facades\Form;
 
-$pages = Form::load('pages');
+$settings = Form::load('settings');
 
-$pages->home->title;
+$settings->main->title;
 ```
