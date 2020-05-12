@@ -2,7 +2,7 @@
     <div class="fj-block-header d-flex">
         <table class="form-control-expand">
             <b-tr>
-                <b-td class="small" v-if="!field.readonly">
+                <b-td class="col-sm" v-if="!field.readonly">
                     <div
                         class="fj-draggable__dragbar fj-block__dragbar"
                         v-if="sortable"
@@ -18,14 +18,14 @@
                     :col="col"
                     :cols="preview"
                 />
-                <b-td class="small text-secondary pl-4" v-if="!field.readonly">
+                <b-td class="col-sm text-secondary pl-4" v-if="!field.readonly">
                     <fa-icon
                         :icon="deleteIcon"
                         @click="$emit('deleteItem')"
                         class="fj-block-delete"
                     />
                 </b-td>
-                <b-td class="small pl-4" v-if="fields.length > 0">
+                <b-td class="col-sm pl-4" v-if="fields.length > 0">
                     <b-button
                         variant="outline-secondary"
                         size="sm"

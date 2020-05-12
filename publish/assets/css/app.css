@@ -15186,7 +15186,7 @@ div#fj-spinner.fj-spinner.loaded {
   display: unset;
 }
 
-table td.small {
+table td.col-sm {
   width: 1%;
   white-space: nowrap;
 }

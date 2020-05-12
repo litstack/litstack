@@ -56,7 +56,7 @@
                             class="text-secondary fj-draggable__dragbar"
                         />
                     </td>
-                    <td class="small fj-table-select" v-if="!noSelect">
+                    <td class="col-sm fj-table-select" v-if="!noSelect">
                         <div class="custom-control custom-radio" v-if="radio">
                             <input
                                 type="radio"
