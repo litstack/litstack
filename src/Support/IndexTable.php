@@ -241,23 +241,21 @@ class IndexTable
             $order = last(explode('.', $this->request->sort_by));
         }
 
-        // Order for eager loads
-        foreach ($this->query->getEagerLoads() as $eager => $closure) {
-            if ($key != $eager) {
-                continue;
-            }
+        $model = $this->query->getModel();
 
-            $model = $this->query->getModel();
-            $table = $model->getTable();
-            $foreignTable = $model->$eager()->getRelated()->getTable();
-
-            $this->query->leftJoin($foreignTable, $foreignTable . '.id', '=', $table . '.' . rtrim($foreignTable, 's') . '_id')
-                ->select($table . '.*', $foreignTable . '.' . explode('.', $this->request->sort_by)[1] . ' as eager_order_column')
-                ->orderBy($foreignTable . '.' . explode('.', $this->request->sort_by)[1], $order);
-            return;
+        if (array_key_exists($key, $this->query->getEagerLoads())) {
+            return $this->query->orderByRelation($key, explode('.', $this->request->sort_by)[1], $order);
         }
 
-        $this->query->orderBy($key, $order);
+        if (!is_translatable($model)) {
+            return $this->query->orderBy($key, $order);
+        }
+
+        if (!in_array($key, $model->translatedAttributes)) {
+            return $this->query->orderBy($key, $order);
+        }
+
+        return $this->query->orderByTranslation(app()->getLocale(), $key, $order);
     }
 
     /**
