@@ -19,6 +19,7 @@ abstract class FormController
         Api\CrudHasBlocks,
         Api\CrudHasMedia,
         Api\CrudHasOrder,
+        Api\CrudHasModal,
         Concerns\HasConfig,
         Concerns\HasForm;
 
@@ -84,7 +85,14 @@ abstract class FormController
     {
         $formField = $this->query()->findOrFail($id);
 
-        $this->updateModel($request, $formField);
+        $request->validate(
+            $this->config->form->getRules($request)
+        );
+
+        $formField->update(
+            $this->filterRequestAttributes($request, $this->fields())
+        );
+
         $formField->load('last_edit');
 
         return crud($formField);

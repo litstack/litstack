@@ -8,26 +8,31 @@ use Fjord\Crud\Requests\CrudUpdateRequest;
 trait CrudUpdate
 {
     /**
-     * Update model.
+     * Filter request attributes.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed $model
-     * @return void
+     * @param CrudUpdateRequest|CrudCreateRequest $request
+     * @param Collection $fields
+     * @return array
      */
-    protected function updateModel(CrudUpdateRequest $request, $model)
+    public function filterRequestAttributes($request, $fields)
     {
-        $this->validateUpdate($request);
-
         $attributes = $request->all();
 
-        foreach ($this->fields() as $field) {
+        foreach ($fields as $field) {
+            /*
             if ($this->isRelationField($field)) {
                 $this->updateRelated($model, $field, $attributes);
                 continue;
             }
+            */
             if (!array_key_exists($field->local_key, $attributes)) {
                 continue;
             }
+            if (!$field->canSave()) {
+                unset($attributes[$field->local_key]);
+                continue;
+            }
+            // Format value before update.
             if (method_exists($field, 'format')) {
                 $attributes[$field->local_key] = $field->format(
                     $attributes[$field->local_key]
@@ -35,29 +40,7 @@ trait CrudUpdate
             }
         }
 
-        $model->update($attributes);
-    }
-
-    public function validateUpdate(CrudUpdateRequest $request)
-    {
-        $rules = [];
-        foreach ($this->fields() as $field) {
-            if (!$field->rules) {
-                continue;
-            }
-            if ($field->translatable) {
-                foreach (config('translatable.locales') as $locale) {
-                    $rules["{$locale}.{$field->local_key}"] = $field->rules;
-                }
-            } else {
-                $rules[$field->local_key] = $field->rules;
-            }
-        }
-        if (empty($rules)) {
-            return;
-        }
-
-        $request->validate($rules);
+        return $attributes;
     }
 
     /**

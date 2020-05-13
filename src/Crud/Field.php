@@ -73,7 +73,6 @@ class Field extends VueProp
         'readonly',
         'cols',
         'info',
-        'rules'
     ];
 
     /**
@@ -86,6 +85,13 @@ class Field extends VueProp
         'cols' => 12,
         'slots' => []
     ];
+
+    /**
+     * Saveable field.
+     *
+     * @var boolean
+     */
+    protected $save = true;
 
     /**
      * Create new Field instance.
@@ -133,6 +139,27 @@ class Field extends VueProp
     }
 
     /**
+     * Is field saveable.
+     *
+     * @return boolean
+     */
+    public function canSave()
+    {
+        return $this->save;
+    }
+
+    /**
+     * Format value before saving it to database.
+     *
+     * @param string $value
+     * @return void
+     */
+    public function format($value)
+    {
+        return $value;
+    }
+
+    /**
      * Cast model value for e.g. boolean.
      *
      * @param Model $value
@@ -172,19 +199,6 @@ class Field extends VueProp
     public function isRelation()
     {
         return false;
-    }
-
-    /**
-     * Validation rules.
-     *
-     * @param string ...$rules
-     * @return self
-     */
-    public function rules(...$rules)
-    {
-        $this->setAttribute('rules', $rules);
-
-        return $this;
     }
 
     /**

@@ -3,9 +3,13 @@
 namespace Fjord\Crud\Fields;
 
 use Fjord\Crud\Field;
+use Illuminate\Support\Facades\Hash;
+use Fjord\Crud\Fields\Concerns\FieldHasRules;
 
 class Password extends Field
 {
+    use FieldHasRules;
+
     /**
      * Field Vue component.
      *
@@ -31,6 +35,12 @@ class Password extends Field
         'title',
         'placeholder',
         'minScore',
+        'noScore',
+        'hint',
+        'rules',
+        'confirm',
+        'updateRules',
+        'creationRules',
     ];
 
     /**
@@ -39,7 +49,8 @@ class Password extends Field
      * @var array
      */
     protected $defaults = [
-        'minScore' => 2
+        'minScore' => 2,
+        'noScore' => false,
     ];
 
     /**
@@ -62,5 +73,29 @@ class Password extends Field
     public function format($value)
     {
         return bcrypt($value);
+    }
+
+    /**
+     * Confirm only.
+     *
+     * @param Type $var
+     * @return void
+     */
+    public function confirm($confirm = true)
+    {
+        if (!$confirm) {
+            return $this;
+        }
+
+        $this->save = false;
+        $this->noScore();
+        $this->hint('Confirm with current password.');
+        $this->rules('required', function ($attribute, $value, $fail) {
+            if (!Hash::check($value, fjord_user()->password)) {
+                return $fail(__('The current password is incorrect.'));
+            }
+        });
+
+        return $this;
     }
 }

@@ -4,6 +4,7 @@
         :model="model"
         :value="value"
         v-slot:default="{ state }"
+        v-on="$listeners"
     >
         <b-input-group :size="field.size">
             <b-input-group-prepend is-text v-if="field.prepend">

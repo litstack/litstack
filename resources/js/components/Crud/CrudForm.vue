@@ -152,7 +152,10 @@ export default {
                 this.model = this.crud(result.data);
             }
 
-            if (window.location.pathname.split('/').pop() == 'create') {
+            if (
+                window.location.pathname.split('/').pop() == 'create' &&
+                this.model.id
+            ) {
                 setTimeout(() => {
                     window.location.replace(`${this.model.id}/edit`);
                 }, 1);

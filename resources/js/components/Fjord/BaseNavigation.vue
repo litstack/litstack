@@ -45,9 +45,10 @@
                 >
                     <b-button
                         variant="outline-secondary"
+                        class="btn-square"
                         @click="Fjord.bus.$emit('cancelSave')"
                     >
-                        {{ __('base.cancel').capitalize() }}
+                        <fa-icon icon="undo" />
                     </b-button>
                     <b-button
                         variant="primary"

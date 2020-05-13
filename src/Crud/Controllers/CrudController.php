@@ -19,6 +19,7 @@ abstract class CrudController
         Api\CrudHasBlocks,
         Api\CrudHasMedia,
         Api\CrudHasOrder,
+        Api\CrudHasModal,
         Concerns\HasConfig,
         Concerns\HasForm;
 
@@ -252,7 +253,13 @@ abstract class CrudController
     {
         $model = $this->query()->findOrFail($id);
 
-        $this->updateModel($request, $model);
+        $request->validate(
+            $this->config->form->getRules($request)
+        );
+
+        $model->update(
+            $this->filterRequestAttributes($request, $this->fields())
+        );
 
         if ($model->last_edit) {
             $model->load('last_edit');
@@ -269,13 +276,17 @@ abstract class CrudController
      */
     public function store(CrudCreateRequest $request)
     {
-        $params = $request->all();
+        $request->validate(
+            $this->config->form->getRules($request)
+        );
+
+        $attributes = $this->filterRequestAttributes($request, $this->fields());
 
         if ($this->config->sortable) {
-            $params[$this->config->orderColumn] = $this->query()->count() + 1;
+            $attributes[$this->config->orderColumn] = $this->query()->count() + 1;
         }
 
-        $model = $this->model::create($params);
+        $model = $this->model::create($attributes);
 
         return crud($model);
     }

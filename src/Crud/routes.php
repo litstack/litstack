@@ -19,7 +19,8 @@ if ($type == 'crud') {
 Route::get("/{id}/load", [$controller, "load"])->name('load');
 Route::put("/{id}", [$controller, "update"])->name('update');
 
-
+// Modal
+Route::put("/{id}/modal/{modal_id}", [$controller, 'updateModal'])->name("modal.update");
 
 // Media
 Route::put("/{id}/media/order", [$controller, 'orderMedia'])->name("media.order");

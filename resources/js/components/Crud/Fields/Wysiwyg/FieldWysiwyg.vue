@@ -1,7 +1,14 @@
 <template>
-    <fj-form-item :field="field" :model="model" :value="value">
+    <fj-form-item
+        :field="field"
+        :model="model"
+        :value="value"
+        v-slot:default="{ state }"
+        v-on="$listeners"
+    >
         <template v-if="!field.readonly">
             <ckeditor
+                :class="state === false ? 'form-control is-invalid' : ''"
                 :editor="editor"
                 :config="editorConfig"
                 :value="value"

@@ -5,7 +5,7 @@
             :disabled="!nearItems.previous"
             variant="outline-secondary"
             size="sm"
-            class="btn-sm-square"
+            class="btn-square"
         >
             <fa-icon icon="chevron-left" class="fj-near-items__prev" />
         </b-button>
@@ -14,7 +14,7 @@
             :disabled="!nearItems.next"
             variant="outline-secondary"
             size="sm"
-            class="btn-sm-square"
+            class="btn-square"
         >
             <fa-icon icon="chevron-right" class="fj-near-items__next" />
         </b-button>

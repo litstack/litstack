@@ -27,17 +27,20 @@ const methods = {
 
         // For non translatable fields
         if (!this.field.translatable) {
-            return this._setValue(this.original);
-        }
-
-        // For translatable fields.
-        let locales = this.$store.state.config.languages;
-        for (let i in locales) {
-            let locale = locales[i];
-            let original = this.original[locale];
-            this._setValue(original, locale);
+            this._setValue(this.original);
+        } else {
+            // For translatable fields.
+            let locales = this.$store.state.config.languages;
+            for (let i in locales) {
+                let locale = locales[i];
+                let original = this.original[locale];
+                this._setValue(original, locale);
+            }
         }
         this.getValue();
+        if (this.changed) {
+            this.changed(this.value);
+        }
     },
 
     /**

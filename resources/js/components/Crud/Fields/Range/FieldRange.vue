@@ -4,6 +4,7 @@
             <b-form-input
                 ref="input"
                 :value="value"
+                @changed="changed"
                 @input="changed"
                 type="range"
                 number
@@ -38,6 +39,11 @@ export default {
             value: 0,
             original: 0
         };
+    },
+    watch: {
+        value(val) {
+            //this.changed(val);
+        }
     },
     beforeMount() {
         this.init();

@@ -5,9 +5,13 @@ namespace Fjord\Crud\Fields;
 use Closure;
 use Fjord\Crud\Field;
 use Fjord\Crud\BaseForm;
+use Illuminate\Support\Facades\Hash;
+use Fjord\Crud\Fields\Concerns\FieldHasForm;
 
 class Modal extends Field
 {
+    use FieldHasForm;
+
     /**
      * Field Vue component.
      *
@@ -22,7 +26,7 @@ class Modal extends Field
      */
     protected $required = [
         'title',
-        'button',
+        'name',
         'form'
     ];
 
@@ -34,9 +38,10 @@ class Modal extends Field
     protected $available = [
         'title',
         'hint',
-        'button',
+        'name',
         'form',
-        'size'
+        'size',
+        'confirmWithPassword'
     ];
 
     /**
@@ -45,21 +50,21 @@ class Modal extends Field
      * @var array
      */
     protected $defaults = [
-        'size' => 'md'
+        'size' => 'md',
+        'confirmWithPassword' => false
     ];
 
     /**
-     * Create new info instance.
+     * Confirm with password.
      *
-     * @param string $id
-     * @param string $model
-     * @param string|null $routePrefix
+     * @param boolean $confirm
+     * @return void
      */
-    public function __construct(string $id, string $model, $routePrefix)
+    public function confirmWithPassword($confirm = true)
     {
-        parent::__construct($id, $model, $routePrefix);
+        $this->setAttribute('confirmWithPassword', $confirm);
 
-        $this->attributes['button'] = $id;
+        return $this;
     }
 
     /**
@@ -77,10 +82,16 @@ class Modal extends Field
         $form = new BaseForm($this->model);
 
         $form->setRoutePrefix(
-            $this->route_prefix
+            "$this->route_prefix/modal/{modal_id}"
         );
 
         $closure($form);
+
+        if ($this->confirmWithPassword) {
+            $form->password('__p_confirm')
+                ->title('Password')
+                ->confirm();
+        }
 
         $this->setAttribute('form', $form);
 

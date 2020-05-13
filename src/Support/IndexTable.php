@@ -194,15 +194,9 @@ class IndexTable
             return;
         }
 
-        $eagerLoads = $this->query->getEagerLoads();
-
         // TODO: Apply multiple filters
         $scope = $this->request->filter;
         $this->query = $this->query->$scope();
-
-        // Eager loads are not passed to the scope. Therefore they are reset 
-        // after the scope is executed.
-        $this->query->setEagerLoads($eagerLoads);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace Fjord\Crud\Fields\Blocks;
 use Closure;
 use Fjord\Crud\Models\FormField;
 use Fjord\Crud\ManyRelationField;
+use Fjord\Crud\Fields\Concerns\FieldHasForm;
 
 class Blocks extends ManyRelationField
 {

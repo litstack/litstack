@@ -14900,42 +14900,51 @@ input[type=color].form-control:disabled {
   box-shadow: 0 0 0 0.2rem rgba(100, 118, 138, 0.5);
 }
 
-.btn-sm,
+.btn {
+  height: 2.5rem;
+  max-height: 2.5rem;
+}
+
+.btn-square {
+  padding: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-square.btn-sm,
+.btn-group-sm > .btn-square.btn {
+  width: 1.75rem !important;
+}
+
+.btn-square.btn {
+  width: 2.5rem;
+}
+
+.btn-square.btn-md {
+  width: 2.5rem !important;
+}
+
+.btn-square.btn-lg,
+.btn-group-lg > .btn-square.btn {
+  width: 3.125rem !important;
+}
+
+.btn.btn-sm,
 .btn-group-sm > .btn {
   height: 1.75rem;
   max-height: 1.75rem;
 }
 
-.btn-sm-square {
-  width: 1.75rem;
-}
-
-.btn-md {
+.btn.btn-md {
   height: 2.5rem;
   max-height: 2.5rem;
 }
 
-.btn-md-square {
-  width: 2.5rem;
-}
-
-.btn-lg,
+.btn.btn-lg,
 .btn-group-lg > .btn {
   height: 3.125rem;
   max-height: 3.125rem;
-}
-
-.btn-lg-square {
-  width: 3.125rem;
-}
-
-.btn-sm-square,
-.btn-md-square,
-.btn-lg-square {
-  padding: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .card {

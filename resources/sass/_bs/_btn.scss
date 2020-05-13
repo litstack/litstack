@@ -1,7 +1,9 @@
 .btn-transparent {
-    @include button-variant(transparent,
+    @include button-variant(
         transparent,
-        rgba(map-get($theme-colors, 'light'), 0.5));
+        transparent,
+        rgba(map-get($theme-colors, 'light'), 0.5)
+    );
     color: $text-muted;
 
     &:active {
@@ -19,49 +21,48 @@
 
 .btn-input {
     border: $input-border-width solid $input-border-color;
-    @include button-variant($input-bg,
+    @include button-variant(
+        $input-bg,
         $input-border-color,
-        rgba(map-get($theme-colors, 'light'), 0.5));
+        rgba(map-get($theme-colors, 'light'), 0.5)
+    );
 }
 
-
 .btn {
-    &-sm {
-        height: $button-sm-height;
-        max-height: $button-sm-height;
+    height: $button-md-height;
+    max-height: $button-md-height;
 
-        &-square {
-            width: $button-sm-height;
+    &-square {
+        padding: 0;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+
+        &.btn-sm {
+            width: $button-sm-height !important;
         }
-    }
-
-    &-md {
-        height: $button-md-height;
-        max-height: $button-md-height;
-
-        &-square {
+        &.btn {
             width: $button-md-height;
         }
+        &.btn-md {
+            width: $button-md-height !important;
+        }
+        &.btn-lg {
+            width: $button-lg-height !important;
+        }
+    }
+    &.btn-sm {
+        height: $button-sm-height;
+        max-height: $button-sm-height;
     }
 
-    &-lg {
+    &.btn-md {
+        height: $button-md-height;
+        max-height: $button-md-height;
+    }
+
+    &.btn-lg {
         height: $button-lg-height;
         max-height: $button-lg-height;
-
-        &-square {
-            width: $button-lg-height;
-        }
-    }
-
-    &-sm,
-    &-md,
-    &-lg,
-        {
-        &-square {
-            padding: 0;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-        }
     }
 }

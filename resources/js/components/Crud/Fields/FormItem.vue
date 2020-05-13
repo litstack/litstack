@@ -87,6 +87,11 @@ export default {
             messages: []
         };
     },
+    watch: {
+        state(val) {
+            this.$emit('state', val);
+        }
+    },
     beforeMount() {
         this.$on('refresh', () => {
             this.$forceUpdate();
@@ -120,6 +125,7 @@ export default {
 
             this.state = false;
             this.messages = errors;
+            this.$emit('error', errors);
         },
         findErrors(result) {
             if (!('errors' in result.response.data)) {

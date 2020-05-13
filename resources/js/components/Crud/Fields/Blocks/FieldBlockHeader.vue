@@ -29,7 +29,7 @@
                     <b-button
                         variant="outline-secondary"
                         size="sm"
-                        class="btn-sm-square"
+                        class="btn-square"
                         @click="$emit('toggleExpand')"
                     >
                         <fa-icon :icon="expand ? 'angle-up' : 'angle-down'" />

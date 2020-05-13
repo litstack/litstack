@@ -3,9 +3,12 @@
 namespace Fjord\Crud\Fields;
 
 use Fjord\Crud\Field;
+use Fjord\Crud\Fields\Concerns\FieldHasRules;
 
 class Input extends Field
 {
+    use FieldHasRules;
+
     /**
      * Field Vue component.
      *
@@ -41,7 +44,10 @@ class Input extends Field
         'hint',
         'type',
         'prepend',
-        'append'
+        'append',
+        'rules',
+        'updateRules',
+        'creationRules',
     ];
 
     /**

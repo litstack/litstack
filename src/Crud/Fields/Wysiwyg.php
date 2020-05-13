@@ -3,9 +3,12 @@
 namespace Fjord\Crud\Fields;
 
 use Fjord\Crud\Field;
+use Fjord\Crud\Fields\Concerns\FieldHasRules;
 
 class Wysiwyg extends Field
 {
+    use FieldHasRules;
+
     /**
      * Field Vue component.
      *
@@ -40,7 +43,10 @@ class Wysiwyg extends Field
         'hint',
         'toolbar',
         'toolbarFormat',
-        'formats'
+        'formats',
+        'rules',
+        'updateRules',
+        'creationRules',
     ];
 
     /**

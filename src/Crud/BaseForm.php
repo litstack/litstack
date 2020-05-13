@@ -120,6 +120,32 @@ class BaseForm extends VueProp
     }
 
     /**
+     * Get rules for request.
+     *
+     * @param CrudUpdateRequest|CrudCreateRequest $request
+     * @return array
+     */
+    public function getRules($request)
+    {
+        $rules = [];
+        foreach ($this->registeredFields as $field) {
+            if (!method_exists($field, 'getRules')) {
+                continue;
+            }
+            $fieldRules = $field->getRules($request);
+            if ($field->translatable) {
+                // Attach rules for translatable fields.
+                foreach (config('translatable.locales') as $locale) {
+                    $rules["{$locale}.{$field->local_key}"] = $fieldRules;
+                }
+            } else {
+                $rules[$field->local_key] = $fieldRules;
+            }
+        }
+        return $rules;
+    }
+
+    /**
      * Set form route prefix.
      *
      * @param string $prefix
@@ -229,7 +255,7 @@ class BaseForm extends VueProp
     public function findField(string $fieldId)
     {
         foreach ($this->registeredFields as $field) {
-            if ($field->isComponent()) {
+            if ($field instanceof Component) {
                 continue;
             }
 

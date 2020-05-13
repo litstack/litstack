@@ -1,26 +1,29 @@
 <template>
     <fj-form-item :field="field" :model="model">
-        <b-button variant="outline-secondary" v-b-modal="modalId">
-            {{ field.button }}
+        <b-button :variant="variant" v-b-modal="modalId">
+            {{ field.name }}
         </b-button>
-        <b-modal :id="modalId" :size="field.size" :title="field.button">
+        <b-form-invalid-feedback
+            v-for="(message, key) in messages"
+            :key="key"
+            style="display:block;"
+        >
+            {{ message }}
+        </b-form-invalid-feedback>
+        <b-modal :id="modalId" :size="field.size" :title="field.name">
             <b-row>
                 <fj-field
-                    v-for="(field, key) in field.form.fields"
+                    v-for="(field, key) in fields"
                     :key="key"
                     :field="field"
                     :model-id="model.id"
                     :model="model"
+                    @error="error"
                     v-on="$listeners"
                 />
             </b-row>
             <template slot="modal-footer">
-                <button
-                    @click.prevent="
-                        $bvModal.hide(`fj-image-${field.id}-${image.id}`)
-                    "
-                    class="btn btn-secondary"
-                >
+                <button @click.prevent="cancel()" class="btn btn-secondary">
                     {{ __('base.close').capitalize() }}
                 </button>
                 <b-button
@@ -50,6 +53,18 @@ export default {
             type: Object
         }
     },
+    data() {
+        return {
+            fields: [],
+            state: null,
+            messages: []
+        };
+    },
+    beforeMount() {
+        this.formatRoutePrefixes();
+        Fjord.bus.$on('saveCanceled', this.resetErrors);
+        Fjord.bus.$on('saved', this.resetErrors);
+    },
     computed: {
         ...mapGetters(['canSave']),
         modalId() {
@@ -57,6 +72,37 @@ export default {
                 /\//g,
                 '-'
             )}`;
+        },
+        variant() {
+            if (this.state !== false) {
+                return 'outline-secondary';
+            }
+            return 'outline-danger';
+        }
+    },
+    methods: {
+        resetErrors() {
+            this.messages = [];
+            this.state = null;
+        },
+        error(messages) {
+            this.state = false;
+            this.messages = messages.concat(this.messages);
+        },
+        cancel() {
+            this.$bvModal.hide(this.modalId);
+        },
+        formatRoutePrefixes() {
+            let fields = Fjord.clone(this.field.form.fields);
+            for (let i in fields) {
+                fields[i].route_prefix = fields[i].route_prefix.replace(
+                    '{modal_id}',
+                    this.field.id
+                );
+                console.log(fields[i].route_prefix);
+            }
+
+            this.fields = fields;
         }
     }
 };

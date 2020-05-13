@@ -4,6 +4,7 @@
         :model="model"
         ref="form"
         v-slot:default="{ state }"
+        v-on="$listeners"
     >
         <b-input-group>
             <b-input
@@ -25,7 +26,10 @@
                 </b-button>
             </b-input-group-append>
         </b-input-group>
-        <div class="fj-field-password-score" v-if="!_.isEmpty(value)">
+        <div
+            class="fj-field-password-score"
+            v-if="!_.isEmpty(value) && !field.noScore"
+        >
             <b-progress
                 class="mt-2"
                 height="0.5rem"
@@ -57,10 +61,19 @@ export default {
         };
     },
     beforeMount() {
-        this.field.hint = ``;
+        if (!this.field.noScore) {
+            this.field.hint = ``;
+        }
+
         Fjord.bus.$on('saveCanceled', this.reset);
     },
     methods: {
+        setState(state) {
+            this.state = state;
+            if (state === false) {
+                this.$emit('error');
+            }
+        },
         reset() {
             this.value = '';
             this.changed('');
@@ -69,6 +82,9 @@ export default {
             this.addSaveJob();
             if (val == '') {
                 return (this.field.hint = ``);
+            }
+            if (this.field.noScore) {
+                return;
             }
             this.field.hint = `Password strength: <b>${this.scoreStrength}</b>`;
             this.$refs.form.$forceUpdate();
@@ -83,7 +99,14 @@ export default {
                 key: this.field.local_key
             };
 
-            if (this.score < this.field.minScore) {
+            let add = true;
+            if (!this.field.noScore && this.score < this.field.minScore) {
+                add = false;
+            } else if (this.field.noScore && this.value == '') {
+                add = false;
+            }
+
+            if (!add) {
                 this.$store.commit('REMOVE_SAVE_JOB', job);
             } else {
                 this.$store.commit('ADD_SAVE_JOB', job);

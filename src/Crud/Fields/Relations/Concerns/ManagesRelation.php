@@ -8,12 +8,13 @@ use Fjord\Support\Facades\Crud;
 use Fjord\Support\Facades\Fjord;
 use Fjord\Vue\Crud\PreviewTable;
 use Illuminate\Database\Eloquent\Builder;
+use Fjord\Crud\Fields\Concerns\FieldHasForm;
 use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
 
 trait ManagesRelation
 {
-    use ManagesRelatedConfig;
+    use ManagesRelatedConfig, FieldHasForm;
 
     /**
      * Relation query builder.

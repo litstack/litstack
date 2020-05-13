@@ -1,5 +1,6 @@
 <template>
     <component
+        ref="component"
         :is="field.component"
         :field="field"
         :model="model"
@@ -29,24 +30,29 @@ export default {
         }
     },
     beforeMount() {
-        // This allows Fields like Blocks to set individual Model id's that
-        // differ from the id of the model that gets passed to the Field.
-        // For e.g: In a Block the model of the Block would be passed but the
-        // route Model id is not the id for the Block but for the Crud Model.
-        let modelId = this.modelId ? this.modelId : this.model.id;
-        let replace = '{id}';
-        this.field._method = 'PUT';
+        this.formatRoutePrefix();
+    },
+    methods: {
+        formatRoutePrefix() {
+            // This allows Fields like Blocks to set individual Model id's that
+            // differ from the id of the model that gets passed to the Field.
+            // For e.g: In a Block the model of the Block would be passed but the
+            // route Model id is not the id for the Block but for the Crud Model.
+            let modelId = this.modelId ? this.modelId : this.model.id;
+            let replace = '{id}';
+            this.field._method = 'PUT';
 
-        if (modelId === undefined) {
-            this.field._method = 'POST';
-            modelId = '';
-            replace = '/{id}';
+            if (modelId === undefined) {
+                this.field._method = 'POST';
+                modelId = '';
+                replace = '/{id}';
+            }
+
+            this.field.route_prefix = this.field.route_prefix.replace(
+                replace,
+                modelId
+            );
         }
-
-        this.field.route_prefix = this.field.route_prefix.replace(
-            replace,
-            modelId
-        );
     }
 };
 </script>

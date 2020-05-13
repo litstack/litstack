@@ -1,10 +1,10 @@
 @extends('fjord::landing')
 
-@section('l-title')
+@section('title')
     Reset Password ({{ $email }})
 @endsection
 
-@section('l-content')
+@section('content')
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
