@@ -6,13 +6,13 @@
             <div></div>
 
             <div class="device-btns">
-                <b-button class="mr-2" @click="setDevice('mobile')">
+                <b-button class="mr-2 btn-square" @click="setDevice('mobile')">
                     <fa-icon fas icon="mobile-alt" />
                 </b-button>
-                <b-button class="mr-2" @click="setDevice('tablet')">
+                <b-button class="mr-2 btn-square" @click="setDevice('tablet')">
                     <fa-icon fas icon="tablet-alt" />
                 </b-button>
-                <b-button @click="setDevice('desktop')">
+                <b-button @click="setDevice('desktop')" class="btn-square">
                     <fa-icon fas icon="desktop" />
                 </b-button>
             </div>
