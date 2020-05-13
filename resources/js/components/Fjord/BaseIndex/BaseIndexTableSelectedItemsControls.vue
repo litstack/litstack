@@ -1,45 +1,46 @@
 <template>
     <transition name="slide">
-        <b-input-group
-            class="mb-4 mt-4"
-            v-if="selectedItems.length > 0"
-            size="sm"
-        >
-            <b-input-group-prepend is-text>
-                <strong>
-                    {{
-                        trans_choice(
-                            'fj.n_items_selected',
-                            selectedItems.length
-                        )
-                    }}
-                    {{
-                        selectedItems.length == items.length
-                            ? `(${__('fj.all')})`
-                            : ''
-                    }}
-                </strong>
-            </b-input-group-prepend>
-            <template v-slot:append>
-                <b-dropdown
-                    style="margin-left: 1px;"
-                    size="sm"
-                    :text="trans_choice('base.action', controls.length)"
-                    class="btn-brl-none"
-                    variant="outline-secondary"
-                >
-                        <fj-slot
-                            v-for="(component, key) in controls"
-                            :key="key"
-                            v-bind="component"
-                            :selectedItems="selectedItems"
-                            @reload="reload"
-                        />
-                        
+        <div v-if="selectedItems.length > 0">
+            <b-input-group
+                size="sm"
+                class="pt-1 pb-3"
+            >
+                <b-input-group-prepend is-text>
+                    <strong>
+                        {{
+                            trans_choice(
+                                'fj.n_items_selected',
+                                selectedItems.length
+                            )
+                        }}
+                        {{
+                            selectedItems.length == items.length
+                                ? `(${__('fj.all')})`
+                                : ''
+                        }}
+                    </strong>
+                </b-input-group-prepend>
+                <template v-slot:append>
+                    <b-dropdown
+                        style="margin-left: 1px;"
+                        size="sm"
+                        :text="trans_choice('base.action', controls.length)"
+                        class="btn-brl-none"
+                        variant="outline-secondary"
+                    >
+                            <fj-slot
+                                v-for="(component, key) in controls"
+                                :key="key"
+                                v-bind="component"
+                                :selectedItems="selectedItems"
+                                @reload="reload"
+                            />
+                            
+                        </b-dropdown>
                     </b-dropdown>
-                </b-dropdown>
-            </template>
-        </b-input-group>
+                </template>
+            </b-input-group>
+        </div>
     </transition>
 </template>
 

@@ -17,6 +17,7 @@ div#fjord-app .fj-navigation {
             &:active {
                 background-color: $list-group-bg;
             }
+
             &:hover {
                 background-color: $nav-item-hover-bg;
             }
@@ -26,13 +27,12 @@ div#fjord-app .fj-navigation {
             background-color: $nav-item-active-bg;
             color: $nav-item-active-color;
             font-weight: $nav-item-active-font-weight;
-            border-right: $nav-item-active-border-width solid
-                $nav-item-active-color;
+            border-right: $nav-item-active-border-width solid $nav-item-active-color;
         }
     }
 
     .collapse {
-        padding: $list-group-item-padding-y 0;
+        padding: 0;
         background-color: $list-group-collapsed-bg;
 
         .list-group-item {

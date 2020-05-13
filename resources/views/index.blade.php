@@ -58,7 +58,9 @@
             }
         
             main.addEventListener('scroll', e => {
+                //let container = document.querySelector('.fj-container');
                 let header = document.querySelector('.fj-page-navigation');
+
                 let toasterSlot = document.querySelector('.b-toaster-slot');
 
                 if(!header) {
