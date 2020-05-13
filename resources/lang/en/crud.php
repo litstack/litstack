@@ -6,11 +6,12 @@ return [
         'blocks' => [
             'expand_all' => 'expand all',
             'collapse_all' => 'collapse all'
+        ],
+        'relation' => [
+            'messages' => [
+                'confirm_unlink' => 'Please confirm that you wish to unlink the item.',
+            ]
         ]
     ],
-    'relation' => [
-        'messages' => [
-            'confirm_unlink' => 'Please confirm that you wish to unlink the item.',
-        ]
-    ]
+
 ];

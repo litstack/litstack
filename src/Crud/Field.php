@@ -73,6 +73,7 @@ class Field extends VueProp
         'readonly',
         'cols',
         'info',
+        'rules'
     ];
 
     /**
@@ -171,6 +172,19 @@ class Field extends VueProp
     public function isRelation()
     {
         return false;
+    }
+
+    /**
+     * Validation rules.
+     *
+     * @param string ...$rules
+     * @return self
+     */
+    public function rules(...$rules)
+    {
+        $this->setAttribute('rules', $rules);
+
+        return $this;
     }
 
     /**

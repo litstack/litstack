@@ -1,11 +1,17 @@
 <template>
-    <fj-form-item :field="field" :model="model" :value="value">
+    <fj-form-item
+        :field="field"
+        :model="model"
+        :value="value"
+        v-slot:default="{ state }"
+    >
         <b-form-textarea
             :value="value"
             :placeholder="field.placeholder"
             :rows="field.rows"
             :max-rows="field.max_rows"
             :maxlength="field.max"
+            :state="state"
             v-bind:readonly="field.readonly"
             @input="changed"
         />

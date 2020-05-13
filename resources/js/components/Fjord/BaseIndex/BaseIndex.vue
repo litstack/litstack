@@ -297,7 +297,6 @@ export default {
                     ids[start + parseInt(i)] = sortedItems[i].id;
                 }
             }
-            console.log(ids);
             this.$emit('sorted', { sortedItems, ids });
         },
         sort(sort) {

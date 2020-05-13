@@ -53,7 +53,7 @@ export default {
     beforeMount() {
         this.relation = this.item;
         this.fields = this.setFieldsRoutePrefixId(
-            this.field.form.fields,
+            Fjord.clone(this.field.form.fields),
             this.relation
         );
     },

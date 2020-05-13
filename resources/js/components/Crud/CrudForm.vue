@@ -135,19 +135,23 @@ export default {
             }
             this.model = this.crud(response.data);
         },
-        saved(responses) {
-            for (let i in responses) {
-                let response = responses[i];
-                if (
-                    (response.config.url ==
-                        `${this.config.route_prefix}/${this.model.id}` &&
-                        response.config.method == 'put') ||
-                    (response.config.url == `${this.config.route_prefix}` &&
-                        response.config.method == 'post')
-                ) {
-                    this.model = this.crud(response.data);
-                }
+        saved(results) {
+            let result;
+            result = results.findSucceeded(
+                'put',
+                `${this.config.route_prefix}/${this.model.id}`
+            );
+            if (result) {
+                this.model = this.crud(result.data);
             }
+            result = results.findSucceeded(
+                'post',
+                `${this.config.route_prefix}`
+            );
+            if (result) {
+                this.model = this.crud(result.data);
+            }
+
             if (window.location.pathname.split('/').pop() == 'create') {
                 setTimeout(() => {
                     window.location.replace(`${this.model.id}/edit`);

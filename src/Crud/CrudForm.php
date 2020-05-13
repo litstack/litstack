@@ -105,16 +105,6 @@ class CrudForm extends BaseForm
     }
 
     /**
-     * Line component.
-     *
-     * @return void
-     */
-    public function line()
-    {
-        return $this->component('fj-line');
-    }
-
-    /**
      * Get current card.
      *
      * @return array $card

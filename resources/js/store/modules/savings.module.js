@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Bus from '@fj-js/common/event.bus';
 import { ToastPlugin } from 'bootstrap-vue';
 import store from '@fj-js/store';
+import ResultsHandler from './savings.results';
 
 Vue.use(ToastPlugin);
 
@@ -35,13 +36,30 @@ export const actions = {
         }
 
         // Parallel map flow.
-        let results = await Promise.all(promises);
+        let results = new ResultsHandler(
+            await Promise.all(promises.map(p => p.catch(e => e)))
+        );
+
+        for (let i in results.results) {
+            let result = results.results[i];
+            let job = state.jobs[i];
+
+            // Failed jobs remain in the store.
+            if (result instanceof Error) {
+                continue;
+            }
+
+            state.jobs.splice(i, 1);
+        }
 
         Fjord.bus.$emit('saved', results);
 
+        return results;
+    },
+    cancelSave({ commit }) {
         commit('FLUSH_SAVE_JOBS');
 
-        return results;
+        Fjord.bus.$emit('saveCanceled');
     },
     saveJob({ commit }, job) {
         commit('ADD_SAVE_JOB', job);

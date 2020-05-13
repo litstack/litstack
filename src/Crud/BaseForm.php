@@ -8,15 +8,16 @@ use Fjord\Crud\Fields\Code;
 use Fjord\Crud\Fields\Icon;
 use Illuminate\Support\Str;
 use Fjord\Crud\Fields\Input;
+use Fjord\Crud\Fields\Modal;
 use Fjord\Crud\Fields\Range;
 use Fjord\Crud\Fields\Select;
 use InvalidArgumentException;
 use Fjord\Crud\Fields\Boolean;
 use Fjord\Crud\Fields\Wysiwyg;
 use Fjord\Crud\Fields\Datetime;
+use Fjord\Crud\Fields\Password;
 use Fjord\Crud\Fields\Textarea;
 use Fjord\Crud\Fields\Component;
-use Fjord\Crud\Models\FormBlock;
 use Fjord\Crud\Models\FormField;
 use Fjord\Support\Facades\Fjord;
 use Fjord\Crud\Fields\Checkboxes;
@@ -42,6 +43,7 @@ class BaseForm extends VueProp
      */
     protected $fields = [
         'input' => Input::class,
+        'password' => Password::class,
         'select' => Select::class,
         'boolean' => Boolean::class,
         'code' => Code::class,
@@ -55,6 +57,7 @@ class BaseForm extends VueProp
         'wysiwyg' => Wysiwyg::class,
         'blocks' => Blocks::class,
         'image' => Image::class,
+        'modal' => Modal::class,
         'component' => Component::class,
         'oneRelation' => OneRelation::class,
         'manyRelation' => ManyRelation::class,
