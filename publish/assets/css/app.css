@@ -14942,6 +14942,19 @@ input[type=color].form-control:disabled {
   box-shadow: 0 0 19px 0 rgba(235, 235, 235, 0.5);
 }
 
+.card .card .card-body {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.card .card .card-body .table-responsive {
+  margin-bottom: 0;
+}
+
+.card .card-body {
+  padding-bottom: 1rem;
+}
+
 .dropdown .dropdown-menu {
   box-shadow: 0 0 40px 0 rgba(112, 133, 156, 0.15);
 }
@@ -15265,7 +15278,7 @@ div#fjord-app .fj-navigation .list-group-item.active {
 }
 
 div#fjord-app .fj-navigation .collapse {
-  padding: 1rem 0;
+  padding: 0;
   background-color: #f5f8fb;
 }
 

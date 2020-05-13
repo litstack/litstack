@@ -35,11 +35,13 @@
                 </div>
             </b-list-group-item>
             <b-collapse v-if="hasChildren" v-model="visible">
-                <fj-nav-item
-                    v-for="(item, index) in item.children"
-                    :item="item"
-                    :key="index"
-                />
+                <div class="fj-navigation-spacer">
+                    <fj-nav-item
+                        v-for="(item, index) in item.children"
+                        :item="item"
+                        :key="index"
+                    />
+                </div>
             </b-collapse>
         </template>
     </b-list-group>
@@ -148,6 +150,16 @@ export default {
         &.active {
             transform: rotate(90deg);
         }
+    }
+    &-spacer {
+        padding: $list-group-item-padding-y 0;
+        background: linear-gradient(
+            180deg,
+            rgba(235, 235, 235, 0.5) 0%,
+            rgba(0, 0, 0, 0) 10px,
+            rgba(0, 0, 0, 0) calc(100% - 10px),
+            rgba(235, 235, 235, 0.5) 100%
+        );
     }
 }
 </style>
