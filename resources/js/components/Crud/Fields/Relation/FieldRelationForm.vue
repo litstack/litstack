@@ -61,7 +61,6 @@ export default {
         setFieldsRoutePrefixId(fields, relation) {
             for (let i in fields) {
                 let field = fields[i];
-                console.log(field.route_prefix, relation.id);
                 fields[i].route_prefix = field.route_prefix.replace(
                     '{id}',
                     relation.id

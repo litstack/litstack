@@ -14,6 +14,7 @@ return [
     'general' => 'allgemein',
     'security' => 'Sicherheit',
     'device' => 'Gerät',
+    'close' => 'schließen',
     "cancel" => "abbrechen",
     'delete' => 'löschen',
     'image' => 'Bild',

@@ -83,7 +83,6 @@ export default {
         this.loadBlocks();
 
         Fjord.bus.$on('saved', () => {
-            console.log('SAVED');
             this.reloadBlocks();
         });
     },

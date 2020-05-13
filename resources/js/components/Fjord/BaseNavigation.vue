@@ -39,16 +39,25 @@
                     />
                 </b-dropdown>
                 <slot name="right" />
-                <b-button
+                <div
                     class="fj-save-button fj-save-animate"
-                    variant="primary"
-                    size="md"
-                    :disabled="!canSave"
-                    @click="saveAll"
                     :style="buttonStyle"
                 >
-                    {{ $t('fj.save') }}
-                </b-button>
+                    <b-button
+                        variant="outline-secondary"
+                        @click="Fjord.bus.$emit('cancelSave')"
+                    >
+                        {{ __('base.cancel').capitalize() }}
+                    </b-button>
+                    <b-button
+                        variant="primary"
+                        size="md"
+                        :disabled="!canSave"
+                        @click="Fjord.bus.$emit('save')"
+                    >
+                        {{ $t('fj.save') }}
+                    </b-button>
+                </div>
             </div>
         </b-col>
     </b-row>
@@ -79,9 +88,6 @@ export default {
         };
     },
     methods: {
-        async saveAll() {
-            Fjord.bus.$emit('save');
-        },
         // Used with elementIsRendered
         waitUntilSaveButton(selector, scope, resolve, reject) {
             let loopCount = 0;
@@ -202,7 +208,7 @@ export default {
 
     .fj-save-button {
         transform: translateX(50vw);
-        box-shadow: 0px 13px 12px -7px rgba(102, 123, 144, 0.5);
+        //box-shadow: 0px 13px 12px -7px rgba(102, 123, 144, 0.5);
     }
     .fj-save-animate {
         transition: 0.25s all cubic-bezier(0.91, -0.13, 0.68, 0.79);

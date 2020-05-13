@@ -20,7 +20,11 @@ export default {
      */
     _format(string, values) {
         let messages = { f: { s: string } };
-        const formatter = new VueI18n({ locale: 'f', messages });
+        const formatter = new VueI18n({
+            locale: 'f',
+            messages,
+            silentTranslationWarn: true
+        });
         return formatter._t.apply(
             formatter,
             ['s', formatter.locale, formatter._getMessages(), this].concat(

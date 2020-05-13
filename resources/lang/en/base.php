@@ -15,6 +15,7 @@ return [
     'security' => 'security',
     'device' => 'device',
     'logout' => 'logout',
+    'close' => 'close',
     'delete' => 'delete',
     'image' => 'image',
     'search' => 'search',

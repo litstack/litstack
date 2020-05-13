@@ -16,15 +16,48 @@ trait CrudUpdate
      */
     protected function updateModel(CrudUpdateRequest $request, $model)
     {
+        $this->validateUpdate($request);
+
         $attributes = $request->all();
 
         foreach ($this->fields() as $field) {
             if ($this->isRelationField($field)) {
                 $this->updateRelated($model, $field, $attributes);
+                continue;
+            }
+            if (!array_key_exists($field->local_key, $attributes)) {
+                continue;
+            }
+            if (method_exists($field, 'format')) {
+                $attributes[$field->local_key] = $field->format(
+                    $attributes[$field->local_key]
+                );
             }
         }
 
         $model->update($attributes);
+    }
+
+    public function validateUpdate(CrudUpdateRequest $request)
+    {
+        $rules = [];
+        foreach ($this->fields() as $field) {
+            if (!$field->rules) {
+                continue;
+            }
+            if ($field->translatable) {
+                foreach (config('translatable.locales') as $locale) {
+                    $rules["{$locale}.{$field->local_key}"] = $field->rules;
+                }
+            } else {
+                $rules[$field->local_key] = $field->rules;
+            }
+        }
+        if (empty($rules)) {
+            return;
+        }
+
+        $request->validate($rules);
     }
 
     /**

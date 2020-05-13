@@ -1,5 +1,10 @@
 <template>
-    <fj-form-item :field="field" :model="model" :value="value">
+    <fj-form-item
+        :field="field"
+        :model="model"
+        :value="value"
+        v-slot:default="{ state }"
+    >
         <b-input-group :size="field.size">
             <b-input-group-prepend is-text v-if="field.prepend">
                 <span v-html="field.prepend"></span>
@@ -11,6 +16,7 @@
                 :type="field.type"
                 :maxlength="field.max"
                 :required="field.required"
+                :state="state"
                 v-bind:readonly="field.readonly"
                 @input="changed"
             />

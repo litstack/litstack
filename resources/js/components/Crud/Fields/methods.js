@@ -5,9 +5,39 @@ const methods = {
         this.setOriginalValue();
 
         Fjord.bus.$on('languageChanged', this.getValue);
-        Fjord.bus.$on('saved', () => {
-            this.setOriginalValue();
-        });
+        Fjord.bus.$on('saved', this.onSaved);
+        Fjord.bus.$on('saveCanceled', this.resetValues);
+    },
+
+    onSaved(results) {
+        if (results.hasFailed(this.field._method, this.field.route_prefix)) {
+            return;
+        }
+
+        this.setOriginalValue();
+    },
+
+    /**
+     * Reset values when savings are canceled.
+     */
+    resetValues() {
+        if (!this.hasValueChanged()) {
+            return;
+        }
+
+        // For non translatable fields
+        if (!this.field.translatable) {
+            return this._setValue(this.original);
+        }
+
+        // For translatable fields.
+        let locales = this.$store.state.config.languages;
+        for (let i in locales) {
+            let locale = locales[i];
+            let original = this.original[locale];
+            this._setValue(original, locale);
+        }
+        this.getValue();
     },
 
     /**
@@ -85,8 +115,10 @@ const methods = {
      *
      * @param {*} value
      */
-    _setValue(value) {
-        let locale = this.getLocale();
+    _setValue(value, locale = null) {
+        if (!locale) {
+            locale = this.getLocale();
+        }
 
         if (this.field.translatable) {
             return (this.model[locale][this.field.local_key] = value);

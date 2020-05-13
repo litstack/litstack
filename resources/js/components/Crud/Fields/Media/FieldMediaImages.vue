@@ -5,7 +5,7 @@
             'fj-image-list': true,
             'mb-4': field.readonly || images.length == 0
         }"
-        :options="{ disabled: field.readonly }"
+        v-bind:disabled="field.readonly"
         @end="newOrder"
         handle=".fj-draggable__dragbar"
         v-if="sortable.length > 0"
@@ -20,7 +20,7 @@
         >
             <div class="fj-image-card__controls">
                 <b-button
-                    v-if="!field.readonly"
+                    v-if="!field.readonly && field.maxFiles > 1"
                     size="sm"
                     variant="link"
                     class="text-secondary fj-image-card__controls_drag fj-draggable__dragbar"
