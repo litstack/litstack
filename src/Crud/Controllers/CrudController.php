@@ -187,7 +187,7 @@ abstract class CrudController
         // Eager loads relations.
         $query = $this->query();
         foreach ($this->fields() as $field) {
-            if ($field->isRelation()) {
+            if ($field->isRelation() && !$field instanceof MediaField) {
                 $query->with($field->id);
             }
         }

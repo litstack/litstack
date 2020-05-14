@@ -4,6 +4,7 @@ namespace Fjord\Crud;
 
 use Fjord\Crud\Models\FormBlock;
 use Fjord\Crud\Models\FormField;
+use Illuminate\Database\Eloquent\Collection;
 
 class MediaField extends ManyRelationField
 {
@@ -16,9 +17,8 @@ class MediaField extends ManyRelationField
      */
     protected function getRelation($model)
     {
-        dd($model);
         if (!$model instanceof FormField && !$model instanceof FormBlock) {
-            return parent::getRelation($model);
+            return $model->{$this->id};
         }
 
         return $model->getMedia($this->id);
@@ -31,7 +31,7 @@ class MediaField extends ManyRelationField
      */
     public function resolveQuery($media)
     {
-        if ($this->maxFiles == 1) {
+        if ($this->maxFiles == 1 && $media instanceof Collection) {
             return $media->first();
         }
 
