@@ -40,7 +40,7 @@ trait HasCrudIndex
      *
      * @var integer
      */
-    public $perPage = 20;
+    public $perPage = 10;
 
     /**
      * Setup index table.

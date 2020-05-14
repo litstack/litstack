@@ -51,7 +51,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     {
         $this->package->route()->get('/profile/settings', ProfileController::class . '@show')->name('profile.show');
         $this->package->route()->put('/profile/settings', ProfileController::class . '@update')->name('profile.update');
-        $this->package->route()->put('/profile/settings/modal/change_password', ProfileController::class . '@updateModal')->name('profile.update.modal');
+        $this->package->route()->put('/profile/settings/modal/{modal_id}', ProfileController::class . '@updateModal')->name('profile.update.modal');
         $this->package->route()->get('/profile/settings/sessions', ProfileController::class . '@sessions')->name('profile.sessions');
 
         $this->package->route()->get('/fjord/users', FjordUserController::class . '@showIndex')->name('users');

@@ -78,6 +78,10 @@ class Post extends Model implements HasMediaContract
 }
 ```
 
+::: warning
+To display conversion urls it is important to set the env `APP_URL` to the url you are working in.
+:::
+
 ## Methods
 
 | Method         | Description                                                   |

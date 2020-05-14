@@ -80,13 +80,17 @@ public function scopeMarketing()
 
 ## Pagination
 
-The maximum number of items to be displayed on a page is defined in `perPage`. The default is `20`.
+The maximum number of items to be displayed on a page is defined in `perPage`. The default is `10`.
 
 ```php
-public $perPage = 10;
+public $perPage = 5;
 ```
 
 ## Sortable
+
+::: warning
+Sortable should only be used on models with a **small** number of records.
+:::
 
 A model can be made sortable in the index table. For this purpose, `sortable` must be set to true and an `orderColumn` must be specified.
 The default `orderColumn` is `order_column`.

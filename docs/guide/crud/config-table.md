@@ -1,10 +1,10 @@
 # Table
 
-Fjord `tables` can be easily configured in the backend and if desired be expanded in Vue. For example, there are tables for the `CRUD` index or the preview of a relation **Field**. The following explains how to customize the tables to your needs.
+Fjord `tables` can be easily configured in the backend. The following explains how to customize the tables to your needs.
 
 ## Text
 
-Casual text columns are added with the function `col({label})`. Attached are all methods for configuring the column.
+Casual text columns are added with the function `col($label)`. Attached are all methods for configuring the column.
 
 ```php
 $table->col('Name');
@@ -155,3 +155,5 @@ export default {
 }
 </script>
 ```
+
+Read the [Extend Vue](/guide/basics/vue.html#bootstrap-vue) section to learn how to register your own Vue components.

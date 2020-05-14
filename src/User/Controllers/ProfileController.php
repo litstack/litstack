@@ -52,11 +52,11 @@ class ProfileController
      * @param string $modal_id
      * @return CrudJs
      */
-    public function updateModal(Request $request)
+    public function updateModal(Request $request, $modal_id)
     {
         $modal = Config::get('user.profile_settings')
             ->form
-            ->findField('change_password') ?? abort(404);
+            ->findField($modal_id) ?? abort(404);
 
         $request->validate(
             $modal->form->getRules($request),

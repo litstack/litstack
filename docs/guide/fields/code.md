@@ -11,12 +11,15 @@ $form->code('code')
 
 ## Methods
 
-| Method         | Description                                                                      |
-| -------------- | -------------------------------------------------------------------------------- |
-| `title`        | The title description for this form field.                                       |
-| `hint`         | A short hint that should describe how to use the form field.                     |
-| `cols`         | Cols of the field.                                                               |
-| `theme`        | Codemirror [theme](https://codemirror.net/demo/theme.html). (default: "default") |
-| `language`     | Codemirrot [languages](https://codemirror.net/mode/). (default: "text/html")     |
-| `tabSize`      | Number of spaces used for a tab. (default: 4)                                    |
-| `line_numbers` | Should the line numbers be visible. (default: true) field.                       |
+| Method          | Description                                                                      |
+| --------------- | -------------------------------------------------------------------------------- |
+| `title`         | The title description for this form field.                                       |
+| `hint`          | A short hint that should describe how to use the form field.                     |
+| `cols`          | Cols of the field.                                                               |
+| `theme`         | Codemirror [theme](https://codemirror.net/demo/theme.html). (default: "default") |
+| `language`      | Codemirrot [languages](https://codemirror.net/mode/). (default: "text/html")     |
+| `tabSize`       | Number of spaces used for a tab. (default: 4)                                    |
+| `line_numbers`  | Should the line numbers be visible. (default: true) field.                       |
+| `rules`         | Field rules that should be applied to the update and create form.                |
+| `creationRules` | Field rules that should be applied to the create form.                           |
+| `updateRules`   | Field rules that should be applied to the update form.                           |

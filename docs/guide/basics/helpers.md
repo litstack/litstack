@@ -70,12 +70,7 @@ If you don't want to use the route name to call a route but directly specify the
 The `__f` method returns the translation using the Fjord application locale for the authenticated fjord-user.
 
 ```php
-[
-    'names' => [
-        'singular' => __f('employee'),
-        'plural' => __f('employees'),
-    ],
-]
+__f('messages.welcome', ['name' => 'Spatie'])
 ```
 
 <a name="method-php-fa"></a>

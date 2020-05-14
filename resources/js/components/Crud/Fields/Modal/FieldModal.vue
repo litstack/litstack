@@ -4,7 +4,17 @@
             :variant="field.variant"
             v-b-modal="modalId"
             v-html="field.name"
+            v-if="!field.preview"
         />
+        <template v-else>
+            <div class="w-100" v-html="_format(field.preview, model)" />
+            <a
+                href="#"
+                v-b-modal="modalId"
+                v-html="field.name"
+                @click.prevent=""
+            />
+        </template>
         <b-form-invalid-feedback
             v-for="(message, key) in messages"
             :key="key"
@@ -70,10 +80,9 @@ export default {
     computed: {
         ...mapGetters(['canSave']),
         modalId() {
-            return `fj-field-modal-${this.field.route_prefix.replace(
-                /\//g,
-                '-'
-            )}`;
+            return `fj-field-modal-${
+                this.field.id
+            }-${this.field.route_prefix.replace(/\//g, '-')}`;
         }
     },
     methods: {

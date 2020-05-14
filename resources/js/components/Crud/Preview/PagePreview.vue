@@ -8,21 +8,27 @@
             <div class="device-btns">
                 <b-button
                     class="mr-2 btn-square"
-                    variant="outline-secondary"
+                    :variant="
+                        device == 'mobile' ? 'secondary' : 'outline-secondary'
+                    "
                     @click="setDevice('mobile')"
                 >
                     <fa-icon fas icon="mobile-alt" />
                 </b-button>
                 <b-button
                     class="mr-2 btn-square"
-                    variant="outline-secondary"
+                    :variant="
+                        device == 'tablet' ? 'secondary' : 'outline-secondary'
+                    "
                     @click="setDevice('tablet')"
                 >
                     <fa-icon fas icon="tablet-alt" />
                 </b-button>
                 <b-button
                     @click="setDevice('desktop')"
-                    variant="outline-secondary"
+                    :variant="
+                        device == 'desktop' ? 'secondary' : 'outline-secondary'
+                    "
                     class="btn-square"
                 >
                     <fa-icon fas icon="desktop" />

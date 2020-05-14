@@ -74,7 +74,7 @@ class ProfileSettingsConfig
             $form->modal('change_password')
                 ->title('Password')
                 ->variant('primary')
-                ->name(fa('user-shield') . ' Change Password')
+                ->name(fa('user-shield') . ' ' . __f('profile.change_password'))
                 ->form(function ($modal) {
                     $modal->password('old_password')
                         ->title('Old Password')
@@ -90,7 +90,7 @@ class ProfileSettingsConfig
                         ->dontStore()
                         ->title('New Password')
                         ->noScore();
-                })->class('d-flex justify-content-end');
+                });
 
             $form->component('fj-profile-security');
         })->cols(8);

@@ -1,6 +1,6 @@
 # Localization
 
-In Fjord can be managed multilingual. The translation in the frontend can be done in `php` using [laravel's localization](https://laravel.com/docs/7.x/localization) service or in `vue` using [vue-i18n](https://kazupon.github.io/vue-i18n/guide/formatting.html). It uses the format of `laravel`, all translation strings are formatted to use them in `vue-i18n`.
+Fjord can be managed multilingual. The translation in the frontend can be done in `php` using [laravel's localization](https://laravel.com/docs/7.x/localization) service or in `vue` using [vue-i18n](https://kazupon.github.io/vue-i18n/guide/formatting.html). It uses the format of `laravel`, all translation strings are formatted to use them in `vue-i18n`.
 
 In Laravel applications that include Fjord, there are **two** different locales, one for your website and one for the Fjord application. So a user can manage German content in the Fjord application and still see the interface in an English version.
 
@@ -37,13 +37,22 @@ __f_c('apples', 10)
 
 In `Vue` the [vue-i18n](https://kazupon.github.io/vue-i18n/introduction.html) format is used.
 
-```vue
+```javascript
 <template>
     <div>
         {{ $t('messages.welcome', { name: 'Jannes' }) }}
     </div>
 </template>
 ```
+
+::: tip
+You can also use the Larvel localization helpers in Vue components.
+
+-   \_\_()
+-   trans()
+-   trans_choice()
+
+:::
 
 ## Determine Locale
 
@@ -60,6 +69,8 @@ if (FjordApp::isLocale('en')) {
 ## Add Path
 
 By default the path `fjord/resources/lang` is imported for the Fjord translation. You can register as many paths with localizations files in your service providers as you want. However it is recommended to separate translations for the Fjord application and your website.
+
+All translation attributes are merged together, which makes it easy to extend existing localizations for parts like **validation** or other.
 
 ```php
 use Fjord\Support\Facades\FjordLang;

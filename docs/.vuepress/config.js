@@ -37,19 +37,22 @@ module.exports = {
         repo: 'aw-studio/fjord',
         editLinks: true,
         docsDir: 'docs',
-        nav: [{ text: 'Home', link: '/' }],
+        nav: [
+            {
+                text: 'Documentation',
+                link: '/guide/getting-started/introduction.html'
+            },
+            { text: '🕹 Demo', link: 'https://playground.fjord-admin.com' }
+        ],
         sidebar: {
             '/': [
                 {
                     title: 'Get started',
                     collapsable: false,
                     children: [
+                        ['guide/getting-started/introduction', 'Introduction'],
                         ['guide/getting-started/installation', 'Installation'],
-                        [
-                            'guide/getting-started/configuration',
-                            'Configuration'
-                        ],
-                        ['guide/getting-started/playground', '🕹 Playground']
+                        ['guide/getting-started/configuration', 'Configuration']
                     ]
                 },
                 {
@@ -58,7 +61,7 @@ module.exports = {
                     children: [
                         ['guide/basics/navigation', 'Navigation'],
                         ['guide/basics/localization', 'Localization'],
-                        ['guide/basics/vue', 'Extend Vue'],
+                        ['guide/basics/vue', 'Extend With Vue'],
                         ['guide/basics/helpers', 'Helpers']
                     ]
                 },
@@ -66,7 +69,6 @@ module.exports = {
                     title: 'CRUD',
                     collapsable: false,
                     children: [
-                        ['guide/crud/introduction', 'Introduction'],
                         ['guide/crud/create-crud', 'Models'],
                         ['guide/crud/create-forms', 'Forms'],
                         ['guide/crud/config-index', 'Index Config'],
@@ -87,14 +89,16 @@ module.exports = {
                         ['guide/fields/checkboxes', 'Checkboxes'],
                         ['guide/fields/range', 'Range'],
                         ['guide/fields/select', 'Select'],
-                        ['guide/fields/icon', 'Icon'],
-                        ['guide/fields/code', 'Code Editor'],
                         ['guide/fields/date-time', 'Date/Time'],
                         ['guide/fields/image', 'Image'],
-                        ['guide/fields/block', 'Block'],
+                        ['guide/fields/icon', 'Icon'],
+                        ['guide/fields/code', 'Code Editor'],
+                        ['guide/fields/password', 'Password'],
                         ['guide/fields/relation', 'Relation'],
                         ['guide/fields/one_relation', 'oneRelation'],
                         ['guide/fields/many_relation', 'manyRelation'],
+                        ['guide/fields/block', 'Block'],
+                        ['guide/fields/modal', 'Modal'],
                         ['guide/fields/component', 'Component']
                     ]
                 },

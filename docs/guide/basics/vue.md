@@ -1,4 +1,8 @@
-# Extend Vue
+# Extend With Vue
+
+The Fjord interface can be extended with custom Vue components for numerous purposes.
+
+## Setup
 
 To include your own `Vue` components in the Fjord application, the locale npm package `vendor/aw-studio/fjord` must be installed. This can be done using the artisan command `fjord:extend`:
 
@@ -19,6 +23,12 @@ In order to load the custom `app.js` you have to include it in your `config/fjor
     ],
 ],
 ```
+
+All javascript files are found in `fjord/resources/js`.
+
+::: tip
+Components that are created in the `components` folder are automaticly registered
+:::
 
 Run `npm run watch` and you are good to go.
 
@@ -48,6 +58,7 @@ The following example shows how to build a root component of a page for a Fjord 
 ```javascript
 <template>
     <fj-container>
+        <fj-navigation/>
         <fj-header title="Posts"/>
 
         <b-row>
@@ -71,3 +82,7 @@ export default {
 }
 </script>
 ```
+
+::: tip
+Read more about how to build your custom page in the [Vue Components](/guide/frontend/components.html#custom-pages) section.
+:::
