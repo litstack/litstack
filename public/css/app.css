@@ -14999,6 +14999,52 @@ input[type=color].form-control:disabled {
   background-color: #f5f8fb;
 }
 
+<<<<<<< HEAD
+.input-group-text {
+  background-color: #70859c;
+  color: white;
+}
+
+.modal-full {
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0;
+  height: 100vh;
+}
+
+.modal-full .modal-content {
+  border: none;
+  border-radius: 0;
+  height: 100vh;
+  background-color: #212227;
+  flex-wrap: wrap;
+}
+
+.modal-full .modal-content *:not(input) {
+  color: white;
+}
+
+.modal-full .modal-content .modal-header,
+.modal-full .modal-content .modal-footer {
+  height: 6rem;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-color: #f5f8fb;
+}
+
+.modal-full .modal-content .modal-body {
+  height: calc(100vh - 12rem);
+  position: relative;
+}
+
+.progress {
+  background-color: #e5eaef;
+}
+
+=======
+>>>>>>> c405d8f4966520aeac2ffbc5830cf5e2ca3009c3
 .table.b-table th {
   color: #70859c;
   font-weight: 400;
@@ -15215,6 +15261,12 @@ table td.col-sm {
 
 table td.fj-table-col {
   vertical-align: middle;
+}
+
+.dark.form-control {
+  background-color: transparent;
+  border-color: #70859c;
+  color: white;
 }
 
 div#fjord-app {
