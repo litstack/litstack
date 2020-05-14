@@ -274,6 +274,9 @@ export default {
         &_drag {
             left: 0;
             top: $input-padding-y-sm / 2;
+            &:hover {
+                cursor: grab;
+            }
         }
         &_edit {
             right: 0;
