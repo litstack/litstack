@@ -8,6 +8,32 @@ use Fjord\Crud\Requests\CrudUpdateRequest;
 trait CrudUpdate
 {
     /**
+     * Update model
+     *
+     * @param mixed $model
+     * @param Request $request
+     * @param Collection $fields
+     * @return void
+     */
+    public function updateModel($model, $request, $fields)
+    {
+        $attributes = $this->filterRequestAttributes($request, $fields);
+
+        foreach ($fields as $field) {
+            if ($field->fill) {
+                continue;
+            }
+            if (!array_key_exists($field->local_key, $attributes)) {
+                continue;
+            }
+            $model->{$field->local_key}  = $attributes[$field->local_key];
+            unset($attributes[$field->local_key]);
+        }
+
+        $model->update($attributes);
+    }
+
+    /**
      * Filter request attributes.
      *
      * @param CrudUpdateRequest|CrudCreateRequest $request

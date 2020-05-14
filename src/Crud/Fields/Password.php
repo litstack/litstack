@@ -11,6 +11,14 @@ class Password extends Field
     use FieldHasRules;
 
     /**
+     * Fill to attribute.
+     *
+     * @var boolean
+     */
+    public $fill = false;
+
+
+    /**
      * Field Vue component.
      *
      * @var string

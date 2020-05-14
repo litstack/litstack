@@ -94,6 +94,13 @@ class Field extends VueProp
     protected $save = true;
 
     /**
+     * Fill to attribute.
+     *
+     * @var boolean
+     */
+    public $fill = true;
+
+    /**
      * Create new Field instance.
      *
      * @param string $id

@@ -7,6 +7,14 @@ use Fjord\Crud\Requests\CrudUpdateRequest;
 
 trait CrudHasModal
 {
+    /**
+     * Update modal field.
+     *
+     * @param CrudUpdateRequest $request
+     * @param int $id
+     * @param string $modal_id
+     * @return CrudJs
+     */
     public function updateModal(CrudUpdateRequest $request, $id, $modal_id)
     {
         $model = $this->query()->findOrFail($id);
