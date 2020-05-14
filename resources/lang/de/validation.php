@@ -116,4 +116,6 @@ return [
     'uploaded'    => ':attribute konnte nicht hochgeladen werden.',
     'url'         => ':attribute muss eine URL sein.',
     'uuid'        => ':attribute muss ein UUID sein.',
+
+    'incorrect_password' => 'Das aktuelle Passwort ist falsch.',
 ];

@@ -73,6 +73,7 @@ class Field extends VueProp
         'readonly',
         'cols',
         'info',
+        'class'
     ];
 
     /**
@@ -83,7 +84,8 @@ class Field extends VueProp
     protected $defaults = [
         'readonly' => false,
         'cols' => 12,
-        'slots' => []
+        'slots' => [],
+        'class' => ''
     ];
 
     /**
@@ -92,6 +94,13 @@ class Field extends VueProp
      * @var boolean
      */
     protected $save = true;
+
+    /**
+     * Fill to attribute.
+     *
+     * @var boolean
+     */
+    public $fill = true;
 
     /**
      * Create new Field instance.

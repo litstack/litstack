@@ -41,6 +41,7 @@ class Modal extends Field
         'name',
         'form',
         'size',
+        'variant',
         'confirmWithPassword'
     ];
 
@@ -51,6 +52,7 @@ class Modal extends Field
      */
     protected $defaults = [
         'size' => 'md',
+        'variant' => 'secondary',
         'confirmWithPassword' => false
     ];
 

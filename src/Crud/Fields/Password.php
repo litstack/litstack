@@ -11,6 +11,14 @@ class Password extends Field
     use FieldHasRules;
 
     /**
+     * Fill to attribute.
+     *
+     * @var boolean
+     */
+    public $fill = false;
+
+
+    /**
      * Field Vue component.
      *
      * @var string
@@ -76,6 +84,19 @@ class Password extends Field
     }
 
     /**
+     * Dont store in database.
+     *
+     * @param boolean $dont
+     * @return void
+     */
+    public function dontStore($dont = true)
+    {
+        $this->save = !$dont;
+
+        return $this;
+    }
+
+    /**
      * Confirm only.
      *
      * @param Type $var
@@ -92,7 +113,7 @@ class Password extends Field
         $this->hint('Confirm with current password.');
         $this->rules('required', function ($attribute, $value, $fail) {
             if (!Hash::check($value, fjord_user()->password)) {
-                return $fail(__('The current password is incorrect.'));
+                return $fail(__f('validation.incorrect_password'));
             }
         });
 

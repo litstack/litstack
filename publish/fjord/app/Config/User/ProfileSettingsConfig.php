@@ -70,7 +70,29 @@ class ProfileSettingsConfig
 
         $form->info(ucwords(__f('base.security')))->cols(4);
 
-        $form->component('fj-profile-security')
-            ->prop('cols', 8);
+        $form->card(function ($form) {
+            $form->modal('change_password')
+                ->title('Password')
+                ->variant('primary')
+                ->name(fa('user-shield') . ' Change Password')
+                ->form(function ($modal) {
+                    $modal->password('old_password')
+                        ->title('Old Password')
+                        ->confirm();
+
+                    $modal->password('password')
+                        ->title('New Password')
+                        ->rules('required', 'min:5')
+                        ->minScore(0);
+
+                    $modal->password('password_confirmation')
+                        ->rules('required', 'same:password')
+                        ->dontStore()
+                        ->title('New Password')
+                        ->noScore();
+                })->class('d-flex justify-content-end');
+
+            $form->component('fj-profile-security');
+        })->cols(8);
     }
 }

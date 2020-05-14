@@ -1,5 +1,5 @@
 <template>
-    <b-col :cols="cols">
+    <b-col cols="12" class="profile-security">
         <fj-index-table
             :items="sessions"
             :cols="tableCols"
@@ -7,11 +7,9 @@
             name-singular="device"
             name-plural="devices"
             no-select
+            no-card
         >
             <template slot="header">
-                <b-row>
-                    <fj-profile-security-change-password />
-                </b-row>
                 <h5>{{ __('profile.logged_in_devices').capitalizeAll() }}</h5>
             </template>
         </fj-index-table>
@@ -22,10 +20,6 @@
 export default {
     name: 'ProfileSecurity',
     props: {
-        cols: {
-            type: Number,
-            required: true
-        },
         model: {
             type: Object,
             required: true
@@ -73,3 +67,10 @@ export default {
     }
 };
 </script>
+<style lang="scss">
+@import '@fj-sass/_variables';
+.profile-security .fj-index-table {
+    margin-left: -$card-spacer-x;
+    margin-right: -$card-spacer-x;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-    <b-col :cols="fieldCols">
+    <b-col :cols="fieldCols" :class="field.class">
         <div :class="`pb-4 fjord-form fj-form-item-${field.id}`">
             <h6 class="fj-form-item-title mb-0 d-flex justify-content-between">
                 <fj-slot

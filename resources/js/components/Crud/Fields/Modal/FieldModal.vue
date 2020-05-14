@@ -1,8 +1,10 @@
 <template>
     <fj-form-item :field="field" :model="model">
-        <b-button :variant="variant" v-b-modal="modalId">
-            {{ field.name }}
-        </b-button>
+        <b-button
+            :variant="field.variant"
+            v-b-modal="modalId"
+            v-html="field.name"
+        />
         <b-form-invalid-feedback
             v-for="(message, key) in messages"
             :key="key"
@@ -72,12 +74,6 @@ export default {
                 /\//g,
                 '-'
             )}`;
-        },
-        variant() {
-            if (this.state !== false) {
-                return 'outline-secondary';
-            }
-            return 'outline-danger';
         }
     },
     methods: {

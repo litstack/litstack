@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 use Fjord\Support\IndexTable;
 use Fjord\User\Models\FjordUser;
 use Fjord\Support\Facades\Config;
+use Fjord\Crud\Controllers\Api\CrudUpdate;
 use Fjord\User\Requests\FjordUserReadRequest;
 use Fjord\User\Requests\FjordUserDeleteRequest;
 
 class ProfileController
 {
+    use CrudUpdate;
+
     /**
      * Show profile update.
      *
@@ -39,6 +42,37 @@ class ProfileController
         $user = fjord_user() ?? abort(404);
 
         $user->update($request->all());
+    }
+
+    /**
+     * Update modal field.
+     *
+     * @param Request $request
+     * @param int $id
+     * @param string $modal_id
+     * @return CrudJs
+     */
+    public function updateModal(Request $request)
+    {
+        $modal = Config::get('user.profile_settings')
+            ->form
+            ->findField('change_password') ?? abort(404);
+
+        $request->validate(
+            $modal->form->getRules($request),
+            __f('validation'),
+            $modal->getRegisteredFields()->mapWithKeys(function ($field) {
+                return [$field->local_key => $field->title];
+            })->toArray()
+        );
+
+        $this->updateModel(
+            fjord_user(),
+            $request,
+            $modal->getRegisteredFields()
+        );
+
+        return crud(fjord_user());
     }
 
     /**
