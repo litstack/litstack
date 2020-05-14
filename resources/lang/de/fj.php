@@ -31,6 +31,7 @@ return [
     "select_item" => ":item auswählen",
     "select_language" => "Sprache auswählen",
     "save_changes" => "Änderungen speichern",
+    "undo_changes" => "Änderungen verwerfen",
     "delete" => "löschen",
     "cancel" => "abbrechen",
     "navigation" => "Navigation",

@@ -30,6 +30,12 @@ Vue.component('fa-icon', FontAwesomeIcon);
 // Modules
 Vue.use(Vuex);
 Vue.use(BootstrapVue, {
+    BTooltip: {
+        delay: {
+            show: 800,
+            hide: 100
+        }
+    },
     BToast: {
         toaster: 'b-toaster-bottom-right'
     }

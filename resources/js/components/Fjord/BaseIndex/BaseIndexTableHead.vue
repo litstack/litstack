@@ -1,5 +1,5 @@
 <template>
-    <thead>
+    <thead class="fj-index-table-head">
         <tr>
             <th v-if="sortable"></th>
             <th v-if="!noSelect"><slot name="checkbox" /></th>
@@ -95,8 +95,16 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 .pointer {
     cursor: pointer;
+}
+.fj-index-table-head {
+    th {
+        padding-bottom: 0.75rem;
+    }
+    span {
+        font-weight: 600;
+    }
 }
 </style>

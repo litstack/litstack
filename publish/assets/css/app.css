@@ -204,7 +204,7 @@ div#fjord-app .fj-nav-loader .fj-ph-title {
   --cyan: #83c2ff;
   --white: #fff;
   --gray: #676569;
-  --gray-dark: #343a40;
+  --gray-dark: #2a353f;
   --primary: #4951f2;
   --secondary: #70859c;
   --success: #9ff2ae;
@@ -2034,7 +2034,7 @@ pre code {
 }
 
 .table-striped tbody tr:nth-of-type(even) {
-  background-color: #f5f8fb;
+  background-color: #F4F6F8;
 }
 
 .table-hover tbody tr:hover {
@@ -2257,8 +2257,8 @@ pre code {
 
 .table .thead-dark th {
   color: #fff;
-  background-color: #343a40;
-  border-color: #454d55;
+  background-color: #2a353f;
+  border-color: #394856;
 }
 
 .table .thead-light th {
@@ -2269,13 +2269,13 @@ pre code {
 
 .table-dark {
   color: #fff;
-  background-color: #343a40;
+  background-color: #2a353f;
 }
 
 .table-dark th,
 .table-dark td,
 .table-dark thead th {
-  border-color: #454d55;
+  border-color: #394856;
 }
 
 .table-dark.table-bordered {
@@ -2615,7 +2615,7 @@ textarea.form-control.is-valid {
 .custom-select.is-valid {
   border-color: #9ff2ae;
   padding-right: calc(0.75em + 2.21875rem);
-  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='%239ff2ae' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e") #fff no-repeat center right 1.75rem/calc(1em + 0.3125rem) calc(1em + 0.3125rem);
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%232a353f' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='%239ff2ae' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e") #fff no-repeat center right 1.75rem/calc(1em + 0.3125rem) calc(1em + 0.3125rem);
 }
 
 .was-validated .custom-select:valid:focus,
@@ -2729,7 +2729,7 @@ textarea.form-control.is-invalid {
 .custom-select.is-invalid {
   border-color: #f67693;
   padding-right: calc(0.75em + 2.21875rem);
-  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23f67693' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23f67693' stroke='none'/%3e%3c/svg%3e") #fff no-repeat center right 1.75rem/calc(1em + 0.3125rem) calc(1em + 0.3125rem);
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%232a353f' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23f67693' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23f67693' stroke='none'/%3e%3c/svg%3e") #fff no-repeat center right 1.75rem/calc(1em + 0.3125rem) calc(1em + 0.3125rem);
 }
 
 .was-validated .custom-select:invalid:focus,
@@ -3901,7 +3901,7 @@ input[type=button].btn-block {
 .dropdown-item:focus {
   color: #171519;
   text-decoration: none;
-  background-color: #f8f9fa;
+  background-color: #F4F6F8;
 }
 
 .dropdown-item.active,
@@ -4410,7 +4410,7 @@ input[type=button].btn-block {
   line-height: 2;
   color: #4f4e52;
   vertical-align: middle;
-  background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px;
+  background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%232a353f' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px;
   border: 1px solid #70859c;
   border-radius: 0.625rem;
   -webkit-appearance: none;
@@ -6049,7 +6049,7 @@ a.badge-gray.focus {
   z-index: 1;
   color: #4f4e52;
   text-decoration: none;
-  background-color: #f8f9fa;
+  background-color: #F4F6F8;
 }
 
 .list-group-item-action:active {
@@ -13194,11 +13194,11 @@ input[type=color].form-control:disabled {
   .table.b-table.table-dark > tbody > tr > .bg-b-table-default,
   .table.b-table.table-dark > tfoot > tr > .bg-b-table-default {
     color: #fff;
-    background-color: #343a40;
+    background-color: #2a353f;
   }
 
   .table.b-table.table-striped > tbody > tr:nth-of-type(even) > .table-b-table-default {
-    background-image: linear-gradient(#f5f8fb, #f5f8fb);
+    background-image: linear-gradient(#F4F6F8, #F4F6F8);
     background-repeat: no-repeat;
   }
 
@@ -14947,6 +14947,10 @@ input[type=color].form-control:disabled {
   max-height: 3.125rem;
 }
 
+.btn.disabled {
+  cursor: not-allowed;
+}
+
 .card {
   box-shadow: 0 0 19px 0 rgba(235, 235, 235, 0.5);
 }
@@ -14997,6 +15001,15 @@ input[type=color].form-control:disabled {
 
 .list-group .collapse .list-group-item:not(.active) {
   background-color: #f5f8fb;
+}
+
+.input-group-text {
+  background-color: #70859c;
+  color: white;
+}
+
+.progress {
+  background-color: #e5eaef;
 }
 
 .table.b-table th {
@@ -15086,6 +15099,10 @@ input[type=color].form-control:disabled {
 .b-toast-info .toast-body::before {
   content: "\F05A";
   color: #4951f2;
+}
+
+.tooltip-inner {
+  padding: 0.5rem 1.5rem;
 }
 
 .fj-block {
@@ -15319,7 +15336,7 @@ div#fjord-app nav.fj-topbar #fj-topbar-right .show .btn {
 }
 
 div#fjord-app nav.fj-topbar .dropdown-menu {
-  background-color: #4f4e52;
+  background-color: #2a353f;
   min-width: 300px;
   font-size: 0.875rem;
 }
