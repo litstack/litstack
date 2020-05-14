@@ -73,6 +73,7 @@ class Field extends VueProp
         'readonly',
         'cols',
         'info',
+        'class'
     ];
 
     /**
@@ -83,7 +84,8 @@ class Field extends VueProp
     protected $defaults = [
         'readonly' => false,
         'cols' => 12,
-        'slots' => []
+        'slots' => [],
+        'class' => ''
     ];
 
     /**

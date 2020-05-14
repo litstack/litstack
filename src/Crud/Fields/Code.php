@@ -3,9 +3,12 @@
 namespace Fjord\Crud\Fields;
 
 use Fjord\Crud\Field;
+use Fjord\Crud\Fields\Concerns\FieldHasRules;
 
 class Code extends Field
 {
+    use FieldHasRules;
+
     /**
      * Field Vue component.
      *
@@ -42,7 +45,10 @@ class Code extends Field
         'lineNumbers',
         'line',
         'language',
-        'options'
+        'options',
+        'rules',
+        'updateRules',
+        'creationRules',
     ];
 
     /**
