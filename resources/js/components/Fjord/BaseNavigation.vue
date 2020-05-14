@@ -153,7 +153,7 @@ export default {
                 ) {
                     e.preventDefault();
                     if (self.canSave) {
-                        self.saveAll();
+                        Fjord.bus.$emit('save');
                     }
                 }
             },
