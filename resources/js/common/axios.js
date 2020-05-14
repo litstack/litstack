@@ -18,6 +18,10 @@ const methods = {
             variant = response.data.variant;
         }
 
+        message = this.$te(`messages.${message}`)
+            ? this.$t(`messages.${message}`)
+            : message;
+
         this.$bvToast.toast(message, { variant });
 
         return response;
@@ -41,6 +45,10 @@ const methods = {
         if ([405, 404].includes(error.response.status)) {
             message = this.$t('fj.errors.not_found');
         }
+
+        message = this.$te(`messages.${message}`)
+            ? this.$t(`messages.${message}`)
+            : message;
 
         this.$bvToast.toast(message, { variant: 'danger' });
 

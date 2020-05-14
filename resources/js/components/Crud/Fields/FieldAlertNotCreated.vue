@@ -5,7 +5,7 @@
         v-html="
             $t('fj.not_created', {
                 relation: field.title,
-                model: ''
+                model: 'name'
             })
         "
     />

@@ -24,7 +24,7 @@ trait ManagesMorphToMany
         $query = [
             $morphToMany->getRelatedPivotKeyName() => $relation->{$morphToMany->getRelatedKeyName()},
             $morphToMany->getForeignPivotKeyName() => $model->{$morphToMany->getParentKeyName()},
-            $morphToMany->getMorphType() => get_class($model)
+            $morphToMany->getMorphType() => $morphToMany->getMorphClass()
         ];
 
         // Sortable
@@ -51,7 +51,7 @@ trait ManagesMorphToMany
         return DB::table($morphToMany->getTable())->where([
             $morphToMany->getRelatedPivotKeyName() => $relation->{$morphToMany->getRelatedKeyName()},
             $morphToMany->getForeignPivotKeyName() => $model->{$morphToMany->getParentKeyName()},
-            $morphToMany->getMorphType() => get_class($model)
+            $morphToMany->getMorphType() => $morphToMany->getMorphClass()
         ])->delete();
     }
 }

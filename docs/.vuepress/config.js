@@ -16,7 +16,7 @@ let head = [
         }
     ],
     ['link', { rel: 'icon', href: `/vue-logo.png` }],
-    ['meta', { name: 'theme-color', content: '#1584ff' }],
+    ['meta', { name: 'theme-color', content: '#4951f2' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }]
 ];
 
@@ -79,6 +79,7 @@ module.exports = {
                     collapsable: true,
                     children: [
                         ['guide/fields/introduction', 'Introduction'],
+                        ['guide/fields/validation', 'Validation'],
                         ['guide/fields/input', 'Input'],
                         ['guide/fields/textarea', 'Textarea'],
                         ['guide/fields/wysiwyg', 'WYSIWYG'],

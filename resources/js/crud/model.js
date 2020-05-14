@@ -32,11 +32,11 @@ export default class CrudModel {
         }
 
         if (!('translation' in attributes)) {
-            return attributes[key] || null;
+            return attributes[key] || undefined;
         }
 
         if (!(lng in attributes)) {
-            return attributes[key] || null;
+            return attributes[key] || undefined;
         }
 
         if (key in attributes[lng]) {
