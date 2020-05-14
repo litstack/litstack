@@ -86,7 +86,11 @@ abstract class FormController
         $formField = $this->query()->findOrFail($id);
 
         $request->validate(
-            $this->config->form->getRules($request)
+            $this->config->form->getRules($request),
+            __f('validation'),
+            $this->fields()->mapWithKeys(function ($field) {
+                return [$field->local_key => $field->title];
+            })->toArray()
         );
 
         $formField->update(

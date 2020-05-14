@@ -2,8 +2,9 @@
 
 namespace Fjord\Application\Translation;
 
-use Illuminate\Support\ServiceProvider;
 use Fjord\Support\Facades\FjordLang;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\ServiceProvider;
 
 class TranslationServiceProvider extends ServiceProvider
 {

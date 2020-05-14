@@ -5,6 +5,7 @@ namespace Fjord\Crud\Controllers;
 use Fjord\Crud\MediaField;
 use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Support\Facades\FjordLang;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Fjord\Crud\Requests\CrudCreateRequest;
@@ -254,7 +255,11 @@ abstract class CrudController
         $model = $this->query()->findOrFail($id);
 
         $request->validate(
-            $this->config->form->getRules($request)
+            $this->config->form->getRules($request),
+            __f('validation'),
+            $this->fields()->mapWithKeys(function ($field) {
+                return [$field->local_key => $field->title];
+            })->toArray()
         );
 
         $model->update(
@@ -277,7 +282,11 @@ abstract class CrudController
     public function store(CrudCreateRequest $request)
     {
         $request->validate(
-            $this->config->form->getRules($request)
+            $this->config->form->getRules($request),
+            __f('validation'),
+            $this->fields()->mapWithKeys(function ($field) {
+                return [$field->local_key => $field->title];
+            })->toArray()
         );
 
         $attributes = $this->filterRequestAttributes($request, $this->fields());

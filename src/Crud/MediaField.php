@@ -16,6 +16,7 @@ class MediaField extends ManyRelationField
      */
     protected function getRelation($model)
     {
+        dd($model);
         if (!$model instanceof FormField && !$model instanceof FormBlock) {
             return parent::getRelation($model);
         }

@@ -89,7 +89,7 @@ class Translator
             $namespace = $this->getNamespaceFromPath($path);
             $langKey = "{$namespace}::{$key}";
 
-            if (!Lang::has($langKey)) {
+            if (!Lang::has($langKey, $this->getLocale(), $fallback = false)) {
                 continue;
             }
 

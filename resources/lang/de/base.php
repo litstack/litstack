@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'hallo' => 'HALLOOO',
     'item_delete' => ':item löschen',
     'item_create' => ':item erstellen',
     'item_remove' => ':item entfernen',
@@ -14,7 +15,7 @@ return [
     'general' => 'allgemein',
     'security' => 'Sicherheit',
     'device' => 'Gerät',
-    'close' => 'schließen',
+    'close' => 'schließen!',
     "cancel" => "abbrechen",
     'delete' => 'löschen',
     'image' => 'Bild',

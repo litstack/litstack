@@ -13,7 +13,11 @@ trait CrudHasModal
         $modal = $this->config->form->findField($modal_id);
 
         $request->validate(
-            $modal->form->getRules($request)
+            $modal->form->getRules($request),
+            __f('validation'),
+            $modal->getRegisteredFields()->mapWithKeys(function ($field) {
+                return [$field->local_key => $field->title];
+            })->toArray()
         );
 
         $model->update(
