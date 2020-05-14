@@ -15008,6 +15008,40 @@ input[type=color].form-control:disabled {
   color: white;
 }
 
+.modal-full {
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0;
+  height: 100vh;
+}
+
+.modal-full .modal-content {
+  border: none;
+  border-radius: 0;
+  height: 100vh;
+  background-color: #212227;
+  flex-wrap: wrap;
+}
+
+.modal-full .modal-content *:not(input) {
+  color: white;
+}
+
+.modal-full .modal-content .modal-header,
+.modal-full .modal-content .modal-footer {
+  height: 6rem;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-color: #f5f8fb;
+}
+
+.modal-full .modal-content .modal-body {
+  height: calc(100vh - 12rem);
+  position: relative;
+}
+
 .progress {
   background-color: #e5eaef;
 }
@@ -15232,6 +15266,12 @@ table td.col-sm {
 
 table td.fj-table-col {
   vertical-align: middle;
+}
+
+.dark.form-control {
+  background-color: transparent;
+  border-color: #70859c;
+  color: white;
 }
 
 div#fjord-app {

@@ -1,14 +1,14 @@
 <template>
     <b-modal
         :id="`fj-image-${field.id}-${image.id}`"
-        size="xl"
+        size="full"
         class="fj-image-modal"
         :title="`${image.name}`"
         :static="true"
     >
-        <div class="row">
-            <div class="col-7">
-                <img :src="imgPath(image)" class="img-fluid" />
+        <div class="row" style="height: 100%">
+            <div class="col-7" style="height: 100%">
+                <img :src="imgPath(image)" class="fj-image-preview" />
             </div>
             <div class="col-5">
                 <div class="mb-2">
@@ -21,8 +21,8 @@
 
                     <b-input
                         v-bind:readonly="field.readonly"
-                        :size="'sm'"
                         :value="getCustomProperty(image, 'title')"
+                        class="dark"
                         @input="changed($event, 'title', image)"
                     />
                 </div>
@@ -33,8 +33,8 @@
                     </b-badge>
                     <b-input
                         v-bind:readonly="field.readonly"
-                        :size="'sm'"
                         :value="getCustomProperty(image, 'alt')"
+                        class="dark"
                         @input="changed($event, 'alt', image)"
                     />
                 </div>
@@ -42,33 +42,24 @@
         </div>
         <div slot="modal-footer" class="w-100 d-flex justify-content-between">
             <div>
-                <button
+                <b-button
                     @click.prevent="destroy(image.id, index)"
-                    class="btn btn-danger btn-sm"
+                    variant="danger"
                     v-if="!field.readonly"
                 >
                     <i class="far fa-trash-alt"></i>
-                    delete
-                </button>
+                    {{ $t('fj.delete') }}
+                </b-button>
             </div>
             <div>
                 <b-button
                     class="fj-save-button"
                     variant="primary"
-                    size="sm"
                     :disabled="!canSave"
                     @click="Fjord.bus.$emit('save')"
                 >
                     {{ $t('fj.save') }}
                 </b-button>
-                <button
-                    @click.prevent="
-                        $bvModal.hide(`fj-image-${field.id}-${image.id}`)
-                    "
-                    class="btn btn-secondary btn-sm"
-                >
-                    close
-                </button>
             </div>
         </div>
     </b-modal>
@@ -152,3 +143,11 @@ export default {
     }
 };
 </script>
+
+<style lang="scss" scoped>
+.fj-image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+</style>
