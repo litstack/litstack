@@ -6,16 +6,15 @@
 // Color system
 
 //$white:    #fff !default;
-//$gray-100: #f8f9fa !default;
+$gray-100: #F4F6F8 !default;
 $gray-200: #f5f8fb !default;
 $gray-300: #e5eaef !default;
 $gray-400: #ccd7e1 !default;
 $gray-500: #6c8199 !default;
-//$gray-600: #6c757d !default;
 $gray-600: #676569 !default;
 $gray-700: #4f4e52 !default;
-//$gray-800: #343a40 !default;
-$gray-900: #232127 !default;
+$gray-800: #2a353f !default;
+$gray-900: #212227 !default;
 $black: #000 !default;
 
 //$blue:    #007bff !default;
@@ -257,7 +256,7 @@ $table-cell-padding-sm: 1.25rem * 0.625 !default;
 //$table-color:                 $body-color !default;
 //$table-bg:                    null !default;
 $table-thead-color: $secondary;
-$table-accent-bg: $body-bg !default;
+$table-accent-bg: $gray-100 !default;
 //$table-hover-color:           $table-color !default;
 $table-hover-bg: #c8d6fb !default;
 $table-active-bg: #acc2fe !default;

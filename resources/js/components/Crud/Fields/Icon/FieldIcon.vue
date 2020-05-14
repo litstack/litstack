@@ -99,6 +99,9 @@ export default {
 
 .fj-icon-picker {
     position: relative;
+    i {
+        color: $secondary;
+    }
     .fj-icon-search {
         margin-bottom: $field-icon-spacer;
         position: fixed;
@@ -154,6 +157,12 @@ export default {
             display: flex;
             justify-content: center;
             align-items: center;
+            color: $secondary;
+            &.btn-primary {
+                i {
+                    color: white;
+                }
+            }
         }
     }
 }

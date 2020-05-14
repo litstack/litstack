@@ -20,11 +20,16 @@
                 </div>
             </div>
 
-            <div class="d-flex fj-save-animate" :style="wrapperStyle">
+            <div
+                class="d-flex fj-save-animate"
+                :style="wrapperStyle"
+                :class="{ loaded: loaded }"
+            >
                 <b-dropdown
                     variant="outline-secondary"
                     size="md"
                     class="dropdown-md-square"
+                    :class="{ disabled: _.isEmpty(controls) }"
                     v-bind:disabled="_.isEmpty(controls)"
                     no-caret
                 >
@@ -41,11 +46,14 @@
                 <slot name="right" />
                 <div
                     class="fj-save-button fj-save-animate"
+                    :class="{ loaded: loaded }"
                     :style="buttonStyle"
                 >
                     <b-button
                         variant="outline-secondary"
-                        class="btn-square"
+                        class="btn-square mr-3"
+                        v-b-tooltip
+                        :title="$t('fj.undo_changes')"
                         @click="Fjord.bus.$emit('cancelSave')"
                     >
                         <fa-icon icon="undo" />
@@ -85,7 +93,8 @@ export default {
     data() {
         return {
             b: {},
-            offset: 0
+            offset: 0,
+            loaded: false
         };
     },
     methods: {
@@ -161,6 +170,10 @@ export default {
 
             this.b = button;
             this.offset = Math.ceil(offset);
+
+            setTimeout(() => {
+                this.loaded = true;
+            }, 10);
         });
     },
     computed: {
@@ -201,6 +214,7 @@ export default {
 
     &__go_back {
         color: $secondary;
+        transform: translateY(2px);
         &:hover {
             color: $gray-700;
             text-decoration: none;
@@ -209,10 +223,15 @@ export default {
 
     .fj-save-button {
         transform: translateX(50vw);
+        display: flex;
         //box-shadow: 0px 13px 12px -7px rgba(102, 123, 144, 0.5);
     }
     .fj-save-animate {
-        transition: 0.25s all cubic-bezier(0.91, -0.13, 0.68, 0.79);
+        opacity: 0;
+        &.loaded {
+            opacity: 1;
+            transition: 0.25s transform cubic-bezier(0.91, -0.13, 0.68, 0.79);
+        }
     }
 
     .fj-page-navigation__container {

@@ -1,9 +1,7 @@
 .btn-transparent {
-    @include button-variant(
+    @include button-variant(transparent,
         transparent,
-        transparent,
-        rgba(map-get($theme-colors, 'light'), 0.5)
-    );
+        rgba(map-get($theme-colors, 'light'), 0.5));
     color: $text-muted;
 
     &:active {
@@ -21,11 +19,9 @@
 
 .btn-input {
     border: $input-border-width solid $input-border-color;
-    @include button-variant(
-        $input-bg,
+    @include button-variant($input-bg,
         $input-border-color,
-        rgba(map-get($theme-colors, 'light'), 0.5)
-    );
+        rgba(map-get($theme-colors, 'light'), 0.5));
 }
 
 .btn {
@@ -41,16 +37,20 @@
         &.btn-sm {
             width: $button-sm-height !important;
         }
+
         &.btn {
             width: $button-md-height;
         }
+
         &.btn-md {
             width: $button-md-height !important;
         }
+
         &.btn-lg {
             width: $button-lg-height !important;
         }
     }
+
     &.btn-sm {
         height: $button-sm-height;
         max-height: $button-sm-height;
@@ -64,5 +64,9 @@
     &.btn-lg {
         height: $button-lg-height;
         max-height: $button-lg-height;
+    }
+
+    &.disabled {
+        cursor: not-allowed;
     }
 }

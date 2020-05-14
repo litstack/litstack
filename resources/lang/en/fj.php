@@ -31,6 +31,7 @@ return [
     "select_item" => "Select :item",
     "select_language" => "Select language",
     "save_changes" => "Save changes",
+    "undo_changes" => "Undo changes",
     "delete" => "delete",
     "cancel" => "cancel",
     "navigation" => "Navigation",

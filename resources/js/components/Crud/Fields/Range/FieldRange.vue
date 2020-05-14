@@ -65,7 +65,7 @@ export default {
         },
         setWidth(value) {
             this.$refs.input.$el.style.background =
-                'linear-gradient(to right, #4951f2 0%, #4951f2 ' +
+                'linear-gradient(to right, #70859c 0%, #70859c ' +
                 this.percentage(value) +
                 '%, #fff ' +
                 this.percentage(value) +
@@ -94,8 +94,8 @@ export default {
 
         background: linear-gradient(
             to right,
-            $primary 0%,
-            $primary 50%,
+            $secondary 0%,
+            $secondary 50%,
             #fff 50%,
             #fff 100%
         );
@@ -108,7 +108,7 @@ export default {
             height: 13px;
             width: 13px;
             border-radius: 13px;
-            background: $primary;
+            background: $secondary;
             cursor: pointer;
             margin-top: -6px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
             box-shadow: $button-primary-shadow;

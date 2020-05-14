@@ -2,7 +2,7 @@
     <fj-form-item :field="field" :model="model">
         <template slot="title-right">
             <a href="#" @click="toggleExpand">
-                <fa-icon :icon="expandedAll ? 'compress-alt' : 'expand-alt'" />
+                <fa-icon :icon="expandedAll ? 'angle-up' : 'angle-down'" />
                 {{
                     __(
                         `crud.fields.blocks.${

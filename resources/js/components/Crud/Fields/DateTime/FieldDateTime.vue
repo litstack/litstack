@@ -74,8 +74,8 @@ export default {
     input {
         display: inline-block !important;
         width: 100% !important;
-        height: calc(1.6em + 0.75rem + 2px) !important;
-        min-height: calc(1.6em + 0.75rem + 2px) !important;
+        height: 2.5rem !important;
+        min-height: 2.5rem !important;
         padding: $input-padding-y $input-padding-x !important;
         font-size: $input-font-size !important;
         font-weight: 400 !important;

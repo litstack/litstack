@@ -66,6 +66,8 @@ export default {
         font-size: $font-size-lg;
         color: $gray-500;
         background: $gray-300;
+        width: 2.5rem;
+        height: 2.5rem;
     }
 }
 </style>

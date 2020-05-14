@@ -4,11 +4,16 @@
 
 div#fjord-app .fj-navigation {
     grid-area: s;
-    border-right: $border-width solid $border-color;
-    padding-top: $nav-padding-top;
+    border-right: $border-width solid $gray-400;
+    //padding-top: $nav-padding-top;
     background: $nav-bg;
     overflow-y: auto;
     height: calc(100vh - #{$topbar-height});
+
+    &>div>.list-group {
+        border-bottom: 1px solid $gray-400;
+        padding-top: $nav-padding-top;
+    }
 
     .list-group-item {
         border-bottom-width: 0;

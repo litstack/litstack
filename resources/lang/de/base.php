@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'hallo' => 'HALLOOO',
     'item_delete' => ':item löschen',
     'item_create' => ':item erstellen',
     'item_remove' => ':item entfernen',
