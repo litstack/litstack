@@ -4,6 +4,8 @@
             :items="sessions"
             :cols="tableCols"
             :loadItems="loadSessions"
+            name-singular="device"
+            name-plural="devices"
             no-select
         >
             <template slot="header">

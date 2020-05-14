@@ -24,7 +24,7 @@ trait ManagesMorphToMany
         $query = [
             $morphToMany->getRelatedPivotKeyName() => $relation->{$morphToMany->getRelatedKeyName()},
             $morphToMany->getForeignPivotKeyName() => $model->{$morphToMany->getParentKeyName()},
-            $morphToMany->getMorphType() => get_class($model)
+            $morphToMany->getMorphType() => get_class($relation)
         ];
 
         // Sortable
