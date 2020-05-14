@@ -1,18 +1,30 @@
 <template>
-    <b-modal id="fj-page-preview" hide-footer>
+    <b-modal id="fj-page-preview" size="full" hide-footer>
         <template slot="modal-header" slot-scope="{ close }">
             <!-- Emulate built in modal header close button action -->
 
             <div></div>
 
             <div class="device-btns">
-                <b-button class="mr-2 btn-square" @click="setDevice('mobile')">
+                <b-button
+                    class="mr-2 btn-square"
+                    variant="outline-secondary"
+                    @click="setDevice('mobile')"
+                >
                     <fa-icon fas icon="mobile-alt" />
                 </b-button>
-                <b-button class="mr-2 btn-square" @click="setDevice('tablet')">
+                <b-button
+                    class="mr-2 btn-square"
+                    variant="outline-secondary"
+                    @click="setDevice('tablet')"
+                >
                     <fa-icon fas icon="tablet-alt" />
                 </b-button>
-                <b-button @click="setDevice('desktop')" class="btn-square">
+                <b-button
+                    @click="setDevice('desktop')"
+                    variant="outline-secondary"
+                    class="btn-square"
+                >
                     <fa-icon fas icon="desktop" />
                 </b-button>
             </div>
@@ -86,145 +98,96 @@ export default {
 <style lang="scss">
 @import '@fj-sass/_variables';
 #fj-page-preview {
-    position: relative;
-
-    .modal-dialog {
-        margin: 0;
-        max-width: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-
-        .modal-header {
+    .device {
+        margin: 0 auto;
+        .controls {
             position: relative;
-            .device-btns {
-                .btn {
-                }
-            }
-            .close {
-                position: absolute;
-                bottom: 0;
-                top: 0;
-                right: 0;
-                margin: 0;
-                padding: 0 -1rem 0 -1rem;
-            }
-        }
+            background: #37383d;
+            display: flex;
+            padding: 1.5rem;
 
-        .modal-content {
-            border-radius: 0;
-            border: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-
-            .modal-body {
-                padding: 0;
-                position: relative;
+            .nav {
+                margin: 0 80px;
+                width: 100%;
+                height: 30px;
+                background: $gray-900;
+                padding: 0 1rem;
+                color: white;
+                border-radius: $border-radius;
                 display: flex;
-                justify-content: space-around;
                 align-items: center;
             }
 
-            .device {
-                .controls {
-                    background: $gray-400;
-                    display: flex;
-                    height: 40px;
+            .btns {
+                position: absolute;
+                margin-left: 5px;
+                margin-right: 5px;
+                height: 30px;
+                width: 65px;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                div {
+                    height: 10px;
+                    width: 10px;
+                    background: #f4be41;
+                    border-radius: 100%;
 
-                    .nav {
-                        height: 30px;
-                        background: $gray-600;
-                        margin: 5px 0;
-                        padding: 0 10px;
-                        color: white;
-                        border-radius: 2px;
-                        display: flex;
-                        align-items: center;
+                    &:first-child {
+                        background: #ec664f;
                     }
-
-                    .btns {
-                        margin-left: 5px;
-                        margin-right: 5px;
-                        height: 40px;
-                        width: 65px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-around;
-                        div {
-                            height: 10px;
-                            width: 10px;
-                            background: #f4be41;
-                            border-radius: 100%;
-
-                            &:first-child {
-                                background: #ec664f;
-                            }
-                            &:last-child {
-                                background: #5dcb3d;
-                            }
-                        }
+                    &:last-child {
+                        background: #5dcb3d;
                     }
                 }
-                &.mobile {
-                    position: absolute;
-                    width: 375px;
-                    height: calc(100vh - 130px);
-                    max-height: 812px;
-                    background: $gray-400;
-                    padding: 20px 20px 40px 20px;
-                    border-radius: 5px;
+            }
+        }
+        &.mobile,
+        &.tablet,
+        &.desktop {
+            height: 100%;
+            background: $gray-800;
+            border-radius: $border-radius;
+            overflow: hidden;
+        }
+        &.mobile,
+        &.tablet {
+            border: 10px solid grey;
+        }
+        &.mobile {
+            width: 375px;
 
-                    .display {
-                        height: calc(100% - 50px);
-                    }
+            .display {
+                height: 100%;
+            }
 
-                    .controls {
-                        height: 70px;
-                        display: block;
+            .controls {
+                display: none;
+            }
+        }
+        &.tablet {
+            width: 1024px;
+            .controls {
+                display: none;
+            }
+            .display {
+                height: 100%;
+            }
+        }
+        &.desktop {
+            width: 90%;
+        }
 
-                        .btns {
-                            height: 30px;
-                        }
+        .display {
+            position: relative;
+            height: calc(100% - 20px);
+            width: 100%;
+            background: white;
 
-                        .nav {
-                            width: 100%;
-                        }
-                    }
-                }
-                &.tablet {
-                    position: absolute;
-                    width: 1024px;
-                    height: calc(100vh - 130px);
-                    max-height: 768px;
-                    background: $gray-400;
-                    padding: 20px 20px 40px 20px;
-                    border-radius: 5px;
-                }
-                &.desktop {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                }
-
-                .display {
-                    position: relative;
-                    height: calc(100% - 20px);
-                    width: 100%;
-                    background: white;
-
-                    iframe {
-                        border: none;
-                        width: 100%;
-                        height: 100%;
-                    }
-                }
+            iframe {
+                border: none;
+                width: 100%;
+                height: 100%;
             }
         }
     }
