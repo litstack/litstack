@@ -2,6 +2,22 @@
 
 A drag and drop image uploader using Spatie's [medialibary](https://docs.spatie.be/laravel-medialibrary/v7/introduction/).
 
+## Model Setup
+
+To attach images to a model, only the media **contract** and the media **trait** must be added to the model.
+
+```php
+use Fjord\Crud\Models\Traits\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMedia as HasMediaContract;
+
+class Post extends Model implements HasMediaContract
+{
+    use HasMedia;
+}
+```
+
+## Basics
+
 For all images that are uploaded an input field for `alt` and `title` is displayed, with `translatable` these two fields are made translatable.
 
 ```php
@@ -42,7 +58,25 @@ $form->image('images') // images is the corresponding media collection.
     ->hint('The first image is the preview image.')
 ```
 
-![Image firstBig](./screens/image/first_big.png 'Logo Title Text 1')
+![Image firstBig](./screens/image/first_big.png 'Image firstBig')
+
+## Conversions
+
+In the config `fjord.mediaconversions` all conversions groups are specified. If you would like a model to use another conversion group than `default`, the group name can be set using the attribute `mediaconversions`.
+
+```php
+class Post extends Model implements HasMediaContract
+{
+    ...
+
+    /**
+     * Media conversions group.
+     *
+     * @var string
+     */
+    protected $mediaconversions = 'other';
+}
+```
 
 ## Methods
 
