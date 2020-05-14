@@ -100,6 +100,8 @@ export default {
 #fj-page-preview {
     .device {
         margin: 0 auto;
+        transition: 0.25s width cubic-bezier(0.91, -0.13, 0.68, 0.79);
+
         .controls {
             position: relative;
             background: #37383d;
@@ -152,10 +154,10 @@ export default {
         }
         &.mobile,
         &.tablet {
-            border: 10px solid grey;
+            border: 16px solid #37383d;
         }
         &.mobile {
-            width: 375px;
+            width: calc(375px + 32px);
 
             .display {
                 height: 100%;
@@ -166,7 +168,7 @@ export default {
             }
         }
         &.tablet {
-            width: 1024px;
+            width: calc(1024px + 32px);
             .controls {
                 display: none;
             }
