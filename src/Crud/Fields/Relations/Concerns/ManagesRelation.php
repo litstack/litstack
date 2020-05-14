@@ -200,12 +200,12 @@ trait ManagesRelation
     /**
      * Set query initial builder.
      *
-     * @param Builder $query
+     * @param Closure $closure
      * @return void
      */
-    public function query(Builder $query)
+    public function query(Closure $closure)
     {
-        $this->query = $query;
+        $closure($this->query);
 
         return $this;
     }
