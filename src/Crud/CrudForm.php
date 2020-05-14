@@ -57,7 +57,7 @@ class CrudForm extends BaseForm
 
         $field = parent::registerField($field, $id, $params);
 
-        if ($this->inCard()) {
+        if ($this->inCard() && !$this->col) {
             $this->card
                 ->component('fj-field')
                 ->prop('field', $field);

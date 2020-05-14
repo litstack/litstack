@@ -4,6 +4,7 @@ namespace Fjord;
 
 use Fjord\Config\Traits\HasIndex;
 use Fjord\Application\Application;
+use Fjord\Vue\Components\ColComponent;
 use Fjord\Vue\Components\CardComponent;
 use Fjord\Vue\Components\InfoComponent;
 use Fjord\Crud\Config\Traits\HasCrudForm;
@@ -65,6 +66,7 @@ class FjordPackage extends Package
         'fj-crud-form' => CrudFormComponent::class,
 
         // Other
+        'fj-col' => ColComponent::class,
         'fj-card' => CardComponent::class,
         'fj-info' => InfoComponent::class,
         'fj-col-image' => ColImageComponent::class,

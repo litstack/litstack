@@ -108,6 +108,13 @@ class BaseForm extends VueProp
     protected $routePrefix;
 
     /**
+     * Current col that Fields should be registered to.
+     *
+     * @var Component
+     */
+    protected $col;
+
+    /**
      * Create new BaseForm instance.
      *
      * @param string $model
@@ -117,6 +124,25 @@ class BaseForm extends VueProp
         $this->model = $model;
 
         $this->registeredFields = collect([]);
+    }
+
+    /**
+     * Add fields in cols.
+     *
+     * @param int|string $cols
+     * @param Closure $closure
+     * @param any ...$params
+     * @return void
+     */
+    public function col($cols, Closure $closure = null)
+    {
+        $component = $this->component('fj-col')->prop('cols', $cols);
+
+        $this->col = $component->comp;
+        $closure($this);
+        $this->col = null;
+
+        return $this;
     }
 
     /**
@@ -192,6 +218,12 @@ class BaseForm extends VueProp
 
         $this->registrar = $fieldInstance;
         $this->registeredFields[] = $fieldInstance;
+
+        if ($this->col) {
+            $this->col
+                ->component('fj-field')
+                ->prop('field', $fieldInstance);
+        }
 
         return $fieldInstance;
     }
