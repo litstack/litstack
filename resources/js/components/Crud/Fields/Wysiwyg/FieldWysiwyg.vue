@@ -89,17 +89,17 @@ export default {
                     class: 'h4',
 
                     converterPriority: 'high'
-                },
-                {
-                    model: 'Custom',
-                    view: {
-                        name: 'span',
-                        classes: 'h1'
-                    },
-                    title: 'Custom',
-
-                    converterPriority: 'high'
                 }
+                // {
+                //     model: 'Custom',
+                //     view: {
+                //         name: 'span',
+                //         classes: 'h1'
+                //     },
+                //     title: 'Custom',
+
+                //     converterPriority: 'high'
+                // }
             ];
         }
     },
