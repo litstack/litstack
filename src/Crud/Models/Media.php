@@ -36,4 +36,24 @@ class Media extends MediaModel
         }
         return $urls;
     }
+
+    /**
+     * Get custom_properties as attribute.
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function getAttribute($name)
+    {
+        $attribute = parent::getAttribute($name);
+
+        if ($attribute) {
+            return $attribute;
+        }
+
+        $properties = parent::getAttribute('custom_properties') ?? [];
+        if (array_key_exists($name, $properties)) {
+            return $properties[$name];
+        }
+    }
 }
