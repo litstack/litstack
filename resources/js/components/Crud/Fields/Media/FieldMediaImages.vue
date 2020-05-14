@@ -226,6 +226,8 @@ export default {
     }
 
     &__controls {
+        border-radius: $border-radius;
+        overflow: hidden;
         position: absolute;
         top: 0;
         bottom: 0;
@@ -240,26 +242,47 @@ export default {
         }
 
         &:hover {
-            background: rgba($info, 0.1);
+            &::before,
+            &::after {
+                content: '';
+                display: block;
+                width: 100%;
+                height: 2rem;
+                background: rgba(black, 0.7);
+                position: absolute;
+                backdrop-filter: blur(5px);
+                z-index: -1;
+            }
+
+            &::before {
+                top: 0;
+                border-top-left-radius: $border-radius;
+                border-top-right-radius: $border-radius;
+            }
+            &::after {
+                bottom: 0;
+                border-bottom-left-radius: $border-radius;
+                border-bottom-right-radius: $border-radius;
+            }
 
             > * {
                 opacity: 1;
+                color: white !important;
             }
         }
 
+        &_drag {
+            left: 0;
+            top: $input-padding-y-sm / 2;
+        }
         &_edit {
-            top: $input-padding-y-sm;
-            right: $input-padding-y-sm;
+            right: 0;
+            top: $input-padding-y-sm / 2;
         }
 
         &_delete {
-            right: $input-padding-y-sm;
-            bottom: $input-padding-y-sm;
-        }
-
-        &_drag {
-            left: $input-padding-y-sm;
-            top: $input-padding-y-sm;
+            right: 0;
+            bottom: $input-padding-y-sm / 2;
         }
     }
 }

@@ -27,7 +27,7 @@
                     {{ item.title }}
                 </div>
                 <div
-                    class="fj-navigation-hasChildren fj-nav-item_icon"
+                    class="fj-navigation-hasChildren fj-nav-item_icon fj-nav-toggle"
                     :class="{ active: visible }"
                     v-if="hasChildren"
                 >
@@ -136,6 +136,9 @@ export default {
         display: inline-block;
         width: 20px;
         text-align: center;
+        &.fj-nav-toggle {
+            width: auto;
+        }
     }
     .fj-navigation .list-group-item {
         border: none;
