@@ -22,6 +22,7 @@ class Kernel
     protected $bootstrappers = [
         Bootstrap\RegisterSingletons::class,
         Bootstrap\BootstrapTranslator::class,
+        Bootstrap\BootstrapKernel::class,
         Bootstrap\DiscoverPackages::class,
         Bootstrap\RegisterConfigFactories::class,
         Bootstrap\BootstrapVueApplication::class,
@@ -43,6 +44,12 @@ class Kernel
      */
     protected $formattedExtensions = [];
 
+    /**
+     * Fjord application service providers.
+     *
+     * @var array
+     */
+    public $providers = [];
 
     /**
      * Create a new Fjord kernel instance.
@@ -88,7 +95,7 @@ class Kernel
     {
         $this->registerRootExtensions();
 
-        $this->app->bootstrapWith($this->bootstrappers);
+        $this->app->bootstrapWith($this->bootstrappers, $this);
     }
 
     /**

@@ -148,15 +148,15 @@ class FjordServiceProvider extends ServiceProvider
             return new Application\Application();
         });
 
-        $this->app->singleton('fjord.kernel', function ($app) {
-            return new Kernel($app->get('fjord.app'));
+        $this->app->singleton(\FjordApp\Kernel::class, function ($app) {
+            return new \FjordApp\Kernel($app->get('fjord.app'));
         });
 
         // Bind fjord
         $this->app['fjord']->bindApp($this->app['fjord.app']);
 
         // Initialize kernel singleton.
-        $this->app->get('fjord.kernel');
+        $this->app->get(\FjordApp\Kernel::class);
     }
 
     /**

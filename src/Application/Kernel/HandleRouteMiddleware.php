@@ -17,7 +17,7 @@ class HandleRouteMiddleware
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        app()->get('fjord.kernel')->handleRoute(Request::route());
+        app()->get(\FjordApp\Kernel::class)->handleRoute(Request::route());
 
         return $next($request);
     }

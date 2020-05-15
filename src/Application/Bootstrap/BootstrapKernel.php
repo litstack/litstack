@@ -2,12 +2,12 @@
 
 namespace Fjord\Application\Bootstrap;
 
-use Illuminate\Console\Application as Artisan;
-use Fjord\Support\Facades\Package;
+use FjordApp\Kernel;
 use Fjord\Application\Application;
 use Illuminate\Support\Facades\App;
+use Illuminate\Console\Application as Artisan;
 
-class RegisterPackages
+class BootstrapKernel
 {
     /**
      * Registers artisan commands of all fjord packages.
@@ -15,16 +15,14 @@ class RegisterPackages
      * @param \Fjord\Application\Application $app
      * @return void
      */
-    public function bootstrap(Application $app)
+    public function bootstrap(Application $app, Kernel $kernel)
     {
         $this->app = $app;
+        $this->kernel = $kernel;
 
-        foreach (Package::all() as $name => $package) {
-            $this->registerCommands($package);
-            $this->registerProviders($package);
-            $this->registerComponents($package);
-            $this->registerExtensions($package);
-        }
+        $this->registerProviders($kernel->providers);
+        //$this->registerComponents();
+        //$this->registerExtensions();
     }
 
     /**
@@ -33,9 +31,9 @@ class RegisterPackages
      * @param mixed $package
      * @return void
      */
-    public function registerComponents($package)
+    public function registerComponents($components)
     {
-        foreach ($package->components() as $name => $component) {
+        foreach ($components as $name => $component) {
             $this->app->get('components')->register($name, $component);
         }
     }
@@ -46,9 +44,9 @@ class RegisterPackages
      * @param mixed $package
      * @return void
      */
-    public function registerProviders($package)
+    public function registerProviders($providers)
     {
-        foreach ($package->providers() as $provider) {
+        foreach ($providers as $provider) {
             app()->register($provider);
         }
     }
@@ -59,9 +57,9 @@ class RegisterPackages
      * @param mixed $package
      * @return void
      */
-    public function registerExtensions($package)
+    public function registerExtensions($extensions)
     {
-        foreach ($package->extensions() as $component => $extension) {
+        foreach ($extensions as $component => $extension) {
             $this->app->registerExtension($component, $extension);
         }
     }
@@ -72,14 +70,14 @@ class RegisterPackages
      * @param mxied $package
      * @return void
      */
-    public function registerCommands($package)
+    public function registerCommands($commands)
     {
         if (!App::runningInConsole()) {
             return;
         }
 
-        Artisan::starting(function ($artisan) use ($package) {
-            $artisan->resolveCommands($package->commands());
+        Artisan::starting(function ($artisan) use ($commands) {
+            $artisan->resolveCommands($commands);
         });
     }
 }

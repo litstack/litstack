@@ -65,7 +65,6 @@ class FjordInstall extends Command
         $this->createDefaultRoles();
         $this->createDefaultPermissions();
 
-        $this->publishFjordServiceProvider();
         $this->publishFjord();
         $this->makeModelDirs();
 
@@ -149,20 +148,6 @@ class FjordInstall extends Command
         $composer['autoload']['psr-4']['FjordApp\\'] = 'fjord/app/';
         File::put(base_path('composer.json'), json_encode($composer, JSON_PRETTY_PRINT));
         shell_exec('composer dumpautoload;');
-    }
-
-    public function publishFjordServiceProvider()
-    {
-        if (File::exists(app_path('Http/Providers/FjordServiceProvider.php'))) {
-            return;
-        }
-
-        $this->info('publishing FjordServiceProvider');
-
-        File::copy(
-            fjord_path('publish/providers/FjordServiceProvider.php'),
-            app_path('Providers/FjordServiceProvider.php')
-        );
     }
 
     /**

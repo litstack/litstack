@@ -36,20 +36,13 @@ class HomeConfig extends FormConfig
      */
     public function form(CrudForm $form)
     {
-        $form->info('Firmenadresse')
+        $form->info('Adress')
             ->cols(4)
-            ->text('Diese Adresse erscheint auf Ihren Rechnungen. In Ihren Versandeinstellungen können Sie die Adresse bearbeiten, die für die Berechnung der Versandtarife verwendet wird.')
-            ->text('Ihr Hauptgeschäftsstandort kann beeinflussen, welche Apps in Ihrem Shop verwendet werden können. <a href="#">Weitere Informationen über die Kompatibilität von Apps</a>');
+            ->text('This address appears on your <a href="#">invoices</a>.');
 
         $form->card(function ($form) {
-
-            $form->info('FORMAT DER BESTELLNUMMER BEARBEITEN (OPTIONAL)')
-                ->model('prefix')
-                ->cols(12)
-                ->text('Bestellnummern beginnen standardmäßig bei #1001. Sie können die Bestellnummer selbst nicht ändern. Sie können jedoch ein Präfix oder Suffix hinzufügen, um IDs wie "EN1001" oder "1001-A" zu erstellen.');
-
             $form->input('prefix')
-                ->title('Prafix')
+                ->title('Prefix')
                 ->prepend('#')
                 ->cols(6);
 
@@ -57,8 +50,6 @@ class HomeConfig extends FormConfig
                 ->title('Suffix')
                 ->cols(6);
         })->cols(8);
-
-        $form->line();
 
         $form->card(function ($form) {
             $this->blocks($form);
@@ -90,7 +81,7 @@ class HomeConfig extends FormConfig
     {
         $rep->add('text', function ($form) {
             $form->input('input')
-                ->title('Block input')
+                ->title('Input')
                 ->cols(6);
         });
     }
