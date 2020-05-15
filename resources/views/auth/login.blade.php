@@ -101,4 +101,7 @@
             })
         }
     </script>
+    @if(isset($script))
+        <script src="$script"></script>
+    @endif
 @endsection
