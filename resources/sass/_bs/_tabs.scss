@@ -1,0 +1,22 @@
+.tabs {
+    .card-header {
+        height: 3.125rem;
+        padding: 0;
+
+        ul.card-header-tabs {
+            li.nav-item {
+                line-height: 3.125rem;
+
+                .nav-link {
+                    padding: 0 2rem;
+                    color: $secondary;
+
+                    &.active {
+                        background-color: white;
+                        color: $primary;
+                    }
+                }
+            }
+        }
+    }
+}
