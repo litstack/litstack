@@ -75,6 +75,7 @@
                     @sort="sort"
                     @loadItems="_loadItems()"
                     @_sorted="sorted"
+                    :class="{ paginated: total > items.length }"
                     v-on="$listeners"
                 />
 
@@ -87,11 +88,11 @@
                 />
 
                 <div
-                    class="d-flex justify-content-center"
+                    class="d-flex justify-content-center fj-index-table-pagination"
                     v-if="numberOfPages > 1"
                 >
                     <b-pagination-nav
-                        class="mt-4"
+                        class="mt-2"
                         :link-gen="linkGen"
                         v-model="currentPage"
                         :number-of-pages="numberOfPages"
@@ -406,6 +407,18 @@ export default {
         min-width: calc(100% + #{2 * $card-spacer-x});
     }
 
+    .paginated {
+        table.b-table {
+            tbody {
+                tr:last-child {
+                    td {
+                        border-bottom: 1px solid $gray-300;
+                    }
+                }
+            }
+        }
+    }
+
     table.b-table {
         &[aria-busy='true'] {
             opacity: 0.6;
@@ -496,5 +509,8 @@ export default {
             }
         }
     }
+}
+.fj-index-table-pagination {
+    margin-top: -8px;
 }
 </style>

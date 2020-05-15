@@ -15042,6 +15042,67 @@ input[type=color].form-control:disabled {
   position: relative;
 }
 
+.pagination .page-link {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0.2rem;
+  border-radius: 0.625rem;
+  color: #70859c;
+}
+
+.pagination li a,
+.pagination li span {
+  border: none;
+}
+
+.pagination li:nth-child(1) a,
+.pagination li:nth-child(1) span,
+.pagination li:nth-child(2) a,
+.pagination li:nth-child(2) span,
+.pagination li:nth-last-child(1) a,
+.pagination li:nth-last-child(1) span,
+.pagination li:nth-last-child(2) a,
+.pagination li:nth-last-child(2) span {
+  border: 1px solid #70859c;
+}
+
+.pagination li:nth-child(1) a:hover,
+.pagination li:nth-child(1) span:hover,
+.pagination li:nth-child(2) a:hover,
+.pagination li:nth-child(2) span:hover,
+.pagination li:nth-last-child(1) a:hover,
+.pagination li:nth-last-child(1) span:hover,
+.pagination li:nth-last-child(2) a:hover,
+.pagination li:nth-last-child(2) span:hover {
+  background-color: #70859c;
+  color: white;
+}
+
+.pagination li:nth-child(1).disabled,
+.pagination li:nth-child(2).disabled,
+.pagination li:nth-last-child(1).disabled,
+.pagination li:nth-last-child(2).disabled {
+  cursor: not-allowed;
+}
+
+.pagination li:nth-child(1).disabled span,
+.pagination li:nth-child(2).disabled span,
+.pagination li:nth-last-child(1).disabled span,
+.pagination li:nth-last-child(2).disabled span {
+  border: 1px solid #ccd7e1;
+  color: #ccd7e1;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: unset;
+  border: none;
+  color: #4951f2;
+  font-weight: 600;
+}
+
 .progress {
   background-color: #e5eaef;
 }

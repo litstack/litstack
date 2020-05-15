@@ -18,14 +18,14 @@
                     :col="col"
                     :cols="preview"
                 />
-                <b-td class="col-sm text-secondary pl-4" v-if="!field.readonly">
+                <b-td class="col-sm text-secondary pl-2" v-if="!field.readonly">
                     <fa-icon
                         :icon="deleteIcon"
                         @click="$emit('deleteItem')"
                         class="fj-block-delete"
                     />
                 </b-td>
-                <b-td class="col-sm pl-4" v-if="fields.length > 0">
+                <b-td class="col-sm pl-2 pr-0" v-if="fields.length > 0">
                     <b-button
                         variant="outline-secondary"
                         size="sm"

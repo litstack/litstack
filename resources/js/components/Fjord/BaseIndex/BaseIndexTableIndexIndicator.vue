@@ -45,4 +45,9 @@ export default {
 };
 </script>
 
-<style lang="css" scoped></style>
+<style lang="scss" scoped>
+.fj-crud-index-table__index-indicator {
+    display: block;
+    margin-top: -5px;
+}
+</style>
