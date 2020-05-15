@@ -15116,6 +15116,25 @@ input[type=color].form-control:disabled {
   background-color: #acc2fe !important;
 }
 
+.tabs .card-header {
+  height: 3.125rem;
+  padding: 0;
+}
+
+.tabs .card-header ul.card-header-tabs li.nav-item {
+  line-height: 3.125rem;
+}
+
+.tabs .card-header ul.card-header-tabs li.nav-item .nav-link {
+  padding: 0 2rem;
+  color: #70859c;
+}
+
+.tabs .card-header ul.card-header-tabs li.nav-item .nav-link.active {
+  background-color: white;
+  color: #4951f2;
+}
+
 .b-toaster {
   left: 0 !important;
   right: 0 !important;
@@ -15333,6 +15352,10 @@ table td.fj-table-col {
   background-color: transparent;
   border-color: #70859c;
   color: white;
+}
+
+.custom-switch {
+  cursor: pointer;
 }
 
 div#fjord-app {
