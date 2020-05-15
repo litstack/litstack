@@ -1,4 +1,4 @@
-<p align="center" style="margin: 50px 0;"><a href="https://laravel.com" target="_blank" rel="noopener"><img src="./docs/logo.svg" width="400"></a></p>
+<p align="center" style="margin: 50px 0 !important;"><a href="https://laravel.com" target="_blank" rel="noopener"><img src="./docs/logo.svg" width="400"></a></p>
 
 # Fjord: Laravel Content-Administration
 
@@ -7,6 +7,18 @@ Fjord is a multilanguage package for building and maintaining the data of your L
 Manage Models as well as all Page-Content of your website on a modern yet super simple interface.
 
 ![Fjord Interface](./docs/fjord_preview.png 'Fjord Interface')
+
+## Features
+
+-   Code Driven Configuration
+-   Using Laravel Standards
+-   Extendable via Vue Components
+-   Form Fields for Models
+-   User Management
+-   Role And Permission Management
+-   Media Management
+-   Translatable
+-   Headless
 
 ## Installation
 
@@ -25,4 +37,10 @@ php artisan fjord:admin
 
 It's all setup now, visit http://yourapp.tld/admin
 
+## Demo
+
+Try the [Demo](https://playground.fjord-admin.com)
+
 ## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](LICENSE.md).
