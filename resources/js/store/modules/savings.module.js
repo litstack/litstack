@@ -1,52 +1,65 @@
 import Vue from 'vue';
-import EloquentCollection from '@fj-js/eloquent/collection';
-import FjordModel from '@fj-js/eloquent/fjord.model';
 import Bus from '@fj-js/common/event.bus';
 import { ToastPlugin } from 'bootstrap-vue';
+import store from '@fj-js/store';
+import ResultsHandler from './savings.results';
+
 Vue.use(ToastPlugin);
 
 const initialState = {
-    modelsToSave: [],
-    saveJobs: [],
-    saveModelIds: {}
+    jobs: []
 };
 
 const getters = {
     canSave(state) {
-        return state.modelsToSave.length > 0 || state.saveJobs.length > 0;
+        return state.jobs.length > 0;
     }
 };
 
 export const actions = {
-    async saveModels({ commit, state }) {
-        // save jobs
+    async save({ commit, state }) {
+        // Run save jobs.
         let promises = [];
-        for (let i = 0; i < state.saveJobs.length; i++) {
-            let saveJob = state.saveJobs[i];
-            let promise = axios[saveJob.method](saveJob.route, saveJob.data);
+        for (let i = 0; i < state.jobs.length; i++) {
+            let job = state.jobs[i];
+            let params = {};
+            for (let key in job.params) {
+                params = { ...params, ...job.params[key] };
+            }
+
+            let promise = axios({
+                method: job.method,
+                url: job.route,
+                data: params
+            });
             promises.push(promise);
         }
 
-        // save eloquent models
-        if (state.modelsToSave.length > 0) {
-            let collection = new EloquentCollection({ data: [] }, FjordModel);
-            collection.items = collect(state.modelsToSave);
+        // Parallel map flow.
+        let results = new ResultsHandler(
+            await Promise.all(promises.map(p => p.catch(e => e)))
+        );
 
-            let promise = collection.save();
+        for (let i in results.results) {
+            let result = results.results[i];
+            let job = state.jobs[i];
 
-            promises.push(promise);
+            // Failed jobs remain in the store.
+            if (result instanceof Error) {
+                continue;
+            }
+
+            state.jobs.splice(i, 1);
         }
 
-        // parallel map flow
-        try {
-            let results = await Promise.all(promises);
+        Fjord.bus.$emit('saved', results);
 
-            Bus.$emit('modelsSaved');
+        return results;
+    },
+    cancelSave({ commit }) {
+        commit('FLUSH_SAVE_JOBS');
 
-            commit('SAVED');
-        } catch (e) {
-            Bus.$emit('error', e);
-        }
+        Fjord.bus.$emit('saveCanceled');
     },
     saveJob({ commit }, job) {
         commit('ADD_SAVE_JOB', job);
@@ -57,54 +70,50 @@ export const state = Object.assign({}, initialState);
 
 export const mutations = {
     ADD_SAVE_JOB(state, job) {
-        let saveJob = state.saveJobs.find(saveJob => {
-            return (
-                saveJob.route == job.route &&
-                saveJob.method == job.method &&
-                saveJob.data.id == job.data.id
-            );
+        let saveJob = null;
+        let index = state.jobs.findIndex(j => {
+            return j.method == job.method && j.route == job.route;
         });
-        if (!saveJob) {
-            state.saveJobs.push(job);
+
+        if (index > -1) {
+            saveJob = state.jobs[index];
         } else {
-            state.saveJobs[state.saveJobs.indexOf(saveJob)] = job;
+            saveJob = {
+                route: job.route,
+                method: job.method,
+                params: {}
+            };
+        }
+
+        // Merge params.
+        saveJob.params[job.key] = job.params;
+
+        if (index > -1) {
+            state.jobs[index] = saveJob;
+        } else {
+            state.jobs.push(saveJob);
         }
     },
-    ADD_MODELS_TO_SAVE(state, { model, id }) {
-        // TODO: hasModel Changes???
-        if (!state.modelsToSave.includes(model)) {
-            state.modelsToSave.push(model);
-            state.saveModelIds[model.model] = [];
-        }
-        if (!state.saveModelIds[model.model].includes(id)) {
-            state.saveModelIds[model.model].push(id);
-        }
-    },
-    REMOVE_MODELS_FROM_SAVE(state, { model, id }) {
-        if (!state.modelsToSave.includes(model)) {
+    REMOVE_SAVE_JOB(state, job) {
+        let index = state.jobs.findIndex(j => {
+            return j.method == job.method && j.route == job.route;
+        });
+
+        if (index == -1) {
             return;
         }
-        if (!state.saveModelIds[model.model].includes(id)) {
-            return;
+        let saveJob = state.jobs[index];
+
+        delete saveJob.params[job.key];
+
+        if (_.isEmpty(saveJob.params)) {
+            state.jobs.splice(index, 1);
+        } else {
+            state.jobs[index] = saveJob;
         }
-        state.saveModelIds[model.model].splice(
-            state.saveModelIds[model.model].indexOf(id),
-            1
-        );
-        if (state.saveModelIds[model.model].length > 0) {
-            return;
-        }
-        state.modelsToSave.splice(state.modelsToSave.indexOf(model), 1);
     },
-    SAVED(state) {
-        state.modelsToSave = [];
-        state.saveModelIds = {};
-        state.saveJobs = [];
-    },
-    FLUSH_SAVINGS(state) {
-        state.modelsToSave = [];
-        state.saveJobs = [];
-        state.saveModelIds = {};
+    FLUSH_SAVE_JOBS(state) {
+        state.jobs = [];
     }
 };
 

@@ -43,21 +43,6 @@ return [
 
     'navigation_path' => 'navigation',
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Fjord Navigation-Layout
-    |--------------------------------------------------------------------------
-    |
-    | With this option you may set the fjord navigation layout.
-    |
-    | Supported: "horizontal", "vertical"
-    |
-    */
-
-    'layout' => env('FJORD_LAYOUT', 'vertical'),
-
-
     /*
     |--------------------------------------------------------------------------
     | Fjord Default-Route
@@ -67,7 +52,41 @@ return [
     |
     */
 
-    'default_route' => 'pages/home',
+    'default_route' => 'form/pages/home',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Google Analytics Id
+    |--------------------------------------------------------------------------
+    |
+    | Set the Google Analytics Id to track traffic on your Fjord application.
+    |
+    */
+
+    'google-analytics-id' => env('GOOGLE_ANALYTICS_ID', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fjord Translatable
+    |--------------------------------------------------------------------------
+    |
+    | Set the default route a user is redirected to after logging in.
+    |
+    */
+
+    'translatable' => [
+
+        'locale' => 'en',
+
+        'translatable' => true,
+
+        'locales' => [
+            'en',
+            'de'
+        ],
+
+        'fallback_locale' => 'en',
+    ],
 
 
     /*

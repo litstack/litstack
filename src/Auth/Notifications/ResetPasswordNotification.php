@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Auth\Notifications;
+namespace Fjord\Auth\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

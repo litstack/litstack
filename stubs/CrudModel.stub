@@ -2,16 +2,26 @@
 
 namespace App\Models;
 
-use AwStudio\Fjord\Fjord\Models\Model as FjordModel;
+use Illuminate\Database\Eloquent\Model;
 DummyTraits
 
-class DummyClassname extends FjordModel DummyImplement
+class DummyClassname extends Model DummyImplement
 {
     DummyUses
 
-    // enter all fillable columns. translated columns must also
-    // be set fillable. don't forget to also set them fillable in
-    // the coresponding translation-model
+    /**
+     * Setup Model:
+     *
+     * Enter all fillable columns. Translated columns must also be set fillable. 
+     * Don't forget to also set them fillable in the coresponding translation-model!
+     */
+
+    
+    /**
+     * Fillable attributes
+     *
+     * @var array
+     */
     protected $fillable = ['title', 'text'];
     DummyVars
     DummyWiths
@@ -19,16 +29,4 @@ class DummyClassname extends FjordModel DummyImplement
     DummySluggable
 
     DummyGetAttributes
-
-    /**
-     * The getRoute function is needed when your CRUD-Model has a
-     * preview view, which is defined in the fjord-resources crud config file.
-     * In order to use it, you should define a named route in routes/web.php
-     *
-     */
-    public function getRoute()
-    {
-        return '';
-        //return route('DummyRoutename', ['id' => $this->id]);
-    }
 }

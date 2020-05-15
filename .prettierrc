@@ -1,4 +1,16 @@
 {
-  "singleQuote": true,
-  "tabWidth": 4
+    "singleQuote": true,
+    "tabWidth": 4,
+    "overrides": [
+        {
+            "files": "*.vue",
+            "options": {
+                "tabWidth": 4,
+                "angleBracketSameLine": true,
+                "jsxBracketSameLine": true,
+                "htmlWhitespaceSensitivity": "ignore",
+                "parser": "vue"
+            }
+        }
+    ]
 }

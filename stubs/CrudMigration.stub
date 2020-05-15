@@ -3,9 +3,24 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Fjord\Support\Migration\MigratePermissions;
 
 class DummyClassname extends Migration
 {
+    use MigratePermissions;
+
+    /**
+     * Permissions that should be created for this crud.
+     *
+     * @var array
+     */
+    protected $permissions = [
+        'create DummyTablename',
+        'read DummyTablename',
+        'update DummyTablename',
+        'delete DummyTablename',
+    ];
+
     /**
      * Run the migrations.
      *
@@ -29,6 +44,8 @@ class DummyClassname extends Migration
         });
         
         DummyTranslation
+
+        $this->upPermissions();
     }
 
     /**
@@ -39,6 +56,9 @@ class DummyClassname extends Migration
     public function down()
     {
         Schema::dropIfExists('DummyTablename');
+        
         DummyDownTranslation
+
+        $this->downPermissions();
     }
 }

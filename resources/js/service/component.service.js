@@ -10,18 +10,12 @@ const requireComponent = require.context(
     /[A-Z]\w+\.(vue)$/
 );
 
-requireComponent.keys().forEach(fileName => {
+requireComponent.keys().forEach((fileName) => {
     // Get component config
     const componentConfig = requireComponent(fileName);
 
     // Get PascalCase name of component
-    const componentName = kebabCase(
-        // Gets the file name regardless of folder depth
-        fileName
-            .split('/')
-            .pop()
-            .replace(/\.\w+$/, '')
-    );
+    let componentName = kebabCase(componentConfig.default.name);
 
     // Register component globally
     Vue.component(

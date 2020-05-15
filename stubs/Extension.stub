@@ -1,0 +1,31 @@
+<?php
+
+namespace DummyNamespace;
+
+use Fjord\User\Models\FjordUser;
+use Fjord\Application\Vue\Extension;
+
+class DummyClass extends Extension
+{
+    /**
+     * Has user permission for this extension.
+     * 
+     * @var \Fjord\Fjord\Models\FjordUser $user
+     * @return boolean
+     */
+    public function authenticate(FjordUser $user)
+    {
+        return true;
+    }
+
+    /**
+     * Modify Vue component in handle method.
+     * 
+     * @var array $component
+     * @return void
+     */
+    public function handle($component)
+    {
+        //
+    }
+}

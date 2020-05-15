@@ -1,16 +1,20 @@
 <?php
 
-namespace AwStudio\Fjord\Auth\Controllers;
+namespace Fjord\Auth\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
+use Fjord\Support\Facades\Fjord;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class ResetPasswordController extends Controller
+class ResetPasswordController
 {
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -24,39 +28,80 @@ class ResetPasswordController extends Controller
 
     use ResetsPasswords;
 
-    protected function guard()
-    {
-        return Auth::guard('fjord');
-    }
-
-    public function broker()
-    {
-        return Password::broker('fjord_users');
-    }
+    /**
+     * Default url for authenticated users.
+     *
+     * @var string
+     */
+    protected $defaultUrl;
 
     /**
      * Where to redirect users after resetting their password.
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo;
 
-    public function showResetForm(Request $request, $token = null)
+    /**
+     * Create new ResetPasswordController instance.
+     * 
+     * @return void
+     */
+    public function __construct()
     {
-        return view('fjord::auth.passwords.reset')->with(
-            ['token' => $token, 'email' => $request->email]
+        $this->redirectTo = Fjord::url('login');
+
+        $this->defaultUrl = Fjord::url(
+            config('fjord.default_route')
         );
     }
 
-    protected function sendResetResponse(Request $request, $response)
+    /**
+     * Get guard.
+     *
+     * @return Guard
+     */
+    protected function guard()
     {
-        return redirect($this->redirectPath())
-            ->with('status', trans($response));
+        return Auth::guard('fjord');
     }
 
-    public function redirectPath()
+    /**
+     * Get broker.
+     *
+     * @return Broker
+     */
+    public function broker()
     {
-        $redirect = '/' . config('fjord.route_prefix') . '/' . config('fjord.default_route');
-        return $redirect;
+        return Password::broker('fjord_users');
+    }
+
+    /**
+     * Show reset form.
+     *
+     * @param Request $request
+     * @param string|null $token
+     * @return View
+     */
+    public function showResetForm(Request $request, $token = null)
+    {
+        return view('fjord::auth.passwords.reset')
+            ->with([
+                'token' => $token,
+                'email' => $request->email
+            ]);
+    }
+
+    /**
+     * Send reset response.
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Redirect
+     */
+    protected function sendResetResponse(Request $request, $response)
+    {
+        return redirect($this->defaultUrl)
+            ->with('status', trans($response));
     }
 }

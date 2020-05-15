@@ -1,5 +1,8 @@
 @auth('fjord')
-<nav class="fj-navigation">
-    <fj-navigation :items="{{fjord()->getNavigation()}}"></fj-navigation>
-</nav>
+    <nav class="fj-navigation">
+
+        @include('fjord::partials.nav_loader')
+
+        <fj-main-navigation :items="{{collect(fjord()->config('navigation')->main)}}"></fj-navigation>
+    </nav>
 @endauth

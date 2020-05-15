@@ -1,10 +1,29 @@
-
-.btn-transparent{
-
-    @include button-variant(transparent, transparent, map-get($theme-colors, 'light'));
+.btn-transparent {
+    @include button-variant(
+        transparent,
+        transparent,
+        map-get($theme-colors, 'light')
+    );
     color: $text-muted;
 
-    &:active{
+    &:active {
         color: $text-muted !important;
+    }
+}
+
+.btn-input {
+    @include button-variant(
+        white,
+        $input-border-color,
+        $gray-100,
+        $input-border-color,
+        $gray-100,
+        $input-border-color
+    );
+
+    color: $input-color;
+
+    &:active {
+        color: $input-color !important;
     }
 }

@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'item_delete' => 'delete :item',
+    'item_create' => 'create :item',
+    'item_remove' => 'remove :item',
+    'item_settings' => ':item settings',
+    'profile' => 'profile',
+    'password' => 'password',
+    'name' => 'name',
+    'email' => 'e-mail',
+    'language' => 'Language',
+    'system_language' => 'System language',
+    'general' => 'general',
+    'security' => 'security',
+    'device' => 'device',
+    'logout' => 'logout',
+    'close' => 'close',
+    'delete' => 'delete',
+    'image' => 'image',
+    'search' => 'search',
+    'first_name' => 'Firstname',
+    'last_name' => 'Lastname',
+    'username' => 'username',
+    "cancel" => "cancel",
+    'location' => 'location',
+    'action' => 'action|actions',
+];

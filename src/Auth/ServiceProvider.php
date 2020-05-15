@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Auth;
+namespace Fjord\Auth;
 
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
@@ -13,6 +13,6 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function boot()
     {
-        $this->app->register('AwStudio\Fjord\Auth\RouteServiceProvider');
+        $this->app->register(\Fjord\Auth\RouteServiceProvider::class);
     }
 }

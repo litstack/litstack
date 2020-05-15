@@ -1,20 +1,41 @@
 <?php
 
-namespace App\Http\Controllers\Fjord;
+namespace FjordApp\Controllers\Crud;
 
-use AwStudio\Fjord\Form\Controllers\CrudController;
-use AwStudio\Fjord\Form\Controllers\Traits\CrudIndexDeleteAll;
-use AwStudio\Fjord\Form\Controllers\Traits\CrudShowForm;
-use AwStudio\Fjord\Form\Controllers\Traits\CrudShowPreview;
+use Illuminate\Database\Eloquent\Builder;
+
+use Fjord\User\Models\FjordUser;
+use Fjord\Crud\Controllers\CrudController;
 
 class DummyClassname extends CrudController
 {
-    use CrudIndexDeleteAll,
-        CrudShowForm,
-        CrudShowPreview;
+    /**
+     * Crud model class name.
+     *
+     * @var string
+     */
+    protected $model = DummyModelClass::class;
 
-    // Set this to false if you don't want to use permissions on this crud-model
-    public const PERMISSIONS = true;
+    /**
+     * Authorize request for permission operation and authenticated fjord-user.
+     * Operations: create, read, update, delete
+     *
+     * @param FjordUser $user
+     * @param string $operation
+     * @return boolean
+     */
+    public function authorize(FjordUser $user, string $operation): bool
+    {
+        return $user->can("{$operation} DummyTableName");
+    }
 
-    protected $modelName = 'DummyModelName';
+    /**
+     * Initial query.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function query(): Builder
+    {
+        return $this->model::query();
+    }
 }

@@ -1,0 +1,8 @@
+// .fj-hide is hidden while the process of loading vue.
+.fj-hide {
+    display: none;
+
+    &.show {
+        display: unset;
+    }
+}

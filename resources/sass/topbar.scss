@@ -1,0 +1,55 @@
+// Topbar above main navigation.
+//
+//
+
+div#fjord-app nav.fj-topbar {
+    grid-area: t;
+    height: $topbar-height;
+    background: $topbar-bg;
+    padding-left: $topbar-padding;
+    padding-right: 5px;
+    display: flex;
+    z-index: 9;
+    border-right: $border-width solid $border-color;
+
+    .fj-topbar__icon {
+        width: 23px;
+    }
+
+    #fj-topbar-right {
+        .btn {
+            color: $topbar-button-color;
+        }
+
+        .show {
+            .btn {
+                color: white;
+            }
+        }
+    }
+
+    .dropdown-menu {
+        background-color: $topbar-dropdown-bg;
+        min-width: $topbar-dropdown-width;
+        font-size: $font-size-sm;
+
+        .dropdown-header {
+            color: $gray-200;
+            font-size: $font-size-sm * 0.85;
+        }
+
+        .dropdown-divider {
+            border-color: $topbar-dropdown-hover-bg;
+        }
+
+        .dropdown-item {
+            color: $topbar-dropdown-color;
+
+            @include hover-focus() {
+                color: $topbar-dropdown-hover-color;
+                text-decoration: none;
+                @include gradient-bg($topbar-dropdown-hover-bg);
+            }
+        }
+    }
+}

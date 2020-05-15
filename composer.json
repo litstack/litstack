@@ -8,7 +8,10 @@
         "spatie/laravel-permission": "^2.37|^3.0|^3.11",
         "spatie/laravel-medialibrary": "^7.0.0|^7.1.0|^7.19",
         "astrotomic/laravel-translatable": "^11.1|^11.8",
-        "cviebrock/eloquent-sluggable": "^4.8|^6.0|^7.0"
+        "cviebrock/eloquent-sluggable": "^4.8|^6.0|^7.0",
+        "mobiledetect/mobiledetectlib": "^2.8",
+        "piwik/device-detector": "^3.12",
+        "laravel/ui": "^2.0"
     },
     "license": "MIT",
     "authors": [
@@ -26,14 +29,17 @@
             "src/Support/helpers.php"
         ],
         "psr-4": {
-            "AwStudio\\Fjord\\": "src"
+            "Fjord\\": "src"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "AwStudio\\Fjord\\FjordServiceProvider"
+                "Fjord\\FjordServiceProvider"
             ]
+        },
+        "fjord": {
+            "package": "Fjord\\FjordPackage"
         }
     }
 }

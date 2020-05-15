@@ -1,34 +1,97 @@
 <?php
 
-namespace AwStudio\Fjord\Auth\Controllers;
+namespace Fjord\Auth\Controllers;
 
 use Illuminate\Http\Request;
+use Fjord\Support\Facades\Fjord;
+use Fjord\User\Models\FjordUser;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use AwStudio\Fjord\Fjord\Models\FjordUser;
-use AwStudio\Fjord\Auth\Controllers\ForgotPasswordController;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
+use Fjord\Auth\Requests\FjordSessionLogoutRequest;
+use Fjord\Auth\Controllers\ForgotPasswordController;
 
 class AuthController extends Controller
 {
+    /**
+     * Default url for authenticated users.
+     *
+     * @var string
+     */
+    protected $defaultUrl;
+
+    /**
+     * Create new AuthController instance.
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->defaultUrl = Fjord::url(
+            config('fjord.default_route')
+        );
+    }
+
+    /**
+     * Authenticate FjordUser.
+     *
+     * @param Request $request
+     * @return redirect
+     */
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');
+        $remember = $request->remember == 'on' || $request->remember;
 
-        if (Auth::guard('fjord')->attempt($credentials)) {
-            return redirect($this->redirectPath());
+        if (Auth::guard('fjord')->attempt($credentials, $remember)) {
+            return $this->loginSucceeded();
         }
+
+        // Try using username.
+        if (config('fjord.login.username')) {
+            $credentials['username'] = $credentials['email'];
+            unset($credentials['email']);
+            if (Auth::guard('fjord')->attempt($credentials, $remember)) {
+                return $this->loginSucceeded();
+            }
+        }
+
+        return response()->json([
+            'message' => __f('login.failed')
+        ], 401);
     }
 
+    /**
+     * Gets executed when the login succeeded.
+     *
+     * @return string
+     */
+    public function loginSucceeded()
+    {
+        return $this->defaultUrl;
+    }
+
+    /**
+     * Show login.
+     *
+     * @return View|Redirect
+     */
     public function login()
     {
         if (fjord_user()) {
-            return redirect()->route('fjord.dashboard');
+            return redirect($this->defaultUrl);
         }
 
         return view('fjord::auth.login');
     }
 
+    /**
+     * Logout user.
+     *
+     * @return void
+     */
     public function logout()
     {
         Auth::logout();
@@ -36,28 +99,57 @@ class AuthController extends Controller
         return view('fjord::auth.login');
     }
 
-    public function redirectPath()
+    /**
+     * Logout session.
+     *
+     * @param FjordSessionLogoutRequest $request
+     * @return void
+     */
+    public function logoutSession(FjordSessionLogoutRequest $request)
     {
-        $redirect = '/' . config('fjord.route_prefix') . '/' . config('fjord.default_route');
-        return $redirect;
+        $session = fjord_user()->sessions()->findOrFail($request->id);
+
+        Session::getHandler()->destroy($session->session_id);
+
+        if ($session->session_id == Session::getId()) {
+            $this->logout();
+        }
+
+        $session->delete();
     }
 
-
+    /**
+     * Create new FjordUser.
+     *
+     * @param Request $request
+     * @param ForgotPasswordController $sendResetLink
+     * @return void
+     */
     public function register(Request $request, ForgotPasswordController $sendResetLink)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:fjord_users'],
+        $rules = [
+            'username' => ['string', 'max:255', 'unique:fjord_users'],
+            'first_name' => ['string', 'max:255'],
+            'last_name' => ['string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:fjord_users'],
             'password' => ['required', 'string', 'min:8'],
-        ]);
+        ];
+
+        $request->validate($rules);
 
         $user = FjordUser::create([
-            'name' => $request->name,
-            'locale' => $request->locale ?? 'de',
+            'username' => $request->username,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'locale' => $request->locale ?? config('fjord.locale'),
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
+        // Assign default role.
+        $user->assignRole('user');
+
+        // Send reset link.
         if ($request->sendResetLink) {
             $sendResetLink->execute($request);
         }

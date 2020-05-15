@@ -1,0 +1,18 @@
+.card {
+    box-shadow: $box-shadow;
+
+    .card {
+        .card-body {
+            padding-top: 0;
+            padding-bottom: 0;
+
+            .table-responsive {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .card-body {
+        padding-bottom: 1rem;
+    }
+}

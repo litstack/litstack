@@ -1,6 +1,6 @@
 <?php
 
-namespace AwStudio\Fjord\Commands;
+namespace Fjord\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
@@ -54,7 +54,7 @@ class FjordGuard extends Command
                 "'providers' => [
         'fjord_users' => [
             'driver' => 'eloquent',
-            'model' => AwStudio\Fjord\Fjord\Models\FjordUser::class,
+            'model' => Fjord\User\Models\FjordUser::class,
         ],",
                 $replace
             );

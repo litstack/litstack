@@ -1,0 +1,13 @@
+.fj-block {
+    background-color: $block-bg;
+    border-radius: $border-radius;
+    padding: $block-spacer-y $block-spacer-x;
+
+    .fj-block {
+        background-color: $block-in-block-bg;
+    }
+
+    .fj-draggable__dragbar {
+        cursor: grab;
+    }
+}

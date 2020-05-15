@@ -1,8 +1,8 @@
 <?php
 
-namespace AwStudio\Fjord\Auth\Controllers;
+namespace Fjord\Auth\Controllers;
 
-use AwStudio\Fjord\Actions\SendPasswordResetLink;
+use Fjord\Actions\SendPasswordResetLink;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,16 +12,32 @@ class ForgotPasswordController
 {
     use SendsPasswordResetEmails;
 
+    /**
+     * Get guard.
+     *
+     * @return Guard
+     */
     protected function guard()
     {
         return Auth::guard('fjord');
     }
 
+    /**
+     * Get broker.
+     *
+     * @return Broker
+     */
     protected function broker()
     {
         return Password::broker('fjord_users');
     }
 
+    /**
+     * Send reset Link.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function execute(Request $request): JsonResponse
     {
         $this->validateEmail($request);
