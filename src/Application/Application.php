@@ -74,12 +74,12 @@ class Application
      * @param  string[]  $bootstrappers
      * @return void
      */
-    public function bootstrapWith(array $bootstrappers)
+    public function bootstrapWith(array $bootstrappers, $kernel)
     {
         $this->hasBeenBootstrapped = true;
 
         foreach ($bootstrappers as $bootstrapper) {
-            with(new $bootstrapper())->bootstrap($this);
+            with(new $bootstrapper())->bootstrap($this, $kernel);
         }
     }
 

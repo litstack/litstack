@@ -22,7 +22,6 @@ class RegisterPackages
         foreach (Package::all() as $name => $package) {
             $this->registerCommands($package);
             $this->registerProviders($package);
-            $this->registerCommands($package);
             $this->registerComponents($package);
             $this->registerExtensions($package);
         }

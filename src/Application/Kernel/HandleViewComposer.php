@@ -14,6 +14,6 @@ class HandleViewComposer
      */
     public function compose(View $view)
     {
-        app()->get('fjord.kernel')->handleView($view);
+        app()->get(\FjordApp\Kernel::class)->handleView($view);
     }
 }

@@ -12,4 +12,14 @@ class Kernel extends FjordKernel
      * @var array
      */
     public $extensions = [];
+
+    /**
+     * Fjord application service providers.
+     *
+     * @var array
+     */
+    public $providers = [
+        Providers\LocalizationServiceProvider::class,
+        Providers\FjordServiceProvider::class,
+    ];
 }
