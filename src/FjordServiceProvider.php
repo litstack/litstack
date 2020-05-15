@@ -187,8 +187,6 @@ class FjordServiceProvider extends ServiceProvider
         if (!fjord()->installed()) {
             return;
         }
-
-        $this->app->register(\App\Providers\FjordServiceProvider::class);
     }
 
     /**
