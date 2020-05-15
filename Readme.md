@@ -43,7 +43,7 @@ It's all setup now, visit http://yourapp.tld/admin
 
 ## Demo
 
-Try the [Demo](https://playground.fjord-admin.com)
+Try the [Demo](https://demo.fjord-admin.com)
 
 ## License
 

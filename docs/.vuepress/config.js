@@ -50,7 +50,7 @@ module.exports = {
                 text: 'Documentation',
                 link: '/docs/getting-started/installation'
             },
-            { text: '🕹 Demo', link: 'https://playground.fjord-admin.com' }
+            { text: '🕹 Demo', link: 'https://demo.fjord-admin.com' }
         ],
         sidebar: {
             '/': [
