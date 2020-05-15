@@ -1,5 +1,7 @@
 # Form Config
 
+[[toc]]
+
 In the `form` function of a **Form** or a **CRUD** config all components and fields are configured for editing the data.
 
 ```php
@@ -80,6 +82,8 @@ public function previewRoute($article)
 Now the page can be previewed for the devices **desktop**, **tablet** or **mobile** like in the following screenshot:
 
 ![Fjord Crud Preview](./preview.png 'Fjord Crud Preview')
+
+### Default Device
 
 The default device can be changed in the config `fjord.php` under 'crud.preview.default_device'.
 

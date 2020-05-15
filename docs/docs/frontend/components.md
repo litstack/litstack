@@ -1,5 +1,7 @@
 # Vue Components
 
+[[toc]]
+
 Fjord comes along with all **bootstrap-vue** components with a few components that can be used to build pages that fit the Fjord style. To ensure that users of the Fjord interface can find their way around quickly and easily on all sites, it is recommended to follow the following docslines.
 
 All Fjord components have the prefix `fj-`.

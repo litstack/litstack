@@ -1,5 +1,7 @@
 # Index Config
 
+[[toc]]
+
 In the Config for a CRUD model its index table is defined. You can easily display attributes or relations or include your own `Vue` component and customize the table as you need it.
 
 ## Query

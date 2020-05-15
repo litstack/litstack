@@ -1,5 +1,7 @@
 # Vue
 
+[[toc]]
+
 ## Mixins
 
 -   [can](#mixin-can)
@@ -7,7 +9,7 @@
 
 <a name="mixin-can"></a>
 
-### `can('permission')`
+### `can({permission})`
 
 The `can` mixin checks if the authenticated user has a permission.
 

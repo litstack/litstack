@@ -1,5 +1,7 @@
 # Javascript
 
+[[toc]]
+
 If you build your own Vue components it makes sense to know about the helpers available in Javascript.
 
 ## Axios

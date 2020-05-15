@@ -1,5 +1,7 @@
 # Table
 
+[[toc]]
+
 Fjord `tables` can be easily configured in the backend. The following explains how to customize the tables to your needs.
 
 ## Text
@@ -72,6 +74,8 @@ $table->image('Image')
     ->src('{image.conversion_urls.sm}');
 ```
 
+### maxWidth, maxHeight
+
 Furthermore, a `maxWidth` and a `maxHeight` can be defined.
 
 ```php
@@ -81,7 +85,9 @@ $table->image('Image')
     ->maxHeight('50px');
 ```
 
-order if the image should simply be displayed as a square:
+### Square
+
+Set a width and a height if the image should simply be displayed as a square:
 
 ```php
 $table->image('Image')
