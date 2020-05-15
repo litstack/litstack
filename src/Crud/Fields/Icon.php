@@ -52,7 +52,7 @@ class Icon extends Field
     {
         parent::setDefaults();
 
-        $this->attributes['icons'] = require fjord_path('src/Crud/Fields/defaults/fontawesome_icons.php');
+        $this->attributes['icons'] = require fjord_path('src/Crud/Fields/Defaults/fontawesome_icons.php');
     }
 
     /**
