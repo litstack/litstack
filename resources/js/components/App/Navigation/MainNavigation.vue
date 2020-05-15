@@ -1,5 +1,5 @@
 <template>
-    <div :class="config.layout == 'horizontal' ? 'container' : ''">
+    <div>
         <fj-nav-item v-for="(item, index) in items" :item="item" :key="index" />
     </div>
 </template>
