@@ -1,5 +1,7 @@
 # Navigation
 
+[[toc]]
+
 Your Fjord-app has two navigations: The topbar, and your Main-Navigation. The top navigation is for managing the admin interface, such as language, users and permissions. The Main-Navigation is intended for the main administration of the data of your application or your site.
 
 Both navigations are configured in `fjord/app/Config/NavigationConfig.php` which looks as follows:

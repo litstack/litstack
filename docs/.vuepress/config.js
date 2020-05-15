@@ -35,7 +35,7 @@ module.exports = {
         [
             'vuepress-plugin-clean-urls',
             {
-                normalSuffix: '/',
+                normalSuffix: '',
                 indexSuffix: '/',
                 notFoundPath: '/404.html'
             }
@@ -48,7 +48,7 @@ module.exports = {
         nav: [
             {
                 text: 'Documentation',
-                link: '/docs/getting-started/introduction.html'
+                link: '/docs/getting-started/installation'
             },
             { text: '🕹 Demo', link: 'https://playground.fjord-admin.com' }
         ],
@@ -58,7 +58,7 @@ module.exports = {
                     title: 'Get started',
                     collapsable: false,
                     children: [
-                        ['docs/getting-started/introduction', 'Introduction'],
+                        //['docs/getting-started/introduction', 'Introduction'],
                         ['docs/getting-started/installation', 'Installation'],
                         ['docs/getting-started/configuration', 'Configuration']
                     ]
@@ -77,8 +77,8 @@ module.exports = {
                     title: 'CRUD',
                     collapsable: false,
                     children: [
-                        ['docs/crud/create-crud', 'Models'],
-                        ['docs/crud/create-forms', 'Forms'],
+                        ['docs/crud/models', 'Models'],
+                        ['docs/crud/forms', 'Forms'],
                         ['docs/crud/config-index', 'Index Config'],
                         ['docs/crud/config-form', 'Form Config'],
                         ['docs/crud/config-table', 'Table']
