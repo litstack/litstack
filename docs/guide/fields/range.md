@@ -1,4 +1,4 @@
-# Relation
+# Range
 
 A range slider.
 

@@ -42,6 +42,7 @@ class Modal extends Field
         'form',
         'size',
         'variant',
+        'preview',
         'confirmWithPassword'
     ];
 

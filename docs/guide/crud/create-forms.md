@@ -1,6 +1,8 @@
 # Forms
 
-The `Config/Forms` directory contains all configuration-files for your Forms. `Forms` are grouped into their collection folders.
+Fjord-Forms provide a convenient way to store, organize and maintain data of many kinds, such as your page-content. You may create as many `Forms` as you like.
+
+`Forms` are divided into Form `collections` to keep the overview. For example, the `Forms` **home** and **faq**, which contain the page-content for the pages **home** and **faq**, can be included in the `collection` **pages**.
 
 ## Create
 
@@ -33,6 +35,10 @@ The migration can now simply be rolled back and re-run using the artisan command
 php artisan fjord:nav-permissions
 ```
 
+::: tip
+Try to use as few groups as possible to keep permission **management** simple.
+:::
+
 ## Controller (Authorization)
 
 A controller has been created in `Controllers/Form/{collection}` in which the authorization for all operation is specified. Operations can be `read`, `update`.
@@ -58,14 +64,13 @@ Add the navigation entry by adding the `form.{collection}.{form}` preset to your
 
 ```php
 $nav->preset('form.pages.home', [
-    'title' => 'Home',
     'icon' => fa('home'),
 ]),
 ```
 
 ## Configuration
 
-Define the CRUD-Config in the created config file: `Config/Form/{collection}/{form}Config.php`. First the controller must be specified in the config:
+Define the Form-Config in the created config file: `Config/Form/{collection}/{form}Config.php`. First the controller must be specified in the config:
 
 ```php
 use FjordApp\Controllers\Form\Pages\HomeController;

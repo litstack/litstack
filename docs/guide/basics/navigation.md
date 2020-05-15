@@ -82,9 +82,10 @@ To build navigation entries for e.g. Crud models you can use navigation presets 
 
 ```php
 $nav->preset('crud.departments', [
-    'title' => ucfirst(__f("models.departments")),
-    'icon' => '<i class="fas fa-building">',
+    'icon' => fa('building')
 ]),
 ```
 
+::: tip
 A list of all registered navigation presets can be displayed with `php artisan fjord:nav`.
+:::

@@ -1,5 +1,11 @@
 # Models
 
+The main component of an admin panel is to manage data. Fjord offers the possibility to make [Laravel Eloquent Models](https://laravel.com/docs/7.x/eloquent) editable and manageable. For a clear administration of models, a suitable `index` table and the corresponding `create` and `update` form is needed. Fjord also comes with powerfull open source packages to make models `translatable` and `sluggable` and to attach `media`. The following packages are used for this
+
+-   [Astronomic Translatable](https://docs.astrotomic.info/laravel-translatable/)
+-   [Spatie Medialibrary](https://docs.spatie.be/laravel-medialibrary/v8/introduction/)
+-   [Cviebrock Sluggable](https://github.com/cviebrock/eloquent-sluggable)
+
 The `fjord/app/Config/Crud` directory contains all configuration-files for your CRUD-Models. Each model has its own file and is set up individually. Configurations can be created for existing Models.
 
 ## Create
@@ -88,6 +94,10 @@ class ArticleTranslation extends Model
 }
 ```
 
+::: warning
+Make sure the **Sluggable** trait and configuration are in the correct Model when using **translatable** Models.
+:::
+
 ## Controller (authorization)
 
 A controller has been created in which the authorization for all operation is specified. Operations can be `create`, `read`, `update`, `delete`.
@@ -114,8 +124,7 @@ Add the navigation entry by adding the `crud.{table_name}` preset to your naviga
 
 ```php
 $nav->preset('crud.articles', [
-    'title' => 'Articles',
-    'icon' => '<i class="fas fa-newspaper">',
+    'icon' => fa('newspaper')
 ]),
 ```
 
@@ -164,4 +173,4 @@ public $expandFormContainer = true;
 
 ### Index, Create & Update Form
 
-Next, the configuration for the [index table](/guide/crud/config-index.html) and the create and update [form](/guide/crud/config-form.html) can be adjusted.
+Next, the configuration for the [index table](/guide/crud/config-index.html) and the **create** and **update** [form](/guide/crud/config-form.html) can be adjusted.

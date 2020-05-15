@@ -35,17 +35,29 @@ $form->input('first_name')->title('First Name');
 
 All available fields can be found in the documentation under [Fields](/guide/fields/introduction.html).
 
+## Col
+
+With `col` fields can be grouped in a column. This is usefull to organize form elements of different heights side by side.
+
+```php
+$form->col(6, function($form) {
+    // Build your form inside the col.
+});
+```
+
 ## Component
 
-Like in the index table you can include your own `Vue` components.
+With `component` a custom **Vue component** can be integrated.
 
 ```php
 $form->component('my-component');
 ```
 
+Read the [Extend Vue](/guide/basics/vue.html#bootstrap-vue) section to learn how to register your own Vue components.
+
 ## Info
 
-A good content-administration interface includes descriptions that help the user quickly understand what is happening on the interface. Such information can be created outside and inside maps like so:
+A good content-administration interface includes **descriptions** that help the user quickly understand what is happening on the interface. Such information can be created outside and inside of cards like so:
 
 ```php
 $form->info('Adress')
@@ -65,7 +77,11 @@ public function previewRoute($article)
 }
 ```
 
-Now the page can be previewed for the devices **desktop**, **tablet** or **mobile**. The default device can be changed in the config `fjord.php` under 'crud.preview.default_device'.
+Now the page can be previewed for the devices **desktop**, **tablet** or **mobile** like in the following screenshot:
+
+![Fjord Crud Preview](./preview.png 'Fjord Crud Preview')
+
+The default device can be changed in the config `fjord.php` under 'crud.preview.default_device'.
 
 ```php
 'crud' => [

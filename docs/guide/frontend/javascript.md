@@ -19,6 +19,10 @@ async func() {
 }
 ```
 
+::: tip
+For requests that shouldn't use the fjord `route_prefix` the global `_axios` can be used.
+:::
+
 ## Fjord
 
 In javascript and all Vue components the global variable `Fjord` is available. This includes the following helpers:
@@ -61,3 +65,4 @@ Fjord.bus.$emit(event, callback);
 Some useful events:
 
 -   `saved` - Executed when saved.
+-   `saveCanceled` - When save has been canceled.
