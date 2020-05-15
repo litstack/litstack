@@ -1,10 +1,28 @@
-# Fjord: A Laravel CMS/Admin-Panel
+<p align="center" style="margin: 50px 0 !important;"><a href="https://laravel.com" target="_blank" rel="noopener"><img src="./docs/logo.svg" width="400"></a></p>
 
-Fjord is a multilanguage CMS/Admin-Panel based on the Laravel framework.
+# Fjord: Laravel Content-Administration
 
-It offers Artisan-Commands for generating CRUD-Modelst and Users. Manage CRUD-Models as well as all Page-Content of your website on a modern yet super simple interface.
+Fjord is a multilanguage package for building and maintaining the data of your Laravel applications. It provides an intuitive interface and the tools needed to manage your project's content.
 
-![Fjord Interface](https://raw.githubusercontent.com/aw-studio/fjord/master/fjord.png 'Fjord Interface')
+Manage Models as well as all Page-Content of your website on a modern yet super simple interface.
+
+![Fjord Interface](./docs/fjord_preview.png 'Fjord Interface')
+
+## Features
+
+-   Code Driven Configuration
+-   Using Laravel Standards
+-   Extendable via Vue Components
+-   Form Fields for Models
+-   User Management
+-   Role And Permission Management
+-   Media Management
+-   Translatable
+-   Headless
+
+## Learning Fjord
+
+Read the [Docs](https://www.fjord-admin.com) and learn how to build your custom Admin panel. Use your knowledge about Laravel standards and do much work in little time.
 
 ## Installation
 
@@ -23,46 +41,10 @@ php artisan fjord:admin
 
 It's all setup now, visit http://yourapp.tld/admin
 
-## CRUD
+## Demo
 
-Create your first CRUD-Model by typing the command:
+Try the [Demo](https://demo.fjord-admin.com)
 
-```bash
-php artisan fjord:crud
-```
+## License
 
-Follow the instructions and your Model will be cruddy in no-time.
-
-![Fjord Interface](https://raw.githubusercontent.com/aw-studio/fjord/master/crud.png 'Fjord CRUD')
-
-## Multilanguage
-
-If your application is multilingual edit the `config/translatable.php` config
-and set the locals to your needing:
-
-```php
-'locales' => [
-    'de',
-    'en'
-],
-```
-
-## Extend Fjord Vue Application
-
-To use the npm fjord package you must install the local package that is located in the vendor folder:
-
-```
-npm i vendor/aw-studio/fjord
-```
-
-You can now extend the Fjord Vue Application:
-
-```javascript
-import Fjord from 'fjord';
-
-const store = {};
-
-new Fjord({
-    store
-});
-```
+The Laravel framework is open-sourced software licensed under the [MIT license](LICENSE.md).

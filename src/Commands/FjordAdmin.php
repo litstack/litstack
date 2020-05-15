@@ -3,7 +3,7 @@
 namespace Fjord\Commands;
 
 use Illuminate\Console\Command;
-use Fjord\Fjord\Models\FjordUser;
+use Fjord\User\Models\FjordUser;
 use Spatie\Permission\Models\Role;
 
 class FjordAdmin extends Command
@@ -44,14 +44,19 @@ class FjordAdmin extends Command
             return;
         }
 
-        $name = $this->ask('enter the admin username');
-        $email = $this->ask('enter the admin email');
-        $password = $this->secret('enter the admin password');
+        $username = $this->ask('Enter the admin username');
+        $first_name = $this->ask('Enter the admin first name');
+        $last_name = $this->ask('Enter the admin last name');
+        $email = $this->ask('Enter the admin email');
+        $password = $this->secret('Enter the admin password');
 
         $user = FjordUser::firstOrCreate([
-            'name' => $name,
+            'username' => $username,
             'email' => $email,
-            'password' => bcrypt($password)
+        ], [
+            'password' => bcrypt($password),
+            'first_name' => $first_name,
+            'last_name' => $last_name,
         ]);
 
         $user->assignRole('admin');

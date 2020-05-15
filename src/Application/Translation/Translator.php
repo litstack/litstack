@@ -47,6 +47,41 @@ class Translator
      */
     public function trans(string $key = null, $replace = [])
     {
+        $langKey = $this->getLangKey($key);
+
+        if ($langKey === false) {
+            return $key;
+        }
+
+        return __($langKey, $replace, $this->getLocale());
+    }
+
+    /**
+     * Get choice translation for Fjord application.
+     *
+     * @param string $key
+     * @param array $replace
+     * @return string
+     */
+    public function choice(string $key = null, $number, $replace = [])
+    {
+        $langKey = $this->getLangKey($key);
+
+        if ($langKey === false) {
+            return $key;
+        }
+
+        return trans_choice($langKey, $number, $replace, $this->getLocale());
+    }
+
+    /**
+     * Get language key.
+     *
+     * @param string $key
+     * @return string|boolean
+     */
+    protected function getLangKey(string $key = null)
+    {
         foreach ($this->paths as $path) {
 
             // Look through all registered paths and return the translation if 
@@ -54,14 +89,14 @@ class Translator
             $namespace = $this->getNamespaceFromPath($path);
             $langKey = "{$namespace}::{$key}";
 
-            if (!Lang::has($langKey)) {
+            if (!Lang::has($langKey, $this->getLocale(), $fallback = false)) {
                 continue;
             }
 
-            return __($langKey, $replace, $this->getLocale());
+            return $langKey;
         }
 
-        return $key;
+        return false;
     }
 
     /**
@@ -78,17 +113,42 @@ class Translator
             return $fallback;
         }
 
-        // Not logged in.
-        if (!fjord_user()) {
-            return $fallback;
-        }
+        $locale = fjord_user()
+            ? fjord_user()->locale
+            : $this->getBrowserLocale();
 
         // Locale not allowed.
-        if (!in_array(fjord_user()->locale, config('fjord.translatable.locales'))) {
+        if (!in_array($locale, config('fjord.translatable.locales'))) {
             return $fallback;
         }
 
-        return fjord_user()->locale;
+        return $locale;
+    }
+
+    /**
+     * Get locale from browser.
+     *
+     * @return void
+     */
+    public function getBrowserLocale()
+    {
+        if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            return config('fjord.translatable.fallback_locale');
+        }
+
+        return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2)
+            ?? config('fjord.translatable.fallback_locale');
+    }
+
+    /** 
+     * Check if the Fjord application is running in a locale.
+     * 
+     * @param string $locale
+     * @return boolean
+     */
+    public function isLocale(string $locale)
+    {
+        return $locale == $this->getLocale();
     }
 
     /**

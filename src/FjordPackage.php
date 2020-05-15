@@ -2,11 +2,26 @@
 
 namespace Fjord;
 
+use Fjord\Config\Traits\HasIndex;
 use Fjord\Application\Application;
+use Fjord\Vue\Components\ColComponent;
+use Fjord\Vue\Components\CardComponent;
+use Fjord\Vue\Components\InfoComponent;
+use Fjord\Crud\Config\Traits\HasCrudForm;
 use Fjord\User\Components\UsersComponent;
-use Fjord\Form\Vue\Components\CrudShowComponent;
-use Fjord\Form\Vue\Components\CrudIndexComponent;
+use Fjord\Crud\Config\Traits\HasCrudIndex;
+use Fjord\Crud\Components\CrudFormComponent;
+use Fjord\Crud\Components\CrudIndexComponent;
+use Fjord\User\Config\UserIndexConfigFactory;
+use Fjord\Config\Factories\IndexConfigFactory;
+use Fjord\Vue\Components\Index\ColImageComponent;
+use Fjord\Vue\Components\Index\ColToggleComponent;
 use Fjord\Application\Package\FjordPackage as Package;
+use Fjord\Crud\Config\Factories\CrudFormConfigFactory;
+use Fjord\Crud\Config\Factories\CrudIndexConfigFactory;
+use Fjord\Vue\Components\Index\ColCrudRelationComponent;
+use Fjord\Application\Navigation\NavigationConfigFactory;
+use Fjord\Application\Navigation\Config as NavigationConfig;
 
 class FjordPackage extends Package
 {
@@ -17,9 +32,9 @@ class FjordPackage extends Package
      */
     protected $providers = [
         \Fjord\Application\Translation\TranslationServiceProvider::class,
-        \Fjord\Application\RouteServiceProvider::class,
+        \Fjord\Application\ApplicationRouteServiceProvider::class,
         \Fjord\User\ServiceProvider::class,
-        \Fjord\Form\ServiceProvider::class,
+        \Fjord\Crud\ServiceProvider::class,
     ];
 
     /**
@@ -35,29 +50,48 @@ class FjordPackage extends Package
         Commands\FjordForm::class,
         Commands\FjordExtend::class,
         Commands\FjordExtension::class,
+        Commands\FjordComponents::class,
         Commands\FjordDefaultPermissions::class,
     ];
 
     /**
-     * List of components this package contains.
+     * List of extendable root Vue components this package contains.
      * 
      * @var array
      */
     protected $components = [
+        // Root
         'fj-users' => UsersComponent::class,
         'fj-crud-index' => CrudIndexComponent::class,
-        'fj-crud-show' => CrudShowComponent::class,
+        'fj-crud-form' => CrudFormComponent::class,
+
+        // Other
+        'fj-col' => ColComponent::class,
+        'fj-card' => CardComponent::class,
+        'fj-info' => InfoComponent::class,
+        'fj-col-image' => ColImageComponent::class,
+        'fj-col-toggle' => ColToggleComponent::class,
+        'fj-col-crud-relation' => ColCrudRelationComponent::class
     ];
 
     /**
-     * List of handlers for config files.
+     * List of config classes with their associated factories.
      * 
      * @var array
      */
-    protected $configHandler = [
-        'navigation.main' => \Fjord\Application\Navigation\MainConfig::class,
-        'navigation.topbar' => \Fjord\Application\Navigation\TopbarConfig::class,
-        'users.table' => User\Config\TableConfig::class
+    protected $configFactories = [
+        // Main
+        HasIndex::class => IndexConfigFactory::class,
+
+        // Navigation
+        NavigationConfig::class => NavigationConfigFactory::class,
+
+        // Crud
+        HasCrudForm::class => CrudFormConfigFactory::class,
+        HasCrudIndex::class => CrudIndexConfigFactory::class,
+
+        // Users
+        User\Config\IndexConfig::class => UserIndexConfigFactory::class
     ];
 
     /**
@@ -68,10 +102,6 @@ class FjordPackage extends Package
      */
     public function boot(Application $app)
     {
-        $app->addCssFile('/' . config('fjord.route_prefix') . '/css/app.css');
-
-        foreach (config('fjord.assets.css') as $path) {
-            $app->addCssFile($path);
-        }
+        //
     }
 }

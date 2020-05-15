@@ -2,7 +2,6 @@
 
 namespace Fjord\Application;
 
-use Illuminate\Routing\Route;
 use Illuminate\View\View;
 
 class Kernel
@@ -21,12 +20,13 @@ class Kernel
      * @var array
      */
     protected $bootstrappers = [
+        Bootstrap\RegisterSingletons::class,
         Bootstrap\BootstrapTranslator::class,
+        Bootstrap\BootstrapKernel::class,
         Bootstrap\DiscoverPackages::class,
-        Bootstrap\RegisterPackageProviders::class,
-        Bootstrap\RegisterPackageCommands::class,
-        Bootstrap\RegisterPackageExtensions::class,
+        Bootstrap\RegisterConfigFactories::class,
         Bootstrap\BootstrapVueApplication::class,
+        Bootstrap\RegisterPackages::class,
     ];
 
     /**
@@ -44,6 +44,12 @@ class Kernel
      */
     protected $formattedExtensions = [];
 
+    /**
+     * Fjord application service providers.
+     *
+     * @var array
+     */
+    public $providers = [];
 
     /**
      * Create a new Fjord kernel instance.
@@ -77,7 +83,7 @@ class Kernel
     {
         $this->build($view);
 
-        $this->extend($view);
+        //$this->extend($view);
     }
 
     /**
@@ -89,7 +95,7 @@ class Kernel
     {
         $this->registerRootExtensions();
 
-        $this->app->bootstrapWith($this->bootstrappers);
+        $this->app->bootstrapWith($this->bootstrappers, $this);
     }
 
     /**
@@ -112,7 +118,7 @@ class Kernel
      */
     public function extend(View $view)
     {
-        $this->app->extend($view);
+        //
     }
 
     /**

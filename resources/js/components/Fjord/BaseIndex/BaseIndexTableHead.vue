@@ -1,36 +1,29 @@
 <template>
-    <thead>
+    <thead class="fj-index-table-head">
         <tr>
-            <th v-for="(col, key) in tableCols" :key="key">
-                <template v-if="col.value == 'check'">
-                    <slot name="checkbox" />
-                </template>
-                <template v-else>
-                    <div
-                        @click="sortCol(col.value, col.sort_by, key)"
-                        :class="{
-                            'text-muted': key != activeCol && activeCol != null,
-                            ['pointer']: col.sort_by ? true : false
-                        }"
-                    >
-                        <span v-html="col.label" />
-                        <span
-                            class="d-inline-block ml-2"
-                            v-if="key == activeCol"
-                        >
-                            <fa-icon
-                                icon="sort-amount-down-alt"
-                                v-if="sort == 'asc'"
-                            />
-                            <fa-icon
-                                icon="sort-amount-down"
-                                v-if="sort == 'desc'"
-                            />
-                        </span>
-                    </div>
-                </template>
+            <th v-if="sortable"></th>
+            <th v-if="!noSelect"><slot name="checkbox" /></th>
+            <th v-for="(col, key) in cols" :key="key">
+                <div
+                    @click="sortCol(col.value, col.sort_by, key)"
+                    :class="{
+                        'text-muted': key != activeCol && activeCol != null,
+                        ['pointer']: col.sort_by ? true : false
+                    }"
+                >
+                    <span v-html="col.label" />
+                    <span class="d-inline-block ml-2" v-if="key == activeCol">
+                        <fa-icon
+                            icon="sort-amount-down-alt"
+                            v-if="sort == 'asc'"
+                        />
+                        <fa-icon
+                            icon="sort-amount-down"
+                            v-if="sort == 'desc'"
+                        />
+                    </span>
+                </div>
             </th>
-            <th v-if="hasRecordActions"></th>
         </tr>
     </thead>
 </template>
@@ -39,17 +32,23 @@
 export default {
     name: 'BaseIndexTableHead',
     props: {
-        tableCols: {
-            type: Array,
+        sortable: {
+            type: Boolean,
             required: true
         },
-        hasRecordActions: {
-            type: Boolean,
+        cols: {
+            type: Array,
             required: true
         },
         selectedItems: {
             type: Array,
             required: true
+        },
+        noSelect: {
+            type: Boolean,
+            default() {
+                return false;
+            }
         }
     },
     data() {
@@ -96,8 +95,16 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 .pointer {
     cursor: pointer;
+}
+.fj-index-table-head {
+    th {
+        padding-bottom: 0.75rem;
+    }
+    span {
+        font-weight: 600;
+    }
 }
 </style>

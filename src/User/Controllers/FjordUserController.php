@@ -2,49 +2,75 @@
 
 namespace Fjord\User\Controllers;
 
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use Fjord\Fjord\Models\FjordUser;
-use Fjord\User\Requests\UpdateUserRoleRequest;
-use Fjord\User\Requests\IndexFjordUserRequest;
 use Fjord\Support\IndexTable;
-use Fjord\Support\Facades\Package;
+use Fjord\User\Models\FjordUser;
+use Fjord\User\Requests\FjordUserReadRequest;
+use Fjord\User\Requests\FjordUserDeleteRequest;
 
-class FjordUserController extends Controller
+class FjordUserController
 {
-    public function showIndex(IndexFjordUserRequest $request)
+    /**
+     * Create new FjordUserController instance.
+     * 
+     * @return void
+     */
+    public function __construct()
     {
-        $config = Package::config('aw-studio/fjord', 'users.table');
+        $this->config = fjord()->config('user.user_index');
+    }
+
+    /**
+     * Show user index.
+     *
+     * @param FjordUserReadRequest $request
+     * @return void
+     */
+    public function showIndex(FjordUserReadRequest $request)
+    {
+        $config = $this->config->get(
+            'sortBy',
+            'sortByDefault',
+            'perPage',
+            'index',
+            'filter'
+        );
 
         return view('fjord::app')->withComponent('fj-users')
             ->withTitle('Users')
             ->withProps([
-                'usersCount' => FjordUser::count(),
                 'config' => $config,
             ]);
     }
 
-    public function deleteAll(Request $request)
+    /**
+     * Delete multiple users.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function deleteAll(FjordUserDeleteRequest $request)
     {
         IndexTable::deleteSelected(FjordUser::class, $request);
-        return response(['message' => __f('fj.deleted_all', ['count' => count($request->ids)])]);
+
+        return response([
+            'message' => __f('fj.deleted_all', [
+                'count' => count($request->ids)
+            ])
+        ]);
     }
 
-    public function fetchIndex(Request $request)
+    /**
+     * Fetch index.
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function fetchIndex(FjordUserReadRequest $request)
     {
-        return IndexTable::get(FjordUser::query(), $request);
-    }
-
-    public function update(UpdateUserRoleRequest $request)
-    {
-        $user = FjordUser::findOrFail($request->user['id']);
-        $role = Role::findOrFail($request->role['id']);
-
-        if ($user->hasRole($role)) {
-            $user->removeRole($role);
-        } else {
-            $user->syncRoles([$role]);
-        }
+        return IndexTable::query($this->config->index_query)
+            ->request($request)
+            ->search($this->config->search)
+            ->get();
     }
 }

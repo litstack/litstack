@@ -9,16 +9,31 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRoute
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
+    /**
+     * Boot application services.
+     *
+     * @return void
+     */
     public function boot()
     {
         parent::boot();
     }
 
+    /**
+     * Map routes.
+     *
+     * @return void
+     */
     public function map()
     {
         $this->mapAuthRoutes();
     }
 
+    /**
+     * Map auth routes.
+     *
+     * @return void
+     */
     protected function mapAuthRoutes()
     {
         FjordRoute::public()
@@ -32,7 +47,11 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::post('logout', AuthController::class . '@logout')
             ->name('logout');
 
-        FjordRoute::post('/fjord/register', AuthController::class . '@register');
+        FjordRoute::post('logout/session', AuthController::class . '@logoutSession')
+            ->name('logout.session');
+
+        FjordRoute::post('/fjord/register', AuthController::class . '@register')
+            ->name('register');
 
         FjordRoute::public()
             ->get('/fjord/password/reset/{token}', ResetPasswordController::class . '@showResetForm')->name('password.reset');

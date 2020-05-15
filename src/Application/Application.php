@@ -2,9 +2,19 @@
 
 namespace Fjord\Application;
 
-use Illuminate\View\View;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\View as ViewFactory;
 
+/**
+ * The Application class manages all depencies for the view fjord::app:
+ * Bootstrapping Application,
+ * Registering and booting packages,
+ * Registering and executing extensions,
+ * Registering and calling config handlers,
+ * Binding css files for fjord,
+ * Bind composer to the fjord::app view
+ */
 class Application
 {
     use Concerns\ManagesFiles;
@@ -24,6 +34,13 @@ class Application
     protected $extensions = [];
 
     /**
+     * Registered config factories.
+     *
+     * @var array
+     */
+    protected $configFactories = [];
+
+    /**
      * Indicates if the application has been bootstrapped before.
      *
      * @var bool
@@ -31,17 +48,38 @@ class Application
     protected $hasBeenBootstrapped = false;
 
     /**
+     * Singleton classes.
+     *
+     * @var array
+     */
+    protected $singletons = [
+        'config.loader' => \Fjord\Config\ConfigLoader::class,
+        'components' => Vue\Components::class,
+    ];
+
+    /**
+     * Bind composer to fjord::app view.
+     * 
+     * @param string $composer
+     * @return \Illuminate\View\Factory
+     */
+    public function composer(string $composer)
+    {
+        return ViewFactory::composer('fjord::app', $composer);
+    }
+
+    /**
      * Run the given array of bootstrap classes.
      *
      * @param  string[]  $bootstrappers
      * @return void
      */
-    public function bootstrapWith(array $bootstrappers)
+    public function bootstrapWith(array $bootstrappers, $kernel)
     {
         $this->hasBeenBootstrapped = true;
 
         foreach ($bootstrappers as $bootstrapper) {
-            with(new $bootstrapper())->bootstrap($this);
+            with(new $bootstrapper())->bootstrap($this, $kernel);
         }
     }
 
@@ -81,14 +119,13 @@ class Application
     }
 
     /**
-     * Execute extensions for the given components.
-     * 
-     * @param Illuminate\View\View $view
-     * @return void
+     * Get extensions.
+     *
+     * @return array
      */
-    public function extend(View $view)
+    public function getExtensions()
     {
-        $this->get('vue')->extend($view, $this->extensions);
+        return $this->extensions;
     }
 
     /**
@@ -99,11 +136,11 @@ class Application
      */
     public function get($binding)
     {
-        return $this->bindings[$binding] ?? null;
+        return $this->bindings[$binding] ??  null;
     }
 
     /**
-     * Register a binding with the container.
+     * Register a binding with the application.
      *
      * @param  string  $abstract
      * @param  Instance  $instance
@@ -113,17 +150,6 @@ class Application
     public function bind($abstract, $instance)
     {
         $this->bindings[$abstract] = $instance;
-    }
-
-    /**
-     * Load config for a Fjord package.
-     * 
-     * @param string $config
-     * @return array $config
-     */
-    public function config(string $config)
-    {
-        return $this->get('packages')->config('aw-studio/fjord', $config);
     }
 
     /**
@@ -147,5 +173,70 @@ class Application
             "name" => $name,
             "extension" => $extension
         ];
+    }
+
+    /**
+     * Register config handler.
+     * 
+     * @param string $dependency
+     * @param string $handler
+     * @return void
+     */
+    public function registerConfigFactory(string $dependency, string $factory)
+    {
+        $this->configFactories[$dependency] = $factory;
+    }
+
+    /**
+     * Get config handler.
+     *
+     * @return array
+     */
+    public function getConfigFactories()
+    {
+        return $this->configFactories;
+    }
+
+    /**
+     * Get all singleton classes.
+     *
+     * @return array $singletons
+     */
+    public function singletons()
+    {
+        return $this->singletons;
+    }
+
+    /**
+     * Register a shared binding in the application.
+     *
+     * @param string $abstract
+     * @param Instance $instance
+     * @return void
+     */
+    public function singleton(string $abstract, $instance)
+    {
+        return $this->bind($abstract, $instance);
+    }
+
+    /**
+     * Get locale for Fjord application.
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->get('translator')->getLocale();
+    }
+
+    /** 
+     * Check if the Fjord application is running in a locale.
+     * 
+     * @param string $locale
+     * @return boolean
+     */
+    public function isLocale(string $locale)
+    {
+        return $this->get('translator')->isLocale($locale);
     }
 }

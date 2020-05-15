@@ -1,32 +1,29 @@
 <template>
-    <b-dropdown-group
-        :header="$t('fj.choose_language')"
-        v-if="config.translatable ? config.translatable.translatable : false"
-    >
-        <b-dropdown-item-button
-            v-for="(locale, index) in config.translatable.locales"
-            :key="index"
-            v-bind:active="isLocaleActive(locale)"
-            @click="setAppLocale(locale)"
-        >
-            <span
-                class="flag-icon flag-icon-squared"
-                :class="flagIcon(locale)"
-            ></span>
-            {{ locale }}
-        </b-dropdown-item-button>
-    </b-dropdown-group>
+    <b-col cols="12">
+        <h6>{{ __('base.system_language').capitalizeAll() }}</h6>
+        <b-select
+            :value="$i18n.locale"
+            :options="options"
+            @change="setAppLocale"
+        />
+    </b-col>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
     name: 'Locales',
+    props: {
+        config: {
+            type: Object,
+            default() {
+                return Fjord.config.translatable;
+            }
+        }
+    },
     methods: {
         async setAppLocale(locale) {
             let response = await this.$store.dispatch('setAppLocale', {
-                locale,
+                locale
             });
         },
         flagIcon(locale) {
@@ -37,19 +34,17 @@ export default {
         },
         isLocaleActive(locale) {
             return this.$i18n.locale == locale;
-        },
+        }
     },
     computed: {
-        ...mapGetters(['config']),
-    },
+        options() {
+            let options = {};
+            for (let i in this.config.locales) {
+                let locale = this.config.locales[i];
+                options[locale] = this.__language(locale);
+            }
+            return options;
+        }
+    }
 };
 </script>
-
-<style lang="scss" scoped>
-.flag-icon {
-    width: 20px;
-    height: 20px;
-    line-height: 20px;
-    border-radius: 100px;
-}
-</style>

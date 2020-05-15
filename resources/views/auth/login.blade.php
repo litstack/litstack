@@ -1,77 +1,107 @@
-@extends('fjord::index')
+@extends('fjord::landing')
 
 @section('title')
     Login
 @endsection
 
 @section('content')
-<div class="fjord-container container sm">
+
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
                 <div class="card-body">
-                    <form method="POST" action="{{ route('fjord.login') }}">
-                        @csrf
+                    <div class="row justify-content-center">
+                        <div class="col-sm-10">
+                            <form method="POST" id="login" onsubmit="doLogin(event)" class="mt-4 mb-4">
+                                @csrf
+                                <h6 class="mb-3">{{ __f('login.login') }}</h6>
+                                <div class="form-group">
+                                    <input 
+                                        id="email" 
+                                        class="form-control @error('email') is-invalid @enderror" 
+                                        name="email" 
+                                        required 
+                                        @if(config('fjord.login.username'))
+                                        placeholder="{{ ucfirst(__f('login.email_or_username')) }} "
+                                        type="text"
+                                        @else
+                                        placeholder="{{ ucfirst(__f('base.email')) }}"
+                                        autocomplete="email" 
+                                        type="email"
+                                        @endif
+                                        autofocus>
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
+                                <div class="form-group ">
+                                    <input 
+                                        placeholder="{{ ucfirst(__f('base.password')) }}" 
+                                        id="password" type="password" 
+                                        class="form-control @error('password') is-invalid @enderror" 
+                                        name="password" 
+                                        required 
+                                        autocomplete="current-password">
 
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group d-flex justify-content-between">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="remember" id="remember">
+
+                                        <label class="form-check-label" for="remember">
+                                            {{ __f('login.remember_me') }}
+                                        </label>
+                                    </div>
+                                    {{--
+                                    <a href="{{ route('password.request') }}" id="forgot-password" style="display:none;">
+                                        {{ __f('login.forgot_password') }}
                                     </a>
-                                @endif
-                            </div>
+                                    --}}                                    
+                                </div>
+
+                                <div class="text-danger text-center" id="login-failed" style="display:none;">
+                                    {{ __f('login.failed') }}
+                                </div>
+
+                                <div class="form-group row mt-4 justify-content-center d-flex">
+                                        <button type="submit" class="btn btn-primary">
+                                            {{ __f('login.do_login') }}
+                                        </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <script type="text/javascript">
+        function doLogin(e) {
+            e.preventDefault()
+
+            const data = new FormData(document.forms.login);
+
+            let promise = axios.post('{{ Fjord::route('login.post') }}', data)
+            promise.then(function(response) {
+                window.location = response.data
+            })
+            promise.catch(function(error) {
+                document.getElementById('login-failed').style.display = 'block';
+                document.getElementById('forgot-password').style.display = 'block';
+            })
+        }
+    </script>
+    @if(isset($script))
+        <script src="{{ $script }}"></script>
+    @endif
 @endsection

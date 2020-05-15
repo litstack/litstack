@@ -1,6 +1,6 @@
 <template>
     <div class="d-inline-block">
-        <b-button size="sm" variant="primary" @click="visible = !visible">
+        <b-button variant="primary" @click="visible = !visible">
             <fa-icon icon="plus" />
             {{ $t('fj.add_model', { model: 'Fjord ' + $t('fj.user') }) }}
         </b-button>
@@ -11,11 +11,31 @@
             <b-form-group :label="$t('fj.enter_username')" label-for="username">
                 <b-form-input
                     id="username"
-                    v-model="user.name"
+                    v-model="user.username"
                     trim
                 ></b-form-input>
                 <b-form-invalid-feedback :state="usernameState">
-                    {{ error('name') }}
+                    {{ error('username') }}
+                </b-form-invalid-feedback>
+            </b-form-group>
+            <b-form-group :label="__('base.first_name')" label-for="first_name">
+                <b-form-input
+                    id="first_name"
+                    v-model="user.first_name"
+                    trim
+                ></b-form-input>
+                <b-form-invalid-feedback :state="first_name">
+                    {{ error('first_name') }}
+                </b-form-invalid-feedback>
+            </b-form-group>
+            <b-form-group :label="__('base.last_name')" label-for="last_name">
+                <b-form-input
+                    id="last_name"
+                    v-model="user.last_name"
+                    trim
+                ></b-form-input>
+                <b-form-invalid-feedback :state="lastnameState">
+                    {{ error('last_name') }}
                 </b-form-invalid-feedback>
             </b-form-group>
             <b-form-group
@@ -79,13 +99,17 @@
                         class="float-right"
                         @click="storeFjordUser"
                         :disabled="
-                            !passwordState || !emailState || !usernameState
+                            !passwordState ||
+                                !emailState ||
+                                !usernameState ||
+                                !lastnameState ||
+                                !firstnameState
                         "
                     >
                         <fa-icon icon="user" />
                         {{
                             $t(`fj.create_model`, {
-                                model: 'Fjord ' + $t('fj.user'),
+                                model: 'Fjord ' + $t('fj.user')
                             })
                         }}
                         <b-spinner
@@ -107,13 +131,15 @@ export default {
         return {
             visible: false,
             user: {
-                name: '',
+                username: '',
+                first_name: '',
+                last_name: '',
                 email: '',
                 password: this.keygen(20),
-                sendResetLink: true,
+                sendResetLink: true
             },
             errors: [],
-            busy: false,
+            busy: false
         };
     },
     methods: {
@@ -136,7 +162,7 @@ export default {
             this.$bvToast.toast(
                 this.$t('fj.model_saved', { model: 'Fjord User' }),
                 {
-                    variant: 'success',
+                    variant: 'success'
                 }
             );
         },
@@ -147,10 +173,12 @@ export default {
         },
         init() {
             this.user = {
-                name: '',
+                username: '',
+                first_name: '',
+                last_name: '',
                 email: '',
                 password: this.keygen(20),
-                sendResetLink: false,
+                sendResetLink: false
             };
         },
         makePassword() {
@@ -167,17 +195,29 @@ export default {
                 );
             }
             return result;
-        },
+        }
     },
     computed: {
         score() {
             return zxcvbn(this.user.password).score;
         },
-        usernameState() {
-            if (this.errors.hasOwnProperty('name')) {
+        firstnameState() {
+            if (this.errors.hasOwnProperty('first_name')) {
                 return false;
             }
-            return this.user.name.length > 0;
+            return this.user.first_name.length > 0;
+        },
+        lastnameState() {
+            if (this.errors.hasOwnProperty('last_name')) {
+                return false;
+            }
+            return this.user.last_name.length > 0;
+        },
+        usernameState() {
+            if (this.errors.hasOwnProperty('username')) {
+                return false;
+            }
+            return this.user.username.length > 0;
         },
         passwordState() {
             return this.score == 4;
@@ -215,7 +255,7 @@ export default {
         },
         name() {
             return this.user.name;
-        },
+        }
     },
     watch: {
         email(val) {
@@ -227,8 +267,8 @@ export default {
             if (this.errors.hasOwnProperty('name')) {
                 Vue.delete(this.errors, 'name');
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

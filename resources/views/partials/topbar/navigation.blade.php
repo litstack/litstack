@@ -1,12 +1,12 @@
-<b-dropdown class="m-md-2" right variant="transparent" size="sm">
+<b-dropdown class="m-md-2 dropdown-sm-square" dropbottom no-caret variant="transparent" size="md">
     <template v-slot:button-content>
-        <fa-icon icon="cogs" />
+        <fa-icon icon="bars" />
     </template>
     
     @php
     $first = true;
     @endphp
-    @foreach(fjord()->app()->config('navigation.topbar') as $group)
+    @foreach(fjord()->config('navigation')->topbar as $section)
         @if($first)
             @php
             $first = false;
@@ -14,18 +14,16 @@
         @else
             <b-dropdown-divider></b-dropdown-divider>
         @endif
-        @foreach($group as $entry)
-            @if(is_string($entry))
-                <header role="heading" class="dropdown-header">{{ $entry }}</header>
+        @foreach($section as $entry)
+            @if($entry['type'] == 'title')
+                <header role="heading" class="dropdown-header">{{ $entry['title'] }}</header>
             @else
-
                 @isset($entry['link'])
                     <b-dropdown-item href="{{ $entry['link'] }}">
-                        @isset($entry['title'])
-                            {{ $entry['title'] }}
-                        @elseif(isset($entry['icon']))
-                            {!! $entry['icon'] !!} {{ $entry['link'] }}
-                        @endisset
+                        @if(array_key_exists('icon', $entry))
+                            <div class="mr-2 d-inline-block fj-topbar__icon">{!! $entry['icon'] !!}</div>
+                        @endif
+                         {{ $entry['title'] }}
                     </b-dropdown-item>
                 @endisset
                 @isset ($entry['component'])
@@ -36,5 +34,6 @@
         @endforeach
     @endforeach
     <b-dropdown-divider></b-dropdown-divider>
-    <fj-locales />
+    <fj-logout :url="'{{route('fjord.logout')}}'"></fj-logout>
+    
 </b-dropdown>

@@ -1,12 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Fjord\Form\DummyNamespace;
+namespace FjordApp\Controllers\Form\DummyNamespace;
 
-use Fjord\Fjord\Models\FjordUser;
-use Fjord\Form\Controllers\FormController;
+use Fjord\User\Models\FjordUser;
+use Fjord\Crud\Controllers\FormController;
+use FjordApp\Config\Form\DummyNamespace\DummyConfigClass;
 
 class DummyClassname extends FormController
 {
+    /**
+     * Form config class.
+     *
+     * @var string
+     */
+    protected $config = DummyConfigClass::class;
+
+
     /**
      * Authorize request for permission operation and authenticated fjord-user.
      * Operations: read, update

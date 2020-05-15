@@ -2,40 +2,30 @@
 
 namespace Fjord\User\Components;
 
-use Fjord\Application\Vue\Component;
+use Closure;
+use Fjord\Vue\RootComponent;
 
-class UsersComponent extends Component
+class UsersComponent extends RootComponent
 {
-    /**
-     * Add to recordActions prop.
-     *
-     * @param string $component
-     * @return void
-     */
-    public function addRecordAction(string $component)
+    protected function slots()
     {
-        $this->props['config']['recordActions'][] = $component;
+        return [
+            'indexControls' => [
+                'many' => true
+            ],
+            'index' => [
+                'many' => true
+            ]
+        ];
     }
-
     /**
-     * Add to globalActions prop.
+     * Edit index table.
      *
-     * @param string $component
+     * @param \Closure $closure
      * @return void
      */
-    public function addGlobalAction(string $component)
+    public function index(Closure $closure)
     {
-        $this->props['config']['globalActions'][] = $component;
-    }
-
-    /**
-     * Add table column to index table.
-     *
-     * @param array $col
-     * @return void
-     */
-    public function addTableColumn(array $col)
-    {
-        $this->props['config']['cols'][] = $col;
+        $closure($this->props['config']['index']);
     }
 }

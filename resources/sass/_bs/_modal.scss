@@ -1,0 +1,36 @@
+.modal {
+    &-full {
+        width: 100vw;
+        max-width: 100vw;
+        margin: 0;
+        height: 100vh;
+
+
+        .modal-content {
+            border: none;
+            border-radius: 0;
+            height: 100vh;
+            background-color: $gray-900;
+            flex-wrap: wrap;
+
+            *:not(input) {
+                color: white;
+            }
+
+            .modal-header,
+            .modal-footer {
+                height: 6rem;
+                padding: 0 2rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-color: $gray-200;
+            }
+
+            .modal-body {
+                height: calc(100vh - 12rem);
+                position: relative;
+            }
+        }
+    }
+}

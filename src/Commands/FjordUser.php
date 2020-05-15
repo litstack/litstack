@@ -3,8 +3,7 @@
 namespace Fjord\Commands;
 
 use Illuminate\Console\Command;
-use Fjord\Fjord\Models\FjordUser as User;
-use Spatie\Permission\Models\Role;
+use Fjord\Support\Facades\Fjord;
 
 class FjordUser extends Command
 {
@@ -39,19 +38,24 @@ class FjordUser extends Command
      */
     public function handle()
     {
-        if (!Role::where('name', 'user')->exists()) {
+        if (!Fjord::installed()) {
             $this->error('You may run fjord:install before fjord:user.');
             return;
         }
 
-        $name = $this->ask('enter the username');
-        $email = $this->ask('enter the email');
-        $password = $this->secret('enter the password');
+        $username = $this->ask('Enter the username');
+        $first_name = $this->ask('Enter the first name');
+        $last_name = $this->ask('Enter the last name');
+        $email = $this->ask('Enter the email');
+        $password = $this->secret('Enter the password');
 
-        $user = User::firstOrCreate([
-            'name' => $name,
+        $user = FjordUser::firstOrCreate([
+            'username' => $username,
             'email' => $email,
-            'password' => bcrypt($password)
+        ], [
+            'password' => bcrypt($password),
+            'first_name' => $first_name,
+            'last_name' => $last_name,
         ]);
 
         $user->assignRole('user');

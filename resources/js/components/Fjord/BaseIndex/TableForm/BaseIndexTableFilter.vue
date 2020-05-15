@@ -1,11 +1,10 @@
 <template>
-    <b-dropdown
-        right
-        :text="$t('fj.filter')"
-        class="btn-br-none"
-        :variant="filterVariant"
-        :disabled="!filter"
-    >
+    <b-dropdown right :variant="filterVariant" :disabled="!filter">
+        <template v-slot:button-content>
+            <fa-icon icon="filter" />
+            {{ $t('fj.filter') }}
+        </template>
+
         <b-dropdown-group
             :header="key"
             v-for="(group, key) in filter"
@@ -34,7 +33,7 @@ export default {
     props: {
         filter: {
             required: true,
-            type: Object
+            type: [Object, Array]
         }
     },
     data() {
@@ -45,11 +44,11 @@ export default {
     methods: {
         doFilter(key) {
             this.filter_scope = key;
-            this.$emit('onFilterChange', key)
+            this.$emit('onFilterChange', key);
         },
         resetFilter() {
             this.filter_scope = null;
-            this.$emit('onFilterChange', null)
+            this.$emit('onFilterChange', null);
         },
         filterActive(key) {
             return key == this.filter_scope;

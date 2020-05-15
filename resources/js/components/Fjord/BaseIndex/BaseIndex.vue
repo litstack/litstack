@@ -1,18 +1,29 @@
 <template>
     <div>
-        <b-card no-body class="fj-index-table">
+        <b-card
+            no-body
+            class="fj-index-table"
+            :style="noCard ? 'box-shadow: none;' : ''"
+        >
             <b-tabs card v-if="hasTabs" @activate-tab="newTab">
                 <b-tab
                     :title="'title' in t ? t.title : t"
                     :active="t == tab"
                     v-for="(t, index) in tabs"
                     :key="index"
-                    no-body/>
+                    no-body
+                />
             </b-tabs>
             <div class="card-body">
-                <slot name="header" v-bind:tab="tab"/>
-                
-                <fj-base-index-table-form>
+                <slot name="header" v-bind:tab="tab" />
+
+                <fj-base-index-table-form
+                    v-if="
+                        searchKeys.length != 0 ||
+                            !_.isEmpty(sortBy) ||
+                            !_.isEmpty(filter)
+                    "
+                >
                     <b-input-group>
                         <b-input-group-prepend is-text>
                             <fa-icon icon="search" />
@@ -21,60 +32,94 @@
                         <fj-base-index-table-search
                             :nameSingular="nameSingular"
                             :namePlural="namePlural"
-                            @search="doSearch"/>
-                        <template v-slot:append>
-                            <fj-base-index-table-filter
-                                :filter="filter"
-                                @onFilterChange="filterChanged"/>
-                            <fj-base-index-table-sort
-                                :sortBy="sortBy"
-                                :sortByDefault="sortByDefault"
-                                @sort="sort"/>
-                        </template>
+                            @search="doSearch"
+                        />
                     </b-input-group>
 
+                    <fj-base-index-table-filter
+                        :filter="filter"
+                        v-if="hasFilter"
+                        @onFilterChange="filterChanged"
+                    />
+
+                    <fj-base-index-table-sort
+                        :sortBy="sortBy"
+                        v-if="hasSort"
+                        :sortByDefault="sortByDefault"
+                        @sort="sort"
+                    />
                 </fj-base-index-table-form>
 
-                <fj-base-index-table-selected-items-actions
-                    :actions="globalActions"
+                <fj-base-index-table-selected-items-controls
+                    :controls="controls"
                     :items="items"
                     :selectedItems="selectedItems"
-                    @reload="_loadItems()"/>
+                    @reload="executedControls"
+                    v-if="!!controls.length"
+                />
 
                 <fj-base-index-table
+                    ref="table"
+                    :namePlural="namePlural"
+                    :sortable="canSort"
                     :busy="isBusy"
-                    :tableCols="tableCols"
+                    :cols="cols"
                     :items="items"
-                    :recordActions="recordActions"
-                    @selectedItemsChanged="setSelectedItems"
+                    :radio="radio"
+                    :no-head="noHead"
+                    :no-select="noSelect"
+                    :small="small"
+                    :selectedItems="selectedItems"
+                    @select="select"
+                    @unselect="unselect"
                     @sort="sort"
-                    @loadItems="_loadItems()"/>
+                    @loadItems="_loadItems()"
+                    @_sorted="sorted"
+                    :class="{ paginated: total > items.length }"
+                    v-on="$listeners"
+                />
 
-                </fj-index-table-table>
+                <fj-base-index-table-index-indicator
+                    :per-page="perPage"
+                    :total="total"
+                    :items="items"
+                    :current-page="currentPage"
+                    v-if="total > items.length"
+                />
+
+                <div
+                    class="d-flex justify-content-center fj-index-table-pagination"
+                    v-if="numberOfPages > 1"
+                >
+                    <b-pagination-nav
+                        class="mt-2"
+                        :link-gen="linkGen"
+                        v-model="currentPage"
+                        :number-of-pages="numberOfPages"
+                        @change="goToPage"
+                    />
+                </div>
             </div>
-            <fj-base-index-table-index-indicator />
         </b-card>
-        <div
-            class="d-flex justify-content-center"
-            v-if="numberOfPages > 1">
-
-            <b-pagination-nav
-                class="mt-4"
-                :link-gen="linkGen"
-                :number-of-pages="numberOfPages"
-                @change="goToPage">
-            </b-pagination-nav>
-
-        </div>
     </div>
 </template>
 
 <script>
-import TableModel from '@fj-js/eloquent/table.model';
-
 export default {
     name: 'IndexTable',
     props: {
+        sortable: {
+            type: [Boolean, String],
+            default() {
+                return false;
+            }
+        },
+        orderColumn: {
+            type: String,
+            default() {
+                return 'order_column';
+            }
+        },
         tabs: {
             required: false,
             type: Array,
@@ -82,29 +127,47 @@ export default {
                 return [];
             }
         },
+        radio: {
+            type: Boolean,
+            default() {
+                return false;
+            }
+        },
+        small: {
+            type: Boolean,
+            default() {
+                return false;
+            }
+        },
+        noSelect: {
+            type: Boolean,
+            default() {
+                return false;
+            }
+        },
+        noHead: {
+            type: Boolean,
+            default() {
+                return false;
+            }
+        },
+        noCard: {
+            type: Boolean,
+            default() {
+                return false;
+            }
+        },
         cols: {
             required: true,
             type: Array
         },
-        numberOfPages: {
-            type: Number,
-            default: () => {
-                return 1;
-            }
-        },
         searchKeys: {
             type: Array,
             default() {
-                return ['name']
-            },
-        },
-        recordActions: {
-            type: Array,
-            default: () => {
                 return [];
             }
         },
-        globalActions: {
+        controls: {
             type: Array,
             default: () => {
                 return [];
@@ -116,10 +179,9 @@ export default {
         },
         loadItems: {
             type: Function,
-            require: true
-        },
-        sortByDefault: {
-            type: Boolean
+            default() {
+                null;
+            }
         },
         nameSingular: {
             type: String
@@ -127,91 +189,165 @@ export default {
         namePlural: {
             type: String
         },
-        filter: {
-            type: Object,
+        perPage: {
+            type: Number,
             default() {
-                return {}
+                return 20;
+            }
+        },
+        filter: {
+            type: [Object, Array],
+            default() {
+                return {};
             }
         },
         sortBy: {
             type: Object,
             default() {
-                return {}
+                return {};
             }
         },
         sortByDefault: {
-            type: String
+            type: String,
+            default() {
+                return 'id.desc';
+            }
+        },
+        selected: {
+            type: Array,
+            default() {
+                return [];
+            }
         }
     },
     data() {
         return {
-            isBusy: true,
+            isBusy: false,
             tab: null,
-
-            tableCols: {},
-            selectedItems: [],
-
             search: '',
             sort_by_key: '',
-
             filter_scope: null,
-
-            currentPage: 1
+            currentPage: 1,
+            numberOfPages: 1,
+            selectedItems: [],
+            total: 0
         };
     },
-
     watch: {
         tabs() {
-            if(!this.hasTabs) {
-                return
+            if (!this.hasTabs) {
+                return;
             }
-            if(!this.tabs.includes(this.tab)) {
-                this.tab = this.tabs[0]
+            if (!this.tabs.includes(this.tab)) {
+                this.tab = this.tabs[0];
             }
         }
     },
     beforeMount() {
-        this.setTableCols();
-
-        if(this.hasTabs) {
-            this.tab = this.tabs[0]
+        if (this.hasTabs) {
+            this.tab = this.tabs[0];
         }
-        
+        this.selectedItems = _.clone(this.selected);
+
         this.sort_by_key = this.sortByDefault || null;
 
-        this.$on('reload', this._loadItems)
+        this.$on('reload', this._loadItems);
+        this.$on('refreshSelected', () => {
+            this.selectedItems = _.clone(this.selected);
+        });
+        this.$on('refresh', () => {
+            this.$refs.table.$forceUpdate();
+        });
 
         this._loadItems();
     },
     computed: {
-        perPage() {
-            return 20;
+        canSort() {
+            if (!this.sortable) {
+                return false;
+            }
+            if (this.sortable == 'force') {
+                return true;
+            }
+            return (
+                this.sort_by_key == `${this.orderColumn}.asc` ||
+                this.sort_by_key == `${this.orderColumn}.desc`
+            );
+        },
+        hasFilter() {
+            return Object.keys(this.filter).length !== 0;
+        },
+        hasSort() {
+            return Object.keys(this.sortBy).length !== 0;
         },
         hasTabs() {
             return this.tabs.length > 0;
         }
     },
     methods: {
+        sorted(sortedItems) {
+            let ids = {};
+            let start = this.currentPage * this.perPage - this.perPage;
+            if (this.sort_by_key.endsWith('desc')) {
+                start = this.total - start - 1;
+            }
+            for (let i in sortedItems) {
+                if (this.sort_by_key.endsWith('desc')) {
+                    ids[start - parseInt(i)] = sortedItems[i].id;
+                } else {
+                    ids[start + parseInt(i)] = sortedItems[i].id;
+                }
+            }
+            this.$emit('sorted', { sortedItems, ids });
+        },
         sort(sort) {
-            this.sort_by_key = sort
-            this._loadItems()
+            this.sort_by_key = sort;
+            this._loadItems();
         },
         newTab(index) {
-            this.tab = this.tabs[index]
-            this._loadItems()
+            this.tab = this.tabs[index];
+            this.resetCurrentPage();
+            this._loadItems();
         },
         filterChanged(filter) {
-            this.filter_scope = filter
-            this._loadItems()
+            this.filter_scope = filter;
+            this.resetCurrentPage();
+            this._loadItems();
         },
         sort(key) {
-            this.sort_by_key = key
-            this._loadItems()
+            this.sort_by_key = key;
+            this._loadItems();
         },
-        setSelectedItems(selectedItems) {
-            this.selectedItems = selectedItems
+        unselect(item) {
+            for (let i in this.selectedItems) {
+                if (this.selectedItems[i].id == item.id) {
+                    this.selectedItems.splice(i, 1);
+                }
+            }
+        },
+        select(item) {
+            if (this.radio) {
+                this.selectedItems = [];
+                this.selectedItems.push(item);
+            } else {
+                this.selectedItems.push(item);
+            }
+        },
+        isItemSelected(item) {
+            return this.selectedItems.find(model => {
+                return model ? model.id == item.id : false;
+            })
+                ? true
+                : false;
+        },
+        executedControls() {
+            this.selectedItems = [];
+            this._loadItems();
         },
         async _loadItems() {
+            if (!this.loadItems) {
+                return;
+            }
             this.isBusy = true;
 
             let payload = {
@@ -224,17 +360,25 @@ export default {
                 searchKeys: this.searchKeys
             };
 
-            await this.loadItems(payload)
-            try {
+            let response = await this.loadItems(payload);
 
-            } catch (e) {
-                this.$bus.$emit('error', e);
-            }
+            this.$refs.table.$emit('loaded');
 
             this.isBusy = false;
+
+            if (!response) return;
+            if (!'data' in response) return;
+            if (!'count' in response.data) return;
+
+            this.numberOfPages = Math.ceil(response.data.count / this.perPage);
+            this.total = response.data.count;
+        },
+        resetCurrentPage() {
+            this.currentPage = 1;
         },
         doSearch(query) {
-            this.search = query
+            this.search = query;
+            this.resetCurrentPage();
             this._loadItems();
         },
         goToPage(page) {
@@ -243,30 +387,7 @@ export default {
         },
         linkGen(pageNum) {
             return { path: `#${pageNum}` };
-        },
-
-        setTableCols() {
-            this.tableCols = [];
-
-            // TODO: make this work
-            //if(this.recordActions.length > 0) {
-                // prepend checkbox col if table has recordActions
-                this.tableCols.push({
-                    value: 'check',
-                    label: 'Check'
-                });
-            //}
-
-            for (let i = 0; i < this.cols.length; i++) {
-                let col = this.cols[i];
-
-                if (typeof col == typeof '') {
-                    col = { value: col, label: col.capitalize() };
-                }
-
-                this.tableCols.push(col);
-            }
-        },
+        }
     }
 };
 </script>
@@ -279,26 +400,40 @@ export default {
         margin-right: 0;
     }
 
-    table.b-table {
+    .table-responsive {
         width: auto;
-        margin-left: -1.25rem;
-        margin-right: -1.25rem;
+        margin-left: -$card-spacer-x;
+        margin-right: -$card-spacer-x;
+        min-width: calc(100% + #{2 * $card-spacer-x});
+    }
 
-        
+    .paginated {
+        table.b-table {
+            tbody {
+                tr:last-child {
+                    td {
+                        border-bottom: 1px solid $gray-300;
+                    }
+                }
+            }
+        }
+    }
 
+    table.b-table {
         &[aria-busy='true'] {
             opacity: 0.6;
         }
 
         thead th {
             border-top: none;
+            border-bottom: 1px solid $gray-300;
 
             &:first-child {
-                padding-left: 0.75rem + 1.25rem;
+                padding-left: $card-spacer-x;
             }
 
             &:last-child {
-                padding-right: 0.75rem + 1.25rem;
+                padding-right: $card-spacer-x;
             }
         }
 
@@ -314,11 +449,11 @@ export default {
                 }
 
                 &:first-child {
-                    padding-left: 0.75rem + 1.25rem;
+                    padding-left: $card-spacer-x;
                 }
 
                 &:last-child {
-                    padding-right: 0.75rem + 1.25rem;
+                    padding-right: $card-spacer-x;
                 }
             }
         }
@@ -374,5 +509,8 @@ export default {
             }
         }
     }
+}
+.fj-index-table-pagination {
+    margin-top: -8px;
 }
 </style>

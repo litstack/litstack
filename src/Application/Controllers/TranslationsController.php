@@ -2,6 +2,7 @@
 
 namespace Fjord\Application\Controllers;
 
+use Fjord\Application\Translation\i18nGenerator;
 use Illuminate\Support\Arr;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\File;
@@ -38,7 +39,9 @@ class TranslationsController extends Controller
             $translations[$locale] = $this->translations[$locale];
         }
 
-        $js = 'window.i18n_m = ' . json_encode($translations) . ';';
+        $converted = i18nGenerator::convert($translations);
+
+        $js = 'window.i18n_m = ' . json_encode($converted) . ';';
         return response($js, 200)
             ->header('Content-Type', 'text/javascript');
     }

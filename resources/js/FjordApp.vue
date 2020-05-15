@@ -1,51 +1,54 @@
 <template>
-    <component :is="component" v-bind="preparedProps" />
+    <component :is="component" v-bind="preparedProps" :slots="slots" />
 </template>
 
 <script>
 import Fjord from './fjord';
-import FjordModel from './eloquent/fjord.model';
-import TranslatableModel from './eloquent/translatable.model';
 import { mapGetters } from 'vuex';
 import axiosMethods from './common/axios';
 
 export default {
     name: 'FjordApp',
     computed: {
-        ...mapGetters(['canSave']),
+        ...mapGetters(['canSave'])
     },
     props: {
         models: {
-            type: [Object, Array],
+            type: [Object, Array]
         },
         component: {
             type: String,
-            required: true,
+            required: true
         },
         props: {
-            type: [Object, Array],
+            type: [Object, Array]
         },
         translatable: {
             type: Object,
-            required: true,
+            required: true
         },
         config: {
             type: Object,
-            required: true,
+            required: true
         },
         auth: {
             type: Object,
-            required: true,
+            required: true
         },
         appLocale: {
             type: String,
-            required: true,
+            required: true
         },
+        slots: {
+            type: [Object, Array],
+            default() {
+                return {};
+            }
+        }
     },
     data() {
         return {
-            preparedModels: {},
-            preparedProps: {},
+            preparedProps: {}
         };
     },
     beforeMount() {
@@ -60,22 +63,25 @@ export default {
             'SET_FALLBACK_LOCALE',
             this.translatable.fallback_locale
         );
-        this.$store.commit('SET_CONFIG', this.config);
+        this.$store.commit('SET_FJORD_CONFIG', this.config);
 
-        this.prepareModels();
         this.prepareProps();
         this.setAuthData();
         this.setAppLocale();
 
         this.callPluginExtensions();
         this.callPluginMethods('beforeMount');
+
+        this.$Bus.$on('save', this.save);
+        this.$Bus.$on('cancelSave', this.cancelSave);
     },
     mounted() {
+        document.querySelector('.fj-nav-loader').remove();
         this.showHiddenElements();
 
-        this.$Bus.$on('error', (e) => {
+        this.$Bus.$on('error', e => {
             this.$bvToast.toast(e, {
-                variant: 'danger',
+                variant: 'danger'
             });
         });
 
@@ -83,12 +89,31 @@ export default {
     },
     methods: {
         ...axiosMethods,
+        cancelSave() {
+            this.$store.dispatch('cancelSave');
+        },
+        async save() {
+            let results = await this.$store.dispatch('save');
+
+            if (results.hasSucceeded()) {
+                this.$bvToast.toast(this.$t('fj.saved'), {
+                    variant: 'success'
+                });
+            }
+        },
         setAppLocale() {
             this.$i18n.locale = this.appLocale;
         },
         showHiddenElements() {
-            let element = document.getElementById('fjord-topbar-right');
-            element.style.opacity = 1;
+            let elements = document.getElementsByClassName('fj-hide');
+
+            for (let i in elements) {
+                let element = elements[i];
+                if (!element.classList) {
+                    continue;
+                }
+                element.classList.toggle('show');
+            }
         },
         callPluginExtensions() {
             let plugins = Fjord.getPlugins();
@@ -118,17 +143,6 @@ export default {
         setAuthData() {
             this.$store.commit('SET_AUTH_DATA', this.auth);
         },
-        prepareModels() {
-            if (typeof this.models != typeof {}) {
-                return;
-            }
-
-            for (name in this.models) {
-                this.preparedModels[name] = this.prepareModel(
-                    this.models[name]
-                );
-            }
-        },
         prepareProps() {
             if (typeof this.props == typeof {}) {
                 this.preparedProps = Object.assign({}, this.props);
@@ -137,19 +151,7 @@ export default {
             if (this.preparedModels) {
                 this.preparedProps.models = this.preparedModels;
             }
-        },
-        prepareModel(model) {
-            switch (model.type) {
-                case 'fjord':
-                    return new FjordModel(model);
-                case 'translatable':
-                    return new TranslatableModel(model);
-                default:
-                    return new FjordModel(model);
-            }
-        },
-    },
+        }
+    }
 };
 </script>
-
-<style lang="css" scoped></style>

@@ -91,7 +91,7 @@ trait InstallVendorConfigs
         $content = file_get_contents(config_path('medialibrary.php'));
         $content = str_replace(
             'Spatie\MediaLibrary\Models\Media::class',
-            'Fjord\Form\Database\Media::class',
+            'Fjord\Crud\Models\Media::class',
             $content
         );
         File::put(config_path('medialibrary.php'), $content);

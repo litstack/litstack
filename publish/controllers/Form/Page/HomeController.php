@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Fjord\Form\Page;
 
-use Fjord\Fjord\Models\FjordUser;
+use Fjord\User\Models\FjordUser;
 use Fjord\Form\Controllers\FormController;
 
 class HomeController extends FormController

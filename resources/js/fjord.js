@@ -1,26 +1,28 @@
 require('./common/bootstrap');
-require('./common/string');
+require('./common/helpers');
 require('./common/axios');
 require('./common/window');
+require('./common/fjord');
 
 require('./service/component.service');
-require('./service/page.service');
 require('./service/library.service');
 
 /**
  * The Fjord Application
- *
- *
  */
 import FjordApp from './FjordApp';
 
 /**
  * A simple event-bus
- *
- *
  */
 import Bus from './common/event.bus';
 Vue.prototype.$Bus = Bus;
+
+/**
+ * Fjord helper
+ */
+import FjordHelper from './common/fjord';
+Vue.prototype.Fjord = FjordHelper;
 
 import store from './store';
 import mixins from './common/mixins';
@@ -36,25 +38,28 @@ function Fjord(options) {
 }
 
 Fjord.use = function(plugin) {
-    plugins.push(plugin)
+    plugins.push(plugin);
 
-    return this
-}
+    return this;
+};
 
 Fjord.getPlugins = function() {
-    return plugins
-}
+    return plugins;
+};
 
 Fjord.prototype._init = function(options) {
     if ('store' in options) {
         this._store_modules = Object.assign(options.store, this._store_modules);
 
-        for(let i=0;i<plugins.length;i++) {
-            let plugin = plugins[0]
-            if(!('store' in plugin)) {
+        for (let i = 0; i < plugins.length; i++) {
+            let plugin = plugins[0];
+            if (!('store' in plugin)) {
                 continue;
             }
-            this._store_modules = Object.assign(plugin.store, this._store_modules);
+            this._store_modules = Object.assign(
+                plugin.store,
+                this._store_modules
+            );
         }
     }
 
@@ -71,7 +76,6 @@ Fjord.prototype._init = function(options) {
 };
 
 Fjord.prototype._vue = function() {
-
     this.app = new Vue({
         el: '#fjord-app',
         i18n,
@@ -81,7 +85,7 @@ Fjord.prototype._vue = function() {
         },
         data: {
             fjPlugins: plugins
-        },
+        }
     });
 };
 

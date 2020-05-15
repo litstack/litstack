@@ -3,28 +3,114 @@
 namespace Fjord\Support;
 
 use Illuminate\Http\Request;
+use InvalidArgumentException;
+use Illuminate\Database\Eloquent\Builder;
 
 class IndexTable
 {
+    /**
+     * Query builder
+     *
+     * @var \Illuminate\Database\Eloquent\Builder
+     */
     protected $query;
 
+    /**
+     * Request
+     *
+     * @var Request
+     */
     protected $request;
 
+    /**
+     * Only.
+     *
+     * @var array
+     */
     protected $only = [];
 
+    /**
+     * Except.
+     *
+     * @var array
+     */
     protected $except = [];
 
-    public function __construct($query, Request $request)
+    /**
+     * Search keys.
+     *
+     * @var array
+     */
+    protected $searchKeys = [];
+
+    /**
+     * Create new IndexTable instance.
+     *
+     * @param Builder $query
+     * @param Request|null $request
+     * @return void
+     */
+    public function __construct($query, $request = null)
     {
         $this->query = $query;
         $this->request = $request;
     }
 
+    /**
+     * Create new IndexTable with query.
+     *
+     * @param Builder $query
+     * @return void
+     */
+    public static function query($query)
+    {
+        return new self($query);
+    }
+
+    /**
+     * Set request.
+     *
+     * @param Request $request
+     * @return self
+     */
+    public function request(Request $request)
+    {
+        $this->request = $request;
+
+        return $this;
+    }
+
+    /**
+     * Set search keys.
+     *
+     * @param array $keys
+     * @return self
+     */
+    public function search(array $keys)
+    {
+        $this->searchKeys = $keys;
+
+        return $this;
+    }
+
+    /**
+     * Delete selected items.
+     *
+     * @param string $class
+     * @param Request $request
+     * @return void
+     */
     public static function deleteSelected($class, Request $request)
     {
         $class::whereIn('id', $request->ids)->delete();
     }
 
+    /**
+     * Except.
+     *
+     * @param array $except
+     * @return void
+     */
     public function except(array $except)
     {
         $this->except = $except;
@@ -32,6 +118,12 @@ class IndexTable
         return $this;
     }
 
+    /**
+     * Only.
+     *
+     * @param array $only
+     * @return void
+     */
     public function only(array $only)
     {
         $this->only = $only;
@@ -39,8 +131,19 @@ class IndexTable
         return $this;
     }
 
-    public function items()
+    /**
+     * Fetch items.
+     *
+     * @return array
+     * 
+     * @throws \InvalidArgumentException
+     */
+    public function get()
     {
+        if (!$this->request) {
+            throw new InvalidArgumentException('Missing argument request for IndexTable.');
+        }
+
         $actions = ['filter', 'search', 'order', 'paginate'];
         if (!empty($this->only)) {
             $actions = $this->only;
@@ -53,23 +156,26 @@ class IndexTable
         }
 
         if (in_array('filter', $actions)) {
-            self::applyFilterToIndex();
+            self::applyFilterToQuery();
         }
 
         if (in_array('search', $actions)) {
-            self::applySearchToIndex();
+            self::applySearchToQuery();
         }
 
         if (in_array('order', $actions)) {
-            self::applyOrderToIndex();
+            self::applyOrderToQuery();
         }
 
+        $itemsQuery = clone $this->query;
+
         if (in_array('paginate', $actions)) {
-            self::applyPaginationToIndex();
+            $itemsQuery = self::applyPaginationToQuery($itemsQuery);
         }
 
         $total = $this->query->count();
-        $items = $this->query->get();
+
+        $items = $itemsQuery->get();
 
         return [
             'count' => $total ?? 0,
@@ -77,12 +183,12 @@ class IndexTable
         ];
     }
 
-    public static function get($query, Request $request)
-    {
-        return with(new self($query, $request))->items();
-    }
-
-    protected function applyFilterToIndex()
+    /**
+     * Apply filter to query.
+     *
+     * @return void
+     */
+    protected function applyFilterToQuery()
     {
         if (!$this->request->filter) {
             return;
@@ -93,14 +199,29 @@ class IndexTable
         $this->query = $this->query->$scope();
     }
 
-    protected function applySearchToIndex()
+    /**
+     * Apply search to query.
+     *
+     * @return void
+     */
+    protected function applySearchToQuery()
     {
-        if ($this->request->search) {
-            $this->query->whereLike($this->request->searchKeys, $this->request->search);
+        if (!$this->request->search) {
+            return;
         }
+
+        $this->query->whereLike(
+            $this->searchKeys,
+            $this->request->search
+        );
     }
 
-    protected function applyOrderToIndex()
+    /**
+     * Apply order to query.
+     *
+     * @return void
+     */
+    protected function applyOrderToQuery()
     {
         if (!$this->request->sort_by) {
             return;
@@ -114,37 +235,40 @@ class IndexTable
             $order = last(explode('.', $this->request->sort_by));
         }
 
-        // TODO: Sortable for eager
-        // Order for eager keys
-        /*
-        $eagerClasses = $this->getEagerClasses();
-        $eager = array_keys($eagerClasses);
-        if(in_array($key, $eager)){
+        $model = $this->query->getModel();
 
-            // get the table names of the related models
-            $foreign_table = with(new $eagerClasses[$key])->getTable();
-            $table = with(new $this->model)->getTable();
-
-            // join the related table for ordering by a foreign column
-            $query->leftJoin($foreign_table, $foreign_table . '.id', '=', $table . '.' . rtrim($foreign_table, 's') . '_id')
-                  ->select($table . '.*', $foreign_table . '.' . explode('.', $request->sort_by)[1] . ' as eager_order_column' )
-                  ->orderBy($foreign_table.'.'.explode('.', $request->sort_by)[1], $order);
-
-        } else {
-        */
-        // Order
-        $this->query->orderBy($key, $order);
-        /*
+        if (array_key_exists($key, $this->query->getEagerLoads())) {
+            return $this->query->orderByRelation($key, explode('.', $this->request->sort_by)[1], $order);
         }
-        */
+
+        if (!is_translatable($model)) {
+            return $this->query->orderBy($key, $order);
+        }
+
+        if (!in_array($key, $model->translatedAttributes)) {
+            return $this->query->orderBy($key, $order);
+        }
+
+        return $this->query->orderByTranslation(app()->getLocale(), $key, $order);
     }
 
-    protected function applyPaginationToIndex()
+    /**
+     * Apply pagination to query. An instance of the Builder is passed here 
+     * because this part should not be applied to the count query.
+     *
+     * @param Builder $query
+     * @return Buider
+     */
+    protected function applyPaginationToQuery($query)
     {
-        if ($this->request->perPage !== 0) {
-            $page = $this->request->page ?? 1;
-            $perPage = $this->request->perPage;
-            $this->query->skip(($page - 1) * $perPage)->take($perPage);
+        if ($this->request->perPage === 0) {
+            return $query;
         }
+
+        $page = $this->request->page ?? 1;
+        $perPage = $this->request->perPage ?? 20;
+        $query->skip(($page - 1) * $perPage)->take($perPage);
+
+        return $query;
     }
 }

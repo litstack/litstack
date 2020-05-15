@@ -1,0 +1,9 @@
+.table.b-table {
+    th {
+        color: $table-thead-color;
+        font-weight: $font-weight-normal;
+    }
+    .table-primary {
+        background-color: $table-active-bg !important;
+    }
+}

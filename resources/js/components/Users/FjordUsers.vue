@@ -1,51 +1,45 @@
 <template>
-    <fj-base-container>
-        <fj-base-header :title="'Fjord ' + $t('fj.users')">
-            <div slot="actions-right">
-                <fj-user-create @userCreated="userCreated" />
-            </div>
-        </fj-base-header>
+    <fj-container>
+        <fj-navigation>
+            <fj-user-create @userCreated="userCreated" slot="right" />
+        </fj-navigation>
+        <fj-header :title="'Fjord ' + $t('fj.users')" />
 
         <b-row>
             <b-col>
                 <fj-index-table
                     ref="indexTable"
-                    :cols="config.cols"
+                    :cols="config.index"
                     :items="users"
-                    :count="count"
-                    :loadItems="loadUsers"
-                    :nameSingular="$t('fj.user')"
-                    :namePlural="$t('fj.users')"
-                    :sortBy="config.sortBy"
-                    :sortByDefault="config.sortByDefault"
+                    :load-items="loadUsers"
+                    :name-singular="$t('fj.user')"
+                    :name-plural="$t('fj.users')"
+                    :per-page="config.perPage"
+                    :sort-by="config.sortBy"
+                    :sort-by-default="config.sortByDefault"
                     :filter="config.filter"
-                    :globalActions="config.globalActions"
-                    :recordActions="config.recordActions"
+                    :global-actions="config.globalActions"
+                    :record-actions="config.recordActions"
                 />
             </b-col>
         </b-row>
-    </fj-base-container>
+    </fj-container>
 </template>
 
 <script>
 export default {
     name: 'Users',
     props: {
-        usersCount: {
-            type: Number,
+        config: {
             required: true,
-        },
-        config: {},
+            type: Object
+        }
     },
     data() {
         return {
             users: [],
-            count: 0,
-            data: {},
+            data: {}
         };
-    },
-    beforeMount() {
-        this.count = this.usersCount;
     },
     methods: {
         reload() {
@@ -54,12 +48,13 @@ export default {
         async loadUsers(payload) {
             let response = await axios.post('fjord/users-index', payload);
             this.users = response.data.items;
-            this.count = response.data.count;
+
+            return response;
         },
 
         userCreated(user) {
             this.reload();
-        },
-    },
+        }
+    }
 };
 </script>

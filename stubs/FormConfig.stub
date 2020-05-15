@@ -1,13 +1,39 @@
 <?php
 
-use App\Http\Controllers\Fjord\Form\DummyCollection\DummyController;
+namespace FjordApp\Config\Form\DummyCollection;
 
-/**
- * Config for DummyCollection DummyFormName.
- */
-return [
-    'controller' => DummyController::class,
-    'form_fields' => [
-        //
-    ]
-];
+use Fjord\Crud\CrudForm;
+use Fjord\Crud\Config\FormConfig;
+use FjordApp\Controllers\Form\DummyCollection\DummyController;
+
+class DummyConfigClassName extends FormConfig
+{
+
+    /**
+     * Controller class.
+     *
+     * @var string
+     */
+    public $controller = DummyController::class;
+
+    /**
+     * Form name, is used for routing.
+     *
+     * @var string
+     */
+    public $formName = DummyFormName;
+
+    /**
+     * Setup create and edit form.
+     *
+     * @param \Fjord\Crud\CrudForm $form
+     * @return void
+     */
+    public function form(CrudForm $form)
+    {
+        $form->card(function($form) {
+            $form->input('text')
+            ->title('text');
+        })->cols(12)->title(ucfirst($this->formName));
+    }
+}

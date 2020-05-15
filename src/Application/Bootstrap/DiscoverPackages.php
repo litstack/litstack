@@ -39,14 +39,15 @@ class DiscoverPackages
     }
 
     /**
-     * Discovers all packages that are defined in the extra 
-     * attribute in the composer files.
+     * Get all packages that are discovered by the 
+     * \Fjord\Foundation\Console\PackageDiscoverCommand and compiled to the 
+     * manifest in bootstrap/cache/fjord.php
      * 
      * @return array $packages
      */
     protected function discover()
     {
-        if(! File::exists($this->path)) {
+        if (!File::exists($this->path)) {
             return;
         }
 
@@ -54,8 +55,8 @@ class DiscoverPackages
 
         $packages = [];
 
-        foreach($manifest as $name => $config) {
-            if(! array_key_exists('package', $config)) {
+        foreach ($manifest as $name => $config) {
+            if (!array_key_exists('package', $config)) {
                 continue;
             }
 

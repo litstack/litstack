@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Fjord\Form\Collection;
 
-use Fjord\Fjord\Models\FjordUser;
+use Fjord\User\Models\FjordUser;
 use Fjord\Form\Controllers\FormController;
 
 class SettingsController extends FormController

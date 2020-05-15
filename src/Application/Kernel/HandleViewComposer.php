@@ -7,13 +7,13 @@ use Illuminate\View\View;
 class HandleViewComposer
 {
     /**
-     * Execute Fjord\Application\Kernel method handleView.
+     * Execute Fjord kernel method handleView.
      * 
      * @param Illuminate\View\View $view
      * @return void
      */
     public function compose(View $view)
     {
-        app()->get('fjord.kernel')->handleView($view);
+        app()->get(\FjordApp\Kernel::class)->handleView($view);
     }
 }

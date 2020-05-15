@@ -3,6 +3,7 @@
 namespace Fjord\Application\Vue;
 
 use Exception;
+use Fjord\Vue\Component;
 use Illuminate\View\View;
 use Fjord\Application\Application;
 
@@ -46,15 +47,6 @@ class VueApplication
     ];
 
     /**
-     * Compiler for root props.
-     *
-     * @var array
-     */
-    protected $compiler = [
-        'model' => Props\ModelProp::class
-    ];
-
-    /**
      * Create new VueApplication instance.
      *
      * @param \Fjord\Application\Application $app
@@ -81,8 +73,6 @@ class VueApplication
 
         $this->setPropsFromViewData($view->getData());
 
-        $this->compileRootProps();
-
         $this->initializeComponent($this->props['component']);
 
         $this->hasBeenBuild = true;
@@ -108,36 +98,56 @@ class VueApplication
     }
 
     /**
+     * Get extensions for component name-
+     *
+     * @param Component $component
+     * @return void
+     */
+    protected function getExtensions(Component $component)
+    {
+        $extensions = [];
+        foreach ($this->app->getExtensions() as $extension) {
+            if ($extension['component'] == $component->getName()) {
+                $extensions[] = $extension;
+            }
+        }
+
+        return $extensions;
+    }
+
+    /**
      * Execute extensions for the given components.
      * 
-     * @param Illuminate\View\View $view
-     * @param array $extensions
+     * @param \Fjord\Vue\Component $component
      * @return void
      * 
      * @throws \Exception
      */
-    public function extend(View $view, array $extensions)
+    public function extend(Component $component)
     {
         if (!$this->hasBeenBuild()) {
             throw new Exception('Fjord Vue application cannot be extended if it has not been build.');
         }
 
-        if (!$this->component) {
-            return;
-        }
-
-        foreach ($extensions as $extension) {
+        foreach ($this->getExtensions($component) as $extension) {
 
             // Look for extensions for the current component.
-            if ($this->component->getName() != $extension['component']) {
+            if ($component->getName() != $extension['component']) {
                 continue;
             }
 
-            if (!$this->component->executeExtension($extension['name']) && $extension['name'] != '') {
-                continue;
+            // Resolve extension in component.
+            if (method_exists($component, 'resolveExtension')) {
+                if (
+                    !$component->resolveExtension($extension['name'])
+                    && $extension['name'] != ''
+                ) {
+                    continue;
+                }
             }
 
             $this->executeExtension(
+                $component,
                 new $extension['extension']($extension['name'])
             );
         }
@@ -146,38 +156,35 @@ class VueApplication
     /**
      * Execute extension for component if user has permission.
      *
+     * @param Component $component
      * @param $extension
      * @return void
      */
-    protected function executeExtension($extension)
+    public function executeExtension(Component $component, $extension)
     {
         if (!$extension->authenticate(fjord_user())) {
             return;
         }
 
         $extension->handle(
-            $this->component
+            $component
         );
     }
 
     /**
      * Initialize component class for the given vue component.
      * 
-     * @var string $component
+     * @var string|Component $component
      */
-    protected function initializeComponent(string $component)
+    protected function initializeComponent($component)
     {
-        foreach ($this->app->get('packages')->all() as $package) {
-            $components = $package->getComponents();
-            foreach ($components as $name => $class) {
-                if ($name != $component) {
-                    continue;
-                }
-
-                $this->component = new $class($component, $this->props['props'] ?? []);
-                return;
-            }
+        if ($component instanceof Component) {
+            $this->component = $component;
+        } else {
+            $this->component = component($component);
         }
+
+        $this->component->bind($this->props['props']);
     }
 
     /**
@@ -199,6 +206,11 @@ class VueApplication
 
             $this->props[$name] = $value;
         }
+
+        // Default props.
+        if (!array_key_exists('props', $this->props)) {
+            $this->props['props'] = [];
+        }
     }
 
     /**
@@ -210,26 +222,6 @@ class VueApplication
     protected function propExists(string $name)
     {
         return array_key_exists($name, $this->props);
-    }
-
-    /**
-     * Run compiler for matching root props.
-     *
-     * @return void
-     */
-    protected function compileRootProps()
-    {
-        foreach ($this->compiler as $prop => $compiler) {
-            if (!$this->propExists($prop)) {
-                continue;
-            }
-
-            $instance = with(new $compiler(
-                $this->props[$prop]
-            ));
-
-            $this->props[$prop] = $instance->getValue();
-        }
     }
 
     /**
@@ -256,11 +248,21 @@ class VueApplication
      */
     public function props()
     {
+
+        $component = $this->component->toArray();
+        $component['component'] = $component['name'];
+        unset($component['name']);
+
+        $props = array_merge($this->props, $component->toArray());
+
+        /*
         if ($this->component) {
             $this->props['props'] = $this->component->getProps();
+            $this->props['slots'] = $this->component->getSlots();
+            $this->props['component'] = $this->component->getName();
         }
-
-        return $this->props;
+        */
+        return $props;
     }
 
     /**

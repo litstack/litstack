@@ -99,16 +99,4 @@ class Packages
     {
         return in_array($name, $this->rootAccess);
     }
-
-    /**
-     * Load config for a package.
-     * 
-     * @param string $package
-     * @param string $config
-     * @return array $config
-     */
-    public function config(string $package, string $config)
-    {
-        return $this->get($package)->config($config);
-    }
 }

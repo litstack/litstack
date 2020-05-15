@@ -2,34 +2,33 @@
 
 namespace Fjord;
 
-use App\Fjord\Kernel;
-use Fjord\Application\Middlewares\StopRedirectForNotFound;
+use FjordApp\Kernel;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use Fjord\Auth\Middleware\Authenticate;
 
+/**
+ * Service providers and console commands that should be registered without 
+ * Fjord being installed. All services that should only be registered if Fjord 
+ * is installed are specified in \Fjord\FjordPackage. 
+ */
 class FjordServiceProvider extends ServiceProvider
 {
     /**
-     * Service providers that should be registered without Fjord being installed.
-     * All service providers that should only be registered if Fjord is 
-     * installed are specified in \Fjord\FjordPackage
+     * Service providers.
      *
      * @var array
      */
     protected $providers = [
         Auth\ServiceProvider::class,
-        Application\ApplicationServiceProvider::class,
-        Foundation\Providers\ArtisanServiceProvider::class,
+        Fjord\Discover\PackageDiscoverServiceProvider::class,
         Support\Macros\BuilderMacros::class,
     ];
 
     /**
-     * Console commands that should be registered without Fjord being installed.
-     * All commands that should only be registered if Fjord is installed are 
-     * specified in \Fjord\FjordPackage
+     * Console commands.
      *
      * @var array
      */
@@ -45,12 +44,36 @@ class FjordServiceProvider extends ServiceProvider
      */
     protected $aliases = [
         'Fjord' => Support\Facades\Fjord::class,
+        'FjordApp' => Support\Facades\FjordApp::class,
         'FjordLang' => Support\Facades\FjordLang::class,
     ];
 
     /**
+     * Middlewares.
+     *
+     * @var array
+     */
+    protected $middlewares = [
+        'fjord.auth' => Auth\Middleware\Authenticate::class,
+    ];
+
+    /**
+     * Create a new FjordServiceProvider instance.
+     *
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @return void
+     */
+    public function __construct($app)
+    {
+        parent::__construct($app);
+
+        $this->aliasLoader = AliasLoader::getInstance();
+    }
+
+    /**
      * Bootstrap the application services.
      *
+     * @param Router $router
      * @return void
      */
     public function boot(Router $router)
@@ -58,11 +81,22 @@ class FjordServiceProvider extends ServiceProvider
         // Load Fjord views.
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'fjord');
 
-        // Middelware
-        $router->aliasMiddleware('fjord.auth', Authenticate::class);
-        $router->aliasMiddleware('fjord.404', StopRedirectForNotFound::class);
+        $this->middlewares($router);
 
         $this->publish();
+    }
+
+    /**
+     * Register middlewares.
+     *
+     * @param Router $router
+     * @return void
+     */
+    protected function middlewares(Router $router)
+    {
+        foreach ($this->middlewares as $alias => $middleware) {
+            $router->aliasMiddleware($alias, $middleware);
+        }
     }
 
     /**
@@ -108,16 +142,21 @@ class FjordServiceProvider extends ServiceProvider
             return;
         }
 
+        $this->app->register(Application\ApplicationServiceProvider::class);
+
         $this->app->singleton('fjord.app', function () {
             return new Application\Application();
         });
 
-        $this->app->singleton('fjord.kernel', function ($app) {
-            return new Kernel($app->get('fjord.app'));
+        $this->app->singleton(\FjordApp\Kernel::class, function ($app) {
+            return new \FjordApp\Kernel($app->get('fjord.app'));
         });
 
+        // Bind fjord
+        $this->app['fjord']->bindApp($this->app['fjord.app']);
+
         // Initialize kernel singleton.
-        $this->app->get('fjord.kernel');
+        $this->app->get(\FjordApp\Kernel::class);
     }
 
     /**

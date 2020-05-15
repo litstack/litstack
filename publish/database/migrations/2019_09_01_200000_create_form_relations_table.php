@@ -19,6 +19,7 @@ class CreateFormRelationsTable extends Migration
             $table->bigInteger('from_model_id');
             $table->string('to_model_type');
             $table->bigInteger('to_model_id');
+            $table->string('field_id');
             $table->unsignedInteger('order_column')->nullable();
         });
     }

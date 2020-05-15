@@ -1,44 +1,74 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
 // Variables
-@import 'variables';
-
-@import '~flag-icon-css/sass/flag-icon';
+@import '_variables';
+@import '_loading';
 
 // Modules
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-vue/src/index';
 @import '~cropperjs/src/index';
 
+// Bootstrap Components
+@import '_bs/_btn';
+@import '_bs/_card';
+@import '_bs/_dropdown';
+@import '_bs/_list-group';
+@import '_bs/_input-group';
+@import '_bs/_modal';
+@import '_bs/_pagination';
+@import '_bs/_progress';
+@import '_bs/_table';
+@import '_bs/_tabs';
+@import '_bs/_toasts';
+@import '_bs/_tooltip';
+
+// Fjord Components
+@import '_fj/_blocks';
+@import '_fj/_spinner';
+@import '_fj/_hide';
+@import '_fj/_table';
+@import '_fj/_dark';
+@import '_fj/_custom-switch';
+
+// Layout
+@import 'layout';
+@import 'landing';
+@import 'brand';
+@import 'navigation';
+@import 'topbar';
+
 // Atoms
-@import '_atoms/border';
-@import '_atoms/bs-buttons';
-@import '_atoms/fjord-brand';
-@import '_atoms/fjord-card';
-@import '_atoms/fjord-search';
-@import '_atoms/fjord-draggable';
-@import '_atoms/fjord-container';
-@import '_atoms/fjord-spinner';
-@import '_atoms/fjord-hide';
+//@import '_atoms/border';
+//@import '_atoms/bs-buttons';
+//@import '_atoms/fjord-brand';
+//@import '_atoms/fjord-card';
+//@import '_atoms/fjord-search';
+//@import '_atoms/fjord-draggable';
+//@import '_atoms/fjord-spinner';
+//@import '_atoms/fjord-hide';
+//@import '_atoms/fjord-table';
 
 // Molecules
-@import '_molecules/fjord-topbar';
-@import '_molecules/fjord-dropzone';
-@import '_molecules/fjord-form';
-@import '_molecules/fjord-tabs';
-@import '_molecules/fjord-modal';
-@import '_molecules/fjord-block';
-@import '_molecules/fjord-cropper';
-@import '_molecules/fjord-toast';
-
-// layout
-@import 'horizontal';
-@import 'vertical';
+//@import '_molecules/fjord-topbar';
+//@import '_molecules/fjord-dropzone';
+//@import '_molecules/fjord-form';
+//@import '_molecules/fjord-tabs';
+//@import '_molecules/fjord-modal';
+//@import '_molecules/fjord-block';
+//@import '_molecules/fjord-cropper';
+//@import '_molecules/fjord-toast';
 
 body,
 html {
-    background-color: $dark;
+    background-color: $body-bg;
+    font-family: 'Inter', sans-serif;
+
+    * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 }
 
 div#fjord-app {
@@ -51,7 +81,8 @@ div#fjord-app {
     }
 }
 
-main {
+.form-control-expand {
+    flex-grow: 1;
 }
 
 .modal-backdrop {
@@ -63,4 +94,8 @@ main {
         cursor: pointer;
         color: black;
     }
+}
+
+.fj-draggable__dragbar {
+    cursor: pointer;
 }

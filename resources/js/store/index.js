@@ -2,18 +2,12 @@ import Vuex from 'vuex';
 
 import config from './modules/config.module';
 import savings from './modules/savings.module';
-import form from './modules/form.module';
 import auth from './modules/auth.module';
-import crud from './modules/crud.module';
-import actions from './modules/actions.module';
 
 const modules = {
     config,
     savings,
-    form,
-    auth,
-    crud,
-    actions,
+    auth
 };
 
 class FjordStore {

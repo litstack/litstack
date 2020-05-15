@@ -2,6 +2,7 @@
 
 namespace Fjord\Commands\Install;
 
+use Fjord\User\Models\FjordUser;
 use Fjord\Commands\Traits\RolesAndPermissions;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
@@ -60,19 +61,34 @@ class FjordInstall extends Command
         $this->call('fjord:guard');
 
         $this->handleFjordPublishable();
-        $this->publishFjordResources();
 
         $this->createDefaultRoles();
         $this->createDefaultPermissions();
 
-        $this->publishDashboardController();
-        $this->publishFjordServiceProvider();
-        $this->publishFjordKernel();
+        $this->publishFjord();
         $this->makeModelDirs();
+
+        $this->defaultUser();
 
         $this->info("\n----- finished -----\n");
 
         $this->info('installation complete - run php artisan fjord:admin to create an admin user');
+    }
+
+    public function defaultUser()
+    {
+        $user = FjordUser::firstOrCreate([
+            'username' => 'admin',
+            'email' => 'admin@admin.com',
+        ], [
+            'first_name' => 'admin',
+            'last_name' => '',
+            'password' => bcrypt('secret')
+        ]);
+
+        $user->assignRole('admin');
+
+        $this->info('created default admin (email: admin@admin.com, password: secret)');
     }
 
     /**
@@ -89,22 +105,6 @@ class FjordInstall extends Command
 
         File::makeDirectory($path);
     }
-
-    protected function publishFjordKernel()
-    {
-        if (File::exists(app_path('Fjord/Kernel.php'))) {
-            return;
-        }
-
-        $this->line("publishing fjord application");
-
-        $this->makeDirectory(app_path('Fjord'));
-        File::copy(
-            fjord_path('publish/fjord/Kernel.php'),
-            app_path('Fjord/Kernel.php')
-        );
-    }
-
 
     /**
      * Publish Fjord config and assets
@@ -132,53 +132,22 @@ class FjordInstall extends Command
      *
      * @return void
      */
-    public function publishFjordResources()
+    public function publishFjord()
     {
-        if (is_dir(fjord_resource_path()) && fjord_resource_path() !== resource_path()) {
+        if (class_exists(\FjordApp\Kernel::class)) {
             return;
         }
-
-        $this->info('publishing fjord resources');
+        $this->info('publishing fjord');
         // clear the config cache, otherwise, fjord_resource_path() will return
         // the resource path itself, which is present for shure
         $this->callSilent('config:clear');
 
-        File::copyDirectory(fjord_path('publish/resources/fjord'), resource_path('fjord'));
-    }
+        File::copyDirectory(fjord_path('publish/fjord'), base_path('fjord'));
 
-    /**
-     * Publish Fjord DashboardController.
-     *
-     * @return void
-     */
-    public function publishDashboardController()
-    {
-        $this->makeDirectory(app_path('Http/Controllers/Fjord'));
-
-        if (File::exists(app_path('Http/Controllers/Fjord/DashboardController.php'))) {
-            return;
-        }
-
-        $this->info('publishing DashboardController');
-
-        File::copy(
-            fjord_path('publish/controllers/DashboardController.php'),
-            app_path('Http/Controllers/Fjord/DashboardController.php')
-        );
-    }
-
-    public function publishFjordServiceProvider()
-    {
-        if (File::exists(app_path('Http/Providers/FjordServiceProvider.php'))) {
-            return;
-        }
-
-        $this->info('publishing FjordServiceProvider');
-
-        File::copy(
-            fjord_path('publish/providers/FjordServiceProvider.php'),
-            app_path('Providers/FjordServiceProvider.php')
-        );
+        $composer = json_decode(File::get(base_path('composer.json')), true);
+        $composer['autoload']['psr-4']['FjordApp\\'] = 'fjord/app/';
+        File::put(base_path('composer.json'), json_encode($composer, JSON_PRETTY_PRINT));
+        shell_exec('composer dumpautoload;');
     }
 
     /**
