@@ -4,6 +4,7 @@
     "type": "project",
     "require": {
         "php": "^7.2",
+        "aw-studio/fjord-permissions": "^1.0",
         "spatie/eloquent-sortable": "^3.6|^3.7|^3.8",
         "spatie/laravel-permission": "^2.37|^3.0|^3.11",
         "spatie/laravel-medialibrary": "^7.0.0|^7.1.0|^7.19",
