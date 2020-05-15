@@ -21,6 +21,8 @@
         <link href="{{ $path }}{{ asset_time() }}" rel="stylesheet">
     @endforeach
 
+    @include('fjord::partials.google_analytics')
+
 </head>
 
 <body onload="makeVisible()">
