@@ -27,7 +27,7 @@ The `user` mixin returns the authenticated FjordUser Model.
 
 ## Localization
 
-[i18n-vue](https://kazupon.github.io/vue-i18n/guide/formatting.html) is used for the translation in Vue. All translations that are available in **php** are available in **i18n-vue** as well like shown in the example:
+[i18n-vue](https://kazupon.github.io/vue-i18n/docs/formatting.html) is used for the translation in Vue. All translations that are available in **php** are available in **i18n-vue** as well like shown in the example:
 
 ```php
 // fjord/resources/lang/{locale}/message.php

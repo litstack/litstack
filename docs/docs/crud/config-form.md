@@ -33,7 +33,7 @@ Fields to edit are defined with `$form->{field}(...)`, like shown in the example
 $form->input('first_name')->title('First Name');
 ```
 
-All available fields can be found in the documentation under [Fields](/guide/fields/introduction.html).
+All available fields can be found in the documentation under [Fields](/docs/fields/introduction.html).
 
 ## Col
 
@@ -53,7 +53,7 @@ With `component` a custom **Vue component** can be integrated.
 $form->component('my-component');
 ```
 
-Read the [Extend Vue](/guide/basics/vue.html#bootstrap-vue) section to learn how to register your own Vue components.
+Read the [Extend Vue](/docs/basics/vue.html#bootstrap-vue) section to learn how to register your own Vue components.
 
 ## Info
 

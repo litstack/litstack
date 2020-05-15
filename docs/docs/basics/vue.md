@@ -84,5 +84,5 @@ export default {
 ```
 
 ::: tip
-Read more about how to build your custom page in the [Vue Components](/guide/frontend/components.html#custom-pages) section.
+Read more about how to build your custom page in the [Vue Components](/docs/frontend/components.html#custom-pages) section.
 :::

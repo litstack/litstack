@@ -4,7 +4,7 @@ heroText: null
 heroImage: /logo.svg
 tagline: Powerful Admin Panel For Laravel
 actionText: Get Started →
-actionLink: /guide/getting-started/introduction.html
+actionLink: /docs/getting-started/introduction.html
 
 features:
     - title: Laravel
@@ -17,7 +17,7 @@ features:
 footer: MIT Licensed | Made with ❤️ in Kiel
 ---
 
-![Fjord Interface](./preview.png 'Fjord Interface')
+![Fjord Interface](./Ford_Highlight.jpg 'Fjord Interface')
 
 ## Editable Models In No Time
 

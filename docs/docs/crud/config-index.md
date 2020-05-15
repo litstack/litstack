@@ -120,4 +120,4 @@ public function index(CrudTable $table)
 }
 ```
 
-To learn how to build columns see the [table](/guide/crud/config-table.html#text) documentation.
+To learn how to build columns see the [table](/docs/crud/config-table.html#text) documentation.

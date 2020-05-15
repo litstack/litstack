@@ -173,4 +173,4 @@ public $expandFormContainer = true;
 
 ### Index, Create & Update Form
 
-Next, the configuration for the [index table](/guide/crud/config-index.html) and the **create** and **update** [form](/guide/crud/config-form.html) can be adjusted.
+Next, the configuration for the [index table](/docs/crud/config-index.html) and the **create** and **update** [form](/docs/crud/config-form.html) can be adjusted.
