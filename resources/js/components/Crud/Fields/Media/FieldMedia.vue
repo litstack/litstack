@@ -13,7 +13,9 @@
                             :ref="`dropzone-${field.id}`"
                             :id="`dropzone-${field.id}`"
                             :options="dropzoneOptions"
+                            @vdropzone-sending="busy = true"
                             @vdropzone-success="uploadSuccess"
+                            @vdropzone-queue-complete="queueComplete"
                             @vdropzone-error="uploadError"
                             @vdropzone-files-added="processQueue"
                         />
@@ -31,23 +33,10 @@
                         >
                             <div
                                 class="fj-dropzone-busy"
-                                v-if="busy"
+                                v-if="busy && images.length < field.maxFiles"
                                 slot="busy"
                             >
-                                <div class="w-100 text-center p-2">
-                                    <b-spinner
-                                        variant="secondary"
-                                        class="mx-auto"
-                                    ></b-spinner>
-                                    <b-progress
-                                        v-if="busy"
-                                        class="mt-2"
-                                        height="0.5rem"
-                                        :value="uploadProgress"
-                                        :max="100"
-                                        variant="primary"
-                                    />
-                                </div>
+                                <b-spinner variant="secondary"></b-spinner>
                             </div>
 
                             <vue-dropzone
@@ -66,9 +55,6 @@
                                 @vdropzone-queue-complete="queueComplete"
                                 @vdropzone-error="uploadError"
                                 @vdropzone-files-added="processQueue"
-                                @vdropzone-total-upload-progress="
-                                    totalUploadProgress
-                                "
                             />
                         </fj-field-media-images>
                         <fj-field-alert-empty
@@ -207,6 +193,15 @@ export default {
             return c;
         }
     },
+    watch: {
+        images(val) {
+            if (val.length == this.field.maxFiles) {
+                // this is done, because the event can't be fired off the
+                // component, when max files are reached
+                this.queueComplete();
+            }
+        }
+    },
     methods: {
         getCropperId() {
             return `fj-cropper-${this.field.route_prefix.replace(/\//g, '-')}`;
@@ -259,17 +254,6 @@ export default {
             console.log('fertig');
 
             this.busy = false;
-        },
-        totalUploadProgress(uploadProgress, totalBytes, totalBytesSent) {
-            const DROPZONE = this.dropzone;
-            console.log(
-                DROPZONE.dropzone.files.length,
-                uploadProgress,
-                totalBytes,
-                totalBytesSent
-            );
-
-            this.uploadProgress = uploadProgress;
         },
         uploadError(file, errorMessage, xhr) {
             this.$bvToast.toast(errorMessage.message, {
