@@ -51,9 +51,18 @@ class ProfileSettingsConfig
                 ->cols(6)
                 ->title(ucwords(__f('base.first_name')));
 
-            $form->input('email')
-                ->cols(6)
-                ->title('E-Mail');
+            $form->modal('change_email')
+                ->title('E-Mail')
+                ->variant('primary')
+                ->preview('{email}')
+                ->name('Change E-Mail')
+                ->confirmWithPassword()
+                ->form(function ($modal) {
+                    $modal->input('email')
+                        ->cols(12)
+                        ->rules('required')
+                        ->title('E-Mail');
+                })->cols(6);
 
             $form->input('username')
                 ->cols(6)
@@ -64,7 +73,7 @@ class ProfileSettingsConfig
             $form->info(ucwords(__f('base.language')))->cols(4)
                 ->text(__f('profile.messages.language'));
             $form->card(function ($form) {
-                $form->component('fj-locales');
+                $form->component('fj-locales')->class('mb-4');
             })->cols(8)->class('mb-5');
         }
 

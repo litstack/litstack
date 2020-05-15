@@ -3,10 +3,10 @@
 namespace Fjord\Crud\Fields\Relations\Concerns;
 
 use Closure;
+use Fjord\Vue\Table;
 use InvalidArgumentException;
 use Fjord\Support\Facades\Crud;
 use Fjord\Support\Facades\Fjord;
-use Fjord\Vue\Crud\PreviewTable;
 use Illuminate\Database\Eloquent\Builder;
 use Fjord\Crud\Fields\Concerns\FieldHasForm;
 use Fjord\Crud\Fields\Relations\OneRelation;
@@ -100,7 +100,7 @@ trait ManagesRelation
      */
     public function preview(Closure $closure)
     {
-        $table = new PreviewTable;
+        $table = new Table;
 
         $closure($table);
 
