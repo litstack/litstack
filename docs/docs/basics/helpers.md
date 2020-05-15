@@ -1,6 +1,12 @@
 # Helpers
 
-Fjord includes a variety of global helper PHP functions and Vue mixins.
+[[toc]]
+
+Fjord includes a variety of global helper **PHP** `functions`.
+
+::: tip
+Fjord includes usefull **Vue** `mixins` as well. Read the [Vue mixins](/docs/frontend/vue#mixins) section to learn more about the existing `mixins`.
+:::
 
 ### Fjord Facade
 

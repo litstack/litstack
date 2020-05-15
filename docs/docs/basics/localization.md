@@ -1,6 +1,8 @@
 # Localization
 
-Fjord can be managed multilingual. The translation in the frontend can be done in `php` using [laravel's localization](https://laravel.com/docs/7.x/localization) service or in `vue` using [vue-i18n](https://kazupon.github.io/vue-i18n/docs/formatting.html). It uses the format of `laravel`, all translation strings are formatted to use them in `vue-i18n`.
+[[toc]]
+
+Fjord can be managed multilingual. The translation in the frontend can be done in `php` using [laravel's localization](https://laravel.com/docs/7.x/localization) service or in `vue` using [vue-i18n](https://kazupon.github.io/vue-i18n/docs/formatting.html). It uses the format of **laravel**, all translation strings are formatted to use them in `vue-i18n`.
 
 In Laravel applications that include Fjord, there are **two** different locales, one for your website and one for the Fjord application. So a user can manage German content in the Fjord application and still see the interface in an English version.
 

@@ -1,5 +1,7 @@
 # Forms
 
+[[toc]]
+
 Fjord-Forms provide a convenient way to store, organize and maintain data of many kinds, such as your page-content. You may create as many `Forms` as you like.
 
 `Forms` are divided into Form `collections` to keep the overview. For example, the `Forms` **home** and **faq**, which contain the page-content for the pages **home** and **faq**, can be included in the `collection` **pages**.
@@ -136,3 +138,15 @@ $settings = Form::load('settings');
 
 $settings->main->title;
 ```
+
+::: tip
+
+Use [View composers](https://laravel.com/docs/7.x/views#view-composers) to load global Form data to your `Views`.
+
+```php
+View::composer('*', function ($view) {
+    $view->with('settings', Form::load('settings', 'main'));
+});
+```
+
+:::
