@@ -11,7 +11,7 @@ $form->password('password')
 
 Update or create form requires a password confirmation.
 
-```php
+```php{3}
 $form->password('password')
     ->title('Password')
     ->confirm();

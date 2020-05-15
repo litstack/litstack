@@ -31,6 +31,14 @@ module.exports = {
             {
                 ga: 'UA-77559383-19'
             }
+        ],
+        [
+            'vuepress-plugin-clean-urls',
+            {
+                normalSuffix: '/',
+                indexSuffix: '/',
+                notFoundPath: '/404.html'
+            }
         ]
     ],
     themeConfig: {
@@ -40,7 +48,7 @@ module.exports = {
         nav: [
             {
                 text: 'Documentation',
-                link: '/guide/getting-started/introduction.html'
+                link: '/docs/getting-started/introduction.html'
             },
             { text: '🕹 Demo', link: 'https://playground.fjord-admin.com' }
         ],
@@ -50,79 +58,79 @@ module.exports = {
                     title: 'Get started',
                     collapsable: false,
                     children: [
-                        ['guide/getting-started/introduction', 'Introduction'],
-                        ['guide/getting-started/installation', 'Installation'],
-                        ['guide/getting-started/configuration', 'Configuration']
+                        ['docs/getting-started/introduction', 'Introduction'],
+                        ['docs/getting-started/installation', 'Installation'],
+                        ['docs/getting-started/configuration', 'Configuration']
                     ]
                 },
                 {
                     title: 'Basics',
                     collapsable: false,
                     children: [
-                        ['guide/basics/navigation', 'Navigation'],
-                        ['guide/basics/localization', 'Localization'],
-                        ['guide/basics/vue', 'Extend With Vue'],
-                        ['guide/basics/helpers', 'Helpers']
+                        ['docs/basics/navigation', 'Navigation'],
+                        ['docs/basics/localization', 'Localization'],
+                        ['docs/basics/vue', 'Extend With Vue'],
+                        ['docs/basics/helpers', 'Helpers']
                     ]
                 },
                 {
                     title: 'CRUD',
                     collapsable: false,
                     children: [
-                        ['guide/crud/create-crud', 'Models'],
-                        ['guide/crud/create-forms', 'Forms'],
-                        ['guide/crud/config-index', 'Index Config'],
-                        ['guide/crud/config-form', 'Form Config'],
-                        ['guide/crud/config-table', 'Table']
+                        ['docs/crud/create-crud', 'Models'],
+                        ['docs/crud/create-forms', 'Forms'],
+                        ['docs/crud/config-index', 'Index Config'],
+                        ['docs/crud/config-form', 'Form Config'],
+                        ['docs/crud/config-table', 'Table']
                     ]
                 },
                 {
                     title: 'Fields',
                     collapsable: true,
                     children: [
-                        ['guide/fields/introduction', 'Introduction'],
-                        ['guide/fields/validation', 'Validation'],
-                        ['guide/fields/input', 'Input'],
-                        ['guide/fields/textarea', 'Textarea'],
-                        ['guide/fields/wysiwyg', 'WYSIWYG'],
-                        ['guide/fields/boolean', 'Boolean'],
-                        ['guide/fields/checkboxes', 'Checkboxes'],
-                        ['guide/fields/range', 'Range'],
-                        ['guide/fields/select', 'Select'],
-                        ['guide/fields/date-time', 'Date/Time'],
-                        ['guide/fields/image', 'Image'],
-                        ['guide/fields/icon', 'Icon'],
-                        ['guide/fields/code', 'Code Editor'],
-                        ['guide/fields/password', 'Password'],
-                        ['guide/fields/relation', 'Relation'],
-                        ['guide/fields/one_relation', 'oneRelation'],
-                        ['guide/fields/many_relation', 'manyRelation'],
-                        ['guide/fields/block', 'Block'],
-                        ['guide/fields/modal', 'Modal'],
-                        ['guide/fields/component', 'Component']
+                        ['docs/fields/introduction', 'Introduction'],
+                        ['docs/fields/validation', 'Validation'],
+                        ['docs/fields/input', 'Input'],
+                        ['docs/fields/textarea', 'Textarea'],
+                        ['docs/fields/wysiwyg', 'WYSIWYG'],
+                        ['docs/fields/boolean', 'Boolean'],
+                        ['docs/fields/checkboxes', 'Checkboxes'],
+                        ['docs/fields/range', 'Range'],
+                        ['docs/fields/select', 'Select'],
+                        ['docs/fields/date-time', 'Date/Time'],
+                        ['docs/fields/image', 'Image'],
+                        ['docs/fields/icon', 'Icon'],
+                        ['docs/fields/code', 'Code Editor'],
+                        ['docs/fields/password', 'Password'],
+                        ['docs/fields/relation', 'Relation'],
+                        ['docs/fields/one_relation', 'oneRelation'],
+                        ['docs/fields/many_relation', 'manyRelation'],
+                        ['docs/fields/block', 'Block'],
+                        ['docs/fields/modal', 'Modal'],
+                        ['docs/fields/component', 'Component']
                     ]
                 },
                 {
                     title: 'Frontend',
                     collapsable: false,
                     children: [
-                        ['guide/frontend/javascript', 'Javascript'],
-                        ['guide/frontend/vue', 'Vue'],
-                        ['guide/frontend/components', 'Vue Components']
+                        ['docs/frontend/javascript', 'Javascript'],
+                        ['docs/frontend/vue', 'Vue'],
+                        ['docs/frontend/components', 'Vue Components']
                     ]
                 },
                 {
                     title: 'Package Development',
                     collapsable: true,
-                    children: [['guide/package/basics', 'Basics']]
+                    children: [['docs/package/basics', 'Basics']]
                 }
                 /*
                 {
                     title: 'Digging Deeper',
                     collapsable: false,
                     children: [
-                        ['guide/deeper/package', 'Package Development'],
-                        ['guide/deeper/lifecycle', 'Lifecycle']
+                        ['docs/deeper/package', 'Package Development'],
+                        ['docs/deeper/lifecycle', 'Lifecycle']
                     ]
                 }
                 */

@@ -98,7 +98,7 @@ public $expandContainer = false;
 
 ### Update Form
 
-Next, the configuration for the [form](/guide/crud/config-form.html) can be adjusted.
+Next, the configuration for the [form](/docs/crud/config-form.html) can be adjusted.
 
 ## Retrieve Data
 

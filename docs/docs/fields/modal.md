@@ -15,7 +15,7 @@ $form->modal('update_email')
 
 Appends a password field to the end of the form that is required to confirm the modal form using the current users password.
 
-```php
+```php{4}
 $form->modal('update_email')
     ->title('E-Mail')
     ->name('Update E-Mail')

@@ -4,7 +4,7 @@ A relation picker. Relation picker can be created for any relation of your model
 
 For the relation Field only the name of the relation must be specified, the type of the relation is automatically recognized and displayed accordingly.
 
-The relations Field can only be used for **Crud Models** and not in **Forms** or **Blocks**. For Forms or Blocks the [oneRelation](/guide/fields/one_relation.html) or [manyRelation](/guide/fields/many_relation.html) field can be used.
+The relations Field can only be used for **Crud Models** and not in **Forms** or **Blocks**. For Forms or Blocks the [oneRelation](/docs/fields/one_relation.html) or [manyRelation](/docs/fields/many_relation.html) field can be used.
 
 ```php
 $form->relation('articles')
