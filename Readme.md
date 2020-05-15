@@ -20,6 +20,10 @@ Manage Models as well as all Page-Content of your website on a modern yet super 
 -   Translatable
 -   Headless
 
+## Learning Fjord
+
+Read the [Docs](https://www.fjord-admin.com) and learn how to build your custom Admin panel. Use your knowledge about Laravel standards and do much work in little time.
+
 ## Installation
 
 Install this package using the following commands:
