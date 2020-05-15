@@ -234,6 +234,10 @@ a.ck.ck-dropdown .ck-button.ck-dropdown__button.ck-on .ck.ck-icon :not([fill]) {
         border-radius: $border-radius !important;
         overflow: hidden;
     }
+
+    .ck.ck-button {
+        border-radius: 0;
+    }
 }
 
 .ck.ck-list__item .ck-button.ck-on {

@@ -2,6 +2,7 @@
 
 return [
     "drag_and_drop" => "Drag and Drop",
+    "change_order" => "Reihenfolge ändern",
     "saved" => "Gespeichert",
     "save" => "Speichern",
     "no_relation_selected" => "Keine <i>:relation</i> ausgewählt.",

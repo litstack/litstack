@@ -5,6 +5,8 @@
                 <b-td class="col-sm" v-if="!field.readonly">
                     <div
                         class="fj-draggable__dragbar fj-block__dragbar"
+                        v-b-tooltip
+                        :title="$t('fj.change_order')"
                         v-if="sortable"
                     >
                         <i class="fas fa-grip-horizontal text-secondary"></i>
@@ -19,15 +21,21 @@
                     :cols="preview"
                 />
                 <b-td class="col-sm text-secondary pl-2" v-if="!field.readonly">
-                    <fa-icon
-                        :icon="deleteIcon"
+                    <b-button
+                        variant="transparent"
+                        v-b-tooltip
+                        :title="$t('fj.delete_model', { model: 'Block' })"
+                        size="sm"
+                        class="btn-square fj-block-delete"
                         @click="$emit('deleteItem')"
-                        class="fj-block-delete"
-                    />
+                    >
+                        <fa-icon :icon="deleteIcon" />
+                    </b-button>
                 </b-td>
                 <b-td class="col-sm pl-2 pr-0" v-if="fields.length > 0">
                     <b-button
                         variant="outline-secondary"
+                        :title="$t('crud.fields.blocks.expand')"
                         size="sm"
                         class="btn-square"
                         @click="$emit('toggleExpand')"
@@ -122,6 +130,7 @@ export default {
     }
     .fj-block-delete {
         cursor: pointer;
+        color: $secondary;
     }
 }
 </style>

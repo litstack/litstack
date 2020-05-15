@@ -97,6 +97,7 @@
             </b-modal>
         </div>
 
+        <slot name="busy" />
         <slot name="drop" />
     </draggable>
 </template>
