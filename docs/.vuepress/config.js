@@ -1,8 +1,8 @@
 const meta = {
     title: 'Fjord | Laravel Content-Administration',
     description:
-        'Fjord is a multilanguage admin-panel/cms scaffolding package that helps you creating CRUD in seconds via Artisan-commands. It also lets you manage the "static" content of each of your websites pages (Headlines, Text, Images), as well repetitive mixed contents you define. Generating content as well as passing it to your views and retrieving it is super simple.',
-    url: 'https://laravel-fjord.com'
+        'Fjord is a multilanguage admin-panel scaffolding package that helps you creating CRUD in seconds via Artisan-commands. It also lets you manage the "static" content of each of your websites pages (Headlines, Text, Images), as well repetitive mixed contents you define. Generating content as well as passing it to your views and retrieving it is super simple.',
+    url: 'https://www.fjord-admin.com'
 };
 
 let head = [
@@ -15,6 +15,24 @@ let head = [
             type: 'text/css'
         }
     ],
+    [
+        'link',
+        {
+            rel: 'icon',
+            type: 'image/png',
+            sizes: '32x32',
+            href: '/favicons/favicon-32x32.png'
+        }
+    ],
+    [
+        'link',
+        {
+            rel: 'icon',
+            type: 'image/png',
+            sizes: '16x16',
+            href: '/favicons/favicon-16x16.png'
+        }
+    ],
     ['link', { rel: 'icon', href: `/vue-logo.png` }],
     ['meta', { name: 'theme-color', content: '#4951f2' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }]
@@ -22,7 +40,7 @@ let head = [
 
 module.exports = {
     base: '/',
-    title: 'Fjord',
+    title: '',
     description: 'description',
     head,
     plugins: [
@@ -35,13 +53,14 @@ module.exports = {
         [
             'vuepress-plugin-clean-urls',
             {
-                normalSuffix: '',
+                normalSuffix: '/',
                 indexSuffix: '/',
                 notFoundPath: '/404.html'
             }
         ]
     ],
     themeConfig: {
+        logo: '/logo.svg',
         repo: 'aw-studio/fjord',
         editLinks: true,
         docsDir: 'docs',
@@ -118,12 +137,14 @@ module.exports = {
                         ['docs/frontend/vue', 'Vue'],
                         ['docs/frontend/components', 'Vue Components']
                     ]
-                },
+                }
+                /*
                 {
                     title: 'Package Development',
                     collapsable: true,
                     children: [['docs/package/basics', 'Basics']]
                 }
+                */
                 /*
                 {
                     title: 'Digging Deeper',

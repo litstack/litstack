@@ -9,12 +9,12 @@ Both navigations are configured in `fjord/app/Config/NavigationConfig.php` which
 ```php
 class NavigationConfig extends Config
 {
-    protected function topbar(Navigation $nav)
+    public function topbar(Navigation $nav)
     {
         // Build your topbar navigation in here.
     }
 
-    protected function main(Navigation $nav)
+    public function main(Navigation $nav)
     {
         // Build your main navigation in here.
     }
