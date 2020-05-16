@@ -86,7 +86,7 @@ class WhereLike
      */
     public function whereAttributeLike($query, $attribute, $searchTerm, $or = true)
     {
-        if (is_translatable($query->getModel())) {
+        if (!$this->isAttributeTranslatable($query->getModel(), $attribute)) {
             if ($or) {
                 $query->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
             } else {
@@ -99,5 +99,21 @@ class WhereLike
                 $query->whereTranslationLike($attribute, "%{$searchTerm}%");
             }
         }
+    }
+
+    /**
+     * Is Model attribute translatable.
+     *
+     * @param mixed $model
+     * @param string $attribute
+     * @return boolean
+     */
+    public function isAttributeTranslatable($model, $attribute)
+    {
+        if (!is_translatable($model)) {
+            return false;
+        }
+
+        return in_array($attribute, $model->translatedAttributes);
     }
 }
