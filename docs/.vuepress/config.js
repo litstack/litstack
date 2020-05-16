@@ -40,7 +40,7 @@ let head = [
 
 module.exports = {
     base: '/',
-    title: '',
+    title: 'Fjord',
     description: 'description',
     head,
     plugins: [
