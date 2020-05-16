@@ -12,10 +12,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BuilderMacros extends ServiceProvider
 {
+    protected $macros = [
+        WhereLike::class,
+    ];
+
     public function boot()
     {
-        $this->whereLike();
+        $this->registerMacros();
         $this->orderBy();
+    }
+
+    public function registerMacros()
+    {
+        foreach ($this->macros as $macro) {
+            new $macro;
+        }
     }
 
     protected function orderBy()
@@ -46,34 +57,6 @@ class BuilderMacros extends ServiceProvider
             return $this->orderByRelation('translation', $column, $direction, function ($query) use ($locale) {
                 $foreignTable = $this->model->translation()->getRelated()->getTable();
                 $query->where("{$foreignTable}.locale", $locale);
-            });
-        });
-    }
-
-    /**
-     * whereLike macro for query builder.
-     *
-     * @return void
-     */
-    protected function whereLike()
-    {
-        Builder::macro('whereLike', function ($attributes, string $searchTerm) {
-            return $this->where(function (Builder $query) use ($attributes, $searchTerm) {
-                foreach (Arr::wrap($attributes) as $attribute) {
-                    $query->when(
-                        Str::contains($attribute, '.'),
-                        function (Builder $query) use ($attribute, $searchTerm) {
-                            [$relationName, $relationAttribute] = explode('.', $attribute);
-
-                            $query->orWhereHas($relationName, function (Builder $query) use ($relationAttribute, $searchTerm) {
-                                $query->where($relationAttribute, 'LIKE', "%{$searchTerm}%");
-                            });
-                        },
-                        function (Builder $query) use ($attribute, $searchTerm) {
-                            $query->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
-                        }
-                    );
-                }
             });
         });
     }
