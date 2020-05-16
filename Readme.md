@@ -1,4 +1,4 @@
-<p align="center" style="margin: 50px 0 !important;"><a href="https://laravel.com" target="_blank" rel="noopener"><img src="./docs/logo.svg" width="400"></a></p>
+<p align="center" style="margin: 50px 0 !important;"><a href="https://www.fjord-admin.com" target="_blank" rel="noopener"><img src="./docs/logo.svg" width="400"></a></p>
 
 # Fjord: Laravel Content-Administration
 
