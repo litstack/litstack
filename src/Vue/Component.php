@@ -5,11 +5,8 @@ namespace Fjord\Vue;
 use Closure;
 use Exception;
 use Fjord\Support\VueProp;
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Fjord\Exceptions\MethodNotFoundException;
-
-use function Psy\debug;
 
 class Component extends VueProp
 {
@@ -515,6 +512,7 @@ class Component extends VueProp
      */
     public function __call($method, $params = [])
     {
+
         if (array_key_exists($method, $this->availableProps)) {
             return $this->prop($method, ...$params);
         }
@@ -525,6 +523,10 @@ class Component extends VueProp
                 $this->availableSlots[$method],
                 ...$params
             );
+        }
+
+        if (self::class == static::class) {
+            return $this->prop($method, ...$params);
         }
 
         $this->methodNotFound($method);

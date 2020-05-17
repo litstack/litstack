@@ -81,15 +81,19 @@ class Component extends Field
     public function __call($method, $params = [])
     {
         try {
-            $this->forwardCallTo($this->attributes['comp'], $method, $params);
+            return $this->forwardCallTo($this->attributes['comp'], $method, $params);
         } catch (MethodNotFoundException $e) {
             try {
-                return parent::__call($method, $params);
+                $result = parent::__call($method, $params);
             } catch (MethodNotFoundException $e) {
                 $this->attributes['comp']->methodNotFound($method, [
                     'function' => '__call',
                     'class' => self::class
                 ]);
+            } finally {
+                $this->prop($method, ...$params);
+
+                return $result;
             }
         }
 

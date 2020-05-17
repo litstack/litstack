@@ -1,5 +1,5 @@
 <template>
-    <b-col :cols="field.cols">
+    <b-col :cols="cols">
         <fj-markdown :markdown="markdown" />
     </b-col>
 </template>
@@ -8,9 +8,11 @@
 export default {
     name: 'FieldMarkdown',
     props: {
-        field: {
-            type: Object,
-            required: true
+        cols: {
+            type: [String, Number],
+            default() {
+                return '12';
+            }
         },
         markdown: {
             type: String,
