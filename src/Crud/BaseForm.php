@@ -3,10 +3,10 @@
 namespace Fjord\Crud;
 
 use Closure;
+
 use Fjord\Support\VueProp;
 use Fjord\Crud\Fields\Code;
 use Fjord\Crud\Fields\Icon;
-use Illuminate\Support\Str;
 use Fjord\Crud\Fields\Input;
 use Fjord\Crud\Fields\Modal;
 use Fjord\Crud\Fields\Range;
@@ -15,6 +15,7 @@ use InvalidArgumentException;
 use Fjord\Crud\Fields\Boolean;
 use Fjord\Crud\Fields\Wysiwyg;
 use Fjord\Crud\Fields\Datetime;
+use Fjord\Crud\Fields\Markdown;
 use Fjord\Crud\Fields\Password;
 use Fjord\Crud\Fields\Textarea;
 use Fjord\Crud\Fields\Component;
@@ -34,8 +35,16 @@ use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Exceptions\MethodNotFoundException;
 use Fjord\Crud\Fields\Relations\BelongsToMany;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Macroable;
+
+
 class BaseForm extends VueProp
 {
+    use Macroable {
+        __call as macroCall;
+    }
+
     /**
      * Available fields.
      *
@@ -346,6 +355,10 @@ class BaseForm extends VueProp
     {
         if (array_key_exists($method, $this->fields)) {
             return $this->registerField($this->fields[$method], ...$params);
+        }
+
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $params);
         }
 
         $this->methodNotAllowed($method);

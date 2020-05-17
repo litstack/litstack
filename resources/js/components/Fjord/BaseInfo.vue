@@ -1,7 +1,12 @@
 <template>
     <b-col :cols="cols">
         <component :is="heading" v-html="title" />
-        <p v-for="info in text" v-html="info" class="text-secondary"></p>
+        <p
+            :key="key"
+            v-for="(info, key) in text"
+            v-html="info"
+            class="text-secondary"
+        />
     </b-col>
 </template>
 

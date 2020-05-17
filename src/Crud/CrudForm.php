@@ -91,7 +91,7 @@ class CrudForm extends BaseForm
      * @param any ...$params
      * @return void
      */
-    public function info(string $title)
+    public function info(string $title = '')
     {
         $info = $this->component('fj-info')->title($title);
 

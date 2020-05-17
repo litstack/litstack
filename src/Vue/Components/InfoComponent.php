@@ -3,6 +3,8 @@
 namespace Fjord\Vue\Components;
 
 use Fjord\Vue\Component;
+use Fjord\Exceptions\InvalidArgumentException;
+use Fjord\Exceptions\MethodNotAllowedException;
 
 class InfoComponent extends Component
 {
@@ -37,10 +39,10 @@ class InfoComponent extends Component
     }
 
     /**
-     * Set component.
+     * Add text.
      *
      * @param string $name
-     * @return void
+     * @return self
      */
     public function text(string $text)
     {
