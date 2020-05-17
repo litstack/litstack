@@ -58,7 +58,7 @@ class Authenticate extends Middleware
             'user_agent' => $request->server('HTTP_USER_AGENT'),
             'ip_address' => $request->ip(),
         ];
-        if (FjordSession::exists($query)) {
+        if (FjordSession::where($query)->exists()) {
             FjordSession::where($query)->update(
                 [
                     'user_agent' => $request->server('HTTP_USER_AGENT'),
@@ -81,8 +81,6 @@ class Authenticate extends Middleware
                 ],
             );
         }
-        // Store fjord session.
-
     }
 
     /**
