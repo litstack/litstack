@@ -1,6 +1,5 @@
 <template>
     <fj-form-item :field="field" :model="model" :value="fileCount">
-        BUSY: {{ busy }}
         <template v-if="model.id">
             <div class="w-100">
                 <b-row>
