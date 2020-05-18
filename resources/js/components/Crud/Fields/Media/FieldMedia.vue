@@ -250,8 +250,6 @@ export default {
             Fjord.bus.$emit('field:updated', 'image:uploaded');
         },
         queueComplete() {
-            console.log('fertig');
-
             this.busy = false;
         },
         uploadError(file, errorMessage, xhr) {
