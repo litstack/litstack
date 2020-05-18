@@ -8,7 +8,6 @@
         v-bind:disabled="field.readonly"
         @end="newOrder"
         handle=".fj-draggable__dragbar"
-        v-if="sortable.length > 0"
     >
         <div
             :class="{
