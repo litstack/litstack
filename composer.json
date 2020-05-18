@@ -2,19 +2,22 @@
     "name": "aw-studio/fjord",
     "description": "Fjord: A Laravel CMS/Admin-Panel",
     "type": "project",
+    "license": "MIT",
     "require": {
         "php": "^7.2",
         "aw-studio/fjord-permissions": "^1.0",
         "spatie/eloquent-sortable": "^3.6|^3.7|^3.8",
         "spatie/laravel-permission": "^2.37|^3.0|^3.11",
-        "spatie/laravel-medialibrary": "^7.0.0|^7.1.0|^7.19",
         "astrotomic/laravel-translatable": "^11.1|^11.8",
         "cviebrock/eloquent-sluggable": "^4.8|^6.0|^7.0",
         "mobiledetect/mobiledetectlib": "^2.8",
         "piwik/device-detector": "^3.12",
-        "laravel/ui": "^2.0"
+        "laravel/ui": "^2.0",
+        "spatie/laravel-medialibrary": "^8.2"
     },
-    "license": "MIT",
+    "require-dev": {
+        "orchestra/testbench": "^5.2"
+    },
     "authors": [
         {
             "name": "Jannes Behrens",
@@ -31,6 +34,11 @@
         ],
         "psr-4": {
             "Fjord\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Fjord\\Test\\": "tests"
         }
     },
     "extra": {

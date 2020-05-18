@@ -7,7 +7,7 @@ use Fjord\Crud\BaseForm;
 class FormMarkdown
 {
     /**
-     * Create new WhereLike instance.
+     * Create new FormMarkdown instance.
      * 
      * @return void
      */

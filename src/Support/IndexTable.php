@@ -210,7 +210,7 @@ class IndexTable
             return;
         }
 
-        $this->query->whereLike(
+        $this->query->search(
             $this->searchKeys,
             $this->request->search
         );

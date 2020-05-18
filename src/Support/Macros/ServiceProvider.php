@@ -11,7 +11,7 @@ use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 class ServiceProvider extends LaravelServiceProvider
 {
     protected $macros = [
-        BuilderWhereLike::class,
+        BuilderSearch::class,
         FormMarkdown::class
     ];
 

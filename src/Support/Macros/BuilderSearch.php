@@ -6,10 +6,10 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 
-class BuilderWhereLike
+class BuilderSearch
 {
     /**
-     * Create new WhereLike instance.
+     * Create new BuilderSearch instance.
      * 
      * @return void
      */
@@ -17,17 +17,17 @@ class BuilderWhereLike
     {
         $self = $this;
 
-        Builder::macro('whereLike', function ($attributes, string $searchTerm) use ($self) {
-            return $self->whereLike($this, $attributes, $searchTerm);
+        Builder::macro('search', function ($attributes, string $searchTerm) use ($self) {
+            return $self->search($this, $attributes, $searchTerm);
         });
     }
 
     /**
-     * whereLike macro for query builder.
+     * search macro for query builder.
      *
-     * @return void
+     * @return Builder
      */
-    public function whereLike(Builder $query, $attributes, string $searchTerm)
+    public function search(Builder $query, $attributes, string $searchTerm)
     {
         return $query->where(function (Builder $query) use ($attributes, $searchTerm) {
             foreach (Arr::wrap($attributes) as $attribute) {
