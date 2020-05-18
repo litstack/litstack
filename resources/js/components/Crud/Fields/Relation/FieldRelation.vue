@@ -135,8 +135,10 @@ export default {
         this.cols = this.field.preview;
         this.cols.push({
             label: '',
-            link: `${this.field.config.route_prefix}/{id}/edit`,
-            value: '<i class="ml-4 fas fa-eye text-secondary"></i>',
+            component: 'fj-field-relation-col-link',
+            props: {
+                field: this.field
+            },
             small: true
         });
         if (!this.field.readonly) {

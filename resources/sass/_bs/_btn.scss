@@ -70,3 +70,13 @@
         cursor: not-allowed;
     }
 }
+
+.btn-transparent {
+
+    color: $secondary;
+
+    &:hover {
+        color: white;
+        background-color: $secondary;
+    }
+}

@@ -31,6 +31,7 @@
                     class="dropdown-md-square"
                     :class="{ disabled: _.isEmpty(controls) }"
                     v-bind:disabled="_.isEmpty(controls)"
+                    right
                     no-caret
                 >
                     <template v-slot:button-content>

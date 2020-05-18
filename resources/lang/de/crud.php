@@ -9,6 +9,9 @@ return [
             'collapse_all' => 'Alle einklappen'
         ],
         'relation' => [
+            'goto' => 'zur Verknüpfung',
+            'unlink' => 'Verknüpfung aufheben',
+            'edit' => 'Verknüpfung bearbeiten',
             'messages' => [
                 'confirm_unlink' => 'Bitte bestätigen Sie, dass Sie die Verknüpfung aufheben möchten.',
             ]
