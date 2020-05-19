@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\File;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class TestCase extends Orchestra
+class FjordTestCase extends Orchestra
 {
-    use SetupDatabase, RefreshDatabase;
+    use SetupDatabase;
 
     public function setUp(): void
     {
@@ -17,8 +17,6 @@ class TestCase extends Orchestra
 
         File::deleteDirectory(__DIR__ . '/laravel');
         File::makeDirectory(__DIR__ . '/laravel');
-
-        $this->setUpDatabase();
     }
 
     protected function getPackageProviders($app)
@@ -29,6 +27,7 @@ class TestCase extends Orchestra
             \Cviebrock\EloquentSluggable\ServiceProvider::class,
             \Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
             \Spatie\Permission\PermissionServiceProvider::class,
+            \Astrotomic\Translatable\TranslatableServiceProvider::class,
             FjordServiceProvider::class,
         ];
     }
@@ -36,13 +35,15 @@ class TestCase extends Orchestra
     protected function getEnvironmentSetUp($app)
     {
         // Setup default database to use sqlite :memory:
-        $app['config']->set('database.default', 'testing');
-        $app['config']->set('database.connections.testing', [
-            'driver' => 'mysql',
-            'host' => 'localhost',
-            'database' => 'fjord-test',
-            'username' => 'root',
-            'password' => 'root'
+        $app['config']->set('database.default', 'testbench');
+        $app['config']->set('database.connections.testbench', [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
+        ]);
+        $app['config']->set('translatable.locales', [
+            'en',
+            'de'
         ]);
     }
 }

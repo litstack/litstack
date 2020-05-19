@@ -293,6 +293,28 @@ if (!function_exists('is_translatable')) {
     }
 }
 
+if (!function_exists('is_attribute_translatable')) {
+    /**
+     * Is a Model attribute translatable.
+     *
+     * @param mixed $model
+     * @param string $attribute
+     * @return boolean
+     */
+    function is_attribute_translatable($model, string $attribute)
+    {
+        if (!is_translatable($model)) {
+            return false;
+        }
+
+        if (is_string($model)) {
+            $model = new $model;
+        }
+
+        return in_array($attribute, $model->translatedAttributes);
+    }
+}
+
 if (!function_exists('has_media')) {
     /**
      * Does a Model has media.

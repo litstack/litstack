@@ -2,14 +2,16 @@
 
 namespace Fjord\Test;
 
-use Illuminate\Support\Str;
+use Fjord\FjordServiceProvider;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Fjord\Test\TestSupport\Database\TestMigrator;
+use Throwable;
 
 trait SetupDatabase
 {
+    protected $migrated = false;
+
     public function migratePackage($provider)
     {
         $paths = ServiceProvider::pathsToPublish(
@@ -33,19 +35,36 @@ trait SetupDatabase
                 $this->loadMigrationsFrom($testTo);
             } else {
                 File::copy($from, $testTo);
+
                 $this->loadMigrationsFrom(dirname($testTo));
             }
         }
-        $this->artisan('migrate', ['--database' => 'testing']);
     }
 
-    protected function setUpDatabase()
+    protected function migrateFjordAndPackages()
     {
+        $this->artisan('migrate:reset', ['--force' => true]);
+
         foreach ($this->getPackageProviders($this->app) as $provider) {
             $this->migratePackage($provider);
         }
-        $this->artisan('migrate', ['--database' => 'testing']);
+    }
 
-        with(new TestMigrator($this->app))->migrate();
+    protected function migrateFjord()
+    {
+        $this->artisan('migrate:reset', ['--force' => true]);
+        $this->migratePackage(\Spatie\Permission\PermissionServiceProvider::class);
+        $this->migratePackage(Fjord\FjordServiceProvider::class);
+    }
+
+    protected function migrateSupportTables()
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/TestSupport/migrations');
+    }
+
+    protected function migrateAll()
+    {
+        $this->migrateFjordAndPackages();
+        $this->migrateSupportTables();
     }
 }
