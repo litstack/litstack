@@ -29,7 +29,7 @@ div#fjord-app .fj-navigation {
         }
 
         &.active {
-            background-color: $nav-item-active-bg;
+            background-color: $gray-200;
             color: $nav-item-active-color;
             font-weight: $nav-item-active-font-weight;
             border-right: $nav-item-active-border-width solid $nav-item-active-color;

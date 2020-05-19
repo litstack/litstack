@@ -1,9 +1,14 @@
 <template>
-    <fa-icon
-        icon="unlink"
-        class="text-secondary fj-field-relation-unlink"
+    <b-button
+        variant="transparent"
+        size="sm"
+        class="btn-square"
+        v-b-tooltip.hover
+        :title="$t('crud.fields.relation.unlink')"
         @click="$emit('unlink', item)"
-    />
+    >
+        <fa-icon icon="unlink" />
+    </b-button>
 </template>
 
 <script>
@@ -17,9 +22,3 @@ export default {
     }
 };
 </script>
-
-<style>
-.fj-field-relation-unlink {
-    cursor: pointer;
-}
-</style>

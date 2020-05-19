@@ -9,6 +9,9 @@ return [
             'collapse_all' => 'collapse all'
         ],
         'relation' => [
+            'goto' => 'Go to relation',
+            'unlink' => 'Unlink relation',
+            'edit' => 'Edit relation',
             'messages' => [
                 'confirm_unlink' => 'Please confirm that you wish to unlink the item.',
             ]

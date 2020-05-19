@@ -2,23 +2,12 @@
     <fj-form-item :field="field" :model="model" :value="fileCount">
         <template v-if="model.id">
             <div class="w-100">
+                <fj-field-alert-empty
+                    v-if="images.length == 0"
+                    :field="field"
+                    :class="{ 'mb-0': field.readonly }"
+                />
                 <b-row>
-                    <div
-                        class="col-12 order-2"
-                        v-if="!field.readonly && images.length == 0"
-                    >
-                        <vue-dropzone
-                            class="fj-dropzone"
-                            :ref="`dropzone-${field.id}`"
-                            :id="`dropzone-${field.id}`"
-                            :options="dropzoneOptions"
-                            @vdropzone-sending="busy = true"
-                            @vdropzone-success="uploadSuccess"
-                            @vdropzone-queue-complete="queueComplete"
-                            @vdropzone-error="uploadError"
-                            @vdropzone-files-added="processQueue"
-                        />
-                    </div>
                     <div class="col-12 order-1">
                         <fj-field-media-images
                             :field="field"
@@ -26,7 +15,6 @@
                             :model="model"
                             :model-id="modelId"
                             :readonly="field.readonly"
-                            v-if="images.length > 0"
                             @deleted="$emit('reload')"
                             @newOrder="$emit('reload')"
                         >
@@ -41,7 +29,6 @@
                             <vue-dropzone
                                 v-if="
                                     !field.readonly &&
-                                        images.length > 0 &&
                                         images.length < field.maxFiles
                                 "
                                 slot="drop"
@@ -56,11 +43,6 @@
                                 @vdropzone-files-added="processQueue"
                             />
                         </fj-field-media-images>
-                        <fj-field-alert-empty
-                            v-else
-                            :field="field"
-                            :class="{ 'mb-0': field.readonly }"
-                        />
                     </div>
                 </b-row>
             </div>
@@ -250,7 +232,7 @@ export default {
             Fjord.bus.$emit('field:updated', 'image:uploaded');
         },
         queueComplete() {
-            console.log('fertig');
+            console.log('queueComplete');
 
             this.busy = false;
         },

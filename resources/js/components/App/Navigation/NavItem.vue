@@ -156,13 +156,8 @@ export default {
     }
     &-spacer {
         padding: $list-group-item-padding-y 0;
-        background: linear-gradient(
-            180deg,
-            rgba(235, 235, 235, 0.5) 0%,
-            rgba(0, 0, 0, 0) 10px,
-            rgba(0, 0, 0, 0) calc(100% - 10px),
-            rgba(235, 235, 235, 0.5) 100%
-        );
+        box-shadow: inset 0px 11px 8px -6px $gray-300,
+            inset 0px -11px 8px -6px $gray-300;
     }
 }
 </style>
