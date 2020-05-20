@@ -33,6 +33,7 @@ div#fjord-app {
         main {
             padding-top: $nav-height-mobile;
             height: calc(100vh - #{$nav-height-mobile});
+            overflow: auto;
         }
     }
 }

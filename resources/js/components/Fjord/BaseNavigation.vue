@@ -2,7 +2,7 @@
     <b-row class="fj-page-navigation" :class="{ 'can-save': canSave }">
         <b-col
             cols="12"
-            class="d-flex justify-content-between align-items-center fj-page-navigation__container"
+            class="d-flex justify-content-end justify-content-lg-between align-items-center fj-page-navigation__container"
         >
             <div class="fj-page-navigation-left d-none d-lg-block">
                 <b-button
@@ -19,13 +19,6 @@
                     <slot name="left" />
                 </div>
             </div>
-            <b-button
-                variant="primary"
-                class="d-block d-lg-none btn-square"
-                @click="toggleNavigation"
-            >
-                <fa-icon icon="stream" />
-            </b-button>
 
             <div
                 class="d-flex fj-save-animate fj-page-navigation-right"
@@ -146,11 +139,6 @@ export default {
                     reject
                 );
             });
-        },
-        toggleNavigation() {
-            document
-                .querySelector('.fj-navigation')
-                .classList.toggle('visible');
         }
     },
     mounted() {

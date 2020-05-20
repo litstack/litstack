@@ -34,6 +34,12 @@
 
             @include('fjord::partials.topbar.topbar')
             @include('fjord::partials.navigation')
+            <b-button
+            variant="primary"
+            class="d-block d-lg-none btn-square fj-main-navigation-toggle"
+        >
+            <fa-icon icon="stream" />
+        </b-button>
 
         <main>
             <div class="fj-content">
@@ -83,6 +89,12 @@
                 }
                 
             });
+
+            document.querySelector('.fj-main-navigation-toggle').addEventListener('click', e => {
+                document
+                    .querySelector('.fj-navigation')
+                    .classList.toggle('visible');
+            })
         }
     </script>
 </body>

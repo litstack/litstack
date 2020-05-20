@@ -17,6 +17,21 @@ export default {
     },
     computed: {
         ...mapGetters(['baseURL', 'config'])
+    },
+    methods: {
+        toggleNavigation() {
+            document
+                .querySelector('.fj-navigation')
+                .classList.toggle('visible');
+        }
     }
 };
 </script>
+<style lang="scss">
+.fj-main-navigation-toggle {
+    position: fixed;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    z-index: 1040;
+}
+</style>
