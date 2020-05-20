@@ -18,12 +18,21 @@ div#fjord-app {
         overflow: hidden;
         overflow-y: scroll;
 
-        > .fj-content {
+        >.fj-content {
             display: none;
         }
 
-        &.loaded > .fj-content {
+        &.loaded>.fj-content {
             display: block;
+        }
+    }
+
+    @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+        display: block;
+
+        main {
+            padding-top: $nav-height-mobile;
+            height: calc(100vh - #{$nav-height-mobile});
         }
     }
 }

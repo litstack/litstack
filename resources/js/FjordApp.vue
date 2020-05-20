@@ -97,7 +97,8 @@ export default {
 
             if (results.hasSucceeded()) {
                 this.$bvToast.toast(this.$t('fj.saved'), {
-                    variant: 'success'
+                    variant: 'success',
+                    noAutoHide: true
                 });
             }
         },

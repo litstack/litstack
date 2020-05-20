@@ -44,4 +44,19 @@ div#fjord-app .fj-navigation {
             padding-left: $nav-item-collapsed-padding-left;
         }
     }
+
+    @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+        width: 100vw;
+        position: fixed;
+        height: calc(100vh - #{$nav-height-mobile * 2});
+        top: $nav-height-mobile;
+        transition: .2s all ease;
+        left: -100vw;
+
+        z-index: $zindex-fixed;
+
+        &.visible {
+            left: 0;
+        }
+    }
 }

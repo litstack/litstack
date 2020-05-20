@@ -1,10 +1,10 @@
 <template>
-    <b-row class="fj-page-navigation">
+    <b-row class="fj-page-navigation" :class="{ 'can-save': canSave }">
         <b-col
             cols="12"
             class="d-flex justify-content-between align-items-center fj-page-navigation__container"
         >
-            <div>
+            <div class="fj-page-navigation-left d-none d-lg-block">
                 <b-button
                     size="sm"
                     variant="link"
@@ -19,9 +19,16 @@
                     <slot name="left" />
                 </div>
             </div>
+            <b-button
+                variant="primary"
+                class="d-block d-lg-none btn-square"
+                @click="toggleNavigation"
+            >
+                <fa-icon icon="stream" />
+            </b-button>
 
             <div
-                class="d-flex fj-save-animate"
+                class="d-flex fj-save-animate fj-page-navigation-right"
                 :style="wrapperStyle"
                 :class="{ loaded: loaded }"
             >
@@ -139,6 +146,11 @@ export default {
                     reject
                 );
             });
+        },
+        toggleNavigation() {
+            document
+                .querySelector('.fj-navigation')
+                .classList.toggle('visible');
         }
     },
     mounted() {
@@ -252,6 +264,23 @@ export default {
         }
         .fj-page-navigation__go_back {
             margin-left: -$btn-padding-x-sm;
+        }
+    }
+    @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+        width: 100vw;
+        position: fixed;
+        top: calc(100vh - #{$nav-height-mobile});
+        height: $nav-height-mobile;
+
+        margin: 0;
+        left: 0;
+        z-index: $zindex-fixed;
+        box-shadow: 0 -17px 14px -16px rgba(188, 188, 188, 0.51);
+
+        &.can-save {
+            .fj-page-navigation-right > :not(.fj-save-button) {
+                display: none;
+            }
         }
     }
 }

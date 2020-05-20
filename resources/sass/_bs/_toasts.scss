@@ -2,10 +2,15 @@
     left: 0 !important;
     right: 0 !important;
 }
+
 .b-toaster-bottom-right {
     .b-toaster-slot {
         bottom: $toast-margin !important;
         right: $toast-margin !important;
+    }
+
+    @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+        bottom: $nav-height-mobile !important;
     }
 }
 
@@ -14,12 +19,14 @@
     color: white !important;
     border: none !important;
     backdrop-filter: blur(5px) !important;
+
     .close {
         font-weight: 400 !important;
         color: white !important;
         text-shadow: none !important;
         opacity: 1 !important;
     }
+
     .toast-header {
         padding: 0 !important;
         position: absolute !important;
@@ -47,6 +54,7 @@
         color: $green;
     }
 }
+
 .b-toast-danger {
     .toast-body::before {
         content: '\f057';
@@ -60,24 +68,28 @@
         display: none;
     }
 }
+
 .b-toast-primary {
     .toast-body::before {
         content: '\f05a';
         color: $primary;
     }
 }
+
 .b-toast-secondary {
     .toast-body::before {
         content: '\f05a';
         color: $light;
     }
 }
+
 .b-toast-warning {
     .toast-body::before {
         content: '\f06a';
         color: $yellow;
     }
 }
+
 .b-toast-info {
     .toast-body::before {
         content: '\f05a';
