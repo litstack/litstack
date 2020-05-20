@@ -11,8 +11,9 @@ use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 class ServiceProvider extends LaravelServiceProvider
 {
     protected $macros = [
-        BuilderWhereLike::class,
-        FormMarkdown::class
+        BuilderSearch::class,
+        FormMarkdown::class,
+        BuilderSort::class,
     ];
 
     public function boot()

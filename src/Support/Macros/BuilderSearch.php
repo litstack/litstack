@@ -6,10 +6,10 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 
-class BuilderWhereLike
+class BuilderSearch
 {
     /**
-     * Create new WhereLike instance.
+     * Create new BuilderSearch instance.
      * 
      * @return void
      */
@@ -17,39 +17,43 @@ class BuilderWhereLike
     {
         $self = $this;
 
-        Builder::macro('whereLike', function ($attributes, string $searchTerm) use ($self) {
-            return $self->whereLike($this, $attributes, $searchTerm);
+        Builder::macro('search', function ($attributes, string $searchTerm) use ($self) {
+            return $self->search($this, $attributes, $searchTerm);
         });
     }
 
     /**
-     * whereLike macro for query builder.
+     * search macro for query builder.
      *
-     * @return void
+     * @return Builder
      */
-    public function whereLike(Builder $query, $attributes, string $searchTerm)
+    public function search(Builder $query, $attributes, string $searchTerm)
     {
         return $query->where(function (Builder $query) use ($attributes, $searchTerm) {
+            $or = false;
             foreach (Arr::wrap($attributes) as $attribute) {
                 $query->when(
                     Str::contains($attribute, '.'),
-                    function (Builder $query) use ($attribute, $searchTerm) {
+                    function (Builder $query) use ($attribute, $searchTerm, $or) {
                         [$relationName, $relationAttribute] = explode('.', $attribute);
                         $this->whereRelatedAttributeLike(
                             $query,
                             $relationName,
                             $relationAttribute,
-                            $searchTerm
+                            $searchTerm,
+                            $or
                         );
                     },
-                    function (Builder $query) use ($attribute, $searchTerm) {
+                    function (Builder $query) use ($attribute, $searchTerm, $or) {
                         $this->whereAttributeLike(
                             $query,
                             $attribute,
-                            $searchTerm
+                            $searchTerm,
+                            $or
                         );
                     }
                 );
+                $or = true;
             }
         });
     }
@@ -63,14 +67,14 @@ class BuilderWhereLike
      * @param mixed $searchTerm
      * @return void
      */
-    public function whereRelatedAttributeLike($query, $relationName, $attribute, $searchTerm)
+    public function whereRelatedAttributeLike($query, $relationName, $attribute, $searchTerm, $or = false)
     {
-        return $query->orWhereHas($relationName, function (Builder $query) use ($attribute, $searchTerm) {
+        return $query->orWhereHas($relationName, function (Builder $query) use ($attribute, $searchTerm, $or) {
             $this->whereAttributeLike(
                 $query,
                 $attribute,
                 $searchTerm,
-                $or = false
+                $or
             );
         });
     }
@@ -86,7 +90,7 @@ class BuilderWhereLike
      */
     public function whereAttributeLike($query, $attribute, $searchTerm, $or = true)
     {
-        if (!$this->isAttributeTranslatable($query->getModel(), $attribute)) {
+        if (!is_attribute_translatable($query->getModel(), $attribute)) {
             if ($or) {
                 $query->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
             } else {
@@ -99,21 +103,5 @@ class BuilderWhereLike
                 $query->whereTranslationLike($attribute, "%{$searchTerm}%");
             }
         }
-    }
-
-    /**
-     * Is Model attribute translatable.
-     *
-     * @param mixed $model
-     * @param string $attribute
-     * @return boolean
-     */
-    public function isAttributeTranslatable($model, $attribute)
-    {
-        if (!is_translatable($model)) {
-            return false;
-        }
-
-        return in_array($attribute, $model->translatedAttributes);
     }
 }

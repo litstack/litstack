@@ -2,6 +2,7 @@
 
 namespace Fjord\Support;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 use Illuminate\Database\Eloquent\Builder;
@@ -50,7 +51,7 @@ class IndexTable
      * @param Request|null $request
      * @return void
      */
-    public function __construct($query, $request = null)
+    public function __construct($query, Request $request = null)
     {
         $this->query = $query;
         $this->request = $request;
@@ -91,6 +92,16 @@ class IndexTable
         $this->searchKeys = $keys;
 
         return $this;
+    }
+
+    /**
+     * Get search keys.
+     *
+     * @return array
+     */
+    public function getSearchKeys()
+    {
+        return $this->searchKeys;
     }
 
     /**
@@ -164,7 +175,7 @@ class IndexTable
         }
 
         if (in_array('order', $actions)) {
-            self::applyOrderToQuery();
+            self::applySortToQuery();
         }
 
         $itemsQuery = clone $this->query;
@@ -210,46 +221,38 @@ class IndexTable
             return;
         }
 
-        $this->query->whereLike(
+        $this->query->search(
             $this->searchKeys,
             $this->request->search
         );
     }
 
     /**
-     * Apply order to query.
+     * Apply sort to query.
      *
      * @return void
      */
-    protected function applyOrderToQuery()
+    protected function applySortToQuery()
     {
         if (!$this->request->sort_by) {
             return;
         }
+        // Get sort key and direction.
+        [$key, $direction] = $this->parseSortKey($this->request->sort_by);
 
-        // Get order key and order direction
-        $key = $this->request->sort_by;
-        $order = 'asc';
-        if (strpos($key, '.') !== false) {
-            $key = explode('.', $this->request->sort_by)[0];
-            $order = last(explode('.', $this->request->sort_by));
+        return $this->query->sort($key, $direction);
+    }
+
+    public function parseSortKey(string $key)
+    {
+        $direction = 'asc';
+
+        if (Str::endsWith($key, '.asc') || Str::endsWith($key, 'desc')) {
+            $direction = last(explode('.', $key));
+            $key = str_replace(".{$direction}", "", $key);
         }
 
-        $model = $this->query->getModel();
-
-        if (array_key_exists($key, $this->query->getEagerLoads())) {
-            return $this->query->orderByRelation($key, explode('.', $this->request->sort_by)[1], $order);
-        }
-
-        if (!is_translatable($model)) {
-            return $this->query->orderBy($key, $order);
-        }
-
-        if (!in_array($key, $model->translatedAttributes)) {
-            return $this->query->orderBy($key, $order);
-        }
-
-        return $this->query->orderByTranslation(app()->getLocale(), $key, $order);
+        return [$key, $direction];
     }
 
     /**

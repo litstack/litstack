@@ -4,6 +4,7 @@ namespace Fjord\Fjord\Discover;
 
 use Exception;
 use Illuminate\Support\Facades\File;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\PackageManifest;
 use Illuminate\Foundation\Console\PackageDiscoverCommand as LaravelPackageDiscoverCommand;
 
@@ -35,6 +36,7 @@ class PackageDiscoverCommand extends LaravelPackageDiscoverCommand
      */
     public function __construct()
     {
+        $this->filesystem = new Filesystem;
         $this->vendorPath = base_path('vendor');
         $this->manifestPath = base_path('bootstrap/cache/fjord.php');
         parent::__construct();
@@ -59,6 +61,35 @@ class PackageDiscoverCommand extends LaravelPackageDiscoverCommand
     }
 
     /**
+     * Find Fjord packages in vendor/composer/installed.json
+     *
+     * @param string $vendorPath
+     * @return array
+     */
+    public function findFjordPackages(string $vendorPath)
+    {
+        // Load packages form vendor/composer/installed.json
+        if ($this->filesystem->exists($path = $vendorPath . '/composer/installed.json')) {
+            $packages = json_decode($this->filesystem->get($path), true);
+        }
+
+        return $this->filterFjordPackages($packages);
+    }
+
+    /**
+     * Filter composer packages for fjord packages.
+     *
+     * @return array
+     */
+    public function filterFjordPackages(array $packages)
+    {
+        // Filter for packages containing "extra": {"fjord": ...}.
+        return collect($packages)->mapWithKeys(function ($package) {
+            return [$this->format($package['name']) => $package['extra']['fjord'] ?? []];
+        })->filter()->all();
+    }
+
+    /**
      * Build the manifest and write it to disk.
      *
      * @return void
@@ -66,16 +97,7 @@ class PackageDiscoverCommand extends LaravelPackageDiscoverCommand
     public function build()
     {
         $this->packages = [];
-
-        // Load packages form vendor/composer/installed.json
-        if (File::exists($path = $this->vendorPath . '/composer/installed.json')) {
-            $packages = json_decode(File::get($path), true);
-        }
-
-        // Filter for packages containing "extra": {"fjord": ...}.
-        $this->packages = collect($packages)->mapWithKeys(function ($package) {
-            return [$this->format($package['name']) => $package['extra']['fjord'] ?? []];
-        })->filter()->all();
+        $this->packages = $this->findFjordPackages($this->vendorPath);
 
         $this->write($this->packages);
     }
@@ -99,13 +121,13 @@ class PackageDiscoverCommand extends LaravelPackageDiscoverCommand
      *
      * @throws \Exception
      */
-    protected function write(array $manifest)
+    public function write(array $manifest)
     {
         if (!is_writable(dirname($this->manifestPath))) {
             throw new Exception('The ' . dirname($this->manifestPath) . ' directory must be present and writable.');
         }
 
-        File::replace(
+        $this->filesystem->replace(
             $this->manifestPath,
             '<?php return ' . var_export($manifest, true) . ';'
         );
