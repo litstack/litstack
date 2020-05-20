@@ -49,7 +49,14 @@
                     'fj-image-card__image': true
                 }"
             >
-                <img :src="imgPath(image)" class />
+                <img
+                    :src="imgPath(image)"
+                    :style="
+                        `object-fit: ${
+                            field.showFullImage ? 'contain' : 'cover'
+                        }`
+                    "
+                />
             </div>
             <fj-field-media-modal
                 :index="index"

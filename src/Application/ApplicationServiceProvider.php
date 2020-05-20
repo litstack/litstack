@@ -35,6 +35,20 @@ class ApplicationServiceProvider extends ServiceProvider
     {
         $this->handleKernel($router);
         $this->fjordErrorPages();
+        $this->addCssFilesFromConfig();
+    }
+
+    /**
+     * Add css files from config fjord.assets.css
+     *
+     * @return void
+     */
+    public function addCssFilesFromConfig()
+    {
+        $files = config('fjord.assets.css') ?? [];
+        foreach ($files as $file) {
+            $this->app['fjord.app']->addCssFile($file);
+        }
     }
 
     /**
