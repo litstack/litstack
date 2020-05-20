@@ -2,7 +2,7 @@
 
 namespace Fjord\Crud\Models;
 
-use Spatie\MediaLibrary\Models\Media as MediaModel;
+use Spatie\MediaLibrary\MediaCollections\Models\Media as MediaModel;
 
 class Media extends MediaModel
 {
