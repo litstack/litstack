@@ -12,7 +12,8 @@ class ServiceProvider extends LaravelServiceProvider
 {
     protected $macros = [
         BuilderSearch::class,
-        FormMarkdown::class
+        FormMarkdown::class,
+        BuilderSort::class,
     ];
 
     public function boot()

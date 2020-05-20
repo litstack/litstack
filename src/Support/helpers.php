@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 
@@ -360,5 +361,22 @@ if (!function_exists('ph_cols')) {
             return $max;
         }
         return $cols;
+    }
+}
+
+if (!function_exists('medialibrary_config')) {
+    /**
+     * Spatie medialibrary changed its config file name.
+     *
+     * @return string
+     */
+    function medialibrary_config_key()
+    {
+        if (File::exists(config_path('medialibrary.php'))) {
+            // For old versions.
+            return 'medialibrary';
+        }
+        // For new versions.
+        return 'media-library';
     }
 }

@@ -39,7 +39,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Fjord\\Test\\": "tests"
+            "FjordTest\\": "tests",
+            "FjordApp\\": "vendor/orchestra/testbench-core/laravel/fjord/app"
         }
     },
     "extra": {

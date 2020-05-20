@@ -35,7 +35,7 @@ class DiscoverPackages
     {
         $packages = $this->discover();
 
-        $app->bind('packages', new Packages($packages));
+        $app->get('packages')->add($packages);
     }
 
     /**
@@ -48,7 +48,7 @@ class DiscoverPackages
     protected function discover()
     {
         if (!File::exists($this->path)) {
-            return;
+            return [];
         }
 
         $manifest = require $this->path;

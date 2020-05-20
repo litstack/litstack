@@ -154,11 +154,13 @@ class Fjord
             return false;
         }
 
+        /*
         try {
             return Schema::hasTable('form_fields');
         } catch (\Exception $e) {
             return false;
         }
+        */
 
         return true;
     }

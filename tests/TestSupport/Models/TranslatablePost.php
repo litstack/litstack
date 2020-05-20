@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Test\TestSupport\Models;
+namespace FjordTest\TestSupport\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Fjord\Crud\Models\Traits\Translatable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Fjord\Test\TestSupport\Models\Translations\TranslatablePostTranslation;
+use FjordTest\TestSupport\Models\Translations\TranslatablePostTranslation;
 
 class TranslatablePost extends Model implements TranslatableContract
 {
@@ -23,4 +23,14 @@ class TranslatablePost extends Model implements TranslatableContract
     public $translatedAttributes = ['title', 'text'];
 
     public $timestamps = false;
+
+    public function translatablePosts()
+    {
+        return $this->manyRelation(self::class, 'translatablePosts');
+    }
+
+    public function translatablePost()
+    {
+        return $this->oneRelation(self::class, 'translatablePost');
+    }
 }

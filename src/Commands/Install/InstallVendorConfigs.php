@@ -71,6 +71,12 @@ trait InstallVendorConfigs
         }
     }
 
+    /**
+     * Publish medialibrary.
+     *
+     * @param array $migrationFiles
+     * @return void
+     */
     protected function vendorMediaLibrary($migrationFiles)
     {
         // If media migration exists, skip
@@ -88,15 +94,20 @@ trait InstallVendorConfigs
             '--provider' => "Spatie\MediaLibrary\MediaLibraryServiceProvider",
             '--tag' => "config"
         ]);
-        $content = file_get_contents(config_path('medialibrary.php'));
+        $content = file_get_contents(config_path(medialibrary_config_key() . '.php'));
         $content = str_replace(
             'Spatie\MediaLibrary\Models\Media::class',
             'Fjord\Crud\Models\Media::class',
             $content
         );
-        File::put(config_path('medialibrary.php'), $content);
+        File::put(config_path(medialibrary_config_key() . '.php'), $content);
     }
 
+    /**
+     * Publish permissions.
+     *
+     * @return void
+     */
     protected function vendorPermissions()
     {
         $this->callSilent('vendor:publish', [

@@ -47,7 +47,7 @@ class CreatePostsTable extends Migration
 
             $table->text('title')->nullable();
             $table->text('text')->nullable();
-            $table->unsignedBigInteger('author_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
         });
 
         //$this->upPermissions();

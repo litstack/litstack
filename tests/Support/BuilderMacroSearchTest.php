@@ -1,26 +1,26 @@
 <?php
 
-namespace Fjord\Test;
+namespace FjordTest;
 
 use Closure;
 use Mockery as m;
 use BadMethodCallException;
-use Fjord\Test\FjordTestCase;
+use FjordTest\BackendTestCase;
 use Fjord\Support\Macros\BuilderSearch;
-use Fjord\Test\TestSupport\Models\Post;
+use FjordTest\TestSupport\Models\Post;
 use Illuminate\Database\Eloquent\Model;
-use Fjord\Test\TestSupport\Models\Author;
+use FjordTest\TestSupport\Models\User;
 use Illuminate\Database\Eloquent\Builder;
-use Fjord\Test\TestSupport\Models\TranslatablePost;
+use FjordTest\TestSupport\Models\TranslatablePost;
 
-class BuilderMacroSearchTest extends FjordTestCase
+class BuilderMacroSearchTest extends BackendTestCase
 {
     public function setUp(): void
     {
         parent::setUp();
 
         $this->macro = new BuilderSearch();
-        $this->migrateSupportTables();
+        $this->migrate();
     }
 
     public function tearDown(): void
@@ -55,6 +55,26 @@ class BuilderMacroSearchTest extends FjordTestCase
         $model->search('users.name', 'rob');
     }
 
+    public function test_whereAttributeLike_function()
+    {
+        $builder = m::mock(Builder::class);
+        $builder->shouldReceive('getModel')->andReturn(new Post)->twice();
+
+        $builder->shouldReceive('where')->with('text', 'LIKE', '%dan%')->once();
+        $this->macro->whereAttributeLike($builder, 'text', 'dan', $or = false);
+
+        $builder->shouldReceive('orWhere')->with('text', 'LIKE', '%dan%')->once();
+        $this->macro->whereAttributeLike($builder, 'text', 'dan', $or = true);
+
+        $builder->shouldReceive('getModel')->andReturn(new TranslatablePost)->twice();
+
+        $builder->shouldReceive('whereTranslationLike')->with('text', '%dan%')->once();
+        $this->macro->whereAttributeLike($builder, 'text', 'dan', $or = false);
+
+        $builder->shouldReceive('orWhereTranslationLike')->with('text', '%dan%')->once();
+        $this->macro->whereAttributeLike($builder, 'text', 'dan', $or = true);
+    }
+
     /** @test */
     public function it_finds_using_attribute()
     {
@@ -78,11 +98,11 @@ class BuilderMacroSearchTest extends FjordTestCase
     /** @test */
     public function it_finds_using_relation_attribute()
     {
-        $author = Author::firstOrCreate(['name' => 'dan']);
-        Post::firstOrCreate(['text' => 'bye', 'author_id' => $author->id]);
+        $user = User::firstOrCreate(['name' => 'dan']);
+        Post::firstOrCreate(['text' => 'bye', 'user_id' => $user->id]);
 
-        $this->assertCount(1, Post::search('author.name', 'dan')->get());
-        $this->assertCount(0, Post::search('author.name', 'rob')->get());
+        $this->assertCount(1, Post::search('user.name', 'dan')->get());
+        $this->assertCount(0, Post::search('user.name', 'rob')->get());
     }
 
     /** @test */
@@ -103,15 +123,6 @@ class BuilderMacroSearchTest extends FjordTestCase
         // Try not existing search term
         $posts = TranslatablePost::search('text', 'other')->get();
         $this->assertCount(0, $posts);
-    }
-
-    protected function passthruAllExcept($mock, $class, array $without)
-    {
-        $methods = get_class_methods($class);
-        foreach ($without as $method) {
-            unset($methods[array_search($method, $methods)]);
-        }
-        $mock->shouldReceive(...$methods)->passthru();
     }
 
     protected function applyWhereWithClosureToBuilderMock($builder)
