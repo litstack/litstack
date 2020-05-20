@@ -2,6 +2,7 @@
 
 namespace FjordTest;
 
+use ReflectionClass;
 use Fjord\FjordServiceProvider;
 use Fjord\Support\Facades\Fjord;
 use Illuminate\Support\Facades\File;
@@ -126,5 +127,22 @@ class BackendTestCase extends Orchestra
             unset($methods[array_search($method, $methods)]);
         }
         $mock->shouldReceive(...$methods)->passthru();
+    }
+
+    /**
+     * Calling protected or private class method.
+     *
+     * @param mixed $instance
+     * @param string $method
+     * @param array $params
+     * @return mixed
+     */
+    protected function callUnaccessibleMethod($instance, string $method, array $params = [])
+    {
+        $class = get_class($instance);
+        $class = new ReflectionClass($class);
+        $method = $class->getMethod($method);
+        $method->setAccessible(true);
+        return $method->invokeArgs($instance, []);
     }
 }

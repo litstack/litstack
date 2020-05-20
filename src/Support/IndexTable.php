@@ -51,7 +51,7 @@ class IndexTable
      * @param Request|null $request
      * @return void
      */
-    public function __construct($query, $request = null)
+    public function __construct($query, Request $request = null)
     {
         $this->query = $query;
         $this->request = $request;
@@ -92,6 +92,16 @@ class IndexTable
         $this->searchKeys = $keys;
 
         return $this;
+    }
+
+    /**
+     * Get search keys.
+     *
+     * @return array
+     */
+    public function getSearchKeys()
+    {
+        return $this->searchKeys;
     }
 
     /**
@@ -165,7 +175,7 @@ class IndexTable
         }
 
         if (in_array('order', $actions)) {
-            self::applyOrderToQuery();
+            self::applySortToQuery();
         }
 
         $itemsQuery = clone $this->query;
@@ -218,18 +228,23 @@ class IndexTable
     }
 
     /**
-     * Apply order to query.
+     * Apply sort to query.
      *
      * @return void
      */
-    protected function applyOrderToQuery()
+    protected function applySortToQuery()
     {
         if (!$this->request->sort_by) {
             return;
         }
+        // Get sort key and direction.
+        [$key, $direction] = $this->parseSortKey($this->request->sort_by);
 
-        // Get order key and order direction
-        $key = $this->request->sort_by;
+        return $this->query->sort($key, $direction);
+    }
+
+    public function parseSortKey(string $key)
+    {
         $direction = 'asc';
 
         if (Str::endsWith($key, '.asc') || Str::endsWith($key, 'desc')) {
@@ -237,7 +252,7 @@ class IndexTable
             $key = str_replace(".{$direction}", "", $key);
         }
 
-        return $this->query->sort($key, $direction);
+        return [$key, $direction];
     }
 
     /**

@@ -6,10 +6,11 @@ use Closure;
 use Mockery as m;
 use BadMethodCallException;
 use FjordTest\BackendTestCase;
-use Fjord\Support\Macros\BuilderSearch;
+use Fjord\Crud\Models\FormRelation;
 use FjordTest\TestSupport\Models\Post;
-use Illuminate\Database\Eloquent\Model;
 use FjordTest\TestSupport\Models\User;
+use Fjord\Support\Macros\BuilderSearch;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use FjordTest\TestSupport\Models\TranslatablePost;
 
@@ -55,7 +56,7 @@ class BuilderMacroSearchTest extends BackendTestCase
         $model->search('users.name', 'rob');
     }
 
-    public function test_whereAttributeLike_function()
+    public function test_whereAttributeLike_function_for_non_translatable_model()
     {
         $builder = m::mock(Builder::class);
         $builder->shouldReceive('getModel')->andReturn(new Post)->twice();
@@ -65,14 +66,24 @@ class BuilderMacroSearchTest extends BackendTestCase
 
         $builder->shouldReceive('orWhere')->with('text', 'LIKE', '%dan%')->once();
         $this->macro->whereAttributeLike($builder, 'text', 'dan', $or = true);
+    }
 
-        $builder->shouldReceive('getModel')->andReturn(new TranslatablePost)->twice();
+    public function test_whereAttributeLike_function_for_translatable_model()
+    {
+        $builder = m::mock(Builder::class);
+        $builder->shouldReceive('getModel')->andReturn(new TranslatablePost);
 
         $builder->shouldReceive('whereTranslationLike')->with('text', '%dan%')->once();
         $this->macro->whereAttributeLike($builder, 'text', 'dan', $or = false);
 
         $builder->shouldReceive('orWhereTranslationLike')->with('text', '%dan%')->once();
         $this->macro->whereAttributeLike($builder, 'text', 'dan', $or = true);
+
+        $builder->shouldReceive('where')->with('other', 'LIKE', '%dan%')->once();
+        $this->macro->whereAttributeLike($builder, 'other', 'dan', $or = false);
+
+        $builder->shouldReceive('orWhere')->with('other', 'LIKE', '%dan%')->once();
+        $this->macro->whereAttributeLike($builder, 'other', 'dan', $or = true);
     }
 
     /** @test */
@@ -96,7 +107,7 @@ class BuilderMacroSearchTest extends BackendTestCase
     }
 
     /** @test */
-    public function it_finds_using_relation_attribute()
+    public function it_finds_using_relation_attribute_when_one_model_exists()
     {
         $user = User::firstOrCreate(['name' => 'dan']);
         Post::firstOrCreate(['text' => 'bye', 'user_id' => $user->id]);
@@ -106,9 +117,23 @@ class BuilderMacroSearchTest extends BackendTestCase
     }
 
     /** @test */
-    public function it_finds_using_translated_attribute()
+    public function it_finds_using_relation_attribute_when_multiple_models_exist()
     {
-        $post = TranslatablePost::firstOrCreate([]);
+        $related = User::create(['name' => 'dan']);
+        $model = Post::create(['text' => 'bye', 'user_id' => $related->id]);
+
+        $related2 = User::create(['name' => 'other related']);
+        $model2 = Post::create(['text' => 'other model', 'user_id' => $related2->id]);
+
+        $this->assertCount(1, Post::search('user.name', 'dan')->get());
+        $this->assertEquals($model->id, Post::search('user.name', 'dan')->first()->id);
+        $this->assertCount(0, Post::search('user.name', 'something that doesnt exist')->get());
+    }
+
+    /** @test */
+    public function it_finds_using_translated_attribute_when_one_model_exists()
+    {
+        $post = TranslatablePost::create([]);
         $post->update([
             'en' => ['text' => 'english post'],
             'de' => ['text' => 'german post']
@@ -121,17 +146,61 @@ class BuilderMacroSearchTest extends BackendTestCase
         $posts = TranslatablePost::search('text', 'german')->get();
         $this->assertCount(1, $posts);
         // Try not existing search term
-        $posts = TranslatablePost::search('text', 'other')->get();
+        $posts = TranslatablePost::search('text', 'something that doesnt exist')->get();
         $this->assertCount(0, $posts);
     }
 
-    protected function applyWhereWithClosureToBuilderMock($builder)
+    /** @test */
+    public function it_finds_using_translated_attribute_when_multiple_models_exist()
     {
-        return $builder->shouldReceive('where')->once()
-            ->with(m::on(function ($closure) use ($builder) {
-                $closure($builder);
-                return $closure instanceof Closure;
-            }));
+        $model = TranslatablePost::create([]);
+        $model->update([
+            'en' => ['text' => 'english post'],
+            'de' => ['text' => 'german post']
+        ]);
+        $model2 = TranslatablePost::create([]);
+        $model2->update([
+            'en' => ['text' => 'other'],
+            'de' => ['text' => 'other']
+        ]);
+
+
+        // Try one locale
+        $models = TranslatablePost::search('text', 'english')->get();
+        $this->assertCount(1, $models);
+        // Try another locale
+        $models = TranslatablePost::search('text', 'german')->get();
+        $this->assertCount(1, $models);
+        // Try not existing search term
+        $models = TranslatablePost::search('text', 'something that doesnt exist')->get();
+        $this->assertCount(0, $models);
+    }
+
+    /** @test */
+    public function it_finds_using_related_translated_attribute()
+    {
+        $model = TranslatablePost::create([]);
+        $model->update([
+            'en' => ['text' => 'english model'],
+            'de' => ['text' => 'german model']
+        ]);
+        $related = TranslatablePost::create([]);
+        $related->update([
+            'en' => ['text' => 'related english related'],
+            'de' => ['text' => 'related german related']
+        ]);
+
+        factory(FormRelation::class, 1)->create([
+            'name' => 'translatablePosts',
+            'from' => $model,
+            'to' => $related,
+        ]);
+
+        $results = TranslatablePost::search('translatablePosts.text', 'related english')->get();
+        $this->assertCount(1, $results);
+
+        $results = TranslatablePost::search('translatablePosts.text', 'model')->get();
+        $this->assertCount(0, $results);
     }
 }
 

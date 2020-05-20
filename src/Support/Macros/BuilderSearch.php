@@ -30,26 +30,30 @@ class BuilderSearch
     public function search(Builder $query, $attributes, string $searchTerm)
     {
         return $query->where(function (Builder $query) use ($attributes, $searchTerm) {
+            $or = false;
             foreach (Arr::wrap($attributes) as $attribute) {
                 $query->when(
                     Str::contains($attribute, '.'),
-                    function (Builder $query) use ($attribute, $searchTerm) {
+                    function (Builder $query) use ($attribute, $searchTerm, $or) {
                         [$relationName, $relationAttribute] = explode('.', $attribute);
                         $this->whereRelatedAttributeLike(
                             $query,
                             $relationName,
                             $relationAttribute,
-                            $searchTerm
+                            $searchTerm,
+                            $or
                         );
                     },
-                    function (Builder $query) use ($attribute, $searchTerm) {
+                    function (Builder $query) use ($attribute, $searchTerm, $or) {
                         $this->whereAttributeLike(
                             $query,
                             $attribute,
-                            $searchTerm
+                            $searchTerm,
+                            $or
                         );
                     }
                 );
+                $or = true;
             }
         });
     }
@@ -63,14 +67,14 @@ class BuilderSearch
      * @param mixed $searchTerm
      * @return void
      */
-    public function whereRelatedAttributeLike($query, $relationName, $attribute, $searchTerm)
+    public function whereRelatedAttributeLike($query, $relationName, $attribute, $searchTerm, $or = false)
     {
-        return $query->orWhereHas($relationName, function (Builder $query) use ($attribute, $searchTerm) {
+        return $query->orWhereHas($relationName, function (Builder $query) use ($attribute, $searchTerm, $or) {
             $this->whereAttributeLike(
                 $query,
                 $attribute,
                 $searchTerm,
-                $or = false
+                $or
             );
         });
     }
