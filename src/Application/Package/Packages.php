@@ -3,6 +3,7 @@
 namespace Fjord\Application\Package;
 
 use Exception;
+use Illuminate\Support\Arr;
 
 class Packages
 {
@@ -12,6 +13,13 @@ class Packages
      * @var array
      */
     protected $packages = [];
+
+    /**
+     * Fjord application instance.
+     *
+     * @var \Fjord\Application\Application
+     */
+    protected $app;
 
     /**
      * List of packages with access to root routes and root config path.
@@ -29,9 +37,9 @@ class Packages
      * @param array $packages
      * @return void
      */
-    public function __construct($packages)
+    public function __construct($app)
     {
-        $this->packages = $packages ?? [];
+        $this->app = $app;
     }
 
     /**
@@ -42,6 +50,19 @@ class Packages
     public function get($name)
     {
         return $this->packages[$name];
+    }
+
+    /**
+     * Add one ore many packages.
+     *
+     * @param string|array $packages
+     * @return void
+     */
+    public function add($packages)
+    {
+        foreach (Arr::wrap($packages) as $name => $package) {
+            $this->packages[$name] = $package;
+        }
     }
 
     /**

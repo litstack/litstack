@@ -45,7 +45,9 @@ class CreateFormFieldsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('form_fields');
         Schema::dropIfExists('form_field_translations');
+        Schema::enableForeignKeyConstraints();
     }
 }

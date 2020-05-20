@@ -47,7 +47,9 @@ class CreateFormBlocksTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('form_blocks');
         Schema::dropIfExists('form_block_translations');
+        Schema::enableForeignKeyConstraints();
     }
 }

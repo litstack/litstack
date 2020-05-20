@@ -107,5 +107,20 @@ export default {
                 return t.name;
             }
         }
+    },
+
+    /**
+     * Get responsive cols.
+     *
+     * @param {Integer} col
+     */
+    bCols(col) {
+        if (col > 5) {
+            return `lg-${col} col-sm-12`;
+        }
+        if (col > 2) {
+            return `lg-${col} col-md-${col} col-sm-12`;
+        }
+        return `lg-${col} col-md-6 col-sm-6`;
     }
 };

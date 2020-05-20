@@ -36,53 +36,12 @@ class HomeConfig extends FormConfig
      */
     public function form(CrudForm $form)
     {
-        $form->info('Adress')
-            ->cols(4)
-            ->text('This address appears on your <a href="#">invoices</a>.');
-
         $form->card(function ($form) {
-            $form->input('prefix')
-                ->title('Prefix')
-                ->prepend('#')
-                ->cols(6);
 
-            $form->input('suffix')
-                ->title('Suffix')
-                ->cols(6);
-        })->cols(8);
+            $form->input('title')
+                ->title('Title');
 
-        $form->card(function ($form) {
-            $this->blocks($form);
-        });
-    }
-
-    /**
-     * Setup form blocks.
-     *
-     * @param \Fjord\Crud\CrudForm $form
-     * @return void
-     */
-    protected function blocks(CrudForm $form)
-    {
-        $form->blocks('block')
-            ->title('Blocks')
-            ->repeatables(function ($rep) {
-                $this->repeatables($rep);
-            });
-    }
-
-    /**
-     * Create repeatables.
-     *
-     * @param Repeatables $rep
-     * @return void
-     */
-    protected function repeatables(Repeatables $rep)
-    {
-        $rep->add('text', function ($form) {
-            $form->input('input')
-                ->title('Input')
-                ->cols(6);
+            $form->markdown(\Illuminate\Support\Facades\File::get(fjord_path('docs/docs/examples/form-loader-example.md')));
         });
     }
 }

@@ -3,12 +3,13 @@
 namespace Fjord\Crud\Models\Traits;
 
 use Fjord\Crud\Models\Media;
-use Spatie\MediaLibrary\Models\Media as SpatieMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 
 trait HasMedia
 {
-    use HasMediaTrait;
+    use InteractsWithMedia;
 
     /**
      * Media conversions group.
@@ -22,7 +23,7 @@ trait HasMedia
      *
      * @return morphMany
      */
-    public function media()
+    public function media(): MorphMany
     {
         // Using Fjord media model.
         return $this->morphMany(Media::class, 'model');
@@ -34,7 +35,7 @@ trait HasMedia
      * @param SpatieMedia $media
      * @return void
      */
-    public function registerMediaConversions(SpatieMedia $media = null)
+    public function registerMediaConversions(SpatieMedia $media = null): void
     {
         foreach (config('fjord.mediaconversions.default') as $key => $value) {
             $this->addMediaConversion($key)

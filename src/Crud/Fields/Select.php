@@ -32,6 +32,7 @@ class Select extends Field
         'title',
         'options',
         'hint',
+        'storable'
     ];
 
     /**
@@ -39,5 +40,7 @@ class Select extends Field
      *
      * @var array
      */
-    protected $defaults = [];
+    protected $defaults = [
+        'storable' => true
+    ];
 }

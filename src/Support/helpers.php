@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 
@@ -293,6 +294,28 @@ if (!function_exists('is_translatable')) {
     }
 }
 
+if (!function_exists('is_attribute_translatable')) {
+    /**
+     * Is a Model attribute translatable.
+     *
+     * @param mixed $model
+     * @param string $attribute
+     * @return boolean
+     */
+    function is_attribute_translatable($model, string $attribute)
+    {
+        if (!is_translatable($model)) {
+            return false;
+        }
+
+        if (is_string($model)) {
+            $model = new $model;
+        }
+
+        return in_array($attribute, $model->translatedAttributes);
+    }
+}
+
 if (!function_exists('has_media')) {
     /**
      * Does a Model has media.
@@ -338,5 +361,22 @@ if (!function_exists('ph_cols')) {
             return $max;
         }
         return $cols;
+    }
+}
+
+if (!function_exists('medialibrary_config')) {
+    /**
+     * Spatie medialibrary changed its config file name.
+     *
+     * @return string
+     */
+    function medialibrary_config_key()
+    {
+        if (File::exists(config_path('medialibrary.php'))) {
+            // For old versions.
+            return 'medialibrary';
+        }
+        // For new versions.
+        return 'media-library';
     }
 }

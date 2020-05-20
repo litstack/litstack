@@ -177,6 +177,9 @@ const methods = {
      * @param {*} value
      */
     addSaveJob(value) {
+        if (this.field.storable === false) {
+            return;
+        }
         let locale = this.getLocale();
         let params = {};
         let jobKey = '';

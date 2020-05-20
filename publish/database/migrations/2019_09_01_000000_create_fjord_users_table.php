@@ -34,6 +34,8 @@ class CreateFjordUsersTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('fjord_users');
+        Schema::enableForeignKeyConstraints();
     }
 }

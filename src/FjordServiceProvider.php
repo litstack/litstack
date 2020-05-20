@@ -5,9 +5,11 @@ namespace Fjord;
 use FjordApp\Kernel;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Factory;
 
 /**
  * Service providers and console commands that should be registered without 
@@ -106,13 +108,31 @@ class FjordServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->config();
         $this->alias();
         $this->fjord();
         $this->artisan();
 
-        // Register providers then app last.
+        // Register providers then Fjord application last.
         $this->providers();
         $this->lightsOn();
+    }
+
+    /**
+     * Merge fjord config.
+     * https://laravel.com/docs/7.x/packages#configuration
+     *
+     * @return void
+     */
+    public function config()
+    {
+        // Merging the new fjord config from vendor package folder to the one 
+        // that is located in config/fjord.php, to avoid errors when older 
+        // version of Fjord was installed before.
+        $this->mergeConfigFrom(
+            __DIR__ . '/../publish/config/fjord.php',
+            'fjord'
+        );
     }
 
     /**
@@ -138,7 +158,7 @@ class FjordServiceProvider extends ServiceProvider
      */
     protected function lightsOn()
     {
-        if (!$this->app->get('fjord')->installed()) {
+        if (!$this->app['fjord']->installed()) {
             return;
         }
 
@@ -156,7 +176,7 @@ class FjordServiceProvider extends ServiceProvider
         $this->app['fjord']->bindApp($this->app['fjord.app']);
 
         // Initialize kernel singleton.
-        $this->app->get(\FjordApp\Kernel::class);
+        $this->app[\FjordApp\Kernel::class];
     }
 
     /**
@@ -201,6 +221,7 @@ class FjordServiceProvider extends ServiceProvider
         }
 
         $this->commands($this->commands);
+        $this->loadFactories();
     }
 
     /**
@@ -221,5 +242,15 @@ class FjordServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../publish/routes' => base_path('routes'),
         ], 'routes');
+    }
+
+    /**
+     * Load Fjord factories.
+     *
+     * @return void
+     */
+    protected function loadFactories()
+    {
+        $this->app[Factory::class]->load(__DIR__ . '/Factories');
     }
 }

@@ -3,6 +3,7 @@
 namespace Fjord\Crud\Models\Relations;
 
 use Fjord\Crud\Models\FormBlock;
+use Fjord\Crud\Models\FormRelation;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -72,7 +73,7 @@ class CrudRelations extends ServiceProvider
             $instance = new $related;
             $model = $this->getModel();
 
-            return $model->belongsToMany($related, 'form_relations', 'from_model_id', 'to_model_id', $model->getKeyName(), $instance->getKeyName())
+            return $model->hasOneThrough($related, FormRelation::class, 'from_model_id', $model->getKeyName(), $instance->getKeyName(), 'to_model_id')
                 ->where('form_relations.from_model_type', get_class($model))
                 ->where('form_relations.to_model_type', $related)
                 ->where('field_id', $fieldId)
