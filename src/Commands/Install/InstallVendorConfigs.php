@@ -79,6 +79,7 @@ trait InstallVendorConfigs
      */
     protected function vendorMediaLibrary($migrationFiles)
     {
+
         // If media migration exists, skip
         $mediaMatch = collect($migrationFiles)->filter(function ($file) {
             return Str::endsWith($file, 'create_media_table');
@@ -96,7 +97,7 @@ trait InstallVendorConfigs
         ]);
         $content = file_get_contents(config_path(medialibrary_config_key() . '.php'));
         $content = str_replace(
-            'Spatie\MediaLibrary\Models\Media::class',
+            'Spatie\MediaLibrary\MediaCollections\Models\Media::class',
             'Fjord\Crud\Models\Media::class',
             $content
         );
