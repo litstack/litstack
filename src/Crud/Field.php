@@ -73,7 +73,8 @@ class Field extends VueProp
         'readonly',
         'cols',
         'info',
-        'class'
+        'class',
+        'dependsOn'
     ];
 
     /**
@@ -145,6 +146,23 @@ class Field extends VueProp
 
         $this->setDefaults();
         $this->attributes['component'] = $this->component;
+    }
+
+    /**
+     * Set dependency.
+     *
+     * @param string $key
+     * @param string|int $value
+     * @return void
+     */
+    public function dependsOn(string $key, $value)
+    {
+        $this->setAttribute('dependsOn', [
+            'key' => $key,
+            'value' => $value
+        ]);
+
+        return $this;
     }
 
     /**

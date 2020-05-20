@@ -119,8 +119,8 @@ export default {
             return `lg-${col} col-sm-12`;
         }
         if (col > 2) {
-            return `lg-${col} col-md-6 col-sm-12`;
+            return `lg-${col} col-md-${col} col-sm-12`;
         }
-        return `lg-${col} col-md-${col} col-sm-6`;
+        return `lg-${col} col-md-6 col-sm-6`;
     }
 };
