@@ -2,6 +2,7 @@
 
 namespace Fjord\Support;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 use Illuminate\Database\Eloquent\Builder;
@@ -229,27 +230,14 @@ class IndexTable
 
         // Get order key and order direction
         $key = $this->request->sort_by;
-        $order = 'asc';
-        if (strpos($key, '.') !== false) {
-            $key = explode('.', $this->request->sort_by)[0];
-            $order = last(explode('.', $this->request->sort_by));
+        $direction = 'asc';
+
+        if (Str::endsWith($key, '.asc') || Str::endsWith($key, 'desc')) {
+            $direction = last(explode('.', $key));
+            $key = str_replace(".{$direction}", "", $key);
         }
 
-        $model = $this->query->getModel();
-
-        if (array_key_exists($key, $this->query->getEagerLoads())) {
-            return $this->query->orderByRelation($key, explode('.', $this->request->sort_by)[1], $order);
-        }
-
-        if (!is_translatable($model)) {
-            return $this->query->orderBy($key, $order);
-        }
-
-        if (!in_array($key, $model->translatedAttributes)) {
-            return $this->query->orderBy($key, $order);
-        }
-
-        return $this->query->orderByTranslation(app()->getLocale(), $key, $order);
+        return $this->query->sort($key, $direction);
     }
 
     /**
