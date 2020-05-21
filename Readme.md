@@ -47,4 +47,4 @@ Try the [Demo](https://demo.fjord-admin.com)
 
 ## License
 
-Fjord is open-sourced software licensed under the [MIT license](LICENSE.md).
+Fjord is an open-sourced software licensed under the [MIT license](LICENSE.md).
