@@ -47,4 +47,4 @@ Try the [Demo](https://demo.fjord-admin.com)
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](LICENSE.md).
+Fjord is open-sourced software licensed under the [MIT license](LICENSE.md).
