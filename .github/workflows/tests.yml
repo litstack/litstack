@@ -2,9 +2,9 @@ name: tests
 
 on:
     push:
-        branches: [testing]
     pull_request:
-        branches: [testing]
+    schedule:
+        - cron: '0 0 * * *'
 
 jobs:
     tests:
