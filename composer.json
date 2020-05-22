@@ -4,7 +4,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "php": "^7.2",
+        "php": "^7.4",
         "aw-studio/fjord-permissions": "^1.0",
         "spatie/eloquent-sortable": "^3.6|^3.7|^3.8",
         "spatie/laravel-permission": "^2.37|^3.0|^3.11",

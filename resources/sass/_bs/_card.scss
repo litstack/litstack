@@ -2,6 +2,9 @@
     box-shadow: $box-shadow;
 
     .card {
+        @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+            margin: unset;
+        }
         .card-body {
             padding-top: 0;
             padding-bottom: 0;
@@ -14,5 +17,18 @@
 
     .card-body {
         padding-bottom: 1rem;
+    }
+
+    @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+        border-radius: 0;
+        margin: 0 -1rem;
+        overflow: scroll;
+        .card {
+            overflow: visible;
+        }
+        .card-body {
+            padding: 1rem;
+            padding-top: 2rem;
+        }
     }
 }

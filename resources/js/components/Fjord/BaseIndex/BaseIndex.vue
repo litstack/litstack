@@ -35,7 +35,6 @@
                             @search="doSearch"
                         />
                     </b-input-group>
-
                     <fj-base-index-table-filter
                         :filter="filter"
                         v-if="hasFilter"
@@ -405,6 +404,9 @@ export default {
         margin-left: -$card-spacer-x;
         margin-right: -$card-spacer-x;
         min-width: calc(100% + #{2 * $card-spacer-x});
+        @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+            margin: 0;
+        }
     }
 
     .paginated {

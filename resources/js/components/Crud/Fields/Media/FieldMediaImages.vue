@@ -8,7 +8,6 @@
         v-bind:disabled="field.readonly"
         @end="newOrder"
         handle=".fj-draggable__dragbar"
-        v-if="sortable.length > 0"
     >
         <div
             :class="{
@@ -50,7 +49,14 @@
                     'fj-image-card__image': true
                 }"
             >
-                <img :src="imgPath(image)" class />
+                <img
+                    :src="imgPath(image)"
+                    :style="
+                        `object-fit: ${
+                            field.showFullImage ? 'contain' : 'cover'
+                        }`
+                    "
+                />
             </div>
             <fj-field-media-modal
                 :index="index"
@@ -69,7 +75,6 @@
                         item: __('base.image')
                     }).capitalize() + '?'
                 "
-                :static="true"
             >
                 {{ __('messages.cant_be_undone') }}
 

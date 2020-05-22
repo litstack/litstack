@@ -2,7 +2,7 @@
 
 namespace Fjord\Crud\Models\Concerns;
 
-use Spatie\MediaLibrary\Models\Media;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 trait HasMedia
 {

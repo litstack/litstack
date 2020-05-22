@@ -128,9 +128,5 @@ export default {
             }
         }
     }
-    .fj-block-delete {
-        cursor: pointer;
-        color: $secondary;
-    }
 }
 </style>

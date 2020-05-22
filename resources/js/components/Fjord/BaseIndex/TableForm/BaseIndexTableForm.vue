@@ -1,9 +1,7 @@
 <template>
-    <b-row class="mb-3">
-        <b-col cols="12" class="fj-index-form">
-            <slot />
-        </b-col>
-    </b-row>
+    <div class="mb-3 fj-index-form">
+        <slot />
+    </div>
 </template>
 
 <script>

@@ -44,7 +44,8 @@ class Image extends MediaField
         'crop',
         'override',
         'firstBig',
-        'sortable'
+        'sortable',
+        'showFullImage'
     ];
 
     /**
@@ -58,7 +59,8 @@ class Image extends MediaField
         'crop' => false,
         'override' => false,
         'firstBig' => false,
-        'sortable' => true
+        'sortable' => true,
+        'showFullImage' => false
     ];
 
 

@@ -4,10 +4,9 @@
         size="full"
         class="fj-image-modal"
         :title="`${image.name}`"
-        :static="true"
     >
-        <div class="row" style="height: 100%">
-            <div class="col-7" style="height: 100%">
+        <div class="row full-height" style="height: 100%">
+            <div class="col-7 full-height" style="height: 100%">
                 <img :src="imgPath(image)" class="fj-image-preview" />
             </div>
             <div class="col-5">

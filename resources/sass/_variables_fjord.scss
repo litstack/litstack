@@ -46,6 +46,9 @@ $nav-bg: $white;
 $nav-height: 5rem;
 $nav-tab-height: 28px;
 $nav-padding-top: 20px;
+$nav-height-mobile: 3.5rem;
+
+$nav-breakpoint-mobile: 'lg';
 
 // Title
 $nav-title-color: $primary;
@@ -56,12 +59,12 @@ $nav-title-letter-spacing: 0.075rem;
 $nav-item-color: $yiq-text-dark;
 $nav-item-icon-color: $gray-500;
 
-$nav-item-active-bg: $gray-300;
+$nav-item-active-bg: $gray-200;
 $nav-item-active-color: $primary;
 $nav-item-active-border-width: 3px;
 $nav-item-active-font-weight: $font-weight-normal;
 
-$nav-item-hover-bg: $nav-item-active-bg;
+$nav-item-hover-bg: $gray-300;
 
 $nav-item-collapsed-padding-left: $list-group-item-padding-x * 1.5;
 

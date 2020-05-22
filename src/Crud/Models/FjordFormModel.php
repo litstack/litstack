@@ -2,18 +2,18 @@
 
 namespace Fjord\Crud\Models;
 
+use Fjord\Crud\ManyRelationField;
+use Spatie\MediaLibrary\HasMedia;
 use Fjord\Crud\Fields\Media\Image;
-use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Fjord\Crud\ManyRelationField;
 
 class FjordFormModel extends Model implements HasMedia, TranslatableContract
 {
-    use HasMediaTrait,
+    use InteractsWithMedia,
         Translatable,
         Concerns\HasConfig,
         Concerns\HasFields,
@@ -45,12 +45,12 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     /**
      * Register media conversions for field.
      *
-     * @param Media $media
+     * @param SpatieMedia $media
      * @return void
      */
-    public function registerMediaConversions(Media $media = null)
+    public function registerMediaConversions(SpatieMedia $media = null): void
     {
-        return $this->registerCrudMediaConversions($media);
+        $this->registerCrudMediaConversions($media);
     }
 
     /**

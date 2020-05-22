@@ -1,3 +1,4 @@
+<!--
 <template>
     <component
         ref="component"
@@ -9,10 +10,39 @@
         v-on="$listeners"
     />
 </template>
+-->
 
 <script>
 export default {
     name: 'Field',
+    render(createElement) {
+        if (!this.shouldRender) {
+            return;
+        }
+
+        let props = this.field.props ? this.field.props : {};
+
+        return createElement(this.field.component, {
+            props: {
+                field: this.field,
+                model: this.model,
+                modelId: this.modelId === 0 ? this.model.id : this.modelId,
+                ...props
+            },
+            on: this.$listeners
+        });
+    },
+    computed: {
+        shouldRender() {
+            if (!this.field.dependsOn) {
+                return true;
+            }
+            return (
+                this.field.dependsOn.value ==
+                this.model[this.field.dependsOn.key]
+            );
+        }
+    },
     props: {
         model: {
             type: Object,

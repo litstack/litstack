@@ -2,23 +2,12 @@
     <fj-form-item :field="field" :model="model" :value="fileCount">
         <template v-if="model.id">
             <div class="w-100">
+                <fj-field-alert-empty
+                    v-if="images.length == 0"
+                    :field="field"
+                    :class="{ 'mb-0': field.readonly }"
+                />
                 <b-row>
-                    <div
-                        class="col-12 order-2"
-                        v-if="!field.readonly && images.length == 0"
-                    >
-                        <vue-dropzone
-                            class="fj-dropzone"
-                            :ref="`dropzone-${field.id}`"
-                            :id="`dropzone-${field.id}`"
-                            :options="dropzoneOptions"
-                            @vdropzone-sending="busy = true"
-                            @vdropzone-success="uploadSuccess"
-                            @vdropzone-queue-complete="queueComplete"
-                            @vdropzone-error="uploadError"
-                            @vdropzone-files-added="processQueue"
-                        />
-                    </div>
                     <div class="col-12 order-1">
                         <fj-field-media-images
                             :field="field"
@@ -26,7 +15,6 @@
                             :model="model"
                             :model-id="modelId"
                             :readonly="field.readonly"
-                            v-if="images.length > 0"
                             @deleted="$emit('reload')"
                             @newOrder="$emit('reload')"
                         >
@@ -41,7 +29,6 @@
                             <vue-dropzone
                                 v-if="
                                     !field.readonly &&
-                                        images.length > 0 &&
                                         images.length < field.maxFiles
                                 "
                                 slot="drop"
@@ -56,27 +43,20 @@
                                 @vdropzone-files-added="processQueue"
                             />
                         </fj-field-media-images>
-                        <fj-field-alert-empty
-                            v-else
-                            :field="field"
-                            :class="{ 'mb-0': field.readonly }"
-                        />
                     </div>
                 </b-row>
             </div>
             <b-modal
                 :id="getCropperId()"
-                size="xl"
-                title="Crop Image"
-                :static="true"
+                size="full"
                 v-if="field.crop !== false"
+                @shown="crop()"
+                @hidden="resetCropper()"
             >
-                <div class="row">
-                    <div class="col-8">
-                        <div class="card no-fx">
-                            <div class="fj-cropper__canvas-wrapper r4x3">
-                                <div class="fj-cropper__canvas"></div>
-                            </div>
+                <div class="row full-height">
+                    <div class="col-8 full-height">
+                        <div class="fj-cropper__canvas-wrapper">
+                            <div class="fj-cropper__canvas full-height"></div>
                         </div>
                     </div>
                     <div class="col-4">
@@ -162,7 +142,9 @@ export default {
                 }
             },
             busy: false,
-            uploadProgress: 0
+            uploadProgress: 0,
+            file: null,
+            done: null
         };
     },
     beforeMount() {
@@ -250,14 +232,11 @@ export default {
             Fjord.bus.$emit('field:updated', 'image:uploaded');
         },
         queueComplete() {
-            console.log('fertig');
-
             this.busy = false;
         },
         uploadError(file, errorMessage, xhr) {
             this.$bvToast.toast(errorMessage.message, {
-                variant: 'danger',
-                noAutoHide: true
+                variant: 'danger'
             });
         },
         processQueue() {
@@ -274,17 +253,23 @@ export default {
                 return;
             }
 
+            // Show the cropping modal
+            //
+            //
+            this.file = file;
+            this.done = done;
+            this.$bvModal.show(`${this.getCropperId()}`);
+        },
+        crop() {
+            let file = this.file;
+            let done = this.done;
+
             // Set some constants
             //
             //
             const DROPZONE = this.dropzone;
             const CANVAS = $(`#${this.getCropperId()} .fj-cropper__canvas`);
             let uploadable = true;
-
-            // Show the cropping modal
-            //
-            //
-            this.$bvModal.show(`${this.getCropperId()}`);
 
             // Create an image node for Cropper.js
             //
@@ -297,13 +282,11 @@ export default {
             // Create Cropper
             //
             //
-            console.log(CANVAS, 'sleeping', image);
             var cropper = new Cropper(image, {
                 aspectRatio: this.field.crop,
                 viewMode: 2,
                 preview: $(`#${this.getCropperId()} .fj-cropper__preview`)[0]
             });
-            console.log(cropper);
 
             // User Actions
             //
@@ -343,6 +326,12 @@ export default {
                 CANVAS.html('');
                 this.$bvModal.hide(`${this.getCropperId()}`);
             });
+
+            this.resetCropper();
+        },
+        resetCropper() {
+            this.file = null;
+            this.done = null;
         }
     }
 };
@@ -404,7 +393,7 @@ div#fjord-app .fj-dropzone {
     &__canvas,
     &__preview {
         &-wrapper {
-            height: 0px;
+            height: 100%;
             position: relative;
         }
         position: absolute;

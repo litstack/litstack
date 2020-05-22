@@ -26,5 +26,9 @@ export default {
     padding: (/*$container-padding-y*/ $page-nav-padding-y) $container-padding-x
         $container-padding-y $container-padding-x !important;
     //padding: 0 $container-padding-x $container-padding-y $container-padding-x !important;
+    @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+        padding: 1rem !important;
+        max-width: unset;
+    }
 }
 </style>

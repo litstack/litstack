@@ -125,8 +125,12 @@ class DummyClassnameConfig extends CrudConfig
     public function form(CrudForm $form)
     {
         $form->card(function($form) {
+
             $this->mainCard($form);
-        })->cols(12)->title('Main');
+            
+        })
+        ->cols(12)
+        ->title('Main');
     }
 
     /**
@@ -137,8 +141,8 @@ class DummyClassnameConfig extends CrudConfig
      */
     protected function mainCard(CrudForm $form)
     {
-        $form->input('input')
-                ->title('Block input')
+        $form->input('title')
+                ->title('Title')
                 ->cols(6);
     }
 }

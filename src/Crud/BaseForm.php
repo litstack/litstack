@@ -147,7 +147,12 @@ class BaseForm extends VueProp
     {
         $component = $this->component('fj-col')->prop('cols', $cols);
 
-        $this->col = $component->comp;
+        if ($component instanceof Component) {
+            $this->col = $component->comp;
+        } else {
+            $this->col = $component;
+        }
+
         $closure($this);
         $this->col = null;
 

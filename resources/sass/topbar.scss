@@ -52,4 +52,16 @@ div#fjord-app nav.fj-topbar {
             }
         }
     }
+
+    @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+        width: 100vw;
+        position: fixed;
+        height: $nav-height-mobile;
+        top: 0;
+        left: 0;
+        z-index: 3;
+        padding: 0 1rem;
+
+        box-shadow: 0 17px 14px -16px rgba(188, 188, 188, 0.51);
+    }
 }

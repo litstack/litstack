@@ -20,6 +20,18 @@
                 max-height: $button-md-height;
                 width: $button-md-height;
             }
+
+            &-mobile {
+                @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+                    &>.btn {
+                        padding: 0;
+                        height: $button-md-height;
+                        max-height: $button-md-height;
+                        width: $button-md-height;
+                    }
+                }
+
+            }
         }
     }
 
@@ -30,6 +42,8 @@
                 max-height: $button-lg-height;
                 width: $button-lg-height;
             }
+
+
         }
     }
 

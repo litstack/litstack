@@ -1,8 +1,14 @@
 <template>
-    <b-dropdown right variant="outline-secondary" v-if="sortBy">
+    <b-dropdown
+        right
+        variant="outline-secondary"
+        v-if="sortBy"
+        class="dropdown-md-square-mobile"
+        no-caret
+    >
         <template v-slot:button-content>
             <fa-icon icon="sort-amount-down" />
-            {{ $t('fj.sort') }}
+            <span class="d-none d-lg-inline-block">{{ $t('fj.sort') }}</span>
         </template>
 
         <b-dropdown-item

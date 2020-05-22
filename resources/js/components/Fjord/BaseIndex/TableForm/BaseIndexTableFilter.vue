@@ -1,8 +1,14 @@
 <template>
-    <b-dropdown right :variant="filterVariant" :disabled="!filter">
+    <b-dropdown
+        right
+        :variant="filterVariant"
+        :disabled="!filter"
+        class="dropdown-md-square-mobile"
+        no-caret
+    >
         <template v-slot:button-content>
             <fa-icon icon="filter" />
-            {{ $t('fj.filter') }}
+            <span class="d-none d-lg-inline-block">{{ $t('fj.filter') }}</span>
         </template>
 
         <b-dropdown-group

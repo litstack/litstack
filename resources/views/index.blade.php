@@ -5,7 +5,8 @@
     <title>@yield('title') - Fjord</title>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -34,6 +35,12 @@
 
             @include('fjord::partials.topbar.topbar')
             @include('fjord::partials.navigation')
+            <b-button
+            variant="primary"
+            class="d-block d-lg-none btn-square fj-main-navigation-toggle"
+        >
+            <fa-icon icon="stream" />
+        </b-button>
 
         <main>
             <div class="fj-content">
@@ -83,6 +90,12 @@
                 }
                 
             });
+
+            document.querySelector('.fj-main-navigation-toggle').addEventListener('click', e => {
+                document
+                    .querySelector('.fj-navigation')
+                    .classList.toggle('visible');
+            })
         }
     </script>
 </body>

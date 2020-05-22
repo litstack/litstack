@@ -139,7 +139,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model implements HasMediaContract, TranslatableContract
 {
-    use TrackEdits, HasMedia, Translatable;
+    use TrackEdits, InteractsWithMedia, Translatable;
 
     /**
      * Setup Model:

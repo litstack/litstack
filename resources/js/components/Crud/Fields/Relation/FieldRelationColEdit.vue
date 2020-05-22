@@ -1,5 +1,11 @@
 <template>
-    <b-button variant="outline-secondary" size="sm" class="btn-square">
+    <b-button
+        variant="transparent"
+        size="sm"
+        class="btn-square"
+        v-b-tooltip.hover
+        :title="$t('crud.fields.relation.edit')"
+    >
         <fa-icon icon="edit" @click="edit(item)" />
         <fj-field-relation-form
             :item="item"

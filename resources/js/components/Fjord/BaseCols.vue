@@ -1,5 +1,5 @@
 <template>
-    <b-col :cols="cols">
+    <b-col :cols="responsiveCols">
         <b-row>
             <component
                 v-for="(c, key) in component"
@@ -26,6 +26,15 @@ export default {
             type: [String, Number],
             default() {
                 return 12;
+            }
+        }
+    },
+    computed: {
+        responsiveCols() {
+            if (typeof this.cols == 'number') {
+                return this.bCols(this.cols);
+            } else {
+                return this.cols;
             }
         }
     },

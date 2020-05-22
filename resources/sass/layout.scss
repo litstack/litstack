@@ -26,4 +26,15 @@ div#fjord-app {
             display: block;
         }
     }
+
+    @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+        display: block;
+
+        main {
+            margin: $nav-height-mobile 0;
+            padding: 1rem 0;
+            height: auto;
+            overflow: visible;
+        }
+    }
 }
