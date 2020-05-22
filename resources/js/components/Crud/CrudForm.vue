@@ -28,7 +28,7 @@
         </fj-navigation>
 
         <fj-header>
-            <h3 class="d-flex justify-content-between">
+            <h3 class="d-flex justify-content-between align-items-baseline">
                 {{ config.names.singular }}
                 <small
                     class="text-secondary"

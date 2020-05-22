@@ -35,7 +35,6 @@
                             @search="doSearch"
                         />
                     </b-input-group>
-
                     <fj-base-index-table-filter
                         :filter="filter"
                         v-if="hasFilter"

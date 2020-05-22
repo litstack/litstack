@@ -232,14 +232,11 @@ export default {
             Fjord.bus.$emit('field:updated', 'image:uploaded');
         },
         queueComplete() {
-            console.log('queueComplete');
-
             this.busy = false;
         },
         uploadError(file, errorMessage, xhr) {
             this.$bvToast.toast(errorMessage.message, {
-                variant: 'danger',
-                noAutoHide: true
+                variant: 'danger'
             });
         },
         processQueue() {
@@ -248,8 +245,6 @@ export default {
             });
         },
         transformFile(file, done) {
-            console.log('attemting transform…');
-
             // If image doesn't require cropping, return bare image
             //
             //
@@ -335,8 +330,6 @@ export default {
             this.resetCropper();
         },
         resetCropper() {
-            console.log('restting cropper');
-
             this.file = null;
             this.done = null;
         }

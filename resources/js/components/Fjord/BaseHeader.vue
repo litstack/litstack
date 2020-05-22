@@ -46,9 +46,7 @@ export default {
 
     h3 {
         position: relative;
-        &.d-flex > * {
-            align-self: flex-end;
-        }
+
         small {
             font-size: $font-size-base * 0.75;
         }
