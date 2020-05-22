@@ -50,7 +50,6 @@
                 :id="getCropperId()"
                 size="xl"
                 title="Crop Image"
-                :static="true"
                 v-if="field.crop !== false"
             >
                 <div class="row">

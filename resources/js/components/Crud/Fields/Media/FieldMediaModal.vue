@@ -4,7 +4,6 @@
         size="full"
         class="fj-image-modal"
         :title="`${image.name}`"
-        :static="true"
     >
         <div class="row" style="height: 100%">
             <div class="col-7" style="height: 100%">

@@ -75,7 +75,6 @@
                         item: __('base.image')
                     }).capitalize() + '?'
                 "
-                :static="true"
             >
                 {{ __('messages.cant_be_undone') }}
 
