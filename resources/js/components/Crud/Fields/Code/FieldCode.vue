@@ -159,6 +159,7 @@ export default {
 
 .vue-codemirror {
     width: 100%;
+    z-index: 1;
     //font-size: 1rem;
 
     @include border-radius($input-border-radius, 0);

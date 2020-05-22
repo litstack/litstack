@@ -1,5 +1,5 @@
 <template>
-    <b-col :cols="cols">
+    <fj-col :cols="cols">
         <div class="fj-draggable fj-block mb-2 mt-2">
             <fj-field-block-header
                 ref="header"
@@ -14,7 +14,6 @@
                 @deleteItem="$emit('deleteItem')"
                 @toggleExpand="expand = !expand"
             />
-
             <div :class="`fj-block-form ${expand ? 'show' : ''}`">
                 <fj-field-block-form
                     :block="block"
@@ -26,7 +25,7 @@
                 />
             </div>
         </div>
-    </b-col>
+    </fj-col>
 </template>
 
 <script>

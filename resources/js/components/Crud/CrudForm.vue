@@ -57,7 +57,7 @@
         </fj-header>
 
         <b-row>
-            <b-col cols="12">
+            <fj-col :cols="12">
                 <b-row class="fjord-form">
                     <components
                         v-for="(component, key) in config.form.components"
@@ -68,7 +68,7 @@
                         :config="config"
                     />
                 </b-row>
-            </b-col>
+            </fj-col>
         </b-row>
     </fj-container>
 </template>

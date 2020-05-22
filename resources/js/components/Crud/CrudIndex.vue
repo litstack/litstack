@@ -23,7 +23,7 @@
         </fj-header>
 
         <b-row>
-            <b-col>
+            <fj-col>
                 <fj-index-table
                     ref="indexTable"
                     :cols="config.index"
@@ -41,7 +41,7 @@
                     :controls="slots.indexControls"
                     @sorted="sorted"
                 />
-            </b-col>
+            </fj-col>
         </b-row>
     </fj-container>
 </template>

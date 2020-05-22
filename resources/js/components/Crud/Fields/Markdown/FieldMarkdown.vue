@@ -1,7 +1,7 @@
 <template>
-    <b-col :cols="cols">
+    <fj-col :cols="cols">
         <fj-markdown :markdown="markdown" />
-    </b-col>
+    </fj-col>
 </template>
 
 <script>

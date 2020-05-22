@@ -91,10 +91,20 @@
                 
             });
 
-            document.querySelector('.fj-main-navigation-toggle').addEventListener('click', e => {
+            
+            const toggleSidebar = () => {
                 document
-                    .querySelector('.fj-navigation')
-                    .classList.toggle('visible');
+                .querySelector('.fj-navigation')
+                .classList.toggle('visible');
+                
+                document
+                .querySelector('#fjord-app')
+                .classList.toggle('navigation-visible');
+            }
+            
+  
+            document.querySelector('.fj-main-navigation-toggle').addEventListener('click', e => {
+                toggleSidebar()
             })
         }
     </script>

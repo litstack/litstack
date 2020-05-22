@@ -3,7 +3,7 @@ div#fjord-app {
     grid-template:
         't m'
         's m';
-    grid-template-columns: 290px 1fr;
+    grid-template-columns: $sidebar-width 1fr;
     grid-template-rows: $topbar_height auto;
 
     &.no-nav {
@@ -18,11 +18,11 @@ div#fjord-app {
         overflow: hidden;
         overflow-y: scroll;
 
-        > .fj-content {
+        >.fj-content {
             display: none;
         }
 
-        &.loaded > .fj-content {
+        &.loaded>.fj-content {
             display: block;
         }
     }
