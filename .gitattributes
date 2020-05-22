@@ -1,0 +1,9 @@
+* text=auto
+
+/docs export-ignore
+/.github export-ignore
+/tests export-ignore
+.prettierrc export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+phpunit.xml export-ignore

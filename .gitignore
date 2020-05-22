@@ -5,6 +5,7 @@
 /vendor
 composer.phar
 composer.lock
+package-lock.json
 .env
 .DS_Store
 .env.backup

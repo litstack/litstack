@@ -38,7 +38,7 @@ class BackendTestCase extends Orchestra
      *
      * @return void
      */
-    protected function installFjord($force = false)
+    public function installFjord($force = false)
     {
         if (Fjord::installed() && !$force) {
             return;
