@@ -31,7 +31,7 @@ export default {
 .fj-main-navigation-toggle {
     position: fixed;
     bottom: 0.5rem;
-    left: 0.5rem;
+    left: 1rem;
     z-index: 1040;
 }
 </style>

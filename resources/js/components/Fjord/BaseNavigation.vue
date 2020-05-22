@@ -257,7 +257,8 @@ export default {
     @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
         width: 100vw;
         position: fixed;
-        top: calc(100vh - #{$nav-height-mobile});
+        bottom: 0;
+        top: unset;
         height: $nav-height-mobile;
 
         margin: 0;

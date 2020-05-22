@@ -18,11 +18,11 @@ div#fjord-app {
         overflow: hidden;
         overflow-y: scroll;
 
-        >.fj-content {
+        > .fj-content {
             display: none;
         }
 
-        &.loaded>.fj-content {
+        &.loaded > .fj-content {
             display: block;
         }
     }
@@ -31,9 +31,10 @@ div#fjord-app {
         display: block;
 
         main {
-            padding-top: $nav-height-mobile;
-            height: calc(100vh - #{$nav-height-mobile});
-            overflow: auto;
+            margin: $nav-height-mobile 0;
+            padding: 1rem 0;
+            height: auto;
+            overflow: visible;
         }
     }
 }
