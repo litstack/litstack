@@ -405,7 +405,9 @@ export default {
         margin-right: -$card-spacer-x;
         min-width: calc(100% + #{2 * $card-spacer-x});
         @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
-            margin: 0;
+            margin-left: -$page-margin-sm;
+            margin-right: -$page-margin-sm;
+            min-width: unset;
         }
     }
 
@@ -432,10 +434,16 @@ export default {
 
             &:first-child {
                 padding-left: $card-spacer-x;
+                @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+                    padding-left: $page-margin-sm;
+                }
             }
 
             &:last-child {
                 padding-right: $card-spacer-x;
+                @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+                    padding-right: $page-margin-sm;
+                }
             }
         }
 
@@ -452,10 +460,16 @@ export default {
 
                 &:first-child {
                     padding-left: $card-spacer-x;
+                    @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+                        padding-left: $page-margin-sm;
+                    }
                 }
 
                 &:last-child {
                     padding-right: $card-spacer-x;
+                    @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+                        padding-right: $page-margin-sm;
+                    }
                 }
             }
         }

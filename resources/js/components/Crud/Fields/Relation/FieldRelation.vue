@@ -374,5 +374,15 @@ export default {
     .fj-index-table {
         background-color: transparent;
     }
+
+    @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+        margin-left: 0;
+        margin-right: 0;
+        .fj-index-table {
+            .card-body {
+                padding: 0;
+            }
+        }
+    }
 }
 </style>

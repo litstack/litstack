@@ -137,7 +137,7 @@ export default {
     border-top-right-radius: $border-radius;
     border-color: $border-color;
     background: white;
-    height: $input-height;
+    min-height: $input-height;
 }
 
 .ck-rounded-corners .ck.ck-editor__main > .ck-editor__editable,

@@ -41,6 +41,9 @@ $topbar-dropdown-hover-bg: $gray-600;
 //
 //
 
+// Sidebar
+$sidebar-width: 290px;
+
 // Nav
 $nav-bg: $white;
 $nav-height: 5rem;
@@ -101,3 +104,6 @@ $button-md-height: 2.5rem;
 $button-lg-height: 3.125rem;
 
 $button-primary-shadow: 0px 6px 15px 1px rgba(0, 0, 0, 0.2);
+
+// Mobile Margins
+$page-margin-sm: 1rem;

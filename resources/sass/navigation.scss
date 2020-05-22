@@ -46,12 +46,12 @@ div#fjord-app .fj-navigation {
     }
 
     @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
-        width: 100vw;
+        width: $sidebar-width;
         position: fixed;
         height: calc(100vh - #{$nav-height-mobile * 2});
         top: $nav-height-mobile;
         transition: .2s all ease;
-        left: -100vw;
+        left: -$sidebar-width;
 
         z-index: $zindex-fixed;
 
