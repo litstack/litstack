@@ -23,8 +23,14 @@ jobs:
         name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }} - ${{ matrix.stability }}
 
         steps:
+            - name: Update apt
+              run: sudo apt-get update --fix-missing
+
+            - name: Install ffmpeg
+              run: sudo apt-get install ffmpeg
+
             - name: Checkout code
-            - uses: actions/checkout@v2
+              uses: actions/checkout@v2
 
             - name: Cache dependencies
               uses: actions/cache@v1
