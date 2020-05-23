@@ -1,5 +1,12 @@
 <p align="center" style="margin: 50px 0 !important;"><a href="https://www.fjord-admin.com" target="_blank" rel="noopener"><img src="./docs/logo.svg" width="400"></a></p>
 
+<p align="center">
+    <a href="https://github.com/aw-studio/fjord/actions"><img src="https://github.com/aw-studio/fjord/workflows/tests/badge.svg" alt="Build Status"></a>
+    <a href="https://packagist.org/packages/aw-studio/fjord"><img src="https://img.shields.io/packagist/dt/aw-studio/fjord?color=%234951f2" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/aw-studio/fjord"><img src="https://img.shields.io/github/v/release/aw-studio/fjord?color=%2383c2ff&label=stable" alt="Latest Stable Version"></a>
+    <a href="https://packagist.org/packages/aw-studio/fjord"><img src="https://img.shields.io/github/license/aw-studio/fjord?color=%2331c653" alt="License"></a>
+</p>
+
 # Fjord: Laravel Content-Administration
 
 Fjord is a multilanguage package for building and maintaining the data of your Laravel applications. It provides an intuitive interface and the tools needed to manage your project's content.
