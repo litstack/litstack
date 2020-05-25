@@ -16,8 +16,8 @@ jobs:
                 php: [7.4]
                 laravel: [7.*]
                 stability: [prefer-lowest, prefer-stable]
-                #include:
-                #    - laravel: 7.*
+                include:
+                    - laravel: 7.*
 
         name: p ${{ matrix.php }} - l ${{ matrix.laravel }} - ${{ matrix.stability }}
 
