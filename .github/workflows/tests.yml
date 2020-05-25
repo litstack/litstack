@@ -37,19 +37,19 @@ jobs:
                   path: ~/.composer/cache/files
                   key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
-            - name: Setup chromedriver
-              uses: nanasess/setup-chromedriver@v1.0.1
-              - run: |
-                  export DISPLAY=:99
-                  chromedriver --url-base=/wd/hub &
-                  sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
-
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
                   coverage: none
+
+            - name: Setup chromedriver
+              uses: nanasess/setup-chromedriver@v1.0.1
+              run: |
+                  export DISPLAY=:99
+                  chromedriver --url-base=/wd/hub &
+                  sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
 
             - name: Setup node 12
               uses: actions/setup-node@v1
