@@ -15,6 +15,13 @@
 <script>
 export default {
     name: 'Field',
+
+    /**
+     * Rendering the fj-field component.
+     *
+     * @param {Function} createElement
+     * @return {Object}
+     */
     render(createElement) {
         if (!this.shouldRender) {
             return;
@@ -33,6 +40,11 @@ export default {
         });
     },
     computed: {
+        /**
+         * Determines if the component should be rendered.
+         *
+         * @return {Boolean}
+         */
         shouldRender() {
             if (!this.field.dependsOn) {
                 return true;

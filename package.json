@@ -1,8 +1,30 @@
 {
     "name": "fjord",
     "description": "Fjord is a multilanguage admin-panel/cms scaffolding package that helps you creating CRUD in seconds via Artisan-commands. It also lets you manage the \"static\" content of each of your websites pages (Headlines, Text, Images), as well repetitive mixed contents you define. Generating content as well as passing it to your views and retrieving it is super simple.",
-    "version": "0.0.1",
+    "version": "2.0.0",
     "main": "./resources/js/index.js",
+    "scripts": {
+        "test": "./node_modules/.bin/jest .*.spec.js"
+    },
+    "jest": {
+        "moduleFileExtensions": [
+            "js",
+            "json",
+            "vue"
+        ],
+        "transform": {
+            "^.+\\.(js|jsx)?$": "<rootDir>/node_modules/babel-jest",
+            ".*\\.(vue)$": "vue-jest"
+        },
+        "moduleNameMapper": {
+            "fjord-test": "<rootDir>/tests/javascript/bootstrap.js",
+            "@fj-js(.*)$": "<rootDir>/resources/js/$1",
+            "@fj-sass(.*)$": "<rootDir>/resources/sass/$1"
+        },
+        "snapshotSerializers": [
+            "jest-serializer-vue"
+        ]
+    },
     "config": {
         "exportAliases": {
             "mix": "./resources/js/mix.js"
@@ -17,30 +39,36 @@
         "Jannes Behrens",
         "Lennart Carstens-Behrens"
     ],
-    "scripts": {
-        "prepublish": "generate-export-aliases"
-    },
     "license": "MIT",
     "devDependencies": {
-        "axios": "^0.19.2",
-        "bootstrap": "^4.4.1",
-        "browser-sync": "^2.26.7",
-        "browser-sync-webpack-plugin": "^2.0.1",
+        "@babel/core": "*",
+        "@babel/preset-env": "*",
+        "@vue/server-test-utils": "^1.0.3",
+        "@vue/test-utils": "^1.0.3",
+        "babel-core": "^6.26.3",
+        "babel-jest": "^26.0.1",
+        "babel-loader": "^8.1.0",
+        "babel-plugin-require-context-hook": "^1.0.0",
+        "babel-plugin-transform-object-rest-spread": "^6.26.0",
+        "babel-plugin-transform-require-context": "^0.1.1",
+        "babel-preset-env": "^1.7.0",
         "cross-env": "^7.0.0",
         "eslint-config-prettier": "^6.10.1",
         "eslint-plugin-prettier": "^3.1.2",
-        "jquery": "^3.2",
-        "laravel-mix": "^5.0.1",
-        "lodash": "^4.17.15",
-        "popper.js": "^1.16.1",
+        "jest": "^26.0.1",
+        "jest-serializer-vue": "^2.0.2",
+        "karma": "^5.0.9",
+        "node-sass-glob-importer": "^5.3.2",
         "resolve-url-loader": "^3.1.0",
-        "sass": "^1.25.0",
         "sass-loader": "^8.0.0",
-        "vue": "^2.6.11",
+        "vue-jest": "^3.0.5",
         "vue-template-compiler": "^2.6.11",
         "vuepress": "^1.2.0"
     },
     "dependencies": {
+        "axios": "^0.19.2",
+        "bootstrap": "^4.4.1",
+        "jquery": "^3.2",
         "@ckeditor/ckeditor5-build-classic": "^12.2.0",
         "@ckeditor/ckeditor5-vue": "^1.0.1",
         "@fortawesome/fontawesome-svg-core": "^1.2.27",
@@ -51,29 +79,26 @@
         "bootstrap-vue": "^2.9.0",
         "collect.js": "^4.20.3",
         "cropperjs": "^1.5.6",
-        "fjord-permissions": "file:../fjord-permissions",
         "fs": "0.0.1-security",
         "highlight.js": "^9.18.1",
         "i18n": "^0.8.5",
         "i18n-js": "^3.5.1",
         "marked": "^1.1.0",
-        "melanke-watchjs": "^1.5.2",
-        "node-sass-glob-importer": "^5.3.2",
         "placeholder-loading": "^0.2.6",
+        "lodash": "^4.17.15",
+        "popper.js": "^1.16.1",
         "prismjs": "^1.20.0",
-        "tiptap": "^1.26.6",
-        "tiptap-extensions": "^1.28.6",
         "vue-codemirror": "^4.0.6",
         "vue-ctk-date-time-picker": "^2.4.0",
-        "vue-gtag": "^1.6.2",
         "vue-i18n": "^8.15.3",
         "vue-js-modal": "^1.3.33",
         "vue-lodash": "^2.1.2",
-        "vue-prism-editor": "^0.3.0",
         "vue-tables-2": "^1.6.25",
         "vue2-dropzone": "^3.5.9",
         "vuedraggable": "^2.23.2",
+        "sass": "^1.25.0",
         "vuex": "^3.1.3",
+        "vue": "^2.6.11",
         "zxcvbn": "^4.4.2"
     }
 }

@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+// Installing Fjord and starting test after, to load namespaces of created FjordApp.
+
+use FjordTest\BackendTestCase;
+use FjordTest\FrontendTestCase;
+use Illuminate\Support\Facades\Artisan;
+
+// Creating database.sqlite
+shell_exec('php ' . __DIR__ . '/../vendor/orchestra/testbench-dusk/create-sqlite-db');
+
+$test = new FrontendTestCase;
+$test->setUp();
+$test->installFjord(
+    $force = true
+);
+
+echo "\033[32m Installed Fjord successfully.\n\033[0m";
+
+Artisan::call('dusk:chrome-driver');
+echo "\033[32m Installed latest version of chrome-driver.\n\033[0m";

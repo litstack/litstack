@@ -2,7 +2,6 @@
 
 namespace Fjord\Auth\Middleware;
 
-use Closure;
 use Throwable;
 use Illuminate\Support\Carbon;
 use Fjord\Auth\Models\FjordSession;
@@ -27,7 +26,6 @@ class Authenticate extends Middleware
         try {
             parent::authenticate($request, $guards);
         } catch (AuthenticationException $e) {
-
             // Delete fjord_session from db when user is logged out.
             FjordSession::where('session_id', Session::getId())->delete();
 

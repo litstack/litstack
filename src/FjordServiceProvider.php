@@ -2,11 +2,8 @@
 
 namespace Fjord;
 
-use FjordApp\Kernel;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;

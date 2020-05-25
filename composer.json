@@ -17,7 +17,9 @@
     },
     "require-dev": {
         "orchestra/testbench": "^5.2",
-        "mockery/mockery": "^1.3"
+        "mockery/mockery": "^1.3",
+        "laravel/dusk": "^6.1",
+        "orchestra/testbench-dusk": "^5.2"
     },
     "authors": [
         {
@@ -39,8 +41,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "FjordTest\\": "tests",
-            "FjordApp\\": "vendor/orchestra/testbench-core/laravel/fjord/app"
+            "FjordTest\\": "tests/php",
+            "FjordApp\\": "vendor/orchestra/testbench-dusk/laravel/fjord/app"
         }
     },
     "extra": {

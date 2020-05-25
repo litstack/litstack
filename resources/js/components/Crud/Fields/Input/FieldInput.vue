@@ -10,6 +10,7 @@
             <b-input-group-prepend is-text v-if="field.prepend">
                 <span v-html="field.prepend"></span>
             </b-input-group-prepend>
+            <!--<fj-input ref="input" slot-scope="{ value }">-->
             <b-input
                 class="form-control"
                 :value="value"
@@ -21,6 +22,7 @@
                 v-bind:readonly="field.readonly"
                 @input="changed"
             />
+            <!--</fj-input>-->
             <b-input-group-append is-text v-if="field.append">
                 <span v-html="field.append"></span>
             </b-input-group-append>
@@ -47,8 +49,8 @@ export default {
     },
     data() {
         return {
-            value: null,
-            original: null
+            value: '',
+            original: ''
         };
     },
     beforeMount() {
@@ -56,8 +58,9 @@ export default {
     },
     methods: {
         ...methods,
-        changed(value) {
-            this.setValue(value);
+        changed(val) {
+            this.setValue(val);
+            //this.$refs.input.$emit('changed', val);
             this.$emit('changed', value);
         }
     }

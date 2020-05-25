@@ -16,10 +16,10 @@ jobs:
                 php: [7.4]
                 laravel: [7.*]
                 stability: [prefer-lowest, prefer-stable]
-                include:
-                    - laravel: 7.*
+                #include:
+                #    - laravel: 7.*
 
-        name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }} - ${{ matrix.stability }}
+        name: php@${{ matrix.php }} - laravel@${{ matrix.laravel }} - ${{ matrix.stability }}
 
         steps:
             - name: Update apt
@@ -37,12 +37,20 @@ jobs:
                   path: ~/.composer/cache/files
                   key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
+            #- name: Setup chromedriver
+            #  uses: nanasess/setup-chromedriver@v1.0.1
+
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
                   coverage: none
+
+            - name: Setup node 12
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 12.x
 
             - name: Fix Imagick Policy
               run: sudo sed -i 's/none/read|write/g' /etc/ImageMagick-6/policy.xml
@@ -51,9 +59,13 @@ jobs:
               run: |
                   composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
                   composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-suggest
+                  npm install
 
-            - name: Install Fjord
-              run: php tests/setup.php
+            - name: Install Fjord & other testing dependencies
+              run: php tests/install
 
-            - name: Execute tests (Unit and Feature tests) via PHPUnit
+            - name: Execute javascript tests via Jest
+              run: npm test
+
+            - name: Execute PHP tests via PHPUnit
               run: vendor/bin/phpunit

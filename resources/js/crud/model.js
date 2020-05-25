@@ -27,14 +27,6 @@ export default class CrudModel {
             return attributes[key];
         }
 
-        if (!this.translatable) {
-            return;
-        }
-
-        if (!('translation' in attributes)) {
-            return attributes[key] || undefined;
-        }
-
         if (!(lng in attributes)) {
             return attributes[key] || undefined;
         }
@@ -93,7 +85,6 @@ export default class CrudModel {
             if (!attribute || typeof attribute != typeof {}) {
                 return;
             }
-
             attribute = this._getTranslatedAttribute(key, attribute);
         }
 

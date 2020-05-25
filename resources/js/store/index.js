@@ -17,7 +17,7 @@ class FjordStore {
         return new Proxy(this, this);
     }
 
-    createStore(assign) {
+    createStore(assign = {}) {
         this.store = new Vuex.Store({
             modules: Object.assign(assign, modules)
         });

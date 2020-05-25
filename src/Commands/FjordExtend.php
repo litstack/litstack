@@ -20,19 +20,24 @@ class FjordExtend extends Command
      *
      * @var string
      */
-    protected $description = 'This will install npm packages fjord and fjord-permissions and extend your webpack.mix.js to extend your Fjord Application.';
+    protected $description = 'This will install node packages fjord and fjord-permissions and extend your webpack.mix.js to extend your Fjord Application.';
 
     public function handle()
     {
-        $this->runNpmInstall();
+        $this->line("build npm packages");
+        $this->runNpmInstall(base_path());
         $this->extendWebpack();
     }
 
-    protected function runNpmInstall()
+    public function runNpmInstall($base, $verbose = false)
     {
-        $this->line("build npm packages");
-        $base = base_path();
-        shell_exec("cd {$base}; npm i vendor/aw-studio/fjord vendor/aw-studio/fjord-permissions");
+        //dd($base);
+        $cmd = "cd {$base}; npm i vendor/aw-studio/fjord vendor/aw-studio/fjord-permissions";
+        if ($verbose) {
+            passthru($cmd);
+        } else {
+            shell_exec($cmd);
+        }
     }
 
     protected function extendWebpack()
