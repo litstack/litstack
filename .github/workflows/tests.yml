@@ -19,7 +19,7 @@ jobs:
                 #include:
                 #    - laravel: 7.*
 
-        name: php@${{ matrix.php }} - laravel@${{ matrix.laravel }} - ${{ matrix.stability }}
+        name: p ${{ matrix.php }} - l ${{ matrix.laravel }} - ${{ matrix.stability }}
 
         steps:
             - name: Update apt
@@ -37,8 +37,12 @@ jobs:
                   path: ~/.composer/cache/files
                   key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
-            - name: Setup chromedriver
-              uses: nanasess/setup-chromedriver@v1.0.1
+            - name: Install chrome
+              run: |
+                  sudo curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+                  sudo echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+                  sudo apt-get -y update
+                  sudo apt-get -y install google-chrome-stable
 
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
