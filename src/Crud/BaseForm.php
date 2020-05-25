@@ -7,6 +7,7 @@ use Closure;
 use Fjord\Support\VueProp;
 use Fjord\Crud\Fields\Code;
 use Fjord\Crud\Fields\Icon;
+use Illuminate\Support\Str;
 use Fjord\Crud\Fields\Input;
 use Fjord\Crud\Fields\Modal;
 use Fjord\Crud\Fields\Range;
@@ -15,7 +16,6 @@ use InvalidArgumentException;
 use Fjord\Crud\Fields\Boolean;
 use Fjord\Crud\Fields\Wysiwyg;
 use Fjord\Crud\Fields\Datetime;
-use Fjord\Crud\Fields\Markdown;
 use Fjord\Crud\Fields\Password;
 use Fjord\Crud\Fields\Textarea;
 use Fjord\Crud\Fields\Component;
@@ -26,6 +26,7 @@ use Fjord\Crud\Fields\Media\Image;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Crud\Fields\Relations\HasOne;
 use Fjord\Crud\Fields\Relations\HasMany;
+use Illuminate\Support\Traits\Macroable;
 use Fjord\Crud\Fields\Relations\MorphOne;
 use Fjord\Crud\Fields\Relations\BelongsTo;
 use Fjord\Crud\Fields\Relations\MorphMany;
@@ -34,9 +35,7 @@ use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Exceptions\MethodNotFoundException;
 use Fjord\Crud\Fields\Relations\BelongsToMany;
-
-use Illuminate\Support\Str;
-use Illuminate\Support\Traits\Macroable;
+use Fjord\Crud\Fields\Relations\MorphToRegistrar;
 
 
 class BaseForm extends VueProp
@@ -81,6 +80,7 @@ class BaseForm extends VueProp
         \Illuminate\Database\Eloquent\Relations\BelongsToMany::class => BelongsToMany::class,
         \Illuminate\Database\Eloquent\Relations\BelongsTo::class => BelongsTo::class,
         \Illuminate\Database\Eloquent\Relations\MorphOne::class => MorphOne::class,
+        \Illuminate\Database\Eloquent\Relations\MorphTo::class => MorphToRegistrar::class,
         \Illuminate\Database\Eloquent\Relations\MorphToMany::class => MorphToMany::class,
         \Illuminate\Database\Eloquent\Relations\MorphMany::class => MorphMany::class,
         \Illuminate\Database\Eloquent\Relations\HasMany::class => HasMany::class,
@@ -217,21 +217,26 @@ class BaseForm extends VueProp
      * @param array $params
      * @return Field $field
      */
-    protected function registerField($field, string $id, $params = [])
+    public function registerField($field, string $id, $params = [])
     {
         if ($this->registrar) {
             // Check if all required properties are set.
-            $this->registrar->checkComplete();
+            if (!$this->registrar->checkComplete()) {
+                return;
+            }
         }
 
-        $fieldInstance = new $field($id, $this->model, $this->routePrefix);
+        $fieldInstance = new $field($id, $this->model, $this->routePrefix, $this);
 
         if ($fieldInstance->isRelation()) {
             $fieldInstance->setAttribute('many', $fieldInstance instanceof ManyRelationField);
         }
 
         $this->registrar = $fieldInstance;
-        $this->registeredFields[] = $fieldInstance;
+
+        if ($fieldInstance->register()) {
+            $this->registeredFields[] = $fieldInstance;
+        }
 
         if ($this->col) {
             $this->col

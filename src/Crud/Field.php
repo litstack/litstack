@@ -26,6 +26,13 @@ class Field extends VueProp
     protected $model;
 
     /**
+     * Form instance.
+     *
+     * @var string
+     */
+    protected $form;
+
+    /**
      * Field attributes.
      *
      * @var array
@@ -109,12 +116,13 @@ class Field extends VueProp
      * @param string $id
      * @param string $model
      * @param string|null $routePrefix
+     * @param mixed $form
      */
-    public function __construct(string $id, string $model, $routePrefix)
+    public function __construct(string $id, string $model, $routePrefix, $form)
     {
         // Merge available, default and required properties of parent and child class.
         if (static::class != self::class) {
-            $parent = new self($id, $model, $routePrefix);
+            $parent = new self($id, $model, $routePrefix, $form);
             $this->available = array_merge(
                 $parent->getAvailableAttributes(),
                 $this->available,
@@ -139,6 +147,7 @@ class Field extends VueProp
         $this->attributes['local_key'] = $id;
         $this->attributes['route_prefix'] = $routePrefix;
         $this->model = $model;
+        $this->form = $form;
 
         if ($this->translatable) {
             $this->available[] = 'translatable';
@@ -173,6 +182,16 @@ class Field extends VueProp
     public function canSave()
     {
         return $this->save;
+    }
+
+    /**
+     * Should field be registered in form.
+     *
+     * @return boolean
+     */
+    public function register()
+    {
+        return true;
     }
 
     /**

@@ -23,7 +23,7 @@ class ManyRelationField extends Field
      */
     public function resolveQuery($query)
     {
-        return $query->get();
+        return $query->getResults();
     }
 
     /**

@@ -49,7 +49,7 @@ class CrudForm extends BaseForm
      * 
      * @throws \Exception
      */
-    protected function registerField($field, string $id, $params = [])
+    public function registerField($field, string $id, $params = [])
     {
         if (!$this->inCard()) {
             throw new Exception("Fields must be registered in cards. Call \$form->card(function... ); and register fields inside closure.");
@@ -57,7 +57,7 @@ class CrudForm extends BaseForm
 
         $field = parent::registerField($field, $id, $params);
 
-        if ($this->inCard() && !$this->col) {
+        if ($this->inCard() && !$this->col && $field->register()) {
             $this->card
                 ->component('fj-field')
                 ->prop('field', $field);

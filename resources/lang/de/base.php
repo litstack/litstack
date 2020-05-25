@@ -4,6 +4,7 @@ return [
     'item_delete' => ':item löschen',
     'item_create' => ':item erstellen',
     'item_remove' => ':item entfernen',
+    'item_select' => ':item auswählen',
     'item_settings' => ':item Einstellungen',
     'profile' => 'Konto',
     'password' => 'Passwort',

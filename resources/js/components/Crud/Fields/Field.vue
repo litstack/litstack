@@ -29,7 +29,7 @@ export default {
 
         let props = this.field.props ? this.field.props : {};
 
-        return createElement(this.field.component, {
+        let vm = createElement(this.field.component, {
             props: {
                 field: this.field,
                 model: this.model,
@@ -38,6 +38,10 @@ export default {
             },
             on: this.$listeners
         });
+
+        //vm.$forceUpdate();
+
+        return vm;
     },
     computed: {
         /**
@@ -49,10 +53,7 @@ export default {
             if (!this.field.dependsOn) {
                 return true;
             }
-            return (
-                this.field.dependsOn.value ==
-                this.model[this.field.dependsOn.key]
-            );
+            return this.field.dependsOn.value == this.dependencyValue;
         }
     },
     props: {
@@ -71,10 +72,34 @@ export default {
             required: true
         }
     },
+    data() {
+        return {
+            dependencyValue: null
+        };
+    },
     beforeMount() {
         this.formatRoutePrefix();
+
+        this.detectDepencyChanges();
+        Fjord.bus.$on('fieldChanged', this.detectDepencyChanges);
     },
     methods: {
+        /**
+         * Detect depency changes.
+         */
+        detectDepencyChanges() {
+            if (!this.field.dependsOn) {
+                return true;
+            }
+            if (this.model[this.field.dependsOn.key] == this.dependencyValue) {
+                return;
+            }
+            this.dependencyValue = this.model[this.field.dependsOn.key];
+        },
+
+        /**
+         * Format field route_prefix.
+         */
         formatRoutePrefix() {
             // This allows Fields like Blocks to set individual Model id's that
             // differ from the id of the model that gets passed to the Field.

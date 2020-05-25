@@ -44,6 +44,7 @@ export default {
         changed(value) {
             this.setValue(value);
             this.$emit('changed', value);
+            Fjord.bus.$emit('fieldChanged');
         }
     }
 };

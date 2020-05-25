@@ -131,6 +131,14 @@ export default {
             cols: []
         };
     },
+    computed: {
+        modalId() {
+            return `form-relation-table-${this.field.route_prefix.replace(
+                /\//g,
+                '-'
+            )}`;
+        }
+    },
     beforeMount() {
         this.cols = this.field.preview;
         this.cols.push({
@@ -224,6 +232,7 @@ export default {
                     break;
                 case 'hasOne':
                 case 'morphOne':
+                case 'morphTo':
                 case 'oneRelation':
                     try {
                         response = await axios.post(
@@ -300,6 +309,7 @@ export default {
                     break;
                 case 'hasOne':
                 case 'morphOne':
+                case 'morphTo':
                 case 'oneRelation':
                     try {
                         response = axios.delete(
@@ -352,14 +362,6 @@ export default {
             this.$bvToast.toast(this.$t('fj.order_changed'), {
                 variant: 'success'
             });
-        }
-    },
-    computed: {
-        modalId() {
-            return `form-relation-table-${this.field.route_prefix.replace(
-                /\//g,
-                '-'
-            )}`;
         }
     }
 };

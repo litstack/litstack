@@ -20,6 +20,6 @@ class OneRelationField extends Field
      */
     public function resolveQuery($query)
     {
-        return $query->first();
+        return $query->getResults();
     }
 }

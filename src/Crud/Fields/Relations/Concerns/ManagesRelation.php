@@ -51,9 +51,9 @@ trait ManagesRelation
      * @param string $model
      * @param string|null $routePrefix
      */
-    public function __construct(string $id, string $model, $routePrefix)
+    public function __construct(string $id, string $model, $routePrefix, $form)
     {
-        parent::__construct($id, $model, $routePrefix);
+        parent::__construct($id, $model, $routePrefix, $form);
 
         $this->initializeRelationField();
     }
@@ -104,15 +104,19 @@ trait ManagesRelation
 
         $closure($table);
 
-        // Add open relation edit page if user has permission.
-        if ($this->relatedConfig->permissions['read']) {
-            $route = Fjord::url($this->relatedConfig->routePrefix . '/{id}/edit');
-            //$table->col("<a href=\"{$route}\"><i class=\"ml-4 fas fa-eye text-secondary\"></i></a>")->small();
-        }
-
         $this->attributes['preview'] = $table;
 
         return $this;
+    }
+
+    /**
+     * Get relation name.
+     *
+     * @return string
+     */
+    public function getRelationName()
+    {
+        return $this->id;
     }
 
     /**
@@ -135,14 +139,13 @@ trait ManagesRelation
             new $this->model
         );
 
-        $related = $relation->getRelated();
+        $related = $this->getRelated();
 
         if (method_exists($relation, 'getTable')) {
             if ($relation->getTable() == 'form_relations') {
                 throw new InvalidArgumentException("The relation Field should be used for Laravel relations, for Fjord relations use oneRelation or manyRelation.");
             }
         }
-
 
         $model = get_class($related);
 
@@ -159,6 +162,18 @@ trait ManagesRelation
         }
 
         return $this;
+    }
+
+    /**
+     * Get related model instance.
+     *
+     * @return mixed
+     */
+    protected function getRelated()
+    {
+        return $this->getRelation(
+            new $this->model
+        )->getRelated();
     }
 
     /**

@@ -188,7 +188,7 @@ abstract class CrudController
         $query = $this->query();
         foreach ($this->fields() as $field) {
             if ($field->isRelation() && !$field instanceof MediaField) {
-                $query->with($field->id);
+                $query->with($field->getRelationName());
             }
         }
 

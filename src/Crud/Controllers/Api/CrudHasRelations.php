@@ -3,9 +3,11 @@
 namespace Fjord\Crud\Controllers\Api;
 
 use Fjord\Support\IndexTable;
+use Fjord\Crud\OneRelationField;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Crud\Fields\Relations\HasOne;
 use Fjord\Crud\Fields\Relations\HasMany;
+use Fjord\Crud\Fields\Relations\MorphTo;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Fields\Relations\MorphOne;
 use Fjord\Crud\Fields\Relations\MorphMany;
@@ -24,7 +26,8 @@ trait CrudHasRelations
         Relations\ManagesOneRelation,
         Relations\ManagesHasOne,
         Relations\ManagesHasMany,
-        Relations\ManagesMorphMany;
+        Relations\ManagesMorphMany,
+        Relations\ManagesMorphTo;
 
     /**
      * Load relation index.
@@ -68,11 +71,19 @@ trait CrudHasRelations
 
         $query = $field->relation($model, $query = true);
 
-        $relations = IndexTable::query($query)
-            ->request($request)
-            ->search($field->getRelatedConfig()->search)
-            ->only(['filter', 'paginate'])
-            ->get();
+        if ($field instanceof OneRelationField) {
+            $items = $query->get();
+            $relations = collect([
+                'count' => $items->count(),
+                'items' => $items
+            ]);
+        } else {
+            $relations = IndexTable::query($query)
+                ->request($request)
+                ->search($field->getRelatedConfig()->search)
+                ->only(['filter', 'paginate'])
+                ->get();
+        }
 
         $relations['items'] = crud(
             $relations['items']
@@ -131,6 +142,9 @@ trait CrudHasRelations
         }
         if ($field instanceof MorphOne) {
             return $this->createMorphOne($request, $field, $model, $relation);
+        }
+        if ($field instanceof MorphTo) {
+            return $this->createMorphTo($request, $field, $model, $relation);
         }
         if ($field instanceof HasOne) {
             return $this->createHasOne($request, $field, $model, $relation);
@@ -195,6 +209,9 @@ trait CrudHasRelations
         }
         if ($field instanceof MorphOne) {
             return $this->destroyMorphOne($request, $field, $model, $relation);
+        }
+        if ($field instanceof MorphTo) {
+            return $this->destroyMorphTo($request, $field, $model, $relation);
         }
         if ($field instanceof HasOne) {
             return $this->destroyHasOne($request, $field, $model, $relation);
