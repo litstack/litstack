@@ -64,8 +64,8 @@ jobs:
             - name: Execute javascript tests via Jest
               run: npm test
 
-            - name: Detect chromium
-              run: ./vendor/bin/dusk-updater detect
+            - name: Detect Chrome
+              run: ./vendor/bin/dusk-updater detect --auto-update
 
             - name: Start Chrome Driver
               run: ./vendor/laravel/dusk/bin/chromedriver-linux &

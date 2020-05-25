@@ -20,7 +20,7 @@ const model = new CrudModel({
 
 describe('Input field', () => {
     it('shows value after rendering', async () => {
-        const wrapper = await mount(Field, { propsData: { field, model } });
+        const wrapper = await render(Field, { propsData: { field, model } });
         expect(wrapper.text()).toContain('<div></div>');
     });
 });
