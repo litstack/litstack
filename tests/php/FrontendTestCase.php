@@ -130,7 +130,7 @@ class FrontendTestCase extends OrchestraDuskTestCase
      */
     public static function prepare()
     {
-        //static::startChromeDriver(['port' => 9515]);
+        static::startChromeDriver(['port' => 9515]);
     }
 
     /**
