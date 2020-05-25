@@ -44,9 +44,6 @@ jobs:
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
                   coverage: none
 
-            - name: Setup chromedriver
-              uses: nanasess/setup-chromedriver@v1.0.1
-
             - name: Setup node 12
               uses: actions/setup-node@v1
               with:
@@ -61,16 +58,14 @@ jobs:
                   composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-suggest
                   npm install
 
-            - name: Export display
-              run: |
-                  export DISPLAY=:99
-                  sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
-
             - name: Install Fjord & other testing dependencies
               run: php tests/install
 
             - name: Execute javascript tests via Jest
               run: npm test
+
+            - name: Start Chrome Driver
+              run: ./vendor/laravel/dusk/bin/chromedriver-linux &
 
             - name: Execute PHP tests via PHPUnit
               run: vendor/bin/phpunit

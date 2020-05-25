@@ -20,5 +20,5 @@ $test->installFjord(
 
 echo "\033[32m Installed Fjord successfully.\n\033[0m";
 
-Artisan::call('dusk:chrome-driver');
+Artisan::call('dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`');
 echo "\033[32m Installed latest version of chrome-driver.\n\033[0m";

@@ -60,7 +60,7 @@
 import { mapGetters } from 'vuex';
 
 export default {
-    name: 'FjordField',
+    name: 'FormItem',
     props: {
         field: {
             type: [Object, Array],
