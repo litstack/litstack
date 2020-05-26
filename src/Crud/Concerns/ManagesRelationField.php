@@ -21,6 +21,16 @@ trait ManagesRelationField
     }
 
     /**
+     * Get relation name.
+     *
+     * @return string
+     */
+    public function getRelationName()
+    {
+        return $this->id;
+    }
+
+    /**
      * Modify preview query with eager loads and accessors to append.
      *
      * @param Builder $query

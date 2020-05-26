@@ -110,16 +110,6 @@ trait ManagesRelation
     }
 
     /**
-     * Get relation name.
-     *
-     * @return string
-     */
-    public function getRelationName()
-    {
-        return $this->id;
-    }
-
-    /**
      * Set model and query builder.
      *
      * @return self
