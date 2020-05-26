@@ -247,7 +247,9 @@ class BaseForm extends VueProp
     public function col(int $cols, Closure $closure)
     {
         return $this->wrapper('fj-col', function ($form) use ($closure) {
-            $closure($this);
+            $this->wrapper('b-row', function ($form) use ($closure) {
+                $closure($this);
+            });
         })->prop('cols', $cols);
     }
 
