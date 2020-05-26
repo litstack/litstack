@@ -246,11 +246,9 @@ class BaseForm extends VueProp
      */
     public function col(int $cols, Closure $closure)
     {
-        $this->wrapper('b-row', function ($form) use ($closure, $cols) {
-            $form->wrapper('fj-col', function ($form) use ($closure) {
-                $closure($this);
-            })->prop('cols', $cols);
-        });
+        return $this->wrapper('fj-col', function ($form) use ($closure) {
+            $closure($this);
+        })->prop('cols', $cols);
     }
 
     /**
@@ -315,9 +313,7 @@ class BaseForm extends VueProp
     {
         if ($this->registrar) {
             // Check if all required properties are set.
-            if (!$this->registrar->checkComplete()) {
-                return;
-            }
+            $this->registrar->checkComplete();
         }
 
         $fieldInstance = new $field($id, $this->model, $this->routePrefix, $this);
@@ -420,6 +416,20 @@ class BaseForm extends VueProp
         return [
             'fields' => $this->registeredFields
         ];
+    }
+
+    /**
+     * To array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        if ($this->registrar) {
+            $this->registrar->checkComplete();
+        }
+
+        return parent::toArray();
     }
 
     /**

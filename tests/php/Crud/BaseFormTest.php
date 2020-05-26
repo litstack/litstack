@@ -132,6 +132,26 @@ class BaseFormTest extends BackendTestCase
         $field = $this->form->findField('other-field');
         $this->assertEquals('other-field', $field->id);
     }
+
+    /** @test */
+    public function checking_registrar_before_new_field()
+    {
+        $this->form->input('dummy-field');
+
+        // Expecting expcetion since title attribute is missing for previous field.
+        $this->expectException(\Throwable::class);
+        $this->form->input('other-field');
+    }
+
+    /** @test */
+    public function checking_registrar_before_passing_to_vue()
+    {
+        $this->form->input('dummy-field');
+
+        // Expecting expcetion since title attribute is missing for previous field.
+        $this->expectException(\Throwable::class);
+        $this->form->toJson();
+    }
 }
 
 class RelatedDummyModel extends Model

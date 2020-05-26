@@ -4,6 +4,7 @@ namespace FjordTest\Crud;
 
 use Fjord\Crud\BaseForm;
 use Fjord\Crud\CrudForm;
+use Fjord\Exceptions\InvalidArgumentException;
 use FjordTest\BackendTestCase;
 use Fjord\Support\Facades\Fjord;
 use Illuminate\Database\Eloquent\Model;
@@ -53,6 +54,13 @@ class CrudFormTest extends BackendTestCase
 
             $this->assertNotEquals($outsideInfo->heading, $insideInfo->heading);
         });
+    }
+
+    /** @test */
+    public function it_denies_to_register_fields_outside_of_wrappers()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->form->input('dummy-component');
     }
 
     /** @test */

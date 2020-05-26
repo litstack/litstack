@@ -26,7 +26,7 @@ class OneRelation extends OneRelationField
     protected $required = [
         'title',
         'model',
-        'preview'
+        'preview',
     ];
 
     /**

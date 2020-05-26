@@ -4,6 +4,7 @@ namespace Fjord\Crud;
 
 use Closure;
 use Exception;
+use Fjord\Exceptions\InvalidArgumentException;
 use Fjord\Vue\Component;
 
 class CrudForm extends BaseForm
@@ -21,6 +22,25 @@ class CrudForm extends BaseForm
      * @var boolean
      */
     protected $inCard = false;
+
+    /**
+     * Register new Field.
+     *
+     * @param mixed $field
+     * @param string $id
+     * @param array $params
+     * @return Field $field
+     */
+    public function registerField($field, string $id, $params = [])
+    {
+        if (!$this->inWrapper()) {
+            throw new InvalidArgumentException('Fields must be registered inside a wrapper.', [
+                'function' => '__call'
+            ]);
+        }
+
+        return parent::registerField($field, $id, $params);
+    }
 
     /**
      * Is registering component in card.

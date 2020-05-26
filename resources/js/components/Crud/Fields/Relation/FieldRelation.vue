@@ -16,14 +16,11 @@
             </b-button>
         </template>
 
-        <div class="form-control-expand fj-field-relation" v-if="model.id">
-            <!--
-            <div v-if="busy" class="d-flex justify-content-around">
-                <fj-spinner />
-            </div>
-            -->
-
-            <template>
+        <template v-if="model.id">
+            <div
+                class="form-control-expand fj-field-relation"
+                :class="{ 'mt-4': !field.many }"
+            >
                 <fj-index-table
                     ref="table"
                     :cols="field.preview"
@@ -31,6 +28,7 @@
                     :load-items="loadRelations"
                     no-card
                     no-select
+                    v-bind:no-head="!field.many"
                     :sort-by-default="
                         field.sortable
                             ? `${field.orderColumn}.${field.orderDirection}`
@@ -45,52 +43,17 @@
                     @sorted="newOrder"
                     @unlink="removeRelation"
                 />
-                <!--
-                <draggable
-                    v-model="selectedRelations"
-                    @end="newOrder"
-                    handle=".fj-draggable__dragbar"
-                    tag="b-row"
-                    :class="{ 'mb-0': field.readonly }"
-                >
-                    <fj-field-block
-                        ref="block"
-                        v-for="(relation, index) in selectedRelations"
-                        :key="index"
-                        :block="relation"
-                        :field="field"
-                        :fields="field.form ? field.form.fields : []"
-                        :model="model"
-                        :cols="field.relatedCols"
-                        :sortable="field.many ? field.sortable : false"
-                        :preview="field.preview"
-                        :set-route-prefix="setFieldsRoutePrefixId"
-                        delete-icon="unlink"
-                        @deleteItem="removeRelation(relation)"
-                        @changed="$emit('changed')"
-                    />
-                </draggable>
-                -->
-
-                <fj-field-relation-confirm-delete
-                    v-for="(relation, index) in selectedRelations"
-                    :key="index"
-                    :field="field"
-                    :relation="relation"
-                    :route-prefix="field.route_prefix"
-                    @confirmed="_removeRelation"
-                    @canceled="$refs.modal.$emit('refresh')"
-                />
-            </template>
-            <!--
-            <div v-if>
-                <fj-field-alert-empty
-                    :field="field"
-                    :class="{ 'mb-0': field.readonly }"
-                />
             </div>
-            -->
 
+            <fj-field-relation-confirm-delete
+                v-for="(relation, index) in selectedRelations"
+                :key="index"
+                :field="field"
+                :relation="relation"
+                :route-prefix="field.route_prefix"
+                @confirmed="_removeRelation"
+                @canceled="$refs.modal.$emit('refresh')"
+            />
             <fj-field-relation-modal
                 ref="modal"
                 :field="field"
@@ -100,7 +63,8 @@
                 @select="selectRelation"
                 @remove="removeRelation"
             />
-        </div>
+        </template>
+
         <template v-else>
             <fj-field-alert-not-created :field="field" class="mb-0" />
         </template>
@@ -133,10 +97,9 @@ export default {
     },
     computed: {
         modalId() {
-            return `form-relation-table-${this.field.route_prefix.replace(
-                /\//g,
-                '-'
-            )}`;
+            return `form-relation-table-${
+                this.field.id
+            }-${this.field.route_prefix.replace(/\//g, '-')}`;
         }
     },
     beforeMount() {
