@@ -255,8 +255,13 @@ class Component extends VueProp
         $valid = false;
         if (is_string($type)) {
             $valid = $this->isValidPropType($type, $value);
-            $message = "Value must be: {$type}";
+            if (class_exists($type)) {
+                $message = "Value must be instance of {$type}";
+            } else {
+                $message = "Value must be: {$type}";
+            }
         } else {
+
             foreach ($type as $t) {
                 $valid = $this->isValidPropType($t, $value);
                 if ($valid) {
@@ -288,13 +293,17 @@ class Component extends VueProp
      */
     protected function isValidPropType($type, $value)
     {
-        if (!in_array($type, self::PROP_TYPES)) {
-
+        // Allow self::PROP_TYPES and classes.
+        if (!in_array($type, self::PROP_TYPES) && !class_exists($type)) {
             throw new InvalidArgumentException(sprintf(
                 '%s is not valid prop type. Available prop type: %s',
                 $type,
                 implode(', ', self::PROP_TYPES)
             ));
+        }
+
+        if (class_exists($type)) {
+            return $value instanceof $type;
         }
 
         return $type == gettype($value);
@@ -499,6 +508,15 @@ class Component extends VueProp
             array_keys($this->availableProps),
             ['class', 'prop', 'slot', 'bind']
         );
+    }
+
+    public function __get(string $name)
+    {
+        if (array_key_exists($name, $this->props)) {
+            return $this->props[$name];
+        }
+
+        return $this->{$name};
     }
 
     /**

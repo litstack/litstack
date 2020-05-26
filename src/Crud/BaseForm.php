@@ -124,6 +124,20 @@ class BaseForm extends VueProp
     protected $col;
 
     /**
+     * Current wrapper component.
+     *
+     * @var Component
+     */
+    protected $wrapper;
+
+    /**
+     * Wrapper component stack.
+     *
+     * @var array
+     */
+    protected $wrapperStack = [];
+
+    /**
      * Create new BaseForm instance.
      *
      * @param string $model
@@ -136,27 +150,107 @@ class BaseForm extends VueProp
     }
 
     /**
-     * Add fields in cols.
+     * Is registering component in wrapper.
      *
-     * @param int|string $cols
-     * @param Closure $closure
-     * @param any ...$params
-     * @return void
+     * @return boolean
      */
-    public function col($cols, Closure $closure = null)
+    public function inWrapper()
     {
-        $component = $this->component('fj-col')->prop('cols', $cols);
+        return $this->wrapper != null;
+    }
 
-        if ($component instanceof Component) {
-            $this->col = $component->comp;
-        } else {
-            $this->col = $component;
+    /**
+     * Get current card.
+     *
+     * @return array $card
+     */
+    public function getWrapper()
+    {
+        return $this->wrapper;
+    }
+
+    /**
+     * Get new wrapper
+     * 
+     * @param string|Component $component
+     * @return component
+     */
+    protected function getNewWrapper($component)
+    {
+        if (is_string($component)) {
+            $component = component($component);
         }
 
-        $closure($this);
-        $this->col = null;
+        if ($this->inWrapper()) {
+            $wrapper = component('fj-field-wrapper');
+        } else {
+            $wrapper = $this->component('fj-field-wrapper');
+        }
 
-        return $this;
+        return $wrapper->wrapperComponent($component);
+    }
+
+    /**
+     * Create wrapper.
+     *
+     * @param string|Component $component
+     * @param Closure $closure
+     * @return self
+     */
+    public function wrapper($component, Closure $closure)
+    {
+        $newWrapper = $this->getNewWrapper($component);
+
+        return $this->registerWrapper($newWrapper, $closure);
+    }
+
+    /**
+     * Register new wrapper.
+     * 
+     * @return Component
+     */
+    public function registerWrapper($wrapper, $closure)
+    {
+        if ($this->inWrapper()) {
+            /*
+            $newWrapper = $this->component('fj-field-wrapper')
+                ->wrapper($component);
+        } else {
+            $newWrapper = component('fj-field-wrapper')
+                ->wrapper($component);
+                */
+
+            $this->wrapper
+                ->component($wrapper);
+
+            $this->wrapperStack[] = $this->wrapper;
+        }
+
+        $this->wrapper = $wrapper;
+        $closure($this);
+        $this->wrapper = !empty($this->wrapperStack)
+            ? array_pop($this->wrapperStack)
+            : null;
+
+        //dd($wrapper->wrapperComponent);
+
+        return $wrapper->wrapperComponent;
+    }
+
+    /**
+     * Register column wrapper.
+     *
+     * @param int $cols
+     * @param Closure $closure
+     * @return void
+     */
+    public function col(int $cols, Closure $closure)
+    {
+        $this->wrapper('b-row', function ($form) use ($closure, $cols) {
+            $form->wrapper('fj-col', function ($form) use ($closure) {
+                $closure($this);
+            })->prop('cols', $cols);
+        });
     }
 
     /**
@@ -238,8 +332,8 @@ class BaseForm extends VueProp
             $this->registeredFields[] = $fieldInstance;
         }
 
-        if ($this->col) {
-            $this->col
+        if ($this->inWrapper() && !$this->col && $fieldInstance->register()) {
+            $this->wrapper
                 ->component('fj-field')
                 ->prop('field', $fieldInstance);
         }

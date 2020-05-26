@@ -61,14 +61,14 @@ jobs:
             - name: Install Fjord & other testing dependencies
               run: php tests/install
 
-            - name: Execute javascript tests via Jest
-              run: npm test
-
             - name: Detect Chrome
               run: ./vendor/bin/dusk-updater detect --auto-update
 
             - name: Start Chrome Driver
               run: ./vendor/laravel/dusk/bin/chromedriver-linux &
 
-            - name: Execute PHP tests via PHPUnit
+            - name: Run javascript tests via Jest
+              run: npm test
+
+            - name: Run PHP tests via PHPUnit
               run: vendor/bin/phpunit

@@ -16,13 +16,6 @@ class CrudForm extends BaseForm
     protected $components = [];
 
     /**
-     * Current card.
-     *
-     * @var Component
-     */
-    protected $card;
-
-    /**
      * Is registering component in card.
      *
      * @var boolean
@@ -40,39 +33,12 @@ class CrudForm extends BaseForm
     }
 
     /**
-     * Register new Field.
-     *
-     * @param mixed $name
-     * @param string $id
-     * @param array $params
-     * @return Field $field
-     * 
-     * @throws \Exception
-     */
-    public function registerField($field, string $id, $params = [])
-    {
-        if (!$this->inCard()) {
-            throw new Exception("Fields must be registered in cards. Call \$form->card(function... ); and register fields inside closure.");
-        }
-
-        $field = parent::registerField($field, $id, $params);
-
-        if ($this->inCard() && !$this->col && $field->register()) {
-            $this->card
-                ->component('fj-field')
-                ->prop('field', $field);
-        }
-
-        return $field;
-    }
-
-    /**
      * Add Vue component
      *
      * @param string $component
      * @return \Fjord\Vue\Component
      */
-    public function component(string $component)
+    public function component($component)
     {
         if ($this->inCard()) {
             return parent::component($component);
@@ -105,38 +71,29 @@ class CrudForm extends BaseForm
     }
 
     /**
-     * Get current card.
+     * Create b-card wrapper.
      *
-     * @return array $card
+     * @param int $cols
+     * @param Closure $closure
+     * @return void
      */
-    public function getCard()
+    public function card(Closure $closure)
     {
-        return $this->card;
+        return $this->wrapper('fj-field-wrapper-card', function ($form) use ($closure) {
+            $this->inCard = true;
+            $closure($form);
+            $this->inCard = false;
+        });
     }
 
     /**
-     * Create a new Card.
+     * Get CrudForm components.
      *
-     * @param Closure $closure
-     * @param any ...$params
-     * @return void
+     * @return array
      */
-    public function card(Closure $closure = null, ...$params)
+    public function getComponents()
     {
-        $card = $this->component('fj-card');
-
-        $this->card = $card;
-
-        $this->inCard = true;
-        $closure($this);
-        $this->inCard = false;
-
-        if ($this->registrar) {
-            // Check if all required properties are set.
-            $this->registrar->checkComplete();
-        }
-
-        return $card;
+        return $this->components;
     }
 
     /**
