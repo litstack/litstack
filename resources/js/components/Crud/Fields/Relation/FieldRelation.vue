@@ -20,6 +20,7 @@
             <div
                 class="form-control-expand fj-field-relation"
                 :class="{ 'mt-4': !field.many }"
+                v-if="!field.tags"
             >
                 <fj-index-table
                     ref="table"
@@ -43,6 +44,17 @@
                     @sorted="newOrder"
                     @unlink="removeRelation"
                 />
+            </div>
+            <div v-else class="">
+                <b-form-tag
+                    v-for="(relation, key) in selectedRelations"
+                    :key="key"
+                    @remove="removeRelation(relation)"
+                    class="mr-2 mt-2"
+                    :variant="field.tagVariant"
+                >
+                    {{ _format(field.tags, relation) }}
+                </b-form-tag>
             </div>
 
             <fj-field-relation-confirm-delete
@@ -149,6 +161,13 @@ export default {
                     id: relation.attributes.id
                 });
             }
+            if (this.field.tags) {
+                this.loadRelations({
+                    perPage: 999999,
+                    page: 1,
+                    sort_by: 'id.desc'
+                });
+            }
         },
         async loadRelations(payload) {
             this.busy = true;
@@ -215,15 +234,6 @@ export default {
                         }
                     );
                     break;
-                /*
-                case 'morphTo':
-                    this.model.attributes[this.field.morph_type] = modelName;
-                    this.model.attributes[this.field.foreign_key] = item.id;
-                    this.model[`${this.field.id}Model`] = item.attributes;
-                    this.setCols();
-                    this.$emit('changed', this.field, this.model);
-                    break;
-                */
                 case 'belongsTo':
                     this.setValue(relation.id);
                     break;
@@ -237,7 +247,11 @@ export default {
             } else {
                 this.allSelectedRelations.push(relation);
             }
-            this.$refs.table.$emit('reload');
+            if (this.field.tags) {
+                this.loadRelations();
+            } else {
+                this.$refs.table.$emit('reload');
+            }
             this.$emit('reload', relation);
             Fjord.bus.$emit('field:updated', 'relation:selected');
         },
@@ -300,8 +314,14 @@ export default {
             } else {
                 this.allSelectedRelations = [];
             }
-            this.$refs.table.$emit('reload');
+
+            if (this.field.tags) {
+                this.loadRelations();
+            } else {
+                this.$refs.table.$emit('reload');
+            }
             this.$emit('reload');
+
             Fjord.bus.$emit('field:updated', 'relation:removed');
         },
         async newOrder({ ids, sortedItems }) {

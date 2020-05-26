@@ -7,7 +7,7 @@
                     :name="field.slots.title"
                     :props="{ field, model }"
                 />
-                <label :for="field.id" v-else>{{ field.title }}</label>
+                <label :for="field.id" v-else v-html="field.title"></label>
                 <div>
                     <slot name="title-right" />
                     <b-badge v-if="field.translatable" variant="secondary">

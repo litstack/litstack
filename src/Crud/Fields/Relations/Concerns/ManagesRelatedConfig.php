@@ -37,6 +37,10 @@ trait ManagesRelatedConfig
         );
 
         $this->setAttribute('config', $config);
+
+        if (!$this->preview) {
+            $this->preview = $this->relatedConfig->index;
+        }
     }
 
     /**

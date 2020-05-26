@@ -1,5 +1,5 @@
 <template>
-    <b-col :cols="cols">
+    <fj-col :cols="cols">
         <component :is="heading" v-html="title" />
         <p
             :key="key"
@@ -7,7 +7,7 @@
             v-html="info"
             class="text-secondary"
         />
-    </b-col>
+    </fj-col>
 </template>
 
 <script>

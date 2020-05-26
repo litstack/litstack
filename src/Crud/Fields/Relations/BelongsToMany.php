@@ -47,6 +47,8 @@ class BelongsToMany extends ManyRelationField
         'small',
         'perPage',
         'searchable',
+        'tags',
+        'tagVariant'
     ];
 
     /**
@@ -61,5 +63,7 @@ class BelongsToMany extends ManyRelationField
         'small' => false,
         'perPage' => 10,
         'searchable' => false,
+        'tags' => false,
+        'tagVariant' => 'secondary'
     ];
 }

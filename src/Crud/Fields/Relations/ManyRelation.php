@@ -47,6 +47,8 @@ class ManyRelation extends ManyRelationField
         'small',
         'perPage',
         'searchable',
+        'tags',
+        'tagVariant'
     ];
 
     /**
@@ -62,6 +64,8 @@ class ManyRelation extends ManyRelationField
         'small' => false,
         'perPage' => 10,
         'searchable' => false,
+        'tags' => false,
+        'tagVariant' => 'secondary'
     ];
 
     /**
