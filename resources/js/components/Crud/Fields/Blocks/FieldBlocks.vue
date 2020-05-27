@@ -1,7 +1,7 @@
 <template>
     <fj-form-item :field="field" :model="model">
         <template slot="title-right">
-            <a href="#" @click="toggleExpand">
+            <a href="#" @click="toggleExpand" v-if="!this.create">
                 <fa-icon :icon="expandedAll ? 'angle-up' : 'angle-down'" />
                 {{
                     __(
@@ -86,6 +86,11 @@ export default {
             this.reloadBlocks();
         });
     },
+    computed: {
+        create() {
+            return this.model.id === undefined;
+        }
+    },
     methods: {
         async reloadBlock(block) {
             let response = await axios.get(
@@ -128,6 +133,9 @@ export default {
             this.busy = false;
         },
         async _loadBlocks() {
+            if (this.create) {
+                return;
+            }
             let response = await axios.get(
                 `${this.field.route_prefix}/blocks/${this.field.id}`
             );

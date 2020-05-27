@@ -5,7 +5,7 @@
                 variant="secondary"
                 size="sm"
                 v-b-modal="modalId"
-                v-if="!field.readonly"
+                v-if="!field.readonly && !this.create"
             >
                 <fa-icon icon="plus" />
                 {{
@@ -122,6 +122,9 @@ export default {
                 return false;
             }
             return this.field.showTableHead === true;
+        },
+        create() {
+            return this.model.id === undefined;
         }
     },
     beforeMount() {
@@ -156,6 +159,9 @@ export default {
     methods: {
         ...methods,
         async loadAllRelations() {
+            if (this.create) {
+                return;
+            }
             let payload = {
                 perPage: 999999,
                 page: 1,
@@ -180,6 +186,9 @@ export default {
             }
         },
         async loadRelations(payload) {
+            if (this.create) {
+                return;
+            }
             this.busy = true;
             let response = await axios.post(
                 `${this.field.route_prefix}/${this.field.id}`,

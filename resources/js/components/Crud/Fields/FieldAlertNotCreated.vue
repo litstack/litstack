@@ -1,14 +1,16 @@
 <template>
-    <b-alert
-        show
-        variant="warning"
-        v-html="
-            $t('fj.not_created', {
-                relation: field.title,
-                model: 'name'
-            })
-        "
-    />
+    <div class="form-control-expand">
+        <b-alert
+            show
+            variant="warning"
+            v-html="
+                $t('fj.not_created', {
+                    relation: field.title,
+                    model: 'Item'
+                })
+            "
+        />
+    </div>
 </template>
 
 <script>
