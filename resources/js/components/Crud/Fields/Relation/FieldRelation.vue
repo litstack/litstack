@@ -10,8 +10,12 @@
                 <fa-icon icon="plus" />
                 {{
                     field.many
-                        ? __('fj.add_model', { model: field.title })
-                        : __('fj.select_item', { item: field.title })
+                        ? __('fj.add_model', {
+                              model: field.config.names.singular
+                          })
+                        : __('fj.select_item', {
+                              item: field.config.names.singular
+                          })
                 }}
             </b-button>
         </template>

@@ -24,6 +24,18 @@ class DummyConfigClassName extends FormConfig
     public $formName = DummyFormName;
 
     /**
+     * Form singular name. This name will be displayed in the navigation.
+     *
+     * @return array
+     */
+    public function names()
+    {
+        return [
+            'singular' => DummyFormName,
+        ];
+    }
+
+    /**
      * Setup create and edit form.
      *
      * @param \Fjord\Crud\CrudForm $form
@@ -36,6 +48,7 @@ class DummyConfigClassName extends FormConfig
             $form->input('text')
                 ->title('text');
 
-        })->cols(12)->title('Form');
+            // ...
+        });
     }
 }

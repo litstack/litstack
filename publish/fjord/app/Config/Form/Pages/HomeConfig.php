@@ -29,6 +29,18 @@ class HomeConfig extends FormConfig
     public $formName = 'home';
 
     /**
+     * Form singular name. This name will be displayed in the navigation.
+     *
+     * @return array
+     */
+    public function names()
+    {
+        return [
+            'singular' => 'Home'
+        ];
+    }
+
+    /**
      * Setup create and edit form.
      *
      * @param \Fjord\Crud\CrudForm $form

@@ -28,7 +28,6 @@ class NavigationConfig extends Config
 
         $nav->section([
             $nav->preset('collections.settings', [
-                'title' => __f('fj.settings'),
                 'icon' => fa('cog')
             ])
         ]);
@@ -46,11 +45,10 @@ class NavigationConfig extends Config
             $nav->title('Pages'),
 
             $nav->group([
-                'title' => 'Pages',
-                'icon' => '<i class="fas fa-file"></i>',
+                'icon' => fa('file'),
             ], [
                 $nav->preset('pages.home', [
-                    'icon' => '<i class="fas fa-home">'
+                    'icon' => fa('home'),
                 ]),
             ])
         ]);

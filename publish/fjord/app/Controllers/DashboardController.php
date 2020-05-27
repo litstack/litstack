@@ -10,7 +10,7 @@ class DashboardController
      * Dashboard.
      *
      * @param Request $request
-     * @return void
+     * @return View
      */
     public function __invoke(Request $request)
     {
