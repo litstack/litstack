@@ -25,15 +25,16 @@ footer: MIT Licensed | Made with ❤️ in Kiel
 $form->image('profile_image')
     ->maxFiles(1)
     ->title('Profile Image')
-    ->cols(4);
+    ->crop(3 / 4)
+    ->width(4);
 
-$form->col(8, function ($col) {
+$form->group(function ($col) {
     $col->input('name')
         ->title('Name');
 
     $col->relation('department')
         ->title('Department');
-});
+})->width(8);
 ```
 
 ![Fjord Interface](./example_form.png 'Fjord Interface')
