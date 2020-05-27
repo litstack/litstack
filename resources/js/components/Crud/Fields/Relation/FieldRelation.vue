@@ -33,7 +33,7 @@
                     :load-items="loadRelations"
                     no-card
                     no-select
-                    v-bind:no-head="!field.many"
+                    v-bind:no-head="!showTableHead"
                     :sort-by-default="
                         field.sortable
                             ? `${field.orderColumn}.${field.orderDirection}`
@@ -116,6 +116,12 @@ export default {
             return `form-relation-table-${
                 this.field.id
             }-${this.field.route_prefix.replace(/\//g, '-')}`;
+        },
+        showTableHead() {
+            if (!this.field.many) {
+                return false;
+            }
+            return this.field.showTableHead === true;
         }
     },
     beforeMount() {

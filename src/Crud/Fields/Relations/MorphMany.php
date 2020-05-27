@@ -42,13 +42,14 @@ class MorphMany extends ManyRelationField
         'preview',
         'confirm',
         'sortable',
-        'query',
+        'filter',
         'relatedCols',
         'small',
         'perPage',
         'searchable',
         'tags',
-        'tagVariant'
+        'tagVariant',
+        'showTableHead'
     ];
 
     /**

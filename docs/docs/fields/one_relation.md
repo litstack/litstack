@@ -9,10 +9,7 @@ use App\Models\Article;
 
 $form->manyRelation('article')
     ->title('Article')
-    ->model(Article::class)
-    ->preview(function ($table) {
-        $table->col('title');
-    });
+    ->model(Article::class);
 ```
 
 In the Model:
@@ -26,12 +23,13 @@ public function articles()
 
 ## Methods
 
-| Method         | Description                                                                   |
-| -------------- | ----------------------------------------------------------------------------- |
-| `title`        | The title description for this field.                                         |
-| `hint`         | A short hint that should describe how to use the field.`                      |
-| `width`        | Width of the field.                                                           |
-| `model`        | The related Model class.                                                      |
-| `preview`      | A closure to define the table preview of the corresponding relation.          |
-| `previewQuery` | Modify preview query with eager loads and accessors that should be displayed. |
-| `confirm`      | Modal pops when unlinkin the relation and asks to confirm.                    |
+| Method    | Description                                                                   |
+| --------- | ----------------------------------------------------------------------------- |
+| `title`   | The title description for this field.                                         |
+| `hint`    | A short hint that should describe how to use the field.`                      |
+| `width`   | Width of the field.                                                           |
+| `model`   | The related Model class.                                                      |
+| `preview` | A closure to define the table preview of the corresponding relation.          |
+| `query`   | Modify preview query with eager loads and accessors that should be displayed. |
+| `filter`  | Initial query builder for the selectable relations.                           |
+| `confirm` | Modal pops when unlinkin the relation and asks to confirm.                    |

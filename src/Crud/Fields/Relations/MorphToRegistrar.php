@@ -42,7 +42,7 @@ class MorphToRegistrar extends OneRelationField
         'previewQuery',
         'preview',
         'confirm',
-        'query',
+        'filter',
         'relatedCols',
         'small',
         'types'

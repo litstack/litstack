@@ -64,7 +64,7 @@ trait ManagesRelation
      * @param Closure $closure
      * @return self
      */
-    public function previewQuery(Closure $closure)
+    public function query(Closure $closure)
     {
         $this->previewModifier = $closure;
 
@@ -208,7 +208,7 @@ trait ManagesRelation
      * @param Closure $closure
      * @return void
      */
-    public function query(Closure $closure)
+    public function filter(Closure $closure)
     {
         $closure($this->query);
 

@@ -42,13 +42,14 @@ class HasMany extends ManyRelationField
         'preview',
         'confirm',
         'sortable',
-        'query',
+        'filter',
         'relatedCols',
         'small',
         'perPage',
         'searchable',
         'tags',
-        'tagVariant'
+        'tagVariant',
+        'showTableHead'
     ];
 
     /**
@@ -64,7 +65,7 @@ class HasMany extends ManyRelationField
         'perPage' => 10,
         'searchable' => false,
         'tags' => false,
-        'tagVariant' => 'secondary'
+        'tagVariant' => 'secondary',
     ];
 
     /**

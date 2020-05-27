@@ -41,7 +41,7 @@ class HasOne extends OneRelationField
         'previewQuery',
         'preview',
         'confirm',
-        'query',
+        'filter',
         'relatedCols',
         'small',
     ];

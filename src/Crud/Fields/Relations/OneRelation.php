@@ -42,7 +42,7 @@ class OneRelation extends OneRelationField
         'previewQuery',
         'preview',
         'confirm',
-        'query',
+        'filter',
         'relatedCols',
         'small',
     ];

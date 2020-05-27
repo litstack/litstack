@@ -47,7 +47,7 @@ class MorphTo extends OneRelationField
         'previewQuery',
         'preview',
         'confirm',
-        'query',
+        'filter',
         'relatedCols',
         'small',
         'morphType'

@@ -43,7 +43,7 @@ class MorphOne extends OneRelationField
         'confirm',
         'sortable',
         'orderColumn',
-        'query',
+        'filter',
         'relatedCols',
         'small',
     ];
