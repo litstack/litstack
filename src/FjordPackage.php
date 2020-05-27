@@ -18,6 +18,7 @@ use Fjord\Vue\Components\FieldWrapperComponent;
 use Fjord\Vue\Components\Index\ColImageComponent;
 use Fjord\Vue\Components\Index\ColToggleComponent;
 use Fjord\Vue\Components\FieldWrapperCardComponent;
+use Fjord\Vue\Components\FieldWrapperGroupComponent;
 use Fjord\Application\Package\FjordPackage as Package;
 use Fjord\Crud\Config\Factories\CrudFormConfigFactory;
 use Fjord\Crud\Config\Factories\CrudIndexConfigFactory;
@@ -73,6 +74,7 @@ class FjordPackage extends Package
         'fj-info' => InfoComponent::class,
         'fj-field-wrapper' => FieldWrapperComponent::class,
         'fj-field-wrapper-card' => FieldWrapperCardComponent::class,
+        'fj-field-wrapper-group' => FieldWrapperGroupComponent::class,
         'fj-col-image' => ColImageComponent::class,
         'fj-col-toggle' => ColToggleComponent::class,
         'fj-col-crud-relation' => ColCrudRelationComponent::class

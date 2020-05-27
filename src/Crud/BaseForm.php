@@ -238,6 +238,19 @@ class BaseForm extends VueProp
     }
 
     /**
+     * Formfield group.
+     *
+     * @param Closure $closure
+     * @return Component
+     */
+    public function group(Closure $closure)
+    {
+        return $this->wrapper('fj-field-wrapper-group', function ($form) use ($closure) {
+            $closure($this);
+        });
+    }
+
+    /**
      * Register column wrapper.
      *
      * @param int $cols
