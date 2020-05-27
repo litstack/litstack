@@ -62,7 +62,7 @@ Read the [Extend Vue](/docs/basics/vue.html#bootstrap-vue) section to learn how 
 A good content-administration interface includes **descriptions** that help the user quickly understand what is happening on the interface. Such information can be created outside and inside of cards like so:
 
 ```php
-$form->info('Adress')
+$form->info('Address')
     ->width(4)
     ->text('This address appears on your <a href="'.route('invoices').'">invoices</a>.')
     ->text(...);
