@@ -45,6 +45,7 @@ class NavigationConfig extends Config
             $nav->title('Pages'),
 
             $nav->group([
+                'title' => 'Pages',
                 'icon' => fa('file'),
             ], [
                 $nav->preset('pages.home', [
