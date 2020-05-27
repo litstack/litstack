@@ -6,7 +6,7 @@ A code editor using [Codemirror](https://codemirror.net/).
 $form->code('code')
     ->title('Google Analytics Id')
     ->hint('Insert your google analytics tag.')
-    ->cols(6);
+    ->width(6);
 ```
 
 ## Methods
@@ -15,7 +15,7 @@ $form->code('code')
 | --------------- | -------------------------------------------------------------------------------- |
 | `title`         | The title description for this form field.                                       |
 | `hint`          | A short hint that should describe how to use the form field.                     |
-| `cols`          | Cols of the field.                                                               |
+| `width`         | Width of the field.                                                              |
 | `theme`         | Codemirror [theme](https://codemirror.net/demo/theme.html). (default: "default") |
 | `language`      | Codemirrot [languages](https://codemirror.net/mode/). (default: "text/html")     |
 | `tabSize`       | Number of spaces used for a tab. (default: 4)                                    |

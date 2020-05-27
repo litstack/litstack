@@ -14,7 +14,7 @@ class FieldWrapperGroupComponent extends Component
     protected function props()
     {
         return [
-            'cols' => [
+            'width' => [
                 'type' => 'integer',
                 'required' => false,
                 'default' => 12

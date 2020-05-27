@@ -69,8 +69,6 @@ class FjordPackage extends Package
         'fj-crud-form' => CrudFormComponent::class,
 
         // Other
-        'fj-col' => ColComponent::class,
-        'fj-card' => CardComponent::class,
         'fj-info' => InfoComponent::class,
         'fj-field-wrapper' => FieldWrapperComponent::class,
         'fj-field-wrapper-card' => FieldWrapperCardComponent::class,

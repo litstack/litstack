@@ -9,7 +9,7 @@ A range slider.
     ->max(4)
     ->step(1)
     ->hint('Range.')
-    ->cols(6);
+    ->width(1/2);
 ```
 
 ## Methods
@@ -18,7 +18,7 @@ A range slider.
 | ------- | -------------------------------------------------------- |
 | `title` | The title description for this field.                    |
 | `hint`  | A short hint that should describe how to use the field.` |
-| `cols`  | Cols of the field.                                       |
+| `width` | Width of the field.                                      |
 | `min`   | Minimum value.                                           |
 | `max`   | Maximum value.                                           |
 | `step`  | Steps. (default: 1)                                      |

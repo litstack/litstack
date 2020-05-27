@@ -25,7 +25,7 @@ class InfoComponent extends Component
                 'required' => true,
                 'default' => []
             ],
-            'cols' => [
+            'width' => [
                 'type' => 'integer',
                 'required' => false,
                 'default' => 4

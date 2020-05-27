@@ -12,7 +12,7 @@ $form->checkboxes('fruits')
         'grape' => 'Grape',
     ])
     ->hint('Select your fruits.')
-    ->cols(6);
+    ->width(6);
 ```
 
 Add the `array` [cast](https://laravel.com/docs/5.2/eloquent-mutators#attribute-casting) to your model:
@@ -29,5 +29,5 @@ protected $casts = [
 | --------- | -------------------------------------------------------- |
 | `title`   | The title description for this field.                    |
 | `hint`    | A short hint that should describe how to use the field.` |
-| `cols`    | Cols of the field.                                       |
+| `width`   | Width of the field.                                      |
 | `options` | An array with checkboxe values and descriptions.         |

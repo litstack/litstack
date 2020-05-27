@@ -1,5 +1,5 @@
 <template>
-    <fj-col :cols="cols">
+    <fj-col :width="width">
         <div class="fj-draggable fj-block mb-2 mt-2">
             <fj-field-block-header
                 ref="header"
@@ -56,7 +56,7 @@ export default {
             required: true,
             type: Object
         },
-        cols: {
+        width: {
             type: [String, Number],
             default() {
                 return 12;

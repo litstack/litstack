@@ -18,8 +18,8 @@ class FieldWrapperCardComponent extends Component
                 'type' => 'string',
                 'required' => false,
             ],
-            'cols' => [
-                'type' => 'integer',
+            'width' => [
+                'type' => ['integer', 'double'],
                 'required' => false,
                 'default' => 12
             ],

@@ -24,7 +24,7 @@ $form->card(function ($form) {
 
 })
 ->title('Card Title')
-->cols(8);
+->width(8);
 ```
 
 ## Fields
@@ -37,14 +37,14 @@ $form->input('first_name')->title('First Name');
 
 All available fields can be found in the documentation under [Fields](/docs/fields/introduction.html).
 
-## Col
+## Group
 
-With `col` fields can be grouped in a column. This is usefull to organize form elements of different heights side by side.
+With `group` fields can be grouped in a column. This is usefull to organize form elements of different heights side by side.
 
 ```php
-$form->col(6, function($form) {
+$form->group(function($form) {
     // Build your form inside the col.
-});
+})->width(6);
 ```
 
 ## Component
@@ -63,7 +63,7 @@ A good content-administration interface includes **descriptions** that help the 
 
 ```php
 $form->info('Adress')
-    ->cols(4)
+    ->width(4)
     ->text('This address appears on your <a href="'.route('invoices').'">invoices</a>.')
     ->text(...);
 ```

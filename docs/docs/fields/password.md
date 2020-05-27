@@ -41,7 +41,7 @@ $modal->password('password_confirmation')
 | `title`         | The title description for this field.                                          |
 | `placeholder`   | The placeholder for this field.                                                |
 | `hint`          | A short hint that should describe how to use the field.`                       |
-| `cols`          | Cols of the field.                                                             |
+| `width`         | Width of the field.                                                            |
 | `confirm`       | Requires the user to type in the current passwort to confirm update or create. |
 | `dontStore`     | The password wont be stored, but only to use validation rules.                 |
 | `noScore`       | Shouldn't display the password score.                                          |

@@ -6,7 +6,7 @@ A boolean field.
 $form->boolean('active')
     ->title('Live')
     ->hint('Put the site online.')
-    ->cols(3);
+    ->width(1/3);
 ```
 
 Add the `array` [cast](https://laravel.com/docs/5.2/eloquent-mutators#attribute-casting) to your model:
@@ -23,4 +23,4 @@ protected $casts = [
 | ------- | -------------------------------------------------- |
 | `title` | The title description for this field.              |
 | `hint`  | A closure where all repeatable blocks are defined. |
-| `cols`  | Cols of the field.                                 |
+| `width` | Width of the field.                                |

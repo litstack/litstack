@@ -29,15 +29,15 @@ export default {
 </script>
 ```
 
-It is recommended to use the bootstrap rows and cols for the page content.
+It is recommended to use the wrap your page content with a b-row and fj-col components.
 
 ```javascript
 <template>
     <fj-container>
         ...
         <b-row>
-            <b-col>...</b-col>
-            <b-col>...</b-col>
+            <fj-col width="1/3">...</fj-col>
+            <fj-col width="1/3">...</fj-col>
         </b-row>
     </fj-container>
 </template>

@@ -1,5 +1,5 @@
 <template>
-    <fj-col :cols="cols">
+    <fj-col :width="width">
         <component :is="heading" v-html="title" />
         <p
             :key="key"
@@ -14,7 +14,7 @@
 export default {
     name: 'Info',
     props: {
-        cols: {
+        width: {
             type: Number,
             required: true
         },

@@ -1,5 +1,5 @@
 <template>
-    <fj-col :cols="cols">
+    <fj-col :width="width">
         <b-card :title="title">
             <b-row>
                 <slot />
@@ -15,7 +15,7 @@ export default {
         title: {
             type: String
         },
-        cols: {
+        width: {
             type: Number,
             default() {
                 return 12;

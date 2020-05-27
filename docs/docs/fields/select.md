@@ -34,4 +34,4 @@ $form->select('article_id')
 | `title`   | The title description for this field.                                  |
 | `options` | An array with the options, can be a simple array or key => value pairs |
 | `hint`    | A short hint that should describe how to use the field.`               |
-| `cols`    | Cols of the field.                                                     |
+| `width`   | Width of the field.                                                    |

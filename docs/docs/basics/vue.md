@@ -62,11 +62,11 @@ The following example shows how to build a root component of a page for a Fjord 
         <fj-header title="Posts"/>
 
         <b-row>
-            <b-col cols="3" v-for="(post, key) in posts" :key="key">
+            <fj-col :width="3" v-for="(post, key) in posts" :key="key">
                 <b-card :title="post.title">
                     {{ post.text }}
                 </b-card>
-            </b-col>
+            </fj-col>
         </b-row>
     </fj-container>
 </template>

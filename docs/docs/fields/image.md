@@ -89,7 +89,7 @@ To display conversion urls it is important to set the env `APP_URL` to the url y
 | `title`         | The title for this form field.                                |
 | `translatable`  | Should the field be translatable.                             |
 | `hint`          | A short hint that should describe how to use the form field.` |
-| `cols`          | Cols of the form field.                                       |
+| `width`         | Width of the form field.                                      |
 | `sortable`      | Should the images be sortable? (default: `true`)              |
 | `maxFiles`      | Maxmium number of uploadable images. (default: `5`)           |
 | `crop`          | Opens a Crop-Tool before the upload. (default: `false`)       |

@@ -11,19 +11,21 @@
 export default {
     name: 'Col',
     props: {
-        cols: {
+        width: {
             type: Number,
             default() {
                 return 12;
             }
         }
-    }
-    /*
+    },
     computed: {
-        responsiveCols() {
-            return `xl-${this.cols} col-12`;
+        cols() {
+            if (this.width >= 1) {
+                return this.width;
+            }
+
+            return Math.round(12 * this.width);
         }
     }
-    */
 };
 </script>

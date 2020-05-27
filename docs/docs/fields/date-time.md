@@ -7,7 +7,7 @@ $form->datetime('publish_at')
     ->title('Date')
     ->formatted('l')
     ->hint('Chose a date.')
-    ->cols(6);
+    ->width(6);
 ```
 
 ```php
@@ -21,7 +21,7 @@ $form->dt('publish_at') // dt and datetime work the same
 | `title`     | The title description for this field.              |
 | `formatted` | The shown datetime format.                         |
 | `hint`      | A closure where all repeatable blocks are defined. |
-| `cols`      | Cols of the field.                                 |
+| `width`     | Width of the field.                                |
 
 ## Formats
 

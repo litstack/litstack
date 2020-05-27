@@ -1,6 +1,6 @@
 <!--
 <template>
-    <fj-col :cols="cols">
+    <fj-col :width="width">
         <b-row>
             <slot />
         </b-row>
@@ -26,7 +26,7 @@ export default {
         let vm = createElement(
             'fj-col',
             {
-                props: { cols: this.cols }
+                props: { width: this.width }
             },
             [createElement('b-row', this.$slots.default)]
         );
@@ -40,7 +40,7 @@ export default {
         title: {
             type: String
         },
-        cols: {
+        width: {
             type: Number,
             default() {
                 return 12;

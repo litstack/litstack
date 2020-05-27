@@ -59,7 +59,7 @@ class Field extends VueProp
      * @var array
      */
     protected $required = [
-        'cols',
+        'width',
     ];
 
     /**
@@ -78,7 +78,7 @@ class Field extends VueProp
      */
     protected $available = [
         'readonly',
-        'cols',
+        'width',
         'info',
         'class',
         'dependsOn'
@@ -91,7 +91,7 @@ class Field extends VueProp
      */
     protected $defaults = [
         'readonly' => false,
-        'cols' => 12,
+        'width' => 12,
         'slots' => [],
         'class' => ''
     ];

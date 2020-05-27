@@ -31,7 +31,7 @@
                     :block="block"
                     :field="field"
                     :model="model"
-                    :cols="field.blockCols"
+                    :width="field.blockWidth"
                     :reload="reloadBlock"
                     :preview="field.repeatables[block.type].preview"
                     :fields="field.repeatables[block.type].form.fields"

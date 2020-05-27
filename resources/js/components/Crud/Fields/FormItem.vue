@@ -1,5 +1,5 @@
 <template>
-    <fj-col :cols="cols" :class="field.class">
+    <fj-col :width="width" :class="field.class">
         <div :class="`pb-4 fjord-form fj-form-item-${field.id}`">
             <h6 class="fj-form-item-title mb-0 d-flex justify-content-between">
                 <fj-slot
@@ -152,8 +152,8 @@ export default {
         length() {
             return this.value ? this.value.length : 0;
         },
-        cols() {
-            return this.field.cols !== undefined ? this.field.cols : 12;
+        width() {
+            return this.field.width !== undefined ? this.field.width : 12;
         }
     }
 };

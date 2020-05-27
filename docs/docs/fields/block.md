@@ -52,4 +52,5 @@ Post::find($id)->content;
 | ------------- | -------------------------------------------------- |
 | `title`       | The title description for this field.              |
 | `repeatables` | A closure where all repeatable blocks are defined. |
-| `cols`        | Cols of the field.                                 |
+| `width`       | Width of the field.                                |
+| `blockWidth`  | Width of a block.                                  |
