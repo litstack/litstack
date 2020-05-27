@@ -34,7 +34,7 @@ $form->group(function ($col) {
 
     $col->relation('department')
         ->title('Department');
-})->width(8);
+})->width(2 / 3);
 ```
 
 ![Fjord Interface](./example_form.png 'Fjord Interface')
