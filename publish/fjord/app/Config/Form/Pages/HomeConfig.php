@@ -53,7 +53,7 @@ class HomeConfig extends FormConfig
             $form->input('title')
                 ->title('Title');
 
-            $form->markdown(\Illuminate\Support\Facades\File::get(fjord_path('resources/docs/examples/form-loader-example.md')));
+            //$form->markdown(\Illuminate\Support\Facades\File::get(fjord_path('resources/docs/examples/form-loader-example.md')));
         });
     }
 }
