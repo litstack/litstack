@@ -25,12 +25,6 @@ class BuilderMacroSortTest extends BackendTestCase
         $this->migrate();
     }
 
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        m::close();
-    }
-
     /** @test */
     public function test_isRelatedColum_function()
     {

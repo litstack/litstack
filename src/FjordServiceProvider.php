@@ -235,10 +235,6 @@ class FjordServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../publish/database/migrations' => database_path('migrations'),
         ], 'migrations');
-
-        $this->publishes([
-            __DIR__ . '/../publish/routes' => base_path('routes'),
-        ], 'routes');
     }
 
     /**

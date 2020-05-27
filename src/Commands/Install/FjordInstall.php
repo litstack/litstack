@@ -21,7 +21,8 @@ class FjordInstall extends Command
      *
      * @var string
      */
-    protected $signature = 'fjord:install';
+    protected $signature = 'fjord:install 
+                            {--migrations= : Whether to publish migrations or not }';
 
     /**
      * The console command description.
@@ -56,7 +57,6 @@ class FjordInstall extends Command
         $this->info("    /___/                                                              ");
 
         $this->info("\n----- start -----\n");
-
         $this->vendorConfigs();
         $this->call('fjord:guard');
 
@@ -77,6 +77,9 @@ class FjordInstall extends Command
 
     public function defaultUser()
     {
+        if (config('app.env') == 'production') {
+            return;
+        }
         $user = FjordUser::firstOrCreate([
             'username' => 'admin',
             'email' => 'admin@admin.com',
@@ -106,6 +109,12 @@ class FjordInstall extends Command
         File::makeDirectory($path);
     }
 
+    public function migrations()
+    {
+        $migrations = $this->option('migrations');
+        return $migrations !== 'false' && $migrations !== false;
+    }
+
     /**
      * Publish Fjord config and assets
      *
@@ -114,9 +123,16 @@ class FjordInstall extends Command
     private function handleFjordPublishable()
     {
         $this->info('publishing fjord config & migrations');
+        if ($this->migrations()) {
+            $this->callSilent('vendor:publish', [
+                '--provider' => "Fjord\FjordServiceProvider",
+                '--tag' => "migrations"
+            ]);
+        }
 
         $this->callSilent('vendor:publish', [
-            '--provider' => "Fjord\FjordServiceProvider"
+            '--provider' => "Fjord\FjordServiceProvider",
+            '--tag' => "config"
         ]);
 
         // migrate tables
@@ -134,7 +150,7 @@ class FjordInstall extends Command
      */
     public function publishFjord()
     {
-        if (class_exists(\FjordApp\Kernel::class)) {
+        if (File::exists(base_path('fjord/app/Kernel.php'))) {
             return;
         }
         $this->info('publishing fjord');

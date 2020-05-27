@@ -2,60 +2,94 @@
 
 namespace FjordTest;
 
-use Fjord\Commands\FjordExtend;
-use ReflectionClass;
-use Fjord\FjordServiceProvider;
-use Fjord\Support\Facades\Fjord;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Artisan;
-use Orchestra\Testbench\TestCase as Orchestra;
-use Fjord\Fjord\Discover\PackageDiscoverCommand;
+use FjordTest\Traits\TestHelpers;
+use FjordTest\Traits\RefreshLaravel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\Dusk\TestCase as OrchestraDuskTestCase;
 
 class BackendTestCase extends OrchestraDuskTestCase
 {
-    use RefreshDatabase, FjordTestCase;
+    use RefreshDatabase, FjordTestCase, TestHelpers;
 
+    /**
+     * Setup the test environment.
+     *
+     * @return void
+     */
     public function setUp(): void
     {
         parent::setUp();
 
         // ...
+        $this->setUpTraits();
     }
 
     /**
-     * Pass thru all method except for the given names.
+     * Clean up the testing environment before the next test.
      *
-     * @param mock $mock
-     * @param mixed $class
-     * @param array $without
      * @return void
      */
-    protected function passthruAllExcept($mock, $class, array $without)
+    public function tearDown(): void
     {
-        $methods = get_class_methods($class);
-        foreach ($without as $method) {
-            unset($methods[array_search($method, $methods)]);
-        }
-        $mock->shouldReceive(...$methods)->passthru();
+        parent::tearDown();
+
+        $this->tearDownTraits();
+    }
+
+    public static function setUpBeforeClass(): void
+    {
+        self::setUpBeforeClassTraits();
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        self::tearDownAfterClassTraits();
     }
 
     /**
-     * Calling protected or private class method.
+     * Boot the testing helper traits.
      *
-     * @param mixed $instance
-     * @param string $method
-     * @param array $params
-     * @return mixed
+     * @return array
      */
-    protected function callUnaccessibleMethod($instance, string $method, array $params = [])
+    protected function setUpTraits()
     {
-        $class = get_class($instance);
-        $class = new ReflectionClass($class);
-        $method = $class->getMethod($method);
-        $method->setAccessible(true);
-        return $method->invokeArgs($instance, []);
+        parent::setUpTraits();
+
+        $uses = array_flip(class_uses_recursive(static::class));
+
+        if (isset($uses[RefreshLaravel::class])) {
+            $this->fixMigrations();
+        }
+    }
+
+
+
+    /**
+     * Boot the testing helper traits.
+     *
+     * @return array
+     */
+    protected function tearDownTraits()
+    {
+        //
+    }
+
+    protected static function setUpBeforeClassTraits()
+    {
+        $uses = array_flip(class_uses_recursive(static::class));
+
+        if (isset($uses[RefreshLaravel::class])) {
+            static::createLaravelBackup();
+        }
+    }
+
+    protected static function tearDownAfterClassTraits()
+    {
+        $uses = array_flip(class_uses_recursive(static::class));
+
+        if (isset($uses[RefreshLaravel::class])) {
+            static::refreshLaravel();
+        }
     }
 
     /**
@@ -68,12 +102,6 @@ class BackendTestCase extends OrchestraDuskTestCase
     {
     }
     public static function prepare()
-    {
-    }
-    public static function setUpBeforeClass(): void
-    {
-    }
-    public static function tearDownAfterClass(): void
     {
     }
 }
