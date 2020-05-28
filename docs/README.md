@@ -1,7 +1,7 @@
 ---
 home: true
 heroText: null
-heroImage: /logo.svg
+heroImage: /fjord-logo-padding.svg
 tagline: Powerful Admin Panel For Laravel
 actionText: Get Started →
 actionLink: /docs/getting-started/installation.html
