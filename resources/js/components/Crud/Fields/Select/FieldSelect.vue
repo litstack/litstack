@@ -1,13 +1,15 @@
 <template>
-    <fj-form-item :field="field" :model="model">
-        <template v-if="!field.readonly">
+    <fj-form-item :field="field" :model="model" v-slot:default="{ state }">
+        <b-input-group v-if="!field.readonly">
             <b-select
                 :value="value"
                 :options="field.options"
                 v-bind:readonly="field.readonly"
+                :state="state"
                 @input="changed"
             />
-        </template>
+        </b-input-group>
+
         <template v-else>
             <b-input class="form-control" :value="value" type="text" readonly />
         </template>

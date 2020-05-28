@@ -3,9 +3,12 @@
 namespace Fjord\Crud\Fields;
 
 use Fjord\Crud\Field;
+use Fjord\Crud\Fields\Concerns\FieldHasRules;
 
 class Select extends Field
 {
+    use FieldHasRules;
+
     /**
      * Field Vue component.
      *
@@ -32,7 +35,10 @@ class Select extends Field
         'title',
         'options',
         'hint',
-        'storable'
+        'storable',
+        'rules',
+        'updateRules',
+        'creationRules',
     ];
 
     /**
