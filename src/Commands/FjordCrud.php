@@ -77,19 +77,19 @@ class FjordCrud extends Command
 
         $step = 1;
         $this->info("\n----- finished -----\n");
-        $this->info("{$step}) edit the generated migration and migrate in {$migrationFileName}");
+        $this->line("<info>{$step}) Migration:</info> Edit the generated migration in<info> {$migrationFileName} </info>and migrate after.");
         $step++;
-        $this->info("{$step}) set the fillable fields in your model in app/Models/{$modelName}.php");
+        $this->line("<info>{$step}) Model:</info> Set the fillable fields in <info>app/Models/{$modelName}.php</info>");
         $step++;
         if ($t) {
-            $this->info("{$step}) set the fillable fields in your translation model in app/Models/Translations/{$modelName}Translation.php");
+            $this->line("<info>{$step}) Translation Model:</info> Set the fillable fields as well in <info>app/Models/Translations/{$modelName}Translation.php</info>");
             $step++;
         }
-        $this->info("{$step}) configure the crud-model in {$fjordConfigPath}Crud/{$modelName}Config.php");
+        $this->line("<info>{$step}) Config:</info> Configure the crud-model in <info>{$fjordConfigPath}Crud/{$modelName}Config.php</info>");
         $step++;
-        $this->info("{$step}) configure the authorization in fjord/app/Controllers/Crud/{$modelName}Controller.php");
+        $this->line("<info>{$step}) Controller:</info> configure the authorization in <info>fjord/app/Controllers/Crud/{$modelName}Controller.php</info>");
         $step++;
-        $this->info("{$step}) add a navigation entry in {$fjordConfigPath}NavigationConfig.php");
+        $this->line("<info>{$step}) Navigation:</info> add a navigation entry in <info>{$fjordConfigPath}NavigationConfig.php</info>");
     }
 
     private function makeModel($modelName, $m, $s, $t)
@@ -97,7 +97,7 @@ class FjordCrud extends Command
         $model = app_path('Models/' . $modelName . '.php');
 
         if (\File::exists($model)) {
-            $this->info('Model App\\Models\\' . $modelName . ' already exists.');
+            $this->line('Model App\\Models\\' . $modelName . ' already exists.');
             return;
         }
 
@@ -105,10 +105,6 @@ class FjordCrud extends Command
         $uses = ['TrackEdits'];
         $appends = [];
         $with = [];
-
-        if (file_exists($model)) {
-            $this->error('model already exists');
-        }
 
         $builder = new StubBuilder(fjord_path('stubs/CrudModel.stub'));
 
@@ -189,7 +185,7 @@ class FjordCrud extends Command
         $model = app_path('Models/Translations/' . $modelName . 'Translation.php');
 
         if (\File::exists($model)) {
-            $this->info("Translation Model already exists.");
+            $this->line("Translation Model already exists.");
             return;
         }
 
@@ -234,10 +230,12 @@ class FjordCrud extends Command
 
         $files = scandir(base_path('database/migrations'));
         $migrationName = 'create_' . $tableName . '_table.php';
+        $timestamp = str_replace(' ', '_', str_replace('-', '_', str_replace(':', '', now())));
+        $migrationFileName = "database/migrations/{$timestamp}_create_{$tableName}_table.php";
         foreach ($files as $file) {
             if (Str::endsWith($file, $migrationName)) {
-                $this->info('Migration for ' . $tableName . ' already exists.');
-                return;
+                $this->line('Migration for ' . $tableName . ' already exists.');
+                return $migrationFileName;
             }
         }
 
@@ -266,8 +264,8 @@ class FjordCrud extends Command
         $fileContents = str_replace('DummyClassname', "Create" . ucfirst(Str::plural($modelName)) . "Table", $fileContents);
         $fileContents = str_replace('DummyTablename', $tableName, $fileContents);
 
-        $timestamp = str_replace(' ', '_', str_replace('-', '_', str_replace(':', '', now())));
-        $migrationFileName = "database/migrations/{$timestamp}_create_{$tableName}_table.php";
+
+
         if (\File::put($migrationFileName, $fileContents)) {
             $this->info('migration created');
         }
@@ -282,7 +280,7 @@ class FjordCrud extends Command
         $controllerPath = base_path('fjord/app/Controllers/Crud/' . $modelName . 'Controller.php');
 
         if (\File::exists($controllerPath)) {
-            $this->info("Controller {$modelName}Controller already exists.");
+            $this->line("Controller {$modelName}Controller already exists.");
             return;
         }
 
@@ -296,7 +294,7 @@ class FjordCrud extends Command
             \File::makeDirectory(base_path('fjord/app/Controllers/Crud'));
         }
         if (\File::put($controllerPath, $fileContents)) {
-            $this->info('controller created');
+            $this->line('Controller created.');
         }
     }
 
@@ -307,7 +305,7 @@ class FjordCrud extends Command
 
         $name = ucfirst($modelName);
         if (\File::exists($config)) {
-            $this->info("Controller {$name}Controller already exists.");
+            $this->line("Controller {$name}Controller already exists.");
             return;
         }
 
