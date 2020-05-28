@@ -60,6 +60,7 @@ class Translator
      * Get choice translation for Fjord application.
      *
      * @param string $key
+     * @param \Countable|int|array $number
      * @param array $replace
      * @return string
      */

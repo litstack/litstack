@@ -4,7 +4,7 @@
 
 ## Setup
 
-An existing Laravel project is required to install Fjord. In addition, an existing database connection is required.
+An existing Laravel project is required to install Fjord. As well a database connection is also required.
 
 ## Requirements
 

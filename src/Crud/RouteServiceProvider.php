@@ -120,7 +120,9 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
         $this->package->addNavPreset("crud.{$name}", [
             'link' => $link,
-            'title' => ucfirst($config->names['plural']),
+            'title' => function () use ($config) {
+                return ucfirst($config->names['plural']);
+            },
             'authorize' => function (FjordUser $user) use ($config) {
                 return (new $config->controller)->authorize($user, 'read');
             }
@@ -178,7 +180,9 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
         $this->package->addNavPreset("{$config->collection}.{$config->formName}", [
             'link' => $link,
-            'title' => ucfirst($config->names['singular']),
+            'title' => function () use ($config) {
+                return ucfirst($config->names['singular']);
+            },
             'authorize' => function (FjordUser $user) use ($config) {
                 return (new $config->controller)->authorize($user, 'read');
             }
