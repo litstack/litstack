@@ -44,7 +44,7 @@ To crop the image to a desired ratio when uploading it, a crop-ratio in crop can
 ```php{3}
 $form->image('images') // images is the corresponding media collection.
     ->title('Images')
-    ->crop(16 / 9)
+    ->crop(16 / 9);
 ```
 
 ## Expand
@@ -69,7 +69,7 @@ For the case that the first image from the list should be used as a preview imag
 $form->image('images') // images is the corresponding media collection.
     ->title('Images')
     ->firstBig()
-    ->hint('The first image is the preview image.')
+    ->hint('The first image is the preview image.');
 ```
 
 ![Image firstBig](./screens/image/first_big.png 'Image firstBig')
