@@ -1,5 +1,10 @@
 <template>
-    <fj-form-item :field="field" :model="model" v-slot:default="{ state }">
+    <fj-form-item
+        :field="field"
+        :model="model"
+        v-slot:default="{ state }"
+        v-on="$listeners"
+    >
         <b-input-group v-if="!field.readonly">
             <b-select
                 :value="value"
