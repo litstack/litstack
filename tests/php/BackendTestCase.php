@@ -4,6 +4,7 @@ namespace FjordTest;
 
 use FjordTest\Traits\TestHelpers;
 use FjordTest\Traits\RefreshLaravel;
+use FjordTest\Traits\CreateFjordUsers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\Dusk\TestCase as OrchestraDuskTestCase;
 
@@ -44,52 +45,6 @@ class BackendTestCase extends OrchestraDuskTestCase
     public static function tearDownAfterClass(): void
     {
         self::tearDownAfterClassTraits();
-    }
-
-    /**
-     * Boot the testing helper traits.
-     *
-     * @return array
-     */
-    protected function setUpTraits()
-    {
-        parent::setUpTraits();
-
-        $uses = array_flip(class_uses_recursive(static::class));
-
-        if (isset($uses[RefreshLaravel::class])) {
-            $this->fixMigrations();
-        }
-    }
-
-
-
-    /**
-     * Boot the testing helper traits.
-     *
-     * @return array
-     */
-    protected function tearDownTraits()
-    {
-        //
-    }
-
-    protected static function setUpBeforeClassTraits()
-    {
-        $uses = array_flip(class_uses_recursive(static::class));
-
-        if (isset($uses[RefreshLaravel::class])) {
-            static::createLaravelBackup();
-        }
-    }
-
-    protected static function tearDownAfterClassTraits()
-    {
-        $uses = array_flip(class_uses_recursive(static::class));
-
-        if (isset($uses[RefreshLaravel::class])) {
-            static::refreshLaravel();
-        }
     }
 
     /**

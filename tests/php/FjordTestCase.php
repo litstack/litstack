@@ -3,7 +3,9 @@
 namespace FjordTest;
 
 use Fjord\Support\Facades\Fjord;
+use FjordTest\Traits\RefreshLaravel;
 use Illuminate\Support\Facades\File;
+use FjordTest\Traits\CreateFjordUsers;
 use Illuminate\Support\Facades\Artisan;
 use Fjord\Fjord\Discover\PackageDiscoverCommand;
 
@@ -21,6 +23,54 @@ trait FjordTestCase
         \Astrotomic\Translatable\TranslatableServiceProvider::class,
         \Fjord\FjordServiceProvider::class
     ];
+
+    /**
+     * Boot the testing helper traits.
+     *
+     * @return array
+     */
+    protected function setUpTraits()
+    {
+        parent::setUpTraits();
+
+        $uses = array_flip(class_uses_recursive(static::class));
+
+        if (isset($uses[RefreshLaravel::class])) {
+            $this->fixMigrations();
+        }
+        if (isset($uses[CreateFjordUsers::class])) {
+            $this->createFjordUsers();
+        }
+    }
+
+    /**
+     * Boot the testing helper traits.
+     *
+     * @return array
+     */
+    protected function tearDownTraits()
+    {
+        //
+    }
+
+    protected static function setUpBeforeClassTraits()
+    {
+        $uses = array_flip(class_uses_recursive(static::class));
+
+        if (isset($uses[RefreshLaravel::class])) {
+            static::createLaravelBackup();
+        }
+    }
+
+    protected static function tearDownAfterClassTraits()
+    {
+        $uses = array_flip(class_uses_recursive(static::class));
+
+        if (isset($uses[RefreshLaravel::class])) {
+            static::refreshLaravel();
+        }
+    }
+
 
     /**
      * Migrate dummy tables.

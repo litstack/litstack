@@ -2,7 +2,7 @@
 home: true
 heroText: null
 heroImage: /logo.svg
-tagline: Powerful Admin Panel For Laravel
+tagline: Beautiful Content Administration
 actionText: Get Started →
 actionLink: /docs/getting-started/installation.html
 

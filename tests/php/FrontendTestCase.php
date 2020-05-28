@@ -47,6 +47,20 @@ class FrontendTestCase extends OrchestraDuskTestCase
         };
 
         $this->migrate();
+
+        $this->setUpTraits();
+    }
+
+    /**
+     * Clean up the testing environment before the next test.
+     *
+     * @return void
+     */
+    public function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->tearDownTraits();
     }
 
     /**
@@ -141,6 +155,7 @@ class FrontendTestCase extends OrchestraDuskTestCase
     public static function setUpBeforeClass(): void
     {
         static::serve(static::$baseServeHost, static::$baseServePort);
+        self::setUpBeforeClassTraits();
     }
 
     /**
@@ -151,5 +166,6 @@ class FrontendTestCase extends OrchestraDuskTestCase
     public static function tearDownAfterClass(): void
     {
         static::stopServing();
+        self::tearDownAfterClassTraits();
     }
 }
