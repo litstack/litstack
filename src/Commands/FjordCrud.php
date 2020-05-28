@@ -294,7 +294,7 @@ class FjordCrud extends Command
             \File::makeDirectory(base_path('fjord/app/Controllers/Crud'));
         }
         if (\File::put($controllerPath, $fileContents)) {
-            $this->line('Controller created.');
+            $this->info('Controller created.');
         }
     }
 
