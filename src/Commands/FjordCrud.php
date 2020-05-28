@@ -111,8 +111,7 @@ class FjordCrud extends Command
 
         // model has media
         if ($m) {
-            $builder->withTraits("use Spatie\MediaLibrary\Models\Media;");
-            $builder->withTraits("use Spatie\MediaLibrary\HasMedia\HasMedia as HasMediaContract;");
+            $builder->withTraits("use Spatie\MediaLibrary\HasMedia as HasMediaContract;");
             $builder->withTraits("use Fjord\Crud\Models\Traits\HasMedia;");
 
             $attributeContents = file_get_contents(fjord_path('stubs/CrudModelMediaAttribute.stub'));
