@@ -18,7 +18,7 @@ A wizard will take you through all required steps. The corresponding `config` an
 
 ## Permissions
 
-Now you need to specify a `permission` `group` in the `_make_form_permissions` `migration`. You can create a `permission` `group` for each form or only for each collection. For example, for the collection `pages` in which all forms for the static pages of a website are located, you can create a `group` for all pages or for each individual form.
+Now you need to specify a **permission group** in the `_make_form_permissions` migration. You can create a **permission group** for each form or only for each collection. For example, for the collection `pages` in which all forms for the static pages of a website are located, you can create a **group** for all pages or for each individual form.
 
 The permissions `read {group}` and `update {group}` are created for all groups that are specified.
 

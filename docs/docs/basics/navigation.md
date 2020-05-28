@@ -23,7 +23,7 @@ class NavigationConfig extends Config
 
 ## Structure
 
-The navigation structure is defined in an array. Simple entries, group titles and nested entries can be created. All entries are grouped in sections like so:
+The navigation structure is defined in an array. Simple entries, group titles and nested entries can be created. All entries are grouped within sections like so:
 
 ```php
 $nav->section([
@@ -37,18 +37,18 @@ $nav->section([
 
 ### Entry
 
-Simple entries have a `title` and a `link`, the Main-Navigation can have an additional `icon`.
+Simple entries have a `title`, a `link`, and an `icon`. The [Font Awesome](https://fontawesome.com/icons?d=gallery&m=free) icons are included by default.
 
 ```php
 $nav->entry('Home', [
     'link' => route('your.route'), // Route
-    'icon' => '<i class="fas fa-home"></i>' // Fontawesome Icon
+    'icon' => '<i class="fas fa-home"></i>' // Font Awesome icon
 ])
 ```
 
 ### Groups
 
-Groups create nested navigation entries. However, only one level is allowed. This default is there to keep the menus clear.
+Create nested navigation entries in groups.
 
 ```php
 $nav->group([
@@ -64,13 +64,13 @@ $nav->group([
 
 ## Authorization
 
-To hide navigation entries from users without the necessary permission, an `authorize` closure can be specified in which permissions for the logged in fjord user can be queried.
+To hide navigation entries from users without the necessary permission, an `authorize` closure can be specified in which permissions for the logged in Fjord user can be queried.
 
 ```php
 use Fjord\User\Models\FjordUser;
 
 $nav->entry('Home', [
-    ...
+    // ...
     'authorize' => function(FjordUser $user) {
         return $user->can('read page-home');
     }
@@ -80,7 +80,7 @@ $nav->entry('Home', [
 
 ## Presets
 
-To build navigation entries for e.g. Crud models you can use navigation presets in which the corresponding `route` and `authorization` has already been defined. This is useful in most cases, especially to keep the correct `authorization`. To edit the entry further you can specify an array with the navigation entry elements as second parameter.
+To build navigation entries for example for Crud models you can use navigation presets in which the corresponding `route` and `authorization` has already been defined. This is useful in most cases, especially to keep the correct `authorization`. To edit the entry further you can specify an array with the navigation entry elements as second parameter.
 
 ```php
 $nav->preset('crud.departments', [

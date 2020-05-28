@@ -2,7 +2,7 @@
 
 [[toc]]
 
-The main component of an admin panel is to manage data. Fjord offers the possibility to make [Laravel Eloquent Models](https://laravel.com/docs/7.x/eloquent) editable and manageable. For a clear administration of models, a suitable `index` table and the corresponding `create` and `update` form is needed. Fjord also comes with powerfull open source packages to make models `translatable` and `sluggable` and to attach `media`. The following packages are used for this
+The main component of an admin panel is to manage data. Fjord offers the possibility to make [Laravel Eloquent Models](https://laravel.com/docs/7.x/eloquent) editable and manageable. For a clear administration of models, a suitable `index` table and the corresponding `create` and `update` form is needed. Fjord also comes with powerfull open source packages to make models `translatable`, `sluggable` and to attach `media`. The following packages are used for this
 
 -   [Astronomic Translatable](https://docs.astrotomic.info/laravel-translatable/)
 -   [Spatie Medialibrary](https://docs.spatie.be/laravel-medialibrary/v8/introduction/)
@@ -79,7 +79,13 @@ class PostTranslation extends Model
 
 ## Create
 
-A CRUD-Model can be created using the following artisan command:
+In order to create your index table and update & edit form three things are needed.
+
+-   Model
+-   Controller
+-   Config
+
+They can be created all at once using the following artisan command
 
 ```shell
 php artisan fjord:crud
@@ -88,14 +94,14 @@ php artisan fjord:crud
 A wizard will take you through all required steps for setting up da fresh CRUD-Model.
 
 ::: tip
-If a Model already exists, it wont be changed. Only the configuration file and the controller will be created. This allows existing models to be made editable using `fjord:crud` as well.
+If a Model already exists, it wont be changed. Only the configuration file and the controller will be created. This allows **existing** models to be made editable using `fjord:crud` as well.
 :::
 
 ## Migrate
 
 Edit the newly created migration and add all table fields you need. For the translation of models [laravel-translatable](https://docs.astrotomic.info/laravel-translatable/installation#migrations) from `astronomic` is used. Pay attention to translatable and non-translatable fields.
 
-In the migration the permissions for the corresponding model are created in the `permissions` array. It can happen that the permissions are used by another model. For example, it makes sense not to give extra permissions for `article_states` but to use the permissions from permission. In this case the array can simply be left empty.
+In the migration all **permissions** for the corresponding model are created in the `permissions` array. It can happen that the permissions are used by another model. For example, it makes sense not to give extra permissions for `article_states` but to use the permissions from permission. In this case the array can simply be left empty.
 
 ```php
 class CreateArticlesTable extends Migration
@@ -139,7 +145,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model implements HasMediaContract, TranslatableContract
 {
-    use TrackEdits, InteractsWithMedia, Translatable;
+    use TrackEdits, HasMedia, Translatable;
 
     /**
      * Setup Model:

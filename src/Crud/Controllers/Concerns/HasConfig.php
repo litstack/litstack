@@ -37,6 +37,10 @@ trait HasConfig
      */
     public function loadConfig()
     {
-        return Request::route()->getConfig();
+        if (!$route = Request::route()) {
+            return;
+        }
+
+        return $route->getConfig();
     }
 }
