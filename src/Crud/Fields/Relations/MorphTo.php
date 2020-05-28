@@ -44,7 +44,7 @@ class MorphTo extends OneRelationField
         'model',
         'hint',
         'form',
-        'previewQuery',
+        'query',
         'preview',
         'confirm',
         'filter',

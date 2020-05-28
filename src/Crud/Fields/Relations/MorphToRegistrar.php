@@ -39,7 +39,7 @@ class MorphToRegistrar extends OneRelationField
         'model',
         'hint',
         'form',
-        'previewQuery',
+        'query',
         'preview',
         'confirm',
         'filter',

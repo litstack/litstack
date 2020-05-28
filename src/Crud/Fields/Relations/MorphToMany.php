@@ -38,7 +38,7 @@ class MorphToMany extends ManyRelationField
         'model',
         'form',
         'hint',
-        'previewQuery',
+        'query',
         'preview',
         'confirm',
         'sortable',

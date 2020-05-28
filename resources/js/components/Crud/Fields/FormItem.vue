@@ -111,7 +111,7 @@ export default {
             );
 
             if (!result) {
-                return;
+                return this.resetErrors();
             }
 
             if (!result.isAxiosError) {

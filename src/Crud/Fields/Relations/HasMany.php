@@ -38,7 +38,7 @@ class HasMany extends ManyRelationField
         'model',
         'form',
         'hint',
-        'previewQuery',
+        'query',
         'preview',
         'confirm',
         'sortable',

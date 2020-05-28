@@ -39,7 +39,7 @@ class OneRelation extends OneRelationField
         'model',
         'form',
         'hint',
-        'previewQuery',
+        'query',
         'preview',
         'confirm',
         'filter',
