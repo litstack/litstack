@@ -68,18 +68,28 @@ class FjordCrud extends Command
             $t = $this->choice('is the model translatable?', ['y', 'n'], 0) == 'y' ? true : false;
         }
 
-        $this->makeModel($modelName, $m, $s, $t);
-        $this->makeMigration($modelName, $s, $t);
+        $translationModelPath = $this->makeModel($modelName, $m, $s, $t);
+        $migrationFileName = $this->makeMigration($modelName, $s, $t);
         $this->makeController($modelName);
         $this->makeConfig($modelName);
 
         $fjordConfigPath = 'fjord/app/Config/';
 
+        $step = 1;
         $this->info("\n----- finished -----\n");
-        $this->info('1) edit the generated migration and migrate');
-        $this->info('2) set the fillable fields in your model' . ($t ? ' and in your translation model' : ''));
-        $this->info('3) configure the crud-model in ' . $fjordConfigPath . 'Crud/' . $modelName . 'Config.php');
-        $this->info('4) add a navigation entry in ' . $fjordConfigPath . 'NavigationConfig.php');
+        $this->info("{$step}) edit the generated migration and migrate in {$migrationFileName}");
+        $step++;
+        $this->info("{$step}) set the fillable fields in your model in app/Models/{$modelName}.php");
+        $step++;
+        if ($t) {
+            $this->info("{$step}) set the fillable fields in your translation model in app/Models/Translations/{$modelName}Translation.php");
+            $step++;
+        }
+        $this->info("{$step}) configure the crud-model in {$fjordConfigPath}Crud/{$modelName}Config.php");
+        $step++;
+        $this->info("{$step}) configure the authorization in fjord/app/Controllers/Crud/{$modelName}Controller.php");
+        $step++;
+        $this->info("{$step}) add a navigation entry in {$fjordConfigPath}NavigationConfig.php");
     }
 
     private function makeModel($modelName, $m, $s, $t)
@@ -257,9 +267,12 @@ class FjordCrud extends Command
         $fileContents = str_replace('DummyTablename', $tableName, $fileContents);
 
         $timestamp = str_replace(' ', '_', str_replace('-', '_', str_replace(':', '', now())));
-        if (\File::put('database/migrations/' . $timestamp . '_create_' . $tableName . '_table.php', $fileContents)) {
+        $migrationFileName = "database/migrations/{$timestamp}_create_{$tableName}_table.php";
+        if (\File::put($migrationFileName, $fileContents)) {
             $this->info('migration created');
         }
+
+        return $migrationFileName;
     }
 
     private function makeController($modelName)
