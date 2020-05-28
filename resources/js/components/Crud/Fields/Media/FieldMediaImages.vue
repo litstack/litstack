@@ -3,7 +3,7 @@
         v-model="sortable"
         :class="{
             'fj-image-list': true,
-            'fj-image-list__preserve': !field.square,
+            'fj-image-list__preserve': field.expand,
             'mb-4': field.readonly || images.length == 0
         }"
         v-bind:disabled="field.readonly"

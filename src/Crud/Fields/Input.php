@@ -55,9 +55,7 @@ class Input extends Field
      *
      * @var array
      */
-    protected $defaults = [
-        'max' => 60,
-    ];
+    protected $defaults = [];
 
     /**
      * Cast field value.

@@ -46,7 +46,7 @@ class Image extends MediaField
         'firstBig',
         'sortable',
         'showFullImage',
-        'square'
+        'expand'
     ];
 
     /**
@@ -62,7 +62,7 @@ class Image extends MediaField
         'firstBig' => false,
         'sortable' => true,
         'showFullImage' => false,
-        'square' => true
+        'expand' => false
     ];
 
 
