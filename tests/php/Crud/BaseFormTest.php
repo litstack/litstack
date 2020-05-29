@@ -2,12 +2,14 @@
 
 namespace FjordTest\Crud;
 
+use Mockery as m;
+use Fjord\Crud\Field;
 use Fjord\Crud\BaseForm;
+use Fjord\Vue\Component;
 use FjordTest\BackendTestCase;
 use Fjord\Support\Facades\Fjord;
 use Illuminate\Database\Eloquent\Model;
 use Fjord\Exceptions\MethodNotFoundException;
-use Fjord\Vue\Component;
 
 class BaseFormTest extends BackendTestCase
 {
@@ -83,8 +85,8 @@ class BaseFormTest extends BackendTestCase
     public function it_appends_fields_to_wrapper()
     {
         $this->form->wrapper('dummy-wrapper', function ($form) {
-            $form->input('dummy-field')->title('dummy-title');
-            $form->input('other-field')->title('dummy-title');
+            $form->registerField(DummyBaseFormFieldMock::class, 'dummy-field');
+            $form->registerField(DummyBaseFormFieldMock::class, 'other-field');
 
             $children = $form->getWrapper()->children;
             $this->assertCount(2, $children);
@@ -96,8 +98,8 @@ class BaseFormTest extends BackendTestCase
     /** @test */
     public function it_returns_registered_fields()
     {
-        $this->form->input('dummy-field')->title('dummy-title');
-        $this->form->input('other-field')->title('dummy-title');
+        $this->form->registerField(DummyBaseFormFieldMock::class, 'dummy-field');
+        $this->form->registerField(DummyBaseFormFieldMock::class, 'other-field');
 
         $fields = $this->form->getRegisteredFields();
         $this->assertEquals(2, $fields->count());
@@ -108,10 +110,10 @@ class BaseFormTest extends BackendTestCase
     /** @test */
     public function it_returns_wrapped_registered_fields()
     {
-        $this->form->input('dummy-field')->title('dummy-title');
+        $this->form->registerField(DummyBaseFormFieldMock::class, 'dummy-field');
 
         $this->form->wrapper('dummy-wrapper', function ($form) {
-            $form->input('wrapped-field')->title('dummy-title');
+            $this->form->registerField(DummyBaseFormFieldMock::class, 'wrapped-field');
         });
 
         $fields = $this->form->getRegisteredFields();
@@ -124,8 +126,9 @@ class BaseFormTest extends BackendTestCase
     /** @test */
     public function findField_finds_field_by_id()
     {
-        $this->form->input('dummy-field')->title('dummy-title');
-        $this->form->input('other-field')->title('dummy-title');
+        $this->form->registerField(DummyBaseFormFieldMock::class, 'dummy-field');
+        $this->form->registerField(DummyBaseFormFieldMock::class, 'other-field');
+
 
         $field = $this->form->findField('dummy-field');
         $this->assertEquals('dummy-field', $field->id);
@@ -134,22 +137,23 @@ class BaseFormTest extends BackendTestCase
     }
 
     /** @test */
-    public function checking_registrar_before_new_field()
+    public function checking_registrar_before_registering_new_field()
     {
-        $this->form->input('dummy-field');
+        // Assuming checkComplete is called on field instance in registrar when registering new field.
+        $field = m::mock('field');
+        $field->shouldReceive('checkComplete')->once();
+        $this->setUnaccessibleProperty($this->form, 'registrar', $field);
 
-        // Expecting expcetion since title attribute is missing for previous field.
-        $this->expectException(\Throwable::class);
-        $this->form->input('other-field');
+        $this->form->registerField(DummyBaseFormFieldMock::class, 'new-field');
     }
 
     /** @test */
     public function checking_registrar_before_passing_to_vue()
     {
-        $this->form->input('dummy-field');
+        $field = m::mock('field');
+        $field->shouldReceive('checkComplete')->once();
+        $this->setUnaccessibleProperty($this->form, 'registrar', $field);
 
-        // Expecting expcetion since title attribute is missing for previous field.
-        $this->expectException(\Throwable::class);
         $this->form->toJson();
     }
 }
@@ -164,4 +168,8 @@ class DummyModel extends Model
     {
         return $this->hasOne(RelatedDummyModel::class);
     }
+}
+
+class DummyBaseFormFieldMock extends Field
+{
 }

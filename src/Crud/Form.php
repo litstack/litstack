@@ -5,8 +5,10 @@ namespace Fjord\Crud;
 use Fjord\Crud\Models\FormField;
 use Illuminate\Support\Collection;
 
-class FormLoader
+class Form
 {
+    protected $extensions = [];
+
     /**
      * Load FormField entries from database by collection name and|or for
      * form_name. If the collection name or the form_name was not set a group is
@@ -88,5 +90,39 @@ class FormLoader
         }
 
         return $items;
+    }
+
+    /**
+     * Extend field.
+     *
+     * @param string $extension
+     * @param string|array $field
+     * @return void
+     */
+    public function extendField(string $extension, $field)
+    {
+        $this->extensions[$extension] = is_array($field) ? $field : [$field];
+    }
+
+    /**
+     * Get field extensions.
+     *
+     * @param mixed $field
+     * @return array
+     */
+    public function getFieldExtensions($field)
+    {
+        $extensions = [];
+        foreach ($this->extensions as $extension => $fields) {
+            foreach ($fields as $fieldClass) {
+                if (!$field instanceof $fieldClass) {
+                    continue;
+                }
+
+                $extensions[] = $extension;
+            }
+        }
+
+        return $extensions;
     }
 }

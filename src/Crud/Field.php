@@ -5,18 +5,17 @@ namespace Fjord\Crud;
 use Closure;
 use Exception;
 use Fjord\Support\VueProp;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
-use Fjord\Crud\Models\FormField;
+use Fjord\Support\Facades\Form;
+use Illuminate\Support\Traits\ForwardsCalls;
 use Fjord\Exceptions\MethodNotFoundException;
+use Fjord\Crud\Exceptions\MissingAttributeException;
 
 class Field extends VueProp
 {
-    /**
-     * Is field translatable.
-     *
-     * @var boolean
-     */
-    protected $translatable = false;
+    use ForwardsCalls;
 
     /**
      * Model class
@@ -54,6 +53,15 @@ class Field extends VueProp
     protected $props = [];
 
     /**
+     * Available slots.
+     *
+     * @var array
+     */
+    protected $availableSlots = [
+        'title',
+    ];
+
+    /**
      * Required attributes.
      *
      * @var array
@@ -63,13 +71,11 @@ class Field extends VueProp
     ];
 
     /**
-     * Available slots.
+     * Required attributes.
      *
      * @var array
      */
-    protected $availableSlots = [
-        'title',
-    ];
+    public $requiredAttributes = [];
 
     /**
      * Available field attributes.
@@ -85,6 +91,13 @@ class Field extends VueProp
     ];
 
     /**
+     * Available field attributes.
+     *
+     * @var array
+     */
+    public $availableAttributes = [];
+
+    /**
      * Default Field attributes.
      *
      * @var array
@@ -94,6 +107,24 @@ class Field extends VueProp
         'width' => 12,
         'slots' => [],
         'class' => ''
+    ];
+
+    /**
+     * Default field attributes.
+     *
+     * @var array
+     */
+    public $defaultAttributes = [];
+
+    /**
+     * Properties that should be merged from traits or extensions.
+     *
+     * @var array
+     */
+    protected $mergeProperties = [
+        'defaultAttributes',
+        'availableAttributes',
+        'requiredAttributes'
     ];
 
     /**
@@ -111,6 +142,13 @@ class Field extends VueProp
     public $fill = true;
 
     /**
+     * Extensions
+     *
+     * @var array
+     */
+    public $extensions = [];
+
+    /**
      * Create new Field instance.
      *
      * @param string $id
@@ -120,41 +158,30 @@ class Field extends VueProp
      */
     public function __construct(string $id, string $model, $routePrefix, $form)
     {
-        // Merge available, default and required properties of parent and child class.
-        if (static::class != self::class) {
-            $parent = new self($id, $model, $routePrefix, $form);
-            $this->available = array_merge(
-                $parent->getAvailableAttributes(),
-                $this->available,
-            );
-            $this->defaults = array_merge(
-                $parent->getDefaults(),
-                $this->defaults,
-            );
-            $this->availableSlots = array_merge(
-                $parent->getAvailableSlots(),
-                $this->availableSlots,
-            );
-            $this->required = array_merge(
-                $parent->getRequiredAttributes(),
-                $this->required,
-            );
-        } else {
-            return;
-        }
-
         $this->attributes['id'] = $id;
         $this->attributes['local_key'] = $id;
         $this->attributes['route_prefix'] = $routePrefix;
         $this->model = $model;
         $this->form = $form;
 
-        if ($this->translatable) {
-            $this->available[] = 'translatable';
+        foreach (Form::getFieldExtensions($this) as $extensionClass) {
+            $this->extensions[] = new $extensionClass($this);
         }
+        $this->mergeExtensionProperties();
+        $this->mergeTraitProperties();
 
-        $this->setDefaults();
+        $this->setDefaultAttributes();
         $this->attributes['component'] = $this->component;
+    }
+
+    /**
+     * Get extensions.
+     *
+     * @return array
+     */
+    public function getExtensions()
+    {
+        return $this->extensions;
     }
 
     /**
@@ -257,7 +284,7 @@ class Field extends VueProp
     public function checkComplete()
     {
         $missing = [];
-        foreach ($this->required as $prop) {
+        foreach ($this->requiredAttributes as $prop) {
             if (array_key_exists($prop, $this->attributes)) {
                 continue;
             }
@@ -269,7 +296,7 @@ class Field extends VueProp
             return true;
         }
 
-        throw new Exception(sprintf(
+        throw new MissingAttributeException(sprintf(
             'Missing required attributes: [%s] for %s field "%s"',
             implode(', ', $missing),
             lcfirst(last(explode('\\', static::class))),
@@ -340,33 +367,65 @@ class Field extends VueProp
      *
      * @return void
      */
-    protected function setDefaults()
+    protected function setDefaultAttributes()
     {
-        foreach ($this->defaults as $name => $value) {
-            $this->attributes[$name] = $value;
+        foreach ($this->defaultAttributes as $name => $value) {
+            $this->setAttribute($name, $value);
         }
 
-        $this->setTranslatable();
+        foreach (get_class_methods($this) as $method) {
+            if ($method == 'setAttribute') {
+                continue;
+            }
+            if (!Str::startsWith($method, 'set')) {
+                continue;
+            }
+            if (!Str::endsWith($method, 'Attribute')) {
+                continue;
+            }
+
+            $this->setAttribute(
+                $this->getSetterAttributeName($method),
+                call_user_func_array([$this, $method], [])
+            );
+        }
     }
 
     /**
-     * Translatable.
+     * Remove available attribute.
      *
+     * @param string $attribute
      * @return void
      */
-    public function setTranslatable()
+    public function removeAvailableAttribute(string $attribute)
     {
-        // Translatable
-        $this->attributes['translatable'] = false;
-
-        if (!$this->translatable) {
-            return;
+        if (($key = array_search($attribute, $this->availableAttributes)) !== false) {
+            unset($this->availableAttributes[$key]);
         }
-        if (!is_translatable($this->model)) {
-            return;
-        }
+    }
 
-        $this->attributes['translatable'] = in_array($this->id, (new $this->model)->translatedAttributes);
+    /**
+     * Get attribute name from setter method name.
+     * 
+     * setNameAttribute => name
+     * setCamelCaseAttribute => camelCase
+     *
+     * @param string $method
+     * @return string
+     */
+    protected function getSetterAttributeName(string $method)
+    {
+        return lcfirst(
+            Str::replaceLast(
+                'Attribute',
+                '',
+                Str::replaceFirst(
+                    'set',
+                    '',
+                    $method
+                )
+            )
+        );
     }
 
     /**
@@ -394,18 +453,16 @@ class Field extends VueProp
      * @param  string  $method
      * @return void
      *
-     * @throws \Fjord\Exceptions\FieldMethodNotFoundException
+     * @throws \Fjord\Exceptions\MethodNotFoundException
      */
     protected function methodNotFound($method)
     {
-        $allowed = $this->getAllowedMethods();
-
         throw new MethodNotFoundException(
             sprintf(
-                'The %s method is not found for the %s field. Supported methods: %s.',
+                'The %s method is not found for the %s field. Available field attributes: %s.',
                 $method,
                 class_basename(static::class),
-                implode(', ', $allowed)
+                implode(', ', $this->availableAttributes)
             ),
             [
                 'function' => '__call',
@@ -414,15 +471,6 @@ class Field extends VueProp
         );
     }
 
-    /**
-     * Get list of allowed methods for field.
-     *
-     * @return array
-     */
-    protected function getAllowedMethods()
-    {
-        return array_merge($this->available, ['authorize']);
-    }
 
     /**
      * Get avaliable attributes.
@@ -431,7 +479,17 @@ class Field extends VueProp
      */
     public function getAvailableAttributes()
     {
-        return $this->available;
+        return $this->availableAttributes;
+    }
+
+    /**
+     * Get attributes.
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
     }
 
     /**
@@ -451,7 +509,57 @@ class Field extends VueProp
      */
     public function getRequiredAttributes()
     {
-        return $this->required;
+        return $this->requiredAttributes;
+    }
+
+    /**
+     * Merge properties from extensions.
+     *
+     * @return void
+     */
+    protected function mergeExtensionProperties()
+    {
+        foreach ($this->mergeProperties as $property) {
+            foreach ($this->extensions as $extension) {
+                if (!property_exists($extension, $property)) {
+                    continue;
+                }
+
+                $this->{$property} = array_merge(
+                    $this->{$property},
+                    $extension->{$property}
+                );
+            }
+        }
+    }
+
+    /**
+     * Merge properties from traits.
+     *
+     * @return void
+     */
+    protected function mergeTraitProperties()
+    {
+        foreach (array_keys(get_object_vars($this)) as $property) {
+            if (Str::startsWith($property, 'available') && Str::endsWith($property, 'Attributes')) {
+                $this->availableAttributes = array_merge(
+                    $this->availableAttributes,
+                    $this->{$property}
+                );
+            }
+            if (Str::startsWith($property, 'required') && Str::endsWith($property, 'Attributes')) {
+                $this->requiredAttributes = array_merge(
+                    $this->requiredAttributes,
+                    $this->{$property}
+                );
+            }
+            if (Str::startsWith($property, 'default') && Str::endsWith($property, 'Attributes')) {
+                $this->defaultAttributes = array_merge(
+                    $this->defaultAttributes,
+                    $this->{$property}
+                );
+            }
+        }
     }
 
     /**
@@ -459,9 +567,9 @@ class Field extends VueProp
      *
      * @return array
      */
-    public function getDefaults()
+    public function getDefaultAttributes()
     {
-        return $this->defaults;
+        return $this->defaultAttributes;
     }
 
     /**
@@ -494,6 +602,17 @@ class Field extends VueProp
     }
 
     /**
+     * Check if attribute is available.
+     *
+     * @param string $attribute
+     * @return boolean
+     */
+    public function isAttributeAvailable(string $attribute)
+    {
+        return in_array($attribute, $this->availableAttributes);
+    }
+
+    /**
      * Call field method.
      *
      * @param string $method
@@ -504,8 +623,14 @@ class Field extends VueProp
      */
     public function __call($method, $params = [])
     {
-        if (in_array($method, $this->available)) {
+        if ($this->isAttributeAvailable($method)) {
             return $this->setAttribute($method, ...$params);
+        }
+
+        foreach ($this->extensions as $extension) {
+            if (method_exists($extension, $method)) {
+                return $this->forwardCallTo($extension, $method, $params);
+            }
         }
 
         $this->methodNotFound($method);

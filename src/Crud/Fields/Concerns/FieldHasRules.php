@@ -30,6 +30,18 @@ trait FieldHasRules
     protected $updateRules = [];
 
     /**
+     * Available field attributes.
+     *
+     * @var array
+     */
+    public $availableRulesAttributes = [
+        'rules',
+        'creationRules',
+        'updateRules'
+    ];
+
+
+    /**
      * Validation rules.
      *
      * @param string ...$rules

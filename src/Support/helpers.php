@@ -281,16 +281,16 @@ if (!function_exists('is_translatable')) {
     /**
      * Is a Model translatable.
      *
-     * @param mixed $model
+     * @param string|mixed $model
      * @return boolean
      */
     function is_translatable($model)
     {
-        $reflect = new \ReflectionClass($model);
-        if ($reflect->implementsInterface('Astrotomic\Translatable\Contracts\Translatable')) {
-            return true;
+        if (is_string($model)) {
+            $model = new $model;
         }
-        return false;
+
+        return $model instanceof \Astrotomic\Translatable\Contracts\Translatable;
     }
 }
 
@@ -302,7 +302,7 @@ if (!function_exists('is_attribute_translatable')) {
      * @param string $attribute
      * @return boolean
      */
-    function is_attribute_translatable($model, string $attribute)
+    function is_attribute_translatable(string $attribute, $model)
     {
         if (!is_translatable($model)) {
             return false;

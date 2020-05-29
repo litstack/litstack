@@ -18,6 +18,7 @@ class ServiceProvider extends LaravelServiceProvider
     {
         $this->app->register(CrudRelations::class);
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(FieldServiceProvider::class);
 
         $this->app['fjord.app']->get('components')->register('fj-crud-index', [
             'props' => [
@@ -46,7 +47,7 @@ class ServiceProvider extends LaravelServiceProvider
         $loader->alias('Form', FormFacade::class);
 
         $this->app->singleton('fjord.form', function () {
-            return new FormLoader;
+            return new Form;
         });
 
         $this->app['fjord.app']->singleton('crud', new Crud);

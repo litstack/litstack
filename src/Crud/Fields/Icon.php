@@ -6,6 +6,8 @@ use Fjord\Crud\Field;
 
 class Icon extends Field
 {
+    use Concerns\FormItemWrapper;
+
     /**
      * Field Vue component.
      *
@@ -18,18 +20,14 @@ class Icon extends Field
      *
      * @var array
      */
-    protected $required = [
-        'title',
-    ];
+    public $requiredAttributes = [];
 
     /**
      * Available Field attributes.
      *
      * @var array
      */
-    protected $available = [
-        'title',
-        'hint',
+    public $availableAttributes = [
         'icons',
         'search'
     ];
@@ -39,20 +37,18 @@ class Icon extends Field
      *
      * @var array
      */
-    protected $defaults = [
+    public $defaultAttributes = [
         'search' => true
     ];
 
     /**
-     * Set default attributes.
+     * Set default icons attribute.
      *
-     * @return void
+     * @return array
      */
-    protected function setDefaults()
+    public function setIconsAttribute()
     {
-        parent::setDefaults();
-
-        $this->attributes['icons'] = require fjord_path('src/Crud/Fields/Defaults/fontawesome_icons.php');
+        return require fjord_path('src/Crud/Fields/Defaults/fontawesome_icons.php');
     }
 
     /**

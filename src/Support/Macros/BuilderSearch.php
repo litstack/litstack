@@ -90,7 +90,7 @@ class BuilderSearch
      */
     public function whereAttributeLike($query, $attribute, $searchTerm, $or = true)
     {
-        if (!is_attribute_translatable($query->getModel(), $attribute)) {
+        if (!is_attribute_translatable($attribute, $query->getModel())) {
             if ($or) {
                 $query->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
             } else {

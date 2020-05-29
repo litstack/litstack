@@ -3,11 +3,12 @@
 namespace Fjord\Crud\Fields;
 
 use Fjord\Crud\Field;
-use Fjord\Crud\Fields\Concerns\FieldHasRules;
 
 class Input extends Field
 {
-    use FieldHasRules;
+    use Concerns\FieldHasRules,
+        Concerns\TranslatableField,
+        Concerns\FormItemWrapper;
 
     /**
      * Field Vue component.
@@ -17,37 +18,23 @@ class Input extends Field
     protected $component = 'fj-field-input';
 
     /**
-     * Is field translatable.
-     *
-     * @var boolean
-     */
-    protected $translatable = true;
-
-    /**
      * Required attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-    ];
+    public $requiredAttributes = [];
 
     /**
      * Available Field attributes.
      *
      * @var array
      */
-    protected $available = [
+    public $availableAttributes = [
         'max',
-        'title',
         'placeholder',
-        'hint',
         'type',
         'prepend',
         'append',
-        'rules',
-        'updateRules',
-        'creationRules',
     ];
 
     /**
@@ -55,9 +42,7 @@ class Input extends Field
      *
      * @var array
      */
-    protected $defaults = [
-        'max' => 60,
-    ];
+    public $defaultAttributes = [];
 
     /**
      * Cast field value.
