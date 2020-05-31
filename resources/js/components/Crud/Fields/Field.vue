@@ -39,8 +39,6 @@ export default {
             on: this.$listeners
         });
 
-        //vm.$forceUpdate();
-
         return vm;
     },
     computed: {
@@ -62,9 +60,9 @@ export default {
             required: true
         },
         modelId: {
-            type: Number,
+            type: [Number, String],
             default() {
-                return 0;
+                return null;
             }
         },
         field: {

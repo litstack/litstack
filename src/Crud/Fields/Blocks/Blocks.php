@@ -3,12 +3,13 @@
 namespace Fjord\Crud\Fields\Blocks;
 
 use Closure;
+use Fjord\Crud\RelationField;
 use Fjord\Crud\Models\FormField;
-use Fjord\Crud\ManyRelationField;
-use Fjord\Crud\Fields\Concerns\FieldHasForm;
+use Fjord\Crud\Fields\Concerns\FormItemWrapper;
 
-class Blocks extends ManyRelationField
+class Blocks extends RelationField
 {
+    use FormItemWrapper;
     /**
      * Field Vue component.
      *
@@ -17,35 +18,32 @@ class Blocks extends ManyRelationField
     protected $component = 'fj-field-blocks';
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-        'repeatables',
-    ];
+    public $required = ['title', 'repeatables'];
 
     /**
      * Available Field attributes.
      *
      * @var array
      */
-    protected $available = [
-        'title',
-        'hint',
+    public $availableAttributes = [
         'repeatables',
         'blockWidth'
     ];
 
     /**
-     * Default Field attributes.
+     * Set default field attributes
      *
-     * @var array
+     * @return void
      */
-    protected $defaults = [
-        'blockWidth' => 12
-    ];
+    public function setDefaultAttributes()
+    {
+        $this->setAttribute('blockWidth', 12);
+        $this->setAttribute('orderColumn', 'order_column');
+    }
 
     /**
      * Add repeatables.
@@ -67,30 +65,18 @@ class Blocks extends ManyRelationField
     }
 
     /**
-     * Get relation for model.
+     * Get relation query for model.
      *
      * @param mixed $model
      * @param boolean $query
      * @return mixed
      */
-    protected function getRelation($model)
+    public function getRelationQuery($model)
     {
         if (!$model instanceof FormField) {
-            return parent::getRelation($model);
+            return parent::getRelationQuery($model);
         }
 
         return $model->blocks($this->id);
-    }
-
-    /**
-     * Set defaults.
-     *
-     * @return void
-     */
-    public function setDefaults()
-    {
-        parent::setDefaults();
-
-        $this->attributes['orderColumn'] = 'order_column';
     }
 }

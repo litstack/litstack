@@ -4,19 +4,12 @@ namespace Fjord\Crud\Fields;
 
 use Fjord\Crud\Field;
 use Illuminate\Support\Facades\Hash;
-use Fjord\Crud\Fields\Concerns\FieldHasRules;
 
 class Password extends Field
 {
-    use FieldHasRules;
-
-    /**
-     * Fill to attribute.
-     *
-     * @var boolean
-     */
-    public $fill = false;
-
+    use Concerns\FieldHasRules,
+        Concerns\FormItemWrapper,
+        Concerns\FieldHasPlaceholder;
 
     /**
      * Field Vue component.
@@ -26,40 +19,120 @@ class Password extends Field
     protected $component = 'fj-field-password';
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-    ];
+    public $required = [];
 
     /**
-     * Available Field attributes.
+     * Use only rules and dont store value.
      *
-     * @var array
+     * @var boolean
      */
-    protected $available = [
-        'title',
-        'placeholder',
-        'minScore',
-        'noScore',
-        'hint',
-        'rules',
-        'confirm',
-        'updateRules',
-        'creationRules',
-    ];
+    protected $rulesOnly = false;
 
     /**
-     * Default Field attributes.
+     * Fill model.
      *
-     * @var array
+     * @return void
      */
-    protected $defaults = [
-        'minScore' => 2,
-        'noScore' => false,
-    ];
+    public function fillModel($model, $attributeName, $attributeValue)
+    {
+        if ($this->rulesOnly) {
+            return;
+        }
+
+        $model->{$attributeName} = $attributeValue;
+    }
+
+    /**
+     * Set default attributes.
+     *
+     * @return void
+     */
+    public function setDefaultAttributes()
+    {
+        $this->minScore(1);
+        $this->noScore(false);
+    }
+
+    /**
+     * Set noScore.
+     *
+     * @param boolean $noScore
+     * @return $this
+     */
+    public function rulesOnly(bool $rulesOnly = true)
+    {
+        $this->rulesOnly = $rulesOnly;
+
+        return $this;
+    }
+
+    /**
+     * DEPRECATED use rulesOnly.
+     *
+     * @param boolean $dontStore
+     * @return $this
+     */
+    public function dontStore(bool $dontStore = true)
+    {
+        $this->rulesOnly($dontStore);
+
+        return $this;
+    }
+
+    /**
+     * Set noScore.
+     *
+     * @param boolean $noScore
+     * @return $this
+     */
+    public function noScore(bool $noScore = true)
+    {
+        $this->setAttribute('noScore', $noScore);
+
+        return $this;
+    }
+
+    /**
+     * Set minScore.
+     *
+     * @param integer $score
+     * @return $this
+     */
+    public function minScore(int $score)
+    {
+        // TODO: find a good way to implement minScore
+        $this->setAttribute('minScore', $score);
+
+        return $this;
+    }
+
+    /**
+     * Confirm the form using the current password.
+     *
+     * @param Type $var
+     * @return self
+     */
+    public function confirm($confirm = true)
+    {
+        if (!$confirm) {
+            return $this;
+        }
+
+        $confirmationRule = function ($attribute, $value, $fail) {
+            if (!Hash::check($value, fjord_user()->password)) {
+                return $fail(__f('validation.incorrect_password'));
+            }
+        };
+
+        return $this->rulesOnly()
+            ->noScore()
+            ->hint('Confirm with current password.')
+            ->rules('required', $confirmationRule);
+    }
 
     /**
      * Cast field value.
@@ -81,42 +154,5 @@ class Password extends Field
     public function format($value)
     {
         return bcrypt($value);
-    }
-
-    /**
-     * Dont store in database.
-     *
-     * @param boolean $dont
-     * @return void
-     */
-    public function dontStore($dont = true)
-    {
-        $this->save = !$dont;
-
-        return $this;
-    }
-
-    /**
-     * Confirm only.
-     *
-     * @param Type $var
-     * @return void
-     */
-    public function confirm($confirm = true)
-    {
-        if (!$confirm) {
-            return $this;
-        }
-
-        $this->save = false;
-        $this->noScore();
-        $this->hint('Confirm with current password.');
-        $this->rules('required', function ($attribute, $value, $fail) {
-            if (!Hash::check($value, fjord_user()->password)) {
-                return $fail(__f('validation.incorrect_password'));
-            }
-        });
-
-        return $this;
     }
 }

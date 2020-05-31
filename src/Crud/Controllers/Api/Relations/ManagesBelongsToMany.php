@@ -19,7 +19,7 @@ trait ManagesBelongsToMany
      */
     protected function createBelongsToMany(CrudUpdateRequest $request, BelongsToMany $field, $model, $relation)
     {
-        $belongsToMany = $field->relation($model, $query = true);
+        $belongsToMany = $field->getRelationQuery($model);
 
         $query = [
             $belongsToMany->getForeignPivotKeyName() => $model->{$belongsToMany->getParentKeyName()},
@@ -44,7 +44,7 @@ trait ManagesBelongsToMany
      */
     protected function destroyBelongsToMany(CrudUpdateRequest $request, BelongsToMany $field, $model, $relation)
     {
-        $belongsToMany = $field->relation($model, $query = true);
+        $belongsToMany = $field->getRelationQuery($model);
         return DB::table($belongsToMany->getTable())->where([
             $belongsToMany->getForeignPivotKeyName() => $model->{$belongsToMany->getParentKeyName()},
             $belongsToMany->getRelatedPivotKeyName() => $relation->{$belongsToMany->getRelatedKeyName()}

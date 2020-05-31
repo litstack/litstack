@@ -6,38 +6,14 @@ use Fjord\Crud\Field;
 
 class Boolean extends Field
 {
+    use Concerns\FormItemWrapper;
+
     /**
      * Field Vue component.
      *
      * @var string
      */
     protected $component = 'fj-field-boolean';
-
-    /**
-     * Required attributes.
-     *
-     * @var array
-     */
-    protected $required = [
-        'title',
-    ];
-
-    /**
-     * Available Field attributes.
-     *
-     * @var array
-     */
-    protected $available = [
-        'title',
-        'hint',
-    ];
-
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    protected $defaults = [];
 
     /**
      * Cast field value.

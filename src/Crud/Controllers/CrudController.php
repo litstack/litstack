@@ -3,6 +3,7 @@
 namespace Fjord\Crud\Controllers;
 
 use Fjord\Crud\MediaField;
+use Fjord\Crud\RelationField;
 use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Support\Facades\FjordLang;
@@ -187,7 +188,7 @@ abstract class CrudController
         // Eager loads relations.
         $query = $this->query();
         foreach ($this->fields() as $field) {
-            if ($field->isRelation() && !$field instanceof MediaField) {
+            if ($field instanceof RelationField && !$field instanceof MediaField) {
                 $query->with($field->getRelationName());
             }
         }

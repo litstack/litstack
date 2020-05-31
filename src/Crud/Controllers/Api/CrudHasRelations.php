@@ -3,7 +3,6 @@
 namespace Fjord\Crud\Controllers\Api;
 
 use Fjord\Support\IndexTable;
-use Fjord\Crud\OneRelationField;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Crud\Fields\Relations\HasOne;
 use Fjord\Crud\Fields\Relations\HasMany;
@@ -16,6 +15,8 @@ use Fjord\Crud\Fields\Relations\MorphToMany;
 use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Crud\Fields\Relations\BelongsToMany;
+use Fjord\Crud\Fields\Relations\OneRelationField;
+use Fjord\Crud\Fields\Relations\LaravelRelationField;
 
 trait CrudHasRelations
 {
@@ -69,7 +70,7 @@ trait CrudHasRelations
 
         $this->validateRelationField($field);
 
-        $query = $field->relation($model, $query = true);
+        $query = $field->getRelationQuery($model, $query = true);
 
         if ($field instanceof OneRelationField) {
             $items = $query->get();
@@ -241,7 +242,7 @@ trait CrudHasRelations
         $model = $this->query()->findOrFail($id);
         $field = $this->config->form->findField($relation) ?? abort(404);
 
-        $query = $field->relation($model, $query = true);
+        $query = $field->getRelationQuery($model, $query = true);
 
         $order = $this->orderField($query, $field, $ids);
 
@@ -258,7 +259,7 @@ trait CrudHasRelations
      */
     protected function validateRelationField($field)
     {
-        if (!$field->isRelation()) {
+        if (!$field instanceof LaravelRelationField) {
             abort(404);
         }
 

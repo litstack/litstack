@@ -6,6 +6,11 @@ use Fjord\Crud\Field;
 
 class Textarea extends Field
 {
+    use Concerns\FieldHasRules,
+        Concerns\TranslatableField,
+        Concerns\FormItemWrapper,
+        Concerns\FieldHasPlaceholder;
+
     /**
      * Field Vue component.
      *
@@ -14,41 +19,25 @@ class Textarea extends Field
     protected $component = 'fj-field-textarea';
 
     /**
-     * Is field translatable.
-     *
-     * @var boolean
-     */
-    protected $translatable = true;
-
-    /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-    ];
+    public $required = [];
+
 
     /**
-     * Available Field attributes.
+     * Set maxChars.
      *
-     * @var array
+     * @param integer $maxChars
+     * @return $this
      */
-    protected $available = [
-        'max',
-        'title',
-        'placeholder',
-        'hint',
-    ];
+    public function maxChars(int $maxChars)
+    {
+        $this->setAttribute('max', $maxChars);
 
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    protected $defaults = [
-        'max' => 250,
-    ];
+        return $this;
+    }
 
     /**
      * Cast field value.

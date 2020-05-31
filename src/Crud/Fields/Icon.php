@@ -16,40 +16,58 @@ class Icon extends Field
     protected $component = 'fj-field-icon';
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    public $requiredAttributes = [];
+    public $required = [];
 
     /**
-     * Available Field attributes.
+     * Set search.
      *
-     * @var array
+     * @param boolean $search
+     * @return self
      */
-    public $availableAttributes = [
-        'icons',
-        'search'
-    ];
+    public function search(bool $search = true)
+    {
+        $this->setAttribute('search', $search);
+
+        return $this;
+    }
 
     /**
-     * Default Field attributes.
+     * Set icons.
      *
-     * @var array
+     * @param array $icons
+     * @return self
      */
-    public $defaultAttributes = [
-        'search' => true
-    ];
+    public function icons(array $icons)
+    {
+        $this->setAttribute('icons', $icons);
+
+        return $this;
+    }
 
     /**
      * Set default icons attribute.
      *
      * @return array
      */
-    public function setIconsAttribute()
+    public function setIconsDefault()
     {
         return require fjord_path('src/Crud/Fields/Defaults/fontawesome_icons.php');
     }
+
+    /**
+     * Set default icons attribute.
+     *
+     * @return array
+     */
+    public function setSearchDefault()
+    {
+        return true;
+    }
+
 
     /**
      * Cast field value.

@@ -5,10 +5,8 @@ namespace Fjord\Crud;
 use Closure;
 use Exception;
 use Fjord\Support\VueProp;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
-use Fjord\Support\Facades\Form;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Fjord\Exceptions\MethodNotFoundException;
 use Fjord\Crud\Exceptions\MissingAttributeException;
@@ -29,7 +27,7 @@ class Field extends VueProp
      *
      * @var string
      */
-    protected $form;
+    protected $formInstance;
 
     /**
      * Field attributes.
@@ -62,27 +60,18 @@ class Field extends VueProp
     ];
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'width',
-    ];
+    public $required = [];
 
     /**
-     * Required attributes.
+     * Always available field attributes.
      *
      * @var array
      */
-    public $requiredAttributes = [];
-
-    /**
-     * Available field attributes.
-     *
-     * @var array
-     */
-    protected $available = [
+    protected $alwaysAvailableAttributes = [
         'readonly',
         'width',
         'info',
@@ -158,30 +147,27 @@ class Field extends VueProp
      */
     public function __construct(string $id, string $model, $routePrefix, $form)
     {
-        $this->attributes['id'] = $id;
-        $this->attributes['local_key'] = $id;
-        $this->attributes['route_prefix'] = $routePrefix;
         $this->model = $model;
-        $this->form = $form;
+        $this->formInstance = $form;
 
-        foreach (Form::getFieldExtensions($this) as $extensionClass) {
-            $this->extensions[] = new $extensionClass($this);
-        }
-        $this->mergeExtensionProperties();
-        $this->mergeTraitProperties();
+        $this->setAttribute('id', $id);
+        $this->setAttribute('local_key', $id);
+        $this->setAttribute('route_prefix', $routePrefix);
+        $this->setAttribute('component', $this->component);
 
+        $this->setDefaultsFromClassMethods();
         $this->setDefaultAttributes();
-        $this->attributes['component'] = $this->component;
+        $this->mergeRequiredAttributes();
     }
 
     /**
-     * Get extensions.
+     * Set default slot attribute.
      *
      * @return array
      */
-    public function getExtensions()
+    protected function setSlotsAttribute()
     {
-        return $this->extensions;
+        return [];
     }
 
     /**
@@ -255,23 +241,21 @@ class Field extends VueProp
     }
 
     /**
-     * Is field component.
+     * Merge required properties to allow defining required attributes in traits.
      *
-     * @return boolean
+     * @return void
      */
-    public function isComponent()
+    public function mergeRequiredAttributes()
     {
-        return false;
-    }
-
-    /**
-     * Is field relation.
-     *
-     * @return boolean
-     */
-    public function isRelation()
-    {
-        return false;
+        foreach (get_object_vars($this) as $propertyName => $propertyValue) {
+            if ($propertyName == 'required') {
+                continue;
+            }
+            if (!Str::endsWith($propertyName, 'Required')) {
+                continue;
+            }
+            $this->required = array_merge($this->required, $propertyValue);
+        }
     }
 
     /**
@@ -284,7 +268,7 @@ class Field extends VueProp
     public function checkComplete()
     {
         $missing = [];
-        foreach ($this->requiredAttributes as $prop) {
+        foreach ($this->required as $prop) {
             if (array_key_exists($prop, $this->attributes)) {
                 continue;
             }
@@ -363,64 +347,51 @@ class Field extends VueProp
     }
 
     /**
-     * Set default Field attributes.
+     * Set default attributes from class method.
      *
      * @return void
      */
-    protected function setDefaultAttributes()
+    public function setDefaultsFromClassMethods()
     {
-        foreach ($this->defaultAttributes as $name => $value) {
-            $this->setAttribute($name, $value);
-        }
-
         foreach (get_class_methods($this) as $method) {
-            if ($method == 'setAttribute') {
+            if (!Str::startsWith($method, 'set') || !Str::endsWith($method, 'Default')) {
                 continue;
             }
-            if (!Str::startsWith($method, 'set')) {
-                continue;
-            }
-            if (!Str::endsWith($method, 'Attribute')) {
-                continue;
-            }
-
-            $this->setAttribute(
-                $this->getSetterAttributeName($method),
-                call_user_func_array([$this, $method], [])
-            );
+            $attributeName = $this->getDefaultSetterAttributeName($method);
+            $attributeValue = $this->{$method}();
+            $this->setAttribute($attributeName, $attributeValue);
         }
     }
 
     /**
-     * Remove available attribute.
+     * Set default field attributes.
      *
-     * @param string $attribute
      * @return void
      */
-    public function removeAvailableAttribute(string $attribute)
+    public function setDefaultAttributes()
     {
-        if (($key = array_search($attribute, $this->availableAttributes)) !== false) {
-            unset($this->availableAttributes[$key]);
-        }
+        // Set your default attributes in here.
+        // $this->setAttribute('something', 'value');
     }
+
 
     /**
      * Get attribute name from setter method name.
      * 
-     * setNameAttribute => name
-     * setCamelCaseAttribute => camelCase
+     * setNameDefault => name
+     * setCamelCaseDefault => camelCase
      *
      * @param string $method
      * @return string
      */
-    protected function getSetterAttributeName(string $method)
+    protected function getDefaultSetterAttributeName(string $method)
     {
         return lcfirst(
             Str::replaceLast(
-                'Attribute',
+                'set',
                 '',
                 Str::replaceFirst(
-                    'set',
+                    'Default',
                     '',
                     $method
                 )
@@ -459,27 +430,15 @@ class Field extends VueProp
     {
         throw new MethodNotFoundException(
             sprintf(
-                'The %s method is not found for the %s field. Available field attributes: %s.',
+                'The %s method is not found for the %s field.',
                 $method,
                 class_basename(static::class),
-                implode(', ', $this->availableAttributes)
             ),
             [
                 'function' => '__call',
                 'class' => self::class
             ]
         );
-    }
-
-
-    /**
-     * Get avaliable attributes.
-     *
-     * @return array
-     */
-    public function getAvailableAttributes()
-    {
-        return $this->availableAttributes;
     }
 
     /**
@@ -507,69 +466,9 @@ class Field extends VueProp
      *
      * @return array
      */
-    public function getRequiredAttributes()
+    public function getRequired()
     {
-        return $this->requiredAttributes;
-    }
-
-    /**
-     * Merge properties from extensions.
-     *
-     * @return void
-     */
-    protected function mergeExtensionProperties()
-    {
-        foreach ($this->mergeProperties as $property) {
-            foreach ($this->extensions as $extension) {
-                if (!property_exists($extension, $property)) {
-                    continue;
-                }
-
-                $this->{$property} = array_merge(
-                    $this->{$property},
-                    $extension->{$property}
-                );
-            }
-        }
-    }
-
-    /**
-     * Merge properties from traits.
-     *
-     * @return void
-     */
-    protected function mergeTraitProperties()
-    {
-        foreach (array_keys(get_object_vars($this)) as $property) {
-            if (Str::startsWith($property, 'available') && Str::endsWith($property, 'Attributes')) {
-                $this->availableAttributes = array_merge(
-                    $this->availableAttributes,
-                    $this->{$property}
-                );
-            }
-            if (Str::startsWith($property, 'required') && Str::endsWith($property, 'Attributes')) {
-                $this->requiredAttributes = array_merge(
-                    $this->requiredAttributes,
-                    $this->{$property}
-                );
-            }
-            if (Str::startsWith($property, 'default') && Str::endsWith($property, 'Attributes')) {
-                $this->defaultAttributes = array_merge(
-                    $this->defaultAttributes,
-                    $this->{$property}
-                );
-            }
-        }
-    }
-
-    /**
-     * Get defaults.
-     *
-     * @return array
-     */
-    public function getDefaultAttributes()
-    {
-        return $this->defaultAttributes;
+        return $this->required;
     }
 
     /**
@@ -602,17 +501,6 @@ class Field extends VueProp
     }
 
     /**
-     * Check if attribute is available.
-     *
-     * @param string $attribute
-     * @return boolean
-     */
-    public function isAttributeAvailable(string $attribute)
-    {
-        return in_array($attribute, $this->availableAttributes);
-    }
-
-    /**
      * Call field method.
      *
      * @param string $method
@@ -623,15 +511,14 @@ class Field extends VueProp
      */
     public function __call($method, $params = [])
     {
-        if ($this->isAttributeAvailable($method)) {
-            return $this->setAttribute($method, ...$params);
-        }
-
+        /*
+        // TODO: Discuss field extensions.
         foreach ($this->extensions as $extension) {
             if (method_exists($extension, $method)) {
                 return $this->forwardCallTo($extension, $method, $params);
             }
         }
+        */
 
         $this->methodNotFound($method);
     }

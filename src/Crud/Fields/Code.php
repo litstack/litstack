@@ -3,11 +3,11 @@
 namespace Fjord\Crud\Fields;
 
 use Fjord\Crud\Field;
-use Fjord\Crud\Fields\Concerns\FieldHasRules;
 
 class Code extends Field
 {
-    use FieldHasRules;
+    use Concerns\FieldHasRules,
+        Concerns\FormItemWrapper;
 
     /**
      * Field Vue component.
@@ -21,49 +21,100 @@ class Code extends Field
      *
      * @var array
      */
-    protected $required = [
-        'title',
-    ];
+    public $required = [];
 
     /**
-     * Available slots.
+     * Set default attributes.
      *
-     * @var array
+     * @return void
      */
-    protected $availableSlots = [];
+    public function setDefaultAttributes()
+    {
+        $this->tabSize(4);
+        $this->theme('default');
+        $this->lineNumbers(true);
+        $this->line(true);
+        $this->language('text/html');
+        $this->options([]);
+    }
 
     /**
-     * Available Field attributes.
+     * Set options.
      *
-     * @var array
+     * @param array $options
+     * @return $this
      */
-    protected $available = [
-        'title',
-        'hint',
-        'tabSize',
-        'theme',
-        'lineNumbers',
-        'line',
-        'language',
-        'options',
-        'rules',
-        'updateRules',
-        'creationRules',
-    ];
+    public function options(array $options)
+    {
+        $this->setAttribute('options', $options);
+
+        return $this;
+    }
 
     /**
-     * Default Field attributes.
+     * Set language.
      *
-     * @var array
+     * @param boolean $line
+     * @return $this
      */
-    protected $defaults = [
-        'tabSize' => 4,
-        'theme' => 'default',
-        'lineNumbers' => true,
-        'line' => true,
-        'language' => 'text/html',
-        'options' => []
-    ];
+    public function language(string $language)
+    {
+        $this->setAttribute('language', $language);
+
+        return $this;
+    }
+
+    /**
+     * Set line.
+     *
+     * @param boolean $line
+     * @return $this
+     */
+    public function line(bool $line = true)
+    {
+        $this->setAttribute('line', $line);
+
+        return $this;
+    }
+
+    /**
+     * Set lineNumbers.
+     *
+     * @param integer $lineNumbers
+     * @return $this
+     */
+    public function lineNumbers(int $lineNumbers)
+    {
+        $this->setAttribute('lineNumbers', $lineNumbers);
+
+        return $this;
+    }
+
+    /**
+     * Set theme.
+     *
+     * @param string $theme
+     * @return $this
+     */
+    public function theme(string $theme)
+    {
+        $this->setAttribute('theme', $theme);
+
+        return $this;
+    }
+
+    /**
+     * Set tabSize.
+     *
+     * @param integer $tabSize
+     * @return $this
+     */
+    public function tabSize(int $tabSize)
+    {
+        $this->setAttribute('tabSize', $tabSize);
+
+        return $this;
+    }
 
     /**
      * Cast field value.

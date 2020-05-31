@@ -2,26 +2,40 @@
 
 namespace Fjord\Crud;
 
+use Fjord\Crud\RelationField;
 use Fjord\Crud\Models\FormBlock;
 use Fjord\Crud\Models\FormField;
 use Illuminate\Database\Eloquent\Collection;
 
-class MediaField extends ManyRelationField
+class MediaField extends RelationField
 {
     /**
-     * Get relation for model.
+     * Get relation query for model.
      *
      * @param mixed $model
      * @param boolean $query
      * @return mixed
      */
-    protected function getRelation($model)
+    public function getRelationQuery($model)
     {
-        if (!$model instanceof FormField && !$model instanceof FormBlock) {
-            return $model->{$this->id};
+        return $model->media()->where('collection', $this->id);
+    }
+
+    /**
+     * Get results.
+     *
+     * @param mixed $model
+     * @return void
+     */
+    public function getResults($model)
+    {
+        $results = $model->getMedia($this->id);
+
+        if ($this->maxFiles == 1) {
+            return $results->first();
         }
 
-        return $model->getMedia($this->id);
+        return $results;
     }
 
     /**

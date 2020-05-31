@@ -19,7 +19,7 @@ trait ManagesMorphToMany
      */
     public function createMorphToMany(CrudUpdateRequest $request, MorphToMany $field, $model, $relation)
     {
-        $morphToMany = $field->relation($model, $query = true);
+        $morphToMany = $field->getRelationQuery($model);
 
         $query = [
             $morphToMany->getRelatedPivotKeyName() => $relation->{$morphToMany->getRelatedKeyName()},
@@ -46,7 +46,7 @@ trait ManagesMorphToMany
      */
     protected function destroyMorphToMany(CrudUpdateRequest $request, MorphToMany $field, $model, $relation)
     {
-        $morphToMany = $field->relation($model, $query = true);
+        $morphToMany = $field->getRelationQuery($model);
 
         return DB::table($morphToMany->getTable())->where([
             $morphToMany->getRelatedPivotKeyName() => $relation->{$morphToMany->getRelatedKeyName()},

@@ -4,6 +4,7 @@ namespace Fjord\Crud\Controllers\Api\Blocks;
 
 use Fjord\Support\IndexTable;
 use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Relations\LaravelRelationField;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 
@@ -23,10 +24,10 @@ trait ManagesBlocksRelations
     {
         $model = $this->query()->findOrFail($id);
         $blockField = $this->config->form->findField($field_id) ?? abort(404);
-        $block = $blockField->relation($model, $query = true)->findOrFail($block_id);
+        $block = $blockField->getRelationQuery($model)->findOrFail($block_id);
         $field = $block->findField($relation) ?? abort(404);
 
-        if (!$field->isRelation() || $field instanceof Blocks) {
+        if (!$field instanceof LaravelRelationField) {
             abort(404);
         }
 
@@ -52,12 +53,12 @@ trait ManagesBlocksRelations
     {
         $model = $this->query()->findOrFail($id);
         $blockField = $this->config->form->findField($field_id) ?? abort(404);
-        $block = $blockField->relation($model, $query = true)->findOrFail($block_id);
+        $block = $blockField->getRelationQuery($model)->findOrFail($block_id);
         $field = $block->findField($relation) ?? abort(404);
 
         $this->validateRelationField($field);
 
-        $query = $field->relation($block, $query = true);
+        $query = $field->getRelationQuery($block);
 
         $relations = IndexTable::query($query)
             ->request($request)
@@ -86,7 +87,7 @@ trait ManagesBlocksRelations
     {
         $model = $this->query()->findOrFail($id);
         $blockField = $this->config->form->findField($field_id) ?? abort(404);
-        $block = $blockField->relation($model, $query = true)->findOrFail($block_id);
+        $block = $blockField->getRelationQuery($model)->findOrFail($block_id);
         $field = $block->findField($relation) ?? abort(404);
 
         $this->validateRelationField($field);
@@ -115,7 +116,7 @@ trait ManagesBlocksRelations
     {
         $model = $this->query()->findOrFail($id);
         $blockField = $this->config->form->findField($field_id) ?? abort(404);
-        $block = $blockField->relation($model, $query = true)->findOrFail($block_id);
+        $block = $blockField->getRelationQuery($model)->findOrFail($block_id);
         $field = $block->findField($relation) ?? abort(404);
 
         $this->validateRelationField($field);
@@ -142,12 +143,12 @@ trait ManagesBlocksRelations
         $ids = $request->ids ?? abort(404);
         $model = $this->query()->findOrFail($id);
         $blockField = $this->config->form->findField($field_id) ?? abort(404);
-        $block = $blockField->relation($model, $query = true)->findOrFail($block_id);
+        $block = $blockField->getRelationQuery($model)->findOrFail($block_id);
         $field = $block->findField($relation) ?? abort(404);
 
         $this->validateRelationField($field);
 
-        $query = $field->relation($block, $query = true);
+        $query = $field->getRelationQuery($block);
 
         $response = $this->orderField($query, $field, $ids);
 

@@ -3,13 +3,12 @@
 namespace Fjord\Crud\Fields\Relations;
 
 use Closure;
-use Fjord\Crud\OneRelationField;
 use Fjord\Exceptions\InvalidArgumentException;
-
+use Fjord\Crud\Fields\Concerns\FormItemWrapper;
 
 class MorphToRegistrar extends OneRelationField
 {
-    use Concerns\ManagesRelation;
+    use FormItemWrapper;
 
     /**
      * MorphTypes.
@@ -19,41 +18,30 @@ class MorphToRegistrar extends OneRelationField
     protected $morphTypes = [];
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-        'model',
-        'types'
+    public $requiredAttributes = [
+        'morphTypes'
     ];
 
     /**
-     * Available Field attributes.
+     * Available field attributes.
      *
      * @var array
      */
-    protected $available = [
-        'title',
-        'model',
-        'hint',
+    public $availableAttributes = [
         'form',
-        'previewQuery',
-        'preview',
-        'confirm',
-        'filter',
-        'relatedCols',
-        'small',
-        'types'
+        'morphTypes'
     ];
 
     /**
-     * Default Field attributes.
+     * Default field attributes.
      *
      * @var array
      */
-    protected $defaults = [];
+    public $defaultAttributes = [];
 
     /**
      * Should field be registered in form.
@@ -71,7 +59,7 @@ class MorphToRegistrar extends OneRelationField
      * @param Closure $callback
      * @return self
      */
-    public function types(Closure $closure)
+    public function morphTypes(Closure $closure)
     {
         if (!array_key_exists('title', $this->attributes)) {
             throw new InvalidArgumentException('You may set a title before defining morph types.', [
@@ -82,7 +70,7 @@ class MorphToRegistrar extends OneRelationField
         $morph = new MorphTypeManager;
         $closure($morph);
 
-        $this->setAttribute('types', $morph);
+        $this->setAttribute('morphTypes', $morph);
 
         $options = [];
         foreach ($morph->getTypes() as $class => $morphType) {
@@ -90,7 +78,7 @@ class MorphToRegistrar extends OneRelationField
         }
 
         $selectId = (new $this->model)->{$this->id}()->getMorphType();
-        $this->form->select($selectId)
+        $this->formInstance->select($selectId)
             ->title(__f('base.item_select', ['item' => $this->title]))
             ->options($options)
             ->storable(false);
@@ -98,9 +86,9 @@ class MorphToRegistrar extends OneRelationField
         foreach ($morph->getTypes() as $class => $morphType) {
             $idDivider = MorphTo::ID_DIVIDER;
             $morphId = "{$this->id}{$idDivider}{$class}";
-            $field = $this->form->registerField(MorphTo::class, $morphId);
+            $field = $this->formInstance->registerField(MorphTo::class, $morphId);
             foreach ($this->attributes as $key => $value) {
-                if (!in_array($key, $this->available)) {
+                if (!in_array($key, $this->availableAttributes)) {
                     continue;
                 }
                 $field->{$key} = $value;

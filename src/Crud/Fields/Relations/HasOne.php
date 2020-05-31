@@ -2,11 +2,11 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
-use Fjord\Crud\OneRelationField;
+use Fjord\Crud\Fields\Concerns\FormItemWrapper;
 
 class HasOne extends OneRelationField
 {
-    use Concerns\ManagesRelation;
+    use FormItemWrapper;
 
     /**
      * Properties passed to Vue component.
@@ -18,32 +18,19 @@ class HasOne extends OneRelationField
     ];
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-        'model',
-        'preview'
-    ];
+    public $requiredAttributes = [];
 
     /**
      * Available Field attributes.
      *
      * @var array
      */
-    protected $available = [
-        'title',
-        'model',
-        'hint',
+    public $availableAttributes = [
         'form',
-        'previewQuery',
-        'preview',
-        'confirm',
-        'filter',
-        'relatedCols',
-        'small',
     ];
 
     /**
@@ -51,13 +38,7 @@ class HasOne extends OneRelationField
      *
      * @var array
      */
-    protected $defaults = [
-        'confirm' => false,
-        'relatedCols' => 12,
-        'small' => false,
-        'perPage' => 1,
-        'searchable' => false,
-    ];
+    public $defaultAttributes = [];
 
     /**
      * Set relation attributes.
@@ -67,6 +48,7 @@ class HasOne extends OneRelationField
      */
     protected function setRelationAttributes($relation)
     {
+
         $this->attributes['foreign_key'] = $relation->getForeignKeyName();
     }
 }

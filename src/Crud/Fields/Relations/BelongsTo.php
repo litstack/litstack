@@ -2,11 +2,11 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
-use Fjord\Crud\OneRelationField;
+use Fjord\Crud\Fields\Concerns\FormItemWrapper;
 
 class BelongsTo extends OneRelationField
 {
-    use Concerns\ManagesRelation;
+    use FormItemWrapper;
 
     /**
      * Properties passed to Vue component.
@@ -18,11 +18,11 @@ class BelongsTo extends OneRelationField
     ];
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
+    public $requiredAttributes = [
         'title',
         'model',
         'preview'
@@ -33,11 +33,9 @@ class BelongsTo extends OneRelationField
      *
      * @var array
      */
-    protected $available = [
-        'title',
+    public $availableAttributes = [
         'model',
         'form',
-        'hint',
         'previewQuery',
         'preview',
         'confirm',
@@ -51,7 +49,7 @@ class BelongsTo extends OneRelationField
      *
      * @var array
      */
-    protected $defaults = [
+    public $defaultAttributes = [
         'confirm' => false,
         'relatedCols' => 12,
         'small' => false,

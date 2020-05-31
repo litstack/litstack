@@ -11,7 +11,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 
 import VueDropzone from 'vue2-dropzone';
-import 'vue2-dropzone/dist/vue2Dropzone.min.css';
+//import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import BootstrapVue from 'bootstrap-vue';

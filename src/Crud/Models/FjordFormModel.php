@@ -2,22 +2,27 @@
 
 namespace Fjord\Crud\Models;
 
-use Fjord\Crud\ManyRelationField;
+use Fjord\Crud\MediaField;
+use Fjord\Crud\RelationField;
 use Spatie\MediaLibrary\HasMedia;
 use Fjord\Crud\Fields\Media\Image;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Fjord\Crud\Fields\Relations\ManyRelationField;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
+//class FjordFormModel extends Model implements HasMedia, TranslatableContract
 class FjordFormModel extends Model implements HasMedia, TranslatableContract
 {
-    use InteractsWithMedia,
+
+    use Traits\HasMedia,
         Translatable,
         Concerns\HasConfig,
         Concerns\HasFields,
         Concerns\HasMedia;
+
 
     /**
      * value is translatable but since non translatable fields are stored in 
@@ -132,8 +137,8 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
      */
     public function getFieldValue($field, $locale = null)
     {
-        if ($field->isRelation()) {
-            return $field->relation($this, $query = false);
+        if ($field instanceof RelationField) {
+            return $field->getResults($this);
         }
 
         if (!$locale) {
@@ -243,14 +248,14 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
         $attributes = parent::relationsToArray();
 
         foreach ($this->fields as $field) {
-            if (!$field->isRelation()) {
+            if (!$field instanceof RelationField) {
                 continue;
             }
 
             $attributes[$field->id] = $this->getFormattedFieldValue($field);
 
             if ($field instanceof ManyRelationField) {
-                if ($field instanceof Image && $field->maxFiles == 1) {
+                if ($field instanceof MediaField && $field->maxFiles == 1) {
                     continue;
                 }
                 $attributes["first_{$field->id}"] = $this->getFormattedFieldValue($field)->first();
@@ -275,10 +280,10 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
 
         $field = $this->findField($method);
 
-        if (!$field->isRelation()) {
+        if (!$field instanceof RelationField) {
             return parent::__call($method, $params);
         }
 
-        return $field->relation($this, $query = true);
+        return $field->relation($this);
     }
 }

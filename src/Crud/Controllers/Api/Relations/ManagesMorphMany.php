@@ -18,7 +18,7 @@ trait ManagesMorphMany
      */
     public function createMorphMany(CrudUpdateRequest $request, MorphMany $field, $model, $relation)
     {
-        $morphMany = $field->relation($model, $query = true);
+        $morphMany = $field->getRelationQuery($model);
 
         $relation->{$morphMany->getMorphType()} = get_class($model);
         $relation->{$morphMany->getForeignKeyName()} = $model->{$morphMany->getLocalKeyName()};
@@ -42,7 +42,7 @@ trait ManagesMorphMany
      */
     protected function destroyMorphMany(CrudUpdateRequest $request, MorphMany $field, $model, $relation)
     {
-        $morphMany = $field->relation($model, $query = true);
+        $morphMany = $field->getRelationQuery($model);
 
         $relation->where([
             $morphMany->getMorphType() => get_class($model),

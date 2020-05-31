@@ -5,7 +5,6 @@ namespace Fjord\Crud\Fields\Relations;
 use Closure;
 use Fjord\Vue\Table;
 use Fjord\Support\Facades\Crud;
-use Fjord\Support\Facades\Fjord;
 
 class MorphTypeManager
 {

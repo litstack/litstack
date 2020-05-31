@@ -36,6 +36,8 @@ use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Exceptions\MethodNotFoundException;
 use Fjord\Crud\Fields\Relations\BelongsToMany;
 use Fjord\Crud\Fields\Relations\MorphToRegistrar;
+use Fjord\Crud\Fields\Relations\ManyRelationField;
+use Fjord\Crud\Fields\Relations\LaravelRelationField;
 
 
 class BaseForm extends VueProp
@@ -332,10 +334,6 @@ class BaseForm extends VueProp
         }
 
         $fieldInstance = new $field($id, $this->model, $this->routePrefix, $this);
-
-        if ($fieldInstance->isRelation()) {
-            $fieldInstance->setAttribute('many', $fieldInstance instanceof ManyRelationField);
-        }
 
         $this->registrar = $fieldInstance;
 

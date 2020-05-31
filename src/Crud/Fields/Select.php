@@ -6,6 +6,9 @@ use Fjord\Crud\Field;
 
 class Select extends Field
 {
+    use Concerns\FieldHasRules,
+        Concerns\FormItemWrapper;
+
     /**
      * Field Vue component.
      *
@@ -18,29 +21,18 @@ class Select extends Field
      *
      * @var array
      */
-    protected $required = [
-        'title',
-        'options',
-    ];
+    public $required = ['options'];
 
     /**
-     * Available Field attributes.
+     * Set select options.
      *
-     * @var array
+     * @param array $options
+     * @return self
      */
-    protected $available = [
-        'title',
-        'options',
-        'hint',
-        'storable'
-    ];
+    public function options(array $options)
+    {
+        $this->setAttribute('options', $options);
 
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    protected $defaults = [
-        'storable' => true
-    ];
+        return $this;
+    }
 }

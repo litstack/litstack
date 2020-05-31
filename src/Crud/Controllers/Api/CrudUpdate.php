@@ -18,9 +18,26 @@ trait CrudUpdate
     public function updateModel($model, $request, $fields)
     {
         $attributes = $this->filterRequestAttributes($request, $fields);
+        $attributes = $this->fitlerNonFillableAttributes($model, $attributes, $fields);
 
+        $model->update($attributes);
+    }
+
+    /**
+     * Filter non fillable attributes.
+     *
+     * @param mixed $model
+     * @param array $attributes
+     * @param Collection $fields
+     * @return array
+     */
+    protected function fitlerNonFillableAttributes($model, $attributes, $fields)
+    {
         foreach ($fields as $field) {
-            if ($field->fill) {
+            if (!method_exists($field, 'isFillable')) {
+                continue;
+            }
+            if (!$field->isFillable()) {
                 continue;
             }
             if (!array_key_exists($field->local_key, $attributes)) {
@@ -30,7 +47,7 @@ trait CrudUpdate
             unset($attributes[$field->local_key]);
         }
 
-        $model->update($attributes);
+        return $attributes;
     }
 
     /**
@@ -45,6 +62,7 @@ trait CrudUpdate
         $attributes = $request->all();
 
         foreach ($fields as $field) {
+            // TODO: Update related attributes. or not ???? 
             /*
             if ($this->isRelationField($field)) {
                 $this->updateRelated($model, $field, $attributes);

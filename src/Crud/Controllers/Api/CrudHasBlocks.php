@@ -32,7 +32,7 @@ trait CrudHasBlocks
         }
 
         return crud(
-            $field->relation($model, $query = true)->findOrFail($block_id)
+            $field->getRelationQuery($model)->findOrFail($block_id)
         );
     }
 
@@ -54,7 +54,7 @@ trait CrudHasBlocks
         }
 
         return crud(
-            $field->relation($model)
+            $field->getResults($model)
         );
     }
 

@@ -5,20 +5,24 @@ namespace Fjord\Crud\Fields\Concerns;
 trait TranslatableField
 {
     /**
-     * Available field attributes.
+     * Set field translatable.
      *
-     * @var array
+     * @param boolean $translatable
+     * @return self
      */
-    public $availableTranslatableAttributes = [
-        'translatable'
-    ];
+    public function translatable(bool $translatable = true)
+    {
+        $this->setAttribute($translatable);
+
+        return $this;
+    }
 
     /**
      * Set translatable default attribute
      *
      * @return boolean
      */
-    public function setTranslatableAttribute(): bool
+    public function setTranslatableDefault(): bool
     {
         return is_attribute_translatable($this->id, $this->model);
     }

@@ -12,26 +12,86 @@ trait FormItemWrapper
      *
      * @var array
      */
-    public $requiredFormItemWrapperAttributes = [
-        'title',
-    ];
+    public $formItemWrapperRequired = ['title'];
 
     /**
-     * Available field attributes.
+     * Set field title.
      *
-     * @var array
+     * @param string $title
+     * @return self
      */
-    public $availableFormItemWrapperAttributes = [
-        'title',
-        'hint',
-    ];
+    public function title(string $title)
+    {
+        $this->setAttribute('title', $title);
+
+        return $this;
+    }
+
+    /**
+     * Set hint.
+     *
+     * @param string $hint
+     * @return self
+     */
+    public function hint(string $hint)
+    {
+        $this->setAttribute('hint', $hint);
+
+        return $this;
+    }
+
+    /**
+     * Set storable.
+     *
+     * @param boolean $storable
+     * @return self
+     */
+    public function storable(bool $storable = true)
+    {
+        $this->setAttribute('storable', $storable);
+
+        return $this;
+    }
+
+    /**
+     * Set width columns or raito.
+     *
+     * @param integer|float $width
+     * @return self
+     */
+    public function width($width)
+    {
+        $this->setAttribute('width', $width);
+
+        return $this;
+    }
+
+    /**
+     * Set storable attribute.
+     *
+     * @return void
+     */
+    public function setStorableDefault()
+    {
+        return true;
+    }
+
+    /**
+     * Set width attribute.
+     *
+     * @return void
+     */
+    public function setWidthDefault()
+    {
+        return 12;
+    }
 
     /**
      * Set hint attribute.
      *
      * @return void
      */
-    public function setHintAttribute()
+    public function setHintDefault()
     {
         if (!property_exists($this, 'withoutHint')) {
             return;
@@ -40,5 +100,7 @@ trait FormItemWrapper
         if ($this->withoutHint) {
             $this->removeAvailableAttribute('hint');
         }
+
+        return '';
     }
 }

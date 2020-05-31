@@ -12,7 +12,7 @@
             </b-input-group-prepend>
             <!--<fj-input ref="input" slot-scope="{ value }">-->
             <b-input
-                class="form-control"
+                class="form-control fj-field-input"
                 :value="value"
                 :placeholder="field.placeholder"
                 :type="field.type"

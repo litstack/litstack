@@ -2,11 +2,14 @@
     <fj-col :width="width" :class="field.class">
         <div :class="`pb-4 fjord-form fj-form-item-${field.id}`">
             <h6 class="fj-form-item-title mb-0 d-flex justify-content-between">
-                <fj-slot
-                    v-if="'title' in field.slots"
-                    :name="field.slots.title"
-                    :props="{ field, model }"
-                />
+                <template v-if="field.slots">
+                    <fj-slot
+                        v-if="'title' in field.slots"
+                        :name="field.slots.title"
+                        :props="{ field, model }"
+                    />
+                </template>
+
                 <label :for="field.id" v-else v-html="field.title"></label>
                 <div>
                     <slot name="title-right" />

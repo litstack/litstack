@@ -3,11 +3,14 @@
 namespace Fjord\Crud\Fields\Media;
 
 use Fjord\Crud\MediaField;
-use Fjord\Crud\Models\FormField;
-use Spatie\MediaLibrary\Models\Media;
+use Fjord\Crud\Fields\Concerns\FormItemWrapper;
+use Fjord\Crud\Fields\Concerns\TranslatableField;
 
 class Image extends MediaField
 {
+    use FormItemWrapper,
+        TranslatableField;
+
     /**
      * Field Vue component.
      *
@@ -16,71 +19,109 @@ class Image extends MediaField
     protected $component = 'fj-field-media';
 
     /**
-     * Is field translatable.
+     * Set default field attributes.
      *
-     * @var boolean
+     * @return void
      */
-    protected $translatable = true;
+    public function setDefaultAttributes()
+    {
+        $this->setAttribute('imageSize', 12);
+        $this->setAttribute('maxFiles', 5);
+        $this->setAttribute('crop', false);
+        $this->setAttribute('override', false);
+        $this->setAttribute('firstBig', false);
+        $this->setAttribute('sortable', true);
+        $this->setAttribute('showFullImage', false);
+    }
 
     /**
-     * Required attributes.
+     * Set showFullImage.
      *
-     * @var array
+     * @param bool $showFullImage
+     * @return self
      */
-    protected $required = [
-        'title',
-    ];
+    public function showFullImage(bool $showFullImage = true)
+    {
+        $this->setAttribute('showFullImage', $showFullImage);
+
+        return $this;
+    }
 
     /**
-     * Available Field attributes.
+     * Set sortable.
      *
-     * @var array
+     * @param bool $sortable
+     * @return self
      */
-    protected $available = [
-        'title',
-        'hint',
-        'imageSize',
-        'maxFiles',
-        'crop',
-        'override',
-        'firstBig',
-        'sortable',
-        'showFullImage'
-    ];
+    public function sortable(bool $sortable = true)
+    {
+        $this->setAttribute('sortable', $sortable);
+
+        return $this;
+    }
 
     /**
-     * Default Field attributes.
+     * Set override.
      *
-     * @var array
+     * @param bool $override
+     * @return self
      */
-    protected $defaults = [
-        'imageSize' => 12,
-        'maxFiles' => 5,
-        'crop' => false,
-        'override' => false,
-        'firstBig' => false,
-        'sortable' => true,
-        'showFullImage' => false
-    ];
+    public function override(bool $override = true)
+    {
+        $this->setAttribute('override', $override);
 
-
-    /**
-     * Media form for custom_properties.
-     *
-     * @var MediaForm
-     */
-    protected $form;
+        return $this;
+    }
 
     /**
      * Set crop ratio.
      *
-     * @param integer $ratio
-     * @return void
+     * @param float $ratio
+     * @return self
      */
-    /*
-    public function crop(int $ratio)
+    public function crop(float $ratio)
     {
-        //
+        $this->setAttribute('crop', $ratio);
+
+        return $this;
     }
-    */
+
+    /**
+     * Set firstBig.
+     *
+     * @param boolean $firstBig
+     * @return self
+     */
+    public function firstBig(bool $firstBig = true)
+    {
+        $this->setAttribute('firstBig', $firstBig);
+
+        return $this;
+    }
+
+    /**
+     * Set max files.
+     *
+     * @param integer $maxFiles
+     * @return self
+     */
+    public function maxFiles(int $maxFiles)
+    {
+        $this->setAttribute('maxFiles', $maxFiles);
+
+        return $this;
+    }
+
+    /**
+     * Set max image size.
+     *
+     * @param integer $size
+     * @return self
+     */
+    public function imageSize(int $size)
+    {
+        $this->setAttribute('imageSize', $size);
+
+        return $this;
+    }
 }

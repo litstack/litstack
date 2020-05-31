@@ -8,7 +8,8 @@ class Input extends Field
 {
     use Concerns\FieldHasRules,
         Concerns\TranslatableField,
-        Concerns\FormItemWrapper;
+        Concerns\FormItemWrapper,
+        Concerns\FieldHasPlaceholder;
 
     /**
      * Field Vue component.
@@ -18,31 +19,73 @@ class Input extends Field
     protected $component = 'fj-field-input';
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    public $requiredAttributes = [];
+    public $required = [];
 
     /**
-     * Available Field attributes.
+     * Set max chars.
      *
-     * @var array
+     * @param integer $max
+     * @return $this
      */
-    public $availableAttributes = [
-        'max',
-        'placeholder',
-        'type',
-        'prepend',
-        'append',
-    ];
+    public function max(int $max)
+    {
+        $this->setAttribute('max', $max);
+
+        return $this;
+    }
 
     /**
-     * Default Field attributes.
+     * Set default attributes.
      *
-     * @var array
+     * @return void
      */
-    public $defaultAttributes = [];
+    public function setDefaultAttributes()
+    {
+        $this->type('text');
+    }
+
+    /**
+     * Set append.
+     *
+     * @param string $prepend
+     * @return $this
+     */
+    public function append(string $append)
+    {
+        $this->setAttribute('append', $append);
+
+        return $this;
+    }
+
+    /**
+     * Set prepend.
+     *
+     * @param string $prepend
+     * @return $this
+     */
+    public function prepend(string $prepend)
+    {
+        $this->setAttribute('prepend', $prepend);
+
+        return $this;
+    }
+
+    /**
+     * Set input type.
+     *
+     * @param string $type
+     * @return $this
+     */
+    public function type(string $type)
+    {
+        $this->setAttribute('type', $type);
+
+        return $this;
+    }
 
     /**
      * Cast field value.

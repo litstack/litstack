@@ -2,11 +2,12 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
-use Fjord\Crud\ManyRelationField;
+use Fjord\Crud\Fields\Concerns\FormItemWrapper;
 
 class ManyRelation extends ManyRelationField
 {
-    use Concerns\ManagesRelation;
+    use Concerns\ManagesFjordRelationField,
+        FormItemWrapper;
 
     /**
      * Properties passed to Vue component.
@@ -18,57 +19,11 @@ class ManyRelation extends ManyRelationField
     ];
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-        'model',
-        'preview'
-    ];
-
-    /**
-     * Available Field attributes.
-     *
-     * @var array
-     */
-    protected $available = [
-        'title',
-        'model',
-        'hint',
-        'form',
-        'previewQuery',
-        'preview',
-        'confirm',
-        'sortable',
-        'filter',
-        'relatedCols',
-        'small',
-        'perPage',
-        'searchable',
-        'tags',
-        'tagVariant',
-        'showTableHead'
-    ];
-
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    protected $defaults = [
-        'confirm' => false,
-        'sortable' => true,
-        'orderColumn' => 'order_column',
-        'relatedCols' => 12,
-        'small' => false,
-        'perPage' => 10,
-        'searchable' => false,
-        'tags' => false,
-        'tagVariant' => 'secondary',
-        'showTableHead' => false
-    ];
+    public $required = ['model'];
 
     /**
      * Get relation for model.
@@ -77,36 +32,14 @@ class ManyRelation extends ManyRelationField
      * @param boolean $query
      * @return mixed
      */
-    protected function getRelation($model)
+    public function getRelationQuery($model)
     {
         if (method_exists($model, $this->id)) {
-            return parent::getRelation($model);
+            return parent::getRelationQuery($model);
         }
 
         return $this->modifyQuery(
-            $model->manyRelation($this->related, $this->id)
+            $model->manyRelation($this->relatedModelClass, $this->id)
         );
-    }
-
-    /**
-     * Set related model.
-     *
-     * @param string $mode
-     * @return void
-     */
-    public function model(string $model)
-    {
-        $this->related = $model;
-
-        $this->loadRelatedConfig($model);
-        $this->setRelation();
-
-        $this->attributes['model'] = $model;
-
-        if (!$this->query) {
-            $this->query = $model::query();
-        }
-
-        return $this;
     }
 }

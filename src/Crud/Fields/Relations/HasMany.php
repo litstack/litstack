@@ -2,11 +2,11 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
-use Fjord\Crud\ManyRelationField;
+use Fjord\Crud\Fields\Concerns\FormItemWrapper;
 
 class HasMany extends ManyRelationField
 {
-    use Concerns\ManagesRelation;
+    use FormItemWrapper;
 
     /**
      * Properties passed to Vue component.
@@ -22,34 +22,17 @@ class HasMany extends ManyRelationField
      *
      * @var array
      */
-    protected $required = [
-        'title',
-        'model',
+    public $requiredAttributes = [
         'preview'
     ];
 
     /**
-     * Available Field attributes.
+     * Available field attributes.
      *
      * @var array
      */
-    protected $available = [
-        'title',
-        'model',
+    public $availableAttributes = [
         'form',
-        'hint',
-        'previewQuery',
-        'preview',
-        'confirm',
-        'sortable',
-        'filter',
-        'relatedCols',
-        'small',
-        'perPage',
-        'searchable',
-        'tags',
-        'tagVariant',
-        'showTableHead'
     ];
 
     /**
@@ -57,16 +40,7 @@ class HasMany extends ManyRelationField
      *
      * @var array
      */
-    protected $defaults = [
-        'confirm' => false,
-        'sortable' => false,
-        'relatedCols' => 12,
-        'small' => false,
-        'perPage' => 10,
-        'searchable' => false,
-        'tags' => false,
-        'tagVariant' => 'secondary',
-    ];
+    public $defaultAttributes = [];
 
     /**
      * Set relation attributes.

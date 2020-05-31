@@ -2,11 +2,11 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
-use Fjord\Crud\ManyRelationField;
+use Fjord\Crud\Fields\Concerns\FormItemWrapper;
 
 class BelongsToMany extends ManyRelationField
 {
-    use Concerns\ManagesRelation;
+    use FormItemWrapper;
 
     /**
      * Properties passed to Vue component.
@@ -22,7 +22,7 @@ class BelongsToMany extends ManyRelationField
      *
      * @var array
      */
-    protected $required = [
+    public $requiredAttributes = [
         'title',
         'model',
         'preview'
@@ -33,7 +33,7 @@ class BelongsToMany extends ManyRelationField
      *
      * @var array
      */
-    protected $available = [
+    public $availableAttributes = [
         'title',
         'model',
         'form',
@@ -57,7 +57,7 @@ class BelongsToMany extends ManyRelationField
      *
      * @var array
      */
-    protected $defaults = [
+    public $defaultAttributes = [
         'confirm' => false,
         'sortable' => false,
         'relatedCols' => 12,
