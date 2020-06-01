@@ -23,6 +23,17 @@ class Range extends Field
     public $required = ['min', 'max'];
 
     /**
+     * Set default attributes.
+     *
+     * @return void
+     */
+    public function setDefaultAttributes()
+    {
+        $this->setAttribute('step', 1);
+        $this->setAttribute('min', 1);
+    }
+
+    /**
      * Set step.
      *
      * @param integer $step
@@ -59,17 +70,6 @@ class Range extends Field
         $this->setAttribute('min', $min);
 
         return $this;
-    }
-
-    /**
-     * Set default attributes.
-     *
-     * @return void
-     */
-    public function setDefaultAttributes()
-    {
-        $this->setAttribute('step', 1);
-        $this->setAttribute('min', 1);
     }
 
     /**

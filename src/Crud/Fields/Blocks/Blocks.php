@@ -10,6 +10,7 @@ use Fjord\Crud\Fields\Concerns\FormItemWrapper;
 class Blocks extends RelationField
 {
     use FormItemWrapper;
+
     /**
      * Field Vue component.
      *
@@ -23,16 +24,6 @@ class Blocks extends RelationField
      * @var array
      */
     public $required = ['title', 'repeatables'];
-
-    /**
-     * Available Field attributes.
-     *
-     * @var array
-     */
-    public $availableAttributes = [
-        'repeatables',
-        'blockWidth'
-    ];
 
     /**
      * Set default field attributes

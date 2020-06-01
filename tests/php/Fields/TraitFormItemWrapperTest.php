@@ -15,16 +15,18 @@ class TraitFormItemWrapperTest extends BackendTestCase
     public function it_can_have_a_hint_per_default()
     {
         $field = $this->getField(FormItemWrapperField::class);
-        $availableAttributes = $this->getUnaccessibleProperty($field, 'availableAttributes');
-        $this->assertContains('hint', $availableAttributes);
+        $field->hint('dummy hint');
+
+        $this->assertEquals('dummy hint', $field->getAttribute('hint'));
     }
 
     /** @test */
-    public function field_without_hint_cant_hint()
+    public function field_without_hint_throws_exception_when_hint_is_called()
     {
         $field = $this->getField(FormItemWrapperFieldWithoutHint::class);
-        $availableAttributes = $this->getUnaccessibleProperty($field, 'availableAttributes');
-        $this->assertNotContains('hint', $availableAttributes);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $field->hint('dummy hint');
     }
 }
 

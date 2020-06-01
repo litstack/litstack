@@ -3,9 +3,6 @@
 namespace Fjord\Crud;
 
 use Fjord\Crud\RelationField;
-use Fjord\Crud\Models\FormBlock;
-use Fjord\Crud\Models\FormField;
-use Illuminate\Database\Eloquent\Collection;
 
 class MediaField extends RelationField
 {
@@ -36,19 +33,5 @@ class MediaField extends RelationField
         }
 
         return $results;
-    }
-
-    /**
-     * Resolve query for media.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|Media
-     */
-    public function resolveQuery($media)
-    {
-        if ($this->maxFiles == 1 && $media instanceof Collection) {
-            return $media->first();
-        }
-
-        return $media;
     }
 }

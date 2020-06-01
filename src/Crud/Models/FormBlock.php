@@ -3,13 +3,7 @@
 namespace Fjord\Crud\Models;
 
 use Fjord\Crud\Fields\Blocks\Blocks;
-use Spatie\MediaLibrary\Models\Media;
-use Illuminate\Database\Eloquent\Model;
-use Astrotomic\Translatable\Translatable;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
 class FormBlock extends FjordFormModel
 {
@@ -47,20 +41,14 @@ class FormBlock extends FjordFormModel
      *
      * @var array
      */
-    protected $appends = [
-        'fields',
-        'translation'
-    ];
+    protected $appends = ['fields', 'translation'];
 
     /**
      * Eager loads.
      *
      * @var array
      */
-    protected $with = [
-        'translations',
-        'media'
-    ];
+    protected $with = ['translations', 'media'];
 
     /**
      * Model relation.

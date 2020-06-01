@@ -290,6 +290,12 @@ if (!function_exists('is_translatable')) {
             $model = new $model;
         }
 
+        $uses = array_keys(class_uses_recursive($model));
+
+        if (in_array(\Astrotomic\Translatable\Translatable::class, $uses)) {
+            return true;
+        }
+
         return $model instanceof \Astrotomic\Translatable\Contracts\Translatable;
     }
 }

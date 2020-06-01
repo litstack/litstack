@@ -4,6 +4,7 @@ namespace FjordTest;
 
 use FjordTest\Traits\TestHelpers;
 use FjordTest\Traits\RefreshLaravel;
+use FjordTest\Traits\InteractsWithConfig;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\Dusk\TestCase as OrchestraDuskTestCase;
 
@@ -59,6 +60,9 @@ class BackendTestCase extends OrchestraDuskTestCase
 
         if (isset($uses[RefreshLaravel::class])) {
             $this->fixMigrations();
+        }
+        if (isset($uses[InteractsWithConfig::class])) {
+            $this->overrideConfigLoaderSingleton();
         }
     }
 

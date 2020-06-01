@@ -13,21 +13,18 @@ use Fjord\Crud\Fields\Relations\ManyRelationField;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
-//class FjordFormModel extends Model implements HasMedia, TranslatableContract
 class FjordFormModel extends Model implements HasMedia, TranslatableContract
 {
-
     use Traits\HasMedia,
         Translatable,
         Concerns\HasConfig,
         Concerns\HasFields,
         Concerns\HasMedia;
 
-
     /**
-     * value is translatable but since non translatable fields are stored in 
+     * "value" is translatable but since non translatable fields are stored in 
      * the value field it is important to not set value as a translatedAttribute 
-     * here, because the translator would store it to the fallback locale.
+     * here.
      *
      * @var array
      */
@@ -199,7 +196,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     public function getAttribute($key)
     {
         // Using fieldIds instead of fieldExists to avoid infinite loop 
-        // when calling getAttribute('field').
+        // when calling getAttribute({field_id}).
         if (!in_array($key, $this->fieldIds)) {
             return parent::getAttribute($key);
         }
@@ -231,6 +228,8 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     {
         $model = parent::newFromBuilder($attributes, $connection);
 
+        // Set field ids to be able to check if field exists in getAttribute 
+        // method.
         $model->setFieldIds($model->fields->map(function ($field) {
             return $field->id;
         })->toArray());
@@ -266,7 +265,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     }
 
     /**
-     * Modified to return relations for type "relation" or "block".
+     * Modified to return relation instances for relation fields.
      * 
      * @param string $method
      * @param array $params
@@ -284,6 +283,6 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
             return parent::__call($method, $params);
         }
 
-        return $field->relation($this);
+        return $field->getRelationQuery($this);
     }
 }

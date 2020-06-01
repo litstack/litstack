@@ -23,6 +23,17 @@ class Icon extends Field
     public $required = [];
 
     /**
+     * Set default attributes.
+     *
+     * @return void
+     */
+    public function setDefaultAttributes()
+    {
+        $this->icons(require fjord_path('src/Crud/Fields/Defaults/fontawesome_icons.php'));
+        $this->search(true);
+    }
+
+    /**
      * Set search.
      *
      * @param boolean $search
@@ -47,27 +58,6 @@ class Icon extends Field
 
         return $this;
     }
-
-    /**
-     * Set default icons attribute.
-     *
-     * @return array
-     */
-    public function setIconsDefault()
-    {
-        return require fjord_path('src/Crud/Fields/Defaults/fontawesome_icons.php');
-    }
-
-    /**
-     * Set default icons attribute.
-     *
-     * @return array
-     */
-    public function setSearchDefault()
-    {
-        return true;
-    }
-
 
     /**
      * Cast field value.

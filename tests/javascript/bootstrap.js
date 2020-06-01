@@ -1,3 +1,4 @@
+require('@fj-js/common/bootstrap');
 require('@fj-js/common/fjord');
 require('@fj-js/common/event.bus');
 

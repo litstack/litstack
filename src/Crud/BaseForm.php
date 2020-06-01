@@ -214,13 +214,6 @@ class BaseForm extends VueProp
     public function registerWrapper($wrapper, $closure)
     {
         if ($this->inWrapper()) {
-            /*
-            $newWrapper = $this->component('fj-field-wrapper')
-                ->wrapper($component);
-        } else {
-            $newWrapper = component('fj-field-wrapper')
-                ->wrapper($component);
-                */
 
             $this->wrapper
                 ->component($wrapper);
@@ -233,8 +226,6 @@ class BaseForm extends VueProp
         $this->wrapper = !empty($this->wrapperStack)
             ? array_pop($this->wrapperStack)
             : null;
-
-        //dd($wrapper->wrapperComponent);
 
         return $wrapper->wrapperComponent;
     }
@@ -329,7 +320,7 @@ class BaseForm extends VueProp
     public function registerField($field, string $id, $params = [])
     {
         if ($this->registrar) {
-            // Check if all required properties are set.
+            // Check if all required field attribute are set.
             $this->registrar->checkComplete();
         }
 

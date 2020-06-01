@@ -27,14 +27,14 @@ class Textarea extends Field
 
 
     /**
-     * Set maxChars.
+     * Set max characters.
      *
-     * @param integer $maxChars
+     * @param integer $max
      * @return $this
      */
-    public function maxChars(int $maxChars)
+    public function max(int $max)
     {
-        $this->setAttribute('max', $maxChars);
+        $this->setAttribute('max', $max);
 
         return $this;
     }

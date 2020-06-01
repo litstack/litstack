@@ -51,70 +51,11 @@ class Field extends VueProp
     protected $props = [];
 
     /**
-     * Available slots.
-     *
-     * @var array
-     */
-    protected $availableSlots = [
-        'title',
-    ];
-
-    /**
      * Required field attributes.
      *
      * @var array
      */
     public $required = [];
-
-    /**
-     * Always available field attributes.
-     *
-     * @var array
-     */
-    protected $alwaysAvailableAttributes = [
-        'readonly',
-        'width',
-        'info',
-        'class',
-        'dependsOn'
-    ];
-
-    /**
-     * Available field attributes.
-     *
-     * @var array
-     */
-    public $availableAttributes = [];
-
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    protected $defaults = [
-        'readonly' => false,
-        'width' => 12,
-        'slots' => [],
-        'class' => ''
-    ];
-
-    /**
-     * Default field attributes.
-     *
-     * @var array
-     */
-    public $defaultAttributes = [];
-
-    /**
-     * Properties that should be merged from traits or extensions.
-     *
-     * @var array
-     */
-    protected $mergeProperties = [
-        'defaultAttributes',
-        'availableAttributes',
-        'requiredAttributes'
-    ];
 
     /**
      * Saveable field.
@@ -154,6 +95,8 @@ class Field extends VueProp
         $this->setAttribute('local_key', $id);
         $this->setAttribute('route_prefix', $routePrefix);
         $this->setAttribute('component', $this->component);
+        $this->setAttribute('readonly', false);
+        $this->setAttribute('class', '');
 
         $this->setDefaultsFromClassMethods();
         $this->setDefaultAttributes();
@@ -161,13 +104,16 @@ class Field extends VueProp
     }
 
     /**
-     * Set default slot attribute.
+     * Set readonly attribute.
      *
-     * @return array
+     * @param boolean $readonly
+     * @return $this
      */
-    protected function setSlotsAttribute()
+    public function readonly(bool $readonly = true)
     {
-        return [];
+        $this->setAttribute('readonly', $readonly);
+
+        return $this;
     }
 
     /**
@@ -301,8 +247,10 @@ class Field extends VueProp
     {
         if (!$this->slotExists($slot)) {
             $field = class_basename(static::class);
-            throw new InvalidArgumentException("Slot {$slot} does not exist for Field {$field}. Available slots: " . implode(', ', $this->getAvailableSlots()));
+            throw new InvalidArgumentException("Slot {$slot} does not exist for Field {$field}");
         }
+
+        $this->{$this->getSlotMethodName($slot)}($component);
 
         $this->attributes['slots'][$slot] = $component;
 
@@ -317,7 +265,21 @@ class Field extends VueProp
      */
     public function slotExists(string $slot)
     {
-        return in_array($slot, $this->availableSlots);
+        return in_array(
+            $this->getSlotMethodName($slot),
+            get_class_methods($this)
+        );
+    }
+
+    /**
+     * Get slot method name.
+     *
+     * @param string $slot
+     * @return string
+     */
+    protected function getSlotMethodName(string $slot)
+    {
+        return Str::camel("{$slot}_slot");
     }
 
     /**
@@ -370,10 +332,12 @@ class Field extends VueProp
      */
     public function setDefaultAttributes()
     {
-        // Set your default attributes in here.
+        // Set the field default attributes in here.
+
+        // $this->something('value');
+        // or:
         // $this->setAttribute('something', 'value');
     }
-
 
     /**
      * Get attribute name from setter method name.
@@ -387,10 +351,10 @@ class Field extends VueProp
     protected function getDefaultSetterAttributeName(string $method)
     {
         return lcfirst(
-            Str::replaceLast(
+            Str::replaceFirst(
                 'set',
                 '',
-                Str::replaceFirst(
+                Str::replaceLast(
                     'Default',
                     '',
                     $method

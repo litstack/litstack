@@ -18,7 +18,7 @@ const model = new CrudModel({
     }
 });
 
-const FjFormItem = {
+const FjBaseField = {
     template: '<div><slot/></div>'
 };
 
@@ -29,8 +29,8 @@ describe('Input field', () => {
         const wrapper = mount(Input, {
             store,
             localVue: Vue,
-            stubs: { FjFormItem },
-            propsData: { field, model }
+            stubs: { FjBaseField },
+            propsData: { field, model, value: '' }
         });
 
         expect(wrapper.find('.fj-field-input').exists()).toBe(true);
@@ -40,8 +40,8 @@ describe('Input field', () => {
         const wrapper = mount(Input, {
             store,
             localVue: Vue,
-            stubs: { FjFormItem },
-            propsData: { field, model }
+            stubs: { FjBaseField },
+            propsData: { field, model, value: '' }
         });
 
         expect(wrapper.find('.fj-field-input').attributes('type')).toBe('text');
@@ -56,8 +56,8 @@ describe('Input field', () => {
         const wrapper = mount(Input, {
             store,
             localVue: Vue,
-            stubs: { FjFormItem },
-            propsData: { field: fieldWithTypeEmail, model }
+            stubs: { FjBaseField },
+            propsData: { field: fieldWithTypeEmail, model, value: '' }
         });
 
         let inputType = wrapper.find('.fj-field-input').attributes('type');
@@ -72,8 +72,8 @@ describe('Input field', () => {
         const wrapper = mount(Input, {
             store,
             localVue: Vue,
-            stubs: { FjFormItem },
-            propsData: { field: fieldWithPrepend, model }
+            stubs: { FjBaseField },
+            propsData: { field: fieldWithPrepend, model, value: '' }
         });
 
         let prependText = wrapper
@@ -90,8 +90,8 @@ describe('Input field', () => {
         const wrapper = mount(Input, {
             store,
             localVue: Vue,
-            stubs: { FjFormItem },
-            propsData: { field: fieldWithPrepend, model }
+            stubs: { FjBaseField },
+            propsData: { field: fieldWithPrepend, model, value: '' }
         });
 
         let prependText = wrapper

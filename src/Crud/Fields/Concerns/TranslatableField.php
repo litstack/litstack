@@ -12,7 +12,7 @@ trait TranslatableField
      */
     public function translatable(bool $translatable = true)
     {
-        $this->setAttribute($translatable);
+        $this->setAttribute('translatable', $translatable);
 
         return $this;
     }

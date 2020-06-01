@@ -20,10 +20,7 @@
             "fjord-test": "<rootDir>/tests/javascript/bootstrap.js",
             "@fj-js(.*)$": "<rootDir>/resources/js/$1",
             "@fj-sass(.*)$": "<rootDir>/resources/sass/$1"
-        },
-        "snapshotSerializers": [
-            "jest-serializer-vue"
-        ]
+        }
     },
     "config": {
         "exportAliases": {

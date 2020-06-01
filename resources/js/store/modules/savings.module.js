@@ -11,6 +11,9 @@ const initialState = {
 };
 
 const getters = {
+    saveJobs(state) {
+        return state.jobs;
+    },
     canSave(state) {
         return state.jobs.length > 0;
     }

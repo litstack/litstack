@@ -30,4 +30,15 @@ class FieldSelectTest extends BackendTestCase
     {
         $this->assertHasTrait(FieldHasRules::class, $this->field);
     }
+
+    /** @test */
+    public function test_options_method()
+    {
+        $this->field->options(['a' => 'b']);
+        $this->assertArrayHasKey('options', $this->field->getAttributes());
+        $this->assertEquals(['a' => 'b'], $this->field->getAttribute('options'));
+
+        // Assert method returns field instance.
+        $this->assertEquals($this->field, $this->field->options([]));
+    }
 }

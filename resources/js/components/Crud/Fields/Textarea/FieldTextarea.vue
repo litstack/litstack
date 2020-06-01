@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item
+    <fj-base-field
         :field="field"
         :model="model"
         :value="value"
@@ -13,11 +13,11 @@
             :maxlength="field.max"
             :state="state"
             v-bind:readonly="field.readonly"
-            @input="changed"
+            @input="$emit('input', $event)"
         />
 
         <slot />
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>
@@ -33,25 +33,18 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        value: {
+            required: true
         }
-    },
-    data() {
-        return {
-            value: '',
-            original: ''
-        };
-    },
-    beforeMount() {
-        this.init();
-    },
+    }
+    /*
     methods: {
-        ...methods,
         changed(value) {
             this.setValue(value);
             this.$emit('changed', value);
         }
     }
+    */
 };
 </script>
-
-<style lang="css"></style>

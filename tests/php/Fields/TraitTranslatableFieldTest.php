@@ -40,6 +40,16 @@ class TraitTranslatableFieldTest extends BackendTestCase
         );
         $this->assertFalse($field->translatable);
     }
+
+    /** @test */
+    public function test_translatable_method()
+    {
+        $field = $this->getField(TranslatableField::class);
+        $field->translatable();
+        $this->assertTrue($field->translatable);
+        $field->translatable(false);
+        $this->assertFalse($field->translatable);
+    }
 }
 
 class TranslatableField extends Field

@@ -15,21 +15,6 @@ class ManyRelationField extends LaravelRelationField
     protected $component = 'fj-field-relation';
 
     /**
-     * Available field attributes.
-     *
-     * @var array
-     */
-    protected $availableManyRelationAttributes = [
-        'sortable',
-        'tagVariant',
-        'tags',
-        'showTableHead',
-        'searchable',
-        'perPage',
-    ];
-
-
-    /**
      * Set default field attributes.
      *
      * @return void
@@ -53,7 +38,7 @@ class ManyRelationField extends LaravelRelationField
      */
     public function showTableHead(bool $show = true)
     {
-        $this->setAttribute('showTableHead', $bool);
+        $this->setAttribute('showTableHead', $show);
 
         return $this;
     }
@@ -117,7 +102,7 @@ class ManyRelationField extends LaravelRelationField
      */
     public function sortable($sort = true)
     {
-        if (!$this->getRelatedModelClass()) {
+        if (!$this->model) {
             throw new InvalidArgumentException('You may set a related Model before making the Field sortable.', [
                 'function' => 'sortable',
                 'class' => 'Fjord\Crud\ManyRelationField'

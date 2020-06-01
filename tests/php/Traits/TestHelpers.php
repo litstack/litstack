@@ -38,7 +38,7 @@ trait TestHelpers
         $class = new ReflectionClass($class);
         $method = $class->getMethod($method);
         $method->setAccessible(true);
-        return $method->invokeArgs($instance, []);
+        return $method->invokeArgs($instance, $params);
     }
 
     /**

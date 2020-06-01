@@ -20,7 +20,7 @@ abstract class RelationField extends Field
      */
     public function relation($model)
     {
-        // TODO: Merge getRelation and this method since one of them is reduntant.
+        // TODO: Merge getRelationQuery and this method since one of them is redundant.
         return $this->getRelationQuery($model);
     }
 

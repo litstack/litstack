@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item
+    <fj-base-field
         :field="field"
         :model="model"
         :value="value"
@@ -10,7 +10,7 @@
             <b-input-group-prepend is-text v-if="field.prepend">
                 <span v-html="field.prepend"></span>
             </b-input-group-prepend>
-            <!--<fj-input ref="input" slot-scope="{ value }">-->
+
             <b-input
                 class="form-control fj-field-input"
                 :value="value"
@@ -20,16 +20,16 @@
                 :required="field.required"
                 :state="state"
                 v-bind:readonly="field.readonly"
-                @input="changed"
+                v-on:input="$emit('input', $event)"
             />
-            <!--</fj-input>-->
+
             <b-input-group-append is-text v-if="field.append">
                 <span v-html="field.append"></span>
             </b-input-group-append>
         </b-input-group>
 
         <slot />
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>
@@ -45,19 +45,13 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        value: {
+            required: true
         }
     },
-    data() {
-        return {
-            value: '',
-            original: ''
-        };
-    },
-    beforeMount() {
-        this.init();
-    },
     methods: {
-        ...methods,
+        //...methods,
         changed(val) {
             this.setValue(val);
             //this.$refs.input.$emit('changed', val);

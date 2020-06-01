@@ -2,6 +2,8 @@
 
 namespace Fjord\Crud\Fields\Concerns;
 
+use InvalidArgumentException;
+
 /**
  * @property-read boolean $withoutHint
  */
@@ -35,6 +37,15 @@ trait FormItemWrapper
      */
     public function hint(string $hint)
     {
+        if (property_exists($this, 'withoutHint')) {
+            if ($this->withoutHint) {
+                throw new InvalidArgumentException(sprintf(
+                    'The hint method is not available on the %s field.',
+                    class_basename(static::class)
+                ));
+            }
+        }
+
         $this->setAttribute('hint', $hint);
 
         return $this;
@@ -84,23 +95,5 @@ trait FormItemWrapper
     public function setWidthDefault()
     {
         return 12;
-    }
-
-    /**
-     * Set hint attribute.
-     *
-     * @return void
-     */
-    public function setHintDefault()
-    {
-        if (!property_exists($this, 'withoutHint')) {
-            return;
-        }
-
-        if ($this->withoutHint) {
-            $this->removeAvailableAttribute('hint');
-        }
-
-        return '';
     }
 }

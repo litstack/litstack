@@ -37,4 +37,15 @@ class FieldTextareaTest extends BackendTestCase
     {
         $this->assertHasTrait(FormItemWrapper::class, $this->field);
     }
+
+    /** @test */
+    public function test_max_method()
+    {
+        $this->field->max(5);
+        $this->assertArrayHasKey('max', $this->field->getAttributes());
+        $this->assertEquals(5, $this->field->getAttribute('max'));
+
+        // Assert method returns field instance.
+        $this->assertEquals($this->field, $this->field->max(5));
+    }
 }

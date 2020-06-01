@@ -30,4 +30,14 @@ class FieldCheckboxesTest extends BackendTestCase
         $this->assertIsArray($this->field->cast('["a"]'));
         $this->assertIsArray($this->field->cast(["a"]));
     }
+
+    /** @test */
+    public function test_options_method()
+    {
+        $this->field->options([]);
+        $this->assertArrayHasKey('options', $this->field->getAttributes());
+
+        // Assert method returns field instance.
+        $this->assertEquals($this->field, $this->field->options([]));
+    }
 }
