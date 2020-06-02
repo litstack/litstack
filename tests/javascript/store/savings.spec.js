@@ -118,7 +118,6 @@ describe('method mergeParamsFromJob', () => {
         store.commit('ADD_SAVE_JOB', otherJob);
 
         let result = methods.mergeParamsFromJob(store.getters.saveJobs[0]);
-        console.log(result);
         expect(result).toStrictEqual({
             attribute: { one: 'one value', two: 'two value' }
         });

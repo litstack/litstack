@@ -3,13 +3,12 @@
 namespace Fjord\Crud\Fields\Media;
 
 use Fjord\Crud\MediaField;
-use Fjord\Crud\Fields\Concerns\FormItemWrapper;
+use Fjord\Crud\Fields\Traits\HasBaseField;
 use Fjord\Crud\Fields\Concerns\TranslatableField;
 
 class Image extends MediaField
 {
-    use FormItemWrapper,
-        TranslatableField;
+    use TranslatableField, HasBaseField;
 
     /**
      * Field Vue component.
@@ -25,20 +24,20 @@ class Image extends MediaField
      */
     public function setDefaultAttributes()
     {
-        $this->setAttribute('imageSize', 12);
-        $this->setAttribute('maxFiles', 5);
-        $this->setAttribute('crop', false);
-        $this->setAttribute('override', false);
-        $this->setAttribute('firstBig', false);
-        $this->setAttribute('sortable', true);
-        $this->setAttribute('showFullImage', false);
+        $this->imageSize(12);
+        $this->maxFiles(5);
+        $this->crop(false);
+        $this->override(false);
+        $this->firstBig(false);
+        $this->sortable(true);
+        $this->showFullImage(false);
     }
 
     /**
      * Set showFullImage.
      *
      * @param bool $showFullImage
-     * @return self
+     * @return $this
      */
     public function showFullImage(bool $showFullImage = true)
     {
@@ -51,7 +50,7 @@ class Image extends MediaField
      * Set sortable.
      *
      * @param bool $sortable
-     * @return self
+     * @return $this
      */
     public function sortable(bool $sortable = true)
     {
@@ -64,7 +63,7 @@ class Image extends MediaField
      * Set override.
      *
      * @param bool $override
-     * @return self
+     * @return $this
      */
     public function override(bool $override = true)
     {
@@ -77,7 +76,7 @@ class Image extends MediaField
      * Set crop ratio.
      *
      * @param float $ratio
-     * @return self
+     * @return $this
      */
     public function crop(float $ratio)
     {
@@ -90,7 +89,7 @@ class Image extends MediaField
      * Set firstBig.
      *
      * @param boolean $firstBig
-     * @return self
+     * @return $this
      */
     public function firstBig(bool $firstBig = true)
     {
@@ -103,7 +102,7 @@ class Image extends MediaField
      * Set max files.
      *
      * @param integer $maxFiles
-     * @return self
+     * @return $this
      */
     public function maxFiles(int $maxFiles)
     {
@@ -116,7 +115,7 @@ class Image extends MediaField
      * Set max image size.
      *
      * @param integer $size
-     * @return self
+     * @return $this
      */
     public function imageSize(int $size)
     {

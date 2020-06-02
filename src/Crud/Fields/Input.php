@@ -2,14 +2,13 @@
 
 namespace Fjord\Crud\Fields;
 
-use Fjord\Crud\Field;
+use Fjord\Crud\BaseField;
 
-class Input extends Field
+class Input extends BaseField
 {
-    use Concerns\FieldHasRules,
-        Concerns\TranslatableField,
-        Concerns\FormItemWrapper,
-        Concerns\FieldHasPlaceholder;
+    use Traits\FieldHasRules,
+        Traits\TranslatableField,
+        Traits\FieldHasPlaceholder;
 
     /**
      * Field Vue component.

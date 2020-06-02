@@ -41,6 +41,7 @@ export default {
             },
             on: {
                 input: this.input,
+                // TODO: Except input ?
                 ...this.$listeners
             }
         });
@@ -48,16 +49,27 @@ export default {
         return vm;
     },
     props: {
+        /**
+         * Model.
+         */
         model: {
             type: Object,
             required: true
         },
+
+        /**
+         * Model id.
+         */
         modelId: {
             type: [Number, String],
             default() {
                 return null;
             }
         },
+
+        /**
+         * Field attributes.
+         */
         field: {
             type: Object,
             required: true
@@ -82,16 +94,19 @@ export default {
         };
     },
     beforeMount() {
+        // Route prefix stuff.
         this.formatRoutePrefix();
 
+        // Field value stuff.
         this.storeOriginalValues();
-        // Set current field value.
         this.setCurrentValue();
-
-        this.detectDepencyChanges();
-        Fjord.bus.$on('fieldChanged', this.detectDepencyChanges);
         Fjord.bus.$on('saveCanceled', this.resetModelValuesToOriginal);
         Fjord.bus.$on('languageChanged', this.setCurrentValue);
+        Fjord.bus.$on('saved', this.onSaved);
+
+        // Render dependency stuff.
+        this.detectDepencyChanges();
+        Fjord.bus.$on('fieldChanged', this.detectDepencyChanges);
     },
     computed: {
         ...mapGetters(['language']),
@@ -115,9 +130,11 @@ export default {
          * @return {undefined}
          */
         input(newValue) {
+            console.log(newValue);
             this.value = newValue;
             this.fillValueToModel(newValue);
             this.addSaveJob();
+            this.$emit('changed');
         },
 
         /**
@@ -290,6 +307,8 @@ export default {
                 route: this.field.route_prefix,
                 method: this.field._method
             };
+
+            console.log('CHANGED', this.field.route_prefix, this.value);
 
             if (this.hasValueChanged()) {
                 this.$store.commit('ADD_SAVE_JOB', job);

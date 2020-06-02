@@ -2,12 +2,10 @@
 
 namespace Fjord\Crud\Fields;
 
-use Fjord\Crud\Field;
+use Fjord\Crud\BaseField;
 
-class Boolean extends Field
+class Boolean extends BaseField
 {
-    use Concerns\FormItemWrapper;
-
     /**
      * Field Vue component.
      *

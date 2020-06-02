@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field" :model="model">
+    <fj-base-field :field="field" :model="model">
         <template slot="title-right">
             <a href="#" @click="toggleExpand" v-if="!this.create">
                 <fa-icon :icon="expandedAll ? 'angle-up' : 'angle-down'" />
@@ -58,7 +58,7 @@
         <template v-else>
             <fj-field-alert-not-created :field="field" class="mb-0" />
         </template>
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>

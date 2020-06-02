@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field" :model="model">
+    <fj-base-field :field="field" :model="model">
         <b-button
             :variant="field.variant"
             v-b-modal="modalId"
@@ -48,7 +48,7 @@
                 </b-button>
             </template>
         </b-modal>
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>

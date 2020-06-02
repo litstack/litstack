@@ -2,12 +2,13 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
+use Fjord\Crud\Fields\Traits\HasBaseField;
 use Fjord\Crud\Fields\Concerns\FormItemWrapper;
 
 class ManyRelation extends ManyRelationField
 {
     use Concerns\ManagesFjordRelationField,
-        FormItemWrapper;
+        HasBaseField;
 
     /**
      * Properties passed to Vue component.

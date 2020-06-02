@@ -4,13 +4,11 @@ namespace FjordTest\Fields;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Fjord\Crud\Field;
-use Fjord\Crud\Fields\Input;
 use FjordTest\BackendTestCase;
 use Illuminate\Database\Eloquent\Model;
 use FjordTest\Traits\InteractsWithFields;
 use Fjord\Crud\Models\Traits\Translatable;
-use Fjord\Crud\Fields\Concerns\FieldHasRules;
-use Fjord\Crud\Fields\Concerns\TranslatableField as TranslatableFieldTrait;
+use Fjord\Crud\Fields\Traits\TranslatableField as TranslatableFieldTrait;
 
 class TraitTranslatableFieldTest extends BackendTestCase
 {

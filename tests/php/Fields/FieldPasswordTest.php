@@ -3,12 +3,12 @@
 namespace FjordTest\Fields;
 
 use Mockery as m;
+use Fjord\Crud\BaseField;
 use FjordTest\BackendTestCase;
 use Fjord\Crud\Fields\Password;
 use Illuminate\Support\Facades\Hash;
 use FjordTest\Traits\InteractsWithFields;
-use Fjord\Crud\Fields\Concerns\FieldHasRules;
-use Fjord\Crud\Fields\Concerns\FormItemWrapper;
+use Fjord\Crud\Fields\Traits\FieldHasRules;
 
 class FieldPasswordTest extends BackendTestCase
 {
@@ -22,9 +22,9 @@ class FieldPasswordTest extends BackendTestCase
     }
 
     /** @test */
-    public function it_has_form_item_wrapper()
+    public function it_is_base_field()
     {
-        $this->assertHasTrait(FormItemWrapper::class, $this->field);
+        $this->assertInstanceOf(BaseField::class, $this->field);
     }
 
     /** @test */

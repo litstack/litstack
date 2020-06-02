@@ -2,10 +2,10 @@
 
 namespace FjordTest\Fields;
 
-use Fjord\Crud\Fields\Checkboxes;
+use Fjord\Crud\BaseField;
 use FjordTest\BackendTestCase;
+use Fjord\Crud\Fields\Checkboxes;
 use FjordTest\Traits\InteractsWithFields;
-use Fjord\Crud\Fields\Concerns\FormItemWrapper;
 
 class FieldCheckboxesTest extends BackendTestCase
 {
@@ -19,9 +19,9 @@ class FieldCheckboxesTest extends BackendTestCase
     }
 
     /** @test */
-    public function it_has_form_item_wrapper()
+    public function it_is_base_field()
     {
-        $this->assertHasTrait(FormItemWrapper::class, $this->field);
+        $this->assertInstanceOf(BaseField::class, $this->field);
     }
 
     /** @test */

@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item
+    <fj-base-field
         :field="field"
         :model="model"
         ref="form"
@@ -9,7 +9,7 @@
         <b-input-group>
             <b-input
                 class="form-control"
-                v-model="value"
+                :value="value"
                 :placeholder="field.placeholder"
                 :type="show ? 'text' : 'password'"
                 :state="state"
@@ -38,7 +38,7 @@
                 :variant="scoreVariant"
             />
         </div>
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>
@@ -52,11 +52,13 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        value: {
+            required: true
         }
     },
     data() {
         return {
-            value: '',
             show: false
         };
     },
@@ -75,12 +77,11 @@ export default {
             }
         },
         reset() {
-            this.value = '';
-            this.changed('');
+            this.$emit('input', '');
         },
-        changed(val) {
-            this.addSaveJob();
-            if (val == '') {
+        changed(newPassword) {
+            this.addSaveJob(newPassword);
+            if (newPassword == '') {
                 return (this.field.hint = ``);
             }
             if (this.field.noScore) {
@@ -89,23 +90,21 @@ export default {
             this.field.hint = `Password strength: <b>${this.scoreStrength}</b>`;
             this.$refs.form.$forceUpdate();
         },
-        addSaveJob() {
+        addSaveJob(newPassword) {
             let job = {
                 route: this.field.route_prefix,
                 method: this.field._method,
-                params: {
-                    [this.field.local_key]: this.value
-                },
+                params: { [this.field.local_key]: newPassword },
                 key: this.field.local_key
             };
 
             let add = true;
             if (!this.field.noScore && this.score < this.field.minScore) {
                 add = false;
-            } else if (this.field.noScore && this.value == '') {
+            } else if (this.field.noScore && newPassword == '') {
                 add = false;
             }
-
+            //console.log(add, this.value)
             if (!add) {
                 this.$store.commit('REMOVE_SAVE_JOB', job);
             } else {

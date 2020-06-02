@@ -22,7 +22,7 @@ class MediaField extends RelationField
      * Get results.
      *
      * @param mixed $model
-     * @return void
+     * @return mixed
      */
     public function getResults($model)
     {

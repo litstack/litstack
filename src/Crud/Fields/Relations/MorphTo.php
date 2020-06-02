@@ -2,12 +2,15 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
-use Fjord\Crud\Fields\Concerns\FormItemWrapper;
+use Fjord\Crud\Fields\Traits\HasBaseField;
 
 class MorphTo extends OneRelationField
 {
-    use FormItemWrapper;
+    use HasBaseField;
 
+    /**
+     * Id divider
+     */
     const ID_DIVIDER = '-';
 
     /**

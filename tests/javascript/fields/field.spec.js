@@ -165,6 +165,19 @@ describe('original value handling', () => {
 
         expect(wrapper.vm.value).toBe('original value');
     });
+
+    it('resets original value after saving', () => {
+        wrapper.vm.original = 'base original value';
+        model.attributes.dummy_attribute = 'new value';
+
+        Fjord.bus.$emit('saved', {
+            hasFailed() {
+                return false;
+            }
+        });
+
+        expect(wrapper.vm.original).toBe('new value');
+    });
 });
 
 describe('fillValueToModel', () => {

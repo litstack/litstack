@@ -20,7 +20,7 @@
                 :required="field.required"
                 :state="state"
                 v-bind:readonly="field.readonly"
-                v-on:input="$emit('input', $event)"
+                @input="$emit('input', $event)"
             />
 
             <b-input-group-append is-text v-if="field.append">
@@ -33,8 +33,6 @@
 </template>
 
 <script>
-import methods from '../methods';
-
 export default {
     name: 'FieldInput',
     props: {
@@ -48,14 +46,6 @@ export default {
         },
         value: {
             required: true
-        }
-    },
-    methods: {
-        //...methods,
-        changed(val) {
-            this.setValue(val);
-            //this.$refs.input.$emit('changed', val);
-            this.$emit('changed', value);
         }
     }
 };

@@ -1,15 +1,13 @@
 <template>
-    <fj-form-item :field="field" :model="model">
+    <fj-base-field :field="field" :model="model">
         <b-form-checkbox
             v-model="value"
+            class="fj-form-item-boolean"
             name="check-button"
             switch
-            @input="changed"
-            class="fj-form-item-boolean"
+            @change="$emit('input', $event)"
         />
-
-        <slot />
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>
@@ -24,24 +22,9 @@ export default {
         },
         model: {
             required: true
-        }
-    },
-    data() {
-        return {
-            value: null,
-            original: null
-        };
-    },
-    beforeMount() {
-        this.init();
-    },
-    methods: {
-        ...methods,
-        changed(value) {
-            if (value === null) return;
-            if (value === undefined) value = false;
-            this.setValue(value);
-            this.$emit('changed', value);
+        },
+        value: {
+            required: true
         }
     }
 };

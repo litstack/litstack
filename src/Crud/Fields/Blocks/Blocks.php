@@ -5,11 +5,11 @@ namespace Fjord\Crud\Fields\Blocks;
 use Closure;
 use Fjord\Crud\RelationField;
 use Fjord\Crud\Models\FormField;
-use Fjord\Crud\Fields\Concerns\FormItemWrapper;
+use Fjord\Crud\Fields\Traits\HasBaseField;
 
 class Blocks extends RelationField
 {
-    use FormItemWrapper;
+    use HasBaseField;
 
     /**
      * Field Vue component.
@@ -32,15 +32,15 @@ class Blocks extends RelationField
      */
     public function setDefaultAttributes()
     {
-        $this->setAttribute('blockWidth', 12);
-        $this->setAttribute('orderColumn', 'order_column');
+        $this->blockWidth(12);
+        $this->orderColumn('order_column');
     }
 
     /**
      * Add repeatables.
      *
      * @param Closure|Repeatables $closure
-     * @return self
+     * @return $this
      */
     public function repeatables($closure)
     {

@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item
+    <fj-base-field
         :field="field"
         :model="model"
         :value="value"
@@ -12,7 +12,7 @@
                 :editor="editor"
                 :config="editorConfig"
                 :value="value"
-                @input="changed"
+                v-on:input="$emit('input', $event)"
             />
         </template>
         <template v-else>
@@ -25,11 +25,10 @@
         </template>
 
         <slot />
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>
-import methods from '../methods';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default {
@@ -42,14 +41,12 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        value: {
+            required: true
         }
     },
     methods: {
-        ...methods,
-        changed(value) {
-            this.setValue(value);
-            this.$emit('changed', value);
-        },
         defaultFormats() {
             return [
                 {
@@ -103,13 +100,8 @@ export default {
             ];
         }
     },
-    beforeMount() {
-        this.init();
-    },
     data() {
         return {
-            value: false,
-            original: false,
             editor: ClassicEditor,
             editorConfig: {
                 heading: {

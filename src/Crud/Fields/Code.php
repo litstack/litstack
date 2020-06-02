@@ -2,12 +2,11 @@
 
 namespace Fjord\Crud\Fields;
 
-use Fjord\Crud\Field;
+use Fjord\Crud\BaseField;
 
-class Code extends Field
+class Code extends BaseField
 {
-    use Concerns\FieldHasRules,
-        Concerns\FormItemWrapper;
+    use Traits\FieldHasRules;
 
     /**
      * Field Vue component.

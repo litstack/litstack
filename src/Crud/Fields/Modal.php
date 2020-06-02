@@ -3,13 +3,12 @@
 namespace Fjord\Crud\Fields;
 
 use Closure;
-use Fjord\Crud\Field;
+use Fjord\Crud\BaseField;
 use Fjord\Crud\BaseForm;
 
-class Modal extends Field
+class Modal extends BaseField
 {
-    use Concerns\FieldHasForm,
-        Concerns\FormItemWrapper;
+    use Traits\FieldHasForm,
 
     /**
      * Field Vue component.

@@ -2,14 +2,13 @@
 
 namespace Fjord\Crud\Fields;
 
-use Fjord\Crud\Field;
+use Fjord\Crud\BaseField;
 
-class Wysiwyg extends Field
+class Wysiwyg extends BaseField
 {
-    use Concerns\FieldHasRules,
-        Concerns\TranslatableField,
-        Concerns\FormItemWrapper,
-        Concerns\FieldHasPlaceholder;
+    use Traits\FieldHasRules,
+        Traits\TranslatableField,
+        Traits\FieldHasPlaceholder;
 
     /**
      * Field Vue component.
@@ -25,6 +24,11 @@ class Wysiwyg extends Field
      */
     public $required = [];
 
+    /**
+     * Set default field attributes.
+     *
+     * @return void
+     */
     public function setDefaultAttributes()
     {
         $this->toolbar([

@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field" :model="model" class="">
+    <fj-base-field :field="field" :model="model" class="">
         <template slot="title-right">
             <b-button
                 variant="secondary"
@@ -84,7 +84,7 @@
         <template v-else>
             <fj-field-alert-not-created :field="field" class="mb-0" />
         </template>
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>

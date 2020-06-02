@@ -2,8 +2,12 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
+use Fjord\Crud\Fields\Traits\HasBaseField;
+
 class MorphMany extends ManyRelationField
 {
+    use HasBaseField;
+
     /**
      * Properties passed to Vue component.
      *

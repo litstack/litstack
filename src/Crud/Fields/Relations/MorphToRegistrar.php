@@ -3,12 +3,12 @@
 namespace Fjord\Crud\Fields\Relations;
 
 use Closure;
+use Fjord\Crud\Fields\Traits\HasBaseField;
 use Fjord\Exceptions\InvalidArgumentException;
-use Fjord\Crud\Fields\Concerns\FormItemWrapper;
 
 class MorphToRegistrar extends OneRelationField
 {
-    use FormItemWrapper;
+    use HasBaseField;
 
     /**
      * MorphTypes.

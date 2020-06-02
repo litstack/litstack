@@ -2,11 +2,11 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
-use Fjord\Crud\Fields\Concerns\FormItemWrapper;
+use Fjord\Crud\Fields\Traits\HasBaseField;
 
 class MorphOne extends OneRelationField
 {
-    use FormItemWrapper;
+    use HasBaseField;
 
     /**
      * Properties passed to Vue component.

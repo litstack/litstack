@@ -1,18 +1,18 @@
 <template>
-    <fj-form-item :field="field" :model="model">
+    <fj-base-field :field="field" :model="model">
         <template v-if="!field.readonly">
             <b-select
                 :value="value"
                 :options="field.options"
                 v-bind:readonly="field.readonly"
-                @input="changed"
+                v-on:input="$emit('input', $event)"
             />
         </template>
         <template v-else>
             <b-input class="form-control" :value="value" type="text" readonly />
         </template>
         <slot />
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>
@@ -28,23 +28,9 @@ export default {
         model: {
             required: true,
             type: Object
-        }
-    },
-    data() {
-        return {
-            value: false,
-            original: false
-        };
-    },
-    beforeMount() {
-        this.init();
-    },
-    methods: {
-        ...methods,
-        changed(value) {
-            this.setValue(value);
-            this.$emit('changed', value);
-            Fjord.bus.$emit('fieldChanged');
+        },
+        value: {
+            required: true
         }
     }
 };

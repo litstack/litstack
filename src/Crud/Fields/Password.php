@@ -2,14 +2,13 @@
 
 namespace Fjord\Crud\Fields;
 
-use Fjord\Crud\Field;
+use Fjord\Crud\BaseField;
 use Illuminate\Support\Facades\Hash;
 
-class Password extends Field
+class Password extends BaseField
 {
-    use Concerns\FieldHasRules,
-        Concerns\FormItemWrapper,
-        Concerns\FieldHasPlaceholder;
+    use Traits\FieldHasRules,
+        Traits\FieldHasPlaceholder;
 
     /**
      * Field Vue component.

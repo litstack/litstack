@@ -21,8 +21,6 @@
 </template>
 
 <script>
-import methods from '../methods';
-
 export default {
     name: 'FieldTextarea',
     props: {
@@ -38,13 +36,5 @@ export default {
             required: true
         }
     }
-    /*
-    methods: {
-        changed(value) {
-            this.setValue(value);
-            this.$emit('changed', value);
-        }
-    }
-    */
 };
 </script>

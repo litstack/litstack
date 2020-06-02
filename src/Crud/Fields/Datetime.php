@@ -3,13 +3,11 @@
 namespace Fjord\Crud\Fields;
 
 use Carbon\CarbonInterface;
-use Fjord\Crud\Field;
+use Fjord\Crud\BaseField;
 use Illuminate\Support\Carbon;
 
-class Datetime extends Field
+class Datetime extends BaseField
 {
-    use Concerns\FormItemWrapper;
-
     /**
      * Field Vue component.
      *

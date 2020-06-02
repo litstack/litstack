@@ -2,12 +2,12 @@
 
 namespace FjordTest\Fields;
 
+use Fjord\Crud\BaseField;
+use Fjord\Crud\Fields\Wysiwyg;
 use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
-use Fjord\Crud\Fields\Concerns\FieldHasRules;
-use Fjord\Crud\Fields\Concerns\FormItemWrapper;
-use Fjord\Crud\Fields\Concerns\TranslatableField;
-use Fjord\Crud\Fields\Wysiwyg;
+use Fjord\Crud\Fields\Traits\FieldHasRules;
+use Fjord\Crud\Fields\Traits\TranslatableField;
 
 class FieldWysiwygTest extends BackendTestCase
 {
@@ -33,8 +33,8 @@ class FieldWysiwygTest extends BackendTestCase
     }
 
     /** @test */
-    public function it_has_form_item_wrapper()
+    public function it_is_base_field()
     {
-        $this->assertHasTrait(FormItemWrapper::class, $this->field);
+        $this->assertInstanceOf(BaseField::class, $this->field);
     }
 }
