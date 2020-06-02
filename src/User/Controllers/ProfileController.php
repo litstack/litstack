@@ -4,15 +4,13 @@ namespace Fjord\User\Controllers;
 
 use Illuminate\Http\Request;
 use Fjord\Support\IndexTable;
-use Fjord\User\Models\FjordUser;
 use Fjord\Support\Facades\Config;
-use Fjord\Crud\Controllers\Api\CrudUpdate;
-use Fjord\User\Requests\FjordUserReadRequest;
-use Fjord\User\Requests\FjordUserDeleteRequest;
+use Fjord\Crud\Controllers\Concerns\ManagesCrudValidation;
+use Fjord\Crud\Controllers\Concerns\ManagesCrudUpdateCreate;
 
 class ProfileController
 {
-    use CrudUpdate;
+    use ManagesCrudValidation, ManagesCrudUpdateCreate;
 
     /**
      * Show profile update.
@@ -66,11 +64,7 @@ class ProfileController
             })->toArray()
         );
 
-        $this->updateModel(
-            fjord_user(),
-            $request,
-            $modal->getRegisteredFields()
-        );
+        fjord_user()->update($this->filterRequestAttributes($request, $modal->getRegisteredFields()));
 
         return crud(fjord_user());
     }

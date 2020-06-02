@@ -23,6 +23,10 @@ trait HasBaseField
     {
         $this->setAttribute('title', $title);
 
+        if (method_exists($this, 'placeholder') && !$this->placeholder) {
+            $this->placeholder($title);
+        }
+
         return $this;
     }
 

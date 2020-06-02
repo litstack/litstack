@@ -40,9 +40,9 @@ export default {
                 ...props
             },
             on: {
-                input: this.input,
+                input: this.input
                 // TODO: Except input ?
-                ...this.$listeners
+                //...this.$listeners
             }
         });
 

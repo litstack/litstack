@@ -8,7 +8,7 @@ use Fjord\Crud\BaseForm;
 
 class Modal extends BaseField
 {
-    use Traits\FieldHasForm,
+    use Traits\FieldHasForm;
 
     /**
      * Field Vue component.

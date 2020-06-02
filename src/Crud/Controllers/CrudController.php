@@ -4,8 +4,6 @@ namespace Fjord\Crud\Controllers;
 
 use Fjord\Crud\RelationField;
 use Fjord\User\Models\FjordUser;
-use Fjord\Crud\Fields\Blocks\Blocks;
-use Fjord\Support\Facades\FjordLang;
 use Fjord\Crud\Fields\Media\MediaField;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,15 +13,16 @@ use Fjord\Crud\Requests\CrudUpdateRequest;
 
 abstract class CrudController
 {
-    use Api\CrudUpdate,
-        Api\CrudHasIndex,
+    use Api\CrudHasIndex,
         Api\CrudHasRelations,
         Api\CrudHasBlocks,
         Api\CrudHasMedia,
         Api\CrudHasOrder,
         Api\CrudHasModal,
         Concerns\HasConfig,
-        Concerns\HasForm;
+        Concerns\HasForm,
+        Concerns\ManagesCrudUpdateCreate,
+        Concerns\ManagesCrudValidation;
 
     /**
      * The Model Class e.g. App\Models\Post
@@ -255,17 +254,12 @@ abstract class CrudController
     {
         $model = $this->query()->findOrFail($id);
 
-        $request->validate(
-            $this->config->form->getRules($request),
-            __f('validation'),
-            $this->fields()->mapWithKeys(function ($field) {
-                return [$field->local_key => $field->title];
-            })->toArray()
-        );
+        $this->validateRequest($request);
 
-        $model->update(
-            $this->filterRequestAttributes($request, $this->fields())
-        );
+        $this->fillModelAttributes($model, $request, $this->fields());
+        $attributes = $this->filterRequestAttributes($request, $this->fields());
+
+        $model->update($attributes);
 
         if ($model->last_edit) {
             $model->load('last_edit');
@@ -282,6 +276,9 @@ abstract class CrudController
      */
     public function store(CrudCreateRequest $request)
     {
+        $this->validateRequest($request);
+
+        /*
         $request->validate(
             $this->config->form->getRules($request),
             __f('validation'),
@@ -289,6 +286,7 @@ abstract class CrudController
                 return [$field->local_key => $field->title];
             })->toArray()
         );
+        */
 
         $attributes = $this->filterRequestAttributes($request, $this->fields());
 

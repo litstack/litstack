@@ -24,6 +24,17 @@ class Textarea extends BaseField
      */
     public $required = [];
 
+    /**
+     * Set default textarea attributes.
+     *
+     * @return void
+     */
+    public function setDefaultAttributes()
+    {
+        $this->rows(3);
+        $this->maxRows(5);
+    }
+
 
     /**
      * Set max characters.
@@ -31,9 +42,35 @@ class Textarea extends BaseField
      * @param integer $max
      * @return $this
      */
-    public function max(int $max)
+    public function maxChars(int $max)
     {
-        $this->setAttribute('max', $max);
+        $this->setAttribute('maxChars', $max);
+
+        return $this;
+    }
+
+    /**
+     * Set rows.
+     *
+     * @param integer $rowsrows
+     * @return $this
+     */
+    public function rows(int $rows)
+    {
+        $this->setAttribute('rows', $rows);
+
+        return $this;
+    }
+
+    /**
+     * Set max rows.
+     *
+     * @param integer $rows
+     * @return $this
+     */
+    public function maxRows(int $rows)
+    {
+        $this->setAttribute('maxRows', $rows);
 
         return $this;
     }

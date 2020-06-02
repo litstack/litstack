@@ -39,13 +39,35 @@ class FieldTextareaTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_max_method()
+    public function test_maxChars_method()
     {
-        $this->field->max(5);
-        $this->assertArrayHasKey('max', $this->field->getAttributes());
-        $this->assertEquals(5, $this->field->getAttribute('max'));
+        $this->field->maxChars(5);
+        $this->assertArrayHasKey('maxChars', $this->field->getAttributes());
+        $this->assertEquals(5, $this->field->getAttribute('maxChars'));
 
         // Assert method returns field instance.
-        $this->assertEquals($this->field, $this->field->max(5));
+        $this->assertEquals($this->field, $this->field->maxChars(5));
+    }
+
+    /** @test */
+    public function test_rows_method()
+    {
+        $this->field->rows(10);
+        $this->assertArrayHasKey('rows', $this->field->getAttributes());
+        $this->assertEquals(10, $this->field->getAttribute('rows'));
+
+        // Assert method returns field instance.
+        $this->assertEquals($this->field, $this->field->rows(5));
+    }
+
+    /** @test */
+    public function test_maxRows_method()
+    {
+        $this->field->maxRows(10);
+        $this->assertArrayHasKey('maxRows', $this->field->getAttributes());
+        $this->assertEquals(10, $this->field->getAttribute('maxRows'));
+
+        // Assert method returns field instance.
+        $this->assertEquals($this->field, $this->field->maxRows(5));
     }
 }

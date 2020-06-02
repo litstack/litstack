@@ -14,14 +14,15 @@ use Fjord\Crud\Requests\FormUpdateRequest;
 
 abstract class FormController
 {
-    use Api\CrudUpdate,
-        Api\CrudHasRelations,
+    use Api\CrudHasRelations,
         Api\CrudHasBlocks,
         Api\CrudHasMedia,
         Api\CrudHasOrder,
         Api\CrudHasModal,
         Concerns\HasConfig,
-        Concerns\HasForm;
+        Concerns\HasForm,
+        Concerns\ManagesCrudUpdateCreate,
+        Concerns\ManagesCrudValidation;
 
     /**
      * Crud model class name.
@@ -85,18 +86,11 @@ abstract class FormController
     {
         $formField = $this->query()->findOrFail($id);
 
-        $request->validate(
-            $this->config->form->getRules($request),
-            __f('validation'),
-            $this->fields()->mapWithKeys(function ($field) {
-                return [$field->local_key => $field->title];
-            })->toArray()
-        );
+        $this->validateRequest($request);
 
-        $formField->update(
-            $this->filterRequestAttributes($request, $this->fields())
-        );
+        $attributes = $this->filterRequestAttributes($request, $this->fields());
 
+        $formField->update($attributes);
         $formField->load('last_edit');
 
         return crud($formField);

@@ -104,6 +104,19 @@ class Field extends VueProp
     }
 
     /**
+     * Fill model.
+     *
+     * @param mixed $model
+     * @param string $attributeName
+     * @param mixed $attributeValue
+     * @return void
+     */
+    public function fillModel($model, $attributeName, $attributeValue)
+    {
+        return;
+    }
+
+    /**
      * Set readonly attribute.
      *
      * @param boolean $readonly
