@@ -35,7 +35,7 @@ trait ManagesCrudValidation
                 $names[$field->local_key] = $field->title;
             } else {
                 foreach (config('translatable.locales') as $locale) {
-                    $names["{$locale}.{$field->local_key}"] = "{$field->title}[{$locale}]";
+                    $names["{$locale}.{$field->local_key}"] = "{$field->title} ({$locale})";
                 }
             }
         }

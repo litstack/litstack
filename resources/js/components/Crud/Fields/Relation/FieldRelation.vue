@@ -242,7 +242,8 @@ export default {
                     id: relation.attributes.id
                 });
             }
-            if (this.field.previewType != 'preview') {
+
+            if (this.field.previewType != 'table') {
                 this.loadRelations({
                     perPage: 999999,
                     page: 1,
@@ -352,7 +353,7 @@ export default {
             } else {
                 this.allSelectedRelations.push(relation);
             }
-            if (this.field.previewType != 'preview') {
+            if (this.field.previewType != 'table') {
                 this.loadRelations();
             } else {
                 this.$refs.table.$emit('reload');
@@ -433,7 +434,7 @@ export default {
             } else {
                 this.allSelectedRelations = [];
             }
-            if (this.field.previewType != 'preview') {
+            if (this.field.previewType != 'table') {
                 this.loadRelations();
             } else {
                 this.$refs.table.$emit('reload');
