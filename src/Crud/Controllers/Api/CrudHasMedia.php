@@ -2,7 +2,7 @@
 
 namespace Fjord\Crud\Controllers\Api;
 
-use Fjord\Crud\MediaField;
+use Fjord\Crud\Fields\Media\MediaField;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 
 trait CrudHasMedia

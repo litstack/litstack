@@ -2,13 +2,11 @@
 
 namespace Fjord\Crud\Models;
 
-use Fjord\Crud\MediaField;
 use Fjord\Crud\RelationField;
 use Spatie\MediaLibrary\HasMedia;
-use Fjord\Crud\Fields\Media\Image;
+use Fjord\Crud\Fields\Media\MediaField;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Fjord\Crud\Fields\Relations\ManyRelationField;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;

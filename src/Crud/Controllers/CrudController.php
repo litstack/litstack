@@ -2,11 +2,11 @@
 
 namespace Fjord\Crud\Controllers;
 
-use Fjord\Crud\MediaField;
 use Fjord\Crud\RelationField;
 use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Support\Facades\FjordLang;
+use Fjord\Crud\Fields\Media\MediaField;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Fjord\Crud\Requests\CrudCreateRequest;
