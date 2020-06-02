@@ -34,4 +34,14 @@ abstract class RelationField extends Field
     {
         return $this->relation($model)->getResults();
     }
+
+    /**
+     * Get relation method name.
+     *
+     * @return string
+     */
+    public function getRelationName()
+    {
+        return $this->id;
+    }
 }

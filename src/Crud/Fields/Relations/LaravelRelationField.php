@@ -128,16 +128,6 @@ class LaravelRelationField extends RelationField
     }
 
     /**
-     * Get relation method name.
-     *
-     * @return string
-     */
-    public function getRelationName()
-    {
-        return $this->id;
-    }
-
-    /**
      * Set index query modifier.
      *
      * @param Closure $closure

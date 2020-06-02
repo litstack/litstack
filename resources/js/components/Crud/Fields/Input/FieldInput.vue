@@ -36,14 +36,25 @@
 export default {
     name: 'FieldInput',
     props: {
+        /**
+         * Field attributes.
+         */
         field: {
             required: true,
             type: Object
         },
+
+        /**
+         * Model.
+         */
         model: {
             required: true,
             type: Object
         },
+
+        /**
+         * Field value.
+         */
         value: {
             required: true
         }

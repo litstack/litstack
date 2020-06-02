@@ -39,7 +39,7 @@ div#fjord-app .fj-nav-loader {
 }
 
 div#fjord-app .fj-nav-loader .fj-ph-entry {
-  height: 0.9rem;
+  height: 1rem;
   margin: 1rem 0;
 }
 
@@ -48,7 +48,7 @@ div#fjord-app .fj-nav-loader .fj-ph-divider {
 }
 
 div#fjord-app .fj-nav-loader .fj-ph-title {
-  height: 0.6890625rem;
+  height: 0.7875rem;
   margin: 1rem 0;
 }
 
@@ -252,7 +252,7 @@ section {
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
   color: #212227;
@@ -574,36 +574,36 @@ h6,
 
 h1,
 .h1 {
-  font-size: 2.25rem;
+  font-size: 2.5rem;
 }
 
 h2,
 .h2 {
-  font-size: 1.8rem;
+  font-size: 2rem;
 }
 
 h3,
 .h3 {
-  font-size: 1.575rem;
+  font-size: 1.75rem;
 }
 
 h4,
 .h4 {
-  font-size: 1.35rem;
+  font-size: 1.5rem;
 }
 
 h5,
 .h5 {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
 }
 
 h6,
 .h6 {
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .lead {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   font-weight: 300;
 }
 
@@ -675,7 +675,7 @@ mark,
 
 .blockquote {
   margin-bottom: 1rem;
-  font-size: 1.125rem;
+  font-size: 1.25rem;
 }
 
 .blockquote-footer {
@@ -2362,7 +2362,7 @@ pre code {
   width: 100%;
   height: 2.5rem;
   padding: 0.3125rem 0.75rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 2;
   color: #000;
@@ -2459,14 +2459,14 @@ select.form-control:focus::-ms-value {
 .col-form-label-lg {
   padding-top: calc(0.5rem + 1px);
   padding-bottom: calc(0.5rem + 1px);
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   line-height: 1.5;
 }
 
 .col-form-label-sm {
   padding-top: calc(0.25rem + 1px);
   padding-bottom: calc(0.25rem + 1px);
-  font-size: 0.63rem;
+  font-size: 0.72rem;
   line-height: 1.5;
 }
 
@@ -2475,7 +2475,7 @@ select.form-control:focus::-ms-value {
   width: 100%;
   padding: 0.3125rem 0;
   margin-bottom: 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
   line-height: 2;
   color: #212227;
   background-color: transparent;
@@ -2492,7 +2492,7 @@ select.form-control:focus::-ms-value {
 .form-control-sm {
   height: calc(1.5em + 0.5rem + 2px);
   padding: 0.25rem 1rem;
-  font-size: 0.63rem;
+  font-size: 0.72rem;
   line-height: 1.5;
   border-radius: 0.4375rem;
 }
@@ -2500,7 +2500,7 @@ select.form-control:focus::-ms-value {
 .form-control-lg {
   height: calc(1.5em + 1rem + 2px);
   padding: 0.5rem 1rem;
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   line-height: 1.5;
   border-radius: 0.8rem;
 }
@@ -2587,7 +2587,7 @@ textarea.form-control {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: 0.1rem;
-  font-size: 0.7875rem;
+  font-size: 0.9rem;
   line-height: 1.5;
   color: #212227;
   background-color: rgba(159, 242, 174, 0.9);
@@ -2701,7 +2701,7 @@ textarea.form-control.is-valid {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: 0.1rem;
-  font-size: 0.7875rem;
+  font-size: 0.9rem;
   line-height: 1.5;
   color: #212227;
   background-color: rgba(246, 118, 147, 0.9);
@@ -2879,7 +2879,7 @@ textarea.form-control.is-invalid {
   background-color: transparent;
   border: 1px solid transparent;
   padding: 0.3125rem 1.25rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   line-height: 2;
   border-radius: 0.625rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -3634,7 +3634,7 @@ fieldset:disabled a.btn {
 .btn-lg,
 .btn-group-lg > .btn {
   padding: 0.5rem 1rem;
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   line-height: 1.5;
   border-radius: 0.8rem;
 }
@@ -3642,7 +3642,7 @@ fieldset:disabled a.btn {
 .btn-sm,
 .btn-group-sm > .btn {
   padding: 0.25rem 1rem;
-  font-size: 0.63rem;
+  font-size: 0.72rem;
   line-height: 1.5;
   border-radius: 0.4375rem;
 }
@@ -3729,7 +3729,7 @@ input[type=button].btn-block {
   min-width: 10rem;
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #212227;
   text-align: left;
   list-style: none;
@@ -3940,7 +3940,7 @@ input[type=button].btn-block {
   display: block;
   padding: 0.5rem 1.25rem;
   margin-bottom: 0;
-  font-size: 0.7875rem;
+  font-size: 0.9rem;
   color: #676569;
   white-space: nowrap;
 }
@@ -4186,7 +4186,7 @@ input[type=button].btn-block {
   align-items: center;
   padding: 0.3125rem 0.75rem;
   margin-bottom: 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 2;
   color: #000;
@@ -4214,7 +4214,7 @@ input[type=button].btn-block {
 .input-group-lg > .input-group-prepend > .btn,
 .input-group-lg > .input-group-append > .btn {
   padding: 0.5rem 1rem;
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   line-height: 1.5;
   border-radius: 0.8rem;
 }
@@ -4231,7 +4231,7 @@ input[type=button].btn-block {
 .input-group-sm > .input-group-prepend > .btn,
 .input-group-sm > .input-group-append > .btn {
   padding: 0.25rem 1rem;
-  font-size: 0.63rem;
+  font-size: 0.72rem;
   line-height: 1.5;
   border-radius: 0.4375rem;
 }
@@ -4264,7 +4264,7 @@ input[type=button].btn-block {
 .custom-control {
   position: relative;
   display: block;
-  min-height: 1.35rem;
+  min-height: 1.5rem;
   padding-left: 1.5rem;
 }
 
@@ -4278,7 +4278,7 @@ input[type=button].btn-block {
   left: 0;
   z-index: -1;
   width: 1rem;
-  height: 1.175rem;
+  height: 1.25rem;
   opacity: 0;
 }
 
@@ -4320,7 +4320,7 @@ input[type=button].btn-block {
 
 .custom-control-label::before {
   position: absolute;
-  top: 0.175rem;
+  top: 0.25rem;
   left: -1.5rem;
   display: block;
   width: 1rem;
@@ -4333,7 +4333,7 @@ input[type=button].btn-block {
 
 .custom-control-label::after {
   position: absolute;
-  top: 0.175rem;
+  top: 0.25rem;
   left: -1.5rem;
   display: block;
   width: 1rem;
@@ -4391,7 +4391,7 @@ input[type=button].btn-block {
 }
 
 .custom-switch .custom-control-label::after {
-  top: calc(0.175rem + 2px);
+  top: calc(0.25rem + 2px);
   left: calc(-2.25rem + 2px);
   width: calc(1rem - 4px);
   height: calc(1rem - 4px);
@@ -4420,7 +4420,7 @@ input[type=button].btn-block {
   width: 100%;
   height: 2.5rem;
   padding: 0.3125rem 1.75rem 0.3125rem 0.75rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 2;
   color: #000;
@@ -4470,7 +4470,7 @@ input[type=button].btn-block {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   padding-left: 1rem;
-  font-size: 0.63rem;
+  font-size: 0.72rem;
 }
 
 .custom-select-lg {
@@ -4478,7 +4478,7 @@ input[type=button].btn-block {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
-  font-size: 1.125rem;
+  font-size: 1.25rem;
 }
 
 .custom-file {
@@ -4840,10 +4840,10 @@ input[type=button].btn-block {
 
 .navbar-brand {
   display: inline-block;
-  padding-top: 0.14375rem;
-  padding-bottom: 0.14375rem;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
   margin-right: 1rem;
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   line-height: inherit;
   white-space: nowrap;
 }
@@ -4885,7 +4885,7 @@ input[type=button].btn-block {
 
 .navbar-toggler {
   padding: 0.25rem 0.75rem;
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   line-height: 1;
   background-color: transparent;
   border: 1px solid transparent;
@@ -5589,7 +5589,7 @@ input[type=button].btn-block {
 
 .pagination-lg .page-link {
   padding: 0.75rem 1.5rem;
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   line-height: 1.5;
 }
 
@@ -5605,7 +5605,7 @@ input[type=button].btn-block {
 
 .pagination-sm .page-link {
   padding: 0.25rem 0.5rem;
-  font-size: 0.7875rem;
+  font-size: 0.9rem;
   line-height: 1.5;
 }
 
@@ -5847,7 +5847,7 @@ a.badge-gray.focus {
 }
 
 .alert-dismissible {
-  padding-right: 6.35rem;
+  padding-right: 6.5rem;
 }
 
 .alert-dismissible .close {
@@ -6009,7 +6009,7 @@ a.badge-gray.focus {
   height: 1rem;
   overflow: hidden;
   line-height: 0;
-  font-size: 0.675rem;
+  font-size: 0.75rem;
   background-color: #f5f8fb;
   border-radius: 0.625rem;
 }
@@ -6441,7 +6441,7 @@ a.badge-gray.focus {
 
 .close {
   float: right;
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   font-weight: 700;
   line-height: 1;
   color: #000;
@@ -6472,7 +6472,7 @@ a.close.disabled {
 .toast {
   max-width: 350px;
   overflow: hidden;
-  font-size: 0.9rem;
+  font-size: 1rem;
   background-color: rgba(108, 129, 153, 0.8);
   background-clip: padding-box;
   border: 0 solid rgba(0, 0, 0, 0.1);
@@ -6751,7 +6751,7 @@ a.close.disabled {
   word-spacing: normal;
   white-space: normal;
   line-break: auto;
-  font-size: 0.7875rem;
+  font-size: 0.9rem;
   word-wrap: break-word;
   opacity: 0;
 }
@@ -6984,7 +6984,7 @@ a.close.disabled {
   word-spacing: normal;
   white-space: normal;
   line-break: auto;
-  font-size: 0.7875rem;
+  font-size: 0.9rem;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: padding-box;
@@ -7162,7 +7162,7 @@ a.close.disabled {
 .popover-header {
   padding: 0.5rem 0.75rem;
   margin-bottom: 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
   background-color: #f7f7f7;
   border-bottom: 1px solid #ebebeb;
   border-top-left-radius: calc(0.8rem - 1px);
@@ -11811,14 +11811,14 @@ a.text-gray:focus {
 
 .custom-checkbox.b-custom-control-lg,
 .input-group-lg .custom-checkbox {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   line-height: 1.5;
   padding-left: 1.875rem;
 }
 
 .custom-checkbox.b-custom-control-lg .custom-control-label::before,
 .input-group-lg .custom-checkbox .custom-control-label::before {
-  top: 0.21875rem;
+  top: 0.3125rem;
   left: -1.875rem;
   width: 1.25rem;
   height: 1.25rem;
@@ -11827,7 +11827,7 @@ a.text-gray:focus {
 
 .custom-checkbox.b-custom-control-lg .custom-control-label::after,
 .input-group-lg .custom-checkbox .custom-control-label::after {
-  top: 0.21875rem;
+  top: 0.3125rem;
   left: -1.875rem;
   width: 1.25rem;
   height: 1.25rem;
@@ -11836,14 +11836,14 @@ a.text-gray:focus {
 
 .custom-checkbox.b-custom-control-sm,
 .input-group-sm .custom-checkbox {
-  font-size: 0.7875rem;
+  font-size: 0.9rem;
   line-height: 1.5;
   padding-left: 1.3125rem;
 }
 
 .custom-checkbox.b-custom-control-sm .custom-control-label::before,
 .input-group-sm .custom-checkbox .custom-control-label::before {
-  top: 0.153125rem;
+  top: 0.2375rem;
   left: -1.3125rem;
   width: 0.875rem;
   height: 0.875rem;
@@ -11852,7 +11852,7 @@ a.text-gray:focus {
 
 .custom-checkbox.b-custom-control-sm .custom-control-label::after,
 .input-group-sm .custom-checkbox .custom-control-label::after {
-  top: 0.153125rem;
+  top: 0.2375rem;
   left: -1.3125rem;
   width: 0.875rem;
   height: 0.875rem;
@@ -11866,13 +11866,13 @@ a.text-gray:focus {
 
 .custom-switch.b-custom-control-lg .custom-control-label,
 .input-group-lg .custom-switch .custom-control-label {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   line-height: 1.5;
 }
 
 .custom-switch.b-custom-control-lg .custom-control-label::before,
 .input-group-lg .custom-switch .custom-control-label::before {
-  top: 0.21875rem;
+  top: 0.3125rem;
   height: 1.25rem;
   left: -2.8125rem;
   width: 2.1875rem;
@@ -11881,7 +11881,7 @@ a.text-gray:focus {
 
 .custom-switch.b-custom-control-lg .custom-control-label::after,
 .input-group-lg .custom-switch .custom-control-label::after {
-  top: calc( 0.21875rem + 2px );
+  top: calc( 0.3125rem + 2px );
   left: calc( -2.8125rem + 2px );
   width: calc( 1.25rem - 4px );
   height: calc( 1.25rem - 4px );
@@ -11901,13 +11901,13 @@ a.text-gray:focus {
 
 .custom-switch.b-custom-control-sm .custom-control-label,
 .input-group-sm .custom-switch .custom-control-label {
-  font-size: 0.7875rem;
+  font-size: 0.9rem;
   line-height: 1.5;
 }
 
 .custom-switch.b-custom-control-sm .custom-control-label::before,
 .input-group-sm .custom-switch .custom-control-label::before {
-  top: 0.153125rem;
+  top: 0.2375rem;
   left: -1.96875rem;
   width: 1.53125rem;
   height: 0.875rem;
@@ -11916,7 +11916,7 @@ a.text-gray:focus {
 
 .custom-switch.b-custom-control-sm .custom-control-label::after,
 .input-group-sm .custom-switch .custom-control-label::after {
-  top: calc( 0.153125rem + 2px );
+  top: calc( 0.2375rem + 2px );
   left: calc( -1.96875rem + 2px );
   width: calc( 0.875rem - 4px );
   height: calc( 0.875rem - 4px );
@@ -11949,7 +11949,7 @@ a.text-gray:focus {
 .input-group-lg.custom-file,
 .input-group-lg .custom-file-input,
 .input-group-lg .custom-file-label {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   height: calc(1.5em + 1rem + 2px);
 }
 
@@ -11979,7 +11979,7 @@ a.text-gray:focus {
 .input-group-sm.custom-file,
 .input-group-sm .custom-file-input,
 .input-group-sm .custom-file-label {
-  font-size: 0.63rem;
+  font-size: 0.72rem;
   height: calc(1.5em + 0.5rem + 2px);
 }
 
@@ -12291,14 +12291,14 @@ input[type=color].form-control:disabled {
 
 .custom-radio.b-custom-control-lg,
 .input-group-lg .custom-radio {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   line-height: 1.5;
   padding-left: 1.875rem;
 }
 
 .custom-radio.b-custom-control-lg .custom-control-label::before,
 .input-group-lg .custom-radio .custom-control-label::before {
-  top: 0.21875rem;
+  top: 0.3125rem;
   left: -1.875rem;
   width: 1.25rem;
   height: 1.25rem;
@@ -12307,7 +12307,7 @@ input[type=color].form-control:disabled {
 
 .custom-radio.b-custom-control-lg .custom-control-label::after,
 .input-group-lg .custom-radio .custom-control-label::after {
-  top: 0.21875rem;
+  top: 0.3125rem;
   left: -1.875rem;
   width: 1.25rem;
   height: 1.25rem;
@@ -12316,14 +12316,14 @@ input[type=color].form-control:disabled {
 
 .custom-radio.b-custom-control-sm,
 .input-group-sm .custom-radio {
-  font-size: 0.7875rem;
+  font-size: 0.9rem;
   line-height: 1.5;
   padding-left: 1.3125rem;
 }
 
 .custom-radio.b-custom-control-sm .custom-control-label::before,
 .input-group-sm .custom-radio .custom-control-label::before {
-  top: 0.153125rem;
+  top: 0.2375rem;
   left: -1.3125rem;
   width: 0.875rem;
   height: 0.875rem;
@@ -12332,7 +12332,7 @@ input[type=color].form-control:disabled {
 
 .custom-radio.b-custom-control-sm .custom-control-label::after,
 .input-group-sm .custom-radio .custom-control-label::after {
-  top: 0.153125rem;
+  top: 0.2375rem;
   left: -1.3125rem;
   width: 0.875rem;
   height: 0.875rem;
@@ -15655,12 +15655,12 @@ div#fjord-app nav.fj-topbar #fj-topbar-right .show .btn {
 div#fjord-app nav.fj-topbar .dropdown-menu {
   background-color: #2a353f;
   min-width: 300px;
-  font-size: 0.7875rem;
+  font-size: 0.9rem;
 }
 
 div#fjord-app nav.fj-topbar .dropdown-menu .dropdown-header {
   color: #f5f8fb;
-  font-size: 0.669375rem;
+  font-size: 0.765rem;
 }
 
 div#fjord-app nav.fj-topbar .dropdown-menu .dropdown-divider {
