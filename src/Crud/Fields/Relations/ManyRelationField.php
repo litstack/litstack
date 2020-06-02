@@ -37,11 +37,11 @@ class ManyRelationField extends LaravelRelationField
 
         $this->setAttribute('many', true);
         $this->setAttribute('previewType', 'table');
+        $this->setAttribute('sortable', false);
 
         $this->small();
         $this->searchable(false);
         $this->perPage(10);
-        $this->sortable(false);
         $this->tagVariant('info');
     }
 

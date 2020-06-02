@@ -116,6 +116,7 @@ abstract class FormController
         $formName = array_pop($routeSplit);
         $collection = last($routeSplit);
 
+
         $configInstance = fjord()->config("form.{$collection}.{$formName}");
 
         $config = $configInstance->get(
@@ -138,6 +139,7 @@ abstract class FormController
                 $field->readonly();
             }
         }
+
 
         $model = FormField::firstOrCreate([
             'collection' => $configInstance->collection,

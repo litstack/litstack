@@ -78,6 +78,7 @@ class LaravelRelationField extends RelationField
     {
         $relatedInstance = $this->getRelatedInstance();
 
+        $this->relatedModelClass = get_class($relatedInstance);
         $this->query = $this->getRelatedModelClass()::query();
 
         $this->loadRelatedConfig($this->getRelatedModelClass());
@@ -92,9 +93,14 @@ class LaravelRelationField extends RelationField
         return $this;
     }
 
+    /**
+     * Get related model class.
+     *
+     * @return string
+     */
     public function getRelatedModelClass()
     {
-        return get_class($this->getRelatedInstance());
+        return $this->relatedModelClass;
     }
 
     /**

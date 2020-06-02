@@ -2,7 +2,6 @@
 
 namespace Fjord\Crud\Fields\Media;
 
-use Fjord\Crud\MediaField;
 use Fjord\Crud\Fields\Traits\HasBaseField;
 use Fjord\Crud\Fields\Traits\TranslatableField;
 
@@ -55,6 +54,19 @@ class Image extends MediaField
     public function sortable(bool $sortable = true)
     {
         $this->setAttribute('sortable', $sortable);
+
+        return $this;
+    }
+
+    /**
+     * Set expand.
+     *
+     * @param bool $sortable
+     * @return $this
+     */
+    public function expand(bool $expand = true)
+    {
+        $this->setAttribute('expand', $expand);
 
         return $this;
     }

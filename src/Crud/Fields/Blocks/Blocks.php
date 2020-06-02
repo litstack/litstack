@@ -33,7 +33,20 @@ class Blocks extends RelationField
     public function setDefaultAttributes()
     {
         $this->blockWidth(12);
-        $this->orderColumn('order_column');
+        $this->setAttribute('orderColumn', 'order_column');
+    }
+
+    /**
+     * Set block width.
+     *
+     * @param integer|float $width
+     * @return $this
+     */
+    public function blockWidth($width)
+    {
+        $this->setAttribute('blockWidth', $width);
+
+        return $this;
     }
 
     /**

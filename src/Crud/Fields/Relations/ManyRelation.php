@@ -40,7 +40,7 @@ class ManyRelation extends ManyRelationField
         }
 
         return $this->modifyQuery(
-            $model->manyRelation($this->relatedModelClass, $this->id)
+            $model->manyRelation($this->getRelatedModelClass(), $this->id)
         );
     }
 }

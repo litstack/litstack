@@ -39,7 +39,7 @@ class OneRelation extends OneRelationField
         }
 
         return $this->modifyQuery(
-            $model->oneRelation($this->relatedModelClass, $this->id)
+            $model->oneRelation($this->getRelatedModelClass(), $this->id)
         );
     }
 }

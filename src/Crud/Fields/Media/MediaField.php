@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Fjord\Crud\Fields\Media;
 
 use Fjord\Crud\RelationField;
 
