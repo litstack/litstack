@@ -7,7 +7,7 @@
                 v-b-modal="modalId"
                 v-if="!field.readonly && !this.create"
             >
-                <fa-icon icon="plus" />
+                <fa-icon :icon="field.many ? 'plus' : 'link'" />
                 {{
                     field.many
                         ? __('fj.add_model', {
@@ -62,9 +62,18 @@
                     @remove="removeRelation(relation)"
                     class="mr-3 mt-3"
                     :variant="field.tagVariant"
-                >
-                    {{ _format(field.tagValue, relation) }}
-                </b-form-tag>
+                    v-html="_format(field.tagValue, relation)"
+                />
+            </div>
+            <div
+                v-else-if="field.previewType == 'link'"
+                class="fj-field-relation-link"
+            >
+                <a
+                    :href="relatedLink(selectedRelations[0])"
+                    v-if="selectedRelations.length > 0 && busy == false"
+                    v-html="_format(field.linkText, selectedRelations[0])"
+                />
             </div>
 
             <fj-field-relation-confirm-delete
@@ -94,8 +103,6 @@
 </template>
 
 <script>
-import methods from '../methods';
-
 export default {
     name: 'FieldRelation',
     props: {
@@ -111,30 +118,68 @@ export default {
     },
     data() {
         return {
+            /**
+             * All selected relation.
+             */
             allSelectedRelations: [],
+
+            /**
+             * Visible selected relations.
+             */
             selectedRelations: [],
+
+            /**
+             * Busy state.
+             */
             busy: true,
-            cols: []
+
+            /**
+             * Table cols.
+             */
+            cols: [],
+
+            /**
+             * Table cols in modal.
+             */
+            modalCols: []
         };
     },
     computed: {
+        /**
+         * Unique modal id.
+         *
+         * @return {String}
+         */
         modalId() {
             return `form-relation-table-${
                 this.field.id
             }-${this.field.route_prefix.replace(/\//g, '-')}`;
         },
+
+        /**
+         * Show table head.
+         *
+         * @return {Boolean}
+         */
         showTableHead() {
             if (!this.field.many) {
                 return false;
             }
             return this.field.showTableHead === true;
         },
+
+        /**
+         * Is on create page.
+         *
+         * @return {Boolean}
+         */
         create() {
             return this.model.id === undefined;
         }
     },
     beforeMount() {
         this.cols = this.field.preview;
+        this.modalCols = this.field.preview;
         this.cols.push({
             label: '',
             component: 'fj-field-relation-col-link',
@@ -163,7 +208,21 @@ export default {
         this.loadAllRelations();
     },
     methods: {
-        ...methods,
+        /**
+         * Related edit link.
+         *
+         * @param {Object} relation
+         * @return {String}
+         */
+        relatedLink(relation) {
+            return `${Fjord.baseURL}${this.field.config.route_prefix}/${relation.id}/edit`;
+        },
+
+        /**
+         * Load all relations.
+         *
+         * @return {undefined}
+         */
         async loadAllRelations() {
             if (this.create) {
                 return;
@@ -183,7 +242,7 @@ export default {
                     id: relation.attributes.id
                 });
             }
-            if (this.field.previewType == 'tags') {
+            if (this.field.previewType != 'preview') {
                 this.loadRelations({
                     perPage: 999999,
                     page: 1,
@@ -191,6 +250,13 @@ export default {
                 });
             }
         },
+
+        /**
+         * Load relations from payload.
+         *
+         * @param {Object} payload
+         * @return {undefined}
+         */
         async loadRelations(payload) {
             if (this.create) {
                 return;
@@ -208,9 +274,23 @@ export default {
             this.busy = false;
             return response;
         },
+
+        /**
+         * Add new relation.
+         *
+         * @param {Object} relation
+         * @return {undefined}
+         */
         newRelation(relation) {
             this.selectedRelations.push(this.crud(relation));
         },
+
+        /**
+         * Select relation.
+         *
+         * @param {Object} relation
+         * @return {undefined}
+         */
         async selectRelation(relation) {
             let response = null;
             switch (this.field.type) {
@@ -272,7 +352,7 @@ export default {
             } else {
                 this.allSelectedRelations.push(relation);
             }
-            if (this.field.previewType == 'tags') {
+            if (this.field.previewType != 'preview') {
                 this.loadRelations();
             } else {
                 this.$refs.table.$emit('reload');
@@ -280,6 +360,13 @@ export default {
             this.$emit('reload', relation);
             Fjord.bus.$emit('field:updated', 'relation:selected');
         },
+
+        /**
+         * Open confirm delete modal. Or delete relation directly.
+         *
+         * @param {Object} relation
+         * @return {undefined}
+         */
         removeRelation(relation) {
             if (!this.field.confirm) {
                 return this._removeRelation(relation);
@@ -287,6 +374,13 @@ export default {
 
             this.$bvModal.show(`modal-${this.field.id}-${relation.id}`);
         },
+
+        /**
+         * Delete relation.
+         *
+         * @param {Object} relation
+         * @return {undefined}
+         */
         async _removeRelation(relation) {
             let response = null;
             switch (this.field.type) {
@@ -339,7 +433,7 @@ export default {
             } else {
                 this.allSelectedRelations = [];
             }
-            if (this.field.previewType == 'tags') {
+            if (this.field.previewType != 'preview') {
                 this.loadRelations();
             } else {
                 this.$refs.table.$emit('reload');
@@ -348,6 +442,10 @@ export default {
 
             Fjord.bus.$emit('field:updated', 'relation:removed');
         },
+
+        /**
+         * Order relations.
+         */
         async newOrder({ ids, sortedItems }) {
             this.selectedRelations = sortedItems;
             let payload = {
@@ -390,6 +488,12 @@ export default {
         padding: map-get($spacers, 3);
         padding-top: 0;
         width: 100%;
+    }
+
+    &-link {
+        a {
+            font-weight: 600;
+        }
     }
 
     @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
