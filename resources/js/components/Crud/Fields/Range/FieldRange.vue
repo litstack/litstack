@@ -4,7 +4,7 @@
             <b-form-input
                 ref="input"
                 :value="value"
-                @input="$emit('input', $event)"
+                @input="input"
                 type="range"
                 number
                 :min="field.min"
@@ -48,12 +48,34 @@ export default {
         }
     },
     methods: {
+        /**
+         * Emit integer value.
+         *
+         * @param {String} newValue
+         * @return {undefined}
+         */
+        input(newValue) {
+            this.$emit('input', parseInt(newValue));
+        },
+
+        /**
+         * Calculate percentage.
+         *
+         * @param {Number} value
+         * @return {undefined}
+         */
         percentage(value) {
             return (
                 ((value - this.field.min) / (this.field.max - this.field.min)) *
                 100
             );
         },
+
+        /**
+         * Set bar width.
+         *
+         * @return {undefined}
+         */
         setWidth(value) {
             this.$refs.input.$el.style.background =
                 'linear-gradient(to right, #70859c 0%, #70859c ' +

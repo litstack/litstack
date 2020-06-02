@@ -2,7 +2,6 @@
     <fj-base-field
         :field="field"
         :model="model"
-        :value="value"
         v-slot:default="{ state }"
         v-on="$listeners"
     >

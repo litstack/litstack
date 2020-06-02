@@ -6,6 +6,8 @@ use Fjord\Crud\BaseField;
 
 class Icon extends BaseField
 {
+    use Traits\FieldHasRules;
+
     /**
      * Field Vue component.
      *

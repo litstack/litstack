@@ -8,6 +8,8 @@ use Illuminate\Support\Carbon;
 
 class Datetime extends BaseField
 {
+    use Traits\FieldHasRules;
+
     /**
      * Field Vue component.
      *

@@ -43,15 +43,12 @@
                     v-html="field.hint && !noHint ? field.hint : ''"
                 />
 
-                <small class="form-text text-muted" v-if="!noMinMax">
-                    <template v-if="field.max && field.min === undefined">
-                        {{ length }}/{{ field.max }}
+                <small class="form-text text-muted" v-if="value">
+                    <template v-if="value && max">
+                        {{ number }}/{{ max }}
                     </template>
-                    <template v-if="field.max && field.min !== undefined">
-                        {{ value }}
-                    </template>
-                    <template v-if="field.maxFiles">
-                        {{ value.length }}/{{ field.maxFiles }}
+                    <template v-else-if="value">
+                        {{ number }}
                     </template>
                 </small>
             </div>
@@ -65,28 +62,51 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'BaseField',
     props: {
+        /**
+         * Field attributes.
+         */
         field: {
             type: [Object, Array],
             required: true
         },
+
+        /**
+         * Model.
+         */
         model: {},
+
+        /**
+         * Value.
+         */
         value: {},
+
+        /**
+         * No hint.
+         */
         noHint: {
             type: Boolean,
             default() {
                 return false;
             }
         },
-        noMinMax: {
-            type: Boolean,
-            default() {
-                return false;
-            }
+
+        /**
+         * Max.
+         */
+        max: {
+            type: Number
         }
     },
     data() {
         return {
+            /**
+             * Error stat.
+             */
             state: null,
+
+            /**
+             * Error messages.
+             */
             messages: []
         };
     },
@@ -103,10 +123,22 @@ export default {
         Fjord.bus.$on('saveCanceled', this.resetErrors);
     },
     methods: {
+        /**
+         * Reset errors.
+         *
+         * @return {undefined}
+         */
         resetErrors() {
             this.state = null;
             this.messages = [];
         },
+
+        /**
+         * Check results for erros.
+         *
+         * @param {Array} results
+         * @return
+         */
         checkForErrors(results) {
             let result = results.findFailed(
                 this.field._method,
@@ -130,6 +162,13 @@ export default {
             this.messages = errors;
             this.$emit('error', errors);
         },
+
+        /**
+         * Find errors.
+         *
+         * @param {Object} result
+         * @return {Array}
+         */
         findErrors(result) {
             if (!('errors' in result.response.data)) {
                 return;
@@ -152,9 +191,27 @@ export default {
     },
     computed: {
         ...mapGetters(['language']),
-        length() {
-            return this.value ? this.value.length : 0;
+
+        /**
+         * Number from value.
+         */
+        number() {
+            if (!this.value) {
+                return 0;
+            }
+            console.log(typeof this.value, this.value);
+            if (typeof this.value == 'number') {
+                return this.value;
+            }
+
+            return this.value.length;
         },
+
+        /**
+         * Col width.
+         *
+         * @return {Number}
+         */
         width() {
             return this.field.width !== undefined ? this.field.width : 12;
         }

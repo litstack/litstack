@@ -6,6 +6,8 @@ use Fjord\Crud\BaseField;
 
 class Range extends BaseField
 {
+    use Traits\FieldHasRules;
+
     /**
      * Field Vue component.
      *

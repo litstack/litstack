@@ -3,6 +3,7 @@
         :field="field"
         :model="model"
         :value="value"
+        :max="field.maxChars"
         v-slot:default="{ state }"
     >
         <b-form-textarea

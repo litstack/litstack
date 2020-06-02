@@ -7,8 +7,7 @@ use Fjord\Crud\BaseField;
 class Wysiwyg extends BaseField
 {
     use Traits\FieldHasRules,
-        Traits\TranslatableField,
-        Traits\FieldHasPlaceholder;
+        Traits\TranslatableField;
 
     /**
      * Field Vue component.

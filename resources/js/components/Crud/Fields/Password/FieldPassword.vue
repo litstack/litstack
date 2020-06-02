@@ -98,14 +98,8 @@ export default {
                 key: this.field.local_key
             };
 
-            let add = true;
-            if (!this.field.noScore && this.score < this.field.minScore) {
-                add = false;
-            } else if (this.field.noScore && newPassword == '') {
-                add = false;
-            }
             //console.log(add, this.value)
-            if (!add) {
+            if (newPassword == '') {
                 this.$store.commit('REMOVE_SAVE_JOB', job);
             } else {
                 this.$store.commit('ADD_SAVE_JOB', job);

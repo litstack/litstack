@@ -28,8 +28,18 @@ trait ManagesCrudValidation
      */
     protected function getValidationAttributeNames()
     {
-        return $this->fields()->mapWithKeys(function ($field) {
-            return [$field->local_key => $field->title];
-        })->toArray();
+        $names = [];
+
+        foreach ($this->fields() as $field) {
+            if (!$field->translatable) {
+                $names[$field->local_key] = $field->title;
+            } else {
+                foreach (config('translatable.locales') as $locale) {
+                    $names["{$locale}.{$field->local_key}"] = "{$field->title}[{$locale}]";
+                }
+            }
+        }
+
+        return $names;
     }
 }
