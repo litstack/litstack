@@ -15277,6 +15277,16 @@ input[type=color].form-control:disabled {
   color: #4951f2;
 }
 
+.b-form-tag {
+  border-radius: 0.4375rem;
+  padding: 0.25rem 0.75rem;
+}
+
+.b-form-tag > button.b-form-tag-remove {
+  transform: translateX(0.1rem);
+  font-weight: 400;
+}
+
 .b-toaster {
   left: 0 !important;
   right: 0 !important;

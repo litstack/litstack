@@ -108,10 +108,17 @@ class LaravelRelationFieldTest extends BackendTestCase
     }
 
     /** @test */
+    public function it_sets_fresh_related_query()
+    {
+        $query = $this->getUnaccessibleProperty($this->field, 'query');
+        $this->assertEquals(LaravelRelationFieldRelation::query(), $query);
+    }
+
+    /** @test */
     public function test_filter_receives_relation_query()
     {
         $this->field->filter(function ($query) {
-            $this->assertEquals($query, (new LaravelRelationFieldModel)->dummy_relation());
+            $this->assertEquals($query, LaravelRelationFieldRelation::query());
         });
     }
 

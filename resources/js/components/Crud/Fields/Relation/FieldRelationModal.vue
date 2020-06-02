@@ -17,7 +17,7 @@
             :name-plural="field.config.names.plural"
             :selected="selectedRelations"
             @select="select"
-            @remove="remove"
+            @unselect="remove"
             v-bind:radio="!field.many"
             no-card
             no-head
@@ -64,7 +64,6 @@ export default {
             this.$emit('remove', item);
         },
         select(item) {
-            console.log('SELECT_relation_modal', this.modalId);
             this.$emit('select', item);
         },
         async loadItems(payload) {

@@ -78,7 +78,7 @@ class LaravelRelationField extends RelationField
     {
         $relatedInstance = $this->getRelatedInstance();
 
-        $this->query = $this->getRelationQuery(new $this->model);
+        $this->query = $this->getRelatedModelClass()::query();
 
         $this->loadRelatedConfig($this->getRelatedModelClass());
         $this->setOrderDefaults();

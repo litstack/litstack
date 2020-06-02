@@ -7,12 +7,24 @@ use Fjord\Exceptions\InvalidArgumentException;
 
 class ManyRelationField extends LaravelRelationField
 {
+    use Concerns\ManagesPreviewTypes;
+
     /**
      * Field Vue component.
      *
      * @var string
      */
     protected $component = 'fj-field-relation';
+
+    /**
+     * Available preview types.
+     *
+     * @var array
+     */
+    protected $availablePreviewTypes = [
+        'table' => ['preview'],
+        'tags' => ['tagVariant', 'tagValue']
+    ];
 
     /**
      * Set default field attributes.
@@ -24,10 +36,13 @@ class ManyRelationField extends LaravelRelationField
         parent::setDefaultAttributes();
 
         $this->setAttribute('many', true);
-        $this->setAttribute('searchable', false);
-        $this->setAttribute('perPage', 10);
-        $this->setAttribute('sortable', false);
-        $this->setAttribute('tagVariant', 'secondary');
+        $this->setAttribute('previewType', 'table');
+
+        $this->small();
+        $this->searchable(false);
+        $this->perPage(10);
+        $this->sortable(false);
+        $this->tagVariant('info');
     }
 
     /**
@@ -64,7 +79,21 @@ class ManyRelationField extends LaravelRelationField
      */
     public function tagVariant(string $value)
     {
-        $this->setAttribute('tags', $value);
+        $this->setAttribute('tagVariant', $value);
+
+        return $this;
+    }
+
+    /**
+     * Set tag value.
+     * Example: "{first_name} {last_name}"
+     *
+     * @param string $value
+     * @return $this
+     */
+    public function tagValue(string $value)
+    {
+        $this->setAttribute('tagValue', $value);
 
         return $this;
     }

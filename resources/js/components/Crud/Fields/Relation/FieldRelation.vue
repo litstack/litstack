@@ -23,8 +23,8 @@
         <template v-if="model.id">
             <div
                 class="form-control-expand fj-field-relation"
-                :class="{ 'mt-4': !field.many }"
-                v-if="!field.tags"
+                :class="{ 'mt-2': !showTableHead }"
+                v-if="field.previewType == 'table'"
             >
                 <fj-index-table
                     ref="table"
@@ -49,15 +49,21 @@
                     @unlink="removeRelation"
                 />
             </div>
-            <div v-else class="">
+            <div
+                v-else-if="field.previewType == 'tags'"
+                class="fj-field-relation-tags mt-2"
+            >
+                <div class="mt-3 text-center text-secondary" v-if="busy">
+                    <fa-icon icon="circle-notch" spin />
+                </div>
                 <b-form-tag
                     v-for="(relation, key) in selectedRelations"
                     :key="key"
                     @remove="removeRelation(relation)"
-                    class="mr-2 mt-2"
+                    class="mr-3 mt-3"
                     :variant="field.tagVariant"
                 >
-                    {{ _format(field.tags, relation) }}
+                    {{ _format(field.tagValue, relation) }}
                 </b-form-tag>
             </div>
 
@@ -177,7 +183,7 @@ export default {
                     id: relation.attributes.id
                 });
             }
-            if (this.field.tags) {
+            if (this.field.previewType == 'tags') {
                 this.loadRelations({
                     perPage: 999999,
                     page: 1,
@@ -266,7 +272,7 @@ export default {
             } else {
                 this.allSelectedRelations.push(relation);
             }
-            if (this.field.tags) {
+            if (this.field.previewType == 'tags') {
                 this.loadRelations();
             } else {
                 this.$refs.table.$emit('reload');
@@ -333,8 +339,7 @@ export default {
             } else {
                 this.allSelectedRelations = [];
             }
-
-            if (this.field.tags) {
+            if (this.field.previewType == 'tags') {
                 this.loadRelations();
             } else {
                 this.$refs.table.$emit('reload');
@@ -377,6 +382,14 @@ export default {
 
     .fj-index-table {
         background-color: transparent;
+    }
+
+    &-tags {
+        border: $input-border-width solid $input-border-color;
+        border-radius: $input-border-radius;
+        padding: map-get($spacers, 3);
+        padding-top: 0;
+        width: 100%;
     }
 
     @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {

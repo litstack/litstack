@@ -4,7 +4,7 @@ namespace Fjord\Crud\Fields\Media;
 
 use Fjord\Crud\MediaField;
 use Fjord\Crud\Fields\Traits\HasBaseField;
-use Fjord\Crud\Fields\Concerns\TranslatableField;
+use Fjord\Crud\Fields\Traits\TranslatableField;
 
 class Image extends MediaField
 {
