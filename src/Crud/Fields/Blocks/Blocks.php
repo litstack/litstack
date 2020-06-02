@@ -78,7 +78,7 @@ class Blocks extends RelationField
     public function getRelationQuery($model)
     {
         if (!$model instanceof FormField) {
-            return parent::getRelationQuery($model);
+            return $model->{$this->id}();
         }
 
         return $model->blocks($this->id);
