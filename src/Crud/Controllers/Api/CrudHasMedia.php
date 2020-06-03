@@ -14,9 +14,14 @@ trait CrudHasMedia
      * @param int $id
      * @return response
      */
-    public function storeMedia(CrudUpdateRequest $request, $id)
+    public function storeMedia(CrudUpdateRequest $request, $identifier, $formName)
     {
-        $model = $this->model::findOrFail($id);
+        $this->formExists($formName) ?: abort(404);
+
+        $request->collection ?: abort(404);
+        $request->media !== null ?: abort(404);
+
+        $model = $this->model::findOrFail($identifier);
 
         $field = $this->config->form->findField($request->collection)
             ?? abort(404);
@@ -47,7 +52,9 @@ trait CrudHasMedia
             ? [app()->getLocale() => $properties]
             : $properties;
 
+
         $media = $model->addMedia($request->media)
+            ->preservingOriginal()
             ->withCustomProperties($customProperties)
             ->toMediaCollection($request->collection);
 

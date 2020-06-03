@@ -366,6 +366,20 @@ class BaseForm extends VueProp
     }
 
     /**
+     * Check if form has field.
+     *
+     * @param string $fieldId
+     * @return boolean
+     */
+    public function hasField(string $fieldId)
+    {
+        if ($this->findField($fieldId)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Get attributes.
      *
      * @return array

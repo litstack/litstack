@@ -3,6 +3,7 @@
 namespace Fjord\Crud\Controllers\Concerns;
 
 use Fjord\Crud\BaseForm;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Request;
 use Fjord\Crud\Models\Traits\TrackEdits;
 
@@ -39,13 +40,31 @@ trait HasForm
      * @param string $form
      * @return void
      */
-    public function getForm(string $formName)
+    protected function getForm(string $formName)
     {
+        if (!Str::contains($formName, '-') && $this->formExists($formName)) {
+            return $this->config->{$formName};
+        }
+
         if (!$this->formExists($formName)) {
             return;
         }
 
-        $this->config->{$formName};
+        $split = explode('-', $formName);
+
+        if (count($split) > 2) {
+            abort(404);
+        }
+
+        [$baseForm, $subForm] = $split;
+
+        $form = $this->getForm($baseForm);
+
+        if (!$form) {
+            return;
+        }
+
+        return $form->findField($subForm);
     }
 
     /**
@@ -54,8 +73,26 @@ trait HasForm
      * @param string $formName
      * @return void
      */
-    public function formExists(string $formName)
+    protected function formExists(string $formName)
     {
-        return $this->config->has($formName);
+        if (!Str::contains($formName, '-')) {
+            return $this->config->has($formName);
+        }
+
+        $split = explode('-', $formName);
+
+        if (count($split) > 2) {
+            abort(404);
+        }
+
+        [$baseForm, $subForm] = $split;
+
+        $form = $this->getForm($baseForm);
+
+        if (!$form) {
+            return false;
+        }
+
+        return $form->hasField($subForm);
     }
 }

@@ -94,6 +94,11 @@ class ManagesUpdateCreateControllerForUpdateTest
 {
     use ManagesCrudUpdateCreate;
 
+    public function getForm(...$params)
+    {
+        return true;
+    }
+
     public function formExists(...$params)
     {
         return true;

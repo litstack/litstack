@@ -46,7 +46,7 @@ trait ManagesCrudUpdateCreate
 
         $model = $this->findOrFail($identifier);
 
-        $this->validate($request, $this->config->form);
+        $this->validate($request, $this->getForm($formName));
 
         $this->fillModelAttributes($model, $request, $this->fields());
         $attributes = $this->filterRequestAttributes($request, $this->fields());
@@ -68,6 +68,7 @@ trait ManagesCrudUpdateCreate
      */
     public function store(CrudCreateRequest $request)
     {
+
         $this->validate($request, $this->config->form);
 
         $attributes = $this->filterRequestAttributes($request, $this->fields());

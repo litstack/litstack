@@ -110,7 +110,7 @@ class PostConfig extends CrudConfig
     {
         $form->card(function ($form) {
             $this->mainCard($form);
-        })->width(12)->title('Main');
+        });
     }
 
     /**
@@ -122,14 +122,21 @@ class PostConfig extends CrudConfig
     protected function mainCard(CrudForm $form)
     {
         $form->input('title')
+            ->updateRules('max:15')
+            ->creationRules('required')
+            ->rules('min:2')
             ->title('Title')
             ->width(6);
 
         $form->textarea('text')
             ->title('Text');
 
-        $form->textarea('text')
-            ->title('Text')
-            ->width(6);
+        $form->image('test_image')
+            ->title('Image')
+            ->maxFiles(1);
+
+        $form->image('test_images')
+            ->title('Images')
+            ->maxFiles(2);
     }
 }

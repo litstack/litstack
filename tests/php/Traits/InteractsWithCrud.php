@@ -28,6 +28,7 @@ trait InteractsWithCrud
     public function setUpCrud()
     {
         $this->publishCrudConfig();
+        $this->refreshCrudConfig();
         $this->makeCrudRoutes();
         $this->migrate();
     }

@@ -14,7 +14,6 @@ class CrudControllerUpdateTest extends BackendTestCase
     {
         parent::setUp();
 
-        //$this->refreshCrudConfig();
         $this->post = Post::create([]);
         $this->actingAs($this->admin, 'fjord');
     }
@@ -28,7 +27,7 @@ class CrudControllerUpdateTest extends BackendTestCase
     public function test_update()
     {
         $url = $this->getCrudRoute("/{$this->post->id}/form");
-        $response = $this->actingAs($this->admin, 'fjord')->put($url);
+        $response = $this->put($url);
         $response->assertStatus(200);
     }
 
@@ -36,7 +35,15 @@ class CrudControllerUpdateTest extends BackendTestCase
     public function test_update_returns_404_when_form_does_not_exist()
     {
         $url = $this->getCrudRoute("/{$this->post->id}/other_form");
-        $response = $this->actingAs($this->admin, 'fjord')->put($url);
+        $response = $this->put($url);
+        $response->assertStatus(404);
+    }
+
+    /** @test */
+    public function test_update_returns_404_when_model_does_not_exists()
+    {
+        $url = $this->getCrudRoute("/-1/other_form");
+        $response = $this->put($url);
         $response->assertStatus(404);
     }
 
