@@ -27,7 +27,7 @@ class NavigationConfig extends Config
         ]);
 
         $nav->section([
-            $nav->preset('collections.settings', [
+            $nav->preset('form.collections.settings', [
                 'icon' => fa('cog')
             ])
         ]);
@@ -48,7 +48,7 @@ class NavigationConfig extends Config
                 'title' => 'Pages',
                 'icon' => fa('file'),
             ], [
-                $nav->preset('pages.home', [
+                $nav->preset('form.pages.home', [
                     'icon' => fa('home'),
                 ]),
             ])
