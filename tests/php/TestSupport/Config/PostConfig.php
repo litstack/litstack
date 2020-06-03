@@ -8,8 +8,6 @@ use Fjord\Crud\Config\CrudConfig;
 use Fjord\Crud\Fields\Blocks\Repeatables;
 use Illuminate\Database\Eloquent\Builder;
 
-use FjordApp\Controllers\Crud\ArticleController;
-
 class PostConfig extends CrudConfig
 {
     /**
@@ -24,7 +22,7 @@ class PostConfig extends CrudConfig
      *
      * @var string
      */
-    public $controller = ArticleController::class;
+    public $controller = \FjordTest\TestSupport\Controllers\PostController::class;
 
     /**
      * Index table search keys.
@@ -126,6 +124,9 @@ class PostConfig extends CrudConfig
         $form->input('title')
             ->title('Title')
             ->width(6);
+
+        $form->textarea('text')
+            ->title('Text');
 
         $form->textarea('text')
             ->title('Text')

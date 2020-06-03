@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\File;
 
 trait InteractsWithCrud
 {
+    use CreateFjordUsers;
+
     /**
      * Get crud route.
      *
@@ -15,7 +17,7 @@ trait InteractsWithCrud
      */
     public function getCrudRoute(string $route)
     {
-        return strip_slashes("/admin/crud/{$route}");
+        return fjord()->url(strip_slashes("/crud/posts/{$route}"));
     }
 
     /**
@@ -57,6 +59,16 @@ trait InteractsWithCrud
             File::makeDirectory(base_path('fjord/app/Config/Crud'));
         }
 
+        File::copy(__DIR__ . '/../TestSupport/Config/PostConfig.php', base_path('fjord/app/Config/Crud/PostConfig.php'));
+    }
+
+    /**
+     * Refresh Crud config.
+     *
+     * @return void
+     */
+    public function refreshCrudConfig()
+    {
         File::copy(__DIR__ . '/../TestSupport/Config/PostConfig.php', base_path('fjord/app/Config/Crud/PostConfig.php'));
     }
 }

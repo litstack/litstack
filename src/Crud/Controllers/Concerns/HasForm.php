@@ -39,8 +39,13 @@ trait HasForm
      * @param string $form
      * @return void
      */
-    public function getForm(string $form)
+    public function getForm(string $formName)
     {
+        if (!$this->formExists($formName)) {
+            return;
+        }
+
+        $this->config->{$formName};
     }
 
     /**
@@ -51,6 +56,6 @@ trait HasForm
      */
     public function formExists(string $formName)
     {
-        return $this->config->{$formName} instanceof BaseForm;
+        return $this->config->has($formName);
     }
 }

@@ -164,6 +164,20 @@ class ConfigHandler
     }
 
     /**
+     * Config has attribute.
+     *
+     * @return boolean
+     */
+    public function has(string $attribute)
+    {
+        if ($this->hasMethod($attribute)) {
+            return true;
+        }
+
+        return property_exists($this->config, $attribute);
+    }
+
+    /**
      * Get config attribute from loaded stack or new.
      *
      * @param string $name

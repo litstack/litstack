@@ -73,7 +73,7 @@ class ConcernManagesCrudUpdateCreateTest extends BackendTestCase
         $controller->model = $model;
         $controller->config = $config;
 
-        $controller->update($request, $id);
+        $controller->update($request, $id, 'form');
     }
 }
 
@@ -93,6 +93,11 @@ class ManagesUpdateCreateController
 class ManagesUpdateCreateControllerForUpdateTest
 {
     use ManagesCrudUpdateCreate;
+
+    public function formExists(...$params)
+    {
+        return true;
+    }
 
     public function findOrFail(...$params)
     {

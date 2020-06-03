@@ -42,10 +42,9 @@ trait ManagesCrudUpdateCreate
      */
     public function update(CrudUpdateRequest $request, $identifier, $formName)
     {
-        return true;
         $this->formExists($formName) ?: abort(404);
 
-        $model = $this->findOrFail($id);
+        $model = $this->findOrFail($identifier);
 
         $this->validate($request, $this->config->form);
 
