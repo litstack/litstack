@@ -8,6 +8,7 @@
                 v-on:input="$emit('input', $event)"
             />
         </template>
+
         <template v-else>
             <b-input class="form-control" :value="value" type="text" readonly />
         </template>

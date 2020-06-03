@@ -3,6 +3,7 @@
         v-model="sortable"
         :class="{
             'fj-image-list': true,
+            'fj-image-list__preserve': field.expand,
             'mb-4': field.readonly || images.length == 0
         }"
         v-bind:disabled="field.readonly"
@@ -191,6 +192,21 @@ export default {
         padding-bottom: 100%;
         grid-row: 1 / 1;
         grid-column: 1 / 1;
+    }
+
+    &__preserve {
+        display: block;
+
+        .fj-dropzone-busy {
+            margin-bottom: 1rem;
+        }
+
+        .fj-image-card {
+            &__image img {
+                position: relative;
+                height: auto;
+            }
+        }
     }
 }
 .dropzone.dz-started .dz-message {

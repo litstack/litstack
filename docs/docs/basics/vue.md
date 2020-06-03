@@ -10,16 +10,20 @@ To include your own `Vue` components in the Fjord application, the locale npm pa
 php artisan fjord:extend
 ```
 
-All Fjord mixins are required in your `webpack.mix.js`.
+At the beginning of your `webpack.mix.js` the import of the fjord mix config was added automatically. Two files are compiled:
 
-In order to load the custom `app.js` you have to include it in your `config/fjord.php`
+-   `fjord/resources/js/app.js` => `public/fjord/js/app.js`
+-   `fjord/resources/sass/app.scss` => `public/fjord/css/app.css`
+
+Add them to **assets** in the config.
 
 ```php
+// config/fjord.php
 'assets' => [
-    // Set path to the app.js file in your public folder
-    'js' => '/fjord/app.js',
+    'js' => '/fjord/js/app.js',
     'css' => [
-        // Put path to css files that should be included here...
+        '/public/fjord/css/app.css',
+        // Add more css files here ...
     ],
 ],
 ```
@@ -31,6 +35,10 @@ Components that are created in the `components` folder are automaticly registere
 :::
 
 Run `npm run watch` and you are good to go.
+
+::: warning
+Dont forget to compile your assets every time you **update** your Fjord version.
+:::
 
 ## Bootstrap Vue
 
@@ -45,7 +53,7 @@ use App\Models\Post;
 
 return view('fjord::app')
     ->withComponent('my-component') // Name of your Vue component.
-    ->withTitle('My Component') // Html title.
+    ->withTitle('Posts') // Html title.
     ->props([
         'posts' => Post::all()
     ]);
@@ -62,7 +70,7 @@ The following example shows how to build a root component of a page for a Fjord 
         <fj-header title="Posts"/>
 
         <b-row>
-            <fj-col :width="3" v-for="(post, key) in posts" :key="key">
+            <fj-col :width="1 / 3" v-for="(post, key) in posts" :key="key">
                 <b-card :title="post.title">
                     {{ post.text }}
                 </b-card>

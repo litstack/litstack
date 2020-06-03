@@ -2,9 +2,9 @@
 
 [[toc]]
 
-Fjord comes along with all **bootstrap-vue** components with a few components that can be used to build pages that fit the Fjord style. To ensure that users of the Fjord interface can find their way around quickly and easily on all sites, it is recommended to follow the following docslines.
+Fjord comes along with **bootstrap-vue** and a few components that can be used to build pages that fit the Fjord style. To ensure that users of the Fjord interface can find their way around quickly and easily on all sites, it is recommended to follow the following guidelines.
 
-All Fjord components have the prefix `fj-`.
+Fjord components have the prefix `fj-`.
 
 ## Custom Pages
 
@@ -29,15 +29,15 @@ export default {
 </script>
 ```
 
-It is recommended to use the wrap your page content with a b-row and fj-col components.
+It is recommended to wrap your page content with a b-row and fj-col components.
 
 ```javascript
 <template>
     <fj-container>
         ...
         <b-row>
-            <fj-col width="1/3">...</fj-col>
-            <fj-col width="1/3">...</fj-col>
+            <fj-col :width="1/3">...</fj-col>
+            <fj-col :width="1/3">...</fj-col>
         </b-row>
     </fj-container>
 </template>
@@ -46,6 +46,10 @@ It is recommended to use the wrap your page content with a b-row and fj-col comp
 ## Navigation
 
 The topbar navigation is designed to make it easier for the user to navigate through the interface and display important controls while scrolling.
+
+```javascript
+<fj-navigation />
+```
 
 ### Go Back
 

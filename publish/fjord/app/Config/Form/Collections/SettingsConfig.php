@@ -33,7 +33,7 @@ class SettingsConfig extends FormConfig
     public function names()
     {
         return [
-            'singular' => 'Home'
+            'singular' => 'Settings'
         ];
     }
 
@@ -48,7 +48,7 @@ class SettingsConfig extends FormConfig
         $form->card(function ($form) {
             $form->input('title')
                 ->title('Title')
-                ->cols(12)
+                ->width(12)
                 ->placeholder('Fjord');
         });
     }

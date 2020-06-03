@@ -4,11 +4,11 @@
 
 ## Setup
 
-An existing Laravel project is required to install Fjord. In addition, an existing database connection is required.
+An existing Laravel project is required to install Fjord. As well a database connection is also required.
 
 ## Requirements
 
-Fjord requires **PHP 7.4+** and **Larvel 7+**. As well as all [requirements](https://docs.spatie.be/laravel-medialibrary/v8/requirement) of **spatie/laravel-medialibrary 8.2+**.
+Fjord requires **PHP 7.4+** and **Larvel 7+**. As well as all [requirements](https://docs.spatie.be/laravel-medialibrary/v8/requirements) of **spatie/laravel-medialibrary 8.2+**.
 
 ## Installing Fjord
 

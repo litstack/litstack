@@ -363,6 +363,7 @@ div#fjord-app .fj-dropzone {
     }
 
     &-busy {
+        min-height: 50px;
         border: $input-border-width solid $input-border-color;
         border-radius: $input-border-radius;
         display: flex;

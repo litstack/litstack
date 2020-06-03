@@ -41,21 +41,35 @@ public function getImagesAttribute()
 
 To crop the image to a desired ratio when uploading it, a crop-ratio in crop can be defined using the method `crop`.
 
-```php
+```php{3}
 $form->image('images') // images is the corresponding media collection.
     ->title('Images')
-    ->crop(16 / 9)
+    ->crop(16 / 9);
 ```
+
+## Expand
+
+By default the images are displayed as a square. However, this view is not suitable for example for header images. With **expand** you can display the image at maximum size.
+
+```php{2}
+$form->image('header_image')
+    ->expand()
+    ->title('Header Image')
+    ->crop(3 / 1)
+    ->maxFiles(1);
+```
+
+![Image expand](./screens/image/expand.png 'Image expand')
 
 ## Preview Image
 
 For the case that the first image from the list should be used as a preview image, you can use `firstBig` to display the first image bigger to show that the first image has a bigger meaning.
 
-```php
+```php{3}
 $form->image('images') // images is the corresponding media collection.
     ->title('Images')
     ->firstBig()
-    ->hint('The first image is the preview image.')
+    ->hint('The first image is the preview image.');
 ```
 
 ![Image firstBig](./screens/image/first_big.png 'Image firstBig')
@@ -92,6 +106,7 @@ To display conversion urls it is important to set the env `APP_URL` to the url y
 | `width`         | Width of the form field.                                      |
 | `sortable`      | Should the images be sortable? (default: `true`)              |
 | `maxFiles`      | Maxmium number of uploadable images. (default: `5`)           |
+| `expand`        | Expand the preview image to its full width.                   |
 | `crop`          | Opens a Crop-Tool before the upload. (default: `false`)       |
-| `showFullImage` | Display's the full image.                                     |
+| `showFullImage` | Display's the full image inside of the square box.            |
 | `firstBig`      | Display's the first image bigger.                             |

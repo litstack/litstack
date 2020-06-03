@@ -4,7 +4,7 @@ The Fjord-configuration file can be found in the laravel config directory `confi
 
 ## Basics
 
-In the following are some basic configurations for the Fjord backend explained. All specific configurations are explained in the corresponding documentation.
+In the following some basic configurations for the Fjord backend are explained. All specific configurations are explained in the corresponding documentation.
 
 Basic configuration keys:
 
