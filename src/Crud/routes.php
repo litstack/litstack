@@ -34,11 +34,13 @@ Route::get("/{id}/blocks/{field_id}/{block_id}", [$controller, "loadBlock"])->na
 Route::post("/{id}/blocks/{field_id}", [$controller, "storeBlock"])->name("blocks.store");
 Route::put("/{id}/blocks/{field_id}/{block_id}", [$controller, "updateBlock"])->name("blocks.update");
 Route::delete("/{id}/blocks/{field_id}/{block_id}", [$controller, "destroyBlock"])->name("blocks.destroy");
+
 // Blocks Media
 Route::post("/{id}/blocks/{field_id}/{block_id}/media", [$controller, "storeBlockMedia"])->name("blocks.media.store");
 Route::put("/{id}/blocks/{field_id}/{block_id}/media/order", [$controller, 'orderBlockMedia'])->name("blocks.media.order");
 Route::put("/{id}/blocks/{field_id}/{block_id}/media/{media_id}", [$controller, "updateBlockMedia"])->name("blocks.media.update");
 Route::delete("/{id}/blocks/{field_id}/{block_id}/media/{media_id}", [$controller, "destroyBlockMedia"])->name("blocks.media.destroy");
+
 // Blocks Relations
 Route::post("/{id}/blocks/{field_id}/{block_id}/{relation}/index", [$controller, "blockRelationIndex"])->name("blocks.relation.index");
 Route::post("/{id}/blocks/{field_id}/{block_id}/{relation}", [$controller, "loadBlockRelations"])->name("blocks.relation.load");

@@ -7,67 +7,39 @@ use Fjord\Support\Facades\Form;
 
 class FormTest extends BackendTestCase
 {
-    /** @test */
-    public function it_registeres_extension_for_one_field()
+    public function setUp(): void
     {
-        Form::extendField(DummyFormFieldExtension::class, DummyExtensionField::class);
+        parent::setUp();
 
-        $extensions = Form::getFieldExtensions(new DummyExtensionField);
-        $this->assertCount(1, $extensions);
-        $this->assertEquals([DummyFormFieldExtension::class], $extensions);
+        $this->setUnaccessibleProperty(Form::getFacadeRoot(), 'fields', []);
     }
 
     /** @test */
-    public function it_registeres_extension_for_multiple_fields()
+    public function it_can_register_field()
     {
-        Form::extendField(DummyFormFieldExtension::class, [
-            DummyExtensionField::class,
-            AnotherDummyExtensionField::class,
-        ]);
+        Form::registerField('name', 'field');
 
-        $extensions = Form::getFieldExtensions(new DummyExtensionField);
-        $this->assertCount(1, $extensions);
-        $this->assertEquals([DummyFormFieldExtension::class], $extensions);
-
-        $extensions = Form::getFieldExtensions(new AnotherDummyExtensionField);
-        $this->assertCount(1, $extensions);
-        $this->assertEquals([DummyFormFieldExtension::class], $extensions);
+        $fields = $this->getUnaccessibleProperty(Form::getFacadeRoot(), 'fields');
+        $this->assertCount(1, $fields);
+        $this->assertArrayHasKey('name', $fields);
+        $this->assertEquals('field', $fields['name']);
     }
 
     /** @test */
-    public function it_doesnt_find_extensions_if_there_are_none()
+    public function test_fieldExists_method()
     {
-        Form::extendField(DummyFormFieldExtension::class, DummyExtensionField::class);
+        $this->setUnaccessibleProperty(Form::getFacadeRoot(), 'fields', ['dummy_field' => 'field']);
 
-        $extensions = Form::getFieldExtensions(new AnotherDummyExtensionField);
-        $this->assertCount(0, $extensions);
+        $this->assertTrue(Form::fieldExists('dummy_field'));
+        $this->assertFalse(Form::fieldExists('other_field'));
     }
 
     /** @test */
-    public function it_finds_extensions_for_nested_fields()
+    public function test_getField_method()
     {
-        Form::extendField(DummyFormFieldExtension::class, NestedDummyExtensionField::class);
+        $this->setUnaccessibleProperty(Form::getFacadeRoot(), 'fields', ['dummy_field' => 'field']);
 
-        $extensions = Form::getFieldExtensions(new NestedDummyExtensionField);
-        $this->assertCount(1, $extensions);
-        $this->assertEquals([DummyFormFieldExtension::class], $extensions);
+        $this->assertEquals('field', Form::getField('dummy_field'));
+        $this->assertNull(Form::getField('other_field'));
     }
-}
-
-
-class DummyExtensionField
-{
-}
-
-class NestedDummyExtensionField extends DummyExtensionField
-{
-}
-
-class AnotherDummyExtensionField
-{
-}
-
-
-class DummyFormFieldExtension
-{
 }

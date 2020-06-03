@@ -14,6 +14,20 @@ trait HasBaseField
     public $baseFieldRequired = ['title'];
 
     /**
+     * Get field title.
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        if (!$this->title) {
+            return parent::getTitle();
+        }
+
+        return $this->title;
+    }
+
+    /**
      * Set field title.
      *
      * @param string $title

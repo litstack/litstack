@@ -2,11 +2,86 @@
 
 namespace Fjord\Crud\Controllers\Concerns;
 
-use Illuminate\Support\Str;
+use Fjord\Crud\CrudValidator;
+use Illuminate\Database\Eloquent\Builder;
+use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 
 trait ManagesCrudUpdateCreate
 {
+    /**
+     * Validate request.
+     *
+     * @param CrudUpdateRequest|CrudCreateRequest $request
+     * @param BaseForm $form
+     * @return void
+     */
+    public function validate($request, $form)
+    {
+        CrudValidator::validate($request, $form);
+    }
+
+    /**
+     * Delete by query.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return void
+     */
+    public function delete(Builder $query)
+    {
+        $query->delete();
+    }
+
+    /**
+     * Update Crud model.
+     *
+     * @param CrudUpdateRequest $request
+     * @param string|integer $identifier
+     * * @param string $formName
+     * @return mixed $model
+     */
+    public function update(CrudUpdateRequest $request, $identifier, $formName)
+    {
+        return true;
+        $this->formExists($formName) ?: abort(404);
+
+        $model = $this->findOrFail($id);
+
+        $this->validate($request, $this->config->form);
+
+        $this->fillModelAttributes($model, $request, $this->fields());
+        $attributes = $this->filterRequestAttributes($request, $this->fields());
+
+        $model->update($attributes);
+
+        if ($model->last_edit) {
+            $model->load('last_edit');
+        }
+
+        return crud($model);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Fjord\Crud\Requests\CrudCreateRequest  $request
+     * @return mixed
+     */
+    public function store(CrudCreateRequest $request)
+    {
+        $this->validate($request, $this->config->form);
+
+        $attributes = $this->filterRequestAttributes($request, $this->fields());
+
+        if ($this->config->sortable) {
+            $attributes[$this->config->orderColumn] = $this->query()->count() + 1;
+        }
+
+        $model = $this->model::create($attributes);
+
+        return crud($model);
+    }
+
     /**
      * Fill model attributes.
      *
@@ -35,16 +110,9 @@ trait ManagesCrudUpdateCreate
         $attributes = $request->all();
 
         foreach ($fields as $field) {
-
             if (!array_key_exists($field->local_key, $attributes)) {
                 continue;
             }
-            /*
-            if (!$field->canSave()) {
-                unset($attributes[$field->local_key]);
-                continue;
-            }
-            */
             // Format value before update.
             if (method_exists($field, 'format')) {
                 $attributes[$field->local_key] = $field->format(

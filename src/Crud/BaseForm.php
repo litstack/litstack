@@ -5,25 +5,11 @@ namespace Fjord\Crud;
 use Closure;
 
 use Fjord\Support\VueProp;
-use Fjord\Crud\Fields\Code;
-use Fjord\Crud\Fields\Icon;
 use Illuminate\Support\Str;
-use Fjord\Crud\Fields\Input;
-use Fjord\Crud\Fields\Modal;
-use Fjord\Crud\Fields\Range;
-use Fjord\Crud\Fields\Select;
 use InvalidArgumentException;
-use Fjord\Crud\Fields\Boolean;
-use Fjord\Crud\Fields\Wysiwyg;
-use Fjord\Crud\Fields\Datetime;
-use Fjord\Crud\Fields\Password;
-use Fjord\Crud\Fields\Textarea;
 use Fjord\Crud\Fields\Component;
 use Fjord\Crud\Models\FormField;
 use Fjord\Support\Facades\Fjord;
-use Fjord\Crud\Fields\Checkboxes;
-use Fjord\Crud\Fields\Media\Image;
-use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Crud\Fields\Relations\HasOne;
 use Fjord\Crud\Fields\Relations\HasMany;
 use Illuminate\Support\Traits\Macroable;
@@ -31,47 +17,16 @@ use Fjord\Crud\Fields\Relations\MorphOne;
 use Fjord\Crud\Fields\Relations\BelongsTo;
 use Fjord\Crud\Fields\Relations\MorphMany;
 use Fjord\Crud\Fields\Relations\MorphToMany;
-use Fjord\Crud\Fields\Relations\OneRelation;
-use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Exceptions\MethodNotFoundException;
 use Fjord\Crud\Fields\Relations\BelongsToMany;
 use Fjord\Crud\Fields\Relations\MorphToRegistrar;
-use Fjord\Crud\Fields\Relations\ManyRelationField;
-use Fjord\Crud\Fields\Relations\LaravelRelationField;
-
+use Fjord\Support\Facades\Form as FormFacade;
 
 class BaseForm extends VueProp
 {
     use Macroable {
         __call as macroCall;
     }
-
-    /**
-     * Available fields.
-     *
-     * @var array
-     */
-    protected $fields = [
-        'input' => Input::class,
-        'password' => Password::class,
-        'select' => Select::class,
-        'boolean' => Boolean::class,
-        'code' => Code::class,
-        'icon' => Icon::class,
-        'datetime' => Datetime::class,
-        'dt' => Datetime::class,
-        'checkboxes' => Checkboxes::class,
-        'range' => Range::class,
-        'textarea' => Textarea::class,
-        'text' => Textarea::class,
-        'wysiwyg' => Wysiwyg::class,
-        'blocks' => Blocks::class,
-        'image' => Image::class,
-        'modal' => Modal::class,
-        'component' => Component::class,
-        'oneRelation' => OneRelation::class,
-        'manyRelation' => ManyRelation::class,
-    ];
 
     /**
      * Available relations.
@@ -378,7 +333,7 @@ class BaseForm extends VueProp
      */
     public function component(string $component)
     {
-        return $this->registerField($this->fields['component'], $component);
+        return $this->registerField(FormFacade::getField('component'), $component);
     }
 
     /**
@@ -451,7 +406,7 @@ class BaseForm extends VueProp
             sprintf(
                 "The %s method is not found for this form. Supported fields: %s.",
                 $method,
-                implode(', ', array_merge(['relation'], array_keys($this->fields))),
+                implode(', ', array_merge(['relation'], array_keys(FormFacade::getFields()))),
             ),
             [
                 'function' => '__call',
@@ -471,8 +426,8 @@ class BaseForm extends VueProp
      */
     public function __call($method, $params = [])
     {
-        if (array_key_exists($method, $this->fields)) {
-            return $this->registerField($this->fields[$method], ...$params);
+        if (FormFacade::fieldExists($method)) {
+            return $this->registerField(FormFacade::getField($method), ...$params);
         }
 
         if (static::hasMacro($method)) {

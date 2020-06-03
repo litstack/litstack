@@ -7,6 +7,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use BadMethodCallException;
 use Illuminate\Support\Str;
+use Fjord\Support\Facades\Config;
 
 class ConfigHandler
 {
@@ -77,6 +78,16 @@ class ConfigHandler
                 $this->registerFactory($factory);
             }
         }
+    }
+
+    /**
+     * Get config key from config class.
+     *
+     * @return string
+     */
+    public function getKey()
+    {
+        return Config::getKey(get_class($this->config));
     }
 
     /**

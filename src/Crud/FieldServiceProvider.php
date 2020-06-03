@@ -2,11 +2,8 @@
 
 namespace Fjord\Crud;
 
-use Fjord\Crud\Fields\Concerns\FieldHasRules;
-use Illuminate\Foundation\AliasLoader;
-use Fjord\Support\Facades\Form as FormFacade;
-use Fjord\Crud\Models\Relations\CrudRelations;
 use Illuminate\Support\ServiceProvider;
+use Fjord\Support\Facades\Form as FormFacade;
 
 class FieldServiceProvider extends ServiceProvider
 {
@@ -17,5 +14,6 @@ class FieldServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        //
     }
 }

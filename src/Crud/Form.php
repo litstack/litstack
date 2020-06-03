@@ -7,7 +7,12 @@ use Illuminate\Support\Collection;
 
 class Form
 {
-    protected $extensions = [];
+    /**
+     * Registered fields.
+     *
+     * @var array
+     */
+    protected $fields = [];
 
     /**
      * Load FormField entries from database by collection name and|or for
@@ -93,36 +98,46 @@ class Form
     }
 
     /**
-     * Extend field.
+     * Register field.
      *
-     * @param string $extension
-     * @param string|array $field
+     * @param string $alias
+     * @param string $field
      * @return void
      */
-    public function extendField(string $extension, $field)
+    public function registerField(string $alias, $field)
     {
-        $this->extensions[$extension] = is_array($field) ? $field : [$field];
+        $this->fields[$alias] = $field;
     }
 
     /**
-     * Get field extensions.
+     * Determine if field alias exists.
      *
      * @param mixed $field
+     * @return boolean
+     */
+    public function fieldExists(string $alias)
+    {
+        return array_key_exists($alias, $this->fields);
+    }
+
+    /**
+     * Get field by alias.
+     *
+     * @param string $alias
+     * @return string
+     */
+    public function getField(string $alias)
+    {
+        return $this->fields[$alias] ?? null;
+    }
+
+    /**
+     * Get fields.
+     *
      * @return array
      */
-    public function getFieldExtensions($field)
+    public function getFields()
     {
-        $extensions = [];
-        foreach ($this->extensions as $extension => $fields) {
-            foreach ($fields as $fieldClass) {
-                if (!$field instanceof $fieldClass) {
-                    continue;
-                }
-
-                $extensions[] = $extension;
-            }
-        }
-
-        return $extensions;
+        return $this->fields;
     }
 }

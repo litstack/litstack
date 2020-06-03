@@ -18,6 +18,18 @@ class FieldTest extends BackendTestCase
     }
 
     /** @test */
+    public function test_getTitle_method()
+    {
+        $field = $this->getField(DummyField::class);
+
+        $this->setUnaccessibleProperty($field, 'attributes', ['id' => 'my_field']);
+        $this->assertEquals('My Field', $field->getTitle());
+
+        $this->setUnaccessibleProperty($field, 'attributes', ['id' => 'other']);
+        $this->assertEquals('Other', $field->getTitle());
+    }
+
+    /** @test */
     public function it_merges_trait_attributes()
     {
         $field = $this->getField(DummyField::class);

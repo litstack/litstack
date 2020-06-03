@@ -5,8 +5,9 @@ namespace FjordTest\CrudController;
 use Mockery as m;
 use FjordTest\BackendTestCase;
 use Fjord\Crud\Controllers\Concerns\ManagesCrudUpdateCreate;
+use Fjord\Crud\Requests\CrudUpdateRequest;
 
-class ConcernManagesUpdateCreateTest extends BackendTestCase
+class ConcernManagesCrudUpdateCreateTest extends BackendTestCase
 {
     public function setUp(): void
     {
@@ -46,6 +47,34 @@ class ConcernManagesUpdateCreateTest extends BackendTestCase
         $this->assertEquals('formatted value', $attributes['dummy_attribute_name']);
         $this->assertEquals('other value', $attributes['other_attribute']);
     }
+
+    /** @test */
+    public function test_update()
+    {
+        $request = m::mock(CrudUpdateRequest::class);
+        $id = 1;
+        $config = m::mock('config');
+        $config->form = null;
+        $model = m::mock('model');
+        $model->last_edit = false;
+
+        $request->shouldReceive('all')->andReturn([
+            'dummy_attribute' => 'value',
+            'other_attribute' => 'other'
+        ]);
+        $model->shouldReceive('update')->withArgs([
+            [
+                'dummy_attribute' => 'value',
+                'other_attribute' => 'other'
+            ]
+        ]);
+
+        $controller = m::mock(ManagesUpdateCreateControllerForUpdateTest::class)->makePartial();
+        $controller->model = $model;
+        $controller->config = $config;
+
+        $controller->update($request, $id);
+    }
 }
 
 class ManagesUpdateCreateField
@@ -59,4 +88,29 @@ class ManagesUpdateCreateField
 class ManagesUpdateCreateController
 {
     use ManagesCrudUpdateCreate;
+}
+
+class ManagesUpdateCreateControllerForUpdateTest
+{
+    use ManagesCrudUpdateCreate;
+
+    public function findOrFail(...$params)
+    {
+        return $this->model;
+    }
+
+    public function validate(...$params)
+    {
+        //
+    }
+
+    public function fields(...$params)
+    {
+        return [];
+    }
+
+    public function fillModelAttributes(...$params)
+    {
+        //
+    }
 }

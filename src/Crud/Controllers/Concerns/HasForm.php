@@ -2,8 +2,9 @@
 
 namespace Fjord\Crud\Controllers\Concerns;
 
-use Fjord\Crud\Models\Traits\TrackEdits;
+use Fjord\Crud\BaseForm;
 use Illuminate\Support\Facades\Request;
+use Fjord\Crud\Models\Traits\TrackEdits;
 
 trait HasForm
 {
@@ -30,5 +31,26 @@ trait HasForm
         }
 
         $model->edited($action);
+    }
+
+    /**
+     * Get form by name.
+     *
+     * @param string $form
+     * @return void
+     */
+    public function getForm(string $form)
+    {
+    }
+
+    /**
+     * Check if form exists.
+     *
+     * @param string $formName
+     * @return void
+     */
+    public function formExists(string $formName)
+    {
+        return $this->config->{$formName} instanceof BaseForm;
     }
 }

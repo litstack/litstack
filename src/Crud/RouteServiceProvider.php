@@ -4,6 +4,7 @@ namespace Fjord\Crud;
 
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
+use Fjord\Support\Facades\Crud;
 use Fjord\User\Models\FjordUser;
 use Fjord\Support\Facades\Package;
 use Illuminate\Support\Facades\Route as RouteFacade;
@@ -63,8 +64,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     public function map()
     {
-        $this->package = Package::get('aw-studio/fjord');
-
         $this->mapFormRoutes();
         $this->mapCrudRoutes();
     }
@@ -79,52 +78,16 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         if (!fjord()->installed()) {
             return;
         }
+
         $configPath = fjord_config_path('Crud');
         $configFiles = glob("{$configPath}/*.php");
 
         foreach ($configFiles as $path) {
             $crudName = strtolower(str_replace('Config.php', '', str_replace($configPath . '/', '', $path)));
-            $configKey = "crud.{$crudName}";
-            $config = fjord()->config($configKey);
-            $controller = $config->controller;
-            $self = $this;
+            $config = fjord()->config("crud.{$crudName}");
 
-            $this->package->route()->group(function () use ($config, $configKey, $controller, $self, $crudName) {
-                $tableName = (new $config->model)->getTable();
-                RouteFacade::group([
-                    'config' => $configKey,
-                    'prefix' => $config->route_prefix,
-                    'as' => "crud.{$tableName}",
-                ], function () use ($config, $controller, $self, $tableName) {
-                    $type = 'crud';
-                    require fjord_path('src/Crud/routes.php');
-
-                    $self->addCrudNavPreset($tableName, $config, app()->get('router'));
-                });
-            });
+            Crud::routes($config->route_prefix, $config->model);
         }
-    }
-
-    /**
-     * Register crud navigation preset.
-     *
-     * @param string $name
-     * @param FormConfig $config
-     * @param \Illuminate\Routing\Router $router
-     * @return void
-     */
-    public function addCrudNavPreset(string $name, $config, Router $router)
-    {
-        $groupStack = last($router->getGroupStack());
-        $link = strip_slashes('/' . $groupStack['prefix']);
-
-        $this->package->addNavPreset("crud.{$name}", [
-            'link' => $link,
-            'title' => ucfirst($config->names['plural']),
-            'authorize' => function (FjordUser $user) use ($config) {
-                return (new $config->controller)->authorize($user, 'read');
-            }
-        ]);
     }
 
     /**
@@ -142,46 +105,10 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             $configFiles = glob("{$formDirectory}/*.php");;
             foreach ($configFiles as $path) {
                 $formName = strtolower(str_replace('Config.php', '', str_replace($formDirectory . '/', '', $path)));
-                $configKey = "form.{$collection}.{$formName}";
-                $config = fjord()->config($configKey);
+                $config = fjord()->config("form.{$collection}.{$formName}");
 
-                $controller = $config->controller;
-                $self = $this;
-
-                $this->package->route()->group(function () use ($config, $configKey, $controller, $self) {
-                    RouteFacade::group([
-                        'prefix' => $config->route_prefix,
-                        'as' => $configKey . ".",
-                        'config' => $configKey
-                    ], function () use ($config, $controller, $self) {
-                        $type = 'form';
-                        require fjord_path('src/Crud/routes.php');
-
-                        $self->addFormNavPreset($config, app()->get('router'));
-                    });
-                });
+                Crud::formRoutes('form', $collection, $config->formName);
             }
         }
-    }
-
-    /**
-     * Register form navigation preset.
-     *
-     * @param FormConfig $config
-     * @param \Illuminate\Routing\Router $router
-     * @return void
-     */
-    public function addFormNavPreset($config, Router $router)
-    {
-        $groupStack = last($router->getGroupStack());
-        $link = strip_slashes('/' . $groupStack['prefix']);
-
-        $this->package->addNavPreset("{$config->collection}.{$config->formName}", [
-            'link' => $link,
-            'title' => ucfirst($config->names['singular']),
-            'authorize' => function (FjordUser $user) use ($config) {
-                return (new $config->controller)->authorize($user, 'read');
-            }
-        ]);
     }
 }

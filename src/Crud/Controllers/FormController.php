@@ -9,20 +9,22 @@ use Fjord\Crud\Fields\Blocks\Blocks;
 use Illuminate\Support\Facades\Route;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\FormReadRequest;
+use Illuminate\Database\Eloquent\Builder;
+use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 use Fjord\Crud\Requests\FormUpdateRequest;
 
 abstract class FormController
 {
-    use Api\CrudHasRelations,
+    use Api\CrudHasIndex,
+        Api\CrudHasRelations,
         Api\CrudHasBlocks,
         Api\CrudHasMedia,
         Api\CrudHasOrder,
         Api\CrudHasModal,
         Concerns\HasConfig,
         Concerns\HasForm,
-        Concerns\ManagesCrudUpdateCreate,
-        Concerns\ManagesCrudValidation;
+        Concerns\ManagesCrudUpdateCreate;
 
     /**
      * Crud model class name.
@@ -66,34 +68,13 @@ abstract class FormController
     }
 
     /**
-     * Get query builder
+     * Initial query.
      *
-     * @return Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query()
+    public function query(): Builder
     {
         return $this->model::query();
-    }
-
-    /**
-     * Update form_field.
-     *
-     * @param FormUpdateRequest $request
-     * @param int $id
-     * @return FormField $formField
-     */
-    public function update(CrudUpdateRequest $request, $id)
-    {
-        $formField = $this->query()->findOrFail($id);
-
-        $this->validateRequest($request);
-
-        $attributes = $this->filterRequestAttributes($request, $this->fields());
-
-        $formField->update($attributes);
-        $formField->load('last_edit');
-
-        return crud($formField);
     }
 
     /**
@@ -109,7 +90,6 @@ abstract class FormController
         array_pop($routeSplit);
         $formName = array_pop($routeSplit);
         $collection = last($routeSplit);
-
 
         $configInstance = fjord()->config("form.{$collection}.{$formName}");
 
@@ -134,7 +114,6 @@ abstract class FormController
             }
         }
 
-
         $model = FormField::firstOrCreate([
             'collection' => $configInstance->collection,
             'form_name' => $configInstance->formName,
@@ -148,5 +127,26 @@ abstract class FormController
                 'header-components' => ['fj-crud-preview'],
                 'controls' => [],
             ]);
+    }
+
+    /**
+     * Deny storing form FormField model.
+     *
+     * @param  \Fjord\Crud\Requests\CrudCreateRequest  $request
+     * @return mixed
+     */
+    public function store(CrudCreateRequest $request)
+    {
+        //
+    }
+
+    /**
+     * Deny filling attributes to FormField Model.
+     *
+     * @return void
+     */
+    public function fillModelAttributes($model, $request, $fields)
+    {
+        return;
     }
 }

@@ -3,7 +3,9 @@
 namespace FjordTest\Traits;
 
 use Fjord\Config\ConfigHandler;
+use Fjord\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Traits\ForwardsCalls;
 
 trait InteractsWithConfig
 {
@@ -64,5 +66,10 @@ class ConfigLoader
     {
         $loader = $this->loader;
         return $loader($key, ...$params);
+    }
+
+    public function getKey()
+    {
+        //
     }
 }

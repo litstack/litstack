@@ -104,6 +104,18 @@ class Field extends VueProp
     }
 
     /**
+     * Get field title.
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return collect(explode('_', $this->getAttribute('id')))->map(function ($word) {
+            return ucfirst($word);
+        })->implode(' ');
+    }
+
+    /**
      * Fill model.
      *
      * @param mixed $model

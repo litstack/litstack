@@ -31,12 +31,25 @@ trait HasConfig
     }
 
     /**
+     * Find or faild model by identifier.
+     *
+     * @param mixed $identifier
+     * @return void
+     */
+    public function findOrFail($identifier)
+    {
+        return $this->query()->findOrFail($identifier);
+    }
+
+    /**
      * Get config.
      *
      * @return Config
      */
     public function loadConfig()
     {
-        return Request::route()->getConfig();
+        if (Request::route()) {
+            return Request::route()->getConfig();
+        }
     }
 }

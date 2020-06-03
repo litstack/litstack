@@ -10,7 +10,7 @@ use Fjord\Crud\Controllers\Concerns\ManagesCrudUpdateCreate;
 
 class ProfileController
 {
-    use ManagesCrudValidation, ManagesCrudUpdateCreate;
+    use ManagesCrudUpdateCreate;
 
     /**
      * Show profile update.

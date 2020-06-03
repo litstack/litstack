@@ -27,18 +27,27 @@ trait TestHelpers
     /**
      * Calling protected or private class method.
      *
-     * @param mixed $instance
+     * @param mixed|string $abstract
      * @param string $method
      * @param array $params
      * @return mixed
      */
-    protected function callUnaccessibleMethod($instance, string $method, array $params = [])
+    protected function callUnaccessibleMethod($abstract, string $method, array $params = [])
     {
-        $class = get_class($instance);
+        $class = $abstract;
+        if (!is_string($abstract)) {
+            $class = get_class($abstract);
+        }
+
         $class = new ReflectionClass($class);
         $method = $class->getMethod($method);
         $method->setAccessible(true);
-        return $method->invokeArgs($instance, $params);
+
+        if ($method->isStatic()) {
+            return $method->invokeArgs(null, $params);
+        }
+
+        return $method->invokeArgs($abstract, $params);
     }
 
     /**

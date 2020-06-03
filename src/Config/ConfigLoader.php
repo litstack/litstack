@@ -4,6 +4,11 @@ namespace Fjord\Config;
 
 use Illuminate\Support\Str;
 
+/**
+ * Config singleton.
+ * 
+ * @see \Fjord\Support\Facades\Config
+ */
 class ConfigLoader
 {
     /**
@@ -59,7 +64,7 @@ class ConfigLoader
      * @param string $key
      * @return string
      */
-    protected function getClassName(string $key)
+    public function getClassName(string $key)
     {
         $name = '';
         foreach (explode('.', $key) as $part) {
@@ -80,5 +85,24 @@ class ConfigLoader
         return class_exists(
             $this->getClassName($key)
         );
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param string $className
+     * @return void
+     */
+    public function getKey(string $className)
+    {
+        $partial = Str::replaceFirst($this->namespace . '\\', '', $className);
+        $partial = Str::replaceLast('Config', '', $partial);
+
+        $parts = [];
+        foreach (explode('\\', $partial) as $part) {
+            $parts[] = Str::snake($part);
+        }
+
+        return implode('.', $parts);
     }
 }

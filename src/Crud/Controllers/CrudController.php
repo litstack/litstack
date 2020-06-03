@@ -21,8 +21,7 @@ abstract class CrudController
         Api\CrudHasModal,
         Concerns\HasConfig,
         Concerns\HasForm,
-        Concerns\ManagesCrudUpdateCreate,
-        Concerns\ManagesCrudValidation;
+        Concerns\ManagesCrudUpdateCreate;
 
     /**
      * The Model Class e.g. App\Models\Post
@@ -241,62 +240,6 @@ abstract class CrudController
                 ],
                 'controls' => [],
             ]);
-    }
-
-    /**
-     * Update Crud model.
-     *
-     * @param CrudUpdateRequest $request
-     * @param int $id
-     * @return mixed $model
-     */
-    public function update(CrudUpdateRequest $request, $id)
-    {
-        $model = $this->query()->findOrFail($id);
-
-        $this->validateRequest($request);
-
-        $this->fillModelAttributes($model, $request, $this->fields());
-        $attributes = $this->filterRequestAttributes($request, $this->fields());
-
-        $model->update($attributes);
-
-        if ($model->last_edit) {
-            $model->load('last_edit');
-        }
-
-        return crud($model);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Fjord\Crud\Requests\CrudCreateRequest  $request
-     * @return mixed
-     */
-    public function store(CrudCreateRequest $request)
-    {
-        $this->validateRequest($request);
-
-        /*
-        $request->validate(
-            $this->config->form->getRules($request),
-            __f('validation'),
-            $this->fields()->mapWithKeys(function ($field) {
-                return [$field->local_key => $field->title];
-            })->toArray()
-        );
-        */
-
-        $attributes = $this->filterRequestAttributes($request, $this->fields());
-
-        if ($this->config->sortable) {
-            $attributes[$this->config->orderColumn] = $this->query()->count() + 1;
-        }
-
-        $model = $this->model::create($attributes);
-
-        return crud($model);
     }
 
     /**
