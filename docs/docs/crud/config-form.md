@@ -70,7 +70,7 @@ $form->info('Address')
 
 ## Preview
 
-There is the possibility to get a `preview` of the stored data directly in the update form. The **route** for this can be easily specified using the method `previewRoute`. For a CRUD Model, the corresponding Model is also passed as a parameter.
+It is possible to get a `preview` of the stored data directly in the update form. The **route** for this can be easily specified using the method `previewRoute`. For a CRUD Model, the corresponding model is also passed as a parameter.
 
 ```php
 public function previewRoute($article)
