@@ -163,7 +163,7 @@ class Crud
         RouteFacade::put("/{{$identifier}}/{form}/media/order", [$controller, 'orderMedia'])->name("media.order");
         RouteFacade::put("/{{$identifier}}/{form}/media/{media_id}", [$controller, 'updateMedia'])->name("media.update");
         RouteFacade::post("/{{$identifier}}/{form}/media", [$controller, 'storeMedia'])->name("media.store");
-        RouteFacade::delete("/{{$identifier}}{form}/media/{media_id}", [$controller, 'destroyMedia'])->name("media.destroy");
+        RouteFacade::delete("/{{$identifier}}/{form}/media/{media_id}", [$controller, 'destroyMedia'])->name("media.destroy");
 
         // Blocks
         RouteFacade::get("/{{$identifier}}/{form}/blocks/{field_id}", [$controller, "loadBlocks"])->name("blocks.index");
