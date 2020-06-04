@@ -31,7 +31,7 @@ Fjord is a Laravel package for building Admin-Interfaces that help maintaining t
 
 Read the [Docs](https://www.fjord-admin.com) and learn how to build your custom Admin panel. Use your knowledge about Laravel standards and do much work in little time.
 
-Feel free to ask us anything on our [discord chanel](https://discord.gg/waNATU).
+Feel free to ask us anything on our [discord chanel](https://discord.gg/J8Ed5B).
 
 ## Installation
 
