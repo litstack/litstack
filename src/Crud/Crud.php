@@ -4,6 +4,7 @@ namespace Fjord\Crud;
 
 use Fjord\Support\Facades\Fjord;
 use Fjord\User\Models\FjordUser;
+use Fjord\Crud\Config\CrudConfig;
 use Fjord\Support\Facades\Config;
 use Fjord\Support\Facades\Package;
 use Illuminate\Support\Facades\Route as RouteFacade;
@@ -38,20 +39,20 @@ class Crud
      * @param string $controller
      * @return void
      */
-    public function routes(string $prefix, string $model, $identifier = 'id')
+    public function routes(string $prefix, $config)
     {
-        Package::get('aw-studio/fjord')->route()->group(function () use ($prefix, $model, $identifier) {
-            $config = $this->config($model);
+        Package::get('aw-studio/fjord')->route()->group(function () use ($prefix, $config) {
+            $model = $config->model;
             $tableName = (new $model)->getTable();
 
             RouteFacade::group([
                 'config' => $config->getKey(),
                 'prefix' => "$prefix",
-                'as' => "crud.{$tableName}.",
-            ], function () use ($prefix, $model, $identifier, $config, $tableName) {
+                'as' => $config->getKey(),
+            ], function () use ($prefix, $model, $config, $tableName) {
 
-                $this->makeCrudRoutes($config->controller, $identifier);
-                $this->makeFieldRoutes($config->controller, $identifier);
+                $this->makeCrudRoutes($config->controller);
+                $this->makeFieldRoutes($config->controller);
 
                 Package::get('aw-studio/fjord')->addNavPreset("crud.{$tableName}", [
                     'link' => Fjord::url($prefix),
@@ -100,6 +101,16 @@ class Crud
         });
     }
 
+    public function fieldRoutes($config, string $controller, string $identifier = 'id')
+    {
+        return RouteFacade::group([
+            'config' => $config->getKey(),
+            'prefix' => "$prefix",
+        ], function () use ($controller, $identifier) {
+            $this->makeFieldRoutes($controller, $identifier);
+        });
+    }
+
     /**
      * Make form routes.
      *
@@ -118,7 +129,7 @@ class Crud
      * @param string $identifier
      * @return void
      */
-    protected function makeCrudRoutes(string $controller, string $identifier)
+    protected function makeCrudRoutes(string $controller, string $identifier = 'id')
     {
         RouteFacade::get("/", [$controller, "index"])->name('index');
         // TODO: Index table name.
@@ -140,10 +151,13 @@ class Crud
     protected function makeFieldRoutes(string $controller, string $identifier = 'id')
     {
         // For refreshing.
-        RouteFacade::get("/load", [$controller, "load"])->name('load');
+        RouteFacade::get("/{{$identifier}}/load", [$controller, "load"])->name('load');
 
         // Update
         RouteFacade::put("/{{$identifier}}/{form}", [$controller, "update"])->name('update');
+
+        // Modal
+        RouteFacade::put("/{{$identifier}}/{form}/modal/{modal_id}", [$controller, 'updateModal'])->name("modal.update");
 
         // Media
         RouteFacade::put("/{{$identifier}}/{form}/media/order", [$controller, 'orderMedia'])->name("media.order");
@@ -158,26 +172,24 @@ class Crud
         RouteFacade::put("/{{$identifier}}/{form}/blocks/{field_id}/{block_id}", [$controller, "updateBlock"])->name("blocks.update");
         RouteFacade::delete("/{{$identifier}}/{form}/blocks/{field_id}/{block_id}", [$controller, "destroyBlock"])->name("blocks.destroy");
 
+        // Blocks Media
+        RouteFacade::post("/{{$identifier}}/{form}/blocks/{field_id}/{block_id}/media", [$controller, "storeBlockMedia"])->name("blocks.media.store");
+        RouteFacade::put("/{{$identifier}}/{form}/blocks/{field_id}/{block_id}/media/order", [$controller, 'orderBlockMedia'])->name("blocks.media.order");
+        RouteFacade::put("/{{$identifier}}/{form}/blocks/{field_id}/{block_id}/media/{media_id}", [$controller, "updateBlockMedia"])->name("blocks.media.update");
+        RouteFacade::delete("/{{$identifier}}/{form}/blocks/{field_id}/{block_id}/media/{media_id}", [$controller, "destroyBlockMedia"])->name("blocks.media.destroy");
+
+        // Blocks Relations
+        RouteFacade::post("/{{$identifier}}/{form}/blocks/{field_id}/{block_id}/{relation}/index", [$controller, "blockRelationIndex"])->name("blocks.relation.index");
+        RouteFacade::post("/{{$identifier}}/{form}/blocks/{field_id}/{block_id}/{relation}", [$controller, "loadBlockRelations"])->name("blocks.relation.load");
+        RouteFacade::put("/{{$identifier}}/{form}/blocks/{field_id}/{block_id}/{relation}/order", [$controller, "orderBlockRelation"])->name("blocks.relation.order");
+        RouteFacade::delete("/{{$identifier}}/{form}/blocks/{field_id}/{block_id}/{relation}/{relation_id}",  [$controller, "destroyBlockRelation"])->name("blocks.relation.delete");
+        RouteFacade::post("/{{$identifier}}/{form}/blocks/{field_id}/{block_id}/{relation}/{relation_id}", [$controller, "createBlockRelation"])->name("blocks.relation.store");
+
         // Relations
         RouteFacade::post("/{{$identifier}}/{form}/{relation}/index", [$controller, "relationIndex"])->name("relation.index");
         RouteFacade::post("/{{$identifier}}/{form}/{relation}", [$controller, "loadRelations"])->name("relation.load");
         RouteFacade::put("/{{$identifier}}/{form}/{relation}/order", [$controller, "orderRelation"])->name("relation.order");
         RouteFacade::delete("/{{$identifier}}/{form}/{relation}/{relation_id}",  [$controller, "destroyRelation"])->name("relation.delete");
         RouteFacade::post("/{{$identifier}}/{form}/{relation}/{relation_id}", [$controller, "createRelation"])->name("relation.store");
-
-        /*
-        // Blocks Media
-        Route::post("/{id}/blocks/{field_id}/{block_id}/media", [$controller, "storeBlockMedia"])->name("blocks.media.store");
-        Route::put("/{id}/blocks/{field_id}/{block_id}/media/order", [$controller, 'orderBlockMedia'])->name("blocks.media.order");
-        Route::put("/{id}/blocks/{field_id}/{block_id}/media/{media_id}", [$controller, "updateBlockMedia"])->name("blocks.media.update");
-        Route::delete("/{id}/blocks/{field_id}/{block_id}/media/{media_id}", [$controller, "destroyBlockMedia"])->name("blocks.media.destroy");
-
-        // Blocks Relations
-        Route::post("/{id}/blocks/{field_id}/{block_id}/{relation}/index", [$controller, "blockRelationIndex"])->name("blocks.relation.index");
-        Route::post("/{id}/blocks/{field_id}/{block_id}/{relation}", [$controller, "loadBlockRelations"])->name("blocks.relation.load");
-        Route::put("/{id}/blocks/{field_id}/{block_id}/{relation}/order", [$controller, "orderBlockRelation"])->name("blocks.relation.order");
-        Route::delete("/{id}/blocks/{field_id}/{block_id}/{relation}/{relation_id}",  [$controller, "destroyBlockRelation"])->name("blocks.relation.delete");
-        Route::post("/{id}/blocks/{field_id}/{block_id}/{relation}/{relation_id}", [$controller, "createBlockRelation"])->name("blocks.relation.store");
-        */
     }
 }

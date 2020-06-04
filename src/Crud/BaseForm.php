@@ -3,7 +3,7 @@
 namespace Fjord\Crud;
 
 use Closure;
-
+use Fjord\Crud\Fields\Blocks\Blocks;
 use Fjord\Support\VueProp;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
@@ -377,6 +377,54 @@ class BaseForm extends VueProp
             return true;
         }
         return false;
+    }
+
+    /**
+     * Check if field with form exists.
+     *
+     * @param string $name
+     * @param string $repeatable
+     * @return boolean
+     */
+    public function hasForm(string $name, string $repeatable = null)
+    {
+        if (!$field = $this->findField($name)) {
+            return false;
+        }
+
+        if (!$field instanceof Blocks) {
+            return method_exists($field, 'form');
+        }
+
+        if (!$repeatable) {
+            return false;
+        }
+
+        return $field->hasRepeatable($repeatable);
+    }
+
+    /**
+     * Get form from field.
+     *
+     * @param string $name
+     * @param string $repeatable
+     * @return BaseForm
+     */
+    public function getForm(string $name, string $repeatable = null)
+    {
+        if (!$this->hasForm($name, $repeatable)) {
+            return;
+        }
+
+        if (!$field = $this->findField($name)) {
+            return;
+        }
+
+        if (!$field instanceof Blocks) {
+            return $field->form;
+        }
+
+        return $field->getRepeatable($repeatable);
     }
 
     /**

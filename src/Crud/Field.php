@@ -6,9 +6,9 @@ use Closure;
 use Exception;
 use Fjord\Support\VueProp;
 use Illuminate\Support\Str;
-use InvalidArgumentException;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Fjord\Exceptions\MethodNotFoundException;
+use Fjord\Exceptions\InvalidArgumentException;
 use Fjord\Crud\Exceptions\MissingAttributeException;
 
 class Field extends VueProp
@@ -91,6 +91,8 @@ class Field extends VueProp
         $this->model = $model;
         $this->formInstance = $form;
 
+        $this->validateFieldId($model, $id);
+
         $this->setAttribute('id', $id);
         $this->setAttribute('local_key', $id);
         $this->setAttribute('route_prefix', $routePrefix);
@@ -101,6 +103,24 @@ class Field extends VueProp
         $this->setDefaultsFromClassMethods();
         $this->setDefaultAttributes();
         $this->mergeRequiredAttributes();
+    }
+
+    /**
+     * Validate field id.
+     *
+     * @param string $model
+     * @param string $id
+     * @return void
+     * 
+     * @throws \Fjord\Exceptions\InvalidArgumentException
+     */
+    protected function validateFieldId($model, $id)
+    {
+        if ($id == 'media') {
+            throw new InvalidArgumentException('The field id cannot be "media".', [
+                'function' => '__call'
+            ]);
+        }
     }
 
     /**

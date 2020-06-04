@@ -4,14 +4,13 @@ namespace Fjord\User\Controllers;
 
 use Illuminate\Http\Request;
 use Fjord\Support\IndexTable;
+use Fjord\User\Models\FjordUser;
 use Fjord\Support\Facades\Config;
-use Fjord\Crud\Controllers\Concerns\ManagesCrudValidation;
-use Fjord\Crud\Controllers\Concerns\ManagesCrudUpdateCreate;
+use Fjord\Crud\Controllers\CrudController;
+use Illuminate\Database\Eloquent\Builder;
 
-class ProfileController
+class ProfileController extends CrudController
 {
-    use ManagesCrudUpdateCreate;
-
     /**
      * Show profile update.
      *
@@ -30,17 +29,36 @@ class ProfileController
     }
 
     /**
+     * Authorization.
+     *
+     * @param FjordUser $user
+     * @param string $operation
+     * @return boolean
+     */
+    public function authorize(FjordUser $user, $operation): bool
+    {
+        return true;
+    }
+
+    public function query(): Builder
+    {
+        return FjordUser::where('id', fjord_user()->id);
+    }
+
+    /**
      * Update profile.
      *
      * @param Request $request
      * @return void
      */
+    /*
     public function update(Request $request)
     {
         $user = fjord_user() ?? abort(404);
 
         $user->update($request->all());
     }
+    */
 
     /**
      * Update modal field.
@@ -50,6 +68,7 @@ class ProfileController
      * @param string $modal_id
      * @return CrudJs
      */
+    /*
     public function updateModal(Request $request, $modal_id)
     {
         $modal = Config::get('user.profile_settings')
@@ -68,6 +87,7 @@ class ProfileController
 
         return crud(fjord_user());
     }
+    */
 
     /**
      * Fetch index.
@@ -75,6 +95,7 @@ class ProfileController
      * @param Request $request
      * @return array
      */
+
     public function sessions(Request $request)
     {
         return IndexTable::query(fjord_user()->sessions()->getQuery())

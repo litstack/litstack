@@ -68,6 +68,28 @@ class Repeatables extends VueProp
     }
 
     /**
+     * Check if form exists.
+     *
+     * @param string $name
+     * @return boolean
+     */
+    public function has(string $name)
+    {
+        return array_key_exists($name, $this->forms);
+    }
+
+    /**
+     * Get form by name.
+     *
+     * @param string $name
+     * @return BlockForm
+     */
+    public function get(string $name)
+    {
+        return $this->forms[$name] ?? null;
+    }
+
+    /**
      * To array.
      *
      * @return array
@@ -94,6 +116,6 @@ class Repeatables extends VueProp
      */
     public function __get(string $key)
     {
-        return $this->forms[$key];
+        return $this->get($key);
     }
 }

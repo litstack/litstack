@@ -69,6 +69,28 @@ class Blocks extends RelationField
     }
 
     /**
+     * Check if block has repeatable.
+     *
+     * @param string $name
+     * @return boolean
+     */
+    public function hasRepeatable(string $name)
+    {
+        return $this->repeatables->has($name);
+    }
+
+    /**
+     * Check if block has repeatable.
+     *
+     * @param string $name
+     * @return boolean
+     */
+    public function getRepeatable(string $name)
+    {
+        return $this->repeatables->get($name);
+    }
+
+    /**
      * Get relation query for model.
      *
      * @param mixed $model

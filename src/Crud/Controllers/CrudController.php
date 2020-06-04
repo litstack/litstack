@@ -13,15 +13,16 @@ use Fjord\Crud\Requests\CrudUpdateRequest;
 
 abstract class CrudController
 {
-    use Api\CrudHasIndex,
+    use Api\CrudBaseApi,
+        Api\CrudHasIndex,
         Api\CrudHasRelations,
         Api\CrudHasBlocks,
         Api\CrudHasMedia,
         Api\CrudHasOrder,
         Api\CrudHasModal,
-        Concerns\HasConfig,
-        Concerns\HasForm,
-        Concerns\ManagesCrudUpdateCreate;
+        Concerns\ManagesForm,
+        Concerns\ManagesConfig,
+        Concerns\ManagesCrud;
 
     /**
      * The Model Class e.g. App\Models\Post
@@ -185,7 +186,7 @@ abstract class CrudController
     {
         // Eager loads relations.
         $query = $this->query();
-        foreach ($this->fields() as $field) {
+        foreach ($this->getForm('form')->getRegisteredFields() as $field) {
             if ($field instanceof RelationField && !$field instanceof MediaField) {
                 $query->with($field->getRelationName());
             }
@@ -197,7 +198,7 @@ abstract class CrudController
         $model->last_edit;
 
         // Append media.
-        foreach ($this->fields() as $field) {
+        foreach ($this->getForm('form')->getRegisteredFields() as $field) {
             if ($field instanceof MediaField) {
                 $model->append($field->id);
             }

@@ -16,15 +16,16 @@ use Fjord\Crud\Requests\FormUpdateRequest;
 
 abstract class FormController
 {
-    use Api\CrudHasIndex,
+    use Api\CrudBaseApi,
+        Api\CrudHasIndex,
         Api\CrudHasRelations,
         Api\CrudHasBlocks,
         Api\CrudHasMedia,
         Api\CrudHasOrder,
         Api\CrudHasModal,
-        Concerns\HasConfig,
-        Concerns\HasForm,
-        Concerns\ManagesCrudUpdateCreate;
+        Concerns\ManagesConfig,
+        Concerns\ManagesForm,
+        Concerns\ManagesCrud;
 
     /**
      * Crud model class name.

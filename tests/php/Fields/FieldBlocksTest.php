@@ -27,6 +27,30 @@ class FieldBlocksTest extends BackendTestCase
     }
 
     /** @test */
+    public function test_hasRepeatable_method()
+    {
+        $this->field->repeatables(function ($rep) {
+            $rep->add('text', function () {
+            });
+        });
+
+        $this->assertTrue($this->field->hasRepeatable('text'));
+        $this->assertFalse($this->field->hasRepeatable('other'));
+    }
+
+    /** @test */
+    public function test_getRepeatable_method()
+    {
+        $this->field->repeatables(function ($rep) {
+            $rep->add('text', function () {
+            });
+        });
+
+        $this->assertNotNull($this->field->getRepeatable('text'));
+        $this->assertNull($this->field->getRepeatable('other'));
+    }
+
+    /** @test */
     public function it_sets_order_column()
     {
         $this->assertArrayHasKey('orderColumn', $this->field->getAttributes());

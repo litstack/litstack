@@ -26,12 +26,6 @@ class CrudTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_routes_method()
-    {
-        Crud::routes('dummy_prefix', DummyCrudModel::class, DummyCrudController::class);
-    }
-
-    /** @test */
     public function test_formRoutes_method()
     {
         Crud::formRoutes('dummy_prefix', 'pages', 'home');

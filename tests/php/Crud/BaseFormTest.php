@@ -28,6 +28,56 @@ class BaseFormTest extends BackendTestCase
     }
 
     /** @test */
+    public function test_hasForm_returns_true_when_modal_with_form_exists()
+    {
+        $this->form->modal('dummy_modal');
+        $this->assertTrue($this->form->hasForm('dummy_modal'));
+
+        $this->form = new BaseForm(DummyModel::class);
+        $this->form->input('input_field');
+        $this->assertFalse($this->form->hasForm('something_else'));
+        $this->assertFalse($this->form->hasForm('input_field'));
+    }
+
+    /** @test */
+    public function test_getForm_returns_form_for_modal()
+    {
+        $this->form->modal('dummy_modal')->form(function () {
+        });
+
+        $this->assertInstanceOf(BaseForm::class, $this->form->getForm('dummy_modal'));
+        $this->assertNull($this->form->getForm('other'));
+    }
+
+    /** @test */
+    public function test_hasForm_returns_true_when_block_with_form_exists()
+    {
+        $this->form->blocks('dummy_block')
+            ->repeatables(function ($rep) {
+                $rep->add('block_form', function () {
+                });
+            });
+
+        $this->assertTrue($this->form->hasForm('dummy_block', 'block_form'));
+        $this->assertFalse($this->form->hasForm('dummy_block', 'other'));
+        $this->assertFalse($this->form->hasForm('dummy_block'));
+    }
+
+    /** @test */
+    public function test_getForm_returns_form_for_block()
+    {
+        $this->form->blocks('dummy_block')
+            ->repeatables(function ($rep) {
+                $rep->add('block_form', function () {
+                });
+            });
+
+        $this->assertInstanceOf(BaseForm::class, $this->form->getForm('dummy_block', 'block_form'));
+        $this->assertNull($this->form->getForm('dummy_block', 'other'));
+        $this->assertNull($this->form->getForm('dummy_block'));
+    }
+
+    /** @test */
     public function it_sets_correct_route_prefix()
     {
         $this->form->setRoutePrefix('dummy_prefix');

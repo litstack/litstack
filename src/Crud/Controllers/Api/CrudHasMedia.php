@@ -16,15 +16,15 @@ trait CrudHasMedia
      */
     public function storeMedia(CrudUpdateRequest $request, $identifier, $formName)
     {
-        $this->formExists($formName) ?: abort(404);
-
         $request->collection ?: abort(404);
         $request->media !== null ?: abort(404);
 
-        $model = $this->model::findOrFail($identifier);
+        $this->formExists($formName) ?: abort(404);
 
-        $field = $this->config->form->findField($request->collection)
+        $field = $this->getForm($formName)->findField($request->collection)
             ?? abort(404);
+
+        $model = $this->model::findOrFail($identifier);
 
         return $this->storeMediaToModel($request, $model, $field);
 
@@ -124,9 +124,14 @@ trait CrudHasMedia
      * @param int $media_id
      * @return int
      */
-    public function destroyMedia(CrudUpdateRequest $request, $id, $media_id)
+    public function destroyMedia(CrudUpdateRequest $request, $identifier, $formName, $media_id)
     {
-        $model = $this->query()->findOrFail($id);
+        // Check if field exists.
+        $this->getForm($formName)->findField($request->collection)
+            ?? abort(404);
+
+        $model = $this->query()->findOrFail($identifier);
+
         if ($model->media()->findOrFail($media_id)->delete()) {
 
             $this->edited($model, 'media:deleted');

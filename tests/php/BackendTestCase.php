@@ -35,6 +35,26 @@ class BackendTestCase extends OrchestraDuskTestCase
         $this->tearDownTraits();
     }
 
+    /**
+     * Begin a server for the tests.
+     *
+     * @return void
+     */
+    public static function setUpBeforeClass(): void
+    {
+        self::setUpBeforeClassTraits();
+    }
+
+    /**
+     * Kill our server.
+     *
+     * @return void
+     */
+    public static function tearDownAfterClass(): void
+    {
+        self::tearDownAfterClassTraits();
+    }
+
     protected function setUpTheBrowserEnvironment()
     {
     }

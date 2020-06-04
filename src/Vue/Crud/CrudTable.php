@@ -59,6 +59,6 @@ class CrudTable extends Table
         $route_prefix = $this->config->routePrefix();
 
         // Default link.
-        return "{$route_prefix}/{id}/edit";
+        return "{$route_prefix}/{id}";
     }
 }

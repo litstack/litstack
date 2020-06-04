@@ -2,9 +2,11 @@
 
 namespace Fjord\User;
 
+use Fjord\Support\Facades\Crud;
 use Fjord\Support\Facades\Config;
 use Fjord\Support\Facades\Package;
 use Fjord\Support\Facades\FjordRoute;
+use Illuminate\Support\Facades\Route;
 use Fjord\User\Controllers\ProfileController;
 use Fjord\User\Controllers\FjordUserController;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
@@ -46,13 +48,21 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->mapUserRoleRoutes();
     }
 
-
     protected function mapUserRoleRoutes()
     {
-        $this->package->route()->get('/profile/settings', ProfileController::class . '@show')->name('profile.show');
-        $this->package->route()->put('/profile/settings', ProfileController::class . '@update')->name('profile.update');
-        $this->package->route()->put('/profile/settings/modal/{modal_id}', ProfileController::class . '@updateModal')->name('profile.update.modal');
-        $this->package->route()->get('/profile/settings/sessions', ProfileController::class . '@sessions')->name('profile.sessions');
+        $this->package->route()->group(function () {
+            Route::group([
+                'config' => 'user.profile_settings',
+                'prefix' => '/profile/settings',
+                'as' => 'profile.'
+            ], function () {
+                Route::get('/', ProfileController::class . '@show')->name('show');
+                Route::get('/sessions', ProfileController::class . '@sessions')->name('sessions');
+
+                Route::put('/{id}/{form}', ProfileController::class . '@update')->name('update');
+                Route::put('/{id}/{form}/modal/{modal_id}', ProfileController::class . '@updateModal')->name('update.modal');
+            });
+        });
 
         $this->package->route()->get('/fjord/users', FjordUserController::class . '@showIndex')->name('users');
         $this->package->route()->post('/fjord/users-index', FjordUserController::class . '@fetchIndex')->name('users.index');

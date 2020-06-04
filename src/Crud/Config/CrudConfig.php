@@ -4,7 +4,6 @@ namespace Fjord\Crud\Config;
 
 use Illuminate\Support\Str;
 use Fjord\Crud\Config\Traits\HasCrudForm;
-use Illuminate\Database\Eloquent\Builder;
 use Fjord\Crud\Config\Traits\HasCrudIndex;
 
 abstract class CrudConfig

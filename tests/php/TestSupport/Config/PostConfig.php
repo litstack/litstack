@@ -138,5 +138,31 @@ class PostConfig extends CrudConfig
         $form->image('test_images')
             ->title('Images')
             ->maxFiles(2);
+
+        $form->blocks('content')
+            ->title('Content')
+            ->repeatables(function ($rep) {
+                $rep->add('text', function ($form) {
+                    $form->text('text')
+                        ->title('Title')
+                        ->rules('min:5');
+                });
+
+                $rep->add('input', function ($form) {
+                    $form->input('title')
+                        ->title('Title')
+                        ->rules('min:5');
+                });
+            });
+
+        $form->blocks('media_blocks')
+            ->title('Media')
+            ->repeatables(function ($rep) {
+                $rep->add('image', function ($form) {
+                    $form->image('images')
+                        ->title('Images')
+                        ->maxFiles(2);
+                });
+            });
     }
 }

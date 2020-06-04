@@ -14,26 +14,32 @@ trait ManagesBlocksRelations
      * Load block relation index.
      *
      * @param CrudReadRequest $request
-     * @param int $id
+     * @param string|integer $identifier
+     * @param string $form_name
      * @param string $field_id
      * @param int $block_id
      * @param string $relation
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function blockRelationIndex(CrudReadRequest $request, $id, $field_id, $block_id, $relation)
+    public function blockRelationIndex(CrudReadRequest $request, $identifier, $form_name, $field_id, $block_id, $relation)
     {
-        $model = $this->query()->findOrFail($id);
-        $blockField = $this->config->form->findField($field_id) ?? abort(404);
+        $this->formExists($form_name) ?: abort(404);
+        $blockField = $this->getForm($form_name)->findField($field_id) ?? abort(404);
+        $blockField instanceof Blocks ?: abort(404);
+        // Find model.
+        $model = $this->findOrFail($identifier);
+        // Find block.
         $block = $blockField->getRelationQuery($model)->findOrFail($block_id);
-        $field = $block->findField($relation) ?? abort(404);
+        // Find relation field.
+        $relationField = $block->findField($relation) ?? abort(404);
 
-        if (!$field instanceof LaravelRelationField) {
+        if (!$relationField instanceof LaravelRelationField) {
             abort(404);
         }
 
-        $index = IndexTable::query($field->getQuery())
+        $index = IndexTable::query($relationField->getQuery())
             ->request($request)
-            ->search($field->getRelatedConfig()->search)
+            ->search($relationField->getRelatedConfig()->search)
             ->get();
 
         $index['items'] = crud($index['items']);
@@ -45,24 +51,30 @@ trait ManagesBlocksRelations
      * Fetch existing relations.
      *
      * @param CrudReadRequest $request
-     * @param int $id
+     * @param string|integer $identifier
+     * @param string $form_name
      * @param int $field_id
      * @return void
      */
-    public function loadBlockRelations(CrudReadRequest $request, $id, $field_id, $block_id, $relation)
+    public function loadBlockRelations(CrudReadRequest $request, $identifier, $form_name, $field_id, $block_id, $relation)
     {
-        $model = $this->query()->findOrFail($id);
-        $blockField = $this->config->form->findField($field_id) ?? abort(404);
+        $this->formExists($form_name) ?: abort(404);
+        $blockField = $this->getForm($form_name)->findField($field_id) ?? abort(404);
+        $blockField instanceof Blocks ?: abort(404);
+        // Find model.
+        $model = $this->findOrFail($identifier);
+        // Find block.
         $block = $blockField->getRelationQuery($model)->findOrFail($block_id);
-        $field = $block->findField($relation) ?? abort(404);
+        // Find relation field.
+        $relationField = $block->findField($relation) ?? abort(404);
 
-        $this->validateRelationField($field);
+        $this->validateRelationField($relationField);
 
-        $query = $field->getRelationQuery($block);
+        $query = $relationField->getRelationQuery($block);
 
         $relations = IndexTable::query($query)
             ->request($request)
-            ->search($field->getRelatedConfig()->search)
+            ->search($relationField->getRelatedConfig()->search)
             ->get();
 
         $relations['items'] = crud(
@@ -76,25 +88,31 @@ trait ManagesBlocksRelations
      * Add new block relation.
      *
      * @param CrudUpdateRequest $request
-     * @param int $id
+     * @param string|integer $identifier
+     * @param string $form_name
      * @param string $field_id
      * @param int $block_id
      * @param string $relation
      * @param int $relation_id
      * @return mixed
      */
-    public function createBlockRelation(CrudUpdateRequest $request, $id, $field_id, $block_id, $relation, $relation_id)
+    public function createBlockRelation(CrudUpdateRequest $request, $identifier, $form_name, $field_id, $block_id, $relation, $relation_id)
     {
-        $model = $this->query()->findOrFail($id);
-        $blockField = $this->config->form->findField($field_id) ?? abort(404);
+        $this->formExists($form_name) ?: abort(404);
+        $blockField = $this->getForm($form_name)->findField($field_id) ?? abort(404);
+        $blockField instanceof Blocks ?: abort(404);
+        // Find model.
+        $model = $this->findOrFail($identifier);
+        // Find block.
         $block = $blockField->getRelationQuery($model)->findOrFail($block_id);
-        $field = $block->findField($relation) ?? abort(404);
+        // Find relation field.
+        $relationField = $block->findField($relation) ?? abort(404);
 
-        $this->validateRelationField($field);
+        $this->validateRelationField($relationField);
 
-        $relation = $field->getQuery()->findOrFail($relation_id);
+        $relation = $relationField->getQuery()->findOrFail($relation_id);
 
-        $response = $this->createFieldRelation($request, $field, $block, $relation);
+        $response = $this->createFieldRelation($request, $relationField, $block, $relation);
 
         $this->edited($model, 'relation:created');
 
@@ -105,25 +123,31 @@ trait ManagesBlocksRelations
      * Remove Block relation.
      *
      * @param CrudUpdateRequest $request
-     * @param int $id
+     * @param string|integer $identifier
+     * @param string $form_name
      * @param string $field_id
      * @param int $block_id
      * @param string $relation
      * @param int $relation_id
      * @return void
      */
-    public function destroyBlockRelation(CrudUpdateRequest $request, $id, $field_id, $block_id, $relation, $relation_id)
+    public function destroyBlockRelation(CrudUpdateRequest $request, $identifier, $form_name, $field_id, $block_id, $relation, $relation_id)
     {
-        $model = $this->query()->findOrFail($id);
-        $blockField = $this->config->form->findField($field_id) ?? abort(404);
+        $this->formExists($form_name) ?: abort(404);
+        $blockField = $this->getForm($form_name)->findField($field_id) ?? abort(404);
+        $blockField instanceof Blocks ?: abort(404);
+        // Find model.
+        $model = $this->findOrFail($identifier);
+        // Find block.
         $block = $blockField->getRelationQuery($model)->findOrFail($block_id);
-        $field = $block->findField($relation) ?? abort(404);
+        // Find relation field.
+        $relationField = $block->findField($relation) ?? abort(404);
 
-        $this->validateRelationField($field);
+        $this->validateRelationField($relationField);
 
-        $relation = $field->getQuery()->findOrFail($relation_id);
+        $relation = $relationField->getQuery()->findOrFail($relation_id);
 
-        $response = $this->destroyFieldRelation($request, $field, $block, $relation);
+        $response = $this->destroyFieldRelation($request, $relationField, $block, $relation);
 
         $this->edited($model, 'relation:ordered');
 
@@ -134,23 +158,29 @@ trait ManagesBlocksRelations
      * Order Block relations.
      *
      * @param CrudUpdateRequest $request
-     * @param int $id
+     * @param string|integer $identifier
+     * @param string $form_name
      * @param string $relation
      * @return void
      */
-    public function orderBlockRelation(CrudUpdateRequest $request, $id, $field_id, $block_id, $relation)
+    public function orderBlockRelation(CrudUpdateRequest $request, $identifier, $form_name, $field_id, $block_id, $relation)
     {
         $ids = $request->ids ?? abort(404);
-        $model = $this->query()->findOrFail($id);
-        $blockField = $this->config->form->findField($field_id) ?? abort(404);
+        $this->formExists($form_name) ?: abort(404);
+        $blockField = $this->getForm($form_name)->findField($field_id) ?? abort(404);
+        $blockField instanceof Blocks ?: abort(404);
+        // Find model.
+        $model = $this->findOrFail($identifier);
+        // Find block.
         $block = $blockField->getRelationQuery($model)->findOrFail($block_id);
-        $field = $block->findField($relation) ?? abort(404);
+        // Find relation field.
+        $relationField = $block->findField($relation) ?? abort(404);
 
-        $this->validateRelationField($field);
+        $this->validateRelationField($relationField);
 
-        $query = $field->getRelationQuery($block);
+        $query = $relationField->getRelationQuery($block);
 
-        $response = $this->orderField($query, $field, $ids);
+        $response = $this->orderField($query, $relationField, $ids);
 
         $this->edited($model, 'relation:ordered');
 

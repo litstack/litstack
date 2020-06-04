@@ -40,6 +40,16 @@ class Post extends Model implements HasMediaContract
     {
         return $this->getMedia('test_images');
     }
+
+    public function content()
+    {
+        return $this->blocks('content');
+    }
+
+    public function media_blocks()
+    {
+        return $this->blocks('media_blocks');
+    }
     /*
     public function many_relation_post()
     {

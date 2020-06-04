@@ -48,6 +48,13 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             return $this;
         });
 
+        Route::macro('config', function ($config) {
+
+            $this->action['config'] = $config;
+
+            return $this;
+        });
+
         Route::macro('getConfig', function () {
             $key = $this->action['config'] ?? null;
             if (!$key) {
@@ -86,7 +93,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             $crudName = strtolower(str_replace('Config.php', '', str_replace($configPath . '/', '', $path)));
             $config = fjord()->config("crud.{$crudName}");
 
-            Crud::routes($config->route_prefix, $config->model);
+            Crud::routes($config->route_prefix, $config);
         }
     }
 
