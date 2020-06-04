@@ -83,7 +83,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $configFiles = glob("{$configPath}/*.php");
 
         foreach ($configFiles as $path) {
-            $crudName = strtolower(str_replace('Config.php', '', str_replace($configPath . '/', '', $path)));
+            $crudName = \Illuminate\Support\Str::snake(str_replace('Config.php', '', str_replace($configPath . '/', '', $path)));
             $configKey = "crud.{$crudName}";
             $config = fjord()->config($configKey);
             $controller = $config->controller;
