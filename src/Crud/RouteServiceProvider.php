@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud;
 
+use Illuminate\Support\Str;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Fjord\Support\Facades\Crud;
@@ -90,7 +91,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $configFiles = glob("{$configPath}/*.php");
 
         foreach ($configFiles as $path) {
-            $crudName = strtolower(str_replace('Config.php', '', str_replace($configPath . '/', '', $path)));
+            $crudName = Str::snake(str_replace('Config.php', '', str_replace($configPath . '/', '', $path)));
             $config = fjord()->config("crud.{$crudName}");
 
             Crud::routes($config->route_prefix, $config);
