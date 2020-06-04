@@ -10,7 +10,7 @@
                 :class="state === false ? 'form-control is-invalid' : ''"
                 :editor="editor"
                 :config="editorConfig"
-                :value="value"
+                :value="value || ''"
                 v-on:input="$emit('input', $event)"
             />
         </template>

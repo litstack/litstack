@@ -4,10 +4,7 @@ namespace Fjord\Crud;
 
 use Illuminate\Support\Str;
 use Illuminate\Routing\Route;
-use Illuminate\Routing\Router;
 use Fjord\Support\Facades\Crud;
-use Fjord\User\Models\FjordUser;
-use Fjord\Support\Facades\Package;
 use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
@@ -50,7 +47,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         });
 
         Route::macro('config', function ($config) {
-
             $this->action['config'] = $config;
 
             return $this;
