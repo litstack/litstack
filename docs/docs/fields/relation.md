@@ -1,8 +1,8 @@
 # Relation
 
-A relation picker. Relation picker can be created for any relation of your model.
+A relation picker. Relation pickers can be created for any relation of your model.
 
-For the relation Field only the name of the relation must be specified, the type of the relation is automatically recognized and displayed accordingly.
+For the relation field only the name of the relation must be specified. The type of the relation is automatically recognized and displayed accordingly.
 
 The relations Field can only be used for **Crud Models** and not in **Forms** or **Blocks**. For Forms or Blocks the [oneRelation](/docs/fields/one_relation.html) or [manyRelation](/docs/fields/many_relation.html) field can be used.
 
@@ -22,7 +22,7 @@ public function articles()
 
 ## Custom Preview
 
-By default, the table configuration from the config of the related model is used. However, it often happens that they display a lot of data. For a relation it is enough to show only a few columns - just to show clear which model is involved. For this case the table can be configured directly with `preview`.
+By default, the table configuration from the config of the related model is used. However, it is often the case that they display a lot of data. For a relation it is enough to show only a few columns - just to show clearly which model is involved. For this case the table can be configured directly with `preview`.
 
 ```php
 $form->relation('articles')

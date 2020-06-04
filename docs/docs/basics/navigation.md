@@ -2,9 +2,9 @@
 
 [[toc]]
 
-Your Fjord-app has two navigations: The topbar, and your Main-Navigation. The top navigation is for managing the admin interface, such as language, users and permissions. The Main-Navigation is intended for the main administration of the data of your application or your site.
+Your Fjord app by default contains two navigation instances: the top bar and your main navigation. The top navigation is for managing the admin interface, such as language, users and permissions. The main navigation is intended for the administration of data in your application.
 
-Both navigations are configured in `fjord/app/Config/NavigationConfig.php` which looks as follows:
+Both navigation instances are configured in `fjord/app/Config/NavigationConfig.php` which looks as follows:
 
 ```php
 class NavigationConfig extends Config
@@ -23,7 +23,7 @@ class NavigationConfig extends Config
 
 ## Structure
 
-The navigation structure is defined in an array. Simple entries, group titles and nested entries can be created. All entries are grouped within sections like so:
+The navigation structure is defined in an array. Simple entries, group titles and nested entries can be created. All entries are grouped within sections like this:
 
 ```php
 $nav->section([
@@ -80,7 +80,7 @@ $nav->entry('Home', [
 
 ## Presets
 
-To build navigation entries for example for Crud models you can use navigation presets in which the corresponding `route` and `authorization` has already been defined. This is useful in most cases, especially to keep the correct `authorization`. To edit the entry further you can specify an array with the navigation entry elements as second parameter.
+To build navigation entries, for example for Crud models, you can use navigation presets in which the corresponding `route` and `authorization` have already been defined. This is useful in most cases, especially to maintain the correct `authorization`. To edit the entry further you can specify an array with the navigation entry elements in a second parameter.
 
 ```php
 $nav->preset('crud.departments', [

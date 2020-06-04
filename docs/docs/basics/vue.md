@@ -4,13 +4,13 @@ The Fjord interface can be extended with custom Vue components for numerous purp
 
 ## Setup
 
-To include your own `Vue` components in the Fjord application, the locale npm package `vendor/aw-studio/fjord` must be installed. This can be done using the artisan command `fjord:extend`:
+To include your own `Vue` components in the Fjord application, the locale npm package `vendor/aw-studio/fjord` has to be installed. This can be done using the following artisan command:
 
 ```shell
 php artisan fjord:extend
 ```
 
-At the beginning of your `webpack.mix.js` the import of the fjord mix config was added automatically. Two files are compiled:
+At the beginning of your `webpack.mix.js` the import of the fjord mix config will be added automatically. Two files are compiled:
 
 -   `fjord/resources/js/app.js` => `public/fjord/js/app.js`
 -   `fjord/resources/sass/app.scss` => `public/fjord/css/app.css`
@@ -28,10 +28,10 @@ Add them to **assets** in the config.
 ],
 ```
 
-All javascript files are found in `fjord/resources/js`.
+All javascript files can be found in `fjord/resources/js`.
 
 ::: tip
-Components that are created in the `components` folder are automaticly registered
+Components that are created in the `components` folder are automatically registered.
 :::
 
 Run `npm run watch` and you are good to go.
@@ -42,7 +42,7 @@ Dont forget to compile your assets every time you **update** your Fjord version.
 
 ## Bootstrap Vue
 
-To make it easy to build uniform Fjord pages, Fjord uses [Bootstrap Vue](https://bootstrap-vue.org/docs/components) for all frontend components. Bootstrap Vue comes with a large number of components to cover all the necessary areas needed to build a site.
+To make it easy to build uniform Fjord pages, Fjord uses [Bootstrap Vue](https://bootstrap-vue.org/docs/components) for all frontend components. Bootstrap Vue comes with a large number of components to cover all the necessary areas needed to build an application.
 
 ## Build Your Own Page
 

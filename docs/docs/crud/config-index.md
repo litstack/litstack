@@ -2,7 +2,7 @@
 
 [[toc]]
 
-In the Config for a CRUD model its index table is defined. You can easily display attributes or relations or include your own `Vue` component and customize the table as you need it.
+In the configuration for a CRUD model its index table is defined. You can easily display attributes or relations or include your own `Vue` component and customize the table as needed.
 
 ## Query
 
@@ -103,7 +103,7 @@ public $sortable = false;
 public $orderColumn = 'order_column';
 ```
 
-Now a draghandle is displayed for each item. So that the records are not mixed up, the draghandle is only shown if the items that are loaded are sorted by `orderColumn` and **no filter** or **search value** is set. If the draghandle should be displayed directly the `sortByDefault` key must be set to the `orderColumn`.
+Now a draghandle is displayed for each item. For the reason of records not getting mixed up, the draghandle is only shown if the loaded items are sorted by `orderColumn` and **no filter** or **search value** is set. If the draghandle should be displayed directly the `sortByDefault` key must be set to the `orderColumn`.
 
 ```php
 public $sortByDefault = 'order_column.asc';
