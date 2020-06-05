@@ -13,7 +13,7 @@ class PageController extends Controller
     public function home(Request $request)
     {
         return view('home')->with([
-            'data' => Form::load('pages', 'home');
+            'data' => Form::load('pages', 'home')
         ]);
     }
 }
