@@ -79,13 +79,13 @@ class PostTranslation extends Model
 
 ## Create
 
-They can be created all at once using the following artisan command:
+In order to create your index table and update & edit form three things are needed.
 
 -   Model
 -   Controller
 -   Config
 
-They can be created all at once using the following artisan command
+They can be created all at once using the following artisan command:
 
 ```shell
 php artisan fjord:crud
@@ -101,7 +101,7 @@ If a Model already exists, it wont be changed. Only the configuration file and t
 
 Edit the newly created migration and add all table fields you need. For the translation of models [laravel-translatable](https://docs.astrotomic.info/laravel-translatable/installation#migrations) from `astronomic` is used. Pay attention to translatable and non-translatable fields.
 
-In the migration all **permissions** for the corresponding model are created in the `permissions` array. It's possible that the permissions are used by another model. For example, it makes sense not to give extra permissions for `article_states` but to use the permissions from permission. In this case the array can simply be left empty.
+In the migration all **permissions** for the corresponding model are created in the `permissions` array. It's possible that the permissions are used by another model. For example, it makes sense not to give extra permissions for `article_states` but to use the permissions from `articles`. In this case the array can simply be left empty.
 
 ```php
 class CreateArticlesTable extends Migration
