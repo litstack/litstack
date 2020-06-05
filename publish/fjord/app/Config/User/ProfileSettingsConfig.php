@@ -39,16 +39,16 @@ class ProfileSettingsConfig
             strip_slashes($this->routePrefix())
         );
 
-        $form->info(ucwords(__f('base.general')))->cols(4);
+        $form->info(ucwords(__f('base.general')))->width(4);
 
         $form->card(function ($form) {
 
             $form->input('first_name')
-                ->cols(6)
+                ->width(6)
                 ->title(ucwords(__f('base.first_name')));
 
             $form->input('first_name')
-                ->cols(6)
+                ->width(6)
                 ->title(ucwords(__f('base.first_name')));
 
             $form->modal('change_email')
@@ -59,25 +59,25 @@ class ProfileSettingsConfig
                 ->confirmWithPassword()
                 ->form(function ($modal) {
                     $modal->input('email')
-                        ->cols(12)
+                        ->width(12)
                         ->rules('required')
                         ->title('E-Mail');
-                })->cols(6);
+                })->width(6);
 
             $form->input('username')
-                ->cols(6)
+                ->width(6)
                 ->title(ucwords(__f('base.username')));
-        })->cols(8)->class('mb-5');
+        })->width(8)->class('mb-5');
 
         if (config('fjord.translatable.translatable')) {
-            $form->info(ucwords(__f('base.language')))->cols(4)
+            $form->info(ucwords(__f('base.language')))->width(4)
                 ->text(__f('profile.messages.language'));
             $form->card(function ($form) {
                 $form->component('fj-locales')->class('mb-4');
-            })->cols(8)->class('mb-5');
+            })->width(8)->class('mb-5');
         }
 
-        $form->info(ucwords(__f('base.security')))->cols(4);
+        $form->info(ucwords(__f('base.security')))->width(4);
 
         $form->card(function ($form) {
             $form->modal('change_password')
@@ -102,6 +102,6 @@ class ProfileSettingsConfig
                 });
 
             $form->component('fj-profile-security');
-        })->cols(8);
+        })->width(8);
     }
 }
