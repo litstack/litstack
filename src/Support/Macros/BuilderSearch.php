@@ -32,30 +32,41 @@ class BuilderSearch
         return $query->where(function (Builder $query) use ($attributes, $searchTerm) {
             $or = false;
             foreach (Arr::wrap($attributes) as $attribute) {
-                $query->when(
-                    Str::contains($attribute, '.'),
-                    function (Builder $query) use ($attribute, $searchTerm, $or) {
-                        [$relationName, $relationAttribute] = explode('.', $attribute);
-                        $this->whereRelatedAttributeLike(
-                            $query,
-                            $relationName,
-                            $relationAttribute,
-                            $searchTerm,
-                            $or
-                        );
-                    },
-                    function (Builder $query) use ($attribute, $searchTerm, $or) {
-                        $this->whereAttributeLike(
-                            $query,
-                            $attribute,
-                            $searchTerm,
-                            $or
-                        );
-                    }
-                );
+                $this->searchRelationOrAttribute($query, $attribute, $searchTerm, $or);
                 $or = true;
             }
         });
+    }
+
+    /**
+     * Search relation or attribute.
+     *
+     * @param Builder $query
+     * @param string $attribute
+     * @param string $searchTerm
+     * @param boolean $or
+     * @return void
+     */
+    protected function searchRelationOrAttribute($query, $attribute, $searchTerm, $or)
+    {
+        $query->when(
+            Str::contains($attribute, '.'),
+            function (Builder $query) use ($attribute, $searchTerm, $or) {
+                $partials = explode('.', $attribute);
+                $relationName = array_shift($partials);
+                $relationAttribute = implode('.', $partials);
+                $this->whereRelatedAttributeLike(
+                    $query,
+                    $relationName,
+                    $relationAttribute,
+                    $searchTerm,
+                    $or
+                );
+            },
+            function (Builder $query) use ($attribute, $searchTerm, $or) {
+                $this->whereAttributeLike($query, $attribute, $searchTerm, $or);
+            }
+        );
     }
 
     /**
@@ -69,13 +80,9 @@ class BuilderSearch
      */
     public function whereRelatedAttributeLike($query, $relationName, $attribute, $searchTerm, $or = false)
     {
-        return $query->orWhereHas($relationName, function (Builder $query) use ($attribute, $searchTerm, $or) {
-            $this->whereAttributeLike(
-                $query,
-                $attribute,
-                $searchTerm,
-                $or
-            );
+        $method = $or ? 'orWhereHas' : 'whereHas';
+        return $query->{$method}($relationName, function (Builder $query) use ($attribute, $searchTerm) {
+            $this->searchRelationOrAttribute($query, $attribute, $searchTerm, false);
         });
     }
 
@@ -91,17 +98,11 @@ class BuilderSearch
     public function whereAttributeLike($query, $attribute, $searchTerm, $or = true)
     {
         if (!is_attribute_translatable($attribute, $query->getModel())) {
-            if ($or) {
-                $query->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
-            } else {
-                $query->where($attribute, 'LIKE', "%{$searchTerm}%");
-            }
+            $method = $or ? 'orWhere' : 'where';
+            $query->{$method}($attribute, 'LIKE', "%{$searchTerm}%");
         } else {
-            if ($or) {
-                $query->orWhereTranslationLike($attribute, "%{$searchTerm}%");
-            } else {
-                $query->whereTranslationLike($attribute, "%{$searchTerm}%");
-            }
+            $method = $or ? 'orWhereTranslationLike' : 'whereTranslationLike';
+            $query->{$method}($attribute, "%{$searchTerm}%");
         }
     }
 }
