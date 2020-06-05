@@ -2,11 +2,9 @@
 
 namespace FjordApp\Config\Crud;
 
-use Fjord\Crud\CrudForm;
+use Fjord\Crud\CrudShow;
 use Fjord\Vue\Crud\CrudTable;
 use Fjord\Crud\Config\CrudConfig;
-use Fjord\Crud\Fields\Blocks\Repeatables;
-use Illuminate\Database\Eloquent\Builder;
 
 class PostConfig extends CrudConfig
 {
@@ -65,7 +63,7 @@ class PostConfig extends CrudConfig
      * @param \Fjord\Crud\CrudShow $form
      * @return void
      */
-    public function form(CrudShow $form)
+    public function show(CrudShow $form)
     {
         $form->card(function ($form) {
             $this->mainCard($form);
@@ -80,6 +78,7 @@ class PostConfig extends CrudConfig
      */
     protected function mainCard(CrudShow $form)
     {
+
         $form->input('title')
             ->updateRules('max:15')
             ->creationRules('required')
@@ -97,6 +96,8 @@ class PostConfig extends CrudConfig
         $form->image('test_images')
             ->title('Images')
             ->maxFiles(2);
+
+
 
         $form->blocks('content')
             ->title('Content')

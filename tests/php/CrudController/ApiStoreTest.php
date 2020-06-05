@@ -29,7 +29,7 @@ class ApiStoreTest extends BackendTestCase
     public function test_creationRule_validation_fails()
     {
         // Asserting 302 since we have the creationRule required for the title.
-        $url = $this->getCrudRoute("/");
+        $url = $this->getCrudRoute("/show");
         $response = $this->post($url);
         $response->assertStatus(302);
     }
@@ -38,7 +38,7 @@ class ApiStoreTest extends BackendTestCase
     public function test_global_rule_validation_fails()
     {
         // Asserting 302 since we have the rule min:2 for the title.
-        $url = $this->getCrudRoute("/");
+        $url = $this->getCrudRoute("/show");
         $response = $this->post($url, ['title' => 'a']);
         $response->assertStatus(302);
     }
@@ -46,7 +46,7 @@ class ApiStoreTest extends BackendTestCase
     /** @test */
     public function it_stores_model()
     {
-        $url = $this->getCrudRoute("/");
+        $url = $this->getCrudRoute("/show");
         $response = $this->post($url, ['title' => 'dummy title']);
         $response->assertStatus(200);
 

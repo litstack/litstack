@@ -57,7 +57,8 @@ class ApiUpdateTest extends BackendTestCase
     public function test_update_method_updates_attribute()
     {
         $url = $this->getCrudRoute("/{$this->post->id}/show");
-        $response = $this->actingAs($this->admin, 'fjord')->put($url, ['title' => 'dummy title']);
+
+        $response = $this->put($url, ['title' => 'dummy title']);
         $response->assertStatus(200);
 
         $this->refreshModel();

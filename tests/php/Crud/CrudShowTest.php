@@ -3,7 +3,7 @@
 namespace FjordTest\Crud;
 
 use Fjord\Crud\BaseForm;
-use Fjord\Crud\CrudForm;
+use Fjord\Crud\CrudShow;
 use Fjord\Exceptions\InvalidArgumentException;
 use FjordTest\BackendTestCase;
 use Fjord\Support\Facades\Fjord;
@@ -11,13 +11,13 @@ use Illuminate\Database\Eloquent\Model;
 use Fjord\Exceptions\MethodNotFoundException;
 use Fjord\Vue\Component;
 
-class CrudFormTest extends BackendTestCase
+class CrudShowTest extends BackendTestCase
 {
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->form = new CrudForm(CrudFormDummyModel::class);
+        $this->form = new CrudShow(CrudFormDummyModel::class);
     }
 
     /** @test */

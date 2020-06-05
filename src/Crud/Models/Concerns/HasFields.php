@@ -13,7 +13,7 @@ trait HasFields
      */
     public function getFieldsAttribute()
     {
-        return $this->config->form->getRegisteredFields();
+        return $this->config->show->getRegisteredFields();
     }
 
     /**

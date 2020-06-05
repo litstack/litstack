@@ -36,6 +36,7 @@ class PublishesTest extends FrontendTestCase
             $url = fjord()->url(
                 fjord()->config('form.pages.home')->route_prefix
             );
+
             $browser
                 ->loginAs($this->admin, 'fjord')
                 ->visit($url)

@@ -84,7 +84,7 @@ abstract class FormController
      * @param FormReadRequest $request
      * @return View $view
      */
-    public function edit(CrudReadRequest $request)
+    public function show(CrudReadRequest $request)
     {
         // Getting collection and formName from route.
         $routeSplit = explode('.', Route::currentRouteName());

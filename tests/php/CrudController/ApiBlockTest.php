@@ -34,6 +34,7 @@ class ApiBlockTest extends BackendTestCase
 
         $url = $this->getCrudRoute("/{$this->post->id}/show/blocks/content");
         $request = $this->post($url, ['type' => 'text']);
+
         $request->assertStatus(200);
         $this->assertCount(1, $this->getBlocks('text'));
         $this->assertCount(1, $this->getBlocks());

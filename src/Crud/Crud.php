@@ -119,7 +119,7 @@ class Crud
      */
     protected function makeFormRoutes(string $controller)
     {
-        RouteFacade::get("/", [$controller, "edit"])->name('edit');
+        RouteFacade::get("/", [$controller, "show"])->name('show');
     }
 
     /**

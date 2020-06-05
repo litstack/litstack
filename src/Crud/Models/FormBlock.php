@@ -81,7 +81,7 @@ class FormBlock extends FjordFormModel
      */
     public function getFieldsAttribute()
     {
-        $fields = $this->config->form->getRegisteredFields();
+        $fields = $this->config->show->getRegisteredFields();
 
         foreach ($fields as $field) {
             if ($field instanceof Blocks && $field->id == $this->field_id) {
