@@ -2,11 +2,9 @@
 
 namespace FjordApp\Config\Crud;
 
-use Fjord\Crud\CrudForm;
-use Fjord\Vue\Crud\CrudTable;
+use Fjord\Crud\CrudShow;
+use Fjord\Crud\CrudIndex;
 use Fjord\Crud\Config\CrudConfig;
-use Fjord\Crud\Fields\Blocks\Repeatables;
-use Illuminate\Database\Eloquent\Builder;
 
 use App\Models\DummyClassname;
 use FjordApp\Controllers\Crud\DummyClassnameController;
@@ -28,20 +26,6 @@ class DummyClassnameConfig extends CrudConfig
     public $controller = DummyClassnameController::class;
 
     /**
-     * Index table search keys.
-     *
-     * @var array
-     */
-    public $search = ['title'];
-
-    /**
-     * Index table sort by default.
-     *
-     * @var string
-     */
-    public $sortByDefault = 'id.desc';
-
-    /**
      * Model singular and plural name.
      *
      * @return array
@@ -55,86 +39,55 @@ class DummyClassnameConfig extends CrudConfig
     }
 
     /**
-     * Sort by keys.
+     * Get crud route prefix.
      *
-     * @return array
+     * @return string
      */
-    public function sortBy()
+    public function routePrefix()
     {
-        return [
-            'id.desc' => __f('fj.sort_new_to_old'),
-            'id.asc' => __f('fj.sort_old_to_new'),
-        ];
-    }
-
-    /**
-     * Initialize index query.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function indexQuery(Builder $query)
-    {
-        // $query->with('relation');
-
-        return $query;
-    }
-
-    /**
-     * Index table filter groups.
-     *
-     * @return array
-     */
-    public function filter()
-    {
-        return [
-            // Filter have to be in groups.
-            'Fitler Group Title' => [
-
-                // Use scopes as filter.
-                'scopeName' => 'Description',
-            ],
-        ];
+        return "crud/" . (new $this->model)->getTable();
     }
 
     /**
      * Build index table.
      *
-     * @param \Fjord\Vue\Crud\CrudTable $table
+     * @param Fjord\Crud\CrudIndex $container
      * @return void
      */
-    public function index(CrudTable $table)
+    public function index(CrudIndex $container)
     {
-        $table->col('Title')->value('{title}')->sortBy('title');
+        $container->expand(false);
+
+        $container->table(function ($table) {
+            $table->col('title')
+                ->value('{title}')
+                ->sortBy('title');
+        })
+            ->sortByDefault('id.desc')
+            ->search('name')
+            ->sortBy([
+                'id.desc' => __f('fj.sort_new_to_old'),
+                'id.asc' => __f('fj.sort_old_to_new'),
+            ])
+            ->width(12);
     }
 
     /**
      * Setup create and edit form.
      *
-     * @param \Fjord\Crud\CrudForm $form
+     * @param \Fjord\Crud\CrudShow $container
      * @return void
      */
-    public function form(CrudForm $form)
+    public function show(CrudShow $container)
     {
-        $form->card(function($form) {
+        $container->card(function($form) {
 
-            $this->mainCard($form);
+            $form->input('title')
+                ->title('Title')
+                ->width(6);
             
         })
         ->width(12)
         ->title('Main');
-    }
-
-    /**
-     * Define form sections in methods to keep the overview.
-     *
-     * @param \Fjord\Crud\CrudForm $form
-     * @return void
-     */
-    protected function mainCard(CrudForm $form)
-    {
-        $form->input('title')
-                ->title('Title')
-                ->width(6);
     }
 }

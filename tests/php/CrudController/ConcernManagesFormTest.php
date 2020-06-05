@@ -14,7 +14,7 @@ class ConcernManagesFormTest extends BackendTestCase
     public function test_isSubForm_method()
     {
         $controller = new HasFormController;
-        $this->assertFalse($this->callUnaccessibleMethod($controller, 'isSubForm', ['form']));
+        $this->assertFalse($this->callUnaccessibleMethod($controller, 'isSubForm', ['show']));
         $this->assertTrue($this->callUnaccessibleMethod($controller, 'isSubForm', ['form-something']));
         $this->assertTrue($this->callUnaccessibleMethod($controller, 'isSubForm', ['form-something-else']));
     }

@@ -32,7 +32,7 @@ class ApiUpdateTest extends BackendTestCase
     /** @test */
     public function test_update()
     {
-        $url = $this->getCrudRoute("/{$this->post->id}/form");
+        $url = $this->getCrudRoute("/{$this->post->id}/show");
         $response = $this->put($url);
         $response->assertStatus(200);
     }
@@ -56,7 +56,7 @@ class ApiUpdateTest extends BackendTestCase
     /** @test */
     public function test_update_method_updates_attribute()
     {
-        $url = $this->getCrudRoute("/{$this->post->id}/form");
+        $url = $this->getCrudRoute("/{$this->post->id}/show");
         $response = $this->actingAs($this->admin, 'fjord')->put($url, ['title' => 'dummy title']);
         $response->assertStatus(200);
 

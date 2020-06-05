@@ -62,7 +62,7 @@ class ApiMediaTest extends BackendTestCase
     /** @test */
     public function it_returns_404_when_no_collection_is_given()
     {
-        $url = $this->getCrudRoute("/{$this->post->id}/form/media");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/media");
         $response = $this->post($url);
         $response->assertStatus(404);
     }
@@ -71,7 +71,7 @@ class ApiMediaTest extends BackendTestCase
 
     public function it_returns_404_when_field_does_not_exists()
     {
-        $url = $this->getCrudRoute("/{$this->post->id}/form/media");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/media");
         $response = $this->post($url, [
             'collection' => 'other_field'
         ]);
@@ -81,7 +81,7 @@ class ApiMediaTest extends BackendTestCase
     /** @test */
     public function it_returns_404_when_media_is_not_sent()
     {
-        $url = $this->getCrudRoute("/{$this->post->id}/form/media");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/media");
         $response = $this->post($url, [
             'collection' => 'test_image'
         ]);
@@ -93,7 +93,7 @@ class ApiMediaTest extends BackendTestCase
     {
         $this->assertNull($this->post->test_image);
 
-        $url = $this->getCrudRoute("/{$this->post->id}/form/media");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/media");
         $response = $this->post($url, [
             'collection' => 'test_image',
             'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
@@ -108,7 +108,7 @@ class ApiMediaTest extends BackendTestCase
     /** @test */
     public function it_can_destroy_image()
     {
-        $url = $this->getCrudRoute("/{$this->post->id}/form/media");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/media");
         $response = $this->post($url, [
             'collection' => 'test_image',
             'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
@@ -118,7 +118,7 @@ class ApiMediaTest extends BackendTestCase
         $this->refreshModel();
         $this->assertNotNull($this->post->test_image);
 
-        $url = $this->getCrudRoute("/{$this->post->id}/form/media");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/media");
         $response = $this->post($url, [
             'collection' => 'test_image',
             'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
@@ -128,7 +128,7 @@ class ApiMediaTest extends BackendTestCase
     /** @test */
     public function it_cannot_upload_multiple_images_when_maxFiles_one()
     {
-        $url = $this->getCrudRoute("/{$this->post->id}/form/media");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/media");
         $response = $this->post($url, [
             'collection' => 'test_image',
             'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
@@ -145,7 +145,7 @@ class ApiMediaTest extends BackendTestCase
     /** @test */
     public function test_image_upload_for_maxFiles_greate_than_one()
     {
-        $url = $this->getCrudRoute("/{$this->post->id}/form/media");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/media");
         $response = $this->post($url, [
             'collection' => 'test_images',
             'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),

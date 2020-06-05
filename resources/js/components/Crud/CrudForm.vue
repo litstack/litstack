@@ -147,7 +147,7 @@ export default {
             }
             result = results.findSucceeded(
                 'post',
-                `${this.config.route_prefix}`
+                `${this.config.route_prefix}/show`
             );
             if (result) {
                 this.model = this.crud(result.data);

@@ -25,20 +25,6 @@ class PostConfig extends CrudConfig
     public $controller = \FjordTest\TestSupport\Controllers\PostController::class;
 
     /**
-     * Index table search keys.
-     *
-     * @var array
-     */
-    public $search = ['title'];
-
-    /**
-     * Index table sort by default.
-     *
-     * @var string
-     */
-    public $sortByDefault = 'id.desc';
-
-    /**
      * Model singular and plural name.
      *
      * @return array
@@ -52,61 +38,34 @@ class PostConfig extends CrudConfig
     }
 
     /**
-     * Sort by keys.
-     *
-     * @return array
-     */
-    public function sortBy()
-    {
-        return [
-            'id.desc' => __f('fj.sort_new_to_old'),
-            'id.asc' => __f('fj.sort_old_to_new'),
-        ];
-    }
-
-    /**
-     * Initialize index query.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function indexQuery(Builder $query)
-    {
-        // $query->with('relation');
-
-        return $query;
-    }
-
-    /**
-     * Index table filter groups.
-     *
-     * @return array
-     */
-    public function filter()
-    {
-        return [];
-    }
-
-    /**
      * Build index table.
      *
-     * @param \Fjord\Vue\Crud\CrudTable $table
+     * @param \Fjord\Crud\CrudIndex $table
      * @return void
      */
-    public function index(CrudTable $table)
+    public function index(CrudTable $container)
     {
-        $table->col('title')
-            ->value('{title}')
-            ->sortBy('title');
+        $container->table(function ($table) {
+            $table->col('title')
+                ->value('{title}')
+                ->sortBy('title');
+        })
+            ->sortByDefault('id.desc')
+            ->search('name')
+            ->sortBy([
+                'id.desc' => __f('fj.sort_new_to_old'),
+                'id.asc' => __f('fj.sort_old_to_new'),
+            ])
+            ->width(12);
     }
 
     /**
      * Setup create and edit form.
      *
-     * @param \Fjord\Crud\CrudForm $form
+     * @param \Fjord\Crud\CrudShow $form
      * @return void
      */
-    public function form(CrudForm $form)
+    public function form(CrudShow $form)
     {
         $form->card(function ($form) {
             $this->mainCard($form);
@@ -116,10 +75,10 @@ class PostConfig extends CrudConfig
     /**
      * Define form sections in methods to keep the overview.
      *
-     * @param \Fjord\Crud\CrudForm $form
+     * @param \Fjord\Crud\CrudShow $form
      * @return void
      */
-    protected function mainCard(CrudForm $form)
+    protected function mainCard(CrudShow $form)
     {
         $form->input('title')
             ->updateRules('max:15')

@@ -90,7 +90,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             $crudName = Str::snake(str_replace('Config.php', '', str_replace($configPath . '/', '', $path)));
             $config = fjord()->config("crud.{$crudName}");
 
-            Crud::routes($config->route_prefix, $config);
+            Crud::routes($config);
         }
     }
 

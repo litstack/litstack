@@ -7,6 +7,7 @@ use Exception;
 use Fjord\Support\VueProp;
 use InvalidArgumentException;
 use Fjord\Exceptions\MethodNotFoundException;
+use Illuminate\Contracts\Support\Arrayable;
 
 class Component extends VueProp
 {
@@ -398,6 +399,10 @@ class Component extends VueProp
      */
     public function extend()
     {
+        if (!fjord_app()->get('vue')->hasBeenBuilt()) {
+            return;
+        }
+
         fjord_app()->get('vue')->extend($this);
     }
 

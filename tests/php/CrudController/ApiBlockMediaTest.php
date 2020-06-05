@@ -47,7 +47,7 @@ class ApiBlockMediaTest extends BackendTestCase
         $block = $this->createBlock();
         $this->assertNull($block->images);
 
-        $url = $this->getCrudRoute("/{$this->post->id}/form/blocks/media_blocks/{$block->id}/media");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/blocks/media_blocks/{$block->id}/media");
         $response = $this->post($url, [
             'collection' => 'images',
             'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
@@ -67,7 +67,7 @@ class ApiBlockMediaTest extends BackendTestCase
         $this->assertNull($block->images);
 
         // Upload media.
-        $url = $this->getCrudRoute("/{$this->post->id}/form/blocks/media_blocks/{$block->id}/media");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/blocks/media_blocks/{$block->id}/media");
         $response = $this->post($url, [
             'collection' => 'images',
             'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
@@ -76,7 +76,7 @@ class ApiBlockMediaTest extends BackendTestCase
 
         // Update properties.
         $media = $this->getBlocks()->first()->images->first();
-        $url = $this->getCrudRoute("/{$this->post->id}/form/blocks/media_blocks/{$block->id}/media/{$media->id}");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/blocks/media_blocks/{$block->id}/media/{$media->id}");
         $response = $this->put($url, [
             'custom_properties' => ['alt' => 'dummy alt', 'title' => 'dummy title'],
         ]);

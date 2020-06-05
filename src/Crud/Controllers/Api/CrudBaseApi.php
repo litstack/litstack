@@ -43,10 +43,10 @@ trait CrudBaseApi
      * @param  \Fjord\Crud\Requests\CrudCreateRequest  $request
      * @return mixed
      */
-    public function store(CrudCreateRequest $request)
+    public function store(CrudCreateRequest $request, $form_name)
     {
-        $form = $this->getForm('form');
-        $this->validate($request, $this->config->form);
+        $form = $this->getForm($form_name) ?: abort(404);
+        $this->validate($request, $form);
 
         $attributes = $this->filterRequestAttributes($request, $form->getRegisteredFields());
 

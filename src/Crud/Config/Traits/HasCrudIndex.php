@@ -15,13 +15,6 @@ trait HasCrudIndex
     public $sortable = false;
 
     /**
-     * Order column for model.
-     *
-     * @var string
-     */
-    public $orderColumn = 'order_column';
-
-    /**
      * Index table search keys.
      *
      * @var array
@@ -41,14 +34,6 @@ trait HasCrudIndex
      * @var integer
      */
     public $perPage = 10;
-
-    /**
-     * Setup index table.
-     *
-     * @param \Fjord\Vue\Crud\CrudTable $table
-     * @return void
-     */
-    abstract public function index(CrudTable $table);
 
     /**
      * Initialize index query.

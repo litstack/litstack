@@ -84,18 +84,12 @@ class FjordPackage extends Package
      * @var array
      */
     protected $configFactories = [
-        // Main
-        HasIndex::class => IndexConfigFactory::class,
-
         // Navigation
         NavigationConfig::class => NavigationConfigFactory::class,
 
         // Crud
         HasCrudForm::class => CrudFormConfigFactory::class,
         HasCrudIndex::class => CrudIndexConfigFactory::class,
-
-        // Users
-        User\Config\IndexConfig::class => UserIndexConfigFactory::class
     ];
 
     /**

@@ -32,13 +32,13 @@ class ApiBlockTest extends BackendTestCase
     {
         $this->assertCount(0, $this->getBlocks('text'));
 
-        $url = $this->getCrudRoute("/{$this->post->id}/form/blocks/content");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/blocks/content");
         $request = $this->post($url, ['type' => 'text']);
         $request->assertStatus(200);
         $this->assertCount(1, $this->getBlocks('text'));
         $this->assertCount(1, $this->getBlocks());
 
-        $url = $this->getCrudRoute("/{$this->post->id}/form/blocks/content");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/blocks/content");
         $request = $this->post($url, ['type' => 'input']);
         $request->assertStatus(200);
 
@@ -54,7 +54,7 @@ class ApiBlockTest extends BackendTestCase
     {
         $this->assertCount(0, $this->getBlocks('text'));
 
-        $url = $this->getCrudRoute("/{$this->post->id}/form/blocks/content");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/blocks/content");
         $request = $this->post($url, ['type' => 'other']);
         $request->assertStatus(404);
         $this->assertCount(0, $this->getBlocks());
@@ -66,7 +66,7 @@ class ApiBlockTest extends BackendTestCase
     {
         $this->assertCount(0, $this->getBlocks('text'));
 
-        $url = $this->getCrudRoute("/{$this->post->id}/form/blocks/title");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/blocks/title");
         $request = $this->post($url, ['type' => 'text']);
         $request->assertStatus(404);
         $this->assertCount(0, $this->getBlocks());
@@ -82,7 +82,7 @@ class ApiBlockTest extends BackendTestCase
         $this->assertCount(2, $this->getBlocks());
 
         // Send request.
-        $url = $this->getCrudRoute("/{$this->post->id}/form/blocks/content");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/blocks/content");
         $request = $this->json('GET', $url);
 
         // Assertions.
@@ -99,7 +99,7 @@ class ApiBlockTest extends BackendTestCase
         $this->assertCount(1, $this->getBlocks('text'));
 
         // Send request.
-        $url = $this->getCrudRoute("/{$this->post->id}/form/blocks/content/{$block->id}");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/blocks/content/{$block->id}");
         $request = $this->json('GET', $url);
 
         // Assertions.
@@ -117,13 +117,13 @@ class ApiBlockTest extends BackendTestCase
         $this->assertCount(2, $this->getBlocks('text'));
 
         // Delete first block.
-        $url = $this->getCrudRoute("/{$this->post->id}/form/blocks/content/{$block1->id}");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/blocks/content/{$block1->id}");
         $request = $this->delete($url);
         $request->assertStatus(200);
         $this->assertCount(1, $this->getBlocks('text'));
 
         // Delete second block.
-        $url = $this->getCrudRoute("/{$this->post->id}/form/blocks/content/{$block2->id}");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/blocks/content/{$block2->id}");
         $request = $this->delete($url);
         $request->assertStatus(200);
         $this->assertCount(0, $this->getBlocks('text'));
@@ -138,7 +138,7 @@ class ApiBlockTest extends BackendTestCase
         $this->assertCount(1, $this->getBlocks('text'));
 
         // Update block.
-        $url = $this->getCrudRoute("/{$this->post->id}/form/blocks/content/{$block->id}");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/blocks/content/{$block->id}");
         $request = $this->put($url, [
             'text' => 'some text'
         ]);
@@ -156,7 +156,7 @@ class ApiBlockTest extends BackendTestCase
         $this->assertCount(1, $this->getBlocks('text'));
 
         // Text uses the rule "min:5"
-        $url = $this->getCrudRoute("/{$this->post->id}/form/blocks/content/{$block->id}");
+        $url = $this->getCrudRoute("/{$this->post->id}/show/blocks/content/{$block->id}");
         $request = $this->put($url, [
             'text' => 'ab'
         ]);

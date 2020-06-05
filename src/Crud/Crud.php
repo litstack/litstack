@@ -39,23 +39,23 @@ class Crud
      * @param string $controller
      * @return void
      */
-    public function routes(string $prefix, $config)
+    public function routes($config)
     {
-        Package::get('aw-studio/fjord')->route()->group(function () use ($prefix, $config) {
+        Package::get('aw-studio/fjord')->route()->group(function () use ($config) {
             $model = $config->model;
             $tableName = (new $model)->getTable();
 
             RouteFacade::group([
                 'config' => $config->getKey(),
-                'prefix' => "$prefix",
+                'prefix' => "$config->routePrefix",
                 'as' => $config->getKey(),
-            ], function () use ($prefix, $model, $config, $tableName) {
+            ], function () use ($model, $config, $tableName) {
 
-                $this->makeCrudRoutes($config->controller);
+                $this->makeCrudRoutes($config);
                 $this->makeFieldRoutes($config->controller);
 
                 Package::get('aw-studio/fjord')->addNavPreset("crud.{$tableName}", [
-                    'link' => Fjord::url($prefix),
+                    'link' => Fjord::url($config->routePrefix),
                     'title' => ucfirst($config->names['plural']),
                     'authorize' => function (FjordUser $user) use ($config) {
                         return (new $config->controller)->authorize($user, 'read');
@@ -129,14 +129,23 @@ class Crud
      * @param string $identifier
      * @return void
      */
-    protected function makeCrudRoutes(string $controller, string $identifier = 'id')
+    protected function makeCrudRoutes($config, string $identifier = 'id')
     {
-        RouteFacade::get("/", [$controller, "index"])->name('index');
-        // TODO: Index table name.
-        RouteFacade::post("/index", [$controller, "indexTable"])->name('index.items');
-        RouteFacade::get("{{$identifier}}", [$controller, "edit"])->name('edit');
-        RouteFacade::get("/create", [$controller, "create"])->name('create');
-        RouteFacade::post("/", [$controller, "store"])->name('store');
+        $controller = $config->controller;
+
+        // Index routes.
+        if ($config->has('index')) {
+            RouteFacade::get("/", [$controller, "index"])->name('index');
+            RouteFacade::post("/index", [$controller, "indexTable"])->name('index.items');
+        }
+
+        // Show routes.
+        if ($config->has('show')) {
+            RouteFacade::post("/{form}", [$controller, "store"])->name('store');
+            RouteFacade::get("/create", [$controller, "create"])->name('create');
+            RouteFacade::get("{{$identifier}}", [$controller, "show"])->name('show');
+        }
+
         RouteFacade::delete("/{id}", [$controller, "destroy"])->name('destroy');
         RouteFacade::post("/delete-all", [$controller, "destroyAll"])->name('destroy.all');
         RouteFacade::post("/order", [$controller, "order"])->name('order');

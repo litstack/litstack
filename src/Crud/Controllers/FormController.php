@@ -96,11 +96,13 @@ abstract class FormController
 
         $config = $configInstance->get(
             'names',
-            'form',
+            'show',
             'permissions',
             'route_prefix',
             'expandContainer'
         );
+        $config['form'] = $config['show'];
+        unset($config['show']);
         $config['expand'] = $config['expandContainer'];
 
         // Get preview route.

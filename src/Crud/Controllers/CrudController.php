@@ -158,11 +158,13 @@ abstract class CrudController
     public function create(CrudCreateRequest $request)
     {
         $config = $this->config->get(
-            'form',
+            'show',
             'names',
             'permissions',
             'route_prefix'
         );
+        $config['form'] = $config['show'];
+        unset($config['show']);
 
         return view('fjord::app')
             ->withComponent($this->config->formComponent)
@@ -182,11 +184,11 @@ abstract class CrudController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(CrudReadRequest $request, $id)
+    public function show(CrudReadRequest $request, $id)
     {
         // Eager loads relations.
         $query = $this->query();
-        foreach ($this->getForm('form')->getRegisteredFields() as $field) {
+        foreach ($this->getForm('show')->getRegisteredFields() as $field) {
             if ($field instanceof RelationField && !$field instanceof MediaField) {
                 $query->with($field->getRelationName());
             }
@@ -198,7 +200,7 @@ abstract class CrudController
         $model->last_edit;
 
         // Append media.
-        foreach ($this->getForm('form')->getRegisteredFields() as $field) {
+        foreach ($this->getForm('show')->getRegisteredFields() as $field) {
             if ($field instanceof MediaField) {
                 $model->append($field->id);
             }
@@ -206,12 +208,14 @@ abstract class CrudController
 
         // Load config attributes.
         $config = $this->config->get(
-            'form',
+            'show',
             'route_prefix',
             'names',
             'permissions',
             'expandFormContainer'
         );
+        $config['form'] = $config['show'];
+        unset($config['show']);
         $config['expand'] = $config['expandFormContainer'];
 
         // Set readonly if the user has no update permission for this crud.

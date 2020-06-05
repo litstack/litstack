@@ -40,6 +40,13 @@ abstract class CrudConfig
     public $expandFormContainer = false;
 
     /**
+     * Order column for model.
+     *
+     * @var string
+     */
+    public $orderColumn = 'order_column';
+
+    /**
      * Load permissions.
      *
      * @return array
