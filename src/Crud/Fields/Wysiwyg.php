@@ -61,7 +61,7 @@ class Wysiwyg extends BaseField
      * @param //TODO: [type] $format
      * @return $this
      */
-    public function formats($format)
+    public function formats($formats)
     {
         $this->setAttribute('formats', $formats);
 
