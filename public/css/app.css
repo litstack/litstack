@@ -15639,7 +15639,7 @@ div#fjord-app nav.fj-topbar {
   height: 85px;
   background: #212227;
   padding-left: 20px;
-  padding-right: 5px;
+  padding-right: 1rem;
   display: flex;
   z-index: 9;
   border-right: 1px solid #70859c;
@@ -15650,11 +15650,26 @@ div#fjord-app nav.fj-topbar .fj-topbar__icon {
 }
 
 div#fjord-app nav.fj-topbar #fj-topbar-right .btn {
-  color: #676569;
+  background-color: transparent !important;
+  transition: 0.2s all ease-in;
+  opacity: 0.6;
+}
+
+div#fjord-app nav.fj-topbar #fj-topbar-right .btn svg {
+  width: 19px;
+  height: 15px;
+}
+
+div#fjord-app nav.fj-topbar #fj-topbar-right .btn:hover {
+  opacity: 1;
+}
+
+div#fjord-app nav.fj-topbar #fj-topbar-right .show {
+  opacity: 1;
 }
 
 div#fjord-app nav.fj-topbar #fj-topbar-right .show .btn {
-  color: white;
+  opacity: 1;
 }
 
 div#fjord-app nav.fj-topbar .dropdown-menu {

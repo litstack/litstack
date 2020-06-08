@@ -122,6 +122,7 @@ export default {
     }
 
     .list-group-item {
+        padding-right: 1rem;
         &.active {
             .fj-nav-item_icon {
                 color: $nav-item-active-color !important;
@@ -148,6 +149,7 @@ export default {
         border-width: 0;
     }
     .fj-navigation-hasChildren {
+        font-size: 0.75rem;
         transform: rotate(0);
         transition: 0.2s all ease;
         &.active {
