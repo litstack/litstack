@@ -16,6 +16,7 @@ class Image extends MediaField
      */
     public function setDefaultAttributes()
     {
+        $this->setAttribute('type', 'image');
         $this->fileSize(12);
         $this->maxFiles(5);
         $this->crop(false);
@@ -23,6 +24,7 @@ class Image extends MediaField
         $this->firstBig(false);
         $this->sortable(true);
         $this->showFullImage(false);
+        $this->accept('image/*');
     }
 
     /**

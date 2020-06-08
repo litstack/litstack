@@ -2,11 +2,13 @@
     <fj-base-field :field="field" :model="model" :value="fileCount">
         <template v-if="model.id">
             <div class="w-100">
+                <!--
                 <fj-field-alert-empty
                     v-if="images.length == 0"
                     :field="field"
                     :class="{ 'mb-0': field.readonly }"
                 />
+                -->
                 <b-row>
                     <div class="col-12 order-1">
                         <fj-field-media-images
@@ -127,7 +129,6 @@ export default {
                 maxFiles: this.field.maxFiles,
                 method: 'POST',
                 paramName: 'media',
-                acceptedFiles: 'image/*, application/pdf',
                 dictDefaultMessage: `<i class="fas fa-file-import d-block"></i> ${this.__(
                     'fj.drag_and_drop'
                 )}`,
@@ -151,6 +152,10 @@ export default {
         this.media = this.model[this.field.id] || [];
 
         this.dropzoneOptions.url = this.getUploadUrl();
+
+        if (this.field.accept !== true) {
+            this.dropzoneOptions.acceptedFiles = this.field.accept.join(',');
+        }
 
         this.images = this.media;
         // TODO: FIX FOR BLOCK
@@ -235,7 +240,9 @@ export default {
             this.busy = false;
         },
         uploadError(file, errorMessage, xhr) {
-            this.$bvToast.toast(errorMessage.message, {
+            this.dropzone.removeAllFiles();
+
+            this.$bvToast.toast(errorMessage, {
                 variant: 'danger'
             });
         },
@@ -244,11 +251,14 @@ export default {
                 this.dropzone.processQueue();
             });
         },
+
         transformFile(file, done) {
+            console.log(file);
             // If image doesn't require cropping, return bare image
             //
             //
-            if (this.field.crop === false) {
+            console.log(file);
+            if (this.field.crop === false || this.field.crop === undefined) {
                 done(file);
                 return;
             }
@@ -340,6 +350,9 @@ export default {
 @import '@fj-sass/_variables';
 
 .dz-error-message {
+    display: none !important;
+}
+.dz-preview {
     display: none !important;
 }
 

@@ -16,22 +16,11 @@ class File extends MediaField
      */
     public function setDefaultAttributes()
     {
+        $this->setAttribute('type', 'file');
         $this->fileSize(12);
         $this->maxFiles(5);
         $this->override(false);
         $this->sortable(true);
-    }
-
-    /**
-     * Set crop ratio.
-     *
-     * @param boolean|float $ratio
-     * @return $this
-     */
-    public function crop($ratio)
-    {
-        $this->setAttribute('crop', $ratio);
-
-        return $this;
+        $this->accept('application/pdf');
     }
 }

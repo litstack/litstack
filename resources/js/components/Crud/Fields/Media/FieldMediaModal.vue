@@ -6,10 +6,24 @@
         :title="`${image.name}`"
     >
         <div class="row full-height" style="height: 100%">
-            <div class="col-7 full-height" style="height: 100%">
-                <img :src="imgPath(image)" class="fj-image-preview" />
-            </div>
-            <div class="col-5">
+            <fj-col
+                :width="field.type == 'image' ? 8 : 12"
+                class="full-height"
+                style="height: 100%"
+            >
+                <img
+                    v-if="field.type == 'image'"
+                    :src="imgPath(image)"
+                    class="fj-image-preview"
+                />
+                <embed
+                    v-if="field.type == 'file'"
+                    :src="imgPath(image)"
+                    type="application/pdf"
+                    class="fj-image-preview"
+                />
+            </fj-col>
+            <fj-col :width="4" v-if="field.type == 'image'">
                 <div class="mb-2">
                     <label class="mb-1">
                         Title
@@ -37,7 +51,7 @@
                         @input="changed($event, 'alt', image)"
                     />
                 </div>
-            </div>
+            </fj-col>
         </div>
         <div slot="modal-footer" class="w-100 d-flex justify-content-between">
             <div>

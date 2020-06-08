@@ -66,6 +66,19 @@ class MediaField extends RelationField
     }
 
     /**
+     * Accept mime types.
+     *
+     * @param string $mimeTypes
+     * @return $this
+     */
+    public function accept($mimeTypes)
+    {
+        $this->setAttribute('accept', $mimeTypes);
+
+        return $this;
+    }
+
+    /**
      * Get relation query for model.
      *
      * @param mixed $model

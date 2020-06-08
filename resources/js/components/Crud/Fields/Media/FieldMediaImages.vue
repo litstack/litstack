@@ -51,12 +51,19 @@
                 }"
             >
                 <img
+                    v-if="field.type == 'image'"
                     :src="imgPath(image)"
                     :style="
                         `object-fit: ${
                             field.showFullImage ? 'contain' : 'cover'
                         }`
                     "
+                />
+                <fa-icon
+                    v-else
+                    :icon="['far', 'file']"
+                    class="text-secondary"
+                    size="2x"
                 />
             </div>
             <fj-field-media-modal
