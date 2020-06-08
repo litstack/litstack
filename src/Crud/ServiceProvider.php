@@ -4,6 +4,7 @@ namespace Fjord\Crud;
 
 use Fjord\Crud\Fields\Code;
 use Fjord\Crud\Fields\Icon;
+use Fjord\Crud\Fields\ListField;
 use Fjord\Crud\Fields\Input;
 use Fjord\Crud\Fields\Modal;
 use Fjord\Crud\Fields\Range;
@@ -53,6 +54,7 @@ class ServiceProvider extends LaravelServiceProvider
         'component' => Component::class,
         'oneRelation' => OneRelation::class,
         'manyRelation' => ManyRelation::class,
+        'list' => ListField::class,
     ];
 
     /**

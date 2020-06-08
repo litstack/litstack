@@ -2362,7 +2362,7 @@ pre code {
   width: 100%;
   height: 2.5rem;
   padding: 0.3125rem 0.75rem;
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 400;
   line-height: 2;
   color: #000;
@@ -2475,7 +2475,7 @@ select.form-control:focus::-ms-value {
   width: 100%;
   padding: 0.3125rem 0;
   margin-bottom: 0;
-  font-size: 1rem;
+  font-size: 0.875rem;
   line-height: 2;
   color: #212227;
   background-color: transparent;
@@ -2879,7 +2879,7 @@ textarea.form-control.is-invalid {
   background-color: transparent;
   border: 1px solid transparent;
   padding: 0.3125rem 1.25rem;
-  font-size: 1rem;
+  font-size: 0.875rem;
   line-height: 2;
   border-radius: 0.625rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -4186,7 +4186,7 @@ input[type=button].btn-block {
   align-items: center;
   padding: 0.3125rem 0.75rem;
   margin-bottom: 0;
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 400;
   line-height: 2;
   color: #000;
@@ -4420,7 +4420,7 @@ input[type=button].btn-block {
   width: 100%;
   height: 2.5rem;
   padding: 0.3125rem 1.75rem 0.3125rem 0.75rem;
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 400;
   line-height: 2;
   color: #000;
@@ -15000,6 +15000,8 @@ input[type=color].form-control:disabled {
 .btn {
   height: 2.5rem;
   max-height: 2.5rem;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .btn-square {
@@ -15030,17 +15032,20 @@ input[type=color].form-control:disabled {
 .btn.btn-sm,
 .btn-group-sm > .btn {
   height: 1.75rem;
+  line-height: 1.75rem;
   max-height: 1.75rem;
 }
 
 .btn.btn-md {
   height: 2.5rem;
+  line-height: 2.5rem;
   max-height: 2.5rem;
 }
 
 .btn.btn-lg,
 .btn-group-lg > .btn {
   height: 3.125rem;
+  line-height: 3.125rem;
   max-height: 3.125rem;
 }
 
@@ -15634,7 +15639,7 @@ div#fjord-app nav.fj-topbar {
   height: 85px;
   background: #212227;
   padding-left: 20px;
-  padding-right: 5px;
+  padding-right: 1rem;
   display: flex;
   z-index: 9;
   border-right: 1px solid #70859c;
@@ -15645,11 +15650,26 @@ div#fjord-app nav.fj-topbar .fj-topbar__icon {
 }
 
 div#fjord-app nav.fj-topbar #fj-topbar-right .btn {
-  color: #676569;
+  background-color: transparent !important;
+  transition: 0.2s all ease-in;
+  opacity: 0.6;
+}
+
+div#fjord-app nav.fj-topbar #fj-topbar-right .btn svg {
+  width: 19px;
+  height: 15px;
+}
+
+div#fjord-app nav.fj-topbar #fj-topbar-right .btn:hover {
+  opacity: 1;
+}
+
+div#fjord-app nav.fj-topbar #fj-topbar-right .show {
+  opacity: 1;
 }
 
 div#fjord-app nav.fj-topbar #fj-topbar-right .show .btn {
-  color: white;
+  opacity: 1;
 }
 
 div#fjord-app nav.fj-topbar .dropdown-menu {

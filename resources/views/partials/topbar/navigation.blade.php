@@ -1,6 +1,6 @@
-<b-dropdown class="m-md-2 dropdown-sm-square" dropbottom no-caret variant="transparent" size="md">
+<b-dropdown class="dropdown-sm-square" dropbottom no-caret variant="transparent" size="md">
     <template v-slot:button-content>
-        <fa-icon icon="bars" />
+        <svg viewBox="0 0 19 15" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"><path d="M0 2h19V0H0v2zM0 8.5h19v-2H0v2zM0 15h19v-2H0v2z" fill="#fff"/></svg>
     </template>
     
     @php

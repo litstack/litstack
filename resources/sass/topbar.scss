@@ -7,7 +7,7 @@ div#fjord-app nav.fj-topbar {
     height: $topbar-height;
     background: $topbar-bg;
     padding-left: $topbar-padding;
-    padding-right: 5px;
+    padding-right: 1rem;
     display: flex;
     z-index: 9;
     border-right: $border-width solid $border-color;
@@ -18,12 +18,28 @@ div#fjord-app nav.fj-topbar {
 
     #fj-topbar-right {
         .btn {
-            color: $topbar-button-color;
+            background-color: transparent !important;
+
+            svg {
+                width: 19px;
+                height: 15px;
+            }
+
+            transition: .2s all ease-in;
+
+            opacity: .6;
+
+            &:hover {
+                opacity: 1;
+            }
         }
 
+
         .show {
+            opacity: 1;
+
             .btn {
-                color: white;
+                opacity: 1;
             }
         }
     }
