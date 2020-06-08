@@ -248,20 +248,12 @@ class VueApplication
      */
     public function props()
     {
-
         $component = $this->component->toArray();
         $component['component'] = $component['name'];
         unset($component['name']);
 
-        $props = array_merge($this->props, $component->toArray());
+        $props = array_merge($this->props, $component);
 
-        /*
-        if ($this->component) {
-            $this->props['props'] = $this->component->getProps();
-            $this->props['slots'] = $this->component->getSlots();
-            $this->props['component'] = $this->component->getName();
-        }
-        */
         return $props;
     }
 

@@ -86,15 +86,7 @@ abstract class FormController
      */
     public function show(CrudReadRequest $request)
     {
-        // Getting collection and formName from route.
-        $routeSplit = explode('.', Route::currentRouteName());
-        array_pop($routeSplit);
-        $formName = array_pop($routeSplit);
-        $collection = last($routeSplit);
-
-        $configInstance = fjord()->config("form.{$collection}.{$formName}");
-
-        $config = $configInstance->get(
+        $config = $this->config->get(
             'names',
             'show',
             'permissions',
@@ -106,8 +98,8 @@ abstract class FormController
         $config['expand'] = $config['expandContainer'];
 
         // Get preview route.
-        if ($configInstance->hasMethod('previewRoute')) {
-            $config['preview_route'] = $configInstance->previewRoute();
+        if ($this->config->hasMethod('previewRoute')) {
+            $config['preview_route'] = $this->config->previewRoute();
         }
 
         // Set readonly if the user has no update permission for this crud.
@@ -118,12 +110,12 @@ abstract class FormController
         }
 
         $model = FormField::firstOrCreate([
-            'collection' => $configInstance->collection,
-            'form_name' => $configInstance->formName,
+            'collection' => $this->config->collection,
+            'form_name' => $this->config->formName,
         ]);
 
         return view('fjord::app')->withComponent($this->config->component)
-            ->withTitle("Form " . $configInstance->names['singular'])
+            ->withTitle("Form " . $this->config->names['singular'])
             ->withProps([
                 'crud-model' => crud($model),
                 'config' => $config,

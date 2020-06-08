@@ -41,6 +41,7 @@ class Crud
      */
     public function routes($config)
     {
+
         Package::get('aw-studio/fjord')->route()->group(function () use ($config) {
             $model = $config->model;
             $tableName = (new $model)->getTable();
@@ -54,7 +55,7 @@ class Crud
                 $this->makeCrudRoutes($config);
                 $this->makeFieldRoutes($config->controller);
 
-                Package::get('aw-studio/fjord')->addNavPreset("crud.{$tableName}", [
+                Package::get('aw-studio/fjord')->addNavPreset($config->getKey(), [
                     'link' => Fjord::url($config->routePrefix),
                     'title' => ucfirst($config->names['plural']),
                     'authorize' => function (FjordUser $user) use ($config) {
@@ -82,7 +83,7 @@ class Crud
             RouteFacade::group([
                 'config' => $config->getKey(),
                 'prefix' => "$url",
-                'as' => "form.{$collection}.{$form}.",
+                'as' => $config->getKey(),
             ], function () use ($url, $config, $collection, $form) {
 
                 //require fjord_path('src/Crud/routes.php');

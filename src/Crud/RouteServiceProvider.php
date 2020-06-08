@@ -2,9 +2,12 @@
 
 namespace Fjord\Crud;
 
+use ReflectionClass;
 use Illuminate\Support\Str;
 use Illuminate\Routing\Route;
 use Fjord\Support\Facades\Crud;
+use Fjord\Crud\Config\CrudConfig;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
@@ -83,14 +86,41 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             return;
         }
 
-        $configPath = fjord_config_path('Crud');
+        $configPath = fjord_config_path();
         $configFiles = glob("{$configPath}/*.php");
 
-        foreach ($configFiles as $path) {
-            $crudName = Str::snake(str_replace('Config.php', '', str_replace($configPath . '/', '', $path)));
-            $config = fjord()->config("crud.{$crudName}");
+        $files = File::allFiles(fjord_config_path());
 
-            Crud::routes($config);
+        foreach ($files as $file) {
+            if ($file->isDir()) {
+                continue;
+            }
+
+            if (!Str::contains($file, '.php')) {
+                continue;
+            }
+
+            $namespace = str_replace("/", "\\", "FjordApp" . explode('fjord/app', str_replace('.php', '', $file))[1]);
+            $reflection = new ReflectionClass($namespace);
+
+            if (!$reflection->getParentClass()) {
+                continue;
+            }
+
+            if ($reflection->getParentClass()->name != CrudConfig::class) {
+                continue;
+            }
+
+            $configKey = collect(explode('/', str_replace('Config.php', '', str_replace($configPath . '/', '', $file))))
+                ->map(fn ($item) => Str::snake($item))
+                ->implode('.');
+
+            Crud::routes(
+                fjord()->config($configKey)
+            );
+        }
+
+        foreach ($configFiles as $path) {
         }
     }
 

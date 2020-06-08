@@ -496,11 +496,11 @@ class Field extends VueProp
     }
 
     /**
-     * To array.
+     * Render field.
      *
      * @return array
      */
-    public function getArray(): array
+    public function render(): array
     {
         foreach ($this->props as $name => $value) {
             $this->attributes[$name] = $value;

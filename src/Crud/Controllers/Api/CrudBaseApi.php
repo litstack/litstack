@@ -12,18 +12,15 @@ trait CrudBaseApi
      * Update Crud model.
      *
      * @param CrudUpdateRequest $request
-     * @param string|integer $identifier
-     * * @param string $formName
+     * @param string|integer $id
+     * * @param string $form_name
      * @return mixed $model
      */
-    public function update(CrudUpdateRequest $request, $identifier, $formName)
+    public function update(CrudUpdateRequest $request, $id, $form_name)
     {
-        $this->formExists($formName) ?: abort(404);
-        $form = $this->getForm($formName);
-
-        $model = $this->findOrFail($identifier);
-
-        $this->validate($request, $this->getForm($formName));
+        $form = $this->getForm($form_name) ?: abort(404);
+        $model = $this->findOrFail($id);
+        $this->validate($request, $this->getForm($form_name));
 
         $this->fillModelAttributes($model, $request, $form->getRegisteredFields());
         $attributes = $this->filterRequestAttributes($request, $form->getRegisteredFields());

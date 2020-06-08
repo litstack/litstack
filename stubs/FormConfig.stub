@@ -2,13 +2,12 @@
 
 namespace FjordApp\Config\Form\DummyCollection;
 
-use Fjord\Crud\CrudForm;
+use Fjord\Crud\CrudShow;
 use Fjord\Crud\Config\FormConfig;
 use FjordApp\Controllers\Form\DummyCollection\DummyController;
 
 class DummyConfigClassName extends FormConfig
 {
-
     /**
      * Controller class.
      *
@@ -38,10 +37,10 @@ class DummyConfigClassName extends FormConfig
     /**
      * Setup create and edit form.
      *
-     * @param \Fjord\Crud\CrudForm $form
+     * @param \Fjord\Crud\CrudShow $form
      * @return void
      */
-    public function form(CrudForm $form)
+    public function show(CrudShow $form)
     {
         $form->card(function($form) {
 

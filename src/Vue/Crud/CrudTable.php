@@ -56,6 +56,10 @@ class CrudTable extends Table
 
     public function defaultLink()
     {
+        if (!$this->config->has('show')) {
+            return false;
+        }
+
         $route_prefix = $this->config->routePrefix();
 
         // Default link.

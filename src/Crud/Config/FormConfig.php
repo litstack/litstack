@@ -4,11 +4,10 @@ namespace Fjord\Crud\Config;
 
 use Illuminate\Support\Str;
 use Fjord\Crud\Models\FormField;
-use Fjord\Crud\Config\Traits\HasCrudForm;
 
-abstract class FormConfig
+class FormConfig
 {
-    use HasCrudForm;
+    use Traits\HasCrudShow;
 
     /**
      * Form field model class.
@@ -78,6 +77,11 @@ abstract class FormConfig
         return "form/{$collection}/{$formName}";
     }
 
+    /**
+     * Form permissions.
+     *
+     * @return void
+     */
     public function permissions()
     {
         $user = fjord_user();

@@ -22,7 +22,7 @@ class NavigationConfig extends Config
         $nav->section([
             $nav->title(__f('fj.user_administration')),
 
-            $nav->preset('users'),
+            $nav->preset('user.user_index'),
             $nav->preset('permissions')
         ]);
 

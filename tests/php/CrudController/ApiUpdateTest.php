@@ -3,6 +3,7 @@
 namespace FjordTest\CrudController;
 
 use FjordTest\BackendTestCase;
+use FjordTest\FrontendTestCase;
 use FjordTest\TestSupport\Models\Post;
 use FjordTest\Traits\InteractsWithCrud;
 
@@ -12,7 +13,7 @@ use FjordTest\Traits\InteractsWithCrud;
  * @see FjordApp\Config\Crud\PostConfig
  * @see FjordTest\TestSupport\Models\Post
  */
-class ApiUpdateTest extends BackendTestCase
+class ApiUpdateTest extends FrontendTestCase
 {
     use InteractsWithCrud;
 
@@ -48,8 +49,8 @@ class ApiUpdateTest extends BackendTestCase
     /** @test */
     public function test_update_returns_404_when_model_does_not_exists()
     {
-        $url = $this->getCrudRoute("/-1/other_form");
-        $response = $this->put($url);
+        $url = $this->getCrudRoute("/0/show");
+        $response = $this->put($url, ['title' => 'dummy title']);
         $response->assertStatus(404);
     }
 

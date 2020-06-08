@@ -4,13 +4,10 @@ namespace FjordApp\Config\Form\Collections;
 
 use Fjord\Crud\CrudShow;
 use Fjord\Crud\Config\FormConfig;
-use Fjord\Crud\Config\Traits\HasCrudForm;
 use FjordApp\Controllers\Form\Collections\SettingsController;
 
 class SettingsConfig extends FormConfig
 {
-    use HasCrudForm;
-
     /**
      * Controller class.
      *
@@ -43,9 +40,9 @@ class SettingsConfig extends FormConfig
      * @param \Fjord\Crud\CrudShow $form
      * @return void
      */
-    public function show(CrudShow $form)
+    public function show(CrudShow $container)
     {
-        $form->card(function ($form) {
+        $container->card(function ($form) {
             $form->input('title')
                 ->title('Title')
                 ->width(12)

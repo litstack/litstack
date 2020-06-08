@@ -34,7 +34,7 @@ class PreviewTable extends VueProp
      *
      * @return array $cols
      */
-    public function getArray(): array
+    public function render(): array
     {
         return $this->cols;
     }

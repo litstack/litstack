@@ -25,19 +25,18 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         });
     }
 
+    /**
+     * Add nav presets
+     *
+     * @return void
+     */
     public function addNavPresets()
     {
-        $this->package->addNavPreset('users', [
-            'link' => route('fjord.aw-studio.fjord.users'),
-            'title' => __f('fj.users'),
-            'authorize' => function ($user) {
-                return $user->can('read fjord-users');
-            },
-            'icon' => fa('users'),
-        ]);
-
+        if (!$config = fjord()->config('user.profile_settings')) {
+            return;
+        }
         $this->package->addNavPreset('profile', [
-            'link' => route('fjord.aw-studio.fjord.profile.show'),
+            'link' => fn () => fjord()->url("$config->route_prefix/" . fjord_user()->id),
             'title' => __f('fj.profile'),
             'icon' => fa('user-cog'),
         ]);
@@ -53,14 +52,10 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->package->route()->group(function () {
             Route::group([
                 'config' => 'user.profile_settings',
-                'prefix' => '/profile/settings',
+                'prefix' => '/profile',
                 'as' => 'profile.'
             ], function () {
-                Route::get('/', ProfileController::class . '@show')->name('show');
                 Route::get('/sessions', ProfileController::class . '@sessions')->name('sessions');
-
-                Route::put('/{id}/{form}', ProfileController::class . '@update')->name('update');
-                Route::put('/{id}/{form}/modal/{modal_id}', ProfileController::class . '@updateModal')->name('update.modal');
             });
         });
 

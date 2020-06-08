@@ -4,13 +4,10 @@ namespace FjordApp\Config\Form\Pages;
 
 use Fjord\Crud\CrudShow;
 use Fjord\Crud\Config\FormConfig;
-use Fjord\Crud\Config\Traits\HasCrudForm;
 use FjordApp\Controllers\Form\Pages\HomeController;
 
 class HomeConfig extends FormConfig
 {
-    use HasCrudForm;
-
     /**
      * Controller class.
      *
@@ -48,6 +45,7 @@ class HomeConfig extends FormConfig
         $form->card(function ($form) {
 
             $form->input('title')
+                ->translatable()
                 ->title('Title');
 
             $form->markdown(\Illuminate\Support\Facades\File::get(fjord_path('resources/docs/form-loader-example.md')));

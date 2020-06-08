@@ -68,7 +68,10 @@ class FjordUserController
      */
     public function fetchIndex(FjordUserReadRequest $request)
     {
-        return IndexTable::query($this->config->index_query)
+        $query = $this->config->index_query
+            ->with('ordered_roles');
+
+        return IndexTable::query($query)
             ->request($request)
             ->search($this->config->search)
             ->get();

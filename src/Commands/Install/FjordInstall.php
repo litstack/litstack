@@ -4,6 +4,8 @@ namespace Fjord\Commands\Install;
 
 use Fjord\User\Models\FjordUser;
 use Fjord\Commands\Traits\RolesAndPermissions;
+use Fjord\Crud\Config\CrudConfig;
+use FjordApp\Controllers\User\ProfileSettingsController;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;

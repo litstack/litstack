@@ -6,13 +6,29 @@ use Closure;
 use Fjord\Support\VueProp;
 use Illuminate\Support\Arr;
 use Fjord\Vue\Crud\CrudTable;
+use Illuminate\Database\Eloquent\Builder;
 
 class CrudIndexTable extends VueProp
 {
+    /**
+     * Crud index table attributes.
+     *
+     * @var array
+     */
     protected $attributes = [];
 
+    /**
+     * Index table
+     *
+     * @var CrudIndexTable
+     */
     protected $table;
 
+    /**
+     * Crud config.
+     * 
+     * @var ConfigHandler
+     */
     protected $config;
 
     protected $queryModifier;
@@ -107,6 +123,18 @@ class CrudIndexTable extends VueProp
         return $this;
     }
 
+    public function getQuery(Builder $query)
+    {
+        if (!$this->queryModifier) {
+            return $query;
+        }
+
+        $modifier = $this->queryModifier;
+        $modifier($query);
+
+        return $query;
+    }
+
     public function setAttribute(string $name, $value)
     {
         $this->attributes[$name] = $value;
@@ -117,7 +145,7 @@ class CrudIndexTable extends VueProp
         return $this->attribute['name'] ?? null;
     }
 
-    public function getArray(): array
+    public function render(): array
     {
 
         return array_merge($this->attributes, [

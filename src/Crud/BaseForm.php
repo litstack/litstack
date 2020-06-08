@@ -432,25 +432,15 @@ class BaseForm extends VueProp
      *
      * @return array
      */
-    public function getArray(): array
-    {
-        return [
-            'fields' => $this->registeredFields
-        ];
-    }
-
-    /**
-     * To array.
-     *
-     * @return array
-     */
-    public function toArray()
+    public function render(): array
     {
         if ($this->registrar) {
             $this->registrar->checkComplete();
         }
 
-        return parent::toArray();
+        return [
+            'fields' => $this->registeredFields
+        ];
     }
 
     /**

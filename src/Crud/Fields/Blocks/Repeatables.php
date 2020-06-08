@@ -94,7 +94,7 @@ class Repeatables extends VueProp
      *
      * @return array
      */
-    public function getArray(): array
+    public function render(): array
     {
         $array = $this->forms;
 

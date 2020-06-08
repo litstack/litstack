@@ -31,7 +31,7 @@ class CrudJs extends VueProp
      *
      * @return array
      */
-    public function getArray(): array
+    public function render(): array
     {
         return [
             'attributes' => $this->getModelAttributes(),

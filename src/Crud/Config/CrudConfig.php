@@ -3,12 +3,12 @@
 namespace Fjord\Crud\Config;
 
 use Illuminate\Support\Str;
-use Fjord\Crud\Config\Traits\HasCrudForm;
+use Fjord\Crud\Config\Traits\HasCrudShow;
 use Fjord\Crud\Config\Traits\HasCrudIndex;
 
 abstract class CrudConfig
 {
-    use HasCrudForm,
+    use HasCrudShow,
         HasCrudIndex;
 
     /**

@@ -119,7 +119,7 @@ class CrudShow extends BaseForm
      *
      * @return array
      */
-    public function getArray(): array
+    public function render(): array
     {
         return [
             'components' => collect($this->components),

@@ -56,7 +56,7 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
      * @var array
      */
     protected $with = [
-        'ordered_roles'
+        //'ordered_roles'
     ];
 
     /**

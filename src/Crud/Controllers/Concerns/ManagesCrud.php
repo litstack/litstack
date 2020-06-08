@@ -24,12 +24,12 @@ trait ManagesCrud
     /**
      * Find or faild model by identifier.
      *
-     * @param mixed $identifier
+     * @param string|integer $id
      * @return void
      */
-    public function findOrFail($identifier)
+    public function findOrFail($id)
     {
-        return $this->query()->findOrFail($identifier);
+        return $this->query()->findOrFail($id);
     }
 
     /**

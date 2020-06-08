@@ -27,6 +27,13 @@ class CrudIndex extends VueProp
 
     protected $slots = [];
 
+    /**
+     * Crud index table.
+     *
+     * @var CrudIndexTable
+     */
+    protected $table;
+
     public function __construct($config)
     {
         $this->config = $config;
@@ -36,6 +43,11 @@ class CrudIndex extends VueProp
     public function setDefaults()
     {
         $this->expand(false);
+    }
+
+    public function getTable()
+    {
+        return $this->table;
     }
 
     public function expand(bool $expand = true)
@@ -49,10 +61,12 @@ class CrudIndex extends VueProp
     {
         $table = new CrudIndexTable($this->config);
 
+        $this->table = $table;
+
         $closure($table->getTable());
 
         $this->component($table->getComponent())
-            ->prop('table', $table->getArray());
+            ->prop('table', $table->render());
 
         return $table;
     }
@@ -168,7 +182,7 @@ class CrudIndex extends VueProp
         return $this->attribute['name'] ?? null;
     }
 
-    public function getArray(): array
+    public function render(): array
     {
         return array_merge([
             'components' => collect($this->components),
