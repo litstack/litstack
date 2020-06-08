@@ -45,6 +45,7 @@ class CrudIndexTable extends VueProp
 
     public function setDefaults()
     {
+        $this->setAttribute('controls', collect([]));
         $this->sortByDefault('id.desc');
         $this->perPage(10);
         $this->search(['title']);
@@ -54,6 +55,10 @@ class CrudIndexTable extends VueProp
             'id.asc' => __f('fj.sort_old_to_new'),
         ]);
         $this->setAttribute('sortable', false);
+        $this->addControl(
+            component('fj-index-delete-all')
+                ->routePrefix($this->config->route_prefix)
+        );
     }
 
     public function getComponent()
@@ -64,6 +69,24 @@ class CrudIndexTable extends VueProp
     public function width($width)
     {
         $this->component->prop('width', $width);
+
+        return $this;
+    }
+
+    public function addControl($control)
+    {
+        $controls = $this->getAttribute('controls');
+        $controls[] = component($control)->toArray();
+        $this->setAttribute('controls', $controls);
+
+        return $this;
+    }
+
+    public function controls($controls)
+    {
+        foreach ($controls as $control) {
+            $this->addControl($control);
+        }
 
         return $this;
     }

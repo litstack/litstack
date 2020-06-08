@@ -106,6 +106,7 @@ abstract class CrudController
      */
     public function destroyAll(CrudDeleteRequest $request)
     {
+        dd($request->ids);
         if (!is_array($request->ids)) {
             abort(405);
         }
@@ -138,7 +139,6 @@ abstract class CrudController
             'sortable',
             'orderColumn'
         );
-        $config['expand'] = $config['expandIndexContainer'];
 
         return view('fjord::app')
             ->withTitle($config['names']['plural'])
@@ -212,11 +212,9 @@ abstract class CrudController
             'route_prefix',
             'names',
             'permissions',
-            'expandFormContainer'
         );
         $config['form'] = $config['show'];
         unset($config['show']);
-        $config['expand'] = $config['expandFormContainer'];
 
         // Set readonly if the user has no update permission for this crud.
         foreach ($config['form']->getRegisteredFields() as $field) {
