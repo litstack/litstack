@@ -153,7 +153,7 @@ export default {
 
         this.dropzoneOptions.url = this.getUploadUrl();
 
-        if (this.field.accept !== true) {
+        if (this.field.accept !== true && this.field.accept !== undefined) {
             this.dropzoneOptions.acceptedFiles = this.field.accept.join(',');
         }
 
