@@ -99,7 +99,7 @@ module.exports = {
                         ['docs/crud/models', 'Models'],
                         ['docs/crud/forms', 'Forms'],
                         ['docs/crud/config-index', 'Index Config'],
-                        ['docs/crud/config-form', 'Form Config'],
+                        ['docs/crud/config-show', 'Show Config'],
                         ['docs/crud/config-table', 'Table']
                     ]
                 },
