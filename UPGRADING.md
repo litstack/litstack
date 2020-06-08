@@ -12,7 +12,19 @@ Update `aw-studio/fjord-permission`:
 composer update aw-studio/fjord-permissions
 ```
 
-### 2. Artisan: fjord:upgrade
+### 2.
+
+Search `use HasCrudForm` in `./fjord/app/Config` and remove the trait from all config files.
+
+### 3. Update Fjord
+
+Update `aw-studio/fjord`:
+
+```shell
+composer update aw-studio/fjord
+```
+
+### 4. Artisan: fjord:upgrade
 
 The artisan `fjord:upgrade` command is making some changes for you.
 
@@ -27,7 +39,7 @@ These are:
 -   Fixing namespaces in the config files.
 -   Fixing navigation preset keys.
 
-### 3. Fix crud index tables.
+### 5. Fix crud index tables.
 
 Update your crud index table config.
 

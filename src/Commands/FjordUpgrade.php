@@ -72,6 +72,8 @@ class FjordUpgrade extends Command
         // Crud Config
         $files = glob(base_path('fjord/app/Config/Crud/*.php'));
 
+
+
         foreach ($files as $file) {
             $content = file_get_contents($file);
             $content = str_replace('form(CrudForm $form)', 'show(CrudShow $form)', $content);
@@ -81,6 +83,19 @@ class FjordUpgrade extends Command
             file_put_contents($file, $content);
         }
         $this->line('Fixed crud config namespaces.');
+
+        // Form Config
+        $files = File::allFiles(base_path('fjord/app/Config/Form'));
+
+        foreach ($files as $file) {
+            if ($file->isDir()) continue;
+            if (!\Str::contains($file, '.php')) continue;
+            $content = file_get_contents($file);
+            $content = str_replace('form(CrudForm $form)', 'show(CrudShow $form)', $content);
+            $content = str_replace('Fjord\Crud\CrudForm', 'Fjord\Crud\CrudShow', $content);
+            file_put_contents($file, $content);
+        }
+        $this->line('Fixed form config namespaces.');
 
         // Navigation
         $path = base_path('fjord/app/Config/NavigationConfig.php');
