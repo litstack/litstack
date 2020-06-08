@@ -2,13 +2,16 @@
 
 namespace FjordApp\Config\User;
 
+use Fjord\Crud\CrudShow;
 use Fjord\Crud\CrudIndex;
+use Illuminate\Support\Str;
 use Fjord\Vue\Crud\CrudTable;
 use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Config\CrudConfig;
+use Illuminate\Support\Facades\Route;
 use FjordApp\Controllers\User\UserIndexController;
 
-class UserIndexConfig extends CrudConfig
+class UserConfig extends CrudConfig
 {
     /**
      * Model class.
@@ -42,8 +45,8 @@ class UserIndexConfig extends CrudConfig
     public function names()
     {
         return [
-            'singular' => ucfirst(__f('models.users')),
-            'plural' => ucfirst(__f('models.users')),
+            'singular' => ucfirst(__f('fj.users')),
+            'plural' => ucfirst(__f('fj.users')),
         ];
     }
 
@@ -86,5 +89,46 @@ class UserIndexConfig extends CrudConfig
             ->label('')
             ->link(false)
             ->small();
+    }
+
+    /**
+     * Crud show container.
+     *
+     * @param CrudShow $container
+     * @return void
+     */
+    public function show(CrudShow $container)
+    {
+        $container->card(function ($form) {
+            $form->input('first_name')
+                ->width(1 / 2)
+                ->creationRules('required')
+                ->rules('min:2')
+                ->title(ucwords(__f('base.first_name')));
+
+            $form->input('last_name')
+                ->width(1 / 2)
+                ->creationRules('required')
+                ->rules('min:2')
+                ->title(ucwords(__f('base.last_name')));
+
+            $form->input('email')
+                ->width(1 / 2)
+                ->creationRules('required')
+                ->rules('email:rfc,dns', 'unique:fjord_users,email')
+                ->title('E-Mail');
+
+            $form->input('username')
+                ->width(1 / 2)
+                ->creationRules('required')
+                ->rules('min:2', 'max:60', 'unique:fjord_users,username')
+                ->title(ucwords(__f('base.username')));
+
+            if (Str::endsWith(Route::current()->uri(), 'create')) {
+                $form->password('password')
+                    ->title(ucwords(__f('base.password')))
+                    ->width(1 / 2);
+            }
+        });
     }
 }

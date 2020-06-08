@@ -158,7 +158,7 @@ export default {
                 this.model.id
             ) {
                 setTimeout(() => {
-                    window.location.replace(`${this.model.id}/edit`);
+                    window.location.replace(`${this.model.id}`);
                 }, 1);
             }
         },

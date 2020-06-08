@@ -28,7 +28,7 @@
         </b-input-group>
         <div
             class="fj-field-password-score"
-            v-if="!_.isEmpty(value) && !field.noScore"
+            v-if="!_.isEmpty(password) && !field.noScore"
         >
             <b-progress
                 class="mt-2"
@@ -59,7 +59,8 @@ export default {
     },
     data() {
         return {
-            show: false
+            show: false,
+            password: null
         };
     },
     beforeMount() {
@@ -80,6 +81,7 @@ export default {
             this.$emit('input', '');
         },
         changed(newPassword) {
+            this.password = newPassword;
             this.addSaveJob(newPassword);
             if (newPassword == '') {
                 return (this.field.hint = ``);
@@ -108,7 +110,10 @@ export default {
     },
     computed: {
         score() {
-            return zxcvbn(this.value).score;
+            if (!this.password) {
+                return 0;
+            }
+            return zxcvbn(this.password).score;
         },
         scoreVariant() {
             switch (this.score) {
