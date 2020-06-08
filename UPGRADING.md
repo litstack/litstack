@@ -4,7 +4,15 @@
 
 In Fjord 2.3 some structural changes were made to the config files. The following steps explain what has to be done to upgrade Fjord.
 
-### 1. Artisan: fjord:upgrade
+### 1. Update Dependencies
+
+Update `aw-studio/fjord-permission`:
+
+```shell
+composer update aw-studio/fjord-permissions
+```
+
+### 2. Artisan: fjord:upgrade
 
 The artisan `fjord:upgrade` command is making some changes for you.
 
@@ -19,7 +27,7 @@ These are:
 -   Fixing namespaces in the config files.
 -   Fixing navigation preset keys.
 
-### 2. Fix crud index tables.
+### 3. Fix crud index tables.
 
 Update your crud index table config.
 
