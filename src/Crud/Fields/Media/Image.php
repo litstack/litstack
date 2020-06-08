@@ -10,20 +10,13 @@ class Image extends MediaField
     use TranslatableField, HasBaseField;
 
     /**
-     * Field Vue component.
-     *
-     * @var string
-     */
-    protected $component = 'fj-field-media';
-
-    /**
      * Set default field attributes.
      *
      * @return void
      */
     public function setDefaultAttributes()
     {
-        $this->imageSize(12);
+        $this->fileSize(12);
         $this->maxFiles(5);
         $this->crop(false);
         $this->override(false);
@@ -46,19 +39,6 @@ class Image extends MediaField
     }
 
     /**
-     * Set sortable.
-     *
-     * @param bool $sortable
-     * @return $this
-     */
-    public function sortable(bool $sortable = true)
-    {
-        $this->setAttribute('sortable', $sortable);
-
-        return $this;
-    }
-
-    /**
      * Set expand.
      *
      * @param bool $sortable
@@ -67,19 +47,6 @@ class Image extends MediaField
     public function expand(bool $expand = true)
     {
         $this->setAttribute('expand', $expand);
-
-        return $this;
-    }
-
-    /**
-     * Set override.
-     *
-     * @param bool $override
-     * @return $this
-     */
-    public function override(bool $override = true)
-    {
-        $this->setAttribute('override', $override);
 
         return $this;
     }
@@ -106,32 +73,6 @@ class Image extends MediaField
     public function firstBig(bool $firstBig = true)
     {
         $this->setAttribute('firstBig', $firstBig);
-
-        return $this;
-    }
-
-    /**
-     * Set max files.
-     *
-     * @param integer $maxFiles
-     * @return $this
-     */
-    public function maxFiles(int $maxFiles)
-    {
-        $this->setAttribute('maxFiles', $maxFiles);
-
-        return $this;
-    }
-
-    /**
-     * Set max image size.
-     *
-     * @param integer $size
-     * @return $this
-     */
-    public function imageSize(int $size)
-    {
-        $this->setAttribute('imageSize', $size);
 
         return $this;
     }

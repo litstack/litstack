@@ -15,6 +15,7 @@ use Fjord\Crud\Fields\Password;
 use Fjord\Crud\Fields\Textarea;
 use Fjord\Crud\Fields\Component;
 use Fjord\Crud\Fields\Checkboxes;
+use Fjord\Crud\Fields\Media\File;
 use Fjord\Crud\Fields\Media\Image;
 use Fjord\Crud\Fields\Blocks\Blocks;
 use Illuminate\Foundation\AliasLoader;
@@ -47,6 +48,7 @@ class ServiceProvider extends LaravelServiceProvider
         'wysiwyg' => Wysiwyg::class,
         'blocks' => Blocks::class,
         'image' => Image::class,
+        'file' => File::class,
         'modal' => Modal::class,
         'component' => Component::class,
         'oneRelation' => OneRelation::class,

@@ -49,7 +49,7 @@ class FjordUpgrade extends Command
         $this->update();
         $this->line('');
         $this->info("Upgrade perared. Now there are only a few steps left.\n");
-        $this->info('Read https://github.com/aw-studio/fjord/blob/master/UPGRADING.md to do the rest.');
+        $this->info('Read ' . fjord_path('UPGRADING.md') . ' to do the rest.');
     }
 
     public function update()

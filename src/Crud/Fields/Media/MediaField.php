@@ -7,6 +7,65 @@ use Fjord\Crud\RelationField;
 class MediaField extends RelationField
 {
     /**
+     * Field Vue component.
+     *
+     * @var string
+     */
+    protected $component = 'fj-field-media';
+
+    /**
+     * Set sortable.
+     *
+     * @param bool $sortable
+     * @return $this
+     */
+    public function sortable(bool $sortable = true)
+    {
+        $this->setAttribute('sortable', $sortable);
+
+        return $this;
+    }
+
+    /**
+     * Set override.
+     *
+     * @param bool $override
+     * @return $this
+     */
+    public function override(bool $override = true)
+    {
+        $this->setAttribute('override', $override);
+
+        return $this;
+    }
+
+    /**
+     * Set max files.
+     *
+     * @param integer $maxFiles
+     * @return $this
+     */
+    public function maxFiles(int $maxFiles)
+    {
+        $this->setAttribute('maxFiles', $maxFiles);
+
+        return $this;
+    }
+
+    /**
+     * Set max image size.
+     *
+     * @param integer $size
+     * @return $this
+     */
+    public function fileSize(int $size)
+    {
+        $this->setAttribute('fileSize', $size);
+
+        return $this;
+    }
+
+    /**
      * Get relation query for model.
      *
      * @param mixed $model
