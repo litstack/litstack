@@ -57,8 +57,9 @@ class FjordUpgrade extends Command
         // Config files.
         if (!new ProfileSettingsConfig instanceof CrudConfig) {
             $this->line('Replaced ' . base_path('fjord/app/Config/User/ProfileSettingsConfig.php'));
-            $this->line('Replaced ' . base_path('fjord/app/Config/User/UserIndexConfig.php'));
+            $this->line('Published ' . base_path('fjord/app/Config/User/UserConfig.php'));
             File::copy(fjord_path('publish/fjord/app/Config/User/ProfileSettingsConfig.php'), base_path('fjord/app/Config/User/ProfileSettingsConfig.php'));
+            File::delete(fjord_path('publish/fjord/app/Config/User/UserIndexConfig.php'));
             File::copy(fjord_path('publish/fjord/app/Config/User/UserIndexConfig.php'), base_path('fjord/app/Config/User/UserIndexConfig.php'));
         }
 
@@ -72,6 +73,8 @@ class FjordUpgrade extends Command
         // Crud Config
         $files = glob(base_path('fjord/app/Config/Crud/*.php'));
 
+
+
         foreach ($files as $file) {
             $content = file_get_contents($file);
             $content = str_replace('form(CrudForm $form)', 'show(CrudShow $form)', $content);
@@ -82,12 +85,25 @@ class FjordUpgrade extends Command
         }
         $this->line('Fixed crud config namespaces.');
 
+        // Form Config
+        $files = File::allFiles(base_path('fjord/app/Config/Form'));
+
+        foreach ($files as $file) {
+            if ($file->isDir()) continue;
+            if (!\Str::contains($file, '.php')) continue;
+            $content = file_get_contents($file);
+            $content = str_replace('form(CrudForm $form)', 'show(CrudShow $form)', $content);
+            $content = str_replace('Fjord\Crud\CrudForm', 'Fjord\Crud\CrudShow', $content);
+            file_put_contents($file, $content);
+        }
+        $this->line('Fixed form config namespaces.');
+
         // Navigation
         $path = base_path('fjord/app/Config/NavigationConfig.php');
         $content = file_get_contents($path);
         $content = str_replace("preset('pages", "preset('form.pages", $content);
         $content = str_replace("preset('collections", "preset('form.collections", $content);
-        $content = str_replace("\$nav->preset('users')", "\$nav->preset('user.user_index', [
+        $content = str_replace("\$nav->preset('users')", "\$nav->preset('user.user', [
                 'icon' => fa('users')
             ])", $content);
         file_put_contents($path, $content);
