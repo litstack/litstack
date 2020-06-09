@@ -29,7 +29,7 @@
 
         <fj-header>
             <h3 class="d-flex justify-content-between align-items-baseline">
-                {{ config.names.singular }}
+                <span v-html="config.names.singular" />
                 <small
                     class="text-secondary"
                     v-if="model.last_edit"
