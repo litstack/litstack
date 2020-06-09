@@ -113,6 +113,7 @@ class ManyRelationFieldRelationConfig
     public $search = '';
     public $route_prefix = '';
     public $index = '';
+    public $model = ManyRelationFieldRelation::class;
 }
 
 class ManyRelationFieldRelation extends Model

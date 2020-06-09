@@ -19,8 +19,8 @@ class OneRelationField extends LaravelRelationField
      * @var array
      */
     protected $availablePreviewTypes = [
-        'table' => ['preview'],
-        'link' => ['linkText']
+        'table' => [],
+        'link' => ['linkValue', 'related_route_prefix']
     ];
 
     /**
@@ -33,7 +33,7 @@ class OneRelationField extends LaravelRelationField
         parent::setDefaultAttributes();
 
         $this->setAttribute('many', false);
-        $this->type('link');
+        $this->type('table');
 
         $this->small();
     }
@@ -45,9 +45,9 @@ class OneRelationField extends LaravelRelationField
      * @param string $text
      * @return $this
      */
-    public function linkText(string $text)
+    public function linkValue(string $text)
     {
-        $this->setAttribute('linkText', $text);
+        $this->setAttribute('linkValue', $text);
 
         return $this;
     }

@@ -2,8 +2,9 @@
 
 namespace FjordTest\Traits;
 
-use Fjord\Support\Facades\Crud;
+use Fjord\Support\Facades\Config;
 use Fjord\Crud\RouteServiceProvider;
+use FjordApp\Config\Crud\PostConfig;
 use Illuminate\Support\Facades\File;
 
 trait InteractsWithCrud
@@ -18,7 +19,7 @@ trait InteractsWithCrud
      */
     public function getCrudRoute(string $route)
     {
-        return fjord()->url(strip_slashes(Crud::config(Post::class)->route_prefix . "/{$route}"));
+        return fjord()->url(strip_slashes(Config::get(PostConfig::class)->route_prefix . "/{$route}"));
     }
 
     /**

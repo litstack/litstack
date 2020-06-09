@@ -81,8 +81,6 @@ class CrudShow extends BaseForm
 
         if ($this->inCard()) {
             $info->heading('h6');
-        } else {
-            $info->class('pt-3');
         }
 
         return $info;
@@ -121,9 +119,8 @@ class CrudShow extends BaseForm
      */
     public function render(): array
     {
-        return [
-            'components' => collect($this->components),
-            'fields' => $this->registeredFields
-        ];
+        return array_merge(parent::render(), [
+            'components' => collect($this->components)
+        ]);
     }
 }

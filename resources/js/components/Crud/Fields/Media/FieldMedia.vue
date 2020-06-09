@@ -154,7 +154,7 @@ export default {
         this.dropzoneOptions.url = this.getUploadUrl();
 
         if (this.field.accept !== true && this.field.accept !== undefined) {
-            this.dropzoneOptions.acceptedFiles = this.field.accept.join(',');
+            this.dropzoneOptions.acceptedFiles = this.field.accept;
         }
 
         this.images = this.media;
@@ -241,6 +241,20 @@ export default {
         },
         uploadError(file, errorMessage, xhr) {
             this.dropzone.removeAllFiles();
+            if (typeof errorMessage == 'object') {
+                console.log('OBject');
+                if ('errors' in errorMessage) {
+                    if ('media' in errorMessage.errors) {
+                        for (let i in errorMessage.errors.media) {
+                            console.log('HI', i, errorMessage.errors.media);
+                            this.$bvToast.toast(errorMessage.errors.media[i], {
+                                variant: 'danger'
+                            });
+                        }
+                        return;
+                    }
+                }
+            }
 
             this.$bvToast.toast(errorMessage, {
                 variant: 'danger'
@@ -357,6 +371,7 @@ export default {
 }
 
 div#fjord-app .fj-dropzone {
+    min-height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -166,6 +166,7 @@ class LaravelRelationFieldRelationConfig
     public $search = '';
     public $route_prefix = '';
     public $index = '';
+    public $model = LaravelRelationFieldRelation::class;
 }
 
 class LaravelRelationFieldRelation extends Model

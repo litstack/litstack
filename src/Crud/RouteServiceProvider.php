@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 use Illuminate\Routing\Route;
 use Fjord\Support\Facades\Crud;
 use Fjord\Crud\Config\CrudConfig;
+use Fjord\Crud\Config\FormConfig;
+use Fjord\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
@@ -71,8 +73,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     public function map()
     {
-        $this->mapFormRoutes();
         $this->mapCrudRoutes();
+        $this->mapFormRoutes();
     }
 
     /**
@@ -85,9 +87,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         if (!fjord()->installed()) {
             return;
         }
-
-        $configPath = fjord_config_path();
-        $configFiles = glob("{$configPath}/*.php");
 
         $files = File::allFiles(fjord_config_path());
 
@@ -111,16 +110,15 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 continue;
             }
 
-            $configKey = collect(explode('/', str_replace('Config.php', '', str_replace($configPath . '/', '', $file))))
-                ->map(fn ($item) => Str::snake($item))
-                ->implode('.');
+            $config = Config::getFromPath($file);
+
+            if (!$config) {
+                continue;
+            }
 
             Crud::routes(
-                fjord()->config($configKey)
+                $config
             );
-        }
-
-        foreach ($configFiles as $path) {
         }
     }
 
@@ -141,7 +139,16 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                     ->map(fn ($item) => Str::snake($item))
                     ->implode('.');
 
-                Crud::formRoutes('form', fjord()->config($configKey));
+                $config = Config::get($configKey);
+                if (!$config) {
+                    continue;
+                }
+
+                if (!$config->getConfig() instanceof FormConfig) {
+                    continue;
+                }
+
+                Crud::formRoutes($config);
             }
         }
     }
