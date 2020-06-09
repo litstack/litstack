@@ -31,25 +31,52 @@ class CrudIndexTable extends VueProp
      */
     protected $config;
 
+    /**
+     * Query modifier for eager loads and selections.
+     *
+     * @var \Illuminate\Database\Eloquent\Builder
+     */
     protected $queryModifier;
 
-    protected $component = 'fj-crud-index-table';
+    /**
+     * Vue component name.
+     *
+     * @var string
+     */
+    protected $componentName = 'fj-crud-index-table';
 
+    /**
+     * Vue component instance.
+     *
+     * @var \Fjord\Vue\Component;
+     */
+    protected $component;
+
+    /**
+     * Create new CrudIndexTable instance.
+     *
+     * @param ConfigHandler $config
+     */
     public function __construct($config)
     {
-        $this->component = component($this->component)->prop('table', $this);
+        $this->component = component($this->componentName)->prop('table', $this);
         $this->config = $config;
         $this->table = new CrudTable($config);
         $this->setDefaults();
     }
 
+    /**
+     * Set defaults.
+     *
+     * @return void
+     */
     public function setDefaults()
     {
         $this->setAttribute('controls', collect([]));
         $this->sortByDefault('id.desc');
         $this->perPage(10);
         $this->search(['title']);
-        $this->filter([]);
+        //$this->filter([]);
         $this->sortBy([
             'id.desc' => __f('fj.sort_new_to_old'),
             'id.asc' => __f('fj.sort_old_to_new'),
@@ -61,11 +88,22 @@ class CrudIndexTable extends VueProp
         );
     }
 
+    /**
+     * Get component instance.
+     *
+     * @return void
+     */
     public function getComponent()
     {
         return $this->component;
     }
 
+    /**
+     * Table card width.
+     *
+     * @param integer|float $width
+     * @return $this
+     */
     public function width($width)
     {
         $this->component->prop('width', $width);
@@ -73,6 +111,12 @@ class CrudIndexTable extends VueProp
         return $this;
     }
 
+    /**
+     * Add table control
+     *
+     * @param string|\Fjord\Vue\Component $control
+     * @return $this
+     */
     public function addControl($control)
     {
         $controls = $this->getAttribute('controls');
@@ -82,6 +126,12 @@ class CrudIndexTable extends VueProp
         return $this;
     }
 
+    /**
+     * Set table controls
+     *
+     * @param array|Collection $controls
+     * @return $this
+     */
     public function controls($controls)
     {
         foreach ($controls as $control) {
@@ -91,11 +141,22 @@ class CrudIndexTable extends VueProp
         return $this;
     }
 
+    /**
+     * Get index table instance.
+     *
+     * @return void
+     */
     public function getTable()
     {
         return $this->table;
     }
 
+    /**
+     * Per page.
+     *
+     * @param integer $perPage
+     * @return $this
+     */
     public function perPage(int $perPage)
     {
         $this->setAttribute('perPage', $perPage);
@@ -103,6 +164,12 @@ class CrudIndexTable extends VueProp
         return $this;
     }
 
+    /**
+     * Set sort by default.
+     *
+     * @param string $key
+     * @return $this
+     */
     public function sortByDefault(string $key)
     {
         $this->setAttribute('sortByDefault', $key);
@@ -110,6 +177,12 @@ class CrudIndexTable extends VueProp
         return $this;
     }
 
+    /**
+     * Sortable CrudIndex table.
+     *
+     * @param boolean $sortable
+     * @return $this
+     */
     public function sortable(bool $sortable)
     {
         throw new \Exception('Sortable index tables comming soon.');
@@ -118,20 +191,45 @@ class CrudIndexTable extends VueProp
         return $this;
     }
 
-    public function search($keys)
+    /**
+     * Set search keys
+     *
+     * @param array $keys
+     * @return void
+     */
+    public function search(...$keys)
     {
-        $this->setAttribute('search', Arr::wrap($keys));
+        $keys = Arr::wrap($keys);
+        if (count($keys) == 1) {
+            if (is_array($keys[0])) {
+                $keys = $keys[0];
+            }
+        }
+
+        $this->setAttribute('search', $keys);
 
         return $this;
     }
 
-    public function sortBy(array $sortBy)
+    /**
+     * Set sortBy keys.
+     *
+     * @param array $sortBy
+     * @return void
+     */
+    public function sortBy(array $keys)
     {
-        $this->setAttribute('sortBy', $sortBy);
+        $this->setAttribute('sortBy', $keys);
 
         return $this;
     }
 
+    /**
+     * Set table filters.
+     *
+     * @param array $filter
+     * @return $this
+     */
     public function filter(array $filter)
     {
         $this->setAttribute('filter', $filter);
@@ -139,6 +237,12 @@ class CrudIndexTable extends VueProp
         return $this;
     }
 
+    /**
+     * Set query modifier.
+     *
+     * @param Closure $closure
+     * @return $this
+     */
     public function query(Closure $closure)
     {
         $this->queryModifier = $closure;
@@ -146,6 +250,12 @@ class CrudIndexTable extends VueProp
         return $this;
     }
 
+    /**
+     * Get modified query.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
     public function getQuery(Builder $query)
     {
         if (!$this->queryModifier) {
@@ -158,19 +268,36 @@ class CrudIndexTable extends VueProp
         return $query;
     }
 
+    /**
+     * Set attribute.
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     */
     public function setAttribute(string $name, $value)
     {
         $this->attributes[$name] = $value;
     }
 
+    /**
+     * Get attribute.
+     *
+     * @param string $name
+     * @return mixed
+     */
     public function getAttribute(string $name)
     {
-        return $this->attribute['name'] ?? null;
+        return $this->attributes[$name] ?? null;
     }
 
+    /**
+     * Render CrudIndexTable for Vue.
+     *
+     * @return array
+     */
     public function render(): array
     {
-
         return array_merge($this->attributes, [
             'cols' => $this->table->toArray()
         ]);

@@ -38,9 +38,26 @@ trait ManagesRelatedConfig
 
         $this->setAttribute('config', $config);
 
-        if (!$this->preview) {
-            $this->preview = $this->relatedConfig->index->getTable()->getTable();
+        $this->getPreviewFromRelatedConfig();
+    }
+
+    /**
+     * Get preview from related config.
+     *
+     * @return void
+     */
+    public function getPreviewFromRelatedConfig()
+    {
+        if ($this->preview) {
+            return;
         }
+        if (!$this->relatedConfig->index) {
+            return;
+        }
+        if (!$table = $this->relatedConfig->index->getTable()) {
+            return;
+        }
+        $this->preview = $table->getTable();
     }
 
     /**

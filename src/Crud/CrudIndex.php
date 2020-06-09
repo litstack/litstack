@@ -21,10 +21,25 @@ class CrudIndex extends VueProp
      */
     protected $wrapperStack = [];
 
+    /**
+     * CrudIndex attributes.
+     *
+     * @var array
+     */
     protected $attributes = [];
 
+    /**
+     * CrudIndex container components.
+     *
+     * @var array
+     */
     protected $components = [];
 
+    /**
+     * CrudIndex container slots.
+     *
+     * @var array
+     */
     protected $slots = [];
 
     /**
@@ -34,22 +49,43 @@ class CrudIndex extends VueProp
      */
     protected $table;
 
+    /**
+     * Create new CrudIndex instance.
+     *
+     * @param ConfigHandler $config
+     */
     public function __construct($config)
     {
         $this->config = $config;
         $this->setDefaults();
     }
 
+    /**
+     * Set defaults.
+     *
+     * @return void
+     */
     public function setDefaults()
     {
         $this->expand(false);
     }
 
+    /**
+     * Get CrudIndex table.
+     *
+     * @return void
+     */
     public function getTable()
     {
         return $this->table;
     }
 
+    /**
+     * Expand CrudIndex container.
+     *
+     * @param boolean $expand
+     * @return $this
+     */
     public function expand(bool $expand = true)
     {
         $this->attributes['expand'] = $expand;
@@ -57,6 +93,12 @@ class CrudIndex extends VueProp
         return $this;
     }
 
+    /**
+     * Create CrudIndex table.
+     *
+     * @param Closure $closure
+     * @return $this
+     */
     public function table(Closure $closure)
     {
         $table = new CrudIndexTable($this->config);
@@ -66,11 +108,18 @@ class CrudIndex extends VueProp
         $closure($table->getTable());
 
         $this->component($table->getComponent())
-            ->prop('table', $table->render());
+            ->prop('table', $table);
 
         return $table;
     }
 
+    /**
+     * Add CrudIndex container slot.
+     *
+     * @param string $name
+     * @param [type] $value
+     * @return void
+     */
     public function slot(string $name, $value)
     {
         $this->slots[$name] = $value;
@@ -172,16 +221,34 @@ class CrudIndex extends VueProp
         return $wrapper->wrapperComponent;
     }
 
+    /**
+     * Set attribute.
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     */
     public function setAttribute(string $name, $value)
     {
         $this->attributes[$name] = $value;
     }
 
+    /**
+     * Get attribute.
+     *
+     * @param string $name
+     * @return void
+     */
     public function getAttribute(string $name)
     {
-        return $this->attribute['name'] ?? null;
+        return $this->attributes[$name] ?? null;
     }
 
+    /**
+     * Render CrudIndex container for Vue.
+     *
+     * @return array
+     */
     public function render(): array
     {
         return array_merge([

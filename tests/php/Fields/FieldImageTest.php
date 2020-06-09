@@ -125,13 +125,13 @@ class FieldImageTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_imageSize_method()
+    public function test_fileSize_method()
     {
-        $this->field->imageSize(14);
-        $this->assertArrayHasKey('imageSize', $this->field->getAttributes());
-        $this->assertEquals(14, $this->field->getAttribute('imageSize'));
+        $this->field->fileSize(14);
+        $this->assertArrayHasKey('fileSize', $this->field->getAttributes());
+        $this->assertEquals(14, $this->field->getAttribute('fileSize'));
 
         // Assert method returns field instance.
-        $this->assertEquals($this->field, $this->field->imageSize(1));
+        $this->assertEquals($this->field, $this->field->fileSize(1));
     }
 }

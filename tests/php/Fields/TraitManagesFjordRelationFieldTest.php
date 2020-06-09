@@ -51,12 +51,13 @@ class TraitManagesFjordRelationFieldTest extends BackendTestCase
     }
 }
 
+
 class ManagesFjordRelationFieldConfig
 {
     public $names = ['singular' => ''];
     public $search = '';
     public $route_prefix = '';
-    public $index = '';
+    public $index = null;
 }
 
 class ManagesFjordRelationFieldField extends LaravelRelationField
