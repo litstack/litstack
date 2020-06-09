@@ -44,4 +44,27 @@ class CrudValidator
 
         return $names;
     }
+
+    /**
+     * Get field validation name
+     *
+     * @param Field $field
+     * @return string
+     */
+    public static function getFieldValidationAttributeNames($field)
+    {
+        $names = [];
+
+        $title = $field->getTitle();
+
+        if (!$field->translatable) {
+            $names[$field->local_key] = $title;
+        } else {
+            foreach (config('translatable.locales') as $locale) {
+                $names["{$locale}.{$field->local_key}"] = "{$title} ({$locale})";
+            }
+        }
+
+        return $names;
+    }
 }

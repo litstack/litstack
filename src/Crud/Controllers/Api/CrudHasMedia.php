@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud\Controllers\Api;
 
+use Fjord\Crud\CrudValidator;
 use Fjord\Crud\Fields\Media\MediaField;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 
@@ -41,6 +42,11 @@ trait CrudHasMedia
      */
     public function storeMediaToModel($request, $model, $field)
     {
+        $request->validate([
+            'media' => 'max:' . $field->fileSize * 1000
+        ], __f('validation'), [
+            'media' => $field->title
+        ]);
         $this->destroyPreviousMedia($model, $field);
 
         $properties = [

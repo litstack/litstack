@@ -241,6 +241,20 @@ export default {
         },
         uploadError(file, errorMessage, xhr) {
             this.dropzone.removeAllFiles();
+            if (typeof errorMessage == 'object') {
+                console.log('OBject');
+                if ('errors' in errorMessage) {
+                    if ('media' in errorMessage.errors) {
+                        for (let i in errorMessage.errors.media) {
+                            console.log('HI', i, errorMessage.errors.media);
+                            this.$bvToast.toast(errorMessage.errors.media[i], {
+                                variant: 'danger'
+                            });
+                        }
+                        return;
+                    }
+                }
+            }
 
             this.$bvToast.toast(errorMessage, {
                 variant: 'danger'
