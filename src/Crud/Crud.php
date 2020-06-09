@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud;
 
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Fjord\Support\Facades\Fjord;
 use Fjord\User\Models\FjordUser;
@@ -22,18 +23,22 @@ use Illuminate\Support\Facades\Route as RouteFacade;
 class Crud
 {
     /**
-     * Get config by model.
+     * Get model names.
      *
      * @param string $model
-     * @return void
+     * @return array
      */
-    public function config($model)
+    public function names(string $model)
     {
-        $configKey = "crud." . lcfirst(class_basename($model));
-
-        if (Config::exists($configKey)) {
-            return Config::get($configKey);
+        $modelInstance = new $model;
+        if (method_exists($modelInstance, 'names')) {
+            return $modelInstance->names();
         }
+
+        return [
+            'singular' => class_basename($model),
+            'plural' => Str::plural(class_basename($model))
+        ];
     }
 
     /**
@@ -72,7 +77,6 @@ class Crud
      */
     public function routes($config)
     {
-
         Package::get('aw-studio/fjord')->route()->group(function () use ($config) {
             RouteFacade::group([
                 'config' => $config->getKey(),
@@ -97,22 +101,20 @@ class Crud
     /**
      * Make routes for Forms.
      *
-     * @param string $prefix
      * @param ConfigHandler $config
      * @return void
      */
-    public function formRoutes(string $prefix, $config)
+    public function formRoutes($config)
     {
-        Package::get('aw-studio/fjord')->route()->group(function () use ($prefix, $config) {
+        Package::get('aw-studio/fjord')->route()->group(function () use ($config) {
             $form = $config->formName;
             $collection = $config->collection;
-            $url = "{$prefix}/{$collection}/{$form}";
 
             RouteFacade::group([
                 'config' => $config->getKey(),
-                'prefix' => "$url",
+                'prefix' => $config->route_prefix,
                 'as' => $config->getKey(),
-            ], function () use ($url, $config, $collection, $form) {
+            ], function () use ($config, $collection, $form) {
 
                 //require fjord_path('src/Crud/routes.php');
                 $this->makeFormRoutes($config->controller);
@@ -120,23 +122,13 @@ class Crud
 
                 // Nav preset.
                 Package::get('aw-studio/fjord')->addNavPreset("form.{$collection}.{$form}", [
-                    'link' => Fjord::url($url),
+                    'link' => Fjord::url($config->route_prefix),
                     'title' => ucfirst($config->names['singular']),
                     'authorize' => function (FjordUser $user) use ($config) {
                         return (new $config->controller)->authorize($user, 'read');
                     }
                 ]);
             });
-        });
-    }
-
-    public function fieldRoutes($config, string $controller, string $identifier = 'id')
-    {
-        return RouteFacade::group([
-            'config' => $config->getKey(),
-            'prefix' => "$prefix",
-        ], function () use ($controller, $identifier) {
-            $this->makeFieldRoutes($controller, $identifier);
         });
     }
 

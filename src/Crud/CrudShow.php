@@ -121,9 +121,8 @@ class CrudShow extends BaseForm
      */
     public function render(): array
     {
-        return [
-            'components' => collect($this->components),
-            'fields' => $this->registeredFields
-        ];
+        return array_merge(parent::render(), [
+            'components' => collect($this->components)
+        ]);
     }
 }

@@ -2,7 +2,8 @@
 
 namespace Fjord\Crud\Fields\Relations\Concerns;
 
-use InvalidArgumentException;
+use Fjord\Exceptions\InvalidArgumentException;
+
 
 trait ManagesPreviewTypes
 {
@@ -19,17 +20,35 @@ trait ManagesPreviewTypes
                 sprintf(
                     'Invalid preview type "%s" for relation field. Available types are: %s',
                     $type,
-                    implode(', ', $this->availablePreviewTypes)
-                )
+                    implode(', ', array_keys($this->availablePreviewTypes))
+                ),
+                [
+                    'function' => 'type'
+                ]
             );
         }
 
         $this->setAttribute('previewType', $type);
 
-        foreach ($this->availablePreviewTypes[$type] as $required) {
-            $this->required[] = $required;
-        }
+        $this->setRequiredAttributesForType($type);
 
         return $this;
+    }
+
+    protected function setRequiredAttributesForType(string $type)
+    {
+        foreach ($this->availablePreviewTypes as $previewType => $attributes) {
+
+            foreach ($attributes as $attribute) {
+                if ($previewType == $type) {
+                    $this->required[] = $attribute;
+                    continue;
+                }
+
+                if (($key = array_search($attribute, $this->required)) !== false) {
+                    unset($this->required[$key]);
+                }
+            }
+        }
     }
 }

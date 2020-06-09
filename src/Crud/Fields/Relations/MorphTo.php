@@ -27,23 +27,7 @@ class MorphTo extends OneRelationField
      *
      * @var array
      */
-    public $requiredAttributes = [];
-
-    /**
-     * Available Field attributes.
-     *
-     * @var array
-     */
-    public $availableAttributes = [
-        'form',
-    ];
-
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    public $defaultAttributes = [];
+    public $required = [];
 
     /**
      * Create new Field instance.

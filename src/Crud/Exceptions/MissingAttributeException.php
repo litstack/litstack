@@ -2,8 +2,8 @@
 
 namespace Fjord\Crud\Exceptions;
 
-use Exception;
+use Fjord\Exceptions\TraceableException;
 
-class MissingAttributeException extends Exception
+class MissingAttributeException extends TraceableException
 {
 }

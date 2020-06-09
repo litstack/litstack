@@ -42,13 +42,13 @@ trait CrudHasRelations
     public function relationIndex(CrudReadRequest $request, $identifier, $form_name, $relation)
     {
         $relationField = $this->getForm($form_name)->findField($relation) ?? abort(404);
-        $model = $this->findOrFail($identifier);
+        $this->findOrFail($identifier);
 
         $this->validateRelationField($relationField);
 
         $index = IndexTable::query($relationField->getQuery())
             ->request($request)
-            ->search($relationField->getRelatedConfig()->search)
+            ->search($relationField->search)
             ->get();
 
         $index['items'] = crud($index['items']);
@@ -83,7 +83,7 @@ trait CrudHasRelations
         } else {
             $relations = IndexTable::query($query)
                 ->request($request)
-                ->search($relationField->getRelatedConfig()->search)
+                ->search($relationField->search)
                 ->only(['filter', 'paginate'])
                 ->get();
         }

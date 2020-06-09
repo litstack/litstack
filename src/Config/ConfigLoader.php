@@ -26,6 +26,45 @@ class ConfigLoader
     protected $loaded = [];
 
     /**
+     * Get key.
+     *
+     * @param sring $key
+     * @return string
+     */
+    public function getKey(string $key)
+    {
+        if ($this->isKeyNamespace($key)) {
+            return $this->getKeyFromNamespace($key);
+        }
+        if ($this->isKeyPath($key)) {
+            return $this->getKeyFromPath($key);
+        }
+        return $key;
+    }
+
+    /**
+     * Is key namespace.
+     *
+     * @param string $key
+     * @return boolean
+     */
+    protected function isKeyNamespace(string $key)
+    {
+        return !Str::contains($key, '.') && Str::contains($key, '\\');
+    }
+
+    /**
+     * Is key path.
+     *
+     * @param string $key
+     * @return boolean
+     */
+    protected function isKeyPath(string $key)
+    {
+        return !Str::contains($key, '.') && Str::contains($key, '/');
+    }
+
+    /**
      * Get config by key.
      *
      * @param string $key
@@ -34,17 +73,19 @@ class ConfigLoader
      */
     public function get(string $key, ...$params)
     {
+        $key = $this->getKey($key);
+
         // Return from stack if already loaded.
         if (array_key_exists($key, $this->loaded)) {
             return $this->loaded[$key];
         }
 
-        // Get classname by key.
-        $class = $this->getClassName($key);
-
-        if (!class_exists($class)) {
+        if (!$this->exists($key)) {
             return;
         }
+
+        // Get classname by key.
+        $class = $this->getClassName($key);
 
         // Initialize new config handler.
         $instance = new ConfigHandler(
@@ -75,6 +116,45 @@ class ConfigLoader
     }
 
     /**
+     * Get config from path.
+     *
+     * @param string $path
+     * @return ConfigHandler
+     */
+    public function getFromPath(string $path)
+    {
+        return $this->get(
+            $this->getKeyFromPath($path)
+        );
+    }
+
+    /**
+     * Get key from path
+     *
+     * @param string $path
+     * @return string
+     */
+    public function getKeyFromPath(string $path)
+    {
+        return collect(explode('/', str_replace('Config.php', '', str_replace(base_path('fjord/app/Config') . '/', '', $path))))
+            ->map(fn ($item) => Str::snake($item))
+            ->implode('.');
+    }
+
+    /**
+     * Get key from namespace.
+     *
+     * @param string $namespace
+     * @return string
+     */
+    public function getKeyFromNamespace(string $namespace)
+    {
+        return collect(explode('\\', Str::replaceLast('Config', '', str_replace('FjordApp\\Config\\', '', $namespace))))
+            ->map(fn ($item) => Str::snake($item))
+            ->implode('.');
+    }
+
+    /**
      * Check if config class exists.
      *
      * @param string $key
@@ -83,26 +163,8 @@ class ConfigLoader
     public function exists(string $key)
     {
         return class_exists(
-            $this->getClassName($key)
+            $this->getClassName($key),
+            false
         );
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param string $className
-     * @return void
-     */
-    public function getKey(string $className)
-    {
-        $partial = Str::replaceFirst($this->namespace . '\\', '', $className);
-        $partial = Str::replaceLast('Config', '', $partial);
-
-        $parts = [];
-        foreach (explode('\\', $partial) as $part) {
-            $parts[] = Str::snake($part);
-        }
-
-        return implode('.', $parts);
     }
 }

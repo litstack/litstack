@@ -25,7 +25,7 @@ $form->image('images') // images is the corresponding media collection.
     ->translatable()
     ->title('Images')
     ->hint('Image Collection.')
-    ->maxFiles(5)
+    ->maxFiles(5);
 ```
 
 Add the image attribute to your model:
