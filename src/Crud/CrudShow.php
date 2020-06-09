@@ -81,8 +81,6 @@ class CrudShow extends BaseForm
 
         if ($this->inCard()) {
             $info->heading('h6');
-        } else {
-            $info->class('pt-3');
         }
 
         return $info;
