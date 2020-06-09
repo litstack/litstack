@@ -5,6 +5,7 @@
                 <nested-draggable :list="list" />
             </b-col>
             <b-col cols="6">
+                <pre>{{ output }}</pre>
                 <pre>{{ list }}</pre>
             </b-col>
         </b-row>
@@ -35,30 +36,115 @@ export default {
         return {
             list: [
                 {
-                    name: 'task 1',
+                    id: 1,
+                    title: 'task 1',
                     list: [
                         {
-                            name: 'task 2',
+                            id: 2,
+                            title: 'task 2',
                             list: []
                         }
                     ]
                 },
                 {
-                    name: 'task 3',
+                    id: 3,
+                    title: 'task 3',
                     list: [
                         {
-                            name: 'task 4',
+                            id: 4,
+                            title: 'task 4',
                             list: []
                         }
                     ]
                 },
                 {
-                    name: 'task 5',
+                    id: 5,
+                    title: 'task 5',
                     list: []
                 }
             ]
         };
     },
-    methods: {}
+    methods: {
+        // Credits: https://github.com/MrPeak/flatten-tree
+        flattenNodeGenerator(node, parent, index, settings, stack) {
+            const { itemsKey, idKey } = settings;
+
+            return list => {
+                node = settings.initNode(node);
+                node[idKey] = node[idKey] || settings.generateUniqueId();
+                list.push(node);
+
+                if (node[itemsKey]) {
+                    for (let i = 0, len = node[itemsKey].length; i < len; i++) {
+                        stack.push(
+                            this.flattenNodeGenerator(
+                                node[itemsKey][i],
+                                node,
+                                i,
+                                settings,
+                                stack
+                            )
+                        );
+                    }
+                }
+
+                if (parent && parent[itemsKey]) {
+                    // Records children' id
+                    parent[itemsKey][index] = node[idKey];
+                    node.parent = parent[idKey];
+                }
+
+                return list;
+            };
+        },
+        flatten(tree, options) {
+            let list = [];
+            const stack = [];
+            const _tree = _.cloneDeep(tree);
+            const settings = {
+                initNode: options.initNode || (node => node),
+                itemsKey: options.itemsKey || 'children',
+                idKey: options.idKey || 'id',
+                uniqueIdStart: options.uniqueIdStart || 1,
+                generateUniqueId:
+                    options.generateUniqueId || (() => settings.uniqueIdStart++)
+            };
+
+            if (Array.isArray(_tree) && _tree.length) {
+                // Object Array
+                for (let i = 0, len = _tree.length; i < len; i++) {
+                    stack.push(
+                        this.flattenNodeGenerator(
+                            _tree[i],
+                            'root', // placeholder
+                            i,
+                            settings,
+                            stack
+                        )
+                    );
+                }
+            } else {
+                // One object tree
+                stack.push(
+                    this.flattenNodeGenerator(_tree, 'root', 0, settings, stack)
+                );
+            }
+
+            while (stack.length) {
+                list = stack.shift()(list);
+            }
+
+            return list;
+        }
+    },
+    computed: {
+        output() {
+            return this.flatten(this.list, {
+                idKey: 'id',
+                itemsKey: 'list'
+            });
+        }
+    }
 };
 </script>
