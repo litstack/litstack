@@ -1,10 +1,10 @@
 <template>
     <draggable class="dragArea" tag="ul" :list="list" :group="{ name: 'g1' }">
-        <li v-for="el in list" :key="el.name" class="">
+        <li v-for="el in list" :key="el.id" class="">
             <div class="fj-list-entry fj-block mb-2">
                 <i class="fas fa-grip-horizontal text-secondary"></i>
                 <div class="pl-2 d-inline-block">
-                    {{ el.name }}
+                    {{ el.title }}
                 </div>
             </div>
             <nested-draggable :list="el.list" />
@@ -14,6 +14,7 @@
 <script>
 import draggable from 'vuedraggable';
 export default {
+    name: 'nested-draggable',
     props: {
         list: {
             required: true,
@@ -22,8 +23,7 @@ export default {
     },
     components: {
         draggable
-    },
-    name: 'nested-draggable'
+    }
 };
 </script>
 
