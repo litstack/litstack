@@ -83,7 +83,7 @@
                     :is="field.related_route_prefix ? 'a' : 'span'"
                     :href="relatedLink(selectedRelations[0])"
                     v-if="selectedRelations.length > 0 && busy == false"
-                    v-html="_format(field.linkText, selectedRelations[0])"
+                    v-html="_format(field.linkValue, selectedRelations[0])"
                 />
             </div>
 
