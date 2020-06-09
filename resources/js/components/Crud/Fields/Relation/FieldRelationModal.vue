@@ -8,7 +8,7 @@
     >
         <fj-index-table
             ref="table"
-            :cols="field.preview"
+            :cols="cols"
             :items="items"
             :load-items="loadItems"
             :search-keys="field.search"
@@ -42,6 +42,7 @@ export default {
             type: String,
             required: true
         },
+        cols: {},
         selectedRelations: {
             type: [Object, Array],
             default: () => {

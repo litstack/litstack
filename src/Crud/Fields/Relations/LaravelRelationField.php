@@ -206,9 +206,12 @@ class LaravelRelationField extends RelationField
         }
         if ($this->relatedConfig->has('index')) {
             if ($this->relatedConfig->index) {
-                $this->setAttribute('preview', $this->relatedConfig->index
+                $table = clone $this->relatedConfig->index
                     ->getTable()
-                    ->getTable());
+                    ->getTable()
+                    ->disableLink();
+
+                $this->setAttribute('preview', $table);
             }
         }
 

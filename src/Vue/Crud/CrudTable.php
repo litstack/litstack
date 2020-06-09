@@ -25,6 +25,20 @@ class CrudTable extends Table
     }
 
     /**
+     * Disable link on all table columns
+     *
+     * @return $this
+     */
+    public function disableLink()
+    {
+        foreach ($this->cols as $col) {
+            $col->link(false);
+        }
+
+        return $this;
+    }
+
+    /**
      * Add table column to cols stack.
      *
      * @param string $label
