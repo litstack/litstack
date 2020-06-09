@@ -56,7 +56,7 @@ class DummyClassname extends Migration
     public function down()
     {
         Schema::dropIfExists('DummyTablename');
-        
+
         DummyDownTranslation
 
         $this->downPermissions();

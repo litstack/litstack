@@ -2,11 +2,16 @@
 
 namespace Fjord\Crud;
 
+use InvalidArgumentException;
 use Fjord\Support\Facades\Fjord;
 use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Config\CrudConfig;
 use Fjord\Support\Facades\Config;
 use Fjord\Support\Facades\Package;
+use Fjord\Crud\Requests\CrudReadRequest;
+use Fjord\Crud\Requests\CrudCreateRequest;
+use Fjord\Crud\Requests\CrudDeleteRequest;
+use Fjord\Crud\Requests\CrudUpdateRequest;
 use Illuminate\Support\Facades\Route as RouteFacade;
 
 /**
@@ -32,6 +37,32 @@ class Crud
     }
 
     /**
+     * Authorize crud controller.
+     *
+     * @param string $controller
+     * @param string $key
+     * @return boolean
+     */
+    public function authorize(string $controller, string $operation)
+    {
+        switch ($operation) {
+            case 'create':
+                return (new CrudCreateRequest)->authorizeController(app('request'), 'create', $controller);
+                break;
+            case 'read':
+                return (new CrudReadRequest)->authorize(app('request'), 'read', $controller);
+                break;
+            case 'update':
+                return (new CrudUpdateRequest)->authorize(app('request'), 'update', $controller);
+                break;
+            case 'delete':
+                return (new CrudDeleteRequest)->authorize(app('request'), 'delete', $controller);
+                break;
+        }
+        throw new InvalidArgumentException("Operation must be create, read, update or delete");
+    }
+
+    /**
      * Make routes for Crud Model.
      *
      * @param string $prefix
@@ -43,14 +74,11 @@ class Crud
     {
 
         Package::get('aw-studio/fjord')->route()->group(function () use ($config) {
-            $model = $config->model;
-            $tableName = (new $model)->getTable();
-
             RouteFacade::group([
                 'config' => $config->getKey(),
                 'prefix' => "$config->routePrefix",
                 'as' => $config->getKey(),
-            ], function () use ($model, $config, $tableName) {
+            ], function () use ($config) {
 
                 $this->makeCrudRoutes($config);
                 $this->makeFieldRoutes($config->controller);
@@ -70,14 +98,14 @@ class Crud
      * Make routes for Forms.
      *
      * @param string $prefix
-     * @param string $collection
-     * @param string $form
+     * @param ConfigHandler $config
      * @return void
      */
-    public function formRoutes(string $prefix, string $collection, string $form)
+    public function formRoutes(string $prefix, $config)
     {
-        Package::get('aw-studio/fjord')->route()->group(function () use ($prefix, $collection, $form) {
-            $config = Config::get("form.{$collection}.{$form}");
+        Package::get('aw-studio/fjord')->route()->group(function () use ($prefix, $config) {
+            $form = $config->formName;
+            $collection = $config->collection;
             $url = "{$prefix}/{$collection}/{$form}";
 
             RouteFacade::group([
@@ -134,6 +162,10 @@ class Crud
     {
         $controller = $config->controller;
 
+        RouteFacade::post("/order", [$controller, "order"])->name('order');
+        RouteFacade::post("/delete-all", [$controller, "destroyAll"])->name('destroy.all');
+        RouteFacade::delete("/{id}", [$controller, "destroy"])->name('destroy');
+
         // Index routes.
         if ($config->has('index')) {
             RouteFacade::get("/", [$controller, "index"])->name('index');
@@ -146,10 +178,6 @@ class Crud
             RouteFacade::get("/create", [$controller, "create"])->name('create');
             RouteFacade::get("{{$identifier}}", [$controller, "show"])->name('show');
         }
-
-        RouteFacade::delete("/{id}", [$controller, "destroy"])->name('destroy');
-        RouteFacade::post("/delete-all", [$controller, "destroyAll"])->name('destroy.all');
-        RouteFacade::post("/order", [$controller, "order"])->name('order');
     }
 
     /**

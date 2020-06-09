@@ -45,7 +45,7 @@ class DummyClassnameConfig extends CrudConfig
      */
     public function routePrefix()
     {
-        return "crud/" . (new $this->model)->getTable();
+        return (new $this->model)->getTable();
     }
 
     /**
@@ -86,8 +86,6 @@ class DummyClassnameConfig extends CrudConfig
                 ->title('Title')
                 ->width(6);
             
-        })
-        ->width(12)
-        ->title('Main');
+        });
     }
 }

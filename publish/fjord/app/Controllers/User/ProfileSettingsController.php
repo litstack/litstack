@@ -16,7 +16,7 @@ class ProfileSettingsController extends CrudController
     protected $model = FjordUser::class;
 
     /**
-     * Authorize request for permission operation and authenticated fjord-user.
+     * Authorize request for authenticated fjord-user and permission operation.
      * Operations: read, update
      *
      * @param FjordUser $user

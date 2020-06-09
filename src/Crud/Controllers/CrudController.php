@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud\Controllers;
 
+use Illuminate\Http\Request;
 use Fjord\Crud\RelationField;
 use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Fields\Media\MediaField;
@@ -32,13 +33,14 @@ abstract class CrudController
     protected $model;
 
     /**
-     * Authorize request for operation.
+     * Authorize request for permission operation and authenticated fjord-user.
+     * Operations: create, read, update, delete
      *
      * @param \Fjord\User\Models\FjordUser $user
      * @param string $operation
      * @return boolean
      */
-    abstract public function authorize(FjordUser $user, string $operation): bool;
+    //abstract public function authorize(FjordUser $user, string $operation, $id = null);
 
     /**
      * Initial query.
@@ -106,7 +108,6 @@ abstract class CrudController
      */
     public function destroyAll(CrudDeleteRequest $request)
     {
-        dd($request->ids);
         if (!is_array($request->ids)) {
             abort(405);
         }
@@ -114,8 +115,7 @@ abstract class CrudController
         $this->delete($this->query()->whereIn('id', $request->ids));
 
         return response()->json([
-
-            'message' => __f('messages.deleted_items', ['count' => count($request->ids)])
+            'message' => __f_choice('messages.deleted_items', count($request->ids))
         ], 200);
     }
 

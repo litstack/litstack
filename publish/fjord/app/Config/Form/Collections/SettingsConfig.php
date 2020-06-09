@@ -16,11 +16,14 @@ class SettingsConfig extends FormConfig
     public $controller = SettingsController::class;
 
     /**
-     * Form name, is used for routing.
+     * Form route prefix.
      *
-     * @var string
+     * @return string
      */
-    public $formName = 'settings';
+    public function routePrefix()
+    {
+        return "settings";
+    }
 
     /**
      * Form singular name. This name will be displayed in the navigation.

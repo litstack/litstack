@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud\Requests\Traits;
 
+use ReflectionClass;
 use Illuminate\Http\Request;
 
 trait AuthorizeController
@@ -23,7 +24,14 @@ trait AuthorizeController
             $controller = $request->route()->controller;
         }
 
+        $reflection = new ReflectionClass($controller);
+        $params = $reflection->getMethod('authorize')->getParameters();
+
+        if (count($params) == 2) {
+            return with(new $controller)
+                ->authorize(fjord_user(), $operation);
+        }
         return with(new $controller)
-            ->authorize(fjord_user(), $operation);
+            ->authorize(fjord_user(), $operation, $request->id);
     }
 }
