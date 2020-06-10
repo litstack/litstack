@@ -183,6 +183,7 @@
                         </b-dropdown>
 
                         <b-dropdown
+                            v-if="field.colors"
                             class="dropdown-sm-square"
                             dropbottom
                             no-caret
@@ -194,21 +195,15 @@
                             size="sm"
                         >
                             <template v-slot:button-content>
-                                <fa-icon icon="tint" />
+                                <fa-icon icon="palette" />
                             </template>
                             <b-dropdown-form style="min-width: 340px;">
                                 <v-swatches
                                     v-model="fontColor"
+                                    :swatches="swatches"
                                     inline
+                                    @input="setFontColor(commands.font_color)"
                                 ></v-swatches>
-                                <b-button
-                                    class="mt-1 float-right"
-                                    variant="primary"
-                                    size="sm"
-                                    @click="setFontColor(commands.font_color)"
-                                >
-                                    {{ trans('fj.save') }}
-                                </b-button>
                             </b-dropdown-form>
                         </b-dropdown>
 
@@ -324,11 +319,17 @@ export default {
 
             linkUrl: null,
             target: null,
-            fontColor: null
+            fontColor: null,
+            swatches: []
         };
     },
     beforeMount() {
         this.editor.setContent(this.value);
+
+        // set font colors
+        if (this.field.colors) {
+            this.swatches = this.field.colors;
+        }
     },
     mounted() {
         this.editor.on('update', ({ getHTML }) => {

@@ -15389,6 +15389,12 @@ textarea.form-control {
   padding-bottom: 0.75rem;
 }
 
+blockquote {
+  font-family: serif;
+  padding-left: 1rem;
+  border-left: 0.1rem solid #70859c;
+}
+
 .fj-block {
   background-color: #f5f8fb;
   border-radius: 0.625rem;

@@ -30,53 +30,18 @@ class Wysiwyg extends BaseField
      */
     public function setDefaultAttributes()
     {
-        $this->toolbar([
-            'heading',
-            '|',
-            'bold',
-            'italic',
-            'link',
-            'bulletedList',
-            'numberedList',
-            'blockQuote',
-        ]);
+        //
     }
 
     /**
-     * Set toolbarFormat.
+     * Set font colors
      *
-     * @param //TODO: [type] $format
-     * @return $this
+     * @param array $colors
+     * @return void
      */
-    public function toolbarFormat($toolbarFormat)
+    public function colors(array $colors)
     {
-        $this->setAttribute('toolbarFormat', $toolbarFormat);
-
-        return $this;
-    }
-
-    /**
-     * Set formats
-     *
-     * @param //TODO: [type] $format
-     * @return $this
-     */
-    public function formats($formats)
-    {
-        $this->setAttribute('formats', $formats);
-
-        return $this;
-    }
-
-    /**
-     * Set toolbar.
-     *
-     * @param array $toolbar
-     * @return $this
-     */
-    public function toolbar(array $toolbar)
-    {
-        $this->setAttribute('toolbar', $toolbar);
+        $this->setAttribute('colors', $colors);
 
         return $this;
     }
