@@ -251,7 +251,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
 
             $attributes[$field->id] = $this->getFormattedFieldValue($field);
 
-            if ($field instanceof ManyRelationField) {
+            if ($field instanceof MediaField || $field instanceof ManyRelationField) {
                 if ($field instanceof MediaField && $field->maxFiles == 1) {
                     continue;
                 }
