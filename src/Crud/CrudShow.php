@@ -64,7 +64,11 @@ class CrudShow extends BaseForm
 
         $component = component($component);
 
-        $this->components[] = $component;
+        if ($this->inWrapper()) {
+            $this->wrapper->component($component);
+        } else {
+            $this->components[] = $component;
+        }
 
         return $component;
     }
