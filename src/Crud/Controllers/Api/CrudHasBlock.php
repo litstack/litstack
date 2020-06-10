@@ -68,7 +68,7 @@ trait CrudHasBlock
      * @param string $field_id
      * @return CrudJs
      */
-    public function storeBlock(CrudUpdateRequest $request, $identifier, $form_name, $field_id)
+    public function storeRepeatable(CrudUpdateRequest $request, $identifier, $form_name, $field_id)
     {
         $this->formExists($form_name) ?: abort(404);
         $field = $this->getForm($form_name)->findField($field_id) ?? abort(404);
@@ -106,7 +106,7 @@ trait CrudHasBlock
      * @param integer $block_id
      * @return FormBlock
      */
-    public function updateBlock(CrudUpdateRequest $request, $identifier, $form_name, $field_id, $block_id)
+    public function updateRepeatable(CrudUpdateRequest $request, $identifier, $form_name, $field_id, $block_id)
     {
         $this->formExists($form_name) ?: abort(404);
         $field = $this->getForm($form_name)->findField($field_id) ?? abort(404);
@@ -134,7 +134,7 @@ trait CrudHasBlock
      * @param integer $block_id
      * @return integer
      */
-    public function destroyBlock(CrudUpdateRequest $request, $identifier, $form_name, $field_id, $block_id)
+    public function destroyRepeatable(CrudUpdateRequest $request, $identifier, $form_name, $field_id, $block_id)
     {
         $this->formExists($form_name) ?: abort(404);
         $field = $this->getForm($form_name)->findField($field_id) ?? abort(404);

@@ -43,7 +43,7 @@ export default {
             let response = null;
             try {
                 response = await axios.post(
-                    `${this.field.route_prefix}/blocks/${this.field.id}`,
+                    `${this.field.route_prefix}/block/${this.field.id}`,
                     payload
                 );
             } catch (e) {

@@ -94,7 +94,7 @@ export default {
     methods: {
         async reloadBlock(block) {
             let response = await axios.get(
-                `${this.field.route_prefix}/blocks/${this.field.id}/${block.id}`
+                `${this.field.route_prefix}/block/${this.field.id}/${block.id}`
             );
             let newBlock = this.crud(response.data);
             for (let i in this.sortableBlocks) {
@@ -137,7 +137,7 @@ export default {
                 return;
             }
             let response = await axios.get(
-                `${this.field.route_prefix}/blocks/${this.field.id}`
+                `${this.field.route_prefix}/block/${this.field.id}`
             );
             this.sortableBlocks = [];
             for (let i in response.data) {
@@ -159,7 +159,7 @@ export default {
         async deleteBlock(block) {
             try {
                 let response = await axios.delete(
-                    `${this.field.route_prefix}/blocks/${block.field_id}/${block.id}`
+                    `${this.field.route_prefix}/block/${block.field_id}/${block.id}`
                 );
             } catch (e) {
                 console.log(e);

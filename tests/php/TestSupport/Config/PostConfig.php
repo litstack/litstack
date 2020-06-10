@@ -99,7 +99,7 @@ class PostConfig extends CrudConfig
 
 
 
-        $form->blocks('content')
+        $form->block('content')
             ->title('Content')
             ->repeatables(function ($rep) {
                 $rep->add('text', function ($form) {
@@ -115,7 +115,7 @@ class PostConfig extends CrudConfig
                 });
             });
 
-        $form->blocks('media_blocks')
+        $form->block('media_repeatables')
             ->title('Media')
             ->repeatables(function ($rep) {
                 $rep->add('image', function ($form) {

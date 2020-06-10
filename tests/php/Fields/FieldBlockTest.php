@@ -4,12 +4,12 @@ namespace FjordTest\Fields;
 
 use Fjord\Crud\BaseField;
 use FjordTest\BackendTestCase;
-use Fjord\Crud\Fields\Blocks\Blocks;
-use Fjord\Crud\Fields\Blocks\Repeatables;
+use Fjord\Crud\Fields\Block\Block;
+use Fjord\Crud\Fields\Block\Repeatables;
 use FjordTest\Traits\InteractsWithFields;
 use Fjord\Crud\Fields\Traits\HasBaseField;
 
-class FieldBlocksTest extends BackendTestCase
+class FieldBlockTest extends BackendTestCase
 {
     use InteractsWithFields;
 
@@ -17,7 +17,7 @@ class FieldBlocksTest extends BackendTestCase
     {
         parent::setUp();
 
-        $this->field = $this->getField(Blocks::class);
+        $this->field = $this->getField(Block::class);
     }
 
     /** @test */

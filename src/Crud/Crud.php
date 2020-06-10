@@ -198,7 +198,7 @@ class Crud
         // Block
         RouteFacade::get("/{{$identifier}}/{form}/block/{field_id}", [$controller, "loadRepeatables"])->name("block.index");
         RouteFacade::get("/{{$identifier}}/{form}/block/{field_id}/{block_id}", [$controller, "loadRepeatable"])->name("block.index");
-        RouteFacade::post("/{{$identifier}}/{form}/block/{field_id}", [$controller, "storeBlock"])->name("block.store");
+        RouteFacade::post("/{{$identifier}}/{form}/block/{field_id}", [$controller, "storeRepeatable"])->name("block.store");
         RouteFacade::put("/{{$identifier}}/{form}/block/{field_id}/{block_id}", [$controller, "updateRepeatable"])->name("block.update");
         RouteFacade::delete("/{{$identifier}}/{form}/block/{field_id}/{block_id}", [$controller, "destroyRepeatable"])->name("block.destroy");
 
