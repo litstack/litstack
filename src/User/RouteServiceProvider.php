@@ -10,7 +10,11 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRoute
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
-
+    /**
+     * Bootstrap the application services.
+     *
+     * @return void
+     */
     public function boot()
     {
         $this->package = Package::get('aw-studio/fjord');

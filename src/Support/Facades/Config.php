@@ -5,8 +5,8 @@ namespace Fjord\Support\Facades;
 use Fjord\Support\FjordFacade;
 
 /**
- * @property static get(string $key): mixed
- * @property static exists(string $key): boolean
+ * @method static \Fjord\Config\ConfigHandler get(string $key)
+ * @method static bool exists(string $key): 
  * 
  * @see \Fjord\Config\ConfigLoader
  */
