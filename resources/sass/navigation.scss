@@ -10,7 +10,7 @@ div#fjord-app .fj-navigation {
     overflow-y: auto;
     height: calc(100vh - #{$topbar-height});
 
-    &>div>.list-group {
+    & > div > .list-group {
         border-bottom: 1px solid $gray-400;
         padding-top: $nav-padding-top;
     }
@@ -32,7 +32,8 @@ div#fjord-app .fj-navigation {
             background-color: $gray-200;
             color: $nav-item-active-color;
             font-weight: $nav-item-active-font-weight;
-            border-right: $nav-item-active-border-width solid $nav-item-active-color;
+            border-right: $nav-item-active-border-width solid
+                $nav-item-active-color;
         }
     }
 
@@ -50,10 +51,11 @@ div#fjord-app .fj-navigation {
         position: fixed;
         height: calc(100vh - #{$nav-height-mobile * 2});
         top: $nav-height-mobile;
-        transition: .2s all ease;
+        transition: 0.2s all ease;
         left: -$sidebar-width;
 
-        z-index: $zindex-fixed;
+        //z-index: $zindex-fixed;
+        z-index: 1;
 
         &.visible {
             left: 0;

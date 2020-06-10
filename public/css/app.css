@@ -15189,6 +15189,24 @@ input[type=color].form-control:disabled {
   height: 100%;
 }
 
+@media (max-width: 992px) {
+  .modal .modal-dialog {
+    margin: 0;
+    height: 100vh;
+  }
+
+  .modal .modal-content {
+    border-radius: 0;
+    position: fixed;
+    bottom: 0;
+  }
+
+  .modal .modal-body {
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+}
+
 .pagination .page-link {
   width: 2.5rem;
   height: 2.5rem;
@@ -15633,7 +15651,7 @@ div#fjord-app .fj-navigation .collapse .list-group-item {
     top: 3.5rem;
     transition: 0.2s all ease;
     left: -290px;
-    z-index: 1030;
+    z-index: 1;
   }
 
   div#fjord-app .fj-navigation.visible {
@@ -15683,6 +15701,7 @@ div#fjord-app nav.fj-topbar .dropdown-menu {
   background-color: #2a353f;
   min-width: 300px;
   font-size: 0.9rem;
+  z-index: 1031;
 }
 
 div#fjord-app nav.fj-topbar .dropdown-menu .dropdown-header {
