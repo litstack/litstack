@@ -102,8 +102,6 @@ The maximum number of items to be displayed on a page is defined in `perPage`. T
 $container->table(...)->perPage(5);
 ```
 
-# <<<<<<< HEAD
-
 ## Sortable
 
 ::: warning
