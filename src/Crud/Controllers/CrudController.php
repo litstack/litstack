@@ -17,7 +17,7 @@ abstract class CrudController
     use Api\CrudBaseApi,
         Api\CrudHasIndex,
         Api\CrudHasRelations,
-        Api\CrudHasBlocks,
+        Api\CrudHasBlock,
         Api\CrudHasMedia,
         Api\CrudHasOrder,
         Api\CrudHasModal,
@@ -137,7 +137,8 @@ abstract class CrudController
             'filter',
             'expandIndexContainer',
             'sortable',
-            'orderColumn'
+            'orderColumn',
+            'permissions'
         );
 
         return view('fjord::app')

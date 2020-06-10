@@ -5,7 +5,7 @@
 Fjord includes a variety of global helper **PHP** `functions`.
 
 ::: tip
-Fjord includes usefull **Vue** `mixins` as well. Read the [Vue mixins](/docs/frontend/vue#mixins) section to learn more about the existing `mixins`.
+Fjord includes useful **Vue** `mixins` as well. Read the [Vue mixins](/docs/frontend/vue#mixins) section to learn more about the existing `mixins`.
 :::
 
 ### Fjord Facade
@@ -29,7 +29,7 @@ The `Fjord` singleton contains some helpers which are related to the Fjord appli
 
 ### `installed()`
 
-The `installed` method checks if fjord has been installed. This can be usefull in service providers.
+The `installed` method checks if Fjord has been installed. This can be useful in service providers.
 
 ```php
 use Fjord\Support\Facades\Fjord;
@@ -73,7 +73,7 @@ If you don't want to use the route name to call a route but directly specify the
 
 ### `__f($key, $replace)`
 
-The `__f` method returns the translation using the Fjord application locale for the authenticated fjord-user.
+The `__f` method returns the translation using the Fjord application locale for the authenticated Fjord user.
 
 ```php
 __f('messages.welcome', ['name' => 'Spatie'])
@@ -83,7 +83,7 @@ __f('messages.welcome', ['name' => 'Spatie'])
 
 ### `fa($group, $icon)`
 
-The `fa` helper makes it easy to create [Fontawesome](https://fontawesome.com/icons?d=gallery) icons.
+The `fa` helper makes it easy to include [Fontawesome](https://fontawesome.com/icons?d=gallery) icons.
 
 ```php
 fa('home') // <i class="fas fa-home"></i>

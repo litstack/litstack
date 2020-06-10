@@ -38,7 +38,7 @@ All available fields can be found in the documentation under [Fields](/docs/fiel
 
 ## Group
 
-With `group` fields can be grouped in a column. This is usefull to organize form elements of different heights side by side.
+With `group` fields can be grouped in a column. This is useful to organize form elements of different heights side by side.
 
 ```php
 $form->group(function($form) {
@@ -65,7 +65,7 @@ Read the [Extend Vue](/docs/basics/vue.html#bootstrap-vue) section to learn how 
 
 ## Info
 
-A good content-administration interface includes **descriptions** that help the user quickly understand what is happening on the interface. Such information can be created outside and inside of cards like so:
+A good content administration interface includes **descriptions** that help the user to quickly understand what is happening on the interface. Such information can be created outside and inside of cards like this:
 
 ```php
 use Fjord\Crud\CrudShow;
@@ -98,7 +98,7 @@ public function show(CrudShow $container)
 
 ## Preview
 
-There is the possibility to get a `preview` of the stored data directly in the update form. The **route** for this can be easily specified using the method `previewRoute`. For a CRUD Model, the corresponding Model is also passed as a parameter.
+It is possible to get a `preview` of the stored data directly in the update form. The **route** for this can be easily specified using the method `previewRoute`. For a CRUD Model, the corresponding model is also passed as a parameter.
 
 ```php
 public function previewRoute($article)

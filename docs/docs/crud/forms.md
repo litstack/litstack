@@ -2,9 +2,9 @@
 
 [[toc]]
 
-Fjord-Forms provide a convenient way to store, organize and maintain data of many kinds, such as your page-content. You may create as many `Forms` as you like.
+Fjord forms provide a convenient way to store, organize and maintain data of many kinds, such as your page content. You may create as many `Forms` as you like.
 
-`Forms` are divided into Form `collections` to keep the overview. For example, the `Forms` **home** and **faq**, which contain the page-content for the pages **home** and **faq**, can be included in the `collection` **pages**.
+Forms are divided into form `collections` to keep the overview. For example, the forms **home** and **faq**, which contain the page content for the pages **home** and **faq**, can be included in the `collection` **pages**.
 
 ## Create
 
@@ -14,7 +14,7 @@ A `form` can be created using the following artisan command:
 php artisan fjord:form
 ```
 
-A wizard will take you through all required steps. The corresponding `config` and the `controller` is created after.
+A wizard will take you through all required steps. The corresponding `config` and the `controller` is created afterwards.
 
 ## Permissions
 
@@ -72,7 +72,7 @@ $nav->preset('form.pages.home', [
 
 ## Configuration
 
-Define the Form-Config in the created config file: `Config/Form/{collection}/{form}Config.php`. First the controller must be specified in the config:
+Define the form config in the created config file: `Config/Form/{collection}/{form}Config.php`. First the controller must be specified in the config:
 
 ```php
 use FjordApp\Controllers\Form\Pages\HomeController;
@@ -104,8 +104,7 @@ Next, the configuration for the [form](/docs/crud/config-form.html) can be adjus
 
 ## Retrieve Data
 
-In order to retrieve the Form data, you have to add the **Form Facade** to your controller.
-Data can now be easily retrieved with the `load` function like so:
+In order to retrieve the form data, you have to add the **Form Facade** to your controller. Data can now be easily retrieved with the `load` function like this:
 
 ```php
 use Fjord\Support\Facades\Form;
@@ -123,7 +122,7 @@ return view('home')->with([
 ]);
 ```
 
-and be used in a Blade:
+and be used in a Blade template:
 
 ```php
 <h1>{{ $home->title }}</h1>

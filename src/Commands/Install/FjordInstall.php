@@ -165,7 +165,7 @@ class FjordInstall extends Command
         $composer = json_decode(File::get(base_path('composer.json')), true);
         $composer['autoload']['psr-4']['FjordApp\\'] = 'fjord/app/';
         File::put(base_path('composer.json'), json_encode($composer, JSON_PRETTY_PRINT));
-        shell_exec('composer dumpautoload;');
+        shell_exec('composer dumpautoload');
     }
 
     /**

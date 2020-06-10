@@ -3,7 +3,7 @@
 namespace Fjord\Crud\Controllers\Api;
 
 use Fjord\Support\IndexTable;
-use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Block\Block;
 use Fjord\Crud\Fields\Relations\HasOne;
 use Fjord\Crud\Fields\Relations\HasMany;
 use Fjord\Crud\Fields\Relations\MorphTo;
@@ -267,7 +267,7 @@ trait CrudHasRelations
             abort(404);
         }
 
-        if ($field instanceof Blocks) {
+        if ($field instanceof Block) {
             abort(404);
         }
 

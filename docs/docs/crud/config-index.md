@@ -101,3 +101,43 @@ The maximum number of items to be displayed on a page is defined in `perPage`. T
 ```php
 $container->table(...)->perPage(5);
 ```
+
+# <<<<<<< HEAD
+
+## Sortable
+
+::: warning
+Sortable should only be used on models with a **small** number of records.
+:::
+
+A model can be made sortable in the index table. For this purpose, `sortable` must be set to true and an `orderColumn` must be specified.
+The default `orderColumn` is `order_column`.
+
+```php
+public $sortable = false;
+
+public $orderColumn = 'order_column';
+```
+
+Now a draghandle is displayed for each item. For the reason of records not getting mixed up, the draghandle is only shown if the loaded items are sorted by `orderColumn` and **no filter** or **search value** is set. If the draghandle should be displayed directly the `sortByDefault` key must be set to the `orderColumn`.
+
+```php
+public $sortByDefault = 'order_column.asc';
+```
+
+## Columns
+
+All table columns are defined in the `index` function.
+
+```php
+use Fjord\Vue\Crud\CrudTable;
+
+public function index(CrudTable $table)
+{
+    // Build your index in here.
+}
+```
+
+To learn how to build columns see the [table](/docs/crud/config-table.html#text) documentation.
+
+> > > > > > > master

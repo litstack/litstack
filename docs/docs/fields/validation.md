@@ -18,7 +18,7 @@ The **error messages** are displayed directly below the field. The **title** is 
 
 ## Update Rules
 
-All rules specified via the method `rules` apply to the creation and updating of a model. Rules that should only apply for updating a model, are defined in `updateRules` like so:
+All rules specified via the method `rules` apply to the creation and updating of a model. Rules that should only apply for updating a model are defined in `updateRules` like this:
 
 ```php
 $form->input('text')

@@ -18,7 +18,7 @@ use Fjord\Crud\Fields\Component;
 use Fjord\Crud\Fields\Checkboxes;
 use Fjord\Crud\Fields\Media\File;
 use Fjord\Crud\Fields\Media\Image;
-use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Block\Block;
 use Illuminate\Foundation\AliasLoader;
 use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
@@ -47,7 +47,7 @@ class ServiceProvider extends LaravelServiceProvider
         'textarea' => Textarea::class,
         'text' => Textarea::class,
         'wysiwyg' => Wysiwyg::class,
-        'blocks' => Blocks::class,
+        'block' => Block::class,
         'image' => Image::class,
         'file' => File::class,
         'modal' => Modal::class,
