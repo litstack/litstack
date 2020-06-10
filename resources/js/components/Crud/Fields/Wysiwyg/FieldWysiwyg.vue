@@ -182,6 +182,36 @@
                             </b-dropdown-form>
                         </b-dropdown>
 
+                        <b-dropdown
+                            class="dropdown-sm-square"
+                            dropbottom
+                            no-caret
+                            :variant="
+                                isActive.font_color()
+                                    ? 'primary'
+                                    : 'transparent'
+                            "
+                            size="sm"
+                        >
+                            <template v-slot:button-content>
+                                <fa-icon icon="tint" />
+                            </template>
+                            <b-dropdown-form style="min-width: 340px;">
+                                <v-swatches
+                                    v-model="fontColor"
+                                    inline
+                                ></v-swatches>
+                                <b-button
+                                    class="mt-1 float-right"
+                                    variant="primary"
+                                    size="sm"
+                                    @click="setFontColor(commands.font_color)"
+                                >
+                                    {{ trans('fj.save') }}
+                                </b-button>
+                            </b-dropdown-form>
+                        </b-dropdown>
+
                         <b-button
                             variant="outline-secondary"
                             size="sm"
@@ -237,18 +267,22 @@ import {
     Bold,
     Code,
     Italic,
-    //Link,
     Strike,
     Underline,
     History
 } from 'tiptap-extensions';
 import CustomLink from './Nodes/CustomLink';
+import FontColor from './Nodes/FontColor';
+
+import VSwatches from 'vue-swatches';
+import 'vue-swatches/dist/vue-swatches.css';
 
 export default {
     name: 'FieldWysiwyg',
     components: {
         EditorContent,
-        EditorMenuBar
+        EditorMenuBar,
+        VSwatches
     },
     props: {
         field: {
@@ -283,12 +317,14 @@ export default {
                     new CustomLink(),
                     new Strike(),
                     new Underline(),
-                    new History()
+                    new History(),
+                    new FontColor()
                 ]
             }),
 
             linkUrl: null,
-            target: null
+            target: null,
+            fontColor: null
         };
     },
     beforeMount() {
@@ -331,6 +367,10 @@ export default {
             command({ href: this.linkUrl, target: this.target });
             this.linkUrl = null;
             this.target = null;
+        },
+        setFontColor(command) {
+            command({ style: `color: ${this.fontColor}` });
+            this.fontColor = null;
         }
     }
 };
