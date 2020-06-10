@@ -32,12 +32,16 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         if (!$config = fjord()->config('user.profile_settings')) {
             return;
         }
+
         $this->package->addNavPreset('profile', [
-            'link' => fn () => fjord()->url(
-                "$config->route_prefix/" . app()->runningInConsole()
+            'link' => function () use ($config) {
+                $id = app()->runningInConsole()
                     ? '{user_id}'
-                    : fjord_user()->id
-            ),
+                    : fjord_user()->id;
+                return fjord()->url(
+                    "$config->route_prefix/{$id}"
+                );
+            },
             'title' => __f('fj.profile'),
             'icon' => fa('user-cog'),
         ]);
