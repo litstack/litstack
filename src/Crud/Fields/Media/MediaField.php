@@ -58,9 +58,9 @@ class MediaField extends RelationField
      * @param integer $size
      * @return $this
      */
-    public function fileSize(int $size)
+    public function maxFileSize(int $size)
     {
-        $this->setAttribute('fileSize', $size);
+        $this->setAttribute('maxFileSize', $size);
 
         return $this;
     }

@@ -122,13 +122,13 @@ class FieldImageTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_fileSize_method()
+    public function test_maxFileSize_method()
     {
-        $this->field->fileSize(14);
-        $this->assertArrayHasKey('fileSize', $this->field->getAttributes());
-        $this->assertEquals(14, $this->field->getAttribute('fileSize'));
+        $this->field->maxFileSize(14);
+        $this->assertArrayHasKey('maxFileSize', $this->field->getAttributes());
+        $this->assertEquals(14, $this->field->getAttribute('maxFileSize'));
 
         // Assert method returns field instance.
-        $this->assertEquals($this->field, $this->field->fileSize(1));
+        $this->assertEquals($this->field, $this->field->maxFileSize(1));
     }
 }
