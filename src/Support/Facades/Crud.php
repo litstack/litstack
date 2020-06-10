@@ -5,7 +5,7 @@ namespace Fjord\Support\Facades;
 use Fjord\Support\FjordFacade;
 
 /**
- * @method static config(string $model): mixed
+ * @method static array names(string $model)
  * 
  * @see \Fjord\Crud\Crud
  */

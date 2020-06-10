@@ -68,7 +68,11 @@ class ProfileSettingsConfig extends CrudConfig
 
         // security
         $container->info(ucwords(__f('base.security')))->width(4);
-        $container->card(fn ($form) => $this->security($form))->width(8);
+
+        $container->group(function ($container) {
+            $container->card(fn ($form) => $this->security($form));
+            $container->component('fj-profile-security');
+        })->width(8);
     }
 
     /**
@@ -83,9 +87,9 @@ class ProfileSettingsConfig extends CrudConfig
             ->width(6)
             ->title(ucwords(__f('base.first_name')));
 
-        $form->input('first_name')
+        $form->input('last_name')
             ->width(6)
-            ->title(ucwords(__f('base.first_name')));
+            ->title(ucwords(__f('base.last_name')));
 
         $form->modal('change_email')
             ->title('E-Mail')
@@ -155,7 +159,5 @@ class ProfileSettingsConfig extends CrudConfig
                     ->title('New Password')
                     ->noScore();
             });
-
-        $form->component('fj-profile-security');
     }
 }

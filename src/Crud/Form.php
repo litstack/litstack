@@ -73,6 +73,12 @@ class Form
         return $items;
     }
 
+    /**
+     * Get collection groups
+     *
+     * @param Collection $items
+     * @return FormFieldCollection
+     */
     protected function getCollectionGroups(Collection $items)
     {
         $items = new FormFieldCollection($items->groupBy('collection'));
@@ -86,6 +92,12 @@ class Form
         return $items;
     }
 
+    /**
+     * Get form groups.
+     *
+     * @param Collection $items
+     * @return FormFieldCollection
+     */
     protected function getFormGroups(Collection $items)
     {
         $items = new FormFieldCollection($items->groupBy('form_name'));
