@@ -1,14 +1,6 @@
 <template>
     <fj-base-field :field="field" :model="model">
-        <b-row class="w-100">
-            <b-col cols="6">
-                <nested-draggable :list="list" />
-            </b-col>
-            <b-col cols="6">
-                <pre>{{ output }}</pre>
-                <pre>{{ list }}</pre>
-            </b-col>
-        </b-row>
+        <nested-draggable :children="list" />
     </fj-base-field>
 </template>
 
@@ -27,43 +19,42 @@ export default {
         model: {
             required: true,
             type: Object
-        },
-        value: {
-            required: true
         }
     },
     data() {
         return {
-            list: [
+            list: [],
+            input: [
                 {
                     id: 1,
-                    title: 'task 1',
-                    list: [
-                        {
-                            id: 2,
-                            title: 'task 2',
-                            list: []
-                        }
-                    ]
+                    title: 'Item 1',
+                    order_column: 2,
+                    parent_id: 0
+                },
+                {
+                    id: 2,
+                    title: 'Item 2',
+                    order_column: 1,
+                    parent_id: 0
                 },
                 {
                     id: 3,
-                    title: 'task 3',
-                    list: [
-                        {
-                            id: 4,
-                            title: 'task 4',
-                            list: []
-                        }
-                    ]
+                    title: 'Item 3',
+                    order_column: 3,
+                    parent_id: 0
                 },
                 {
-                    id: 5,
-                    title: 'task 5',
-                    list: []
+                    id: 4,
+                    title: 'Item 4',
+                    order_column: 1,
+                    parent_id: 3
                 }
             ]
         };
+    },
+    beforeMount() {
+        let copy = Fjord.clone(this.input);
+        this.list = this.unflatten(copy);
     },
     methods: {
         // Credits: https://github.com/MrPeak/flatten-tree
@@ -92,23 +83,22 @@ export default {
                 if (parent && parent[itemsKey]) {
                     // Records children' id
                     parent[itemsKey][index] = node[idKey];
-                    node.parent = parent[idKey];
+                    node.parent_id = parent[idKey];
                 }
 
                 return list;
             };
         },
-        flatten(tree, options) {
+        flatten(tree) {
             let list = [];
             const stack = [];
             const _tree = _.cloneDeep(tree);
             const settings = {
-                initNode: options.initNode || (node => node),
-                itemsKey: options.itemsKey || 'children',
-                idKey: options.idKey || 'id',
-                uniqueIdStart: options.uniqueIdStart || 1,
-                generateUniqueId:
-                    options.generateUniqueId || (() => settings.uniqueIdStart++)
+                initNode: node => node,
+                itemsKey: 'children',
+                idKey: 'id',
+                uniqueIdStart: 1,
+                generateUniqueId: () => settings.uniqueIdStart++
             };
 
             if (Array.isArray(_tree) && _tree.length) {
@@ -135,15 +125,53 @@ export default {
                 list = stack.shift()(list);
             }
 
+            // cleanup
+            list = _.map(list, item => {
+                if (!item.parent_id) {
+                    item.parent_id = 0;
+                }
+                return _.omit(item, ['children']);
+            });
+
             return list;
+        },
+        // https://stackoverflow.com/questions/18017869/build-tree-array-from-flat-array-in-javascript
+        unflatten(array, parent, tree) {
+            array = _.sortBy(array, item => {
+                return item.order_column;
+            });
+
+            tree = typeof tree !== 'undefined' ? tree : [];
+            parent = typeof parent !== 'undefined' ? parent : { id: 0 };
+
+            if (!parent.hasOwnProperty('children')) {
+                parent.children = [];
+            }
+
+            var children = _.filter(array, child => {
+                return child.parent_id == parent.id;
+            });
+
+            if (!_.isEmpty(children)) {
+                if (parent.id == 0) {
+                    tree = children;
+                } else {
+                    parent['children'] = children;
+                }
+                _.each(children, child => {
+                    this.unflatten(array, child);
+                });
+            }
+
+            return tree;
         }
     },
     computed: {
         output() {
-            return this.flatten(this.list, {
-                idKey: 'id',
-                itemsKey: 'list'
-            });
+            return this.flatten(this.list);
+        },
+        unflattened() {
+            return this.unflatten(this.input);
         }
     }
 };

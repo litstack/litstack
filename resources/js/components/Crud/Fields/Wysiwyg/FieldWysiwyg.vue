@@ -243,4 +243,11 @@ a.ck.ck-dropdown .ck-button.ck-dropdown__button.ck-on .ck.ck-icon :not([fill]) {
         color: $secondary;
     }
 }
+
+.ck.ck-content {
+    p {
+        line-height: 1.25rem;
+        font-size: $input-font-size;
+    }
+}
 </style>

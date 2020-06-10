@@ -2362,7 +2362,7 @@ pre code {
   width: 100%;
   height: 2.5rem;
   padding: 0.3125rem 0.75rem;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 400;
   line-height: 2;
   color: #000;
@@ -2475,7 +2475,7 @@ select.form-control:focus::-ms-value {
   width: 100%;
   padding: 0.3125rem 0;
   margin-bottom: 0;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   line-height: 2;
   color: #212227;
   background-color: transparent;
@@ -4186,7 +4186,7 @@ input[type=button].btn-block {
   align-items: center;
   padding: 0.3125rem 0.75rem;
   margin-bottom: 0;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 400;
   line-height: 2;
   color: #000;
@@ -4420,7 +4420,7 @@ input[type=button].btn-block {
   width: 100%;
   height: 2.5rem;
   padding: 0.3125rem 1.75rem 0.3125rem 0.75rem;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 400;
   line-height: 2;
   color: #000;
@@ -15380,6 +15380,13 @@ input[type=color].form-control:disabled {
 
 .tooltip-inner {
   padding: 0.5rem 1.5rem;
+}
+
+textarea.form-control {
+  line-height: 1.25rem;
+  font-size: 0.9rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 
 .fj-block {
