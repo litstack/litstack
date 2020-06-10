@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Fjord\Crud\Models\FormEdit;
 use Fjord\Crud\Models\FormField;
 use Fjord\User\Models\FjordUser;
-use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Block\Block;
 use Illuminate\Support\Facades\Route;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\FormReadRequest;
@@ -20,7 +20,7 @@ abstract class FormController
     use Api\CrudBaseApi,
         Api\CrudHasIndex,
         Api\CrudHasRelations,
-        Api\CrudHasBlocks,
+        Api\CrudHasBlock,
         Api\CrudHasMedia,
         Api\CrudHasOrder,
         Api\CrudHasModal,

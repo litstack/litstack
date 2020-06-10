@@ -100,6 +100,7 @@
                 ref="modal"
                 :field="field"
                 :model="model"
+                :cols="modalCols"
                 :modal-id="modalId"
                 :selectedRelations="allSelectedRelations"
                 @select="selectRelation"
@@ -190,7 +191,7 @@ export default {
     },
     beforeMount() {
         this.cols = this.field.preview;
-        this.modalCols = this.field.preview;
+        this.modalCols = Fjord.clone(this.field.preview);
         this.cols.push({
             label: '',
             component: 'fj-field-relation-col-link',

@@ -43,12 +43,12 @@ class Post extends Model implements HasMediaContract
 
     public function content()
     {
-        return $this->blocks('content');
+        return $this->repeatables('content');
     }
 
-    public function media_blocks()
+    public function media_repeatables()
     {
-        return $this->blocks('media_blocks');
+        return $this->repeatables('media_repeatables');
     }
     /*
     public function many_relation_post()

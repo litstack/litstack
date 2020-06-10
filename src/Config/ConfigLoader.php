@@ -3,6 +3,7 @@
 namespace Fjord\Config;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 /**
  * Config singleton.
@@ -129,6 +130,20 @@ class ConfigLoader
     }
 
     /**
+     * Get path from key.
+     *
+     * @param string $key
+     * @return string
+     */
+    public function getPathFromKey(string $key)
+    {
+        $path = collect(explode('.', $key))
+            ->map(fn ($item) => ucfirst(Str::camel($item)))
+            ->implode('/');
+        return base_path("fjord/app/Config/{$path}Config.php");
+    }
+
+    /**
      * Get key from path
      *
      * @param string $path
@@ -162,9 +177,8 @@ class ConfigLoader
      */
     public function exists(string $key)
     {
-        return class_exists(
-            $this->getClassName($key),
-            false
+        return File::exists(
+            $this->getPathFromKey($key),
         );
     }
 }

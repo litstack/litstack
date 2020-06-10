@@ -4,7 +4,6 @@ namespace Fjord\Crud;
 
 use Fjord\Crud\Fields\Code;
 use Fjord\Crud\Fields\Icon;
-use Fjord\Crud\Fields\ListField;
 use Fjord\Crud\Fields\Input;
 use Fjord\Crud\Fields\Modal;
 use Fjord\Crud\Fields\Range;
@@ -18,7 +17,7 @@ use Fjord\Crud\Fields\Component;
 use Fjord\Crud\Fields\Checkboxes;
 use Fjord\Crud\Fields\Media\File;
 use Fjord\Crud\Fields\Media\Image;
-use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Block\Block;
 use Illuminate\Foundation\AliasLoader;
 use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
@@ -47,14 +46,13 @@ class ServiceProvider extends LaravelServiceProvider
         'textarea' => Textarea::class,
         'text' => Textarea::class,
         'wysiwyg' => Wysiwyg::class,
-        'blocks' => Blocks::class,
+        'block' => Block::class,
         'image' => Image::class,
         'file' => File::class,
         'modal' => Modal::class,
         'component' => Component::class,
         'oneRelation' => OneRelation::class,
         'manyRelation' => ManyRelation::class,
-        'list' => ListField::class,
     ];
 
     /**

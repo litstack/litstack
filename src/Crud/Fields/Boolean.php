@@ -6,6 +6,8 @@ use Fjord\Crud\BaseField;
 
 class Boolean extends BaseField
 {
+    use Traits\FieldHasRules;
+
     /**
      * Field Vue component.
      *

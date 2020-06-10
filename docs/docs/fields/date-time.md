@@ -16,12 +16,15 @@ $form->dt('publish_at') // dt and datetime work the same
 
 ## Methods
 
-| Method      | Description                                        |
-| ----------- | -------------------------------------------------- |
-| `title`     | The title description for this field.              |
-| `formatted` | The shown datetime format.                         |
-| `hint`      | A closure where all repeatable blocks are defined. |
-| `width`     | Width of the field.                                |
+| Method          | Description                                                      |
+| --------------- | ---------------------------------------------------------------- |
+| `title`         | The title description for this field.                            |
+| `formatted`     | The shown datetime format.                                       |
+| `hint`          | A closure where all repeatable blocks are defined.               |
+| `width`         | Width of the field.                                              |
+| `rules`         | Rules that should be applied when **updating** and **creating**. |
+| `creationRules` | Rules that should be applied when **creating**.                  |
+| `updateRules`   | Rules that should be applied when **updating**.                  |
 
 ## Formats
 

@@ -2,7 +2,7 @@
 
 ## From v2.2 to v2.3
 
-In Fjord 2.3 some structural changes were made to the config files. The following steps explain what has to be done to upgrade Fjord.
+Updating Fjord v2.2 to v2.3 is not that easy. Fjord 2.3 has some structural changes in the config files. These changes make cool features like charts and more possible in the future. The following steps explain what has to be done to upgrade Fjord.
 
 ### 1. Update Dependencies
 
@@ -14,7 +14,7 @@ composer update aw-studio/fjord-permissions
 
 ### 2.
 
-Search `use HasCrudForm` in `./fjord/app/Config` and remove the trait from all config files.
+The trait `HasCrudForm` is deprecated. However it is only used in form configs that are located in `./fjord/app/Config/Form`. Just search for `HasCrudForm` and remove the trait from all config files.
 
 ### 3. Update Fjord
 
@@ -39,7 +39,13 @@ These are:
 -   Fixing namespaces in the config files.
 -   Fixing navigation preset keys.
 
-### 5. Fix crud index tables.
+### 5. Update navigation presets
+
+The navigation preset keys have changed. Navigation presets that have pointed to a crud were given as `crud.{table_name}`. Now it is the snake_case folder name separated with dots. So `./fjord/app/Config/Crud/PostConfig.php` is now `crud.post` or `./fjord/app/Config/Form/Pages/HomeConfig.php` is now `form.pages.home`.
+
+You can use `php artisan fjord:nav` to get a list of all existing navigation presets.
+
+### 6. Upadte crud index tables
 
 Update your crud index table config.
 

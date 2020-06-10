@@ -39,7 +39,7 @@ public function getImagesAttribute()
 
 ## Crop
 
-To crop the image to a desired ratio when uploading it, a crop-ratio in crop can be defined using the method `crop`.
+To crop the image to a desired ratio before uploading it, a ratio can be defined using the method `crop`.
 
 ```php{3}
 $form->image('images') // images is the corresponding media collection.
@@ -49,7 +49,7 @@ $form->image('images') // images is the corresponding media collection.
 
 ## Expand
 
-By default the images are displayed as a square. However, this view is not suitable for example for header images. With **expand** you can display the image at maximum size.
+By default the images are displayed as a square. However, this view is not suitable for example for header images. With **expand** you can display the image at full size.
 
 ```php{2}
 $form->image('header_image')
@@ -63,7 +63,7 @@ $form->image('header_image')
 
 ## Preview Image
 
-For the case that the first image from the list should be used as a preview image, you can use `firstBig` to display the first image bigger to show that the first image has a bigger meaning.
+In the case that the first image from the list should be used as a preview image, you can use `firstBig` to display the first image bigger to show that it has a special importance.
 
 ```php{3}
 $form->image('images') // images is the corresponding media collection.
@@ -96,6 +96,16 @@ class Post extends Model implements HasMediaContract
 To display conversion urls it is important to set the env `APP_URL` to the url you are working in.
 :::
 
+## Max. File Size
+
+The maximum allowed file size for an image can be specified using the `maxFileSize` method. The file size is given in **megabytes**. The default value is 12 mb.
+
+```php{3}
+$form->image('images')
+    ->title('Images')
+    ->maxFileSize(25);
+```
+
 ## Methods
 
 | Method          | Description                                                   |
@@ -106,6 +116,7 @@ To display conversion urls it is important to set the env `APP_URL` to the url y
 | `width`         | Width of the form field.                                      |
 | `sortable`      | Should the images be sortable? (default: `true`)              |
 | `maxFiles`      | Maxmium number of uploadable images. (default: `5`)           |
+| `maxFileSize`   | Maximum file size. (default: `12`)                            |
 | `expand`        | Expand the preview image to its full width.                   |
 | `crop`          | Opens a Crop-Tool before the upload. (default: `false`)       |
 | `showFullImage` | Display's the full image inside of the square box.            |

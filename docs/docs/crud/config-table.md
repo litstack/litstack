@@ -18,7 +18,7 @@ The `value` of the column is indicated by the function value. You can specify mo
 $table->col('Name')->value('{first_name} {last_name}');
 ```
 
-It is also possible to specify the attribute of relations, for this attributes must be separated with a dot like so.
+It is also possible to specify the attribute of relations. In this case attributes must be separated with a dot like this:
 
 ```php
 $table->col('Product')->value('{product.name}');
@@ -36,7 +36,7 @@ $table->col('Icon')
 
 ## Sortable
 
-A table column can be sorted directly by clicking on the column in the table head. To do so, you just have to specify the name of the attribute you want to sort by.
+A table column can be sorted directly by clicking on the column in the table head. To achieve this, you simply have to specify the name of the attribute you want to sort by.
 
 ```php
 $table->col('Name')
@@ -46,7 +46,7 @@ $table->col('Name')
 
 ## Strip Html
 
-For example, if you want to display the value of a `wysiwyg` Field, it makes sense to strip the **html tags** and specify a maximum number of characters like so:
+For example, if you want to display the value of a `wysiwyg` field, it makes sense to strip the **html tags** and specify a maximum number of characters like this:
 
 ```php
 $table->col('Text')
@@ -113,7 +113,7 @@ $table->relation('Product')
 
 ## Toggle
 
-To edit the boolean state of a moddle directly in a table, a **switch** can be displayed in a column using `toggle`. The name of the corresponding attribute must be specified as the first parameter. In addition, the `routePrefix` for the update route must be specified, if the table is built in a CRUD or Form config, simply use the config function `routePrefix`.
+To edit the boolean state of a moel directly in a table, a **switch** can be displayed in a column using `toggle`. The name of the corresponding attribute must be specified as the first parameter. In addition, the `routePrefix` for the update route must be specified, if the table is built in a CRUD or form config, simply use the config function `routePrefix`.
 
 ```php
 $table->toggle('active')

@@ -69,7 +69,8 @@ module.exports = {
                 text: 'Documentation',
                 link: '/docs/getting-started/installation'
             },
-            { text: '🕹 Demo', link: 'https://demo.fjord-admin.com/admin' }
+            { text: '🕹 Demo', link: 'https://demo.fjord-admin.com/admin' },
+            { text: 'Discord', link: 'https://discord.gg/J8Ed5B' }
         ],
         sidebar: {
             '/': [
@@ -124,7 +125,7 @@ module.exports = {
                         ['docs/fields/relation', 'Relation'],
                         ['docs/fields/one_relation', 'oneRelation'],
                         ['docs/fields/many_relation', 'manyRelation'],
-                        ['docs/fields/blocks', 'Blocks'],
+                        ['docs/fields/block', 'Block'],
                         ['docs/fields/modal', 'Modal'],
                         ['docs/fields/component', 'Component']
                     ]
