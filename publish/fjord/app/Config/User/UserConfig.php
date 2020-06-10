@@ -9,7 +9,7 @@ use Fjord\Vue\Crud\CrudTable;
 use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Config\CrudConfig;
 use Illuminate\Support\Facades\Route;
-use FjordApp\Controllers\User\UserIndexController;
+use FjordApp\Controllers\User\UserController;
 
 class UserConfig extends CrudConfig
 {
@@ -25,7 +25,7 @@ class UserConfig extends CrudConfig
      *
      * @var string
      */
-    public $controller = UserIndexController::class;
+    public $controller = UserController::class;
 
     /**
      * Route prefix.

@@ -4,13 +4,15 @@ namespace Fjord\Crud\Fields\Relations;
 
 use Closure;
 use Fjord\Vue\Table;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Fjord\Crud\RelationField;
-use Fjord\Crud\Fields\Relations\Concerns\RelationForm;
+use Fjord\Support\Facades\Crud;
+use Fjord\Support\Facades\Config;
+use Fjord\Exceptions\InvalidArgumentException;
 
 class LaravelRelationField extends RelationField
 {
-    use Concerns\ManagesRelatedConfig;
-
     /**
      * Relation query builder.
      *
@@ -37,7 +39,7 @@ class LaravelRelationField extends RelationField
      *
      * @var array
      */
-    public $required = ['preview'];
+    public $laravelRelationFieldRequired = ['preview'];
 
     /**
      * Create new Field instance.
@@ -62,7 +64,7 @@ class LaravelRelationField extends RelationField
     {
         parent::setDefaultAttributes();
 
-
+        $this->search('title');
         $this->confirm();
         $this->small(false);
     }
@@ -78,10 +80,9 @@ class LaravelRelationField extends RelationField
     {
         $relatedInstance = $this->getRelatedInstance();
 
-        $this->relatedModelClass = get_class($relatedInstance);
+        $this->setRelatedModelClass(get_class($relatedInstance));
         $this->query = $this->getRelatedModelClass()::query();
 
-        $this->loadRelatedConfig($this->getRelatedModelClass());
         $this->setOrderDefaults();
         $this->setAttribute('model', $this->getRelatedModelClass());
 
@@ -91,6 +92,48 @@ class LaravelRelationField extends RelationField
         }
 
         return $this;
+    }
+
+    /**
+     * Set related model class.
+     *
+     * @param string $model
+     * @return $this
+     */
+    protected function setRelatedModelClass(string $model)
+    {
+        $this->relatedModelClass = $model;
+
+        $relatedConfigKey = "crud." . Str::snake(class_basename($model));
+
+        if (Config::exists($relatedConfigKey) && !$this->relatedConfig) {
+            $this->use($relatedConfigKey);
+        }
+
+        if (!$this->names) {
+            $this->names(Crud::names($model));
+        }
+    }
+
+    /**
+     * Merge related config.
+     *
+     * @param string $configKey
+     * @return void
+     */
+    protected function mergeRelatedConfig($configKey)
+    {
+        if (!Config::exists($configKey)) {
+            return;
+        }
+        $relatedConfig = Config::get($configKey);
+
+        if (!$this->related_route_prefix) {
+            $this->routePrefix($relatedConfig->route_prefix);
+        }
+        if ($relatedConfig->has('index')) {
+            $this->setAttribute('preview', $relatedConfig->index->getTable()->getTable());
+        }
     }
 
     /**
@@ -141,6 +184,43 @@ class LaravelRelationField extends RelationField
     }
 
     /**
+     * Use related config.
+     *
+     * @param string $config
+     * @return void
+     */
+    public function use(string $config)
+    {
+        $this->relatedConfig = Config::get($config);
+
+        if (!$this->relatedConfig) {
+            throw new InvalidArgumentException("Couldn't find config {$config}");
+        }
+
+        if ($this->relatedConfig->model != $this->getRelatedModelClass() && $this->getRelatedModelClass() != null) {
+            throw new InvalidArgumentException("Related config {$config} must be using model " . $this->getRelatedModelClass());
+        }
+
+        if (method_exists($this, 'model')) {
+            $this->model($this->relatedConfig->model);
+        }
+        if ($this->relatedConfig->has('index')) {
+            if ($this->relatedConfig->index) {
+                $table = clone $this->relatedConfig->index
+                    ->getTable()
+                    ->getTable()
+                    ->disableLink();
+
+                $this->setAttribute('preview', $table);
+            }
+        }
+
+        $this->routePrefix($this->relatedConfig->route_prefix);
+
+        return $this;
+    }
+
+    /**
      * Get relation query for model.
      *
      * @param mixed $model
@@ -184,31 +264,10 @@ class LaravelRelationField extends RelationField
     }
 
     /**
-     * Add edit form.
-     *
-     * @param Closure $closure
-     * @return void
-     */
-    public function form(Closure $closure)
-    {
-        $form = new RelationForm($this->getRelatedModelClass());
-
-        $form->setRoutePrefix(
-            strip_slashes($this->getRelatedConfig()->routePrefix . '/{id}')
-        );
-
-        $closure($form);
-
-        $this->attributes['form'] = $form;
-
-        return $this;
-    }
-
-    /**
      * Build relation index table.
      *
      * @param Closure $closure
-     * @return self
+     * @return $this
      */
     public function preview(Closure $closure)
     {
@@ -217,6 +276,56 @@ class LaravelRelationField extends RelationField
         $closure($table);
 
         $this->attributes['preview'] = $table;
+
+        return $this;
+    }
+
+    /**
+     * Singular and plural name.
+     *
+     * @param Closure $closure
+     * @return $this
+     */
+    public function names(array $names)
+    {
+        if (!array_key_exists('singular', $names) || !array_key_exists('plural', $names)) {
+            throw new InvalidArgumentException('Singular and plural name may be present.');
+        }
+
+        $this->setAttribute('names', $names);
+
+        return $this;
+    }
+
+    /**
+     * Set prefix to related config.
+     *
+     * @param string $routePrefix
+     * @return $this
+     */
+    public function routePrefix(string $routePrefix)
+    {
+        $this->setAttribute('related_route_prefix', $routePrefix);
+
+        return $this;
+    }
+
+    /**
+     * Set search keys
+     *
+     * @param array ...$keys
+     * @return $this
+     */
+    public function search(...$keys)
+    {
+        $keys = Arr::wrap($keys);
+        if (count($keys) == 1) {
+            if (is_array($keys[0])) {
+                $keys = $keys[0];
+            }
+        }
+
+        $this->setAttribute('search', $keys);
 
         return $this;
     }

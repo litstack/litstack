@@ -1,7 +1,7 @@
 <template>
     <b-modal
         :id="`modal-${field.id}-${relation.id}`"
-        :title="__('base.item_remove', { item: field.config.names.singular })"
+        :title="__('base.item_remove', { item: field.names.singular })"
     >
         {{ __('crud.fields.relation.messages.confirm_unlink') }}
 

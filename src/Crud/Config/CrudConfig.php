@@ -3,6 +3,7 @@
 namespace Fjord\Crud\Config;
 
 use Illuminate\Support\Str;
+use Fjord\Support\Facades\Crud;
 use Fjord\Crud\Config\Traits\HasCrudShow;
 use Fjord\Crud\Config\Traits\HasCrudIndex;
 
@@ -47,7 +48,7 @@ abstract class CrudConfig
     public $orderColumn = 'order_column';
 
     /**
-     * Load permissions.
+     * Crud permissions for operations create, read, update and delete.
      *
      * @return array
      */
@@ -55,12 +56,10 @@ abstract class CrudConfig
     {
         $permissions = [];
         $operations = ['create', 'read', 'update', 'delete'];
-        $controller = new $this->controller;
-        $user = fjord_user();
 
         foreach ($operations as $operation) {
-            $permissions[$operation] = $user
-                ? $controller->authorize($user, $operation)
+            $permissions[$operation] = fjord_user()
+                ? Crud::authorize($this->controller, $operation)
                 : false;
         }
 

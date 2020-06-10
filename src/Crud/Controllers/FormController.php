@@ -2,10 +2,11 @@
 
 namespace Fjord\Crud\Controllers;
 
+use Illuminate\Http\Request;
 use Fjord\Crud\Models\FormEdit;
 use Fjord\Crud\Models\FormField;
 use Fjord\User\Models\FjordUser;
-use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Block\Block;
 use Illuminate\Support\Facades\Route;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\FormReadRequest;
@@ -19,7 +20,7 @@ abstract class FormController
     use Api\CrudBaseApi,
         Api\CrudHasIndex,
         Api\CrudHasRelations,
-        Api\CrudHasBlocks,
+        Api\CrudHasBlock,
         Api\CrudHasMedia,
         Api\CrudHasOrder,
         Api\CrudHasModal,
@@ -35,13 +36,17 @@ abstract class FormController
     protected $model = FormField::class;
 
     /**
-     * Authorize request for operation.
+     * Authorize request for permission operation and authenticated fjord-user.
+     * Operations: read, update
      *
-     * @param FjordUser $user
+     * @param \Fjord\User\Models\FjordUser $user
      * @param string $operation
      * @return boolean
      */
-    abstract public function authorize(FjordUser $user, string $operation): bool;
+    public function authorize(FjordUser $user, string $operation): bool
+    {
+        return true;
+    }
 
     /**
      * Create new CrudController instance.
@@ -91,11 +96,9 @@ abstract class FormController
             'show',
             'permissions',
             'route_prefix',
-            'expandContainer'
         );
         $config['form'] = $config['show'];
         unset($config['show']);
-        $config['expand'] = $config['expandContainer'];
 
         // Get preview route.
         if ($this->config->hasMethod('previewRoute')) {

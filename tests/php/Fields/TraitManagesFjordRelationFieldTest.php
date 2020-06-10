@@ -37,13 +37,6 @@ class TraitManagesFjordRelationFieldTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_model_method_loads_related_config()
-    {
-        $this->field->model(ManagesFjordRelationFieldRelation::class);
-        $this->assertArrayHasKey('config', $this->field->getAttributes());
-    }
-
-    /** @test */
     public function test_model_method_sets_model_query()
     {
         $this->field->model(ManagesFjordRelationFieldRelation::class);
@@ -51,12 +44,14 @@ class TraitManagesFjordRelationFieldTest extends BackendTestCase
     }
 }
 
+
 class ManagesFjordRelationFieldConfig
 {
     public $names = ['singular' => ''];
     public $search = '';
     public $route_prefix = '';
-    public $index = '';
+    public $index = null;
+    public $model = ManagesFjordRelationFieldRelation::class;
 }
 
 class ManagesFjordRelationFieldField extends LaravelRelationField

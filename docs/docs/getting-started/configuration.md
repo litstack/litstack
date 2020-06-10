@@ -1,6 +1,6 @@
 # Configuration
 
-The Fjord-configuration file can be found in the laravel config directory `config/fjord.php`.
+The Fjord configuration file can be found in the laravel config directory `config/fjord.php`.
 
 ## Basics
 

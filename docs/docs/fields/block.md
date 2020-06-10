@@ -1,12 +1,10 @@
-# Blocks
+# Block
 
-Blocks can be added to CRUD-Models as well as to Collections like Pages. Blocks don't need a dedicated column in the model, as they are stored in a centrally.
-
-Blocks are used to map repetitive content. They can contain any number of so called repeatables, which you can string together in any order.
-A Repeatable can be regarded as a separate individual form. As well a preview table can be set for every block. If Field values are to be displayed as preview, they must be written in **curly brackets**.
+Block fields are used to map repetitive content. They can contain any number of so called **repeatables**, which you can string together in any order.
+A **repeatable** can be regarded as a separate individual form. As well a preview table can be set for every block. If field values are to be displayed as preview, they must be written in **curly brackets**.
 
 ```php
-$form->blocks('content')
+$form->block('content')
     ->title('Content')
     ->repeatables(function($repeatables) {
 
@@ -31,12 +29,14 @@ $form->blocks('content')
 
 ### Preparing the Model
 
-Setting your model up for using blocks is simple. Any block gets it's dedicated relation method:
+Block fields can be added to CRUD-Models as well as to forms. Blocks don't need a dedicated column in the model, as they are stored in a database table centrally.
+
+The repeatables can be loaded to your model using the `repeatables` **relation** method.
 
 ```php
 public function content()
 {
-    return $this->blocks('content');
+    return $this->repeatables('content');
 }
 ```
 

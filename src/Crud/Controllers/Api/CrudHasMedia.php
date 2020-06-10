@@ -35,12 +35,22 @@ trait CrudHasMedia
      * Store media to model.
      *
      * @param CrudUpdateRequest $request
-     * @param Field $field
+     * @param MediaField $field
      * @param int $model
      * @return void
      */
     public function storeMediaToModel($request, $model, $field)
     {
+        if (!$field instanceof MediaField) {
+            abort(404);
+        }
+
+        $request->validate([
+            'media' => 'required|max:' . $field->maxFileSize * 1000
+        ], __f('validation'), [
+            'media' => $field->title
+        ]);
+
         $this->destroyPreviousMedia($model, $field);
 
         $properties = [

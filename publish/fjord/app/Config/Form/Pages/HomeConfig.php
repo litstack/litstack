@@ -16,11 +16,14 @@ class HomeConfig extends FormConfig
     public $controller = HomeController::class;
 
     /**
-     * Form name, is used for routing.
+     * Form route prefix.
      *
-     * @var string
+     * @return string
      */
-    public $formName = 'home';
+    public function routePrefix()
+    {
+        return "pages/home";
+    }
 
     /**
      * Form singular name. This name will be displayed in the navigation.

@@ -3,19 +3,19 @@
 namespace Fjord\Crud\Controllers\Api;
 
 use Fjord\Crud\Models\FormBlock;
-use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Block\Block;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
-use Fjord\Crud\Controllers\Api\Blocks\ManagesBlocksMedia;
-use Fjord\Crud\Controllers\Api\Blocks\ManagesBlocksRelations;
+use Fjord\Crud\Controllers\Api\Block\ManagesBlockMedia;
+use Fjord\Crud\Controllers\Api\Block\ManagesBlockRelations;
 
-trait CrudHasBlocks
+trait CrudHasBlock
 {
-    use ManagesBlocksMedia,
-        ManagesBlocksRelations;
+    use ManagesBlockMedia,
+        ManagesBlockRelations;
 
     /**
-     * Update form_block.
+     * Load single repeatable.
      *
      * @param CrudUpdateRequest $request
      * @param string|integer $id
@@ -24,11 +24,11 @@ trait CrudHasBlocks
      * @param string $block_id
      * @return CrudJs
      */
-    public function loadBlock(CrudReadRequest $request, $identifier, $form_name, $field_id, $block_id)
+    public function loadRepeatable(CrudReadRequest $request, $identifier, $form_name, $field_id, $block_id)
     {
         $this->formExists($form_name) ?: abort(404);
         $field = $this->getForm($form_name)->findField($field_id) ?? abort(404);
-        $field instanceof Blocks ?: abort(404);
+        $field instanceof Block ?: abort(404);
 
         $model = $this->findOrFail($identifier);
 
@@ -38,7 +38,7 @@ trait CrudHasBlocks
     }
 
     /**
-     * Update form_block.
+     * Load all repeatables.
      *
      * @param CrudUpdateRequest $request
      * @param string|integer $id
@@ -46,11 +46,11 @@ trait CrudHasBlocks
      * @param string $field_id
      * @return CrudJs
      */
-    public function loadBlocks(CrudReadRequest $request, $identifier, $form_name, $field_id)
+    public function loadRepeatables(CrudReadRequest $request, $identifier, $form_name, $field_id)
     {
         $this->formExists($form_name) ?: abort(404);
         $field = $this->getForm($form_name)->findField($field_id) ?? abort(404);
-        $field instanceof Blocks ?: abort(404);
+        $field instanceof Block ?: abort(404);
 
         $model = $this->findOrFail($identifier);
 
@@ -68,11 +68,11 @@ trait CrudHasBlocks
      * @param string $field_id
      * @return CrudJs
      */
-    public function storeBlock(CrudUpdateRequest $request, $identifier, $form_name, $field_id)
+    public function storeRepeatable(CrudUpdateRequest $request, $identifier, $form_name, $field_id)
     {
         $this->formExists($form_name) ?: abort(404);
         $field = $this->getForm($form_name)->findField($field_id) ?? abort(404);
-        $field instanceof Blocks ?: abort(404);
+        $field instanceof Block ?: abort(404);
 
         $field->hasRepeatable($request->type) ?: abort(404);
 
@@ -106,11 +106,11 @@ trait CrudHasBlocks
      * @param integer $block_id
      * @return FormBlock
      */
-    public function updateBlock(CrudUpdateRequest $request, $identifier, $form_name, $field_id, $block_id)
+    public function updateRepeatable(CrudUpdateRequest $request, $identifier, $form_name, $field_id, $block_id)
     {
         $this->formExists($form_name) ?: abort(404);
         $field = $this->getForm($form_name)->findField($field_id) ?? abort(404);
-        $field instanceof Blocks ?: abort(404);
+        $field instanceof Block ?: abort(404);
 
         $model = $this->findOrFail($identifier);
 
@@ -134,11 +134,11 @@ trait CrudHasBlocks
      * @param integer $block_id
      * @return integer
      */
-    public function destroyBlock(CrudUpdateRequest $request, $identifier, $form_name, $field_id, $block_id)
+    public function destroyRepeatable(CrudUpdateRequest $request, $identifier, $form_name, $field_id, $block_id)
     {
         $this->formExists($form_name) ?: abort(404);
         $field = $this->getForm($form_name)->findField($field_id) ?? abort(404);
-        $field instanceof Blocks ?: abort(404);
+        $field instanceof Block ?: abort(404);
 
         $model = $this->findOrFail($identifier);
 

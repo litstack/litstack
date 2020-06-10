@@ -4,7 +4,7 @@ namespace Fjord\Crud\Controllers\Concerns;
 
 use Fjord\Crud\Field;
 use Fjord\Crud\BaseForm;
-use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Block\Block;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Request;
 use Fjord\Crud\Models\Traits\TrackEdits;
@@ -94,6 +94,6 @@ trait ManagesForm
      */
     protected function fieldHasForm(Field $field)
     {
-        return method_exists($field, 'form') ?: $field instanceof Blocks;
+        return method_exists($field, 'form') ?: $field instanceof Block;
     }
 }

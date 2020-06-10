@@ -1,13 +1,13 @@
 <?php
 
-namespace Fjord\Crud\Fields\Blocks;
+namespace Fjord\Crud\Fields\Block;
 
 use Closure;
 use Fjord\Vue\Table;
 use Fjord\Support\VueProp;
 use Fjord\Crud\Models\FormBlock;
 use Fjord\Vue\Crud\PreviewTable;
-use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Block\Block;
 
 class Repeatables extends VueProp
 {
@@ -35,11 +35,11 @@ class Repeatables extends VueProp
     /**
      * Create new Repeatables instance.
      *
-     * @param Blocks $field
+     * @param Block $field
      */
-    public function __construct(Blocks $field)
+    public function __construct(Block $field)
     {
-        $this->routePrefix = strip_slashes("{$field->route_prefix}/blocks/{$field->id}/{block_id}");
+        $this->routePrefix = strip_slashes("{$field->route_prefix}/block/{$field->id}/{block_id}");
     }
 
     /**

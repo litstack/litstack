@@ -16,19 +16,19 @@ class CrudRelations extends ServiceProvider
      */
     public function register()
     {
-        $this->blocks();
+        $this->repeatables();
         $this->manyRelation();
         $this->oneRelation();
     }
 
     /**
-     * Register blocks relation macro.
+     * Register block relation macro.
      *
      * @return void
      */
-    public function blocks()
+    public function repeatables()
     {
-        Builder::macro('blocks', function ($fieldId = null) {
+        Builder::macro('repeatables', function ($fieldId = null) {
             $model = $this->getModel();
 
             $relation = $model->morphMany(FormBlock::class, 'model')

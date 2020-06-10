@@ -6,7 +6,7 @@ use Closure;
 use Fjord\Crud\Fields\Traits\HasBaseField;
 use Fjord\Exceptions\InvalidArgumentException;
 
-class MorphToRegistrar extends OneRelationField
+class MorphToRegistrar extends LaravelRelationField
 {
     use HasBaseField;
 
@@ -22,26 +22,9 @@ class MorphToRegistrar extends OneRelationField
      *
      * @var array
      */
-    public $requiredAttributes = [
+    public $required = [
         'morphTypes'
     ];
-
-    /**
-     * Available field attributes.
-     *
-     * @var array
-     */
-    public $availableAttributes = [
-        'form',
-        'morphTypes'
-    ];
-
-    /**
-     * Default field attributes.
-     *
-     * @var array
-     */
-    public $defaultAttributes = [];
 
     /**
      * Should field be registered in form.
@@ -67,10 +50,10 @@ class MorphToRegistrar extends OneRelationField
             ]);
         }
 
-        $morph = new MorphTypeManager;
-        $closure($morph);
+        $this->setAttribute('morphTypes', []);
 
-        $this->setAttribute('morphTypes', $morph);
+        $morph = new MorphTypeManager($this->id, $this->formInstance);
+        $closure($morph);
 
         $options = [];
         foreach ($morph->getTypes() as $class => $morphType) {
@@ -78,38 +61,12 @@ class MorphToRegistrar extends OneRelationField
         }
 
         $selectId = (new $this->model)->{$this->id}()->getMorphType();
+
         $this->formInstance->select($selectId)
             ->title(__f('base.item_select', ['item' => $this->title]))
             ->options($options)
             ->storable(false);
-
-        foreach ($morph->getTypes() as $class => $morphType) {
-            $idDivider = MorphTo::ID_DIVIDER;
-            $morphId = "{$this->id}{$idDivider}{$class}";
-            $field = $this->formInstance->registerField(MorphTo::class, $morphId);
-            foreach ($this->attributes as $key => $value) {
-                if (!in_array($key, $this->availableAttributes)) {
-                    continue;
-                }
-                $field->{$key} = $value;
-            }
-            $field->title($morphType['name'])
-                ->dependsOn($selectId, $class);
-            $field->setAttribute('preview', $morphType['preview']);
-
-            $this->morphTypes[$class] = $field;
-        }
-    }
-
-    /**
-     * Add edit form.
-     *
-     * @param Closure $closure
-     * @return void
-     */
-    public function form(Closure $closure)
-    {
-        throw new InvalidArgumentException('form is not available for MorphTo relations.');
+        $this->setAttribute('morphTypes', $morph->getTypes());
     }
 
     /**

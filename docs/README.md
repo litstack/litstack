@@ -10,9 +10,9 @@ features:
     - title: Laravel
       details: Just integrate Fjord into existing projects and do a lot with little learning using your knowledge about Laravel standards.
     - title: Code Driven Configuration
-      details: Easy to deploy. Configure your Admin panel in the code.
+      details: Easy to deploy. Configure your Admin panel inside the code.
     - title: Infinitely Extendable
-      details: Extend the backend howerer you like with custom Vue components and packages.
+      details: Extend the backend however you like with custom Vue components and packages.
 
 footer: MIT Licensed | Made with ❤️ in Kiel
 ---

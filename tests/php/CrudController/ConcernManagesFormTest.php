@@ -27,7 +27,7 @@ class ConcernManagesFormTest extends BackendTestCase
         $form = new HasFormDummyForm(HasFormDummyModel::class);
         $this->assertFalse($this->callUnaccessibleMethod($controller, 'fieldHasForm', [$form->input('')]));
         $form = new HasFormDummyForm(HasFormDummyModel::class);
-        $this->assertTrue($this->callUnaccessibleMethod($controller, 'fieldHasForm', [$form->blocks('')]));
+        $this->assertTrue($this->callUnaccessibleMethod($controller, 'fieldHasForm', [$form->block('')]));
         $form = new HasFormDummyForm(HasFormDummyModel::class);
         $this->assertTrue($this->callUnaccessibleMethod($controller, 'fieldHasForm', [$form->modal('')]));
     }
@@ -50,7 +50,7 @@ class ConcernManagesFormTest extends BackendTestCase
     {
         $form = new HasFormDummyForm(HasFormDummyModel::class);
         $form->input('field_without_form')->title('');
-        $form->blocks('block_form')->repeatables(function ($rep) {
+        $form->block('block_form')->repeatables(function ($rep) {
             $rep->add('text', function () {
             });
         });
@@ -104,7 +104,7 @@ class ConcernManagesFormTest extends BackendTestCase
     {
         $form = new HasFormDummyForm(HasFormDummyModel::class);
         $form->input('field_without_form')->title('');
-        $form->blocks('block_form')->repeatables(function ($rep) {
+        $form->block('block_form')->repeatables(function ($rep) {
             $rep->add('text', function () {
             });
         });

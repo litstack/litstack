@@ -13,7 +13,7 @@
 
 <script>
 export default {
-    name: 'FieldBlockForm',
+    name: 'FieldRepeatableForm',
     props: {
         block: {
             required: true,

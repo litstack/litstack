@@ -3,7 +3,7 @@
 namespace Fjord\Crud\Controllers\Api;
 
 use Fjord\Support\IndexTable;
-use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Block\Block;
 use Fjord\Crud\Fields\Relations\HasOne;
 use Fjord\Crud\Fields\Relations\HasMany;
 use Fjord\Crud\Fields\Relations\MorphTo;
@@ -42,13 +42,13 @@ trait CrudHasRelations
     public function relationIndex(CrudReadRequest $request, $identifier, $form_name, $relation)
     {
         $relationField = $this->getForm($form_name)->findField($relation) ?? abort(404);
-        $model = $this->findOrFail($identifier);
+        $this->findOrFail($identifier);
 
         $this->validateRelationField($relationField);
 
         $index = IndexTable::query($relationField->getQuery())
             ->request($request)
-            ->search($relationField->getRelatedConfig()->search)
+            ->search($relationField->search)
             ->get();
 
         $index['items'] = crud($index['items']);
@@ -83,7 +83,7 @@ trait CrudHasRelations
         } else {
             $relations = IndexTable::query($query)
                 ->request($request)
-                ->search($relationField->getRelatedConfig()->search)
+                ->search($relationField->search)
                 ->only(['filter', 'paginate'])
                 ->get();
         }
@@ -267,7 +267,7 @@ trait CrudHasRelations
             abort(404);
         }
 
-        if ($field instanceof Blocks) {
+        if ($field instanceof Block) {
             abort(404);
         }
 

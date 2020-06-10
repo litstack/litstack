@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Crud\Controllers\Api\Blocks;
+namespace Fjord\Crud\Controllers\Api\Block;
 
-use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Block\Block;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 
-trait ManagesBlocksMedia
+trait ManagesBlockMedia
 {
     /**
      * Store a newly created block resource in storage.
@@ -21,7 +21,7 @@ trait ManagesBlocksMedia
     {
         $this->formExists($form_name) ?: abort(404);
         $blockField = $this->getForm($form_name)->findField($field_id) ?? abort(404);
-        $blockField instanceof Blocks ?: abort(404);
+        $blockField instanceof Block ?: abort(404);
         // Find model.
         $model = $this->findOrFail($identifier);
         // Find block.
@@ -47,7 +47,7 @@ trait ManagesBlocksMedia
     {
         $this->formExists($form_name) ?: abort(404);
         $blockField = $this->getForm($form_name)->findField($field_id) ?? abort(404);
-        $blockField instanceof Blocks ?: abort(404);
+        $blockField instanceof Block ?: abort(404);
 
         // Find model.
         $model = $this->findOrFail($identifier);
@@ -60,7 +60,7 @@ trait ManagesBlocksMedia
     }
 
     /**
-     * Remove the specified blocks resource from storage.
+     * Remove the specified block resource from storage.
      *
      * @param CrudUpdateRequest $request
      * @param string|integer $identifier
@@ -74,7 +74,7 @@ trait ManagesBlocksMedia
     {
         $this->formExists($form_name) ?: abort(404);
         $blockField = $this->getForm($form_name)->findField($field_id) ?? abort(404);
-        $blockField instanceof Blocks ?: abort(404);
+        $blockField instanceof Block ?: abort(404);
         // Find model.
         $model = $this->query()->findOrFail($identifier);
         // Find block.
@@ -100,7 +100,7 @@ trait ManagesBlocksMedia
         $ids = $request->ids ?? abort(404);
         $this->formExists($form_name) ?: abort(404);
         $blockField = $this->getForm($form_name)->findField($field_id) ?? abort(404);
-        $blockField instanceof Blocks ?: abort(404);
+        $blockField instanceof Block ?: abort(404);
         // Find model.
         $model = $this->findOrFail($identifier);
         // Find block.

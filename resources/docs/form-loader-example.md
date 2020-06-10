@@ -5,21 +5,20 @@ Load the form data in your controller and pass it to the view:
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Fjord\Support\Facades\Form;
 
-class PageController extends Controller
+class HomeController
 {
-    public function home(Request $request)
+    public function __invoke()
     {
         return view('home')->with([
-            'data' => Form::load('pages', 'home');
+            'data' => Form::load('pages', 'home')
         ]);
     }
 }
 ```
 
-And easely show the values of your fields:
+And easely show the values of your fields in the view:
 
 ```php
 <h1>{{ $data->title }}</h1>

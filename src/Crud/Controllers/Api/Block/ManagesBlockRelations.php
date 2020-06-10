@@ -1,14 +1,14 @@
 <?php
 
-namespace Fjord\Crud\Controllers\Api\Blocks;
+namespace Fjord\Crud\Controllers\Api\Block;
 
 use Fjord\Support\IndexTable;
-use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Block\Block;
 use Fjord\Crud\Fields\Relations\LaravelRelationField;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 
-trait ManagesBlocksRelations
+trait ManagesBlockRelations
 {
     /**
      * Load block relation index.
@@ -25,7 +25,7 @@ trait ManagesBlocksRelations
     {
         $this->formExists($form_name) ?: abort(404);
         $blockField = $this->getForm($form_name)->findField($field_id) ?? abort(404);
-        $blockField instanceof Blocks ?: abort(404);
+        $blockField instanceof Block ?: abort(404);
         // Find model.
         $model = $this->findOrFail($identifier);
         // Find block.
@@ -60,7 +60,7 @@ trait ManagesBlocksRelations
     {
         $this->formExists($form_name) ?: abort(404);
         $blockField = $this->getForm($form_name)->findField($field_id) ?? abort(404);
-        $blockField instanceof Blocks ?: abort(404);
+        $blockField instanceof Block ?: abort(404);
         // Find model.
         $model = $this->findOrFail($identifier);
         // Find block.
@@ -100,7 +100,7 @@ trait ManagesBlocksRelations
     {
         $this->formExists($form_name) ?: abort(404);
         $blockField = $this->getForm($form_name)->findField($field_id) ?? abort(404);
-        $blockField instanceof Blocks ?: abort(404);
+        $blockField instanceof Block ?: abort(404);
         // Find model.
         $model = $this->findOrFail($identifier);
         // Find block.
@@ -135,7 +135,7 @@ trait ManagesBlocksRelations
     {
         $this->formExists($form_name) ?: abort(404);
         $blockField = $this->getForm($form_name)->findField($field_id) ?? abort(404);
-        $blockField instanceof Blocks ?: abort(404);
+        $blockField instanceof Block ?: abort(404);
         // Find model.
         $model = $this->findOrFail($identifier);
         // Find block.
@@ -168,7 +168,7 @@ trait ManagesBlocksRelations
         $ids = $request->ids ?? abort(404);
         $this->formExists($form_name) ?: abort(404);
         $blockField = $this->getForm($form_name)->findField($field_id) ?? abort(404);
-        $blockField instanceof Blocks ?: abort(404);
+        $blockField instanceof Block ?: abort(404);
         // Find model.
         $model = $this->findOrFail($identifier);
         // Find block.

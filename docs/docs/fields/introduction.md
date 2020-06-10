@@ -1,16 +1,16 @@
 # Field Introduction
 
-Fields can be used to make database data easily editable. A field is attached to a column of the database, or a relation and with the appropriate configuration your model will editable in a flash.
+Fields can be used to make database entries easily editable. A field or a relation is attached to a column of the database. With the appropriate configuration your model will editable in no time.
 
 ## Basics
 
-When you create a field you must first specify the `attribute` that the field refers to. Like in the example here an input field refers to `first_name`.
+When you create a field you must first specify the `attribute` that the field refers to. Like in the following example an input field refers to `first_name`.
 
 ```php
 $form->input('first_name');
 ```
 
-Every Field requires a title.
+Every field requires a title.
 
 ```php
 $form->input('first_name')->title('Firstname');

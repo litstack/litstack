@@ -14,11 +14,14 @@ A range slider.
 
 ## Methods
 
-| Method  | Description                                              |
-| ------- | -------------------------------------------------------- |
-| `title` | The title description for this field.                    |
-| `hint`  | A short hint that should describe how to use the field.` |
-| `width` | Width of the field.                                      |
-| `min`   | Minimum value.                                           |
-| `max`   | Maximum value.                                           |
-| `step`  | Steps. (default: 1)                                      |
+| Method          | Description                                                      |
+| --------------- | ---------------------------------------------------------------- |
+| `title`         | The title description for this field.                            |
+| `hint`          | A short hint that should describe how to use the field.`         |
+| `width`         | Width of the field.                                              |
+| `min`           | Minimum value.                                                   |
+| `max`           | Maximum value.                                                   |
+| `step`          | Steps. (default: 1)                                              |
+| `rules`         | Rules that should be applied when **updating** and **creating**. |
+| `creationRules` | Rules that should be applied when **creating**.                  |
+| `updateRules`   | Rules that should be applied when **updating**.                  |

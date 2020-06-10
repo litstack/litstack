@@ -12,11 +12,9 @@ trait ManagesFjordRelationField
      */
     public function model(string $model)
     {
-        $this->relatedModelClass = $model;
-        $this->setAttribute('model', $model);
+        $this->setRelatedModelClass($model);
 
-        // Load related config.
-        $this->loadRelatedConfig($model);
+        $this->setAttribute('model', $model);
 
         $this->setOrderDefaults();
 

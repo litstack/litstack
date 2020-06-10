@@ -52,7 +52,7 @@ class BaseFormTest extends BackendTestCase
     /** @test */
     public function test_hasForm_returns_true_when_block_with_form_exists()
     {
-        $this->form->blocks('dummy_block')
+        $this->form->block('dummy_block')
             ->repeatables(function ($rep) {
                 $rep->add('block_form', function () {
                 });
@@ -66,7 +66,7 @@ class BaseFormTest extends BackendTestCase
     /** @test */
     public function test_getForm_returns_form_for_block()
     {
-        $this->form->blocks('dummy_block')
+        $this->form->block('dummy_block')
             ->repeatables(function ($rep) {
                 $rep->add('block_form', function () {
                 });

@@ -11,10 +11,10 @@
                 {{
                     field.many
                         ? __('fj.add_model', {
-                              model: field.config.names.singular
+                              model: field.names.singular
                           })
                         : __('fj.select_item', {
-                              item: field.config.names.singular
+                              item: field.names.singular
                           })
                 }}
             </b-button>
@@ -39,9 +39,9 @@
                             ? `${field.orderColumn}.${field.orderDirection}`
                             : null
                     "
-                    :name-singular="field.config.names.singular"
-                    :name-plural="field.config.names.plural"
-                    :searchKeys="field.searchable ? field.config.search : []"
+                    :name-singular="field.names.singular"
+                    :name-plural="field.names.plural"
+                    :searchKeys="field.searchable ? field.search : []"
                     :per-page="field.perPage"
                     v-bind:small="field.small"
                     :sortable="field.sortable ? 'force' : false"
@@ -53,8 +53,17 @@
                 v-else-if="field.previewType == 'tags'"
                 class="fj-field-relation-tags mt-2"
             >
-                <div class="mt-3 text-center text-secondary" v-if="busy">
+                <div
+                    class="mt-3 text-center text-secondary"
+                    v-if="busy && _.isEmpty(selectedRelations)"
+                >
                     <fa-icon icon="circle-notch" spin />
+                </div>
+                <div
+                    v-if="!busy && _.isEmpty(selectedRelations)"
+                    class="mt-3 text-center text-secondary"
+                >
+                    <fa-icon icon="tags" />
                 </div>
                 <b-form-tag
                     v-for="(relation, key) in selectedRelations"
@@ -62,17 +71,19 @@
                     @remove="removeRelation(relation)"
                     class="mr-3 mt-3"
                     :variant="field.tagVariant"
-                    v-html="_format(field.tagValue, relation)"
-                />
+                >
+                    <span v-html="_format(field.tagValue, relation)" />
+                </b-form-tag>
             </div>
             <div
                 v-else-if="field.previewType == 'link'"
                 class="fj-field-relation-link"
             >
-                <a
+                <component
+                    :is="field.related_route_prefix ? 'a' : 'span'"
                     :href="relatedLink(selectedRelations[0])"
                     v-if="selectedRelations.length > 0 && busy == false"
-                    v-html="_format(field.linkText, selectedRelations[0])"
+                    v-html="_format(field.linkValue, selectedRelations[0])"
                 />
             </div>
 
@@ -89,6 +100,7 @@
                 ref="modal"
                 :field="field"
                 :model="model"
+                :cols="modalCols"
                 :modal-id="modalId"
                 :selectedRelations="allSelectedRelations"
                 @select="selectRelation"
@@ -179,7 +191,7 @@ export default {
     },
     beforeMount() {
         this.cols = this.field.preview;
-        this.modalCols = this.field.preview;
+        this.modalCols = Fjord.clone(this.field.preview);
         this.cols.push({
             label: '',
             component: 'fj-field-relation-col-link',
@@ -215,7 +227,7 @@ export default {
          * @return {String}
          */
         relatedLink(relation) {
-            return `${Fjord.baseURL}${this.field.config.route_prefix}/${relation.id}/edit`;
+            return `${Fjord.baseURL}${this.field.related_route_prefix}/${relation.id}`;
         },
 
         /**
@@ -311,7 +323,7 @@ export default {
                     }
                     this.$bvToast.toast(
                         this.$t('fj.relation_added', {
-                            relation: this.field.config.names.singular
+                            relation: this.field.names.singular
                         }),
                         {
                             variant: 'success'

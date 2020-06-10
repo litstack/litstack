@@ -6,7 +6,7 @@ If you build your own Vue components it makes sense to know about the helpers av
 
 ## Axios
 
-The javascript global `axios` is configured with the route prefix specified in the config **fjord.php**. It is recommended when executing an axios request to set a try around the function.
+The javascript global `axios` is configured with the route prefix specified in the config **fjord.php**. It is recommended to set a try around the function when executing an axios request.
 
 ```javascript
 async func() {
@@ -53,7 +53,7 @@ All attributes from the config **fjord.php**.
 
 ## Event Bus
 
-The event bus can be called via the global Fjord like so:
+The event bus can be called via the global Fjord like this:
 
 ```javascript
 Fjord.bus.$on(event, callback);

@@ -2,7 +2,7 @@
 
 namespace Fjord\Crud\Models;
 
-use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Block\Block;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class FormBlock extends FjordFormModel
@@ -84,7 +84,7 @@ class FormBlock extends FjordFormModel
         $fields = $this->config->show->getRegisteredFields();
 
         foreach ($fields as $field) {
-            if ($field instanceof Blocks && $field->id == $this->field_id) {
+            if ($field instanceof Block && $field->id == $this->field_id) {
 
                 // Returning fields from repeatables form.
                 return $field->repeatables->{$this->type}->getRegisteredFields();

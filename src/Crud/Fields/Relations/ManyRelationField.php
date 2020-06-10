@@ -22,7 +22,7 @@ class ManyRelationField extends LaravelRelationField
      * @var array
      */
     protected $availablePreviewTypes = [
-        'table' => ['preview'],
+        'table' => [],
         'tags' => ['tagVariant', 'tagValue']
     ];
 

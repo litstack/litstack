@@ -17,7 +17,7 @@ class Image extends MediaField
     public function setDefaultAttributes()
     {
         $this->setAttribute('type', 'image');
-        $this->fileSize(12);
+        $this->maxFileSize(12);
         $this->maxFiles(5);
         $this->crop(false);
         $this->override(false);

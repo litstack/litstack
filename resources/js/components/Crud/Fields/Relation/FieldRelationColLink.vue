@@ -28,7 +28,7 @@ export default {
     computed: {
         ...mapGetters(['baseURL']),
         link() {
-            return `${this.baseURL}${this.field.config.route_prefix}/${this.item.id}/edit`;
+            return `${this.baseURL}${this.field.related_route_prefix}/${this.item.id}`;
         }
     }
 };

@@ -1,13 +1,13 @@
 <?php
 
-namespace Fjord\Crud\Fields\Blocks;
+namespace Fjord\Crud\Fields\Block;
 
 use Closure;
 use Fjord\Crud\RelationField;
 use Fjord\Crud\Models\FormField;
 use Fjord\Crud\Fields\Traits\HasBaseField;
 
-class Blocks extends RelationField
+class Block extends RelationField
 {
     use HasBaseField;
 
@@ -16,7 +16,7 @@ class Blocks extends RelationField
      *
      * @var string
      */
-    protected $component = 'fj-field-blocks';
+    protected $component = 'fj-field-block';
 
     /**
      * Required field attributes.
@@ -103,6 +103,6 @@ class Blocks extends RelationField
             return $model->{$this->id}();
         }
 
-        return $model->blocks($this->id);
+        return $model->repeatables($this->id);
     }
 }

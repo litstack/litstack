@@ -3,11 +3,12 @@
 namespace Fjord\Crud;
 
 use Closure;
-use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Block\Block;
 use Fjord\Support\VueProp;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Fjord\Crud\Fields\Component;
+use Fjord\Crud\Fields\Input;
 use Fjord\Crud\Models\FormField;
 use Fjord\Support\Facades\Fjord;
 use Fjord\Crud\Fields\Relations\HasOne;
@@ -279,7 +280,11 @@ class BaseForm extends VueProp
             $this->registrar->checkComplete();
         }
 
-        $fieldInstance = new $field($id, $this->model, $this->routePrefix, $this);
+        if ($field instanceof Field) {
+            $fieldInstance = $field;
+        } else {
+            $fieldInstance = new $field($id, $this->model, $this->routePrefix, $this);
+        }
 
         $this->registrar = $fieldInstance;
 
@@ -392,7 +397,7 @@ class BaseForm extends VueProp
             return false;
         }
 
-        if (!$field instanceof Blocks) {
+        if (!$field instanceof Block) {
             return method_exists($field, 'form');
         }
 
@@ -420,7 +425,7 @@ class BaseForm extends VueProp
             return;
         }
 
-        if (!$field instanceof Blocks) {
+        if (!$field instanceof Block) {
             return $field->form;
         }
 

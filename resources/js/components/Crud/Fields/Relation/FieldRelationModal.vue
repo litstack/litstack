@@ -8,13 +8,13 @@
     >
         <fj-index-table
             ref="table"
-            :cols="field.preview"
+            :cols="cols"
             :items="items"
             :load-items="loadItems"
-            :search-keys="field.config.search"
+            :search-keys="field.search"
             :per-page="10"
-            :name-singular="field.config.names.singular"
-            :name-plural="field.config.names.plural"
+            :name-singular="field.names.singular"
+            :name-plural="field.names.plural"
             :selected="selectedRelations"
             @select="select"
             @unselect="remove"
@@ -42,6 +42,7 @@ export default {
             type: String,
             required: true
         },
+        cols: {},
         selectedRelations: {
             type: [Object, Array],
             default: () => {

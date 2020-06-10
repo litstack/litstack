@@ -36,11 +36,12 @@ To import your own icons you have to specify the corresponding `css` file in the
 
 ## Methods
 
-| Method        | Description                                                                 |
-| ------------- | --------------------------------------------------------------------------- |
-| `title`       | The title description for this field.                                       |
-| `hint`        | A short hint that should describe how to use the field.`                    |
-| `width`       | Width of the field.                                                         |
-| `icons`       | List of selectable icons. (By default all fontawesome icons are selectable) |
-| `placeholder` | The placeholder for this form field.                                        |
-| `max`         | Max characters.                                                             |
+| Method          | Description                                                                 |
+| --------------- | --------------------------------------------------------------------------- |
+| `title`         | The title description for this field.                                       |
+| `hint`          | A short hint that should describe how to use the field.`                    |
+| `width`         | Width of the field.                                                         |
+| `icons`         | List of selectable icons. (By default all fontawesome icons are selectable) |
+| `rules`         | Rules that should be applied when **updating** and **creating**.            |
+| `creationRules` | Rules that should be applied when **creating**.                             |
+| `updateRules`   | Rules that should be applied when **updating**.                             |

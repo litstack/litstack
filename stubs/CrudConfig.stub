@@ -45,7 +45,7 @@ class DummyClassnameConfig extends CrudConfig
      */
     public function routePrefix()
     {
-        return "crud/" . (new $this->model)->getTable();
+        return (new $this->model)->getTable();
     }
 
     /**
@@ -56,6 +56,7 @@ class DummyClassnameConfig extends CrudConfig
      */
     public function index(CrudIndex $container)
     {
+        // Expand html container to full width.
         $container->expand(false);
 
         $container->table(function ($table) {
@@ -64,7 +65,7 @@ class DummyClassnameConfig extends CrudConfig
                 ->sortBy('title');
         })
             ->sortByDefault('id.desc')
-            ->search('name')
+            ->search('title')
             ->sortBy([
                 'id.desc' => __f('fj.sort_new_to_old'),
                 'id.asc' => __f('fj.sort_old_to_new'),
@@ -86,8 +87,6 @@ class DummyClassnameConfig extends CrudConfig
                 ->title('Title')
                 ->width(6);
             
-        })
-        ->width(12)
-        ->title('Main');
+        });
     }
 }

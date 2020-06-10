@@ -50,7 +50,7 @@
 
 <script>
 export default {
-    name: 'FieldBlockHeader',
+    name: 'FieldRepeatableHeader',
     props: {
         deleteIcon: {
             type: String,

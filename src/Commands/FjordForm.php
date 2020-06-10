@@ -59,12 +59,18 @@ class FjordForm extends Command
         $controller->withPermission("{$collection}");
         $controller->withConfigClass($controllerName . "Config");
 
-        $configDir = base_path("fjord/app/Config/Form/{$collection}");
+        $configDir = base_path("fjord/app/Config/Form/{$controllerNamespace}");
         $config = new StubBuilder(fjord_path('stubs/FormConfig.stub'));
+
+        // Routing
+        $config->withCRouteName(Str::slug($collection, '-'));
+        $config->withFormRouteName(Str::slug($formName, '-'));
         $config->withCollection($controllerNamespace);
         $config->withFormName("'" . lcfirst($formName) . "'");
         $config->withController("{$controllerName}Controller");
         $config->withConfigClassName($controllerName . "Config");
+
+
 
         $this->createDirIfNotExists($configDir);
         $this->createDirIfNotExists($controllerDir);

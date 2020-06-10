@@ -1,7 +1,7 @@
 <template>
     <fj-col :width="width">
         <div class="fj-draggable fj-block mb-2 mt-2">
-            <fj-field-block-header
+            <fj-field-repeatable-header
                 ref="header"
                 :sortable="sortable"
                 :expand="expand"
@@ -15,7 +15,7 @@
                 @toggleExpand="expand = !expand"
             />
             <div :class="`fj-block-form ${expand ? 'show' : ''}`">
-                <fj-field-block-form
+                <fj-field-repeatable-form
                     :block="block"
                     :field="field"
                     :model="model"
@@ -30,7 +30,7 @@
 
 <script>
 export default {
-    name: 'FieldBlock',
+    name: 'FieldRepeatable',
     props: {
         deleteIcon: {
             type: String,
