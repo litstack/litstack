@@ -72,11 +72,14 @@ trait ManagesCrud
         $attributes = $request->all();
 
         foreach ($fields as $field) {
+            dump($field->local_key);
             if (!array_key_exists($field->local_key, $attributes)) {
                 continue;
             }
+            dd($attributes, "a");
             // Format value before update.
             if (method_exists($field, 'format')) {
+
                 $attributes[$field->local_key] = $field->format(
                     $attributes[$field->local_key]
                 );

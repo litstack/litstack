@@ -124,11 +124,9 @@ class UserConfig extends CrudConfig
                 ->rules('min:2', 'max:60', 'unique:fjord_users,username')
                 ->title(ucwords(__f('base.username')));
 
-            if (Str::endsWith(Route::current()->uri(), 'create')) {
-                $form->password('password')
-                    ->title(ucwords(__f('base.password')))
-                    ->width(1 / 2);
-            }
+            $form->password('password')
+                ->title(ucwords(__f('base.password')))
+                ->width(1 / 2);
         });
     }
 }
