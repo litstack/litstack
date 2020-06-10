@@ -4,6 +4,7 @@ namespace Fjord\Commands;
 
 use Illuminate\Console\Command;
 use Fjord\Support\Facades\Fjord;
+use Fjord\User\Models\FjordUser as FjordUserModel;
 
 class FjordUser extends Command
 {
@@ -49,7 +50,7 @@ class FjordUser extends Command
         $email = $this->ask('Enter the email');
         $password = $this->secret('Enter the password');
 
-        $user = FjordUser::firstOrCreate([
+        $user = FjordUserModel::firstOrCreate([
             'username' => $username,
             'email' => $email,
         ], [
