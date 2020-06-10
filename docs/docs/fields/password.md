@@ -43,9 +43,9 @@ $modal->password('password_confirmation')
 | `hint`          | A short hint that should describe how to use the field.`                       |
 | `width`         | Width of the field.                                                            |
 | `confirm`       | Requires the user to type in the current passwort to confirm update or create. |
-| `dontStore`     | The password wont be stored, but only to use validation rules.                 |
+| `rulesOnly`     | The password wont be stored, only validation rules are used.                   |
 | `noScore`       | Shouldn't display the password score.                                          |
 | `minScore`      | Minimum password score.                                                        |
-| `rules`         | Field rules that should be applied to the update and create form.              |
-| `creationRules` | Field rules that should be applied to the create form.                         |
-| `updateRules`   | Field rules that should be applied to the update form.                         |
+| `rules`         | Rules that should be applied when **updating** and **creating**.               |
+| `creationRules` | Rules that should be applied when **creating**.                                |
+| `updateRules`   | Rules that should be applied when **updating**.                                |

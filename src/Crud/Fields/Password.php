@@ -61,7 +61,7 @@ class Password extends BaseField
     }
 
     /**
-     * Set noScore.
+     * Only rules.
      *
      * @param boolean $noScore
      * @return $this
