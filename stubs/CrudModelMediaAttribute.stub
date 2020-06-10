@@ -3,7 +3,7 @@
      *
      * @return \Fjord\Crud\Models\Media
      */
-    public function getImageAttribute()
+    public function getImagesAttribute()
     {
         return $this->getMedia('image');
     }
