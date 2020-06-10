@@ -1,5 +1,5 @@
 <template>
-    <b-modal :id="id" size="lg" :title="field.config.names.singular">
+    <b-modal :id="id" size="lg" :title="field.names.singular">
         <b-row>
             <fj-field
                 v-for="(field, key) in fields"

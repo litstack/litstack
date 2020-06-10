@@ -20,6 +20,6 @@ $form->code('code')
 | `language`      | Codemirrot [languages](https://codemirror.net/mode/). (default: "text/html")     |
 | `tabSize`       | Number of spaces used for a tab. (default: 4)                                    |
 | `line_numbers`  | Should the line numbers be visible. (default: true) field.                       |
-| `rules`         | Field rules that should be applied to the update and create form.                |
-| `creationRules` | Field rules that should be applied to the create form.                           |
-| `updateRules`   | Field rules that should be applied to the update form.                           |
+| `rules`         | Rules that should be applied when **updating** and **creating**.                 |
+| `creationRules` | Rules that should be applied when **creating**.                                  |
+| `updateRules`   | Rules that should be applied when **updating**.                                  |

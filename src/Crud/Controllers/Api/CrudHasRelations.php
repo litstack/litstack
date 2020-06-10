@@ -3,8 +3,7 @@
 namespace Fjord\Crud\Controllers\Api;
 
 use Fjord\Support\IndexTable;
-use Fjord\Crud\OneRelationField;
-use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Block\Block;
 use Fjord\Crud\Fields\Relations\HasOne;
 use Fjord\Crud\Fields\Relations\HasMany;
 use Fjord\Crud\Fields\Relations\MorphTo;
@@ -16,6 +15,8 @@ use Fjord\Crud\Fields\Relations\MorphToMany;
 use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Crud\Fields\Relations\BelongsToMany;
+use Fjord\Crud\Fields\Relations\OneRelationField;
+use Fjord\Crud\Fields\Relations\LaravelRelationField;
 
 trait CrudHasRelations
 {
@@ -33,20 +34,21 @@ trait CrudHasRelations
      * Load relation index.
      *
      * @param CrudReadRequest $request
-     * @param int $id
+     * @param string|integer $identifier
+     * @param string $form_name
      * @param string $relation
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function relationIndex(CrudReadRequest $request, $id, $relation)
+    public function relationIndex(CrudReadRequest $request, $identifier, $form_name, $relation)
     {
-        $model = $this->query()->findOrFail($id);
-        $field = $this->config->form->findField($relation) ?? abort(404);
+        $relationField = $this->getForm($form_name)->findField($relation) ?? abort(404);
+        $this->findOrFail($identifier);
 
-        $this->validateRelationField($field);
+        $this->validateRelationField($relationField);
 
-        $index = IndexTable::query($field->getQuery())
+        $index = IndexTable::query($relationField->getQuery())
             ->request($request)
-            ->search($field->getRelatedConfig()->search)
+            ->search($relationField->search)
             ->get();
 
         $index['items'] = crud($index['items']);
@@ -58,20 +60,21 @@ trait CrudHasRelations
      * Fetch existing relations.
      *
      * @param CrudReadRequest $request
-     * @param int $id
+     * @param string|integer $identifier
+     * @param string $form_name
      * @param int $field_id
      * @return void
      */
-    public function loadRelations(CrudReadRequest $request, $id, $relation)
+    public function loadRelations(CrudReadRequest $request, $identifier, $form_name, $relation)
     {
-        $model = $this->query()->findOrFail($id);
-        $field = $this->config->form->findField($relation) ?? abort(404);
+        $relationField = $this->getForm($form_name)->findField($relation) ?? abort(404);
+        $model = $this->findOrFail($identifier);
 
-        $this->validateRelationField($field);
+        $this->validateRelationField($relationField);
 
-        $query = $field->relation($model, $query = true);
+        $query = $relationField->getRelationQuery($model, $query = true);
 
-        if ($field instanceof OneRelationField) {
+        if ($relationField instanceof OneRelationField) {
             $items = $query->get();
             $relations = collect([
                 'count' => $items->count(),
@@ -80,7 +83,7 @@ trait CrudHasRelations
         } else {
             $relations = IndexTable::query($query)
                 ->request($request)
-                ->search($field->getRelatedConfig()->search)
+                ->search($relationField->search)
                 ->only(['filter', 'paginate'])
                 ->get();
         }
@@ -96,21 +99,22 @@ trait CrudHasRelations
      * Add new relation.
      *
      * @param CrudUpdateRequest $request
-     * @param int $id
+     * @param string|integer $identifier
+     * @param string $form_name
      * @param string $relation
      * @param int $relation_id
      * @return mixed
      */
-    public function createRelation(CrudUpdateRequest $request, $id, $relation, $relation_id)
+    public function createRelation(CrudUpdateRequest $request, $identifier, $form_name, $relation, $relation_id)
     {
-        $model = $this->query()->findOrFail($id);
-        $field = $this->config->form->findField($relation) ?? abort(404);
+        $relationField = $this->getForm($form_name)->findField($relation) ?? abort(404);
+        $model = $this->findOrFail($identifier);
 
-        $this->validateRelationField($field);
+        $this->validateRelationField($relationField);
 
-        $relation = $field->getQuery()->findOrFail($relation_id);
+        $relation = $relationField->getQuery()->findOrFail($relation_id);
 
-        $this->createFieldRelation($request, $field, $model, $relation);
+        $this->createFieldRelation($request, $relationField, $model, $relation);
 
         $this->edited($model, 'relation:created');
 
@@ -163,21 +167,22 @@ trait CrudHasRelations
      * Remove relation.
      *
      * @param CrudUpdateRequest $request
-     * @param int $id
+     * @param string|integer $identifier
+     * @param string $form_name
      * @param string $relation
      * @param int $relation_id
      * @return mixed
      */
-    public function destroyRelation(CrudUpdateRequest $request, $id, $relation, $relation_id)
+    public function destroyRelation(CrudUpdateRequest $request, $identifier, $form_name, $relation, $relation_id)
     {
-        $model = $this->query()->findOrFail($id);
-        $field = $this->config->form->findField($relation) ?? abort(404);
+        $relationField = $this->getForm($form_name)->findField($relation) ?? abort(404);
+        $model = $this->findOrFail($identifier);
 
-        $this->validateRelationField($field);
+        $this->validateRelationField($relationField);
 
-        $relation = $field->getQuery()->findOrFail($relation_id);
+        $relation = $relationField->getQuery()->findOrFail($relation_id);
 
-        $response = $this->destroyFieldRelation($request, $field, $model, $relation);
+        $response = $this->destroyFieldRelation($request, $relationField, $model, $relation);
 
         $this->edited($model, 'relation:deleted');
 
@@ -230,20 +235,20 @@ trait CrudHasRelations
      * Order relations.
      *
      * @param CrudUpdateRequest $request
-     * @param int $id
+     * @param string|integer $identifier
+     * @param string $form_name
      * @param string $relation
      * @return void
      */
-    public function orderRelation(CrudUpdateRequest $request, $id, $relation)
+    public function orderRelation(CrudUpdateRequest $request, $identifier, $form_name, $relation)
     {
-
         $ids = $request->ids ?? abort(404);
-        $model = $this->query()->findOrFail($id);
-        $field = $this->config->form->findField($relation) ?? abort(404);
+        $relationField = $this->getForm($form_name)->findField($relation) ?? abort(404);
+        $model = $this->findOrFail($identifier);
 
-        $query = $field->relation($model, $query = true);
+        $query = $relationField->getRelationQuery($model, $query = true);
 
-        $order = $this->orderField($query, $field, $ids);
+        $order = $this->orderField($query, $relationField, $ids);
 
         $this->edited($model, 'relation:ordered');
 
@@ -258,11 +263,11 @@ trait CrudHasRelations
      */
     protected function validateRelationField($field)
     {
-        if (!$field->isRelation()) {
+        if (!$field instanceof LaravelRelationField) {
             abort(404);
         }
 
-        if ($field instanceof Blocks) {
+        if ($field instanceof Block) {
             abort(404);
         }
 

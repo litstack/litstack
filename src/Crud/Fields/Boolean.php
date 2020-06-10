@@ -2,42 +2,18 @@
 
 namespace Fjord\Crud\Fields;
 
-use Fjord\Crud\Field;
+use Fjord\Crud\BaseField;
 
-class Boolean extends Field
+class Boolean extends BaseField
 {
+    use Traits\FieldHasRules;
+
     /**
      * Field Vue component.
      *
      * @var string
      */
     protected $component = 'fj-field-boolean';
-
-    /**
-     * Required attributes.
-     *
-     * @var array
-     */
-    protected $required = [
-        'title',
-    ];
-
-    /**
-     * Available Field attributes.
-     *
-     * @var array
-     */
-    protected $available = [
-        'title',
-        'hint',
-    ];
-
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    protected $defaults = [];
 
     /**
      * Cast field value.

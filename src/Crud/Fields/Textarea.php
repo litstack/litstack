@@ -2,10 +2,14 @@
 
 namespace Fjord\Crud\Fields;
 
-use Fjord\Crud\Field;
+use Fjord\Crud\BaseField;
 
-class Textarea extends Field
+class Textarea extends BaseField
 {
+    use Traits\FieldHasRules,
+        Traits\TranslatableField,
+        Traits\FieldHasPlaceholder;
+
     /**
      * Field Vue component.
      *
@@ -14,41 +18,62 @@ class Textarea extends Field
     protected $component = 'fj-field-textarea';
 
     /**
-     * Is field translatable.
-     *
-     * @var boolean
-     */
-    protected $translatable = true;
-
-    /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-    ];
+    public $required = [];
 
     /**
-     * Available Field attributes.
+     * Set default textarea attributes.
      *
-     * @var array
+     * @return void
      */
-    protected $available = [
-        'max',
-        'title',
-        'placeholder',
-        'hint',
-    ];
+    public function setDefaultAttributes()
+    {
+        $this->rows(3);
+        $this->maxRows(5);
+    }
+
 
     /**
-     * Default Field attributes.
+     * Set max characters.
      *
-     * @var array
+     * @param integer $max
+     * @return $this
      */
-    protected $defaults = [
-        'max' => 250,
-    ];
+    public function maxChars(int $max)
+    {
+        $this->setAttribute('maxChars', $max);
+
+        return $this;
+    }
+
+    /**
+     * Set rows.
+     *
+     * @param integer $rowsrows
+     * @return $this
+     */
+    public function rows(int $rows)
+    {
+        $this->setAttribute('rows', $rows);
+
+        return $this;
+    }
+
+    /**
+     * Set max rows.
+     *
+     * @param integer $rows
+     * @return $this
+     */
+    public function maxRows(int $rows)
+    {
+        $this->setAttribute('maxRows', $rows);
+
+        return $this;
+    }
 
     /**
      * Cast field value.

@@ -43,7 +43,7 @@ Try to use as few groups as possible to keep permission **management** simple.
 
 ## Controller (Authorization)
 
-A controller has been created in `Controllers/Form/{collection}` in which the authorization for all operation is specified. Operations can be `read`, `update`.
+A controller has been created in `Controllers/Form/{collection}` in which the authorization for all operation is specified. Operations can be `read` and `update`.
 
 ```php
 /**

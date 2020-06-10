@@ -3,9 +3,9 @@
 namespace Fjord\Crud\Config\Factories;
 
 use Closure;
-use Fjord\Vue\Crud\CrudTable;
 use Fjord\Config\ConfigFactory;
 use Fjord\Config\ConfigHandler;
+use Fjord\Crud\CrudIndex;
 
 class CrudIndexConfigFactory extends ConfigFactory
 {
@@ -18,11 +18,11 @@ class CrudIndexConfigFactory extends ConfigFactory
      */
     public function index(ConfigHandler $config, Closure $method)
     {
-        $table = new CrudTable($config);
+        $index = new CrudIndex($config);
 
-        $method($table);
+        $method($index);
 
-        return $table;
+        return $index;
     }
 
     /**

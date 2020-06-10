@@ -1,28 +1,27 @@
 <template>
-    <fj-form-item
+    <fj-base-field
         :field="field"
         :model="model"
         :value="value"
+        :max="field.maxChars"
         v-slot:default="{ state }"
     >
         <b-form-textarea
             :value="value"
             :placeholder="field.placeholder"
             :rows="field.rows"
-            :max-rows="field.max_rows"
-            :maxlength="field.max"
+            :max-rows="field.maxRows"
+            :maxlength="field.maxChars"
             :state="state"
             v-bind:readonly="field.readonly"
-            @input="changed"
+            @input="$emit('input', $event)"
         />
 
         <slot />
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>
-import methods from '../methods';
-
 export default {
     name: 'FieldTextarea',
     props: {
@@ -33,25 +32,10 @@ export default {
         model: {
             required: true,
             type: Object
-        }
-    },
-    data() {
-        return {
-            value: '',
-            original: ''
-        };
-    },
-    beforeMount() {
-        this.init();
-    },
-    methods: {
-        ...methods,
-        changed(value) {
-            this.setValue(value);
-            this.$emit('changed', value);
+        },
+        value: {
+            required: true
         }
     }
 };
 </script>
-
-<style lang="css"></style>

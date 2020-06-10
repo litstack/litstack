@@ -55,6 +55,8 @@ trait TrackEdits
     {
         return $this->morphOne(ModelEdit::class, 'model')
             ->orderByDesc('id')
-            ->with('user');
+            // TODO: find a better way to load user.
+            ->with('user')
+            ->take(1);
     }
 }

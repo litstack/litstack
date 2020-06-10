@@ -2,7 +2,7 @@
 
 namespace Fjord\Crud\Controllers\Api;
 
-use Fjord\Crud\MediaField;
+use Fjord\Crud\Fields\Media\MediaField;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 
 trait CrudHasMedia
@@ -14,12 +14,17 @@ trait CrudHasMedia
      * @param int $id
      * @return response
      */
-    public function storeMedia(CrudUpdateRequest $request, $id)
+    public function storeMedia(CrudUpdateRequest $request, $identifier, $formName)
     {
-        $model = $this->model::findOrFail($id);
+        $request->collection ?: abort(404);
+        $request->media !== null ?: abort(404);
 
-        $field = $this->config->form->findField($request->collection)
+        $this->formExists($formName) ?: abort(404);
+
+        $field = $this->getForm($formName)->findField($request->collection)
             ?? abort(404);
+
+        $model = $this->model::findOrFail($identifier);
 
         return $this->storeMediaToModel($request, $model, $field);
 
@@ -30,12 +35,22 @@ trait CrudHasMedia
      * Store media to model.
      *
      * @param CrudUpdateRequest $request
-     * @param Field $field
+     * @param MediaField $field
      * @param int $model
      * @return void
      */
     public function storeMediaToModel($request, $model, $field)
     {
+        if (!$field instanceof MediaField) {
+            abort(404);
+        }
+
+        $request->validate([
+            'media' => 'required|max:' . $field->maxFileSize * 1000
+        ], __f('validation'), [
+            'media' => $field->title
+        ]);
+
         $this->destroyPreviousMedia($model, $field);
 
         $properties = [
@@ -47,7 +62,9 @@ trait CrudHasMedia
             ? [app()->getLocale() => $properties]
             : $properties;
 
+
         $media = $model->addMedia($request->media)
+            ->preservingOriginal()
             ->withCustomProperties($customProperties)
             ->toMediaCollection($request->collection);
 
@@ -95,13 +112,15 @@ trait CrudHasMedia
      * Update media attributes
      *
      * @param CrudUpdateRequest $request
-     * @param int $id
+     * @param string|integer $id
      * @param int $media_id
      * @return int
      */
-    public function updateMedia(CrudUpdateRequest $request, $id, $media_id)
+    public function updateMedia(CrudUpdateRequest $request, $id, $form_name, $media_id)
     {
-        $model = $this->query()->findOrFail($id);
+        $this->formExists($form_name) ?: abort(404);
+
+        $model = $this->findOrFail($id);
         $media = $model->media()->findOrFail($media_id);
         $media->custom_properties = $request->custom_properties;
 
@@ -113,13 +132,17 @@ trait CrudHasMedia
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @param int $media_id
-     * @return int
+     * @param CrudUpdateRequest $request
+     * @param string|integer $id
+     * @param string $form_name
+     * @return Response
      */
-    public function destroyMedia(CrudUpdateRequest $request, $id, $media_id)
+    public function destroyMedia(CrudUpdateRequest $request, $id, $form_name, $media_id)
     {
-        $model = $this->query()->findOrFail($id);
+        $this->formExists($form_name) ?: abort(404);
+
+        $model = $this->findOrFail($id);
+
         if ($model->media()->findOrFail($media_id)->delete()) {
 
             $this->edited($model, 'media:deleted');
@@ -132,21 +155,25 @@ trait CrudHasMedia
      * Order media.
      *
      * @param CrudUpdateRequest $request
-     * @param int $id
+     * @param string|integer $id
+     * @param string $form_name
      * @return void
      */
-    public function orderMedia(CrudUpdateRequest $request, $id)
+    public function orderMedia(CrudUpdateRequest $request, $id, $form_name)
     {
-        $model = $this->query()->findOrFail($id);
         $ids = $request->ids ?? abort(404);
-        $field = $this->config->form->findField($request->collection) ?? abort(404);
-        $query = $model->media()->where('collection_name', $field->id);
+        $this->formExists($form_name) ?: abort(404);
+        $mediaField = $this->config->form->findField($request->collection) ?? abort(404);
 
-        if (!$field->sortable) {
+        $model = $this->findOrFail($id);
+
+        $query = $model->media()->where('collection_name', $mediaField->id);
+
+        if (!$mediaField->sortable) {
             abort(404);
         }
 
-        $response = $this->orderField($query, $field, $ids);
+        $response = $this->orderField($query, $mediaField, $ids);
 
         $this->edited($model, 'media:ordered');
 

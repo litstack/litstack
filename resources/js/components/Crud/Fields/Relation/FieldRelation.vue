@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field" :model="model" class="">
+    <fj-base-field :field="field" :model="model" class="">
         <template slot="title-right">
             <b-button
                 variant="secondary"
@@ -7,14 +7,14 @@
                 v-b-modal="modalId"
                 v-if="!field.readonly && !this.create"
             >
-                <fa-icon icon="plus" />
+                <fa-icon :icon="field.many ? 'plus' : 'link'" />
                 {{
                     field.many
                         ? __('fj.add_model', {
-                              model: field.config.names.singular
+                              model: field.names.singular
                           })
                         : __('fj.select_item', {
-                              item: field.config.names.singular
+                              item: field.names.singular
                           })
                 }}
             </b-button>
@@ -23,8 +23,8 @@
         <template v-if="model.id">
             <div
                 class="form-control-expand fj-field-relation"
-                :class="{ 'mt-4': !field.many }"
-                v-if="!field.tags"
+                :class="{ 'mt-2': !showTableHead }"
+                v-if="field.previewType == 'table'"
             >
                 <fj-index-table
                     ref="table"
@@ -39,9 +39,9 @@
                             ? `${field.orderColumn}.${field.orderDirection}`
                             : null
                     "
-                    :name-singular="field.config.names.singular"
-                    :name-plural="field.config.names.plural"
-                    :searchKeys="field.searchable ? field.config.search : []"
+                    :name-singular="field.names.singular"
+                    :name-plural="field.names.plural"
+                    :searchKeys="field.searchable ? field.search : []"
                     :per-page="field.perPage"
                     v-bind:small="field.small"
                     :sortable="field.sortable ? 'force' : false"
@@ -49,16 +49,42 @@
                     @unlink="removeRelation"
                 />
             </div>
-            <div v-else class="">
+            <div
+                v-else-if="field.previewType == 'tags'"
+                class="fj-field-relation-tags mt-2"
+            >
+                <div
+                    class="mt-3 text-center text-secondary"
+                    v-if="busy && _.isEmpty(selectedRelations)"
+                >
+                    <fa-icon icon="circle-notch" spin />
+                </div>
+                <div
+                    v-if="!busy && _.isEmpty(selectedRelations)"
+                    class="mt-3 text-center text-secondary"
+                >
+                    <fa-icon icon="tags" />
+                </div>
                 <b-form-tag
                     v-for="(relation, key) in selectedRelations"
                     :key="key"
                     @remove="removeRelation(relation)"
-                    class="mr-2 mt-2"
+                    class="mr-3 mt-3"
                     :variant="field.tagVariant"
                 >
-                    {{ _format(field.tags, relation) }}
+                    <span v-html="_format(field.tagValue, relation)" />
                 </b-form-tag>
+            </div>
+            <div
+                v-else-if="field.previewType == 'link'"
+                class="fj-field-relation-link"
+            >
+                <component
+                    :is="field.related_route_prefix ? 'a' : 'span'"
+                    :href="relatedLink(selectedRelations[0])"
+                    v-if="selectedRelations.length > 0 && busy == false"
+                    v-html="_format(field.linkValue, selectedRelations[0])"
+                />
             </div>
 
             <fj-field-relation-confirm-delete
@@ -74,6 +100,7 @@
                 ref="modal"
                 :field="field"
                 :model="model"
+                :cols="modalCols"
                 :modal-id="modalId"
                 :selectedRelations="allSelectedRelations"
                 @select="selectRelation"
@@ -84,12 +111,10 @@
         <template v-else>
             <fj-field-alert-not-created :field="field" class="mb-0" />
         </template>
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>
-import methods from '../methods';
-
 export default {
     name: 'FieldRelation',
     props: {
@@ -105,30 +130,68 @@ export default {
     },
     data() {
         return {
+            /**
+             * All selected relation.
+             */
             allSelectedRelations: [],
+
+            /**
+             * Visible selected relations.
+             */
             selectedRelations: [],
+
+            /**
+             * Busy state.
+             */
             busy: true,
-            cols: []
+
+            /**
+             * Table cols.
+             */
+            cols: [],
+
+            /**
+             * Table cols in modal.
+             */
+            modalCols: []
         };
     },
     computed: {
+        /**
+         * Unique modal id.
+         *
+         * @return {String}
+         */
         modalId() {
             return `form-relation-table-${
                 this.field.id
             }-${this.field.route_prefix.replace(/\//g, '-')}`;
         },
+
+        /**
+         * Show table head.
+         *
+         * @return {Boolean}
+         */
         showTableHead() {
             if (!this.field.many) {
                 return false;
             }
             return this.field.showTableHead === true;
         },
+
+        /**
+         * Is on create page.
+         *
+         * @return {Boolean}
+         */
         create() {
             return this.model.id === undefined;
         }
     },
     beforeMount() {
         this.cols = this.field.preview;
+        this.modalCols = Fjord.clone(this.field.preview);
         this.cols.push({
             label: '',
             component: 'fj-field-relation-col-link',
@@ -157,7 +220,21 @@ export default {
         this.loadAllRelations();
     },
     methods: {
-        ...methods,
+        /**
+         * Related edit link.
+         *
+         * @param {Object} relation
+         * @return {String}
+         */
+        relatedLink(relation) {
+            return `${Fjord.baseURL}${this.field.related_route_prefix}/${relation.id}`;
+        },
+
+        /**
+         * Load all relations.
+         *
+         * @return {undefined}
+         */
         async loadAllRelations() {
             if (this.create) {
                 return;
@@ -177,7 +254,8 @@ export default {
                     id: relation.attributes.id
                 });
             }
-            if (this.field.tags) {
+
+            if (this.field.previewType != 'table') {
                 this.loadRelations({
                     perPage: 999999,
                     page: 1,
@@ -185,6 +263,13 @@ export default {
                 });
             }
         },
+
+        /**
+         * Load relations from payload.
+         *
+         * @param {Object} payload
+         * @return {undefined}
+         */
         async loadRelations(payload) {
             if (this.create) {
                 return;
@@ -202,9 +287,23 @@ export default {
             this.busy = false;
             return response;
         },
+
+        /**
+         * Add new relation.
+         *
+         * @param {Object} relation
+         * @return {undefined}
+         */
         newRelation(relation) {
             this.selectedRelations.push(this.crud(relation));
         },
+
+        /**
+         * Select relation.
+         *
+         * @param {Object} relation
+         * @return {undefined}
+         */
         async selectRelation(relation) {
             let response = null;
             switch (this.field.type) {
@@ -224,7 +323,7 @@ export default {
                     }
                     this.$bvToast.toast(
                         this.$t('fj.relation_added', {
-                            relation: this.field.config.names.singular
+                            relation: this.field.names.singular
                         }),
                         {
                             variant: 'success'
@@ -266,7 +365,7 @@ export default {
             } else {
                 this.allSelectedRelations.push(relation);
             }
-            if (this.field.tags) {
+            if (this.field.previewType != 'table') {
                 this.loadRelations();
             } else {
                 this.$refs.table.$emit('reload');
@@ -274,6 +373,13 @@ export default {
             this.$emit('reload', relation);
             Fjord.bus.$emit('field:updated', 'relation:selected');
         },
+
+        /**
+         * Open confirm delete modal. Or delete relation directly.
+         *
+         * @param {Object} relation
+         * @return {undefined}
+         */
         removeRelation(relation) {
             if (!this.field.confirm) {
                 return this._removeRelation(relation);
@@ -281,6 +387,13 @@ export default {
 
             this.$bvModal.show(`modal-${this.field.id}-${relation.id}`);
         },
+
+        /**
+         * Delete relation.
+         *
+         * @param {Object} relation
+         * @return {undefined}
+         */
         async _removeRelation(relation) {
             let response = null;
             switch (this.field.type) {
@@ -333,8 +446,7 @@ export default {
             } else {
                 this.allSelectedRelations = [];
             }
-
-            if (this.field.tags) {
+            if (this.field.previewType != 'table') {
                 this.loadRelations();
             } else {
                 this.$refs.table.$emit('reload');
@@ -343,6 +455,10 @@ export default {
 
             Fjord.bus.$emit('field:updated', 'relation:removed');
         },
+
+        /**
+         * Order relations.
+         */
         async newOrder({ ids, sortedItems }) {
             this.selectedRelations = sortedItems;
             let payload = {
@@ -377,6 +493,20 @@ export default {
 
     .fj-index-table {
         background-color: transparent;
+    }
+
+    &-tags {
+        border: $input-border-width solid $input-border-color;
+        border-radius: $input-border-radius;
+        padding: map-get($spacers, 3);
+        padding-top: 0;
+        width: 100%;
+    }
+
+    &-link {
+        a {
+            font-weight: 600;
+        }
     }
 
     @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {

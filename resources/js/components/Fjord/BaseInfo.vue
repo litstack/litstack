@@ -1,6 +1,6 @@
 <template>
     <fj-col :width="width">
-        <component :is="heading" v-html="title" />
+        <component :is="heading" v-html="title" v-if="title != ''" />
         <p
             :key="key"
             v-for="(info, key) in text"

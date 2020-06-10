@@ -7,7 +7,7 @@ use Fjord\Application\Application;
 use Fjord\Vue\Components\ColComponent;
 use Fjord\Vue\Components\CardComponent;
 use Fjord\Vue\Components\InfoComponent;
-use Fjord\Crud\Config\Traits\HasCrudForm;
+use Fjord\Crud\Config\Traits\HasCrudShow;
 use Fjord\User\Components\UsersComponent;
 use Fjord\Crud\Config\Traits\HasCrudIndex;
 use Fjord\Crud\Components\CrudFormComponent;
@@ -55,6 +55,8 @@ class FjordPackage extends Package
         Commands\FjordExtension::class,
         Commands\FjordComponents::class,
         Commands\FjordDefaultPermissions::class,
+
+        Commands\FjordUpgrade::class,
     ];
 
     /**
@@ -84,18 +86,12 @@ class FjordPackage extends Package
      * @var array
      */
     protected $configFactories = [
-        // Main
-        HasIndex::class => IndexConfigFactory::class,
-
         // Navigation
         NavigationConfig::class => NavigationConfigFactory::class,
 
         // Crud
-        HasCrudForm::class => CrudFormConfigFactory::class,
+        HasCrudShow::class => CrudFormConfigFactory::class,
         HasCrudIndex::class => CrudIndexConfigFactory::class,
-
-        // Users
-        User\Config\IndexConfig::class => UserIndexConfigFactory::class
     ];
 
     /**

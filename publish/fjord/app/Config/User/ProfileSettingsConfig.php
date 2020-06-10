@@ -2,20 +2,43 @@
 
 namespace FjordApp\Config\User;
 
-use Fjord\Crud\CrudForm;
+use Fjord\Crud\CrudShow;
 use Fjord\User\Models\FjordUser;
-use Fjord\Crud\Config\Traits\HasCrudForm;
+use Fjord\Crud\Config\CrudConfig;
+use FjordApp\Controllers\User\ProfileSettingsController;
 
-class ProfileSettingsConfig
+class ProfileSettingsConfig extends CrudConfig
 {
-    use HasCrudForm;
-
     /**
-     * FjordUser Model.
+     * Model class.
      *
      * @var string
      */
     public $model = FjordUser::class;
+
+    /**
+     * Controller class.
+     *
+     * @var string
+     */
+    public $controller = ProfileSettingsController::class;
+
+    /**
+     * Model singular and plural name.
+     *
+     * @return array
+     */
+    public function names()
+    {
+        $profileSettingsName = ucwords(__f('base.item_settings', [
+            'item' => __f('base.profile')
+        ]));
+
+        return [
+            'singular' => $profileSettingsName,
+            'plural' => $profileSettingsName,
+        ];
+    }
 
     /**
      * Route prefix.
@@ -24,84 +47,115 @@ class ProfileSettingsConfig
      */
     public function routePrefix()
     {
-        return fjord()->url('profile/settings');
+        return 'profile';
     }
 
     /**
-     * Setup profile settings.
+     * Setup create and edit form.
      *
-     * @param \Fjord\Crud\CrudForm $form
+     * @param \Fjord\Crud\CrudShow $form
      * @return void
      */
-    public function form(CrudForm $form)
+    public function show(CrudShow $container)
     {
-        $form->setRoutePrefix(
-            strip_slashes($this->routePrefix())
-        );
+        // settings
+        $container->info(ucwords(__f('base.general')))->width(4);
+        $container->card(fn ($form) => $this->settings($form))
+            ->width(8)->class('mb-5');
 
-        $form->info(ucwords(__f('base.general')))->width(4);
+        // language
+        $this->language($container);
 
-        $form->card(function ($form) {
+        // security
+        $container->info(ucwords(__f('base.security')))->width(4);
+        $container->card(fn ($form) => $this->security($form))->width(8);
+    }
 
-            $form->input('first_name')
-                ->width(6)
-                ->title(ucwords(__f('base.first_name')));
+    /**
+     * Profile settings.
+     *
+     * @param CrudShow $form
+     * @return void
+     */
+    public function settings($form)
+    {
+        $form->input('first_name')
+            ->width(6)
+            ->title(ucwords(__f('base.first_name')));
 
-            $form->input('first_name')
-                ->width(6)
-                ->title(ucwords(__f('base.first_name')));
+        $form->input('first_name')
+            ->width(6)
+            ->title(ucwords(__f('base.first_name')));
 
-            $form->modal('change_email')
-                ->title('E-Mail')
-                ->variant('primary')
-                ->preview('{email}')
-                ->name('Change E-Mail')
-                ->confirmWithPassword()
-                ->form(function ($modal) {
-                    $modal->input('email')
-                        ->width(12)
-                        ->rules('required')
-                        ->title('E-Mail');
-                })->width(6);
+        $form->modal('change_email')
+            ->title('E-Mail')
+            ->variant('primary')
+            ->preview('{email}')
+            ->name('Change E-Mail')
+            ->confirmWithPassword()
+            ->form(function ($modal) {
+                $modal->input('email')
+                    ->width(12)
+                    ->rules('required')
+                    ->title('E-Mail');
+            })->width(6);
 
-            $form->input('username')
-                ->width(6)
-                ->title(ucwords(__f('base.username')));
-        })->width(8)->class('mb-5');
+        $form->input('username')
+            ->width(6)
+            ->title(ucwords(__f('base.username')));
+    }
 
-        if (config('fjord.translatable.translatable')) {
-            $form->info(ucwords(__f('base.language')))->width(4)
-                ->text(__f('profile.messages.language'));
-            $form->card(function ($form) {
-                $form->component('fj-locales')->class('mb-4');
-            })->width(8)->class('mb-5');
+    /**
+     * Change language
+     *
+     * @param CrudShow $form
+     * @return void
+     */
+    public function language($form)
+    {
+        if (!config('fjord.translatable.translatable')) {
+            return;
         }
 
-        $form->info(ucwords(__f('base.security')))->width(4);
+        $form->info(ucwords(__f('base.language')))->width(4)
+            ->text(__f('profile.messages.language'));
 
-        $form->card(function ($form) {
-            $form->modal('change_password')
-                ->title('Password')
-                ->variant('primary')
-                ->name(fa('user-shield') . ' ' . __f('profile.change_password'))
-                ->form(function ($modal) {
-                    $modal->password('old_password')
-                        ->title('Old Password')
-                        ->confirm();
+        $form->card(fn ($form) => $form->component('fj-locales')->class('mb-4'))
+            ->width(8)
+            ->class('mb-5');
+    }
 
-                    $modal->password('password')
-                        ->title('New Password')
-                        ->rules('required', 'min:5')
-                        ->minScore(0);
+    /**
+     * User security.
+     * - Change password
+     * - Session manager
+     *
+     * @param CrudShow $container
+     * @return void
+     */
+    public function security($form)
+    {
+        $form->modal('change_password')
+            ->title('Password')
+            ->variant('primary')
+            ->name(fa('user-shield') . ' ' . __f('profile.change_password'))
+            ->form(function ($modal) {
+                $modal->password('old_password')
+                    ->title('Old Password')
+                    ->confirm();
 
-                    $modal->password('password_confirmation')
-                        ->rules('required', 'same:password')
-                        ->dontStore()
-                        ->title('New Password')
-                        ->noScore();
-                });
+                $modal->password('password')
+                    ->title('New Password')
+                    ->rules('required', 'min:5')
+                    ->minScore(0);
 
-            $form->component('fj-profile-security');
-        })->width(8);
+                $modal->password('password_confirmation')
+                    ->rules('required', 'same:password')
+                    ->dontStore()
+                    ->title('New Password')
+                    ->noScore();
+            });
+
+        $form->component('fj-profile-security');
     }
 }

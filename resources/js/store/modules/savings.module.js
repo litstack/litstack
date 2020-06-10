@@ -11,26 +11,41 @@ const initialState = {
 };
 
 const getters = {
+    saveJobs(state) {
+        return state.jobs;
+    },
     canSave(state) {
         return state.jobs.length > 0;
     }
 };
 
+export const methods = {
+    /**
+     * Merge params for job.
+     *
+     * @param {Object} job
+     * @return {*}
+     */
+    mergeParamsFromJob(job) {
+        let params = {};
+        for (let key in job.params) {
+            params = _.merge(params, job.params[key]);
+        }
+        return params;
+    }
+};
+
 export const actions = {
     async save({ commit, state }) {
-        // Run save jobs.
+        // Save jobs.
         let promises = [];
         for (let i = 0; i < state.jobs.length; i++) {
             let job = state.jobs[i];
-            let params = {};
-            for (let key in job.params) {
-                params = { ...params, ...job.params[key] };
-            }
 
             let promise = axios({
                 method: job.method,
                 url: job.route,
-                data: params
+                data: methods.mergeParamsFromJob(job)
             });
             promises.push(promise);
         }
@@ -121,5 +136,6 @@ export default {
     state,
     actions,
     mutations,
-    getters
+    getters,
+    methods
 };

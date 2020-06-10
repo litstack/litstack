@@ -2,13 +2,18 @@
 
 namespace Fjord\Vue;
 
+use Closure;
 use Exception;
 use ErrorException;
-use Fjord\Exceptions\InvalidArgumentException;
 use Fjord\Support\VueProp;
+use Fjord\Vue\Traits\Authorizable;
+use Fjord\Vue\Contracts\AuthorizableContract;
+use Fjord\Exceptions\InvalidArgumentException;
 
-class Col extends VueProp
+class Col extends VueProp implements AuthorizableContract
 {
+    use Authorizable;
+
     /**
      * Attributes.
      *
@@ -33,7 +38,7 @@ class Col extends VueProp
      * Set link.
      *
      * @param string|boolean $link
-     * @return self
+     * @return $this
      */
     public function link($link)
     {
@@ -45,7 +50,7 @@ class Col extends VueProp
     /**
      * Small column.
      *
-     * @return self
+     * @return $this
      */
     public function small()
     {
@@ -58,7 +63,7 @@ class Col extends VueProp
      * Set sort_by.
      *
      * @param string $key
-     * @return self
+     * @return $this
      */
     public function sortBy(string $key)
     {
@@ -71,7 +76,7 @@ class Col extends VueProp
      * Set label.
      *
      * @param string $label
-     * @return self
+     * @return $this
      */
     public function label(string $label)
     {
@@ -84,7 +89,7 @@ class Col extends VueProp
      * Regular expression for column value.
      *
      * @param string $regex
-     * @return void
+     * @return $this
      * 
      * @throws InvalidArgumentException
      */
@@ -110,7 +115,7 @@ class Col extends VueProp
      * Max characters for field
      *
      * @param boolean $strip
-     * @return void
+     * @return $this
      */
     public function stripHtml(bool $strip = true)
     {
@@ -123,7 +128,7 @@ class Col extends VueProp
      * Max characters for field
      *
      * @param int $max
-     * @return void
+     * @return $this
      */
     public function maxChars(int $max = 100)
     {
@@ -137,7 +142,7 @@ class Col extends VueProp
      *
      * @return array
      */
-    public function getArray(): array
+    public function render(): array
     {
         $this->checkComplete();
 

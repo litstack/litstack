@@ -2,10 +2,12 @@
 
 namespace Fjord\Crud\Fields;
 
-use Fjord\Crud\Field;
+use Fjord\Crud\BaseField;
 
-class Range extends Field
+class Range extends BaseField
 {
+    use Traits\FieldHasRules;
+
     /**
      * Field Vue component.
      *
@@ -14,37 +16,61 @@ class Range extends Field
     protected $component = 'fj-field-range';
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-        'min',
-        'max'
-    ];
+    public $required = ['min', 'max'];
 
     /**
-     * Available Field attributes.
+     * Set default attributes.
      *
-     * @var array
+     * @return void
      */
-    protected $available = [
-        'title',
-        'hint',
-        'step',
-        'min',
-        'max',
-    ];
+    public function setDefaultAttributes()
+    {
+        $this->setAttribute('step', 1);
+        $this->setAttribute('min', 1);
+    }
 
     /**
-     * Default Field attributes.
+     * Set step.
      *
-     * @var array
+     * @param integer $step
+     * @return $this
      */
-    protected $defaults = [
-        'step' => 1,
-    ];
+    public function step(int $step)
+    {
+        $this->setAttribute('step', $step);
+
+        return $this;
+    }
+
+    /**
+     * Set max.
+     *
+     * @param integer $max
+     * @return $this
+     */
+    public function max(int $max)
+    {
+        $this->setAttribute('max', $max);
+
+        return $this;
+    }
+
+    /**
+     * Set min.
+     *
+     * @param integer $min
+     * @return $this
+     */
+    public function min(int $min)
+    {
+        $this->setAttribute('min', $min);
+
+        return $this;
+    }
 
     /**
      * Cast field value.
@@ -54,6 +80,10 @@ class Range extends Field
      */
     public function cast($value)
     {
-        return (int) $value;
+        if (!is_numeric($value)) {
+            return 0;
+        }
+
+        return is_float($value) ? (float) $value : (int) $value;
     }
 }

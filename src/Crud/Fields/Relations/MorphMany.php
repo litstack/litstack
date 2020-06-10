@@ -2,11 +2,11 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
-use Fjord\Crud\ManyRelationField;
+use Fjord\Crud\Fields\Traits\HasBaseField;
 
 class MorphMany extends ManyRelationField
 {
-    use Concerns\ManagesRelation;
+    use HasBaseField;
 
     /**
      * Properties passed to Vue component.
@@ -22,7 +22,7 @@ class MorphMany extends ManyRelationField
      *
      * @var array
      */
-    protected $required = [
+    public $requiredAttributes = [
         'title',
         'model',
         'preview'
@@ -33,23 +33,8 @@ class MorphMany extends ManyRelationField
      *
      * @var array
      */
-    protected $available = [
-        'title',
-        'model',
-        'hint',
+    public $availableAttributes = [
         'form',
-        'query',
-        'preview',
-        'confirm',
-        'sortable',
-        'filter',
-        'relatedCols',
-        'small',
-        'perPage',
-        'searchable',
-        'tags',
-        'tagVariant',
-        'showTableHead'
     ];
 
     /**
@@ -57,32 +42,5 @@ class MorphMany extends ManyRelationField
      *
      * @var array
      */
-    protected $defaults = [
-        'confirm' => false,
-        'sortable' => false,
-        'relatedCols' => 12,
-        'small' => false,
-        'perPage' => 10,
-        'searchable' => false,
-        'tags' => false,
-        'tagVariant' => 'secondary'
-    ];
-
-    /**
-     * Set relation attributes.
-     *
-     * @param mixed $relation
-     * @return self
-     */
-    protected function setRelationAttributes($relation)
-    {
-        return;
-        if (!$this->getModelConfig($this->related)) {
-            $this->throwMissingConfigException();
-        }
-
-        $this->attributes['foreign_key'] = $relation->getForeignKeyName();
-        $this->attributes['morph_type_value'] = $this->model;
-        $this->attributes['morph_type'] = $relation->getMorphType();
-    }
+    public $defaultAttributes = [];
 }

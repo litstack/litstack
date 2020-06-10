@@ -2,15 +2,15 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
-use Closure;
-use Fjord\Crud\OneRelationField;
-use Fjord\Exceptions\InvalidArgumentException;
-
+use Fjord\Crud\Fields\Traits\HasBaseField;
 
 class MorphTo extends OneRelationField
 {
-    use Concerns\ManagesRelation;
+    use HasBaseField;
 
+    /**
+     * Id divider
+     */
     const ID_DIVIDER = '-';
 
     /**
@@ -23,50 +23,11 @@ class MorphTo extends OneRelationField
     ];
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-        'model',
-        'morphType',
-        'preview'
-    ];
-
-    /**
-     * Available Field attributes.
-     *
-     * @var array
-     */
-    protected $available = [
-        'title',
-        'model',
-        'hint',
-        'form',
-        'query',
-        'preview',
-        'confirm',
-        'filter',
-        'relatedCols',
-        'small',
-        'morphType'
-    ];
-
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    protected $defaults = [
-        'confirm' => false,
-        'sortable' => false,
-        'orderColumn' => 'order_column',
-        'relatedCols' => 12,
-        'small' => false,
-        'perPage' => 1,
-        'searchable' => false,
-    ];
+    public $required = [];
 
     /**
      * Create new Field instance.
@@ -77,23 +38,32 @@ class MorphTo extends OneRelationField
      */
     public function __construct(string $id, string $model, $routePrefix, $form)
     {
+        $dividedId = explode(static::ID_DIVIDER, $id);
+        $this->setAttribute('morphType', last($dividedId));
+        $id = $dividedId[0] . static::ID_DIVIDER . (new $this->morphType)->getTable();
+
         parent::__construct($id, $model, $routePrefix, $form);
 
-        $dividedId = explode(static::ID_DIVIDER, $this->id);
-        $this->setAttribute('morphType', last($dividedId));
-        $this->id = $dividedId[0] . static::ID_DIVIDER . (new $this->morphType)->getTable();
-        $this->local_key = $dividedId[0];
-
-        $this->initializeRelationField();
+        $this->setAttribute('local_key', $dividedId[0]);
     }
 
+    /**
+     * Get relation name.
+     *
+     * @return string
+     */
     public function getRelationName()
     {
         return explode(static::ID_DIVIDER, $this->id)[0];
     }
 
-
-    protected function getRelation($model)
+    /**
+     * Get relation
+     *
+     * @param mixed $model
+     * @return void
+     */
+    public function getRelationQuery($model)
     {
         $query = $model->{$this->getRelationName()}();
 

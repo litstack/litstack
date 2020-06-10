@@ -3,12 +3,12 @@
 namespace Fjord\Crud\Config;
 
 use Illuminate\Support\Str;
+use Fjord\Support\Facades\Crud;
 use Fjord\Crud\Models\FormField;
-use Fjord\Crud\Config\Traits\HasCrudForm;
 
-abstract class FormConfig
+class FormConfig
 {
-    use HasCrudForm;
+    use Traits\HasCrudShow;
 
     /**
      * Form field model class.
@@ -25,66 +25,59 @@ abstract class FormConfig
     public $controller;
 
     /**
-     * Form collection name.
-     *
-     * @var string
-     */
-    public $collection;
-
-    /**
-     * Form name, is used for routing.
-     *
-     * @var string
-     */
-    public $formName;
-
-    /**
-     * Set bootstrap container to fluid.
-     *
-     * @var boolean
-     */
-    public $expandContainer = false;
-
-    /**
      * Create new FormConfig instance.
      */
     public function __construct()
     {
         $this->model = FormField::class;
+    }
 
-        if ($this->collection) {
-            return;
-        }
-
-        // The collection property is used for the route. If the collection is 
-        // not specified in the config, it will be set to the lowercase folder 
-        // name of the collection.
+    /**
+     * Form collection name.
+     *
+     * @return string
+     */
+    public function collection()
+    {
         $split = explode(
             '\\',
             last(explode('Config\\Form\\', static::class))
         );
-        $this->collection = strtolower($split[0]);
+        return strtolower($split[0]);
     }
 
     /**
-     * Get crud route prefix.
+     * Form name.
      *
-     * @return string $route
+     * @return string
+     */
+    public function formName()
+    {
+        return Str::snake(str_replace('Config', '', class_basename(static::class)));
+    }
+
+    /**
+     * Form route prefix.
+     *
+     * @return string
      */
     public function routePrefix()
     {
-        $collection = strtolower($this->collection);
-        $formName = strtolower($this->formName);
+        $collection = $this->collection();
+        $formName = $this->formName();
         return "form/{$collection}/{$formName}";
     }
 
+    /**
+     * Form permissions for read and update.
+     *
+     * @return array
+     */
     public function permissions()
     {
-        $user = fjord_user();
-        $controller = new $this->controller;
         return [
-            'read' => $controller->authorize($user, 'read'),
-            'update' => $controller->authorize($user, 'update'),
+            'read' => Crud::authorize($this->controller, 'read'),
+            'update' => Crud::authorize($this->controller, 'update')
         ];
     }
 
@@ -96,7 +89,7 @@ abstract class FormConfig
     public function names()
     {
         return [
-            'singular' => ucfirst(Str::singular($this->formName))
+            'singular' => ucfirst(Str::singular($this->formName()))
         ];
     }
 

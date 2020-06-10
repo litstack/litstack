@@ -56,10 +56,7 @@ export default {
     },
     methods: {
         async loadSessions(payload) {
-            let response = await axios.get(
-                'profile/settings/sessions',
-                payload
-            );
+            let response = await axios.get('profile/sessions', payload);
             this.sessions = response.data.items;
 
             return response;

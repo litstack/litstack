@@ -2,12 +2,13 @@
 
 namespace Fjord\Crud\Fields;
 
-use Fjord\Crud\Field;
-use Fjord\Crud\Fields\Concerns\FieldHasRules;
+use Fjord\Crud\BaseField;
 
-class Input extends Field
+class Input extends BaseField
 {
-    use FieldHasRules;
+    use Traits\FieldHasRules,
+        Traits\TranslatableField,
+        Traits\FieldHasPlaceholder;
 
     /**
      * Field Vue component.
@@ -17,45 +18,73 @@ class Input extends Field
     protected $component = 'fj-field-input';
 
     /**
-     * Is field translatable.
-     *
-     * @var boolean
-     */
-    protected $translatable = true;
-
-    /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-    ];
+    public $required = [];
 
     /**
-     * Available Field attributes.
+     * Set max chars.
      *
-     * @var array
+     * @param integer $max
+     * @return $this
      */
-    protected $available = [
-        'max',
-        'title',
-        'placeholder',
-        'hint',
-        'type',
-        'prepend',
-        'append',
-        'rules',
-        'updateRules',
-        'creationRules',
-    ];
+    public function max(int $max)
+    {
+        $this->setAttribute('max', $max);
+
+        return $this;
+    }
 
     /**
-     * Default Field attributes.
+     * Set default attributes.
      *
-     * @var array
+     * @return void
      */
-    protected $defaults = [];
+    public function setDefaultAttributes()
+    {
+        $this->type('text');
+    }
+
+    /**
+     * Set append.
+     *
+     * @param string $prepend
+     * @return $this
+     */
+    public function append(string $append)
+    {
+        $this->setAttribute('append', $append);
+
+        return $this;
+    }
+
+    /**
+     * Set prepend.
+     *
+     * @param string $prepend
+     * @return $this
+     */
+    public function prepend(string $prepend)
+    {
+        $this->setAttribute('prepend', $prepend);
+
+        return $this;
+    }
+
+    /**
+     * Set input type.
+     *
+     * @param string $type
+     * @return $this
+     */
+    public function type(string $type)
+    {
+        $this->setAttribute('type', $type);
+
+        return $this;
+    }
 
     /**
      * Cast field value.

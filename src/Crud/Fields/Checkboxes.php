@@ -2,10 +2,12 @@
 
 namespace Fjord\Crud\Fields;
 
-use Fjord\Crud\Field;
+use Fjord\Crud\BaseField;
 
-class Checkboxes extends Field
+class Checkboxes extends BaseField
 {
+    use Traits\FieldHasRules;
+
     /**
      * Field Vue component.
      *
@@ -14,32 +16,24 @@ class Checkboxes extends Field
     protected $component = 'fj-field-checkboxes';
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-        'options'
-    ];
+    public $required = ['options'];
 
     /**
-     * Available Field attributes.
+     * Set options.
      *
-     * @var array
+     * @param array $options
+     * @return $this
      */
-    protected $available = [
-        'title',
-        'options',
-        'hint'
-    ];
+    public function options(array $options)
+    {
+        $this->setAttribute('options', $options);
 
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    protected $defaults = [];
+        return $this;
+    }
 
     /**
      * Cast field value.

@@ -18,7 +18,7 @@ trait ManagesHasMany
      */
     protected function createHasMany(CrudUpdateRequest $request, HasMany $field, $model, $relation)
     {
-        $hasMany = $field->relation($model, $query = true);
+        $hasMany = $field->getRelationQuery($model);
 
         $relation->{$hasMany->getForeignKeyName()} = $model->{$hasMany->getLocalKeyName()};
 
@@ -41,7 +41,7 @@ trait ManagesHasMany
      */
     protected function destroyHasMany(CrudUpdateRequest $request, HasMany $field, $model, $relation)
     {
-        $hasOne = $field->relation($model, $query = true);
+        $hasOne = $field->getRelationQuery($model);
 
         $relation->update([
             $hasOne->getForeignKeyName() => null

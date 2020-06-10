@@ -2,18 +2,12 @@
 
 namespace FjordApp\Config\Form\Pages;
 
-use Fjord\Crud\CrudForm;
-use App\Models\Department;
+use Fjord\Crud\CrudShow;
 use Fjord\Crud\Config\FormConfig;
-use Fjord\Vue\Crud\RelationTable;
-use Fjord\Crud\Config\Traits\HasCrudForm;
-use Fjord\Crud\Fields\Blocks\Repeatables;
 use FjordApp\Controllers\Form\Pages\HomeController;
 
 class HomeConfig extends FormConfig
 {
-    use HasCrudForm;
-
     /**
      * Controller class.
      *
@@ -22,11 +16,14 @@ class HomeConfig extends FormConfig
     public $controller = HomeController::class;
 
     /**
-     * Form name, is used for routing.
+     * Form route prefix.
      *
-     * @var string
+     * @return string
      */
-    public $formName = 'home';
+    public function routePrefix()
+    {
+        return "pages/home";
+    }
 
     /**
      * Form singular name. This name will be displayed in the navigation.
@@ -43,14 +40,15 @@ class HomeConfig extends FormConfig
     /**
      * Setup create and edit form.
      *
-     * @param \Fjord\Crud\CrudForm $form
+     * @param \Fjord\Crud\CrudShow $form
      * @return void
      */
-    public function form(CrudForm $form)
+    public function show(CrudShow $form)
     {
         $form->card(function ($form) {
 
             $form->input('title')
+                ->translatable()
                 ->title('Title');
 
             $form->markdown(\Illuminate\Support\Facades\File::get(fjord_path('resources/docs/form-loader-example.md')));

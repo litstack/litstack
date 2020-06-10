@@ -2,26 +2,31 @@
 
 namespace Fjord\Crud\Controllers;
 
+use Illuminate\Http\Request;
 use Fjord\Crud\Models\FormEdit;
 use Fjord\Crud\Models\FormField;
 use Fjord\User\Models\FjordUser;
-use Fjord\Crud\Fields\Blocks\Blocks;
+use Fjord\Crud\Fields\Block\Block;
 use Illuminate\Support\Facades\Route;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\FormReadRequest;
+use Illuminate\Database\Eloquent\Builder;
+use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 use Fjord\Crud\Requests\FormUpdateRequest;
 
 abstract class FormController
 {
-    use Api\CrudUpdate,
+    use Api\CrudBaseApi,
+        Api\CrudHasIndex,
         Api\CrudHasRelations,
-        Api\CrudHasBlocks,
+        Api\CrudHasBlock,
         Api\CrudHasMedia,
         Api\CrudHasOrder,
         Api\CrudHasModal,
-        Concerns\HasConfig,
-        Concerns\HasForm;
+        Concerns\ManagesConfig,
+        Concerns\ManagesForm,
+        Concerns\ManagesCrud;
 
     /**
      * Crud model class name.
@@ -31,13 +36,17 @@ abstract class FormController
     protected $model = FormField::class;
 
     /**
-     * Authorize request for operation.
+     * Authorize request for permission operation and authenticated fjord-user.
+     * Operations: read, update
      *
-     * @param FjordUser $user
+     * @param \Fjord\User\Models\FjordUser $user
      * @param string $operation
      * @return boolean
      */
-    abstract public function authorize(FjordUser $user, string $operation): bool;
+    public function authorize(FjordUser $user, string $operation): bool
+    {
+        return true;
+    }
 
     /**
      * Create new CrudController instance.
@@ -65,41 +74,13 @@ abstract class FormController
     }
 
     /**
-     * Get query builder
+     * Initial query.
      *
-     * @return Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query()
+    public function query(): Builder
     {
         return $this->model::query();
-    }
-
-    /**
-     * Update form_field.
-     *
-     * @param FormUpdateRequest $request
-     * @param int $id
-     * @return FormField $formField
-     */
-    public function update(CrudUpdateRequest $request, $id)
-    {
-        $formField = $this->query()->findOrFail($id);
-
-        $request->validate(
-            $this->config->form->getRules($request),
-            __f('validation'),
-            $this->fields()->mapWithKeys(function ($field) {
-                return [$field->local_key => $field->title];
-            })->toArray()
-        );
-
-        $formField->update(
-            $this->filterRequestAttributes($request, $this->fields())
-        );
-
-        $formField->load('last_edit');
-
-        return crud($formField);
     }
 
     /**
@@ -108,28 +89,20 @@ abstract class FormController
      * @param FormReadRequest $request
      * @return View $view
      */
-    public function edit(CrudReadRequest $request)
+    public function show(CrudReadRequest $request)
     {
-        // Getting collection and formName from route.
-        $routeSplit = explode('.', Route::currentRouteName());
-        array_pop($routeSplit);
-        $formName = array_pop($routeSplit);
-        $collection = last($routeSplit);
-
-        $configInstance = fjord()->config("form.{$collection}.{$formName}");
-
-        $config = $configInstance->get(
+        $config = $this->config->get(
             'names',
-            'form',
+            'show',
             'permissions',
             'route_prefix',
-            'expandContainer'
         );
-        $config['expand'] = $config['expandContainer'];
+        $config['form'] = $config['show'];
+        unset($config['show']);
 
         // Get preview route.
-        if ($configInstance->hasMethod('previewRoute')) {
-            $config['preview_route'] = $configInstance->previewRoute();
+        if ($this->config->hasMethod('previewRoute')) {
+            $config['preview_route'] = $this->config->previewRoute();
         }
 
         // Set readonly if the user has no update permission for this crud.
@@ -140,17 +113,38 @@ abstract class FormController
         }
 
         $model = FormField::firstOrCreate([
-            'collection' => $configInstance->collection,
-            'form_name' => $configInstance->formName,
+            'collection' => $this->config->collection,
+            'form_name' => $this->config->formName,
         ]);
 
         return view('fjord::app')->withComponent($this->config->component)
-            ->withTitle("Form " . $configInstance->names['singular'])
+            ->withTitle("Form " . $this->config->names['singular'])
             ->withProps([
                 'crud-model' => crud($model),
                 'config' => $config,
                 'header-components' => ['fj-crud-preview'],
                 'controls' => [],
             ]);
+    }
+
+    /**
+     * Deny storing form FormField model.
+     *
+     * @param  \Fjord\Crud\Requests\CrudCreateRequest  $request
+     * @return mixed
+     */
+    public function store(CrudCreateRequest $request)
+    {
+        //
+    }
+
+    /**
+     * Deny filling attributes to FormField Model.
+     *
+     * @return void
+     */
+    public function fillModelAttributes($model, $request, $fields)
+    {
+        return;
     }
 }

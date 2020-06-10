@@ -41,9 +41,9 @@ class TableComponent extends Component
      *
      * @return array
      */
-    public function getArray(): array
+    public function render(): array
     {
-        $array = parent::getArray();
+        $array = parent::render();
         unset($array['name']);
         $array['component'] = $this->name;
         $array = array_merge($array['props']->toArray(), $array);

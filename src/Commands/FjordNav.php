@@ -2,6 +2,7 @@
 
 namespace Fjord\Commands;
 
+use Closure;
 use Illuminate\Console\Command;
 use Fjord\Support\Facades\Package;
 
@@ -43,10 +44,13 @@ class FjordNav extends Command
 
             $packageName = Package::hasRootAccess($name) ? '' : $name;
             foreach ($package->getNavPresets() as $key => $preset) {
+                $link = $preset['link'] instanceof Closure
+                    ? $preset['link']()
+                    : $preset['link'];
                 $entries[] = [
                     'package' => $packageName,
                     'key' => $key,
-                    'link' => $preset['link']
+                    'link' => $link
                 ];
             }
         }

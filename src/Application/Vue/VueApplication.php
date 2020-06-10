@@ -35,7 +35,7 @@ class VueApplication
      * 
      * @var bool
      */
-    protected $hasBeenBuild = false;
+    protected $built = false;
 
     /**
      * Required props that need to be passed to fjord::app view.
@@ -75,7 +75,7 @@ class VueApplication
 
         $this->initializeComponent($this->props['component']);
 
-        $this->hasBeenBuild = true;
+        $this->built = true;
     }
 
     /**
@@ -125,8 +125,8 @@ class VueApplication
      */
     public function extend(Component $component)
     {
-        if (!$this->hasBeenBuild()) {
-            throw new Exception('Fjord Vue application cannot be extended if it has not been build.');
+        if (!$this->hasBeenBuilt()) {
+            throw new Exception('Fjord Vue application cannot be extended if it has not been built.');
         }
 
         foreach ($this->getExtensions($component) as $extension) {
@@ -248,20 +248,12 @@ class VueApplication
      */
     public function props()
     {
-
         $component = $this->component->toArray();
         $component['component'] = $component['name'];
         unset($component['name']);
 
-        $props = array_merge($this->props, $component->toArray());
+        $props = array_merge($this->props, $component);
 
-        /*
-        if ($this->component) {
-            $this->props['props'] = $this->component->getProps();
-            $this->props['slots'] = $this->component->getSlots();
-            $this->props['component'] = $this->component->getName();
-        }
-        */
         return $props;
     }
 
@@ -282,8 +274,8 @@ class VueApplication
      *
      * @return boolean
      */
-    protected function hasBeenBuild()
+    public function hasBeenBuilt()
     {
-        return $this->hasBeenBuild;
+        return $this->built;
     }
 }

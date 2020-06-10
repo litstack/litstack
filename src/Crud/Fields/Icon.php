@@ -2,10 +2,12 @@
 
 namespace Fjord\Crud\Fields;
 
-use Fjord\Crud\Field;
+use Fjord\Crud\BaseField;
 
-class Icon extends Field
+class Icon extends BaseField
 {
+    use Traits\FieldHasRules;
+
     /**
      * Field Vue component.
      *
@@ -14,45 +16,47 @@ class Icon extends Field
     protected $component = 'fj-field-icon';
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-    ];
-
-    /**
-     * Available Field attributes.
-     *
-     * @var array
-     */
-    protected $available = [
-        'title',
-        'hint',
-        'icons',
-        'search'
-    ];
-
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    protected $defaults = [
-        'search' => true
-    ];
+    public $required = [];
 
     /**
      * Set default attributes.
      *
      * @return void
      */
-    protected function setDefaults()
+    public function setDefaultAttributes()
     {
-        parent::setDefaults();
+        $this->icons(require fjord_path('src/Crud/Fields/Defaults/fontawesome_icons.php'));
+        $this->search(true);
+    }
 
-        $this->attributes['icons'] = require fjord_path('src/Crud/Fields/Defaults/fontawesome_icons.php');
+    /**
+     * Set search.
+     *
+     * @param boolean $search
+     * @return self
+     */
+    public function search(bool $search = true)
+    {
+        $this->setAttribute('search', $search);
+
+        return $this;
+    }
+
+    /**
+     * Set icons.
+     *
+     * @param array $icons
+     * @return self
+     */
+    public function icons(array $icons)
+    {
+        $this->setAttribute('icons', $icons);
+
+        return $this;
     }
 
     /**

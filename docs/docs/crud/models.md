@@ -141,19 +141,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-...
+// ...
 
-class Article extends Model implements HasMediaContract, TranslatableContract
+class Article extends Model
 {
-    use TrackEdits, HasMedia, Translatable;
-
     /**
-     * Setup Model:
+     * The attributes that are mass assignable.
      *
-     * Enter all fillable columns. Translated columns must also be set fillable.
-     * Don't forget to also set them fillable in the coresponding translation-model!
+     * @var array
      */
-    ...
+    protected $fillable = ['title', 'text'];
+
+    // ...
 }
 ```
 
@@ -179,7 +178,7 @@ Make sure the **Sluggable** trait and configuration are in the correct Model whe
 
 ## Controller (authorization)
 
-A controller has been created in which the authorization for all operations is specified. Operations can be `create`, `read`, `update`, `delete`.
+A controller has been created in which the authorization for all operations is specified. Operations can be `create`, `read`, `update` and `delete`.
 
 ```php
 public function authorize(FjordUser $user, string $operation): bool

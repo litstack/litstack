@@ -167,8 +167,9 @@ export default {
          */
         items(val) {
             this.sortableItems = this.items;
-            this.$forceUpdate();
+            //this.$forceUpdate();
         },
+
         /**
          * Watch selected items to set indeterminate for table header checkbox.
          */
@@ -246,7 +247,7 @@ export default {
             } else {
                 this.$emit('select', item);
             }
-            this.$forceUpdate();
+            //this.$forceUpdate();
         },
         sort(sort) {
             this.$emit('sort', sort);

@@ -19,7 +19,7 @@ trait ManagesMorphTo
      */
     protected function createMorphTo(CrudUpdateRequest $request, MorphTo $field, $model, $relation)
     {
-        $morphTo = $field->relation($model, $query = true);
+        $morphTo = $field->getRelationQuery($model);
 
         $model->{$morphTo->getMorphType()} = get_class($relation);
         $model->{$morphTo->getForeignKeyName()} = $relation->id;
@@ -38,7 +38,7 @@ trait ManagesMorphTo
      */
     protected function destroyMorphTo(CrudUpdateRequest $request, MorphTo $field, $model, $relation)
     {
-        $morphTo = $field->relation($model, $query = true);
+        $morphTo = $field->getRelationQuery($model);
 
         $model->{$morphTo->getMorphType()} = '';
         $model->{$morphTo->getForeignKeyName()} = NULL;

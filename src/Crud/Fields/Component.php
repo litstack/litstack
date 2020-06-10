@@ -18,45 +18,25 @@ class Component extends Field
     protected $component = 'fj-field-component';
 
     /**
-     * Is field translatable.
+     * Set default attributes.
      *
-     * @var boolean
+     * @return void
      */
-    protected $translatable = false;
-
-    /**
-     * Required attributes.
-     *
-     * @var array
-     */
-    protected $required = [
-        'comp',
-    ];
-
-    protected $available = [];
-
-    /**
-     * Create new info instance.
-     *
-     * @param string $id
-     * @param string $model
-     * @param string|null $routePrefix
-     */
-    public function __construct(string $id, string $model, $routePrefix, $form)
+    public function setDefaultAttributes()
     {
-        parent::__construct($id, $model, $routePrefix, $form);
-
-        $this->attributes['comp'] = component($id);
+        $this->setComponent($this->id);
     }
 
     /**
-     * Is field component.
+     * Set component.
      *
-     * @return boolean
+     * @param string $name
+     * @return void
      */
-    public function isComponent()
+    public function setComponent(string $name)
     {
-        return true;
+        $this->id = $name;
+        $this->setAttribute('comp', component($name));
     }
 
     /**

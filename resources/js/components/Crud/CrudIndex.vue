@@ -1,5 +1,5 @@
 <template>
-    <fj-container :fluid="config.expand ? 'fluid' : 'lg'">
+    <fj-container :fluid="config.index.expand ? 'fluid' : 'lg'">
         <fj-navigation :controls="slots.navControls">
             <b-button
                 size="md"
@@ -13,35 +13,28 @@
         </fj-navigation>
         <fj-header :title="config.names.plural">
             <div slot="actions" class="d-flex align-items-center">
-                <fj-slot
-                    v-for="(component, key) in slots.headerControls"
+                <b-button
+                    v-for="(button, key) in config.index.slots[
+                        'header-actions'
+                    ]"
                     :key="key"
-                    v-bind="component"
-                    :config="config"
-                />
+                    variant="transparent"
+                    class="mr-2"
+                >
+                    {{ button }}
+                </b-button>
             </div>
         </fj-header>
 
         <b-row>
-            <fj-col>
-                <fj-index-table
-                    ref="indexTable"
-                    :cols="config.index"
-                    :items="items"
-                    :count="count"
-                    :sortable="config.sortable"
-                    :order-column="config.orderColumn"
-                    :per-page="config.perPage"
-                    :load-items="loadItems"
-                    :name-singular="config.names.singular"
-                    :name-plural="config.names.plural"
-                    :sort-by="config.sortBy"
-                    :sort-by-default="config.sortByDefault"
-                    :filter="config.filter"
-                    :controls="slots.indexControls"
-                    @sorted="sorted"
-                />
-            </fj-col>
+            <component
+                v-for="(component, key) in config.index.components"
+                :key="key"
+                :is="component.name"
+                v-bind="component.props"
+                :slots="component.slots"
+                :config="config"
+            />
         </b-row>
     </fj-container>
 </template>
@@ -60,47 +53,13 @@ export default {
             type: Object
         }
     },
-    data() {
-        return {
-            items: [],
-            count: 0
-        };
-    },
+
     beforeMount() {
         this.$store.commit('SET_CONFIG', this.config);
     },
     computed: {
         ...mapGetters(['baseURL'])
     },
-    methods: {
-        async sorted({ sortedItems, ids }) {
-            this.items = sortedItems;
-            try {
-                let response = axios.post(`${this.config.route_prefix}/order`, {
-                    ids: ids
-                });
-            } catch (e) {
-                console.log(e);
-                return;
-            }
-
-            this.$bvToast.toast(this.__('fj.order_changed'), {
-                variant: 'success'
-            });
-        },
-        reload() {
-            this.$refs.indexTable.$emit('reload');
-        },
-        async loadItems(payload) {
-            let response = await axios.post(
-                `${this.config.route_prefix}/index`,
-                payload
-            );
-            this.items = this.crud(response.data.items);
-            this.count = response.data.count;
-
-            return response;
-        }
-    }
+    methods: {}
 };
 </script>

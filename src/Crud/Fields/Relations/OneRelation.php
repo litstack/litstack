@@ -2,12 +2,12 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
-use Fjord\Crud\Models\FormField;
-use Fjord\Crud\OneRelationField;
+use Fjord\Crud\Fields\Traits\HasBaseField;
 
 class OneRelation extends OneRelationField
 {
-    use Concerns\ManagesRelation;
+    use Concerns\ManagesFjordRelationField,
+        HasBaseField;
 
     /**
      * Properties passed to Vue component.
@@ -19,46 +19,11 @@ class OneRelation extends OneRelationField
     ];
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-        'model',
-        'preview',
-    ];
-
-    /**
-     * Available Field attributes.
-     *
-     * @var array
-     */
-    protected $available = [
-        'title',
-        'model',
-        'form',
-        'hint',
-        'query',
-        'preview',
-        'confirm',
-        'filter',
-        'relatedCols',
-        'small',
-    ];
-
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    protected $defaults = [
-        'confirm' => true,
-        'relatedCols' => 12,
-        'small' => false,
-        'perPage' => 1,
-        'searchable' => false,
-    ];
+    public $required = ['model'];
 
     /**
      * Get relation for model.
@@ -67,36 +32,14 @@ class OneRelation extends OneRelationField
      * @param boolean $query
      * @return mixed
      */
-    protected function getRelation($model)
+    public function getRelationQuery($model)
     {
         if (method_exists($model, $this->id)) {
-            return parent::getRelation($model);
+            return parent::getRelationQuery($model);
         }
 
         return $this->modifyQuery(
-            $model->oneRelation($this->related, $this->id)
+            $model->oneRelation($this->getRelatedModelClass(), $this->id)
         );
-    }
-
-    /**
-     * Set related model.
-     *
-     * @param string $mode
-     * @return void
-     */
-    public function model(string $model)
-    {
-        $this->related = $model;
-
-        $this->loadRelatedConfig($model);
-        $this->setRelation();
-
-        $this->attributes['model'] = $model;
-
-        if (!$this->query) {
-            $this->query = $model::query();
-        }
-
-        return $this;
     }
 }

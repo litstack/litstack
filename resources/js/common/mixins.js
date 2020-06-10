@@ -12,11 +12,13 @@ export default {
     /**
      * Formats string with values.
      * Example:
-     * string: 'Search {name}',
-     * values: {name: "Employees"}
+     *      string: "Search {name}",
+     *      values: {name: "Employees"}
+     *      returns: "Search Employees"
      *
      * @param {String} string
      * @param {Object} values
+     * @return {String}
      */
     _format(string, values) {
         let messages = { f: { s: string } };
@@ -31,6 +33,16 @@ export default {
                 values
             )
         );
+    },
+
+    /**
+     * Check if the authenticated user has a permission.
+     *
+     * @param {String} permission
+     * @return {Boolean}
+     */
+    can(permission) {
+        return store.getters.permissions.includes(permission);
     },
 
     /**

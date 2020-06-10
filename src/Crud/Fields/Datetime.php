@@ -3,11 +3,13 @@
 namespace Fjord\Crud\Fields;
 
 use Carbon\CarbonInterface;
-use Fjord\Crud\Field;
+use Fjord\Crud\BaseField;
 use Illuminate\Support\Carbon;
 
-class Datetime extends Field
+class Datetime extends BaseField
 {
+    use Traits\FieldHasRules;
+
     /**
      * Field Vue component.
      *
@@ -16,38 +18,62 @@ class Datetime extends Field
     protected $component = 'fj-field-date-time';
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-    ];
+    public $required = [];
 
     /**
-     * Available Field attributes.
+     * Set default attributes
      *
-     * @var array
+     * @return void
      */
-    protected $available = [
-        'title',
-        'hint',
-        'formatted',
-        'inline',
-        'only_date'
-    ];
+    public function setDefaultAttributes()
+    {
+        $this->formatted('llll');
+        $this->inline(false);
+        $this->onlyDate(true);
+    }
 
     /**
-     * Default Field attributes.
+     * Set formatted.
      *
-     * @var array
+     * @param string $format
+     * @return $this
      */
-    protected $defaults = [
-        'formatted' => 'llll',
-        'no_label' => false,
-        'inline' => false,
-        'only_date' => true
-    ];
+    public function formatted(string $format)
+    {
+        $this->setAttribute('formatted', $format);
+
+        return $this;
+    }
+
+    /**
+     * Set inline.
+     *
+     * @param boolean $inline
+     * @return $this
+     */
+    public function inline(bool $inline = true)
+    {
+        $this->setAttribute('inline', $inline);
+
+        return $this;
+    }
+
+    /**
+     * Set only date.
+     *
+     * @param boolean $date
+     * @return $this
+     */
+    public function onlyDate(bool $date = true)
+    {
+        $this->setAttribute('only_date', $date);
+
+        return $this;
+    }
 
     /**
      * Cast field value.

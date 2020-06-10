@@ -1,12 +1,14 @@
 <template>
-    <fj-form-item :field="field" :model="model" :value="fileCount">
+    <fj-base-field :field="field" :model="model" :value="fileCount">
         <template v-if="model.id">
             <div class="w-100">
+                <!--
                 <fj-field-alert-empty
                     v-if="images.length == 0"
                     :field="field"
                     :class="{ 'mb-0': field.readonly }"
                 />
+                -->
                 <b-row>
                     <div class="col-12 order-1">
                         <fj-field-media-images
@@ -86,7 +88,7 @@
         <template v-else>
             <fj-field-alert-not-created :field="field" class="mb-0" />
         </template>
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>
@@ -127,7 +129,6 @@ export default {
                 maxFiles: this.field.maxFiles,
                 method: 'POST',
                 paramName: 'media',
-                acceptedFiles: 'image/*, application/pdf',
                 dictDefaultMessage: `<i class="fas fa-file-import d-block"></i> ${this.__(
                     'fj.drag_and_drop'
                 )}`,
@@ -151,6 +152,10 @@ export default {
         this.media = this.model[this.field.id] || [];
 
         this.dropzoneOptions.url = this.getUploadUrl();
+
+        if (this.field.accept !== true && this.field.accept !== undefined) {
+            this.dropzoneOptions.acceptedFiles = this.field.accept;
+        }
 
         this.images = this.media;
         // TODO: FIX FOR BLOCK
@@ -235,7 +240,23 @@ export default {
             this.busy = false;
         },
         uploadError(file, errorMessage, xhr) {
-            this.$bvToast.toast(errorMessage.message, {
+            this.dropzone.removeAllFiles();
+            if (typeof errorMessage == 'object') {
+                console.log('OBject');
+                if ('errors' in errorMessage) {
+                    if ('media' in errorMessage.errors) {
+                        for (let i in errorMessage.errors.media) {
+                            console.log('HI', i, errorMessage.errors.media);
+                            this.$bvToast.toast(errorMessage.errors.media[i], {
+                                variant: 'danger'
+                            });
+                        }
+                        return;
+                    }
+                }
+            }
+
+            this.$bvToast.toast(errorMessage, {
                 variant: 'danger'
             });
         },
@@ -244,11 +265,14 @@ export default {
                 this.dropzone.processQueue();
             });
         },
+
         transformFile(file, done) {
+            console.log(file);
             // If image doesn't require cropping, return bare image
             //
             //
-            if (this.field.crop === false) {
+            console.log(file);
+            if (this.field.crop === false || this.field.crop === undefined) {
                 done(file);
                 return;
             }
@@ -342,8 +366,12 @@ export default {
 .dz-error-message {
     display: none !important;
 }
+.dz-preview {
+    display: none !important;
+}
 
 div#fjord-app .fj-dropzone {
+    min-height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
