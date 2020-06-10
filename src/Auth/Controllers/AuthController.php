@@ -42,6 +42,8 @@ class AuthController extends Controller
      */
     public function authenticate(Request $request)
     {
+        $request->validate($this->getAuthenticationRules(), __f('validation'));
+
         $credentials = $request->only('email', 'password');
         $remember = $request->remember == 'on' || $request->remember;
 
@@ -61,6 +63,27 @@ class AuthController extends Controller
         return response()->json([
             'message' => __f('login.failed')
         ], 401);
+    }
+
+    /**
+     * Get authentication validation rules.
+     *
+     * @return array
+     */
+    public function getAuthenticationRules()
+    {
+        $rules = [
+            'email' => 'required',
+            'password' => 'required'
+        ];
+
+        if (config('fjord.login.username')) {
+            return $rules;
+        }
+
+        $rules['email'] .= '|email:rfc,dns';
+
+        return $rules;
     }
 
     /**

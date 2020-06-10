@@ -2,7 +2,7 @@
 
 [[toc]]
 
-In the `form` function of a **Form** or a **CRUD** config all components and fields are configured for editing the data.
+In the `show` method of a **Form** or a **CRUD** config all components and fields are configured for editing the data.
 
 ```php
 use Fjord\Crud\CrudShow;

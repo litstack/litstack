@@ -17,7 +17,7 @@ class File extends MediaField
     public function setDefaultAttributes()
     {
         $this->setAttribute('type', 'file');
-        $this->fileSize(12);
+        $this->maxFileSize(12);
         $this->maxFiles(5);
         $this->override(false);
         $this->sortable(true);

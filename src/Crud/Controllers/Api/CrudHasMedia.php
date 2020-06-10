@@ -46,7 +46,7 @@ trait CrudHasMedia
         }
 
         $request->validate([
-            'media' => 'required|max:' . $field->fileSize * 1000
+            'media' => 'required|max:' . $field->maxFileSize * 1000
         ], __f('validation'), [
             'media' => $field->title
         ]);
