@@ -59,7 +59,7 @@ class FjordUpgrade extends Command
             $this->line('Replaced ' . base_path('fjord/app/Config/User/ProfileSettingsConfig.php'));
             $this->line('Published ' . base_path('fjord/app/Config/User/UserConfig.php'));
             File::copy(fjord_path('publish/fjord/app/Config/User/ProfileSettingsConfig.php'), base_path('fjord/app/Config/User/ProfileSettingsConfig.php'));
-            File::delete(fjord_path('publish/fjord/app/Config/User/UserIndexConfig.php'));
+            File::delete(base_path('fjord/app/Config/User/UserIndexConfig.php'));
             File::copy(fjord_path('publish/fjord/app/Config/User/UserConfig.php'), base_path('fjord/app/Config/User/UserConfig.php'));
         }
 
