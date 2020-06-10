@@ -43,10 +43,9 @@ trait CrudBaseApi
     public function store(CrudCreateRequest $request, $form_name)
     {
         $form = $this->getForm($form_name) ?: abort(404);
-        //$this->validate($request, $form);
-        //dd($form->getRegisteredFields());
+        $this->validate($request, $form);
+
         $attributes = $this->filterRequestAttributes($request, $form->getRegisteredFields());
-        dd($attributes);
 
         if ($this->config->sortable) {
             $attributes[$this->config->orderColumn] = $this->query()->count() + 1;

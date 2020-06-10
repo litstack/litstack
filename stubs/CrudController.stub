@@ -22,9 +22,10 @@ class DummyClassname extends CrudController
      *
      * @param FjordUser $user
      * @param string $operation
+     * @param integer $id
      * @return boolean
      */
-    public function authorize(FjordUser $user, string $operation): bool
+    public function authorize(FjordUser $user, string $operation, $id = null): bool
     {
         return $user->can("{$operation} DummyTableName");
     }
