@@ -18,10 +18,11 @@ class MorphTypeManager
 
     protected $form;
 
-    public function __construct(string $id, BaseForm $form)
+    public function __construct(string $id, BaseForm $form, $selectId)
     {
         $this->id  = $id;
         $this->form = $form;
+        $this->selectId = $selectId;
     }
 
     /**
@@ -32,20 +33,13 @@ class MorphTypeManager
      */
     public function to(string $model)
     {
-        $config = Crud::config($model);
-
-        if (!$config->permissions['read']) {
-            return;
-        }
-
         $idDivider = MorphTo::ID_DIVIDER;
         $morphId = "{$this->id}{$idDivider}{$model}";
-        $field = $this->form->registerField(MorphTo::class, $morphId);
+        $field = $this->form
+            ->registerField(MorphTo::class, $morphId)
+            ->dependsOn($this->selectId, $model);
 
-        $this->types[$model] = collect([
-            'name' => $config->names['singular'],
-            'field' => $field
-        ]);
+        $this->types[$model] = $field;
 
         return $field;
     }

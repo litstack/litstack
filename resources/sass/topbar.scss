@@ -25,15 +25,14 @@ div#fjord-app nav.fj-topbar {
                 height: 15px;
             }
 
-            transition: .2s all ease-in;
+            transition: 0.2s all ease-in;
 
-            opacity: .6;
+            opacity: 0.6;
 
             &:hover {
                 opacity: 1;
             }
         }
-
 
         .show {
             opacity: 1;
@@ -48,6 +47,7 @@ div#fjord-app nav.fj-topbar {
         background-color: $topbar-dropdown-bg;
         min-width: $topbar-dropdown-width;
         font-size: $font-size-sm;
+        z-index: $zindex-fixed + 1;
 
         .dropdown-header {
             color: $gray-200;
