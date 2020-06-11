@@ -53,10 +53,17 @@ class FieldWysiwygTest extends BackendTestCase
     /** @test */
     public function test_css_method()
     {
-        $this->field->css('dummypath');
-        $this->assertEquals('dummypath', $this->field->getAttribute('css'));
+        $this->field->css(__DIR__ . '/wysiwyg.css');
+        $this->assertStringContainsString("dummycss", $this->field->getAttribute('css'));
 
         // Assert method returns field instance.
-        $this->assertEquals($this->field, $this->field->css('dummypath'));
+        $this->assertEquals($this->field, $this->field->css(__DIR__ . '/wysiwyg.css'));
+    }
+
+    /** @test */
+    public function test_css_method_throws_exception_for_not_existing_path()
+    {
+        $this->expectException(\Illuminate\Contracts\Filesystem\FileNotFoundException::class);
+        $this->field->css('other_path');
     }
 }
