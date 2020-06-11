@@ -75,8 +75,10 @@ trait ManagesCrud
             if (!array_key_exists($field->local_key, $attributes)) {
                 continue;
             }
+
             // Format value before update.
             if (method_exists($field, 'format')) {
+
                 $attributes[$field->local_key] = $field->format(
                     $attributes[$field->local_key]
                 );

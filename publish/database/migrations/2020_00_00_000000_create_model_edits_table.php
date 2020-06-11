@@ -21,7 +21,10 @@ class CreateModelEditsTable extends Migration
             $table->text('payload');
             $table->timestamp('created_at');
 
-            $table->foreign('fjord_user_id')->references('id')->on('fjord_users');
+            $table->foreign('fjord_user_id')
+                ->references('id')
+                ->on('fjord_users')
+                ->onDelete('cascade');
         });
     }
 

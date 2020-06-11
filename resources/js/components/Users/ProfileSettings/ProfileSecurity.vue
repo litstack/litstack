@@ -1,5 +1,5 @@
 <template>
-    <b-col cols="12" class="profile-security">
+    <fj-col :width="12">
         <fj-index-table
             :items="sessions"
             :cols="tableCols"
@@ -13,7 +13,7 @@
                 <h5>{{ __('profile.logged_in_devices').capitalizeAll() }}</h5>
             </template>
         </fj-index-table>
-    </b-col>
+    </fj-col>
 </template>
 
 <script>

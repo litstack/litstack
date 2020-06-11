@@ -44,29 +44,28 @@ class MorphToRegistrar extends LaravelRelationField
      */
     public function morphTypes(Closure $closure)
     {
-        if (!array_key_exists('title', $this->attributes)) {
-            throw new InvalidArgumentException('You may set a title before defining morph types.', [
-                'function' => 'types'
-            ]);
-        }
-
         $this->setAttribute('morphTypes', []);
 
-        $morph = new MorphTypeManager($this->id, $this->formInstance);
+        $selectId = (new $this->model)->{$this->id}()->getMorphType();
+
+        $select = $this->formInstance->select($selectId)
+            ->title(__f('base.item_select', ['item' => $this->title]))
+            ->storable(false);
+
+        $morph = new MorphTypeManager($this->id, $this->formInstance, $selectId);
+
         $closure($morph);
 
         $options = [];
         foreach ($morph->getTypes() as $class => $morphType) {
-            $options[$class] = $morphType['name'];
+            $options[$class] = $morphType->names['singular'];
         }
 
-        $selectId = (new $this->model)->{$this->id}()->getMorphType();
+        $select->options($options);
 
-        $this->formInstance->select($selectId)
-            ->title(__f('base.item_select', ['item' => $this->title]))
-            ->options($options)
-            ->storable(false);
         $this->setAttribute('morphTypes', $morph->getTypes());
+
+        //dd($this->formInstance->getRegisteredFields());
     }
 
     /**

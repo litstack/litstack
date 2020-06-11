@@ -51,15 +51,6 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
     ];
 
     /**
-     * Eager loads.
-     *
-     * @var array
-     */
-    protected $with = [
-        //'ordered_roles'
-    ];
-
-    /**
      * Send password reset notification.
      *
      * @param string $token

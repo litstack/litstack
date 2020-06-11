@@ -70,7 +70,7 @@ module.exports = {
                 link: '/docs/getting-started/installation'
             },
             { text: '🕹 Demo', link: 'https://demo.fjord-admin.com/admin' },
-            { text: 'Discord', link: 'https://discord.gg/J8Ed5B' }
+            { text: 'Discord', link: 'https://discord.gg/u4qpb5P' }
         ],
         sidebar: {
             '/': [

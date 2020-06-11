@@ -12,9 +12,10 @@ trait InteractsWithFields
      * @param string $fieldClass
      * @param string $id
      * @param string $model
+     * @param mixed|null $form
      * @return mixed
      */
-    public function getField(string $fieldClass, string $id = 'dummy_field', string $model = null)
+    public function getField(string $fieldClass, string $id = 'dummy_field', string $model = null, $form = null)
     {
         if (!$model) {
             $model = DummyFieldModel::class;
@@ -23,7 +24,7 @@ trait InteractsWithFields
             $id,
             $model,
             'dummy_route_prefix',
-            new DummyFieldForm
+            $form ? $form : new DummyFieldForm
         );
     }
 }

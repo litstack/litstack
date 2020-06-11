@@ -685,7 +685,7 @@ mark,
 }
 
 .blockquote-footer::before {
-  content: "— ";
+  content: "\2014\A0";
 }
 
 .img-fluid {
@@ -2395,11 +2395,6 @@ pre code {
   border-color: #c0c3fb;
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(73, 81, 242, 0.25);
-}
-
-.form-control::-webkit-input-placeholder {
-  color: #676569;
-  opacity: 1;
 }
 
 .form-control::-moz-placeholder {
@@ -15189,6 +15184,24 @@ input[type=color].form-control:disabled {
   height: 100%;
 }
 
+@media (max-width: 992px) {
+  .modal .modal-dialog {
+    margin: 0;
+    height: 100vh;
+  }
+
+  .modal .modal-content {
+    border-radius: 0;
+    position: fixed;
+    bottom: 0;
+  }
+
+  .modal .modal-body {
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+}
+
 .pagination .page-link {
   width: 2.5rem;
   height: 2.5rem;
@@ -15344,12 +15357,12 @@ input[type=color].form-control:disabled {
 }
 
 .b-toast-success .toast-body::before {
-  content: "";
+  content: "\F058";
   color: #9ff2ae;
 }
 
 .b-toast-danger .toast-body::before {
-  content: "";
+  content: "\F057";
   color: #f67693;
 }
 
@@ -15359,22 +15372,22 @@ input[type=color].form-control:disabled {
 }
 
 .b-toast-primary .toast-body::before {
-  content: "";
+  content: "\F05A";
   color: #4951f2;
 }
 
 .b-toast-secondary .toast-body::before {
-  content: "";
+  content: "\F05A";
   color: #cfd9e2;
 }
 
 .b-toast-warning .toast-body::before {
-  content: "";
+  content: "\F06A";
   color: #f6ed76;
 }
 
 .b-toast-info .toast-body::before {
-  content: "";
+  content: "\F05A";
   color: #4951f2;
 }
 
@@ -15387,6 +15400,12 @@ textarea.form-control {
   font-size: 0.9rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+blockquote {
+  font-family: serif;
+  padding-left: 1rem;
+  border-left: 0.1rem solid #70859c;
 }
 
 .fj-block {
@@ -15683,6 +15702,7 @@ div#fjord-app nav.fj-topbar .dropdown-menu {
   background-color: #2a353f;
   min-width: 300px;
   font-size: 0.9rem;
+  z-index: 1031;
 }
 
 div#fjord-app nav.fj-topbar .dropdown-menu .dropdown-header {

@@ -7,6 +7,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use FjordTest\TestSupport\Models\Post;
 use FjordTest\Traits\InteractsWithCrud;
+use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
@@ -23,6 +24,7 @@ class ApiMediaTest extends BackendTestCase
     {
         parent::setUp();
 
+        Storage::fake();
         $this->post = Post::create([]);
         $this->actingAs($this->admin, 'fjord');
     }
@@ -91,15 +93,12 @@ class ApiMediaTest extends BackendTestCase
     /** @test */
     public function it_uploads_single_image()
     {
-        return $this->markTestSkipped(
-            'Media upload test is not working for validated request.'
-        );
         $this->assertNull($this->post->test_image);
 
         $url = $this->getCrudRoute("/{$this->post->id}/show/media");
         $response = $this->post($url, [
             'collection' => 'test_image',
-            'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
+            'media' => UploadedFile::fake()->image('test_png.png'),
         ]);
         $response->assertStatus(200);
 
@@ -111,13 +110,10 @@ class ApiMediaTest extends BackendTestCase
     /** @test */
     public function it_can_destroy_image()
     {
-        return $this->markTestSkipped(
-            'Media upload test is not working for validated request.'
-        );
         $url = $this->getCrudRoute("/{$this->post->id}/show/media");
         $response = $this->post($url, [
             'collection' => 'test_image',
-            'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
+            'media' => UploadedFile::fake()->image('test_png.png'),
         ]);
         $response->assertStatus(200);
 
@@ -127,26 +123,23 @@ class ApiMediaTest extends BackendTestCase
         $url = $this->getCrudRoute("/{$this->post->id}/show/media");
         $response = $this->post($url, [
             'collection' => 'test_image',
-            'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
+            'media' => UploadedFile::fake()->image('test_png.png'),
         ]);
     }
 
     /** @test */
     public function it_cannot_upload_multiple_images_when_maxFiles_one()
     {
-        return $this->markTestSkipped(
-            'Media upload test is not working for validated request.'
-        );
         $url = $this->getCrudRoute("/{$this->post->id}/show/media");
         $response = $this->post($url, [
             'collection' => 'test_image',
-            'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
+            'media' => UploadedFile::fake()->image('test_png.png'),
         ]);
         $response->assertStatus(200);
 
         $response = $this->post($url, [
             'collection' => 'test_image',
-            'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
+            'media' => UploadedFile::fake()->image('test_png.png'),
         ]);
         $response->assertStatus(405);
     }
@@ -154,25 +147,22 @@ class ApiMediaTest extends BackendTestCase
     /** @test */
     public function test_image_upload_for_maxFiles_greate_than_one()
     {
-        return $this->markTestSkipped(
-            'Media upload test is not working for validated request.'
-        );
         $url = $this->getCrudRoute("/{$this->post->id}/show/media");
         $response = $this->post($url, [
             'collection' => 'test_images',
-            'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
+            'media' => UploadedFile::fake()->image('test_png.png'),
         ]);
         $response->assertStatus(200);
 
         $response = $this->post($url, [
             'collection' => 'test_images',
-            'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
+            'media' => UploadedFile::fake()->image('test_png.png'),
         ]);
         $response->assertStatus(200);
 
         $response = $this->post($url, [
             'collection' => 'test_images',
-            'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
+            'media' => UploadedFile::fake()->image('test_png.png'),
         ]);
         $response->assertStatus(405);
     }

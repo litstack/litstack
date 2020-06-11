@@ -17,6 +17,7 @@ use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Crud\Fields\Relations\BelongsToMany;
 use Fjord\Crud\Fields\Relations\OneRelationField;
 use Fjord\Crud\Fields\Relations\LaravelRelationField;
+use Illuminate\Database\Eloquent\Collection;
 
 trait CrudHasRelations
 {
@@ -46,6 +47,7 @@ trait CrudHasRelations
 
         $this->validateRelationField($relationField);
 
+
         $index = IndexTable::query($relationField->getQuery())
             ->request($request)
             ->search($relationField->search)
@@ -60,27 +62,27 @@ trait CrudHasRelations
      * Fetch existing relations.
      *
      * @param CrudReadRequest $request
-     * @param string|integer $identifier
+     * @param string|integer $id
      * @param string $form_name
      * @param int $field_id
      * @return void
      */
-    public function loadRelations(CrudReadRequest $request, $identifier, $form_name, $relation)
+    public function loadRelations(CrudReadRequest $request, $id, $form_name, $relation)
     {
         $relationField = $this->getForm($form_name)->findField($relation) ?? abort(404);
-        $model = $this->findOrFail($identifier);
+        $model = $this->findOrFail($id);
 
         $this->validateRelationField($relationField);
 
-        $query = $relationField->getRelationQuery($model, $query = true);
-
         if ($relationField instanceof OneRelationField) {
-            $items = $query->get();
+            $items = $relationField->getResults($model);
+            $items = new Collection($items ? [$items] : []);
             $relations = collect([
-                'count' => $items->count(),
+                'count' => 0,
                 'items' => $items
             ]);
         } else {
+            $query = $relationField->getRelationQuery($model);
             $relations = IndexTable::query($query)
                 ->request($request)
                 ->search($relationField->search)

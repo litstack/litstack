@@ -2,10 +2,7 @@
 
 namespace Fjord\User;
 
-use Fjord\Support\Facades\Crud;
-use Fjord\Support\Facades\Config;
 use Fjord\Support\Facades\Package;
-use Fjord\Support\Facades\FjordRoute;
 use Illuminate\Support\Facades\Route;
 use Fjord\User\Controllers\ProfileController;
 use Fjord\User\Controllers\FjordUserController;
@@ -13,7 +10,11 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRoute
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
-
+    /**
+     * Bootstrap the application services.
+     *
+     * @return void
+     */
     public function boot()
     {
         $this->package = Package::get('aw-studio/fjord');
@@ -35,8 +36,16 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         if (!$config = fjord()->config('user.profile_settings')) {
             return;
         }
+
         $this->package->addNavPreset('profile', [
-            'link' => fn () => fjord()->url("$config->route_prefix/" . fjord_user()->id),
+            'link' => function () use ($config) {
+                $id = app()->runningInConsole()
+                    ? '{user_id}'
+                    : fjord_user()->id;
+                return fjord()->url(
+                    "$config->route_prefix/{$id}"
+                );
+            },
             'title' => __f('fj.profile'),
             'icon' => fa('user-cog'),
         ]);

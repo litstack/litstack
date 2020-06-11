@@ -15,6 +15,9 @@ return [
             'messages' => [
                 'confirm_unlink' => 'Bitte bestätigen Sie, dass Sie die Verknüpfung aufheben möchten.',
             ]
+        ],
+        'wysiwyg' => [
+            'new_window' => 'Link in neuem Fenster öffnen'
         ]
     ]
 ];
