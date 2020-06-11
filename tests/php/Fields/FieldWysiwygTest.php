@@ -37,4 +37,26 @@ class FieldWysiwygTest extends BackendTestCase
     {
         $this->assertInstanceOf(BaseField::class, $this->field);
     }
+
+    /** @test */
+    public function test_colors_method()
+    {
+        $this->field->colors('red', 'green');
+        $this->assertEquals(['red', 'green'], $this->field->getAttribute('colors'));
+        $this->field->colors(['red', 'green']);
+        $this->assertEquals(['red', 'green'], $this->field->getAttribute('colors'));
+
+        // Assert method returns field instance.
+        $this->assertEquals($this->field, $this->field->colors('red'));
+    }
+
+    /** @test */
+    public function test_css_method()
+    {
+        $this->field->css('dummypath');
+        $this->assertEquals('dummypath', $this->field->getAttribute('css'));
+
+        // Assert method returns field instance.
+        $this->assertEquals($this->field, $this->field->css('dummypath'));
+    }
 }
