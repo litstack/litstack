@@ -24,6 +24,7 @@ export default {
      * @return {Object}
      */
     render(createElement) {
+        console.log(this.field.id, this.shouldRender);
         if (!this.shouldRender) {
             return;
         }
@@ -135,6 +136,7 @@ export default {
             this.fillValueToModel(newValue);
             this.addSaveJob();
             this.$emit('changed');
+            Fjord.bus.$emit('fieldChanged', this.field.local_key);
         },
 
         /**

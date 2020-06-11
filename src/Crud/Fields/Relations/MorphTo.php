@@ -39,12 +39,18 @@ class MorphTo extends OneRelationField
     public function __construct(string $id, string $model, $routePrefix, $form)
     {
         $dividedId = explode(static::ID_DIVIDER, $id);
+        $this->relatedModelClass = last($dividedId);
         $this->setAttribute('morphType', last($dividedId));
         $id = $dividedId[0] . static::ID_DIVIDER . (new $this->morphType)->getTable();
 
         parent::__construct($id, $model, $routePrefix, $form);
 
         $this->setAttribute('local_key', $dividedId[0]);
+    }
+
+    public function getRelatedInstance()
+    {
+        return (new $this->morphType);
     }
 
     /**
