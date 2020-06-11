@@ -18,7 +18,7 @@ trait ManagesHasOne
      */
     protected function createHasOne(CrudUpdateRequest $request, HasOne $field, $model, $relation)
     {
-        $hasOne = $field->relation($model, $query = true);
+        $hasOne = $field->getRelationQuery($model);
 
         $query = [
             $hasOne->getForeignKeyName() => $model->{$hasOne->getLocalKeyName()}
@@ -44,7 +44,7 @@ trait ManagesHasOne
      */
     protected function destroyHasOne(CrudUpdateRequest $request, HasOne $field, $model, $relation)
     {
-        $hasOne = $field->relation($model, $query = true);
+        $hasOne = $field->getRelationQuery($model);
 
         $relation->update([
             $hasOne->getForeignKeyName() => null

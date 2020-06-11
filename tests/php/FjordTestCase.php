@@ -6,7 +6,9 @@ use Fjord\Support\Facades\Fjord;
 use FjordTest\Traits\RefreshLaravel;
 use Illuminate\Support\Facades\File;
 use FjordTest\Traits\CreateFjordUsers;
+use FjordTest\Traits\InteractsWithCrud;
 use Illuminate\Support\Facades\Artisan;
+use FjordTest\Traits\InteractsWithConfig;
 use Fjord\Fjord\Discover\PackageDiscoverCommand;
 
 trait FjordTestCase
@@ -41,6 +43,12 @@ trait FjordTestCase
         if (isset($uses[CreateFjordUsers::class])) {
             $this->createFjordUsers();
         }
+        if (isset($uses[InteractsWithConfig::class])) {
+            $this->overrideConfigLoaderSingleton();
+        }
+        if (isset($uses[InteractsWithCrud::class])) {
+            $this->setUpCrud();
+        }
     }
 
     /**
@@ -70,7 +78,6 @@ trait FjordTestCase
             static::refreshLaravel();
         }
     }
-
 
     /**
      * Migrate dummy tables.

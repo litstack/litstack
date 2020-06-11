@@ -15,13 +15,12 @@ trait CrudHasIndex
      */
     public function indexTable(CrudReadRequest $request)
     {
-        $query = $this->config->indexQuery(
-            $this->query()
-        );
+        $table = $this->config->index->getTable();
+        $query = $table->getQuery($this->query());
 
         $index = IndexTable::query($query)
             ->request($request)
-            ->search($this->config->search)
+            ->search($table->getAttribute('search'))
             ->get();
 
         $index['items'] = crud($index['items']);

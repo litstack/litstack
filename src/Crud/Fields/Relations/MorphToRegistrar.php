@@ -3,13 +3,12 @@
 namespace Fjord\Crud\Fields\Relations;
 
 use Closure;
-use Fjord\Crud\OneRelationField;
+use Fjord\Crud\Fields\Traits\HasBaseField;
 use Fjord\Exceptions\InvalidArgumentException;
 
-
-class MorphToRegistrar extends OneRelationField
+class MorphToRegistrar extends LaravelRelationField
 {
-    use Concerns\ManagesRelation;
+    use HasBaseField;
 
     /**
      * MorphTypes.
@@ -19,41 +18,13 @@ class MorphToRegistrar extends OneRelationField
     protected $morphTypes = [];
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-        'model',
-        'types'
+    public $required = [
+        'morphTypes'
     ];
-
-    /**
-     * Available Field attributes.
-     *
-     * @var array
-     */
-    protected $available = [
-        'title',
-        'model',
-        'hint',
-        'form',
-        'query',
-        'preview',
-        'confirm',
-        'filter',
-        'relatedCols',
-        'small',
-        'types'
-    ];
-
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    protected $defaults = [];
 
     /**
      * Should field be registered in form.
@@ -71,7 +42,7 @@ class MorphToRegistrar extends OneRelationField
      * @param Closure $callback
      * @return self
      */
-    public function types(Closure $closure)
+    public function morphTypes(Closure $closure)
     {
         if (!array_key_exists('title', $this->attributes)) {
             throw new InvalidArgumentException('You may set a title before defining morph types.', [
@@ -79,49 +50,28 @@ class MorphToRegistrar extends OneRelationField
             ]);
         }
 
-        $morph = new MorphTypeManager;
-        $closure($morph);
+        $this->setAttribute('morphTypes', []);
 
-        $this->setAttribute('types', $morph);
+        $selectId = (new $this->model)->{$this->id}()->getMorphType();
+
+        $select = $this->formInstance->select($selectId)
+            ->title(__f('base.item_select', ['item' => $this->title]))
+            ->storable(false);
+
+        $morph = new MorphTypeManager($this->id, $this->formInstance, $selectId);
+
+        $closure($morph);
 
         $options = [];
         foreach ($morph->getTypes() as $class => $morphType) {
-            $options[$class] = $morphType['name'];
+            $options[$class] = $morphType->names['singular'];
         }
 
-        $selectId = (new $this->model)->{$this->id}()->getMorphType();
-        $this->form->select($selectId)
-            ->title(__f('base.item_select', ['item' => $this->title]))
-            ->options($options)
-            ->storable(false);
+        $select->options($options);
 
-        foreach ($morph->getTypes() as $class => $morphType) {
-            $idDivider = MorphTo::ID_DIVIDER;
-            $morphId = "{$this->id}{$idDivider}{$class}";
-            $field = $this->form->registerField(MorphTo::class, $morphId);
-            foreach ($this->attributes as $key => $value) {
-                if (!in_array($key, $this->available)) {
-                    continue;
-                }
-                $field->{$key} = $value;
-            }
-            $field->title($morphType['name'])
-                ->dependsOn($selectId, $class);
-            $field->setAttribute('preview', $morphType['preview']);
+        $this->setAttribute('morphTypes', $morph->getTypes());
 
-            $this->morphTypes[$class] = $field;
-        }
-    }
-
-    /**
-     * Add edit form.
-     *
-     * @param Closure $closure
-     * @return void
-     */
-    public function form(Closure $closure)
-    {
-        throw new InvalidArgumentException('form is not available for MorphTo relations.');
+        //dd($this->formInstance->getRegisteredFields());
     }
 
     /**

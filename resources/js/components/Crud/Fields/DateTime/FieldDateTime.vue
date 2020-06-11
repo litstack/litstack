@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field" :model="model">
+    <fj-base-field :field="field" :model="model">
         <template v-if="!field.readonly">
             <vue-ctk-date-time-picker
                 :id="`${field.id}-${makeid(10)}`"
@@ -11,18 +11,16 @@
                 :formatted="field.formatted"
                 :onlyDate="field.only_date"
                 color="var(--primary)"
-                @input="changed"
+                v-on:input="$emit('input', $event)"
             />
         </template>
         <template v-else>
             <b-input class="form-control" :value="value" type="text" readonly />
         </template>
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>
-import methods from '../methods';
-
 export default {
     name: 'FieldDateTime',
     props: {
@@ -33,23 +31,17 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        value: {
+            required: true
         }
     },
     data() {
         return {
-            value: null,
             datetimeString: ''
         };
     },
-    beforeMount() {
-        this.init();
-    },
     methods: {
-        ...methods,
-        changed(value) {
-            this.setValue(value);
-            this.$emit('changed', value);
-        },
         makeid(length) {
             var result = '';
             var characters =

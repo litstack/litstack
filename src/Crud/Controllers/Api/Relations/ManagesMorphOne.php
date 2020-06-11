@@ -18,7 +18,7 @@ trait ManagesMorphOne
      */
     protected function createMorphOne(CrudUpdateRequest $request, MorphOne $field, $model, $relation)
     {
-        $morphOne = $field->relation($model, $query = true);
+        $morphOne = $field->getRelationQuery($model);
 
         $query = [
             $morphOne->getMorphType() => get_class($model),
@@ -46,7 +46,7 @@ trait ManagesMorphOne
      */
     protected function destroyMorphOne(CrudUpdateRequest $request, MorphOne $field, $model, $relation)
     {
-        $morphOne = $field->relation($model, $query = true);
+        $morphOne = $field->getRelationQuery($model);
 
         $relation->{$morphOne->getMorphType()} = '';
         $relation->{$morphOne->getForeignKeyName()} = 0;

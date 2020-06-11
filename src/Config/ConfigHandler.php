@@ -7,6 +7,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use BadMethodCallException;
 use Illuminate\Support\Str;
+use Fjord\Support\Facades\Config;
 
 class ConfigHandler
 {
@@ -80,6 +81,16 @@ class ConfigHandler
     }
 
     /**
+     * Get config key from config class.
+     *
+     * @return string
+     */
+    public function getKey()
+    {
+        return Config::getKey(get_class($this->config));
+    }
+
+    /**
      * Register config factory.
      *
      * @param string $factory
@@ -150,6 +161,20 @@ class ConfigHandler
     public function hasMethod(string $method)
     {
         return method_exists($this->config, $method);
+    }
+
+    /**
+     * Config has attribute.
+     *
+     * @return boolean
+     */
+    public function has(string $attribute)
+    {
+        if ($this->hasMethod($attribute)) {
+            return true;
+        }
+
+        return property_exists($this->config, $attribute);
     }
 
     /**

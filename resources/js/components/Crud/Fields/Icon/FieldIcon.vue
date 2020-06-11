@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field" :model="model">
+    <fj-base-field :field="field" :model="model">
         <template v-if="!field.readonly">
             <b-dropdown
                 split
@@ -46,12 +46,10 @@
                 v-html="value"
             ></div>
         </template>
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>
-import methods from '../methods';
-
 export default {
     name: 'FieldIcon',
     props: {
@@ -62,12 +60,13 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        value: {
+            required: true
         }
     },
     data() {
         return {
-            value: null,
-            original: null,
             search: '',
             searched: []
         };
@@ -81,14 +80,11 @@ export default {
         }
     },
     beforeMount() {
-        this.init();
         this.searched = this.field.icons;
     },
     methods: {
-        ...methods,
         setIcon(icon) {
-            this.setValue(icon);
-            this.$emit('changed', icon);
+            this.$emit('input', icon);
         }
     }
 };

@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field" :model="model">
+    <fj-base-field :field="field" :model="model">
         <b-button
             :variant="field.variant"
             v-b-modal="modalId"
@@ -22,7 +22,8 @@
         >
             {{ message }}
         </b-form-invalid-feedback>
-        <b-modal :id="modalId" :size="field.size" :title="field.name">
+        <b-modal :id="modalId" :size="field.size">
+            <span slot="modal-title" v-html="field.name" />
             <b-row>
                 <fj-field
                     v-for="(field, key) in fields"
@@ -48,7 +49,7 @@
                 </b-button>
             </template>
         </b-modal>
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>

@@ -6,10 +6,15 @@ use Closure;
 use Exception;
 use Fjord\Support\VueProp;
 use InvalidArgumentException;
+use Fjord\Vue\Traits\Authorizable;
+use Illuminate\Contracts\Support\Arrayable;
 use Fjord\Exceptions\MethodNotFoundException;
+use Fjord\Vue\Contracts\AuthorizableContract;
 
-class Component extends VueProp
+class Component extends VueProp implements AuthorizableContract
 {
+    use Authorizable;
+
     const PROP_TYPES = [
         'boolean',
         'integer',
@@ -398,6 +403,10 @@ class Component extends VueProp
      */
     public function extend()
     {
+        if (!fjord_app()->get('vue')->hasBeenBuilt()) {
+            return;
+        }
+
         fjord_app()->get('vue')->extend($this);
     }
 
@@ -406,7 +415,7 @@ class Component extends VueProp
      *
      * @return array
      */
-    public function getArray(): array
+    public function render(): array
     {
         $this->extend();
 

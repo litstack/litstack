@@ -1,8 +1,10 @@
 <template>
     <b-list-group flush>
-        <b-list-group-item v-if="isTitle" class="fj-nav-title">
-            {{ this.item.title }}
-        </b-list-group-item>
+        <b-list-group-item
+            v-if="isTitle"
+            class="fj-nav-title"
+            v-html="item.title"
+        />
         <template v-else-if="isSection">
             <fj-nav-item
                 v-for="(i, index) in item"
@@ -24,7 +26,7 @@
             >
                 <div>
                     <span v-html="item.icon" class="fj-nav-item_icon"></span>
-                    {{ item.title }}
+                    <span v-html="item.title" />
                 </div>
                 <div
                     class="fj-navigation-hasChildren fj-nav-item_icon fj-nav-toggle"
@@ -122,6 +124,7 @@ export default {
     }
 
     .list-group-item {
+        padding-right: 1rem;
         &.active {
             .fj-nav-item_icon {
                 color: $nav-item-active-color !important;
@@ -148,6 +151,7 @@ export default {
         border-width: 0;
     }
     .fj-navigation-hasChildren {
+        font-size: 0.75rem;
         transform: rotate(0);
         transition: 0.2s all ease;
         &.active {

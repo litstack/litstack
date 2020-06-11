@@ -70,7 +70,7 @@ module.exports = {
                 link: '/docs/getting-started/installation'
             },
             { text: '🕹 Demo', link: 'https://demo.fjord-admin.com/admin' },
-            { text: 'Discord', link: 'https://discord.gg/u4qpb5P' },
+            { text: 'Discord', link: 'https://discord.gg/u4qpb5P' }
         ],
         sidebar: {
             '/': [
@@ -100,7 +100,7 @@ module.exports = {
                         ['docs/crud/models', 'Models'],
                         ['docs/crud/forms', 'Forms'],
                         ['docs/crud/config-index', 'Index Config'],
-                        ['docs/crud/config-form', 'Form Config'],
+                        ['docs/crud/config-show', 'Show Config'],
                         ['docs/crud/config-table', 'Table']
                     ]
                 },
@@ -125,7 +125,7 @@ module.exports = {
                         ['docs/fields/relation', 'Relation'],
                         ['docs/fields/one_relation', 'oneRelation'],
                         ['docs/fields/many_relation', 'manyRelation'],
-                        ['docs/fields/blocks', 'Blocks'],
+                        ['docs/fields/block', 'Block'],
                         ['docs/fields/modal', 'Modal'],
                         ['docs/fields/component', 'Component']
                     ]

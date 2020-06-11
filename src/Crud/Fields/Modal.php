@@ -3,14 +3,12 @@
 namespace Fjord\Crud\Fields;
 
 use Closure;
-use Fjord\Crud\Field;
+use Fjord\Crud\BaseField;
 use Fjord\Crud\BaseForm;
-use Illuminate\Support\Facades\Hash;
-use Fjord\Crud\Fields\Concerns\FieldHasForm;
 
-class Modal extends Field
+class Modal extends BaseField
 {
-    use FieldHasForm;
+    use Traits\FieldHasForm;
 
     /**
      * Field Vue component.
@@ -20,66 +18,95 @@ class Modal extends Field
     protected $component = 'fj-field-modal';
 
     /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-        'name',
-        'form'
-    ];
+    public $required = ['name', 'form'];
 
     /**
-     * Available Field attributes.
+     * Set default attributes.
      *
-     * @var array
-     */
-    protected $available = [
-        'title',
-        'hint',
-        'name',
-        'form',
-        'size',
-        'variant',
-        'preview',
-        'confirmWithPassword'
-    ];
-
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    protected $defaults = [
-        'size' => 'md',
-        'variant' => 'secondary',
-        'confirmWithPassword' => false
-    ];
-
-    /**
-     * Confirm with password.
-     *
-     * @param boolean $confirm
      * @return void
      */
-    public function confirmWithPassword($confirm = true)
+    public function setDefaultAttributes()
     {
-        $this->setAttribute('confirmWithPassword', $confirm);
+        $this->size('md');
+        $this->variant('secondary');
+        $this->confirmWithPassword(false);
+    }
+
+    /**
+     * Set modal preview.
+     *
+     * @param string $variant
+     * @return $this
+     */
+    public function preview(string $preview)
+    {
+        $this->setAttribute('preview', $preview);
 
         return $this;
     }
 
     /**
-     * Is field component.
+     * Set modal variant.
      *
-     * @return boolean
+     * @param string $variant
+     * @return $this
      */
-    public function isComponent()
+    public function variant(string $variant)
     {
-        return true;
+        $this->setAttribute('variant', $variant);
+
+        return $this;
     }
 
+    /**
+     * Set modal name.
+     *
+     * @param string $name
+     * @return $this
+     */
+    public function name(string $name)
+    {
+        $this->setAttribute('name', $name);
+
+        return $this;
+    }
+
+    /**
+     * Set modal window size.
+     *
+     * @param string $size
+     * @return $this
+     */
+    public function size(string $size)
+    {
+        $this->setAttribute('size', $size);
+
+        return $this;
+    }
+
+    /**
+     * Set confirmWithPassword.
+     *
+     * @param boolean $confirmWithPassword
+     * @return $this
+     */
+    public function confirmWithPassword(bool $confirmWithPassword = true)
+    {
+        $this->setAttribute('confirmWithPassword', $confirmWithPassword);
+
+        return $this;
+    }
+
+    /**
+     * Add form to modal.
+     *
+     * @param Closure $closure
+     * @return void
+     */
     public function form(Closure $closure)
     {
         $form = new BaseForm($this->model);

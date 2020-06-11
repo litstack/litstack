@@ -27,6 +27,8 @@
 .btn {
     height: $button-md-height;
     max-height: $button-md-height;
+    padding-top: 0;
+    padding-bottom: 0;
 
     &-square {
         padding: 0;
@@ -53,16 +55,19 @@
 
     &.btn-sm {
         height: $button-sm-height;
+        line-height: $button-sm-height;
         max-height: $button-sm-height;
     }
 
     &.btn-md {
         height: $button-md-height;
+        line-height: $button-md-height;
         max-height: $button-md-height;
     }
 
     &.btn-lg {
         height: $button-lg-height;
+        line-height: $button-lg-height;
         max-height: $button-lg-height;
     }
 

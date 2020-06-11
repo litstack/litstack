@@ -2,7 +2,7 @@
 
 [[toc]]
 
-Fjord `tables` can be easily configured in the backend. The following explains how to customize the tables to your needs.
+Fjord `tables` can be easily configured in the backend. You can easily display attributes, relationships or include your own `Vue` components to adjust the table as needed. The following explains how to customize the tables to your needs.
 
 ## Text
 

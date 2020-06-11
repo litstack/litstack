@@ -2,87 +2,80 @@
 
 namespace Fjord\Crud\Fields\Media;
 
-use Fjord\Crud\MediaField;
-use Fjord\Crud\Models\FormField;
-use Spatie\MediaLibrary\Models\Media;
+use Fjord\Crud\Fields\Traits\HasBaseField;
+use Fjord\Crud\Fields\Traits\TranslatableField;
 
 class Image extends MediaField
 {
-    /**
-     * Field Vue component.
-     *
-     * @var string
-     */
-    protected $component = 'fj-field-media';
+    use TranslatableField, HasBaseField;
 
     /**
-     * Is field translatable.
+     * Set default field attributes.
      *
-     * @var boolean
+     * @return void
      */
-    protected $translatable = true;
+    public function setDefaultAttributes()
+    {
+        $this->setAttribute('type', 'image');
+        $this->maxFileSize(12);
+        $this->maxFiles(5);
+        $this->crop(false);
+        $this->override(false);
+        $this->firstBig(false);
+        $this->sortable(true);
+        $this->showFullImage(false);
+        $this->accept('image/*');
+    }
 
     /**
-     * Required attributes.
+     * Set showFullImage.
      *
-     * @var array
+     * @param bool $showFullImage
+     * @return $this
      */
-    protected $required = [
-        'title',
-    ];
+    public function showFullImage(bool $showFullImage = true)
+    {
+        $this->setAttribute('showFullImage', $showFullImage);
+
+        return $this;
+    }
 
     /**
-     * Available Field attributes.
+     * Set expand.
      *
-     * @var array
+     * @param bool $sortable
+     * @return $this
      */
-    protected $available = [
-        'title',
-        'hint',
-        'imageSize',
-        'maxFiles',
-        'crop',
-        'override',
-        'firstBig',
-        'sortable',
-        'showFullImage',
-        'expand'
-    ];
+    public function expand(bool $expand = true)
+    {
+        $this->setAttribute('expand', $expand);
 
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    protected $defaults = [
-        'imageSize' => 12,
-        'maxFiles' => 5,
-        'crop' => false,
-        'override' => false,
-        'firstBig' => false,
-        'sortable' => true,
-        'showFullImage' => false,
-        'expand' => false
-    ];
-
-
-    /**
-     * Media form for custom_properties.
-     *
-     * @var MediaForm
-     */
-    protected $form;
+        return $this;
+    }
 
     /**
      * Set crop ratio.
      *
-     * @param integer $ratio
-     * @return void
+     * @param boolean|float $ratio
+     * @return $this
      */
-    /*
-    public function crop(int $ratio)
+    public function crop($ratio)
     {
-        //
+        $this->setAttribute('crop', $ratio);
+
+        return $this;
     }
-    */
+
+    /**
+     * Set firstBig.
+     *
+     * @param boolean $firstBig
+     * @return $this
+     */
+    public function firstBig(bool $firstBig = true)
+    {
+        $this->setAttribute('firstBig', $firstBig);
+
+        return $this;
+    }
 }

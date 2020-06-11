@@ -25,7 +25,7 @@ $form->image('images') // images is the corresponding media collection.
     ->translatable()
     ->title('Images')
     ->hint('Image Collection.')
-    ->maxFiles(5)
+    ->maxFiles(5);
 ```
 
 Add the image attribute to your model:
@@ -96,6 +96,16 @@ class Post extends Model implements HasMediaContract
 To display conversion urls it is important to set the env `APP_URL` to the url you are working in.
 :::
 
+## Max. File Size
+
+The maximum allowed file size for an image can be specified using the `maxFileSize` method. The file size is given in **megabytes**. The default value is 12 mb.
+
+```php{3}
+$form->image('images')
+    ->title('Images')
+    ->maxFileSize(25);
+```
+
 ## Methods
 
 | Method          | Description                                                   |
@@ -106,6 +116,7 @@ To display conversion urls it is important to set the env `APP_URL` to the url y
 | `width`         | Width of the form field.                                      |
 | `sortable`      | Should the images be sortable? (default: `true`)              |
 | `maxFiles`      | Maxmium number of uploadable images. (default: `5`)           |
+| `maxFileSize`   | Maximum file size. (default: `12`)                            |
 | `expand`        | Expand the preview image to its full width.                   |
 | `crop`          | Opens a Crop-Tool before the upload. (default: `false`)       |
 | `showFullImage` | Display's the full image inside of the square box.            |

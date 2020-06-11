@@ -6,7 +6,9 @@ use Closure;
 use Mockery as m;
 use BadMethodCallException;
 use FjordTest\BackendTestCase;
+use Illuminate\Support\Facades\DB;
 use Fjord\Crud\Models\FormRelation;
+use FjordTest\TestSupport\Models\Tag;
 use FjordTest\TestSupport\Models\Post;
 use FjordTest\TestSupport\Models\User;
 use Fjord\Support\Macros\BuilderSearch;
@@ -195,6 +197,49 @@ class BuilderMacroSearchTest extends BackendTestCase
 
         $results = TranslatablePost::search('translatablePosts.text', 'model')->get();
         $this->assertCount(0, $results);
+    }
+
+    /** @test */
+    public function it_finds_using_nested_relation_attributes()
+    {
+        $red = Tag::create(['title' => 'red']);
+        $blue = Tag::create(['title' => 'blue']);
+        $green = Tag::create(['title' => 'green']);
+        $yellow = Tag::create(['title' => 'yellow']);
+
+        // red, blue
+        $related1 = User::create(['name' => '']);
+        $this->addTag($related1, $red);
+        $this->addTag($related1, $blue);
+        $model1 = Post::create(['user_id' => $related1->id]);
+
+        // red, green
+        $related2 = User::create(['name' => '']);
+        $this->addTag($related2, $red);
+        $this->addTag($related2, $green);
+        $model2 = Post::create(['user_id' => $related2->id]);
+
+        // red, blue, yellow
+        $related3 = User::create(['name' => '']);
+        $this->addTag($related3, $red);
+        $this->addTag($related3, $blue);
+        $this->addTag($related3, $yellow);
+        $model3 = Post::create(['user_id' => $related3->id]);
+
+        $this->assertCount(3, Post::search('user.tags.title', 'red')->get());
+        $this->assertCount(2, Post::search('user.tags.title', 'blue')->get());
+        $this->assertCount(1, Post::search('user.tags.title', 'green')->get());
+        $this->assertCount(1, Post::search('user.tags.title', 'yellow')->get());
+        $this->assertCount(0, Post::search('user.tags.title', 'other')->get());
+    }
+
+    public function addTag($related, $tag)
+    {
+        DB::table('taggables')->insert([
+            'taggable_type' => get_class($related),
+            'taggable_id' => $related->id,
+            'tag_id' => $tag->id
+        ]);
     }
 }
 

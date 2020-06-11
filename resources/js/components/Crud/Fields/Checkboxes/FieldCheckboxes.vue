@@ -1,17 +1,15 @@
 <template>
-    <fj-form-item :field="field" :model="model">
+    <fj-base-field :field="field" :model="model">
         <b-checkbox-group
             :checked="value"
             :options="field.options"
-            @input="changed"
+            @input="$emit('input', $event)"
             class="fj-form-item-checkboxes"
         />
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>
-import methods from '../methods';
-
 export default {
     name: 'FieldCheckboxes',
     props: {
@@ -22,22 +20,9 @@ export default {
         model: {
             required: true,
             type: Object
-        }
-    },
-    data() {
-        return {
-            value: [],
-            original: []
-        };
-    },
-    beforeMount() {
-        this.init();
-    },
-    methods: {
-        ...methods,
-        changed(value) {
-            this.setValue(value);
-            this.$emit('changed', value);
+        },
+        value: {
+            required: true
         }
     }
 };

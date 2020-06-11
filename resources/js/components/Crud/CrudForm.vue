@@ -29,7 +29,7 @@
 
         <fj-header>
             <h3 class="d-flex justify-content-between align-items-baseline">
-                {{ config.names.singular }}
+                <span v-html="config.names.singular" />
                 <small
                     class="text-secondary"
                     v-if="model.last_edit"
@@ -147,7 +147,7 @@ export default {
             }
             result = results.findSucceeded(
                 'post',
-                `${this.config.route_prefix}`
+                `${this.config.route_prefix}/show`
             );
             if (result) {
                 this.model = this.crud(result.data);
@@ -158,7 +158,7 @@ export default {
                 this.model.id
             ) {
                 setTimeout(() => {
-                    window.location.replace(`${this.model.id}/edit`);
+                    window.location.replace(`${this.model.id}`);
                 }, 1);
             }
         },

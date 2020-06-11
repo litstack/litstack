@@ -112,7 +112,7 @@ class Fjord
      *
      * @param string $key
      * @param array $params
-     * @return $config
+     * @return ConfigHandler|null
      */
     public function config($key, ...$params)
     {

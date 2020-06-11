@@ -19,8 +19,11 @@ protected $casts = [
 
 ## Methods
 
-| Method  | Description                                        |
-| ------- | -------------------------------------------------- |
-| `title` | The title description for this field.              |
-| `hint`  | A closure where all repeatable blocks are defined. |
-| `width` | Width of the field.                                |
+| Method          | Description                                                      |
+| --------------- | ---------------------------------------------------------------- |
+| `title`         | The title description for this field.                            |
+| `hint`          | A closure where all repeatable blocks are defined.               |
+| `width`         | Width of the field.                                              |
+| `rules`         | Rules that should be applied when **updating** and **creating**. |
+| `creationRules` | Rules that should be applied when **creating**.                  |
+| `updateRules`   | Rules that should be applied when **updating**.                  |

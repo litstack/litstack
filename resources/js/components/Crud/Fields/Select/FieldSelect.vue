@@ -1,57 +1,46 @@
 <template>
-    <fj-form-item
-        :field="field"
-        :model="model"
-        v-slot:default="{ state }"
-        v-on="$listeners"
-    >
-        <b-input-group v-if="!field.readonly">
+    <fj-base-field :field="field" :model="model">
+        <template v-if="!field.readonly">
             <b-select
                 :value="value"
                 :options="field.options"
                 v-bind:readonly="field.readonly"
-                :state="state"
-                @input="changed"
+                v-on:input="$emit('input', $event)"
             />
-        </b-input-group>
+        </template>
 
         <template v-else>
             <b-input class="form-control" :value="value" type="text" readonly />
         </template>
         <slot />
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>
-import methods from '../methods';
-
 export default {
     name: 'FieldSelect',
     props: {
+        /**
+         * Field attributes.
+         */
         field: {
             required: true,
             type: Object
         },
+
+        /**
+         * Model.
+         */
         model: {
             required: true,
             type: Object
-        }
-    },
-    data() {
-        return {
-            value: false,
-            original: false
-        };
-    },
-    beforeMount() {
-        this.init();
-    },
-    methods: {
-        ...methods,
-        changed(value) {
-            this.setValue(value);
-            this.$emit('changed', value);
-            Fjord.bus.$emit('fieldChanged');
+        },
+
+        /**
+         * Field value.
+         */
+        value: {
+            required: true
         }
     }
 };

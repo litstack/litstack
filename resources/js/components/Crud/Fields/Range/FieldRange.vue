@@ -1,11 +1,10 @@
 <template>
-    <fj-form-item :field="field" :model="model" :value="value">
+    <fj-base-field :field="field" :model="model" :value="value">
         <b-input-group>
             <b-form-input
                 ref="input"
                 :value="value"
-                @changed="changed"
-                @input="changed"
+                @input="input"
                 type="range"
                 number
                 :min="field.min"
@@ -16,12 +15,10 @@
         </b-input-group>
 
         <slot />
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>
-import methods from '../methods';
-
 export default {
     name: 'FieldRange',
     props: {
@@ -32,37 +29,53 @@ export default {
         model: {
             required: true,
             type: Object
-        }
-    },
-    data() {
-        return {
-            value: 0,
-            original: 0
-        };
-    },
-    watch: {
-        value(val) {
-            //this.changed(val);
+        },
+        value: {
+            required: true
         }
     },
     beforeMount() {
-        this.init();
-
         if (this.value === undefined) {
-            this.value = this.field.min;
+            this.$emit('input', this.field.min);
         }
     },
     mounted() {
         this.setWidth(this.value);
     },
+    watch: {
+        value(val) {
+            this.setWidth(val);
+        }
+    },
     methods: {
-        ...methods,
+        /**
+         * Emit integer value.
+         *
+         * @param {String} newValue
+         * @return {undefined}
+         */
+        input(newValue) {
+            this.$emit('input', parseInt(newValue));
+        },
+
+        /**
+         * Calculate percentage.
+         *
+         * @param {Number} value
+         * @return {undefined}
+         */
         percentage(value) {
             return (
                 ((value - this.field.min) / (this.field.max - this.field.min)) *
                 100
             );
         },
+
+        /**
+         * Set bar width.
+         *
+         * @return {undefined}
+         */
         setWidth(value) {
             this.$refs.input.$el.style.background =
                 'linear-gradient(to right, #70859c 0%, #70859c ' +
@@ -70,12 +83,6 @@ export default {
                 '%, #fff ' +
                 this.percentage(value) +
                 '%, white 100%)';
-        },
-        changed(value) {
-            this.setValue(value);
-            this.$emit('changed', value);
-
-            this.setWidth(value);
         }
     }
 };

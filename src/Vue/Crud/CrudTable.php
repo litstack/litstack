@@ -25,6 +25,20 @@ class CrudTable extends Table
     }
 
     /**
+     * Disable link on all table columns
+     *
+     * @return $this
+     */
+    public function disableLink()
+    {
+        foreach ($this->cols as $col) {
+            $col->link(false);
+        }
+
+        return $this;
+    }
+
+    /**
      * Add table column to cols stack.
      *
      * @param string $label
@@ -56,9 +70,13 @@ class CrudTable extends Table
 
     public function defaultLink()
     {
+        if (!$this->config->has('show')) {
+            return false;
+        }
+
         $route_prefix = $this->config->routePrefix();
 
         // Default link.
-        return "{$route_prefix}/{id}/edit";
+        return "{$route_prefix}/{id}";
     }
 }

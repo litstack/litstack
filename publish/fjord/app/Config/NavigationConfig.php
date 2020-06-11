@@ -22,12 +22,14 @@ class NavigationConfig extends Config
         $nav->section([
             $nav->title(__f('fj.user_administration')),
 
-            $nav->preset('users'),
+            $nav->preset('user.user', [
+                'icon' => fa('users')
+            ]),
             $nav->preset('permissions')
         ]);
 
         $nav->section([
-            $nav->preset('collections.settings', [
+            $nav->preset('form.collections.settings', [
                 'icon' => fa('cog')
             ])
         ]);
@@ -48,7 +50,7 @@ class NavigationConfig extends Config
                 'title' => 'Pages',
                 'icon' => fa('file'),
             ], [
-                $nav->preset('pages.home', [
+                $nav->preset('form.pages.home', [
                     'icon' => fa('home'),
                 ]),
             ])

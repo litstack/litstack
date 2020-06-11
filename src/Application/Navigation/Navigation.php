@@ -85,12 +85,13 @@ class Navigation implements Arrayable
     {
         $preset = Package::navEntry($name, $params);
 
-        if (!array_key_exists('title', $preset)) {
-            return $this->entry($preset);
+        $title = $preset['title'] ?? null;
+        if ($title instanceof Closure) {
+            $preset['title'] = $preset['title']();
         }
 
-        if ($preset['title'] instanceof Closure) {
-            $preset['title'] = $preset['title']();
+        if ($preset['link'] instanceof Closure) {
+            $preset['link'] = $preset['link']();
         }
 
         return $this->entry($preset);

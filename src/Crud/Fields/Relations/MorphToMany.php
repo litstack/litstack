@@ -2,11 +2,11 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
-use Fjord\Crud\ManyRelationField;
+use Fjord\Crud\Fields\Traits\HasBaseField;
 
 class MorphToMany extends ManyRelationField
 {
-    use Concerns\ManagesRelation;
+    use HasBaseField;
 
     /**
      * Properties passed to Vue component.
@@ -22,34 +22,15 @@ class MorphToMany extends ManyRelationField
      *
      * @var array
      */
-    protected $required = [
-        'title',
-        'model',
-        'preview'
-    ];
+    public $requiredAttributes = [];
 
     /**
      * Available Field attributes.
      *
      * @var array
      */
-    protected $available = [
-        'title',
-        'model',
+    public $availableAttributes = [
         'form',
-        'hint',
-        'query',
-        'preview',
-        'confirm',
-        'sortable',
-        'filter',
-        'relatedCols',
-        'small',
-        'perPage',
-        'searchable',
-        'tags',
-        'tagVariant',
-        'showTableHead'
     ];
 
     /**
@@ -57,25 +38,5 @@ class MorphToMany extends ManyRelationField
      *
      * @var array
      */
-    protected $defaults = [
-        'confirm' => false,
-        'sortable' => false,
-        'relatedCols' => 12,
-        'small' => false,
-        'perPage' => 10,
-        'searchable' => false,
-        'tags' => false,
-        'tagVariant' => 'secondary'
-    ];
-
-    /**
-     * Set relation attributes.
-     *
-     * @param mixed $relation
-     * @return self
-     */
-    protected function setRelationAttributes($relation)
-    {
-        //
-    }
+    public $defaultAttributes = [];
 }

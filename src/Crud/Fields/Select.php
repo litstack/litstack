@@ -2,12 +2,11 @@
 
 namespace Fjord\Crud\Fields;
 
-use Fjord\Crud\Field;
-use Fjord\Crud\Fields\Concerns\FieldHasRules;
+use Fjord\Crud\BaseField;
 
-class Select extends Field
+class Select extends BaseField
 {
-    use FieldHasRules;
+    use Traits\FieldHasRules;
 
     /**
      * Field Vue component.
@@ -21,32 +20,18 @@ class Select extends Field
      *
      * @var array
      */
-    protected $required = [
-        'title',
-        'options',
-    ];
+    public $required = ['options'];
 
     /**
-     * Available Field attributes.
+     * Set select options.
      *
-     * @var array
+     * @param array $options
+     * @return self
      */
-    protected $available = [
-        'title',
-        'options',
-        'hint',
-        'storable',
-        'rules',
-        'updateRules',
-        'creationRules',
-    ];
+    public function options(array $options)
+    {
+        $this->setAttribute('options', $options);
 
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    protected $defaults = [
-        'storable' => true
-    ];
+        return $this;
+    }
 }

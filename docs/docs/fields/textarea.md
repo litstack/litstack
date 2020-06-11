@@ -21,6 +21,8 @@ $form->textarea('text')
 | `width`         | Width of the field.                                                                                                   |
 | `translatable`  | Should the field be translatable? For translatable crud models, the translatable fields are automatically recognized. |
 | `max`           | Max characters.                                                                                                       |
-| `rules`         | Field rules that should be applied to the update and create form.                                                     |
-| `creationRules` | Field rules that should be applied to the create form.                                                                |
-| `updateRules`   | Field rules that should be applied to the update form.                                                                |
+| `rows`          | Number of rows.                                                                                                       |
+| `maxRows`       | Maximum number of rows.                                                                                               |
+| `rules`         | Rules that should be applied when **updating** and **creating**.                                                      |
+| `creationRules` | Rules that should be applied when **creating**.                                                                       |
+| `updateRules`   | Rules that should be applied when **updating**.                                                                       |

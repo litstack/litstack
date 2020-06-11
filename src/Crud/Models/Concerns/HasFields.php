@@ -2,7 +2,7 @@
 
 namespace Fjord\Crud\Models\Concerns;
 
-use Fjord\Crud\Models\FormBlock;
+use Fjord\Crud\RelationField;
 
 trait HasFields
 {
@@ -13,7 +13,7 @@ trait HasFields
      */
     public function getFieldsAttribute()
     {
-        return $this->config->form->getRegisteredFields();
+        return $this->config->show->getRegisteredFields();
     }
 
     /**
@@ -62,7 +62,7 @@ trait HasFields
      */
     public function getFieldValue($field)
     {
-        if ($field->isRelation()) {
+        if ($field instanceof RelationField) {
             return $this->{$field->id};
         }
 

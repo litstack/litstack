@@ -2,12 +2,12 @@
 
 namespace Fjord\Crud\Fields;
 
-use Fjord\Crud\Field;
-use Fjord\Crud\Fields\Concerns\FieldHasRules;
+use Fjord\Crud\BaseField;
 
-class Wysiwyg extends Field
+class Wysiwyg extends BaseField
 {
-    use FieldHasRules;
+    use Traits\FieldHasRules,
+        Traits\TranslatableField;
 
     /**
      * Field Vue component.
@@ -17,55 +17,34 @@ class Wysiwyg extends Field
     protected $component = 'fj-field-wysiwyg';
 
     /**
-     * Is field translatable.
-     *
-     * @var boolean
-     */
-    protected $translatable = true;
-
-    /**
-     * Required attributes.
+     * Required field attributes.
      *
      * @var array
      */
-    protected $required = [
-        'title',
-    ];
+    public $required = [];
 
     /**
-     * Available Field attributes.
+     * Set default field attributes.
      *
-     * @var array
+     * @return void
      */
-    protected $available = [
-        'title',
-        'placeholder',
-        'hint',
-        'toolbar',
-        'toolbarFormat',
-        'formats',
-        'rules',
-        'updateRules',
-        'creationRules',
-    ];
+    public function setDefaultAttributes()
+    {
+        //
+    }
 
     /**
-     * Default Field attributes.
+     * Set font colors
      *
-     * @var array
+     * @param array $colors
+     * @return void
      */
-    protected $defaults = [
-        'toolbar' => [
-            'heading',
-            '|',
-            'bold',
-            'italic',
-            'link',
-            'bulletedList',
-            'numberedList',
-            'blockQuote',
-        ]
-    ];
+    public function colors(array $colors)
+    {
+        $this->setAttribute('colors', $colors);
+
+        return $this;
+    }
 
     /**
      * Cast field value.

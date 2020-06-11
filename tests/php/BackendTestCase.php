@@ -3,8 +3,6 @@
 namespace FjordTest;
 
 use FjordTest\Traits\TestHelpers;
-use FjordTest\Traits\RefreshLaravel;
-use FjordTest\Traits\CreateFjordUsers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\Dusk\TestCase as OrchestraDuskTestCase;
 
@@ -37,19 +35,26 @@ class BackendTestCase extends OrchestraDuskTestCase
         $this->tearDownTraits();
     }
 
+    /**
+     * Begin a server for the tests.
+     *
+     * @return void
+     */
     public static function setUpBeforeClass(): void
     {
         self::setUpBeforeClassTraits();
     }
 
+    /**
+     * Kill our server.
+     *
+     * @return void
+     */
     public static function tearDownAfterClass(): void
     {
         self::tearDownAfterClassTraits();
     }
 
-    /**
-     * Resetting browser environment.
-     */
     protected function setUpTheBrowserEnvironment()
     {
     }

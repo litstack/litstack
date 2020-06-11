@@ -2,10 +2,8 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
-use Closure;
-use Fjord\Vue\Table;
+use Fjord\Crud\BaseForm;
 use Fjord\Support\Facades\Crud;
-use Fjord\Support\Facades\Fjord;
 
 class MorphTypeManager
 {
@@ -16,27 +14,39 @@ class MorphTypeManager
      */
     protected $types = [];
 
+    protected $id;
+
+    protected $form;
+
+    public function __construct(string $id, BaseForm $form, $selectId)
+    {
+        $this->id  = $id;
+        $this->form = $form;
+        $this->selectId = $selectId;
+    }
+
     /**
      * Add morph type.
      *
-     * @param Closure $closure
+     * @param string $model
      * @return void
      */
-    public function to(string $class, Closure $closure)
+    public function to(string $model)
     {
-        $config = Crud::config($class);
+        $idDivider = MorphTo::ID_DIVIDER;
+        $morphId = "{$this->id}{$idDivider}{$model}";
+        $field = $this->form
+            ->registerField(MorphTo::class, $morphId)
+            ->dependsOn($this->selectId, $model);
 
-        if (!$config->permissions['read']) {
-            return;
-        }
+        $this->types[$model] = $field;
 
-        $table = new Table;
-        $closure($table);
+        return $field;
+    }
 
-        $this->types[$class] = collect([
-            'name' => $config->names['singular'],
-            'preview' => $table
-        ]);
+    public function registerMorphType()
+    {
+        # code...
     }
 
     /**

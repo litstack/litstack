@@ -2,10 +2,15 @@
 
 namespace Fjord\Vue;
 
+use Closure;
 use Fjord\Support\VueProp;
+use Fjord\Vue\Traits\Authorizable;
+use Fjord\Vue\Contracts\AuthorizableContract;
 
-class Table extends VueProp
+class Table extends VueProp implements AuthorizableContract
 {
+    use Authorizable;
+
     /**
      * Column stack.
      *
@@ -92,7 +97,7 @@ class Table extends VueProp
      *
      * @return array $cols
      */
-    public function getArray(): array
+    public function render(): array
     {
         return $this->cols;
     }

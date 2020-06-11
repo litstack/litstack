@@ -2,14 +2,8 @@
 
 namespace Fjord\Crud\Models;
 
-use Fjord\Crud\Fields\Blocks\Blocks;
-use Spatie\MediaLibrary\Models\Media;
-use Illuminate\Database\Eloquent\Model;
-use Astrotomic\Translatable\Translatable;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Fjord\Crud\Fields\Block\Block;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
 class FormBlock extends FjordFormModel
 {
@@ -47,20 +41,14 @@ class FormBlock extends FjordFormModel
      *
      * @var array
      */
-    protected $appends = [
-        'fields',
-        'translation'
-    ];
+    protected $appends = ['fields', 'translation'];
 
     /**
      * Eager loads.
      *
      * @var array
      */
-    protected $with = [
-        'translations',
-        'media'
-    ];
+    protected $with = ['translations', 'media'];
 
     /**
      * Model relation.
@@ -93,10 +81,10 @@ class FormBlock extends FjordFormModel
      */
     public function getFieldsAttribute()
     {
-        $fields = $this->config->form->getRegisteredFields();
+        $fields = $this->config->show->getRegisteredFields();
 
         foreach ($fields as $field) {
-            if ($field instanceof Blocks && $field->id == $this->field_id) {
+            if ($field instanceof Block && $field->id == $this->field_id) {
 
                 // Returning fields from repeatables form.
                 return $field->repeatables->{$this->type}->getRegisteredFields();

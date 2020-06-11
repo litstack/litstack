@@ -1,5 +1,5 @@
 <template>
-    <fj-form-item :field="field" :model="model">
+    <fj-base-field :field="field" :model="model">
         <codemirror
             ref="editor"
             :class="`fj-code-${field.id}`"
@@ -7,11 +7,11 @@
             :options="options"
             v-bind:readonly="field.readonly"
             theme="default"
-            @input="changed"
+            @input="$emit('input', $event)"
             @blur="blur"
             @focus="focus"
         />
-    </fj-form-item>
+    </fj-base-field>
 </template>
 
 <script>
@@ -47,10 +47,10 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        value: {
+            required: true
         }
-    },
-    beforeMount() {
-        this.init();
     },
     mounted() {
         this.$nextTick(() => {
@@ -61,11 +61,6 @@ export default {
         });
     },
     methods: {
-        ...methods,
-        changed(value) {
-            this.setValue(value);
-            this.$emit('changed', value);
-        },
         focus(cm) {
             $(`.fj-code-${this.field.id}`).addClass('focus');
         },
@@ -75,8 +70,6 @@ export default {
     },
     data() {
         return {
-            value: '',
-            original: '',
             options: {
                 tabSize: this.field.tabSize,
                 mode: this.field.language,
