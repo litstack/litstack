@@ -184,7 +184,7 @@
 
                         <b-dropdown
                             v-if="field.colors"
-                            class="dropdown-sm-square"
+                            class="dropdown-sm-square fj-color-palette"
                             dropbottom
                             no-caret
                             :variant="
@@ -197,14 +197,20 @@
                             <template v-slot:button-content>
                                 <fa-icon icon="palette" />
                             </template>
-                            <b-dropdown-form style="min-width: 340px;">
-                                <v-swatches
-                                    v-model="fontColor"
-                                    :swatches="swatches"
-                                    inline
-                                    @input="setFontColor(commands.font_color)"
-                                ></v-swatches>
-                            </b-dropdown-form>
+                            <div class="fj-color-palette-wrapper">
+                                <b-button
+                                    size="sm"
+                                    class="btn-square"
+                                    v-for="color in fontColors"
+                                    :key="color"
+                                    @click="
+                                        setFontColor(commands.font_color, color)
+                                    "
+                                    :style="
+                                        `background: ${color}; border-color: ${color}`
+                                    "
+                                ></b-button>
+                            </div>
                         </b-dropdown>
 
                         <b-button
@@ -319,8 +325,7 @@ export default {
 
             linkUrl: null,
             target: null,
-            fontColor: null,
-            swatches: []
+            fontColors: []
         };
     },
     beforeMount() {
@@ -328,7 +333,7 @@ export default {
 
         // set font colors
         if (this.field.colors) {
-            this.swatches = this.field.colors;
+            this.fontColors = this.field.colors;
         }
     },
     mounted() {
@@ -369,9 +374,8 @@ export default {
             this.linkUrl = null;
             this.target = null;
         },
-        setFontColor(command) {
-            command({ style: `color: ${this.fontColor}` });
-            this.fontColor = null;
+        setFontColor(command, color) {
+            command({ style: `color: ${color}` });
         }
     }
 };
@@ -405,6 +409,18 @@ export default {
         .dropdown-toggle {
             background: $secondary;
             color: white;
+        }
+    }
+    .fj-color-palette {
+        .dropdown-menu {
+            width: 14rem;
+        }
+        &-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 1.75rem);
+            grid-auto-rows: 1fr;
+            grid-gap: 0.5rem;
+            padding: 0 0.5rem;
         }
     }
 }
