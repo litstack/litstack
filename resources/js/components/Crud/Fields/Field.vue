@@ -131,7 +131,7 @@ export default {
          * @return {undefined}
          */
         input(newValue) {
-            console.log(newValue);
+            //console.log(newValue);
             this.value = newValue;
             this.fillValueToModel(newValue);
             this.addSaveJob();
@@ -310,7 +310,7 @@ export default {
                 method: this.field._method
             };
 
-            console.log('CHANGED', this.field.route_prefix, this.value);
+            //console.log('CHANGED', this.field.route_prefix, this.value);
 
             if (this.hasValueChanged()) {
                 this.$store.commit('ADD_SAVE_JOB', job);
