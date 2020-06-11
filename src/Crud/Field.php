@@ -124,6 +124,16 @@ class Field extends VueProp
     }
 
     /**
+     * Get model class.
+     *
+     * @return string
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
      * Get field title.
      *
      * @return string
