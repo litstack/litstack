@@ -86,7 +86,7 @@ class ConfigLoader
         }
 
         // Get classname by key.
-        $class = $this->getClassName($key);
+        $class = $this->getNamespaceFromKey($key);
 
         // Initialize new config handler.
         $instance = new ConfigHandler(
@@ -101,12 +101,12 @@ class ConfigLoader
     }
 
     /**
-     * Get classname of config by key.
+     * Get namespace of config by key.
      *
      * @param string $key
      * @return string
      */
-    public function getClassName(string $key)
+    public function getNamespaceFromKey(string $key)
     {
         $name = '';
         foreach (explode('.', $key) as $part) {

@@ -133,7 +133,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $directories = glob($configPath . '/*', GLOB_ONLYDIR);
 
         foreach ($directories as $formDirectory) {
-            $configFiles = glob("{$formDirectory}/*.php");;
+            $configFiles = glob("{$formDirectory}/*.php");
             foreach ($configFiles as $path) {
                 $configKey = collect(explode('/', str_replace('Config.php', '', str_replace(base_path('fjord/app/Config') . '/', '', $path))))
                     ->map(fn ($item) => Str::snake($item))

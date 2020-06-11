@@ -27,6 +27,8 @@ class FormBlock extends FjordFormModel
      * @var array
      */
     protected $fillable = [
+        'form_type',
+        'config_type',
         'field_id',
         'model_type',
         'model_id',
@@ -61,27 +63,13 @@ class FormBlock extends FjordFormModel
     }
 
     /**
-     * Get config key from model relation.
-     *
-     * @return string
-     */
-    public function getConfigKey()
-    {
-        if ($this->model instanceof FormField) {
-            return $this->model->getConfigKey();
-        }
-
-        return "crud." . lcfirst(class_basename(get_class($this->model)));
-    }
-
-    /**
      * Get fields from config.
      *
      * @return Field
      */
     public function getFieldsAttribute()
     {
-        $fields = $this->config->show->getRegisteredFields();
+        $fields = $this->getForm()->getRegisteredFields();
 
         foreach ($fields as $field) {
             if ($field instanceof Block && $field->id == $this->field_id) {

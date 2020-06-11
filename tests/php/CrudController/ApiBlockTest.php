@@ -182,6 +182,7 @@ class ApiBlockTest extends BackendTestCase
     public function createRepeatable($type = 'text')
     {
         return FormBlock::create([
+            'config_type' => \FjordApp\Config\Crud\PostConfig::class,
             'type' => $type,
             'model_type' => get_class($this->post),
             'model_id' => $this->post->id,
