@@ -2,12 +2,12 @@
 
 namespace Fjord\Config;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 /**
  * Config singleton.
- * 
+ *
  * @see \Fjord\Support\Facades\Config
  */
 class ConfigLoader
@@ -90,7 +90,7 @@ class ConfigLoader
 
         // Initialize new config handler.
         $instance = new ConfigHandler(
-            // Passing params to new instance.
+        // Passing params to new instance.
             new $class(...$params)
         );
 
@@ -112,7 +112,6 @@ class ConfigLoader
         foreach (explode('.', $key) as $part) {
             $name .= "\\" . ucfirst(Str::camel($part));
         }
-
         return $this->namespace . $name . "Config";
     }
 
@@ -124,6 +123,7 @@ class ConfigLoader
      */
     public function getFromPath(string $path)
     {
+
         return $this->get(
             $this->getKeyFromPath($path)
         );
@@ -137,9 +137,11 @@ class ConfigLoader
      */
     public function getPathFromKey(string $key)
     {
+
         $path = collect(explode('.', $key))
             ->map(fn ($item) => ucfirst(Str::camel($item)))
             ->implode('/');
+
         return base_path("fjord/app/Config/{$path}Config.php");
     }
 
@@ -151,7 +153,7 @@ class ConfigLoader
      */
     public function getKeyFromPath(string $path)
     {
-        return collect(explode('/', str_replace('Config.php', '', str_replace(base_path('fjord/app/Config') . '/', '', $path))))
+        return collect(config_parser($path))
             ->map(fn ($item) => Str::snake($item))
             ->implode('.');
     }
@@ -164,6 +166,7 @@ class ConfigLoader
      */
     public function getKeyFromNamespace(string $namespace)
     {
+
         return collect(explode('\\', Str::replaceLast('Config', '', str_replace('FjordApp\\Config\\', '', $namespace))))
             ->map(fn ($item) => Str::snake($item))
             ->implode('.');
@@ -178,7 +181,7 @@ class ConfigLoader
     public function exists(string $key)
     {
         return File::exists(
-            $this->getPathFromKey($key),
+            $this->getPathFromKey($key)
         );
     }
 }

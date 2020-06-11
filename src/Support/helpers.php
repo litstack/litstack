@@ -4,6 +4,18 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
+if (!function_exists('config_parser')) {
+    /**
+     * Get Parsed Config
+     *
+     * @param $path
+     * @return array
+     */
+    function config_parser($path)
+    {
+        return explode('/', str_replace('\\', '/', str_replace('Config.php', '', str_replace(base_path('fjord/app/Config') . '\\', '', str_replace(base_path('fjord/app/Config') . '/', '', $path)))));
+    }
+}
 
 if (!function_exists('crud')) {
     /**
