@@ -54,8 +54,8 @@ div#fjord-app .fj-navigation {
         transition: 0.2s all ease;
         left: -$sidebar-width;
 
-        //z-index: $zindex-fixed;
-        z-index: 1;
+        z-index: $zindex-fixed;
+        //z-index: 1;
 
         &.visible {
             left: 0;
