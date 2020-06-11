@@ -5,6 +5,10 @@
         v-slot:default="{ state }"
         v-on="$listeners"
     >
+        <div class="fj-field-wysiwyg__css" v-if="field.css">
+            <v-style v-html="prependCssSelectors(field.css)"></v-style>
+        </div>
+
         <template v-if="!field.readonly">
             <div
                 class="fj-field-wysiwyg"
@@ -19,6 +23,7 @@
                             :text="format(isActive)"
                             variant="outline-secondary"
                             size="sm"
+                            class="fj-field-wysiwyg__menu-dropdown"
                         >
                             <b-dropdown-item
                                 :active="isActive.paragraph()"
@@ -236,16 +241,12 @@
                 <editor-content
                     :editor="editor"
                     class="fj-field-wysiwyg__content"
+                    :id="identifier"
                 />
             </div>
         </template>
         <template v-else>
-            <div class="form-control" style="height: auto;" readonly>
-                <div
-                    v-html="model[`${field.id}Model`]"
-                    class="ck-blurred ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline"
-                ></div>
-            </div>
+            <div v-html="value"></div>
         </template>
 
         <slot />
@@ -279,7 +280,12 @@ export default {
     name: 'FieldWysiwyg',
     components: {
         EditorContent,
-        EditorMenuBar
+        EditorMenuBar,
+        'v-style': {
+            render: function(createElement) {
+                return createElement('style', this.$slots.default);
+            }
+        }
     },
     props: {
         field: {
@@ -372,6 +378,23 @@ export default {
         },
         setFontColor(command, color) {
             command({ style: `color: ${color}` });
+        },
+        prependCssSelectors(css) {
+            // Prepend every css-selector with the identifier of the editor
+            // credit: Ryan Worth
+            // https://stackoverflow.com/questions/11161198/prepend-all-css-selectors
+            return css.replace(
+                /(^(?:\s|[^@{])*?|[},]\s*)(\/\/.*\s+|.*\/\*[^*]*\*\/\s*|@media.*{\s*|@font-face.*{\s*)*([.#]?-?[_a-zA-Z]+[_a-zA-Z0-9-]*)(?=[^}]*{)/g,
+                `$1$2 #${this.identifier} $3`
+            );
+        }
+    },
+    computed: {
+        identifier() {
+            return `${this.field.local_key}-${this.field.route_prefix.replace(
+                /\//g,
+                '-'
+            )}`;
         }
     }
 };
@@ -387,6 +410,15 @@ export default {
 
     padding: $input-padding-x;
     padding-bottom: 0;
+    &__menu {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 1.75rem);
+        grid-auto-rows: 1fr;
+        grid-gap: 0.5rem;
+        &-dropdown {
+            grid-column: 1 / span 5 !important;
+        }
+    }
     &__content {
         padding-top: $input-padding-x;
         .ProseMirror {

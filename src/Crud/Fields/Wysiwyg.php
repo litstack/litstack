@@ -3,6 +3,8 @@
 namespace Fjord\Crud\Fields;
 
 use Fjord\Crud\BaseField;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
 
 class Wysiwyg extends BaseField
 {
@@ -39,9 +41,24 @@ class Wysiwyg extends BaseField
      * @param array $colors
      * @return void
      */
-    public function colors(array $colors)
+    public function colors($colors, ...$more)
     {
+        $colors = array_merge(Arr::wrap($colors), $more);
+
         $this->setAttribute('colors', $colors);
+
+        return $this;
+    }
+
+    /**
+     * Add custom css to editor
+     *
+     * @param string $path
+     * @return void
+     */
+    public function css(string $path)
+    {
+        $this->setAttribute('css', File::get($path));
 
         return $this;
     }
