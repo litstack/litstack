@@ -275,15 +275,11 @@ import {
 import CustomLink from './Nodes/CustomLink';
 import FontColor from './Nodes/FontColor';
 
-import VSwatches from 'vue-swatches';
-import 'vue-swatches/dist/vue-swatches.css';
-
 export default {
     name: 'FieldWysiwyg',
     components: {
         EditorContent,
-        EditorMenuBar,
-        VSwatches
+        EditorMenuBar
     },
     props: {
         field: {
