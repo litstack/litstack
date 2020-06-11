@@ -187,22 +187,15 @@ class BaseFormTest extends BackendTestCase
     }
 
     /** @test */
-    public function checking_registrar_before_registering_new_field()
+    public function it_checks_field_completion_before_rendering()
     {
-        // Assuming checkComplete is called on field instance in registrar when registering new field.
-        $field = m::mock('field');
-        $field->shouldReceive('checkComplete')->once();
-        $this->setUnaccessibleProperty($this->form, 'registrar', $field);
-
-        $this->form->registerField(DummyBaseFormFieldMock::class, 'new-field');
-    }
-
-    /** @test */
-    public function checking_registrar_before_passing_to_vue()
-    {
-        $field = m::mock('field');
-        $field->shouldReceive('checkComplete')->once();
-        $this->setUnaccessibleProperty($this->form, 'registrar', $field);
+        $field1 = m::mock('field');
+        $field1->shouldReceive('checkComplete')->once();
+        $field2 = m::mock('field');
+        $field2->shouldReceive('checkComplete')->once();
+        $this->setUnaccessibleProperty($this->form, 'registeredFields', [
+            $field1, $field2
+        ]);
 
         $this->form->toJson();
     }
