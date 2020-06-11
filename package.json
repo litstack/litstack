@@ -4,7 +4,9 @@
     "version": "2.0.0",
     "main": "./resources/js/index.js",
     "scripts": {
-        "test": "./node_modules/.bin/jest .*.spec.js"
+        "test": "npm run test:js && npm run test:php",
+        "test:js": "./node_modules/.bin/jest .*.spec.js",
+        "test:php": "vendor/bin/phpunit"
     },
     "jest": {
         "moduleFileExtensions": [
