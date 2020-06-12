@@ -197,6 +197,7 @@ class Crud
         RouteFacade::get("/{{$identifier}}/{form}/list/{field_id}", [$controller, "loadListItems"])->name("list.index");
         RouteFacade::get("/{{$identifier}}/{form}/list/{field_id}/{list_item_id}", [$controller, "loadListItem"])->name("list.load");
         RouteFacade::post("/{{$identifier}}/{form}/list/{field_id}", [$controller, "storeListItem"])->name("list.store");
+        RouteFacade::put("/{{$identifier}}/{form}/list/{field_id}/order", [$controller, "orderList"])->name("list.order");
         RouteFacade::put("/{{$identifier}}/{form}/list/{field_id}/{list_item_id}", [$controller, "updateListItem"])->name("list.update");
         RouteFacade::delete("/{{$identifier}}/{form}/list/{field_id}/{list_item_id}", [$controller, "destroyListItem"])->name("list.destroy");
 

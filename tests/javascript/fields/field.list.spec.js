@@ -4,7 +4,6 @@ import { mount, shallowMount } from '@vue/test-utils';
 import List from '@fj-js/components/Crud/Fields/List/FieldList';
 import CrudModel from '@fj-js/crud/model';
 import FjordStore from '@fj-js/store';
-import Vue from 'vue';
 
 const field = {
     local_key: 'list',

@@ -24,7 +24,6 @@ export default {
      * @return {Object}
      */
     render(createElement) {
-        console.log(this.field.id, this.shouldRender);
         if (!this.shouldRender) {
             return;
         }
@@ -91,7 +90,17 @@ export default {
             /**
              * Field value originals. This is used to detect changes.
              */
-            original: null
+            original: null,
+
+            /**
+             * Fields route prefix.
+             */
+            routePrefix: '',
+
+            /**
+             * Request method.
+             */
+            method: 'PUT'
         };
     },
     beforeMount() {
@@ -131,7 +140,6 @@ export default {
          * @return {undefined}
          */
         input(newValue) {
-            //console.log(newValue);
             this.value = newValue;
             this.fillValueToModel(newValue);
             this.addSaveJob();
@@ -145,9 +153,8 @@ export default {
          * @return {undefined}
          */
         onSaved(results) {
-            if (
-                results.hasFailed(this.field._method, this.field.route_prefix)
-            ) {
+            console.log('CHECK results', this.method, this.routePrefix);
+            if (results.hasFailed(this.method, this.routePrefix)) {
                 return;
             }
 
@@ -306,8 +313,8 @@ export default {
             let job = {
                 params: this.getSaveJobParams(this.value),
                 key: this.getSaveJobKey(),
-                route: this.field.route_prefix,
-                method: this.field._method
+                route: this.routePrefix,
+                method: this.method
             };
 
             //console.log('CHANGED', this.field.route_prefix, this.value);
@@ -379,20 +386,23 @@ export default {
             // differ from the id of the model that gets passed to the Field.
             // For e.g: In a Block the model of the Block would be passed but the
             // route Model id is not the id for the Block but for the Crud Model.
-            let modelId = this.modelId ? this.modelId : this.model.id;
+            let modelId = this.modelId || this.model.id;
             let replace = '{id}';
-            this.field._method = 'PUT';
+            this.method = 'PUT';
 
             if (modelId === undefined) {
-                this.field._method = 'POST';
+                this.method = 'POST';
                 modelId = '';
                 replace = '/{id}';
             }
 
-            this.field.route_prefix = this.field.route_prefix.replace(
+            this.routePrefix = this.field.route_prefix.replace(
                 replace,
                 modelId
             );
+
+            this.field._method = this.method;
+            this.field.route_prefix = this.routePrefix;
         }
     }
 };

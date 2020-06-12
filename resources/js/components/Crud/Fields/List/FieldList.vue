@@ -8,8 +8,8 @@
                 @click="addListItem"
             >
                 {{
-                    trans('base.item_add', {
-                        item: trans('base.element')
+                    __('base.item_add', {
+                        item: __('base.item_item', { item: field.title })
                     })
                 }}
             </b-button>
@@ -22,6 +22,8 @@
             :children="list"
             :field="field"
             :model="model"
+            @end="orderListItems"
+            @addItem="addListItem"
             @deleteItem="deleteListItem"
         />
     </fj-base-field>
@@ -86,24 +88,66 @@ export default {
     beforeMount() {
         //this.list = this.unflatten(copy);
     },
-    mounted() {
-        this.loadItems();
+    async mounted() {
+        this.busy = true;
+        await this.loadItems();
+        this.busy = false;
     },
     methods: {
-        async deleteListItem(item) {
-            // let response = await this.sendDeleteListItem(item);
-            // if (!response) {
-            //     return;
-            // }
-
-            let flattened = this.flatten(this.list);
-            console.log(item);
-            flattened = _.filter(flattened, current => current.id != item.id);
-            console.log(flattened);
-
-            this.list = this.unflatten(flattened);
+        itemToast(key) {
+            this.$bvToast.toast(this.__(key, { item: this.__item() }), {
+                variant: 'success'
+            });
         },
 
+        async orderListItems() {
+            let items = _.map(this.flattenCrud(this.list), item => {
+                return {
+                    id: item.id,
+                    order_column: item.order_column,
+                    parent_id: item.parent_id
+                };
+            });
+            let response = await this.sendOrderListItems({ items });
+            if (!response) {
+                return;
+            }
+
+            this.$bvToast.toast(
+                this.__('base.item_ordered', { item: this.field.title }),
+                {
+                    variant: 'success'
+                }
+            );
+        },
+
+        sendOrderListItems(payload) {
+            try {
+                return axios.put(
+                    `${this.field.route_prefix}/list/${this.field.id}/order`,
+                    payload
+                );
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+        /**
+         * Delete list item.
+         */
+        async deleteListItem(item) {
+            let response = await this.sendDeleteListItem(item);
+            if (!response) {
+                return;
+            }
+            await this.loadItems();
+
+            this.itemToast('base.item_deleted');
+        },
+
+        /**
+         * Send delete list item.
+         */
         sendDeleteListItem(item) {
             try {
                 return axios.delete(
@@ -118,7 +162,6 @@ export default {
          * Load items.
          */
         async loadItems() {
-            this.busy = true;
             let response = await this.sendLoadItems();
             if (!response) {
                 return (this.busy = false);
@@ -126,7 +169,6 @@ export default {
 
             let listItems = this.crud(response.data);
             this.list = this.unflatten(listItems);
-            this.busy = false;
         },
 
         /**
@@ -150,13 +192,13 @@ export default {
             if (!response) {
                 return;
             }
+            await this.loadItems();
 
-            let flattened = this.flatten(this.list);
-            let listItem = this.crud(response.data);
+            this.itemToast('base.item_added');
+        },
 
-            flattened.push(listItem);
-
-            this.list = this.unflatten(flattened);
+        __item() {
+            return this.__('base.item_item', { item: this.field.title });
         },
 
         /**
@@ -179,14 +221,17 @@ export default {
          */
         flattenNodeGenerator(node, parent, index, settings, stack) {
             const { itemsKey, idKey } = settings;
-
             return list => {
                 node = settings.initNode(node);
                 node[idKey] = node[idKey] || settings.generateUniqueId();
+
+                node.order_column = index;
+
                 list.push(node);
 
-                if (node[itemsKey]) {
-                    for (let i = 0, len = node[itemsKey].length; i < len; i++) {
+                let nodeItems = node[itemsKey];
+                if (nodeItems) {
+                    for (let i = 0, len = nodeItems.length; i < len; i++) {
                         stack.push(
                             this.flattenNodeGenerator(
                                 node[itemsKey][i],
@@ -201,8 +246,10 @@ export default {
 
                 if (parent && parent[itemsKey]) {
                     // Records children' id
-                    parent[itemsKey][index] = node[idKey];
+                    parent[itemsKey][index] = node;
                     node.parent_id = parent[idKey];
+                } else {
+                    node.parent_id = 0;
                 }
 
                 return list;
@@ -212,10 +259,10 @@ export default {
         /**
          * Flatten tree.
          */
-        flatten(tree) {
+        flatten(tree, cloner) {
             let list = [];
             const stack = [];
-            const _tree = _.cloneDeep(tree);
+            const _tree = tree;
             const settings = {
                 initNode: node => node,
                 itemsKey: 'children',
@@ -257,6 +304,16 @@ export default {
             });
 
             return list;
+        },
+
+        /**
+         * Flatten crud tree.
+         */
+        flattenCrud(tree) {
+            // The flattened tree needs to be converted to a crud array since
+            // the flatten method is creating a clone which is getting rid of
+            // all crud model objects.
+            return this.crud(this.flatten(tree));
         },
 
         /**

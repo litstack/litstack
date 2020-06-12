@@ -17,7 +17,7 @@ class CrudRelations extends ServiceProvider
      */
     public function register()
     {
-        $this->listItems();
+        $this->list();
         $this->repeatables();
         $this->manyRelation();
         $this->oneRelation();
@@ -28,15 +28,32 @@ class CrudRelations extends ServiceProvider
      *
      * @return void
      */
-    public function listItems()
+    public function list()
     {
-        Builder::macro('listItems', function ($fieldId = null) {
+        Builder::macro('listItems', function (string $fieldId) {
             $model = $this->getModel();
 
+
+            $relation = $model->morphMany(FormListItem::class, 'model');
+
+            //dd($relation);
+
+            /*
+            $relation = new ListRelation(
+                $this,
+                $model,
+                $morphMany->getQualifiedMorphType(),
+                $morphMany->getQualifiedForeignKeyName(),
+                $model->getKeyName()
+            );
+            */
+
+            /*
             $relation = $model->morphMany(FormListItem::class, 'model')
                 ->with('translations')
                 ->orderBy('order_column');
 
+                */
             if ($fieldId) {
                 $relation->where('field_id', $fieldId);
             }

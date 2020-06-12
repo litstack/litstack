@@ -24,7 +24,7 @@ class ListField extends RelationField
      *
      * @var array
      */
-    public $required = ['form'];
+    public $required = ['form', 'previewTitle'];
 
     /**
      * Set default attributes.
@@ -50,6 +50,19 @@ class ListField extends RelationField
     }
 
     /**
+     * Preview title.
+     *
+     * @param string $title
+     * @return self
+     */
+    public function previewTitle(string $title)
+    {
+        $this->setAttribute('previewTitle', $title);
+
+        return $this;
+    }
+
+    /**
      * Add form to modal.
      *
      * @param Closure $closure
@@ -60,7 +73,7 @@ class ListField extends RelationField
         $form = new BaseForm($this->model);
 
         $form->setRoutePrefix(
-            "$this->route_prefix/list/{list_item_id}"
+            "$this->route_prefix/list/{$this->id}/{list_item_id}"
         );
 
         $closure($form);
@@ -91,6 +104,7 @@ class ListField extends RelationField
     public function getRelationQuery($model)
     {
         if (!$model instanceof FormField) {
+
             return $model->{$this->id}();
         }
 

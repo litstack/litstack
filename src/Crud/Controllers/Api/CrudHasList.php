@@ -100,4 +100,47 @@ trait CrudHasList
 
         return $listItem;
     }
+
+    public function orderList(CrudUpdateRequest $request, $id, $form_type, $field_id)
+    {
+        $request->validate([
+            'items' => 'required',
+            'items.*.order_column' => 'required|integer',
+            'items.*.id' => 'required|integer',
+            'items.*.parent_id' => 'integer',
+        ], __f('validation'));
+
+        $orderedItems = $request->items;
+
+        $this->formExists($form_type) ?: abort(404);
+        $field = $this->getForm($form_type)->findField($field_id) ?? abort(404);
+        $field instanceof ListField ?: abort(404);
+
+        $model = $this->findOrFail($id);
+
+        $listItems = $field->getResults($model);
+        // Check parent_id's.
+        foreach ($orderedItems as $orderedItem) {
+            $parentId = $orderedItem['parent_id'] ?? null;
+            if (!$parentId) {
+                continue;
+            }
+
+            if (!$listItems->find($parentId)) {
+                abort(405);
+            }
+        }
+
+        foreach ($orderedItems as $orderedItem) {
+            $update = [
+                'order_column' => $orderedItem['order_column']
+            ];
+            if (array_key_exists('parent_id', $orderedItem)) {
+                $update['parent_id'] = $orderedItem['parent_id'];
+            }
+            $field->getRelationQuery($model)
+                ->where('id', $orderedItem['id'])
+                ->update($update);
+        }
+    }
 }

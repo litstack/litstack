@@ -144,6 +144,7 @@ class ApiBlockMediaTest extends BackendTestCase
     public function createBlock()
     {
         return FormBlock::create([
+            'config_type' => \FjordApp\Config\Crud\PostConfig::class,
             'type' => 'image',
             'model_type' => get_class($this->post),
             'model_id' => $this->post->id,

@@ -18,6 +18,12 @@ return [
         ],
         'wysiwyg' => [
             'new_window' => 'Link in neuem Fenster öffnen'
+        ],
+        'list' => [
+            'messages' => [
+                'confirm_delete' => 'Soll :item Element wirklich gelöscht werden?',
+                'confirm_delete_info' => 'Wenn Sie diesen Element entfernen, entfernen Sie dadurch auch alle darunter befindlichen Elemente.',
+            ]
         ]
     ]
 ];

@@ -5,6 +5,7 @@
         tag="ul"
         :list="children"
         :group="{ name: 'g1' }"
+        v-on="$listeners"
     >
         <li v-for="item in children" :key="item.id" class="">
             <div class="fj-list-entry fj-block mb-2">
@@ -16,7 +17,7 @@
                     </b-td>
                     <b-td>
                         <div class="pl-2 d-inline-block">
-                            {{ item.attributes.id }}
+                            {{ _format(field.previewTitle, item) }}
                         </div>
                     </b-td>
                     <b-td
@@ -26,26 +27,61 @@
                         <b-button
                             variant="transparent"
                             v-b-tooltip
-                            :title="$t('fj.delete_model', { model: 'Item' })"
+                            :title="__('base.item_edit', { item: 'Item' })"
                             size="sm"
                             class="btn-square fj-block-delete"
-                            @click="$emit('deleteItem', item)"
+                            v-b-modal="modalId(item)"
+                        >
+                            <fa-icon icon="edit" />
+                        </b-button>
+                        <b-button
+                            variant="transparent"
+                            v-b-tooltip
+                            :title="__('base.item_add', { item: 'Item' })"
+                            size="sm"
+                            class="btn-square fj-block-delete"
+                            @click="$emit('addItem', item)"
+                        >
+                            <fa-icon icon="plus" />
+                        </b-button>
+                        <b-button
+                            variant="transparent"
+                            v-b-tooltip
+                            :title="__('base.item_delete', { item: 'Item' })"
+                            size="sm"
+                            class="btn-square fj-block-delete"
+                            v-b-modal="`${modalId(item)}-delete`"
                         >
                             <fa-icon icon="trash" />
                         </b-button>
                     </b-td>
                 </table>
+                <fj-field-list-modal
+                    :item="item"
+                    :model="model"
+                    :modal-id="modalId(item)"
+                    :field="field"
+                />
+                <fj-field-list-modal-confirm-delete
+                    :item="item"
+                    :model="model"
+                    :modal-id="`${modalId(item)}-delete`"
+                    :field="field"
+                    v-on="$listeners"
+                />
             </div>
             <nested-draggable
                 :children="item.children"
                 :field="field"
                 :model="model"
+                v-on="$listeners"
             />
         </li>
     </draggable>
 </template>
 <script>
 import draggable from 'vuedraggable';
+
 export default {
     name: 'nested-draggable',
     props: {
@@ -75,6 +111,12 @@ export default {
     },
     components: {
         draggable
+    },
+
+    methods: {
+        modalId(item) {
+            return `list-modal-${this.field.route_prefix}-${this.field.local_key}-${item.id}`;
+        }
     }
 };
 </script>
