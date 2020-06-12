@@ -151,7 +151,7 @@ class ConfigLoader
      */
     public function getKeyFromPath(string $path)
     {
-        return collect(explode('/', str_replace('Config.php', '', str_replace(base_path('fjord/app/Config') . '/', '', $path))))
+        return collect(explode('/', str_replace('\\', '/', str_replace('Config.php', '', str_replace(base_path('fjord/app/Config') . '\\', '', str_replace(base_path('fjord/app/Config') . '/', '', $path))))))
             ->map(fn ($item) => Str::snake($item))
             ->implode('.');
     }

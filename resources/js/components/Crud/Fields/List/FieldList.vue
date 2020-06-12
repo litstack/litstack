@@ -1,6 +1,29 @@
 <template>
     <fj-base-field :field="field" :model="model">
-        <nested-draggable :children="list" />
+        <template slot="title-right">
+            <b-button
+                variant="secondary"
+                class="mb-2"
+                size="sm"
+                @click="addListItem"
+            >
+                {{
+                    trans('base.item_add', {
+                        item: trans('base.element')
+                    })
+                }}
+            </b-button>
+        </template>
+        <div class="d-flex justify-content-around w-100" v-if="busy">
+            <fj-spinner />
+        </div>
+        <nested-draggable
+            v-else
+            :children="list"
+            :field="field"
+            :model="model"
+            @deleteItem="deleteListItem"
+        />
     </fj-base-field>
 </template>
 
@@ -12,10 +35,17 @@ export default {
         nestedDraggable
     },
     props: {
+        /**
+         * Field attributes.
+         */
         field: {
             required: true,
             type: Object
         },
+
+        /**
+         * Model.
+         */
         model: {
             required: true,
             type: Object
@@ -23,6 +53,7 @@ export default {
     },
     data() {
         return {
+            busy: false,
             list: [],
             input: [
                 {
@@ -53,11 +84,99 @@ export default {
         };
     },
     beforeMount() {
-        let copy = Fjord.clone(this.input);
-        this.list = this.unflatten(copy);
+        //this.list = this.unflatten(copy);
+    },
+    mounted() {
+        this.loadItems();
     },
     methods: {
-        // Credits: https://github.com/MrPeak/flatten-tree
+        async deleteListItem(item) {
+            // let response = await this.sendDeleteListItem(item);
+            // if (!response) {
+            //     return;
+            // }
+
+            let flattened = this.flatten(this.list);
+            console.log(item);
+            flattened = _.filter(flattened, current => current.id != item.id);
+            console.log(flattened);
+
+            this.list = this.unflatten(flattened);
+        },
+
+        sendDeleteListItem(item) {
+            try {
+                return axios.delete(
+                    `${this.field.route_prefix}/list/${this.field.id}/${item.id}`
+                );
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+        /**
+         * Load items.
+         */
+        async loadItems() {
+            this.busy = true;
+            let response = await this.sendLoadItems();
+            if (!response) {
+                return (this.busy = false);
+            }
+
+            let listItems = this.crud(response.data);
+            this.list = this.unflatten(listItems);
+            this.busy = false;
+        },
+
+        /**
+         * Send loat items.
+         */
+        sendLoadItems(parent) {
+            try {
+                return axios.get(
+                    `${this.field.route_prefix}/list/${this.field.id}`
+                );
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+        /**
+         * Add list.
+         */
+        async addListItem(parent) {
+            let response = await this.sendAddListItem(parent);
+            if (!response) {
+                return;
+            }
+
+            let flattened = this.flatten(this.list);
+            let listItem = this.crud(response.data);
+
+            flattened.push(listItem);
+
+            this.list = this.unflatten(flattened);
+        },
+
+        /**
+         * Send add list item request.
+         */
+        sendAddListItem(parent) {
+            try {
+                return axios.post(
+                    `${this.field.route_prefix}/list/${this.field.id}`,
+                    { parent_id: parent ? parent.id : null }
+                );
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+        /**
+         * Flatten node generator.
+         * Credits: https://github.com/MrPeak/flatten-tree
+         */
         flattenNodeGenerator(node, parent, index, settings, stack) {
             const { itemsKey, idKey } = settings;
 
@@ -89,6 +208,10 @@ export default {
                 return list;
             };
         },
+
+        /**
+         * Flatten tree.
+         */
         flatten(tree) {
             let list = [];
             const stack = [];
@@ -135,7 +258,11 @@ export default {
 
             return list;
         },
-        // https://stackoverflow.com/questions/18017869/build-tree-array-from-flat-array-in-javascript
+
+        /**
+         * Unflatten.
+         * https://stackoverflow.com/questions/18017869/build-tree-array-from-flat-array-in-javascript
+         */
         unflatten(array, parent, tree) {
             array = _.sortBy(array, item => {
                 return item.order_column;
@@ -167,9 +294,16 @@ export default {
         }
     },
     computed: {
+        /**
+         * Output.
+         */
         output() {
             return this.flatten(this.list);
         },
+
+        /**
+         * Unflattened.
+         */
         unflattened() {
             return this.unflatten(this.input);
         }

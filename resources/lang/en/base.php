@@ -5,6 +5,7 @@ return [
     'item_create' => 'create :item',
     'item_remove' => 'remove :item',
     'item_select' => 'select :item',
+    'item_add' => 'add :item',
     'item_settings' => ':item settings',
     'profile' => 'profile',
     'password' => 'password',

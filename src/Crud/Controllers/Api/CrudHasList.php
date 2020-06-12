@@ -64,6 +64,10 @@ trait CrudHasList
         $listItem->parent_id = $parent_id;
         $listItem->order_column = $order_column;
         $listItem->save();
+
+        return crud(
+            $listItem
+        );
     }
 
     public function destroyListItem(CrudUpdateRequest $request, $id, $form_type, $field_id, $list_item_id)
