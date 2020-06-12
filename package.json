@@ -6,7 +6,7 @@
     "scripts": {
         "test": "npm run test:js && npm run test:php",
         "test:js": "./node_modules/.bin/jest .*.spec.js",
-        "test:php": "vendor/bin/phpunit"
+        "test:php": "rm -rf vendor/orchestra && composer install && php tests/install && vendor/bin/phpunit"
     },
     "jest": {
         "moduleFileExtensions": [
@@ -70,6 +70,7 @@
         "@fortawesome/free-regular-svg-icons": "^5.12.1",
         "@fortawesome/free-solid-svg-icons": "^5.12.1",
         "@fortawesome/vue-fontawesome": "^0.1.9",
+        "apexcharts": "^3.19.2",
         "axios": "^0.19.2",
         "bootstrap": "^4.4.1",
         "bootstrap-vue": "^2.9.0",
@@ -89,6 +90,7 @@
         "tiptap": "^1.27.1",
         "tiptap-extensions": "^1.29.1",
         "vue": "^2.6.11",
+        "vue-apexcharts": "^1.5.3",
         "vue-codemirror": "^4.0.6",
         "vue-color": "^2.7.1",
         "vue-ctk-date-time-picker": "^2.4.0",
