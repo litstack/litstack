@@ -275,11 +275,6 @@ class BaseForm extends VueProp
      */
     public function registerField($field, string $id, $params = [])
     {
-        if ($this->registrar) {
-            // Check if all required field attribute are set.
-            $this->registrar->checkComplete();
-        }
-
         if ($field instanceof Field) {
             $fieldInstance = $field;
         } else {
@@ -439,8 +434,8 @@ class BaseForm extends VueProp
      */
     public function render(): array
     {
-        if ($this->registrar) {
-            $this->registrar->checkComplete();
+        foreach ($this->registeredFields as $field) {
+            $field->checkComplete();
         }
 
         return [

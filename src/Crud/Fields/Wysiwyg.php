@@ -3,6 +3,8 @@
 namespace Fjord\Crud\Fields;
 
 use Fjord\Crud\BaseField;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
 
 class Wysiwyg extends BaseField
 {
@@ -30,53 +32,33 @@ class Wysiwyg extends BaseField
      */
     public function setDefaultAttributes()
     {
-        $this->toolbar([
-            'heading',
-            '|',
-            'bold',
-            'italic',
-            'link',
-            'bulletedList',
-            'numberedList',
-            'blockQuote',
-        ]);
+        //
     }
 
     /**
-     * Set toolbarFormat.
+     * Set font colors
      *
-     * @param //TODO: [type] $format
-     * @return $this
+     * @param array $colors
+     * @return void
      */
-    public function toolbarFormat($toolbarFormat)
+    public function colors($colors, ...$more)
     {
-        $this->setAttribute('toolbarFormat', $toolbarFormat);
+        $colors = array_merge(Arr::wrap($colors), $more);
+
+        $this->setAttribute('colors', $colors);
 
         return $this;
     }
 
     /**
-     * Set formats
+     * Add custom css to editor
      *
-     * @param //TODO: [type] $format
-     * @return $this
+     * @param string $path
+     * @return void
      */
-    public function formats($formats)
+    public function css(string $path)
     {
-        $this->setAttribute('formats', $formats);
-
-        return $this;
-    }
-
-    /**
-     * Set toolbar.
-     *
-     * @param array $toolbar
-     * @return $this
-     */
-    public function toolbar(array $toolbar)
-    {
-        $this->setAttribute('toolbar', $toolbar);
+        $this->setAttribute('css', File::get($path));
 
         return $this;
     }

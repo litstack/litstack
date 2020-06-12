@@ -15,6 +15,9 @@ return [
             'messages' => [
                 'confirm_unlink' => 'Please confirm that you wish to unlink the item.',
             ]
+        ],
+        'wysiwyg' => [
+            'new_window' => 'open in new window'
         ]
     ],
 

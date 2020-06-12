@@ -4,13 +4,13 @@ namespace FjordTest\CrudController;
 
 use Fjord\Crud\Models\Media;
 use FjordTest\BackendTestCase;
-use FjordTest\FrontendTestCase;
 use Fjord\Crud\Models\FormBlock;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use FjordTest\TestSupport\Models\Post;
 use FjordTest\Traits\InteractsWithCrud;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * This test is using the Crud Post.
@@ -26,6 +26,7 @@ class ApiBlockMediaTest extends BackendTestCase
     {
         parent::setUp();
 
+        Storage::fake();
         $this->post = Post::create([]);
         $this->actingAs($this->admin, 'fjord');
     }
@@ -44,9 +45,6 @@ class ApiBlockMediaTest extends BackendTestCase
     /** @test */
     public function it_can_upload_image()
     {
-        return $this->markTestSkipped(
-            'Media upload test is not working for validated request.'
-        );
         $block = $this->createBlock();
         $this->assertNull($block->images);
 
@@ -54,7 +52,7 @@ class ApiBlockMediaTest extends BackendTestCase
 
         $response = $this->post($url, [
             'collection' => 'images',
-            'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
+            'media' => UploadedFile::fake()->image('test_png.png'),
         ]);
         $response->assertStatus(200);
 
@@ -67,9 +65,6 @@ class ApiBlockMediaTest extends BackendTestCase
     /** @test */
     public function it_can_update_media_properties()
     {
-        return $this->markTestSkipped(
-            'Media upload test is not working for validated request.'
-        );
         $block = $this->createBlock();
         $this->assertNull($block->images);
 
@@ -77,7 +72,7 @@ class ApiBlockMediaTest extends BackendTestCase
         $url = $this->getCrudRoute("/{$this->post->id}/show/block/media_repeatables/{$block->id}/media");
         $response = $this->post($url, [
             'collection' => 'images',
-            'media' => new UploadedFile(__DIR__ . "/../TestSupport/media/test_png.png", 'test_png.png'),
+            'media' => UploadedFile::fake()->image('test_png.png'),
         ]);
         $response->assertStatus(200);
 
