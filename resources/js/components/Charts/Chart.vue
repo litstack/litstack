@@ -9,7 +9,6 @@
             <div class="fj-chart__wrapper">
                 <apexchart
                     type="area"
-                    height="400px"
                     :options="options"
                     :series="series"
                 ></apexchart>
@@ -193,7 +192,7 @@ export default {
 
         secondColor(variant) {
             return variant == this.white
-                ? this.secondary
+                ? '#ddd'
                 : `#${this.lightenDarkenColor(variant.replace('#', ''), -50)}`;
         },
         lightenDarkenColor(col, amt) {
