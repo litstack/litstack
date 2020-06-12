@@ -151,9 +151,25 @@ class ConfigLoader
      */
     public function getKeyFromPath(string $path)
     {
-        return collect(explode('/', str_replace('\\', '/', str_replace('Config.php', '', str_replace(base_path('fjord/app/Config') . '\\', '', str_replace(base_path('fjord/app/Config') . '/', '', $path))))))
+        return collect($this->explodePath($path))
             ->map(fn ($item) => Str::snake($item))
             ->implode('.');
+    }
+
+    /**
+     * Explode path.
+     *
+     * @param string $path
+     * @return array
+     */
+    protected function explodePath(string $path)
+    {
+        // Replacing path for windows and unix.
+        $modified = str_replace('\\', '/', $path);
+        $modified = str_replace(base_path('fjord/app/Config') . '/', '', $modified);
+        $modified = str_replace('Config.php', '', $modified);
+
+        return explode('/', $modified);
     }
 
     /**

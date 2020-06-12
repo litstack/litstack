@@ -242,11 +242,9 @@ export default {
         uploadError(file, errorMessage, xhr) {
             this.dropzone.removeAllFiles();
             if (typeof errorMessage == 'object') {
-                console.log('OBject');
                 if ('errors' in errorMessage) {
                     if ('media' in errorMessage.errors) {
                         for (let i in errorMessage.errors.media) {
-                            console.log('HI', i, errorMessage.errors.media);
                             this.$bvToast.toast(errorMessage.errors.media[i], {
                                 variant: 'danger'
                             });
@@ -267,11 +265,9 @@ export default {
         },
 
         transformFile(file, done) {
-            console.log(file);
             // If image doesn't require cropping, return bare image
             //
             //
-            console.log(file);
             if (this.field.crop === false || this.field.crop === undefined) {
                 done(file);
                 return;
@@ -337,9 +333,11 @@ export default {
             $('body').on('click', '#cropper-save', () => {
                 if (uploadable) {
                     // Get the canvas with image data from Cropper.js
+                    // set the canvas size to the actual pictures width and height
+                    // to prevent the original size
                     var canvas = cropper.getCroppedCanvas({
-                        width: 1400,
-                        height: 1000
+                        width: file.width,
+                        height: file.height
                     });
                     // Turn the canvas into a Blob (file object without a name)
                     canvas.toBlob(function(blob) {
