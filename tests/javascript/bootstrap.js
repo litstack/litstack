@@ -12,8 +12,9 @@ import mixins from '@fj-js/common/mixins';
 Vue.mixin({
     methods: {
         ...mixins,
-        // mocking trans method
-        trans: key => key
+        // mocking trans methods
+        trans: key => key,
+        __: key => key
     }
 });
 
