@@ -18,6 +18,12 @@ return [
         ],
         'wysiwyg' => [
             'new_window' => 'open in new window'
+        ],
+        'list' => [
+            'messages' => [
+                'confirm_delete' => 'Should :item item really be deleted?',
+                'confirm_delete_info' => 'If you remove this item, you also remove all child items below it.',
+            ]
         ]
     ],
 

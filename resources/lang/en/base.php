@@ -2,10 +2,16 @@
 
 return [
     'item_delete' => 'delete :item',
+    'item_deleted' => ':item deleted',
     'item_create' => 'create :item',
     'item_remove' => 'remove :item',
     'item_select' => 'select :item',
+    'item_order' => 'order :item',
+    'item_ordered' => ':item ordered',
+    'item_add' => 'add :item',
+    'item_added' => ':item added',
     'item_settings' => ':item settings',
+    'item_item' => ':item item',
     'profile' => 'profile',
     'password' => 'password',
     'name' => 'name',

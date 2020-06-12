@@ -14,10 +14,11 @@ use Fjord\Crud\Fields\Datetime;
 use Fjord\Crud\Fields\Password;
 use Fjord\Crud\Fields\Textarea;
 use Fjord\Crud\Fields\Component;
+use Fjord\Crud\Fields\ListField;
 use Fjord\Crud\Fields\Checkboxes;
 use Fjord\Crud\Fields\Media\File;
-use Fjord\Crud\Fields\Media\Image;
 use Fjord\Crud\Fields\Block\Block;
+use Fjord\Crud\Fields\Media\Image;
 use Illuminate\Foundation\AliasLoader;
 use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
@@ -53,6 +54,7 @@ class ServiceProvider extends LaravelServiceProvider
         'component' => Component::class,
         'oneRelation' => OneRelation::class,
         'manyRelation' => ManyRelation::class,
+        'list' => ListField::class
     ];
 
     /**

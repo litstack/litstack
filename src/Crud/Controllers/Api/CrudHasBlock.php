@@ -82,7 +82,8 @@ trait CrudHasBlock
             'type' => $request->type,
             'model_type' => $this->model,
             'model_id' => $model->id,
-            'field_id' => $field->id
+            'field_id' => $field->id,
+            'config_type' => get_class($this->config->getConfig()),
         ])->count();
 
         $block = new FormBlock();
@@ -90,6 +91,8 @@ trait CrudHasBlock
         $block->model_type = $this->model;
         $block->model_id = $model->id;
         $block->field_id = $field->id;
+        $block->config_type = get_class($this->config->getConfig());
+        $block->form_type = $form_name;
         $block->order_column = $order_column;
         $block->save();
 

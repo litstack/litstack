@@ -21,6 +21,7 @@ abstract class FormController
         Api\CrudHasIndex,
         Api\CrudHasRelations,
         Api\CrudHasBlock,
+        Api\CrudHasList,
         Api\CrudHasMedia,
         Api\CrudHasOrder,
         Api\CrudHasModal,
@@ -113,8 +114,11 @@ abstract class FormController
         }
 
         $model = FormField::firstOrCreate([
-            'collection' => $this->config->collection,
+            'config_type' => get_class($this->config->getConfig()),
+        ], [
             'form_name' => $this->config->formName,
+            'collection' => $this->config->collection,
+            'form_type' => 'show',
         ]);
 
         return view('fjord::app')->withComponent($this->config->component)

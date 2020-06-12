@@ -105,7 +105,6 @@ export default {
                     '{modal_id}',
                     this.field.id
                 );
-                console.log(fields[i].route_prefix);
             }
 
             this.fields = fields;

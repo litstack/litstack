@@ -3,6 +3,7 @@
 namespace Fjord\Crud\Models;
 
 use Fjord\Crud\RelationField;
+use Fjord\Support\Facades\Config;
 use Spatie\MediaLibrary\HasMedia;
 use Fjord\Crud\Fields\Media\MediaField;
 use Illuminate\Database\Eloquent\Model;
@@ -168,6 +169,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
      */
     public function attributesToArray()
     {
+
         $attributes = parent::attributesToArray();
 
         $attributes['value'] = $attributes['value'] ?? [];
@@ -225,6 +227,11 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     public function newFromBuilder($attributes = [], $connection = null)
     {
         $model = parent::newFromBuilder($attributes, $connection);
+
+        // FIX: config_type
+        if (method_exists($this, 'fixConfigType')) {
+            $this->fixConfigType($model);
+        }
 
         // Set field ids to be able to check if field exists in getAttribute 
         // method.

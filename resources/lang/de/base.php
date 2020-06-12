@@ -2,10 +2,16 @@
 
 return [
     'item_delete' => ':item löschen',
+    'item_deleted' => ':item gelöscht',
     'item_create' => ':item erstellen',
     'item_remove' => ':item entfernen',
     'item_select' => ':item auswählen',
+    'item_order' => ':item sortieren',
+    'item_ordered' => ':item sortiert',
+    'item_add' => ':item hinzufügen',
+    'item_added' => ':item hinzugefügt',
     'item_settings' => ':item Einstellungen',
+    'item_item' => ':item Element',
     'profile' => 'Konto',
     'password' => 'Passwort',
     'name' => 'Name',

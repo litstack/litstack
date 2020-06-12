@@ -52,6 +52,16 @@ class ConfigHandler
     }
 
     /**
+     * Get namespace of config.
+     * 
+     * @return string
+     */
+    public function getType()
+    {
+        return get_class($this->config);
+    }
+
+    /**
      * Find factories by config depenecies.
      *
      * @return void

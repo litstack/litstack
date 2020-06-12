@@ -3,6 +3,7 @@
 namespace Fjord\Crud\Models;
 
 use Fjord\Crud\Models\FormEdit;
+use Fjord\Support\Facades\Config;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Fjord\Crud\Models\Traits\TrackEdits;
@@ -37,6 +38,8 @@ class FormField extends FjordFormModel
      * @var array
      */
     public $fillable = [
+        'form_type',
+        'config_type',
         'collection',
         'form_name',
         'field_id',
@@ -65,12 +68,14 @@ class FormField extends FjordFormModel
     ];
 
     /**
-     * Get config key.
-     *
-     * @return string $key
+     * Fix: config_type
      */
-    public function getConfigKey()
+    public function fixConfigType($model)
     {
-        return "form.{$this->collection}.{$this->form_name}";
+        if ($model->collection && $model->form_name && !$model->config_type) {
+            $model->update([
+                'config_type' => Config::getNamespaceFromKey("form.{$model->collection}.{$model->form_name}")
+            ]);
+        }
     }
 }

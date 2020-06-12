@@ -13,7 +13,27 @@ trait HasFields
      */
     public function getFieldsAttribute()
     {
-        return $this->config->show->getRegisteredFields();
+        return $this->getForm()->getRegisteredFields();
+    }
+
+    /**
+     * Get form.
+     *
+     * @return BaseForm
+     */
+    public function getForm()
+    {
+        return $this->config->{$this->getFormType()};
+    }
+
+    /**
+     * Get form type.
+     *
+     * @return string
+     */
+    protected function getFormType()
+    {
+        return $this->form_type ?: 'show';
     }
 
     /**

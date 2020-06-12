@@ -2,8 +2,13 @@
 
 namespace Fjord;
 
+use Illuminate\Support\Str;
 use Illuminate\Routing\Router;
+use Fjord\Support\Facades\Config;
+use Fjord\Crud\Fields\Block\Block;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\File;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
@@ -174,6 +179,35 @@ class FjordServiceProvider extends ServiceProvider
 
         // Initialize kernel singleton.
         $this->app[\FjordApp\Kernel::class];
+
+        // Fix: config_type
+        if (app()->runningInConsole() || env('APP_ENV') == 'testing' || env('APP_ENV') === null) return;
+        if (!DB::table('form_blocks')->where('config_type', '')->exists()) {
+            return;
+        }
+        foreach (File::allFiles(base_path('fjord/app/Config')) as $configPath) {
+            if (!Str::endsWith(basename($configPath), 'Config.php')) {
+                continue;
+            }
+
+            try {
+                $namespace = 'FjordApp\\Config\\' . collect(explode('/', str_replace('.php', '', str_replace(base_path('fjord/app/Config') . '/', '', $configPath))))
+                    ->map(fn ($item) => ucfirst(Str::camel($item)))
+                    ->implode('\\');
+                $config = Config::get($namespace);
+                $fields = $config->show->getRegisteredFields();
+            } catch (\Throwable $e) {
+                continue;
+            }
+            foreach ($fields as $field) {
+                if (!$field instanceof Block) {
+                    continue;
+                }
+                DB::table('form_blocks')->where('model_type', $config->model)->where('config_type', '')->update([
+                    'config_type' => get_class($config->getConfig())
+                ]);
+            }
+        }
     }
 
     /**
