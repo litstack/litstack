@@ -46,7 +46,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                     "$config->route_prefix/{$id}"
                 );
             },
-            'title' => __f('fj.profile'),
+            'title' => fn () => __f('fj.profile'),
             'icon' => fa('user-cog'),
         ]);
     }
