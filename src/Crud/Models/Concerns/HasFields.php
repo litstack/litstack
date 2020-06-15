@@ -69,10 +69,12 @@ trait HasFields
      */
     public function getFormattedFieldValue($field,  $locale = null)
     {
+
         return $field->cast(
             $this->getFieldValue($field, $locale)
         );
     }
+
 
     /**
      * Get field value.
@@ -80,22 +82,20 @@ trait HasFields
      * @param Field $field
      * @return mixed
      */
-    public function getFieldValue($field)
+    public function getFieldValue($field, $locale = null)
     {
         if ($field instanceof RelationField) {
-            return $this->{$field->id};
+            return $this->getRelationValue($field->id);
         }
 
-        if (!is_translatable(static::class)) {
-            return $this->{$field->id};
+        if (!$locale) {
+            $locale = app()->getLocale();
         }
 
         if ($field->translatable) {
-            $value = $this->translation[app()->getLocale()] ?? [];
-        } else {
-            $value = $this->translation[config('translatable.fallback_locale')] ?? [];
+            return $this->getTranslatedFieldValue($field, app()->getLocale());
         }
 
-        return $value['value'] ?? null;
+        return $this->value[$field->local_key] ?? null;
     }
 }

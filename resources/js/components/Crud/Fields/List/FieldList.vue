@@ -90,7 +90,7 @@ export default {
     },
     async mounted() {
         this.busy = true;
-        //await this.loadItems();
+        await this.loadItems();
         this.busy = false;
     },
     methods: {

@@ -21,7 +21,7 @@
                 v-bind:disabled="!canSave"
                 @click="Fjord.bus.$emit('save')"
             >
-                {{ __('base.save') }}
+                {{ __('base.save').capitalize() }}
             </b-button>
         </template>
     </b-modal>
@@ -49,11 +49,19 @@ export default {
         formatRoutePrefixes() {
             let fields = Fjord.clone(this.field.form.fields);
             for (let i in fields) {
+                if (
+                    fields[i].component == 'fj-field-media' ||
+                    fields[i].component == 'fj-field-relation'
+                ) {
+                    let partials = fields[i].route_prefix.split('/');
+                    partials[partials.length - 3] = 'block';
+                    fields[i].route_prefix = partials.join('/');
+                }
+
                 fields[i].route_prefix = fields[i].route_prefix.replace(
                     '{list_item_id}',
                     this.item.id
                 );
-                console.log(fields[i].route_prefix);
             }
 
             this.fields = fields;
