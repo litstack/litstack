@@ -3,10 +3,13 @@
 namespace Fjord\Crud;
 
 use Closure;
+use Fjord\Crud\Container\CanHaveCharts;
 use Fjord\Exceptions\InvalidArgumentException;
 
 class CrudShow extends BaseForm
 {
+    use CanHaveCharts;
+
     /**
      * List of Vue components and its props.
      *

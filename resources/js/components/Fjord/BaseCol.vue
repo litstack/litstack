@@ -12,7 +12,7 @@ export default {
     name: 'Col',
     props: {
         width: {
-            type: Number,
+            type: [Number, String],
             default() {
                 return 12;
             }
@@ -20,11 +20,7 @@ export default {
     },
     computed: {
         cols() {
-            if (this.width >= 1) {
-                return this.width;
-            }
-
-            return Math.round(12 * this.width);
+            return this.bCols(Number(this.width));
         }
     }
 };

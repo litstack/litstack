@@ -3,6 +3,7 @@
 namespace Fjord\Crud\Models\Relations;
 
 use Fjord\Crud\Models\FormBlock;
+use Fjord\Crud\Models\FormListItem;
 use Fjord\Crud\Models\FormRelation;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
@@ -16,13 +17,53 @@ class CrudRelations extends ServiceProvider
      */
     public function register()
     {
+        $this->list();
         $this->repeatables();
         $this->manyRelation();
         $this->oneRelation();
     }
 
     /**
-     * Register block relation macro.
+     * Register listItems relation macro.
+     *
+     * @return void
+     */
+    public function list()
+    {
+        Builder::macro('listItems', function (string $fieldId) {
+            $model = $this->getModel();
+
+
+            $relation = $model->morphMany(FormListItem::class, 'model');
+
+            //dd($relation);
+
+            /*
+            $relation = new ListRelation(
+                $this,
+                $model,
+                $morphMany->getQualifiedMorphType(),
+                $morphMany->getQualifiedForeignKeyName(),
+                $model->getKeyName()
+            );
+            */
+
+            /*
+            $relation = $model->morphMany(FormListItem::class, 'model')
+                ->with('translations')
+                ->orderBy('order_column');
+
+                */
+            if ($fieldId) {
+                $relation->where('field_id', $fieldId);
+            }
+
+            return $relation;
+        });
+    }
+
+    /**
+     * Register repeatables relation macro.
      *
      * @return void
      */

@@ -11,7 +11,7 @@ trait HasConfig
      */
     public function getConfigAttribute()
     {
-        return fjord()->config($this->getConfigKey(), static::class);
+        return fjord()->config($this->config_type, static::class);
     }
 
     /**
@@ -22,15 +22,5 @@ trait HasConfig
     public function scopeConfig($query)
     {
         return self::getConfigAttribute();
-    }
-
-    /**
-     * Get config key.
-     *
-     * @return string $key
-     */
-    public function getConfigKey()
-    {
-        return $this->configKey ??  Str::snake(last(explode('\\', static::class)));
     }
 }

@@ -75,6 +75,7 @@ class MorphTo extends OneRelationField
 
         if ($model->id) {
             if ($model->{$query->getMorphType()} != $this->morphType) {
+                //dd($model);
                 $query->where('id', -1);
             }
         }
@@ -92,5 +93,23 @@ class MorphTo extends OneRelationField
     public function getRelated()
     {
         return new $this->morphType;
+    }
+
+    /**
+     * Get results for model.
+     *
+     * @param mixed $model
+     * @return mixed
+     */
+    public function getResults($model)
+    {
+        $query = $this->relation($model);
+
+        // Nullable morphTo.
+        if (!$model->{$query->getMorphType()}) {
+            return null;
+        }
+
+        return $query->getResults();
     }
 }

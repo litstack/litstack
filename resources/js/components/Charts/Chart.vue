@@ -1,26 +1,58 @@
 <template>
-    <fj-col :width="width">
-        <div class="fj-chart card" :class="this.variant">
-            <div class="px-3 pt-3">
-                <h4 class="fj-chart__title">
-                    {{ title }}
+    <fj-col :width="chart.width" class="mb-4">
+        <div class="fj-chart card" :class="chart.variant">
+            <div
+                class="fj-chart__title px-3 pt-3 d-flex justify-content-between"
+            >
+                <h4>
+                    {{ chart.title }}
                 </h4>
+                <b-dropdown :text="active.title" size="sm" :variant="reverse">
+                    <b-dropdown-item
+                        v-for="(option, key) in options"
+                        :key="key"
+                        @click="active = option"
+                        v-bind:active="active == option"
+                    >
+                        {{ option.title }}
+                    </b-dropdown-item>
+                </b-dropdown>
             </div>
-            <div class="fj-chart__wrapper">
-                <apexchart
-                    type="area"
-                    :options="options"
-                    :series="series"
-                ></apexchart>
+            <div
+                class="fj-chart__wrapper d-flex justify-content-around"
+                v-if="busy"
+                :style="`height: ${height}`"
+            >
+                <fj-spinner :variant="reverse" />
+            </div>
+            <div
+                class="fj-chart__wrapper"
+                :style="
+                    `display: ${busy ? 'none' : 'block'};height: ${height};`
+                "
+            >
+                <component
+                    ref="chart"
+                    :is="component"
+                    :variant="chart.variant"
+                    :height="height"
+                />
             </div>
             <div class="fj-chart__legend px-3 pb-1">
                 <h3 class="mb-0">
-                    3.253 $
-                    <fa-icon icon="arrow-up" class="text-success" />
+                    {{ result }}
+
+                    <template v-if="trend">
+                        <fa-icon :icon="trendIcon" :class="trendText" />
+                    </template>
                 </h3>
-                <small>
-                    daily goal 1 million bucks
-                </small>
+                <template v-if="trend">
+                    <small :class="trendText">
+                        {{ `${trend == 'up' ? '+' : ''}${difference}` }} ({{
+                            `${trend == 'up' ? '+' : ''}${percentage}`
+                        }}%)
+                    </small>
+                </template>
             </div>
         </div>
     </fj-col>
@@ -30,189 +62,147 @@
 export default {
     name: 'Chart',
     props: {
-        title: {
+        chart: {},
+        component: {
             type: String
-        },
-        variant: {
-            type: String,
-            default: 'white'
-        },
-        width: {
-            type: Number,
-            default: 4
         }
     },
     data() {
         return {
-            primary: '#4951f2',
-            secondary: '#6c8199',
-            white: '#fff',
-
-            background: '#fff',
-
-            options: {
-                chart: {
-                    toolbar: {
-                        show: false
-                    },
-                    animations: {
-                        enabled: false
-                    }
-                },
-                xaxis: {
-                    categories: [
-                        1991,
-                        1992,
-                        1993,
-                        1994,
-                        1995,
-                        1996,
-                        1997,
-                        1998
-                    ],
-                    labels: {
-                        show: false
-                    },
-                    axisBorder: {
-                        show: false
-                    },
-                    axisTicks: {
-                        show: false
-                    }
-                },
-                yaxis: {
-                    show: false
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                colors: ['red', 'green'], // stroke color
-                stroke: {
-                    curve: 'straight',
-                    width: 3
-                },
-                markers: {
-                    size: 5,
-                    colors: [],
-                    strokeColors: null,
-                    strokeWidth: 3,
-                    strokeOpacity: 0.9,
-                    strokeDashArray: 0,
-                    fillOpacity: 1,
-                    discrete: [],
-                    shape: 'circle',
-                    radius: 2,
-                    offsetX: 0,
-                    offsetY: 0,
-                    onClick: undefined,
-                    onDblClick: undefined,
-                    showNullDataPoints: true,
-                    hover: {
-                        size: undefined,
-                        sizeOffset: 3
-                    }
-                },
-                fill: {
-                    colors: [],
-                    type: 'gradient',
-                    gradient: {
-                        opacityFrom: 0.5,
-                        opacityTo: 0
-                    }
-                },
-                legend: {
-                    show: false
-                },
-                grid: {
-                    show: false
-                }
-            },
-            series: [
+            busy: true,
+            result: 0,
+            trendUp: false,
+            difference: 0,
+            trend: null,
+            percentage: 0,
+            options: [
                 {
-                    name: 'series-1',
-                    data: [30, 40, 45, 150, 49, 60, 70, 50]
+                    title: 'Today',
+                    key: 'today'
                 },
                 {
-                    color: '',
-                    name: 'series-2',
-                    data: [120, 75, 100, 110, 120, 20, 30, 10]
+                    title: 'Yesterday',
+                    key: 'yesterday'
+                },
+                {
+                    title: 'Last 7 days',
+                    key: 'last7days'
+                },
+                {
+                    title: 'This Week',
+                    key: 'thisweek'
+                },
+                {
+                    title: 'Last 30 days',
+                    key: 'last30days'
+                },
+                {
+                    title: 'This Month',
+                    key: 'thismonth'
                 }
-            ]
+            ],
+            active: {
+                title: 'Last 7 days',
+                key: 'last7days'
+            }
         };
     },
-    methods: {
-        // {
-        //     labels: [],
-        //     values: [{
-        //         name: '',
-        //         data: []
-        //     }]
-        // }
-
-        resetColors() {
-            this.options.colors = [];
-            this.options.markers.colors = [];
-            this.options.markers.strokeColors = [];
-            this.options.fill.colors = [];
-
-            this.background = null;
+    computed: {
+        height() {
+            let cols = this.bCols(this.chart.width);
+            if (cols > 9) {
+                return '400px';
+            }
+            if (cols > 6) {
+                return '300px';
+            }
+            if (cols > 3) {
+                return '250px';
+            }
+            if (cols > 0) {
+                return '200px';
+            }
         },
-
-        addColor(variant, second = false) {
-            let reverse = second
-                ? this.secondColor(variant)
-                : this.firstColor(variant);
-            console.log(second, variant, reverse);
-            this.options.colors.push(reverse); // chart stroke
-            this.options.fill.colors.push(reverse); // chart gradient
-            this.options.markers.strokeColors.push(reverse); // Circle border
-            this.options.markers.colors.push(this.background); // Inner circle
-        },
-
-        setCardColor(variant) {
-            this.background = variant;
-        },
-
-        firstColor(variant) {
-            switch (variant) {
-                case this.white:
-                    return this.primary;
+        reverse() {
+            switch (this.chart.variant) {
+                case 'white':
+                    return 'primary';
                     break;
-                case this.primary:
-                    return this.white;
+                case 'primary':
+                    return 'light';
                     break;
-                case this.secondary:
-                    return this.white;
+                case 'secondary':
+                    return 'light';
                     break;
                 default:
-                    return this.primary;
+                    return 'primary';
                     break;
             }
         },
-
-        secondColor(variant) {
-            return variant == this.white
-                ? '#ddd'
-                : `#${this.lightenDarkenColor(variant.replace('#', ''), -50)}`;
+        trendText() {
+            if (this.trend == 'up') return 'text-success';
+            if (this.trend == 'down') return 'text-danger';
+            if (this.trend == 'same') return '';
         },
-        lightenDarkenColor(col, amt) {
-            col = parseInt(col, 16);
-            return (
-                ((col & 0x0000ff) + amt) |
-                ((((col >> 8) & 0x00ff) + amt) << 8) |
-                (((col >> 16) + amt) << 16)
-            ).toString(16);
+        trendIcon() {
+            if (this.trend == 'up') return 'arrow-up';
+            if (this.trend == 'down') return 'arrow-down';
+            if (this.trend == 'same') return 'arrow-left';
         }
     },
-    beforeMount() {
-        let color = this[this.variant];
-        this.resetColors();
-        this.setCardColor(color);
-        console.log('FIRST');
-        this.addColor(color);
-        console.log('SECOND');
-        this.addColor(color, true);
-        //this.addColor(this.secondary);
+    mounted() {
+        this.loadData();
+    },
+    watch: {
+        active() {
+            this.loadData();
+        }
+    },
+    methods: {
+        async loadData() {
+            this.busy = true;
+            let response = await this.sendLoadData();
+            if (!response) {
+                return;
+            }
+            this.$refs.chart.update(response.data.chart);
+            this.makeResults(response.data.results);
+            this.busy = false;
+        },
+
+        sendLoadData() {
+            try {
+                return axios.post('chart-data', {
+                    key: this.chart.name,
+                    type: this.active.key
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+        makeResults(results) {
+            this.result = results[0];
+            if ((results.length = 2)) {
+                this.difference = this.result - results[1];
+                this.trend =
+                    this.difference == 0
+                        ? 'same'
+                        : this.difference > 0
+                        ? 'up'
+                        : 'down';
+                if (this.difference == 0) {
+                    this.percentage = 0;
+                } else {
+                    this.percentage = (
+                        (this.difference / this.result) *
+                        100
+                    ).toFixed(1);
+                }
+            } else {
+                this.trend = null;
+            }
+        }
     }
 };
 </script>
@@ -221,17 +211,22 @@ export default {
 @import '@fj-sass/_variables';
 .fj-chart {
     &__title {
-        font-weight: 700;
-        font-size: 1.25rem;
-        margin: 0;
-        max-width: 70%;
+        h4 {
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin: 0;
+            max-width: 70%;
+        }
+        z-index: 2;
     }
+
     &__wrapper {
         margin: 0 -12px;
-        margin-top: -2rem;
+        z-index: 1;
     }
     &__legend {
         margin-top: -2rem;
+        z-index: 2;
     }
 
     &.primary {
@@ -244,7 +239,8 @@ export default {
     &.secondary {
         background: $secondary;
         h3,
-        h4 {
+        h4,
+        .fj-chart__legend {
             color: white;
         }
     }

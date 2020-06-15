@@ -97,7 +97,12 @@ class PostConfig extends CrudConfig
             ->title('Images')
             ->maxFiles(2);
 
-
+        $form->list('test_list')
+            ->title('Test List')
+            ->form(function ($form) {
+                $form->input('test_list_input')->title('Hi');
+            });
+        //->nestable();
 
         $form->block('content')
             ->title('Content')

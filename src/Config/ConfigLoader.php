@@ -86,7 +86,7 @@ class ConfigLoader
         }
 
         // Get classname by key.
-        $class = $this->getClassName($key);
+        $class = $this->getNamespaceFromKey($key);
 
         // Initialize new config handler.
         $instance = new ConfigHandler(
@@ -101,12 +101,12 @@ class ConfigLoader
     }
 
     /**
-     * Get classname of config by key.
+     * Get namespace of config by key.
      *
      * @param string $key
      * @return string
      */
-    public function getClassName(string $key)
+    public function getNamespaceFromKey(string $key)
     {
         $name = '';
         foreach (explode('.', $key) as $part) {
@@ -151,9 +151,25 @@ class ConfigLoader
      */
     public function getKeyFromPath(string $path)
     {
-        return collect(explode('/', str_replace('Config.php', '', str_replace(base_path('fjord/app/Config') . '/', '', $path))))
+        return collect($this->explodePath($path))
             ->map(fn ($item) => Str::snake($item))
             ->implode('.');
+    }
+
+    /**
+     * Explode path.
+     *
+     * @param string $path
+     * @return array
+     */
+    protected function explodePath(string $path)
+    {
+        // Replacing path for windows and unix.
+        $modified = str_replace('\\', '/', $path);
+        $modified = str_replace(base_path('fjord/app/Config') . '/', '', $modified);
+        $modified = str_replace('Config.php', '', $modified);
+
+        return explode('/', $modified);
     }
 
     /**

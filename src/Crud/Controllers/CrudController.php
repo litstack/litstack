@@ -18,6 +18,7 @@ abstract class CrudController
         Api\CrudHasIndex,
         Api\CrudHasRelations,
         Api\CrudHasBlock,
+        Api\CrudHasList,
         Api\CrudHasMedia,
         Api\CrudHasOrder,
         Api\CrudHasModal,

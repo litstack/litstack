@@ -84,7 +84,7 @@ class LaravelRelationField extends RelationField
         $this->query = $this->getRelatedModelClass()::query();
 
         $this->setOrderDefaults();
-        $this->setAttribute('model', $this->getRelatedModelClass());
+        //$this->setAttribute('model', $this->getRelatedModelClass());
 
         // Set relation attributes.
         if (method_exists($this, 'setRelationAttributes')) {
