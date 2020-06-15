@@ -23,6 +23,7 @@ return [
     'device' => 'device',
     'logout' => 'logout',
     'close' => 'close',
+    'save' => 'save',
     'delete' => 'delete',
     'image' => 'image',
     'search' => 'search',

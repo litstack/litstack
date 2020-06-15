@@ -368,7 +368,7 @@ export default {
     display: none !important;
 }
 
-div#fjord-app .fj-dropzone {
+.fj-dropzone {
     min-height: 100px;
     display: flex;
     justify-content: center;

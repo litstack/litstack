@@ -84,17 +84,6 @@ class ListField extends RelationField
     }
 
     /**
-     * Cast field value.
-     *
-     * @param mixed $value
-     * @return boolean
-     */
-    public function cast($value)
-    {
-        return (string) $value;
-    }
-
-    /**
      * Get relation query for model.
      *
      * @param mixed $model
@@ -104,7 +93,6 @@ class ListField extends RelationField
     public function getRelationQuery($model)
     {
         if (!$model instanceof FormField) {
-
             return $model->{$this->id}();
         }
 

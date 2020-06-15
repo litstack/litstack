@@ -33,20 +33,17 @@ class CrudRelations extends ServiceProvider
         Builder::macro('listItems', function (string $fieldId) {
             $model = $this->getModel();
 
-
-            $relation = $model->morphMany(FormListItem::class, 'model');
+            $morphMany = $model->morphMany(FormListItem::class, 'model');
 
             //dd($relation);
 
-            /*
             $relation = new ListRelation(
-                $this,
-                $model,
+                $morphMany->getQuery(),
+                $morphMany->getParent(),
                 $morphMany->getQualifiedMorphType(),
                 $morphMany->getQualifiedForeignKeyName(),
-                $model->getKeyName()
+                $morphMany->getLocalKeyName()
             );
-            */
 
             /*
             $relation = $model->morphMany(FormListItem::class, 'model')

@@ -9,6 +9,16 @@ use Fjord\Crud\Requests\CrudUpdateRequest;
 
 trait CrudHasList
 {
+    /**
+     * Load list items.
+     *
+     * @param CrudReadRequest $request
+     * @param string $id
+     * @param string $form_type
+     * @param string $field_id
+     * @param string $list_item_id
+     * @return CrudJs
+     */
     public function loadListItem(CrudReadRequest $request, $id, $form_type, $field_id, $list_item_id)
     {
         $this->formExists($form_type) ?: abort(404);
@@ -31,10 +41,19 @@ trait CrudHasList
         $model = $this->findOrFail($id);
 
         return crud(
-            $field->getResults($model)
+            $field->getRelationQuery($model)->getFlat()
         );
     }
 
+    /**
+     * Store list item.
+     *
+     * @param CrudUpdateRequest $request
+     * @param string $id
+     * @param string $form_type
+     * @param string $field_id
+     * @return void
+     */
     public function storeListItem(CrudUpdateRequest $request, $id, $form_type, $field_id)
     {
         $this->formExists($form_type) ?: abort(404);
@@ -70,6 +89,16 @@ trait CrudHasList
         );
     }
 
+    /**
+     * Destroy list item.
+     *
+     * @param CrudUpdateRequest $request
+     * @param string $id
+     * @param string $form_type
+     * @param string $field_id
+     * @param string $list_item_id
+     * @return void
+     */
     public function destroyListItem(CrudUpdateRequest $request, $id, $form_type, $field_id, $list_item_id)
     {
         $this->formExists($form_type) ?: abort(404);
