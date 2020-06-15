@@ -110,6 +110,15 @@ class ServiceProvider extends LaravelServiceProvider
         );
 
         Builder::macro(
+            'whereInHours',
+            fn ($column, CarbonInterface $time, int $count) => $this
+                ->whereBetween($column, [
+                    $time->copy()->startOfHour(),
+                    $time->copy()->addHours($count)->endOfHour(),
+                ])
+        );
+
+        Builder::macro(
             'whereInDay',
             fn ($column, CarbonInterface $time) => $this
                 ->whereBetween($column, [
@@ -119,11 +128,29 @@ class ServiceProvider extends LaravelServiceProvider
         );
 
         Builder::macro(
+            'whereInDays',
+            fn ($column, CarbonInterface $time, int $count) => $this
+                ->whereBetween($column, [
+                    $time->copy()->startOfDay(),
+                    $time->copy()->addDays($count)->endOfDay(),
+                ])
+        );
+
+        Builder::macro(
             'whereInWeek',
             fn ($column, CarbonInterface $time) => $this
                 ->whereBetween($column, [
                     $time->copy()->startOfWeek(),
                     $time->copy()->endOfWeek(),
+                ])
+        );
+
+        Builder::macro(
+            'whereInWeeks',
+            fn ($column, CarbonInterface $time, int $count) => $this
+                ->whereBetween($column, [
+                    $time->copy()->startOfWeek(),
+                    $time->copy()->addWeeks($count)->endOfWeek(),
                 ])
         );
 

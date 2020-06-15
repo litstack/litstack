@@ -1,7 +1,7 @@
 <template>
     <apexchart
         ref="chart"
-        type="area"
+        :type="type"
         :options="options"
         :series="series"
         height="100%"
@@ -15,8 +15,13 @@ export default {
         variant: {
             type: String,
             default: 'white'
+        },
+        type: {
+            type: String,
+            required: true
         }
     },
+
     data() {
         return {
             primary: '#4951f2',
@@ -92,8 +97,22 @@ export default {
                 },
                 grid: {
                     show: false
-                }
+                },
+                plotOptions: {
+                    pie: {
+                        donut: {
+                            labels: {
+                                show: true,
+                                total: {
+                                    show: true
+                                }
+                            }
+                        }
+                    }
+                },
+                labels: ['Comedy', 'Action', 'SciFi', 'Drama', 'Horror']
             },
+
             series: [
                 { name: 'This Week', data: [1, 0, 0, 0, 0, 0, 0] },
                 { name: 'Last Week', data: [2, 0, 0, 0, 0, 0, 0] }
@@ -130,6 +149,12 @@ export default {
                 xaxis: { categories: data.categories }
             });
             this.series = data.series;
+
+            if ('labels' in data) {
+                this.$refs.chart.updateOptions({
+                    labels: data.labels
+                });
+            }
         },
 
         resetColors() {

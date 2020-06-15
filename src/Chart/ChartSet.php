@@ -104,9 +104,10 @@ class ChartSet
         for ($i = 0; $i < $this->iterations; $i++) {
             $time = $this->getTimeFromIterationKey($i);
 
-            $values[] = $this->getValueFromTime($time);
+            $values[] = $this->getValueFromTime($time) ?? 0;
             $this->labels[] = $this->getLabelFromTime($time);
         }
+
         $this->values[] = $values;
 
         return $this;

@@ -36,6 +36,7 @@
                     :is="component"
                     :variant="chart.variant"
                     :height="height"
+                    :type="chart.type"
                 />
             </div>
             <div class="fj-chart__legend px-3 pb-1">
@@ -69,6 +70,7 @@ export default {
     },
     data() {
         return {
+            height: '200px',
             busy: true,
             result: 0,
             trendUp: false,
@@ -108,21 +110,6 @@ export default {
         };
     },
     computed: {
-        height() {
-            let cols = this.bCols(this.chart.width);
-            if (cols > 9) {
-                return '400px';
-            }
-            if (cols > 6) {
-                return '300px';
-            }
-            if (cols > 3) {
-                return '250px';
-            }
-            if (cols > 0) {
-                return '200px';
-            }
-        },
         reverse() {
             switch (this.chart.variant) {
                 case 'white':
@@ -150,8 +137,13 @@ export default {
             if (this.trend == 'same') return 'arrow-left';
         }
     },
-    mounted() {
-        this.loadData();
+    beforeMount() {
+        this.setHeight();
+    },
+    async mounted() {
+        this.busy = true;
+        await this.loadData();
+        this.busy = false;
     },
     watch: {
         active() {
@@ -159,15 +151,31 @@ export default {
         }
     },
     methods: {
+        setHeight() {
+            if (this.chart.height) {
+                return (this.height = this.chart.height);
+            }
+            let cols = this.bCols(this.chart.width);
+            if (cols > 9) {
+                return (this.height = '400px');
+            }
+            if (cols > 6) {
+                return (this.height = '300px');
+            }
+            if (cols > 3) {
+                return (this.height = '250px');
+            }
+            if (cols > 0) {
+                return (this.height = '200px');
+            }
+        },
         async loadData() {
-            this.busy = true;
             let response = await this.sendLoadData();
             if (!response) {
                 return;
             }
             this.$refs.chart.update(response.data.chart);
             this.makeResults(response.data.results);
-            this.busy = false;
         },
 
         sendLoadData() {
@@ -184,7 +192,7 @@ export default {
         makeResults(results) {
             this.result = results[0];
             if ((results.length = 2)) {
-                this.difference = this.result - results[1];
+                this.difference = (this.result - results[1]).toFixed(1);
                 this.trend =
                     this.difference == 0
                         ? 'same'
@@ -221,11 +229,11 @@ export default {
     }
 
     &__wrapper {
-        margin: 0 -12px;
+        margin: 0 -10px 0 -12px;
         z-index: 1;
     }
     &__legend {
-        margin-top: -2rem;
+        margin-top: -1rem;
         z-index: 2;
     }
 

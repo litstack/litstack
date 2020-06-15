@@ -2,9 +2,9 @@
 
 namespace Fjord\Chart;
 
-use Closure;
+use Fjord\Chart\Config\DonutChartConfig;
+use Fjord\Chart\Config\AreaChartConfig;
 use Fjord\Support\VueProp;
-use InvalidArgumentException;
 use Fjord\Config\ConfigHandler;
 use Fjord\Chart\Contracts\Engine;
 
@@ -41,8 +41,24 @@ class Chart extends VueProp
     {
         $this->engine = $engine;
         $this->config = $config;
+        $this->setAttribute('type', $this->getTypeFromConfig());
 
         $this->setAttribute('width', 12);
+    }
+
+    /**
+     * Set config type.
+     *
+     * @return void
+     */
+    protected function getTypeFromConfig()
+    {
+        if ($this->config->getConfig() instanceof AreaChartConfig) {
+            return 'area';
+        }
+        if ($this->config->getConfig() instanceof DonutChartConfig) {
+            return 'donut';
+        }
     }
 
     /**
@@ -105,6 +121,19 @@ class Chart extends VueProp
             ['component' => $this->engine->getComponent()],
             ['chart' => $this]
         ));
+    }
+
+    /**
+     * Set chart height.
+     *
+     * @param string|integer $height
+     * @return $this
+     */
+    public function height($height)
+    {
+        $this->setAttribute('height', $height);
+
+        return $this;
     }
 
     /**

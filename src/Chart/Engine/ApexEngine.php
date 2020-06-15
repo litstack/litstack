@@ -20,19 +20,26 @@ class ApexEngine extends ChartEngine
      * @param ChartSet $set
      * @return array
      */
-    public function render(array $names, ChartSet $set)
+    public function render(array $names, ChartSet $set, string $type)
     {
         $series = [
             'categories' => $set->getLabels(),
             'series' => [],
         ];
 
-        foreach ($set->getValues() as $key => $values) {
-            $series['series'][]  = [
-                'name' => $names[$key],
-                'data' => $values
-            ];
+
+        if ($type == 'area') {
+            foreach ($set->getValues() as $key => $values) {
+                $series['series'][]  = [
+                    'name' => $names[$key],
+                    'data' => $values
+                ];
+            }
+        } else if ($type == 'donut') {
+            $series['labels'] = $names;
+            $series['series']  = $set->getValues()[0][0];
         }
+
 
         return $series;
     }
