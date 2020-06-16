@@ -100,7 +100,6 @@ export default {
                 key: this.field.local_key
             };
 
-            //console.log(add, this.value)
             if (newPassword == '') {
                 this.$store.commit('REMOVE_SAVE_JOB', job);
             } else {

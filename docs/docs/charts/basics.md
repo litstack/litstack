@@ -114,3 +114,9 @@ Possible card variants: `primary`, `secondary`, `white`
 ```php
 $container->chart('charts.sales_chart')->variant('primary');
 ```
+
+The width of the chart is indicated by `width`.
+
+```php
+$container->chart('charts.sales_chart')->width(1 / 3);
+```
