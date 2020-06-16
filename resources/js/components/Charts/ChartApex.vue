@@ -104,11 +104,26 @@ export default {
                 },
                 plotOptions: {
                     pie: {
+                        customScale: 0.9,
                         donut: {
+                            background: 'transparent', // inner circle background
+                            size: '75%',
                             labels: {
                                 show: true,
                                 total: {
-                                    show: true
+                                    show: true,
+                                    fontSize: '1rem',
+                                    fontFamily: 'Inter',
+                                    fontWeight: 400,
+                                    color: 'white'
+                                },
+                                value: {
+                                    show: true,
+                                    fontSize: '2rem',
+                                    fontFamily: 'Inter',
+                                    fontWeight: 700,
+                                    color: 'white',
+                                    offsetY: 4
                                 }
                             }
                         }
@@ -152,11 +167,30 @@ export default {
             this.options.fill = {
                 colors: []
             };
-            this.options.colors.push(this.secondColor(variant));
-            this.options.fill.colors.push('#70859c');
-            this.options.fill.colors.push('#83c2ff');
-            this.options.fill.colors.push('#9ff2ae');
-            this.options.fill.colors.push('#83c2ff'); // chart fill color
+            //this.options.colors.push(this.secondColor(variant));
+            if (variant == this.white) {
+                this.options.fill.colors.push('#4951f2');
+                this.options.fill.colors.push('#1923ef');
+                this.options.fill.colors.push('#0e17c7');
+                this.options.fill.colors.push('#0b1197');
+                this.options.fill.colors.push('#070c68');
+                this.options.fill.colors.push('#040638');
+                this.options.fill.colors.push('#010108');
+            } else {
+                this.options.fill.colors.push('rgba(0,16,33,.15)');
+                this.options.fill.colors.push('rgba(0,16,33,.30)');
+                this.options.fill.colors.push('rgba(0,16,33,.45)');
+                this.options.fill.colors.push('rgba(0,16,33,.60)');
+                this.options.fill.colors.push('rgba(0,16,33,.75)');
+                this.options.fill.colors.push('rgba(0,16,33,.90)');
+            }
+
+            let fontColor = variant == this.white ? 'black' : 'white';
+
+            this.options.plotOptions.pie.donut.labels.total.color = fontColor;
+            this.options.plotOptions.pie.donut.labels.value.color = fontColor;
+
+            this.options.stroke.colors = ['transparent'];
         },
 
         makeArea(variant) {
