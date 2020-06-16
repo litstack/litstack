@@ -22,6 +22,8 @@ import Draggable from 'vuedraggable';
 import VueLodash from 'vue-lodash';
 import lodash from 'lodash';
 
+window.numeral = require('numeral');
+
 // FontAwesome
 library.add(far);
 library.add(fas);

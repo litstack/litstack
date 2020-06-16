@@ -2,19 +2,23 @@
 
 namespace Fjord\Chart\Config;
 
-abstract class AreaChartConfig
+use Illuminate\Support\Collection;
+
+abstract class AreaChartConfig extends ChartConfig
 {
     /**
-     * Created at column.
+     * Calculate value.
      *
-     * @var string
+     * @param Builder $query
+     * @return integer
      */
-    public $created_at = 'created_at';
+    abstract public function value($query): int;
 
     /**
-     * Chart engine.
+     * Number that is displayed at the bottom left corner.
      *
-     * @var string
+     * @param \Illuminate\Support\Collection
+     * @return integer
      */
-    public $engine = 'apex';
+    abstract public function result(Collection $values): int;
 }

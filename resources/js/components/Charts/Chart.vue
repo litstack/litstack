@@ -37,23 +37,27 @@
                     :variant="chart.variant"
                     :height="height"
                     :type="chart.type"
+                    :format="format"
                 />
             </div>
             <div class="fj-chart__legend px-3 pb-1">
-                <h3 class="mb-0">
-                    {{ result }}
+                <template v-if="chart.type == 'area'">
+                    <h3 class="mb-0">
+                        {{ result }}
 
+                        <template v-if="trend">
+                            <fa-icon :icon="trendIcon" :class="trendText" />
+                        </template>
+                    </h3>
                     <template v-if="trend">
-                        <fa-icon :icon="trendIcon" :class="trendText" />
+                        <small :class="trendText">
+                            {{ `${trend == 'up' ? '+' : ''}${difference}` }} ({{
+                                `${trend == 'up' ? '+' : ''}${percentage}`
+                            }}%)
+                        </small>
                     </template>
-                </h3>
-                <template v-if="trend">
-                    <small :class="trendText">
-                        {{ `${trend == 'up' ? '+' : ''}${difference}` }} ({{
-                            `${trend == 'up' ? '+' : ''}${percentage}`
-                        }}%)
-                    </small>
                 </template>
+                <div v-else class="mt-5"></div>
             </div>
         </div>
     </fj-col>
@@ -151,6 +155,19 @@ export default {
         }
     },
     methods: {
+        format(value) {
+            if (this.chart.format) {
+                value = numeral(value).format(this.chart.format);
+            }
+            if (this.chart.prefix) {
+                value = this.chart.prefix + value;
+            }
+            if (this.chart.suffix) {
+                value += this.chart.suffix;
+            }
+
+            return value;
+        },
         setHeight() {
             if (this.chart.height) {
                 return (this.height = this.chart.height);
@@ -210,6 +227,8 @@ export default {
             } else {
                 this.trend = null;
             }
+
+            this.result = this.format(this.result);
         }
     }
 };

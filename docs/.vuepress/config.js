@@ -131,6 +131,11 @@ module.exports = {
                     ]
                 },
                 {
+                    title: 'Charts',
+                    collapsable: false,
+                    children: [['docs/charts/basics', 'Basics']]
+                },
+                {
                     title: 'Frontend',
                     collapsable: false,
                     children: [

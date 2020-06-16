@@ -2,6 +2,7 @@
 
 namespace Fjord;
 
+use Fjord\Commands\FjordChart;
 use Fjord\Application\Application;
 use Fjord\Vue\Components\InfoComponent;
 use Fjord\Vue\Components\ChartComponent;
@@ -48,6 +49,7 @@ class FjordPackage extends Package
         Commands\FjordUser::class,
         Commands\FjordCrud::class,
         Commands\FjordForm::class,
+        Commands\FjordChart::class,
         Commands\FjordExtend::class,
         Commands\FjordExtension::class,
         Commands\FjordComponents::class,

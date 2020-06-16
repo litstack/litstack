@@ -2,10 +2,7 @@
 
 namespace Fjord\Chart;
 
-use Closure;
-use App\Models\Sale;
 use Carbon\CarbonInterface;
-use Illuminate\Support\Carbon;
 use Fjord\Support\Facades\Config;
 
 class ChartController
@@ -43,7 +40,7 @@ class ChartController
         $queryMethod = $this->donutQueryMethod($type);
 
         $set = ChartSet::make(
-            Sale::select('price'),
+            $config->model::query(),
             fn ($query, $time) => $this->resolveValue($config, $queryMethod, $query, $time),
             fn ($time, $i) => $time->{$timeMethod}($i),
         )
@@ -53,9 +50,7 @@ class ChartController
         $set->load($start);
 
         return [
-            'results' => collect($set->getValues())->map(
-                fn ($values) => $config->result(collect($values))
-            )->toArray(),
+            'results' => [],
             'chart' => $engine->render($config->labels, $set, $chartType)
         ];
     }
@@ -71,7 +66,7 @@ class ChartController
         }
 
         $set = ChartSet::make(
-            Sale::select('price'),
+            $config->model::query(),
             fn ($query, $time) => $this->resolveValue($config, $queryMethod, $query, $time),
             fn ($time, $i) => $time->{$timeMethod}($i),
         )

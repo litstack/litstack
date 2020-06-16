@@ -19,7 +19,8 @@ export default {
         type: {
             type: String,
             required: true
-        }
+        },
+        format: {}
     },
 
     data() {
@@ -53,6 +54,9 @@ export default {
                     }
                 },
                 yaxis: {
+                    labels: {
+                        formatter: this.format
+                    },
                     show: false
                 },
                 dataLabels: {
@@ -129,11 +133,11 @@ export default {
         };
     },
     beforeMount() {
-        let color = this[this.variant];
+        let variant = this[this.variant];
         this.resetColors();
-        this.setCardColor(color);
-        this.addColor(color);
-        this.addColor(color, true);
+        this.setCardColor(variant);
+        if (this.type == 'area') this.makeArea(variant);
+        if (this.type == 'donut') this.makeDonut(variant);
     },
     methods: {
         // {
@@ -143,6 +147,22 @@ export default {
         //         data: []
         //     }]
         // }
+
+        makeDonut(variant) {
+            this.options.fill = {
+                colors: []
+            };
+            this.options.colors.push(this.secondColor(variant));
+            this.options.fill.colors.push('#70859c');
+            this.options.fill.colors.push('#83c2ff');
+            this.options.fill.colors.push('#9ff2ae');
+            this.options.fill.colors.push('#83c2ff'); // chart fill color
+        },
+
+        makeArea(variant) {
+            this.addAreaColor(variant);
+            this.addAreaColor(variant, true);
+        },
 
         update(data) {
             this.$refs.chart.updateOptions({
@@ -166,11 +186,11 @@ export default {
             this.background = null;
         },
 
-        addColor(variant, second = false) {
+        addAreaColor(variant, second = false) {
             let reverse = second
                 ? this.secondColor(variant)
                 : this.firstColor(variant);
-            console.log(second, variant, reverse);
+
             this.options.colors.push(reverse); // chart stroke
             this.options.fill.colors.push(reverse); // chart gradient
             this.options.markers.strokeColors.push(reverse); // Circle border

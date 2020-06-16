@@ -98,6 +98,62 @@ class Chart extends VueProp
     }
 
     /**
+     * Value prefix.
+     *
+     * @param string $prefix
+     * @return $this
+     */
+    public function prefix(string $prefix)
+    {
+        $this->setAttribute('prefix', $prefix);
+
+        return $this;
+    }
+
+    /**
+     * Value suffix.
+     *
+     * @param string $suffix
+     * @return $this
+     */
+    public function suffix(string $suffix)
+    {
+        $this->setAttribute('suffix', $suffix);
+
+        return $this;
+    }
+
+    /**
+     * Value format.
+     *
+     * @param string $format
+     * @return $this
+     */
+    public function format(string $format)
+    {
+        $this->setAttribute('format', $format);
+
+        return $this;
+    }
+
+    /**
+     * Value currency format.
+     *
+     * @param string|boolean $currency
+     * @return $this
+     */
+    public function currency(string $currency = '')
+    {
+        if ($currency == '') {
+            $currency = '$';
+        }
+
+        $this->format('0,0[.]00')->suffix(" {$currency}");
+
+        return $this;
+    }
+
+    /**
      * Chart width.
      *
      * @param string $width

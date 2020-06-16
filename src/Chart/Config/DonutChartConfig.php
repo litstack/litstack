@@ -2,19 +2,20 @@
 
 namespace Fjord\Chart\Config;
 
-abstract class DonutChartConfig
+abstract class DonutChartConfig extends ChartConfig
 {
     /**
-     * Created at column.
+     * Value.
      *
-     * @var string
+     * @param Builder $query
+     * @return array
      */
-    public $created_at = 'created_at';
+    abstract public function value($query): array;
 
     /**
-     * Chart engine.
+     * Labels.
      *
-     * @var string
+     * @return array
      */
-    public $engine = 'apex';
+    abstract public function labels(): array;
 }
