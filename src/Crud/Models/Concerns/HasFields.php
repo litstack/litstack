@@ -3,6 +3,7 @@
 namespace Fjord\Crud\Models\Concerns;
 
 use Fjord\Crud\RelationField;
+use Fjord\Crud\Fields\Media\MediaField;
 
 trait HasFields
 {
@@ -84,6 +85,15 @@ trait HasFields
      */
     public function getFieldValue($field, $locale = null)
     {
+        if ($field instanceof MediaField) {
+            $media = $this->getMedia($field->id);
+            if ($field->maxFiles == 1) {
+                $media = $media->first();
+            }
+
+            return $media;
+        }
+
         if ($field instanceof RelationField) {
             return $this->getRelationValue($field->id);
         }
