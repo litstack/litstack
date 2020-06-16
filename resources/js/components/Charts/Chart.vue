@@ -7,16 +7,6 @@
                 <h4>
                     {{ chart.title }}
                 </h4>
-                <b-dropdown :text="active.title" size="sm" :variant="reverse">
-                    <b-dropdown-item
-                        v-for="(option, key) in options"
-                        :key="key"
-                        @click="active = option"
-                        v-bind:active="active == option"
-                    >
-                        {{ option.title }}
-                    </b-dropdown-item>
-                </b-dropdown>
             </div>
             <div
                 class="fj-chart__wrapper d-flex justify-content-around"
@@ -40,24 +30,46 @@
                     :format="format"
                 />
             </div>
-            <div class="fj-chart__legend px-3 pb-1">
-                <template v-if="chart.type == 'area'">
-                    <h3 class="mb-0">
-                        {{ result }}
+            <div
+                class="fj-chart__legend d-flex justify-content-between px-3 pb-1"
+            >
+                <div>
+                    <template v-if="chart.type == 'area'">
+                        <h3 class="mb-0">
+                            {{ result }}
 
+                            <template v-if="trend">
+                                <fa-icon :icon="trendIcon" :class="trendText" />
+                            </template>
+                        </h3>
                         <template v-if="trend">
-                            <fa-icon :icon="trendIcon" :class="trendText" />
+                            <small :class="trendText">
+                                {{ `${trend == 'up' ? '+' : ''}` }} ({{
+                                    `${trend == 'up' ? '+' : ''}`
+                                }}%)
+                            </small>
                         </template>
-                    </h3>
-                    <template v-if="trend">
-                        <small :class="trendText">
-                            {{ `${trend == 'up' ? '+' : ''}${difference}` }} ({{
-                                `${trend == 'up' ? '+' : ''}${percentage}`
-                            }}%)
-                        </small>
                     </template>
-                </template>
-                <div v-else class="mt-5"></div>
+                </div>
+                <div class="d-flex align-items-end flex-column">
+                    <b-dropdown
+                        :text="active.title"
+                        size="sm"
+                        :variant="reverse"
+                        class="mt-auto mb-2"
+                        :dropup="true"
+                        right
+                    >
+                        <b-dropdown-item
+                            v-for="(option, key) in options"
+                            :key="key"
+                            @click="active = option"
+                            v-bind:active="active == option"
+                        >
+                            {{ option.title }}
+                        </b-dropdown-item>
+                    </b-dropdown>
+                </div>
             </div>
         </div>
     </fj-col>
@@ -252,8 +264,8 @@ export default {
         z-index: 1;
     }
     &__legend {
-        margin-top: -1rem;
-        z-index: 2;
+        // margin-top: -1rem;
+        // z-index: 2;
     }
 
     &.primary {
