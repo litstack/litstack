@@ -353,7 +353,7 @@ export default {
                     );
                     break;
                 case 'belongsTo':
-                    this.setValue(relation.id);
+                    this.$emit('input', relation.id);
                     break;
             }
 
@@ -433,7 +433,7 @@ export default {
                     });
                     break;
                 case 'belongsTo':
-                    this.setValue(null);
+                    this.$emit('input', null);
                     break;
             }
 

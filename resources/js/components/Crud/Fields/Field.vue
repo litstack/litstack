@@ -153,7 +153,6 @@ export default {
          * @return {undefined}
          */
         onSaved(results) {
-            console.log('CHECK results', this.method, this.routePrefix);
             if (results.hasFailed(this.method, this.routePrefix)) {
                 return;
             }

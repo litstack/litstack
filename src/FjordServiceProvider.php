@@ -185,29 +185,45 @@ class FjordServiceProvider extends ServiceProvider
         if (!DB::table('form_blocks')->where('config_type', '')->exists()) {
             return;
         }
-        foreach (File::allFiles(base_path('fjord/app/Config')) as $configPath) {
-            if (!Str::endsWith(basename($configPath), 'Config.php')) {
-                continue;
-            }
-
-            try {
-                $namespace = 'FjordApp\\Config\\' . collect(explode('/', str_replace('.php', '', str_replace(base_path('fjord/app/Config') . '/', '', $configPath))))
-                    ->map(fn ($item) => ucfirst(Str::camel($item)))
-                    ->implode('\\');
-                $config = Config::get($namespace);
-                $fields = $config->show->getRegisteredFields();
-            } catch (\Throwable $e) {
-                continue;
-            }
-            foreach ($fields as $field) {
-                if (!$field instanceof Block) {
+        $this->app->booted(function () {
+            foreach (File::allFiles(base_path('fjord/app/Config')) as $configPath) {
+                if (!Str::endsWith(basename($configPath), 'Config.php')) {
                     continue;
                 }
-                DB::table('form_blocks')->where('model_type', $config->model)->where('config_type', '')->update([
-                    'config_type' => get_class($config->getConfig())
-                ]);
+                try {
+                    $namespace = 'FjordApp\\Config\\' . collect(explode('/', str_replace('.php', '', str_replace(base_path('fjord/app/Config') . '/', '', $configPath))))
+                        ->map(fn ($item) => ucfirst(Str::camel($item)))
+                        ->implode('\\');
+
+                    $config = Config::get($namespace);
+                    $fields = $config->show->getRegisteredFields();
+                } catch (\Throwable $e) {
+                    continue;
+                }
+                if (!$config->has('show')) {
+                    continue;
+                }
+
+                foreach ($fields as $field) {
+                    if (!$field instanceof Block) {
+                        continue;
+                    }
+
+                    $query = DB::table('form_blocks')->where('model_type', $config->model)->where('config_type', '');
+                    if ($config->model == FormField::class) {
+                        $formField = DB::table('form_fields')->where('config_type', $namespace)->first();
+
+                        if (!$formField) {
+                            return;
+                        }
+                        $query->where('model_id', $formField->id);
+                    }
+                    $query->update([
+                        'config_type' => get_class($config->getConfig())
+                    ]);
+                }
             }
-        }
+        });
     }
 
     /**
