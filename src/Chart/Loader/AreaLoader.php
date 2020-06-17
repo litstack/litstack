@@ -42,11 +42,24 @@ class AreaLoader extends ChartLoader
 
         return [
             'results' => $this->getResults($set),
-            'chart' => $this->engine->renderArea(
+            'chart' => $this->engine->render(
+                'area',
                 $this->getNames(),
-                $set
+                $set,
+                $this->getGoal()
             )
         ];
+    }
+
+    public function getGoal()
+    {
+        if ($this->config->goal === null) {
+            return;
+        }
+
+        if ($this->getShowGoal()) {
+            return $this->config->goal;
+        }
     }
 
     public function getResults(ChartSet $set)
@@ -65,6 +78,18 @@ class AreaLoader extends ChartLoader
             'thisweek' => fn ($time) => $time->subWeek(),
             'last30days' => fn ($time) => $time->subDays(30),
             'thismonth' => fn ($time) => $time->subMonth()
+        ];
+    }
+
+    protected function getShowGoalConfig()
+    {
+        return [
+            'today' => false,
+            'yesterday' => false,
+            'last7days' => true,
+            'thisweek' => true,
+            'last30days' => true,
+            'thismonth' => true
         ];
     }
 }

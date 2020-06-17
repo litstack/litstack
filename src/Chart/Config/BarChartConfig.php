@@ -28,4 +28,14 @@ abstract class BarChartConfig extends ChartConfig
      * @return integer
      */
     abstract public function result(Collection $values): int;
+
+    /**
+     * Set daily goal.
+     *
+     * @return void
+     */
+    public function goal()
+    {
+        //
+    }
 }

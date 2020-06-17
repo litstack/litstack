@@ -232,7 +232,10 @@ class Chart extends VueProp
     {
         return array_merge(
             $this->attributes,
-            ['name' => $this->config->getKey()]
+            [
+                'name' => $this->config->getKey(),
+                'goal' => $this->config->has('goal') ? $this->config->goal : null
+            ]
         );
     }
 }

@@ -42,11 +42,22 @@ class BarLoader extends ChartLoader
 
         return [
             'results' => $this->getResults($set),
-            'chart' => $this->engine->renderArea(
+            'chart' => $this->engine->render(
+                'bar',
                 $this->getNames(),
-                $set
+                $set,
+                $this->getGoal()
             )
         ];
+    }
+
+    public function getGoal()
+    {
+        if ($this->config->goal === null) {
+            return;
+        }
+
+        return $this->config->goal * $this->getDailyGoalFactor();
     }
 
     public function getResults(ChartSet $set)
@@ -65,6 +76,18 @@ class BarLoader extends ChartLoader
             'thisweek' => fn ($time) => $time->subWeek(),
             'last30days' => fn ($time) => $time->subDays(30),
             'thismonth' => fn ($time) => $time->subMonth()
+        ];
+    }
+
+    protected function getDailyGoalFactorConfig()
+    {
+        return [
+            'today' => 1 / 24,
+            'yesterday' => 1 / 24,
+            'last7days' => 1,
+            'thisweek' => 1,
+            'last30days' => 1,
+            'thismonth' => 1
         ];
     }
 }
