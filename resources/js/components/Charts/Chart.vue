@@ -16,12 +16,17 @@
                 <fj-spinner :variant="reverse" />
             </div>
             <div
-                class="fj-chart__wrapper"
+                :class="
+                    `fj-chart__wrapper ${
+                        chart.type == 'number' ? 'chart-number' : ''
+                    }`
+                "
                 :style="
                     `display: ${busy ? 'none' : 'block'};height: ${height};`
                 "
             >
                 <component
+                    v-if="chart.type != 'number'"
                     ref="chart"
                     :is="component"
                     :variant="chart.variant"
@@ -29,12 +34,21 @@
                     :type="chart.type"
                     :format="format"
                 />
+                <div v-else>
+                    {{ value }}
+                </div>
             </div>
             <div
                 class="fj-chart__legend d-flex justify-content-between px-3 pb-1"
             >
                 <div>
-                    <template v-if="chart.type == 'area'">
+                    <template
+                        v-if="
+                            chart.type == 'area' ||
+                                chart.type == 'bar' ||
+                                chart.type == 'number'
+                        "
+                    >
                         <h3 class="mb-0">
                             {{ result }}
 
@@ -44,8 +58,9 @@
                         </h3>
                         <template v-if="trend">
                             <small :class="trendText">
-                                {{ `${trend == 'up' ? '+' : ''}` }} ({{
-                                    `${trend == 'up' ? '+' : ''}`
+                                {{ `${trend == 'up' ? '+' : ''}${difference}` }}
+                                ({{
+                                    `${trend == 'up' ? '+' : ''}${percentage}`
                                 }}%)
                             </small>
                         </template>
@@ -86,6 +101,7 @@ export default {
     },
     data() {
         return {
+            value: 0,
             height: '200px',
             busy: true,
             result: 0,
@@ -203,7 +219,11 @@ export default {
             if (!response) {
                 return;
             }
-            this.$refs.chart.update(response.data.chart);
+            if (this.chart.type == 'number') {
+                this.value = response.data.value;
+            } else {
+                this.$refs.chart.update(response.data.chart);
+            }
             this.makeResults(response.data.results);
         },
 
@@ -262,6 +282,11 @@ export default {
     &__wrapper {
         margin: 0 -10px 0 -12px;
         z-index: 1;
+
+        &.chart-number {
+            font-size: 100px;
+            margin: 0;
+        }
     }
     &__legend {
         // margin-top: -1rem;

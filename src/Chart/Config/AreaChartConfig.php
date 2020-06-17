@@ -7,6 +7,13 @@ use Illuminate\Support\Collection;
 abstract class AreaChartConfig extends ChartConfig
 {
     /**
+     * Compare to previous time.
+     *
+     * @var boolean
+     */
+    public $compare = true;
+
+    /**
      * Calculate value.
      *
      * @param Builder $query

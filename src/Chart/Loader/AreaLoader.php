@@ -35,7 +35,10 @@ class AreaLoader extends ChartLoader
             ->iterations($iterations);
 
         $set->load($startTime);
-        $set->load($nextTimeResolver($startTime));
+
+        if ($this->config->compare) {
+            $set->load($nextTimeResolver($startTime));
+        }
 
         return [
             'results' => $this->getResults($set),

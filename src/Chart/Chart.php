@@ -5,9 +5,10 @@ namespace Fjord\Chart;
 use Fjord\Support\VueProp;
 use Fjord\Config\ConfigHandler;
 use Fjord\Chart\Contracts\Engine;
+use Fjord\Chart\Config\BarChartConfig;
 use Fjord\Chart\Config\AreaChartConfig;
 use Fjord\Chart\Config\DonutChartConfig;
-use Fjord\Chart\Config\HeatmapChartConfig;
+use Fjord\Chart\Config\NumberChartConfig;
 use Fjord\Chart\Config\ProgressChartConfig;
 
 class Chart extends VueProp
@@ -59,6 +60,8 @@ class Chart extends VueProp
             AreaChartConfig::class => 'area',
             DonutChartConfig::class => 'donut',
             ProgressChartConfig::class => 'radialBar',
+            BarChartConfig::class => 'bar',
+            NumberChartConfig::class => 'number',
         ] as $class => $type) {
             if ($this->config->getConfig() instanceof $class) {
                 return $type;

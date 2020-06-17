@@ -14,7 +14,9 @@ class FjordChart extends GeneratorCommand
     protected $signature = 'fjord:chart {name}
                             {--area : Whether to create area chart }
                             {--donut : Whether to create donut chart }
-                            {--progress : Whether to create progress chart }';
+                            {--progress : Whether to create progress chart }
+                            {--bar : Whether to create bar chart }
+                            {--number : Whether to create number chart }';
 
     /**
      * The console command description.
@@ -35,6 +37,12 @@ class FjordChart extends GeneratorCommand
         }
         if ($this->option('progress')) {
             return fjord_path('stubs/ChartProgressConfig.stub');
+        }
+        if ($this->option('bar')) {
+            return fjord_path('stubs/ChartBarConfig.stub');
+        }
+        if ($this->option('number')) {
+            return fjord_path('stubs/ChartNumberConfig.stub');
         }
 
         return fjord_path('stubs/ChartAreaConfig.stub');

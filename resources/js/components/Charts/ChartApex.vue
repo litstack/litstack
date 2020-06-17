@@ -153,6 +153,7 @@ export default {
         this.setCardColor(variant);
 
         if (this.type == 'area') this.makeArea(variant);
+        if (this.type == 'bar') this.makeArea(variant);
         if (this.type == 'donut') this.makeDonut(variant);
         if (this.type == 'radialBar') this.makeRadialBar(variant);
     },

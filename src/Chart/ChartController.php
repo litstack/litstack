@@ -2,10 +2,13 @@
 
 namespace Fjord\Chart;
 
-use Carbon\CarbonInterface;
+use Fjord\Config\ConfigHandler;
+use Fjord\Chart\Contracts\Engine;
+use Fjord\Chart\Loader\BarLoader;
 use Fjord\Support\Facades\Config;
 use Fjord\Chart\Loader\AreaLoader;
 use Fjord\Chart\Loader\DonutLoader;
+use Fjord\Chart\Loader\NumberLoader;
 use Fjord\Chart\Loader\ProgressLoader;
 
 class ChartController
@@ -28,12 +31,14 @@ class ChartController
         return $loader->get($request);
     }
 
-    protected function makeLoader(string $chartType, $config, $engine)
+    protected function makeLoader(string $chartType, ConfigHandler $config, Engine $engine)
     {
         $loader = [
             'donut' => fn () => new DonutLoader($config, $engine),
             'area' => fn () => new AreaLoader($config, $engine),
             'radialBar' => fn () => new ProgressLoader($config, $engine),
+            'bar' => fn () => new BarLoader($config, $engine),
+            'number' => fn () => new NumberLoader($config, $engine),
         ][$chartType] ?? abort(404);
 
         return $loader();
