@@ -8,6 +8,9 @@ use Carbon\CarbonInterface;
 
 class AreaLoader extends ChartLoader
 {
+    use Concerns\HasGoal,
+        Concerns\HasComparison;
+
     /**
      * Make series.
      *
@@ -46,20 +49,9 @@ class AreaLoader extends ChartLoader
                 'area',
                 $this->getNames(),
                 $set,
-                $this->getGoal()
+                $this->getDailyGoal()
             )
         ];
-    }
-
-    public function getGoal()
-    {
-        if ($this->config->dailyGoal === null) {
-            return;
-        }
-
-        if ($this->getShowGoal()) {
-            return $this->config->dailyGoal;
-        }
     }
 
     public function getResults(ChartSet $set)
@@ -78,18 +70,6 @@ class AreaLoader extends ChartLoader
             'thisweek' => fn ($time) => $time->subWeek(),
             'last30days' => fn ($time) => $time->subDays(30),
             'thismonth' => fn ($time) => $time->subMonth()
-        ];
-    }
-
-    protected function getShowGoalConfig()
-    {
-        return [
-            'today' => false,
-            'yesterday' => false,
-            'last7days' => true,
-            'thisweek' => true,
-            'last30days' => true,
-            'thismonth' => true
         ];
     }
 }

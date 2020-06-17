@@ -8,6 +8,9 @@ use Carbon\CarbonInterface;
 
 class BarLoader extends ChartLoader
 {
+    use Concerns\HasGoal,
+        Concerns\HasComparison;
+
     /**
      * Make series.
      *
@@ -46,18 +49,9 @@ class BarLoader extends ChartLoader
                 'bar',
                 $this->getNames(),
                 $set,
-                $this->getGoal()
+                $this->getDailyGoal()
             )
         ];
-    }
-
-    public function getGoal()
-    {
-        if ($this->config->dailyGoal === null) {
-            return;
-        }
-
-        return $this->config->dailyGoal * $this->getDailyGoalFactor();
     }
 
     public function getResults(ChartSet $set)
@@ -65,29 +59,5 @@ class BarLoader extends ChartLoader
         return collect($set->getValues())->map(function ($values) {
             return $this->config->result($values);
         });
-    }
-
-    protected function getNextTimeResolverConfig()
-    {
-        return [
-            'today' => fn ($time) => $time->subDay(),
-            'yesterday' => fn ($time) => $time->subWeek(),
-            'last7days' => fn ($time) => $time->subWeek(),
-            'thisweek' => fn ($time) => $time->subWeek(),
-            'last30days' => fn ($time) => $time->subDays(30),
-            'thismonth' => fn ($time) => $time->subMonth()
-        ];
-    }
-
-    protected function getDailyGoalFactorConfig()
-    {
-        return [
-            'today' => 1 / 24,
-            'yesterday' => 1 / 24,
-            'last7days' => 1,
-            'thisweek' => 1,
-            'last30days' => 1,
-            'thismonth' => 1
-        ];
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Fjord\Chart\Engine;
 
-use Fjord\Chart\ChartSet;
 use Fjord\Chart\Contracts\Engine;
 
 class ChartEngine implements Engine

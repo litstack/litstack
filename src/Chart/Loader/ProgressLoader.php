@@ -8,6 +8,8 @@ use Carbon\CarbonInterface;
 
 class ProgressLoader extends ChartLoader
 {
+    use Concerns\HasOneIteration;
+
     /**
      * Make series.
      *
@@ -41,18 +43,6 @@ class ProgressLoader extends ChartLoader
                 $this->config->minValue,
                 $this->config->maxValue
             )
-        ];
-    }
-
-    protected function getQueryResolverConfig()
-    {
-        return [
-            'today' => fn ($query, $column, $time) => $query->whereInDay($column, $time),
-            'yesterday' => fn ($query, $column, $time) => $query->whereInDay($column, $time),
-            'last7days' => fn ($query, $column, $time) => $query->whereInDays($column, $time, 7),
-            'thisweek' => fn ($query, $column, $time) => $query->whereInWeek($column, $time),
-            'last30days' => fn ($query, $column, $time) => $query->whereInDays($column, $time, 30),
-            'thismonth' => fn ($query, $column, $time) => $query->whereInMonth($column, $time)
         ];
     }
 }

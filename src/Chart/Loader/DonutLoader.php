@@ -8,6 +8,8 @@ use Carbon\CarbonInterface;
 
 class DonutLoader extends ChartLoader
 {
+    use Concerns\HasOneIteration;
+
     /**
      * Make series.
      *
@@ -40,18 +42,6 @@ class DonutLoader extends ChartLoader
                 $this->config->labels,
                 $set
             )
-        ];
-    }
-
-    protected function getQueryResolverConfig()
-    {
-        return [
-            'today' => fn ($query, $column, $time) => $query->whereInDay($column, $time),
-            'yesterday' => fn ($query, $column, $time) => $query->whereInDay($column, $time),
-            'last7days' => fn ($query, $column, $time) => $query->whereInDays($column, $time, 7),
-            'thisweek' => fn ($query, $column, $time) => $query->whereInWeek($column, $time),
-            'last30days' => fn ($query, $column, $time) => $query->whereInDays($column, $time, 30),
-            'thismonth' => fn ($query, $column, $time) => $query->whereInMonth($column, $time)
         ];
     }
 }
