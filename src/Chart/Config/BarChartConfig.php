@@ -34,7 +34,7 @@ abstract class BarChartConfig extends ChartConfig
      *
      * @return void
      */
-    public function goal()
+    public function dailyGoal()
     {
         //
     }

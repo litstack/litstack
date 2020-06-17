@@ -53,12 +53,12 @@ class AreaLoader extends ChartLoader
 
     public function getGoal()
     {
-        if ($this->config->goal === null) {
+        if ($this->config->dailyGoal === null) {
             return;
         }
 
         if ($this->getShowGoal()) {
-            return $this->config->goal;
+            return $this->config->dailyGoal;
         }
     }
 

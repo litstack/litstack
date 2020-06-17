@@ -34,7 +34,7 @@ abstract class AreaChartConfig extends ChartConfig
      *
      * @return void
      */
-    public function goal()
+    public function dailyGoal()
     {
         //
     }

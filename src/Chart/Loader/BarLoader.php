@@ -53,11 +53,11 @@ class BarLoader extends ChartLoader
 
     public function getGoal()
     {
-        if ($this->config->goal === null) {
+        if ($this->config->dailyGoal === null) {
             return;
         }
 
-        return $this->config->goal * $this->getDailyGoalFactor();
+        return $this->config->dailyGoal * $this->getDailyGoalFactor();
     }
 
     public function getResults(ChartSet $set)
