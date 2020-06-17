@@ -375,6 +375,7 @@ export default {
                             variant: 'success'
                         }
                     );
+                    break;
             }
 
             if (!this.field.many) {
