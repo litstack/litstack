@@ -353,8 +353,28 @@ export default {
                     );
                     break;
                 case 'belongsTo':
+                    try {
+                        response = await axios.put(
+                            `${this.field.route_prefix}/`,
+                            {
+                                [this.field.local_key] : relation.id
+                            }
+                        );
+                    } catch (e) {
+                        console.log(e);
+                        return;
+                    }
+
                     this.$emit('input', relation.id);
-                    break;
+
+                    this.$bvToast.toast(
+                        this.$t('fj.relation_added', {
+                            relation: this.field.names.singular
+                        }),
+                        {
+                            variant: 'success'
+                        }
+                    );
             }
 
             if (!this.field.many) {
