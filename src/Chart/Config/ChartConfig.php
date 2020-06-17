@@ -3,6 +3,8 @@
 namespace Fjord\Chart\Config;
 
 use Fjord\Chart\Chart;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 
 abstract class ChartConfig
 {
@@ -43,5 +45,74 @@ abstract class ChartConfig
     public function mount(Chart $chart)
     {
         //
+    }
+
+    /**
+     * Add count select to query.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    protected function count($query)
+    {
+        return (clone $query)->select(
+            DB::raw("COUNT(*) as value")
+        );
+    }
+
+    /**
+     * Add average select to query.
+     *
+     * @param Builder $query
+     * @param string $column
+     * @return Builder
+     */
+    protected function average($query, string $column)
+    {
+        return (clone $query)->select(
+            DB::raw("AVG({$column}) as value")
+        );
+    }
+
+    /**
+     * Add sum select to query.
+     *
+     * @param Builder $query
+     * @param string $column
+     * @return Builder
+     */
+    protected function sum($query, string $column)
+    {
+        return (clone $query)->select(
+            DB::raw("SUM({$column}) as value")
+        );
+    }
+
+    /**
+     * Add min select to query.
+     *
+     * @param Builder $query
+     * @param string $column
+     * @return Builder
+     */
+    protected function min($query, string $column)
+    {
+        return (clone $query)->select(
+            DB::raw("MIN({$column}) as value")
+        );
+    }
+
+    /**
+     * Add max select to query.
+     *
+     * @param Builder $query
+     * @param string $column
+     * @return Builder
+     */
+    protected function max($query, string $column)
+    {
+        return (clone $query)->select(
+            DB::raw("MAX({$column}) as value")
+        );
     }
 }

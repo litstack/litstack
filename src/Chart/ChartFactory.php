@@ -47,4 +47,14 @@ class ChartFactory
 
         return $chart;
     }
+
+    /**
+     * Get engine resolver.
+     *
+     * @return \Fjord\Chart\Engine\ChartEngineResolver
+     */
+    public function getResolver()
+    {
+        return $this->resolver;
+    }
 }

@@ -5,44 +5,85 @@ namespace Fjord\Chart;
 use Closure;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 
 class ChartSet
 {
+    /**
+     * Query builder.
+     *
+     * @var \Illuminate\Database\Eloquent\Builder
+     */
     protected $query;
 
+    /**
+     * Iterations.
+     *
+     * @var integer
+     */
     protected $iterations;
 
+    /**
+     * Labels.
+     *
+     * @var array
+     */
     protected $labels = [];
 
+    /**
+     * Values.
+     *
+     * @var array
+     */
     protected $values = [];
 
-    protected $labelClosure;
+    /**
+     * Label resolver closure.
+     *
+     * @var Closure
+     */
+    protected $labelResolver;
 
-    protected $valueClosure;
+    /**
+     * Value resolver closure.
+     *
+     * @var Closure
+     */
+    protected $valueResolver;
 
-    protected $timeClosure;
+    /**
+     * Time resolver closure.
+     *
+     * @var Closure
+     */
+    protected $timeResolver;
 
-    public function __construct(
-        Builder $query,
-        Closure $valueClosure,
-        Closure $timeClosure
-    ) {
+    /**
+     * Create new ChartSet instance.
+     *
+     * @param Builder $query
+     * @param Closure $valueResolver
+     * @param Closure $timeResolver
+     */
+    public function __construct(Builder $query, Closure $valueResolver, Closure $timeResolver)
+    {
         $this->query = $query;
-        $this->valueClosure = $valueClosure;
-        $this->timeClosure = $timeClosure;
+        $this->valueResolver = $valueResolver;
+        $this->timeResolver = $timeResolver;
     }
 
-    public static function make(
-        Builder $query,
-        Closure $valueClosure,
-        Closure $timeClosure
-    ) {
-        return new self(
-            $query,
-            $valueClosure,
-            $timeClosure
-        );
+    /**
+     * Make chart set.
+     *
+     * @param Builder $query
+     * @param Closure $valueClosure
+     * @param Closure $timeResolver
+     * @return void
+     */
+    public static function make(Builder $query, Closure $valueResolver, Closure $timeResolver)
+    {
+        return new self($query, $valueResolver, $timeResolver);
     }
 
     public function label(Closure $closure)
@@ -91,7 +132,7 @@ class ChartSet
     }
 
     /**
-     * Load.
+     * Load values.
      *
      * @return void
      */
@@ -100,51 +141,139 @@ class ChartSet
         $this->time = $time;
         $this->reset();
 
-        $values = [];
+        $statements = [];
         for ($i = 0; $i < $this->iterations; $i++) {
             $time = $this->getTimeFromIterationKey($i);
 
-            $values[] = $this->getValueFromTime($time) ?? 0;
+            $statement = $this->getSelectFromTime($time) ?? 0;
+
+            if (is_array($statement)) {
+                $statements = array_merge($statement, $statements);
+            } else {
+                $statements[] = $statement;
+            }
+
             $this->labels[] = $this->getLabelFromTime($time);
         }
 
-        $this->values[] = $values;
+        $this->values[] = $this->convertNullValues(
+            $this->getValuesFromStatements($statements)
+        );
 
         return $this;
     }
 
-    protected function getDefaultLabel($time)
+    /**
+     * Get values from selects.
+     *
+     * @param array $selects
+     * @return \Illuminate\Support\Collection
+     */
+    protected function getValuesFromStatements(array $selects)
+    {
+        return $this->getQueryFromStatements($selects)
+            ->get('value')
+            ->pluck('value');
+    }
+
+    /**
+     * Modify query with select statement.
+     *
+     * @param array $select
+     * @return Builder
+     */
+    protected function getQueryFromStatements(array $selects)
+    {
+        $query = array_pop($selects);
+
+        foreach ($selects as $select) {
+            $query->unionAll($select);
+        }
+
+        return $query;
+    }
+
+    /**
+     * Convert null values to integer.
+     *
+     * @param \Illuminate\Support\Collection $values
+     * @return \Illuminate\Support\Collection
+     */
+    protected function convertNullValues(Collection $values)
+    {
+        return $values->map(
+            fn ($value) => (int) $value
+        );
+    }
+
+    /**
+     * Get default label.
+     *
+     * @param \Carbon\CarbonInterface $time
+     * @return string
+     */
+    protected function getDefaultLabel(CarbonInterface $time)
     {
         return $time->format("d.m.y");
     }
 
+    /**
+     * Get label from time.
+     *
+     * @param \Carbon\CarbonInterface $time
+     * @return string
+     */
     public function getLabelFromTime(CarbonInterface $time)
     {
-        $labelClosure = $this->labelClosure ?: fn ($time) => $this->getDefaultLabel($time);
+        $labelResolver = $this->labelResolver
+            ?: fn ($time) => $this->getDefaultLabel($time);
 
-        return $labelClosure($time);
+        return $labelResolver($time);
     }
 
-    public function getValueFromTime(CarbonInterface $time)
+    /**
+     * Get select query from time.
+     *
+     * @param \Carbon\CarbonInterface $time
+     * @return Builder
+     */
+    public function getSelectFromTime(CarbonInterface $time)
     {
-        $valueClosure = $this->valueClosure;
+        $valueResolver = $this->valueResolver;
 
-        return $valueClosure(clone $this->query, $time);
+        return $valueResolver(clone $this->query, $time);
     }
 
+    /**
+     * Get values.
+     *
+     * @return array
+     */
     public function getValues()
     {
         return $this->values;
     }
 
+    /**
+     * Get labels.
+     *
+     * @return array
+     */
     public function getLabels()
     {
         return $this->labels;
     }
 
-    protected function getTimeFromIterationKey($i)
+    /**
+     * Get time from iteration key.
+     *
+     * @param integer $i
+     * @return \Carbon\CarbonInterface
+     */
+    protected function getTimeFromIterationKey(int $i): CarbonInterface
     {
-        $timeClosure = $this->timeClosure;
-        return $timeClosure($this->time->copy(), $i);
+        $timeResolver = $this->timeResolver;
+
+        return $timeResolver($this->time->copy(), $i);
     }
 }

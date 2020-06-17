@@ -151,8 +151,10 @@ export default {
         let variant = this[this.variant];
         this.resetColors();
         this.setCardColor(variant);
+
         if (this.type == 'area') this.makeArea(variant);
         if (this.type == 'donut') this.makeDonut(variant);
+        if (this.type == 'radialBar') this.makeRadialBar(variant);
     },
     methods: {
         // {
@@ -162,6 +164,21 @@ export default {
         //         data: []
         //     }]
         // }
+        makeRadialBar(variant) {
+            this.options.fill = {
+                colors: []
+            };
+            console.log('make!');
+
+            this.options.fill.colors.push('red');
+
+            let fontColor = variant == this.white ? 'black' : 'white';
+
+            this.options.plotOptions.pie.donut.labels.total.color = fontColor;
+            this.options.plotOptions.pie.donut.labels.value.color = fontColor;
+
+            this.options.stroke.colors = ['transparent'];
+        },
 
         makeDonut(variant) {
             this.options.fill = {

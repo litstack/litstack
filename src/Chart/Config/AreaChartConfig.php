@@ -12,7 +12,7 @@ abstract class AreaChartConfig extends ChartConfig
      * @param Builder $query
      * @return integer
      */
-    abstract public function value($query): int;
+    abstract public function value($query);
 
     /**
      * Number that is displayed at the bottom left corner.
