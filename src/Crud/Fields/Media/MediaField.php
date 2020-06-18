@@ -87,7 +87,7 @@ class MediaField extends RelationField
      */
     public function getRelationQuery($model)
     {
-        return $model->media()->where('collection', $this->id);
+        return $model->media()->where('collection_name', $this->id);
     }
 
     /**
