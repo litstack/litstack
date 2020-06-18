@@ -65,9 +65,16 @@
 export default {
     name: 'FieldBlock',
     props: {
+        /**
+         * Field attributes.
+         */
         field: {
             type: Object
         },
+
+        /**
+         * Model.
+         */
         model: {
             type: Object
         }
@@ -92,6 +99,9 @@ export default {
         }
     },
     methods: {
+        /**
+         * Reload block.
+         */
         async reloadBlock(block) {
             let response = await axios.get(
                 `${this.field.route_prefix}/block/${this.field.id}/${block.id}`
@@ -104,6 +114,10 @@ export default {
                 }
             }
         },
+
+        /**
+         * Toggle expand all.
+         */
         toggleExpand() {
             for (let i in this.$refs.block) {
                 let block = this.$refs.block[i];
@@ -112,6 +126,10 @@ export default {
 
             this.expandedAll = !this.expandedAll;
         },
+
+        /**
+         * Set fields route prefix block id.
+         */
         setFieldsRoutePrefixBlockId(fields, block) {
             for (let i in fields) {
                 let field = fields[i];
@@ -124,27 +142,59 @@ export default {
             }
             return fields;
         },
+
+        /**
+         * Reload blocks.
+         */
         reloadBlocks() {
             this._loadBlocks();
         },
+
+        /**
+         * Load blocks and set busy state.
+         */
         async loadBlocks() {
             this.busy = true;
             await this._loadBlocks();
             this.busy = false;
         },
+
+        /**
+         * Load blocks.
+         */
         async _loadBlocks() {
             if (this.create) {
                 return;
             }
-            let response = await axios.get(
-                `${this.field.route_prefix}/block/${this.field.id}`
-            );
+            let response = await this.sendLoadBlocks();
+
+            if (!response) {
+                return;
+            }
+
             this.sortableBlocks = [];
             for (let i in response.data) {
                 let block = response.data[i];
                 this.newBlock(block, false);
             }
         },
+
+        /**
+         * Send load blocks.
+         */
+        async sendLoadBlocks() {
+            try {
+                return await axios.get(
+                    `${this.field.route_prefix}/block/${this.field.id}`
+                );
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+        /**
+         * Add new block to list.
+         */
         newBlock(block, open = true) {
             this.sortableBlocks.push(this.crud(block));
             if (open) {
@@ -156,15 +206,12 @@ export default {
                 });
             }
         },
+
+        /**
+         * Delete block.
+         */
         async deleteBlock(block) {
-            try {
-                let response = await axios.delete(
-                    `${this.field.route_prefix}/block/${block.field_id}/${block.id}`
-                );
-            } catch (e) {
-                console.log(e);
-                return;
-            }
+            let response = await this.sendDeleteBlock(block);
             this.sortableBlocks.splice(this.sortableBlocks.indexOf(block), 1);
 
             Fjord.bus.$emit('field:updated', 'block:deleted');
@@ -173,17 +220,30 @@ export default {
                 variant: 'success'
             });
         },
+
+        /**
+         * Send load block request.
+         */
+        async sendDeleteBlock(block) {
+            try {
+                return await axios.delete(
+                    `${this.field.route_prefix}/block/${block.field_id}/${block.id}`
+                );
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+        /**
+         * Set new order.
+         */
         async newOrder() {
             let payload = {
                 ids: this.sortableBlocks.map(item => item.id)
             };
-            try {
-                let response = await axios.put(
-                    `${this.field.route_prefix}/${this.field.id}/order`,
-                    payload
-                );
-            } catch (e) {
-                console.log(e);
+            let response = await this.sendNewOrder(payload);
+
+            if(!response) {
                 return;
             }
 
@@ -192,6 +252,20 @@ export default {
             this.$bvToast.toast(this.$t('fj.order_changed'), {
                 variant: 'success'
             });
+        },
+
+        /**
+         * Send new order request.
+         */
+        sendNewOrder(payload) {
+            try {
+                let response = await axios.put(
+                    `${this.field.route_prefix}/${this.field.id}/order`,
+                    payload
+                );
+            } catch (e) {
+                console.log(e);
+            }
         }
     }
 };

@@ -1,28 +1,37 @@
-import Vue from 'vue';
-import Bus from '@fj-js/common/event.bus';
-
 const state = {
+    /**
+     * Authenticated user state.
+     */
     auth: {}
 };
 
 const getters = {
+    /**
+     * Authenticated user getter.
+     */
     auth(state) {
         return state.auth;
     }
 };
 
 const mutations = {
+    /**
+     * Set authenticated user.
+     */
     SET_AUTH_DATA(state, payload) {
         state.auth = payload;
     }
 };
 
 const actions = {
+    /**
+     * Set app locale.
+     */
     async setAppLocale({ commit, state }, locale) {
         if (locale != state.locale) {
             localStorage.setItem('fj-locale', locale.locale);
             const { data } = await axios.post('/set-locale', locale);
-            window.location.reload()
+            window.location.reload();
         }
     }
 };

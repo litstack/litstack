@@ -101,14 +101,49 @@ export default {
     },
     data() {
         return {
+            /**
+             * Current value. Only used for [number] charts.
+             */
             value: 0,
+
+            /**
+             * Height of the chart wrapper.
+             */
             height: '200px',
+
+            /**
+             * Busy state.
+             */
             busy: true,
+
+            /**
+             * Total of [bar] or [area] chart.
+             */
             result: 0,
+
+            /**
+             * Trend up or down.
+             */
             trendUp: false,
+
+            /**
+             * Difference between previous and current total.
+             */
             difference: 0,
+
+            /**
+             * Trend, e.g. "up"
+             */
             trend: null,
+
+            /**
+             * Trend percentage.
+             */
             percentage: 0,
+
+            /**
+             * Available timespan options.
+             */
             options: [
                 {
                     title: 'Today',
@@ -135,6 +170,10 @@ export default {
                     key: 'thismonth'
                 }
             ],
+
+            /**
+             * Current timespan.
+             */
             active: {
                 title: 'Last 7 days',
                 key: 'last7days'
@@ -142,6 +181,9 @@ export default {
         };
     },
     computed: {
+        /**
+         * Reverse variant.
+         */
         reverse() {
             switch (this.chart.variant) {
                 case 'white':
@@ -158,11 +200,19 @@ export default {
                     break;
             }
         },
+
+        /**
+         * Trend text color.
+         */
         trendText() {
             if (this.trend == 'up') return 'text-success';
             if (this.trend == 'down') return 'text-danger';
             if (this.trend == 'same') return '';
         },
+
+        /**
+         * Trend icon.
+         */
         trendIcon() {
             if (this.trend == 'up') return 'arrow-up';
             if (this.trend == 'down') return 'arrow-down';
@@ -183,6 +233,9 @@ export default {
         }
     },
     methods: {
+        /**
+         * Format chart value and add prefix or suffix.
+         */
         format(value) {
             if (this.chart.format) {
                 value = numeral(value).format(this.chart.format);
@@ -196,6 +249,10 @@ export default {
 
             return value;
         },
+
+        /**
+         * Set chart wrapper height.
+         */
         setHeight() {
             if (this.chart.height) {
                 return (this.height = this.chart.height);
@@ -214,6 +271,10 @@ export default {
                 return (this.height = '200px');
             }
         },
+
+        /**
+         * Load chart data.
+         */
         async loadData() {
             let response = await this.sendLoadData();
             if (!response) {
@@ -227,9 +288,12 @@ export default {
             this.makeResults(response.data.results);
         },
 
-        sendLoadData() {
+        /**
+         * Send load data request.
+         */
+        async sendLoadData() {
             try {
-                return axios.post('chart-data', {
+                return await axios.post('chart-data', {
                     key: this.chart.name,
                     type: this.active.key
                 });
@@ -238,6 +302,9 @@ export default {
             }
         },
 
+        /**
+         * Make trend results.
+         */
         makeResults(results) {
             this.result = results[0];
             if ((results.length = 2)) {

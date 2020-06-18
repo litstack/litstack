@@ -35,19 +35,15 @@ export default {
         ...mapGetters(['form'])
     },
     methods: {
+        /**
+         * Add repeatable.
+         */
         async add(type) {
-            let payload = {
+            let response = await this.sendAddRepeatable({
                 type: type
-            };
+            });
 
-            let response = null;
-            try {
-                response = await axios.post(
-                    `${this.field.route_prefix}/block/${this.field.id}`,
-                    payload
-                );
-            } catch (e) {
-                console.log(e);
+            if (!response) {
                 return;
             }
 
@@ -57,6 +53,28 @@ export default {
 
             Fjord.bus.$emit('field:updated', 'block:added');
 
+            this.showNewRepeatableToast();
+        },
+
+        /**
+         * Send add repeatable request.
+         */
+        async sendAddRepeatable(payload) {
+            try {
+                return await axios.post(
+                    `${this.field.route_prefix}/block/${this.field.id}`,
+                    payload
+                );
+            } catch (e) {
+                console.log(e);
+                return;
+            }
+        },
+
+        /**
+         * Show new repeatable toast.
+         */
+        showNewRepeatableToast() {
             this.$bvToast.toast(this.$t('fj.new_block', { type }), {
                 variant: 'success'
             });
