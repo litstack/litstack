@@ -72,15 +72,16 @@ trait FieldHasRules
      * Get rules for request.
      *
      * @param CrudUpdateRequest|CrudCreateRequest $request
+     * @param string|null $type
      * @return array
      */
-    public function getRules($request)
+    public function getRules($request, $type = null)
     {
         $rules = $this->rules;
-        if ($request instanceof CrudUpdateRequest) {
+        if ($type == 'update' || ($request instanceof CrudUpdateRequest && $type == null)) {
             $rules = array_merge($rules, $this->updateRules);
         }
-        if ($request instanceof CrudCreateRequest) {
+        if ($type == 'creation' || ($request instanceof CrudCreateRequest && $type == null)) {
             $rules = array_merge($rules, $this->creationRules);
         }
         return $rules;

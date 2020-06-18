@@ -14,7 +14,7 @@ trait HasFields
      */
     public function getFieldsAttribute()
     {
-        return $this->getForm()->getRegisteredFields();
+        return $this->getForm()->getRegisteredFields() ?? [];
     }
 
     /**

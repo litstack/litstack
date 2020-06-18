@@ -219,16 +219,17 @@ class BaseForm extends VueProp
      * Get rules for request.
      *
      * @param CrudUpdateRequest|CrudCreateRequest $request
+     * @param string|null $type
      * @return array
      */
-    public function getRules($request)
+    public function getRules($request, $type = null)
     {
         $rules = [];
         foreach ($this->registeredFields as $field) {
             if (!method_exists($field, 'getRules')) {
                 continue;
             }
-            $fieldRules = $field->getRules($request);
+            $fieldRules = $field->getRules($request, $type);
             if ($field->translatable) {
                 // Attach rules for translatable fields.
                 foreach (config('translatable.locales') as $locale) {

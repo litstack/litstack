@@ -169,12 +169,11 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
      */
     public function attributesToArray()
     {
-
         $attributes = parent::attributesToArray();
 
         $attributes['value'] = $attributes['value'] ?? [];
 
-        foreach ($this->fields as $field) {
+        foreach (($this->fields ?? []) as $field) {
             if ($field->translatable) {
                 continue;
             }
@@ -251,7 +250,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     {
         $attributes = parent::relationsToArray();
 
-        foreach ($this->fields as $field) {
+        foreach (($this->fields ?? []) as $field) {
             if (!$field instanceof RelationField) {
                 continue;
             }

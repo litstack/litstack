@@ -34,6 +34,7 @@ class ListField extends RelationField
     public function setDefaultAttributes()
     {
         $this->search(true);
+        $this->maxDepth(3);
     }
 
     /**
@@ -58,6 +59,19 @@ class ListField extends RelationField
     public function previewTitle(string $title)
     {
         $this->setAttribute('previewTitle', $title);
+
+        return $this;
+    }
+
+    /**
+     * Set max deth.
+     *
+     * @param integer $depth
+     * @return $this
+     */
+    public function maxDepth(int $depth)
+    {
+        $this->setAttribute('maxDepth', $depth);
 
         return $this;
     }

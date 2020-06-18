@@ -196,29 +196,30 @@ class Crud
         // List
         RouteFacade::get("/{{$identifier}}/{form}/list/{field_id}", [$controller, "loadListItems"])->name("list.index");
         RouteFacade::get("/{{$identifier}}/{form}/list/{field_id}/{list_item_id}", [$controller, "loadListItem"])->name("list.load");
-        RouteFacade::post("/{{$identifier}}/{form}/list/{field_id}", [$controller, "storeListItem"])->name("list.store");
+
+        RouteFacade::post("/{{$identifier}}/{form}/list/{field_id}/create", [$controller, "createListItem"])->name("list.create");
         RouteFacade::put("/{{$identifier}}/{form}/list/{field_id}/order", [$controller, "orderList"])->name("list.order");
+        RouteFacade::post("/{{$identifier}}/{form}/list/{field_id}/{parent_id?}", [$controller, "storeListItem"])->name("list.store");
         RouteFacade::put("/{{$identifier}}/{form}/list/{field_id}/{list_item_id}", [$controller, "updateListItem"])->name("list.update");
         RouteFacade::delete("/{{$identifier}}/{form}/list/{field_id}/{list_item_id}", [$controller, "destroyListItem"])->name("list.destroy");
-
         // Block
         RouteFacade::get("/{{$identifier}}/{form}/block/{field_id}", [$controller, "loadRepeatables"])->name("block.index");
         RouteFacade::get("/{{$identifier}}/{form}/block/{field_id}/{block_id}", [$controller, "loadRepeatable"])->name("block.load");
         RouteFacade::post("/{{$identifier}}/{form}/block/{field_id}", [$controller, "storeRepeatable"])->name("block.store");
         RouteFacade::put("/{{$identifier}}/{form}/block/{field_id}/{block_id}", [$controller, "updateRepeatable"])->name("block.update");
         RouteFacade::delete("/{{$identifier}}/{form}/block/{field_id}/{block_id}", [$controller, "destroyRepeatable"])->name("block.destroy");
-
-        // Block Media
+        // Block/List Media
         RouteFacade::post("/{{$identifier}}/{form}/block/{field_id}/{block_id}/media", [$controller, "storeBlockMedia"])->name("block.media.store");
         RouteFacade::put("/{{$identifier}}/{form}/block/{field_id}/{block_id}/media/order", [$controller, 'orderBlockMedia'])->name("block.media.order");
         RouteFacade::put("/{{$identifier}}/{form}/block/{field_id}/{block_id}/media/{media_id}", [$controller, "updateBlockMedia"])->name("block.media.update");
         RouteFacade::delete("/{{$identifier}}/{form}/block/{field_id}/{block_id}/media/{media_id}", [$controller, "destroyBlockMedia"])->name("block.media.destroy");
-        // Block Relations
+        // Block/List Relations
         RouteFacade::post("/{{$identifier}}/{form}/block/{field_id}/{block_id}/{relation}/index", [$controller, "blockRelationIndex"])->name("block.relation.index");
         RouteFacade::post("/{{$identifier}}/{form}/block/{field_id}/{block_id}/{relation}", [$controller, "loadBlockRelations"])->name("block.relation.load");
         RouteFacade::put("/{{$identifier}}/{form}/block/{field_id}/{block_id}/{relation}/order", [$controller, "orderBlockRelation"])->name("block.relation.order");
         RouteFacade::delete("/{{$identifier}}/{form}/block/{field_id}/{block_id}/{relation}/{relation_id}",  [$controller, "destroyBlockRelation"])->name("block.relation.delete");
         RouteFacade::post("/{{$identifier}}/{form}/block/{field_id}/{block_id}/{relation}/{relation_id}", [$controller, "createBlockRelation"])->name("block.relation.store");
+
         // Relations
         RouteFacade::post("/{{$identifier}}/{form}/{relation}/index", [$controller, "relationIndex"])->name("relation.index");
         RouteFacade::post("/{{$identifier}}/{form}/{relation}", [$controller, "loadRelations"])->name("relation.load");

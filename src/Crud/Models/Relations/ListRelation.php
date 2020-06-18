@@ -26,7 +26,29 @@ class ListRelation extends MorphMany
      */
     public function getFlat()
     {
-        return parent::getResults();
+        // Flattening unflattened list to have "depth" attribute.
+        return $this->flatten(
+            $this->getResults()
+        );
+    }
+
+    /**
+     * Flatten results.
+     *
+     * @param Collection $listItems
+     * @param integer $parent_id
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    protected function flatten($listItems)
+    {
+        foreach ($listItems as $listItem) {
+            if (empty($listItem->children)) {
+                continue;
+            }
+            return $listItems->merge($this->flatten($listItem->children));
+        }
+
+        return $listItems;
     }
 
     /**
@@ -36,12 +58,13 @@ class ListRelation extends MorphMany
      * @param integer $parent_id
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function unflatten(Collection $listItems, $parent_id = 0)
+    protected function unflatten(Collection $listItems, $parent_id = 0, $depth = 1)
     {
         $unflattened = $listItems->where('parent_id', $parent_id);
 
         foreach ($unflattened as $item) {
-            $item->setAttribute('children', $this->unflatten($listItems, $item->id));
+            $item->setAttribute('depth', $depth);
+            $item->setAttribute('children', $this->unflatten($listItems, $item->id, ++$depth));
         }
 
         return $unflattened;

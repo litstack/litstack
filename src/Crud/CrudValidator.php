@@ -9,11 +9,12 @@ class CrudValidator
      *
      * @param CrudUpdateRequest|CrudCreateRequest $request
      * @param BaseForm $form
+     * @param string|null $type
      * @return void
      */
-    public static function validate($request, $form)
+    public static function validate($request, $form, $type = null)
     {
-        $rules = $form->getRules($request);
+        $rules = $form->getRules($request, $type);
         $attributeNames = self::getValidationAttributeNames($form);
 
         $request->validate($rules, __f('validation'), $attributeNames);

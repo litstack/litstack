@@ -42,7 +42,7 @@ const methods = {
         }
 
         let message = error.response.data.message;
-        if ([405, 404].includes(error.response.status)) {
+        if ([405, 404].includes(error.response.status) && !message) {
             message = this.$t('fj.errors.not_found');
         }
 

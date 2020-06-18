@@ -37,11 +37,12 @@ trait ManagesCrud
      *
      * @param CrudUpdateRequest|CrudCreateRequest $request
      * @param BaseForm $form
+     * @param string|null $type
      * @return void
      */
-    public function validate($request, BaseForm $form)
+    public function validate($request, BaseForm $form, $type = null)
     {
-        CrudValidator::validate($request, $form);
+        CrudValidator::validate($request, $form, $type);
     }
 
     /**

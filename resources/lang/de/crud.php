@@ -21,6 +21,7 @@ return [
         ],
         'list' => [
             'messages' => [
+                'max_depth' => 'Die Liste kann maximal :count Ebenen verschachtelt werden.',
                 'confirm_delete' => 'Soll :item Element wirklich gelöscht werden?',
                 'confirm_delete_info' => 'Wenn Sie diesen Element entfernen, entfernen Sie dadurch auch alle darunter befindlichen Elemente.',
             ]
