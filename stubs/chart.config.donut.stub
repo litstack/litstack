@@ -1,6 +1,6 @@
 <?php
 
-namespace FjordApp\Config\Charts;
+namespace DummyNamespace;
 
 use Fjord\Chart\Chart;
 use Fjord\Chart\Config\DonutChartConfig;

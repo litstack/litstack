@@ -1,12 +1,12 @@
 <?php
 
-namespace FjordApp\Config\Charts;
+namespace DummyNamespace;
 
 use Fjord\Chart\Chart;
 use Illuminate\Support\Collection; 
-use Fjord\Chart\Config\AreaChartConfig;
+use Fjord\Chart\Config\NumberChartConfig;
 
-class DummyClass extends AreaChartConfig
+class DummyClass extends NumberChartConfig
 {
     /**
      * Model class.
@@ -44,17 +44,6 @@ class DummyClass extends AreaChartConfig
      */
     public function value($query)
     {
-        return $query->count();
-    }
-
-    /**
-     * Number that is displayed at the bottom left corner.
-     *
-     * @param \Illuminate\Support\Collection
-     * @return integer
-     */
-    public function result(Collection $values): int
-    {
-        return $values->sum();
+        return $this->count($query);
     }
 }

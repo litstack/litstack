@@ -1,12 +1,12 @@
 <?php
 
-namespace FjordApp\Config\Charts;
+namespace DummyNamespace;
 
 use Fjord\Chart\Chart;
 use Illuminate\Support\Collection; 
-use Fjord\Chart\Config\BarChartConfig;
+use Fjord\Chart\Config\AreaChartConfig;
 
-class DummyClass extends BarChartConfig
+class DummyClass extends AreaChartConfig
 {
     /**
      * Model class.

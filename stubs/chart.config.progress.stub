@@ -1,12 +1,12 @@
 <?php
 
-namespace FjordApp\Config\Charts;
+namespace DummyNamespace;
 
 use Fjord\Chart\Chart;
 use Illuminate\Support\Collection; 
-use Fjord\Chart\Config\HeatmapChartConfig;
+use Fjord\Chart\Config\ProgressChartConfig;
 
-class DummyClass extends HeatmapChartConfig
+class DummyClass extends ProgressChartConfig
 {
     /**
      * Model class.

@@ -23,7 +23,25 @@ class FjordChart extends GeneratorCommand
      *
      * @var string
      */
-    protected $description = 'This will create a chart config';
+    protected $description = 'This will create a chart config. Default chart type is "area".';
+
+    /**
+     * Execute the console command.
+     *
+     * @return bool|null
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function handle()
+    {
+        if ($this->setChartType() === false) {
+            $this->error("Only one chart type can be selected");
+
+            return false;
+        }
+
+        parent::handle();
+    }
 
     /**
      * Get the stub file for the generator.
@@ -32,20 +50,42 @@ class FjordChart extends GeneratorCommand
      */
     protected function getStub()
     {
-        if ($this->option('donut')) {
-            return fjord_path('stubs/ChartDonutConfig.stub');
-        }
-        if ($this->option('progress')) {
-            return fjord_path('stubs/ChartProgressConfig.stub');
-        }
-        if ($this->option('bar')) {
-            return fjord_path('stubs/ChartBarConfig.stub');
-        }
-        if ($this->option('number')) {
-            return fjord_path('stubs/ChartNumberConfig.stub');
+        return [
+            'donut' => fjord_path('stubs/chart.config.donut.stub'),
+            'progress' => fjord_path('stubs/chart.config.progress.stub'),
+            'bar' => fjord_path('stubs/chart.config.bar.stub'),
+            'number' => fjord_path('stubs/chart.config.number.stub'),
+            'area' => fjord_path('stubs/chart.config.area.stub'),
+        ][$this->type];
+    }
+
+    /**
+     * Set chart type from options.
+     *
+     * @return boolean|null
+     */
+    public function setChartType()
+    {
+        $this->type = null;
+        foreach ([
+            'donut', 'progress', 'bar', 'number', 'area'
+        ] as $type) {
+            if (!$this->option($type)) {
+                continue;
+            }
+
+            // Returning false when type has already been set since multiple 
+            // types are not allowed.
+            if ($this->type) {
+                return false;
+            }
+
+            $this->type = $type;
         }
 
-        return fjord_path('stubs/ChartAreaConfig.stub');
+        if (!$this->type) {
+            $this->type = 'area';
+        }
     }
 
     /**

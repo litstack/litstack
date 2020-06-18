@@ -1,6 +1,6 @@
 <?php
 
-namespace FjordApp\Config\Charts;
+namespace DummyNamespace;
 
 use Fjord\Chart\Chart;
 use Illuminate\Support\Collection; 
@@ -45,5 +45,16 @@ class DummyClass extends BarChartConfig
     public function value($query)
     {
         return $this->count($query);
+    }
+
+    /**
+     * Number that is displayed at the bottom left corner.
+     *
+     * @param \Illuminate\Support\Collection
+     * @return integer
+     */
+    public function result(Collection $values): int
+    {
+        return $values->sum();
     }
 }
