@@ -15,16 +15,6 @@ class FjordGuard extends Command
     protected $signature = 'fjord:guard';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed

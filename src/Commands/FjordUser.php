@@ -23,16 +23,6 @@ class FjordUser extends Command
     protected $description = 'This wizard will generate an user for you';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
