@@ -20,8 +20,8 @@ import VueCodemirror from 'vue-codemirror';
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import Draggable from 'vuedraggable';
 import VueLodash from 'vue-lodash';
-import lodash from 'lodash';
 
+window._ = require('lodash');
 window.numeral = require('numeral');
 
 // FontAwesome
