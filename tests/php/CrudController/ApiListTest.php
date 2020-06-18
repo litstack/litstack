@@ -61,10 +61,8 @@ class ApiListTest extends BackendTestCase
     public function it_cannot_store_for_not_existing_parent_id()
     {
         $this->assertEquals(0, FormListItem::count());
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list");
-        $request = $this->post($url, [
-            'parent_id' => 10
-        ])->assertStatus(404);
+        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/10");
+        $request = $this->post($url)->assertStatus(404);
     }
 
     // Store
@@ -195,8 +193,9 @@ class ApiListTest extends BackendTestCase
 
     // Order
     /** @test */
-    public function it_can_order_list_items_deeply()
+    public function it_fails_to_order_when_max_depth_is_reached()
     {
+
         $listItem1 = $this->createListItem();
         $listItem2 = $this->createListItem();
         $listItem3 = $this->createListItem();
@@ -210,13 +209,7 @@ class ApiListTest extends BackendTestCase
                 ['id' => $listItem3->id, 'order_column' => 1, 'parent_id' => $listItem2->id],
                 ['id' => $listItem4->id, 'order_column' => 1, 'parent_id' => $listItem3->id],
             ]
-        ])->assertStatus(200);
-
-        $listItems = $this->post->test_list;
-
-        $this->assertCount(1, $listItems);
-        $this->assertCount(1, $listItems[0]->children);
-        $this->assertCount(1, $listItems[0]->children->first()->children);
+        ])->assertStatus(405);
     }
 
     public function createListItem($parent_id = 0)

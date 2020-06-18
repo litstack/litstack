@@ -105,6 +105,10 @@ trait CrudHasList
 
         $parent = $field->getRelationQuery($model)->getFlat()->find($parent_id);
 
+        if ($parent_id && !$parent) {
+            abort(404);
+        }
+
         if ($parent) {
             $this->checkMaxDepth(++$parent->depth, $field->maxDepth);
         }

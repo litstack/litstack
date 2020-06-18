@@ -53,7 +53,7 @@ class CrudValidatorTest extends BackendTestCase
         $request = m::mock('request');
         $form = m::mock('form');
 
-        $form->shouldReceive('getRules')->withArgs([$request])->andReturn(['dummy rule', 'other dummy rule']);
+        $form->shouldReceive('getRules')->withArgs([$request, null])->andReturn(['dummy rule', 'other dummy rule']);
         $form->shouldReceive('getRegisteredFields')->andReturn([]);
         $request->shouldReceive('validate')->withArgs([
             ['dummy rule', 'other dummy rule'],
