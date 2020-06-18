@@ -1,6 +1,6 @@
 <?php
 
-namespace FjordApp\Controllers\Crud;
+namespace DummyNamespace;
 
 use Illuminate\Database\Eloquent\Builder;
 
@@ -14,7 +14,7 @@ class DummyClass extends CrudController
      *
      * @var string
      */
-    protected $model = DummyModelClass::class;
+    protected $model = \App\Models\DummyModelClass::class;
 
     /**
      * Authorize request for authenticated fjord-user and permission operation.

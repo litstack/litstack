@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -94,6 +95,23 @@ if (!function_exists('is_closure')) {
     function is_closure($t)
     {
         return $t instanceof Closure;
+    }
+}
+
+if (!function_exists('split_path')) {
+    /**
+     * Split path.
+     *
+     * @param string $path
+     * @return string
+     */
+    function split_path(string $path)
+    {
+        if (Str::contains($path, '\\')) {
+            return explode('\\', $path);
+        }
+
+        return explode('/', $path);
     }
 }
 
