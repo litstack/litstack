@@ -180,8 +180,8 @@ class ApiListTest extends BackendTestCase
         $this->put($url, [
             'items' => [
                 ['id' => $listItem1->id, 'order_column' => 1],
-                ['id' => $listItem2->id, 'order_column' => 1, 'parent_id' => 1],
-                ['id' => $listItem3->id, 'order_column' => 1, 'parent_id' => 2],
+                ['id' => $listItem2->id, 'order_column' => 1, 'parent_id' => $listItem1->id],
+                ['id' => $listItem3->id, 'order_column' => 1, 'parent_id' => $listItem2->id],
             ]
         ])->assertStatus(200);
 
@@ -191,6 +191,32 @@ class ApiListTest extends BackendTestCase
         $this->assertEquals(0, $listItems[0]->parent_id);
         $this->assertEquals(1, $listItems[1]->parent_id);
         $this->assertEquals(2, $listItems[2]->parent_id);
+    }
+
+    // Order
+    /** @test */
+    public function it_can_order_list_items_deeply()
+    {
+        $listItem1 = $this->createListItem();
+        $listItem2 = $this->createListItem();
+        $listItem3 = $this->createListItem();
+        $listItem4 = $this->createListItem();
+
+        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/order");
+        $this->put($url, [
+            'items' => [
+                ['id' => $listItem1->id, 'order_column' => 1],
+                ['id' => $listItem2->id, 'order_column' => 1, 'parent_id' => $listItem1->id],
+                ['id' => $listItem3->id, 'order_column' => 1, 'parent_id' => $listItem2->id],
+                ['id' => $listItem4->id, 'order_column' => 1, 'parent_id' => $listItem3->id],
+            ]
+        ])->assertStatus(200);
+
+        $listItems = $this->post->test_list;
+
+        $this->assertCount(1, $listItems);
+        $this->assertCount(1, $listItems[0]->children);
+        $this->assertCount(1, $listItems[0]->children->first()->children);
     }
 
     public function createListItem($parent_id = 0)

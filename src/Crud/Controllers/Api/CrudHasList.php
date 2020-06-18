@@ -32,6 +32,15 @@ trait CrudHasList
         );
     }
 
+    /**
+     * Load list items.
+     *
+     * @param CrudReadRequest $request
+     * @param string $id
+     * @param string $form_type
+     * @param string $field_id
+     * @return CrudJs
+     */
     public function loadListItems(CrudReadRequest $request, $id, $form_type, $field_id)
     {
         $this->formExists($form_type) ?: abort(404);
@@ -52,7 +61,7 @@ trait CrudHasList
      * @param string $id
      * @param string $form_type
      * @param string $field_id
-     * @return void
+     * @return CrudJs
      */
     public function storeListItem(CrudUpdateRequest $request, $id, $form_type, $field_id)
     {
@@ -112,6 +121,16 @@ trait CrudHasList
         return $block->delete();
     }
 
+    /**
+     * Update list item.
+     *
+     * @param CrudUpdateRequest $request
+     * @param string $id
+     * @param string $form_type
+     * @param string $field_id
+     * @param string $list_item_id
+     * @return CrudJs
+     */
     public function updateListItem(CrudUpdateRequest $request, $id, $form_type, $field_id, $list_item_id)
     {
         $this->formExists($form_type) ?: abort(404);
@@ -127,9 +146,18 @@ trait CrudHasList
 
         $listItem->update($request->all());
 
-        return $listItem;
+        return crud($listItem);
     }
 
+    /**
+     * Order list item.
+     *
+     * @param CrudUpdateRequest $request
+     * @param string $id
+     * @param string $form_type
+     * @param string $field_id
+     * @return void
+     */
     public function orderList(CrudUpdateRequest $request, $id, $form_type, $field_id)
     {
         $request->validate([
@@ -147,7 +175,7 @@ trait CrudHasList
 
         $model = $this->findOrFail($id);
 
-        $listItems = $field->getResults($model);
+        $listItems = $field->getRelationQuery($model)->getFlat();
         // Check parent_id's.
         foreach ($orderedItems as $orderedItem) {
             $parentId = $orderedItem['parent_id'] ?? null;

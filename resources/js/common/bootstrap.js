@@ -1,3 +1,4 @@
+window._ = require('lodash');
 window.Vue = require('vue');
 
 window.Cropper = require('cropperjs');
