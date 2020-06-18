@@ -58,16 +58,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapUserRoleRoutes()
     {
-        $this->package->route()->group(function () {
-            Route::group([
-                'config' => 'user.profile_settings',
-                'prefix' => '/profile',
-                'as' => 'profile.'
-            ], function () {
-                Route::get('/sessions', ProfileController::class . '@sessions')->name('sessions');
-            });
-        });
-
+        $this->package->route()->get('profile-sessions', ProfileController::class . '@sessions')->name('sessions');
         $this->package->route()->get('/fjord/users', FjordUserController::class . '@showIndex')->name('users');
         $this->package->route()->post('/fjord/users-index', FjordUserController::class . '@fetchIndex')->name('users.index');
         $this->package->route()->post('/fjord/users/delete-all', FjordUserController::class . '@deleteAll')->name('users.delete');

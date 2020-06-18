@@ -3,7 +3,7 @@
 namespace Fjord\Application\Controllers;
 
 use Illuminate\Routing\Controller;
-use File;
+use Illuminate\Support\Facades\File;
 
 class FileController extends Controller
 {

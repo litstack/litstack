@@ -16,9 +16,6 @@ $factory->define(FormRelation::class, function (Faker $faker, $args) {
         throw new InvalidArgumentException('Missing parameter "to".');
     }
 
-    //$field_id = $args['name'];
-    //   unset($args['name']);
-
     return [
         'field_id' => $args['name'],
         'from_model_id' => $args['from']->id,

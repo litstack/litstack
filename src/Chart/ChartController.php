@@ -20,7 +20,7 @@ class ChartController
      * @param ChartRequest $request
      * @return array
      */
-    public function get(ChartRequest $request)
+    public function __invoke(ChartRequest $request)
     {
         $config = Config::get($request->key) ?: abort(404);
         $factory = app('fjord.chart.factory');

@@ -14,6 +14,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     public function map()
     {
-        FjordRoute::post('/chart-data', ChartController::class . '@get');
+        FjordRoute::post('/chart-data', ChartController::class);
     }
 }
