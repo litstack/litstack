@@ -7,6 +7,7 @@ use Fjord\Chart\Contracts\Engine;
 use Fjord\Chart\Loader\BarLoader;
 use Fjord\Support\Facades\Config;
 use Fjord\Chart\Loader\AreaLoader;
+use Fjord\Chart\Loader\ChartLoader;
 use Fjord\Chart\Loader\DonutLoader;
 use Fjord\Chart\Loader\NumberLoader;
 use Fjord\Chart\Loader\ProgressLoader;
@@ -31,7 +32,15 @@ class ChartController
         return $loader->get($request);
     }
 
-    protected function makeLoader(string $chartType, ConfigHandler $config, Engine $engine)
+    /**
+     * Make chart loader.
+     *
+     * @param string $chartType
+     * @param ConfigHandler $config
+     * @param Engine $engine
+     * @return ChartLoader
+     */
+    protected function makeLoader(string $chartType, ConfigHandler $config, Engine $engine): ChartLoader
     {
         $loader = [
             'donut' => fn () => new DonutLoader($config, $engine),

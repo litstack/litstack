@@ -2,8 +2,6 @@
 
 namespace Fjord\Chart\Contracts;
 
-use Fjord\Chart\Chart;
-
 interface Engine
 {
     /**

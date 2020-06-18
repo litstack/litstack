@@ -14,7 +14,7 @@ class ApexEngine extends ChartEngine
     protected $component = 'fj-chart-apex';
 
     /**
-     * Render area chart.
+     * Render chart by type.
      *
      * @param array $names
      * @param ChartSet $set
