@@ -125,6 +125,7 @@ module.exports = {
                         ['docs/fields/relation', 'Relation'],
                         ['docs/fields/one_relation', 'oneRelation'],
                         ['docs/fields/many_relation', 'manyRelation'],
+                        ['docs/fields/list', 'List'],
                         ['docs/fields/block', 'Block'],
                         ['docs/fields/modal', 'Modal'],
                         ['docs/fields/component', 'Component']
@@ -133,7 +134,14 @@ module.exports = {
                 {
                     title: 'Charts',
                     collapsable: false,
-                    children: [['docs/charts/basics', 'Basics']]
+                    children: [
+                        ['docs/charts/basics', 'Basics'],
+                        ['docs/charts/area', 'Area Chart'],
+                        ['docs/charts/bar', 'Bar Chart'],
+                        ['docs/charts/number', 'Number'],
+                        ['docs/charts/donut', 'Donut Chart'],
+                        ['docs/charts/progress', 'Progress']
+                    ]
                 },
                 {
                     title: 'Frontend',
@@ -144,23 +152,19 @@ module.exports = {
                         ['docs/frontend/components', 'Vue Components']
                     ]
                 }
-                /*
-                {
-                    title: 'Package Development',
-                    collapsable: true,
-                    children: [['docs/package/basics', 'Basics']]
-                }
-                */
-                /*
-                {
-                    title: 'Digging Deeper',
-                    collapsable: false,
-                    children: [
-                        ['docs/deeper/package', 'Package Development'],
-                        ['docs/deeper/lifecycle', 'Lifecycle']
-                    ]
-                }
-                */
+                // {
+                //     title: 'Package Development',
+                //     collapsable: true,
+                //     children: [['docs/package/basics', 'Basics']]
+                // },
+                // {
+                //     title: 'Digging Deeper',
+                //     collapsable: false,
+                //     children: [
+                //         ['docs/deeper/package', 'Package Development'],
+                //         ['docs/deeper/lifecycle', 'Lifecycle']
+                //     ]
+                // }
             ]
         }
     }
