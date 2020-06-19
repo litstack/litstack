@@ -78,7 +78,7 @@ class Packages
     public function navPreset(string $package, $name = null, array $merge = [])
     {
         if (is_string($name)) {
-            return $this->get($package)->navEntry($name, $merge);
+            return $this->get($package)->navPreset($name, $merge);
         }
 
         if (is_array($name)) {
@@ -94,7 +94,7 @@ class Packages
                 continue;
             }
 
-            return $rootPackage->navEntry($name, $merge);
+            return $rootPackage->navPreset($name, $merge);
         }
 
         throw new InvalidArgumentException('No navigation entry preset with name "' . $name . '" found.');
