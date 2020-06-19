@@ -108,6 +108,9 @@ export default {
         }
     },
     methods: {
+        /**
+         * Handle custom property input changed.
+         */
         changed(value, key, image) {
             if (!this.field.translatable) {
                 image.custom_properties[key] = value;
@@ -130,6 +133,10 @@ export default {
 
             this.$store.dispatch('saveJob', job);
         },
+
+        /**
+         * Get custom property for image by propery name.
+         */
         getCustomProperty(image, key) {
             if (!this.field.translatable) {
                 return image.custom_properties[key];
@@ -144,9 +151,17 @@ export default {
 
             return image.custom_properties[this.language][key];
         },
+
+        /**
+         * Handle delet image click.
+         */
         async destroy(id, index) {
             this.$emit('delete');
         },
+
+        /**
+         * Get media url for image id.
+         */
         getMediaUrl(id) {
             return `${this.field.route_prefix}/media/${id}`;
         }

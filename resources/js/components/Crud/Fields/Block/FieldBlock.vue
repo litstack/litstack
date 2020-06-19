@@ -243,7 +243,7 @@ export default {
             };
             let response = await this.sendNewOrder(payload);
 
-            if(!response) {
+            if (!response) {
                 return;
             }
 
@@ -257,7 +257,7 @@ export default {
         /**
          * Send new order request.
          */
-        sendNewOrder(payload) {
+        async sendNewOrder(payload) {
             try {
                 let response = await axios.put(
                     `${this.field.route_prefix}/${this.field.id}/order`,

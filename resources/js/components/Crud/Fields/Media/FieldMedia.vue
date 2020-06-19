@@ -41,7 +41,7 @@
                                 @vdropzone-sending="busy = true"
                                 @vdropzone-success="uploadSuccess"
                                 @vdropzone-queue-complete="queueComplete"
-                                @vdropzone-error="uploadError"
+                                @vdropzone-error="handleUploadError"
                                 @vdropzone-files-added="processQueue"
                             />
                         </fj-field-media-images>
@@ -98,14 +98,25 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'FieldMedia',
     props: {
+        /**
+         * Model.
+         */
         model: {
             required: true,
             type: Object
         },
+
+        /**
+         * Field attributes.
+         */
         field: {
             required: true,
             type: Object
         },
+
+        /**
+         * Model id.
+         */
         modelId: {
             type: [Boolean, Number]
         }
@@ -165,18 +176,30 @@ export default {
     },
     computed: {
         ...mapGetters(['baseURL', 'language']),
+
+        /**
+         * Dropzone ref.
+         */
         dropzone() {
             return this.$refs[`dropzone-${this.field.id}`];
         },
+
+        /**
+         * Determines if max files are reached.
+         */
         maxFiles() {
             return this.images.length + this.uploads >= this.field.maxFiles;
         },
+
+        /**
+         * Files count array.
+         */
         fileCount() {
-            let c = [];
+            let count = [];
             for (var i = 0; i < this.images.length; i++) {
-                c.push(1);
+                count.push(1);
             }
-            return c;
+            return count;
         }
     },
     watch: {
@@ -189,12 +212,23 @@ export default {
         }
     },
     methods: {
+        /**
+         * Get cropper id.
+         */
         getCropperId() {
             return `fj-cropper-${this.field.route_prefix.replace(/\//g, '-')}`;
         },
+
+        /**
+         * Get upload url.
+         */
         getUploadUrl() {
             return `${this.baseURL}${this.field.route_prefix}/media`;
         },
+
+        /**
+         * Get custom property by image and property name.
+         */
         getCustomProperty(image, key) {
             if (!this.field.translatable) {
                 return image.custom_properties[key];
@@ -209,8 +243,12 @@ export default {
 
             return image.custom_properties[this.language][key];
         },
+
+        /**
+         * Check if maxfiles are reached.
+         */
         checkMaxFiles() {
-            if (this.images.length >= this.field.maxFiles) {
+            if (this.maxFilesReached()) {
                 this.dropzone.removeAllFiles();
                 this.dropzone.disable();
                 $(`#dropzone-${this.field.id}`)
@@ -219,14 +257,28 @@ export default {
                     .html(
                         '<i class="far fa-images"></i> maximale Anzahl an Bildern erreicht'
                     );
-                return true;
             }
 
-            return false;
+            return this.maxFilesReached();
         },
+
+        /**
+         * Determine wheter max files are reached.
+         */
+        maxFilesReached() {
+            return this.images.length >= this.field.maxFiles;
+        },
+
+        /**
+         * Update attributes.
+         */
         updateAttributes() {
             this.$emit('updateAttributes', this.images);
         },
+
+        /**
+         * Handle upload success.
+         */
         uploadSuccess(file, response) {
             this.uploads++;
             this.$bvToast.toast(this.__('fj.image_uploaded'), {
@@ -236,10 +288,18 @@ export default {
             this.$emit('reload');
             Fjord.bus.$emit('field:updated', 'image:uploaded');
         },
+
+        /**
+         * Handle queue complete.
+         */
         queueComplete() {
             this.busy = false;
         },
-        uploadError(file, errorMessage, xhr) {
+
+        /**
+         * Handle upload error.
+         */
+        handleUploadError(file, errorMessage, xhr) {
             this.dropzone.removeAllFiles();
             if (typeof errorMessage == 'object') {
                 if ('errors' in errorMessage) {
@@ -258,12 +318,19 @@ export default {
                 variant: 'danger'
             });
         },
+
+        /**
+         * Handle process queue.
+         */
         processQueue() {
             this.$nextTick(() => {
                 this.dropzone.processQueue();
             });
         },
 
+        /**
+         * Transform file before upload.
+         */
         transformFile(file, done) {
             // If image doesn't require cropping, return bare image
             //
@@ -280,6 +347,10 @@ export default {
             this.done = done;
             this.$bvModal.show(`${this.getCropperId()}`);
         },
+
+        /**
+         * Crop image.
+         */
         crop() {
             let file = this.file;
             let done = this.done;
@@ -351,6 +422,10 @@ export default {
 
             this.resetCropper();
         },
+
+        /**
+         * Reset cropper.
+         */
         resetCropper() {
             this.file = null;
             this.done = null;
