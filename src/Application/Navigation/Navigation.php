@@ -2,7 +2,6 @@
 
 namespace Fjord\Application\Navigation;
 
-use Closure;
 use Fjord\Support\Facades\Package;
 use Illuminate\Contracts\Support\Arrayable;
 
@@ -79,26 +78,17 @@ class Navigation implements Arrayable
      *
      * @param string $name
      * @param array $params
-     * @return array $entry
+     * @return array
      */
     public function preset(string $name, array $params = [])
     {
-        $preset = Package::navEntry($name, $params);
-
-        $title = $preset['title'] ?? null;
-        if ($title instanceof Closure) {
-            $preset['title'] = $preset['title']();
-        }
-
-        if ($preset['link'] instanceof Closure) {
-            $preset['link'] = $preset['link']();
-        }
-
-        return $this->entry($preset);
+        return $this->entry(
+            Package::navPreset($name, $params)
+        );
     }
 
     /**
-     * Navigation section.
+     * Add navigation section.
      *
      * @param array $entries
      * @return void

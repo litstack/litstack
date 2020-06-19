@@ -2,6 +2,7 @@
 
 namespace Fjord\Application\Package;
 
+use Closure;
 use Fjord\Application\Application;
 use Fjord\Support\Facades\FjordRoute;
 
@@ -97,11 +98,22 @@ abstract class FjordPackage
      *
      * @param string $name
      * @param array $merge
-     * @return void
+     * @return array
      */
-    public function navEntry(string $name, array $merge = [])
+    public function navPreset(string $name, array $merge = [])
     {
-        return array_merge($this->navPresets[$name], $merge);
+        $preset = array_merge($this->navPresets[$name], $merge);
+
+        $title = $preset['title'] ?? null;
+        if ($title instanceof Closure) {
+            $preset['title'] = $preset['title']();
+        }
+
+        if ($preset['link'] instanceof Closure) {
+            $preset['link'] = $preset['link']();
+        }
+
+        return $preset;
     }
 
     /**
