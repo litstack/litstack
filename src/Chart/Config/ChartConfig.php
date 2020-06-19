@@ -3,6 +3,7 @@
 namespace Fjord\Chart\Config;
 
 use Fjord\Chart\Chart;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -55,6 +56,8 @@ abstract class ChartConfig
      */
     protected function count($query)
     {
+        $this->resultResolver = fn (Collection $values) =>  $values->sum();
+
         return (clone $query)->select(
             DB::raw("COUNT(*) as value")
         );
@@ -69,6 +72,8 @@ abstract class ChartConfig
      */
     protected function average($query, string $column)
     {
+        $this->resultResolver = fn (Collection $values) => $values->avg();
+
         return (clone $query)->select(
             DB::raw("AVG({$column}) as value")
         );
@@ -83,6 +88,8 @@ abstract class ChartConfig
      */
     protected function sum($query, string $column)
     {
+        $this->resultResolver = fn (Collection $values) => $values->sum();
+
         return (clone $query)->select(
             DB::raw("SUM({$column}) as value")
         );
@@ -97,6 +104,8 @@ abstract class ChartConfig
      */
     protected function min($query, string $column)
     {
+        $this->resultResolver = fn (Collection $values) => $values->min();
+
         return (clone $query)->select(
             DB::raw("MIN({$column}) as value")
         );
@@ -111,6 +120,8 @@ abstract class ChartConfig
      */
     protected function max($query, string $column)
     {
+        $this->resultResolver = fn (Collection $values) => $values->max();
+
         return (clone $query)->select(
             DB::raw("MAX({$column}) as value")
         );

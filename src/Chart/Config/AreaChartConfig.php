@@ -2,10 +2,13 @@
 
 namespace Fjord\Chart\Config;
 
+use Closure;
 use Illuminate\Support\Collection;
 
 abstract class AreaChartConfig extends ChartConfig
 {
+    use Concerns\HasResults;
+
     /**
      * Compare to previous time.
      *
@@ -20,14 +23,6 @@ abstract class AreaChartConfig extends ChartConfig
      * @return integer
      */
     abstract public function value($query);
-
-    /**
-     * Number that is displayed at the bottom left corner.
-     *
-     * @param \Illuminate\Support\Collection
-     * @return integer
-     */
-    abstract public function result(Collection $values): int;
 
     /**
      * Set daily goal.

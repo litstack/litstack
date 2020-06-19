@@ -4,6 +4,8 @@ namespace Fjord\Chart\Config;
 
 abstract class NumberChartConfig extends ChartConfig
 {
+    use Concerns\HasResults;
+
     /**
      * Compare to previous time.
      *

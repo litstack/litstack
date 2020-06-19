@@ -6,6 +6,8 @@ use Illuminate\Support\Collection;
 
 abstract class BarChartConfig extends ChartConfig
 {
+    use Concerns\HasResults;
+
     /**
      * Compare to previous time.
      *

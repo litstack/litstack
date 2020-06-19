@@ -9,7 +9,8 @@ use Illuminate\Support\Arr;
 
 class NumberLoader extends ChartLoader
 {
-    use Concerns\HasOneIteration;
+    use Concerns\HasOneIteration,
+        Concerns\HasComparison;
 
     /**
      * Make series.

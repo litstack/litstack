@@ -45,4 +45,14 @@ class DummyClass extends ProgressChartConfig
     {
         return 100;
     }
+
+    /**
+     * Get minimum value.
+     *
+     * @return integer|float
+     */
+    public function minValue()
+    {
+        return 0;
+    }
 }

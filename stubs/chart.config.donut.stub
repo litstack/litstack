@@ -44,9 +44,9 @@ class DummyClass extends DonutChartConfig
     public function value($query): array
     {
         return [
-            (clone $query)->where('product', 'T-shirt')->count(),
-            (clone $query)->where('product', 'Schuh')->count(),
-            (clone $query)->where('product', 'Pullover')->count(),
+            (clone $query)->where('product', 'shirt')->count(),
+            (clone $query)->where('product', 'shoe')->count(),
+            (clone $query)->where('product', 'jacket')->count(),
         ];
     }
 
@@ -58,9 +58,9 @@ class DummyClass extends DonutChartConfig
     public function labels(): array
     {
         return [
-            'T-shirt',
-            'Schuh',
-            'Pullover'
+            'Shirt',
+            'Shoe',
+            'Jacket'
         ];
     }
 }
