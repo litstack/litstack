@@ -2,8 +2,6 @@
 
 namespace Fjord\Chart\Config;
 
-use Illuminate\Support\Collection;
-
 abstract class BarChartConfig extends ChartConfig
 {
     use Concerns\HasResults;
@@ -22,14 +20,6 @@ abstract class BarChartConfig extends ChartConfig
      * @return integer
      */
     abstract public function value($query);
-
-    /**
-     * Number that is displayed at the bottom left corner.
-     *
-     * @param \Illuminate\Support\Collection
-     * @return integer
-     */
-    abstract public function result(Collection $values): int;
 
     /**
      * Set daily goal.
