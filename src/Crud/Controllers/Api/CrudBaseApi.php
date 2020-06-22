@@ -51,12 +51,14 @@ trait CrudBaseApi
             $attributes[$this->config->orderColumn] = $this->query()->count() + 1;
         }
 
-        $model = new $this->model;
+        $model = new $this->model($attributes);
 
         $this->fillOnStore($model);
 
+        $model->save();
+
         return crud(
-            $model->create($attributes)
+            $model
         );
     }
 
