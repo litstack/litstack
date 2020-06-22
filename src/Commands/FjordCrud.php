@@ -286,7 +286,7 @@ class FjordCrud extends Command
 
         $fileContents = file_get_contents(__DIR__ . '/../../stubs/CrudController.stub');
 
-        $fileContents = str_replace('DummyClassname', $modelName . 'Controller', $fileContents);
+        $fileContents = str_replace('DummyClass', $modelName . 'Controller', $fileContents);
         $fileContents = str_replace('DummyModelClass', "\\App\\Models\\{$modelName}", $fileContents);
         $fileContents = str_replace('DummyTableName', $tableName, $fileContents);
 
