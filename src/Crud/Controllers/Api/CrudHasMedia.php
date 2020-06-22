@@ -156,14 +156,15 @@ trait CrudHasMedia
      *
      * @param CrudUpdateRequest $request
      * @param string|integer $id
-     * @param string $form_name
+     * @param string $formName
      * @return void
      */
-    public function orderMedia(CrudUpdateRequest $request, $id, $form_name)
+    public function orderMedia(CrudUpdateRequest $request, $id, $formName)
     {
         $ids = $request->ids ?? abort(404);
-        $this->formExists($form_name) ?: abort(404);
-        $mediaField = $this->config->form->findField($request->collection) ?? abort(404);
+        $this->formExists($formName) ?: abort(404);
+        $mediaField = $this->getForm($formName)->findField($request->collection)
+            ?? abort(404);
 
         $model = $this->findOrFail($id);
 
