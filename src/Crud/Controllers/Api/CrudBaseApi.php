@@ -25,7 +25,7 @@ trait CrudBaseApi
         $this->fillModelAttributes($model, $request, $form->getRegisteredFields());
         $attributes = $this->filterRequestAttributes($request, $form->getRegisteredFields());
 
-        $this->fillUpdateModel($model)->update($attributes);
+        $this->fillOnUpdate($model)->update($attributes);
 
         if ($model->last_edit) {
             $model->load('last_edit');
@@ -51,9 +51,13 @@ trait CrudBaseApi
             $attributes[$this->config->orderColumn] = $this->query()->count() + 1;
         }
 
-        $model = $this->fillNewModel($this->model)->create($attributes);
+        $model = new $this->model;
 
-        return crud($model);
+        $this->fillOnStore($model);
+
+        return crud(
+            $model->create($attributes)
+        );
     }
 
     /**
@@ -62,7 +66,7 @@ trait CrudBaseApi
      * @param mixed $model
      * @return void
      */
-    protected function fillNewModel($model)
+    protected function fillOnStore($model)
     {
         //
     }
@@ -73,7 +77,7 @@ trait CrudBaseApi
      * @param mixed $model
      * @return void
      */
-    protected function fillUpdateModel($model)
+    protected function fillOnUpdate($model)
     {
         //
     }
