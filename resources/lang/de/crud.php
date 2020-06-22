@@ -26,5 +26,9 @@ return [
                 'confirm_delete_info' => 'Wenn Sie diesen Element entfernen, entfernen Sie dadurch auch alle darunter befindlichen Elemente.',
             ]
         ]
+    ],
+    'meta' => [
+        'title_hint' => "Leicht verständlicher sinnvoller Satz. Gibt eine Vorstellung, worum es im Seiteninhalt geht. Maximal :width breit.",
+        'description_hint' => "Kurze aber aussagekräftige Inhaltsangabe der Seite. Beinhaltet die wichtigsten Schlüsselwörter des Seiteninhaltes.",
     ]
 ];

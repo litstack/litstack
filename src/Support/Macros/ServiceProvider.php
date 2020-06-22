@@ -15,6 +15,7 @@ class ServiceProvider extends LaravelServiceProvider
         BuilderSearch::class,
         FormMarkdown::class,
         BuilderSort::class,
+        CrudMetaMacro::class,
     ];
 
     /**
@@ -35,7 +36,11 @@ class ServiceProvider extends LaravelServiceProvider
     public function registerMacros()
     {
         foreach ($this->macros as $macro) {
-            new $macro;
+            $instance = new $macro;
+
+            if (method_exists($instance, 'register')) {
+                $instance->register();
+            }
         }
     }
 }

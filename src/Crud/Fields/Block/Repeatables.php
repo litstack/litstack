@@ -6,11 +6,13 @@ use Closure;
 use Fjord\Vue\Table;
 use Fjord\Support\VueProp;
 use Fjord\Crud\Models\FormBlock;
-use Fjord\Vue\Crud\PreviewTable;
 use Fjord\Crud\Fields\Block\Block;
+use Illuminate\Support\Traits\Macroable;
 
 class Repeatables extends VueProp
 {
+    use Macroable;
+    
     /**
      * Registered forms.
      *

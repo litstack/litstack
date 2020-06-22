@@ -27,5 +27,8 @@ return [
             ]
         ]
     ],
-
+    'meta' => [
+        'title_hint' => "Easily understandable meaningful sentence. Gives an idea what the page content is about. Maximum :width wide.",
+        'description_hint' => "Short but meaningful summary of the page. Contains the most important keywords of the page content.",
+    ]
 ];

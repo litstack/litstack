@@ -84,7 +84,7 @@ class PackageDiscoverCommand extends LaravelPackageDiscoverCommand
     public function filterFjordPackages(array $packages)
     {
         // Filter for packages containing "extra": {"fjord": ...}.
-        return collect($packages)->mapWithKeys(function ($package) {
+        return collect($packages['packages'] ?? $packages)->mapWithKeys(function ($package) {
             return [$this->format($package['name']) => $package['extra']['fjord'] ?? []];
         })->filter()->all();
     }
