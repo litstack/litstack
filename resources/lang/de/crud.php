@@ -19,5 +19,9 @@ return [
         'wysiwyg' => [
             'new_window' => 'Link in neuem Fenster öffnen'
         ]
+    ],
+    'meta' => [
+        'title_hint' => "Leicht verständlicher sinnvoller Satz. Gibt eine Vorstellung, worum es im Seiteninhalt geht. Maximal :width breit.",
+        'description_hint' => "Kurze aber aussagekräftige Inhaltsangabe der Seite. Beinhaltet die wichtigsten Schlüsselwörter des Seiteninhaltes.",
     ]
 ];
