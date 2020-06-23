@@ -3,22 +3,20 @@
 namespace Fjord\Crud\Fields\Block;
 
 use Closure;
-use Fjord\Vue\Table;
 use Fjord\Support\VueProp;
-use Fjord\Crud\Models\FormBlock;
 use Fjord\Crud\Fields\Block\Block;
 use Illuminate\Support\Traits\Macroable;
 
 class Repeatables extends VueProp
 {
     use Macroable;
-    
+
     /**
      * Registered forms.
      *
      * @var array
      */
-    public $forms = [];
+    public $repeatables = [];
 
     /**
      * Preview tables.
@@ -41,32 +39,25 @@ class Repeatables extends VueProp
      */
     public function __construct(Block $field)
     {
-        $this->routePrefix = strip_slashes("{$field->route_prefix}/block/{$field->id}/{block_id}");
+        $this->field = $field;
     }
 
     /**
-     * Undocumented function
+     * Add repeatable.
      *
      * @param string $name
      * @param Closure $closure
-     * @return void
+     * @return 
      */
     public function add(string $name, Closure $closure)
     {
-        $form = new BlockForm(FormBlock::class);
+        $rep = new Repeatable($this->field, $name);
 
-        $form->setRoutePrefix(
-            $this->routePrefix
-        );
+        $rep->form($closure);
 
-        $preview = new Table;
+        $this->repeatables[$name] = $rep;
 
-        $closure($form, $preview);
-
-        $this->forms[$name] = $form;
-        $this->previews[$name] = $preview;
-
-        return $this;
+        return $rep;
     }
 
     /**
@@ -77,7 +68,7 @@ class Repeatables extends VueProp
      */
     public function has(string $name)
     {
-        return array_key_exists($name, $this->forms);
+        return array_key_exists($name, $this->repeatables);
     }
 
     /**
@@ -88,7 +79,7 @@ class Repeatables extends VueProp
      */
     public function get(string $name)
     {
-        return $this->forms[$name] ?? null;
+        return $this->repeatables[$name] ?? null;
     }
 
     /**
@@ -98,16 +89,13 @@ class Repeatables extends VueProp
      */
     public function render(): array
     {
-        $array = $this->forms;
+        $rendered = [];
 
-        foreach ($array as $name => $form) {
-            $array[$name] = [
-                'form' => $form->toArray(),
-                'preview' => $this->previews[$name]->toArray()
-            ];
+        foreach ($this->repeatables as $name => $rep) {
+            $rendered[$name] = $rep->render();
         }
 
-        return $array;
+        return $rendered;
     }
 
     /**

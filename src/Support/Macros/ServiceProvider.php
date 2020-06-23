@@ -2,6 +2,7 @@
 
 namespace Fjord\Support\Macros;
 
+use Fjord\Support\Macros\BladeBlock;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class ServiceProvider extends LaravelServiceProvider
@@ -16,6 +17,7 @@ class ServiceProvider extends LaravelServiceProvider
         FormMarkdown::class,
         BuilderSort::class,
         CrudMetaMacro::class,
+        BladeBlock::class,
     ];
 
     /**
