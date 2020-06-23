@@ -8,13 +8,6 @@ use Fjord\Crud\Controllers\FormController;
 class DummyClass extends FormController
 {
     /**
-     * Form config class.
-     *
-     * @var string
-     */
-    protected $config = App\Models\DummyModelClass::class;
-
-    /**
      * Authorize request for authenticated fjord-user and permission operation.
      * Operations: read, update
      *
