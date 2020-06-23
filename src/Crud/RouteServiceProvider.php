@@ -106,7 +106,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 continue;
             }
 
-            if ($reflection->getParentClass()->name != CrudConfig::class) {
+            if (!new $namespace instanceof CrudConfig) {
                 continue;
             }
 
