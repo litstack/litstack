@@ -7,6 +7,13 @@ use Illuminate\Support\Collection;
 abstract class ProgressChartConfig extends ChartConfig
 {
     /**
+     * Chart engine.
+     *
+     * @var string
+     */
+    public $engine = 'apex.progress';
+
+    /**
      * Calculate value.
      *
      * @param Builder $query

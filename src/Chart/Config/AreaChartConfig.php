@@ -14,7 +14,14 @@ abstract class AreaChartConfig extends ChartConfig
      *
      * @var boolean
      */
-    public $compare = true;
+    public $compare = false;
+
+    /**
+     * Chart engine.
+     *
+     * @var string
+     */
+    public $engine = 'apex.area';
 
     /**
      * Calculate value.

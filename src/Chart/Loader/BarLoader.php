@@ -46,10 +46,8 @@ class BarLoader extends ChartLoader
         return [
             'results' => $this->getResults($set),
             'chart' => $this->engine->render(
-                'bar',
                 $this->getNames(),
                 $set,
-                $this->getDailyGoal()
             )
         ];
     }

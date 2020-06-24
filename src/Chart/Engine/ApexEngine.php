@@ -20,7 +20,7 @@ class ApexEngine extends ChartEngine
      * @param ChartSet $set
      * @return array
      */
-    public function render(string $type = 'area', array $names, ChartSet $set, $goal = null)
+    public function render(array $names, ChartSet $set)
     {
         $series = [
             'categories' => $set->getLabels(),
@@ -31,17 +31,17 @@ class ApexEngine extends ChartEngine
             $series['series'][]  = [
                 'name' => $names[$key],
                 'data' => $values,
-                'type' => $type
+                'type' => 'area'
             ];
         }
 
-        if ($goal !== null) {
-            $series['series'][]  = [
-                'name' => 'Goal',
-                'data' => array_fill(0, count($set->getValues()[0]), $goal),
-                'type' => 'line'
-            ];
-        }
+        // if ($goal !== null) {
+        //     $series['series'][]  = [
+        //         'name' => 'Goal',
+        //         'data' => array_fill(0, count($set->getValues()[0]), $goal),
+        //         'type' => 'line'
+        //     ];
+        // }
 
         return $series;
     }

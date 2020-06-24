@@ -172,6 +172,11 @@ export default {
             ],
 
             /**
+             * Available Colors for Pie
+             */
+            colors: [],
+
+            /**
              * Current timespan.
              */
             active: {
@@ -347,7 +352,7 @@ export default {
     }
 
     &__wrapper {
-        margin: 0 -10px 0 -12px;
+        //margin: 0 -10px 0 -12px;
         z-index: 1;
 
         &.chart-number {

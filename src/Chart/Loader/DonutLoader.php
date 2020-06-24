@@ -38,7 +38,7 @@ class DonutLoader extends ChartLoader
 
         return [
             'results' => [],
-            'chart' => $this->engine->renderDonut(
+            'chart' => $this->engine->render(
                 $this->config->labels,
                 $set
             )

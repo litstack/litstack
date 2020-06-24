@@ -4,7 +4,11 @@ namespace Fjord\Chart;
 
 use Carbon\CarbonInterface;
 use Fjord\Chart\Engine\ApexEngine;
+use Fjord\Chart\Engine\ApexBarEngine;
+use Fjord\Chart\Engine\ApexAreaEngine;
+use Fjord\Chart\Engine\ApexDonutEngine;
 use Illuminate\Database\Eloquent\Builder;
+use Fjord\Chart\Engine\ApexProgressEngine;
 use Fjord\Chart\Engine\ChartEngineResolver;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
@@ -70,8 +74,20 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function registerApexEngine(ChartEngineResolver $resolver)
     {
-        $resolver->register('apex', function () {
-            return new ApexEngine;
+        // $resolver->register('apex', function () {
+        //     return new ApexEngine;
+        // });
+        $resolver->register('apex.area', function () {
+            return new ApexAreaEngine;
+        });
+        $resolver->register('apex.bar', function () {
+            return new ApexBarEngine;
+        });
+        $resolver->register('apex.donut', function () {
+            return new ApexDonutEngine;
+        });
+        $resolver->register('apex.progress', function () {
+            return new ApexProgressEngine;
         });
     }
 

@@ -14,6 +14,13 @@ abstract class BarChartConfig extends ChartConfig
     public $compare = true;
 
     /**
+     * Chart engine.
+     *
+     * @var string
+     */
+    public $engine = 'apex.bar';
+
+    /**
      * Calculate value.
      *
      * @param Builder $query

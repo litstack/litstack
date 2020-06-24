@@ -5,6 +5,13 @@ namespace Fjord\Chart\Config;
 abstract class DonutChartConfig extends ChartConfig
 {
     /**
+     * Chart engine.
+     *
+     * @var string
+     */
+    public $engine = 'apex.donut';
+
+    /**
      * Value.
      *
      * @param Builder $query
