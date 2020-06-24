@@ -46,29 +46,39 @@ export default {
                     },
                     type: 'radialBar'
                 },
-
-                // dataLabels: {
-                //     enabled: false
-                // },
-                // colors: ['red', 'green'], // stroke color
-                // stroke: {
-                //     curve: 'straight',
-                //     width: 2
-                // },
-
                 plotOptions: {
                     radialBar: {
                         hollow: {
                             size: '70%',
-                            background: 'transparent'
+                            background: 'transparent',
+                            position: 'back'
                         },
                         track: {
                             show: true,
-                            margin: 5,
                             background: '#f2f2f2',
                             strokeWidth: '10%'
+                        },
+                        dataLabels: {
+                            name: {
+                                fontSize: '22px'
+                            },
+                            value: {
+                                fontSize: '16px'
+                            },
+                            total: {
+                                show: true,
+                                label: undefined,
+                                formatter: function(val) {
+                                    return val.globals.series[0];
+                                }
+                            }
                         }
                     }
+                },
+                fill: {
+                    type: 'solid',
+                    opacity: 1,
+                    colors: []
                 },
                 labels: [],
                 stroke: {
@@ -88,18 +98,10 @@ export default {
     },
     methods: {
         makeRadialBar(variant) {
-            this.options.fill = {
-                colors: []
-            };
-
-            this.options.fill.colors.push('red');
-
-            let fontColor = variant == WHITE ? 'black' : 'white';
-
-            // this.options.plotOptions.pie.donut.labels.total.color = fontColor;
-            // this.options.plotOptions.pie.donut.labels.value.color = fontColor;
-
-            // this.options.stroke.colors = ['transparent'];
+            // this.options.fill = {
+            //     colors: []
+            // };
+            this.options.fill.colors.push(firstColor(variant));
         },
 
         update(data) {
@@ -107,6 +109,7 @@ export default {
                 xaxis: { categories: data.categories }
             });
             this.series = data.series;
+            console.log('series: ', data.series);
 
             if ('labels' in data) {
                 this.$refs.chart.updateOptions({

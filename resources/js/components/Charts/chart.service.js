@@ -1,6 +1,20 @@
 export const PRIMARY = '#4951f2';
 export const SECONDARY = '#6c8199';
 export const WHITE = '#fff';
+export const COLORS = [
+    '#FF6766',
+    '#C5F466',
+    '#AA6BCE',
+    '#66E067',
+    '#708CCD',
+    '#FFAC66',
+    '#E367AD',
+    '#FFCC67',
+    '#67C2C5',
+    '#8A70CF',
+    '#FFFC67',
+    '#FEE566'
+];
 
 export function firstColor(variant) {
     switch (variant) {

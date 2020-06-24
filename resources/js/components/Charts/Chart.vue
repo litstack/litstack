@@ -225,6 +225,8 @@ export default {
         }
     },
     beforeMount() {
+        console.log('chart: ', this.chart);
+
         this.setHeight();
     },
     async mounted() {
