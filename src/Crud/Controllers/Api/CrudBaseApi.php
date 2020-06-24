@@ -25,7 +25,9 @@ trait CrudBaseApi
         $this->fillModelAttributes($model, $request, $form->getRegisteredFields());
         $attributes = $this->filterRequestAttributes($request, $form->getRegisteredFields());
 
-        $this->fillOnUpdate($model)->update($attributes);
+        $this->fillOnUpdate($model);
+
+        $model->update($attributes);
 
         if ($model->last_edit) {
             $model->load('last_edit');
@@ -51,7 +53,11 @@ trait CrudBaseApi
             $attributes[$this->config->orderColumn] = $this->query()->count() + 1;
         }
 
-        $model = $this->fillOnStore($this->model)->create($attributes);
+        $model = new $this->model($attributes);
+
+        $this->fillOnStore($this->model);
+
+        $model->save();
 
         return crud($model);
     }
