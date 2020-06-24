@@ -133,7 +133,7 @@ module.exports = {
                 },
                 {
                     title: 'Charts',
-                    collapsable: false,
+                    collapsable: true,
                     children: [
                         ['docs/charts/basics', 'Basics'],
                         ['docs/charts/area', 'Area Chart'],
@@ -150,6 +150,14 @@ module.exports = {
                         ['docs/frontend/javascript', 'Javascript'],
                         ['docs/frontend/vue', 'Vue'],
                         ['docs/frontend/components', 'Vue Components']
+                    ]
+                },
+                {
+                    title: 'Official Packages',
+                    collapsable: false,
+                    children: [
+                        ['docs/packages/fjord-ui-kit', 'Fjord UI Kit'],
+                        ['docs/packages/fjord-pages', 'Fjord Pages']
                     ]
                 }
                 // {
