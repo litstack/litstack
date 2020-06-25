@@ -87,6 +87,8 @@
                 </div>
             </div>
         </div>
+
+        <fj-chart-gradients />
     </fj-col>
 </template>
 
@@ -340,7 +342,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '@fj-sass/_variables';
 .fj-chart {
     &__title {

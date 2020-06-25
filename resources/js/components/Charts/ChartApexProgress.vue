@@ -49,28 +49,38 @@ export default {
                 plotOptions: {
                     radialBar: {
                         hollow: {
-                            size: '70%',
+                            size: '82%',
+                            margin: 0,
                             background: 'transparent',
                             position: 'back'
                         },
                         track: {
-                            show: true,
-                            background: '#f2f2f2',
-                            strokeWidth: '10%'
+                            show: false
+                            // background: '#f2f2f2',
+                            // strokeWidth: '10%'
                         },
                         dataLabels: {
+                            show: true,
+                            value: {
+                                show: true,
+                                fontSize: '2rem',
+                                fontFamily: 'Inter',
+                                fontWeight: 700,
+                                color: 'white',
+                                offsetY: -4
+                            },
                             name: {
                                 fontSize: '22px'
-                            },
-                            value: {
-                                fontSize: '16px'
                             },
                             total: {
                                 show: true,
                                 label: undefined,
-                                formatter: function(val) {
-                                    return val.globals.series[0];
-                                }
+                                fontSize: '1rem',
+                                fontFamily: 'Inter',
+                                fontWeight: 400
+                                // formatter: function(val) {
+                                //     return `${val.globals.series[0]}`;
+                                // }
                             }
                         }
                     }
@@ -81,9 +91,7 @@ export default {
                     colors: []
                 },
                 labels: [],
-                stroke: {
-                    lineCap: 'round'
-                }
+                stroke: {}
             },
 
             series: []
@@ -102,6 +110,15 @@ export default {
             //     colors: []
             // };
             this.options.fill.colors.push(firstColor(variant));
+            this.options.plotOptions.radialBar.dataLabels.value.color = this.dataLabelColor(
+                variant
+            );
+        },
+        dataLabelColor(variant) {
+            if (variant == PRIMARY || variant == SECONDARY) {
+                return 'white';
+            }
+            return 'black';
         },
 
         update(data) {
@@ -121,8 +138,21 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.fj-bar-chart {
-    margin: 0;
+<style lang="scss">
+.apexcharts-radialbar-hollow {
+    // transform: scale(1.06);
+    // transform-origin: 32%;
+}
+
+.fj-chart.primary,
+.fj-chart.secondary {
+    circle.apexcharts-radialbar-hollow {
+        fill: url(#svg-gradient-white) !important;
+    }
+}
+.fj-chart.white {
+    circle.apexcharts-radialbar-hollow {
+        fill: url(#svg-gradient-primary) !important;
+    }
 }
 </style>

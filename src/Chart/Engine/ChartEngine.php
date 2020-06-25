@@ -4,7 +4,7 @@ namespace Fjord\Chart\Engine;
 
 use Fjord\Chart\Contracts\Engine;
 
-class ChartEngine implements Engine
+abstract class ChartEngine implements Engine
 {
     /**
      * Get component name.
