@@ -50,8 +50,9 @@
                         "
                     >
                         <h3 class="mb-0">
-                            {{ result }}
-
+                            <template v-if="chart.type != 'number'">
+                                {{ result }}
+                            </template>
                             <template v-if="trend">
                                 <fa-icon :icon="trendIcon" :class="trendText" />
                             </template>
