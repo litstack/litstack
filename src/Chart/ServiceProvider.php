@@ -75,9 +75,6 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function registerApexEngine(ChartEngineResolver $resolver)
     {
-        // $resolver->register('apex', function () {
-        //     return new ApexEngine;
-        // });
         $resolver->register('apex.area', function () {
             return new ApexAreaEngine;
         });

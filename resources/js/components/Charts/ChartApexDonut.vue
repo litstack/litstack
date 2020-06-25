@@ -118,12 +118,9 @@ export default {
                 }
             } else {
                 let whites = [
-                    'rgba(255,255,255,.1667',
+                    'rgba(255,255,255,.1',
                     'rgba(255,255,255,1',
-                    'rgba(255,255,255,.3333',
-                    'rgba(255,255,255,.8333',
-                    'rgba(255,255,255,.5',
-                    'rgba(255,255,255,.6666'
+                    'rgba(255,255,255,.45'
                 ];
                 for (let i = 0; i < whites.length; i++) {
                     this.options.fill.colors.push(whites[i]);

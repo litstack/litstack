@@ -21,7 +21,7 @@ abstract class ChartConfig
      *
      * @var string
      */
-    public $engine = 'apex';
+    public $engine = 'apex.area';
 
     /**
      * Default variant.

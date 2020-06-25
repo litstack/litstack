@@ -2,9 +2,6 @@
 
 namespace Fjord\Chart\Config;
 
-use Closure;
-use Illuminate\Support\Collection;
-
 abstract class AreaChartConfig extends ChartConfig
 {
     use Concerns\HasResults;
@@ -30,14 +27,4 @@ abstract class AreaChartConfig extends ChartConfig
      * @return integer
      */
     abstract public function value($query);
-
-    /**
-     * Set daily goal.
-     *
-     * @return void
-     */
-    public function dailyGoal()
-    {
-        //
-    }
 }

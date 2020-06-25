@@ -234,7 +234,8 @@ class Chart extends VueProp
             $this->attributes,
             [
                 'name' => $this->config->getKey(),
-                'goal' => $this->config->has('goal') ? $this->config->goal : null
+                'goal' => $this->config->has('goal') ? $this->config->goal : null,
+                'compare' => $this->config->has('compare') ? $this->config->compare : false,
             ]
         );
     }
