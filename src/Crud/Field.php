@@ -72,11 +72,11 @@ class Field extends VueProp
     public $fill = true;
 
     /**
-     * Extensions
+     * Repository class.
      *
-     * @var array
+     * @var string
      */
-    public $extensions = [];
+    protected $repository;
 
     /**
      * Create new Field instance.
@@ -103,6 +103,22 @@ class Field extends VueProp
         $this->setDefaultsFromClassMethods();
         $this->setDefaultAttributes();
         $this->mergeRequiredAttributes();
+    }
+
+    /**
+     * Get repository instance.
+     *
+     * @return null|instance
+     */
+    public function getRepository()
+    {
+        if (!$this->repository) {
+            return;
+        }
+
+        return app()->make($this->repository, [
+            'field' => $this
+        ]);
     }
 
     /**
@@ -517,29 +533,6 @@ class Field extends VueProp
         }
 
         return $this->attributes;
-    }
-
-    /**
-     * Call field method.
-     *
-     * @param string $method
-     * @param array $params
-     * @return static|void
-     * 
-     * @throws \Fjord\Exceptions\MethodNotFoundException
-     */
-    public function __call($method, $params = [])
-    {
-        /*
-        // TODO: Discuss field extensions.
-        foreach ($this->extensions as $extension) {
-            if (method_exists($extension, $method)) {
-                return $this->forwardCallTo($extension, $method, $params);
-            }
-        }
-        */
-
-        $this->methodNotFound($method);
     }
 
     /**

@@ -2,12 +2,38 @@
 
 namespace Fjord\Crud\Controllers\Api;
 
+use Illuminate\Http\Request;
+use Fjord\Crud\Actions\ActionResolver;
 use Illuminate\Database\Eloquent\Builder;
 use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 
 trait CrudBaseApi
 {
+    /**
+     * Perform crud api call.
+     *
+     * @param Request $request
+     * @param ActionResolver $resolver
+     * @return mixed
+     */
+    public function api(Request $request, ActionResolver $resolver, $id, $form_type, $field_id, $action, $type)
+    {
+        $request->validate([
+            'action' => 'required|string',
+            'type' => 'required|string'
+        ]);
+
+        return $resolver->resolve(
+            $this,
+            $id,
+            $form_type,
+            $field_id,
+            $action,
+            $type,
+        );
+    }
+
     /**
      * Update Crud model.
      *
