@@ -16,5 +16,5 @@ interface Engine
     /**
      * 
      */
-    //public function render(array $names, ChartSet $set);
+    public function render(array $names, ChartSet $set);
 }

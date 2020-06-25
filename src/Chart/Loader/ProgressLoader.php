@@ -35,7 +35,8 @@ class ProgressLoader extends ChartLoader
 
         $set->load($startTime);
 
-        $this->engine->setMinMax($this->config->minValue, $this->config->maxValue);
+        $this->engine->setStart($this->config->start);
+        $this->engine->setGoal($this->config->goal);
 
         return [
             'results' => [],

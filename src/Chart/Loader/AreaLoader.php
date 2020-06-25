@@ -46,10 +46,8 @@ class AreaLoader extends ChartLoader
         return [
             'results' => $this->getResults($set),
             'chart' => $this->engine->render(
-                'area',
                 $this->getNames(),
                 $set,
-                $this->getDailyGoal()
             )
         ];
     }

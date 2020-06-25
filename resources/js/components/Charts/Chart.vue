@@ -2,7 +2,7 @@
     <fj-col :width="chart.width" class="mb-4">
         <div class="fj-chart card" :class="chart.variant">
             <div
-                class="fj-chart__title px-3 pt-3 d-flex justify-content-between"
+                class="fj-chart__title px-4 pt-4 d-flex justify-content-between"
             >
                 <h4>
                     {{ chart.title }}
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div
-                class="fj-chart__legend d-flex justify-content-between px-3 pb-1"
+                class="fj-chart__legend d-flex justify-content-between px-4 pb-2"
             >
                 <div>
                     <template
@@ -87,6 +87,8 @@
                 </div>
             </div>
         </div>
+
+        <fj-chart-gradients />
     </fj-col>
 </template>
 
@@ -225,8 +227,6 @@ export default {
         }
     },
     beforeMount() {
-        console.log('chart: ', this.chart);
-
         this.setHeight();
     },
     async mounted() {
@@ -340,7 +340,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '@fj-sass/_variables';
 .fj-chart {
     &__title {

@@ -7,6 +7,13 @@ abstract class NumberChartConfig extends ChartConfig
     use Concerns\HasResults;
 
     /**
+     * Chart engine.
+     *
+     * @var string
+     */
+    public $engine = 'number';
+
+    /**
      * Compare to previous time.
      *
      * @var boolean

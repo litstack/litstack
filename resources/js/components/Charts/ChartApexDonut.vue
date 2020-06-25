@@ -65,15 +65,16 @@ export default {
                 colors: [],
                 tooltip: {
                     enabled: true,
-                    fillSeriesColor: false,
-                    followCursor: false
+                    enabled: true,
+                    theme: 'dark',
+                    fillSeriesColor: false
                 },
                 plotOptions: {
                     pie: {
                         customScale: 0.9,
                         donut: {
                             background: 'transparent', // inner circle background
-                            size: '92%',
+                            size: '94%',
                             labels: {
                                 show: true,
                                 total: {
@@ -109,8 +110,6 @@ export default {
     },
     methods: {
         makeDonut(variant) {
-            console.log('make');
-
             this.options.fill.colors = [];
             if (variant == WHITE) {
                 for (let i = 0; i < COLORS.length; i++) {
@@ -118,10 +117,17 @@ export default {
                     this.options.colors.push(COLORS[i]);
                 }
             } else {
-                for (let i = 1; i < 7; i++) {
-                    let color = `rgba(0,16,33,${0.15 * i})`;
-                    this.options.fill.colors.push(color);
-                    this.options.colors.push(color);
+                let whites = [
+                    'rgba(255,255,255,.1667',
+                    'rgba(255,255,255,1',
+                    'rgba(255,255,255,.3333',
+                    'rgba(255,255,255,.8333',
+                    'rgba(255,255,255,.5',
+                    'rgba(255,255,255,.6666'
+                ];
+                for (let i = 0; i < whites.length; i++) {
+                    this.options.fill.colors.push(whites[i]);
+                    this.options.colors.push(whites[i]);
                 }
             }
 
@@ -134,8 +140,6 @@ export default {
         },
 
         update(data) {
-            console.log('update');
-
             this.series = data.series;
 
             if ('labels' in data) {
@@ -151,9 +155,5 @@ export default {
 <style lang="scss">
 .fj-bar-chart {
     margin: 0;
-}
-.apexcharts-tooltip {
-    background: #333;
-    color: white;
 }
 </style>

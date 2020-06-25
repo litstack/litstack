@@ -23,7 +23,7 @@ class ApexProgressEngine extends ChartEngine
     public function render(array $names, ChartSet $set)
     {
         $value = $set->getValues()[0][0];
-        $progress = (($value - $this->min) * 100) / ($this->max - $this->min);
+        $progress = (($value - $this->start) * 100) / ($this->goal - $this->start);
 
         return [
             'categories' => $set->getLabels(),
@@ -32,9 +32,15 @@ class ApexProgressEngine extends ChartEngine
         ];
     }
 
-    public function setMinMax($min, $max)
+
+
+    public function setStart($start)
     {
-        $this->min = $min;
-        $this->max = $max;
+        $this->start = $start;
+    }
+
+    public function setGoal($goal)
+    {
+        $this->goal = $goal;
     }
 }

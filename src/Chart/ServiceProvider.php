@@ -4,6 +4,7 @@ namespace Fjord\Chart;
 
 use Carbon\CarbonInterface;
 use Fjord\Chart\Engine\ApexEngine;
+use Fjord\Chart\Engine\NumberEngine;
 use Fjord\Chart\Engine\ApexBarEngine;
 use Fjord\Chart\Engine\ApexAreaEngine;
 use Fjord\Chart\Engine\ApexDonutEngine;
@@ -88,6 +89,9 @@ class ServiceProvider extends LaravelServiceProvider
         });
         $resolver->register('apex.progress', function () {
             return new ApexProgressEngine;
+        });
+        $resolver->register('number', function () {
+            return new NumberEngine;
         });
     }
 

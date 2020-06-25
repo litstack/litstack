@@ -47,6 +47,7 @@ export default {
                     }
                 },
                 grid: {
+                    borderColor: 'red',
                     strokeDashArray: 2
                 },
                 plotOptions: {
@@ -66,11 +67,27 @@ export default {
                     colors: ['transparent']
                 },
                 xaxis: {
+                    labels: {
+                        show: false
+                    },
+                    axisBorder: {
+                        show: false
+                    },
                     categories: []
                 },
                 yaxis: {
                     title: {
                         text: undefined
+                    },
+                    labels: {
+                        show: true,
+                        style: {
+                            colors: ['pink'],
+                            cssClass: 'apexcharts-yaxis-label'
+                            //   fontSize: '12px',
+                            //   fontFamily: 'Helvetica, Arial, sans-serif',
+                            //   fontWeight: 400,
+                        }
                     }
                 },
                 colors: [], // stroke color
@@ -79,6 +96,8 @@ export default {
                     colors: []
                 },
                 tooltip: {
+                    enabled: true,
+                    theme: 'dark',
                     y: {
                         formatter: function(val) {
                             return val + ' K';
@@ -100,6 +119,7 @@ export default {
         this.background = variant;
 
         this.makeArea(variant);
+        this.setGridColor(variant);
     },
     methods: {
         makeArea(variant) {
@@ -127,13 +147,37 @@ export default {
             this.options.markers.colors.push(reverse); // Inner circle
 
             this.options.fill.colors.push(reverse); // chart gradient
+        },
+
+        setGridColor(variant) {
+            if (variant == WHITE) {
+                this.options.grid.borderColor = 'rgba(125, 125, 125, 0.4)';
+            } else {
+                this.options.grid.borderColor = 'rgba(255, 255, 255, 0.4)';
+            }
         }
     }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .fj-bar-chart {
     margin: 0;
+}
+.fj-chart.primary,
+.fj-chart.secondary {
+    .apexcharts-yaxis-label {
+        tspan {
+            fill: rgba(255, 255, 255, 0.4);
+        }
+    }
+}
+
+.fj-chart.white {
+    .apexcharts-yaxis-label {
+        tspan {
+            fill: rgba(125, 125, 125, 0.4);
+        }
+    }
 }
 </style>

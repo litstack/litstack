@@ -22,21 +22,21 @@ abstract class ProgressChartConfig extends ChartConfig
     abstract public function value($query);
 
     /**
-     * Get maximum value.
+     * Get goal value.
      *
      * @return integer|float
      */
-    public function maxValue()
+    public function goal()
     {
         return 100;
     }
 
     /**
-     * Get minimum value.
+     * Get start value.
      *
      * @return integer|float
      */
-    public function minValue()
+    public function start()
     {
         return 0;
     }
