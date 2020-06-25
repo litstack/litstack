@@ -2,12 +2,8 @@
 
 namespace Fjord\Crud\Actions;
 
-class ActionResolver
+class ApiResolverAction
 {
-    protected $actions = [
-        'list' => ListApiAction::class,
-    ];
-
     /**
      * Resolve api call by action.
      *
@@ -16,13 +12,14 @@ class ActionResolver
      * @param string $type
      * @return mixed
      */
-    public function resolve($controller, $form_type, $field_id, $action, $type)
+    public function resolve($controller, $id, $form_type, $field_id, $action, $type)
     {
         if (!$this->hasAction($action)) {
             abort(404);
         }
 
         return app()->call([$this->makeAction($action, $controller), 'execute'], [
+            'id' => $id,
             'form_type' => $form_type,
             'field_id' => $field_id,
             'type' => $type,

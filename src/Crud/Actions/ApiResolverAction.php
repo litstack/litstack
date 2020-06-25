@@ -8,9 +8,14 @@ use Illuminate\Http\Request;
 use Fjord\Config\ConfigHandler;
 use Fjord\Crud\Controllers\CrudController;
 use Fjord\Crud\Controllers\FormController;
+use Fjord\Crud\Repositories\ListRepository;
 
-class BaseApiAction
+class ApiResolverAction
 {
+    protected $actions = [
+        'list' => ListRepository::class,
+    ];
+
     /**
      * Crud Config.
      *
@@ -52,11 +57,11 @@ class BaseApiAction
      * @param CrudController|FormController
      * @param \Fjord\Config\ConfigHandler $config
      */
-    public function __construct($controller, ConfigHandler $config)
-    {
-        $this->controller = $controller;
-        $this->config = $config;
-    }
+    // public function __construct($controller, ConfigHandler $config)
+    // {
+    //     $this->controller = $controller;
+    //     $this->config = $config;
+    // }
 
     /**
      * Execute action by type.
@@ -66,17 +71,32 @@ class BaseApiAction
      * @param string $type
      * @return mixed
      */
-    public function execute($id, $form_type, $field_id, $type)
+    public function execute(Request $request, $id, $form_type, $field_id, $action, $type)
     {
-        if (!method_exists($this, $type)) {
+        if (!$this->hasAction($action)) {
             abort(404);
         }
 
-        $this->validateForm($form_type);
-        $this->validateField($field_id);
-        $this->setModel($id);
+        $repository = $this->actions[$type];
 
-        return app()->call([$this, $type]);
+        if (!method_exists($repository, $type)) {
+            abort(404);
+        }
+
+        $form = $this->getForm($form_type);
+        $field = $this->getField($form, $field_id);
+        $model = $this->getModel($id);
+
+        $instance = new $repository[$action](
+            $this->controller,
+            $this->config,
+            $field,
+            $model
+        );
+
+        return app()->call([$instance, $type], [
+            'payload' => (object) ($request->payload ?: []),
+        ]);
     }
 
     /**
@@ -85,7 +105,7 @@ class BaseApiAction
      * @param string|integer $id
      * @return void
      */
-    protected function setModel($id)
+    protected function getModel($id)
     {
         $this->model = $this->controller->findOrFail($id);
     }
@@ -96,17 +116,20 @@ class BaseApiAction
      * @param Request $request
      * @return void
      */
-    protected function validateForm($form_type)
+    protected function getForm($form_type)
     {
+
         if (!$this->config->has($form_type)) {
             abort(404);
         }
 
-        $this->form = $this->config->{$form_type};
+        $form = $this->config->{$form_type};
 
-        if ($this->form instanceof BaseForm) {
+        if (!$form instanceof BaseForm) {
             abort(404);
         }
+
+        return $form;
     }
 
     /**
@@ -115,48 +138,15 @@ class BaseApiAction
      * @param string $field_id
      * @return void
      */
-    protected function validateField($field_id)
+    protected function getField($form, $field_id)
     {
-        $this->field = $this->form->findFieldOrFail($field_id);
+        $field = $form->findFieldOrFail($field_id);
 
-        if ($this->fieldClass) {
-            $this->validateFieldInstance($this->field, $this->fieldClass);
-        }
-    }
+        // if ($this->fieldClass) {
+        //     $this->validateFieldInstance($this->field, $this->fieldClass);
+        // }
 
-    /**
-     * Get form type from request.
-     *
-     * @param Request $request
-     * @return string
-     */
-    protected function getFormType(Request $request)
-    {
-        return $request->route('form');
-    }
-
-    /**
-     * Get form.
-     *
-     * @return BaseForm
-     */
-    public function getForm()
-    {
-        $this->form;
-    }
-
-    /**
-     * Validate field class.
-     *
-     * @param Field $field
-     * @param string $expected
-     * @return void
-     */
-    protected function validateFieldInstance(Field $field, $expected)
-    {
-        if (!$field instanceof $expected) {
-            abort(404);
-        }
+        return $field;
     }
 
     /**

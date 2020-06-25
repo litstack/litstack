@@ -17,9 +17,12 @@ class BaseFieldRepository
     /**
      * Create new ListRepository instance.
      */
-    public function __construct(Request $request)
+    public function __construct($controller, $config, $field, $model)
     {
-        $this->field = $this->getField;
+        $this->controller = $controller;
+        $this->config = $config;
+        $this->field = $field;
+        $this->model = $model;
     }
 
     /**
@@ -34,11 +37,3 @@ class BaseFieldRepository
         $model->update($request->all());
     }
 }
-
-[
-    'payload' => [
-
-    ],
-    'action' => 'list',
-    'type' => 'update'
-]

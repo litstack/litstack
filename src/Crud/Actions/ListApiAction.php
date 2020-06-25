@@ -1,21 +1,14 @@
 <?php
 
-use Illuminate\Http\Request;
+namespace Fjord\Crud\Actions;
+
 use Fjord\Crud\Fields\ListField;
 use Fjord\Crud\Actions\BaseApiAction;
 use Fjord\Crud\Requests\CrudReadRequest;
-use Fjord\Crud\Repositories\ListRepository;
 use League\CommonMark\Block\Element\ListItem;
 
 class ListApiAction extends BaseApiAction
 {
-    /**
-     * Repository class.
-     *
-     * @var string
-     */
-    protected $repository = ListRepository::class;
-
     /**
      * Required field class.
      *
@@ -29,27 +22,33 @@ class ListApiAction extends BaseApiAction
      * @param CrudReadRequest $request
      * @return mixed
      */
-    public function update(CrudReadRequest $request)
-    {
-        $this->callRepository('update', $this->field, [
-            'model' => $this->getListItem($request)
-        ]);
-    }
+    // public function update(CrudReadRequest $request)
+    // {
+    //     $this->callRepository('update', $this->field, [
+    //         'model' => $this->getListItem($request)
+    //     ]);
+    // }
 
-    protected function destroy(Type $var = null)
+    /**
+     * Destory list item.
+     *
+     * @param CrudReadRequest $request
+     * @return void
+     */
+    public function destroy(CrudReadRequest $request, $payload)
     {
-        # code...
+        $this->getListItem($payload->list_item_id)->delete();
     }
 
     /**
      * Get list item.
      *
-     * @param Request $request
+     * @param string|integer $id
      * @return ListItem
      */
-    protected function getListItem(Request $request)
+    protected function getListItem($id)
     {
-        $this->model->{$this->field->id}()
-            ->findOrFail($request->list_item_id);
+        return $this->model->{$this->field->id}()
+            ->findOrFail($id);
     }
 }

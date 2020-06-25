@@ -186,9 +186,14 @@ export default {
                 //     `${this.field.route_prefix}/list/${this.field.id}/${item.id}`
                 // );
                 return await axios.post(
-                    `${window.location.pathname}/${this.model.id}/api/show/${this.field.id}/list/delete`,
+                    `${window.location.pathname.replace('admin/', '')}/${this.model.id}/api/list/destroy`,
                     {
-                        list_item_id: item.id
+                        field_id: this.field.id,
+                        action: 'list',
+                        type: 'destroy',
+                        payload: {
+                            list_item_id: item.id
+                        }
                     }
                 );
             } catch (e) {

@@ -17,7 +17,7 @@ trait CrudBaseApi
      * @param ActionResolver $resolver
      * @return mixed
      */
-    public function api(Request $request, ActionResolver $resolver, $id, $form_type, $field_id, $action, $type)
+    public function api(Request $request, ApiResolverAction $resolver, $id, $action, $type)
     {
         $request->validate([
             'action' => 'required|string',
@@ -27,8 +27,8 @@ trait CrudBaseApi
         return $resolver->resolve(
             $this,
             $id,
-            $form_type,
-            $field_id,
+            $request->form_type ?: 'show',
+            $request->field_id,
             $action,
             $type,
         );
