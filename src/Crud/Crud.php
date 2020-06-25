@@ -220,6 +220,9 @@ class Crud
         RouteFacade::delete("/{{$identifier}}/{form}/block/{field_id}/{block_id}/{relation}/{relation_id}",  [$controller, "destroyBlockRelation"])->name("block.relation.delete");
         RouteFacade::post("/{{$identifier}}/{form}/block/{field_id}/{block_id}/{relation}/{relation_id}", [$controller, "createBlockRelation"])->name("block.relation.store");
 
+        // Api
+        RouteFacade::post("/{{$identifier}}/api/{form_type}/{field_id}/{action}/{delete}", [$controller, "api"])->name("api");
+
         // Relations
         RouteFacade::post("/{{$identifier}}/{form}/{relation}/index", [$controller, "relationIndex"])->name("relation.index");
         RouteFacade::post("/{{$identifier}}/{form}/{relation}", [$controller, "loadRelations"])->name("relation.load");

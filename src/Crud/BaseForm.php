@@ -367,6 +367,23 @@ class BaseForm extends VueProp
     }
 
     /**
+     * Find registered field or fail.
+     *
+     * @param string $fieldId
+     * @return Field
+     */
+    public function findFieldOrFail(string $fieldId)
+    {
+        $field = $this->findField($fieldId);
+
+        if ($field) {
+            return $field;
+        }
+
+        abort(404);
+    }
+
+    /**
      * Check if form has field.
      *
      * @param string $fieldId

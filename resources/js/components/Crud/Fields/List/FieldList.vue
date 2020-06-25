@@ -182,8 +182,14 @@ export default {
          */
         async sendDeleteListItem(item) {
             try {
-                return await axios.delete(
-                    `${this.field.route_prefix}/list/${this.field.id}/${item.id}`
+                // return await axios.delete(
+                //     `${this.field.route_prefix}/list/${this.field.id}/${item.id}`
+                // );
+                return await axios.post(
+                    `${window.location.pathname}/${this.model.id}/api/show/${this.field.id}/list/delete`,
+                    {
+                        list_item_id: item.id
+                    }
                 );
             } catch (e) {
                 console.log(e);

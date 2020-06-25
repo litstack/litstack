@@ -6,6 +6,7 @@ use Closure;
 use Fjord\Crud\BaseForm;
 use Fjord\Crud\RelationField;
 use Fjord\Crud\Models\FormField;
+use Fjord\Crud\Repositories\ListRepository;
 
 class ListField extends RelationField
 {
@@ -25,6 +26,13 @@ class ListField extends RelationField
      * @var array
      */
     public $required = ['form', 'previewTitle'];
+
+    /**
+     * Repository class.
+     *
+     * @return string
+     */
+    protected $repository = ListRepository::class;
 
     /**
      * Set default attributes.

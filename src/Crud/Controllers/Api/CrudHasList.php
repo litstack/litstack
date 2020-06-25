@@ -6,6 +6,7 @@ use Fjord\Crud\Fields\ListField;
 use Fjord\Crud\Models\FormListItem;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Pipeline\Pipeline;
 
 trait CrudHasList
 {
@@ -180,13 +181,17 @@ trait CrudHasList
         $field = $this->getForm($form_type)->findField($field_id) ?? abort(404);
         $field instanceof ListField ?: abort(404);
 
-        $model = $this->findOrFail($id);
-
-        $listItem = $model->{$field_id}()->findOrFail($list_item_id);
-
         $this->validate($request, $field->form);
 
-        $listItem->update($request->all());
+        $model = $this->findOrFail($id);
+
+        $listItem = $model->{$field->id}()->findOrFail($list_item_id);
+
+        if (!$repository = $field->getRepository()) {
+            abort(404);
+        }
+
+        app()->call([$repository, 'update'], ['model' => $listItem]);
 
         return crud($listItem);
     }

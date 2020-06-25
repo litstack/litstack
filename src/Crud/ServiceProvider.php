@@ -86,6 +86,8 @@ class ServiceProvider extends LaravelServiceProvider
         $this->app['fjord.app']->singleton('crud', new Crud);
 
         $this->registerFields();
+
+        $this->registerRepositoryBindings();
     }
 
     /**
@@ -93,10 +95,19 @@ class ServiceProvider extends LaravelServiceProvider
      *
      * @return void
      */
-    public function registerFields()
+    protected function registerFields()
     {
         foreach ($this->fields as $alias => $field) {
             FormFacade::registerField($alias, $field);
         }
+    }
+
+    /**
+     * Register repository bindings.
+     *
+     * @return void
+     */
+    protected function registerRepositoryBindings()
+    {
     }
 }
