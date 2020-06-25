@@ -18,7 +18,7 @@
             <div
                 :class="
                     `fj-chart__wrapper ${
-                        chart.type == 'number' ? 'chart-number' : ''
+                        chart.type == 'number' ? 'fj-chart__number' : ''
                     }`
                 "
                 :style="
@@ -34,7 +34,7 @@
                     :type="chart.type"
                     :format="format"
                 />
-                <div v-else>
+                <div v-else class="text-center">
                     {{ value }}
                 </div>
             </div>
@@ -50,8 +50,9 @@
                         "
                     >
                         <h3 class="mb-0">
-                            {{ result }}
-
+                            <template v-if="chart.type != 'number'">
+                                {{ result }}
+                            </template>
                             <template v-if="trend">
                                 <fa-icon :icon="trendIcon" :class="trendText" />
                             </template>
@@ -357,7 +358,7 @@ export default {
         //margin: 0 -10px 0 -12px;
         z-index: 1;
 
-        &.chart-number {
+        &.fj-chart__number {
             font-size: 100px;
             margin: 0;
         }
@@ -370,7 +371,8 @@ export default {
     &.primary {
         background: $primary;
         h3,
-        h4 {
+        h4,
+        .fj-chart__number div {
             color: white;
         }
     }
@@ -378,7 +380,8 @@ export default {
         background: $secondary;
         h3,
         h4,
-        .fj-chart__legend {
+        .fj-chart__legend,
+        .fj-chart__number div {
             color: white;
         }
     }

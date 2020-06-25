@@ -39,9 +39,7 @@ class BarLoader extends ChartLoader
 
         $set->load($startTime);
 
-        if ($this->config->compare) {
-            $set->load($nextTimeResolver($startTime));
-        }
+        $set->load($nextTimeResolver($startTime));
 
         return [
             'results' => $this->getResults($set),

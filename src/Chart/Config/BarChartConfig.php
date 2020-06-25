@@ -27,14 +27,4 @@ abstract class BarChartConfig extends ChartConfig
      * @return integer
      */
     abstract public function value($query);
-
-    /**
-     * Set daily goal.
-     *
-     * @return void
-     */
-    public function dailyGoal()
-    {
-        //
-    }
 }
