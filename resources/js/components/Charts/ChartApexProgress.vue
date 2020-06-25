@@ -126,8 +126,6 @@ export default {
                 xaxis: { categories: data.categories }
             });
             this.series = data.series;
-            console.log('series: ', data.series);
-
             if ('labels' in data) {
                 this.$refs.chart.updateOptions({
                     labels: data.labels

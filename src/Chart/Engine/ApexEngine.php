@@ -46,38 +46,38 @@ class ApexEngine extends ChartEngine
         return $series;
     }
 
-    /**
-     * Render donut chart.
-     *
-     * @param array $names
-     * @param ChartSet $set
-     * @return array
-     */
-    public function renderDonut(array $names, ChartSet $set)
-    {
-        return [
-            'categories' => $set->getLabels(),
-            'labels' => $names,
-            'series' => $set->getValues()[0],
-        ];
-    }
+    // /**
+    //  * Render donut chart.
+    //  *
+    //  * @param array $names
+    //  * @param ChartSet $set
+    //  * @return array
+    //  */
+    // public function renderDonut(array $names, ChartSet $set)
+    // {
+    //     return [
+    //         'categories' => $set->getLabels(),
+    //         'labels' => $names,
+    //         'series' => $set->getValues()[0],
+    //     ];
+    // }
 
-    /**
-     * Render donut chart.
-     *
-     * @param array $names
-     * @param ChartSet $set
-     * @return array
-     */
-    public function renderProgress(array $names, ChartSet $set, $min, $max)
-    {
-        $value = $set->getValues()[0][0];
-        $progress = (($value - $min) * 100) / ($max - $min);
+    // /**
+    //  * Render donut chart.
+    //  *
+    //  * @param array $names
+    //  * @param ChartSet $set
+    //  * @return array
+    //  */
+    // public function renderProgress(array $names, ChartSet $set, $min, $max)
+    // {
+    //     $value = $set->getValues()[0][0];
+    //     $progress = (($value - $min) * 100) / ($max - $min);
 
-        return [
-            'categories' => $set->getLabels(),
-            'labels' => $names,
-            'series' => [$progress],
-        ];
-    }
+    //     return [
+    //         'categories' => $set->getLabels(),
+    //         'labels' => $names,
+    //         'series' => [$progress],
+    //     ];
+    // }
 }

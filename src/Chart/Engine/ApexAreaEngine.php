@@ -11,7 +11,7 @@ class ApexAreaEngine extends ChartEngine
      *
      * @var string
      */
-    protected $component = 'fj-chart-apex-line';
+    protected $component = 'fj-chart-apex-area';
 
     /**
      * Render chart by type.
@@ -31,17 +31,9 @@ class ApexAreaEngine extends ChartEngine
             $series['series'][]  = [
                 'name' => $names[$key],
                 'data' => $values,
-                'type' => 'line'
+                'type' => 'area'
             ];
         }
-
-        // if ($goal !== null) {
-        //     $series['series'][]  = [
-        //         'name' => 'Goal',
-        //         'data' => array_fill(0, count($set->getValues()[0]), $goal),
-        //         'type' => 'line'
-        //     ];
-        // }
 
         return $series;
     }
