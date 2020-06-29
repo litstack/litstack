@@ -49,24 +49,11 @@ export default {
         formatRoutePrefixes() {
             let fields = Fjord.clone(this.field.form.fields);
             for (let i in fields) {
-                if (
-                    fields[i].component == 'fj-field-media' ||
-                    fields[i].component == 'fj-field-relation'
-                ) {
-                    let partials = fields[i].route_prefix.split('/');
-                    partials[partials.length - 3] = 'block';
-                    fields[i].route_prefix = partials.join('/');
-                }
+                fields[i].params.list_item_id = this.item.id;
 
-                if (this.item.id) {
-                    fields[i].route_prefix = fields[i].route_prefix.replace(
-                        '{list_item_id}',
-                        this.item.id ? this.item.id : ''
-                    );
-                } else {
-                    fields[
-                        i
-                    ].route_prefix = `${this.field.route_prefix}/list/${this.field.id}/${this.item.parent_id}`;
+                if (!this.item.id) {
+                    fields[i].route_prefix += '/store';
+                    fields[i].params.parent_id = this.item.parent_id;
                 }
             }
 

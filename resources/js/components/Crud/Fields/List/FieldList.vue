@@ -29,7 +29,7 @@
         <fj-field-list-modal
             v-if="newModel"
             :item="newModel"
-            :model="newModel"
+            :model="model"
             :field="newField"
             :modalId="modalId()"
         />
@@ -155,9 +155,16 @@ export default {
 
         async sendOrderListItems(payload) {
             try {
-                return await axios.put(
-                    `${this.field.route_prefix}/list/${this.field.id}/order`,
-                    payload
+                // return await axios.put(
+                //     `${this.field.route_prefix}/list/${this.field.id}/order`,
+                //     payload
+                // );
+                return await axios.post(
+                    `${this.field.route_prefix}/list/order`,
+                    {
+                        field_id: this.field.id,
+                        payload
+                    }
                 );
             } catch (e) {
                 console.log(e);
@@ -185,17 +192,12 @@ export default {
                 // return await axios.delete(
                 //     `${this.field.route_prefix}/list/${this.field.id}/${item.id}`
                 // );
-                return await axios.post(
-                    `${window.location.pathname.replace('admin/', '')}/${this.model.id}/api/list/destroy`,
-                    {
-                        field_id: this.field.id,
-                        action: 'list',
-                        type: 'destroy',
-                        payload: {
-                            list_item_id: item.id
-                        }
+                return await axios.delete(this.apiRoute, {
+                    field_id: this.field.id,
+                    payload: {
+                        list_item_id: item.id
                     }
-                );
+                });
             } catch (e) {
                 console.log(e);
             }
@@ -219,9 +221,9 @@ export default {
          */
         async sendLoadItems(parent) {
             try {
-                return await axios.get(
-                    `${this.field.route_prefix}/list/${this.field.id}`
-                );
+                return await axios.post(`${this.apiRoute}/index`, {
+                    field_id: this.field.id
+                });
             } catch (e) {
                 console.log(e);
             }
@@ -247,12 +249,12 @@ export default {
          */
         async sendCreateListItem(parent) {
             try {
-                return await axios.post(
-                    `${this.field.route_prefix}/list/${this.field.id}/create`,
-                    {
-                        parent_id: parent ? parent.id : null
+                return await axios.post(`${this.apiRoute}/create`, {
+                    field_id: this.field.id,
+                    payload: {
+                        parent_id: parent.id || null
                     }
-                );
+                });
             } catch (e) {
                 console.log(e);
             }
@@ -420,6 +422,10 @@ export default {
          */
         unflattened() {
             return this.unflatten(this.input);
+        },
+
+        apiRoute() {
+            return `${this.field.route_prefix}/list`;
         }
     }
 };

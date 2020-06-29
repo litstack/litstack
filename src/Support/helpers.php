@@ -6,6 +6,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
+if (!function_exists('debug')) {
+    /**
+     * Return default value in debug mode.
+     *
+     * @param  mixed  $value
+     * @return mixed
+     */
+    function debug($value)
+    {
+        if (!config('app.debug')) {
+            return;
+        }
+
+        return value($value);
+    }
+}
 
 if (!function_exists('crud')) {
     /**

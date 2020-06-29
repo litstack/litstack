@@ -3,6 +3,7 @@
 namespace Fjord\Crud\Fields\Traits;
 
 use Closure;
+use Fjord\Crud\CrudValidator;
 use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 
@@ -71,17 +72,16 @@ trait FieldHasRules
     /**
      * Get rules for request.
      *
-     * @param CrudUpdateRequest|CrudCreateRequest $request
      * @param string|null $type
      * @return array
      */
-    public function getRules($request, $type = null)
+    public function getRules($type = null)
     {
         $rules = $this->rules;
-        if ($type == 'update' || ($request instanceof CrudUpdateRequest && $type == null)) {
+        if ($type == CrudValidator::UPDATE) {
             $rules = array_merge($rules, $this->updateRules);
         }
-        if ($type == 'creation' || ($request instanceof CrudCreateRequest && $type == null)) {
+        if ($type == CrudValidator::CREATION) {
             $rules = array_merge($rules, $this->creationRules);
         }
         return $rules;

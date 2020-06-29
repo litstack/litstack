@@ -3,9 +3,9 @@
 namespace Fjord\Crud\Repositories;
 
 use Fjord\Crud\Field;
-use Illuminate\Http\Request;
+use Fjord\Config\ConfigHandler;
 
-class BaseFieldRepository
+abstract class BaseFieldRepository
 {
     /**
      * Field instance.
@@ -15,25 +15,12 @@ class BaseFieldRepository
     protected $field;
 
     /**
-     * Create new ListRepository instance.
+     * Create new BaseFieldRepository instance.
      */
-    public function __construct($controller, $config, $field, $model)
+    public function __construct(ConfigHandler $config, $controller, Field $field = null)
     {
-        $this->controller = $controller;
         $this->config = $config;
+        $this->controller = $controller;
         $this->field = $field;
-        $this->model = $model;
-    }
-
-    /**
-     * Update model.
-     *
-     * @param Request $request
-     * @param mixed $model
-     * @return void
-     */
-    public function update(Request $request, $model)
-    {
-        $model->update($request->all());
     }
 }

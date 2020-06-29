@@ -94,8 +94,15 @@ class ListField extends RelationField
     {
         $form = new BaseForm($this->model);
 
+        $form->afterRegisteringField(function ($field) {
+            $field->setAttribute('params', [
+                'field_id' => $this->id,
+                'list_item_id' => null
+            ]);
+        });
+
         $form->setRoutePrefix(
-            "$this->route_prefix/list/{$this->id}/{list_item_id}"
+            "$this->route_prefix/list"
         );
 
         $closure($form);

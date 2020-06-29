@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud;
 
+use Fjord\Crud\Api\ApiRepositories;
 use Fjord\Crud\Fields\Code;
 use Fjord\Crud\Fields\Icon;
 use Fjord\Crud\Fields\Input;
@@ -24,6 +25,7 @@ use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Support\Facades\Form as FormFacade;
 use Fjord\Crud\Models\Relations\CrudRelations;
+use Fjord\Crud\Repositories\ListRepository;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class ServiceProvider extends LaravelServiceProvider
@@ -87,7 +89,23 @@ class ServiceProvider extends LaravelServiceProvider
 
         $this->registerFields();
 
-        $this->registerRepositoryBindings();
+        $this->registerApiRepositories();
+    }
+
+    /**
+     * Register crud api repositories.
+     *
+     * @return string
+     */
+    protected function registerApiRepositories()
+    {
+        $this->app->singleton(ApiRepositories::class, function () {
+            $rep = new ApiRepositories;
+
+            $rep->register('list', ListRepository::class);
+
+            return $rep;
+        });
     }
 
     /**
@@ -100,14 +118,5 @@ class ServiceProvider extends LaravelServiceProvider
         foreach ($this->fields as $alias => $field) {
             FormFacade::registerField($alias, $field);
         }
-    }
-
-    /**
-     * Register repository bindings.
-     *
-     * @return void
-     */
-    protected function registerRepositoryBindings()
-    {
     }
 }

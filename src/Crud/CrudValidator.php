@@ -4,20 +4,24 @@ namespace Fjord\Crud;
 
 class CrudValidator
 {
+    public const UPDATE = 'update';
+
+    public const CREATION = 'creation';
+
     /**
      * Validate update or create request.
      *
-     * @param CrudUpdateRequest|CrudCreateRequest $request
+     * @param array $attributes
      * @param BaseForm $form
      * @param string|null $type
      * @return void
      */
-    public static function validate($request, $form, $type = null)
+    public static function validate(array $attributes, BaseForm $form, $type = null)
     {
-        $rules = $form->getRules($request, $type);
+        $rules = $form->getRules($type);
         $attributeNames = self::getValidationAttributeNames($form);
 
-        $request->validate($rules, __f('validation'), $attributeNames);
+        validator()->validate($attributes, $rules, __f('validation', $attributeNames));
     }
 
     /**

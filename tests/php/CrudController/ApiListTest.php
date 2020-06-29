@@ -31,8 +31,14 @@ class ApiListTest extends BackendTestCase
     public function it_can_store_list_item()
     {
         $this->assertEquals(0, FormListItem::count());
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list");
-        $result = $this->post($url)->assertStatus(200)->decodeResponseJson();
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/store");
+
+        $result = $this->post($url, [
+            'field_id' => 'test_list',
+            'payload' => [
+                'test_list_input' => 'some text'
+            ]
+        ])->assertStatus(200)->decodeResponseJson();
         $this->assertEquals(1, FormListItem::count());
 
         $listItem = $this->post->test_list()->first();
@@ -44,12 +50,18 @@ class ApiListTest extends BackendTestCase
 
     // Store
     /** @test */
-    public function it_can_store_multiple_list_item_and_add_order_column()
+    public function it_can_store_multiple_list_item_and_automatically_adds_order_column()
     {
         $this->assertEquals(0, FormListItem::count());
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list");
-        $result = $this->post($url)->assertStatus(200);
-        $result = $this->post($url)->assertStatus(200);
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/store");
+        $params = [
+            'field_id' => 'test_list',
+            'payload' => [
+                'test_list_input' => 'some text'
+            ]
+        ];
+        $result = $this->post($url, $params)->assertStatus(200);
+        $result = $this->post($url, $params)->assertStatus(200);
         $this->assertEquals(2, FormListItem::count());
 
         $listItem = $this->post->test_list->last();
@@ -61,7 +73,7 @@ class ApiListTest extends BackendTestCase
     public function it_cannot_store_for_not_existing_parent_id()
     {
         $this->assertEquals(0, FormListItem::count());
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/10");
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/store");
         $request = $this->post($url)->assertStatus(404);
     }
 
@@ -71,9 +83,10 @@ class ApiListTest extends BackendTestCase
     {
         $this->assertEquals(0, FormListItem::count());
         $parent = $this->createListItem();
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list");
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/store");
         $request = $this->post($url, [
-            'parent_id' => $parent->id
+            'field_id' => 'test_list',
+            'parent_id' => $parent->id,
         ])->assertStatus(200);
     }
 
@@ -85,8 +98,13 @@ class ApiListTest extends BackendTestCase
         $listItem2 = $this->createListItem();
         $this->assertEquals(2, FormListItem::count());
 
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/{$listItem2->id}");
-        $request = $this->delete($url)->assertStatus(200);
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/destroy");
+        $request = $this->delete($url, [
+            'field_id' => 'test_list',
+            'payload' => [
+                'list_item_id' => $listItem2->id
+            ]
+        ])->assertStatus(200);
         $this->assertFalse($this->post->test_list()->where('id', $listItem2->id)->exists());
     }
 
@@ -132,11 +150,15 @@ class ApiListTest extends BackendTestCase
         $this->assertEquals(1, FormListItem::count());
 
         // Update listItem.
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/{$listItem->id}");
-        $request = $this->put($url, [
-            'test_list_input' => 'some text'
-        ]);
-        $request->assertStatus(200);
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list");
+        $this->put($url, [
+            'field_id' => 'test_list',
+            'list_item_id' => $listItem->id,
+            'payload' => [
+                'test_list_input' => 'some text'
+            ]
+        ])->assertStatus(200);
+
         $listItem = $this->post->test_list()->first();
 
         $this->assertEquals('some text', $listItem->test_list_input);
@@ -150,12 +172,15 @@ class ApiListTest extends BackendTestCase
         $listItem2 = $this->createListItem();
         $listItem3 = $this->createListItem();
 
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/order");
-        $this->put($url, [
-            'items' => [
-                ['id' => $listItem1->id, 'order_column' => 2],
-                ['id' => $listItem2->id, 'order_column' => 3],
-                ['id' => $listItem3->id, 'order_column' => 1],
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/order");
+        $r = $this->put($url, [
+            'field_id' => 'test_list',
+            'payload' => [
+                'items' => [
+                    ['id' => $listItem1->id, 'order_column' => 2],
+                    ['id' => $listItem2->id, 'order_column' => 3],
+                    ['id' => $listItem3->id, 'order_column' => 1],
+                ]
             ]
         ])->assertStatus(200);
 
@@ -174,13 +199,17 @@ class ApiListTest extends BackendTestCase
         $listItem2 = $this->createListItem();
         $listItem3 = $this->createListItem();
 
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/order");
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/order");
         $this->put($url, [
-            'items' => [
-                ['id' => $listItem1->id, 'order_column' => 1],
-                ['id' => $listItem2->id, 'order_column' => 1, 'parent_id' => $listItem1->id],
-                ['id' => $listItem3->id, 'order_column' => 1, 'parent_id' => $listItem2->id],
+            'field_id' => 'test_list',
+            'payload' => [
+                'items' => [
+                    ['id' => $listItem1->id, 'order_column' => 1],
+                    ['id' => $listItem2->id, 'order_column' => 1, 'parent_id' => $listItem1->id],
+                    ['id' => $listItem3->id, 'order_column' => 1, 'parent_id' => $listItem2->id],
+                ]
             ]
+
         ])->assertStatus(200);
 
         $listItems = $this->post->test_list()->orderBy('id')->get();
@@ -195,7 +224,6 @@ class ApiListTest extends BackendTestCase
     /** @test */
     public function it_fails_to_order_when_max_depth_is_reached()
     {
-
         $listItem1 = $this->createListItem();
         $listItem2 = $this->createListItem();
         $listItem3 = $this->createListItem();
@@ -203,11 +231,14 @@ class ApiListTest extends BackendTestCase
 
         $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/order");
         $this->put($url, [
-            'items' => [
-                ['id' => $listItem1->id, 'order_column' => 1],
-                ['id' => $listItem2->id, 'order_column' => 1, 'parent_id' => $listItem1->id],
-                ['id' => $listItem3->id, 'order_column' => 1, 'parent_id' => $listItem2->id],
-                ['id' => $listItem4->id, 'order_column' => 1, 'parent_id' => $listItem3->id],
+            'field_id' => 'test_list',
+            'payload' => [
+                'items' => [
+                    ['id' => $listItem1->id, 'order_column' => 1],
+                    ['id' => $listItem2->id, 'order_column' => 1, 'parent_id' => $listItem1->id],
+                    ['id' => $listItem3->id, 'order_column' => 1, 'parent_id' => $listItem2->id],
+                    ['id' => $listItem4->id, 'order_column' => 1, 'parent_id' => $listItem3->id],
+                ]
             ]
         ])->assertStatus(405);
     }

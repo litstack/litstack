@@ -310,7 +310,10 @@ export default {
             }
 
             let job = {
-                params: this.getSaveJobParams(this.value),
+                params: {
+                    payload: this.getSaveJobPayload(this.value),
+                    ...(this.field.params || {})
+                },
                 key: this.getSaveJobKey(),
                 route: this.routePrefix,
                 method: this.method
@@ -343,7 +346,7 @@ export default {
          *
          * @return {Object}
          */
-        getSaveJobParams(value) {
+        getSaveJobPayload(value) {
             return this.field.translatable
                 ? { [this.language]: { [this.field.local_key]: value } }
                 : { [this.field.local_key]: value };
