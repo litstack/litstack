@@ -103,15 +103,35 @@ export default {
          * Reload block.
          */
         async reloadBlock(block) {
-            let response = await axios.get(
-                `${this.field.route_prefix}/block/${this.field.id}/${block.id}`
-            );
+            let response = await this.sendReloadBlock();
+
+            if (!response) {
+                return;
+            }
+
             let newBlock = this.crud(response.data);
             for (let i in this.sortableBlocks) {
                 let block = this.sortableBlocks[i];
                 if (block.id == newBlock.id) {
                     this.sortableBlocks[i] = newBlock;
                 }
+            }
+        },
+
+        /**
+         * Send reload block request.
+         */
+        async sendReloadBlock() {
+            try {
+                return await axios.post(
+                    `${this.field.route_prefix}/block/load`,
+                    {
+                        field_id: this.field.id,
+                        repeatable_id: this.block.id
+                    }
+                );
+            } catch (e) {
+                console.log(e);
             }
         },
 
@@ -133,9 +153,7 @@ export default {
         setFieldsRoutePrefixBlockId(fields, block) {
             for (let i in fields) {
                 let field = fields[i];
-                fields[i].route_prefix = field.route_prefix
-                    .replace('{block_id}', block.id)
-                    .replace('{id}', this.model.id);
+                fields[i].params.repeatable_id = block.id;
                 if (this.field.readonly) {
                     fields[i].readonly = true;
                 }
@@ -184,8 +202,11 @@ export default {
          */
         async sendLoadBlocks() {
             try {
-                return await axios.get(
-                    `${this.field.route_prefix}/block/${this.field.id}`
+                return await axios.post(
+                    `${this.field.route_prefix}/block/index`,
+                    {
+                        field_id: this.field.id
+                    }
                 );
             } catch (e) {
                 console.log(e);
@@ -226,8 +247,12 @@ export default {
          */
         async sendDeleteBlock(block) {
             try {
-                return await axios.delete(
-                    `${this.field.route_prefix}/block/${block.field_id}/${block.id}`
+                return await axios.post(
+                    `${this.field.route_prefix}/block/destroy`,
+                    {
+                        field_id: this.field.id,
+                        repeatable_id: block.id
+                    }
                 );
             } catch (e) {
                 console.log(e);
@@ -259,9 +284,12 @@ export default {
          */
         async sendNewOrder(payload) {
             try {
-                let response = await axios.put(
-                    `${this.field.route_prefix}/${this.field.id}/order`,
-                    payload
+                return await axios.put(
+                    `${this.field.route_prefix}/block/order`,
+                    {
+                        field_id: this.field.id,
+                        payload
+                    }
                 );
             } catch (e) {
                 console.log(e);

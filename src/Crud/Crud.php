@@ -179,7 +179,8 @@ class Crud
     protected function makeFieldRoutes(string $controller, string $identifier = 'id')
     {
         // Api
-        $route = RouteFacade::any("/{id}/api/{form_type}/{action}/{type?}", [$controller, "api"])->name("api");
+        RouteFacade::any("/api/{form_type}/{action?}/{type?}", [$controller, "api"])->name("api");
+        RouteFacade::any("/{id}/api/{form_type}/{action?}/{type?}", [$controller, "api"])->name("api");
 
         // // For refreshing.
         // RouteFacade::get("/{{$identifier}}/load", [$controller, "load"])->name('load');

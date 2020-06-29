@@ -61,10 +61,10 @@ export default {
          */
         async sendAddRepeatable(payload) {
             try {
-                return await axios.post(
-                    `${this.field.route_prefix}/block/${this.field.id}`,
+                return await axios.post(`${this.field.route_prefix}/block`, {
+                    field_id: this.field.id,
                     payload
-                );
+                });
             } catch (e) {
                 console.log(e);
                 return;

@@ -113,8 +113,8 @@ export default {
 
             if (
                 !results.hasSucceeded(
-                    'post',
-                    `${this.field.route_prefix}/list/${this.field.id}/${this.newModel.parent_id}`
+                    'put',
+                    `${this.field.route_prefix}/list/store`
                 )
             ) {
                 return;
@@ -192,7 +192,7 @@ export default {
                 // return await axios.delete(
                 //     `${this.field.route_prefix}/list/${this.field.id}/${item.id}`
                 // );
-                return await axios.delete(this.apiRoute, {
+                return await axios.post(`${this.apiRoute}/destroy`, {
                     field_id: this.field.id,
                     payload: {
                         list_item_id: item.id

@@ -12,18 +12,11 @@ use Fjord\Crud\Requests\CrudUpdateRequest;
 class ListRepository extends BaseFieldRepository
 {
     /**
-     * List field instance.
-     *
-     * @var ListField
-     */
-    protected $field;
-
-    /**
      * Create new ListRepository instance.
      */
-    public function __construct(ConfigHandler $config, $controller, ListField $field)
+    public function __construct($config, $controller, $form, ListField $field)
     {
-        parent::__construct($config, $controller, $field);
+        parent::__construct($config, $controller, $form, $field);
     }
 
     /**
@@ -56,9 +49,11 @@ class ListRepository extends BaseFieldRepository
             CrudValidator::UPDATE
         );
 
+        $attributes = $this->formatAttributes((array) $payload, $this->field->getRegisteredFields());
+
         $listItem = $this->getListItem($model, $request->list_item_id);
 
-        $listItem->update((array) $payload);
+        $listItem->update($attributes);
 
         return crud($listItem);
     }

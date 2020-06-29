@@ -82,7 +82,7 @@ trait CrudBaseApi
      * @param mixed $model
      * @return void
      */
-    protected function fillOnStore($model)
+    public function fillOnStore($model)
     {
         //
     }
@@ -93,7 +93,7 @@ trait CrudBaseApi
      * @param mixed $model
      * @return void
      */
-    protected function fillOnUpdate($model)
+    public function fillOnUpdate($model)
     {
         //
     }

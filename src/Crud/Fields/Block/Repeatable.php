@@ -4,6 +4,7 @@ namespace Fjord\Crud\Fields\Block;
 
 use Closure;
 use Fjord\Vue\Table;
+use Fjord\Crud\BaseForm;
 use Fjord\Support\VueProp;
 use Fjord\Crud\Models\FormBlock;
 use Illuminate\Support\Traits\ForwardsCalls;
@@ -41,7 +42,7 @@ class Repeatable extends VueProp
 
     protected function getRoutePrefix()
     {
-        return strip_slashes("{$this->field->route_prefix}/block/{$this->field->id}/{block_id}");
+        return strip_slashes("{$this->field->route_prefix}/block");
     }
 
     /**
@@ -54,9 +55,15 @@ class Repeatable extends VueProp
     {
         $form = new BlockForm(FormBlock::class);
 
-        $form->setRoutePrefix(
-            $this->getRoutePrefix()
-        );
+        $form->setRoutePrefix($this->getRoutePrefix());
+
+        $form->afterRegisteringField(function ($field) {
+            $field->setAttribute('params', [
+                'field_id' => $this->field->id,
+                'repeatable_id' => null,
+                'type' => $this->name,
+            ]);
+        });
 
         $this->preview = new Table;
 
@@ -144,6 +151,26 @@ class Repeatable extends VueProp
     public function getView()
     {
         return $this->viewName;
+    }
+
+    /**
+     * Get form instance.
+     *
+     * @return BaseForm
+     */
+    public function getForm()
+    {
+        return $this->form;
+    }
+
+    /**
+     * Get registered fields.
+     *
+     * @return Collection
+     */
+    public function getRegisteredFields()
+    {
+        return $this->form ? $this->form->getRegisteredFields() : collect([]);
     }
 
     /**

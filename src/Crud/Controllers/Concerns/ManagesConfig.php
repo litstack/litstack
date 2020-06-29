@@ -31,4 +31,9 @@ trait ManagesConfig
     {
         return $this->config;
     }
+
+    public function getModel()
+    {
+        return $this->model;
+    }
 }

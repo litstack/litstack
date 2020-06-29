@@ -2,7 +2,6 @@
 
 namespace Fjord\Crud;
 
-use Fjord\Crud\Api\ApiRepositories;
 use Fjord\Crud\Fields\Code;
 use Fjord\Crud\Fields\Icon;
 use Fjord\Crud\Fields\Input;
@@ -20,12 +19,15 @@ use Fjord\Crud\Fields\Checkboxes;
 use Fjord\Crud\Fields\Media\File;
 use Fjord\Crud\Fields\Block\Block;
 use Fjord\Crud\Fields\Media\Image;
+use Fjord\Crud\Api\ApiRepositories;
 use Illuminate\Foundation\AliasLoader;
+use Fjord\Crud\Repositories\ListRepository;
 use Fjord\Crud\Fields\Relations\OneRelation;
+use Fjord\Crud\Repositories\BlockRepository;
 use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Support\Facades\Form as FormFacade;
 use Fjord\Crud\Models\Relations\CrudRelations;
-use Fjord\Crud\Repositories\ListRepository;
+use Fjord\Crud\Repositories\DefaultRepository;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class ServiceProvider extends LaravelServiceProvider
@@ -102,7 +104,9 @@ class ServiceProvider extends LaravelServiceProvider
         $this->app->singleton(ApiRepositories::class, function () {
             $rep = new ApiRepositories;
 
+            $rep->register('default', DefaultRepository::class);
             $rep->register('list', ListRepository::class);
+            $rep->register('block', BlockRepository::class);
 
             return $rep;
         });

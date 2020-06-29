@@ -33,11 +33,11 @@ class CrudApi
      */
     public function handle(Request $request, $controller)
     {
-        $repository = $this->repositories->findOrFail($request->route('action'));
+        $repository = $this->repositories->findOrFail($request->route('action') ?? 'default');
         $loader = new ApiLoader($controller, $controller->getConfig());
 
         $repositoryInstance = $this->makeRepository($request, $repository, $loader, $controller);
-        $model = $loader->loadModelOrFail($request->id);
+        $model = $request->id ? $loader->loadModelOrFail($request->id) : null;
 
         $type = $this->getType($request);
 
@@ -83,9 +83,9 @@ class CrudApi
     protected function makeRepository(Request $request, string $repository, ApiLoader $loader, $controller)
     {
         $field = null;
+        $form = $loader->loadFormOrFail($request->route('form_type') ?? 'show');
 
         if ($request->field_id) {
-            $form = $loader->loadFormOrFail($request->route('form_type') ?? 'show');
             $field = $loader->loadFieldOrFail($form, $request->field_id);
         }
 
@@ -94,6 +94,7 @@ class CrudApi
                 'config' => $controller->getConfig(),
                 'controller' => $controller,
                 'field' => $field,
+                'form' => $form,
             ]);
         } catch (TypeError $e) {
             abort(404, debug($e->getMessage()));
