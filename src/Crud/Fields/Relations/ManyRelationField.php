@@ -131,17 +131,17 @@ class ManyRelationField extends LaravelRelationField
      */
     public function sortable($sort = true)
     {
-        if (!$this->model) {
+        $relatedModel = $this->getRelatedModelClass();
+
+        if (!$relatedModel) {
             throw new InvalidArgumentException('You may set a related Model before making the Field sortable.', [
                 'function' => 'sortable',
-                'class' => 'Fjord\Crud\ManyRelationField'
             ]);
         }
 
-        if (empty($this->getRelationQuery(new $this->model)->getQuery()->getQuery()->orders)) {
-            throw new InvalidArgumentException('You may add orderBy to the related query for ' . $this->id . ' in ' . $this->model . '.', [
+        if (empty($this->getRelationQuery(new $relatedModel)->getQuery()->getQuery()->orders)) {
+            throw new InvalidArgumentException('You may add [orderBy] to the related query for ' . $this->id . ' in ' . $this->model . '.', [
                 'function' => 'sortable',
-                'class' => 'Fjord\Crud\ManyRelationField'
             ]);
         }
 

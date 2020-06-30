@@ -29,6 +29,15 @@ use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Support\Facades\Form as FormFacade;
 use Fjord\Crud\Models\Relations\CrudRelations;
 use Fjord\Crud\Repositories\DefaultRepository;
+use Fjord\Crud\Repositories\RelationRepository;
+use Fjord\Crud\Repositories\Relations\HasOneRepository;
+use Fjord\Crud\Repositories\Relations\HasManyRepository;
+use Fjord\Crud\Repositories\Relations\MorphToRepository;
+use Fjord\Crud\Repositories\Relations\MorphOneRepository;
+use Fjord\Crud\Repositories\Relations\BelongsToRepository;
+use Fjord\Crud\Repositories\Relations\MorphToManyRepository;
+use Fjord\Crud\Repositories\Relations\OneRelationRepository;
+use Fjord\Crud\Repositories\Relations\ManyRelationRepository;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class ServiceProvider extends LaravelServiceProvider
@@ -109,6 +118,16 @@ class ServiceProvider extends LaravelServiceProvider
             $rep->register('list', ListRepository::class);
             $rep->register('block', BlockRepository::class);
             $rep->register('media', MediaRepository::class);
+            $rep->register('relation', RelationRepository::class);
+            $rep->register('one-relation', OneRelationRepository::class);
+            $rep->register('many-relation', ManyRelationRepository::class);
+            $rep->register('belongs-to', BelongsToRepository::class);
+            $rep->register('belongs-to', BelongsToRepository::class);
+            $rep->register('has-many', HasManyRepository::class);
+            $rep->register('has-one', HasOneRepository::class);
+            $rep->register('morph-one', MorphOneRepository::class);
+            $rep->register('morph-to-many', MorphToManyRepository::class);
+            $rep->register('morph-to', MorphToRepository::class);
 
             return $rep;
         });

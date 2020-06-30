@@ -7,6 +7,7 @@ use TypeError;
 use Fjord\Crud\Field;
 use Fjord\Crud\BaseForm;
 use Illuminate\Http\Request;
+use Fjord\Crud\Models\Traits\TrackEdits;
 
 class ApiRequest
 {
@@ -100,10 +101,40 @@ class ApiRequest
             abort(404, debug("Method [{$this->method}] does not exist on " . get_class($repository)));
         }
 
-        return app()->call([$repository, $this->method], [
+        $response = app()->call([$repository, $this->method], [
             'model' => $model,
             'payload' => (object) ($this->request->payload ?: [])
         ]);
+
+        $this->storeEdit();
+
+        return $response;
+    }
+
+    /**
+     * Store model edit.
+     *
+     * @return void
+     */
+    protected function storeEdit()
+    {
+        if (in_array($this->method, ['load', 'index'])) {
+            return;
+        }
+
+        $model = $this->getModel();
+
+        if (!$model) {
+            return;
+        }
+
+        if (!in_array(TrackEdits::class, class_uses_recursive($model))) {
+            return;
+        }
+
+        $abstract = $this->hasChild() ? $this->childAbstract : $this->abstract;
+
+        $model->edited("{$abstract}:{$this->method}");
     }
 
     /**

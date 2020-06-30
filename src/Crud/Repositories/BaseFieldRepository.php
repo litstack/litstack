@@ -103,20 +103,4 @@ abstract class BaseFieldRepository
             }
         }
     }
-
-    /**
-     * Store model edit.
-     *
-     * @param mixed $model
-     * @param string $action
-     * @return void
-     */
-    protected function edited($model, $action = 'updated')
-    {
-        if (!in_array(TrackEdits::class, class_uses($model))) {
-            return;
-        }
-
-        $model->edited($action);
-    }
 }

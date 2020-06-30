@@ -47,7 +47,6 @@ trait CrudHasRelations
 
         $this->validateRelationField($relationField);
 
-
         $index = IndexTable::query($relationField->getQuery())
             ->request($request)
             ->search($relationField->search)
@@ -255,24 +254,5 @@ trait CrudHasRelations
         $this->edited($model, 'relation:ordered');
 
         return $order;
-    }
-
-    /**
-     * Is the field a valid relation field
-     *
-     * @param mixed $field
-     * @return boolean
-     */
-    protected function validateRelationField($field)
-    {
-        if (!$field instanceof LaravelRelationField) {
-            abort(404);
-        }
-
-        if ($field instanceof Block) {
-            abort(404);
-        }
-
-        return true;
     }
 }

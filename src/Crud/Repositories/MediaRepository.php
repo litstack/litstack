@@ -9,6 +9,13 @@ use Fjord\Crud\Requests\CrudUpdateRequest;
 class MediaRepository extends BaseFieldRepository
 {
     /**
+     * MediaField field instance.
+     *
+     * @var MediaField
+     */
+    protected $field;
+
+    /**
      * Create new MediaRepository instance.
      */
     public function __construct($config, $controller, $form, MediaField $field)
@@ -30,8 +37,6 @@ class MediaRepository extends BaseFieldRepository
         $media = $model->media()->findOrFail($request->media_id);
         $media->custom_properties = $customProperties;
         $media->save();
-
-        $this->edited($model, 'media:updated');
     }
 
     /**
@@ -59,9 +64,6 @@ class MediaRepository extends BaseFieldRepository
     public function destroy(CrudUpdateRequest $request, $model)
     {
         if ($model->media()->findOrFail($request->media_id)->delete()) {
-
-            $this->edited($model, 'media:deleted');
-
             return response()->json(['message' => __f('fj.image_deleted')], 200);
         }
     }
@@ -83,7 +85,6 @@ class MediaRepository extends BaseFieldRepository
         $query = $model->media()->where('collection_name', $this->field->id);
 
         $this->orderField($query, $this->field, $ids);
-        $this->edited($model, 'media:ordered');
     }
 
     /**
@@ -108,17 +109,14 @@ class MediaRepository extends BaseFieldRepository
             'alt' => $request->alt ?? null,
         ];
 
-        $customProperties = $field->translatable ?? false
+        $customProperties = $this->field->translatable ?? false
             ? [app()->getLocale() => $properties]
             : $properties;
-
 
         $media = $model->addMedia($request->media)
             ->preservingOriginal()
             ->withCustomProperties($customProperties)
             ->toMediaCollection($request->collection);
-
-        $this->edited($model, 'media:uploaded');
 
         return response()->json($media, 200);
     }

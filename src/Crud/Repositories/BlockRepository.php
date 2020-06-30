@@ -12,6 +12,13 @@ use Fjord\Crud\Requests\CrudUpdateRequest;
 class BlockRepository extends BaseFieldRepository
 {
     /**
+     * Block field instance.
+     *
+     * @var Block
+     */
+    protected $field;
+
+    /**
      * Create new BlockRepository instance.
      */
     public function __construct($config, $controller, $form, Block $field)
@@ -131,8 +138,6 @@ class BlockRepository extends BaseFieldRepository
         $query = $this->field->getRelationQuery($model);
 
         $order = $this->orderField($query, $this->field, $payload->ids);
-
-        $this->edited($model, 'relation:ordered');
 
         return $order;
     }
