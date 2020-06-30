@@ -11,7 +11,7 @@ abstract class AreaChartConfig extends ChartConfig
      *
      * @var boolean
      */
-    public $compare = false;
+    public $compare = true;
 
     /**
      * Chart engine.

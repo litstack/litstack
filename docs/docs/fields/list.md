@@ -1,6 +1,6 @@
 # List
 
-A list field with nested items.
+A list field with nested items. It can be used to build **navigations** with nested entries.
 
 ```php
 $form->list('menue')
@@ -9,7 +9,7 @@ $form->list('menue')
     ->form(function($form) {
         $form->input('title')
             ->title('Title');
-    })->;
+    });
 ```
 
 :::tip
