@@ -61,7 +61,7 @@ class Repeatable extends VueProp
             $field->setAttribute('params', [
                 'field_id' => $this->field->id,
                 'repeatable_id' => null,
-                'type' => $this->name,
+                'repeatable_type' => $this->name,
             ]);
         });
 

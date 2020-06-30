@@ -2,22 +2,45 @@
 
 namespace Fjord\Crud\Api;
 
-use BadMethodCallException;
 use Fjord\Crud\BaseForm;
+use BadMethodCallException;
 use Illuminate\Support\Str;
+use Fjord\Config\ConfigHandler;
 
 class ApiLoader
 {
+    /**
+     * Crud controller
+     *
+     * @var [type]
+     */
     protected $controller;
 
+    /**
+     * Crud config.
+     *
+     * @var ConfigHandler
+     */
     protected $config;
 
-    public function __construct($controller, $config)
+    /**
+     * Create new ApiLoader instance.
+     *
+     * @param [type] $controller
+     * @param ConfigHandler $config
+     */
+    public function __construct($controller, ConfigHandler $config)
     {
         $this->controller = $controller;
         $this->config = $config;
     }
 
+    /**
+     * Load form by form_type.
+     *
+     * @param string $type
+     * @return BaseForm|null
+     */
     public function loadForm($type)
     {
         if (!$type) {
@@ -37,22 +60,38 @@ class ApiLoader
         return $form;
     }
 
-    public function loadField($form, $field_id)
+    /**
+     * Load field from form by field_id.
+     *
+     * @param BaseForm $form
+     * @param string $field_id
+     * @return Field|null
+     */
+    public function loadField(BaseForm $form, $field_id)
     {
-        $field = $form->findFieldOrFail($field_id);
-
-        // if ($this->fieldClass) {
-        //     $this->validateFieldInstance($this->field, $this->fieldClass);
-        // }
-
-        return $field;
+        return $form->findfield($field_id);
     }
 
+    /**
+     * Load model by id.
+     *
+     * @param string|integer $id
+     * @return mixed
+     */
     public function loadModel($id)
     {
         return $this->controller->findOrFail($id);
     }
 
+    /**
+     * Call load or fail with Http NotFoundHttpException exception.
+     *
+     * @param string $method
+     * @param parameters $parameters
+     * @return mixed
+     * 
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     protected function callLoadOrFail($method, $parameters)
     {
         $result = $this->{str_replace('OrFail', '', $method)}(...$parameters);
@@ -64,6 +103,15 @@ class ApiLoader
         return $result;
     }
 
+    /**
+     * Call method.
+     *
+     * @param string $method
+     * @param array $parameters
+     * @return mixed
+     * 
+     * @throws \BadMethodCallException
+     */
     public function __call($method, $parameters = [])
     {
         if (Str::endsWith($method, 'OrFail') && Str::startsWith($method, 'load')) {

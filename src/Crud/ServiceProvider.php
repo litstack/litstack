@@ -24,6 +24,7 @@ use Illuminate\Foundation\AliasLoader;
 use Fjord\Crud\Repositories\ListRepository;
 use Fjord\Crud\Fields\Relations\OneRelation;
 use Fjord\Crud\Repositories\BlockRepository;
+use Fjord\Crud\Repositories\MediaRepository;
 use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Support\Facades\Form as FormFacade;
 use Fjord\Crud\Models\Relations\CrudRelations;
@@ -107,6 +108,7 @@ class ServiceProvider extends LaravelServiceProvider
             $rep->register('default', DefaultRepository::class);
             $rep->register('list', ListRepository::class);
             $rep->register('block', BlockRepository::class);
+            $rep->register('media', MediaRepository::class);
 
             return $rep;
         });

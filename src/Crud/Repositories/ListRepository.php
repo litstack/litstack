@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud\Repositories;
 
+use Illuminate\Http\Request;
 use Fjord\Crud\CrudValidator;
 use Fjord\Config\ConfigHandler;
 use Fjord\Crud\Fields\ListField;
@@ -18,6 +19,8 @@ class ListRepository extends BaseFieldRepository
     {
         parent::__construct($config, $controller, $form, $field);
     }
+
+
 
     /**
      * Load list items for model.
@@ -190,6 +193,29 @@ class ListRepository extends BaseFieldRepository
     }
 
     /**
+     * Get child field.
+     *
+     * @param string $field_id
+     * @return Field|null
+     */
+    public function getField($field_id)
+    {
+        return $this->field->form->findField($field_id);
+    }
+
+    /**
+     * Get list item model.
+     *
+     * @param  Request  $request
+     * @param  mixed    $model
+     * @return ListItem
+     */
+    public function getModel(Request $request, $model)
+    {
+        return $this->getListItem($model, $request->list_item_id);
+    }
+
+    /**
      * Get list item.
      *
      * @param string|integer $id
@@ -197,8 +223,7 @@ class ListRepository extends BaseFieldRepository
      */
     protected function getListItem($model, $id)
     {
-        return $model->{$this->field->id}()
-            ->findOrFail($id);
+        return $model->{$this->field->id}()->findOrFail($id);
     }
 
     /**

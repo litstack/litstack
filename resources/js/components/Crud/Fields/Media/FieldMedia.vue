@@ -126,6 +126,17 @@ export default {
     },
     data() {
         let self = this;
+
+        let params = {
+            collection: this.field.id,
+            field_id: this.field.id,
+            ...(this.field.params || {})
+        };
+
+        if (params.field_id != this.field.id) {
+            params.child_field_id = this.field.id;
+        }
+
         return {
             media: [],
             images: [],
@@ -149,9 +160,7 @@ export default {
                     ).content,
                     'X-Requested-With': 'XMLHttpRequest'
                 },
-                params: {
-                    collection: this.field.id
-                }
+                params
             },
             busy: false,
             uploadProgress: 0,
@@ -300,21 +309,23 @@ export default {
          * Handle upload error.
          */
         handleUploadError(file, errorMessage, xhr) {
+            let message = errorMessage;
+
             this.dropzone.removeAllFiles();
             if (typeof errorMessage == 'object') {
                 if ('errors' in errorMessage) {
                     if ('media' in errorMessage.errors) {
                         for (let i in errorMessage.errors.media) {
-                            this.$bvToast.toast(errorMessage.errors.media[i], {
-                                variant: 'danger'
-                            });
+                            message = errorMessage.errors.media[i];
                         }
                         return;
                     }
+                } else if ('message' in errorMessage) {
+                    message = errorMessage.message;
                 }
             }
 
-            this.$bvToast.toast(errorMessage, {
+            this.$bvToast.toast(message, {
                 variant: 'danger'
             });
         },

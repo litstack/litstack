@@ -12,7 +12,7 @@ use Fjord\Crud\Requests\CrudUpdateRequest;
 class BlockRepository extends BaseFieldRepository
 {
     /**
-     * Create new ListRepository instance.
+     * Create new BlockRepository instance.
      */
     public function __construct($config, $controller, $form, Block $field)
     {
@@ -67,7 +67,7 @@ class BlockRepository extends BaseFieldRepository
      */
     public function update(CrudUpdateRequest $request, $model, $payload)
     {
-        $type = $request->type;
+        $type = $request->repeatable_type;
         $repeatable = $this->field->getRepeatable($type) ?:
             abort(404, debug("Repeatable [{$type}] not found for block field [{$this->field->id}]"));
 
@@ -95,7 +95,7 @@ class BlockRepository extends BaseFieldRepository
      */
     public function store(CrudUpdateRequest $request, $model, $payload)
     {
-        $type = $payload->type ?? null;
+        $type = $payload->repeatable_type ?? null;
         $this->field->hasRepeatable($type)
             ?: abort(404, debug("Repeatable [{$type}] not found on block [{$this->field->id}]"));
 
@@ -135,6 +135,34 @@ class BlockRepository extends BaseFieldRepository
         $this->edited($model, 'relation:ordered');
 
         return $order;
+    }
+
+    /**
+     * Get child field.
+     *
+     * @param Request $request
+     * @param string $field_id
+     * @return Field|null
+     */
+    public function getField(Request $request, $field_id)
+    {
+        if (!$repeatable = $this->field->getRepeatable($request->repeatable_type)) {
+            abort(404, debug("Missing [{$request->repeatable_type}] repeatable."));
+        }
+
+        return $repeatable->findField($field_id);
+    }
+
+    /**
+     * Get repeatable model.
+     *
+     * @param Request $request
+     * @param mixed $model
+     * @return FormBlock
+     */
+    public function getModel(Request $request, $model)
+    {
+        return $this->getRepeatable($model, $request->repeatable_id);
     }
 
     /**

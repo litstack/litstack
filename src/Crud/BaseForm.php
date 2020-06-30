@@ -375,7 +375,7 @@ class BaseForm extends VueProp
      * @param string $fieldId
      * @return Field|void
      */
-    public function findField(string $fieldId)
+    public function findField($fieldId)
     {
         foreach ($this->registeredFields as $field) {
             if ($field instanceof Component) {
@@ -386,23 +386,6 @@ class BaseForm extends VueProp
                 return $field;
             }
         }
-    }
-
-    /**
-     * Find registered field or fail.
-     *
-     * @param string $fieldId
-     * @return Field
-     */
-    public function findFieldOrFail(string $fieldId)
-    {
-        $field = $this->findField($fieldId);
-
-        if ($field) {
-            return $field;
-        }
-
-        abort(404);
     }
 
     /**

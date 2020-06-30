@@ -4,6 +4,8 @@ namespace Fjord\Crud\Controllers\Api;
 
 use Fjord\Crud\Api\CrudApi;
 use Illuminate\Http\Request;
+use Fjord\Crud\Api\ApiLoader;
+use Fjord\Crud\Api\ApiRequest;
 use Fjord\Crud\Actions\ActionResolver;
 use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
@@ -17,9 +19,14 @@ trait CrudBaseApi
      * @param ActionResolver $resolver
      * @return mixed
      */
-    public function api(Request $request, CrudApi $api)
+    public function api(Request $request)
     {
-        return $api->handle($request, $this);
+        $api = app()->make(ApiRequest::class, [
+            'controller' => $this,
+            'loader' => new ApiLoader($this, $this->getConfig())
+        ]);
+
+        return $api->handle();
     }
 
     /**

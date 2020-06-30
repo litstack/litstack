@@ -149,7 +149,6 @@ export default {
          */
         async newOrder() {
             let response = await this.sendNewOrder({
-                collection: this.field.id,
                 ids: _.map(this.sortable, 'id')
             });
 
@@ -169,21 +168,16 @@ export default {
          */
         async sendNewOrder(payload) {
             try {
-                return await axios.put(this.getMediaUrl('order'), payload);
+                return await axios.post(
+                    `${this.field.route_prefix}/media/order`,
+                    {
+                        field_id: this.field.id,
+                        ...payload
+                    }
+                );
             } catch (e) {
                 console.log(e);
             }
-        },
-        getMediaUrl(key) {
-            return `${this.field.route_prefix}/media/${key}`;
-        },
-
-        /**
-         * Image col size.
-         * TODO: I think this can be removed.
-         */
-        imgCols(size = 3) {
-            return `col-${size}`;
         },
 
         /**
@@ -218,9 +212,15 @@ export default {
         /**
          * Send delete image request.
          */
-        async sendDeleteImage(image) {
+        async sendDeleteImage(media) {
             try {
-                return await axios.delete(this.getMediaUrl(image.id));
+                return await axios.post(
+                    `${this.field.route_prefix}/media/destroy`,
+                    {
+                        field_id: this.field.id,
+                        media_id: media.id
+                    }
+                );
             } catch (e) {
                 console.log(e);
             }

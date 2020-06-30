@@ -126,9 +126,13 @@ export default {
             }
 
             let job = {
-                route: this.getMediaUrl(image.id),
+                route: `${this.field.route_prefix}/media`,
                 method: 'put',
-                params: { custom_properties: image.custom_properties }
+                params: {
+                    payload: { custom_properties: image.custom_properties },
+                    field_id: this.field.id,
+                    media_id: this.image.id
+                }
             };
 
             this.$store.dispatch('saveJob', job);
