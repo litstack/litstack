@@ -23,13 +23,13 @@ class MorphToRegistrar extends LaravelRelationField
      * @var array
      */
     public $required = [
-        'morphTypes'
+        'morphTypes',
     ];
 
     /**
      * Should field be registered in form.
      *
-     * @return boolean
+     * @return bool
      */
     public function register()
     {
@@ -40,13 +40,14 @@ class MorphToRegistrar extends LaravelRelationField
      * Add morph types.
      *
      * @param Closure $callback
+     *
      * @return self
      */
     public function morphTypes(Closure $closure)
     {
         $this->setAttribute('morphTypes', []);
 
-        $selectId = (new $this->model)->{$this->id}()->getMorphType();
+        $selectId = (new $this->model())->{$this->id}()->getMorphType();
 
         $select = $this->formInstance->select($selectId)
             ->title(__f('base.item_select', ['item' => $this->title]))
@@ -72,6 +73,7 @@ class MorphToRegistrar extends LaravelRelationField
      * Build relation index table.
      *
      * @param Closure $closure
+     *
      * @return void
      */
     public function preview(Closure $closure)

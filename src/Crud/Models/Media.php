@@ -34,6 +34,7 @@ class Media extends MediaModel
         foreach ($this->getMediaConversionNames() as $name) {
             $urls[$name] = $this->getUrl($name);
         }
+
         return $urls;
     }
 
@@ -41,6 +42,7 @@ class Media extends MediaModel
      * Get custom_properties as attribute.
      *
      * @param string $name
+     *
      * @return mixed
      */
     public function getAttribute($name)

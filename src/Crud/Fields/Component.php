@@ -3,8 +3,8 @@
 namespace Fjord\Crud\Fields;
 
 use Fjord\Crud\Field;
-use Illuminate\Support\Traits\ForwardsCalls;
 use Fjord\Exceptions\MethodNotFoundException;
+use Illuminate\Support\Traits\ForwardsCalls;
 
 class Component extends Field
 {
@@ -31,6 +31,7 @@ class Component extends Field
      * Set component.
      *
      * @param string $name
+     *
      * @return void
      */
     public function setComponent(string $name)
@@ -53,10 +54,11 @@ class Component extends Field
      * Call field method.
      *
      * @param string $method
-     * @param array $params
-     * @return static|void
-     * 
+     * @param array  $params
+     *
      * @throws \Fjord\Exceptions\MethodNotFoundException
+     *
+     * @return static|void
      */
     public function __call($method, $params = [])
     {
@@ -68,7 +70,7 @@ class Component extends Field
             } catch (MethodNotFoundException $e) {
                 $this->attributes['comp']->methodNotFound($method, [
                     'function' => '__call',
-                    'class' => self::class
+                    'class'    => self::class,
                 ]);
             } finally {
                 $this->prop($method, ...$params);

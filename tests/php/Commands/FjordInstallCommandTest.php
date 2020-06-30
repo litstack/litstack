@@ -2,8 +2,8 @@
 
 namespace FjordTest\Commands;
 
-use FjordTest\BackendTestCase;
 use Fjord\User\Models\FjordUser;
+use FjordTest\BackendTestCase;
 use FjordTest\Traits\RefreshLaravel;
 
 class FjordInstallCommandTest extends BackendTestCase
@@ -49,7 +49,7 @@ class FjordInstallCommandTest extends BackendTestCase
     public function it_changes_create_permission_tables_migration_name()
     {
         // Using dusk testbench since migrations wont be published to avoid.
-        $files = glob(parent::getBasePath() . '/database/migrations/*_create_permission_tables.php');
+        $files = glob(parent::getBasePath().'/database/migrations/*_create_permission_tables.php');
 
         $this->assertCount(1, $files);
         $this->assertStringEndsWith('2020_00_00_000000_create_permission_tables.php', $files[0]);
@@ -59,7 +59,7 @@ class FjordInstallCommandTest extends BackendTestCase
     public function it_creates_default_admin()
     {
         $this->assertTrue(FjordUser::where([
-            'email' => 'admin@admin.com'
+            'email' => 'admin@admin.com',
         ])->exists());
     }
 
@@ -67,7 +67,7 @@ class FjordInstallCommandTest extends BackendTestCase
     public function it_assigns_admin_role_to_default_fjord_user()
     {
         $user = FjordUser::where([
-            'email' => 'admin@admin.com'
+            'email' => 'admin@admin.com',
         ])->first();
 
         $this->assertTrue(
@@ -85,7 +85,7 @@ class FjordInstallCommandTest extends BackendTestCase
         FjordUser::where('id', '!=', -1)->delete();
         $this->artisan('fjord:install --migrations=false');
         $this->assertFalse(FjordUser::where([
-            'email' => 'admin@admin.com'
+            'email' => 'admin@admin.com',
         ])->exists());
     }
 
@@ -105,7 +105,7 @@ class FjordInstallCommandTest extends BackendTestCase
             'delete fjord-user-roles',
             // Fjord user role permissions.
             'read fjord-role-permissions',
-            'update fjord-role-permissions'
+            'update fjord-role-permissions',
         ];
         foreach ($permissions as $permission) {
             $this->assertDatabaseHas('permissions', ['name' => $permission]);

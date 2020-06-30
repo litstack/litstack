@@ -10,9 +10,9 @@ class TraceableException extends Exception implements Traceable
     /**
      * Create new TraceableException instance.
      *
-     * @param string $message
-     * @param array $options
-     * @param integer $code
+     * @param string    $message
+     * @param array     $options
+     * @param int       $code
      * @param Exception $previous
      */
     public function __construct($message = null, array $options = [], $code = 0, Exception $previous = null)
@@ -28,6 +28,7 @@ class TraceableException extends Exception implements Traceable
      * Set trace.
      *
      * @param array $trace
+     *
      * @return void
      */
     public function setTrace($trace)
@@ -52,6 +53,7 @@ class TraceableException extends Exception implements Traceable
      * Find trace by options.
      *
      * @param array $options
+     *
      * @return array|null
      */
     public function findTrace(array $options)
@@ -76,7 +78,8 @@ class TraceableException extends Exception implements Traceable
      *
      * @param array $trace
      * @param array $options
-     * @return boolean
+     *
+     * @return bool
      */
     protected function hasTraceOptions($trace, $options)
     {
@@ -89,6 +92,7 @@ class TraceableException extends Exception implements Traceable
                 return false;
             }
         }
+
         return true;
     }
 }

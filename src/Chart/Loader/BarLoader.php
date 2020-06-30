@@ -2,23 +2,24 @@
 
 namespace Fjord\Chart\Loader;
 
+use Carbon\CarbonInterface;
 use Closure;
 use Fjord\Chart\ChartSet;
-use Carbon\CarbonInterface;
 
 class BarLoader extends ChartLoader
 {
-    use Concerns\HasGoal,
-        Concerns\HasComparison;
+    use Concerns\HasGoal;
+    use Concerns\HasComparison;
 
     /**
      * Make series.
      *
      * @param CarbonInterface $startTime
-     * @param integer $iterations
-     * @param Closure $timeResolver
-     * @param Closure $valueResolver
-     * @param Closure $labelResolver
+     * @param int             $iterations
+     * @param Closure         $timeResolver
+     * @param Closure         $valueResolver
+     * @param Closure         $labelResolver
+     *
      * @return array
      */
     protected function makeSeries(
@@ -28,7 +29,6 @@ class BarLoader extends ChartLoader
         Closure $valueResolver,
         Closure $labelResolver
     ): array {
-
         $nextTimeResolver = $this->getNextTimeResolver();
 
         $query = $this->config->model::query();
@@ -43,10 +43,10 @@ class BarLoader extends ChartLoader
 
         return [
             'results' => $this->getResults($set),
-            'chart' => $this->engine->render(
+            'chart'   => $this->engine->render(
                 $this->getNames(),
                 $set,
-            )
+            ),
         ];
     }
 

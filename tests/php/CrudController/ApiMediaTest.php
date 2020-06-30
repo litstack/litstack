@@ -3,16 +3,16 @@
 namespace FjordTest\CrudController;
 
 use FjordTest\BackendTestCase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\File;
 use FjordTest\TestSupport\Models\Post;
 use FjordTest\Traits\InteractsWithCrud;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * This test is using the Crud Post.
- * 
+ *
  * @see FjordApp\Config\Crud\PostConfig
  * @see FjordTest\TestSupport\Models\Post
  */
@@ -57,7 +57,7 @@ class ApiMediaTest extends BackendTestCase
     {
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/media");
         $response = $this->post($url, [
-            'collection' => 'test_image'
+            'collection' => 'test_image',
         ]);
         $response->assertStatus(404);
     }
@@ -69,9 +69,9 @@ class ApiMediaTest extends BackendTestCase
 
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/media");
         $response = $this->post($url, [
-            'field_id' => 'test_image',
+            'field_id'   => 'test_image',
             'collection' => 'test_image',
-            'media' => UploadedFile::fake()->image('test_png.png'),
+            'media'      => UploadedFile::fake()->image('test_png.png'),
         ]);
         $response->assertStatus(200);
 
@@ -85,16 +85,16 @@ class ApiMediaTest extends BackendTestCase
     {
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/media");
         $response = $this->post($url, [
-            'field_id' => 'test_image',
+            'field_id'   => 'test_image',
             'collection' => 'test_image',
-            'media' => UploadedFile::fake()->image('test_png.png'),
+            'media'      => UploadedFile::fake()->image('test_png.png'),
         ]);
         $response->assertStatus(200);
 
         $response = $this->post($url, [
-            'field_id' => 'test_image',
+            'field_id'   => 'test_image',
             'collection' => 'test_image',
-            'media' => UploadedFile::fake()->image('test_png.png'),
+            'media'      => UploadedFile::fake()->image('test_png.png'),
         ]);
         $response->assertStatus(405);
     }
@@ -104,23 +104,23 @@ class ApiMediaTest extends BackendTestCase
     {
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/media");
         $response = $this->post($url, [
-            'field_id' => 'test_images',
+            'field_id'   => 'test_images',
             'collection' => 'test_images',
-            'media' => UploadedFile::fake()->image('test_png.png'),
+            'media'      => UploadedFile::fake()->image('test_png.png'),
         ]);
         $response->assertStatus(200);
 
         $response = $this->post($url, [
-            'field_id' => 'test_images',
+            'field_id'   => 'test_images',
             'collection' => 'test_images',
-            'media' => UploadedFile::fake()->image('test_png.png'),
+            'media'      => UploadedFile::fake()->image('test_png.png'),
         ]);
         $response->assertStatus(200);
 
         $response = $this->post($url, [
-            'field_id' => 'test_images',
+            'field_id'   => 'test_images',
             'collection' => 'test_images',
-            'media' => UploadedFile::fake()->image('test_png.png'),
+            'media'      => UploadedFile::fake()->image('test_png.png'),
         ]);
         $response->assertStatus(405);
     }

@@ -3,7 +3,6 @@
 namespace FjordTest\Commands;
 
 use FjordTest\BackendTestCase;
-use Fjord\User\Models\FjordUser;
 use FjordTest\Traits\RefreshLaravel;
 
 class FjordGuardCommandTest extends BackendTestCase

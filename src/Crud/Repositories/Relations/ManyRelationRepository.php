@@ -2,10 +2,10 @@
 
 namespace Fjord\Crud\Repositories\Relations;
 
-use Fjord\Crud\Models\FormRelation;
-use Fjord\Crud\Requests\CrudUpdateRequest;
-use Fjord\Crud\Repositories\BaseFieldRepository;
 use Fjord\Crud\Fields\Relations\ManyRelationField;
+use Fjord\Crud\Models\FormRelation;
+use Fjord\Crud\Repositories\BaseFieldRepository;
+use Fjord\Crud\Requests\CrudUpdateRequest;
 
 class ManyRelationRepository extends BaseFieldRepository
 {
@@ -30,7 +30,8 @@ class ManyRelationRepository extends BaseFieldRepository
      * Create new manyRelation.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
+     * @param mixed             $model
+     *
      * @return void
      */
     public function create(CrudUpdateRequest $request, $model)
@@ -41,11 +42,11 @@ class ManyRelationRepository extends BaseFieldRepository
 
         $query = [
             'from_model_type' => get_class($model),
-            'from_model_id' => $model->id,
-            'to_model_type' => get_class($related),
-            'to_model_id' => $related->id,
-            'field_id' => $this->field->id,
-            'order_column' => $order_column
+            'from_model_id'   => $model->id,
+            'to_model_type'   => get_class($related),
+            'to_model_id'     => $related->id,
+            'field_id'        => $this->field->id,
+            'order_column'    => $order_column,
         ];
 
         // Check if relation already exists.
@@ -59,8 +60,9 @@ class ManyRelationRepository extends BaseFieldRepository
     /**
      * Destroy manyRelation.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed $model
+     * @param CrudUpdateRequest $request
+     * @param mixed             $model
+     *
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)
@@ -69,10 +71,10 @@ class ManyRelationRepository extends BaseFieldRepository
 
         $query = [
             'from_model_type' => get_class($model),
-            'from_model_id' => $model->id,
-            'to_model_type' => get_class($related),
-            'to_model_id' => $related->id,
-            'field_id' => $this->field->id
+            'from_model_id'   => $model->id,
+            'to_model_type'   => get_class($related),
+            'to_model_id'     => $related->id,
+            'field_id'        => $this->field->id,
         ];
 
         FormRelation::where($query)->delete();

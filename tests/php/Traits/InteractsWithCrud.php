@@ -2,8 +2,8 @@
 
 namespace FjordTest\Traits;
 
-use Fjord\Support\Facades\Config;
 use Fjord\Crud\RouteServiceProvider;
+use Fjord\Support\Facades\Config;
 use FjordApp\Config\Crud\PostConfig;
 use Illuminate\Support\Facades\File;
 
@@ -15,11 +15,12 @@ trait InteractsWithCrud
      * Get crud route.
      *
      * @param string $route
+     *
      * @return void
      */
     public function getCrudRoute(string $route)
     {
-        return fjord()->url(strip_slashes(Config::get(PostConfig::class)->route_prefix . "/{$route}"));
+        return fjord()->url(strip_slashes(Config::get(PostConfig::class)->route_prefix."/{$route}"));
     }
 
     /**
@@ -62,7 +63,7 @@ trait InteractsWithCrud
             File::makeDirectory(base_path('fjord/app/Config/Crud'));
         }
 
-        File::copy(__DIR__ . '/../TestSupport/Config/PostConfig.php', base_path('fjord/app/Config/Crud/PostConfig.php'));
+        File::copy(__DIR__.'/../TestSupport/Config/PostConfig.php', base_path('fjord/app/Config/Crud/PostConfig.php'));
     }
 
     /**
@@ -72,6 +73,6 @@ trait InteractsWithCrud
      */
     public function refreshCrudConfig()
     {
-        File::copy(__DIR__ . '/../TestSupport/Config/PostConfig.php', base_path('fjord/app/Config/Crud/PostConfig.php'));
+        File::copy(__DIR__.'/../TestSupport/Config/PostConfig.php', base_path('fjord/app/Config/Crud/PostConfig.php'));
     }
 }

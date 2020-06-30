@@ -2,16 +2,17 @@
 
 namespace FjordTest\Fields;
 
-use FjordTest\BackendTestCase;
-use Illuminate\Database\Eloquent\Model;
-use FjordTest\Traits\InteractsWithFields;
 use Fjord\Crud\Fields\Relations\Concerns\ManagesFjordRelationField;
 use Fjord\Crud\Fields\Relations\LaravelRelationField;
+use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithConfig;
+use FjordTest\Traits\InteractsWithFields;
+use Illuminate\Database\Eloquent\Model;
 
 class TraitManagesFjordRelationFieldTest extends BackendTestCase
 {
-    use InteractsWithFields, InteractsWithConfig;
+    use InteractsWithFields;
+    use InteractsWithConfig;
 
     public function setUp(): void
     {
@@ -26,7 +27,7 @@ class TraitManagesFjordRelationFieldTest extends BackendTestCase
 
     public function getConfig(string $key, ...$params)
     {
-        return new ManagesFjordRelationFieldConfig;
+        return new ManagesFjordRelationFieldConfig();
     }
 
     /** @test */
@@ -43,7 +44,6 @@ class TraitManagesFjordRelationFieldTest extends BackendTestCase
         $this->assertEquals(ManagesFjordRelationFieldRelation::query(), $this->getUnaccessibleProperty($this->field, 'query'));
     }
 }
-
 
 class ManagesFjordRelationFieldConfig
 {

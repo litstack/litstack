@@ -2,13 +2,11 @@
 
 namespace Fjord\Commands;
 
-use Illuminate\Console\Command;
 use Fjord\Crud\Config\CrudConfig;
-use Illuminate\Support\Facades\File;
-use Illuminate\Filesystem\Filesystem;
-use Fjord\Commands\Traits\RolesAndPermissions;
 use FjordApp\Config\User\ProfileSettingsConfig;
-use FjordApp\Controllers\User\ProfileSettingsController;
+use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\File;
 
 class FjordUpgrade extends Command
 {
@@ -39,15 +37,15 @@ class FjordUpgrade extends Command
         $this->update();
         $this->line('');
         $this->info("Upgrade perared. Now there are only a few steps left.\n");
-        $this->info('Read ' . fjord_path('UPGRADING.md') . ' to do the rest.');
+        $this->info('Read '.fjord_path('UPGRADING.md').' to do the rest.');
     }
 
     public function update()
     {
         // Config files.
-        if (!new ProfileSettingsConfig instanceof CrudConfig) {
-            $this->line('Replaced ' . base_path('fjord/app/Config/User/ProfileSettingsConfig.php'));
-            $this->line('Published ' . base_path('fjord/app/Config/User/UserConfig.php'));
+        if (!new ProfileSettingsConfig() instanceof CrudConfig) {
+            $this->line('Replaced '.base_path('fjord/app/Config/User/ProfileSettingsConfig.php'));
+            $this->line('Published '.base_path('fjord/app/Config/User/UserConfig.php'));
             File::copy(fjord_path('publish/fjord/app/Config/User/ProfileSettingsConfig.php'), base_path('fjord/app/Config/User/ProfileSettingsConfig.php'));
             File::delete(base_path('fjord/app/Config/User/UserIndexConfig.php'));
             File::copy(fjord_path('publish/fjord/app/Config/User/UserConfig.php'), base_path('fjord/app/Config/User/UserConfig.php'));
@@ -55,8 +53,8 @@ class FjordUpgrade extends Command
 
         // Controller
         if (!File::exists(base_path('fjord/app/Controllers/User'))) {
-            $this->line('Published ' . fjord_path('publish/fjord/app/Controllers/User/ProfileSettingsController.php'));
-            $this->line('Published ' . fjord_path('publish/fjord/app/Controllers/User/UserIndexController.php'));
+            $this->line('Published '.fjord_path('publish/fjord/app/Controllers/User/ProfileSettingsController.php'));
+            $this->line('Published '.fjord_path('publish/fjord/app/Controllers/User/UserIndexController.php'));
             File::copyDirectory(fjord_path('publish/fjord/app/Controllers/User'), base_path('fjord/app/Controllers/User'));
         }
 
@@ -77,8 +75,12 @@ class FjordUpgrade extends Command
         $files = File::allFiles(base_path('fjord/app/Config/Form'));
 
         foreach ($files as $file) {
-            if ($file->isDir()) continue;
-            if (!\Str::contains($file, '.php')) continue;
+            if ($file->isDir()) {
+                continue;
+            }
+            if (!\Str::contains($file, '.php')) {
+                continue;
+            }
             $content = file_get_contents($file);
             $content = str_replace('form(CrudForm $form)', 'show(CrudShow $form)', $content);
             $content = str_replace('Fjord\Crud\CrudForm', 'Fjord\Crud\CrudShow', $content);

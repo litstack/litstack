@@ -20,6 +20,7 @@ class BladeBlock
      * Compile block directive.
      *
      * @param string $expression
+     *
      * @return string
      */
     protected function compileBlock($expression)

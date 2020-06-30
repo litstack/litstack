@@ -2,15 +2,16 @@
 
 namespace Fjord\Application\Bootstrap;
 
-use Fjord\Support\Facades\Package;
 use Fjord\Application\Application;
+use Fjord\Support\Facades\Package;
 
 class RegisterConfigFactories
 {
     /**
      * Registers extensions from packages.
-     * 
+     *
      * @param \Fjord\Application\Application $app
+     *
      * @return void
      */
     public function bootstrap(Application $app)

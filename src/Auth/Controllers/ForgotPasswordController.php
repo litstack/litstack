@@ -2,7 +2,6 @@
 
 namespace Fjord\Auth\Controllers;
 
-use Fjord\Actions\SendPasswordResetLink;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -36,6 +35,7 @@ class ForgotPasswordController
      * Send reset Link.
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function execute(Request $request): JsonResponse

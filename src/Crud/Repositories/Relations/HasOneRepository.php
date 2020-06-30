@@ -3,8 +3,8 @@
 namespace Fjord\Crud\Repositories\Relations;
 
 use Fjord\Crud\Fields\Relations\HasOne;
-use Fjord\Crud\Requests\CrudUpdateRequest;
 use Fjord\Crud\Repositories\BaseFieldRepository;
+use Fjord\Crud\Requests\CrudUpdateRequest;
 
 class HasOneRepository extends BaseFieldRepository
 {
@@ -29,7 +29,8 @@ class HasOneRepository extends BaseFieldRepository
      * Create new hasOne relation.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
+     * @param mixed             $model
+     *
      * @return void
      */
     public function create(CrudUpdateRequest $request, $model)
@@ -39,12 +40,12 @@ class HasOneRepository extends BaseFieldRepository
         $hasOne = $this->field->getRelationQuery($model);
 
         $query = [
-            $hasOne->getForeignKeyName() => $model->{$hasOne->getLocalKeyName()}
+            $hasOne->getForeignKeyName() => $model->{$hasOne->getLocalKeyName()},
         ];
 
         // Remove existing hasOne relations.
         $hasOne->where($query)->update([
-            $hasOne->getForeignKeyName() => null
+            $hasOne->getForeignKeyName() => null,
         ]);
 
         // Create new relation.
@@ -54,8 +55,9 @@ class HasOneRepository extends BaseFieldRepository
     /**
      * Remove hasOne relation.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed $model
+     * @param CrudUpdateRequest $request
+     * @param mixed             $model
+     *
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)
@@ -65,7 +67,7 @@ class HasOneRepository extends BaseFieldRepository
         $hasOne = $this->field->getRelationQuery($model);
 
         $related->update([
-            $hasOne->getForeignKeyName() => null
+            $hasOne->getForeignKeyName() => null,
         ]);
     }
 }

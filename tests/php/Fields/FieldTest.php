@@ -3,10 +3,10 @@
 namespace FjordTest\Fields;
 
 use Fjord\Crud\Field;
-use FjordTest\BackendTestCase;
 use Fjord\User\Models\FjordUser;
-use Illuminate\Support\Facades\Auth;
+use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
+use Illuminate\Support\Facades\Auth;
 
 class FieldTest extends BackendTestCase
 {

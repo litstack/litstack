@@ -2,16 +2,16 @@
 
 namespace Fjord\Crud;
 
-use ReflectionClass;
-use Illuminate\Support\Str;
-use Illuminate\Routing\Route;
-use Fjord\Support\Facades\Crud;
 use Fjord\Crud\Config\CrudConfig;
 use Fjord\Crud\Config\FormConfig;
 use Fjord\Support\Facades\Config;
+use Fjord\Support\Facades\Crud;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route as RouteFacade;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
+use Illuminate\Support\Str;
+use ReflectionClass;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -48,6 +48,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             if (isset($this->groupStack[0])) {
                 $this->groupStack[0]['config'] = $this->config;
             }
+
             return $this;
         });
 
@@ -62,6 +63,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             if (!$key) {
                 return;
             }
+
             return fjord()->config($key);
         });
     }
@@ -99,14 +101,14 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 continue;
             }
 
-            $namespace = str_replace("/", "\\", "FjordApp" . explode('fjord/app', str_replace('.php', '', $file))[1]);
+            $namespace = str_replace('/', '\\', 'FjordApp'.explode('fjord/app', str_replace('.php', '', $file))[1]);
             $reflection = new ReflectionClass($namespace);
 
             if (!$reflection->getParentClass()) {
                 continue;
             }
 
-            if (!new $namespace instanceof CrudConfig) {
+            if (!new $namespace() instanceof CrudConfig) {
                 continue;
             }
 
@@ -130,7 +132,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     protected function mapFormRoutes()
     {
         $configPath = fjord_config_path('Form');
-        $directories = glob($configPath . '/*', GLOB_ONLYDIR);
+        $directories = glob($configPath.'/*', GLOB_ONLYDIR);
 
         foreach ($directories as $formDirectory) {
             $configFiles = glob("{$formDirectory}/*.php");

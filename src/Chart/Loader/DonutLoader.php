@@ -2,9 +2,9 @@
 
 namespace Fjord\Chart\Loader;
 
+use Carbon\CarbonInterface;
 use Closure;
 use Fjord\Chart\ChartSet;
-use Carbon\CarbonInterface;
 
 class DonutLoader extends ChartLoader
 {
@@ -14,10 +14,11 @@ class DonutLoader extends ChartLoader
      * Make series.
      *
      * @param CarbonInterface $startTime
-     * @param integer $iterations
-     * @param Closure $timeResolver
-     * @param Closure $valueResolver
-     * @param Closure $labelResolver
+     * @param int             $iterations
+     * @param Closure         $timeResolver
+     * @param Closure         $valueResolver
+     * @param Closure         $labelResolver
+     *
      * @return array
      */
     protected function makeSeries(
@@ -27,7 +28,6 @@ class DonutLoader extends ChartLoader
         Closure $valueResolver,
         Closure $labelResolver
     ): array {
-
         $query = $this->config->model::query();
 
         $set = ChartSet::make($query, $valueResolver, $timeResolver)
@@ -38,10 +38,10 @@ class DonutLoader extends ChartLoader
 
         return [
             'results' => [],
-            'chart' => $this->engine->render(
+            'chart'   => $this->engine->render(
                 $this->config->labels,
                 $set
-            )
+            ),
         ];
     }
 }

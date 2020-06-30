@@ -2,9 +2,9 @@
 
 namespace Fjord\Commands;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class FjordExtend extends Command
 {
@@ -25,11 +25,11 @@ class FjordExtend extends Command
     /**
      * Handle command.
      *
-     * @return boolean|null
+     * @return bool|null
      */
     public function handle()
     {
-        $this->line("build npm packages");
+        $this->line('build npm packages');
         $this->runNpmInstall(base_path());
         $this->extendWebpack();
     }
@@ -38,7 +38,8 @@ class FjordExtend extends Command
      * Run npm install.
      *
      * @param string $base
-     * @param boolean $verbose
+     * @param bool   $verbose
+     *
      * @return void
      */
     protected function runNpmInstall($base, $verbose = false)
@@ -52,7 +53,7 @@ class FjordExtend extends Command
     }
 
     /**
-     * Extend webpack file
+     * Extend webpack file.
      *
      * @return void
      */
@@ -64,8 +65,8 @@ class FjordExtend extends Command
             return;
         }
 
-        $this->line("build webpack.mix");
+        $this->line('build webpack.mix');
 
-        File::prepend(base_path('webpack.mix.js'), "\n" . $extension);
+        File::prepend(base_path('webpack.mix.js'), "\n".$extension);
     }
 }

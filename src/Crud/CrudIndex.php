@@ -83,7 +83,8 @@ class CrudIndex extends VueProp
     /**
      * Expand CrudIndex container.
      *
-     * @param boolean $expand
+     * @param bool $expand
+     *
      * @return $this
      */
     public function expand(bool $expand = true)
@@ -97,6 +98,7 @@ class CrudIndex extends VueProp
      * Create CrudIndex table.
      *
      * @param Closure $closure
+     *
      * @return $this
      */
     public function table(Closure $closure)
@@ -118,6 +120,7 @@ class CrudIndex extends VueProp
      *
      * @param string $name
      * @param [type] $value
+     *
      * @return void
      */
     public function slot(string $name, $value)
@@ -128,7 +131,7 @@ class CrudIndex extends VueProp
     /**
      * Is registering component in wrapper.
      *
-     * @return boolean
+     * @return bool
      */
     public function inWrapper()
     {
@@ -149,6 +152,7 @@ class CrudIndex extends VueProp
      * Add Vue component field.
      *
      * @param \Fjord\Vue\Component|string $component
+     *
      * @return \Fjord\Vue\Component
      */
     public function component($component)
@@ -167,9 +171,10 @@ class CrudIndex extends VueProp
     }
 
     /**
-     * Get new wrapper
-     * 
+     * Get new wrapper.
+     *
      * @param string|Component $component
+     *
      * @return component
      */
     protected function getNewWrapper($component)
@@ -187,7 +192,8 @@ class CrudIndex extends VueProp
      * Create wrapper.
      *
      * @param string|Component $component
-     * @param Closure $closure
+     * @param Closure          $closure
+     *
      * @return self
      */
     public function wrapper($component, Closure $closure)
@@ -199,13 +205,12 @@ class CrudIndex extends VueProp
 
     /**
      * Register new wrapper.
-     * 
+     *
      * @return Component
      */
     public function registerWrapper($wrapper, $closure)
     {
         if ($this->inWrapper()) {
-
             $this->wrapper
                 ->component($wrapper);
 
@@ -225,7 +230,8 @@ class CrudIndex extends VueProp
      * Set attribute.
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return void
      */
     public function setAttribute(string $name, $value)
@@ -237,6 +243,7 @@ class CrudIndex extends VueProp
      * Get attribute.
      *
      * @param string $name
+     *
      * @return void
      */
     public function getAttribute(string $name)
@@ -253,7 +260,7 @@ class CrudIndex extends VueProp
     {
         return array_merge([
             'components' => collect($this->components),
-            'slots' => collect($this->slots),
+            'slots'      => collect($this->slots),
         ], $this->attributes);
     }
 }

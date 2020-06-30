@@ -7,7 +7,8 @@ use Fjord\Crud\Fields\Traits\TranslatableField;
 
 class File extends MediaField
 {
-    use TranslatableField, HasBaseField;
+    use TranslatableField;
+    use HasBaseField;
 
     /**
      * Set default field attributes.

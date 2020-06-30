@@ -14,7 +14,7 @@ class BelongsToMany extends ManyRelationField
      * @var array
      */
     protected $props = [
-        'type' => 'belongsToMany'
+        'type' => 'belongsToMany',
     ];
 
     /**
@@ -25,7 +25,7 @@ class BelongsToMany extends ManyRelationField
     public $requiredAttributes = [
         'title',
         'model',
-        'preview'
+        'preview',
     ];
 
     /**
@@ -49,7 +49,7 @@ class BelongsToMany extends ManyRelationField
         'searchable',
         'tags',
         'tagVariant',
-        'showTableHead'
+        'showTableHead',
     ];
 
     /**
@@ -58,13 +58,13 @@ class BelongsToMany extends ManyRelationField
      * @var array
      */
     public $defaultAttributes = [
-        'confirm' => false,
-        'sortable' => false,
+        'confirm'     => false,
+        'sortable'    => false,
         'relatedCols' => 12,
-        'small' => false,
-        'perPage' => 10,
-        'searchable' => false,
-        'tags' => false,
-        'tagVariant' => 'secondary'
+        'small'       => false,
+        'perPage'     => 10,
+        'searchable'  => false,
+        'tags'        => false,
+        'tagVariant'  => 'secondary',
     ];
 }

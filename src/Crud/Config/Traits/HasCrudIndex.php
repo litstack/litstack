@@ -2,7 +2,6 @@
 
 namespace Fjord\Crud\Config\Traits;
 
-use Fjord\Vue\Crud\CrudTable;
 use Illuminate\Database\Eloquent\Builder;
 
 trait HasCrudIndex
@@ -10,7 +9,7 @@ trait HasCrudIndex
     /**
      * Is index table sortable.
      *
-     * @var boolean
+     * @var bool
      */
     public $sortable = false;
 
@@ -31,7 +30,7 @@ trait HasCrudIndex
     /**
      * Items per page.
      *
-     * @var integer
+     * @var int
      */
     public $perPage = 10;
 
@@ -39,6 +38,7 @@ trait HasCrudIndex
      * Initialize index query.
      *
      * @param Builder $query
+     *
      * @return Builder $query
      */
     public function indexQuery(Builder $query)
@@ -55,7 +55,7 @@ trait HasCrudIndex
     {
         return [
             'id.desc' => 'New first',
-            'id.asc' => 'Old first',
+            'id.asc'  => 'Old first',
         ];
     }
 

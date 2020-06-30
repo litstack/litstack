@@ -2,19 +2,20 @@
 
 namespace Fjord\Auth\Controllers;
 
-use Illuminate\Http\Request;
 use Fjord\Support\Facades\Fjord;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Auth\ResetsPasswords;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ResetPasswordController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -44,7 +45,7 @@ class ResetPasswordController
 
     /**
      * Create new ResetPasswordController instance.
-     * 
+     *
      * @return void
      */
     public function __construct()
@@ -79,8 +80,9 @@ class ResetPasswordController
     /**
      * Show reset form.
      *
-     * @param Request $request
+     * @param Request     $request
      * @param string|null $token
+     *
      * @return View
      */
     public function showResetForm(Request $request, $token = null)
@@ -88,15 +90,16 @@ class ResetPasswordController
         return view('fjord::auth.passwords.reset')
             ->with([
                 'token' => $token,
-                'email' => $request->email
+                'email' => $request->email,
             ]);
     }
 
     /**
      * Send reset response.
      *
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
+     *
      * @return Redirect
      */
     protected function sendResetResponse(Request $request, $response)

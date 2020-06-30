@@ -2,9 +2,9 @@
 
 namespace FjordApp\Config\Form\Dashboards;
 
-use FjordApp\Controllers\Form\Dashboards\MainDashboardController;
 use Fjord\Crud\Config\FormConfig;
 use Fjord\Crud\CrudShow;
+use FjordApp\Controllers\Form\Dashboards\MainDashboardController;
 
 class MainDashboardConfig extends FormConfig
 {
@@ -22,7 +22,7 @@ class MainDashboardConfig extends FormConfig
      */
     public function routePrefix()
     {
-        return "/";
+        return '/';
     }
 
     /**
@@ -41,6 +41,7 @@ class MainDashboardConfig extends FormConfig
      * Setup create and edit form.
      *
      * @param \Fjord\Crud\CrudShow $container
+     *
      * @return void
      */
     public function show(CrudShow $container)

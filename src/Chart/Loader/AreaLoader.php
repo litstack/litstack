@@ -2,23 +2,24 @@
 
 namespace Fjord\Chart\Loader;
 
+use Carbon\CarbonInterface;
 use Closure;
 use Fjord\Chart\ChartSet;
-use Carbon\CarbonInterface;
 
 class AreaLoader extends ChartLoader
 {
-    use Concerns\HasGoal,
-        Concerns\HasComparison;
+    use Concerns\HasGoal;
+    use Concerns\HasComparison;
 
     /**
      * Make series.
      *
      * @param CarbonInterface $startTime
-     * @param integer $iterations
-     * @param Closure $timeResolver
-     * @param Closure $valueResolver
-     * @param Closure $labelResolver
+     * @param int             $iterations
+     * @param Closure         $timeResolver
+     * @param Closure         $valueResolver
+     * @param Closure         $labelResolver
+     *
      * @return array
      */
     protected function makeSeries(
@@ -28,7 +29,6 @@ class AreaLoader extends ChartLoader
         Closure $valueResolver,
         Closure $labelResolver
     ): array {
-
         $nextTimeResolver = $this->getNextTimeResolver();
 
         $query = $this->config->model::query();
@@ -45,10 +45,10 @@ class AreaLoader extends ChartLoader
 
         return [
             'results' => $this->getResults($set),
-            'chart' => $this->engine->render(
+            'chart'   => $this->engine->render(
                 $this->getNames(),
                 $set,
-            )
+            ),
         ];
     }
 
@@ -62,12 +62,12 @@ class AreaLoader extends ChartLoader
     protected function getNextTimeResolverConfig()
     {
         return [
-            'today' => fn ($time) => $time->subDay(),
-            'yesterday' => fn ($time) => $time->subWeek(),
-            'last7days' => fn ($time) => $time->subWeek(),
-            'thisweek' => fn ($time) => $time->subWeek(),
+            'today'      => fn ($time)      => $time->subDay(),
+            'yesterday'  => fn ($time)  => $time->subWeek(),
+            'last7days'  => fn ($time)  => $time->subWeek(),
+            'thisweek'   => fn ($time)   => $time->subWeek(),
             'last30days' => fn ($time) => $time->subDays(30),
-            'thismonth' => fn ($time) => $time->subMonth()
+            'thismonth'  => fn ($time)  => $time->subMonth(),
         ];
     }
 }

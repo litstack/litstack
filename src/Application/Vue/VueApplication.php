@@ -3,36 +3,36 @@
 namespace Fjord\Application\Vue;
 
 use Exception;
+use Fjord\Application\Application;
 use Fjord\Vue\Component;
 use Illuminate\View\View;
-use Fjord\Application\Application;
 
 class VueApplication
 {
     /**
      * Props that are passed to the vue application.
-     * 
+     *
      * @var array
      */
     protected $props = [];
 
     /**
      * Fjord application instance.
-     * 
+     *
      * @var Fjord\Application\Application
      */
     protected $app;
 
     /**
      * Component instance.
-     * 
+     *
      * @var \Fjord\Application\Vue\Component
      */
     protected $component;
 
     /**
      * Determines if the application has been build.
-     * 
+     *
      * @var bool
      */
     protected $built = false;
@@ -50,6 +50,7 @@ class VueApplication
      * Create new VueApplication instance.
      *
      * @param \Fjord\Application\Application $app
+     *
      * @return void
      */
     public function __construct(Application $app)
@@ -59,13 +60,14 @@ class VueApplication
 
     /**
      * Build Vue application.
-     * 
+     *
      * @param Illuminate\View\View $view
+     *
      * @return void
      */
     public function build(View $view)
     {
-        if ($view->getName() != "fjord::app") {
+        if ($view->getName() != 'fjord::app') {
             throw new Exception('Fjord application can only be build for view "fjord::app".');
         }
 
@@ -86,21 +88,22 @@ class VueApplication
     protected function setDefaultProps()
     {
         $this->props = [
-            'config' => collect(config('fjord')),
-            'auth' => fjord_user(),
-            'app-locale' => $this->app->get('translator')->getLocale(),
+            'config'       => collect(config('fjord')),
+            'auth'         => fjord_user(),
+            'app-locale'   => $this->app->get('translator')->getLocale(),
             'translatable' => collect([
-                'language' => app()->getLocale(),
-                'languages' => collect(config('translatable.locales')),
+                'language'        => app()->getLocale(),
+                'languages'       => collect(config('translatable.locales')),
                 'fallback_locale' => config('translatable.fallback_locale'),
             ]),
         ];
     }
 
     /**
-     * Get extensions for component name-
+     * Get extensions for component name-.
      *
      * @param Component $component
+     *
      * @return void
      */
     protected function getExtensions(Component $component)
@@ -117,11 +120,12 @@ class VueApplication
 
     /**
      * Execute extensions for the given components.
-     * 
+     *
      * @param \Fjord\Vue\Component $component
-     * @return void
-     * 
+     *
      * @throws \Exception
+     *
+     * @return void
      */
     public function extend(Component $component)
     {
@@ -158,6 +162,7 @@ class VueApplication
      *
      * @param Component $component
      * @param $extension
+     *
      * @return void
      */
     public function executeExtension(Component $component, $extension)
@@ -173,8 +178,8 @@ class VueApplication
 
     /**
      * Initialize component class for the given vue component.
-     * 
-     * @var string|Component $component
+     *
+     * @var string|Component
      */
     protected function initializeComponent($component)
     {
@@ -191,6 +196,7 @@ class VueApplication
      * Merge view data into props.
      *
      * @param array $data
+     *
      * @return void
      */
     protected function setPropsFromViewData(array $data)
@@ -215,9 +221,10 @@ class VueApplication
 
     /**
      * Checks if prop exists.
-     * 
+     *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     protected function propExists(string $name)
     {
@@ -228,9 +235,10 @@ class VueApplication
      * Check if all required props are passed to view.
      *
      * @param array $data
-     * @return void
-     * 
+     *
      * @throws \Exception
+     *
+     * @return void
      */
     protected function checkForRequiredProps($data)
     {
@@ -262,6 +270,7 @@ class VueApplication
      *
      * @param string $name
      * @param $value
+     *
      * @return void
      */
     public function setProp(string $name, $value)
@@ -270,9 +279,9 @@ class VueApplication
     }
 
     /**
-     * Checks if Fjord Vue application has been build. 
+     * Checks if Fjord Vue application has been build.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasBeenBuilt()
     {

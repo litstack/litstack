@@ -2,15 +2,15 @@
 
 namespace Fjord\Crud\Config;
 
-use Illuminate\Support\Str;
-use Fjord\Support\Facades\Crud;
-use Fjord\Crud\Config\Traits\HasCrudShow;
 use Fjord\Crud\Config\Traits\HasCrudIndex;
+use Fjord\Crud\Config\Traits\HasCrudShow;
+use Fjord\Support\Facades\Crud;
+use Illuminate\Support\Str;
 
 abstract class CrudConfig
 {
-    use HasCrudShow,
-        HasCrudIndex;
+    use HasCrudShow;
+    use HasCrudIndex;
 
     /**
      * Controller class.
@@ -29,14 +29,14 @@ abstract class CrudConfig
     /**
      * Set bootstrap container on index page to fluid.
      *
-     * @var boolean
+     * @var bool
      */
     public $expandIndexContainer = false;
 
     /**
      * Set bootstrap container on create and update page to fluid.
      *
-     * @var boolean
+     * @var bool
      */
     public $expandFormContainer = false;
 
@@ -73,7 +73,7 @@ abstract class CrudConfig
      */
     public function routePrefix()
     {
-        return 'crud/' . (new $this->model)->getTable();
+        return 'crud/'.(new $this->model())->getTable();
     }
 
     /**
@@ -83,11 +83,11 @@ abstract class CrudConfig
      */
     public function names()
     {
-        $tableName = (new $this->model)->getTable();
+        $tableName = (new $this->model())->getTable();
 
         return [
             'singular' => ucfirst(Str::singular($tableName)),
-            'plural' => ucfirst($tableName),
+            'plural'   => ucfirst($tableName),
         ];
     }
 
@@ -95,6 +95,7 @@ abstract class CrudConfig
      * Index component.
      *
      * @param Component $component
+     *
      * @return void
      */
     public function indexComponent($component)
@@ -106,6 +107,7 @@ abstract class CrudConfig
      * Form component.
      *
      * @param Component $component
+     *
      * @return void
      */
     public function formComponent($component)

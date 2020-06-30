@@ -25,7 +25,7 @@ class Datetime extends BaseField
     public $required = [];
 
     /**
-     * Set default attributes
+     * Set default attributes.
      *
      * @return void
      */
@@ -40,6 +40,7 @@ class Datetime extends BaseField
      * Set formatted.
      *
      * @param string $format
+     *
      * @return $this
      */
     public function formatted(string $format)
@@ -52,7 +53,8 @@ class Datetime extends BaseField
     /**
      * Set inline.
      *
-     * @param boolean $inline
+     * @param bool $inline
+     *
      * @return $this
      */
     public function inline(bool $inline = true)
@@ -65,7 +67,8 @@ class Datetime extends BaseField
     /**
      * Set only date.
      *
-     * @param boolean $date
+     * @param bool $date
+     *
      * @return $this
      */
     public function onlyDate(bool $date = true)
@@ -79,7 +82,8 @@ class Datetime extends BaseField
      * Cast field value.
      *
      * @param mixed $value
-     * @return boolean
+     *
+     * @return bool
      */
     public function cast($value)
     {

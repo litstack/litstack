@@ -3,7 +3,6 @@
 namespace Fjord\Crud\Container;
 
 use Fjord\Chart\Chart;
-use Fjord\Config\ConfigHandler;
 use Fjord\Support\Facades\Config;
 use InvalidArgumentException;
 
@@ -13,6 +12,7 @@ trait CanHaveCharts
      * Create chart.
      *
      * @param string $name
+     *
      * @return \Fjord\Vue\Component
      */
     public function chart(string $name)
@@ -34,6 +34,7 @@ trait CanHaveCharts
      * Register chart component.
      *
      * @param Chart $chart
+     *
      * @return void
      */
     protected function registerChart(Chart $chart)

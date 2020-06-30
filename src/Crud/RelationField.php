@@ -8,6 +8,7 @@ abstract class RelationField extends Field
      * Get relation query for model.
      *
      * @param mixed $model
+     *
      * @return mixed
      */
     abstract public function getRelationQuery($model);
@@ -16,6 +17,7 @@ abstract class RelationField extends Field
      * Get relation from model.
      *
      * @param mixed $model
+     *
      * @return mixed
      */
     public function relation($model)
@@ -28,6 +30,7 @@ abstract class RelationField extends Field
      * Get results for model.
      *
      * @param mixed $model
+     *
      * @return mixed
      */
     public function getResults($model)

@@ -11,6 +11,7 @@ class NavigationConfig extends Config
      * Topbar navigation entries.
      *
      * @param \Fjord\Application\Navigation\Navigation $nav
+     *
      * @return void
      */
     public function topbar(Navigation $nav)
@@ -23,15 +24,15 @@ class NavigationConfig extends Config
             $nav->title(__f('fj.user_administration')),
 
             $nav->preset('user.user', [
-                'icon' => fa('users')
+                'icon' => fa('users'),
             ]),
-            $nav->preset('permissions')
+            $nav->preset('permissions'),
         ]);
 
         $nav->section([
             $nav->preset('form.collections.settings', [
-                'icon' => fa('cog')
-            ])
+                'icon' => fa('cog'),
+            ]),
         ]);
     }
 
@@ -39,6 +40,7 @@ class NavigationConfig extends Config
      * Main navigation entries.
      *
      * @param \Fjord\Application\Navigation\Navigation $nav
+     *
      * @return void
      */
     public function main(Navigation $nav)
@@ -48,12 +50,12 @@ class NavigationConfig extends Config
 
             $nav->group([
                 'title' => 'Pages',
-                'icon' => fa('file'),
+                'icon'  => fa('file'),
             ], [
                 $nav->preset('form.pages.home', [
                     'icon' => fa('home'),
                 ]),
-            ])
+            ]),
         ]);
     }
 }

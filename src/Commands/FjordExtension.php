@@ -54,29 +54,32 @@ class FjordExtension extends GeneratorCommand
      */
     protected function getNameInput()
     {
-        return trim($this->argument('name') . 'Extension');
+        return trim($this->argument('name').'Extension');
     }
 
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
+     *
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Extensions';
+        return $rootNamespace.'\Extensions';
     }
 
     /**
      * Get the destination class path.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     public function getPath($name)
     {
         $name = $this->getNameInput();
+
         return base_path("fjord/app/Extensions/{$name}.php");
     }
 }

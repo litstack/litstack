@@ -2,12 +2,11 @@
 
 namespace FjordTest\Fields;
 
-use Mockery as m;
 use Fjord\Crud\BaseForm;
-use FjordTest\BackendTestCase;
-use Illuminate\Database\Eloquent\Model;
-use FjordTest\Traits\InteractsWithFields;
 use Fjord\Crud\Fields\Relations\MorphToRegistrar;
+use FjordTest\BackendTestCase;
+use FjordTest\Traits\InteractsWithFields;
+use Illuminate\Database\Eloquent\Model;
 
 class FieldRelationMorphToTest extends BackendTestCase
 {
@@ -93,7 +92,7 @@ class FieldRelationMorphToTest extends BackendTestCase
         $this->field->morphTypes(function ($morph) {
             $type = $morph->to(MorphToRelationFirst::class);
 
-            $results = $type->getResults(new MorphToRegistrarFieldModel);
+            $results = $type->getResults(new MorphToRegistrarFieldModel());
             //$this->assertEquals(MorphToRegistrarFieldModel::class, $type->getModel());
         });
     }
@@ -103,7 +102,6 @@ class FieldRelationMorphToTest extends BackendTestCase
         return new BaseForm(MorphToRegistrarFieldModel::class);
     }
 }
-
 
 class MorphToRelationFirst extends Model
 {

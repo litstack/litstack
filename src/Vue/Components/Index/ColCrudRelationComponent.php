@@ -15,16 +15,16 @@ class ColCrudRelationComponent extends TableComponent
     {
         $props = [
             'related' => [
-                'type' => 'string',
-                'required' => true
+                'type'     => 'string',
+                'required' => true,
             ],
             'value' => [
-                'type' => 'string',
-                'required' => true
+                'type'     => 'string',
+                'required' => true,
             ],
             'routePrefix' => [
-                'type' => 'string',
-                'required' => true
+                'type'     => 'string',
+                'required' => true,
             ],
         ];
 
@@ -38,10 +38,10 @@ class ColCrudRelationComponent extends TableComponent
      * Deny to set link.
      *
      * @param string $link
+     *
      * @return void
      */
     public function link($link)
     {
-        return;
     }
 }

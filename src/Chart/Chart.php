@@ -2,14 +2,14 @@
 
 namespace Fjord\Chart;
 
-use Fjord\Support\VueProp;
-use Fjord\Config\ConfigHandler;
-use Fjord\Chart\Contracts\Engine;
-use Fjord\Chart\Config\BarChartConfig;
 use Fjord\Chart\Config\AreaChartConfig;
+use Fjord\Chart\Config\BarChartConfig;
 use Fjord\Chart\Config\DonutChartConfig;
 use Fjord\Chart\Config\NumberChartConfig;
 use Fjord\Chart\Config\ProgressChartConfig;
+use Fjord\Chart\Contracts\Engine;
+use Fjord\Config\ConfigHandler;
+use Fjord\Support\VueProp;
 
 class Chart extends VueProp
 {
@@ -38,7 +38,7 @@ class Chart extends VueProp
      * Create new Chart instance.
      *
      * @param \Fjord\Chart\Contracts\Engine $engine
-     * @param ConfigHandler $config
+     * @param ConfigHandler                 $config
      */
     public function __construct(Engine $engine, ConfigHandler $config)
     {
@@ -83,6 +83,7 @@ class Chart extends VueProp
      * Chart variant.
      *
      * @param string $variant
+     *
      * @return $this
      */
     public function variant(string $variant)
@@ -96,6 +97,7 @@ class Chart extends VueProp
      * Chart title.
      *
      * @param string $title
+     *
      * @return $this
      */
     public function title(string $title)
@@ -109,6 +111,7 @@ class Chart extends VueProp
      * Value prefix.
      *
      * @param string $prefix
+     *
      * @return $this
      */
     public function prefix(string $prefix)
@@ -122,6 +125,7 @@ class Chart extends VueProp
      * Value suffix.
      *
      * @param string $suffix
+     *
      * @return $this
      */
     public function suffix(string $suffix)
@@ -135,6 +139,7 @@ class Chart extends VueProp
      * Value format.
      *
      * @param string $format
+     *
      * @return $this
      */
     public function format(string $format)
@@ -147,7 +152,8 @@ class Chart extends VueProp
     /**
      * Value currency format.
      *
-     * @param string|boolean $currency
+     * @param string|bool $currency
+     *
      * @return $this
      */
     public function currency(string $currency = '')
@@ -165,6 +171,7 @@ class Chart extends VueProp
      * Chart width.
      *
      * @param string $width
+     *
      * @return $this
      */
     public function width(string $width)
@@ -190,7 +197,8 @@ class Chart extends VueProp
     /**
      * Set chart height.
      *
-     * @param string|integer $height
+     * @param string|int $height
+     *
      * @return $this
      */
     public function height($height)
@@ -204,6 +212,7 @@ class Chart extends VueProp
      * Get attribute.
      *
      * @param string $name
+     *
      * @return mixed
      */
     public function getAttribute(string $name)
@@ -215,7 +224,8 @@ class Chart extends VueProp
      * Set attribute.
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return void
      */
     public function setAttribute(string $name, $value)
@@ -233,8 +243,8 @@ class Chart extends VueProp
         return array_merge(
             $this->attributes,
             [
-                'name' => $this->config->getKey(),
-                'goal' => $this->config->has('goal') ? $this->config->goal : null,
+                'name'    => $this->config->getKey(),
+                'goal'    => $this->config->has('goal') ? $this->config->goal : null,
                 'compare' => $this->config->has('compare') ? $this->config->compare : false,
             ]
         );

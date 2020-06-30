@@ -20,23 +20,24 @@ class CrudShow extends BaseForm
     /**
      * Is registering component in card.
      *
-     * @var boolean
+     * @var bool
      */
     protected $inCard = false;
 
     /**
      * Register new Field.
      *
-     * @param mixed $field
+     * @param mixed  $field
      * @param string $id
-     * @param array $params
+     * @param array  $params
+     *
      * @return Field $field
      */
     public function registerField($field, string $id, $params = [])
     {
         if (!$this->inWrapper()) {
             throw new InvalidArgumentException('Fields must be registered inside a wrapper.', [
-                'function' => '__call'
+                'function' => '__call',
             ]);
         }
 
@@ -46,7 +47,7 @@ class CrudShow extends BaseForm
     /**
      * Is registering component in card.
      *
-     * @return boolean
+     * @return bool
      */
     public function inCard()
     {
@@ -54,9 +55,10 @@ class CrudShow extends BaseForm
     }
 
     /**
-     * Add Vue component
+     * Add Vue component.
      *
      * @param string $component
+     *
      * @return \Fjord\Vue\Component
      */
     public function component($component)
@@ -80,6 +82,7 @@ class CrudShow extends BaseForm
      * Create a new Card.
      *
      * @param any ...$params
+     *
      * @return void
      */
     public function info(string $title = '')
@@ -96,8 +99,9 @@ class CrudShow extends BaseForm
     /**
      * Create b-card wrapper.
      *
-     * @param int $cols
+     * @param int     $cols
      * @param Closure $closure
+     *
      * @return void
      */
     public function card(Closure $closure)
@@ -127,7 +131,7 @@ class CrudShow extends BaseForm
     public function render(): array
     {
         return array_merge(parent::render(), [
-            'components' => collect($this->components)
+            'components' => collect($this->components),
         ]);
     }
 }

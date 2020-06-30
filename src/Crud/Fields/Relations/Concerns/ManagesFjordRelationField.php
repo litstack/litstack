@@ -8,6 +8,7 @@ trait ManagesFjordRelationField
      * Set related model.
      *
      * @param string $mode
+     *
      * @return void
      */
     public function model(string $model)

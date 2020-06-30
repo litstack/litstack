@@ -21,7 +21,7 @@ class CrudMetaMacro
                         ->title('Meta-Title')
                         ->placeholder('Meta-Title')
                         ->hint(__f('crud.meta.title_hint', [
-                            'width' => $metaMaxWith
+                            'width' => $metaMaxWith,
                         ]));
 
                     $meta->input('meta_description')

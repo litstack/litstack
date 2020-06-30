@@ -2,24 +2,25 @@
 
 namespace Fjord\Chart\Loader;
 
+use Carbon\CarbonInterface;
 use Closure;
 use Fjord\Chart\ChartSet;
-use Carbon\CarbonInterface;
 use Illuminate\Support\Arr;
 
 class NumberLoader extends ChartLoader
 {
-    use Concerns\HasOneIteration,
-        Concerns\HasComparison;
+    use Concerns\HasOneIteration;
+    use Concerns\HasComparison;
 
     /**
      * Make series.
      *
      * @param CarbonInterface $startTime
-     * @param integer $iterations
-     * @param Closure $timeResolver
-     * @param Closure $valueResolver
-     * @param Closure $labelResolver
+     * @param int             $iterations
+     * @param Closure         $timeResolver
+     * @param Closure         $valueResolver
+     * @param Closure         $labelResolver
+     *
      * @return array
      */
     protected function makeSeries(
@@ -29,7 +30,6 @@ class NumberLoader extends ChartLoader
         Closure $valueResolver,
         Closure $labelResolver
     ): array {
-
         $nextTimeResolver = $this->getNextTimeResolver();
 
         $query = $this->config->model::query();
@@ -46,7 +46,7 @@ class NumberLoader extends ChartLoader
 
         return [
             'results' => Arr::flatten($set->getValues()),
-            'value' => $set->getValues()[0][0]
+            'value'   => $set->getValues()[0][0],
         ];
     }
 }

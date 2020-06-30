@@ -9,7 +9,7 @@ class Packages
 {
     /**
      * List of all packages found in composer.json files.
-     * 
+     *
      * @var array
      */
     protected $packages = [];
@@ -23,18 +23,19 @@ class Packages
 
     /**
      * List of packages with access to root routes and root config path.
-     * 
+     *
      * @var array
      */
     protected $rootAccess = [
-        "aw-studio/fjord",
-        "aw-studio/fjord-permissions",
+        'aw-studio/fjord',
+        'aw-studio/fjord-permissions',
     ];
 
     /**
      * Create instance.
-     * 
+     *
      * @param array $packages
+     *
      * @return void
      */
     public function __construct($app)
@@ -44,7 +45,7 @@ class Packages
 
     /**
      * Get package by name.
-     * 
+     *
      * @return $package
      */
     public function get($name)
@@ -56,6 +57,7 @@ class Packages
      * Add one ore many packages.
      *
      * @param string|array $packages
+     *
      * @return void
      */
     public function add($packages)
@@ -70,10 +72,11 @@ class Packages
      *
      * @param string $package
      * @param string $name
-     * @param array $merge
-     * @return void
-     * 
+     * @param array  $merge
+     *
      * @throws \InvalidArgumentException
+     *
+     * @return void
      */
     public function navPreset(string $package, $name = null, array $merge = [])
     {
@@ -97,12 +100,12 @@ class Packages
             return $rootPackage->navPreset($name, $merge);
         }
 
-        throw new InvalidArgumentException('No navigation entry preset with name "' . $name . '" found.');
+        throw new InvalidArgumentException('No navigation entry preset with name "'.$name.'" found.');
     }
 
     /**
      * Get list of all packages.
-     * 
+     *
      * @return array
      */
     public function all()
@@ -112,8 +115,9 @@ class Packages
 
     /**
      * Check if package has root acccess.
-     * 
+     *
      * @param string $name
+     *
      * @return bool
      */
     public function hasRootAccess($name)

@@ -16,22 +16,23 @@ class ApexEngine extends ChartEngine
     /**
      * Render chart by type.
      *
-     * @param array $names
+     * @param array    $names
      * @param ChartSet $set
+     *
      * @return array
      */
     public function render(array $names, ChartSet $set)
     {
         $series = [
             'categories' => $set->getLabels(),
-            'series' => [],
+            'series'     => [],
         ];
 
         foreach ($set->getValues() as $key => $values) {
-            $series['series'][]  = [
+            $series['series'][] = [
                 'name' => $names[$key],
                 'data' => $values,
-                'type' => 'area'
+                'type' => 'area',
             ];
         }
 

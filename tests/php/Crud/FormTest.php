@@ -2,8 +2,8 @@
 
 namespace FjordTest\Crud;
 
-use FjordTest\BackendTestCase;
 use Fjord\Support\Facades\Form;
+use FjordTest\BackendTestCase;
 
 class FormTest extends BackendTestCase
 {

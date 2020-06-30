@@ -3,7 +3,6 @@
 namespace FjordTest\Browser;
 
 use FjordTest\FrontendTestCase;
-use Illuminate\Support\Facades\Auth;
 use FjordTest\Traits\CreateFjordUsers;
 
 class PublishesTest extends FrontendTestCase

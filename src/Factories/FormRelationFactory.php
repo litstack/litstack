@@ -17,11 +17,11 @@ $factory->define(FormRelation::class, function (Faker $faker, $args) {
     }
 
     return [
-        'field_id' => $args['name'],
-        'from_model_id' => $args['from']->id,
+        'field_id'        => $args['name'],
+        'from_model_id'   => $args['from']->id,
         'from_model_type' => get_class($args['from']),
-        'to_model_id' => $args['to']->id,
-        'to_model_type' => get_class($args['to']),
+        'to_model_id'     => $args['to']->id,
+        'to_model_type'   => get_class($args['to']),
     ];
 });
 

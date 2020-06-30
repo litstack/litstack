@@ -10,7 +10,6 @@ trait Translatable
 
     /**
      * Append the translation to each query.
-     *
      */
     public function getTranslationAttribute()
     {
