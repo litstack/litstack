@@ -243,24 +243,24 @@ describe('save job', () => {
         expect(wrapper.vm.getSaveJobKey()).toBe('de.dummy_attribute_name');
     });
 
-    it('gets correct save job params', () => {
+    it('gets correct save job payload', () => {
         let params;
         field.local_key = 'dummy_attribute_name';
 
         field.translatable = false;
-        params = wrapper.vm.getSaveJobParams('dummy value');
+        params = wrapper.vm.getSaveJobPayload('dummy value');
         expect(params).toStrictEqual({ dummy_attribute_name: 'dummy value' });
 
         field.translatable = true;
 
         store.commit('SET_LANGUAGE', 'en');
-        params = wrapper.vm.getSaveJobParams('dummy value');
+        params = wrapper.vm.getSaveJobPayload('dummy value');
         expect(params).toStrictEqual({
             en: { dummy_attribute_name: 'dummy value' }
         });
 
         store.commit('SET_LANGUAGE', 'de');
-        params = wrapper.vm.getSaveJobParams('dummy value');
+        params = wrapper.vm.getSaveJobPayload('dummy value');
         expect(params).toStrictEqual({
             de: { dummy_attribute_name: 'dummy value' }
         });
@@ -327,7 +327,7 @@ describe('save job', () => {
         expect(store.getters.saveJobs.length).toBe(0);
     });
 
-    it('removes updates save job when value has changes', () => {
+    it('updates save job when value has changes', () => {
         field.local_key = 'dummy_attribute_name';
         field.translatable = false;
         wrapper.vm.original = 'original value';
@@ -337,14 +337,16 @@ describe('save job', () => {
         wrapper.vm.addSaveJob();
         expect(store.getters.saveJobs.length).toBe(1);
         expect(
-            store.getters.saveJobs[0].params[jobKey].dummy_attribute_name
+            store.getters.saveJobs[0].params[jobKey].payload
+                .dummy_attribute_name
         ).toBe('new value');
 
         wrapper.vm.value = 'other new value';
         wrapper.vm.addSaveJob();
         expect(store.getters.saveJobs.length).toBe(1);
         expect(
-            store.getters.saveJobs[0].params[jobKey].dummy_attribute_name
+            store.getters.saveJobs[0].params[jobKey].payload
+                .dummy_attribute_name
         ).toBe('other new value');
     });
 
