@@ -37,22 +37,12 @@ class DummyClass extends ProgressChartConfig
     }
 
     /**
-     * Get maximum value.
+     * Get goal value.
      *
      * @return integer|float
      */
-    public function maxValue()
+    public function goal()
     {
         return 100;
-    }
-
-    /**
-     * Get minimum value.
-     *
-     * @return integer|float
-     */
-    public function minValue()
-    {
-        return 0;
     }
 }
