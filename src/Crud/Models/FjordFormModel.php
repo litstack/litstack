@@ -3,6 +3,7 @@
 namespace Fjord\Crud\Models;
 
 use Fjord\Crud\RelationField;
+use Fjord\Support\Facades\Config;
 use Spatie\MediaLibrary\HasMedia;
 use Fjord\Crud\Fields\Media\MediaField;
 use Illuminate\Database\Eloquent\Model;
@@ -125,26 +126,26 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     }
 
     /**
-     * Get field value.
+     * Get a relationship.
      *
-     * @param Field $field
+     * @param  string  $key
      * @return mixed
      */
-    public function getFieldValue($field, $locale = null)
+    public function getRelationValue($key)
     {
-        if ($field instanceof RelationField) {
-            return $field->getResults($this);
+        // If the key already exists in the relationships array, it just means the
+        // relationship has already been loaded, so we'll just return it out of
+        // here because there is no need to query within the relations twice.
+        if ($this->relationLoaded($key)) {
+            return $this->relations[$key];
         }
 
-        if (!$locale) {
-            $locale = app()->getLocale();
+        // If the "attribute" exists as a method on the model, we will just assume
+        // it is a relationship and will load and return results from the query
+        // and hydrate the relationship's value on the "relationships" array.
+        if (method_exists($this, $key) || in_array($key, $this->fieldIds)) {
+            return $this->getRelationshipFromMethod($key);
         }
-
-        if ($field->translatable) {
-            return $this->getTranslatedFieldValue($field, app()->getLocale());
-        }
-
-        return $this->value[$field->local_key] ?? null;
     }
 
     /**
@@ -172,7 +173,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
 
         $attributes['value'] = $attributes['value'] ?? [];
 
-        foreach ($this->fields as $field) {
+        foreach (($this->fields ?? []) as $field) {
             if ($field->translatable) {
                 continue;
             }
@@ -226,6 +227,11 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     {
         $model = parent::newFromBuilder($attributes, $connection);
 
+        // FIX: config_type
+        if (method_exists($this, 'fixConfigType')) {
+            $this->fixConfigType($model);
+        }
+
         // Set field ids to be able to check if field exists in getAttribute 
         // method.
         $model->setFieldIds($model->fields->map(function ($field) {
@@ -244,7 +250,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     {
         $attributes = parent::relationsToArray();
 
-        foreach ($this->fields as $field) {
+        foreach (($this->fields ?? []) as $field) {
             if (!$field instanceof RelationField) {
                 continue;
             }
@@ -255,7 +261,8 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
                 if ($field instanceof MediaField && $field->maxFiles == 1) {
                     continue;
                 }
-                $attributes["first_{$field->id}"] = $this->getFormattedFieldValue($field)->first();
+                $items = $this->getFormattedFieldValue($field);
+                $attributes["first_{$field->id}"] = $items ? $items->first() : null;
             }
         }
 

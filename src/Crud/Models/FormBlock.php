@@ -2,11 +2,15 @@
 
 namespace Fjord\Crud\Models;
 
+use BadMethodCallException;
 use Fjord\Crud\Fields\Block\Block;
+use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class FormBlock extends FjordFormModel
 {
+    use ForwardsCalls;
+
     /**
      * Translation model.
      *
@@ -27,6 +31,8 @@ class FormBlock extends FjordFormModel
      * @var array
      */
     protected $fillable = [
+        'form_type',
+        'config_type',
         'field_id',
         'model_type',
         'model_id',
@@ -61,17 +67,23 @@ class FormBlock extends FjordFormModel
     }
 
     /**
-     * Get config key from model relation.
+     * Get Blade x component name.
      *
-     * @return string
+     * @return string|null
      */
-    public function getConfigKey()
+    public function getXAttribute()
     {
-        if ($this->model instanceof FormField) {
-            return $this->model->getConfigKey();
-        }
+        return $this->getRepeatable()->getX();
+    }
 
-        return "crud." . lcfirst(class_basename(get_class($this->model)));
+    /**
+     * Get view name.
+     *
+     * @return string|null
+     */
+    public function getViewAttribute()
+    {
+        return $this->getRepeatable()->getView();
     }
 
     /**
@@ -81,13 +93,23 @@ class FormBlock extends FjordFormModel
      */
     public function getFieldsAttribute()
     {
-        $fields = $this->config->show->getRegisteredFields();
+        return $this->getRepeatable()->getRegisteredFields();
+    }
+
+    /**
+     * Get repeatable.
+     *
+     * @return Repeatables
+     */
+    public function getRepeatable()
+    {
+        $fields = $this->getForm()->getRegisteredFields();
 
         foreach ($fields as $field) {
             if ($field instanceof Block && $field->id == $this->field_id) {
 
                 // Returning fields from repeatables form.
-                return $field->repeatables->{$this->type}->getRegisteredFields();
+                return $field->repeatables->{$this->type};
             }
         }
     }
@@ -105,5 +127,21 @@ class FormBlock extends FjordFormModel
         unset($items['model']);
 
         return $items;
+    }
+
+    /**
+     * Modified calls.
+     * 
+     * @param string $method
+     * @param array $params
+     * @return mixed
+     */
+    public function __call($method, $params = [])
+    {
+        try {
+            return parent::__call($method, $params);
+        } catch (BadMethodCallException $e) {
+            return $this->forwardCallTo($this->getRepeatable(), $method, $params);
+        }
     }
 }

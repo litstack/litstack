@@ -199,7 +199,6 @@ export default {
             if (!this.value) {
                 return 0;
             }
-            console.log(typeof this.value, this.value);
             if (typeof this.value == 'number') {
                 return this.value;
             }

@@ -8,7 +8,7 @@ use Fjord\Exceptions\Contracts\Traceable;
 class TraceableException extends Exception implements Traceable
 {
     /**
-     * Create new FieldException instance.
+     * Create new TraceableException instance.
      *
      * @param string $message
      * @param array $options
@@ -18,6 +18,7 @@ class TraceableException extends Exception implements Traceable
     public function __construct($message = null, array $options = [], $code = 0, Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
+
         $this->setTrace(
             $this->findTrace($options)
         );

@@ -68,7 +68,7 @@ jobs:
               run: ./vendor/laravel/dusk/bin/chromedriver-linux &
 
             - name: Run javascript tests via Jest
-              run: npm test --verbose
+              run: npm run test:js --verbose
 
             - name: Run PHP tests via PHPUnit
-              run: vendor/bin/phpunit
+              run: npm run test:php

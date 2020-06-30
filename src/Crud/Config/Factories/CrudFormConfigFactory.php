@@ -21,7 +21,7 @@ class CrudFormConfigFactory extends ConfigFactory
         $form = new CrudShow($config->model);
 
         $form->setRoutePrefix(
-            strip_slashes($config->route_prefix . "/{id}/show")
+            strip_slashes($config->route_prefix . "/{id}/api/show")
         );
 
         $method($form);

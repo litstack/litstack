@@ -8,6 +8,7 @@ import { mapGetters } from 'vuex';
 import axiosMethods from './common/axios';
 
 export default {
+    inheritAttrs: false,
     name: 'FjordApp',
     computed: {
         ...mapGetters(['canSave'])

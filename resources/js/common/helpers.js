@@ -49,3 +49,9 @@ String.prototype.hash = function() {
     }
     return hash;
 };
+
+String.prototype.slugify = function() {
+    return this.replace(/[A-Z]/g, m => '-' + m.toLowerCase())
+        .replace(/ /g, '-')
+        .replace(/[^\w-]+/g, '');
+};

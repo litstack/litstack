@@ -2,8 +2,8 @@
 
 namespace Fjord\Application\Package;
 
-use Exception;
 use Illuminate\Support\Arr;
+use InvalidArgumentException;
 
 class Packages
 {
@@ -73,12 +73,12 @@ class Packages
      * @param array $merge
      * @return void
      * 
-     * @throws \Exception
+     * @throws \InvalidArgumentException
      */
-    public function navEntry(string $package, $name = null, array $merge = [])
+    public function navPreset(string $package, $name = null, array $merge = [])
     {
         if (is_string($name)) {
-            return $this->get($package)->navEntry($name, $merge);
+            return $this->get($package)->navPreset($name, $merge);
         }
 
         if (is_array($name)) {
@@ -94,10 +94,10 @@ class Packages
                 continue;
             }
 
-            return $rootPackage->navEntry($name, $merge);
+            return $rootPackage->navPreset($name, $merge);
         }
 
-        throw new Exception('No navigation entry preset with name "' . $name . '" found.');
+        throw new InvalidArgumentException('No navigation entry preset with name "' . $name . '" found.');
     }
 
     /**

@@ -26,4 +26,9 @@ trait ManagesConfig
 
         return $route->getConfig();
     }
+
+    public function getConfig()
+    {
+        return $this->config;
+    }
 }

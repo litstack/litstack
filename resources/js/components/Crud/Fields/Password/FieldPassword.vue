@@ -26,7 +26,7 @@
                 </b-button>
             </b-input-group-append>
         </b-input-group>
-        <div
+        <!-- <div
             class="fj-field-password-score"
             v-if="!_.isEmpty(password) && !field.noScore"
         >
@@ -37,7 +37,7 @@
                 :max="4"
                 :variant="scoreVariant"
             />
-        </div>
+        </div> -->
     </fj-base-field>
 </template>
 
@@ -100,7 +100,6 @@ export default {
                 key: this.field.local_key
             };
 
-            //console.log(add, this.value)
             if (newPassword == '') {
                 this.$store.commit('REMOVE_SAVE_JOB', job);
             } else {
@@ -113,7 +112,8 @@ export default {
             if (!this.password) {
                 return 0;
             }
-            return zxcvbn(this.password).score;
+            // TODO: make password checker.
+            return 0;
         },
         scoreVariant() {
             switch (this.score) {

@@ -27,16 +27,6 @@ class FjordUpgrade extends Command
     protected $description = 'This will upgrade your Fjord version from ^2.2 to ^2.3';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed

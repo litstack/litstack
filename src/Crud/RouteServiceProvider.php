@@ -106,7 +106,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 continue;
             }
 
-            if ($reflection->getParentClass()->name != CrudConfig::class) {
+            if (!new $namespace instanceof CrudConfig) {
                 continue;
             }
 
@@ -133,7 +133,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $directories = glob($configPath . '/*', GLOB_ONLYDIR);
 
         foreach ($directories as $formDirectory) {
-            $configFiles = glob("{$formDirectory}/*.php");;
+            $configFiles = glob("{$formDirectory}/*.php");
             foreach ($configFiles as $path) {
                 $configKey = Config::getKeyFromPath($path);
 

@@ -2,8 +2,10 @@
 
 namespace Fjord;
 
+use Fjord\Commands\FjordChart;
 use Fjord\Application\Application;
 use Fjord\Vue\Components\InfoComponent;
+use Fjord\Vue\Components\ChartComponent;
 use Fjord\Crud\Config\Traits\HasCrudShow;
 use Fjord\User\Components\UsersComponent;
 use Fjord\Crud\Config\Traits\HasCrudIndex;
@@ -31,8 +33,9 @@ class FjordPackage extends Package
     protected $providers = [
         \Fjord\Application\Translation\TranslationServiceProvider::class,
         \Fjord\Application\ApplicationRouteServiceProvider::class,
-        \Fjord\User\ServiceProvider::class,
+        \Fjord\Chart\ServiceProvider::class,
         \Fjord\Crud\ServiceProvider::class,
+        \Fjord\User\ServiceProvider::class,
     ];
 
     /**
@@ -46,8 +49,10 @@ class FjordPackage extends Package
         Commands\FjordUser::class,
         Commands\FjordCrud::class,
         Commands\FjordForm::class,
+        Commands\FjordChart::class,
         Commands\FjordExtend::class,
         Commands\FjordExtension::class,
+        Commands\FjordController::class,
         Commands\FjordComponents::class,
         Commands\FjordDefaultPermissions::class,
 
@@ -71,7 +76,7 @@ class FjordPackage extends Package
         'fj-field-wrapper-group' => FieldWrapperGroupComponent::class,
         'fj-col-image' => ColImageComponent::class,
         'fj-col-toggle' => ColToggleComponent::class,
-        'fj-col-crud-relation' => ColCrudRelationComponent::class
+        'fj-col-crud-relation' => ColCrudRelationComponent::class,
     ];
 
     /**

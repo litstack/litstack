@@ -10,6 +10,11 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRoute
 
 class ApplicationRouteServiceProvider extends LaravelRouteServiceProvider
 {
+    /**
+     * Map routes.
+     *
+     * @return void
+     */
     public function map()
     {
         $this->mapFjordRoutes();
@@ -17,6 +22,11 @@ class ApplicationRouteServiceProvider extends LaravelRouteServiceProvider
         $this->mapAppRoutes();
     }
 
+    /**
+     * Map application routes.
+     *
+     * @return void
+     */
     protected function mapAppRoutes()
     {
         if (File::exists(base_path('fjord/routes/fjord.php'))) {
@@ -24,6 +34,11 @@ class ApplicationRouteServiceProvider extends LaravelRouteServiceProvider
         }
     }
 
+    /**
+     * Map fjord routes.
+     *
+     * @return void
+     */
     protected function mapFjordRoutes()
     {
         FjordRoute::group(function () {
@@ -33,7 +48,7 @@ class ApplicationRouteServiceProvider extends LaravelRouteServiceProvider
     }
 
     /**
-     * Undocumented function
+     * Map file routes.
      *
      * @return void
      */

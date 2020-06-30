@@ -3,7 +3,7 @@
 namespace Fjord\Application\Translation;
 
 /**
- * Conversion inspired by martinlindhe
+ * Generator inspired by martinlindhe
  * https://github.com/martinlindhe/laravel-vue-i18n-generator
  */
 class i18nGenerator

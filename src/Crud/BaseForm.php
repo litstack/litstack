@@ -96,6 +96,13 @@ class BaseForm extends VueProp
     protected $wrapperStack = [];
 
     /**
+     * List of closure's that get called after registering a field.
+     *
+     * @var array
+     */
+    protected $registerFieldHooks = [];
+
+    /**
      * Create new BaseForm instance.
      *
      * @param string $model
@@ -219,16 +226,17 @@ class BaseForm extends VueProp
      * Get rules for request.
      *
      * @param CrudUpdateRequest|CrudCreateRequest $request
+     * @param string|null $type
      * @return array
      */
-    public function getRules($request)
+    public function getRules($type = null)
     {
         $rules = [];
         foreach ($this->registeredFields as $field) {
             if (!method_exists($field, 'getRules')) {
                 continue;
             }
-            $fieldRules = $field->getRules($request);
+            $fieldRules = $field->getRules($type);
             if ($field->translatable) {
                 // Attach rules for translatable fields.
                 foreach (config('translatable.locales') as $locale) {
@@ -293,7 +301,22 @@ class BaseForm extends VueProp
                 ->prop('field', $fieldInstance);
         }
 
+        foreach ($this->registerFieldHooks as $hook) {
+            $hook($fieldInstance);
+        }
+
         return $fieldInstance;
+    }
+
+    /**
+     * Add after registering field hook.
+     *
+     * @param Closure $closure
+     * @return void
+     */
+    public function afterRegisteringField(Closure $closure)
+    {
+        $this->registerFieldHooks[] = $closure;
     }
 
     /**
@@ -352,7 +375,7 @@ class BaseForm extends VueProp
      * @param string $fieldId
      * @return Field|void
      */
-    public function findField(string $fieldId)
+    public function findField($fieldId)
     {
         foreach ($this->registeredFields as $field) {
             if ($field instanceof Component) {
@@ -424,7 +447,7 @@ class BaseForm extends VueProp
             return $field->form;
         }
 
-        return $field->getRepeatable($repeatable);
+        return $field->getRepeatable($repeatable)->getForm();
     }
 
     /**

@@ -112,8 +112,14 @@ class Modal extends BaseField
         $form = new BaseForm($this->model);
 
         $form->setRoutePrefix(
-            "$this->route_prefix/modal/{modal_id}"
+            "$this->route_prefix/modal"
         );
+
+        $form->afterRegisteringField(function ($field) {
+            $field->setAttribute('params', [
+                'field_id' => $this->id,
+            ]);
+        });
 
         $closure($form);
 

@@ -116,6 +116,10 @@ export default {
             this.$refs.header.$emit('refresh');
             this.$emit('changed');
         },
+
+        /**
+         * Reload repeatables.
+         */
         async _reload() {
             if (this.reload) {
                 await this.reload(this.block);

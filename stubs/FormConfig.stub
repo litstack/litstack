@@ -40,12 +40,12 @@ class DummyConfigClassName extends FormConfig
     /**
      * Setup create and edit form.
      *
-     * @param \Fjord\Crud\CrudShow $form
+     * @param \Fjord\Crud\CrudShow $container
      * @return void
      */
-    public function show(CrudShow $form)
+    public function show(CrudShow $container)
     {
-        $form->card(function($form) {
+        $container->card(function($form) {
 
             $form->input('text')
                 ->title('text');

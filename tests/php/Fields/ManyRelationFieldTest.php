@@ -39,7 +39,7 @@ class ManyRelationFieldTest extends BackendTestCase
     public function test_sortable_method_throws_exception_when_model_is_not_set()
     {
         $this->expectException(\Fjord\Exceptions\InvalidArgumentException::class);
-        $this->setUnaccessibleProperty($this->field, 'model', null);
+        $this->setUnaccessibleProperty($this->field, 'relatedModelClass', null);
 
         $this->field->sortable();
     }

@@ -1,9 +1,27 @@
 <?php
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
+if (!function_exists('debug')) {
+    /**
+     * Return default value in debug mode.
+     *
+     * @param  mixed  $value
+     * @return mixed
+     */
+    function debug($value)
+    {
+        if (!config('app.debug')) {
+            return;
+        }
+
+        return value($value);
+    }
+}
 
 if (!function_exists('crud')) {
     /**
@@ -94,6 +112,23 @@ if (!function_exists('is_closure')) {
     function is_closure($t)
     {
         return $t instanceof Closure;
+    }
+}
+
+if (!function_exists('split_path')) {
+    /**
+     * Split path.
+     *
+     * @param string $path
+     * @return string
+     */
+    function split_path(string $path)
+    {
+        if (Str::contains($path, '\\')) {
+            return explode('\\', $path);
+        }
+
+        return explode('/', $path);
     }
 }
 

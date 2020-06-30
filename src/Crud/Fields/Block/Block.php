@@ -85,7 +85,7 @@ class Block extends RelationField
      * @param string $name
      * @return boolean
      */
-    public function getRepeatable(string $name)
+    public function getRepeatable($name)
     {
         return $this->repeatables->get($name);
     }

@@ -12,19 +12,8 @@ use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudDeleteRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 
-abstract class CrudController
+abstract class CrudController extends CrudBaseController
 {
-    use Api\CrudBaseApi,
-        Api\CrudHasIndex,
-        Api\CrudHasRelations,
-        Api\CrudHasBlock,
-        Api\CrudHasMedia,
-        Api\CrudHasOrder,
-        Api\CrudHasModal,
-        Concerns\ManagesForm,
-        Concerns\ManagesConfig,
-        Concerns\ManagesCrud;
-
     /**
      * The Model Class e.g. App\Models\Post
      *
@@ -41,13 +30,6 @@ abstract class CrudController
      * @return boolean
      */
     //abstract public function authorize(FjordUser $user, string $operation, $id = null);
-
-    /**
-     * Initial query.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    abstract public function query(): Builder;
 
     /**
      * Create new CrudController instance.
@@ -189,7 +171,7 @@ abstract class CrudController
     {
         // Eager loads relations.
         $query = $this->query();
-        foreach ($this->getForm('show')->getRegisteredFields() as $field) {
+        foreach ($this->config->show->getRegisteredFields() as $field) {
             if ($field instanceof RelationField && !$field instanceof MediaField) {
                 $query->with($field->getRelationName());
             }
@@ -201,7 +183,7 @@ abstract class CrudController
         $model->last_edit;
 
         // Append media.
-        foreach ($this->getForm('show')->getRegisteredFields() as $field) {
+        foreach ($this->config->show->getRegisteredFields() as $field) {
             if ($field instanceof MediaField) {
                 $model->append($field->id);
             }

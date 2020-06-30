@@ -52,6 +52,16 @@ class ConfigHandler
     }
 
     /**
+     * Get namespace of config.
+     * 
+     * @return string
+     */
+    public function getType()
+    {
+        return get_class($this->config);
+    }
+
+    /**
      * Find factories by config depenecies.
      *
      * @return void
@@ -60,16 +70,13 @@ class ConfigHandler
     {
         $reflector = new ReflectionClass($this->config);
         $parent = $reflector->getParentClass();
-        $uses = array_merge(
-            class_uses($this->config),
-            $parent ? class_uses($parent->name) : []
-        );
+        $uses = class_uses_recursive($this->config);
 
         foreach (fjord()->getConfigFactories() as $dependency => $factory) {
 
             // Matching parent class.
             if ($parent) {
-                if ($parent->name == $dependency) {
+                if ($this->config instanceof $dependency) {
                     $this->registerFactory($factory);
                 }
             }

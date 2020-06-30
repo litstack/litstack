@@ -144,36 +144,91 @@ export default {
         ...mapGetters(['form'])
     },
     methods: {
+        /**
+         * Create new order.
+         */
         async newOrder() {
-            let payload = {
-                collection: this.field.id,
+            let response = await this.sendNewOrder({
                 ids: _.map(this.sortable, 'id')
-            };
-            await axios.put(this.getMediaUrl('order'), payload);
+            });
+
+            if (!response) {
+                return;
+            }
+
             this.$bvToast.toast(this.$t('fj.order_changed'), {
                 variant: 'success'
             });
             this.$emit('newOrder');
             Fjord.bus.$emit('field:updated', 'image:ordered');
         },
-        getMediaUrl(key) {
-            return `${this.field.route_prefix}/media/${key}`;
+
+        /**
+         * Send new order request.
+         */
+        async sendNewOrder(payload) {
+            try {
+                return await axios.post(
+                    `${this.field.route_prefix}/media/order`,
+                    {
+                        field_id: this.field.id,
+                        ...payload
+                    }
+                );
+            } catch (e) {
+                console.log(e);
+            }
         },
-        imgCols(size = 3) {
-            return `col-${size}`;
-        },
+
+        /**
+         * Image path.
+         */
         imgPath(image) {
             return `/storage/${image.id}/${image.file_name}`;
         },
+
+        /**
+         * Handle delete image button click.
+         */
         deleteImage(image, index) {
             this.$bvModal.show(this.deleteImageModalId(image));
         },
+
+        /**
+         * Delete image.
+         */
         async _deleteImage(image, index) {
-            let response = await axios.delete(this.getMediaUrl(image.id));
+            let response = await this.sendDeleteImage(image);
+
+            if (!response) {
+                return;
+            }
+
             this.$delete(this.sortable, index);
             this.$emit('deleted');
             Fjord.bus.$emit('field:updated', 'image:deleted');
         },
+
+        /**
+         * Send delete image request.
+         */
+        async sendDeleteImage(media) {
+            try {
+                return await axios.post(
+                    `${this.field.route_prefix}/media/destroy`,
+                    {
+                        field_id: this.field.id,
+                        media_id: media.id
+                    }
+                );
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+        /**
+         * Delete image modal id by image.
+         */
         deleteImageModalId(image) {
             return `fj-delete-image-${this.field.id}-${image.id}`;
         }

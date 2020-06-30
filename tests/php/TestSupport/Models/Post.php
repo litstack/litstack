@@ -50,6 +50,11 @@ class Post extends Model implements HasMediaContract
     {
         return $this->repeatables('media_repeatables');
     }
+
+    public function test_list()
+    {
+        return $this->listItems('test_list');
+    }
     /*
     public function many_relation_post()
     {

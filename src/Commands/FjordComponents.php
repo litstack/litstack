@@ -22,16 +22,6 @@ class FjordComponents extends Command
     protected $description = 'List all registered components that can be extended.';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed

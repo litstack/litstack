@@ -119,5 +119,18 @@ export default {
                 return t.name;
             }
         }
+    },
+
+    /**
+     * Get bootstrap cols from width.
+     *
+     * @param {Number} width
+     */
+    bCols(width) {
+        if (width >= 1) {
+            return width;
+        }
+
+        return Math.round(12 * width);
     }
 };

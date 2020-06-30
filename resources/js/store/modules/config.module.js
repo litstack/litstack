@@ -1,12 +1,34 @@
-import Vue from 'vue';
 import Bus from '@fj-js/common/event.bus';
 
 const initialState = {
+    /**
+     * Crud edit locale.
+     */
     language: '',
+
+    /**
+     * Crud edit locales.
+     */
     languages: [],
+
+    /**
+     * Crud edit fallback locale.
+     */
     fallback_locale: '',
+
+    /**
+     * Fjord config.
+     */
     fjord_config: {},
+
+    /**
+     * Config.
+     */
     config: {},
+
+    /**
+     * Base url with a front slash prepended and appended e.g.: "/admin/"
+     */
     baseURL: ''
 };
 

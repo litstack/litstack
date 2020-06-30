@@ -8,12 +8,12 @@ use Fjord\Support\Facades\Config;
 class ConfigLoaderTest extends BackendTestCase
 {
     /** @test */
-    public function test_getClassName_method()
+    public function test_getNamespaceFromKey_method()
     {
-        $className = Config::getClassName('my.config.key');
+        $className = Config::getNamespaceFromKey('my.config.key');
         $this->assertEquals('FjordApp\Config\My\Config\KeyConfig', $className);
 
-        $className = Config::getClassName('my.config.snake_key');
+        $className = Config::getNamespaceFromKey('my.config.snake_key');
         $this->assertEquals('FjordApp\Config\My\Config\SnakeKeyConfig', $className);
     }
 

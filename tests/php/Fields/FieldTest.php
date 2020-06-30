@@ -73,15 +73,6 @@ class FieldTest extends BackendTestCase
     }
 
     /** @test */
-    public function it_fails_when_attribute_is_not_available()
-    {
-        $field = $this->getField(DummyField::class);
-
-        $this->expectException(\Fjord\Exceptions\MethodNotFoundException::class);
-        $field->something();
-    }
-
-    /** @test */
     public function test_readonly_method()
     {
         $field = $this->getField(DummyField::class);

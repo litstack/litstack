@@ -244,10 +244,12 @@ export default {
                 page: 1,
                 sort_by: 'id.desc'
             };
-            let response = await axios.post(
-                `${this.field.route_prefix}/${this.field.id}`,
-                payload
-            );
+            let response = await this.sendLoadRelations(payload);
+
+            if (!response) {
+                return;
+            }
+
             for (let i in response.data.items) {
                 let relation = response.data.items[i];
                 this.allSelectedRelations.push({
@@ -275,10 +277,13 @@ export default {
                 return;
             }
             this.busy = true;
-            let response = await axios.post(
-                `${this.field.route_prefix}/${this.field.id}`,
-                payload
-            );
+
+            let response = await this.sendLoadRelations(payload);
+
+            if (!response) {
+                return;
+            }
+
             this.selectedRelations = [];
             for (let i in response.data.items) {
                 let block = response.data.items[i];
@@ -286,6 +291,23 @@ export default {
             }
             this.busy = false;
             return response;
+        },
+
+        /**
+         * Send load relation request.
+         */
+        async sendLoadRelations(payload) {
+            try {
+                return await axios.post(
+                    `${this.field.route_prefix}/relation/load`,
+                    {
+                        field_id: this.field.id,
+                        ...payload
+                    }
+                );
+            } catch (e) {
+                console.log(e);
+            }
         },
 
         /**
@@ -305,78 +327,20 @@ export default {
          * @return {undefined}
          */
         async selectRelation(relation) {
-            let response = null;
-            switch (this.field.type) {
-                case 'morphMany':
-                case 'hasMany':
-                case 'morphedByMany':
-                case 'morphToMany':
-                case 'belongsToMany':
-                case 'manyRelation':
-                    try {
-                        response = await axios.post(
-                            `${this.field.route_prefix}/${this.field.id}/${relation.id}`
-                        );
-                    } catch (e) {
-                        console.log(e);
-                        return;
-                    }
-                    this.$bvToast.toast(
-                        this.$t('fj.relation_added', {
-                            relation: this.field.names.singular
-                        }),
-                        {
-                            variant: 'success'
-                        }
-                    );
-                    break;
-                case 'hasOne':
-                case 'morphOne':
-                case 'morphTo':
-                case 'oneRelation':
-                    try {
-                        response = await axios.post(
-                            `${this.field.route_prefix}/${this.field.id}/${relation.id}`
-                        );
-                    } catch (e) {
-                        console.log(e);
-                        return;
-                    }
+            let response = await this.sendSelectRelation(relation);
 
-                    this.$bvToast.toast(
-                        this.$t('fj.relation_added', {
-                            relation: this.field.title
-                        }),
-                        {
-                            variant: 'success'
-                        }
-                    );
-                    break;
-                case 'belongsTo':
-                    try {
-                        response = await axios.put(
-                            `${this.field.route_prefix}/`,
-                            {
-                                [this.field.local_key] : relation.id
-                            }
-                        );
-                    } catch (e) {
-                        console.log(e);
-                        return;
-                    }
-
-                    this.$emit('input', relation.id);
-
-                    this.$bvToast.toast(
-                        this.$t('fj.relation_added', {
-                            relation: this.field.names.singular
-                        }),
-                        {
-                            variant: 'success'
-                        }
-                    );
-                    break;
+            if (!response) {
+                return;
             }
+
+            this.$bvToast.toast(
+                this.$t('fj.relation_added', {
+                    relation: this.field.title
+                }),
+                {
+                    variant: 'success'
+                }
+            );
 
             if (!this.field.many) {
                 this.allSelectedRelations = [];
@@ -393,6 +357,25 @@ export default {
             }
             this.$emit('reload', relation);
             Fjord.bus.$emit('field:updated', 'relation:selected');
+        },
+
+        /**
+         * Send select relation request.
+         */
+        async sendSelectRelation(relation) {
+            try {
+                return await axios.post(
+                    `${
+                        this.field.route_prefix
+                    }/${this.field.type.slugify()}/create`,
+                    {
+                        field_id: this.field.id,
+                        related_id: relation.id
+                    }
+                );
+            } catch (e) {
+                console.log(e);
+            }
         },
 
         /**
@@ -416,47 +399,15 @@ export default {
          * @return {undefined}
          */
         async _removeRelation(relation) {
-            let response = null;
-            switch (this.field.type) {
-                case 'morphMany':
-                case 'hasMany':
-                case 'morphedByMany':
-                case 'morphToMany':
-                case 'belongsToMany':
-                case 'manyRelation':
-                case 'relation':
-                    try {
-                        response = await axios.delete(
-                            `${this.field.route_prefix}/${this.field.id}/${relation.id}`
-                        );
-                    } catch (e) {
-                        console.log(e);
-                        return;
-                    }
-                    this.$bvToast.toast(this.$t('fj.relation_unlinked'), {
-                        variant: 'success'
-                    });
-                    break;
-                case 'hasOne':
-                case 'morphOne':
-                case 'morphTo':
-                case 'oneRelation':
-                    try {
-                        response = axios.delete(
-                            `${this.field.route_prefix}/${this.field.id}/${relation.id}`
-                        );
-                    } catch (e) {
-                        console.log(e);
-                        return;
-                    }
-                    this.$bvToast.toast(this.$t('fj.relation_unlinked'), {
-                        variant: 'success'
-                    });
-                    break;
-                case 'belongsTo':
-                    this.$emit('input', null);
-                    break;
+            let response = await this.sendDestroyRelation(relation);
+
+            if (!response) {
+                return;
             }
+
+            this.$bvToast.toast(this.$t('fj.relation_unlinked'), {
+                variant: 'success'
+            });
 
             if (this.field.many) {
                 for (let i in this.allSelectedRelations) {
@@ -478,6 +429,25 @@ export default {
         },
 
         /**
+         * Send remove relation request.
+         */
+        async sendDestroyRelation(relation) {
+            try {
+                return await axios.post(
+                    `${
+                        this.field.route_prefix
+                    }/${this.field.type.slugify()}/destroy`,
+                    {
+                        field_id: this.field.id,
+                        related_id: relation.id
+                    }
+                );
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+        /**
          * Order relations.
          */
         async newOrder({ ids, sortedItems }) {
@@ -485,13 +455,10 @@ export default {
             let payload = {
                 ids
             };
-            try {
-                let response = await axios.put(
-                    `${this.field.route_prefix}/${this.field.id}/order`,
-                    payload
-                );
-            } catch (e) {
-                console.log(e);
+
+            let response = await this.sendNewOrder(payload);
+
+            if (!response) {
                 return;
             }
 
@@ -501,6 +468,20 @@ export default {
             this.$bvToast.toast(this.$t('fj.order_changed'), {
                 variant: 'success'
             });
+        },
+
+        /**
+         * Send new order request.
+         */
+        async sendNewOrder(payload) {
+            try {
+                return await axios.put(
+                    `${this.field.route_prefix}/relation/order`,
+                    { field_id: this.field.id, ...payload }
+                );
+            } catch (e) {
+                console.log(e);
+            }
         }
     }
 };

@@ -125,9 +125,22 @@ module.exports = {
                         ['docs/fields/relation', 'Relation'],
                         ['docs/fields/one_relation', 'oneRelation'],
                         ['docs/fields/many_relation', 'manyRelation'],
+                        ['docs/fields/list', 'List'],
                         ['docs/fields/block', 'Block'],
                         ['docs/fields/modal', 'Modal'],
                         ['docs/fields/component', 'Component']
+                    ]
+                },
+                {
+                    title: 'Charts',
+                    collapsable: true,
+                    children: [
+                        ['docs/charts/basics', 'Basics'],
+                        ['docs/charts/area', 'Area Chart'],
+                        ['docs/charts/bar', 'Bar Chart'],
+                        ['docs/charts/number', 'Number'],
+                        ['docs/charts/donut', 'Donut Chart'],
+                        ['docs/charts/progress', 'Progress']
                     ]
                 },
                 {
@@ -138,24 +151,28 @@ module.exports = {
                         ['docs/frontend/vue', 'Vue'],
                         ['docs/frontend/components', 'Vue Components']
                     ]
-                }
-                /*
+                },
                 {
-                    title: 'Package Development',
-                    collapsable: true,
-                    children: [['docs/package/basics', 'Basics']]
-                }
-                */
-                /*
-                {
-                    title: 'Digging Deeper',
+                    title: 'Official Packages',
                     collapsable: false,
                     children: [
-                        ['docs/deeper/package', 'Package Development'],
-                        ['docs/deeper/lifecycle', 'Lifecycle']
+                        ['docs/packages/fjord-ui-kit', 'Fjord UI Kit'],
+                        ['docs/packages/fjord-pages', 'Fjord Pages']
                     ]
                 }
-                */
+                // {
+                //     title: 'Package Development',
+                //     collapsable: true,
+                //     children: [['docs/package/basics', 'Basics']]
+                // },
+                // {
+                //     title: 'Digging Deeper',
+                //     collapsable: false,
+                //     children: [
+                //         ['docs/deeper/package', 'Package Development'],
+                //         ['docs/deeper/lifecycle', 'Lifecycle']
+                //     ]
+                // }
             ]
         }
     }
