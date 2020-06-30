@@ -2,11 +2,9 @@
 
 namespace Fjord\Crud\Repositories\Relations;
 
-use Fjord\Crud\Fields\Relations\HasOne;
 use Fjord\Crud\Fields\Relations\MorphOne;
-use Fjord\Crud\Fields\Relations\MorphMany;
-use Fjord\Crud\Requests\CrudUpdateRequest;
 use Fjord\Crud\Repositories\BaseFieldRepository;
+use Fjord\Crud\Requests\CrudUpdateRequest;
 
 class MorphOneRepository extends BaseFieldRepository
 {
@@ -31,7 +29,8 @@ class MorphOneRepository extends BaseFieldRepository
      * Create new MorphOne relation.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
+     * @param mixed             $model
+     *
      * @return void
      */
     public function create(CrudUpdateRequest $request, $model)
@@ -41,14 +40,14 @@ class MorphOneRepository extends BaseFieldRepository
         $morphOne = $this->field->getRelationQuery($model);
 
         $query = [
-            $morphOne->getMorphType() => get_class($model),
-            $morphOne->getForeignKeyName() => $model->{$morphOne->getLocalKeyName()}
+            $morphOne->getMorphType()      => get_class($model),
+            $morphOne->getForeignKeyName() => $model->{$morphOne->getLocalKeyName()},
         ];
 
         // Remove existsing morphOne relations.
         $morphOne->where($query)->update([
-            $morphOne->getMorphType() => '',
-            $morphOne->getForeignKeyName() => 0
+            $morphOne->getMorphType()      => '',
+            $morphOne->getForeignKeyName() => 0,
         ]);
 
         // Create new relation.
@@ -58,8 +57,9 @@ class MorphOneRepository extends BaseFieldRepository
     /**
      * Remove MorphOne relation.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed $model
+     * @param CrudUpdateRequest $request
+     * @param mixed             $model
+     *
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)

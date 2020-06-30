@@ -2,8 +2,6 @@
 
 namespace Fjord\Chart\Config;
 
-use Illuminate\Support\Collection;
-
 abstract class ProgressChartConfig extends ChartConfig
 {
     /**
@@ -17,14 +15,15 @@ abstract class ProgressChartConfig extends ChartConfig
      * Calculate value.
      *
      * @param Builder $query
-     * @return integer
+     *
+     * @return int
      */
     abstract public function value($query);
 
     /**
      * Get goal value.
      *
-     * @return integer|float
+     * @return int|float
      */
     public function goal()
     {
@@ -34,7 +33,7 @@ abstract class ProgressChartConfig extends ChartConfig
     /**
      * Get start value.
      *
-     * @return integer|float
+     * @return int|float
      */
     public function start()
     {

@@ -6,8 +6,8 @@ use Fjord\Crud\Fields\Traits\HasBaseField;
 
 class OneRelation extends OneRelationField
 {
-    use Concerns\ManagesFjordRelationField,
-        HasBaseField;
+    use Concerns\ManagesFjordRelationField;
+    use HasBaseField;
 
     /**
      * Properties passed to Vue component.
@@ -15,7 +15,7 @@ class OneRelation extends OneRelationField
      * @var array
      */
     protected $props = [
-        'type' => 'oneRelation'
+        'type' => 'oneRelation',
     ];
 
     /**
@@ -29,7 +29,8 @@ class OneRelation extends OneRelationField
      * Get relation for model.
      *
      * @param mixed $model
-     * @param boolean $query
+     * @param bool  $query
+     *
      * @return mixed
      */
     public function getRelationQuery($model)

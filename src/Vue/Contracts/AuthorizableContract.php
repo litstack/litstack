@@ -10,6 +10,7 @@ interface AuthorizableContract
      * Set authorize closure.
      *
      * @param Closure $closure
+     *
      * @return $this
      */
     public function authorize(Closure $closure);
@@ -17,7 +18,7 @@ interface AuthorizableContract
     /**
      * Check if is authorized.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAuthorized(): bool;
 }

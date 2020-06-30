@@ -2,14 +2,13 @@
 
 namespace FjordTest\CrudController;
 
-use FjordTest\BackendTestCase;
 use FjordTest\FrontendTestCase;
 use FjordTest\TestSupport\Models\Post;
 use FjordTest\Traits\InteractsWithCrud;
 
 /**
  * This test is using the Crud Post.
- * 
+ *
  * @see FjordApp\Config\Crud\PostConfig
  * @see FjordTest\TestSupport\Models\Post
  */

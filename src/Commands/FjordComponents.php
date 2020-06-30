@@ -3,7 +3,6 @@
 namespace Fjord\Commands;
 
 use Illuminate\Console\Command;
-use Fjord\Support\Facades\Package;
 
 class FjordComponents extends Command
 {
@@ -32,7 +31,7 @@ class FjordComponents extends Command
         foreach (fjord_app()->get('components')->all() as $name => $options) {
             $component = component($name);
             $components[] = [
-                'name' => $name,
+                'name'  => $name,
                 'props' => implode(', ', array_keys($component->getAvailableProps())),
                 'slots' => implode(', ', array_keys($component->getAvailableSlots())),
             ];
@@ -41,7 +40,7 @@ class FjordComponents extends Command
         $this->table([
             'Name',
             'Props',
-            'Slots'
+            'Slots',
         ], $components);
     }
 }

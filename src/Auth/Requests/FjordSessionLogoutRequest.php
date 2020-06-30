@@ -2,9 +2,8 @@
 
 namespace Fjord\Auth\Requests;
 
-use Illuminate\Http\Request;
-use Fjord\Auth\Models\FjordSession;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class FjordSessionLogoutRequest extends FormRequest
 {

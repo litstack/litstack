@@ -10,11 +10,12 @@ class NotFoundController extends Controller
     /**
      * 404 not found.
      *
-     * @return void
      * @throws NotFoundHttpException
+     *
+     * @return void
      */
     public function __invoke()
     {
-        throw new NotFoundHttpException;
+        throw new NotFoundHttpException();
     }
 }

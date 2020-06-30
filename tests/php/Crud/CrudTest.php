@@ -3,10 +3,8 @@
 namespace FjordTest\Crud;
 
 use FjordTest\BackendTestCase;
-use Fjord\Support\Facades\Crud;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Database\Eloquent\Model;
 use FjordTest\Traits\InteractsWithConfig;
+use Illuminate\Database\Eloquent\Model;
 
 class CrudTest extends BackendTestCase
 {
@@ -15,7 +13,8 @@ class CrudTest extends BackendTestCase
     public function getConfig(string $key, ...$params)
     {
         $this->calledConfigKey = $key;
-        return new DummyCrudConfig;
+
+        return new DummyCrudConfig();
     }
 }
 

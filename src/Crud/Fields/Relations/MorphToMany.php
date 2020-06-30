@@ -14,7 +14,7 @@ class MorphToMany extends ManyRelationField
      * @var array
      */
     protected $props = [
-        'type' => 'morphToMany'
+        'type' => 'morphToMany',
     ];
 
     /**

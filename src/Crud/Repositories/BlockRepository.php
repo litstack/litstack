@@ -2,12 +2,12 @@
 
 namespace Fjord\Crud\Repositories;
 
-use Illuminate\Http\Request;
 use Fjord\Crud\CrudValidator;
-use Fjord\Crud\Models\FormBlock;
 use Fjord\Crud\Fields\Block\Block;
+use Fjord\Crud\Models\FormBlock;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Http\Request;
 
 class BlockRepository extends BaseFieldRepository
 {
@@ -30,7 +30,8 @@ class BlockRepository extends BaseFieldRepository
      * Load repeatable.
      *
      * @param CrudReadRequest $request
-     * @param mixed $model
+     * @param mixed           $model
+     *
      * @return CrudJs
      */
     public function load(CrudReadRequest $request, $model)
@@ -44,7 +45,8 @@ class BlockRepository extends BaseFieldRepository
      * Fetch all repeatables.
      *
      * @param CrudReadRequest $request
-     * @param mixed $model
+     * @param mixed           $model
+     *
      * @return CrudJs
      */
     public function index(CrudReadRequest $request, $model)
@@ -56,7 +58,8 @@ class BlockRepository extends BaseFieldRepository
      * Destroy repeatable.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
+     * @param mixed             $model
+     *
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)
@@ -68,8 +71,9 @@ class BlockRepository extends BaseFieldRepository
      * Update repeatable.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
-     * @param object $payload
+     * @param mixed             $model
+     * @param object            $payload
+     *
      * @return CrudJs
      */
     public function update(CrudUpdateRequest $request, $model, $payload)
@@ -96,8 +100,9 @@ class BlockRepository extends BaseFieldRepository
      * Store new repeatable in database.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
-     * @param object $payload
+     * @param mixed             $model
+     * @param object            $payload
+     *
      * @return CrudJs
      */
     public function store(CrudUpdateRequest $request, $model, $payload)
@@ -125,14 +130,15 @@ class BlockRepository extends BaseFieldRepository
      * Update repeatable order.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
-     * @param object $payload
+     * @param mixed             $model
+     * @param object            $payload
+     *
      * @return void
      */
     public function order(CrudUpdateRequest $request, $model, $payload)
     {
         validator()->validate((array) $payload, [
-            'ids' => 'required|array'
+            'ids' => 'required|array',
         ], __f('validation'));
 
         $query = $this->field->getRelationQuery($model);
@@ -146,7 +152,8 @@ class BlockRepository extends BaseFieldRepository
      * Get child field.
      *
      * @param Request $request
-     * @param string $field_id
+     * @param string  $field_id
+     *
      * @return Field|null
      */
     public function getField(Request $request, $field_id)
@@ -162,7 +169,8 @@ class BlockRepository extends BaseFieldRepository
      * Get repeatable model.
      *
      * @param Request $request
-     * @param mixed $model
+     * @param mixed   $model
+     *
      * @return FormBlock
      */
     public function getModel(Request $request, $model)
@@ -174,17 +182,18 @@ class BlockRepository extends BaseFieldRepository
      * Get order column for new repeatable.
      *
      * @param Request $request
-     * @param mixed $model
-     * @param string $type
-     * @return integer
+     * @param mixed   $model
+     * @param string  $type
+     *
+     * @return int
      */
     protected function getOrderColumnForNewRepeatable(Request $request, $model, $type)
     {
         return FormBlock::where([
-            'type' => $type,
-            'model_type' => get_class($model),
-            'model_id' => $model->id,
-            'field_id' => $this->field->id,
+            'type'        => $type,
+            'model_type'  => get_class($model),
+            'model_id'    => $model->id,
+            'field_id'    => $this->field->id,
             'config_type' => get_class($this->config->getConfig()),
         ])->count();
     }
@@ -192,8 +201,9 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Get repeatable.
      *
-     * @param mixed $model
-     * @param integer|string $id
+     * @param mixed      $model
+     * @param int|string $id
+     *
      * @return FormBlock
      */
     protected function getRepeatable($model, $id)

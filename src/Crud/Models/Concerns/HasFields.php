@@ -2,8 +2,8 @@
 
 namespace Fjord\Crud\Models\Concerns;
 
-use Fjord\Crud\RelationField;
 use Fjord\Crud\Fields\Media\MediaField;
+use Fjord\Crud\RelationField;
 
 trait HasFields
 {
@@ -41,7 +41,8 @@ trait HasFields
      * Check if field with id exists.
      *
      * @param string $id
-     * @return boolean
+     *
+     * @return bool
      */
     public function fieldExists(string $id)
     {
@@ -51,7 +52,8 @@ trait HasFields
     /**
      * Find field by id.
      *
-     * @param  string $id
+     * @param string $id
+     *
      * @return \Fjord\Crud\Field
      */
     public function findField($id)
@@ -68,19 +70,18 @@ trait HasFields
      *
      * @return void
      */
-    public function getFormattedFieldValue($field,  $locale = null)
+    public function getFormattedFieldValue($field, $locale = null)
     {
-
         return $field->cast(
             $this->getFieldValue($field, $locale)
         );
     }
 
-
     /**
      * Get field value.
      *
      * @param Field $field
+     *
      * @return mixed
      */
     public function getFieldValue($field, $locale = null)

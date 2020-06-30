@@ -2,14 +2,13 @@
 
 namespace FjordApp\Config\User;
 
-use Fjord\Crud\CrudShow;
-use Fjord\Crud\CrudIndex;
-use Illuminate\Support\Str;
-use Fjord\Vue\Crud\CrudTable;
-use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Config\CrudConfig;
-use Illuminate\Support\Facades\Route;
+use Fjord\Crud\CrudIndex;
+use Fjord\Crud\CrudShow;
+use Fjord\User\Models\FjordUser;
+use Fjord\Vue\Crud\CrudTable;
 use FjordApp\Controllers\User\UserController;
+use Illuminate\Support\Facades\Route;
 
 class UserConfig extends CrudConfig
 {
@@ -46,7 +45,7 @@ class UserConfig extends CrudConfig
     {
         return [
             'singular' => ucfirst(__f('fj.users')),
-            'plural' => ucfirst(__f('fj.users')),
+            'plural'   => ucfirst(__f('fj.users')),
         ];
     }
 
@@ -54,12 +53,13 @@ class UserConfig extends CrudConfig
      * Build user index table.
      *
      * @param CrudIndex $table
+     *
      * @return void
      */
     public function index(CrudIndex $container)
     {
         $container->table(fn ($table) => $this->indexTable($table))
-            ->query(fn ($query) => $query->with('ordered_roles'))
+            ->query(fn ($query)       => $query->with('ordered_roles'))
             ->sortByDefault('id.desc')
             ->search('username', 'first_name', 'last_name', 'email');
     }
@@ -68,6 +68,7 @@ class UserConfig extends CrudConfig
      * User index table.
      *
      * @param \Fjord\Vue\Crud\CrudTable $table
+     *
      * @return void
      */
     public function indexTable(CrudTable $table)
@@ -95,6 +96,7 @@ class UserConfig extends CrudConfig
      * Crud show container.
      *
      * @param CrudShow $container
+     *
      * @return void
      */
     public function show(CrudShow $container)

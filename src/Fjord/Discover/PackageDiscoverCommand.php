@@ -3,10 +3,9 @@
 namespace Fjord\Fjord\Discover;
 
 use Exception;
-use Illuminate\Support\Facades\File;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Foundation\PackageManifest;
 use Illuminate\Foundation\Console\PackageDiscoverCommand as LaravelPackageDiscoverCommand;
+use Illuminate\Foundation\PackageManifest;
 
 class PackageDiscoverCommand extends LaravelPackageDiscoverCommand
 {
@@ -36,7 +35,7 @@ class PackageDiscoverCommand extends LaravelPackageDiscoverCommand
      */
     public function __construct()
     {
-        $this->filesystem = new Filesystem;
+        $this->filesystem = new Filesystem();
         $this->vendorPath = base_path('vendor');
         $this->manifestPath = base_path('bootstrap/cache/fjord.php');
         parent::__construct();
@@ -45,7 +44,8 @@ class PackageDiscoverCommand extends LaravelPackageDiscoverCommand
     /**
      * Execute the console command.
      *
-     * @param  \Fjord\Foundation\PackageManifest  $manifest
+     * @param \Fjord\Foundation\PackageManifest $manifest
+     *
      * @return void
      */
     public function handle(PackageManifest $manifest)
@@ -61,15 +61,16 @@ class PackageDiscoverCommand extends LaravelPackageDiscoverCommand
     }
 
     /**
-     * Find Fjord packages in vendor/composer/installed.json
+     * Find Fjord packages in vendor/composer/installed.json.
      *
      * @param string $vendorPath
+     *
      * @return array
      */
     public function findFjordPackages(string $vendorPath)
     {
         // Load packages form vendor/composer/installed.json
-        if ($this->filesystem->exists($path = $vendorPath . '/composer/installed.json')) {
+        if ($this->filesystem->exists($path = $vendorPath.'/composer/installed.json')) {
             $packages = json_decode($this->filesystem->get($path), true);
         }
 
@@ -105,31 +106,33 @@ class PackageDiscoverCommand extends LaravelPackageDiscoverCommand
     /**
      * Format the given package name.
      *
-     * @param  string  $package
+     * @param string $package
+     *
      * @return string
      */
     protected function format($package)
     {
-        return str_replace($this->vendorPath . '/', '', $package);
+        return str_replace($this->vendorPath.'/', '', $package);
     }
 
     /**
      * Write the given manifest array to disk.
      *
-     * @param  array  $manifest
-     * @return void
+     * @param array $manifest
      *
      * @throws \Exception
+     *
+     * @return void
      */
     public function write(array $manifest)
     {
         if (!is_writable(dirname($this->manifestPath))) {
-            throw new Exception('The ' . dirname($this->manifestPath) . ' directory must be present and writable.');
+            throw new Exception('The '.dirname($this->manifestPath).' directory must be present and writable.');
         }
 
         $this->filesystem->replace(
             $this->manifestPath,
-            '<?php return ' . var_export($manifest, true) . ';'
+            '<?php return '.var_export($manifest, true).';'
         );
     }
 }

@@ -12,7 +12,8 @@ class NavigationConfigFactory extends ConfigFactory
      * Resolve query.
      *
      * @param \Fjord\Config\ConfigHandler $config
-     * @param Closure $method
+     * @param Closure                     $method
+     *
      * @return Navigation
      */
     public function topbar(ConfigHandler $config, Closure $method)
@@ -24,7 +25,8 @@ class NavigationConfigFactory extends ConfigFactory
      * Resolve query.
      *
      * @param \Fjord\Config\ConfigHandler $config
-     * @param Closure $method
+     * @param Closure                     $method
+     *
      * @return Navigation
      */
     public function main(ConfigHandler $config, Closure $method)
@@ -36,11 +38,12 @@ class NavigationConfigFactory extends ConfigFactory
      * Create and build new navigation.
      *
      * @param Closure $method
+     *
      * @return Navigation
      */
     protected function nav(Closure $method)
     {
-        $nav = new Navigation;
+        $nav = new Navigation();
 
         $method($nav);
 
@@ -51,7 +54,7 @@ class NavigationConfigFactory extends ConfigFactory
             foreach ($section as $key => $entry) {
                 if (!$entry) {
                     unset($nav[$i][$key]);
-                } else if ($entry['type'] == 'group') {
+                } elseif ($entry['type'] == 'group') {
                     foreach ($entry['children'] as $ci => $child) {
                         if (!$child) {
                             unset($nav[$i][$key]['children'][$ci]);
@@ -74,7 +77,8 @@ class NavigationConfigFactory extends ConfigFactory
      * Is section emtpy. True when it only has titles.
      *
      * @param array $section
-     * @return boolean
+     *
+     * @return bool
      */
     protected function isSectionEmpty($section)
     {
@@ -87,6 +91,7 @@ class NavigationConfigFactory extends ConfigFactory
                 return false;
             }
         }
+
         return true;
     }
 }

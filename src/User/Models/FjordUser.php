@@ -3,18 +3,18 @@
 namespace Fjord\User\Models;
 
 use Fjord\Auth\Models\FjordSession;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Auth\Passwords\CanResetPassword;
 use Fjord\Auth\Notifications\ResetPasswordNotification;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class FjordUser extends Authenticatable implements CanResetPasswordContract
 {
-    use Notifiable,
-        HasRoles,
-        CanResetPassword;
+    use Notifiable;
+    use HasRoles;
+    use CanResetPassword;
 
     /**
      * Guard name.
@@ -54,13 +54,14 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
      * Send password reset notification.
      *
      * @param string $token
+     *
      * @return void
      */
     public function sendPasswordResetNotification($token)
     {
         $link = route('fjord.password.reset', $token);
 
-        $link .= '?email=' . urlencode($this->email);
+        $link .= '?email='.urlencode($this->email);
 
         $this->notify(new ResetPasswordNotification($link));
     }
@@ -79,6 +80,7 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
      * Has role admin scope.
      *
      * @param $query
+     *
      * @return $query
      */
     public function scopeAdmin($query)
@@ -90,6 +92,7 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
      * Has role user scope.
      *
      * @param  $query
+     *
      * @return $query
      */
     public function scopeUser($query)

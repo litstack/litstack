@@ -2,10 +2,9 @@
 
 namespace FjordTest\Crud;
 
-use Mockery as m;
-use Fjord\Crud\BaseForm;
 use Fjord\Crud\CrudValidator;
 use FjordTest\BackendTestCase;
+use Mockery as m;
 
 class CrudValidatorTest extends BackendTestCase
 {

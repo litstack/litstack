@@ -12,12 +12,12 @@ trait HasComparison
     protected function getNextTimeResolverConfig()
     {
         return [
-            'today' => fn ($time) => $time->subDay(),
-            'yesterday' => fn ($time) => $time->subWeek(),
-            'last7days' => fn ($time) => $time->subWeek(),
-            'thisweek' => fn ($time) => $time->subWeek(),
+            'today'      => fn ($time)      => $time->subDay(),
+            'yesterday'  => fn ($time)  => $time->subWeek(),
+            'last7days'  => fn ($time)  => $time->subWeek(),
+            'thisweek'   => fn ($time)   => $time->subWeek(),
             'last30days' => fn ($time) => $time->subDays(30),
-            'thismonth' => fn ($time) => $time->subMonth()
+            'thismonth'  => fn ($time)  => $time->subMonth(),
         ];
     }
 }

@@ -2,5 +2,5 @@
 
 return [
     'products' => 'Products',
-    'product' => 'Product',
+    'product'  => 'Product',
 ];

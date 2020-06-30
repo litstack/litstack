@@ -27,8 +27,9 @@ class MediaRepository extends BaseFieldRepository
      * Update media custom_properties.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
-     * @param object $payload
+     * @param mixed             $model
+     * @param object            $payload
+     *
      * @return void
      */
     public function update(CrudUpdateRequest $request, $model, $payload)
@@ -43,7 +44,8 @@ class MediaRepository extends BaseFieldRepository
      * Store new media in model.
      *
      * @param CrudReadRequest $request
-     * @param mixed $model
+     * @param mixed           $model
+     *
      * @return void
      */
     public function store(CrudUpdateRequest $request, $model)
@@ -58,7 +60,8 @@ class MediaRepository extends BaseFieldRepository
      * Destroy media from model.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
+     * @param mixed             $model
+     *
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)
@@ -72,7 +75,8 @@ class MediaRepository extends BaseFieldRepository
      * Order media.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
+     * @param mixed             $model
+     *
      * @return void
      */
     public function order(CrudUpdateRequest $request, $model)
@@ -91,22 +95,23 @@ class MediaRepository extends BaseFieldRepository
      * Store media to model.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
+     * @param mixed             $model
+     *
      * @return Response
      */
     protected function storeMediaToModel($request, $model)
     {
         $request->validate([
-            'media' => 'required|max:' . $this->field->maxFileSize * 1000
+            'media' => 'required|max:'.$this->field->maxFileSize * 1000,
         ], __f('validation'), [
-            'media' => $this->field->title
+            'media' => $this->field->title,
         ]);
 
         $this->destroyPreviousMedia($model);
 
         $properties = [
             'title' => $request->title ?? null,
-            'alt' => $request->alt ?? null,
+            'alt'   => $request->alt ?? null,
         ];
 
         $customProperties = $this->field->translatable ?? false
@@ -125,6 +130,7 @@ class MediaRepository extends BaseFieldRepository
      * Destroy previous media if there are to many.
      *
      * @param mixed $model
+     *
      * @return void
      */
     public function destroyPreviousMedia($model)
@@ -135,8 +141,9 @@ class MediaRepository extends BaseFieldRepository
 
         if (!$this->field->override) {
             if ($mediaCount >= $this->field->maxFiles) {
-                abort(405, "Max files count reached.");
+                abort(405, 'Max files count reached.');
             }
+
             return;
         }
 

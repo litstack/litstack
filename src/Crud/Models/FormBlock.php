@@ -4,8 +4,8 @@ namespace Fjord\Crud\Models;
 
 use BadMethodCallException;
 use Fjord\Crud\Fields\Block\Block;
-use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Traits\ForwardsCalls;
 
 class FormBlock extends FjordFormModel
 {
@@ -21,7 +21,7 @@ class FormBlock extends FjordFormModel
     /**
      * No timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
@@ -39,7 +39,7 @@ class FormBlock extends FjordFormModel
         'type',
         'content',
         'order_column',
-        'value'
+        'value',
     ];
 
     /**
@@ -131,9 +131,10 @@ class FormBlock extends FjordFormModel
 
     /**
      * Modified calls.
-     * 
+     *
      * @param string $method
-     * @param array $params
+     * @param array  $params
+     *
      * @return mixed
      */
     public function __call($method, $params = [])

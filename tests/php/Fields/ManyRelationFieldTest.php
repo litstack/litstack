@@ -2,15 +2,16 @@
 
 namespace FjordTest\Fields;
 
+use Fjord\Crud\Fields\Relations\ManyRelationField;
 use FjordTest\BackendTestCase;
-use Illuminate\Database\Eloquent\Model;
 use FjordTest\Traits\InteractsWithConfig;
 use FjordTest\Traits\InteractsWithFields;
-use Fjord\Crud\Fields\Relations\ManyRelationField;
+use Illuminate\Database\Eloquent\Model;
 
 class ManyRelationFieldTest extends BackendTestCase
 {
-    use InteractsWithFields, InteractsWithConfig;
+    use InteractsWithFields;
+    use InteractsWithConfig;
 
     public function setUp(): void
     {
@@ -25,7 +26,7 @@ class ManyRelationFieldTest extends BackendTestCase
 
     public function getConfig()
     {
-        return new ManyRelationFieldRelationConfig;
+        return new ManyRelationFieldRelationConfig();
     }
 
     /** @test */

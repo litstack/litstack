@@ -2,10 +2,10 @@
 
 namespace Fjord\Crud\Repositories\Relations;
 
-use Illuminate\Support\Facades\DB;
-use Fjord\Crud\Requests\CrudUpdateRequest;
 use Fjord\Crud\Fields\Relations\MorphToMany;
 use Fjord\Crud\Repositories\BaseFieldRepository;
+use Fjord\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Support\Facades\DB;
 
 class MorphToManyRepository extends BaseFieldRepository
 {
@@ -30,7 +30,8 @@ class MorphToManyRepository extends BaseFieldRepository
      * Create new MorphToMany relation.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
+     * @param mixed             $model
+     *
      * @return void
      */
     public function create(CrudUpdateRequest $request, $model)
@@ -42,7 +43,7 @@ class MorphToManyRepository extends BaseFieldRepository
         $query = [
             $morphToMany->getRelatedPivotKeyName() => $related->{$morphToMany->getRelatedKeyName()},
             $morphToMany->getForeignPivotKeyName() => $model->{$morphToMany->getParentKeyName()},
-            $morphToMany->getMorphType() => $morphToMany->getMorphClass()
+            $morphToMany->getMorphType()           => $morphToMany->getMorphClass(),
         ];
 
         // Sortable
@@ -56,8 +57,9 @@ class MorphToManyRepository extends BaseFieldRepository
     /**
      * Remove MorphToMany relation.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed $model
+     * @param CrudUpdateRequest $request
+     * @param mixed             $model
+     *
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)
@@ -69,7 +71,7 @@ class MorphToManyRepository extends BaseFieldRepository
         return DB::table($morphToMany->getTable())->where([
             $morphToMany->getRelatedPivotKeyName() => $related->{$morphToMany->getRelatedKeyName()},
             $morphToMany->getForeignPivotKeyName() => $model->{$morphToMany->getParentKeyName()},
-            $morphToMany->getMorphType() => $morphToMany->getMorphClass()
+            $morphToMany->getMorphType()           => $morphToMany->getMorphClass(),
         ])->delete();
     }
 }

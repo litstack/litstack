@@ -17,13 +17,13 @@ class FormRelation extends Model
         'to_model_id',
         'to_model_type',
         'field_id',
-        'order_column'
+        'order_column',
     ];
 
     /**
      * Timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 }

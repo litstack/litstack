@@ -2,8 +2,8 @@
 
 namespace Fjord\Vue\Crud;
 
-use Fjord\Vue\Col;
 use Fjord\Support\VueProp;
+use Fjord\Vue\Col;
 
 class PreviewTable extends VueProp
 {
@@ -18,6 +18,7 @@ class PreviewTable extends VueProp
      * Add table column to cols stack.
      *
      * @param value $label
+     *
      * @return \Fjord\Vue\BaseCol $col
      */
     public function col(string $value)

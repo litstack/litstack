@@ -3,12 +3,11 @@
 namespace Fjord\Crud\Fields\Relations;
 
 use Fjord\Crud\Fields\Traits\HasBaseField;
-use Fjord\Crud\Fields\Concerns\FormItemWrapper;
 
 class ManyRelation extends ManyRelationField
 {
-    use Concerns\ManagesFjordRelationField,
-        HasBaseField;
+    use Concerns\ManagesFjordRelationField;
+    use HasBaseField;
 
     /**
      * Properties passed to Vue component.
@@ -16,7 +15,7 @@ class ManyRelation extends ManyRelationField
      * @var array
      */
     protected $props = [
-        'type' => 'manyRelation'
+        'type' => 'manyRelation',
     ];
 
     /**
@@ -30,7 +29,8 @@ class ManyRelation extends ManyRelationField
      * Get relation for model.
      *
      * @param mixed $model
-     * @param boolean $query
+     * @param bool  $query
+     *
      * @return mixed
      */
     public function getRelationQuery($model)

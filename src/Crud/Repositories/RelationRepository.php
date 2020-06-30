@@ -2,12 +2,12 @@
 
 namespace Fjord\Crud\Repositories;
 
-use Fjord\Support\IndexTable;
+use Fjord\Crud\Fields\Relations\LaravelRelationField;
+use Fjord\Crud\Fields\Relations\OneRelationField;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
+use Fjord\Support\IndexTable;
 use Illuminate\Database\Eloquent\Collection;
-use Fjord\Crud\Fields\Relations\OneRelationField;
-use Fjord\Crud\Fields\Relations\LaravelRelationField;
 
 class RelationRepository extends BaseFieldRepository
 {
@@ -30,7 +30,8 @@ class RelationRepository extends BaseFieldRepository
      * Load selectable relations.
      *
      * @param CrudReadRequest $request
-     * @param mixed $model
+     * @param mixed           $model
+     *
      * @return array
      */
     public function index(CrudReadRequest $request, $model)
@@ -49,7 +50,8 @@ class RelationRepository extends BaseFieldRepository
      * Load selected relations.
      *
      * @param CrudReadRequest $request
-     * @param mixed $model
+     * @param mixed           $model
+     *
      * @return void
      */
     public function load(CrudReadRequest $request, $model)
@@ -59,7 +61,7 @@ class RelationRepository extends BaseFieldRepository
             $items = new Collection($items ? [$items] : []);
             $relations = collect([
                 'count' => 0,
-                'items' => $items
+                'items' => $items,
             ]);
         } else {
             $query = $this->field->getRelationQuery($model);
@@ -81,12 +83,13 @@ class RelationRepository extends BaseFieldRepository
      * Order relations.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
+     * @param mixed             $model
+     *
      * @return void
      */
     public function order(CrudUpdateRequest $request, $model)
     {
-        $ids = $request->ids ?? abort(404, debug("Missing parameter [ids]."));
+        $ids = $request->ids ?? abort(404, debug('Missing parameter [ids].'));
 
         $query = $this->field->getRelationQuery($model);
 

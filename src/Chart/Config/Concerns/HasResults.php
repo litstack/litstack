@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 trait HasResults
 {
     /**
-     * Result resolver
+     * Result resolver.
      *
      * @var Closure
      */
@@ -18,12 +18,14 @@ trait HasResults
      * Number that is displayed at the bottom left corner.
      *
      * @param \Illuminate\Support\Collection
-     * @return integer
+     *
+     * @return int
      */
     public function result(Collection $values): int
     {
         if ($this->resultResolver instanceof Closure) {
             $resolver = $this->resultResolver;
+
             return $resolver($values);
         }
 

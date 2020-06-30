@@ -2,8 +2,8 @@
 
 namespace FjordApp\Config\Form\Pages;
 
-use Fjord\Crud\CrudShow;
 use Fjord\Crud\Config\FormConfig;
+use Fjord\Crud\CrudShow;
 use FjordApp\Controllers\Form\Pages\HomeController;
 
 class HomeConfig extends FormConfig
@@ -22,7 +22,7 @@ class HomeConfig extends FormConfig
      */
     public function routePrefix()
     {
-        return "pages/home";
+        return 'pages/home';
     }
 
     /**
@@ -33,7 +33,7 @@ class HomeConfig extends FormConfig
     public function names()
     {
         return [
-            'singular' => 'Home'
+            'singular' => 'Home',
         ];
     }
 
@@ -41,12 +41,12 @@ class HomeConfig extends FormConfig
      * Setup create and edit form.
      *
      * @param \Fjord\Crud\CrudShow $form
+     *
      * @return void
      */
     public function show(CrudShow $form)
     {
         $form->card(function ($form) {
-
             $form->input('title')
                 ->translatable()
                 ->title('Title');

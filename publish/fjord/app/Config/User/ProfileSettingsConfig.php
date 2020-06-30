@@ -2,9 +2,9 @@
 
 namespace FjordApp\Config\User;
 
+use Fjord\Crud\Config\CrudConfig;
 use Fjord\Crud\CrudShow;
 use Fjord\User\Models\FjordUser;
-use Fjord\Crud\Config\CrudConfig;
 use FjordApp\Controllers\User\ProfileSettingsController;
 
 class ProfileSettingsConfig extends CrudConfig
@@ -31,12 +31,12 @@ class ProfileSettingsConfig extends CrudConfig
     public function names()
     {
         $profileSettingsName = ucwords(__f('base.item_settings', [
-            'item' => __f('base.profile')
+            'item' => __f('base.profile'),
         ]));
 
         return [
             'singular' => $profileSettingsName,
-            'plural' => $profileSettingsName,
+            'plural'   => $profileSettingsName,
         ];
     }
 
@@ -54,6 +54,7 @@ class ProfileSettingsConfig extends CrudConfig
      * Setup create and edit form.
      *
      * @param \Fjord\Crud\CrudShow $form
+     *
      * @return void
      */
     public function show(CrudShow $container)
@@ -79,6 +80,7 @@ class ProfileSettingsConfig extends CrudConfig
      * Profile settings.
      *
      * @param CrudShow $form
+     *
      * @return void
      */
     public function settings($form)
@@ -110,9 +112,10 @@ class ProfileSettingsConfig extends CrudConfig
     }
 
     /**
-     * Change language
+     * Change language.
      *
      * @param CrudShow $form
+     *
      * @return void
      */
     public function language($form)
@@ -132,9 +135,10 @@ class ProfileSettingsConfig extends CrudConfig
     /**
      * User security.
      * - Change password
-     * - Session manager
+     * - Session manager.
      *
      * @param CrudShow $container
+     *
      * @return void
      */
     public function security($form)
@@ -142,7 +146,7 @@ class ProfileSettingsConfig extends CrudConfig
         $form->modal('change_password')
             ->title('Password')
             ->variant('primary')
-            ->name(fa('user-shield') . ' ' . __f('profile.change_password'))
+            ->name(fa('user-shield').' '.__f('profile.change_password'))
             ->form(function ($modal) {
                 $modal->password('old_password')
                     ->title('Old Password')

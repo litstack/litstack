@@ -2,11 +2,10 @@
 
 namespace Fjord\Chart;
 
-use Closure;
 use Carbon\CarbonInterface;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 class ChartSet
 {
@@ -20,7 +19,7 @@ class ChartSet
     /**
      * Iterations.
      *
-     * @var integer
+     * @var int
      */
     protected $iterations;
 
@@ -79,6 +78,7 @@ class ChartSet
      * @param Builder $query
      * @param Closure $valueClosure
      * @param Closure $timeResolver
+     *
      * @return void
      */
     public static function make(Builder $query, Closure $valueResolver, Closure $timeResolver)
@@ -97,6 +97,7 @@ class ChartSet
      * Set time.
      *
      * @param CarbonInterface $time
+     *
      * @return $this
      */
     public function time(CarbonInterface $time)
@@ -109,7 +110,8 @@ class ChartSet
     /**
      * Set iterations.
      *
-     * @param integer $iterations
+     * @param int $iterations
+     *
      * @return $this
      */
     public function iterations(int $iterations)
@@ -167,6 +169,7 @@ class ChartSet
      * Get values from selects.
      *
      * @param array $selects
+     *
      * @return \Illuminate\Support\Collection
      */
     protected function getValuesFromStatements(array $selects)
@@ -180,6 +183,7 @@ class ChartSet
      * Modify query with select statement.
      *
      * @param array $select
+     *
      * @return Builder
      */
     protected function getQueryFromStatements(array $selects)
@@ -197,6 +201,7 @@ class ChartSet
      * Convert null values to integer.
      *
      * @param \Illuminate\Support\Collection $values
+     *
      * @return \Illuminate\Support\Collection
      */
     protected function convertNullValues(Collection $values)
@@ -210,17 +215,19 @@ class ChartSet
      * Get default label.
      *
      * @param \Carbon\CarbonInterface $time
+     *
      * @return string
      */
     protected function getDefaultLabel(CarbonInterface $time)
     {
-        return $time->format("d.m.y");
+        return $time->format('d.m.y');
     }
 
     /**
      * Get label from time.
      *
      * @param \Carbon\CarbonInterface $time
+     *
      * @return string
      */
     public function getLabelFromTime(CarbonInterface $time)
@@ -235,6 +242,7 @@ class ChartSet
      * Get select query from time.
      *
      * @param \Carbon\CarbonInterface $time
+     *
      * @return Builder
      */
     public function getSelectFromTime(CarbonInterface $time)
@@ -267,7 +275,8 @@ class ChartSet
     /**
      * Get time from iteration key.
      *
-     * @param integer $i
+     * @param int $i
+     *
      * @return \Carbon\CarbonInterface
      */
     protected function getTimeFromIterationKey(int $i): CarbonInterface

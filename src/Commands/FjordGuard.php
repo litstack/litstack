@@ -65,7 +65,6 @@ class FjordGuard extends Command
             );
         }
 
-
         File::put(config_path('auth.php'), $replace);
     }
 }

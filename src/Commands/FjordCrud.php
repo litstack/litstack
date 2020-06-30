@@ -5,8 +5,6 @@ namespace Fjord\Commands;
 use Fjord\Support\StubBuilder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class FjordCrud extends Command
 {
@@ -41,12 +39,12 @@ class FjordCrud extends Command
      */
     public function handle()
     {
-        $this->info("    ______ _                   __   ______ ____   __  __ ____  ");
+        $this->info('    ______ _                   __   ______ ____   __  __ ____  ');
         $this->info("   / ____/(_)____   _____ ____/ /  / ____// __ \ / / / // __ \ ");
         $this->info("  / /_   / // __ \ / ___// __  /  / /    / /_/ // / / // / / / ");
-        $this->info(" / __/  / // /_/ // /   / /_/ /  / /___ / _, _// /_/ // /_/ /  ");
+        $this->info(' / __/  / // /_/ // /   / /_/ /  / /___ / _, _// /_/ // /_/ /  ');
         $this->info("/_/  __/ / \____//_/    \__,_/   \____//_/ |_| \____//_____/   ");
-        $this->info("    /___/                                                      ");
+        $this->info('    /___/                                                      ');
 
         $modelName = $this->option('model');
         if (!$modelName) {
@@ -58,13 +56,13 @@ class FjordCrud extends Command
         $m = $this->option('media');
         $s = $this->option('slug');
         $t = $this->option('translatable');
-        if ($m !== "0") {
+        if ($m !== '0') {
             $m = $this->choice('does the model have media?', ['y', 'n'], 0) == 'y' ? true : false;
         }
-        if ($s !== "0") {
+        if ($s !== '0') {
             $s = $this->choice('does the model have a slug?', ['y', 'n'], 0) == 'y' ? true : false;
         }
-        if ($t !== "0") {
+        if ($t !== '0') {
             $t = $this->choice('is the model translatable?', ['y', 'n'], 0) == 'y' ? true : false;
         }
 
@@ -94,10 +92,11 @@ class FjordCrud extends Command
 
     private function makeModel($modelName, $m, $s, $t)
     {
-        $model = app_path('Models/' . $modelName . '.php');
+        $model = app_path('Models/'.$modelName.'.php');
 
         if (\File::exists($model)) {
-            $this->line('Model App\\Models\\' . $modelName . ' already exists.');
+            $this->line('Model App\\Models\\'.$modelName.' already exists.');
+
             return;
         }
 
@@ -146,7 +145,7 @@ class FjordCrud extends Command
         if ($t) {
             $builder->withTraits("use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;");
             $builder->withTraits("use Fjord\Crud\Models\Traits\Translatable;");
-            $builder->withVars('public $translatedAttributes' . " = ['title', 'text'];");
+            $builder->withVars('public $translatedAttributes'." = ['title', 'text'];");
 
             $attributeContents = file_get_contents(fjord_path('stubs/CrudModelTranslationAttribute.stub'));
             $builder->withGetAttributes($attributeContents);
@@ -160,19 +159,19 @@ class FjordCrud extends Command
         }
 
         if ($implements) {
-            $builder->withImplement('implements ' . implode(', ', $implements));
+            $builder->withImplement('implements '.implode(', ', $implements));
         }
 
         if ($uses) {
-            $builder->withUses('use ' . implode(', ', $uses) . ';');
+            $builder->withUses('use '.implode(', ', $uses).';');
         }
 
         if ($appends) {
-            $builder->withVars("\tprotected \$appends = ['" . implode("', '", $appends) . "'];");
+            $builder->withVars("\tprotected \$appends = ['".implode("', '", $appends)."'];");
         }
 
         if ($with) {
-            $builder->withWiths("protected \$with = ['" . implode("', '", $with) . "'];");
+            $builder->withWiths("protected \$with = ['".implode("', '", $with)."'];");
         }
 
         $builder->create($model);
@@ -182,27 +181,28 @@ class FjordCrud extends Command
 
     private function makeTranslationModel($modelName, $s)
     {
-        $model = app_path('Models/Translations/' . $modelName . 'Translation.php');
+        $model = app_path('Models/Translations/'.$modelName.'Translation.php');
 
         if (\File::exists($model)) {
-            $this->line("Translation Model already exists.");
+            $this->line('Translation Model already exists.');
+
             return;
         }
 
         if (!file_exists($model)) {
-            $fileContents = file_get_contents(__DIR__ . '/../../stubs/CrudTranslationModel.stub');
+            $fileContents = file_get_contents(__DIR__.'/../../stubs/CrudTranslationModel.stub');
 
-            $fileContents = str_replace('DummyClassname', $modelName . 'Translation', $fileContents);
+            $fileContents = str_replace('DummyClassname', $modelName.'Translation', $fileContents);
 
             // if the model is sluggable, add sluggable trait
             if ($s) {
                 $fileContents = str_replace('DummyTraits', "use Fjord\Crud\Models\Traits\Sluggable;\nDummyTraits", $fileContents);
                 $fileContents = str_replace('DummyTraits', "use Illuminate\Database\Eloquent\Builder;\nDummyTraits", $fileContents);
 
-                $sluggableContents = file_get_contents(__DIR__ . '/../../stubs/CrudModelSluggable.stub');
-                $fileContents = str_replace('DummySluggable', $sluggableContents . "\n" . 'DummySluggable', $fileContents);
+                $sluggableContents = file_get_contents(__DIR__.'/../../stubs/CrudModelSluggable.stub');
+                $fileContents = str_replace('DummySluggable', $sluggableContents."\n".'DummySluggable', $fileContents);
 
-                $sluggableContents = file_get_contents(__DIR__ . '/../../stubs/CrudTranslationModelSlugUnique.stub');
+                $sluggableContents = file_get_contents(__DIR__.'/../../stubs/CrudTranslationModelSlugUnique.stub');
                 $fileContents = str_replace('DummySluggable', $sluggableContents, $fileContents);
 
                 $uses = ['Sluggable'];
@@ -226,28 +226,29 @@ class FjordCrud extends Command
     private function makeMigration($modelName, $s, $t)
     {
         $tableName = Str::snake(Str::plural($modelName));
-        $translationTableName = Str::singular($tableName) . '_translations';
+        $translationTableName = Str::singular($tableName).'_translations';
 
         $files = scandir(base_path('database/migrations'));
-        $migrationName = 'create_' . $tableName . '_table.php';
+        $migrationName = 'create_'.$tableName.'_table.php';
         $timestamp = str_replace(' ', '_', str_replace('-', '_', str_replace(':', '', now())));
         $migrationFileName = "database/migrations/{$timestamp}_create_{$tableName}_table.php";
         foreach ($files as $file) {
             if (Str::endsWith($file, $migrationName)) {
-                $this->line('Migration for ' . $tableName . ' already exists.');
+                $this->line('Migration for '.$tableName.' already exists.');
+
                 return $migrationFileName;
             }
         }
 
-        $fileContents = file_get_contents(__DIR__ . '/../../stubs/CrudMigration.stub');
+        $fileContents = file_get_contents(__DIR__.'/../../stubs/CrudMigration.stub');
 
         // model is translatable
         if ($t) {
-            $translationContents = file_get_contents(__DIR__ . '/../../stubs/CrudMigrationTranslation.stub');
+            $translationContents = file_get_contents(__DIR__.'/../../stubs/CrudMigrationTranslation.stub');
             $fileContents = str_replace('DummyTranslation', $translationContents, $fileContents);
             $fileContents = str_replace('DummyDownTranslation', "Schema::dropIfExists('DummyTranslationTablename');", $fileContents);
             $fileContents = str_replace('DummyTranslationTablename', $translationTableName, $fileContents);
-            $fileContents = str_replace('DummyForeignId', Str::singular($tableName) . '_id', $fileContents);
+            $fileContents = str_replace('DummyForeignId', Str::singular($tableName).'_id', $fileContents);
         } else {
             $fileContents = str_replace('DummyTranslation', '', $fileContents);
             $fileContents = str_replace('DummyDownTranslation', '', $fileContents);
@@ -255,16 +256,13 @@ class FjordCrud extends Command
 
         // model has slug
         if ($s) {
-            $fileContents = str_replace('DummySlug', '$table->string' . "('slug')->nullable();", $fileContents);
+            $fileContents = str_replace('DummySlug', '$table->string'."('slug')->nullable();", $fileContents);
         } else {
             $fileContents = str_replace('DummySlug', '', $fileContents);
         }
 
-
-        $fileContents = str_replace('DummyClassname', "Create" . ucfirst(Str::plural($modelName)) . "Table", $fileContents);
+        $fileContents = str_replace('DummyClassname', 'Create'.ucfirst(Str::plural($modelName)).'Table', $fileContents);
         $fileContents = str_replace('DummyTablename', $tableName, $fileContents);
-
-
 
         if (\File::put($migrationFileName, $fileContents)) {
             $this->info('migration created');
@@ -277,16 +275,17 @@ class FjordCrud extends Command
     {
         $tableName = Str::snake(Str::plural($modelName));
 
-        $controllerPath = base_path('fjord/app/Controllers/Crud/' . $modelName . 'Controller.php');
+        $controllerPath = base_path('fjord/app/Controllers/Crud/'.$modelName.'Controller.php');
 
         if (\File::exists($controllerPath)) {
             $this->line("Controller {$modelName}Controller already exists.");
+
             return;
         }
 
-        $fileContents = file_get_contents(__DIR__ . '/../../stubs/CrudController.stub');
+        $fileContents = file_get_contents(__DIR__.'/../../stubs/CrudController.stub');
 
-        $fileContents = str_replace('DummyClass', $modelName . 'Controller', $fileContents);
+        $fileContents = str_replace('DummyClass', $modelName.'Controller', $fileContents);
         $fileContents = str_replace('DummyModelClass', "\\App\\Models\\{$modelName}", $fileContents);
         $fileContents = str_replace('DummyTableName', $tableName, $fileContents);
 
@@ -301,15 +300,16 @@ class FjordCrud extends Command
     private function makeConfig($modelName)
     {
         $tableName = Str::snake(Str::plural($modelName));
-        $config = base_path('fjord/app/Config/Crud/' . ucfirst($modelName) . 'Config.php');
+        $config = base_path('fjord/app/Config/Crud/'.ucfirst($modelName).'Config.php');
 
         $name = ucfirst($modelName);
         if (\File::exists($config)) {
             $this->line("Controller {$name}Controller already exists.");
+
             return;
         }
 
-        $fileContents = file_get_contents(__DIR__ . '/../../stubs/CrudConfig.stub');
+        $fileContents = file_get_contents(__DIR__.'/../../stubs/CrudConfig.stub');
         $fileContents = str_replace('DummyClassname', $modelName, $fileContents);
         $fileContents = str_replace('DummyTablename', $tableName, $fileContents);
         if (!\File::exists(base_path('fjord/app/Config/Crud'))) {
@@ -339,7 +339,7 @@ class FjordCrud extends Command
             $delimiter = '';
             $str = 'implements ';
             foreach ($implements as $imp) {
-                $str .= $delimiter . $imp;
+                $str .= $delimiter.$imp;
                 $delimiter = ', ';
             }
             $fileContents = str_replace('DummyImplement', $str, $fileContents);
@@ -355,10 +355,10 @@ class FjordCrud extends Command
             $delimiter = '';
             $str = 'use ';
             foreach ($uses as $use) {
-                $str .= $delimiter . $use;
+                $str .= $delimiter.$use;
                 $delimiter = ', ';
             }
-            $fileContents = str_replace('DummyUses', $str . ';', $fileContents);
+            $fileContents = str_replace('DummyUses', $str.';', $fileContents);
         }
 
         return $fileContents;
@@ -371,10 +371,10 @@ class FjordCrud extends Command
             $delimiter = '';
             $str = 'protected $appends = [';
             foreach ($appends as $append) {
-                $str .= $delimiter . "'" . $append . "'";
+                $str .= $delimiter."'".$append."'";
                 $delimiter = ', ';
             }
-            $fileContents = str_replace('DummyVars', $str . '];', $fileContents);
+            $fileContents = str_replace('DummyVars', $str.'];', $fileContents);
         }
 
         return $fileContents;

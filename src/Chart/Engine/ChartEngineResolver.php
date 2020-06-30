@@ -24,8 +24,9 @@ class ChartEngineResolver
     /**
      * Register a new chart engine resolver.
      *
-     * @param string $engine
+     * @param string  $engine
      * @param Closure $closure
+     *
      * @return void
      */
     public function register(string $engine, Closure $closure)
@@ -39,6 +40,7 @@ class ChartEngineResolver
      * Resolve an engine instance by name.
      *
      * @param string $engine
+     *
      * @return void
      */
     public function resolve(string $engine)

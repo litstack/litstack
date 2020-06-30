@@ -15,18 +15,17 @@ class FieldWrapperGroupComponent extends Component
     {
         return [
             'width' => [
-                'type' => 'integer',
+                'type'     => 'integer',
                 'required' => false,
-                'default' => 12
+                'default'  => 12,
             ],
             'class' => [
-                'type' => 'string',
+                'type'     => 'string',
                 'required' => false,
-                'default' => 'mb-4'
+                'default'  => 'mb-4',
             ],
             'dependsOn' => [
                 'type' => 'object',
-
 
             ],
         ];

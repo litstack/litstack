@@ -16,11 +16,12 @@ class MainDashboardController extends FormController
 
     /**
      * Authorize request for authenticated fjord-user and permission operation.
-     * Operations: read, update
+     * Operations: read, update.
      *
      * @param FjordUser $user
-     * @param string $operation
-     * @return boolean
+     * @param string    $operation
+     *
+     * @return bool
      */
     public function authorize(FjordUser $user, string $operation): bool
     {

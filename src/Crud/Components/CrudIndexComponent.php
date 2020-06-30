@@ -3,8 +3,8 @@
 namespace Fjord\Crud\Components;
 
 use Closure;
-use Illuminate\Support\Str;
 use Fjord\Vue\RootComponent;
+use Illuminate\Support\Str;
 
 class CrudIndexComponent extends RootComponent
 {
@@ -17,11 +17,11 @@ class CrudIndexComponent extends RootComponent
     {
         return array_merge(parent::slots(), [
             'indexControls' => [
-                'many' => true
+                'many' => true,
             ],
             'index' => [
-                'many' => true
-            ]
+                'many' => true,
+            ],
         ]);
     }
 
@@ -29,6 +29,7 @@ class CrudIndexComponent extends RootComponent
      * Edit index.
      *
      * @param Closure $closure
+     *
      * @return void
      */
     public function index(Closure $closure)
@@ -40,7 +41,8 @@ class CrudIndexComponent extends RootComponent
      * Check for crud model.
      *
      * @param string $model
-     * @return boolean
+     *
+     * @return bool
      */
     public function isModel(string $model)
     {
@@ -51,7 +53,8 @@ class CrudIndexComponent extends RootComponent
      * Should extension be executed.
      *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     public function resolveExtension(string $name = ''): bool
     {

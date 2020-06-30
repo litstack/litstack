@@ -3,7 +3,6 @@
 namespace Fjord\Vue\Crud;
 
 use Fjord\Vue\Table;
-use Fjord\Vue\TableComponent;
 
 class CrudTable extends Table
 {
@@ -25,7 +24,7 @@ class CrudTable extends Table
     }
 
     /**
-     * Disable link on all table columns
+     * Disable link on all table columns.
      *
      * @return $this
      */
@@ -42,6 +41,7 @@ class CrudTable extends Table
      * Add table column to cols stack.
      *
      * @param string $label
+     *
      * @return \Fjord\Vue\Col
      */
     public function col(string $label = '')
@@ -57,6 +57,7 @@ class CrudTable extends Table
      * Add table column to cols stack and set component.
      *
      * @param string $component
+     *
      * @return \Fjord\Vue\Crud\CrudTableComponent $col
      */
     public function component(string $component)

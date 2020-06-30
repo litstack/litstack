@@ -2,10 +2,9 @@
 
 namespace Fjord\Crud\Repositories\Relations;
 
-use Fjord\Crud\Fields\Relations\HasOne;
 use Fjord\Crud\Fields\Relations\MorphMany;
-use Fjord\Crud\Requests\CrudUpdateRequest;
 use Fjord\Crud\Repositories\BaseFieldRepository;
+use Fjord\Crud\Requests\CrudUpdateRequest;
 
 class MorphManyRepository extends BaseFieldRepository
 {
@@ -30,7 +29,8 @@ class MorphManyRepository extends BaseFieldRepository
      * Create new morphMany relation.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
+     * @param mixed             $model
+     *
      * @return void
      */
     public function create(CrudUpdateRequest $request, $model)
@@ -53,8 +53,9 @@ class MorphManyRepository extends BaseFieldRepository
     /**
      * Remove morphMany relation.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed $model
+     * @param CrudUpdateRequest $request
+     * @param mixed             $model
+     *
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)
@@ -64,11 +65,11 @@ class MorphManyRepository extends BaseFieldRepository
         $morphMany = $this->field->getRelationQuery($model);
 
         $related->where([
-            $morphMany->getMorphType() => get_class($model),
-            $morphMany->getForeignKeyName() => $model->{$morphMany->getLocalKeyName()}
+            $morphMany->getMorphType()      => get_class($model),
+            $morphMany->getForeignKeyName() => $model->{$morphMany->getLocalKeyName()},
         ])->update([
-            $morphMany->getMorphType() => '',
-            $morphMany->getForeignKeyName() => null
+            $morphMany->getMorphType()      => '',
+            $morphMany->getForeignKeyName() => null,
         ]);
     }
 }

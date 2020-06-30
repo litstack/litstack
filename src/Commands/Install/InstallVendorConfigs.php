@@ -2,15 +2,15 @@
 
 namespace Fjord\Commands\Install;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 trait InstallVendorConfigs
 {
     /**
-     * Publish all relevant vendor config files and edit them as needed
+     * Publish all relevant vendor config files and edit them as needed.
      *
      * @return void
      */
@@ -37,14 +37,14 @@ trait InstallVendorConfigs
     protected function vendorSluggable()
     {
         $this->callSilent('vendor:publish', [
-            '--provider' => "Cviebrock\EloquentSluggable\ServiceProvider"
+            '--provider' => "Cviebrock\EloquentSluggable\ServiceProvider",
         ]);
     }
 
     protected function vendorTranslatable()
     {
         $this->callSilent('vendor:publish', [
-            '--tag' => "translatable"
+            '--tag' => 'translatable',
         ]);
 
         $replace = file_get_contents(config_path('translatable.php'));
@@ -75,6 +75,7 @@ trait InstallVendorConfigs
      * Publish medialibrary.
      *
      * @param array $migrationFiles
+     *
      * @return void
      */
     protected function vendorMediaLibrary($migrationFiles)
@@ -88,20 +89,20 @@ trait InstallVendorConfigs
         if (!$mediaMatch && $this->migrations()) {
             $this->callSilent('vendor:publish', [
                 '--provider' => "Spatie\MediaLibrary\MediaLibraryServiceProvider",
-                '--tag' => "migrations"
+                '--tag'      => 'migrations',
             ]);
         }
         $this->callSilent('vendor:publish', [
             '--provider' => "Spatie\MediaLibrary\MediaLibraryServiceProvider",
-            '--tag' => "config"
+            '--tag'      => 'config',
         ]);
-        $content = file_get_contents(config_path(medialibrary_config_key() . '.php'));
+        $content = file_get_contents(config_path(medialibrary_config_key().'.php'));
         $content = str_replace(
             'Spatie\MediaLibrary\MediaCollections\Models\Media::class',
             'Fjord\Crud\Models\Media::class',
             $content
         );
-        File::put(config_path(medialibrary_config_key() . '.php'), $content);
+        File::put(config_path(medialibrary_config_key().'.php'), $content);
     }
 
     /**
@@ -117,20 +118,19 @@ trait InstallVendorConfigs
 
         $this->callSilent('vendor:publish', [
             '--provider' => \Spatie\Permission\PermissionServiceProvider::class,
-            '--tag' => "migrations"
+            '--tag'      => 'migrations',
         ]);
 
-        $migrationsPath = app()->databasePath() . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR;
+        $migrationsPath = app()->databasePath().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR;
         $migration = Collection::make($migrationsPath)
             ->flatMap(function ($path) {
-                return File::glob($path . '*_create_permission_tables.php');
+                return File::glob($path.'*_create_permission_tables.php');
             })->first();
-
 
         $name = '2020_00_00_000000_create_permission_tables.php';
         if ($name == basename($migration)) {
             return;
         }
-        File::move($migration, $migrationsPath . $name);
+        File::move($migration, $migrationsPath.$name);
     }
 }

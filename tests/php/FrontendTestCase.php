@@ -3,17 +3,19 @@
 namespace FjordTest;
 
 use Exception;
-use Laravel\Dusk\Browser;
-use FjordTest\Traits\TestHelpers;
-use Laravel\Dusk\Chrome\SupportsChrome;
 use Facebook\WebDriver\Chrome\ChromeOptions;
-use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
+use Facebook\WebDriver\Remote\RemoteWebDriver;
+use FjordTest\Traits\TestHelpers;
+use Laravel\Dusk\Browser;
+use Laravel\Dusk\Chrome\SupportsChrome;
 use Orchestra\Testbench\Dusk\TestCase as OrchestraDuskTestCase;
 
 class FrontendTestCase extends OrchestraDuskTestCase
 {
-    use SupportsChrome, FjordTestCase, TestHelpers;
+    use SupportsChrome;
+    use FjordTestCase;
+    use TestHelpers;
 
     /**
      * The base serve host URL to use while testing the application.
@@ -39,9 +41,9 @@ class FrontendTestCase extends OrchestraDuskTestCase
         parent::setUp();
 
         Browser::$baseUrl = $this->baseUrl();
-        Browser::$storeScreenshotsAt = __DIR__ . '/../resources/screenshots';
-        Browser::$storeConsoleLogAt = __DIR__ . '/../resources/console';
-        Browser::$storeSourceAt = __DIR__ . '/../resources/source';
+        Browser::$storeScreenshotsAt = __DIR__.'/../resources/screenshots';
+        Browser::$storeConsoleLogAt = __DIR__.'/../resources/console';
+        Browser::$storeSourceAt = __DIR__.'/../resources/source';
 
         Browser::$userResolver = function () {
             return $this->user();
@@ -75,16 +77,17 @@ class FrontendTestCase extends OrchestraDuskTestCase
     }
 
     /**
-     * Get package provider
+     * Get package provider.
      *
      * @param Application $app
+     *
      * @return array
      */
     protected function getPackageProviders($app)
     {
         return array_merge(
             [
-                \Laravel\Dusk\DuskServiceProvider::class
+                \Laravel\Dusk\DuskServiceProvider::class,
             ],
             static::$packageProviders
         );
@@ -97,7 +100,7 @@ class FrontendTestCase extends OrchestraDuskTestCase
      */
     protected function driver(): RemoteWebDriver
     {
-        $options = (new ChromeOptions)->addArguments([
+        $options = (new ChromeOptions())->addArguments([
             '--disable-gpu',
             '--headless',
             '--window-size=1920,1080',
@@ -127,20 +130,20 @@ class FrontendTestCase extends OrchestraDuskTestCase
     /**
      * Return the default user to authenticate.
      *
-     * @return \App\User|int|null
-     *
      * @throws \Exception
+     *
+     * @return \App\User|int|null
      */
     protected function user()
     {
         throw new Exception('User resolver has not been set.');
     }
 
-
     /**
      * Prepare for Dusk test execution.
      *
      * @beforeClass
+     *
      * @return void
      */
     public static function prepare()

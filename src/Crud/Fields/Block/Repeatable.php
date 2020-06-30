@@ -3,10 +3,10 @@
 namespace Fjord\Crud\Fields\Block;
 
 use Closure;
-use Fjord\Vue\Table;
 use Fjord\Crud\BaseForm;
-use Fjord\Support\VueProp;
 use Fjord\Crud\Models\FormBlock;
+use Fjord\Support\VueProp;
+use Fjord\Vue\Table;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 class Repeatable extends VueProp
@@ -49,6 +49,7 @@ class Repeatable extends VueProp
      * Configure repeatable form.
      *
      * @param Closure $closure
+     *
      * @return $this
      */
     public function form(Closure $closure)
@@ -59,13 +60,13 @@ class Repeatable extends VueProp
 
         $form->afterRegisteringField(function ($field) {
             $field->setAttribute('params', [
-                'field_id' => $this->field->id,
-                'repeatable_id' => null,
+                'field_id'        => $this->field->id,
+                'repeatable_id'   => null,
                 'repeatable_type' => $this->name,
             ]);
         });
 
-        $this->preview = new Table;
+        $this->preview = new Table();
 
         $closure($form, $this->preview);
 
@@ -82,15 +83,15 @@ class Repeatable extends VueProp
     public function render(): array
     {
         return [
-            'form' => $this->form->toArray(),
-            'preview' => $this->preview->toArray()
+            'form'    => $this->form->toArray(),
+            'preview' => $this->preview->toArray(),
         ];
     }
 
     /**
      * Determine if repeatable has Blade x component.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasX()
     {
@@ -111,6 +112,7 @@ class Repeatable extends VueProp
      * Set blade x component.
      *
      * @param string $component
+     *
      * @return $this
      */
     public function x(string $component)
@@ -124,6 +126,7 @@ class Repeatable extends VueProp
      * Add blade x component.
      *
      * @param string $view
+     *
      * @return $this
      */
     public function view(string $name)
@@ -136,7 +139,7 @@ class Repeatable extends VueProp
     /**
      * Determine if repeatable has view.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasView()
     {
@@ -176,8 +179,9 @@ class Repeatable extends VueProp
     /**
      * Handle dynamic method calls to the repeatable.
      *
-     * @param  string  $method
-     * @param  array  $parameters
+     * @param string $method
+     * @param array  $parameters
+     *
      * @return mixed
      */
     public function __call($method, $parameters)

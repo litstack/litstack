@@ -4,12 +4,11 @@ namespace Fjord\Vue;
 
 use Closure;
 use Exception;
-use Fjord\Support\VueProp;
-use InvalidArgumentException;
-use Fjord\Vue\Traits\Authorizable;
-use Illuminate\Contracts\Support\Arrayable;
 use Fjord\Exceptions\MethodNotFoundException;
+use Fjord\Support\VueProp;
 use Fjord\Vue\Contracts\AuthorizableContract;
+use Fjord\Vue\Traits\Authorizable;
+use InvalidArgumentException;
 
 class Component extends VueProp implements AuthorizableContract
 {
@@ -70,7 +69,8 @@ class Component extends VueProp implements AuthorizableContract
      * Create new Component instance.
      *
      * @param string $name
-     * @param array $options
+     * @param array  $options
+     *
      * @return void
      */
     public function __construct(string $name, array $options = [])
@@ -115,15 +115,15 @@ class Component extends VueProp implements AuthorizableContract
         }
     }
 
-
     /**
      * Register new slot.
      *
-     * @param string $name
+     * @param string           $name
      * @param string|Component $component
-     * @return void
-     * 
+     *
      * @throws \InvalidArgumentException
+     *
+     * @return void
      */
     public function slot(string $name, $component)
     {
@@ -154,10 +154,11 @@ class Component extends VueProp implements AuthorizableContract
     }
 
     /**
-     * Has slot many components
-     * 
+     * Has slot many components.
+     *
      * @param string $slot
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasSlotMany(string $slot)
     {
@@ -169,6 +170,7 @@ class Component extends VueProp implements AuthorizableContract
         if (!array_key_exists('many', $options)) {
             return false;
         }
+
         return $options['many'];
     }
 
@@ -196,6 +198,7 @@ class Component extends VueProp implements AuthorizableContract
      * Bind multiple props.
      *
      * @param array $props
+     *
      * @return self
      */
     public function bind(array $props)
@@ -211,7 +214,8 @@ class Component extends VueProp implements AuthorizableContract
      * Add single prop.
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return self
      */
     public function prop(string $name, $value = true)
@@ -230,6 +234,7 @@ class Component extends VueProp implements AuthorizableContract
      * Set component class.
      *
      * @param string $value
+     *
      * @return void
      */
     public function class(string $value)
@@ -246,9 +251,10 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Check prop config type.
      *
-     * @param string $name
+     * @param string       $name
      * @param string|array $type
-     * @param mixed $value
+     * @param mixed        $value
+     *
      * @return void
      */
     protected function checkPropType($name, $type, $value)
@@ -266,14 +272,13 @@ class Component extends VueProp implements AuthorizableContract
                 $message = "Value must be: {$type}";
             }
         } else {
-
             foreach ($type as $t) {
                 $valid = $this->isValidPropType($t, $value);
                 if ($valid) {
                     break;
                 }
             }
-            $message = "Value must be: " . implode(', ', $type);
+            $message = 'Value must be: '.implode(', ', $type);
         }
 
         if (!$valid) {
@@ -291,10 +296,11 @@ class Component extends VueProp implements AuthorizableContract
      * Check if a prop type is valid.
      *
      * @param string $type
-     * @param mixed $value
-     * @return boolean
-     * 
+     * @param mixed  $value
+     *
      * @throws \InvalidArgumentException
+     *
+     * @return bool
      */
     protected function isValidPropType($type, $value)
     {
@@ -315,7 +321,7 @@ class Component extends VueProp implements AuthorizableContract
     }
 
     /**
-     * Get missing props and attributes
+     * Get missing props and attributes.
      *
      * @return array
      */
@@ -342,13 +348,12 @@ class Component extends VueProp implements AuthorizableContract
         return $missing;
     }
 
-
     /**
      * Check if all required props have been set.
      *
-     * @return boolean
-     * 
      * @throws \Exception
+     *
+     * @return bool
      */
     public function checkComplete()
     {
@@ -359,9 +364,9 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Check for missing required props.
      *
-     * @return boolean
-     * 
      * @throws \Exception
+     *
+     * @return bool
      */
     public function checkCompleteProps()
     {
@@ -379,9 +384,9 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Check for missing slots.
      *
-     * @return boolean
-     * 
      * @throws \Exception
+     *
+     * @return bool
      */
     public function checkCompleteSlots()
     {
@@ -422,14 +427,14 @@ class Component extends VueProp implements AuthorizableContract
         $this->checkComplete();
 
         return [
-            'name' => $this->name,
+            'name'  => $this->name,
             'props' => collect($this->props),
-            'slots' => collect($this->slots)
+            'slots' => collect($this->slots),
         ];
     }
 
     /**
-     * Get component name
+     * Get component name.
      *
      * @return string
      */
@@ -481,18 +486,19 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Throw a MethodNotFoundException.
      *
-     * @param  array  $others
-     * @param  string  $method
-     * @return void
+     * @param array  $others
+     * @param string $method
      *
      * @throws \Fjord\Exceptions\MethodNotFoundException
+     *
+     * @return void
      */
     public function methodNotFound($method, $options = [])
     {
         if (empty($options)) {
             $options = [
                 'function' => '__call',
-                'class' => self::class
+                'class'    => self::class,
             ];
         }
 
@@ -532,14 +538,14 @@ class Component extends VueProp implements AuthorizableContract
      * Call component method.
      *
      * @param string $method
-     * @param array $params
-     * @return void
-     * 
+     * @param array  $params
+     *
      * @throws \Fjord\Exceptions\MethodNotFoundException
+     *
+     * @return void
      */
     public function __call($method, $params = [])
     {
-
         if (array_key_exists($method, $this->availableProps)) {
             return $this->prop($method, ...$params);
         }

@@ -2,10 +2,9 @@
 
 namespace Fjord\Vue;
 
-use Closure;
 use Fjord\Support\VueProp;
-use Fjord\Vue\Traits\Authorizable;
 use Fjord\Vue\Contracts\AuthorizableContract;
+use Fjord\Vue\Traits\Authorizable;
 
 class Table extends VueProp implements AuthorizableContract
 {
@@ -22,6 +21,7 @@ class Table extends VueProp implements AuthorizableContract
      * Add table column to cols stack.
      *
      * @param string $label
+     *
      * @return \Fjord\Vue\Col $col
      */
     public function col(string $label = '')
@@ -37,6 +37,7 @@ class Table extends VueProp implements AuthorizableContract
      * Add toggle column.
      *
      * @param string $key
+     *
      * @return ColImageComponent
      */
     public function toggle(string $key)
@@ -81,6 +82,7 @@ class Table extends VueProp implements AuthorizableContract
      * Add table column to cols stack and set component.
      *
      * @param string $component
+     *
      * @return mixed
      */
     public function component(string $component)

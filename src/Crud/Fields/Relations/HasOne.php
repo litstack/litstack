@@ -14,7 +14,7 @@ class HasOne extends OneRelationField
      * @var array
      */
     protected $props = [
-        'type' => 'hasOne'
+        'type' => 'hasOne',
     ];
 
     /**
@@ -44,11 +44,11 @@ class HasOne extends OneRelationField
      * Set relation attributes.
      *
      * @param string $model
+     *
      * @return self
      */
     protected function setRelationAttributes($relation)
     {
-
         $this->attributes['foreign_key'] = $relation->getForeignKeyName();
     }
 }

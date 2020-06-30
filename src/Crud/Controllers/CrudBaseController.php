@@ -2,16 +2,13 @@
 
 namespace Fjord\Crud\Controllers;
 
-use Fjord\Crud\Api\CrudApi;
-use Illuminate\Http\Request;
-use Fjord\Crud\Api\ApiLoader;
-use Fjord\Support\IndexTable;
-use Fjord\Crud\Api\ApiRequest;
 use Fjord\Crud\Actions\ActionResolver;
+use Fjord\Crud\Api\ApiLoader;
+use Fjord\Crud\Api\ApiRequest;
 use Fjord\Crud\Requests\CrudReadRequest;
+use Fjord\Support\IndexTable;
 use Illuminate\Database\Eloquent\Builder;
-use Fjord\Crud\Requests\CrudCreateRequest;
-use Fjord\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Http\Request;
 
 abstract class CrudBaseController
 {
@@ -28,6 +25,7 @@ abstract class CrudBaseController
      * Fill model on store.
      *
      * @param mixed $model
+     *
      * @return void
      */
     public function fillOnStore($model)
@@ -39,6 +37,7 @@ abstract class CrudBaseController
      * Fill model on update.
      *
      * @param mixed $model
+     *
      * @return void
      */
     public function fillOnUpdate($model)
@@ -50,6 +49,7 @@ abstract class CrudBaseController
      * Delete by query.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return void
      */
     public function delete(Builder $query)
@@ -60,7 +60,8 @@ abstract class CrudBaseController
     /**
      * Find or faild model by identifier.
      *
-     * @param string|integer $id
+     * @param string|int $id
+     *
      * @return void
      */
     public function findOrFail($id)
@@ -71,15 +72,16 @@ abstract class CrudBaseController
     /**
      * Perform crud api call.
      *
-     * @param Request $request
+     * @param Request        $request
      * @param ActionResolver $resolver
+     *
      * @return mixed
      */
     public function api(Request $request)
     {
         $api = app()->make(ApiRequest::class, [
             'controller' => $this,
-            'loader' => new ApiLoader($this, $this->getConfig())
+            'loader'     => new ApiLoader($this, $this->getConfig()),
         ]);
 
         return $api->handle();
@@ -89,6 +91,7 @@ abstract class CrudBaseController
      * Load index table items.
      *
      * @param CrudReadRequest $request
+     *
      * @return array $items
      */
     public function indexTable(CrudReadRequest $request)

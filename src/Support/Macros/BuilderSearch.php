@@ -2,15 +2,15 @@
 
 namespace Fjord\Support\Macros;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Builder;
 
 class BuilderSearch
 {
     /**
      * Create new BuilderSearch instance.
-     * 
+     *
      * @return void
      */
     public function __construct()
@@ -42,9 +42,10 @@ class BuilderSearch
      * Search relation or attribute.
      *
      * @param Builder $query
-     * @param string $attribute
-     * @param string $searchTerm
-     * @param boolean $or
+     * @param string  $attribute
+     * @param string  $searchTerm
+     * @param bool    $or
+     *
      * @return void
      */
     protected function searchRelationOrAttribute($query, $attribute, $searchTerm, $or)
@@ -70,17 +71,19 @@ class BuilderSearch
     }
 
     /**
-     * Where related attribute like
+     * Where related attribute like.
      *
      * @param Builder $query
-     * @param string $relationName
-     * @param string $attribute
-     * @param mixed $searchTerm
+     * @param string  $relationName
+     * @param string  $attribute
+     * @param mixed   $searchTerm
+     *
      * @return void
      */
     public function whereRelatedAttributeLike($query, $relationName, $attribute, $searchTerm, $or = false)
     {
         $method = $or ? 'orWhereHas' : 'whereHas';
+
         return $query->{$method}($relationName, function (Builder $query) use ($attribute, $searchTerm) {
             $this->searchRelationOrAttribute($query, $attribute, $searchTerm, false);
         });
@@ -90,9 +93,10 @@ class BuilderSearch
      * Where attribute like.
      *
      * @param Builder $query
-     * @param string $attribute
-     * @param mixed $searchTerm
-     * @param boolean $or
+     * @param string  $attribute
+     * @param mixed   $searchTerm
+     * @param bool    $or
+     *
      * @return void
      */
     public function whereAttributeLike($query, $attribute, $searchTerm, $or = true)

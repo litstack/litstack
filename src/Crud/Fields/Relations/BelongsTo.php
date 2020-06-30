@@ -14,7 +14,7 @@ class BelongsTo extends OneRelationField
      * @var array
      */
     protected $props = [
-        'type' => 'belongsTo'
+        'type' => 'belongsTo',
     ];
 
     /**
@@ -25,7 +25,7 @@ class BelongsTo extends OneRelationField
     public $requiredAttributes = [
         'title',
         'model',
-        'preview'
+        'preview',
     ];
 
     /**
@@ -50,17 +50,18 @@ class BelongsTo extends OneRelationField
      * @var array
      */
     public $defaultAttributes = [
-        'confirm' => false,
+        'confirm'     => false,
         'relatedCols' => 12,
-        'small' => false,
-        'perPage' => 1,
-        'searchable' => false,
+        'small'       => false,
+        'perPage'     => 1,
+        'searchable'  => false,
     ];
 
     /**
      * Set relation attributes.
      *
      * @param string $model
+     *
      * @return self
      */
     protected function setRelationAttributes($relation)

@@ -2,9 +2,9 @@
 
 namespace Fjord\Chart\Loader;
 
+use Carbon\CarbonInterface;
 use Closure;
 use Fjord\Chart\ChartSet;
-use Carbon\CarbonInterface;
 
 class ProgressLoader extends ChartLoader
 {
@@ -14,10 +14,11 @@ class ProgressLoader extends ChartLoader
      * Make series.
      *
      * @param CarbonInterface $startTime
-     * @param integer $iterations
-     * @param Closure $timeResolver
-     * @param Closure $valueResolver
-     * @param Closure $labelResolver
+     * @param int             $iterations
+     * @param Closure         $timeResolver
+     * @param Closure         $valueResolver
+     * @param Closure         $labelResolver
+     *
      * @return array
      */
     protected function makeSeries(
@@ -40,7 +41,7 @@ class ProgressLoader extends ChartLoader
 
         return [
             'results' => [],
-            'chart' => $this->engine->render(['Progress'], $set)
+            'chart'   => $this->engine->render(['Progress'], $set),
         ];
     }
 }

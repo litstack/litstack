@@ -20,7 +20,7 @@ class ModelEdit extends Model
     protected $appends = ['time'];
 
     protected $casts = [
-        'payload' => 'json'
+        'payload' => 'json',
     ];
 
     public function getTimeAttribute()

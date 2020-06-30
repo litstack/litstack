@@ -2,11 +2,11 @@
 
 namespace FjordTest\Crud;
 
-use Mockery as m;
-use FjordTest\BackendTestCase;
 use Fjord\Crud\Models\FormRelation;
+use FjordTest\BackendTestCase;
 use FjordTest\TestSupport\Models\Post;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Mockery as m;
 
 class OneRelationMacroTest extends BackendTestCase
 {
@@ -70,7 +70,7 @@ class OneRelationMacroTest extends BackendTestCase
         factory(FormRelation::class, $count)->create([
             'name' => $name,
             'from' => $this->model,
-            'to' => $this->related
+            'to'   => $this->related,
         ]);
     }
 

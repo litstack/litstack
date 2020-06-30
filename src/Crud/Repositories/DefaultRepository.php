@@ -13,7 +13,8 @@ class DefaultRepository extends BaseFieldRepository
      * Load model.
      *
      * @param CrudReadRequest $request
-     * @param mixed $model
+     * @param mixed           $model
+     *
      * @return CrudJs
      */
     public function load(CrudReadRequest $request, $model)
@@ -25,8 +26,9 @@ class DefaultRepository extends BaseFieldRepository
      * Update model.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
-     * @param object $payload
+     * @param mixed             $model
+     * @param object            $payload
+     *
      * @return CrudJs
      */
     public function update(CrudUpdateRequest $request, $model, $payload)
@@ -55,7 +57,8 @@ class DefaultRepository extends BaseFieldRepository
      * Store new model.
      *
      * @param CrudCreateRequest $request
-     * @param object $payload
+     * @param object            $payload
+     *
      * @return CrudJs
      */
     public function store(CrudCreateRequest $request, $payload)

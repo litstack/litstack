@@ -22,7 +22,7 @@ class FjordControllerCommandTest extends BackendTestCase
         $this->assertFileExists(base_path('fjord/app/Controllers/Form/DummyFormController.php'));
         $this->assertInstanceOf(
             \Fjord\Crud\Controllers\FormController::class,
-            new \FjordApp\Controllers\Form\DummyFormController
+            new \FjordApp\Controllers\Form\DummyFormController()
         );
     }
 
@@ -34,7 +34,7 @@ class FjordControllerCommandTest extends BackendTestCase
         $this->assertFileExists(base_path('fjord/app/Controllers/Crud/DummyCrudController.php'));
         $this->assertInstanceOf(
             \Fjord\Crud\Controllers\CrudController::class,
-            new \FjordApp\Controllers\Crud\DummyCrudController
+            new \FjordApp\Controllers\Crud\DummyCrudController()
         );
     }
 }
