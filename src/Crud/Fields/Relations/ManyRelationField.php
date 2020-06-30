@@ -139,7 +139,7 @@ class ManyRelationField extends LaravelRelationField
             ]);
         }
 
-        if (empty($this->getRelationQuery(new $relatedModel)->getQuery()->getQuery()->orders)) {
+        if (empty($this->getRelationQuery(new $this->model)->getQuery()->getQuery()->orders)) {
             throw new InvalidArgumentException('You may add [orderBy] to the related query for ' . $this->id . ' in ' . $this->model . '.', [
                 'function' => 'sortable',
             ]);

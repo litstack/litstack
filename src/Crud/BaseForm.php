@@ -447,7 +447,7 @@ class BaseForm extends VueProp
             return $field->form;
         }
 
-        return $field->getRepeatable($repeatable);
+        return $field->getRepeatable($repeatable)->getForm();
     }
 
     /**

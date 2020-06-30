@@ -40,7 +40,7 @@ export default {
          */
         async add(type) {
             let response = await this.sendAddRepeatable({
-                type: type
+                repeatable_type: type
             });
 
             if (!response) {

@@ -116,29 +116,12 @@ class ApiListTest extends BackendTestCase
         $listItem2 = $this->createListItem();
         $this->assertEquals(2, FormListItem::count());
 
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list");
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/index");
 
-        $result = $this->get($url)->assertStatus(200)->decodeResponseJson();
+        $result = $this->post($url, ['field_id' => 'test_list'])->assertStatus(200)->decodeResponseJson();
         $this->assertCount(2, $result);
         $this->assertEquals($listItem1->id, $result[0]["attributes"]['id']);
         $this->assertEquals($listItem2->id, $result[1]["attributes"]['id']);
-    }
-
-    // Load
-    /** @test */
-    public function it_can_load_single_list_item()
-    {
-        $listItem1 = $this->createListItem();
-        $listItem2 = $this->createListItem();
-        $this->assertEquals(2, FormListItem::count());
-
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/{$listItem1->id}");
-        $result = $this->get($url)->assertStatus(200)->decodeResponseJson();
-        $this->assertEquals($listItem1->id, $result["attributes"]['id']);
-
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/{$listItem2->id}");
-        $result = $this->get($url)->assertStatus(200)->decodeResponseJson();
-        $this->assertEquals($listItem2->id, $result["attributes"]['id']);
     }
 
     // Update

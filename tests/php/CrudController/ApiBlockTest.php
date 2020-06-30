@@ -32,45 +32,31 @@ class ApiBlockTest extends BackendTestCase
     {
         $this->assertCount(0, $this->getRepeatables('text'));
 
-        $url = $this->getCrudRoute("/{$this->post->id}/show/block/content");
-        $request = $this->post($url, ['type' => 'text']);
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/block/store");
+        $request = $this->post($url, [
+            'payload' => [
+                'repeatable_type' => 'text',
+            ],
+            'field_id' => 'content'
+        ]);
 
         $request->assertStatus(200);
         $this->assertCount(1, $this->getRepeatables('text'));
         $this->assertCount(1, $this->getRepeatables());
 
-        $url = $this->getCrudRoute("/{$this->post->id}/show/block/content");
-        $request = $this->post($url, ['type' => 'input']);
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/block/store");
+        $request = $this->post($url, [
+            'payload' => [
+                'repeatable_type' => 'input',
+            ],
+            'field_id' => 'content'
+        ]);
         $request->assertStatus(200);
 
         // Asserting 2 repeatables at all.
         $this->assertCount(2, $this->getRepeatables());
         // And one with type input.
         $this->assertCount(1, $this->getRepeatables('input'));
-    }
-
-    // Store
-    /** @test */
-    public function it_cannot_store_block_when_repeatable_does_not_exist()
-    {
-        $this->assertCount(0, $this->getRepeatables('text'));
-
-        $url = $this->getCrudRoute("/{$this->post->id}/show/block/content");
-        $request = $this->post($url, ['type' => 'other']);
-        $request->assertStatus(404);
-        $this->assertCount(0, $this->getRepeatables());
-    }
-
-    // Store
-    /** @test */
-    public function it_cannot_store_repeatables_for_fields_that_are_not_block()
-    {
-        $this->assertCount(0, $this->getRepeatables('text'));
-
-        $url = $this->getCrudRoute("/{$this->post->id}/show/block/title");
-        $request = $this->post($url, ['type' => 'text']);
-        $request->assertStatus(404);
-        $this->assertCount(0, $this->getRepeatables());
     }
 
     // Load all
@@ -83,8 +69,8 @@ class ApiBlockTest extends BackendTestCase
         $this->assertCount(2, $this->getRepeatables());
 
         // Send request.
-        $url = $this->getCrudRoute("/{$this->post->id}/show/block/content");
-        $request = $this->json('GET', $url);
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/block/index");
+        $request = $this->json('POST', $url, ['field_id' => 'content']);
 
         // Assertions.
         $request->assertStatus(200);
@@ -100,8 +86,11 @@ class ApiBlockTest extends BackendTestCase
         $this->assertCount(1, $this->getRepeatables('text'));
 
         // Send request.
-        $url = $this->getCrudRoute("/{$this->post->id}/show/block/content/{$block->id}");
-        $request = $this->json('GET', $url);
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/block/load");
+        $request = $this->json('POST', $url, [
+            'field_id' => 'content',
+            'repeatable_id' => $block->id
+        ]);
 
         // Assertions.
         $request->assertStatus(200);
@@ -118,14 +107,19 @@ class ApiBlockTest extends BackendTestCase
         $this->assertCount(2, $this->getRepeatables('text'));
 
         // Delete first block.
-        $url = $this->getCrudRoute("/{$this->post->id}/show/block/content/{$block1->id}");
-        $request = $this->delete($url);
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/block/destroy");
+        $request = $this->json('POST', $url, [
+            'repeatable_id' => $block1->id,
+            'field_id' => 'content'
+        ]);
         $request->assertStatus(200);
         $this->assertCount(1, $this->getRepeatables('text'));
 
         // Delete second block.
-        $url = $this->getCrudRoute("/{$this->post->id}/show/block/content/{$block2->id}");
-        $request = $this->delete($url);
+        $request = $this->json('POST', $url, [
+            'repeatable_id' => $block2->id,
+            'field_id' => 'content'
+        ]);
         $request->assertStatus(200);
         $this->assertCount(0, $this->getRepeatables('text'));
     }
@@ -139,9 +133,14 @@ class ApiBlockTest extends BackendTestCase
         $this->assertCount(1, $this->getRepeatables('text'));
 
         // Update block.
-        $url = $this->getCrudRoute("/{$this->post->id}/show/block/content/{$block->id}");
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/block");
         $request = $this->put($url, [
-            'text' => 'some text'
+            'payload' => [
+                'text' => 'some text'
+            ],
+            'field_id' => 'content',
+            'repeatable_id' => $block->id,
+            'repeatable_type' => 'text'
         ]);
         $request->assertStatus(200);
         $block = $this->getRepeatables('text')->first();

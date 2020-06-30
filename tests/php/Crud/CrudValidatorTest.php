@@ -2,8 +2,9 @@
 
 namespace FjordTest\Crud;
 
-use Fjord\Crud\CrudValidator;
 use Mockery as m;
+use Fjord\Crud\BaseForm;
+use Fjord\Crud\CrudValidator;
 use FjordTest\BackendTestCase;
 
 class CrudValidatorTest extends BackendTestCase
@@ -45,22 +46,5 @@ class CrudValidatorTest extends BackendTestCase
         $this->assertArrayHasKey('en.dummy_field', $names);
         $this->assertEquals('Dummy Title (de)', $names['de.dummy_field']);
         $this->assertEquals('Dummy Title (en)', $names['en.dummy_field']);
-    }
-
-    /** @test */
-    public function test_validate()
-    {
-        $request = m::mock('request');
-        $form = m::mock('form');
-
-        $form->shouldReceive('getRules')->withArgs([$request, null])->andReturn(['dummy rule', 'other dummy rule']);
-        $form->shouldReceive('getRegisteredFields')->andReturn([]);
-        $request->shouldReceive('validate')->withArgs([
-            ['dummy rule', 'other dummy rule'],
-            __f('validation'),
-            []
-        ]);
-
-        CrudValidator::validate($request, $form);
     }
 }

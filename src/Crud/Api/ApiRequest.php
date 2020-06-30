@@ -8,6 +8,8 @@ use Fjord\Crud\Field;
 use Fjord\Crud\BaseForm;
 use Illuminate\Http\Request;
 use Fjord\Crud\Models\Traits\TrackEdits;
+use Fjord\Crud\Controllers\CrudBaseController;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
 class ApiRequest
 {
@@ -21,7 +23,7 @@ class ApiRequest
     /**
      * Crud controller.
      *
-     * @var [type]
+     * @var CrudBaseController
      */
     protected $controller;
 
@@ -66,10 +68,10 @@ class ApiRequest
      * @param ApiRepositories $repositories
      * @param Request $request
      * @param ApiLoader $loader
-     * @param [type] $controller
+     * @param CrudBaseController $controller
      * @return void
      */
-    public function __construct(ApiRepositories $repositories, Request $request, ApiLoader $loader, $controller)
+    public function __construct(ApiRepositories $repositories, Request $request, ApiLoader $loader, CrudBaseController $controller)
     {
         $this->repositories = $repositories;
         $this->request = $request;
@@ -101,10 +103,17 @@ class ApiRequest
             abort(404, debug("Method [{$this->method}] does not exist on " . get_class($repository)));
         }
 
-        $response = app()->call([$repository, $this->method], [
-            'model' => $model,
-            'payload' => (object) ($this->request->payload ?: [])
-        ]);
+        $inject = ['payload' => (object) ($this->request->payload ?: [])];
+
+        if ($model) {
+            $inject['model'] = $model;
+        }
+
+        try {
+            $response = app()->call([$repository, $this->method], $inject);
+        } catch (BindingResolutionException $e) {
+            abort(404, $e->getMessage());
+        }
 
         $this->storeEdit();
 

@@ -5,7 +5,7 @@ namespace Fjord\Crud\Repositories;
 use Fjord\Crud\Field;
 use Fjord\Crud\BaseForm;
 use Fjord\Config\ConfigHandler;
-use Fjord\Crud\Requests\CrudUpdateRequest;
+use Fjord\Crud\Controllers\CrudBaseController;
 
 abstract class BaseFieldRepository
 {
@@ -17,9 +17,28 @@ abstract class BaseFieldRepository
     protected $field;
 
     /**
-     * Create new BaseFieldRepository instance.
+     * Crud controller instance.
+     *
+     * @var CrudBaseController
      */
-    public function __construct(ConfigHandler $config, $controller, BaseForm $form, Field $field = null)
+    protected $contoller;
+
+    /**
+     * Form instance.
+     *
+     * @var BaseForm
+     */
+    protected $form;
+
+    /**
+     * Create new BaseFieldRepository instance.
+     *
+     * @param ConfigHandler $config
+     * @param CrudBaseController $controller
+     * @param BaseForm $form
+     * @param Field $field
+     */
+    public function __construct(ConfigHandler $config, CrudBaseController $controller, BaseForm $form, Field $field = null)
     {
         $this->config = $config;
         $this->controller = $controller;

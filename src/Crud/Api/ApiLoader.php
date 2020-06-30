@@ -6,13 +6,14 @@ use Fjord\Crud\BaseForm;
 use BadMethodCallException;
 use Illuminate\Support\Str;
 use Fjord\Config\ConfigHandler;
+use Fjord\Crud\Controllers\CrudBaseController;
 
 class ApiLoader
 {
     /**
      * Crud controller
      *
-     * @var [type]
+     * @var CrudBaseController
      */
     protected $controller;
 
@@ -26,10 +27,10 @@ class ApiLoader
     /**
      * Create new ApiLoader instance.
      *
-     * @param [type] $controller
+     * @param CrudBaseController $controller
      * @param ConfigHandler $config
      */
-    public function __construct($controller, ConfigHandler $config)
+    public function __construct(CrudBaseController $controller, ConfigHandler $config)
     {
         $this->controller = $controller;
         $this->config = $config;

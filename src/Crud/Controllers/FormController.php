@@ -2,33 +2,15 @@
 
 namespace Fjord\Crud\Controllers;
 
-use Illuminate\Http\Request;
-use Fjord\Crud\Models\FormEdit;
 use Fjord\Crud\Models\FormField;
 use Fjord\User\Models\FjordUser;
-use Fjord\Crud\Fields\Block\Block;
-use Illuminate\Support\Facades\Route;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\FormReadRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Fjord\Crud\Requests\CrudCreateRequest;
-use Fjord\Crud\Requests\CrudUpdateRequest;
-use Fjord\Crud\Requests\FormUpdateRequest;
 
-abstract class FormController
+abstract class FormController extends CrudBaseController
 {
-    use Api\CrudBaseApi,
-        Api\CrudHasIndex,
-        Api\CrudHasRelations,
-        Api\CrudHasBlock,
-        Api\CrudHasList,
-        Api\CrudHasMedia,
-        Api\CrudHasOrder,
-        Api\CrudHasModal,
-        Concerns\ManagesConfig,
-        Concerns\ManagesForm,
-        Concerns\ManagesCrud;
-
     /**
      * Crud model class name.
      *

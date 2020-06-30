@@ -250,10 +250,6 @@ export default {
                 return;
             }
 
-            // await axios.post(
-            //     `${this.field.route_prefix}/${this.field.id}`,
-            //     payload
-            // );
             for (let i in response.data.items) {
                 let relation = response.data.items[i];
                 this.allSelectedRelations.push({
