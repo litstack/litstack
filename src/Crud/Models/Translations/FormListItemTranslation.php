@@ -9,7 +9,7 @@ class FormListItemTranslation extends Model
     /**
      * No timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
@@ -26,6 +26,6 @@ class FormListItemTranslation extends Model
      * @var array
      */
     protected $casts = [
-        'value' => 'json'
+        'value' => 'json',
     ];
 }

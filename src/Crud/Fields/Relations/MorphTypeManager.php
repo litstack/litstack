@@ -3,7 +3,6 @@
 namespace Fjord\Crud\Fields\Relations;
 
 use Fjord\Crud\BaseForm;
-use Fjord\Support\Facades\Crud;
 
 class MorphTypeManager
 {
@@ -20,7 +19,7 @@ class MorphTypeManager
 
     public function __construct(string $id, BaseForm $form, $selectId)
     {
-        $this->id  = $id;
+        $this->id = $id;
         $this->form = $form;
         $this->selectId = $selectId;
     }
@@ -29,6 +28,7 @@ class MorphTypeManager
      * Add morph type.
      *
      * @param string $model
+     *
      * @return void
      */
     public function to(string $model)
@@ -46,7 +46,7 @@ class MorphTypeManager
 
     public function registerMorphType()
     {
-        # code...
+        // code...
     }
 
     /**

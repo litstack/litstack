@@ -2,15 +2,9 @@
 
 namespace Fjord\Crud\Models;
 
-use Fjord\Crud\Models\FormEdit;
-use Fjord\Support\Facades\Config;
-use Spatie\MediaLibrary\Models\Media;
-use Illuminate\Database\Eloquent\Model;
 use Fjord\Crud\Models\Traits\TrackEdits;
-use Astrotomic\Translatable\Translatable;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Fjord\Support\Facades\Config;
+use Illuminate\Database\Eloquent\Model;
 
 class FormField extends FjordFormModel
 {
@@ -44,7 +38,7 @@ class FormField extends FjordFormModel
         'form_name',
         'field_id',
         'value',
-        'field_type'
+        'field_type',
     ];
 
     /**
@@ -55,7 +49,7 @@ class FormField extends FjordFormModel
     protected $with = [
         'translations',
         'media',
-        'last_edit'
+        'last_edit',
     ];
 
     /**
@@ -64,17 +58,17 @@ class FormField extends FjordFormModel
      * @var array
      */
     protected $casts = [
-        'value' => 'json'
+        'value' => 'json',
     ];
 
     /**
-     * Fix: config_type
+     * Fix: config_type.
      */
     public function fixConfigType($model)
     {
         if ($model->collection && $model->form_name && !$model->config_type) {
             $model->update([
-                'config_type' => Config::getNamespaceFromKey("form.{$model->collection}.{$model->form_name}")
+                'config_type' => Config::getNamespaceFromKey("form.{$model->collection}.{$model->form_name}"),
             ]);
         }
     }

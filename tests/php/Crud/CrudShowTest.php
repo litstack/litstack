@@ -2,14 +2,10 @@
 
 namespace FjordTest\Crud;
 
-use Fjord\Crud\BaseForm;
 use Fjord\Crud\CrudShow;
 use Fjord\Exceptions\InvalidArgumentException;
 use FjordTest\BackendTestCase;
-use Fjord\Support\Facades\Fjord;
 use Illuminate\Database\Eloquent\Model;
-use Fjord\Exceptions\MethodNotFoundException;
-use Fjord\Vue\Component;
 
 class CrudShowTest extends BackendTestCase
 {
@@ -89,7 +85,6 @@ class CrudShowTest extends BackendTestCase
         $this->assertInstanceof(\Fjord\Crud\Fields\Component::class, $fields[0]);
     }
 }
-
 
 class CrudFormDummyModel extends Model
 {

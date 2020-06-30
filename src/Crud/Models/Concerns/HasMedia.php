@@ -10,6 +10,7 @@ trait HasMedia
      * Register media conversions for field.
      *
      * @param Media $media
+     *
      * @return void
      */
     public function registerCrudMediaConversions(Media $media = null)

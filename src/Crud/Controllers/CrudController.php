@@ -2,20 +2,20 @@
 
 namespace Fjord\Crud\Controllers;
 
-use Illuminate\Http\Request;
-use Fjord\Crud\RelationField;
-use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Fields\Media\MediaField;
-use Fjord\Crud\Requests\CrudReadRequest;
-use Illuminate\Database\Eloquent\Builder;
+use Fjord\Crud\RelationField;
 use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudDeleteRequest;
+use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
+use Fjord\User\Models\FjordUser;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 abstract class CrudController extends CrudBaseController
 {
     /**
-     * The Model Class e.g. App\Models\Post
+     * The Model Class e.g. App\Models\Post.
      *
      * @var string
      */
@@ -23,17 +23,18 @@ abstract class CrudController extends CrudBaseController
 
     /**
      * Authorize request for permission operation and authenticated fjord-user.
-     * Operations: create, read, update, delete
+     * Operations: create, read, update, delete.
      *
      * @param \Fjord\User\Models\FjordUser $user
-     * @param string $operation
-     * @return boolean
+     * @param string                       $operation
+     *
+     * @return bool
      */
     //abstract public function authorize(FjordUser $user, string $operation, $id = null);
 
     /**
      * Create new CrudController instance.
-     * 
+     *
      * @return void
      */
     public function __construct()
@@ -45,7 +46,8 @@ abstract class CrudController extends CrudBaseController
      * Load model.
      *
      * @param CrudReadRequest $request
-     * @param int $id
+     * @param int             $id
+     *
      * @return array
      */
     public function load(CrudReadRequest $request, $id)
@@ -62,6 +64,7 @@ abstract class CrudController extends CrudBaseController
      * Delete by query.
      *
      * @param Builder $query
+     *
      * @return void
      */
     public function delete(Builder $query)
@@ -73,6 +76,7 @@ abstract class CrudController extends CrudBaseController
      * Delete one.
      *
      * @param CrudDeleteRequest $request
+     *
      * @return void
      */
     public function destroy(CrudDeleteRequest $request, $id)
@@ -86,6 +90,7 @@ abstract class CrudController extends CrudBaseController
      * Delete all.
      *
      * @param CrudDeleteRequest $request
+     *
      * @return void
      */
     public function destroyAll(CrudDeleteRequest $request)
@@ -97,7 +102,7 @@ abstract class CrudController extends CrudBaseController
         $this->delete($this->query()->whereIn('id', $request->ids));
 
         return response()->json([
-            'message' => __f_choice('messages.deleted_items', count($request->ids))
+            'message' => __f_choice('messages.deleted_items', count($request->ids)),
         ], 200);
     }
 
@@ -105,6 +110,7 @@ abstract class CrudController extends CrudBaseController
      * Show Crud index.
      *
      * @param CrudReadRequest $request
+     *
      * @return View
      */
     public function index(CrudReadRequest $request)
@@ -127,7 +133,7 @@ abstract class CrudController extends CrudBaseController
             ->withTitle($config['names']['plural'])
             ->withComponent($this->config->indexComponent)
             ->withProps([
-                'config' => $config,
+                'config'           => $config,
                 'headerComponents' => [],
             ]);
     }
@@ -136,6 +142,7 @@ abstract class CrudController extends CrudBaseController
      * Show Crud create.
      *
      * @param CrudCreateRequest $request
+     *
      * @return void
      */
     public function create(CrudCreateRequest $request)
@@ -152,19 +159,20 @@ abstract class CrudController extends CrudBaseController
         return view('fjord::app')
             ->withComponent($this->config->formComponent)
             ->withTitle(__f('base.item_create', [
-                'item' => $config['names']['singular']
+                'item' => $config['names']['singular'],
             ]))
             ->withProps([
-                'crud-model' => crud(new $this->model),
-                'config' => $config,
-                'headerComponents' => []
+                'crud-model'       => crud(new $this->model()),
+                'config'           => $config,
+                'headerComponents' => [],
             ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(CrudReadRequest $request, $id)
@@ -218,11 +226,11 @@ abstract class CrudController extends CrudBaseController
             ->withTitle($this->config->names['singular'])
             ->withProps([
                 'crud-model' => crud($model),
-                'config' => $config,
-                'backRoute' => $this->config->route_prefix,
-                'nearItems' => [
-                    'next' => $next,
-                    'previous' => $previous
+                'config'     => $config,
+                'backRoute'  => $this->config->route_prefix,
+                'nearItems'  => [
+                    'next'     => $next,
+                    'previous' => $previous,
                 ],
                 'controls' => [],
             ]);
@@ -232,6 +240,7 @@ abstract class CrudController extends CrudBaseController
      * Sort.
      *
      * @param CrudUpdateRequest $request
+     *
      * @return void
      */
     public function order(CrudUpdateRequest $request)

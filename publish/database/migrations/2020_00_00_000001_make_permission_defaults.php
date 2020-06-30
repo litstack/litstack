@@ -1,8 +1,8 @@
 <?php
 
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Migrations\Migration;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class MakePermissionDefaults extends Migration
 {
@@ -19,7 +19,7 @@ class MakePermissionDefaults extends Migration
         'delete fjord-user-roles',
         // Fjord user role permissions.
         'read fjord-role-permissions',
-        'update fjord-role-permissions'
+        'update fjord-role-permissions',
     ];
 
     /**

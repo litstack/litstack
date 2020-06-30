@@ -2,8 +2,8 @@
 
 namespace Fjord\Crud\Models\Relations;
 
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class ListRelation extends MorphMany
 {
@@ -36,7 +36,8 @@ class ListRelation extends MorphMany
      * Flatten results.
      *
      * @param Collection $listItems
-     * @param integer $parent_id
+     * @param int        $parent_id
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     protected function flatten($listItems)
@@ -45,6 +46,7 @@ class ListRelation extends MorphMany
             if (empty($listItem->children)) {
                 continue;
             }
+
             return $listItems->merge($this->flatten($listItem->children));
         }
 
@@ -55,7 +57,8 @@ class ListRelation extends MorphMany
      * Unflatten results.
      *
      * @param Collection $listItems
-     * @param integer $parent_id
+     * @param int        $parent_id
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     protected function unflatten(Collection $listItems, $parent_id = 0, $depth = 1)

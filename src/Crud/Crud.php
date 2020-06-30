@@ -2,20 +2,20 @@
 
 namespace Fjord\Crud;
 
-use Illuminate\Support\Str;
-use InvalidArgumentException;
-use Fjord\Support\Facades\Fjord;
-use Fjord\User\Models\FjordUser;
-use Fjord\Support\Facades\Package;
-use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudDeleteRequest;
+use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
+use Fjord\Support\Facades\Fjord;
+use Fjord\Support\Facades\Package;
+use Fjord\User\Models\FjordUser;
 use Illuminate\Support\Facades\Route as RouteFacade;
+use Illuminate\Support\Str;
+use InvalidArgumentException;
 
 /**
  * Crud singleton.
- * 
+ *
  * @see \Fjord\Support\Facades\Crud
  */
 class Crud
@@ -24,18 +24,19 @@ class Crud
      * Get model names.
      *
      * @param string $model
+     *
      * @return array
      */
     public function names(string $model)
     {
-        $modelInstance = new $model;
+        $modelInstance = new $model();
         if (method_exists($modelInstance, 'names')) {
             return $modelInstance->names();
         }
 
         return [
             'singular' => class_basename($model),
-            'plural' => Str::plural(class_basename($model))
+            'plural'   => Str::plural(class_basename($model)),
         ];
     }
 
@@ -44,25 +45,27 @@ class Crud
      *
      * @param string $controller
      * @param string $key
-     * @return boolean
+     *
+     * @return bool
      */
     public function authorize(string $controller, string $operation)
     {
         switch ($operation) {
             case 'create':
-                return (new CrudCreateRequest)->authorizeController(app('request'), 'create', $controller);
+                return (new CrudCreateRequest())->authorizeController(app('request'), 'create', $controller);
                 break;
             case 'read':
-                return (new CrudReadRequest)->authorize(app('request'), 'read', $controller);
+                return (new CrudReadRequest())->authorize(app('request'), 'read', $controller);
                 break;
             case 'update':
-                return (new CrudUpdateRequest)->authorize(app('request'), 'update', $controller);
+                return (new CrudUpdateRequest())->authorize(app('request'), 'update', $controller);
                 break;
             case 'delete':
-                return (new CrudDeleteRequest)->authorize(app('request'), 'delete', $controller);
+                return (new CrudDeleteRequest())->authorize(app('request'), 'delete', $controller);
                 break;
         }
-        throw new InvalidArgumentException("Operation must be create, read, update or delete");
+
+        throw new InvalidArgumentException('Operation must be create, read, update or delete');
     }
 
     /**
@@ -71,6 +74,7 @@ class Crud
      * @param string $prefix
      * @param string $model
      * @param string $controller
+     *
      * @return void
      */
     public function routes($config)
@@ -79,18 +83,17 @@ class Crud
             RouteFacade::group([
                 'config' => $config->getKey(),
                 'prefix' => "$config->routePrefix",
-                'as' => $config->getKey(),
+                'as'     => $config->getKey(),
             ], function () use ($config) {
-
                 $this->makeCrudRoutes($config);
                 $this->makeFieldRoutes($config->controller);
 
                 Package::get('aw-studio/fjord')->addNavPreset($config->getKey(), [
-                    'link' => Fjord::url($config->routePrefix),
-                    'title' => fn () => ucfirst($config->names['plural']),
+                    'link'      => Fjord::url($config->routePrefix),
+                    'title'     => fn ()     => ucfirst($config->names['plural']),
                     'authorize' => function (FjordUser $user) use ($config) {
-                        return (new $config->controller)->authorize($user, 'read');
-                    }
+                        return (new $config->controller())->authorize($user, 'read');
+                    },
                 ]);
             });
         });
@@ -100,6 +103,7 @@ class Crud
      * Make routes for Forms.
      *
      * @param ConfigHandler $config
+     *
      * @return void
      */
     public function formRoutes($config)
@@ -111,7 +115,7 @@ class Crud
             RouteFacade::group([
                 'config' => $config->getKey(),
                 'prefix' => $config->route_prefix,
-                'as' => $config->getKey(),
+                'as'     => $config->getKey(),
             ], function () use ($config, $collection, $form) {
 
                 //require fjord_path('src/Crud/routes.php');
@@ -120,11 +124,11 @@ class Crud
 
                 // Nav preset.
                 Package::get('aw-studio/fjord')->addNavPreset("form.{$collection}.{$form}", [
-                    'link' => Fjord::url($config->route_prefix),
-                    'title' => fn () => ucfirst($config->names['singular']),
+                    'link'      => Fjord::url($config->route_prefix),
+                    'title'     => fn ()     => ucfirst($config->names['singular']),
                     'authorize' => function (FjordUser $user) use ($config) {
-                        return (new $config->controller)->authorize($user, 'read');
-                    }
+                        return (new $config->controller())->authorize($user, 'read');
+                    },
                 ]);
             });
         });
@@ -134,11 +138,12 @@ class Crud
      * Make form routes.
      *
      * @param string $controller
+     *
      * @return void
      */
     protected function makeFormRoutes(string $controller)
     {
-        RouteFacade::get("/", [$controller, "show"])->name('show');
+        RouteFacade::get('/', [$controller, 'show'])->name('show');
     }
 
     /**
@@ -146,27 +151,28 @@ class Crud
      *
      * @param string $controller
      * @param string $identifier
+     *
      * @return void
      */
     protected function makeCrudRoutes($config, string $identifier = 'id')
     {
         $controller = $config->controller;
 
-        RouteFacade::post("/order", [$controller, "order"])->name('order');
-        RouteFacade::post("/delete-all", [$controller, "destroyAll"])->name('destroy.all');
-        RouteFacade::delete("/{id}", [$controller, "destroy"])->name('destroy');
+        RouteFacade::post('/order', [$controller, 'order'])->name('order');
+        RouteFacade::post('/delete-all', [$controller, 'destroyAll'])->name('destroy.all');
+        RouteFacade::delete('/{id}', [$controller, 'destroy'])->name('destroy');
 
         // Index routes.
         if ($config->has('index')) {
-            RouteFacade::get("/", [$controller, "index"])->name('index');
-            RouteFacade::post("/index", [$controller, "indexTable"])->name('index.items');
+            RouteFacade::get('/', [$controller, 'index'])->name('index');
+            RouteFacade::post('/index', [$controller, 'indexTable'])->name('index.items');
         }
 
         // Show routes.
         if ($config->has('show')) {
-            RouteFacade::post("/{form}", [$controller, "store"])->name('store');
-            RouteFacade::get("/create", [$controller, "create"])->name('create');
-            RouteFacade::get("{{$identifier}}", [$controller, "show"])->name('show');
+            RouteFacade::post('/{form}', [$controller, 'store'])->name('store');
+            RouteFacade::get('/create', [$controller, 'create'])->name('create');
+            RouteFacade::get("{{$identifier}}", [$controller, 'show'])->name('show');
         }
     }
 
@@ -174,22 +180,20 @@ class Crud
      * Make field routes.
      *
      * @param string $controller
+     *
      * @return void
      */
     protected function makeFieldRoutes(string $controller, string $identifier = 'id')
     {
         // Api
-        RouteFacade::any("/api/{form_type}/{repository?}/{method?}/{child_method?}", [$controller, "api"])->name("api");
-        RouteFacade::any("/{id}/api/{form_type}/{repository?}/{method?}/{child_method?}", [$controller, "api"])->name("api");
+        RouteFacade::any('/api/{form_type}/{repository?}/{method?}/{child_method?}', [$controller, 'api'])->name('api');
+        RouteFacade::any('/{id}/api/{form_type}/{repository?}/{method?}/{child_method?}', [$controller, 'api'])->name('api');
 
         // // For refreshing.
         // RouteFacade::get("/{{$identifier}}/load", [$controller, "load"])->name('load');
 
         // // Update
         // RouteFacade::put("/{{$identifier}}/{form}", [$controller, "update"])->name('update');
-
-
-
 
         // // Modal
         // RouteFacade::put("/{{$identifier}}/{form}/modal/{modal_id}", [$controller, 'updateModal'])->name("modal.update");
@@ -201,8 +205,8 @@ class Crud
         // RouteFacade::delete("/{{$identifier}}/{form}/media/{media_id}", [$controller, 'destroyMedia'])->name("media.destroy");
 
         // List
-        RouteFacade::get("/{{$identifier}}/{form}/list/{field_id}", [$controller, "loadListItems"])->name("list.index");
-        RouteFacade::get("/{{$identifier}}/{form}/list/{field_id}/{list_item_id}", [$controller, "loadListItem"])->name("list.load");
+        RouteFacade::get("/{{$identifier}}/{form}/list/{field_id}", [$controller, 'loadListItems'])->name('list.index');
+        RouteFacade::get("/{{$identifier}}/{form}/list/{field_id}/{list_item_id}", [$controller, 'loadListItem'])->name('list.load');
 
         // RouteFacade::post("/{{$identifier}}/{form}/list/{field_id}/create", [$controller, "createListItem"])->name("list.create");
         // RouteFacade::put("/{{$identifier}}/{form}/list/{field_id}/order", [$controller, "orderList"])->name("list.order");
@@ -226,7 +230,6 @@ class Crud
         // RouteFacade::put("/{{$identifier}}/{form}/block/{field_id}/{block_id}/{relation}/order", [$controller, "orderBlockRelation"])->name("block.relation.order");
         // RouteFacade::delete("/{{$identifier}}/{form}/block/{field_id}/{block_id}/{relation}/{relation_id}",  [$controller, "destroyBlockRelation"])->name("block.relation.delete");
         // RouteFacade::post("/{{$identifier}}/{form}/block/{field_id}/{block_id}/{relation}/{relation_id}", [$controller, "createBlockRelation"])->name("block.relation.store");
-
 
         // Relations
         // RouteFacade::post("/{{$identifier}}/{form}/{relation}/index", [$controller, "relationIndex"])->name("relation.index");

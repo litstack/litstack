@@ -3,9 +3,9 @@
 namespace Fjord\Crud;
 
 use Carbon\CarbonInterface;
-use Fjord\Support\VueProp;
 use Fjord\Crud\Models\FormBlock;
 use Fjord\Crud\Models\FormField;
+use Fjord\Support\VueProp;
 
 class CrudJs extends VueProp
 {
@@ -34,9 +34,9 @@ class CrudJs extends VueProp
     public function render(): array
     {
         return [
-            'attributes' => $this->getModelAttributes(),
+            'attributes'   => $this->getModelAttributes(),
             'translatable' => is_translatable($this->model),
-            'cast' => $this->usesJsonCast()
+            'cast'         => $this->usesJsonCast(),
         ];
     }
 
@@ -70,6 +70,7 @@ class CrudJs extends VueProp
      * Cast attributes for Fields.
      *
      * @param array $array
+     *
      * @return array
      */
     public function castAttributes(array $array)
@@ -86,7 +87,7 @@ class CrudJs extends VueProp
     /**
      * Is the Crud Model casting the field values into one json column.
      *
-     * @return boolean
+     * @return bool
      */
     public function usesJsonCast()
     {

@@ -2,10 +2,10 @@
 
 namespace FjordTest\Fields;
 
-use FjordTest\BackendTestCase;
 use Fjord\Crud\Fields\Media\Image;
-use FjordTest\Traits\InteractsWithFields;
 use Fjord\Crud\Fields\Traits\HasBaseField;
+use FjordTest\BackendTestCase;
+use FjordTest\Traits\InteractsWithFields;
 
 class FieldImageTest extends BackendTestCase
 {

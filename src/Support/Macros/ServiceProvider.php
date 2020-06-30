@@ -2,7 +2,6 @@
 
 namespace Fjord\Support\Macros;
 
-use Fjord\Support\Macros\BladeBlock;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class ServiceProvider extends LaravelServiceProvider
@@ -38,7 +37,7 @@ class ServiceProvider extends LaravelServiceProvider
     public function registerMacros()
     {
         foreach ($this->macros as $macro) {
-            $instance = new $macro;
+            $instance = new $macro();
 
             if (method_exists($instance, 'register')) {
                 $instance->register();

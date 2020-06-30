@@ -7,7 +7,8 @@ use Fjord\Crud\Fields\Traits\TranslatableField;
 
 class Image extends MediaField
 {
-    use TranslatableField, HasBaseField;
+    use TranslatableField;
+    use HasBaseField;
 
     /**
      * Set default field attributes.
@@ -31,6 +32,7 @@ class Image extends MediaField
      * Set showFullImage.
      *
      * @param bool $showFullImage
+     *
      * @return $this
      */
     public function showFullImage(bool $showFullImage = true)
@@ -44,6 +46,7 @@ class Image extends MediaField
      * Set expand.
      *
      * @param bool $sortable
+     *
      * @return $this
      */
     public function expand(bool $expand = true)
@@ -56,7 +59,8 @@ class Image extends MediaField
     /**
      * Set crop ratio.
      *
-     * @param boolean|float $ratio
+     * @param bool|float $ratio
+     *
      * @return $this
      */
     public function crop($ratio)
@@ -69,7 +73,8 @@ class Image extends MediaField
     /**
      * Set firstBig.
      *
-     * @param boolean $firstBig
+     * @param bool $firstBig
+     *
      * @return $this
      */
     public function firstBig(bool $firstBig = true)

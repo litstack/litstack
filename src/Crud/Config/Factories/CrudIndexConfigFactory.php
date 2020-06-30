@@ -13,7 +13,8 @@ class CrudIndexConfigFactory extends ConfigFactory
      * Setup index table.
      *
      * @param \Fjord\Config\Types\CrudConfig $config
-     * @param Closure $method
+     * @param Closure                        $method
+     *
      * @return \Fjord\Vue\Crud\CrudTable
      */
     public function index(ConfigHandler $config, Closure $method)
@@ -29,7 +30,8 @@ class CrudIndexConfigFactory extends ConfigFactory
      * Setup fj-crud-index component form.
      *
      * @param \Fjord\Config\ConfigHandler $config
-     * @param Closure $method
+     * @param Closure                     $method
+     *
      * @return \Fjord\Vue\Component
      */
     public function indexComponent(ConfigHandler $config, Closure $method)
@@ -53,7 +55,8 @@ class CrudIndexConfigFactory extends ConfigFactory
      * Setup fj-crud-form component form.
      *
      * @param \Fjord\Config\ConfigHandler $config
-     * @param Closure $method
+     * @param Closure                     $method
+     *
      * @return \Fjord\Vue\Component
      */
     public function formComponent(ConfigHandler $config, Closure $method)

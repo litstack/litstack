@@ -2,9 +2,6 @@
 
 namespace Fjord\Crud\Api;
 
-use Closure;
-use Fjord\Crud\Repositories\ListRepository;
-
 class ApiRepositories
 {
     /**
@@ -19,6 +16,7 @@ class ApiRepositories
      *
      * @param string $abstract
      * @param string $repository
+     *
      * @return void
      */
     public function register(string $abstract, string $repository)
@@ -32,6 +30,7 @@ class ApiRepositories
      * Find repository by abstract.
      *
      * @param string $abstract
+     *
      * @return string|null
      */
     public function find($abstract)
@@ -45,9 +44,10 @@ class ApiRepositories
      * Find repository by abstract or throw not foudn exception.
      *
      * @param string $abstract
-     * @return void
-     * 
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
      */
     public function findOrFail(string $abstract)
     {

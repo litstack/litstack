@@ -2,14 +2,14 @@
 
 namespace FjordTest;
 
-use Fjord\Support\Facades\Fjord;
-use FjordTest\Traits\RefreshLaravel;
-use Illuminate\Support\Facades\File;
-use FjordTest\Traits\CreateFjordUsers;
-use FjordTest\Traits\InteractsWithCrud;
-use Illuminate\Support\Facades\Artisan;
-use FjordTest\Traits\InteractsWithConfig;
 use Fjord\Fjord\Discover\PackageDiscoverCommand;
+use Fjord\Support\Facades\Fjord;
+use FjordTest\Traits\CreateFjordUsers;
+use FjordTest\Traits\InteractsWithConfig;
+use FjordTest\Traits\InteractsWithCrud;
+use FjordTest\Traits\RefreshLaravel;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 
 trait FjordTestCase
 {
@@ -23,7 +23,7 @@ trait FjordTestCase
         \Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         \Spatie\Permission\PermissionServiceProvider::class,
         \Astrotomic\Translatable\TranslatableServiceProvider::class,
-        \Fjord\FjordServiceProvider::class
+        \Fjord\FjordServiceProvider::class,
     ];
 
     /**
@@ -87,7 +87,7 @@ trait FjordTestCase
     protected function migrate()
     {
         $this->artisan('migrate');
-        $this->loadMigrationsFrom(__DIR__ . '/TestSupport/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/TestSupport/migrations');
     }
 
     /**
@@ -106,9 +106,10 @@ trait FjordTestCase
     }
 
     /**
-     * Get package provider
+     * Get package provider.
      *
      * @param Application $app
+     *
      * @return array
      */
     protected function getPackageProviders($app)
@@ -117,9 +118,10 @@ trait FjordTestCase
     }
 
     /**
-     * Setup app environment
+     * Setup app environment.
      *
      * @param Application $app
+     *
      * @return void
      */
     protected function getEnvironmentSetUp($app)
@@ -138,7 +140,7 @@ trait FjordTestCase
         ]);
         $config->set('translatable.locales', [
             'en',
-            'de'
+            'de',
         ]);
     }
 
@@ -159,14 +161,14 @@ trait FjordTestCase
      */
     protected function discoverFjordPackages()
     {
-        $finder = new PackageDiscoverCommand;
+        $finder = new PackageDiscoverCommand();
 
-        $vendorPath = realpath(__DIR__ . '/../../vendor');
+        $vendorPath = realpath(__DIR__.'/../../vendor');
 
         $manifest = array_merge(
             // Find packages in current composer json.
             $finder->filterFjordPackages([
-                json_decode(File::get(__DIR__ . '/../../composer.json'), true)
+                json_decode(File::get(__DIR__.'/../../composer.json'), true),
             ]),
             // Find packages in current composer json.
             $finder->findFjordPackages($vendorPath)

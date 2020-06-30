@@ -15,16 +15,18 @@ abstract class Extension
 
     /**
      * Has user permission for this extension.
-     * 
+     *
      * @var \Fjord\User\Models\FjordUser $user
-     * @return boolean
+     *
+     * @return bool
      */
     abstract public function authenticate(FjordUser $user);
 
     /**
      * Modify props in handle method.
-     * 
+     *
      * @var array $props
+     *
      * @return array $props
      */
     abstract public function handle($props);

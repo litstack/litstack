@@ -4,14 +4,14 @@ namespace Fjord\Crud\Fields;
 
 use Closure;
 use Fjord\Crud\BaseForm;
-use Fjord\Crud\RelationField;
 use Fjord\Crud\Models\FormField;
+use Fjord\Crud\RelationField;
 use Fjord\Crud\Repositories\ListRepository;
 
 class ListField extends RelationField
 {
-    use Traits\HasBaseField,
-        Traits\FieldHasForm;
+    use Traits\HasBaseField;
+    use Traits\FieldHasForm;
 
     /**
      * Field Vue component.
@@ -48,7 +48,8 @@ class ListField extends RelationField
     /**
      * Set search.
      *
-     * @param boolean $search
+     * @param bool $search
+     *
      * @return self
      */
     public function search(bool $search = true)
@@ -62,6 +63,7 @@ class ListField extends RelationField
      * Preview title.
      *
      * @param string $title
+     *
      * @return self
      */
     public function previewTitle(string $title)
@@ -74,7 +76,8 @@ class ListField extends RelationField
     /**
      * Set max deth.
      *
-     * @param integer $depth
+     * @param int $depth
+     *
      * @return $this
      */
     public function maxDepth(int $depth)
@@ -88,6 +91,7 @@ class ListField extends RelationField
      * Add form to modal.
      *
      * @param Closure $closure
+     *
      * @return void
      */
     public function form(Closure $closure)
@@ -96,8 +100,8 @@ class ListField extends RelationField
 
         $form->afterRegisteringField(function ($field) {
             $field->setAttribute('params', [
-                'field_id' => $this->id,
-                'list_item_id' => null
+                'field_id'     => $this->id,
+                'list_item_id' => null,
             ]);
         });
 
@@ -116,7 +120,8 @@ class ListField extends RelationField
      * Get relation query for model.
      *
      * @param mixed $model
-     * @param boolean $query
+     * @param bool  $query
+     *
      * @return mixed
      */
     public function getRelationQuery($model)

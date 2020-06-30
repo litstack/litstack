@@ -2,10 +2,10 @@
 
 namespace Fjord\Support;
 
-use Illuminate\Support\Collection;
-use Illuminate\Contracts\Support\Jsonable;
-use Illuminate\Contracts\Support\Arrayable;
 use Fjord\Vue\Contracts\AuthorizableContract;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Support\Collection;
 
 abstract class VueProp implements Arrayable, Jsonable
 {
@@ -29,7 +29,8 @@ abstract class VueProp implements Arrayable, Jsonable
     /**
      * To json.
      *
-     * @param integer $options
+     * @param int $options
+     *
      * @return void
      */
     public function toJson($options = 0)
@@ -44,9 +45,9 @@ abstract class VueProp implements Arrayable, Jsonable
      */
     protected function getRendered(): Collection
     {
-        // When all props are passed to the Vue application, they are converted 
-        // to an array using Laravel's collection method toArray. To ensure that 
-        // all nested objects are converted, the array is converted to a 
+        // When all props are passed to the Vue application, they are converted
+        // to an array using Laravel's collection method toArray. To ensure that
+        // all nested objects are converted, the array is converted to a
         // collection instance, which then calls the toArray method on all items.
         $rendered = collect($this->render());
 
@@ -57,6 +58,7 @@ abstract class VueProp implements Arrayable, Jsonable
      * Filter rendered collection authorized items.
      *
      * @param Collection $rendered
+     *
      * @return Collection
      */
     protected function filterAuthorized(Collection $rendered)

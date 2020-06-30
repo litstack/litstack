@@ -2,12 +2,11 @@
 
 namespace FjordTest\Fields;
 
-use Fjord\Crud\BaseField;
-use FjordTest\BackendTestCase;
 use Fjord\Crud\Fields\Block\Block;
 use Fjord\Crud\Fields\Block\Repeatables;
-use FjordTest\Traits\InteractsWithFields;
 use Fjord\Crud\Fields\Traits\HasBaseField;
+use FjordTest\BackendTestCase;
+use FjordTest\Traits\InteractsWithFields;
 
 class FieldBlockTest extends BackendTestCase
 {

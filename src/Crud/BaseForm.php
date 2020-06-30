@@ -4,24 +4,23 @@ namespace Fjord\Crud;
 
 use Closure;
 use Fjord\Crud\Fields\Block\Block;
+use Fjord\Crud\Fields\Component;
+use Fjord\Crud\Fields\Relations\BelongsTo;
+use Fjord\Crud\Fields\Relations\BelongsToMany;
+use Fjord\Crud\Fields\Relations\HasMany;
+use Fjord\Crud\Fields\Relations\HasOne;
+use Fjord\Crud\Fields\Relations\MorphMany;
+use Fjord\Crud\Fields\Relations\MorphOne;
+use Fjord\Crud\Fields\Relations\MorphToMany;
+use Fjord\Crud\Fields\Relations\MorphToRegistrar;
+use Fjord\Crud\Models\FormField;
+use Fjord\Exceptions\MethodNotFoundException;
+use Fjord\Support\Facades\Fjord;
+use Fjord\Support\Facades\Form as FormFacade;
 use Fjord\Support\VueProp;
 use Illuminate\Support\Str;
-use InvalidArgumentException;
-use Fjord\Crud\Fields\Component;
-use Fjord\Crud\Fields\Input;
-use Fjord\Crud\Models\FormField;
-use Fjord\Support\Facades\Fjord;
-use Fjord\Crud\Fields\Relations\HasOne;
-use Fjord\Crud\Fields\Relations\HasMany;
 use Illuminate\Support\Traits\Macroable;
-use Fjord\Crud\Fields\Relations\MorphOne;
-use Fjord\Crud\Fields\Relations\BelongsTo;
-use Fjord\Crud\Fields\Relations\MorphMany;
-use Fjord\Crud\Fields\Relations\MorphToMany;
-use Fjord\Exceptions\MethodNotFoundException;
-use Fjord\Crud\Fields\Relations\BelongsToMany;
-use Fjord\Crud\Fields\Relations\MorphToRegistrar;
-use Fjord\Support\Facades\Form as FormFacade;
+use InvalidArgumentException;
 
 class BaseForm extends VueProp
 {
@@ -36,13 +35,13 @@ class BaseForm extends VueProp
      */
     protected $relations = [
         \Illuminate\Database\Eloquent\Relations\BelongsToMany::class => BelongsToMany::class,
-        \Illuminate\Database\Eloquent\Relations\BelongsTo::class => BelongsTo::class,
-        \Illuminate\Database\Eloquent\Relations\MorphOne::class => MorphOne::class,
-        \Illuminate\Database\Eloquent\Relations\MorphTo::class => MorphToRegistrar::class,
-        \Illuminate\Database\Eloquent\Relations\MorphToMany::class => MorphToMany::class,
-        \Illuminate\Database\Eloquent\Relations\MorphMany::class => MorphMany::class,
-        \Illuminate\Database\Eloquent\Relations\HasMany::class => HasMany::class,
-        \Illuminate\Database\Eloquent\Relations\HasOne::class => HasOne::class,
+        \Illuminate\Database\Eloquent\Relations\BelongsTo::class     => BelongsTo::class,
+        \Illuminate\Database\Eloquent\Relations\MorphOne::class      => MorphOne::class,
+        \Illuminate\Database\Eloquent\Relations\MorphTo::class       => MorphToRegistrar::class,
+        \Illuminate\Database\Eloquent\Relations\MorphToMany::class   => MorphToMany::class,
+        \Illuminate\Database\Eloquent\Relations\MorphMany::class     => MorphMany::class,
+        \Illuminate\Database\Eloquent\Relations\HasMany::class       => HasMany::class,
+        \Illuminate\Database\Eloquent\Relations\HasOne::class        => HasOne::class,
     ];
 
     /**
@@ -53,8 +52,8 @@ class BaseForm extends VueProp
     protected $model;
 
     /**
-     * Field that is being registered is stored in here. When the next 
-     * field is called this field will be checked for required properties. 
+     * Field that is being registered is stored in here. When the next
+     * field is called this field will be checked for required properties.
      *
      * @var Field
      */
@@ -63,7 +62,7 @@ class BaseForm extends VueProp
     /**
      * Registered fields.
      *
-     * @var array 
+     * @var array
      */
     protected $registeredFields = [];
 
@@ -117,7 +116,7 @@ class BaseForm extends VueProp
     /**
      * Is registering component in wrapper.
      *
-     * @return boolean
+     * @return bool
      */
     public function inWrapper()
     {
@@ -135,9 +134,10 @@ class BaseForm extends VueProp
     }
 
     /**
-     * Get new wrapper
-     * 
+     * Get new wrapper.
+     *
      * @param string|Component $component
+     *
      * @return component
      */
     protected function getNewWrapper($component)
@@ -159,7 +159,8 @@ class BaseForm extends VueProp
      * Create wrapper.
      *
      * @param string|Component $component
-     * @param Closure $closure
+     * @param Closure          $closure
+     *
      * @return self
      */
     public function wrapper($component, Closure $closure)
@@ -171,13 +172,12 @@ class BaseForm extends VueProp
 
     /**
      * Register new wrapper.
-     * 
+     *
      * @return Component
      */
     public function registerWrapper($wrapper, $closure)
     {
         if ($this->inWrapper()) {
-
             $this->wrapper
                 ->component($wrapper);
 
@@ -197,6 +197,7 @@ class BaseForm extends VueProp
      * Formfield group.
      *
      * @param Closure $closure
+     *
      * @return Component
      */
     public function group(Closure $closure)
@@ -209,8 +210,9 @@ class BaseForm extends VueProp
     /**
      * Register column wrapper.
      *
-     * @param int $cols
+     * @param int     $cols
      * @param Closure $closure
+     *
      * @return void
      */
     public function col(int $cols, Closure $closure)
@@ -226,7 +228,8 @@ class BaseForm extends VueProp
      * Get rules for request.
      *
      * @param CrudUpdateRequest|CrudCreateRequest $request
-     * @param string|null $type
+     * @param string|null                         $type
+     *
      * @return array
      */
     public function getRules($type = null)
@@ -246,6 +249,7 @@ class BaseForm extends VueProp
                 $rules[$field->local_key] = $fieldRules;
             }
         }
+
         return $rules;
     }
 
@@ -253,6 +257,7 @@ class BaseForm extends VueProp
      * Set form route prefix.
      *
      * @param string $prefix
+     *
      * @return void
      */
     public function setRoutePrefix(string $prefix)
@@ -276,9 +281,10 @@ class BaseForm extends VueProp
     /**
      * Register new Field.
      *
-     * @param mixed $field
+     * @param mixed  $field
      * @param string $id
-     * @param array $params
+     * @param array  $params
+     *
      * @return Field $field
      */
     public function registerField($field, string $id, $params = [])
@@ -312,6 +318,7 @@ class BaseForm extends VueProp
      * Add after registering field hook.
      *
      * @param Closure $closure
+     *
      * @return void
      */
     public function afterRegisteringField(Closure $closure)
@@ -323,17 +330,18 @@ class BaseForm extends VueProp
      * Register new Relation.
      *
      * @param string $name
-     * @return mixed
-     * 
+     *
      * @throws \InvalidArgumentException
+     *
+     * @return mixed
      */
     public function relation(string $name)
     {
         if ($this->model == FormField::class) {
-            throw new InvalidArgumentException("Laravel relations are not available in Forms. Use fields oneRelation or manyRelation instead.");
+            throw new InvalidArgumentException('Laravel relations are not available in Forms. Use fields oneRelation or manyRelation instead.');
         }
 
-        $relationType = get_class((new $this->model)->$name());
+        $relationType = get_class((new $this->model())->$name());
 
         if (array_key_exists($relationType, $this->relations)) {
             return $this->registerField($this->relations[$relationType], $name);
@@ -352,6 +360,7 @@ class BaseForm extends VueProp
      * Add Vue component field.
      *
      * @param string $component
+     *
      * @return \Fjord\Vue\Component
      */
     public function component(string $component)
@@ -373,6 +382,7 @@ class BaseForm extends VueProp
      * Find registered field.
      *
      * @param string $fieldId
+     *
      * @return Field|void
      */
     public function findField($fieldId)
@@ -392,13 +402,15 @@ class BaseForm extends VueProp
      * Check if form has field.
      *
      * @param string $fieldId
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasField(string $fieldId)
     {
         if ($this->findField($fieldId)) {
             return true;
         }
+
         return false;
     }
 
@@ -407,7 +419,8 @@ class BaseForm extends VueProp
      *
      * @param string $name
      * @param string $repeatable
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasForm(string $name, string $repeatable = null)
     {
@@ -431,6 +444,7 @@ class BaseForm extends VueProp
      *
      * @param string $name
      * @param string $repeatable
+     *
      * @return BaseForm
      */
     public function getForm(string $name, string $repeatable = null)
@@ -462,30 +476,31 @@ class BaseForm extends VueProp
         }
 
         return [
-            'fields' => $this->registeredFields
+            'fields' => $this->registeredFields,
         ];
     }
 
     /**
      * Throw a method not allowed HTTP exception.
      *
-     * @param  array  $others
-     * @param  string  $method
-     * @return void
+     * @param array  $others
+     * @param string $method
      *
      * @throws \Fjord\Exceptions\MethodNotFoundException
+     *
+     * @return void
      */
     protected function methodNotAllowed($method)
     {
         throw new MethodNotFoundException(
             sprintf(
-                "The %s method is not found for this form. Supported fields: %s.",
+                'The %s method is not found for this form. Supported fields: %s.',
                 $method,
                 implode(', ', array_merge(['relation'], array_keys(FormFacade::getFields()))),
             ),
             [
                 'function' => '__call',
-                'class' => self::class
+                'class'    => self::class,
             ]
         );
     }
@@ -494,10 +509,11 @@ class BaseForm extends VueProp
      * Call form method.
      *
      * @param string $method
-     * @param array $params
-     * @return void
-     * 
+     * @param array  $params
+     *
      * @throws \Fjord\Exceptions\MethodNotFoundException
+     *
+     * @return void
      */
     public function __call($method, $params = [])
     {

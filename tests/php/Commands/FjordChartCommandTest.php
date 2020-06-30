@@ -14,7 +14,7 @@ class FjordChartCommandTest extends BackendTestCase
         $this->assertFileExists(base_path('fjord/app/Config/Charts/DummyDefaultChartConfig.php'));
         $this->assertInstanceOf(
             \Fjord\Chart\Config\AreaChartConfig::class,
-            new \FjordApp\Config\Charts\DummyDefaultChartConfig
+            new \FjordApp\Config\Charts\DummyDefaultChartConfig()
         );
     }
 
@@ -26,7 +26,7 @@ class FjordChartCommandTest extends BackendTestCase
         $this->assertFileExists(base_path('fjord/app/Config/Charts/DummyAreaChartConfig.php'));
         $this->assertInstanceOf(
             \Fjord\Chart\Config\AreaChartConfig::class,
-            new \FjordApp\Config\Charts\DummyAreaChartConfig
+            new \FjordApp\Config\Charts\DummyAreaChartConfig()
         );
     }
 
@@ -38,7 +38,7 @@ class FjordChartCommandTest extends BackendTestCase
         $this->assertFileExists(base_path('fjord/app/Config/Charts/DummyBarChartConfig.php'));
         $this->assertInstanceOf(
             \Fjord\Chart\Config\BarChartConfig::class,
-            new \FjordApp\Config\Charts\DummyBarChartConfig
+            new \FjordApp\Config\Charts\DummyBarChartConfig()
         );
     }
 
@@ -50,7 +50,7 @@ class FjordChartCommandTest extends BackendTestCase
         $this->assertFileExists(base_path('fjord/app/Config/Charts/DummyDonutChartConfig.php'));
         $this->assertInstanceOf(
             \Fjord\Chart\Config\DonutChartConfig::class,
-            new \FjordApp\Config\Charts\DummyDonutChartConfig
+            new \FjordApp\Config\Charts\DummyDonutChartConfig()
         );
     }
 
@@ -62,7 +62,7 @@ class FjordChartCommandTest extends BackendTestCase
         $this->assertFileExists(base_path('fjord/app/Config/Charts/DummyNumberChartConfig.php'));
         $this->assertInstanceOf(
             \Fjord\Chart\Config\NumberChartConfig::class,
-            new \FjordApp\Config\Charts\DummyNumberChartConfig
+            new \FjordApp\Config\Charts\DummyNumberChartConfig()
         );
     }
 
@@ -74,7 +74,7 @@ class FjordChartCommandTest extends BackendTestCase
         $this->assertFileExists(base_path('fjord/app/Config/Charts/DummyProgressChartConfig.php'));
         $this->assertInstanceOf(
             \Fjord\Chart\Config\ProgressChartConfig::class,
-            new \FjordApp\Config\Charts\DummyProgressChartConfig
+            new \FjordApp\Config\Charts\DummyProgressChartConfig()
         );
     }
 }

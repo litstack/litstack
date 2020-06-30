@@ -25,14 +25,14 @@ class FjordController extends GeneratorCommand
     /**
      * Execute the console command.
      *
-     * @return bool|null
-     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     *
+     * @return bool|null
      */
     public function handle()
     {
         if ($this->setControllerType() === false) {
-            $this->error("Only one controller type can be selected");
+            $this->error('Only one controller type can be selected');
 
             return false;
         }
@@ -49,8 +49,8 @@ class FjordController extends GeneratorCommand
     {
         return [
             'default' => fjord_path('stubs/controller.default.stub'),
-            'form' => fjord_path('stubs/controller.form.stub'),
-            'crud' => fjord_path('stubs/controller.crud.stub'),
+            'form'    => fjord_path('stubs/controller.form.stub'),
+            'crud'    => fjord_path('stubs/controller.crud.stub'),
         ][$this->type];
     }
 
@@ -59,15 +59,16 @@ class FjordController extends GeneratorCommand
      *
      * Remove the base controller import if we are already in base namespace.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function buildClass($name)
     {
         $replace = [
             'default' => fn () => [],
-            'form' => fn () => $this->buildCrudReplacements($name),
-            'crud' => fn () => $this->buildCrudReplacements($name),
+            'form'    => fn ()    => $this->buildCrudReplacements($name),
+            'crud'    => fn ()    => $this->buildCrudReplacements($name),
         ][$this->type]();
 
         return str_replace(
@@ -81,6 +82,7 @@ class FjordController extends GeneratorCommand
      * Build crud controller replacements.
      *
      * @param string $name
+     *
      * @return array
      */
     protected function buildCrudReplacements(string $name)
@@ -90,26 +92,26 @@ class FjordController extends GeneratorCommand
 
         return [
             'DummyModelClass' => $modelClassName,
-            'DummyTableName' => $tableName,
+            'DummyTableName'  => $tableName,
         ];
     }
 
     /**
      * Set chart type from options.
      *
-     * @return boolean|null
+     * @return bool|null
      */
     public function setControllerType()
     {
         $this->type = null;
         foreach ([
-            'form', 'crud'
+            'form', 'crud',
         ] as $type) {
             if (!$this->option($type)) {
                 continue;
             }
 
-            // Returning false when type has already been set since multiple 
+            // Returning false when type has already been set since multiple
             // types are not allowed.
             if ($this->type) {
                 return false;
@@ -126,15 +128,16 @@ class FjordController extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
+     *
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
     {
         return [
-            "default" => $rootNamespace . "\Controllers",
-            "form" => $rootNamespace . "\Controllers\Form",
-            "crud" => $rootNamespace . "\Controllers\Crud",
+            'default' => $rootNamespace."\Controllers",
+            'form'    => $rootNamespace."\Controllers\Form",
+            'crud'    => $rootNamespace."\Controllers\Crud",
         ][$this->type];
     }
 }

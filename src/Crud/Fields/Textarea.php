@@ -6,9 +6,9 @@ use Fjord\Crud\BaseField;
 
 class Textarea extends BaseField
 {
-    use Traits\FieldHasRules,
-        Traits\TranslatableField,
-        Traits\FieldHasPlaceholder;
+    use Traits\FieldHasRules;
+    use Traits\TranslatableField;
+    use Traits\FieldHasPlaceholder;
 
     /**
      * Field Vue component.
@@ -35,11 +35,11 @@ class Textarea extends BaseField
         $this->maxRows(5);
     }
 
-
     /**
      * Set max characters.
      *
-     * @param integer $max
+     * @param int $max
+     *
      * @return $this
      */
     public function maxChars(int $max)
@@ -52,7 +52,8 @@ class Textarea extends BaseField
     /**
      * Set rows.
      *
-     * @param integer $rowsrows
+     * @param int $rowsrows
+     *
      * @return $this
      */
     public function rows(int $rows)
@@ -65,7 +66,8 @@ class Textarea extends BaseField
     /**
      * Set max rows.
      *
-     * @param integer $rows
+     * @param int $rows
+     *
      * @return $this
      */
     public function maxRows(int $rows)
@@ -79,7 +81,8 @@ class Textarea extends BaseField
      * Cast field value.
      *
      * @param mixed $value
-     * @return boolean
+     *
+     * @return bool
      */
     public function cast($value)
     {

@@ -3,20 +3,19 @@
 namespace Fjord\Crud;
 
 use Closure;
-use Exception;
+use Fjord\Crud\Exceptions\MissingAttributeException;
+use Fjord\Exceptions\InvalidArgumentException;
+use Fjord\Exceptions\MethodNotFoundException;
 use Fjord\Support\VueProp;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
-use Fjord\Exceptions\MethodNotFoundException;
-use Fjord\Exceptions\InvalidArgumentException;
-use Fjord\Crud\Exceptions\MissingAttributeException;
 
 class Field extends VueProp
 {
     use ForwardsCalls;
 
     /**
-     * Model class
+     * Model class.
      *
      * @var string
      */
@@ -60,14 +59,14 @@ class Field extends VueProp
     /**
      * Saveable field.
      *
-     * @var boolean
+     * @var bool
      */
     protected $save = true;
 
     /**
      * Fill to attribute.
      *
-     * @var boolean
+     * @var bool
      */
     public $fill = true;
 
@@ -81,10 +80,10 @@ class Field extends VueProp
     /**
      * Create new Field instance.
      *
-     * @param string $id
-     * @param string $model
+     * @param string      $id
+     * @param string      $model
      * @param string|null $routePrefix
-     * @param mixed $form
+     * @param mixed       $form
      */
     public function __construct(string $id, string $model, $routePrefix, $form)
     {
@@ -117,7 +116,7 @@ class Field extends VueProp
         }
 
         return app()->make($this->repository, [
-            'field' => $this
+            'field' => $this,
         ]);
     }
 
@@ -126,15 +125,16 @@ class Field extends VueProp
      *
      * @param string $model
      * @param string $id
-     * @return void
-     * 
+     *
      * @throws \Fjord\Exceptions\InvalidArgumentException
+     *
+     * @return void
      */
     protected function validateFieldId($model, $id)
     {
         if ($id == 'media') {
             throw new InvalidArgumentException('The field id cannot be "media".', [
-                'function' => '__call'
+                'function' => '__call',
             ]);
         }
     }
@@ -164,20 +164,21 @@ class Field extends VueProp
     /**
      * Fill model.
      *
-     * @param mixed $model
+     * @param mixed  $model
      * @param string $attributeName
-     * @param mixed $attributeValue
+     * @param mixed  $attributeValue
+     *
      * @return void
      */
     public function fillModel($model, $attributeName, $attributeValue)
     {
-        return;
     }
 
     /**
      * Set readonly attribute.
      *
-     * @param boolean $readonly
+     * @param bool $readonly
+     *
      * @return $this
      */
     public function readonly(bool $readonly = true)
@@ -190,15 +191,16 @@ class Field extends VueProp
     /**
      * Set dependency.
      *
-     * @param string $key
+     * @param string     $key
      * @param string|int $value
+     *
      * @return void
      */
     public function dependsOn(string $key, $value)
     {
         $this->setAttribute('dependsOn', [
-            'key' => $key,
-            'value' => $value
+            'key'   => $key,
+            'value' => $value,
         ]);
 
         return $this;
@@ -207,7 +209,7 @@ class Field extends VueProp
     /**
      * Is field saveable.
      *
-     * @return boolean
+     * @return bool
      */
     public function canSave()
     {
@@ -217,7 +219,7 @@ class Field extends VueProp
     /**
      * Should field be registered in form.
      *
-     * @return boolean
+     * @return bool
      */
     public function register()
     {
@@ -228,6 +230,7 @@ class Field extends VueProp
      * Format value before saving it to database.
      *
      * @param string $value
+     *
      * @return void
      */
     public function format($value)
@@ -239,6 +242,7 @@ class Field extends VueProp
      * Cast model value for e.g. boolean.
      *
      * @param Model $value
+     *
      * @return mixed
      */
     public function cast($value)
@@ -250,6 +254,7 @@ class Field extends VueProp
      * Transform model value.
      *
      * @param Model $value
+     *
      * @return mixed
      */
     public function transform($value)
@@ -278,9 +283,9 @@ class Field extends VueProp
     /**
      * Check if all required props have been set.
      *
-     * @return boolean
-     * 
      * @throws \Exception
+     *
+     * @return bool
      */
     public function checkComplete()
     {
@@ -310,14 +315,16 @@ class Field extends VueProp
      *
      * @param string $slot
      * @param string $component
-     * @return void
-     * 
+     *
      * @throws \InvalidArgumentException
+     *
+     * @return void
      */
     public function slot(string $slot, string $component)
     {
         if (!$this->slotExists($slot)) {
             $field = class_basename(static::class);
+
             throw new InvalidArgumentException("Slot {$slot} does not exist for Field {$field}");
         }
 
@@ -332,6 +339,7 @@ class Field extends VueProp
      * Check if slot exists.
      *
      * @param string $slot
+     *
      * @return void
      */
     public function slotExists(string $slot)
@@ -346,6 +354,7 @@ class Field extends VueProp
      * Get slot method name.
      *
      * @param string $slot
+     *
      * @return string
      */
     protected function getSlotMethodName(string $slot)
@@ -357,6 +366,7 @@ class Field extends VueProp
      * Set authorize closure.
      *
      * @param Closure $closure
+     *
      * @return void
      */
     public function authorize(Closure $closure)
@@ -367,7 +377,7 @@ class Field extends VueProp
     /**
      * Execute authorize method.
      *
-     * @return boolean
+     * @return bool
      */
     public function authorized()
     {
@@ -376,6 +386,7 @@ class Field extends VueProp
         }
 
         $closure = $this->authorize;
+
         return $closure(fjord_user());
     }
 
@@ -412,11 +423,12 @@ class Field extends VueProp
 
     /**
      * Get attribute name from setter method name.
-     * 
+     *
      * setNameDefault => name
      * setCamelCaseDefault => camelCase
      *
      * @param string $method
+     *
      * @return string
      */
     protected function getDefaultSetterAttributeName(string $method)
@@ -437,8 +449,9 @@ class Field extends VueProp
     /**
      * Set field attribute.
      *
-     * @param string $name
+     * @param string             $name
      * @param string|int|closure $value
+     *
      * @return self
      */
     public function setAttribute(string $name, $value = true)
@@ -455,11 +468,12 @@ class Field extends VueProp
     /**
      * Throw a MethodNotFoundException.
      *
-     * @param  array  $others
-     * @param  string  $method
-     * @return void
+     * @param array  $others
+     * @param string $method
      *
      * @throws \Fjord\Exceptions\MethodNotFoundException
+     *
+     * @return void
      */
     protected function methodNotFound($method)
     {
@@ -471,7 +485,7 @@ class Field extends VueProp
             ),
             [
                 'function' => '__call',
-                'class' => self::class
+                'class'    => self::class,
             ]
         );
     }
@@ -510,6 +524,7 @@ class Field extends VueProp
      * Get attribute.
      *
      * @param string $name
+     *
      * @return any
      */
     public function getAttribute(string $name)
@@ -539,6 +554,7 @@ class Field extends VueProp
      * Get attribute.
      *
      * @param string $name
+     *
      * @return any
      */
     public function __get(string $name)
@@ -550,6 +566,7 @@ class Field extends VueProp
      * Get attribute.
      *
      * @param string $name
+     *
      * @return any
      */
     public function __set(string $name, $value)

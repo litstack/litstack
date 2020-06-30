@@ -4,9 +4,9 @@ namespace Fjord\Crud;
 
 use Closure;
 use Fjord\Support\VueProp;
-use Illuminate\Support\Arr;
 use Fjord\Vue\Crud\CrudTable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 
 class CrudIndexTable extends VueProp
 {
@@ -18,7 +18,7 @@ class CrudIndexTable extends VueProp
     protected $attributes = [];
 
     /**
-     * Index table
+     * Index table.
      *
      * @var CrudIndexTable
      */
@@ -26,7 +26,7 @@ class CrudIndexTable extends VueProp
 
     /**
      * Crud config.
-     * 
+     *
      * @var ConfigHandler
      */
     protected $config;
@@ -79,7 +79,7 @@ class CrudIndexTable extends VueProp
         //$this->filter([]);
         $this->sortBy([
             'id.desc' => __f('fj.sort_new_to_old'),
-            'id.asc' => __f('fj.sort_old_to_new'),
+            'id.asc'  => __f('fj.sort_old_to_new'),
         ]);
         $this->setAttribute('sortable', false);
         $this->addControl(
@@ -101,7 +101,8 @@ class CrudIndexTable extends VueProp
     /**
      * Table card width.
      *
-     * @param integer|float $width
+     * @param int|float $width
+     *
      * @return $this
      */
     public function width($width)
@@ -112,9 +113,10 @@ class CrudIndexTable extends VueProp
     }
 
     /**
-     * Add table control
+     * Add table control.
      *
      * @param string|\Fjord\Vue\Component $control
+     *
      * @return $this
      */
     public function addControl($control)
@@ -127,9 +129,10 @@ class CrudIndexTable extends VueProp
     }
 
     /**
-     * Set table controls
+     * Set table controls.
      *
      * @param array|Collection $controls
+     *
      * @return $this
      */
     public function controls($controls)
@@ -154,7 +157,8 @@ class CrudIndexTable extends VueProp
     /**
      * Per page.
      *
-     * @param integer $perPage
+     * @param int $perPage
+     *
      * @return $this
      */
     public function perPage(int $perPage)
@@ -168,6 +172,7 @@ class CrudIndexTable extends VueProp
      * Set sort by default.
      *
      * @param string $key
+     *
      * @return $this
      */
     public function sortByDefault(string $key)
@@ -180,7 +185,8 @@ class CrudIndexTable extends VueProp
     /**
      * Sortable CrudIndex table.
      *
-     * @param boolean $sortable
+     * @param bool $sortable
+     *
      * @return $this
      */
     public function sortable(bool $sortable)
@@ -192,9 +198,10 @@ class CrudIndexTable extends VueProp
     }
 
     /**
-     * Set search keys
+     * Set search keys.
      *
      * @param array $keys
+     *
      * @return void
      */
     public function search(...$keys)
@@ -215,6 +222,7 @@ class CrudIndexTable extends VueProp
      * Set sortBy keys.
      *
      * @param array $sortBy
+     *
      * @return void
      */
     public function sortBy(array $keys)
@@ -228,6 +236,7 @@ class CrudIndexTable extends VueProp
      * Set table filters.
      *
      * @param array $filter
+     *
      * @return $this
      */
     public function filter(array $filter)
@@ -241,6 +250,7 @@ class CrudIndexTable extends VueProp
      * Set query modifier.
      *
      * @param Closure $closure
+     *
      * @return $this
      */
     public function query(Closure $closure)
@@ -254,6 +264,7 @@ class CrudIndexTable extends VueProp
      * Get modified query.
      *
      * @param Builder $query
+     *
      * @return Builder
      */
     public function getQuery(Builder $query)
@@ -272,7 +283,8 @@ class CrudIndexTable extends VueProp
      * Set attribute.
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return void
      */
     public function setAttribute(string $name, $value)
@@ -284,6 +296,7 @@ class CrudIndexTable extends VueProp
      * Get attribute.
      *
      * @param string $name
+     *
      * @return mixed
      */
     public function getAttribute(string $name)
@@ -299,7 +312,7 @@ class CrudIndexTable extends VueProp
     public function render(): array
     {
         return array_merge($this->attributes, [
-            'cols' => $this->table->toArray()
+            'cols' => $this->table->toArray(),
         ]);
     }
 }

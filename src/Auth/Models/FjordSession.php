@@ -2,10 +2,10 @@
 
 namespace Fjord\Auth\Models;
 
-use Mobile_Detect;
 use DeviceDetector\DeviceDetector;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
+use Mobile_Detect;
 
 class FjordSession extends Model
 {
@@ -24,7 +24,7 @@ class FjordSession extends Model
     const UPDATED_AT = 'last_activity';
 
     /**
-     * Fillable attributes
+     * Fillable attributes.
      *
      * @var array
      */
@@ -34,7 +34,7 @@ class FjordSession extends Model
         'ip_address',
         'user_agent',
         'payload',
-        'last_activity'
+        'last_activity',
     ];
 
     /**
@@ -65,7 +65,7 @@ class FjordSession extends Model
         'is_current',
         'browser',
         'device',
-        'os'
+        'os',
     ];
 
     /**
@@ -91,7 +91,7 @@ class FjordSession extends Model
     }
 
     /**
-     * Readable last_activity
+     * Readable last_activity.
      *
      * @return void
      */
@@ -133,13 +133,13 @@ class FjordSession extends Model
     }
 
     /**
-     * Get device attribute
+     * Get device attribute.
      *
      * @return string mobile|tablet|desktop
      */
     public function getDeviceAttribute()
     {
-        $detect = new Mobile_Detect;
+        $detect = new Mobile_Detect();
         $detect->setUserAgent($this->user_agent);
 
         if ($detect->isMobile()) {
@@ -148,6 +148,7 @@ class FjordSession extends Model
         if ($detect->isTable()) {
             return 'tablet';
         }
+
         return 'desktop';
     }
 }

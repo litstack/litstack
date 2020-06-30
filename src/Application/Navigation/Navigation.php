@@ -18,13 +18,14 @@ class Navigation implements Arrayable
      * Navigation title.
      *
      * @param string $title
+     *
      * @return string $title
      */
     public function title(string $title)
     {
         return [
             'title' => $title,
-            'type' => 'title',
+            'type'  => 'title',
         ];
     }
 
@@ -33,6 +34,7 @@ class Navigation implements Arrayable
      *
      * @param array $params
      * @param array $children
+     *
      * @return array $entry
      */
     public function group(array $params, array $children = [])
@@ -52,7 +54,8 @@ class Navigation implements Arrayable
      * Navigation entry.
      *
      * @param string|array $title
-     * @param array $params
+     * @param array        $params
+     *
      * @return array $entry
      */
     public function entry($title, array $params = [])
@@ -69,7 +72,7 @@ class Navigation implements Arrayable
 
         return array_merge($params, [
             'title' => $title,
-            'type' => 'entry'
+            'type'  => 'entry',
         ]);
     }
 
@@ -77,7 +80,8 @@ class Navigation implements Arrayable
      * Navigation entry preset.
      *
      * @param string $name
-     * @param array $params
+     * @param array  $params
+     *
      * @return array
      */
     public function preset(string $name, array $params = [])
@@ -91,6 +95,7 @@ class Navigation implements Arrayable
      * Add navigation section.
      *
      * @param array $entries
+     *
      * @return void
      */
     public function section(array $entries)
@@ -112,7 +117,8 @@ class Navigation implements Arrayable
      * Authorize navigation entry.
      *
      * @param array $params
-     * @return boolean
+     *
+     * @return bool
      */
     protected function authorize(array $params)
     {

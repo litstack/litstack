@@ -11,12 +11,13 @@ class BlockForm extends BaseForm
      * Laravel relations not allowed for block.
      *
      * @param string $name
-     * @return mixed
-     * 
+     *
      * @throws \InvalidArgumentException
+     *
+     * @return mixed
      */
     public function relation(string $name)
     {
-        throw new InvalidArgumentException("Laravel relations are not available in Block. Use fields oneRelation or manyRelation instead.");
+        throw new InvalidArgumentException('Laravel relations are not available in Block. Use fields oneRelation or manyRelation instead.');
     }
 }

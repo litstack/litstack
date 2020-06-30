@@ -6,9 +6,9 @@ use Fjord\Crud\BaseField;
 
 class Input extends BaseField
 {
-    use Traits\FieldHasRules,
-        Traits\TranslatableField,
-        Traits\FieldHasPlaceholder;
+    use Traits\FieldHasRules;
+    use Traits\TranslatableField;
+    use Traits\FieldHasPlaceholder;
 
     /**
      * Field Vue component.
@@ -27,7 +27,8 @@ class Input extends BaseField
     /**
      * Set max chars.
      *
-     * @param integer $max
+     * @param int $max
+     *
      * @return $this
      */
     public function max(int $max)
@@ -51,6 +52,7 @@ class Input extends BaseField
      * Set append.
      *
      * @param string $prepend
+     *
      * @return $this
      */
     public function append(string $append)
@@ -64,6 +66,7 @@ class Input extends BaseField
      * Set prepend.
      *
      * @param string $prepend
+     *
      * @return $this
      */
     public function prepend(string $prepend)
@@ -77,6 +80,7 @@ class Input extends BaseField
      * Set input type.
      *
      * @param string $type
+     *
      * @return $this
      */
     public function type(string $type)
@@ -90,7 +94,8 @@ class Input extends BaseField
      * Cast field value.
      *
      * @param mixed $value
-     * @return boolean
+     *
+     * @return bool
      */
     public function cast($value)
     {

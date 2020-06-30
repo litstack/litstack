@@ -25,8 +25,8 @@ class ChartRequest extends FormRequest
     public function rules()
     {
         return [
-            'key' => 'required',
-            'type' => 'required'
+            'key'  => 'required',
+            'type' => 'required',
         ];
     }
 }

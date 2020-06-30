@@ -20,8 +20,9 @@ class Form
      * returned where the respective collection or form can be called with the
      * name.
      *
-     * @param  string $collection
-     * @param  string $name
+     * @param string $collection
+     * @param string $name
+     *
      * @return FormFieldCollection
      */
     public function load(string $collection = null, string $name = null)
@@ -50,9 +51,9 @@ class Form
      * Get groups for collection and form_name and
      * create nested Collection based on the groups.
      *
-     * @param  Illuminate\Support\Collection $items Collection of AwStudio\Fjord\Form\Database\FormField
-     * @param  bool $loading_collection
-     * @param  bool $loading_name
+     * @param Illuminate\Support\Collection $items              Collection of AwStudio\Fjord\Form\Database\FormField
+     * @param bool                          $loading_collection
+     * @param bool                          $loading_name
      *
      * @return AwStudio\Fjord\Form\FormFieldCollection|AwStudio\Fjord\Form\Collection
      */
@@ -74,9 +75,10 @@ class Form
     }
 
     /**
-     * Get collection groups
+     * Get collection groups.
      *
      * @param Collection $items
+     *
      * @return FormFieldCollection
      */
     protected function getCollectionGroups(Collection $items)
@@ -96,6 +98,7 @@ class Form
      * Get form groups.
      *
      * @param Collection $items
+     *
      * @return FormFieldCollection
      */
     protected function getFormGroups(Collection $items)
@@ -114,6 +117,7 @@ class Form
      *
      * @param string $alias
      * @param string $field
+     *
      * @return void
      */
     public function registerField(string $alias, $field)
@@ -125,7 +129,8 @@ class Form
      * Determine if field alias exists.
      *
      * @param mixed $field
-     * @return boolean
+     *
+     * @return bool
      */
     public function fieldExists(string $alias)
     {
@@ -136,6 +141,7 @@ class Form
      * Get field by alias.
      *
      * @param string $alias
+     *
      * @return string
      */
     public function getField(string $alias)

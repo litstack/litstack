@@ -3,13 +3,13 @@
 namespace Fjord\Crud\Api;
 
 use Closure;
-use TypeError;
-use Fjord\Crud\Field;
 use Fjord\Crud\BaseForm;
-use Illuminate\Http\Request;
-use Fjord\Crud\Models\Traits\TrackEdits;
 use Fjord\Crud\Controllers\CrudBaseController;
+use Fjord\Crud\Field;
+use Fjord\Crud\Models\Traits\TrackEdits;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Http\Request;
+use TypeError;
 
 class ApiRequest
 {
@@ -65,10 +65,11 @@ class ApiRequest
     /**
      * Create new CrudApi request.
      *
-     * @param ApiRepositories $repositories
-     * @param Request $request
-     * @param ApiLoader $loader
+     * @param ApiRepositories    $repositories
+     * @param Request            $request
+     * @param ApiLoader          $loader
      * @param CrudBaseController $controller
+     *
      * @return void
      */
     public function __construct(ApiRepositories $repositories, Request $request, ApiLoader $loader, CrudBaseController $controller)
@@ -85,9 +86,9 @@ class ApiRequest
     /**
      * Handle api request.
      *
-     * @return mixed
-     * 
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return mixed
      */
     public function handle()
     {
@@ -100,7 +101,7 @@ class ApiRequest
         }
 
         if (!method_exists($repository, $this->method)) {
-            abort(404, debug("Method [{$this->method}] does not exist on " . get_class($repository)));
+            abort(404, debug("Method [{$this->method}] does not exist on ".get_class($repository)));
         }
 
         $inject = ['payload' => (object) ($this->request->payload ?: [])];
@@ -163,24 +164,25 @@ class ApiRequest
     /**
      * Get child model.
      *
-     * @param  mixed  $parentRepository
-     * @param  mixed  $model
-     * @return mixed
-     * 
+     * @param mixed $parentRepository
+     * @param mixed $model
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return mixed
      */
     public function getParentModel($parentRepository, $model)
     {
         if (!method_exists($parentRepository, 'getModel')) {
-            abort(404, debug("Missing [getModel] method on " . get_class($parentRepository)));
+            abort(404, debug('Missing [getModel] method on '.get_class($parentRepository)));
         }
 
         $model = app()->call([$parentRepository, 'getModel'], [
-            'model' => $model
+            'model' => $model,
         ]);
 
         if (!$model) {
-            abort(404, debug("Couldn't find child [$this->abstract] Model for " . get_class($model) . " with id [$model->id]."));
+            abort(404, debug("Couldn't find child [$this->abstract] Model for ".get_class($model)." with id [$model->id]."));
         }
 
         return $model;
@@ -202,7 +204,8 @@ class ApiRequest
     /**
      * Get child repository instance.
      *
-     * @param  mixed  $parentRepository
+     * @param mixed $parentRepository
+     *
      * @return mixed
      */
     protected function getChildRepository($parentRepository)
@@ -216,9 +219,9 @@ class ApiRequest
     /**
      * Get child field getter.
      *
-     * @return Closure
-     * 
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return Closure
      */
     protected function getChildFieldGetter($parentRepository)
     {
@@ -226,12 +229,12 @@ class ApiRequest
             $field_id = $this->request->child_field_id;
 
             if (!method_exists($parentRepository, 'getField') && $field_id) {
-                abort(404, debug("Missing [getField] method on " . get_class($parentRepository)));
+                abort(404, debug('Missing [getField] method on '.get_class($parentRepository)));
             }
 
             // Getting field from parentRepository's getField method.
             $field = app()->call([$parentRepository, 'getField'], [
-                'field_id' => $field_id
+                'field_id' => $field_id,
             ]);
 
             return $this->passFieldOrFail($field_id, $field);
@@ -256,20 +259,21 @@ class ApiRequest
     /**
      * Make repository instance with bindings.
      *
-     * @param  string   $repository
-     * @param  Closure  $fieldGetter
-     * @return mixed
-     * 
+     * @param string  $repository
+     * @param Closure $fieldGetter
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return mixed
      */
     protected function makeRepository(string $repository, Closure $fieldGetter)
     {
         try {
             return app()->make($repository, [
-                'config' => $this->controller->getConfig(),
+                'config'     => $this->controller->getConfig(),
                 'controller' => $this->controller,
-                'field' => $fieldGetter(),
-                'form' => $this->getForm(),
+                'field'      => $fieldGetter(),
+                'form'       => $this->getForm(),
             ]);
         } catch (TypeError $e) {
             abort(404, debug($e->getMessage()));
@@ -290,6 +294,7 @@ class ApiRequest
      * Get field instance.
      *
      * @param string|null $field_id
+     *
      * @return Field|null
      */
     public function getField($field_id)
@@ -304,11 +309,12 @@ class ApiRequest
     /**
      * Pass field id or throw Http NotFoundException.
      *
-     * @param string $field_id
+     * @param string     $field_id
      * @param Field|null $field
-     * @return Field
-     * 
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return Field
      */
     protected function passFieldOrFail($field_id, $field)
     {
@@ -347,6 +353,7 @@ class ApiRequest
      * Get repository method from request.
      *
      * @param Request $request
+     *
      * @return string
      */
     protected function getMethodFromRequest(Request $request)
@@ -357,9 +364,9 @@ class ApiRequest
 
         // Get repository method from request method.
         return [
-            'GET' => 'index',
-            'POST' => 'store',
-            'PUT' => 'update',
+            'GET'    => 'index',
+            'POST'   => 'store',
+            'PUT'    => 'update',
             'DELETE' => 'destroy',
         ][$this->request->getMethod()] ?? null;
     }
@@ -381,7 +388,7 @@ class ApiRequest
     /**
      * Determines if api has child repository. For example a media field in a block.
      *
-     * @return boolean
+     * @return bool
      */
     protected function hasChild()
     {

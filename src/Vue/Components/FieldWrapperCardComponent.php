@@ -15,18 +15,18 @@ class FieldWrapperCardComponent extends Component
     {
         return [
             'title' => [
-                'type' => 'string',
+                'type'     => 'string',
                 'required' => false,
             ],
             'width' => [
-                'type' => ['integer', 'double'],
+                'type'     => ['integer', 'double'],
                 'required' => false,
-                'default' => 12
+                'default'  => 12,
             ],
             'class' => [
-                'type' => 'string',
+                'type'     => 'string',
                 'required' => false,
-                'default' => 'mb-4'
+                'default'  => 'mb-4',
             ],
         ];
     }

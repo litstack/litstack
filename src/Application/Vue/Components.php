@@ -23,8 +23,9 @@ class Components
     /**
      * Register component.
      *
-     * @param string $name
+     * @param string       $name
      * @param string|array $class
+     *
      * @return void
      */
     public function register(string $name, $class)
@@ -52,7 +53,8 @@ class Components
      * Is component name registered.
      *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     public function isRegistered(string $name)
     {
@@ -64,6 +66,7 @@ class Components
      * Get new component instance.
      *
      * @param string $name
+     *
      * @return void
      */
     public function component(string $name)

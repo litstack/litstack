@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\File;
 
 class Wysiwyg extends BaseField
 {
-    use Traits\FieldHasRules,
-        Traits\TranslatableField;
+    use Traits\FieldHasRules;
+    use Traits\TranslatableField;
 
     /**
      * Field Vue component.
@@ -36,9 +36,10 @@ class Wysiwyg extends BaseField
     }
 
     /**
-     * Set font colors
+     * Set font colors.
      *
      * @param array $colors
+     *
      * @return void
      */
     public function colors($colors, ...$more)
@@ -51,9 +52,10 @@ class Wysiwyg extends BaseField
     }
 
     /**
-     * Add custom css to editor
+     * Add custom css to editor.
      *
      * @param string $path
+     *
      * @return void
      */
     public function css(string $path)
@@ -67,7 +69,8 @@ class Wysiwyg extends BaseField
      * Cast field value.
      *
      * @param mixed $value
-     * @return boolean
+     *
+     * @return bool
      */
     public function cast($value)
     {

@@ -13,10 +13,10 @@ class RootComponent extends Component
     {
         return [
             'navControls' => [
-                'many' => true
+                'many' => true,
             ],
             'headerControls' => [
-                'many' => true
+                'many' => true,
             ],
         ];
     }

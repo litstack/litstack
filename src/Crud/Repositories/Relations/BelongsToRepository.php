@@ -2,10 +2,10 @@
 
 namespace Fjord\Crud\Repositories\Relations;
 
-use Illuminate\Support\Facades\DB;
 use Fjord\Crud\Fields\Relations\BelongsTo;
-use Fjord\Crud\Requests\CrudUpdateRequest;
 use Fjord\Crud\Repositories\BaseFieldRepository;
+use Fjord\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Support\Facades\DB;
 
 class BelongsToRepository extends BaseFieldRepository
 {
@@ -30,7 +30,8 @@ class BelongsToRepository extends BaseFieldRepository
      * Create new belongsTo relation.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
+     * @param mixed             $model
+     *
      * @return void
      */
     public function create(CrudUpdateRequest $request, $model)
@@ -41,7 +42,7 @@ class BelongsToRepository extends BaseFieldRepository
 
         $query = [
             $belongsToMany->getForeignPivotKeyName() => $model->{$belongsToMany->getParentKeyName()},
-            $belongsToMany->getRelatedPivotKeyName() => $related->{$belongsToMany->getRelatedKeyName()}
+            $belongsToMany->getRelatedPivotKeyName() => $related->{$belongsToMany->getRelatedKeyName()},
         ];
 
         if ($this->field->sortable) {
@@ -54,8 +55,9 @@ class BelongsToRepository extends BaseFieldRepository
     /**
      * Destroy belongsTo relation.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed $model
+     * @param CrudUpdateRequest $request
+     * @param mixed             $model
+     *
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)
@@ -63,9 +65,10 @@ class BelongsToRepository extends BaseFieldRepository
         $related = $this->getRelated($request, $model);
 
         $belongsToMany = $this->field->getRelationQuery($model);
+
         return DB::table($belongsToMany->getTable())->where([
             $belongsToMany->getForeignPivotKeyName() => $model->{$belongsToMany->getParentKeyName()},
-            $belongsToMany->getRelatedPivotKeyName() => $related->{$belongsToMany->getRelatedKeyName()}
+            $belongsToMany->getRelatedPivotKeyName() => $related->{$belongsToMany->getRelatedKeyName()},
         ])->delete();
     }
 }

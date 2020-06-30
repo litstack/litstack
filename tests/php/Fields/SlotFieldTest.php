@@ -42,6 +42,7 @@ class SlotFieldTest extends BackendTestCase
         $this->markTestSkipped(
             'Field slots not done yet.'
         );
+
         return;
         $this->expectException(\InvalidArgumentException::class);
         $this->field->slot('some_not_existsing_slot', 'dummy-component');

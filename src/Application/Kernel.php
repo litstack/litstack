@@ -8,15 +8,15 @@ class Kernel
 {
     /**
      * Fjord application instance.
-     * 
+     *
      * @var Fjord\Application\Application
      */
     protected $app;
 
     /**
-     * List of bootstrappers that should be executed before when the 
+     * List of bootstrappers that should be executed before when the
      * kernel is initialized. They get executed in the given order.
-     * 
+     *
      * @var array
      */
     protected $bootstrappers = [
@@ -37,7 +37,7 @@ class Kernel
     protected $extensions = [];
 
     /**
-     * Formatted array of extensions to allow multiple extensions 
+     * Formatted array of extensions to allow multiple extensions
      * for one component.
      *
      * @var array
@@ -54,7 +54,8 @@ class Kernel
     /**
      * Create a new Fjord kernel instance.
      *
-     * @param  \Fjord\Application\Application  $app
+     * @param \Fjord\Application\Application $app
+     *
      * @return void
      */
     public function __construct(Application $app)
@@ -66,7 +67,7 @@ class Kernel
 
     /**
      * Handle incomming route.
-     * 
+     *
      * @return void
      */
     public function handleRoute($route)
@@ -76,7 +77,7 @@ class Kernel
 
     /**
      * Handle fjord::app view before it gets executed.
-     * 
+     *
      * @return void
      */
     public function handleView(View $view)
@@ -88,7 +89,7 @@ class Kernel
 
     /**
      * Get the bootstrap classes for the application.
-     * 
+     *
      * @return void
      */
     public function bootstrap()
@@ -100,7 +101,7 @@ class Kernel
 
     /**
      * Register all extensions that are defined in the $extensions variable.
-     * 
+     *
      * @return void
      */
     protected function registerRootExtensions()
@@ -112,8 +113,9 @@ class Kernel
 
     /**
      * Execute extensions for the given components.
-     * 
+     *
      * @param Illuminate\View\View $view
+     *
      * @return void
      */
     public function extend(View $view)
@@ -123,8 +125,9 @@ class Kernel
 
     /**
      * Build application for the given route.
-     * 
+     *
      * @param Illuminate\View\View $view
+     *
      * @return void
      */
     public function build(View $view)
@@ -134,9 +137,10 @@ class Kernel
 
     /**
      * Register extension class.
-     * 
+     *
      * @param string $component
      * @param string $extension
+     *
      * @return void
      */
     public function registerExtension(string $key, string $extension)

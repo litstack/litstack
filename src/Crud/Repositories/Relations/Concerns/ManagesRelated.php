@@ -10,6 +10,7 @@ trait ManagesRelated
      * Get related model from request.
      *
      * @param Request $request
+     *
      * @return mixed
      */
     public function getRelated(Request $request, $model)

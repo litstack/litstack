@@ -2,16 +2,14 @@
 
 namespace FjordTest;
 
-use Mockery as m;
-use ReflectionClass;
 use BadMethodCallException;
-use FjordTest\BackendTestCase;
 use Fjord\Crud\Models\FormRelation;
 use Fjord\Support\Macros\BuilderSort;
 use FjordTest\TestSupport\Models\Post;
+use FjordTest\TestSupport\Models\TranslatablePost;
 use FjordTest\TestSupport\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use FjordTest\TestSupport\Models\TranslatablePost;
+use ReflectionClass;
 
 class BuilderMacroSortTest extends BackendTestCase
 {
@@ -137,11 +135,11 @@ class BuilderMacroSortTest extends BackendTestCase
     {
         TranslatablePost::create([])->update([
             'en' => ['text' => 'en a'],
-            'de' => ['text' => 'de a']
+            'de' => ['text' => 'de a'],
         ]);
         TranslatablePost::create([])->update([
             'en' => ['text' => 'en b'],
-            'de' => ['text' => 'de b']
+            'de' => ['text' => 'de b'],
         ]);
 
         // Using default direction and "en" locale.
@@ -173,7 +171,6 @@ class BuilderMacroSortTest extends BackendTestCase
         $this->assertEquals('de a', $posts[1]->text);
     }
 
-
     public function it_sorts_by_related_translated_attribute()
     {
         // TODO make it work for hasOneThrough relation
@@ -188,48 +185,48 @@ class BuilderMacroSortTest extends BackendTestCase
         $basePost1 = TranslatablePost::create([]);
         $basePost1->update([
             'en' => ['text' => 'en base 1'],
-            'de' => ['text' => 'de base 1']
+            'de' => ['text' => 'de base 1'],
         ]);
         $basePost2 = TranslatablePost::create([]);
         $basePost2->update([
             'en' => ['text' => 'en base 2'],
-            'de' => ['text' => 'de base 2']
+            'de' => ['text' => 'de base 2'],
         ]);
         $basePost3 = TranslatablePost::create([]);
         $basePost3->update([
             'en' => ['text' => 'en base 2'],
-            'de' => ['text' => 'de base 2']
+            'de' => ['text' => 'de base 2'],
         ]);
         $relatedPost1 = TranslatablePost::create([]);
         $relatedPost1->update([
             'en' => ['text' => 'en related a'],
-            'de' => ['text' => 'de related a']
+            'de' => ['text' => 'de related a'],
         ]);
         $relatedPost2 = TranslatablePost::create([]);
         $relatedPost2->update([
             'en' => ['text' => 'en related b'],
-            'de' => ['text' => 'de related b']
+            'de' => ['text' => 'de related b'],
         ]);
         $relatedPost3 = TranslatablePost::create([]);
         $relatedPost3->update([
             'en' => ['text' => 'en related c'],
-            'de' => ['text' => 'de related c']
+            'de' => ['text' => 'de related c'],
         ]);
 
         factory(FormRelation::class, 1)->create([
             'name' => 'translatablePost',
             'from' => $basePost3,
-            'to' => $relatedPost1,
+            'to'   => $relatedPost1,
         ]);
         factory(FormRelation::class, 1)->create([
             'name' => 'translatablePost',
             'from' => $basePost2,
-            'to' => $relatedPost2,
+            'to'   => $relatedPost2,
         ]);
         factory(FormRelation::class, 1)->create([
             'name' => 'translatablePost',
             'from' => $basePost1,
-            'to' => $relatedPost3,
+            'to'   => $relatedPost3,
         ]);
 
         $posts = TranslatablePost::whereHas('translatablePost')->sort('translatablePost.text')->get();

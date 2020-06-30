@@ -2,10 +2,9 @@
 
 namespace Fjord\Commands;
 
+use Illuminate\Database\Console\Migrations\RollbackCommand;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
-use Illuminate\Database\Migrations\Migrator;
-use Illuminate\Database\Console\Migrations\RollbackCommand;
 
 class FjordFormPermissions extends RollbackCommand
 {
@@ -30,10 +29,10 @@ class FjordFormPermissions extends RollbackCommand
      */
     public function handle()
     {
-        $migrationsPath = app()->databasePath() . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR;
+        $migrationsPath = app()->databasePath().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR;
         $migrationPath = Collection::make($migrationsPath)
             ->flatMap(function ($path) {
-                return File::glob($path . '*_make_form_permissions.php');
+                return File::glob($path.'*_make_form_permissions.php');
             })->first();
         $files = [$migrationPath];
 

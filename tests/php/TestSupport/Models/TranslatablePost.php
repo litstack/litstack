@@ -2,10 +2,10 @@
 
 namespace FjordTest\TestSupport\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Fjord\Crud\Models\Traits\Translatable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Fjord\Crud\Models\Traits\Translatable;
 use FjordTest\TestSupport\Models\Translations\TranslatablePostTranslation;
+use Illuminate\Database\Eloquent\Model;
 
 class TranslatablePost extends Model implements TranslatableContract
 {
@@ -16,7 +16,7 @@ class TranslatablePost extends Model implements TranslatableContract
     protected $translationModel = TranslatablePostTranslation::class;
 
     /**
-     * Fillable attributes
+     * Fillable attributes.
      *
      * @var array
      */

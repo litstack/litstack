@@ -3,8 +3,8 @@
 namespace FjordTest\Fields;
 
 use Fjord\Crud\BaseField;
-use FjordTest\BackendTestCase;
 use Fjord\Crud\Fields\Checkboxes;
+use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
 
 class FieldCheckboxesTest extends BackendTestCase
@@ -28,7 +28,7 @@ class FieldCheckboxesTest extends BackendTestCase
     public function test_cast()
     {
         $this->assertIsArray($this->field->cast('["a"]'));
-        $this->assertIsArray($this->field->cast(["a"]));
+        $this->assertIsArray($this->field->cast(['a']));
     }
 
     /** @test */

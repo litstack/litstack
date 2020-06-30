@@ -3,11 +3,11 @@
 namespace Fjord\Crud\Controllers;
 
 use Fjord\Crud\Models\FormField;
-use Fjord\User\Models\FjordUser;
+use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\FormReadRequest;
+use Fjord\User\Models\FjordUser;
 use Illuminate\Database\Eloquent\Builder;
-use Fjord\Crud\Requests\CrudCreateRequest;
 
 abstract class FormController extends CrudBaseController
 {
@@ -20,11 +20,12 @@ abstract class FormController extends CrudBaseController
 
     /**
      * Authorize request for permission operation and authenticated fjord-user.
-     * Operations: read, update
+     * Operations: read, update.
      *
      * @param \Fjord\User\Models\FjordUser $user
-     * @param string $operation
-     * @return boolean
+     * @param string                       $operation
+     *
+     * @return bool
      */
     public function authorize(FjordUser $user, string $operation): bool
     {
@@ -43,7 +44,8 @@ abstract class FormController extends CrudBaseController
      * Load model.
      *
      * @param CrudReadRequest $request
-     * @param int $id
+     * @param int             $id
+     *
      * @return array
      */
     public function load(CrudReadRequest $request, $id)
@@ -70,6 +72,7 @@ abstract class FormController extends CrudBaseController
      * Edit form.
      *
      * @param FormReadRequest $request
+     *
      * @return View $view
      */
     public function show(CrudReadRequest $request)
@@ -98,25 +101,26 @@ abstract class FormController extends CrudBaseController
         $model = FormField::firstOrCreate([
             'config_type' => get_class($this->config->getConfig()),
         ], [
-            'form_name' => $this->config->formName,
+            'form_name'  => $this->config->formName,
             'collection' => $this->config->collection,
-            'form_type' => 'show',
+            'form_type'  => 'show',
         ]);
 
         return view('fjord::app')->withComponent($this->config->component)
-            ->withTitle("Form " . $this->config->names['singular'])
+            ->withTitle('Form '.$this->config->names['singular'])
             ->withProps([
-                'crud-model' => crud($model),
-                'config' => $config,
+                'crud-model'        => crud($model),
+                'config'            => $config,
                 'header-components' => ['fj-crud-preview'],
-                'controls' => [],
+                'controls'          => [],
             ]);
     }
 
     /**
      * Deny storing form FormField model.
      *
-     * @param  \Fjord\Crud\Requests\CrudCreateRequest  $request
+     * @param \Fjord\Crud\Requests\CrudCreateRequest $request
+     *
      * @return mixed
      */
     public function store(CrudCreateRequest $request)
@@ -131,6 +135,5 @@ abstract class FormController extends CrudBaseController
      */
     public function fillModelAttributes($model, $request, $fields)
     {
-        return;
     }
 }

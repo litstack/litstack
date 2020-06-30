@@ -4,13 +4,12 @@ namespace FjordTest\CrudController;
 
 use Fjord\Crud\Models\FormBlock;
 use FjordTest\BackendTestCase;
-use FjordTest\FrontendTestCase;
 use FjordTest\TestSupport\Models\Post;
 use FjordTest\Traits\InteractsWithCrud;
 
 /**
  * This test is using the Crud Post.
- * 
+ *
  * @see FjordApp\Config\Crud\PostConfig
  * @see FjordTest\TestSupport\Models\Post
  */
@@ -27,6 +26,7 @@ class ApiBlockTest extends BackendTestCase
     }
 
     // Store
+
     /** @test */
     public function it_can_store_block()
     {
@@ -37,7 +37,7 @@ class ApiBlockTest extends BackendTestCase
             'payload' => [
                 'repeatable_type' => 'text',
             ],
-            'field_id' => 'content'
+            'field_id' => 'content',
         ]);
 
         $request->assertStatus(200);
@@ -49,7 +49,7 @@ class ApiBlockTest extends BackendTestCase
             'payload' => [
                 'repeatable_type' => 'input',
             ],
-            'field_id' => 'content'
+            'field_id' => 'content',
         ]);
         $request->assertStatus(200);
 
@@ -60,6 +60,7 @@ class ApiBlockTest extends BackendTestCase
     }
 
     // Load all
+
     /** @test */
     public function it_can_load_all_repeatables()
     {
@@ -78,6 +79,7 @@ class ApiBlockTest extends BackendTestCase
     }
 
     // Load one
+
     /** @test */
     public function it_can_load_block()
     {
@@ -88,8 +90,8 @@ class ApiBlockTest extends BackendTestCase
         // Send request.
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/block/load");
         $request = $this->json('POST', $url, [
-            'field_id' => 'content',
-            'repeatable_id' => $block->id
+            'field_id'      => 'content',
+            'repeatable_id' => $block->id,
         ]);
 
         // Assertions.
@@ -98,6 +100,7 @@ class ApiBlockTest extends BackendTestCase
     }
 
     // Delete
+
     /** @test */
     public function it_can_delete_block()
     {
@@ -110,7 +113,7 @@ class ApiBlockTest extends BackendTestCase
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/block/destroy");
         $request = $this->json('POST', $url, [
             'repeatable_id' => $block1->id,
-            'field_id' => 'content'
+            'field_id'      => 'content',
         ]);
         $request->assertStatus(200);
         $this->assertCount(1, $this->getRepeatables('text'));
@@ -118,13 +121,14 @@ class ApiBlockTest extends BackendTestCase
         // Delete second block.
         $request = $this->json('POST', $url, [
             'repeatable_id' => $block2->id,
-            'field_id' => 'content'
+            'field_id'      => 'content',
         ]);
         $request->assertStatus(200);
         $this->assertCount(0, $this->getRepeatables('text'));
     }
 
     // Update
+
     /** @test */
     public function it_can_update_block()
     {
@@ -136,11 +140,11 @@ class ApiBlockTest extends BackendTestCase
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/block");
         $request = $this->put($url, [
             'payload' => [
-                'text' => 'some text'
+                'text' => 'some text',
             ],
-            'field_id' => 'content',
-            'repeatable_id' => $block->id,
-            'repeatable_type' => 'text'
+            'field_id'        => 'content',
+            'repeatable_id'   => $block->id,
+            'repeatable_type' => 'text',
         ]);
         $request->assertStatus(200);
         $block = $this->getRepeatables('text')->first();
@@ -148,6 +152,7 @@ class ApiBlockTest extends BackendTestCase
     }
 
     // Update
+
     /** @test */
     public function test_update_validates_request()
     {
@@ -158,7 +163,7 @@ class ApiBlockTest extends BackendTestCase
         // Text uses the rule "min:5"
         $url = $this->getCrudRoute("/{$this->post->id}/show/block/content/{$block->id}");
         $request = $this->put($url, [
-            'text' => 'ab'
+            'text' => 'ab',
         ]);
         //$request->assertStatus(302);
         $block = $this->getRepeatables('text')->first();
@@ -182,10 +187,10 @@ class ApiBlockTest extends BackendTestCase
     {
         return FormBlock::create([
             'config_type' => \FjordApp\Config\Crud\PostConfig::class,
-            'type' => $type,
-            'model_type' => get_class($this->post),
-            'model_id' => $this->post->id,
-            'field_id' => 'content'
+            'type'        => $type,
+            'model_type'  => get_class($this->post),
+            'model_id'    => $this->post->id,
+            'field_id'    => 'content',
         ]);
     }
 }

@@ -8,7 +8,7 @@ class FormMarkdown
 {
     /**
      * Create new FormMarkdown instance.
-     * 
+     *
      * @return void
      */
     public function __construct()
