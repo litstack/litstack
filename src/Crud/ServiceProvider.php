@@ -11,7 +11,7 @@ use Fjord\Crud\Fields\Component;
 use Fjord\Crud\Fields\Datetime;
 use Fjord\Crud\Fields\Icon;
 use Fjord\Crud\Fields\Input;
-use Fjord\Crud\Fields\ListField;
+use Fjord\Crud\Fields\ListField\ListField;
 use Fjord\Crud\Fields\Media\File;
 use Fjord\Crud\Fields\Media\Image;
 use Fjord\Crud\Fields\Modal;

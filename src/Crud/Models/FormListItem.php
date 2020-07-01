@@ -2,7 +2,8 @@
 
 namespace Fjord\Crud\Models;
 
-use Fjord\Crud\Fields\ListField;
+use Fjord\Crud\Fields\ListField\ListCollection;
+use Fjord\Crud\Fields\ListField\ListField;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class FormListItem extends FjordFormModel
@@ -100,5 +101,17 @@ class FormListItem extends FjordFormModel
         unset($items['model']);
 
         return $items;
+    }
+
+    /**
+     * Create a new Eloquent Collection instance.
+     *
+     * @param array $models
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function newCollection(array $models = [])
+    {
+        return new ListCollection($models);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud\Models\Relations;
 
+use Fjord\Crud\Fields\ListField\ListRelation;
 use Fjord\Crud\Models\FormBlock;
 use Fjord\Crud\Models\FormListItem;
 use Fjord\Crud\Models\FormRelation;
@@ -35,8 +36,6 @@ class CrudRelations extends ServiceProvider
 
             $morphMany = $model->morphMany(FormListItem::class, 'model');
 
-            //dd($relation);
-
             $relation = new ListRelation(
                 $morphMany->getQuery(),
                 $morphMany->getParent(),
@@ -45,12 +44,6 @@ class CrudRelations extends ServiceProvider
                 $morphMany->getLocalKeyName()
             );
 
-            /*
-            $relation = $model->morphMany(FormListItem::class, 'model')
-                ->with('translations')
-                ->orderBy('order_column');
-
-                */
             if ($fieldId) {
                 $relation->where('field_id', $fieldId);
             }

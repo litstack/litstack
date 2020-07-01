@@ -3,7 +3,7 @@
 namespace Fjord\Crud\Repositories;
 
 use Fjord\Crud\CrudValidator;
-use Fjord\Crud\Fields\ListField;
+use Fjord\Crud\Fields\ListField\ListField;
 use Fjord\Crud\Models\FormListItem;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;

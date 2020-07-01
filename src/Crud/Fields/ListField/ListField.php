@@ -1,17 +1,19 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Fjord\Crud\Fields\ListField;
 
 use Closure;
 use Fjord\Crud\BaseForm;
+use Fjord\Crud\Fields\Traits\FieldHasForm;
+use Fjord\Crud\Fields\Traits\HasBaseField;
 use Fjord\Crud\Models\FormField;
 use Fjord\Crud\RelationField;
 use Fjord\Crud\Repositories\ListRepository;
 
 class ListField extends RelationField
 {
-    use Traits\HasBaseField;
-    use Traits\FieldHasForm;
+    use HasBaseField;
+    use FieldHasForm;
 
     /**
      * Field Vue component.
