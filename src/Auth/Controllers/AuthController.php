@@ -2,17 +2,16 @@
 
 namespace Fjord\Auth\Controllers;
 
-use Illuminate\Http\Request;
+use Fjord\Auth\Actions\AuthenticationAction;
+use Fjord\Auth\Requests\FjordSessionLogoutRequest;
 use Fjord\Support\Facades\Fjord;
 use Fjord\User\Models\FjordUser;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use Fjord\Auth\Actions\AuthenticationAction;
-use Fjord\Auth\Requests\FjordSessionLogoutRequest;
-use Fjord\Auth\Controllers\ForgotPasswordController;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {

@@ -10,7 +10,7 @@ if (!function_exists('production')) {
     /**
      * Determines wether app is running in production.
      *
-     * @return boolean
+     * @return bool
      */
     function production()
     {
