@@ -96,7 +96,7 @@ class FjordChart extends GeneratorCommand
             $this->chartType = $default;
         }
 
-        $this->type = ucfirst($this->chartType) . ' chart config';
+        $this->type = ucfirst($this->chartType).' chart config';
     }
 
     /**
@@ -110,7 +110,7 @@ class FjordChart extends GeneratorCommand
     {
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
 
-        return $this->getFjordPath() . '/' . str_replace('\\', '/', $name) . '.php';
+        return $this->getFjordPath().'/'.str_replace('\\', '/', $name).'.php';
     }
 
     /**
@@ -122,7 +122,7 @@ class FjordChart extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Config\Charts';
+        return $rootNamespace.'\Config\Charts';
     }
 
     /**
