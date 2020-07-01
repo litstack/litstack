@@ -23,8 +23,6 @@ class Crud
     /**
      * Get model names.
      *
-     * @param string $model
-     *
      * @return array
      */
     public function names(string $model)
@@ -43,7 +41,6 @@ class Crud
     /**
      * Authorize crud controller.
      *
-     * @param string $controller
      * @param string $key
      *
      * @return bool
@@ -117,7 +114,6 @@ class Crud
                 'prefix' => $config->route_prefix,
                 'as'     => $config->getKey(),
             ], function () use ($config, $collection, $form) {
-
                 //require fjord_path('src/Crud/routes.php');
                 $this->makeFormRoutes($config->controller);
                 $this->makeFieldRoutes($config->controller);
@@ -137,8 +133,6 @@ class Crud
     /**
      * Make form routes.
      *
-     * @param string $controller
-     *
      * @return void
      */
     protected function makeFormRoutes(string $controller)
@@ -150,7 +144,6 @@ class Crud
      * Make Crud Model routes.
      *
      * @param string $controller
-     * @param string $identifier
      *
      * @return void
      */
@@ -178,8 +171,6 @@ class Crud
 
     /**
      * Make field routes.
-     *
-     * @param string $controller
      *
      * @return void
      */

@@ -104,7 +104,7 @@ class BaseForm extends VueProp
     /**
      * Create new BaseForm instance.
      *
-     * @param string $model
+     * @return void
      */
     public function __construct(string $model)
     {
@@ -120,7 +120,7 @@ class BaseForm extends VueProp
      */
     public function inWrapper()
     {
-        return $this->wrapper != null;
+        return $this->wrapper !== null;
     }
 
     /**
@@ -134,32 +134,9 @@ class BaseForm extends VueProp
     }
 
     /**
-     * Get new wrapper.
-     *
-     * @param string|Component $component
-     *
-     * @return component
-     */
-    protected function getNewWrapper($component)
-    {
-        if (is_string($component)) {
-            $component = component($component);
-        }
-
-        if ($this->inWrapper()) {
-            $wrapper = component('fj-field-wrapper');
-        } else {
-            $wrapper = $this->component('fj-field-wrapper');
-        }
-
-        return $wrapper->wrapperComponent($component);
-    }
-
-    /**
      * Create wrapper.
      *
-     * @param string|Component $component
-     * @param Closure          $closure
+     * @param Component|string $component
      *
      * @return self
      */
@@ -172,6 +149,9 @@ class BaseForm extends VueProp
 
     /**
      * Register new wrapper.
+     *
+     * @param mixed $wrapper
+     * @param mixed $closure
      *
      * @return Component
      */
@@ -196,22 +176,18 @@ class BaseForm extends VueProp
     /**
      * Formfield group.
      *
-     * @param Closure $closure
-     *
+     * @param  Closure   $closure
      * @return Component
      */
     public function group(Closure $closure)
     {
-        return $this->wrapper('fj-field-wrapper-group', function ($form) use ($closure) {
+        return $this->wrapper('fj-field-wrapper-group', function () use ($closure) {
             $closure($this);
         });
     }
 
     /**
      * Register column wrapper.
-     *
-     * @param int     $cols
-     * @param Closure $closure
      *
      * @return void
      */
@@ -227,9 +203,8 @@ class BaseForm extends VueProp
     /**
      * Get rules for request.
      *
-     * @param CrudUpdateRequest|CrudCreateRequest $request
-     * @param string|null                         $type
-     *
+     * @param  CrudCreateRequest|CrudUpdateRequest $request
+     * @param  string|null                         $type
      * @return array
      */
     public function getRules($type = null)
@@ -256,8 +231,6 @@ class BaseForm extends VueProp
     /**
      * Set form route prefix.
      *
-     * @param string $prefix
-     *
      * @return void
      */
     public function setRoutePrefix(string $prefix)
@@ -281,11 +254,10 @@ class BaseForm extends VueProp
     /**
      * Register new Field.
      *
-     * @param mixed  $field
-     * @param string $id
-     * @param array  $params
-     *
-     * @return Field $field
+     * @param  mixed  $field
+     * @param  string $id
+     * @param  array  $params
+     * @return Field  $field
      */
     public function registerField($field, string $id, $params = [])
     {
@@ -317,8 +289,6 @@ class BaseForm extends VueProp
     /**
      * Add after registering field hook.
      *
-     * @param Closure $closure
-     *
      * @return void
      */
     public function afterRegisteringField(Closure $closure)
@@ -329,37 +299,29 @@ class BaseForm extends VueProp
     /**
      * Register new Relation.
      *
-     * @param string $name
-     *
      * @throws \InvalidArgumentException
      *
      * @return mixed
      */
     public function relation(string $name)
     {
-        if ($this->model == FormField::class) {
+        if (FormField::class === $this->model) {
             throw new InvalidArgumentException('Laravel relations are not available in Forms. Use fields oneRelation or manyRelation instead.');
         }
 
-        $relationType = get_class((new $this->model())->$name());
+        $relationType = \get_class((new $this->model())->{$name}());
 
-        if (array_key_exists($relationType, $this->relations)) {
+        if (\array_key_exists($relationType, $this->relations)) {
             return $this->registerField($this->relations[$relationType], $name);
         }
 
-        throw new InvalidArgumentException(sprintf(
-            'Relation %s not supported. Supported relations: %s',
-            lcfirst(class_basename($relationType)),
-            implode(', ', collect(array_keys($this->relations))->map(function ($relation) {
-                return lcfirst(class_basename($relation));
-            })->toArray())
-        ));
+        throw new InvalidArgumentException(sprintf('Relation %s not supported. Supported relations: %s', lcfirst(class_basename($relationType)), implode(', ', collect(array_keys($this->relations))->map(function ($relation) {
+            return lcfirst(class_basename($relation));
+        })->toArray())));
     }
 
     /**
      * Add Vue component field.
-     *
-     * @param string $component
      *
      * @return \Fjord\Vue\Component
      */
@@ -392,7 +354,7 @@ class BaseForm extends VueProp
                 continue;
             }
 
-            if ($field->id == $fieldId) {
+            if ($field->id === $fieldId) {
                 return $field;
             }
         }
@@ -400,8 +362,6 @@ class BaseForm extends VueProp
 
     /**
      * Check if form has field.
-     *
-     * @param string $fieldId
      *
      * @return bool
      */
@@ -417,7 +377,6 @@ class BaseForm extends VueProp
     /**
      * Check if field with form exists.
      *
-     * @param string $name
      * @param string $repeatable
      *
      * @return bool
@@ -442,7 +401,6 @@ class BaseForm extends VueProp
     /**
      * Get form from field.
      *
-     * @param string $name
      * @param string $repeatable
      *
      * @return BaseForm
@@ -466,8 +424,6 @@ class BaseForm extends VueProp
 
     /**
      * Get attributes.
-     *
-     * @return array
      */
     public function render(): array
     {
@@ -478,6 +434,28 @@ class BaseForm extends VueProp
         return [
             'fields' => $this->registeredFields,
         ];
+    }
+
+    /**
+     * Get new wrapper.
+     *
+     * @param Component|string $component
+     *
+     * @return component
+     */
+    protected function getNewWrapper($component)
+    {
+        if (\is_string($component)) {
+            $component = component($component);
+        }
+
+        if ($this->inWrapper()) {
+            $wrapper = component('fj-field-wrapper');
+        } else {
+            $wrapper = $this->component('fj-field-wrapper');
+        }
+
+        return $wrapper->wrapperComponent($component);
     }
 
     /**
@@ -492,17 +470,7 @@ class BaseForm extends VueProp
      */
     protected function methodNotAllowed($method)
     {
-        throw new MethodNotFoundException(
-            sprintf(
-                'The %s method is not found for this form. Supported fields: %s.',
-                $method,
-                implode(', ', array_merge(['relation'], array_keys(FormFacade::getFields()))),
-            ),
-            [
-                'function' => '__call',
-                'class'    => self::class,
-            ]
-        );
+        throw new MethodNotFoundException(sprintf('The %s method is not found for this form. Supported fields: %s.', $method, implode(', ', array_merge(['relation'], array_keys(FormFacade::getFields()))), ), ['function' => '__call', 'class' => self::class]);
     }
 
     /**
