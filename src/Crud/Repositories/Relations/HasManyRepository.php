@@ -2,10 +2,9 @@
 
 namespace Fjord\Crud\Repositories\Relations;
 
-use Illuminate\Support\Facades\DB;
 use Fjord\Crud\Fields\Relations\HasMany;
-use Fjord\Crud\Requests\CrudUpdateRequest;
 use Fjord\Crud\Repositories\BaseFieldRepository;
+use Fjord\Crud\Requests\CrudUpdateRequest;
 
 class HasManyRepository extends BaseFieldRepository
 {
@@ -30,7 +29,8 @@ class HasManyRepository extends BaseFieldRepository
      * Create new hasMany relation.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
+     * @param mixed             $model
+     *
      * @return void
      */
     public function create(CrudUpdateRequest $request, $model)
@@ -52,8 +52,9 @@ class HasManyRepository extends BaseFieldRepository
     /**
      * Remove hasMany relation.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed $model
+     * @param CrudUpdateRequest $request
+     * @param mixed             $model
+     *
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)
@@ -63,7 +64,7 @@ class HasManyRepository extends BaseFieldRepository
         $hasMany = $this->field->getRelationQuery($model);
 
         $related->update([
-            $hasMany->getForeignKeyName() => null
+            $hasMany->getForeignKeyName() => null,
         ]);
     }
 }

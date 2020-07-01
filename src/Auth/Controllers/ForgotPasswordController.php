@@ -37,6 +37,7 @@ class ForgotPasswordController
      * Send reset Link.
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function execute(Request $request): JsonResponse

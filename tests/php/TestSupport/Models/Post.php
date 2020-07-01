@@ -11,7 +11,7 @@ class Post extends Model implements HasMediaContract
     use HasMedia;
 
     /**
-     * Fillable attributes
+     * Fillable attributes.
      *
      * @var array
      */
@@ -55,6 +55,7 @@ class Post extends Model implements HasMediaContract
     {
         return $this->listItems('test_list');
     }
+
     /*
     public function many_relation_post()
     {

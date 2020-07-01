@@ -2,8 +2,8 @@
 
 namespace FjordTest\Config;
 
-use FjordTest\BackendTestCase;
 use Fjord\Support\Facades\Config;
+use FjordTest\BackendTestCase;
 
 class ConfigLoaderTest extends BackendTestCase
 {

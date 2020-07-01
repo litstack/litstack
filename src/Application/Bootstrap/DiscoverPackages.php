@@ -2,16 +2,15 @@
 
 namespace Fjord\Application\Bootstrap;
 
-use Illuminate\Support\Facades\File;
 use Fjord\Application\Application;
-use Fjord\Application\Package\FjordPackage;
 use Fjord\Application\Package\Packages;
+use Illuminate\Support\Facades\File;
 
 class DiscoverPackages
 {
     /**
      * Path to the compiled manifest including all packages.
-     * 
+     *
      * @var string
      */
     protected $path;
@@ -27,8 +26,9 @@ class DiscoverPackages
     /**
      * Initialize Packages instance with all Fjord packages
      * and bind instance to the application.
-     * 
+     *
      * @param Fjord\Application\Application $app
+     *
      * @return void
      */
     public function bootstrap(Application $app)
@@ -39,10 +39,10 @@ class DiscoverPackages
     }
 
     /**
-     * Get all packages that are discovered by the 
-     * \Fjord\Foundation\Console\PackageDiscoverCommand and compiled to the 
-     * manifest in bootstrap/cache/fjord.php
-     * 
+     * Get all packages that are discovered by the
+     * \Fjord\Foundation\Console\PackageDiscoverCommand and compiled to the
+     * manifest in bootstrap/cache/fjord.php.
+     *
      * @return array $packages
      */
     protected function discover()

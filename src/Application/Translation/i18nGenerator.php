@@ -4,7 +4,7 @@ namespace Fjord\Application\Translation;
 
 /**
  * Generator inspired by martinlindhe
- * https://github.com/martinlindhe/laravel-vue-i18n-generator
+ * https://github.com/martinlindhe/laravel-vue-i18n-generator.
  */
 class i18nGenerator
 {
@@ -26,6 +26,7 @@ class i18nGenerator
      * Create new i18nGenerator instance.
      *
      * @param array $translations
+     *
      * @return void
      */
     public function __construct(array $translations)
@@ -37,6 +38,7 @@ class i18nGenerator
      * Convert translations array.
      *
      * @param array $translations
+     *
      * @return array
      */
     public static function convert(array $translations)
@@ -68,19 +70,20 @@ class i18nGenerator
      * Convert nested array.
      *
      * @param array $array
+     *
      * @return array
      */
     public function convertArray(array $array)
     {
         $converted = [];
         foreach ($array as $key => $section) {
-
             if (is_array($section)) {
                 $converted[$key] = $this->convertArray($section);
             } elseif (is_string($section)) {
                 $converted[$key] = $this->convertString($section);
             }
         }
+
         return $converted;
     }
 
@@ -88,15 +91,17 @@ class i18nGenerator
      * Turn Laravel style ":link" into vue-i18n style "{link}".
      *
      * @param string $string
+     *
      * @return string
      */
     protected function convertString(string $string)
     {
         $escapedEscapeChar = preg_quote($this->escapeChar, '/');
+
         return preg_replace_callback(
             "/(?<!mailto|tel|{$escapedEscapeChar}):\w+/",
             function ($matches) {
-                return '{' . strtolower(mb_substr($matches[0], 1)) . '}';
+                return '{'.strtolower(mb_substr($matches[0], 1)).'}';
             },
             $string
         );

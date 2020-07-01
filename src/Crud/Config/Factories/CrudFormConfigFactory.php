@@ -3,9 +3,9 @@
 namespace Fjord\Crud\Config\Factories;
 
 use Closure;
-use Fjord\Crud\CrudShow;
 use Fjord\Config\ConfigFactory;
 use Fjord\Config\ConfigHandler;
+use Fjord\Crud\CrudShow;
 
 class CrudFormConfigFactory extends ConfigFactory
 {
@@ -13,7 +13,8 @@ class CrudFormConfigFactory extends ConfigFactory
      * Setup create and edit form.
      *
      * @param \Fjord\Config\ConfigHandler $config
-     * @param Closure $method
+     * @param Closure                     $method
+     *
      * @return \Fjord\Crud\CrudForm
      */
     public function show(ConfigHandler $config, Closure $method)
@@ -21,7 +22,7 @@ class CrudFormConfigFactory extends ConfigFactory
         $form = new CrudShow($config->model);
 
         $form->setRoutePrefix(
-            strip_slashes($config->route_prefix . "/{id}/api/show")
+            strip_slashes($config->route_prefix.'/{id}/api/show')
         );
 
         $method($form);
@@ -33,7 +34,8 @@ class CrudFormConfigFactory extends ConfigFactory
      * Setup crud-show component form.
      *
      * @param \Fjord\Config\ConfigHandler $config
-     * @param Closure $method
+     * @param Closure                     $method
+     *
      * @return \Fjord\Vue\Component
      */
     public function component(ConfigHandler $config, Closure $method)

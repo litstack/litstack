@@ -2,12 +2,12 @@
 
 namespace FjordTest\Crud;
 
-use Mockery as m;
-use FjordTest\BackendTestCase;
 use Fjord\Crud\Models\FormRelation;
+use FjordTest\BackendTestCase;
 use FjordTest\TestSupport\Models\Post;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Mockery as m;
 
 class ManyRelationMacroTest extends BackendTestCase
 {
@@ -68,7 +68,7 @@ class ManyRelationMacroTest extends BackendTestCase
         factory(FormRelation::class, 1)->create([
             'name' => 'many_relation',
             'from' => $this->model,
-            'to' => $this->related1
+            'to'   => $this->related1,
         ]);
 
         $this->assertInstanceOf(Collection::class, $model->many_relation()->getResults());
@@ -88,12 +88,12 @@ class ManyRelationMacroTest extends BackendTestCase
         factory(FormRelation::class, $count)->create([
             'name' => $name,
             'from' => $this->model,
-            'to' => $this->related1
+            'to'   => $this->related1,
         ]);
         factory(FormRelation::class, $count)->create([
             'name' => $name,
             'from' => $this->model,
-            'to' => $this->related2
+            'to'   => $this->related2,
         ]);
     }
 

@@ -2,12 +2,11 @@
 
 namespace FjordTest\Fields;
 
-use Fjord\Crud\BaseField;
 use Carbon\CarbonInterface;
-use FjordTest\BackendTestCase;
+use Fjord\Crud\BaseField;
 use Fjord\Crud\Fields\Datetime;
+use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
-use Fjord\Crud\Fields\Traits\FieldHasRules;
 
 class FieldDatetimeTest extends BackendTestCase
 {

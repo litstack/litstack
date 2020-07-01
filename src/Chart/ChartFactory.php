@@ -2,9 +2,8 @@
 
 namespace Fjord\Chart;
 
-use Fjord\Chart\Chart;
-use Fjord\Config\ConfigHandler;
 use Fjord\Chart\Engine\ChartEngineResolver;
+use Fjord\Config\ConfigHandler;
 
 class ChartFactory
 {
@@ -29,6 +28,7 @@ class ChartFactory
      * Make chart from config.
      *
      * @param ConfigHandler $config
+     *
      * @return Chart
      */
     public function make(ConfigHandler $config)

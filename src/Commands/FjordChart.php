@@ -35,14 +35,14 @@ class FjordChart extends GeneratorCommand
     /**
      * Execute the console command.
      *
-     * @return bool|null
-     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     *
+     * @return bool|null
      */
     public function handle()
     {
         if ($this->setChartType() === false) {
-            $this->error("Only one chart type can be selected");
+            $this->error('Only one chart type can be selected');
 
             return false;
         }
@@ -58,7 +58,7 @@ class FjordChart extends GeneratorCommand
     protected function getStub()
     {
         return [
-            'donut' => fjord_path('stubs/chart.config.donut.stub'),
+            'donut'    => fjord_path('stubs/chart.config.donut.stub'),
             'progress' => fjord_path('stubs/chart.config.progress.stub'),
             'bar' => fjord_path('stubs/chart.config.bar.stub'),
             'number' => fjord_path('stubs/chart.config.number.stub'),
@@ -69,18 +69,18 @@ class FjordChart extends GeneratorCommand
     /**
      * Set chart type from options.
      *
-     * @return boolean|null
+     * @return bool|null
      */
     public function setChartType()
     {
         foreach ([
-            'donut', 'progress', 'bar', 'number', 'area'
+            'donut', 'progress', 'bar', 'number', 'area',
         ] as $type) {
             if (!$this->option($type)) {
                 continue;
             }
 
-            // Returning false when type has already been set since multiple 
+            // Returning false when type has already been set since multiple
             // types are not allowed.
             if ($this->chartType) {
                 return false;
@@ -95,7 +95,8 @@ class FjordChart extends GeneratorCommand
     /**
      * Get the destination class path.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function getPath($name)
@@ -108,7 +109,8 @@ class FjordChart extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
+     *
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
@@ -119,7 +121,8 @@ class FjordChart extends GeneratorCommand
     /**
      * Parse the class name and format according to the root namespace.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function qualifyClass($name)

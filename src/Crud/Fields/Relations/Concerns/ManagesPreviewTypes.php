@@ -4,13 +4,13 @@ namespace Fjord\Crud\Fields\Relations\Concerns;
 
 use Fjord\Exceptions\InvalidArgumentException;
 
-
 trait ManagesPreviewTypes
 {
     /**
      * Relation Preview type.
      *
      * @param string $type
+     *
      * @return $this
      */
     public function type(string $type)
@@ -23,7 +23,7 @@ trait ManagesPreviewTypes
                     implode(', ', array_keys($this->availablePreviewTypes))
                 ),
                 [
-                    'function' => 'type'
+                    'function' => 'type',
                 ]
             );
         }
@@ -38,7 +38,6 @@ trait ManagesPreviewTypes
     protected function setRequiredAttributesForType(string $type)
     {
         foreach ($this->availablePreviewTypes as $previewType => $attributes) {
-
             foreach ($attributes as $attribute) {
                 if ($previewType == $type) {
                     $this->required[] = $attribute;

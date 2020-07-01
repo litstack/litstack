@@ -14,7 +14,7 @@ class MakeFormPermissions extends Migration
      */
     protected $groups = [
         'pages',
-        'settings'
+        'settings',
     ];
 
     /**

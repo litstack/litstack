@@ -2,32 +2,29 @@
 
 namespace Fjord;
 
-use Fjord\Commands\FjordChart;
 use Fjord\Application\Application;
-use Fjord\Vue\Components\InfoComponent;
-use Fjord\Vue\Components\ChartComponent;
-use Fjord\Crud\Config\Traits\HasCrudShow;
-use Fjord\User\Components\UsersComponent;
-use Fjord\Crud\Config\Traits\HasCrudIndex;
+use Fjord\Application\Navigation\Config as NavigationConfig;
+use Fjord\Application\Navigation\NavigationConfigFactory;
+use Fjord\Application\Package\FjordPackage as Package;
 use Fjord\Crud\Components\CrudFormComponent;
 use Fjord\Crud\Components\CrudIndexComponent;
-use Fjord\Vue\Components\FieldWrapperComponent;
-use Fjord\Vue\Components\Index\ColImageComponent;
-use Fjord\Vue\Components\Index\ColToggleComponent;
-use Fjord\Vue\Components\FieldWrapperCardComponent;
-use Fjord\Vue\Components\FieldWrapperGroupComponent;
-use Fjord\Application\Package\FjordPackage as Package;
 use Fjord\Crud\Config\Factories\CrudFormConfigFactory;
 use Fjord\Crud\Config\Factories\CrudIndexConfigFactory;
+use Fjord\Crud\Config\Traits\HasCrudIndex;
+use Fjord\Crud\Config\Traits\HasCrudShow;
+use Fjord\Vue\Components\FieldWrapperCardComponent;
+use Fjord\Vue\Components\FieldWrapperComponent;
+use Fjord\Vue\Components\FieldWrapperGroupComponent;
 use Fjord\Vue\Components\Index\ColCrudRelationComponent;
-use Fjord\Application\Navigation\NavigationConfigFactory;
-use Fjord\Application\Navigation\Config as NavigationConfig;
+use Fjord\Vue\Components\Index\ColImageComponent;
+use Fjord\Vue\Components\Index\ColToggleComponent;
+use Fjord\Vue\Components\InfoComponent;
 
 class FjordPackage extends Package
 {
     /**
      * List of service providers to be registered for this package.
-     * 
+     *
      * @var array
      */
     protected $providers = [
@@ -59,27 +56,27 @@ class FjordPackage extends Package
 
     /**
      * List of extendable root Vue components this package contains.
-     * 
+     *
      * @var array
      */
     protected $components = [
         // Root
         'fj-crud-index' => CrudIndexComponent::class,
-        'fj-crud-form' => CrudFormComponent::class,
+        'fj-crud-form'  => CrudFormComponent::class,
 
         // Other
-        'fj-info' => InfoComponent::class,
-        'fj-field-wrapper' => FieldWrapperComponent::class,
-        'fj-field-wrapper-card' => FieldWrapperCardComponent::class,
+        'fj-info'                => InfoComponent::class,
+        'fj-field-wrapper'       => FieldWrapperComponent::class,
+        'fj-field-wrapper-card'  => FieldWrapperCardComponent::class,
         'fj-field-wrapper-group' => FieldWrapperGroupComponent::class,
-        'fj-col-image' => ColImageComponent::class,
-        'fj-col-toggle' => ColToggleComponent::class,
-        'fj-col-crud-relation' => ColCrudRelationComponent::class,
+        'fj-col-image'           => ColImageComponent::class,
+        'fj-col-toggle'          => ColToggleComponent::class,
+        'fj-col-crud-relation'   => ColCrudRelationComponent::class,
     ];
 
     /**
      * List of config classes with their associated factories.
-     * 
+     *
      * @var array
      */
     protected $configFactories = [
@@ -87,7 +84,7 @@ class FjordPackage extends Package
         NavigationConfig::class => NavigationConfigFactory::class,
 
         // Crud
-        HasCrudShow::class => CrudFormConfigFactory::class,
+        HasCrudShow::class  => CrudFormConfigFactory::class,
         HasCrudIndex::class => CrudIndexConfigFactory::class,
     ];
 
@@ -95,6 +92,7 @@ class FjordPackage extends Package
      * Boot application.
      *
      * @param Application $app
+     *
      * @return void
      */
     public function boot(Application $app)

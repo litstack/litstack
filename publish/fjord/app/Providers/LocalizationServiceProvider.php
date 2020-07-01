@@ -15,7 +15,7 @@ class LocalizationServiceProvider extends ServiceProvider
     protected function paths()
     {
         return [
-            base_path('fjord/resources/lang/')
+            base_path('fjord/resources/lang/'),
         ];
     }
 

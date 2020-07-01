@@ -3,11 +3,11 @@
 namespace FjordTest\Fields;
 
 use Fjord\Crud\BaseField;
-use FjordTest\BackendTestCase;
 use Fjord\Crud\Fields\Textarea;
-use FjordTest\Traits\InteractsWithFields;
 use Fjord\Crud\Fields\Traits\FieldHasRules;
 use Fjord\Crud\Fields\Traits\TranslatableField;
+use FjordTest\BackendTestCase;
+use FjordTest\Traits\InteractsWithFields;
 
 class FieldTextareaTest extends BackendTestCase
 {

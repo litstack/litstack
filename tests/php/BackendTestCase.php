@@ -8,7 +8,9 @@ use Orchestra\Testbench\Dusk\TestCase as OrchestraDuskTestCase;
 
 class BackendTestCase extends OrchestraDuskTestCase
 {
-    use RefreshDatabase, FjordTestCase, TestHelpers;
+    use RefreshDatabase;
+    use FjordTestCase;
+    use TestHelpers;
 
     /**
      * Setup the test environment.
@@ -58,9 +60,11 @@ class BackendTestCase extends OrchestraDuskTestCase
     protected function setUpTheBrowserEnvironment()
     {
     }
+
     protected function registerShutdownFunction()
     {
     }
+
     public static function prepare()
     {
     }

@@ -5,9 +5,10 @@ namespace Fjord\Crud\Fields\Traits;
 trait FieldHasPlaceholder
 {
     /**
-     * Set placeholder
+     * Set placeholder.
      *
      * @param string $placeholder
+     *
      * @return $this
      */
     public function placeholder(string $placeholder)

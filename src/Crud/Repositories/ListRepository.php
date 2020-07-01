@@ -2,13 +2,12 @@
 
 namespace Fjord\Crud\Repositories;
 
-use Illuminate\Http\Request;
 use Fjord\Crud\CrudValidator;
-use Fjord\Config\ConfigHandler;
 use Fjord\Crud\Fields\ListField;
 use Fjord\Crud\Models\FormListItem;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Http\Request;
 
 class ListRepository extends BaseFieldRepository
 {
@@ -20,13 +19,12 @@ class ListRepository extends BaseFieldRepository
         parent::__construct($config, $controller, $form, $field);
     }
 
-
-
     /**
      * Load list items for model.
      *
      * @param CrudReadRequest $request
-     * @param mixed $model
+     * @param mixed           $model
+     *
      * @return CrudJs
      */
     public function index(CrudReadRequest $request, $model)
@@ -40,8 +38,9 @@ class ListRepository extends BaseFieldRepository
      * Update list item.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
-     * @param object $payload
+     * @param mixed             $model
+     * @param object            $payload
+     *
      * @return CrudJs
      */
     public function update(CrudUpdateRequest $request, $model, $payload)
@@ -65,8 +64,9 @@ class ListRepository extends BaseFieldRepository
      * Send new list item model.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
-     * @param object $payload
+     * @param mixed             $model
+     * @param object            $payload
+     *
      * @return CrudJs
      */
     public function create(CrudUpdateRequest $request, $model, $payload)
@@ -77,9 +77,9 @@ class ListRepository extends BaseFieldRepository
         $this->checkMaxDepth($newDepth, $this->field->maxDepth);
 
         $listItem = new FormListItem([
-            'parent_id' => $parent->id ?? 0,
+            'parent_id'   => $parent->id ?? 0,
             'config_type' => get_class($this->config->getConfig()),
-            'form_type' => $request->form_type ?? 'show'
+            'form_type'   => $request->form_type ?? 'show',
         ]);
 
         return crud($listItem);
@@ -89,8 +89,9 @@ class ListRepository extends BaseFieldRepository
      * Store new list item to database.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
-     * @param object $payload
+     * @param mixed             $model
+     * @param object            $payload
+     *
      * @return CrudJs
      */
     public function store(CrudUpdateRequest $request, $model, $payload)
@@ -113,11 +114,11 @@ class ListRepository extends BaseFieldRepository
 
         $order_column = FormListItem::where([
             'config_type' => $this->config->getType(),
-            'form_type' => $payload->form_type ?? 'show',
-            'model_type' => get_class($model),
-            'model_id' => $model->id,
-            'field_id' => $this->field->id,
-            'parent_id' => $parent->id ?? 0
+            'form_type'   => $payload->form_type ?? 'show',
+            'model_type'  => get_class($model),
+            'model_id'    => $model->id,
+            'field_id'    => $this->field->id,
+            'parent_id'   => $parent->id ?? 0,
         ])->count();
 
         $listItem = new FormListItem();
@@ -138,6 +139,7 @@ class ListRepository extends BaseFieldRepository
      * Destory list item.
      *
      * @param CrudReadRequest $request
+     *
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model, $payload)
@@ -149,17 +151,18 @@ class ListRepository extends BaseFieldRepository
      * Order list.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
-     * @param object $payload
+     * @param mixed             $model
+     * @param object            $payload
+     *
      * @return void
      */
     public function order(CrudUpdateRequest $request, $model, $payload)
     {
         $request->validate([
-            'payload.items' => 'required',
+            'payload.items'                => 'required',
             'payload.items.*.order_column' => 'required|integer',
-            'payload.items.*.id' => 'required|integer',
-            'payload.items.*.parent_id' => 'integer',
+            'payload.items.*.id'           => 'required|integer',
+            'payload.items.*.parent_id'    => 'integer',
         ], __f('validation'));
 
         $orderedItems = $payload->items;
@@ -181,7 +184,7 @@ class ListRepository extends BaseFieldRepository
 
         foreach ($orderedItems as $orderedItem) {
             $update = [
-                'order_column' => $orderedItem['order_column']
+                'order_column' => $orderedItem['order_column'],
             ];
             if (array_key_exists('parent_id', $orderedItem)) {
                 $update['parent_id'] = $orderedItem['parent_id'];
@@ -196,6 +199,7 @@ class ListRepository extends BaseFieldRepository
      * Get child field.
      *
      * @param string $field_id
+     *
      * @return Field|null
      */
     public function getField($field_id)
@@ -206,8 +210,9 @@ class ListRepository extends BaseFieldRepository
     /**
      * Get list item model.
      *
-     * @param  Request  $request
-     * @param  mixed    $model
+     * @param Request $request
+     * @param mixed   $model
+     *
      * @return ListItem
      */
     public function getModel(Request $request, $model)
@@ -218,7 +223,8 @@ class ListRepository extends BaseFieldRepository
     /**
      * Get list item.
      *
-     * @param string|integer $id
+     * @param string|int $id
+     *
      * @return ListItem
      */
     protected function getListItem($model, $id)
@@ -229,7 +235,8 @@ class ListRepository extends BaseFieldRepository
     /**
      * Get parent by id.
      *
-     * @param string|integer $parentId
+     * @param string|int $parentId
+     *
      * @return FormListItem
      */
     protected function getParent($model, $parentId = 0)
@@ -242,8 +249,9 @@ class ListRepository extends BaseFieldRepository
     /**
      * Check max depth.
      *
-     * @param integer $depth
-     * @param integer $maxDepth
+     * @param int $depth
+     * @param int $maxDepth
+     *
      * @return void
      */
     protected function checkMaxDepth(int $depth, int $maxDepth)
@@ -253,7 +261,7 @@ class ListRepository extends BaseFieldRepository
         }
 
         return abort(405, __f('crud.fields.list.messages.max_depth', [
-            'count' => $maxDepth
+            'count' => $maxDepth,
         ]));
     }
 }

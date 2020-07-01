@@ -3,14 +3,14 @@
 namespace Fjord\Chart;
 
 use Carbon\CarbonInterface;
-use Fjord\Chart\Engine\ApexEngine;
-use Fjord\Chart\Engine\NumberEngine;
-use Fjord\Chart\Engine\ApexBarEngine;
 use Fjord\Chart\Engine\ApexAreaEngine;
+use Fjord\Chart\Engine\ApexBarEngine;
 use Fjord\Chart\Engine\ApexDonutEngine;
-use Illuminate\Database\Eloquent\Builder;
+use Fjord\Chart\Engine\ApexEngine;
 use Fjord\Chart\Engine\ApexProgressEngine;
 use Fjord\Chart\Engine\ChartEngineResolver;
+use Fjord\Chart\Engine\NumberEngine;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class ServiceProvider extends LaravelServiceProvider
@@ -26,7 +26,7 @@ class ServiceProvider extends LaravelServiceProvider
     }
 
     /**
-     * Register the application services
+     * Register the application services.
      *
      * @return void
      */
@@ -59,7 +59,7 @@ class ServiceProvider extends LaravelServiceProvider
     public function registerChartEngineResolver()
     {
         $this->app->singleton('fjord.chart.engine.resolver', function () {
-            $resolver = new ChartEngineResolver;
+            $resolver = new ChartEngineResolver();
 
             $this->registerApexEngine($resolver);
 
@@ -71,24 +71,25 @@ class ServiceProvider extends LaravelServiceProvider
      * Register ApexEngine.
      *
      * @param ChartEngineResolver $resolver
+     *
      * @return void
      */
     public function registerApexEngine(ChartEngineResolver $resolver)
     {
         $resolver->register('apex.area', function () {
-            return new ApexAreaEngine;
+            return new ApexAreaEngine();
         });
         $resolver->register('apex.bar', function () {
-            return new ApexBarEngine;
+            return new ApexBarEngine();
         });
         $resolver->register('apex.donut', function () {
-            return new ApexDonutEngine;
+            return new ApexDonutEngine();
         });
         $resolver->register('apex.progress', function () {
-            return new ApexProgressEngine;
+            return new ApexProgressEngine();
         });
         $resolver->register('number', function () {
-            return new NumberEngine;
+            return new NumberEngine();
         });
     }
 

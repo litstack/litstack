@@ -22,7 +22,8 @@ class CrudFormComponent extends RootComponent
      * Check for crud model.
      *
      * @param string $model
-     * @return boolean
+     *
+     * @return bool
      */
     public function isModel(string $model)
     {
@@ -33,7 +34,8 @@ class CrudFormComponent extends RootComponent
      * Should extension be executed.
      *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     public function resolveExtension(string $name = ''): bool
     {

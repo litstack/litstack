@@ -2,10 +2,8 @@
 
 namespace Fjord\Commands;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
-use Fjord\Support\StubBuilder;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class FjordForm extends GeneratorCommand
 {
@@ -32,12 +30,12 @@ class FjordForm extends GeneratorCommand
      */
     public function handle()
     {
-        $this->info("    _______                __   ______                   ");
-        $this->info("   / ____(_)___  _________/ /  / ____/___  _________ ___ ");
+        $this->info('    _______                __   ______                   ');
+        $this->info('   / ____(_)___  _________/ /  / ____/___  _________ ___ ');
         $this->line("<info>  / /_  / / __ \/ ___/ __  /  / /_  / __ \/ ___/ __ `__ \\");
-        $this->info(" / __/ / / /_/ / /  / /_/ /  / __/ / /_/ / /  / / / / / /");
+        $this->info(' / __/ / / /_/ / /  / /_/ /  / __/ / /_/ / /  / / / / / /');
         $this->info("/_/ __/ /\____/_/   \__,_/  /_/    \____/_/  /_/ /_/ /_/ ");
-        $this->info("   /___/                                                 ");
+        $this->info('   /___/                                                 ');
 
         $this->setCollectionAndFormName();
 
@@ -53,9 +51,9 @@ class FjordForm extends GeneratorCommand
      */
     protected function makeController()
     {
-        $this->call("fjord:controller", [
-            "name" => "{$this->collectionNamespace}/{$this->formClass}Controller",
-            "--form" => true
+        $this->call('fjord:controller', [
+            'name'   => "{$this->collectionNamespace}/{$this->formClass}Controller",
+            '--form' => true,
         ]);
     }
 
@@ -84,17 +82,18 @@ class FjordForm extends GeneratorCommand
      *
      * Remove the base controller import if we are already in base namespace.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function buildClass($name)
     {
         $replace = [
             'DummyControllerRouteName' => Str::slug($this->collection),
-            'DummyFormRouteName' => Str::slug($this->formName),
-            'DummyController' => $this->formClass . 'Controller',
-            'DummyCollection' => $this->collectionNamespace,
-            'DummyFormName' => $this->formClass,
+            'DummyFormRouteName'       => Str::slug($this->formName),
+            'DummyController'          => $this->formClass.'Controller',
+            'DummyCollection'          => $this->collectionNamespace,
+            'DummyFormName'            => $this->formClass,
         ];
 
         return str_replace(
@@ -107,18 +106,20 @@ class FjordForm extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string $rootNamespace
+     * @param string $rootNamespace
+     *
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . "\\Config\\Form\\{$this->collectionNamespace}";
+        return $rootNamespace."\\Config\\Form\\{$this->collectionNamespace}";
     }
 
     /**
      * Parse the class name and format according to the root namespace.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function qualifyClass($name)

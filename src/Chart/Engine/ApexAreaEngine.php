@@ -16,22 +16,23 @@ class ApexAreaEngine extends ChartEngine
     /**
      * Render chart by type.
      *
-     * @param array $names
+     * @param array    $names
      * @param ChartSet $set
+     *
      * @return array
      */
     public function render(array $names, ChartSet $set)
     {
         $series = [
             'categories' => $set->getLabels(),
-            'series' => [],
+            'series'     => [],
         ];
 
         foreach ($set->getValues() as $key => $values) {
-            $series['series'][]  = [
+            $series['series'][] = [
                 'name' => $names[$key],
                 'data' => $values,
-                'type' => 'area'
+                'type' => 'area',
             ];
         }
 
@@ -41,24 +42,26 @@ class ApexAreaEngine extends ChartEngine
     /**
      * Render donut chart.
      *
-     * @param array $names
+     * @param array    $names
      * @param ChartSet $set
+     *
      * @return array
      */
     public function renderDonut(array $names, ChartSet $set)
     {
         return [
             'categories' => $set->getLabels(),
-            'labels' => $names,
-            'series' => $set->getValues()[0],
+            'labels'     => $names,
+            'series'     => $set->getValues()[0],
         ];
     }
 
     /**
      * Render donut chart.
      *
-     * @param array $names
+     * @param array    $names
      * @param ChartSet $set
+     *
      * @return array
      */
     public function renderProgress(array $names, ChartSet $set, $min, $max)
@@ -68,8 +71,8 @@ class ApexAreaEngine extends ChartEngine
 
         return [
             'categories' => $set->getLabels(),
-            'labels' => $names,
-            'series' => [$progress],
+            'labels'     => $names,
+            'series'     => [$progress],
         ];
     }
 }

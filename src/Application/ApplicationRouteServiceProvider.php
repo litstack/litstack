@@ -2,11 +2,11 @@
 
 namespace Fjord\Application;
 
-use Illuminate\Support\Facades\File;
-use Fjord\Support\Facades\FjordRoute;
-use Illuminate\Support\Facades\Route;
 use Fjord\Application\Controllers\FileController;
+use Fjord\Support\Facades\FjordRoute;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Route;
 
 class ApplicationRouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -54,22 +54,22 @@ class ApplicationRouteServiceProvider extends LaravelRouteServiceProvider
      */
     protected function mapFileRoutes()
     {
-        FjordRoute::get('js/app.js', FileController::class . '@fjordJs')
+        FjordRoute::get('js/app.js', FileController::class.'@fjordJs')
             ->name('js');
         FjordRoute::public()
-            ->get('js/app2.js', FileController::class . '@fjord2Js')
+            ->get('js/app2.js', FileController::class.'@fjord2Js')
             ->name('app2.js');
         FjordRoute::public()
-            ->get('css/app.css', FileController::class . '@fjordCss')
+            ->get('css/app.css', FileController::class.'@fjordCss')
             ->name('css');
         FjordRoute::public()
-            ->get('images/fjord-logo.png', FileController::class . '@fjordLogo')
+            ->get('images/fjord-logo.png', FileController::class.'@fjordLogo')
             ->name('logo');
         FjordRoute::public()
-            ->get('favicon/favicon-32x32.png', FileController::class . '@fjordFaviconBig')
+            ->get('favicon/favicon-32x32.png', FileController::class.'@fjordFaviconBig')
             ->name('favicon-big');
         FjordRoute::public()
-            ->get('favicon/favicon-16x16.png', FileController::class . '@fjordFaviconSmall')
+            ->get('favicon/favicon-16x16.png', FileController::class.'@fjordFaviconSmall')
             ->name('favicon-small');
     }
 }

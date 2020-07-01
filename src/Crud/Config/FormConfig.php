@@ -2,9 +2,9 @@
 
 namespace Fjord\Crud\Config;
 
-use Illuminate\Support\Str;
-use Fjord\Support\Facades\Crud;
 use Fjord\Crud\Models\FormField;
+use Fjord\Support\Facades\Crud;
+use Illuminate\Support\Str;
 
 class FormConfig
 {
@@ -43,6 +43,7 @@ class FormConfig
             '\\',
             last(explode('Config\\Form\\', static::class))
         );
+
         return strtolower($split[0]);
     }
 
@@ -65,6 +66,7 @@ class FormConfig
     {
         $collection = $this->collection();
         $formName = $this->formName();
+
         return "form/{$collection}/{$formName}";
     }
 
@@ -76,8 +78,8 @@ class FormConfig
     public function permissions()
     {
         return [
-            'read' => Crud::authorize($this->controller, 'read'),
-            'update' => Crud::authorize($this->controller, 'update')
+            'read'   => Crud::authorize($this->controller, 'read'),
+            'update' => Crud::authorize($this->controller, 'update'),
         ];
     }
 
@@ -89,7 +91,7 @@ class FormConfig
     public function names()
     {
         return [
-            'singular' => ucfirst(Str::singular($this->formName()))
+            'singular' => ucfirst(Str::singular($this->formName())),
         ];
     }
 
@@ -97,6 +99,7 @@ class FormConfig
      * Form component.
      *
      * @param Component $component
+     *
      * @return void
      */
     public function component($component)

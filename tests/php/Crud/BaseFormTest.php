@@ -2,14 +2,14 @@
 
 namespace FjordTest\Crud;
 
-use Mockery as m;
-use Fjord\Crud\Field;
 use Fjord\Crud\BaseForm;
+use Fjord\Crud\Field;
+use Fjord\Exceptions\MethodNotFoundException;
+use Fjord\Support\Facades\Fjord;
 use Fjord\Vue\Component;
 use FjordTest\BackendTestCase;
-use Fjord\Support\Facades\Fjord;
 use Illuminate\Database\Eloquent\Model;
-use Fjord\Exceptions\MethodNotFoundException;
+use Mockery as m;
 
 class BaseFormTest extends BackendTestCase
 {
@@ -140,8 +140,8 @@ class BaseFormTest extends BackendTestCase
 
             $children = $form->getWrapper()->children;
             $this->assertCount(2, $children);
-            $this->assertEquals("dummy-field", $children[0]->field->id);
-            $this->assertEquals("other-field", $children[1]->field->id);
+            $this->assertEquals('dummy-field', $children[0]->field->id);
+            $this->assertEquals('other-field', $children[1]->field->id);
         });
     }
 
@@ -179,7 +179,6 @@ class BaseFormTest extends BackendTestCase
         $this->form->registerField(DummyBaseFormFieldMock::class, 'dummy-field');
         $this->form->registerField(DummyBaseFormFieldMock::class, 'other-field');
 
-
         $field = $this->form->findField('dummy-field');
         $this->assertEquals('dummy-field', $field->id);
         $field = $this->form->findField('other-field');
@@ -194,7 +193,7 @@ class BaseFormTest extends BackendTestCase
         $field2 = m::mock('field');
         $field2->shouldReceive('checkComplete')->once();
         $this->setUnaccessibleProperty($this->form, 'registeredFields', [
-            $field1, $field2
+            $field1, $field2,
         ]);
 
         $this->form->toJson();

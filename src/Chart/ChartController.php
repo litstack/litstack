@@ -2,15 +2,15 @@
 
 namespace Fjord\Chart;
 
-use Fjord\Config\ConfigHandler;
 use Fjord\Chart\Contracts\Engine;
-use Fjord\Chart\Loader\BarLoader;
-use Fjord\Support\Facades\Config;
 use Fjord\Chart\Loader\AreaLoader;
+use Fjord\Chart\Loader\BarLoader;
 use Fjord\Chart\Loader\ChartLoader;
 use Fjord\Chart\Loader\DonutLoader;
 use Fjord\Chart\Loader\NumberLoader;
 use Fjord\Chart\Loader\ProgressLoader;
+use Fjord\Config\ConfigHandler;
+use Fjord\Support\Facades\Config;
 
 class ChartController
 {
@@ -18,6 +18,7 @@ class ChartController
      * Get chart data.
      *
      * @param ChartRequest $request
+     *
      * @return array
      */
     public function __invoke(ChartRequest $request)
@@ -35,19 +36,20 @@ class ChartController
     /**
      * Make chart loader.
      *
-     * @param string $chartType
+     * @param string        $chartType
      * @param ConfigHandler $config
-     * @param Engine $engine
+     * @param Engine        $engine
+     *
      * @return ChartLoader
      */
     protected function makeLoader(string $chartType, ConfigHandler $config, Engine $engine): ChartLoader
     {
         $loader = [
-            'donut' => fn () => new DonutLoader($config, $engine),
-            'area' => fn () => new AreaLoader($config, $engine),
+            'donut'     => fn ()     => new DonutLoader($config, $engine),
+            'area'      => fn ()      => new AreaLoader($config, $engine),
             'radialBar' => fn () => new ProgressLoader($config, $engine),
-            'bar' => fn () => new BarLoader($config, $engine),
-            'number' => fn () => new NumberLoader($config, $engine),
+            'bar'       => fn ()       => new BarLoader($config, $engine),
+            'number'    => fn ()    => new NumberLoader($config, $engine),
         ][$chartType] ?? abort(404);
 
         return $loader();

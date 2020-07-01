@@ -2,8 +2,8 @@
 
 namespace Fjord\Commands;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\GeneratorCommand as LaravelGeneratorCommand;
+use Illuminate\Support\Str;
 
 abstract class GeneratorCommand extends LaravelGeneratorCommand
 {
@@ -30,13 +30,14 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
     /**
      * Get the destination class path.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function getPath($name)
     {
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
 
-        return $this->getFjordPath() . '/' . str_replace('\\', '/', $name) . '.php';
+        return $this->getFjordPath().'/'.str_replace('\\', '/', $name).'.php';
     }
 }

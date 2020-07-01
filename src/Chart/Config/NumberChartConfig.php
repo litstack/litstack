@@ -16,7 +16,7 @@ abstract class NumberChartConfig extends ChartConfig
     /**
      * Compare to previous time.
      *
-     * @var boolean
+     * @var bool
      */
     public $compare = true;
 
@@ -24,7 +24,8 @@ abstract class NumberChartConfig extends ChartConfig
      * Calculate value.
      *
      * @param Builder $query
-     * @return integer
+     *
+     * @return int
      */
     abstract public function value($query);
 }

@@ -41,6 +41,7 @@ class Code extends BaseField
      * Set options.
      *
      * @param array $options
+     *
      * @return $this
      */
     public function options(array $options)
@@ -53,7 +54,8 @@ class Code extends BaseField
     /**
      * Set language.
      *
-     * @param boolean $line
+     * @param bool $line
+     *
      * @return $this
      */
     public function language(string $language)
@@ -66,7 +68,8 @@ class Code extends BaseField
     /**
      * Set line.
      *
-     * @param boolean $line
+     * @param bool $line
+     *
      * @return $this
      */
     public function line(bool $line = true)
@@ -79,7 +82,8 @@ class Code extends BaseField
     /**
      * Set lineNumbers.
      *
-     * @param integer $lineNumbers
+     * @param int $lineNumbers
+     *
      * @return $this
      */
     public function lineNumbers(int $lineNumbers)
@@ -93,6 +97,7 @@ class Code extends BaseField
      * Set theme.
      *
      * @param string $theme
+     *
      * @return $this
      */
     public function theme(string $theme)
@@ -105,7 +110,8 @@ class Code extends BaseField
     /**
      * Set tabSize.
      *
-     * @param integer $tabSize
+     * @param int $tabSize
+     *
      * @return $this
      */
     public function tabSize(int $tabSize)
@@ -119,7 +125,8 @@ class Code extends BaseField
      * Cast field value.
      *
      * @param mixed $value
-     * @return boolean
+     *
+     * @return bool
      */
     public function cast($value)
     {

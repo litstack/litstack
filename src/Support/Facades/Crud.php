@@ -6,7 +6,7 @@ use Fjord\Support\FjordFacade;
 
 /**
  * @method static array names(string $model)
- * 
+ *
  * @see \Fjord\Crud\Crud
  */
 class Crud extends FjordFacade

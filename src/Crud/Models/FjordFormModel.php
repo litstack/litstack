@@ -2,27 +2,27 @@
 
 namespace Fjord\Crud\Models;
 
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
+use Fjord\Crud\Fields\Media\MediaField;
+use Fjord\Crud\Fields\Relations\ManyRelationField;
 use Fjord\Crud\RelationField;
 use Fjord\Support\Facades\Config;
-use Spatie\MediaLibrary\HasMedia;
-use Fjord\Crud\Fields\Media\MediaField;
 use Illuminate\Database\Eloquent\Model;
-use Astrotomic\Translatable\Translatable;
-use Fjord\Crud\Fields\Relations\ManyRelationField;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
 class FjordFormModel extends Model implements HasMedia, TranslatableContract
 {
-    use Traits\HasMedia,
-        Translatable,
-        Concerns\HasConfig,
-        Concerns\HasFields,
-        Concerns\HasMedia;
+    use Traits\HasMedia;
+    use Translatable;
+    use Concerns\HasConfig;
+    use Concerns\HasFields;
+    use Concerns\HasMedia;
 
     /**
-     * "value" is translatable but since non translatable fields are stored in 
-     * the value field it is important to not set value as a translatedAttribute 
+     * "value" is translatable but since non translatable fields are stored in
+     * the value field it is important to not set value as a translatedAttribute
      * here.
      *
      * @var array
@@ -47,6 +47,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
      * Register media conversions for field.
      *
      * @param SpatieMedia $media
+     *
      * @return void
      */
     public function registerMediaConversions(SpatieMedia $media = null): void
@@ -101,9 +102,10 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
      *
      * @param array $attributes
      * @param array $options
+     *
      * @return void
      */
-    public function update(array $attributes = array(), array $options = array())
+    public function update(array $attributes = [], array $options = [])
     {
         $translations = $this->getTranslationsArray();
         foreach (config('translatable.locales') as $locale) {
@@ -128,7 +130,8 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     /**
      * Get a relationship.
      *
-     * @param  string  $key
+     * @param string $key
+     *
      * @return mixed
      */
     public function getRelationValue($key)
@@ -151,8 +154,9 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     /**
      * Get translated field value.
      *
-     * @param Field $field
+     * @param Field  $field
      * @param string $locale
+     *
      * @return void
      */
     public function getTranslatedFieldValue($field, string $locale)
@@ -190,11 +194,12 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
      * Get attribute.
      *
      * @param string $key
+     *
      * @return void
      */
     public function getAttribute($key)
     {
-        // Using fieldIds instead of fieldExists to avoid infinite loop 
+        // Using fieldIds instead of fieldExists to avoid infinite loop
         // when calling getAttribute({field_id}).
         if (!in_array($key, $this->fieldIds)) {
             return parent::getAttribute($key);
@@ -209,6 +214,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
      * Set field ids to be able to check if field exists in getAttribute method.
      *
      * @param array $ids
+     *
      * @return void
      */
     public function setFieldIds(array $ids)
@@ -219,8 +225,9 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     /**
      * Create a new model instance that is existing.
      *
-     * @param  array  $attributes
-     * @param  string|null  $connection
+     * @param array       $attributes
+     * @param string|null $connection
+     *
      * @return static
      */
     public function newFromBuilder($attributes = [], $connection = null)
@@ -232,7 +239,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
             $this->fixConfigType($model);
         }
 
-        // Set field ids to be able to check if field exists in getAttribute 
+        // Set field ids to be able to check if field exists in getAttribute
         // method.
         $model->setFieldIds($model->fields->map(function ($field) {
             return $field->id;
@@ -271,9 +278,10 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
 
     /**
      * Modified to return relation instances for relation fields.
-     * 
+     *
      * @param string $method
-     * @param array $params
+     * @param array  $params
+     *
      * @return mixed
      */
     public function __call($method, $params = [])

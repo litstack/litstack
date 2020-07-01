@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 /**
  * @property-read array $search
  * @property-read string $sortByDefault
- * @property-read integer $perPage
+ * @property-read int $perPage
  */
 trait HasIndex
 {
@@ -16,6 +16,7 @@ trait HasIndex
      * Setup index table.
      *
      * @param \Fjord\Vue\Table $table
+     *
      * @return void
      */
     abstract public function index(Table $table);
@@ -24,6 +25,7 @@ trait HasIndex
      * Initialize index query.
      *
      * @param Builder $query
+     *
      * @return Builder $query
      */
     public function indexQuery(Builder $query)
@@ -40,7 +42,7 @@ trait HasIndex
     {
         return [
             'id.desc' => __f('fj.sort_new_to_old'),
-            'id.asc' => __f('fj.sort_old_to_new'),
+            'id.asc'  => __f('fj.sort_old_to_new'),
         ];
     }
 

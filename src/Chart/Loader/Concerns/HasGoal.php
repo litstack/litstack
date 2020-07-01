@@ -7,7 +7,7 @@ trait HasGoal
     /**
      * Get daily goal.
      *
-     * @return integer|null
+     * @return int|null
      */
     protected function getDailyGoal()
     {
@@ -19,7 +19,7 @@ trait HasGoal
     /**
      * Determine if daily goal should be shown.
      *
-     * @return boolean
+     * @return bool
      */
     protected function shoudDailyGoalBeShown()
     {
@@ -34,12 +34,12 @@ trait HasGoal
     protected function getShowGoalConfig()
     {
         return [
-            'today' => false,
-            'yesterday' => false,
-            'last7days' => true,
-            'thisweek' => true,
+            'today'      => false,
+            'yesterday'  => false,
+            'last7days'  => true,
+            'thisweek'   => true,
             'last30days' => true,
-            'thismonth' => true
+            'thismonth'  => true,
         ];
     }
 }

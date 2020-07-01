@@ -2,22 +2,23 @@
 
 namespace Fjord\Application\Composer;
 
-use Illuminate\View\View;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Request;
 use Fjord\Application\Kernel\HandleViewComposer;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class HttpErrorComposer
 {
     /**
      * Show Fjord error pages.
      *
-     * @param  View  $view
+     * @param View $view
+     *
      * @return void
      */
     public function compose(View $view)
     {
-        $fjordPrefix = strip_slashes("/" . config('fjord.route_prefix') . "/");
+        $fjordPrefix = strip_slashes('/'.config('fjord.route_prefix').'/');
         if (!Str::startsWith(Request::getRequestUri(), $fjordPrefix)) {
             return;
         }

@@ -4,7 +4,6 @@ namespace Fjord\Crud\Fields\Block;
 
 use Closure;
 use Fjord\Support\VueProp;
-use Fjord\Crud\Fields\Block\Block;
 use Illuminate\Support\Traits\Macroable;
 
 class Repeatables extends VueProp
@@ -45,9 +44,10 @@ class Repeatables extends VueProp
     /**
      * Add repeatable.
      *
-     * @param string $name
+     * @param string  $name
      * @param Closure $closure
-     * @return 
+     *
+     * @return
      */
     public function add(string $name, Closure $closure)
     {
@@ -64,7 +64,8 @@ class Repeatables extends VueProp
      * Check if form exists.
      *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     public function has(string $name)
     {
@@ -75,6 +76,7 @@ class Repeatables extends VueProp
      * Get form by name.
      *
      * @param string $name
+     *
      * @return BlockForm
      */
     public function get($name)
@@ -102,6 +104,7 @@ class Repeatables extends VueProp
      * Get form by key.
      *
      * @param string $key
+     *
      * @return void
      */
     public function __get(string $key)

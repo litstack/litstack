@@ -4,8 +4,6 @@ namespace FjordTest\Traits;
 
 use Fjord\Config\ConfigHandler;
 use Fjord\Support\Facades\Config;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Traits\ForwardsCalls;
 
 trait InteractsWithConfig
 {
@@ -13,6 +11,7 @@ trait InteractsWithConfig
      * Get config mock.
      *
      * @param string $key
+     *
      * @return void
      */
     abstract public function getConfig(string $key, ...$params);
@@ -59,12 +58,14 @@ class ConfigLoader
     public function exists(string $key)
     {
         $exists = $this->exists;
+
         return $exists($key);
     }
 
     public function get($key, ...$params)
     {
         $loader = $this->loader;
+
         return $loader($key, ...$params);
     }
 

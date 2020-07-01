@@ -3,9 +3,9 @@
 namespace FjordTest\Fields;
 
 use Fjord\Crud\Field;
+use Fjord\Crud\Fields\Traits\HasBaseField;
 use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
-use Fjord\Crud\Fields\Traits\HasBaseField;
 
 class TraitHasBaseFieldTest extends BackendTestCase
 {

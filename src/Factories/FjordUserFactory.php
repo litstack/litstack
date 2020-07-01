@@ -8,9 +8,9 @@ use Fjord\User\Models\FjordUser;
 $factory->define(FjordUser::class, function (Faker $faker, $args) {
     return [
         'first_name' => $faker->firstName,
-        'last_name' => $faker->lastName,
-        'email' => $faker->unique()->safeEmail,
-        'username' => $faker->unique()->userName,
-        'password' => bcrypt('secret'),
+        'last_name'  => $faker->lastName,
+        'email'      => $faker->unique()->safeEmail,
+        'username'   => $faker->unique()->userName,
+        'password'   => bcrypt('secret'),
     ];
 });

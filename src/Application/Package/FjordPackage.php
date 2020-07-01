@@ -10,35 +10,35 @@ abstract class FjordPackage
 {
     /**
      * Composer package name.
-     * 
+     *
      * @var string
      */
     protected $name;
 
     /**
-     * Configuration for the package that is defined in its composer.json
-     * 
+     * Configuration for the package that is defined in its composer.json.
+     *
      * @var array
      */
     protected $extra;
 
     /**
      * List of service providers to be registered for this package.
-     * 
+     *
      * @var array
      */
     protected $providers = [];
 
     /**
      * List of artisan commands to be registered for this package.
-     * 
+     *
      * @var array
      */
     protected $commands = [];
 
     /**
      * List of components this package contains.
-     * 
+     *
      * @var array
      */
     protected $components = [];
@@ -52,7 +52,7 @@ abstract class FjordPackage
 
     /**
      * List of factories for config files.
-     * 
+     *
      * @var array
      */
     protected $configFactories = [];
@@ -66,8 +66,9 @@ abstract class FjordPackage
 
     /**
      * Create a new Package instance.
-     * 
+     *
      * @param array $config
+     *
      * @return void
      */
     public function __construct($name, $extra)
@@ -85,7 +86,8 @@ abstract class FjordPackage
      * Add navigation entry preset.
      *
      * @param string $name
-     * @param array $entry
+     * @param array  $entry
+     *
      * @return void
      */
     public function addNavPreset(string $name, array $entry)
@@ -97,7 +99,8 @@ abstract class FjordPackage
      * Get navigation entry preset.
      *
      * @param string $name
-     * @param array $merge
+     * @param array  $merge
+     *
      * @return array
      */
     public function navPreset(string $name, array $merge = [])
@@ -130,7 +133,8 @@ abstract class FjordPackage
      * Check if navigation entry preset exists.
      *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasNavPreset(string $name)
     {
@@ -139,7 +143,7 @@ abstract class FjordPackage
 
     /**
      * Check if package has root access.
-     * 
+     *
      * @return bool
      */
     public function hasRootAccess()
@@ -147,10 +151,9 @@ abstract class FjordPackage
         return fjord()->get('packages')->hasRootAccess($this->name);
     }
 
-
     /**
      * Create route for package.
-     * 
+     *
      * @return $route
      */
     public function route()
@@ -160,29 +163,29 @@ abstract class FjordPackage
 
     /**
      * Get route prefix.
-     * 
+     *
      * @return string $prefix
      */
     public function getRoutePrefix()
     {
-        return config('fjord.route_prefix') . ($this->hasRootAccess()
-            ? "/"
-            : "/" . $this->name);
+        return config('fjord.route_prefix').($this->hasRootAccess()
+            ? '/'
+            : '/'.$this->name);
     }
 
     /**
      * Get route as.
-     * 
+     *
      * @return string $as
      */
     public function getRouteAs()
     {
-        return 'fjord.' . str_replace('/', '.', $this->name) . '.';
+        return 'fjord.'.str_replace('/', '.', $this->name).'.';
     }
 
     /**
      * Get providers.
-     * 
+     *
      * @return array $providers
      */
     public function providers()
@@ -192,7 +195,7 @@ abstract class FjordPackage
 
     /**
      * Get commands.
-     * 
+     *
      * @return array $commands
      */
     public function commands()
@@ -202,7 +205,7 @@ abstract class FjordPackage
 
     /**
      * Get components.
-     * 
+     *
      * @return array $commands
      */
     public function components()

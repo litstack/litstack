@@ -15,7 +15,7 @@ class FjordFormCommandTest extends BackendTestCase
         $this->assertFileExists(base_path('fjord/app/Config/Form/Test/HomeConfig.php'));
         $this->assertInstanceOf(
             \Fjord\Crud\Config\FormConfig::class,
-            new \FjordApp\Config\Form\Pages\HomeConfig
+            new \FjordApp\Config\Form\Pages\HomeConfig()
         );
     }
 
@@ -28,7 +28,7 @@ class FjordFormCommandTest extends BackendTestCase
         $this->assertFileExists(base_path('fjord/app/Config/Form/TestCollection/HomePageConfig.php'));
         $this->assertInstanceOf(
             \Fjord\Crud\Config\FormConfig::class,
-            new \FjordApp\Config\Form\TestCollection\HomePageConfig
+            new \FjordApp\Config\Form\TestCollection\HomePageConfig()
         );
     }
 
@@ -41,7 +41,7 @@ class FjordFormCommandTest extends BackendTestCase
         $this->assertFileExists(base_path('fjord/app/Config/Form/TestCol/OtherPageConfig.php'));
         $this->assertInstanceOf(
             \Fjord\Crud\Config\FormConfig::class,
-            new \FjordApp\Config\Form\TestCol\OtherPageConfig
+            new \FjordApp\Config\Form\TestCol\OtherPageConfig()
         );
     }
 }

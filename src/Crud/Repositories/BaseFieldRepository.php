@@ -2,10 +2,10 @@
 
 namespace Fjord\Crud\Repositories;
 
-use Fjord\Crud\Field;
-use Fjord\Crud\BaseForm;
 use Fjord\Config\ConfigHandler;
+use Fjord\Crud\BaseForm;
 use Fjord\Crud\Controllers\CrudBaseController;
+use Fjord\Crud\Field;
 
 abstract class BaseFieldRepository
 {
@@ -33,10 +33,10 @@ abstract class BaseFieldRepository
     /**
      * Create new BaseFieldRepository instance.
      *
-     * @param ConfigHandler $config
+     * @param ConfigHandler      $config
      * @param CrudBaseController $controller
-     * @param BaseForm $form
-     * @param Field $field
+     * @param BaseForm           $form
+     * @param Field              $field
      */
     public function __construct(ConfigHandler $config, CrudBaseController $controller, BaseForm $form, Field $field = null)
     {
@@ -52,6 +52,7 @@ abstract class BaseFieldRepository
      * @param mixed $model
      * @param array $attributes
      * @param array $fields
+     *
      * @return void
      */
     protected function fillAttributesToModel($model, array $attributes)
@@ -68,8 +69,9 @@ abstract class BaseFieldRepository
     /**
      * Filter request attributes.
      *
-     * @param array $attributes
+     * @param array      $attributes
      * @param Collection $fields
+     *
      * @return array
      */
     protected function formatAttributes(array $attributes, $fields)
@@ -81,7 +83,6 @@ abstract class BaseFieldRepository
 
             // Format value before update.
             if (method_exists($field, 'format')) {
-
                 $attributes[$field->local_key] = $field->format(
                     $attributes[$field->local_key]
                 );
@@ -95,13 +96,14 @@ abstract class BaseFieldRepository
      * Order models.
      *
      * @param Builder $query
-     * @param Field $field
-     * @param array $ids
+     * @param Field   $field
+     * @param array   $ids
+     *
      * @return void
      */
     protected function orderField($query, Field $field, array $ids)
     {
-        $idKey = $query->getModel()->getTable() . '.id';
+        $idKey = $query->getModel()->getTable().'.id';
         $models = $query->whereIn($idKey, $ids)->get();
 
         $oderColumn = $field->orderColumn ?? 'order_column';

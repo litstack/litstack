@@ -2,9 +2,9 @@
 
 namespace Fjord\Application;
 
+use Illuminate\Support\Facades\View as ViewFactory;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\View as ViewFactory;
 
 /**
  * The Application class manages all depencies for the view fjord::app:
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\View as ViewFactory;
  * Registering and executing extensions,
  * Registering and calling config handlers,
  * Binding css files for fjord,
- * Bind composer to the fjord::app view
+ * Bind composer to the fjord::app view.
  */
 class Application
 {
@@ -53,15 +53,16 @@ class Application
      * @var array
      */
     protected $singletons = [
-        'packages' => Package\Packages::class,
+        'packages'      => Package\Packages::class,
         'config.loader' => \Fjord\Config\ConfigLoader::class,
-        'components' => Vue\Components::class,
+        'components'    => Vue\Components::class,
     ];
 
     /**
      * Bind composer to fjord::app view.
-     * 
+     *
      * @param string $composer
+     *
      * @return \Illuminate\View\Factory
      */
     public function composer(string $composer)
@@ -72,7 +73,8 @@ class Application
     /**
      * Run the given array of bootstrap classes.
      *
-     * @param  string[]  $bootstrappers
+     * @param string[] $bootstrappers
+     *
      * @return void
      */
     public function bootstrapWith(array $bootstrappers, $kernel)
@@ -96,8 +98,9 @@ class Application
 
     /**
      * Boot packages and build Vue application.
-     * 
+     *
      * @param Illuminate\View\View $view
+     *
      * @return void
      */
     public function build(View $view)
@@ -131,21 +134,23 @@ class Application
 
     /**
      * Get Fjord application binding.
-     * 
+     *
      * @param string $binding
+     *
      * @return instance
      */
     public function get($binding)
     {
-        return $this->bindings[$binding] ??  null;
+        return $this->bindings[$binding] ?? null;
     }
 
     /**
      * Register a binding with the application.
      *
-     * @param  string  $abstract
-     * @param  Instance  $instance
-     * @param  bool  $shared
+     * @param string   $abstract
+     * @param Instance $instance
+     * @param bool     $shared
+     *
      * @return void
      */
     public function bind($abstract, $instance)
@@ -155,32 +160,34 @@ class Application
 
     /**
      * Register extension class.
-     * 
+     *
      * @param string $component
      * @param string $extension
+     *
      * @return void
      */
     public function registerExtension(string $key, string $extension)
     {
         $component = $key;
-        $name = "";
+        $name = '';
         if (Str::contains($key, '::')) {
             $component = explode('::', $key)[0];
             $name = explode('::', $key)[1];
         }
 
         $this->extensions[] = [
-            "component" => $component,
-            "name" => $name,
-            "extension" => $extension
+            'component' => $component,
+            'name'      => $name,
+            'extension' => $extension,
         ];
     }
 
     /**
      * Register config handler.
-     * 
+     *
      * @param string $dependency
      * @param string $handler
+     *
      * @return void
      */
     public function registerConfigFactory(string $dependency, string $factory)
@@ -211,8 +218,9 @@ class Application
     /**
      * Register a shared binding in the application.
      *
-     * @param string $abstract
+     * @param string   $abstract
      * @param Instance $instance
+     *
      * @return void
      */
     public function singleton(string $abstract, $instance)
@@ -230,11 +238,12 @@ class Application
         return $this->get('translator')->getLocale();
     }
 
-    /** 
+    /**
      * Check if the Fjord application is running in a locale.
-     * 
+     *
      * @param string $locale
-     * @return boolean
+     *
+     * @return bool
      */
     public function isLocale(string $locale)
     {

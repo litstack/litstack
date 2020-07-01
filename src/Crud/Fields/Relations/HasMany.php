@@ -14,7 +14,7 @@ class HasMany extends ManyRelationField
      * @var array
      */
     protected $props = [
-        'type' => 'hasMany'
+        'type' => 'hasMany',
     ];
 
     /**
@@ -23,7 +23,7 @@ class HasMany extends ManyRelationField
      * @var array
      */
     public $requiredAttributes = [
-        'preview'
+        'preview',
     ];
 
     /**
@@ -46,6 +46,7 @@ class HasMany extends ManyRelationField
      * Set relation attributes.
      *
      * @param string $model
+     *
      * @return self
      */
     protected function setRelationAttributes($relation)

@@ -16,16 +16,17 @@ class NumberEngine extends ChartEngine
     /**
      * Render chart by type.
      *
-     * @param array $names
+     * @param array    $names
      * @param ChartSet $set
+     *
      * @return array
      */
     public function render(array $names, ChartSet $set)
     {
         return [
             'categories' => $set->getLabels(),
-            'labels' => $names,
-            'series' => $set->getValues()[0],
+            'labels'     => $names,
+            'series'     => $set->getValues()[0],
         ];
     }
 }

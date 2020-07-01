@@ -3,7 +3,6 @@
 namespace Fjord\Crud\Models;
 
 use Fjord\Crud\Fields\ListField;
-use Fjord\Crud\Fields\Block\Block;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class FormListItem extends FjordFormModel
@@ -18,7 +17,7 @@ class FormListItem extends FjordFormModel
     /**
      * No timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
@@ -44,7 +43,7 @@ class FormListItem extends FjordFormModel
      * @var array
      */
     protected $casts = [
-        'value' => 'json'
+        'value' => 'json',
     ];
 
     /**

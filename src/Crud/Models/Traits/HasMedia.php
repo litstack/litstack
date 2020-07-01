@@ -3,8 +3,8 @@
 namespace Fjord\Crud\Models\Traits;
 
 use Fjord\Crud\Models\Media;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 
 trait HasMedia
@@ -33,6 +33,7 @@ trait HasMedia
      * Register media conversions.
      *
      * @param SpatieMedia $media
+     *
      * @return void
      */
     public function registerMediaConversions(SpatieMedia $media = null): void

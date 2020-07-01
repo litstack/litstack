@@ -15,15 +15,15 @@ class FieldWrapperComponent extends Component
     {
         return [
             'wrapperComponent' => [
-                'type' => Component::class,
+                'type'     => Component::class,
                 'required' => true,
             ],
             'children' => [
-                'type' => ['array', 'object'],
+                'type'     => ['array', 'object'],
                 'required' => true,
-                'default' => function () {
+                'default'  => function () {
                     return collect([]);
-                }
+                },
             ],
         ];
     }
@@ -32,6 +32,7 @@ class FieldWrapperComponent extends Component
      * Add child component.
      *
      * @param mixed $name
+     *
      * @return void
      */
     public function component($component)

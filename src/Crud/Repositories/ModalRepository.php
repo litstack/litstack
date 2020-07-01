@@ -2,10 +2,9 @@
 
 namespace Fjord\Crud\Repositories;
 
-use Fjord\Crud\Fields\Modal;
 use Fjord\Crud\CrudValidator;
+use Fjord\Crud\Fields\Modal;
 use Fjord\Crud\Requests\CrudUpdateRequest;
-
 
 class ModalRepository extends BaseFieldRepository
 {
@@ -28,7 +27,8 @@ class ModalRepository extends BaseFieldRepository
      * Update model form.
      *
      * @param CrudUpdateRequest $request
-     * @param mixed $model
+     * @param mixed             $model
+     *
      * @return void
      */
     public function update(CrudUpdateRequest $request, $model, $payload)

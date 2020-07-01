@@ -4,12 +4,15 @@ namespace Fjord\Auth\Controllers;
 
 use Illuminate\Http\Request;
 use Fjord\Support\Facades\Fjord;
+use Fjord\User\Models\FjordUser;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Fjord\Auth\Actions\AuthenticationAction;
 use Fjord\Auth\Requests\FjordSessionLogoutRequest;
+use Fjord\Auth\Controllers\ForgotPasswordController;
 
 class AuthController extends Controller
 {
@@ -22,7 +25,7 @@ class AuthController extends Controller
 
     /**
      * Create new AuthController instance.
-     * 
+     *
      * @return void
      */
     public function __construct()
@@ -36,6 +39,7 @@ class AuthController extends Controller
      * Authenticate FjordUser.
      *
      * @param Request $request
+     *
      * @return redirect
      */
     public function authenticate(Request $request, AuthenticationAction $authentication)
@@ -85,8 +89,8 @@ class AuthController extends Controller
     public function getAuthenticationRules()
     {
         $rules = [
-            'email' => 'required',
-            'password' => 'required'
+            'email'    => 'required',
+            'password' => 'required',
         ];
 
         if (config('fjord.login.username')) {
@@ -138,6 +142,7 @@ class AuthController extends Controller
      * Logout session.
      *
      * @param FjordSessionLogoutRequest $request
+     *
      * @return void
      */
     public function logoutSession(FjordSessionLogoutRequest $request)
@@ -151,5 +156,45 @@ class AuthController extends Controller
         }
 
         $session->delete();
+    }
+
+    /**
+     * Create new FjordUser.
+     *
+     * @param Request                  $request
+     * @param ForgotPasswordController $sendResetLink
+     *
+     * @return void
+     */
+    public function register(Request $request, ForgotPasswordController $sendResetLink)
+    {
+        $rules = [
+            'username'   => ['string', 'max:255', 'unique:fjord_users'],
+            'first_name' => ['string', 'max:255'],
+            'last_name'  => ['string', 'max:255'],
+            'email'      => ['required', 'string', 'email', 'max:255', 'unique:fjord_users'],
+            'password'   => ['required', 'string', 'min:8'],
+        ];
+
+        $request->validate($rules);
+
+        $user = FjordUser::create([
+            'username'   => $request->username,
+            'first_name' => $request->first_name,
+            'last_name'  => $request->last_name,
+            'locale'     => $request->locale ?? config('fjord.locale'),
+            'email'      => $request->email,
+            'password'   => Hash::make($request->password),
+        ]);
+
+        // Assign default role.
+        $user->assignRole('user');
+
+        // Send reset link.
+        if ($request->sendResetLink) {
+            $sendResetLink->execute($request);
+        }
+
+        return $user;
     }
 }

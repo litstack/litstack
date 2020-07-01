@@ -36,7 +36,7 @@ class FormFieldCollection extends Collection
     /**
      * Has multiple collection.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMultipleCollections()
     {
@@ -46,7 +46,7 @@ class FormFieldCollection extends Collection
     /**
      * Has multiple names.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMultipleNames()
     {
@@ -57,7 +57,8 @@ class FormFieldCollection extends Collection
      * Get attribute.
      *
      * @param string $key
-     * @param boolean $query
+     * @param bool   $query
+     *
      * @return void
      */
     public function getAttribute(string $key, $query = false)
@@ -85,6 +86,7 @@ class FormFieldCollection extends Collection
      * Get attribute.
      *
      * @param string $key
+     *
      * @return void
      */
     public function __get($key)
@@ -96,7 +98,8 @@ class FormFieldCollection extends Collection
      * Get query builder.
      *
      * @param string $method
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return mixed
      */
     public function __call($method, $parameters)

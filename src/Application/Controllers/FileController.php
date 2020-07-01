@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 class FileController extends Controller
 {
     /**
-     * app.js
+     * app.js.
      *
      * @return response
      */
@@ -19,7 +19,7 @@ class FileController extends Controller
     }
 
     /**
-     * app2.js
+     * app2.js.
      *
      * @return response
      */
@@ -30,7 +30,7 @@ class FileController extends Controller
     }
 
     /**
-     * app.css
+     * app.css.
      *
      * @return response
      */
@@ -41,7 +41,7 @@ class FileController extends Controller
     }
 
     /**
-     * fjord-logo.png
+     * fjord-logo.png.
      *
      * @return response
      */
@@ -52,7 +52,7 @@ class FileController extends Controller
     }
 
     /**
-     * favicon-32x32.png
+     * favicon-32x32.png.
      *
      * @return response
      */
@@ -63,7 +63,7 @@ class FileController extends Controller
     }
 
     /**
-     * favicon-16x16.png
+     * favicon-16x16.png.
      *
      * @return response
      */
@@ -77,6 +77,7 @@ class FileController extends Controller
      * Send file.
      *
      * @param string $path
+     *
      * @return void
      */
     protected function sendFile(string $path)

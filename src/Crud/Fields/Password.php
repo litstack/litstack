@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Hash;
 
 class Password extends BaseField
 {
-    use Traits\FieldHasRules,
-        Traits\FieldHasPlaceholder;
+    use Traits\FieldHasRules;
+    use Traits\FieldHasPlaceholder;
 
     /**
      * Field Vue component.
@@ -27,17 +27,18 @@ class Password extends BaseField
     /**
      * Use only rules and dont store value.
      *
-     * @var boolean
+     * @var bool
      */
     protected $rulesOnly = false;
 
     /**
      * Fill model.
      *
-     * @param mixed $model
+     * @param mixed   $model
      * @param Request $request
-     * @param string $attributeName
-     * @param mixed $attributeValue
+     * @param string  $attributeName
+     * @param mixed   $attributeValue
+     *
      * @return void
      */
     public function fillModel($model, $attributeName, $attributeValue)
@@ -63,7 +64,8 @@ class Password extends BaseField
     /**
      * Only rules.
      *
-     * @param boolean $noScore
+     * @param bool $noScore
+     *
      * @return $this
      */
     public function rulesOnly(bool $rulesOnly = true)
@@ -76,7 +78,8 @@ class Password extends BaseField
     /**
      * DEPRECATED use rulesOnly.
      *
-     * @param boolean $dontStore
+     * @param bool $dontStore
+     *
      * @return $this
      */
     public function dontStore(bool $dontStore = true)
@@ -89,7 +92,8 @@ class Password extends BaseField
     /**
      * Set noScore.
      *
-     * @param boolean $noScore
+     * @param bool $noScore
+     *
      * @return $this
      */
     public function noScore(bool $noScore = true)
@@ -102,7 +106,8 @@ class Password extends BaseField
     /**
      * Set minScore.
      *
-     * @param integer $score
+     * @param int $score
+     *
      * @return $this
      */
     public function minScore(int $score)
@@ -117,6 +122,7 @@ class Password extends BaseField
      * Confirm the form using the current password.
      *
      * @param Type $var
+     *
      * @return self
      */
     public function confirm($confirm = true)
@@ -141,7 +147,8 @@ class Password extends BaseField
      * Cast field value.
      *
      * @param mixed $value
-     * @return boolean
+     *
+     * @return bool
      */
     public function cast($value)
     {
@@ -152,6 +159,7 @@ class Password extends BaseField
      * Format value before saving it to database.
      *
      * @param string $value
+     *
      * @return void
      */
     public function format($value)

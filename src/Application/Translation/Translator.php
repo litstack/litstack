@@ -2,8 +2,8 @@
 
 namespace Fjord\Application\Translation;
 
-use Illuminate\Support\Facades\Lang;
 use Fjord\Application\Application;
+use Illuminate\Support\Facades\Lang;
 
 class Translator
 {
@@ -42,7 +42,8 @@ class Translator
      * Get translation for Fjord application.
      *
      * @param string $key
-     * @param array $replace
+     * @param array  $replace
+     *
      * @return string
      */
     public function trans(string $key = null, $replace = [])
@@ -59,9 +60,10 @@ class Translator
     /**
      * Get choice translation for Fjord application.
      *
-     * @param string $key
+     * @param string               $key
      * @param \Countable|int|array $number
-     * @param array $replace
+     * @param array                $replace
+     *
      * @return string
      */
     public function choice(string $key = null, $number, $replace = [])
@@ -79,13 +81,14 @@ class Translator
      * Get language key.
      *
      * @param string $key
-     * @return string|boolean
+     *
+     * @return string|bool
      */
     protected function getLangKey(string $key = null)
     {
         foreach ($this->paths as $path) {
 
-            // Look through all registered paths and return the translation if 
+            // Look through all registered paths and return the translation if
             // the key is found in a path.
             $namespace = $this->getNamespaceFromPath($path);
             $langKey = "{$namespace}::{$key}";
@@ -141,11 +144,12 @@ class Translator
             ?? config('fjord.translatable.fallback_locale');
     }
 
-    /** 
+    /**
      * Check if the Fjord application is running in a locale.
-     * 
+     *
      * @param string $locale
-     * @return boolean
+     *
+     * @return bool
      */
     public function isLocale(string $locale)
     {
@@ -156,6 +160,7 @@ class Translator
      * Get namespace from path.
      *
      * @param string $path
+     *
      * @return string $namespace
      */
     protected function getNamespaceFromPath(string $path)
@@ -167,6 +172,7 @@ class Translator
      * Add path.
      *
      * @param string $path
+     *
      * @return void
      */
     public function addPath(string $path)

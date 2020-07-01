@@ -3,9 +3,9 @@
 namespace Fjord\Chart\Config;
 
 use Fjord\Chart\Chart;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Builder;
 
 abstract class ChartConfig
 {
@@ -41,6 +41,7 @@ abstract class ChartConfig
      * Mount.
      *
      * @param Chart $chart
+     *
      * @return void
      */
     public function mount(Chart $chart)
@@ -52,14 +53,15 @@ abstract class ChartConfig
      * Add count select to query.
      *
      * @param Builder $query
+     *
      * @return Builder
      */
     protected function count($query)
     {
-        $this->resultResolver = fn (Collection $values) =>  $values->sum();
+        $this->resultResolver = fn (Collection $values) => $values->sum();
 
         return (clone $query)->select(
-            DB::raw("COUNT(*) as value")
+            DB::raw('COUNT(*) as value')
         );
     }
 
@@ -67,7 +69,8 @@ abstract class ChartConfig
      * Add average select to query.
      *
      * @param Builder $query
-     * @param string $column
+     * @param string  $column
+     *
      * @return Builder
      */
     protected function average($query, string $column)
@@ -83,7 +86,8 @@ abstract class ChartConfig
      * Add sum select to query.
      *
      * @param Builder $query
-     * @param string $column
+     * @param string  $column
+     *
      * @return Builder
      */
     protected function sum($query, string $column)
@@ -99,7 +103,8 @@ abstract class ChartConfig
      * Add min select to query.
      *
      * @param Builder $query
-     * @param string $column
+     * @param string  $column
+     *
      * @return Builder
      */
     protected function min($query, string $column)
@@ -115,7 +120,8 @@ abstract class ChartConfig
      * Add max select to query.
      *
      * @param Builder $query
-     * @param string $column
+     * @param string  $column
+     *
      * @return Builder
      */
     protected function max($query, string $column)
