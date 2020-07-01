@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/.vscode
 composer.phar
 composer.lock
 package-lock.json
