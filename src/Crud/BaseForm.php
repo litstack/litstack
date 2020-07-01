@@ -176,7 +176,8 @@ class BaseForm extends VueProp
     /**
      * Formfield group.
      *
-     * @param  Closure   $closure
+     * @param Closure $closure
+     *
      * @return Component
      */
     public function group(Closure $closure)
@@ -203,8 +204,9 @@ class BaseForm extends VueProp
     /**
      * Get rules for request.
      *
-     * @param  CrudCreateRequest|CrudUpdateRequest $request
-     * @param  string|null                         $type
+     * @param CrudCreateRequest|CrudUpdateRequest $request
+     * @param string|null                         $type
+     *
      * @return array
      */
     public function getRules($type = null)
@@ -254,10 +256,11 @@ class BaseForm extends VueProp
     /**
      * Register new Field.
      *
-     * @param  mixed  $field
-     * @param  string $id
-     * @param  array  $params
-     * @return Field  $field
+     * @param mixed  $field
+     * @param string $id
+     * @param array  $params
+     *
+     * @return Field $field
      */
     public function registerField($field, string $id, $params = [])
     {

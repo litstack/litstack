@@ -36,21 +36,25 @@ class ListRelation extends MorphMany
      * Flatten results.
      *
      * @param Collection $listItems
-     * @param int        $parent_id
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     protected function flatten($listItems)
     {
+        $flattened = clone $listItems;
         foreach ($listItems as $listItem) {
-            if (empty($listItem->children)) {
+            if (! $listItem->children instanceof Collection) {
                 continue;
             }
 
-            return $listItems->merge($this->flatten($listItem->children));
+            if ($listItem->children->isEmpty()) {
+                continue;
+            }
+
+            $flattened = $flattened->merge($this->flatten($listItem->children));
         }
 
-        return $listItems;
+        return $flattened;
     }
 
     /**
@@ -67,7 +71,7 @@ class ListRelation extends MorphMany
 
         foreach ($unflattened as $item) {
             $item->setAttribute('depth', $depth);
-            $item->setAttribute('children', $this->unflatten($listItems, $item->id, ++$depth));
+            $item->setAttribute('children', $this->unflatten($listItems, $item->id, $depth + 1));
         }
 
         return $unflattened;
