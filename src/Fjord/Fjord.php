@@ -3,6 +3,7 @@
 namespace Fjord\Fjord;
 
 use Fjord\Application\Application;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 class Fjord
@@ -159,7 +160,29 @@ class Fjord
             return false;
         }
 
+        if (! File::exists(base_path('bootstrap/cache/fjord.php'))) {
+            return false;
+        }
+
         return true;
+    }
+
+    /**
+     * Determines wether composer dumpautoload needs to be called.
+     *
+     * @return void
+     */
+    public function needsDumpAutoload()
+    {
+        if ($this->installed()) {
+            return false;
+        }
+
+        if (! class_exists(\FjordApp\Kernel::class)) {
+            return false;
+        }
+
+        return ! File::exists(base_path('bootstrap/cache/fjord.php'));
     }
 
     /**
