@@ -108,8 +108,8 @@ class MorphTo extends OneRelationField
         $query = $this->relation($model);
 
         // Nullable morphTo.
-        if (!$model->{$query->getMorphType()}) {
-            return null;
+        if (! $model->{$query->getMorphType()}) {
+            return;
         }
 
         return $query->getResults();

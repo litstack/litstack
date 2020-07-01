@@ -29,7 +29,7 @@ class FjordAdmin extends Command
      */
     public function handle()
     {
-        if (!Role::where('name', 'admin')->exists()) {
+        if (! Role::where('name', 'admin')->exists()) {
             $this->error('You may run fjord:install before fjord:admin.');
 
             return;

@@ -67,8 +67,8 @@ class FjordController extends GeneratorCommand
     {
         $replace = [
             'default' => fn () => [],
-            'form'    => fn ()    => $this->buildCrudReplacements($name),
-            'crud'    => fn ()    => $this->buildCrudReplacements($name),
+            'form'    => fn () => $this->buildCrudReplacements($name),
+            'crud'    => fn () => $this->buildCrudReplacements($name),
         ][$this->type]();
 
         return str_replace(
@@ -107,7 +107,7 @@ class FjordController extends GeneratorCommand
         foreach ([
             'form', 'crud',
         ] as $type) {
-            if (!$this->option($type)) {
+            if (! $this->option($type)) {
                 continue;
             }
 
@@ -120,7 +120,7 @@ class FjordController extends GeneratorCommand
             $this->type = $type;
         }
 
-        if (!$this->type) {
+        if (! $this->type) {
             $this->type = 'default';
         }
     }

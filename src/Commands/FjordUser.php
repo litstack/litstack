@@ -29,7 +29,7 @@ class FjordUser extends Command
      */
     public function handle()
     {
-        if (!Fjord::installed()) {
+        if (! Fjord::installed()) {
             $this->error('You may run fjord:install before fjord:user.');
 
             return;

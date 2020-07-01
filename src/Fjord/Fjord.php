@@ -151,11 +151,11 @@ class Fjord
      */
     public function installed()
     {
-        if (!config()->has('fjord')) {
+        if (! config()->has('fjord')) {
             return false;
         }
 
-        if (!class_exists(\FjordApp\Kernel::class)) {
+        if (! class_exists(\FjordApp\Kernel::class)) {
             return false;
         }
 

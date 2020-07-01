@@ -39,7 +39,7 @@ class CrudValidator
         foreach ($form->getRegisteredFields() as $field) {
             $title = $field->getTitle();
 
-            if (!$field->translatable) {
+            if (! $field->translatable) {
                 $names[$field->local_key] = $title;
             } else {
                 foreach (config('translatable.locales') as $locale) {

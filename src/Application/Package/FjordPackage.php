@@ -75,7 +75,7 @@ abstract class FjordPackage
     {
         $this->name = $name;
 
-        if (!is_array($extra)) {
+        if (! is_array($extra)) {
             $extra = [];
         }
 

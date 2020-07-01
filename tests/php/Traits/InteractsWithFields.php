@@ -18,7 +18,7 @@ trait InteractsWithFields
      */
     public function getField(string $fieldClass, string $id = 'dummy_field', string $model = null, $form = null)
     {
-        if (!$model) {
+        if (! $model) {
             $model = DummyFieldModel::class;
         }
 

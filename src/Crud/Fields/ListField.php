@@ -126,7 +126,7 @@ class ListField extends RelationField
      */
     public function getRelationQuery($model)
     {
-        if (!$model instanceof FormField) {
+        if (! $model instanceof FormField) {
             return $model->{$this->id}();
         }
 

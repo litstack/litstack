@@ -93,7 +93,7 @@ class Packages
 
         foreach ($this->rootAccess as $rootPackageName) {
             $rootPackage = $this->get($rootPackageName);
-            if (!$rootPackage->hasNavPreset($name)) {
+            if (! $rootPackage->hasNavPreset($name)) {
                 continue;
             }
 

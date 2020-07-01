@@ -186,7 +186,7 @@ class BaseForm extends VueProp
 
         $this->wrapper = $wrapper;
         $closure($this);
-        $this->wrapper = !empty($this->wrapperStack)
+        $this->wrapper = ! empty($this->wrapperStack)
             ? array_pop($this->wrapperStack)
             : null;
 
@@ -236,7 +236,7 @@ class BaseForm extends VueProp
     {
         $rules = [];
         foreach ($this->registeredFields as $field) {
-            if (!method_exists($field, 'getRules')) {
+            if (! method_exists($field, 'getRules')) {
                 continue;
             }
             $fieldRules = $field->getRules($type);
@@ -301,7 +301,7 @@ class BaseForm extends VueProp
             $this->registeredFields[] = $fieldInstance;
         }
 
-        if ($this->inWrapper() && !$this->col && $fieldInstance->register()) {
+        if ($this->inWrapper() && ! $this->col && $fieldInstance->register()) {
             $this->wrapper
                 ->component('fj-field')
                 ->prop('field', $fieldInstance);
@@ -424,15 +424,15 @@ class BaseForm extends VueProp
      */
     public function hasForm(string $name, string $repeatable = null)
     {
-        if (!$field = $this->findField($name)) {
+        if (! $field = $this->findField($name)) {
             return false;
         }
 
-        if (!$field instanceof Block) {
+        if (! $field instanceof Block) {
             return method_exists($field, 'form');
         }
 
-        if (!$repeatable) {
+        if (! $repeatable) {
             return false;
         }
 
@@ -449,15 +449,15 @@ class BaseForm extends VueProp
      */
     public function getForm(string $name, string $repeatable = null)
     {
-        if (!$this->hasForm($name, $repeatable)) {
+        if (! $this->hasForm($name, $repeatable)) {
             return;
         }
 
-        if (!$field = $this->findField($name)) {
+        if (! $field = $this->findField($name)) {
             return;
         }
 
-        if (!$field instanceof Block) {
+        if (! $field instanceof Block) {
             return $field->form;
         }
 

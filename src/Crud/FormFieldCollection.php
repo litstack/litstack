@@ -71,7 +71,7 @@ class FormFieldCollection extends Collection
 
         $formField = $this->where('field_id', $key)->first();
 
-        if (!$formField) {
+        if (! $formField) {
             return;
         }
 

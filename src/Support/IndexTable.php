@@ -158,14 +158,14 @@ class IndexTable
      */
     public function get()
     {
-        if (!$this->request) {
+        if (! $this->request) {
             throw new InvalidArgumentException('Missing argument request for IndexTable.');
         }
 
         $actions = ['filter', 'search', 'order', 'paginate'];
-        if (!empty($this->only)) {
+        if (! empty($this->only)) {
             $actions = $this->only;
-        } elseif (!empty($this->except)) {
+        } elseif (! empty($this->except)) {
             foreach ($this->except as $action) {
                 if (($key = array_search($action, $actions)) !== false) {
                     unset($actions[$key]);
@@ -208,7 +208,7 @@ class IndexTable
      */
     protected function applyFilterToQuery()
     {
-        if (!$this->request->filter) {
+        if (! $this->request->filter) {
             return;
         }
 
@@ -224,7 +224,7 @@ class IndexTable
      */
     protected function applySearchToQuery()
     {
-        if (!$this->request->search) {
+        if (! $this->request->search) {
             return;
         }
 
@@ -241,7 +241,7 @@ class IndexTable
      */
     protected function applySortToQuery()
     {
-        if (!$this->request->sort_by) {
+        if (! $this->request->sort_by) {
             return;
         }
         // Get sort key and direction.

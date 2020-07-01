@@ -15,7 +15,7 @@ trait ManagesPreviewTypes
      */
     public function type(string $type)
     {
-        if (!array_key_exists($type, $this->availablePreviewTypes)) {
+        if (! array_key_exists($type, $this->availablePreviewTypes)) {
             throw new InvalidArgumentException(
                 sprintf(
                     'Invalid preview type "%s" for relation field. Available types are: %s',

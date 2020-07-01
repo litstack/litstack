@@ -47,7 +47,7 @@ class FjordCrud extends Command
         $this->info('    /___/                                                      ');
 
         $modelName = $this->option('model');
-        if (!$modelName) {
+        if (! $modelName) {
             $modelName = $this->ask('enter the model name (PascalCase, singular)');
         }
 
@@ -131,7 +131,7 @@ class FjordCrud extends Command
         // model has slug
         if ($s) {
             // if is not translated
-            if (!$t) {
+            if (! $t) {
                 $builder->withTraits("use Fjord\Crud\Models\Traits\Sluggable;");
 
                 $sluggableContents = file_get_contents(fjord_path('stubs/CrudModelSluggable.stub'));
@@ -189,7 +189,7 @@ class FjordCrud extends Command
             return;
         }
 
-        if (!file_exists($model)) {
+        if (! file_exists($model)) {
             $fileContents = file_get_contents(__DIR__.'/../../stubs/CrudTranslationModel.stub');
 
             $fileContents = str_replace('DummyClassname', $modelName.'Translation', $fileContents);
@@ -212,7 +212,7 @@ class FjordCrud extends Command
             // remove placeholders
             $fileContents = $this->cleanUp($fileContents);
 
-            if (!\File::exists('app/Models/Translations')) {
+            if (! \File::exists('app/Models/Translations')) {
                 \File::makeDirectory('app/Models/Translations');
             }
             if (\File::put($model, $fileContents)) {
@@ -289,7 +289,7 @@ class FjordCrud extends Command
         $fileContents = str_replace('DummyModelClass', "\\App\\Models\\{$modelName}", $fileContents);
         $fileContents = str_replace('DummyTableName', $tableName, $fileContents);
 
-        if (!\File::exists(base_path('fjord/app/Controllers/Crud'))) {
+        if (! \File::exists(base_path('fjord/app/Controllers/Crud'))) {
             \File::makeDirectory(base_path('fjord/app/Controllers/Crud'));
         }
         if (\File::put($controllerPath, $fileContents)) {
@@ -312,7 +312,7 @@ class FjordCrud extends Command
         $fileContents = file_get_contents(__DIR__.'/../../stubs/CrudConfig.stub');
         $fileContents = str_replace('DummyClassname', $modelName, $fileContents);
         $fileContents = str_replace('DummyTablename', $tableName, $fileContents);
-        if (!\File::exists(base_path('fjord/app/Config/Crud'))) {
+        if (! \File::exists(base_path('fjord/app/Config/Crud'))) {
             \File::makeDirectory(base_path('fjord/app/Config/Crud'));
         }
         if (\File::put($config, $fileContents)) {

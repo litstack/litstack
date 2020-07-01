@@ -110,7 +110,7 @@ class ConfigHandler
     {
         $instance = new $factory($this);
 
-        if (!is_subclass_of($factory, ConfigFactory::class)) {
+        if (! is_subclass_of($factory, ConfigFactory::class)) {
             throw new TypeError("Config factory {$factory} must extend ".ConfigFactory::class.'.');
         }
 
@@ -275,7 +275,7 @@ class ConfigHandler
      */
     protected function resolveMethod($method, $parameters = [])
     {
-        if (!$this->methodHasFactory($method)) {
+        if (! $this->methodHasFactory($method)) {
             return $this->callMethod($method, $parameters);
         }
 

@@ -219,7 +219,7 @@ class CrudIndex extends VueProp
 
         $this->wrapper = $wrapper;
         $closure($this);
-        $this->wrapper = !empty($this->wrapperStack)
+        $this->wrapper = ! empty($this->wrapperStack)
             ? array_pop($this->wrapperStack)
             : null;
 

@@ -45,17 +45,17 @@ class ApiLoader
      */
     public function loadForm($type)
     {
-        if (!$type) {
+        if (! $type) {
             return;
         }
 
-        if (!$this->config->has($type)) {
+        if (! $this->config->has($type)) {
             return;
         }
 
         $form = $this->config->{$type};
 
-        if (!$form instanceof BaseForm) {
+        if (! $form instanceof BaseForm) {
             return false;
         }
 
@@ -101,7 +101,7 @@ class ApiLoader
     {
         $result = $this->{str_replace('OrFail', '', $method)}(...$parameters);
 
-        if (!$result) {
+        if (! $result) {
             abort(404);
         }
 

@@ -41,16 +41,16 @@ class ApplicationServiceProvider extends ServiceProvider
         }
         // Fix: config_type
         try {
-            if (!\Illuminate\Support\Facades\Schema::hasColumn('form_blocks', 'form_type')) {
+            if (! \Illuminate\Support\Facades\Schema::hasColumn('form_blocks', 'form_type')) {
                 \Illuminate\Support\Facades\Schema::table('form_blocks', fn ($table) => $table->string('form_type')->after('model_id'));
             }
-            if (!\Illuminate\Support\Facades\Schema::hasColumn('form_blocks', 'config_type')) {
+            if (! \Illuminate\Support\Facades\Schema::hasColumn('form_blocks', 'config_type')) {
                 \Illuminate\Support\Facades\Schema::table('form_blocks', fn ($table) => $table->string('config_type')->after('model_id'));
             }
-            if (!\Illuminate\Support\Facades\Schema::hasColumn('form_fields', 'form_type')) {
+            if (! \Illuminate\Support\Facades\Schema::hasColumn('form_fields', 'form_type')) {
                 \Illuminate\Support\Facades\Schema::table('form_fields', fn ($table) => $table->string('form_type')->after('id'));
             }
-            if (!\Illuminate\Support\Facades\Schema::hasColumn('form_fields', 'config_type')) {
+            if (! \Illuminate\Support\Facades\Schema::hasColumn('form_fields', 'config_type')) {
                 \Illuminate\Support\Facades\Schema::table('form_fields', fn ($table) => $table->string('config_type')->after('id'));
             }
             $this->fixFormFields();

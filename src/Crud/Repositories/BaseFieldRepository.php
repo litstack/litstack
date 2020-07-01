@@ -58,7 +58,7 @@ abstract class BaseFieldRepository
     protected function fillAttributesToModel($model, array $attributes)
     {
         foreach ($this->form->getRegisteredFields() as $field) {
-            if (!array_key_exists($field->local_key, $attributes)) {
+            if (! array_key_exists($field->local_key, $attributes)) {
                 continue;
             }
 
@@ -77,7 +77,7 @@ abstract class BaseFieldRepository
     protected function formatAttributes(array $attributes, $fields)
     {
         foreach ($fields as $field) {
-            if (!array_key_exists($field->local_key, $attributes)) {
+            if (! array_key_exists($field->local_key, $attributes)) {
                 continue;
             }
 
@@ -111,7 +111,7 @@ abstract class BaseFieldRepository
         foreach ($ids as $order => $id) {
             $model = $models->where('id', $id)->first();
 
-            if (!$model) {
+            if (! $model) {
                 continue;
             }
 

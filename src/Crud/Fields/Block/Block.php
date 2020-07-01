@@ -60,7 +60,7 @@ class Block extends RelationField
     public function repeatables($closure)
     {
         $repeatables = $closure;
-        if (!$closure instanceof Repeatables) {
+        if (! $closure instanceof Repeatables) {
             $repeatables = new Repeatables($this);
             $closure($repeatables);
         }
@@ -104,7 +104,7 @@ class Block extends RelationField
      */
     public function getRelationQuery($model)
     {
-        if (!$model instanceof FormField) {
+        if (! $model instanceof FormField) {
             return $model->{$this->id}();
         }
 

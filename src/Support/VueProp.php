@@ -64,11 +64,11 @@ abstract class VueProp implements Arrayable, Jsonable
     protected function filterAuthorized(Collection $rendered)
     {
         foreach ($rendered as $key => $item) {
-            if (!$item instanceof AuthorizableContract) {
+            if (! $item instanceof AuthorizableContract) {
                 continue;
             }
 
-            if (!$item->isAuthorized()) {
+            if (! $item->isAuthorized()) {
                 unset($rendered[$key]);
             }
         }

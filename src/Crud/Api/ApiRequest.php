@@ -100,7 +100,7 @@ class ApiRequest
             $repository = $this->getChildRepository($repository);
         }
 
-        if (!method_exists($repository, $this->method)) {
+        if (! method_exists($repository, $this->method)) {
             abort(404, debug("Method [{$this->method}] does not exist on ".get_class($repository)));
         }
 
@@ -134,11 +134,11 @@ class ApiRequest
 
         $model = $this->getModel();
 
-        if (!$model) {
+        if (! $model) {
             return;
         }
 
-        if (!in_array(TrackEdits::class, class_uses_recursive($model))) {
+        if (! in_array(TrackEdits::class, class_uses_recursive($model))) {
             return;
         }
 
@@ -154,7 +154,7 @@ class ApiRequest
      */
     protected function getModel()
     {
-        if (!$id = $this->request->id) {
+        if (! $id = $this->request->id) {
             return;
         }
 
@@ -173,7 +173,7 @@ class ApiRequest
      */
     public function getParentModel($parentRepository, $model)
     {
-        if (!method_exists($parentRepository, 'getModel')) {
+        if (! method_exists($parentRepository, 'getModel')) {
             abort(404, debug('Missing [getModel] method on '.get_class($parentRepository)));
         }
 
@@ -181,7 +181,7 @@ class ApiRequest
             'model' => $model,
         ]);
 
-        if (!$model) {
+        if (! $model) {
             abort(404, debug("Couldn't find child [$this->abstract] Model for ".get_class($model)." with id [$model->id]."));
         }
 
@@ -228,7 +228,7 @@ class ApiRequest
         return function () use ($parentRepository) {
             $field_id = $this->request->child_field_id;
 
-            if (!method_exists($parentRepository, 'getField') && $field_id) {
+            if (! method_exists($parentRepository, 'getField') && $field_id) {
                 abort(404, debug('Missing [getField] method on '.get_class($parentRepository)));
             }
 
@@ -299,7 +299,7 @@ class ApiRequest
      */
     public function getField($field_id)
     {
-        if (!$form = $this->getForm()) {
+        if (! $form = $this->getForm()) {
             return;
         }
 
@@ -318,7 +318,7 @@ class ApiRequest
      */
     protected function passFieldOrFail($field_id, $field)
     {
-        if ($field_id && !$field) {
+        if ($field_id && ! $field) {
             abort(404, debug("Couln't find field [{$field_id}]."));
         }
 
@@ -392,6 +392,6 @@ class ApiRequest
      */
     protected function hasChild()
     {
-        return !empty($this->request->child_field_id);
+        return ! empty($this->request->child_field_id);
     }
 }

@@ -17,11 +17,11 @@ trait AuthorizeController
      */
     public function authorizeController(Request $request, string $operation, $controller = null): bool
     {
-        if (!fjord_user()) {
+        if (! fjord_user()) {
             return false;
         }
 
-        if (!$controller) {
+        if (! $controller) {
             $controller = $request->route()->controller;
         }
 

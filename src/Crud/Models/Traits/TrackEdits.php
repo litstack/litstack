@@ -28,7 +28,7 @@ trait TrackEdits
      */
     public function edited($action = 'update')
     {
-        if (!fjord_user()) {
+        if (! fjord_user()) {
             return;
         }
 

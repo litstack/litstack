@@ -93,7 +93,7 @@ class Translator
             $namespace = $this->getNamespaceFromPath($path);
             $langKey = "{$namespace}::{$key}";
 
-            if (!Lang::has($langKey, $this->getLocale(), $fallback = false)) {
+            if (! Lang::has($langKey, $this->getLocale(), $fallback = false)) {
                 continue;
             }
 
@@ -113,7 +113,7 @@ class Translator
         $fallback = config('fjord.translatable.fallback_locale');
 
         // Not translatable
-        if (!config('fjord.translatable.translatable')) {
+        if (! config('fjord.translatable.translatable')) {
             return $fallback;
         }
 
@@ -122,7 +122,7 @@ class Translator
             : $this->getBrowserLocale();
 
         // Locale not allowed.
-        if (!in_array($locale, config('fjord.translatable.locales'))) {
+        if (! in_array($locale, config('fjord.translatable.locales'))) {
             return $fallback;
         }
 
@@ -136,7 +136,7 @@ class Translator
      */
     public function getBrowserLocale()
     {
-        if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+        if (! isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             return config('fjord.translatable.fallback_locale');
         }
 

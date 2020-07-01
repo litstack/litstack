@@ -82,7 +82,7 @@ class FjordSession extends Model
      */
     public function detector()
     {
-        if (!$this->deviceDetector) {
+        if (! $this->deviceDetector) {
             $this->deviceDetector = new DeviceDetector($this->user_agent);
             $this->deviceDetector->parse();
         }

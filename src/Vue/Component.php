@@ -95,7 +95,7 @@ class Component extends VueProp implements AuthorizableContract
     {
         // Props.
         foreach ($this->availableProps as $name => $options) {
-            if (!array_key_exists('default', $options)) {
+            if (! array_key_exists('default', $options)) {
                 continue;
             }
 
@@ -108,7 +108,7 @@ class Component extends VueProp implements AuthorizableContract
         }
         // Slots.
         foreach ($this->availableSlots as $name => $options) {
-            if (!$this->hasSlotMany($name)) {
+            if (! $this->hasSlotMany($name)) {
                 continue;
             }
             $this->slots[$name] = collect([]);
@@ -127,7 +127,7 @@ class Component extends VueProp implements AuthorizableContract
      */
     public function slot(string $name, $component)
     {
-        if (!array_key_exists($name, $this->availableSlots)) {
+        if (! array_key_exists($name, $this->availableSlots)) {
             $message = sprintf(
                 '%s is not an available slot for Vue component %s.',
                 $name,
@@ -162,12 +162,12 @@ class Component extends VueProp implements AuthorizableContract
      */
     public function hasSlotMany(string $slot)
     {
-        if (!array_key_exists($slot, $this->availableSlots)) {
+        if (! array_key_exists($slot, $this->availableSlots)) {
             return;
         }
 
         $options = $this->availableSlots[$slot];
-        if (!array_key_exists('many', $options)) {
+        if (! array_key_exists('many', $options)) {
             return false;
         }
 
@@ -239,7 +239,7 @@ class Component extends VueProp implements AuthorizableContract
      */
     public function class(string $value)
     {
-        if (!array_key_exists('class', $this->props)) {
+        if (! array_key_exists('class', $this->props)) {
             $this->props['class'] = '';
         }
 
@@ -281,7 +281,7 @@ class Component extends VueProp implements AuthorizableContract
             $message = 'Value must be: '.implode(', ', $type);
         }
 
-        if (!$valid) {
+        if (! $valid) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid value type "%s" for prop %s in Vue component %s. %s',
                 gettype($value),
@@ -305,7 +305,7 @@ class Component extends VueProp implements AuthorizableContract
     protected function isValidPropType($type, $value)
     {
         // Allow self::PROP_TYPES and classes.
-        if (!in_array($type, self::PROP_TYPES) && !class_exists($type)) {
+        if (! in_array($type, self::PROP_TYPES) && ! class_exists($type)) {
             throw new InvalidArgumentException(sprintf(
                 '%s is not valid prop type. Available prop type: %s',
                 $type,
@@ -330,11 +330,11 @@ class Component extends VueProp implements AuthorizableContract
         $missing = [];
 
         foreach ($attributes as $name => $options) {
-            if (!array_key_exists('required', $options)) {
+            if (! array_key_exists('required', $options)) {
                 continue;
             }
 
-            if (!$options['required']) {
+            if (! $options['required']) {
                 continue;
             }
 
@@ -408,7 +408,7 @@ class Component extends VueProp implements AuthorizableContract
      */
     public function extend()
     {
-        if (!fjord_app()->get('vue')->hasBeenBuilt()) {
+        if (! fjord_app()->get('vue')->hasBeenBuilt()) {
             return;
         }
 

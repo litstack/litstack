@@ -77,7 +77,7 @@ class BootstrapKernel
      */
     public function registerCommands($commands)
     {
-        if (!App::runningInConsole()) {
+        if (! App::runningInConsole()) {
             return;
         }
 

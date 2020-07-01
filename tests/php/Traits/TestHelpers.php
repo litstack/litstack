@@ -37,7 +37,7 @@ trait TestHelpers
     protected function callUnaccessibleMethod($abstract, string $method, array $params = [])
     {
         $class = $abstract;
-        if (!is_string($abstract)) {
+        if (! is_string($abstract)) {
             $class = get_class($abstract);
         }
 

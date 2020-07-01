@@ -269,7 +269,7 @@ class CrudIndexTable extends VueProp
      */
     public function getQuery(Builder $query)
     {
-        if (!$this->queryModifier) {
+        if (! $this->queryModifier) {
             return $query;
         }
 

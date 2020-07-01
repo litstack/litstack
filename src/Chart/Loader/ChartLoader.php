@@ -78,7 +78,7 @@ abstract class ChartLoader
 
     protected function getConfigKeyFor(string $method)
     {
-        if (!$timespanType = $this->getTimespanType()) {
+        if (! $timespanType = $this->getTimespanType()) {
             throw new Exception('Missing timespan type.');
         }
 
@@ -147,12 +147,12 @@ abstract class ChartLoader
     protected function getLabelResolverConfig()
     {
         return [
-            'today'      => fn ($time)      => $time->hour,
-            'yesterday'  => fn ($time)  => $time->hour,
-            'last7days'  => fn ($time)  => $time->format('l'),
-            'thisweek'   => fn ($time)   => $time->format('l'),
+            'today'      => fn ($time) => $time->hour,
+            'yesterday'  => fn ($time) => $time->hour,
+            'last7days'  => fn ($time) => $time->format('l'),
+            'thisweek'   => fn ($time) => $time->format('l'),
             'last30days' => fn ($time) => $time->format('l'),
-            'thismonth'  => fn ($time)  => $time->format('l'),
+            'thismonth'  => fn ($time) => $time->format('l'),
         ];
     }
 
@@ -170,7 +170,7 @@ abstract class ChartLoader
 
     public function __call($method, $parameters = [])
     {
-        if (Str::startsWith($method, 'get') && !Str::endsWith($method, 'Config')) {
+        if (Str::startsWith($method, 'get') && ! Str::endsWith($method, 'Config')) {
             return $this->getConfigKeyFor($method, ...$parameters);
         }
 

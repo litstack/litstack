@@ -22,7 +22,7 @@ trait FieldHasForm
      */
     public function getRegisteredFields()
     {
-        if (!array_key_exists('form', $this->attributes)) {
+        if (! array_key_exists('form', $this->attributes)) {
             return collect([]);
         }
 

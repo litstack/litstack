@@ -95,7 +95,7 @@ abstract class CrudController extends CrudBaseController
      */
     public function destroyAll(CrudDeleteRequest $request)
     {
-        if (!is_array($request->ids)) {
+        if (! is_array($request->ids)) {
             abort(405);
         }
 
@@ -180,7 +180,7 @@ abstract class CrudController extends CrudBaseController
         // Eager loads relations.
         $query = $this->query();
         foreach ($this->config->show->getRegisteredFields() as $field) {
-            if ($field instanceof RelationField && !$field instanceof MediaField) {
+            if ($field instanceof RelationField && ! $field instanceof MediaField) {
                 $query->with($field->getRelationName());
             }
         }
@@ -209,7 +209,7 @@ abstract class CrudController extends CrudBaseController
 
         // Set readonly if the user has no update permission for this crud.
         foreach ($config['form']->getRegisteredFields() as $field) {
-            if (!$config['permissions']['update']) {
+            if (! $config['permissions']['update']) {
                 $field->readonly();
             }
         }
@@ -254,7 +254,7 @@ abstract class CrudController extends CrudBaseController
         foreach ($ids as $order => $id) {
             $model = $models->where('id', $id)->first();
 
-            if (!$model) {
+            if (! $model) {
                 continue;
             }
             $model->{$this->config->orderColumn} = $order;

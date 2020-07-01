@@ -25,7 +25,7 @@ class UserController extends CrudController
      */
     public function destroyAll(CrudDeleteRequest $request)
     {
-        if (!is_array($request->ids)) {
+        if (! is_array($request->ids)) {
             abort(404);
         }
 

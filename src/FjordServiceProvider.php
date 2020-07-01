@@ -163,7 +163,7 @@ class FjordServiceProvider extends ServiceProvider
      */
     protected function lightsOn()
     {
-        if (!$this->app['fjord']->installed()) {
+        if (! $this->app['fjord']->installed()) {
             return;
         }
 
@@ -187,12 +187,12 @@ class FjordServiceProvider extends ServiceProvider
         if (app()->runningInConsole() || env('APP_ENV') == 'testing' || env('APP_ENV') === null) {
             return;
         }
-        if (!DB::table('form_blocks')->where('config_type', '')->exists()) {
+        if (! DB::table('form_blocks')->where('config_type', '')->exists()) {
             return;
         }
         $this->app->booted(function () {
             foreach (File::allFiles(base_path('fjord/app/Config')) as $configPath) {
-                if (!Str::endsWith(basename($configPath), 'Config.php')) {
+                if (! Str::endsWith(basename($configPath), 'Config.php')) {
                     continue;
                 }
 
@@ -206,12 +206,12 @@ class FjordServiceProvider extends ServiceProvider
                 } catch (\Throwable $e) {
                     continue;
                 }
-                if (!$config->has('show')) {
+                if (! $config->has('show')) {
                     continue;
                 }
 
                 foreach ($fields as $field) {
-                    if (!$field instanceof Block) {
+                    if (! $field instanceof Block) {
                         continue;
                     }
 
@@ -219,7 +219,7 @@ class FjordServiceProvider extends ServiceProvider
                     if ($config->model == FormField::class) {
                         $formField = DB::table('form_fields')->where('config_type', $namespace)->first();
 
-                        if (!$formField) {
+                        if (! $formField) {
                             return;
                         }
                         $query->where('model_id', $formField->id);
@@ -257,7 +257,7 @@ class FjordServiceProvider extends ServiceProvider
             $this->app->register($provider);
         }
 
-        if (!fjord()->installed()) {
+        if (! fjord()->installed()) {
             return;
         }
     }
@@ -269,7 +269,7 @@ class FjordServiceProvider extends ServiceProvider
      */
     protected function artisan()
     {
-        if (!App::runningInConsole()) {
+        if (! App::runningInConsole()) {
             return;
         }
 

@@ -17,7 +17,7 @@ class SetLocale
     {
         $user = auth()->user();
 
-        if (!in_array($request->locale, config('fjord.translatable.locales'))) {
+        if (! in_array($request->locale, config('fjord.translatable.locales'))) {
             return response()->json('method not allowed', 405);
         }
 

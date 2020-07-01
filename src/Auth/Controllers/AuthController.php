@@ -51,7 +51,7 @@ class AuthController extends Controller
 
         $attempt = $authentication->execute($request->only('email', 'password'), $remember);
 
-        if (!$attempt) {
+        if (! $attempt) {
             abort(401, __f('login.failed'));
         }
 
@@ -65,7 +65,7 @@ class AuthController extends Controller
      */
     protected function denyDefaultAdminInProduction(Request $request)
     {
-        if (!production()) {
+        if (! production()) {
             return;
         }
 

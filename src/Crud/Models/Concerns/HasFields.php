@@ -99,7 +99,7 @@ trait HasFields
             return $this->getRelationValue($field->id);
         }
 
-        if (!$locale) {
+        if (! $locale) {
             $locale = app()->getLocale();
         }
 

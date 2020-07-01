@@ -135,7 +135,7 @@ class BuilderSort
      */
     protected function sortColumn(string $column, string $direction): Builder
     {
-        if (!is_attribute_translatable($column, $this->getModel())) {
+        if (! is_attribute_translatable($column, $this->getModel())) {
             return $this->query->orderBy($column, $direction);
         } else {
             return $this->sortByTranslation($column, $direction);

@@ -92,7 +92,7 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (!$request->expectsJson()) {
+        if (! $request->expectsJson()) {
             return route('fjord.login');
         }
     }
@@ -109,11 +109,11 @@ class Authenticate extends Middleware
     {
         $session = FjordSession::where('session_id', Session::getId())->first();
 
-        if (!$session) {
+        if (! $session) {
             return;
         }
 
-        if (!is_array($session->payload)) {
+        if (! is_array($session->payload)) {
             $session->payload = [];
         }
 
@@ -124,7 +124,7 @@ class Authenticate extends Middleware
 
         $location = $this->fetchLocation();
 
-        if (!$location) {
+        if (! $location) {
             return;
         }
 
