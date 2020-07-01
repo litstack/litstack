@@ -55,8 +55,6 @@ class FjordPackage extends Package
         Commands\FjordController::class,
         Commands\FjordComponents::class,
         Commands\FjordDefaultPermissions::class,
-
-        Commands\FjordUpgrade::class,
     ];
 
     /**

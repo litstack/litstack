@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'default_route' => 'form/pages/home',
+    'default_route' => 'pages/home',
 
     /*
     |--------------------------------------------------------------------------

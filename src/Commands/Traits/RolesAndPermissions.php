@@ -7,12 +7,22 @@ use Spatie\Permission\Models\Permission;
 
 trait RolesAndPermissions
 {
+    /**
+     * Create default roles.
+     *
+     * @return void
+     */
     public function createDefaultRoles()
     {
         Role::firstOrCreate(['guard_name' => 'fjord', 'name' => 'admin']);
         Role::firstOrCreate(['guard_name' => 'fjord', 'name' => 'user']);
     }
 
+    /**
+     * Create default permissions.
+     *
+     * @return void
+     */
     public function createDefaultPermissions()
     {
         $admin = Role::where('name', 'admin')->first();

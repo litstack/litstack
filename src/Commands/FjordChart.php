@@ -26,6 +26,13 @@ class FjordChart extends GeneratorCommand
     protected $description = 'This will create a chart config. Default chart type is "area".';
 
     /**
+     * Chart type.
+     *
+     * @var string
+     */
+    protected $chartType = 'area';
+
+    /**
      * Execute the console command.
      *
      * @return bool|null
@@ -56,7 +63,7 @@ class FjordChart extends GeneratorCommand
             'bar' => fjord_path('stubs/chart.config.bar.stub'),
             'number' => fjord_path('stubs/chart.config.number.stub'),
             'area' => fjord_path('stubs/chart.config.area.stub'),
-        ][$this->type];
+        ][$this->chartType];
     }
 
     /**
@@ -66,7 +73,6 @@ class FjordChart extends GeneratorCommand
      */
     public function setChartType()
     {
-        $this->type = null;
         foreach ([
             'donut', 'progress', 'bar', 'number', 'area'
         ] as $type) {
@@ -76,16 +82,14 @@ class FjordChart extends GeneratorCommand
 
             // Returning false when type has already been set since multiple 
             // types are not allowed.
-            if ($this->type) {
+            if ($this->chartType) {
                 return false;
             }
 
-            $this->type = $type;
+            $this->chartType = $type;
         }
 
-        if (!$this->type) {
-            $this->type = 'area';
-        }
+        $this->type = ucfirst($this->chartType) . " chart config";
     }
 
     /**

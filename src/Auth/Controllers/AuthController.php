@@ -4,14 +4,12 @@ namespace Fjord\Auth\Controllers;
 
 use Illuminate\Http\Request;
 use Fjord\Support\Facades\Fjord;
-use Fjord\User\Models\FjordUser;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use Fjord\Auth\Actions\AuthenticationAction;
 use Fjord\Auth\Requests\FjordSessionLogoutRequest;
-use Fjord\Auth\Controllers\ForgotPasswordController;
 
 class AuthController extends Controller
 {
@@ -40,29 +38,43 @@ class AuthController extends Controller
      * @param Request $request
      * @return redirect
      */
-    public function authenticate(Request $request)
+    public function authenticate(Request $request, AuthenticationAction $authentication)
     {
         $request->validate($this->getAuthenticationRules(), __f('validation'));
 
-        $credentials = $request->only('email', 'password');
+        $this->denyDefaultAdminInProduction($request);
+
         $remember = $request->remember == 'on' || $request->remember;
 
-        if (Auth::guard('fjord')->attempt($credentials, $remember)) {
-            return $this->loginSucceeded();
+        $attempt = $authentication->execute($request->only('email', 'password'), $remember);
+
+        if (!$attempt) {
+            abort(401, __f('login.failed'));
         }
 
-        // Try using username.
-        if (config('fjord.login.username')) {
-            $credentials['username'] = $credentials['email'];
-            unset($credentials['email']);
-            if (Auth::guard('fjord')->attempt($credentials, $remember)) {
-                return $this->loginSucceeded();
-            }
+        return $this->loginSucceeded();
+    }
+
+    /**
+     * Deny default admin in production.
+     *
+     * @return void
+     */
+    protected function denyDefaultAdminInProduction(Request $request)
+    {
+        if (!production()) {
+            return;
         }
 
-        return response()->json([
-            'message' => __f('login.failed')
-        ], 401);
+        if ($request->password != 'secret') {
+            return;
+        }
+
+        if ($request->email != 'email' && $request->email != 'admin') {
+            return;
+        }
+
+        abort(401, __f('login.failed'));
     }
 
     /**
@@ -139,44 +151,5 @@ class AuthController extends Controller
         }
 
         $session->delete();
-    }
-
-    /**
-     * Create new FjordUser.
-     *
-     * @param Request $request
-     * @param ForgotPasswordController $sendResetLink
-     * @return void
-     */
-    public function register(Request $request, ForgotPasswordController $sendResetLink)
-    {
-        $rules = [
-            'username' => ['string', 'max:255', 'unique:fjord_users'],
-            'first_name' => ['string', 'max:255'],
-            'last_name' => ['string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:fjord_users'],
-            'password' => ['required', 'string', 'min:8'],
-        ];
-
-        $request->validate($rules);
-
-        $user = FjordUser::create([
-            'username' => $request->username,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'locale' => $request->locale ?? config('fjord.locale'),
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        // Assign default role.
-        $user->assignRole('user');
-
-        // Send reset link.
-        if ($request->sendResetLink) {
-            $sendResetLink->execute($request);
-        }
-
-        return $user;
     }
 }

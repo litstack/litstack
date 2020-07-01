@@ -6,6 +6,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
+if (!function_exists('production')) {
+    /**
+     * Determines wether app is running in production.
+     *
+     * @return boolean
+     */
+    function production()
+    {
+        return config('app.env') == 'production';
+    }
+}
+
 if (!function_exists('debug')) {
     /**
      * Return default value in debug mode.
