@@ -120,7 +120,7 @@ class ProfileSettingsConfig extends CrudConfig
      */
     public function language($form)
     {
-        if (!config('fjord.translatable.translatable')) {
+        if (! config('fjord.translatable.translatable')) {
             return;
         }
 

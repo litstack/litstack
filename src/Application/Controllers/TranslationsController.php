@@ -74,7 +74,7 @@ class TranslationsController extends Controller
      */
     protected function getTranslationsFromPath(string $locale, string $path, string $prefix = '')
     {
-        if (!File::isDirectory($path)) {
+        if (! File::isDirectory($path)) {
             return;
         }
 

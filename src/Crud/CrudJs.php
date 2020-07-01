@@ -51,7 +51,7 @@ class CrudJs extends VueProp
             $this->model->toArray()
         );
 
-        if (!array_key_exists('translations', $array)) {
+        if (! array_key_exists('translations', $array)) {
             return $array;
         }
 

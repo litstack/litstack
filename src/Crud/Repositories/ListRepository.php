@@ -98,7 +98,7 @@ class ListRepository extends BaseFieldRepository
     {
         $parent = $this->getParent($model, $request->parent_id ?? 0);
 
-        if ($request->parent_id && !$parent) {
+        if ($request->parent_id && ! $parent) {
             abort(404);
         }
 
@@ -171,11 +171,11 @@ class ListRepository extends BaseFieldRepository
         foreach ($orderedItems as $orderedItem) {
             $parentId = $orderedItem['parent_id'] ?? null;
 
-            if (!$parentId) {
+            if (! $parentId) {
                 continue;
             }
 
-            if (!$parent = $listItems->find($parentId)) {
+            if (! $parent = $listItems->find($parentId)) {
                 abort(405);
             }
 

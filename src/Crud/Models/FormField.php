@@ -66,7 +66,7 @@ class FormField extends FjordFormModel
      */
     public function fixConfigType($model)
     {
-        if ($model->collection && $model->form_name && !$model->config_type) {
+        if ($model->collection && $model->form_name && ! $model->config_type) {
             $model->update([
                 'config_type' => Config::getNamespaceFromKey("form.{$model->collection}.{$model->form_name}"),
             ]);

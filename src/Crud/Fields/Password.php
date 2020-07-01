@@ -127,12 +127,12 @@ class Password extends BaseField
      */
     public function confirm($confirm = true)
     {
-        if (!$confirm) {
+        if (! $confirm) {
             return $this;
         }
 
         $confirmationRule = function ($attribute, $value, $fail) {
-            if (!Hash::check($value, fjord_user()->password)) {
+            if (! Hash::check($value, fjord_user()->password)) {
                 return $fail(__f('validation.incorrect_password'));
             }
         };

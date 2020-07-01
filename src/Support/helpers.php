@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-if (!function_exists('production')) {
+if (! function_exists('production')) {
     /**
      * Determines wether app is running in production.
      *
@@ -18,7 +18,7 @@ if (!function_exists('production')) {
     }
 }
 
-if (!function_exists('debug')) {
+if (! function_exists('debug')) {
     /**
      * Return default value in debug mode.
      *
@@ -28,7 +28,7 @@ if (!function_exists('debug')) {
      */
     function debug($value)
     {
-        if (!config('app.debug')) {
+        if (! config('app.debug')) {
             return;
         }
 
@@ -36,7 +36,7 @@ if (!function_exists('debug')) {
     }
 }
 
-if (!function_exists('crud')) {
+if (! function_exists('crud')) {
     /**
      * Create new CrudJs instance.
      *
@@ -59,7 +59,7 @@ if (!function_exists('crud')) {
     }
 }
 
-if (!function_exists('component')) {
+if (! function_exists('component')) {
     /**
      * Get a new Vue component instance.
      *
@@ -86,7 +86,7 @@ if (!function_exists('component')) {
     }
 }
 
-if (!function_exists('fa')) {
+if (! function_exists('fa')) {
     /**
      * Get a fontawesome icon.
      *
@@ -97,7 +97,7 @@ if (!function_exists('fa')) {
      */
     function fa(string $group, $icon = null)
     {
-        if (!$icon) {
+        if (! $icon) {
             $icon = $group;
             $group = 'fas';
         }
@@ -106,7 +106,7 @@ if (!function_exists('fa')) {
     }
 }
 
-if (!function_exists('strip_slashes')) {
+if (! function_exists('strip_slashes')) {
     /**
      * Strip slashes for routes. Make /admin//route => /admin/route.
      *
@@ -120,7 +120,7 @@ if (!function_exists('strip_slashes')) {
     }
 }
 
-if (!function_exists('is_closure')) {
+if (! function_exists('is_closure')) {
     /**
      * Is Closure.
      *
@@ -134,7 +134,7 @@ if (!function_exists('is_closure')) {
     }
 }
 
-if (!function_exists('split_path')) {
+if (! function_exists('split_path')) {
     /**
      * Split path.
      *
@@ -152,7 +152,7 @@ if (!function_exists('split_path')) {
     }
 }
 
-if (!function_exists('fjord_js')) {
+if (! function_exists('fjord_js')) {
     /**
      * Get the Fjord app.js file path.
      *
@@ -172,7 +172,7 @@ if (!function_exists('fjord_js')) {
     }
 }
 
-if (!function_exists('fjord_css')) {
+if (! function_exists('fjord_css')) {
     /**
      * Get the Fjord app.css file path.
      *
@@ -186,7 +186,7 @@ if (!function_exists('fjord_css')) {
     }
 }
 
-if (!function_exists('fjord_user')) {
+if (! function_exists('fjord_user')) {
     /**
      * Get the authenticated Fjord user.
      *
@@ -198,7 +198,7 @@ if (!function_exists('fjord_user')) {
     }
 }
 
-if (!function_exists('asset_time')) {
+if (! function_exists('asset_time')) {
     /**
      * Appends ?t={time} to files to disable caching.
      *
@@ -210,7 +210,7 @@ if (!function_exists('asset_time')) {
     }
 }
 
-if (!function_exists('__f')) {
+if (! function_exists('__f')) {
     /**
      * Translate by key.
      *
@@ -225,7 +225,7 @@ if (!function_exists('__f')) {
     }
 }
 
-if (!function_exists('__f_choice')) {
+if (! function_exists('__f_choice')) {
     /**
      * Translate choice by key.
      *
@@ -240,7 +240,7 @@ if (!function_exists('__f_choice')) {
     }
 }
 
-if (!function_exists('__f_c')) {
+if (! function_exists('__f_c')) {
     /**
      * Translate choice by key.
      *
@@ -255,7 +255,7 @@ if (!function_exists('__f_c')) {
     }
 }
 
-if (!function_exists('__f_')) {
+if (! function_exists('__f_')) {
     /**
      * Translate if key exists or returns default.
      *
@@ -273,7 +273,7 @@ if (!function_exists('__f_')) {
     }
 }
 
-if (!function_exists('fjord_config_path')) {
+if (! function_exists('fjord_config_path')) {
     /**
      * Path to Fjord config files.
      *
@@ -287,7 +287,7 @@ if (!function_exists('fjord_config_path')) {
     }
 }
 
-if (!function_exists('fjord_resource_path')) {
+if (! function_exists('fjord_resource_path')) {
     /**
      * Path to Fjord resources.
      *
@@ -301,7 +301,7 @@ if (!function_exists('fjord_resource_path')) {
     }
 }
 
-if (!function_exists('fjord_path')) {
+if (! function_exists('fjord_path')) {
     /**
      * Path to Fjord composer package.
      *
@@ -315,7 +315,7 @@ if (!function_exists('fjord_path')) {
     }
 }
 
-if (!function_exists('fjord')) {
+if (! function_exists('fjord')) {
     /**
      * Get Fjord facade.
      *
@@ -327,7 +327,7 @@ if (!function_exists('fjord')) {
     }
 }
 
-if (!function_exists('fjord_app')) {
+if (! function_exists('fjord_app')) {
     /**
      * Get Fjord application instance.
      *
@@ -339,7 +339,7 @@ if (!function_exists('fjord_app')) {
     }
 }
 
-if (!function_exists('is_translatable')) {
+if (! function_exists('is_translatable')) {
     /**
      * Is a Model translatable.
      *
@@ -363,7 +363,7 @@ if (!function_exists('is_translatable')) {
     }
 }
 
-if (!function_exists('is_attribute_translatable')) {
+if (! function_exists('is_attribute_translatable')) {
     /**
      * Is a Model attribute translatable.
      *
@@ -374,7 +374,7 @@ if (!function_exists('is_attribute_translatable')) {
      */
     function is_attribute_translatable(string $attribute, $model)
     {
-        if (!is_translatable($model)) {
+        if (! is_translatable($model)) {
             return false;
         }
 
@@ -386,7 +386,7 @@ if (!function_exists('is_attribute_translatable')) {
     }
 }
 
-if (!function_exists('has_media')) {
+if (! function_exists('has_media')) {
     /**
      * Does a Model has media.
      *
@@ -405,7 +405,7 @@ if (!function_exists('has_media')) {
     }
 }
 
-if (!function_exists('is_valid_path')) {
+if (! function_exists('is_valid_path')) {
     /**
      * Does a file exists.
      *
@@ -419,7 +419,7 @@ if (!function_exists('is_valid_path')) {
     }
 }
 
-if (!function_exists('ph_cols')) {
+if (! function_exists('ph_cols')) {
     /**
      * Get ph cols from string length.
      *
@@ -439,7 +439,7 @@ if (!function_exists('ph_cols')) {
     }
 }
 
-if (!function_exists('medialibrary_config')) {
+if (! function_exists('medialibrary_config')) {
     /**
      * Spatie medialibrary changed its config file name.
      *

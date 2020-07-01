@@ -97,7 +97,7 @@ trait FjordTestCase
      */
     public function installFjord($force = false)
     {
-        if (Fjord::installed() && !$force) {
+        if (Fjord::installed() && ! $force) {
             return;
         }
         Artisan::call('fjord:install');

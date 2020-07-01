@@ -60,7 +60,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
         Route::macro('getConfig', function () {
             $key = $this->action['config'] ?? null;
-            if (!$key) {
+            if (! $key) {
                 return;
             }
 
@@ -86,7 +86,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     protected function mapCrudRoutes()
     {
-        if (!fjord()->installed()) {
+        if (! fjord()->installed()) {
             return;
         }
 
@@ -97,24 +97,24 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 continue;
             }
 
-            if (!Str::contains($file, '.php')) {
+            if (! Str::contains($file, '.php')) {
                 continue;
             }
 
             $namespace = str_replace('/', '\\', 'FjordApp'.explode('fjord/app', str_replace('.php', '', $file))[1]);
             $reflection = new ReflectionClass($namespace);
 
-            if (!$reflection->getParentClass()) {
+            if (! $reflection->getParentClass()) {
                 continue;
             }
 
-            if (!new $namespace() instanceof CrudConfig) {
+            if (! new $namespace() instanceof CrudConfig) {
                 continue;
             }
 
             $config = Config::getFromPath($file);
 
-            if (!$config) {
+            if (! $config) {
                 continue;
             }
 
@@ -140,11 +140,11 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 $configKey = Config::getKeyFromPath($path);
 
                 $config = Config::get($configKey);
-                if (!$config) {
+                if (! $config) {
                     continue;
                 }
 
-                if (!$config->getConfig() instanceof FormConfig) {
+                if (! $config->getConfig() instanceof FormConfig) {
                     continue;
                 }
 

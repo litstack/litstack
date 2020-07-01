@@ -35,7 +35,7 @@ class CrudShow extends BaseForm
      */
     public function registerField($field, string $id, $params = [])
     {
-        if (!$this->inWrapper()) {
+        if (! $this->inWrapper()) {
             throw new InvalidArgumentException('Fields must be registered inside a wrapper.', [
                 'function' => '__call',
             ]);

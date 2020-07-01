@@ -90,7 +90,7 @@ class Crud
 
                 Package::get('aw-studio/fjord')->addNavPreset($config->getKey(), [
                     'link'      => Fjord::url($config->routePrefix),
-                    'title'     => fn ()     => ucfirst($config->names['plural']),
+                    'title'     => fn () => ucfirst($config->names['plural']),
                     'authorize' => function (FjordUser $user) use ($config) {
                         return (new $config->controller())->authorize($user, 'read');
                     },
@@ -125,7 +125,7 @@ class Crud
                 // Nav preset.
                 Package::get('aw-studio/fjord')->addNavPreset("form.{$collection}.{$form}", [
                     'link'      => Fjord::url($config->route_prefix),
-                    'title'     => fn ()     => ucfirst($config->names['singular']),
+                    'title'     => fn () => ucfirst($config->names['singular']),
                     'authorize' => function (FjordUser $user) use ($config) {
                         return (new $config->controller())->authorize($user, 'read');
                     },

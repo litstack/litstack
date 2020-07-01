@@ -158,7 +158,7 @@ class BlockRepository extends BaseFieldRepository
      */
     public function getField(Request $request, $field_id)
     {
-        if (!$repeatable = $this->field->getRepeatable($request->repeatable_type)) {
+        if (! $repeatable = $this->field->getRepeatable($request->repeatable_type)) {
             abort(404, debug("Missing [{$request->repeatable_type}] repeatable."));
         }
 

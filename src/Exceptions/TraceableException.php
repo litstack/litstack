@@ -33,15 +33,15 @@ class TraceableException extends Exception implements Traceable
      */
     public function setTrace($trace)
     {
-        if (!$trace) {
+        if (! $trace) {
             return;
         }
 
-        if (!array_key_exists('line', $trace)) {
+        if (! array_key_exists('line', $trace)) {
             return;
         }
 
-        if (!array_key_exists('file', $trace)) {
+        if (! array_key_exists('file', $trace)) {
             return;
         }
 
@@ -63,7 +63,7 @@ class TraceableException extends Exception implements Traceable
         }
 
         foreach ($this->getTrace() as $trace) {
-            if (!array_key_exists('class', $trace)) {
+            if (! array_key_exists('class', $trace)) {
                 continue;
             }
 
@@ -84,7 +84,7 @@ class TraceableException extends Exception implements Traceable
     protected function hasTraceOptions($trace, $options)
     {
         foreach ($options as $key => $value) {
-            if (!array_key_exists($key, $trace)) {
+            if (! array_key_exists($key, $trace)) {
                 false;
             }
 

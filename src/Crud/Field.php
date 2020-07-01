@@ -111,7 +111,7 @@ class Field extends VueProp
      */
     public function getRepository()
     {
-        if (!$this->repository) {
+        if (! $this->repository) {
             return;
         }
 
@@ -273,7 +273,7 @@ class Field extends VueProp
             if ($propertyName == 'required') {
                 continue;
             }
-            if (!Str::endsWith($propertyName, 'Required')) {
+            if (! Str::endsWith($propertyName, 'Required')) {
                 continue;
             }
             $this->required = array_merge($this->required, $propertyValue);
@@ -322,7 +322,7 @@ class Field extends VueProp
      */
     public function slot(string $slot, string $component)
     {
-        if (!$this->slotExists($slot)) {
+        if (! $this->slotExists($slot)) {
             $field = class_basename(static::class);
 
             throw new InvalidArgumentException("Slot {$slot} does not exist for Field {$field}");
@@ -381,7 +381,7 @@ class Field extends VueProp
      */
     public function authorized()
     {
-        if (!$this->authorize) {
+        if (! $this->authorize) {
             return true;
         }
 
@@ -398,7 +398,7 @@ class Field extends VueProp
     public function setDefaultsFromClassMethods()
     {
         foreach (get_class_methods($this) as $method) {
-            if (!Str::startsWith($method, 'set') || !Str::endsWith($method, 'Default')) {
+            if (! Str::startsWith($method, 'set') || ! Str::endsWith($method, 'Default')) {
                 continue;
             }
             $attributeName = $this->getDefaultSetterAttributeName($method);

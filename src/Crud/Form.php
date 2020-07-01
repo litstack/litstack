@@ -63,11 +63,11 @@ class Form
             return $items->first();
         }
 
-        if (!$loadingCollection) {
+        if (! $loadingCollection) {
             return $this->getCollectionGroups($items);
         }
 
-        if (!$loadingName) {
+        if (! $loadingName) {
             return $this->getFormGroups($items);
         }
 

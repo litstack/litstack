@@ -24,7 +24,7 @@ class FjordGuard extends Command
         $config = require config_path('auth.php');
         $replace = file_get_contents(config_path('auth.php'));
 
-        if (!array_key_exists('fjord', $config['guards'])) {
+        if (! array_key_exists('fjord', $config['guards'])) {
             $this->info('generating fjord guard');
             $replace = str_replace(
                 "'guards' => [",
@@ -37,7 +37,7 @@ class FjordGuard extends Command
             );
         }
 
-        if (!array_key_exists('fjord_users', $config['providers'])) {
+        if (! array_key_exists('fjord_users', $config['providers'])) {
             $this->info('generating fjord_users provider');
             $replace = str_replace(
                 "'providers' => [",
@@ -50,7 +50,7 @@ class FjordGuard extends Command
             );
         }
 
-        if (!array_key_exists('fjord_users', $config['passwords'])) {
+        if (! array_key_exists('fjord_users', $config['passwords'])) {
             $this->info('generating fjord_users broker');
             $replace = str_replace(
                 "'passwords' => [",

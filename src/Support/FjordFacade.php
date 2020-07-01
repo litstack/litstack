@@ -35,7 +35,7 @@ abstract class FjordFacade
     {
         $instance = static::getInstance();
 
-        if (!$instance) {
+        if (! $instance) {
             throw new RuntimeException('A Fjord facade root has not been set.');
         }
 

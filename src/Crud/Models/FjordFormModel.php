@@ -76,17 +76,17 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
 
         foreach (config('translatable.locales') as $locale) {
             $translation = $this->translations->where('locale', $locale)->first();
-            if (!$translation) {
+            if (! $translation) {
                 continue;
             }
             $value = $translation->value ?? [];
 
             foreach ($this->fields as $field) {
-                if (!$field->translatable) {
+                if (! $field->translatable) {
                     continue;
                 }
 
-                if (!array_key_exists($field->local_key, $value)) {
+                if (! array_key_exists($field->local_key, $value)) {
                     $value[$field->local_key] = $this->getFormattedFieldValue($field, $locale);
                 }
 
@@ -109,7 +109,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     {
         $translations = $this->getTranslationsArray();
         foreach (config('translatable.locales') as $locale) {
-            if (!array_key_exists($locale, $attributes)) {
+            if (! array_key_exists($locale, $attributes)) {
                 continue;
             }
             $translation = array_merge($translations[$locale] ?? [], $attributes[$locale]);
@@ -119,7 +119,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
 
         $attributes['value'] = $this->value ?? [];
         foreach ($attributes as $key => $value) {
-            if (!in_array($key, $this->fillable) && !in_array($key, config('translatable.locales'))) {
+            if (! in_array($key, $this->fillable) && ! in_array($key, config('translatable.locales'))) {
                 $attributes['value'][$key] = $value;
             }
         }
@@ -201,7 +201,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     {
         // Using fieldIds instead of fieldExists to avoid infinite loop
         // when calling getAttribute({field_id}).
-        if (!in_array($key, $this->fieldIds)) {
+        if (! in_array($key, $this->fieldIds)) {
             return parent::getAttribute($key);
         }
 
@@ -258,7 +258,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
         $attributes = parent::relationsToArray();
 
         foreach (($this->fields ?? []) as $field) {
-            if (!$field instanceof RelationField) {
+            if (! $field instanceof RelationField) {
                 continue;
             }
 
@@ -286,13 +286,13 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
      */
     public function __call($method, $params = [])
     {
-        if (!in_array($method, $this->fieldIds)) {
+        if (! in_array($method, $this->fieldIds)) {
             return parent::__call($method, $params);
         }
 
         $field = $this->findField($method);
 
-        if (!$field instanceof RelationField) {
+        if (! $field instanceof RelationField) {
             return parent::__call($method, $params);
         }
 

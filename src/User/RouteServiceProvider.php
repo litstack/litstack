@@ -32,7 +32,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     public function addNavPresets()
     {
-        if (!$config = fjord()->config('user.profile_settings')) {
+        if (! $config = fjord()->config('user.profile_settings')) {
             return;
         }
 

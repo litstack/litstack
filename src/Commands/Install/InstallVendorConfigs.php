@@ -86,7 +86,7 @@ trait InstallVendorConfigs
             return Str::endsWith($file, 'create_media_table');
         })->first();
         // TODO: ask Jannes about this.
-        if (!$mediaMatch && $this->migrations()) {
+        if (! $mediaMatch && $this->migrations()) {
             $this->callSilent('vendor:publish', [
                 '--provider' => "Spatie\MediaLibrary\MediaLibraryServiceProvider",
                 '--tag'      => 'migrations',
@@ -112,7 +112,7 @@ trait InstallVendorConfigs
      */
     protected function vendorPermissions()
     {
-        if (!$this->migrations()) {
+        if (! $this->migrations()) {
             return;
         }
 

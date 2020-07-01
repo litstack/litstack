@@ -59,7 +59,7 @@ class StubBuilder
         $fileContents = $this->stubString;
 
         foreach ($this->neededDummies as $dummy) {
-            if (!array_key_exists($dummy, $this->attributes)) {
+            if (! array_key_exists($dummy, $this->attributes)) {
                 $fileContents = str_replace($dummy, '', $fileContents);
             } else {
                 $fileContents = str_replace($dummy, $this->attributes[$dummy], $fileContents);

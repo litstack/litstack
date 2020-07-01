@@ -19,7 +19,7 @@ trait ManagesFjordRelationField
 
         $this->setOrderDefaults();
 
-        if (!$this->query) {
+        if (! $this->query) {
             $this->query = $model::query();
         }
 

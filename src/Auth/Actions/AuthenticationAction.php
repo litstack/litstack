@@ -20,7 +20,7 @@ class AuthenticationAction
             return true;
         }
 
-        if (!config('fjord.login.username')) {
+        if (! config('fjord.login.username')) {
             return false;
         }
 

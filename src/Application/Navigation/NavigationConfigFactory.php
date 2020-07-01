@@ -52,11 +52,11 @@ class NavigationConfigFactory extends ConfigFactory
         // Unset empty entries.
         foreach ($nav as $i => $section) {
             foreach ($section as $key => $entry) {
-                if (!$entry) {
+                if (! $entry) {
                     unset($nav[$i][$key]);
                 } elseif ($entry['type'] == 'group') {
                     foreach ($entry['children'] as $ci => $child) {
-                        if (!$child) {
+                        if (! $child) {
                             unset($nav[$i][$key]['children'][$ci]);
                         }
                     }

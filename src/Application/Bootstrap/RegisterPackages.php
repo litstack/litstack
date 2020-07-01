@@ -79,7 +79,7 @@ class RegisterPackages
      */
     public function registerCommands($package)
     {
-        if (!App::runningInConsole()) {
+        if (! App::runningInConsole()) {
             return;
         }
 

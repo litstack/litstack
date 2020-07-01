@@ -71,7 +71,7 @@ class CrudTable extends Table
 
     public function defaultLink()
     {
-        if (!$this->config->has('show')) {
+        if (! $this->config->has('show')) {
             return false;
         }
 

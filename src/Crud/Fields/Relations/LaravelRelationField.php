@@ -107,11 +107,11 @@ class LaravelRelationField extends RelationField
 
         $relatedConfigKey = 'crud.'.Str::snake(class_basename($model));
 
-        if (Config::exists($relatedConfigKey) && !$this->relatedConfig) {
+        if (Config::exists($relatedConfigKey) && ! $this->relatedConfig) {
             $this->use($relatedConfigKey);
         }
 
-        if (!$this->names) {
+        if (! $this->names) {
             $this->names(Crud::names($model));
         }
     }
@@ -125,12 +125,12 @@ class LaravelRelationField extends RelationField
      */
     protected function mergeRelatedConfig($configKey)
     {
-        if (!Config::exists($configKey)) {
+        if (! Config::exists($configKey)) {
             return;
         }
         $relatedConfig = Config::get($configKey);
 
-        if (!$this->related_route_prefix) {
+        if (! $this->related_route_prefix) {
             $this->routePrefix($relatedConfig->route_prefix);
         }
         if ($relatedConfig->has('index')) {
@@ -197,7 +197,7 @@ class LaravelRelationField extends RelationField
     {
         $this->relatedConfig = Config::get($config);
 
-        if (!$this->relatedConfig) {
+        if (! $this->relatedConfig) {
             throw new InvalidArgumentException("Couldn't find config {$config}");
         }
 
@@ -259,7 +259,7 @@ class LaravelRelationField extends RelationField
      */
     protected function modifyQuery($query)
     {
-        if (!$this->previewModifier instanceof Closure) {
+        if (! $this->previewModifier instanceof Closure) {
             return $query;
         }
 
@@ -296,7 +296,7 @@ class LaravelRelationField extends RelationField
      */
     public function names(array $names)
     {
-        if (!array_key_exists('singular', $names) || !array_key_exists('plural', $names)) {
+        if (! array_key_exists('singular', $names) || ! array_key_exists('plural', $names)) {
             throw new InvalidArgumentException('Singular and plural name may be present.');
         }
 

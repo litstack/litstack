@@ -138,7 +138,7 @@ class ManyRelationField extends LaravelRelationField
     {
         $relatedModel = $this->getRelatedModelClass();
 
-        if (!$relatedModel) {
+        if (! $relatedModel) {
             throw new InvalidArgumentException('You may set a related Model before making the Field sortable.', [
                 'function' => 'sortable',
             ]);

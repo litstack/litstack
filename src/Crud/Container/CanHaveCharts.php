@@ -19,7 +19,7 @@ trait CanHaveCharts
     {
         $config = Config::get($name);
 
-        if (!$config) {
+        if (! $config) {
             throw new InvalidArgumentException("Config [{$name}] not found.");
         }
 

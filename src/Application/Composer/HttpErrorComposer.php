@@ -19,12 +19,12 @@ class HttpErrorComposer
     public function compose(View $view)
     {
         $fjordPrefix = strip_slashes('/'.config('fjord.route_prefix').'/');
-        if (!Str::startsWith(Request::getRequestUri(), $fjordPrefix)) {
+        if (! Str::startsWith(Request::getRequestUri(), $fjordPrefix)) {
             return;
         }
 
         // Compose Fjord error pages only when logged in.
-        if (!fjord_user()) {
+        if (! fjord_user()) {
             return;
         }
 

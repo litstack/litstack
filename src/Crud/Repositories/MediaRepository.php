@@ -81,7 +81,7 @@ class MediaRepository extends BaseFieldRepository
      */
     public function order(CrudUpdateRequest $request, $model)
     {
-        if (!$this->field->sortable) {
+        if (! $this->field->sortable) {
             abort(404, debug("The media field [{$this->field->id}] is not sortable."));
         }
 
@@ -139,7 +139,7 @@ class MediaRepository extends BaseFieldRepository
             ->where('collection_name', $this->field->id)
             ->count();
 
-        if (!$this->field->override) {
+        if (! $this->field->override) {
             if ($mediaCount >= $this->field->maxFiles) {
                 abort(405, 'Max files count reached.');
             }

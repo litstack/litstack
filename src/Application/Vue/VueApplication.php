@@ -129,7 +129,7 @@ class VueApplication
      */
     public function extend(Component $component)
     {
-        if (!$this->hasBeenBuilt()) {
+        if (! $this->hasBeenBuilt()) {
             throw new Exception('Fjord Vue application cannot be extended if it has not been built.');
         }
 
@@ -143,7 +143,7 @@ class VueApplication
             // Resolve extension in component.
             if (method_exists($component, 'resolveExtension')) {
                 if (
-                    !$component->resolveExtension($extension['name'])
+                    ! $component->resolveExtension($extension['name'])
                     && $extension['name'] != ''
                 ) {
                     continue;
@@ -167,7 +167,7 @@ class VueApplication
      */
     public function executeExtension(Component $component, $extension)
     {
-        if (!$extension->authenticate(fjord_user())) {
+        if (! $extension->authenticate(fjord_user())) {
             return;
         }
 
@@ -214,7 +214,7 @@ class VueApplication
         }
 
         // Default props.
-        if (!array_key_exists('props', $this->props)) {
+        if (! array_key_exists('props', $this->props)) {
             $this->props['props'] = [];
         }
     }
@@ -243,7 +243,7 @@ class VueApplication
     protected function checkForRequiredProps($data)
     {
         foreach ($this->required as $name) {
-            if (!array_key_exists($name, $data)) {
+            if (! array_key_exists($name, $data)) {
                 throw new Exception("Missing required variable \"{$name}\" for view fjord::app.");
             }
         }

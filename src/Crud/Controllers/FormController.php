@@ -93,7 +93,7 @@ abstract class FormController extends CrudBaseController
 
         // Set readonly if the user has no update permission for this crud.
         foreach ($config['form']->getRegisteredFields() as $field) {
-            if (!$config['permissions']['update']) {
+            if (! $config['permissions']['update']) {
                 $field->readonly();
             }
         }

@@ -59,7 +59,7 @@ trait InteractsWithCrud
             return;
         }
 
-        if (!File::exists(base_path('fjord/app/Config/Crud'))) {
+        if (! File::exists(base_path('fjord/app/Config/Crud'))) {
             File::makeDirectory(base_path('fjord/app/Config/Crud'));
         }
 

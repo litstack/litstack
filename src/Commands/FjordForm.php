@@ -124,7 +124,7 @@ class FjordForm extends GeneratorCommand
      */
     protected function qualifyClass($name)
     {
-        if (!Str::endsWith($name, 'Config')) {
+        if (! Str::endsWith($name, 'Config')) {
             $name .= 'Config';
         }
 
@@ -139,11 +139,11 @@ class FjordForm extends GeneratorCommand
     protected function setCollectionAndFormName()
     {
         $collection = $this->option('collection');
-        if (!$collection) {
+        if (! $collection) {
             $collection = $this->ask('enter the collection name (snake_case, plural)');
         }
         $formName = $this->option('form');
-        if (!$formName) {
+        if (! $formName) {
             $formName = $this->ask('enter the form name (snake_case)');
         }
 

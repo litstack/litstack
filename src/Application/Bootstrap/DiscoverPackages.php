@@ -47,7 +47,7 @@ class DiscoverPackages
      */
     protected function discover()
     {
-        if (!File::exists($this->path)) {
+        if (! File::exists($this->path)) {
             return [];
         }
 
@@ -56,7 +56,7 @@ class DiscoverPackages
         $packages = [];
 
         foreach ($manifest as $name => $config) {
-            if (!array_key_exists('package', $config)) {
+            if (! array_key_exists('package', $config)) {
                 continue;
             }
 

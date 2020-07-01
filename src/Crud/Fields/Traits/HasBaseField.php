@@ -20,7 +20,7 @@ trait HasBaseField
      */
     public function getTitle()
     {
-        if (!$this->title) {
+        if (! $this->title) {
             return parent::getTitle();
         }
 
@@ -38,7 +38,7 @@ trait HasBaseField
     {
         $this->setAttribute('title', $title);
 
-        if (method_exists($this, 'placeholder') && !$this->placeholder) {
+        if (method_exists($this, 'placeholder') && ! $this->placeholder) {
             $this->placeholder($title);
         }
 

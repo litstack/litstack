@@ -6,13 +6,13 @@ use Faker\Generator as Faker;
 use Fjord\Crud\Models\FormRelation;
 
 $factory->define(FormRelation::class, function (Faker $faker, $args) {
-    if (!array_key_exists('name', $args)) {
+    if (! array_key_exists('name', $args)) {
         throw new InvalidArgumentException('Missing parameter "name".');
     }
-    if (!array_key_exists('from', $args)) {
+    if (! array_key_exists('from', $args)) {
         throw new InvalidArgumentException('Missing parameter "from".');
     }
-    if (!array_key_exists('to', $args)) {
+    if (! array_key_exists('to', $args)) {
         throw new InvalidArgumentException('Missing parameter "to".');
     }
 

@@ -54,7 +54,7 @@ class ConfigLoader
      */
     protected function isKeyNamespace(string $key)
     {
-        return !Str::contains($key, '.') && Str::contains($key, '\\');
+        return ! Str::contains($key, '.') && Str::contains($key, '\\');
     }
 
     /**
@@ -66,7 +66,7 @@ class ConfigLoader
      */
     protected function isKeyPath(string $key)
     {
-        return !Str::contains($key, '.') && Str::contains($key, '/');
+        return ! Str::contains($key, '.') && Str::contains($key, '/');
     }
 
     /**
@@ -86,7 +86,7 @@ class ConfigLoader
             return $this->loaded[$key];
         }
 
-        if (!$this->exists($key)) {
+        if (! $this->exists($key)) {
             return;
         }
 

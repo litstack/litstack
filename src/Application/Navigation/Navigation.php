@@ -39,7 +39,7 @@ class Navigation implements Arrayable
      */
     public function group(array $params, array $children = [])
     {
-        if (!$this->authorize($params)) {
+        if (! $this->authorize($params)) {
             return;
         }
 
@@ -66,7 +66,7 @@ class Navigation implements Arrayable
             $title = $title['title'];
         }
 
-        if (!$this->authorize($params)) {
+        if (! $this->authorize($params)) {
             return;
         }
 
@@ -122,11 +122,11 @@ class Navigation implements Arrayable
      */
     protected function authorize(array $params)
     {
-        if (!array_key_exists('authorize', $params)) {
+        if (! array_key_exists('authorize', $params)) {
             return true;
         }
 
-        if (!is_callable($params['authorize'])) {
+        if (! is_callable($params['authorize'])) {
             return $params['authorize'];
         }
 
