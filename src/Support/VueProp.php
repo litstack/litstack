@@ -29,8 +29,7 @@ abstract class VueProp implements Arrayable, Jsonable
     /**
      * To json.
      *
-     * @param int $options
-     *
+     * @param  int  $options
      * @return void
      */
     public function toJson($options = 0)
@@ -57,8 +56,7 @@ abstract class VueProp implements Arrayable, Jsonable
     /**
      * Filter rendered collection authorized items.
      *
-     * @param Collection $rendered
-     *
+     * @param  Collection $rendered
      * @return Collection
      */
     protected function filterAuthorized(Collection $rendered)

@@ -6,7 +6,6 @@ use Fjord\Crud\BaseForm;
 use Fjord\Crud\Field;
 use Fjord\Exceptions\Traceable\BadMethodCallException;
 use Fjord\Support\Facades\Fjord;
-use Fjord\Vue\Component;
 use FjordTest\BackendTestCase;
 use Illuminate\Database\Eloquent\Model;
 use Mockery as m;
@@ -92,43 +91,6 @@ class BaseFormTest extends BackendTestCase
         $this->form->setRoutePrefix('dummy_prefix');
         $field = $this->form->input('text');
         $this->assertEquals('dummy_prefix', $field->route_prefix);
-    }
-
-    /** @test */
-    public function test_wrapper()
-    {
-        $this->assertFalse($this->form->inWrapper());
-        $this->form->wrapper('dummy-wrapper', function ($form) {
-            $this->assertTrue($form->inWrapper());
-        });
-        $this->assertFalse($this->form->inWrapper());
-    }
-
-    /** @test */
-    public function wrapper_returns_wrapping_component()
-    {
-        $component = $this->form->wrapper('dummy-wrapper', function ($form) {
-            //
-        });
-
-        $this->assertInstanceOf(Component::class, $component);
-        $this->assertEquals('dummy-wrapper', $component->getName());
-    }
-
-    /** @test */
-    public function test_wrapper_in_wrapper()
-    {
-        $this->assertFalse($this->form->inWrapper());
-        $this->form->wrapper('dummy-wrapper', function ($form) {
-            $this->form->wrapper('nested-dummy-wrapper', function ($form) {
-                $this->assertTrue($form->inWrapper());
-            });
-
-            $this->assertTrue($form->inWrapper());
-            $children = $form->getWrapper()->children;
-            $this->assertEquals(1, $children->count());
-        });
-        $this->assertFalse($this->form->inWrapper());
     }
 
     /** @test */

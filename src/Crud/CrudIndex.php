@@ -3,44 +3,21 @@
 namespace Fjord\Crud;
 
 use Closure;
-use Fjord\Support\VueProp;
+use Fjord\Config\ConfigHandler;
+use Fjord\Vue\Container\Container;
+use Fjord\Vue\Container\Traits\Expandable;
+use Fjord\Vue\Container\Traits\HasCharts;
 
-class CrudIndex extends VueProp
+class CrudIndex extends Container
 {
-    /**
-     * Current wrapper component.
-     *
-     * @var Component
-     */
-    protected $wrapper;
+    use HasCharts, Expandable;
 
     /**
-     * Wrapper component stack.
+     * ConfigHandler instance.
      *
-     * @var array
+     * @var ConfigHandler
      */
-    protected $wrapperStack = [];
-
-    /**
-     * CrudIndex attributes.
-     *
-     * @var array
-     */
-    protected $attributes = [];
-
-    /**
-     * CrudIndex container components.
-     *
-     * @var array
-     */
-    protected $components = [];
-
-    /**
-     * CrudIndex container slots.
-     *
-     * @var array
-     */
-    protected $slots = [];
+    protected $config;
 
     /**
      * Crud index table.
@@ -54,7 +31,7 @@ class CrudIndex extends VueProp
      *
      * @param ConfigHandler $config
      */
-    public function __construct($config)
+    public function __construct(ConfigHandler $config)
     {
         $this->config = $config;
         $this->setDefaults();
@@ -81,20 +58,6 @@ class CrudIndex extends VueProp
     }
 
     /**
-     * Expand CrudIndex container.
-     *
-     * @param bool $expand
-     *
-     * @return $this
-     */
-    public function expand(bool $expand = true)
-    {
-        $this->attributes['expand'] = $expand;
-
-        return $this;
-    }
-
-    /**
      * Create CrudIndex table.
      *
      * @param Closure $closure
@@ -113,154 +76,5 @@ class CrudIndex extends VueProp
             ->prop('table', $table);
 
         return $table;
-    }
-
-    /**
-     * Add CrudIndex container slot.
-     *
-     * @param string $name
-     * @param [type] $value
-     *
-     * @return void
-     */
-    public function slot(string $name, $value)
-    {
-        $this->slots[$name] = $value;
-    }
-
-    /**
-     * Is registering component in wrapper.
-     *
-     * @return bool
-     */
-    public function inWrapper()
-    {
-        return $this->wrapper != null;
-    }
-
-    /**
-     * Get current card.
-     *
-     * @return array $card
-     */
-    public function getWrapper()
-    {
-        return $this->wrapper;
-    }
-
-    /**
-     * Add Vue component field.
-     *
-     * @param \Fjord\Vue\Component|string $component
-     *
-     * @return \Fjord\Vue\Component
-     */
-    public function component($component)
-    {
-        if (is_string($component)) {
-            $component = component($component);
-        }
-
-        if ($this->inWrapper()) {
-            $this->wrapper->component($component);
-        } else {
-            $this->components[] = $component;
-        }
-
-        return $component;
-    }
-
-    /**
-     * Get new wrapper.
-     *
-     * @param string|Component $component
-     *
-     * @return component
-     */
-    protected function getNewWrapper($component)
-    {
-        if (is_string($component)) {
-            $component = component($component);
-        }
-
-        $wrapper = $this->component('fj-field-wrapper');
-
-        return $wrapper->wrapperComponent($component);
-    }
-
-    /**
-     * Create wrapper.
-     *
-     * @param string|Component $component
-     * @param Closure          $closure
-     *
-     * @return self
-     */
-    public function wrapper($component, Closure $closure)
-    {
-        $newWrapper = $this->getNewWrapper($component);
-
-        return $this->registerWrapper($newWrapper, $closure);
-    }
-
-    /**
-     * Register new wrapper.
-     *
-     * @return Component
-     */
-    public function registerWrapper($wrapper, $closure)
-    {
-        if ($this->inWrapper()) {
-            $this->wrapper
-                ->component($wrapper);
-
-            $this->wrapperStack[] = $this->wrapper;
-        }
-
-        $this->wrapper = $wrapper;
-        $closure($this);
-        $this->wrapper = ! empty($this->wrapperStack)
-            ? array_pop($this->wrapperStack)
-            : null;
-
-        return $wrapper->wrapperComponent;
-    }
-
-    /**
-     * Set attribute.
-     *
-     * @param string $name
-     * @param mixed  $value
-     *
-     * @return void
-     */
-    public function setAttribute(string $name, $value)
-    {
-        $this->attributes[$name] = $value;
-    }
-
-    /**
-     * Get attribute.
-     *
-     * @param string $name
-     *
-     * @return void
-     */
-    public function getAttribute(string $name)
-    {
-        return $this->attributes[$name] ?? null;
-    }
-
-    /**
-     * Render CrudIndex container for Vue.
-     *
-     * @return array
-     */
-    public function render(): array
-    {
-        return array_merge([
-            'components' => collect($this->components),
-            'slots'      => collect($this->slots),
-        ], $this->attributes);
     }
 }

@@ -1,26 +1,23 @@
 <?php
 
-namespace Fjord\Crud\Container;
+namespace Fjord\Vue\Container\Traits;
 
 use Fjord\Chart\Chart;
 use Fjord\Support\Facades\Config;
 use InvalidArgumentException;
 
-trait CanHaveCharts
+trait HasCharts
 {
     /**
-     * Create chart.
+     * Add chart.
      *
-     * @param string $name
-     *
+     * @param  string               $name
      * @return \Fjord\Vue\Component
      */
     public function chart(string $name)
     {
-        $config = Config::get($name);
-
-        if (! $config) {
-            throw new InvalidArgumentException("Config [{$name}] not found.");
+        if (! $config = Config::get($name)) {
+            throw new InvalidArgumentException("Chart config [{$name}] not found.");
         }
 
         $chart = app('fjord.chart.factory')->make($config);
@@ -33,8 +30,7 @@ trait CanHaveCharts
     /**
      * Register chart component.
      *
-     * @param Chart $chart
-     *
+     * @param  Chart $chart
      * @return void
      */
     protected function registerChart(Chart $chart)

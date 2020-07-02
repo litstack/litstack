@@ -17,12 +17,12 @@ use Fjord\Crud\Models\FormField;
 use Fjord\Exceptions\Traceable\BadMethodCallException;
 use Fjord\Support\Facades\Fjord;
 use Fjord\Support\Facades\Form as FormFacade;
-use Fjord\Support\VueProp;
+use Fjord\Vue\Container\Container;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use InvalidArgumentException;
 
-class BaseForm extends VueProp
+class BaseForm extends Container
 {
     use Macroable {
         __call as macroCall;
@@ -74,27 +74,6 @@ class BaseForm extends VueProp
     protected $routePrefix;
 
     /**
-     * Current col that Fields should be registered to.
-     *
-     * @var Component
-     */
-    protected $col;
-
-    /**
-     * Current wrapper component.
-     *
-     * @var Component
-     */
-    protected $wrapper;
-
-    /**
-     * Wrapper component stack.
-     *
-     * @var array
-     */
-    protected $wrapperStack = [];
-
-    /**
      * List of closure's that get called after registering a field.
      *
      * @var array
@@ -104,80 +83,30 @@ class BaseForm extends VueProp
     /**
      * Create new BaseForm instance.
      *
+     * @param  string $model
      * @return void
      */
     public function __construct(string $model)
     {
         $this->model = $model;
-
         $this->registeredFields = collect([]);
     }
 
     /**
-     * Is registering component in wrapper.
+     * Add Vue component field.
      *
-     * @return bool
+     * @param  string|Component     $component
+     * @return \Fjord\Vue\Component
      */
-    public function inWrapper()
+    public function component($component)
     {
-        return $this->wrapper !== null;
+        return $this->registerField(FormFacade::getField('component'), $component);
     }
 
     /**
-     * Get current card.
+     * Add form group.
      *
-     * @return array $card
-     */
-    public function getWrapper()
-    {
-        return $this->wrapper;
-    }
-
-    /**
-     * Create wrapper.
-     *
-     * @param Component|string $component
-     *
-     * @return self
-     */
-    public function wrapper($component, Closure $closure)
-    {
-        $newWrapper = $this->getNewWrapper($component);
-
-        return $this->registerWrapper($newWrapper, $closure);
-    }
-
-    /**
-     * Register new wrapper.
-     *
-     * @param mixed $wrapper
-     * @param mixed $closure
-     *
-     * @return Component
-     */
-    public function registerWrapper($wrapper, $closure)
-    {
-        if ($this->inWrapper()) {
-            $this->wrapper
-                ->component($wrapper);
-
-            $this->wrapperStack[] = $this->wrapper;
-        }
-
-        $this->wrapper = $wrapper;
-        $closure($this);
-        $this->wrapper = ! empty($this->wrapperStack)
-            ? array_pop($this->wrapperStack)
-            : null;
-
-        return $wrapper->wrapperComponent;
-    }
-
-    /**
-     * Formfield group.
-     *
-     * @param Closure $closure
-     *
+     * @param  Closure   $closure
      * @return Component
      */
     public function group(Closure $closure)
@@ -188,25 +117,10 @@ class BaseForm extends VueProp
     }
 
     /**
-     * Register column wrapper.
-     *
-     * @return void
-     */
-    public function col(int $cols, Closure $closure)
-    {
-        return $this->wrapper('fj-col', function ($form) use ($closure) {
-            $this->wrapper('b-row', function ($form) use ($closure) {
-                $closure($this);
-            });
-        })->prop('cols', $cols);
-    }
-
-    /**
      * Get rules for request.
      *
-     * @param CrudCreateRequest|CrudUpdateRequest $request
-     * @param string|null                         $type
-     *
+     * @param  CrudCreateRequest|CrudUpdateRequest $request
+     * @param  string|null                         $type
      * @return array
      */
     public function getRules($type = null)
@@ -233,6 +147,7 @@ class BaseForm extends VueProp
     /**
      * Set form route prefix.
      *
+     * @param  string $prefix
      * @return void
      */
     public function setRoutePrefix(string $prefix)
@@ -240,6 +155,7 @@ class BaseForm extends VueProp
         if (Str::startsWith($prefix, Fjord::url(''))) {
             $prefix = Str::replaceFirst(Fjord::url(''), '', $prefix);
         }
+
         $this->routePrefix = $prefix;
     }
 
@@ -256,11 +172,10 @@ class BaseForm extends VueProp
     /**
      * Register new Field.
      *
-     * @param mixed  $field
-     * @param string $id
-     * @param array  $params
-     *
-     * @return Field $field
+     * @param  mixed  $field
+     * @param  string $id
+     * @param  array  $params
+     * @return Field  $field
      */
     public function registerField($field, string $id, $params = [])
     {
@@ -276,7 +191,7 @@ class BaseForm extends VueProp
             $this->registeredFields[] = $fieldInstance;
         }
 
-        if ($this->inWrapper() && ! $this->col && $fieldInstance->register()) {
+        if ($this->inWrapper() && $fieldInstance->register()) {
             $this->wrapper
                 ->component('fj-field')
                 ->prop('field', $fieldInstance);
@@ -292,6 +207,7 @@ class BaseForm extends VueProp
     /**
      * Add after registering field hook.
      *
+     * @param  Closure $closure
      * @return void
      */
     public function afterRegisteringField(Closure $closure)
@@ -302,9 +218,9 @@ class BaseForm extends VueProp
     /**
      * Register new Relation.
      *
-     * @throws \InvalidArgumentException
-     *
      * @return mixed
+     *
+     * @throws \InvalidArgumentException
      */
     public function relation(string $name)
     {
@@ -328,19 +244,9 @@ class BaseForm extends VueProp
     }
 
     /**
-     * Add Vue component field.
-     *
-     * @return \Fjord\Vue\Component
-     */
-    public function component(string $component)
-    {
-        return $this->registerField(FormFacade::getField('component'), $component);
-    }
-
-    /**
      * Get registered fields.
      *
-     * @return void
+     * @return array
      */
     public function getRegisteredFields()
     {
@@ -350,8 +256,7 @@ class BaseForm extends VueProp
     /**
      * Find registered field.
      *
-     * @param string $fieldId
-     *
+     * @param  string     $fieldId
      * @return Field|void
      */
     public function findField($fieldId)
@@ -384,8 +289,7 @@ class BaseForm extends VueProp
     /**
      * Check if field with form exists.
      *
-     * @param string $repeatable
-     *
+     * @param  string $repeatable
      * @return bool
      */
     public function hasForm(string $name, string $repeatable = null)
@@ -408,8 +312,7 @@ class BaseForm extends VueProp
     /**
      * Get form from field.
      *
-     * @param string $repeatable
-     *
+     * @param  string   $repeatable
      * @return BaseForm
      */
     public function getForm(string $name, string $repeatable = null)
@@ -430,7 +333,9 @@ class BaseForm extends VueProp
     }
 
     /**
-     * Get attributes.
+     * Render Form.
+     *
+     * @return array
      */
     public function render(): array
     {
@@ -438,42 +343,19 @@ class BaseForm extends VueProp
             $field->checkComplete();
         }
 
-        return [
+        return array_merge(parent::render(), [
             'fields' => $this->registeredFields,
-        ];
-    }
-
-    /**
-     * Get new wrapper.
-     *
-     * @param Component|string $component
-     *
-     * @return component
-     */
-    protected function getNewWrapper($component)
-    {
-        if (\is_string($component)) {
-            $component = component($component);
-        }
-
-        if ($this->inWrapper()) {
-            $wrapper = component('fj-field-wrapper');
-        } else {
-            $wrapper = $this->component('fj-field-wrapper');
-        }
-
-        return $wrapper->wrapperComponent($component);
+        ]);
     }
 
     /**
      * Call form method.
      *
-     * @param string $method
-     * @param array  $params
+     * @param  string $method
+     * @param  array  $params
+     * @return void
      *
      * @throws \Fjord\Exceptions\Traceable\BadMethodCallException
-     *
-     * @return void
      */
     public function __call($method, $params = [])
     {

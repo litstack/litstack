@@ -20,9 +20,8 @@ class Form
      * returned where the respective collection or form can be called with the
      * name.
      *
-     * @param string $collection
-     * @param string $name
-     *
+     * @param  string              $collection
+     * @param  string              $name
      * @return FormFieldCollection
      */
     public function load(string $collection = null, string $name = null)
@@ -51,11 +50,10 @@ class Form
      * Get groups for collection and form_name and
      * create nested Collection based on the groups.
      *
-     * @param Illuminate\Support\Collection $items              Collection of AwStudio\Fjord\Form\Database\FormField
-     * @param bool                          $loading_collection
-     * @param bool                          $loading_name
-     *
-     * @return AwStudio\Fjord\Form\FormFieldCollection|AwStudio\Fjord\Form\Collection
+     * @param  Illuminate\Support\Collection $items
+     * @param  bool                          $loading_collection
+     * @param  bool                          $loading_name
+     * @return FormFieldCollection
      */
     protected function getGroups(Collection $items, bool $loadingCollection, bool $loadingName)
     {
@@ -77,8 +75,7 @@ class Form
     /**
      * Get collection groups.
      *
-     * @param Collection $items
-     *
+     * @param  Collection          $items
      * @return FormFieldCollection
      */
     protected function getCollectionGroups(Collection $items)
@@ -97,8 +94,7 @@ class Form
     /**
      * Get form groups.
      *
-     * @param Collection $items
-     *
+     * @param  Collection          $items
      * @return FormFieldCollection
      */
     protected function getFormGroups(Collection $items)
@@ -115,9 +111,8 @@ class Form
     /**
      * Register field.
      *
-     * @param string $alias
-     * @param string $field
-     *
+     * @param  string $alias
+     * @param  string $field
      * @return void
      */
     public function registerField(string $alias, $field)
@@ -128,8 +123,7 @@ class Form
     /**
      * Determine if field alias exists.
      *
-     * @param mixed $field
-     *
+     * @param  mixed $field
      * @return bool
      */
     public function fieldExists(string $alias)
@@ -140,11 +134,10 @@ class Form
     /**
      * Get field by alias.
      *
-     * @param string $alias
-     *
+     * @param  string $alias
      * @return string
      */
-    public function getField(string $alias)
+    public function getFieldClass(string $alias)
     {
         return $this->fields[$alias] ?? null;
     }
@@ -157,5 +150,16 @@ class Form
     public function getFields()
     {
         return $this->fields;
+    }
+
+    /**
+     * Get field class for the given alias.
+     *
+     * @param  string $alias
+     * @return string
+     */
+    public function getField(string $alias)
+    {
+        return $this->fields[$alias] ?? null;
     }
 }
