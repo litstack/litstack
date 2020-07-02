@@ -35,6 +35,16 @@ trait HasAttributes
     }
 
     /**
+     * Get attributes.
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
+    /**
      * Determines if attribute with the given name exists.
      *
      * @param  string $name

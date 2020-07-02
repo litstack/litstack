@@ -53,7 +53,7 @@ class MorphToRegistrar extends LaravelRelationField
             ->title(__f('base.item_select', ['item' => $this->title]))
             ->storable(false);
 
-        $morph = new MorphTypeManager($this->id, $this->formInstance, $selectId);
+        $morph = new MorphTypeManager($this->id, $this->formInstance, $select);
 
         $closure($morph);
 

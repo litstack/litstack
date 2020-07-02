@@ -1,19 +1,8 @@
-<!--
-<template>
-    <component
-        ref="component"
-        :is="field.component"
-        :field="field"
-        :model="model"
-        :model-id="modelId === 0 ? model.id : modelId"
-        v-bind="field.props ? field.props : {}"
-        v-on="$listeners"
-    />
-</template>
--->
-
 <script>
 import { mapState, mapGetters } from 'vuex';
+
+import dependencyMethods from './dependecy_methods';
+
 export default {
     name: 'Field',
 
@@ -78,9 +67,9 @@ export default {
     data() {
         return {
             /**
-             * Value of depency attribute.
+             * Determines if the field fulfills conditions.
              */
-            dependencyValue: null,
+            fulfillsConditions: true,
 
             /**
              * Field value.
@@ -115,8 +104,10 @@ export default {
         Fjord.bus.$on('saved', this.onSaved);
 
         // Render dependency stuff.
-        this.detectDepencyChanges();
-        Fjord.bus.$on('fieldChanged', this.detectDepencyChanges);
+        this.resolveDependecies(this.field.dependencies);
+        Fjord.bus.$on('fieldChanged', () =>
+            this.resolveDependecies(this.field.dependencies)
+        );
     },
     computed: {
         ...mapGetters(['language']),
@@ -127,13 +118,16 @@ export default {
          * @return {Boolean}
          */
         shouldRender() {
-            if (!this.field.dependsOn) {
+            if (!this.field.dependencies) {
                 return true;
             }
-            return this.field.dependsOn.value == this.dependencyValue;
+
+            return this.fulfillsConditions;
         }
     },
     methods: {
+        ...dependencyMethods,
+
         /**
          * v-on:input
          *
@@ -361,21 +355,6 @@ export default {
             return this.field.translatable
                 ? `${this.language}.${this.field.local_key}`
                 : this.field.local_key;
-        },
-
-        /**
-         * Detect depency changes.
-         *
-         * @return {undefined}
-         */
-        detectDepencyChanges() {
-            if (!this.field.dependsOn) {
-                return true;
-            }
-            if (this.model[this.field.dependsOn.key] == this.dependencyValue) {
-                return;
-            }
-            this.dependencyValue = this.model[this.field.dependsOn.key];
         },
 
         /**

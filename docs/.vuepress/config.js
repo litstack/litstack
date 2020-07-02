@@ -109,7 +109,6 @@ module.exports = {
                     collapsable: true,
                     children: [
                         ['docs/fields/introduction', 'Introduction'],
-                        ['docs/fields/validation', 'Validation'],
                         ['docs/fields/input', 'Input'],
                         ['docs/fields/textarea', 'Textarea'],
                         ['docs/fields/wysiwyg', 'WYSIWYG'],
@@ -128,7 +127,9 @@ module.exports = {
                         ['docs/fields/list', 'List'],
                         ['docs/fields/block', 'Block'],
                         ['docs/fields/modal', 'Modal'],
-                        ['docs/fields/component', 'Component']
+                        ['docs/fields/component', 'Component'],
+                        ['docs/fields/validation', 'Validation'],
+                        ['docs/fields/conditions', 'Conditional Fields']
                     ]
                 },
                 {

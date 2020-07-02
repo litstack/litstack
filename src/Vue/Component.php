@@ -4,7 +4,7 @@ namespace Fjord\Vue;
 
 use Closure;
 use Exception;
-use Fjord\Exceptions\MethodNotFoundException;
+use Fjord\Exceptions\Traceable\BadMethodCallException;
 use Fjord\Support\VueProp;
 use Fjord\Vue\Contracts\AuthorizableContract;
 use Fjord\Vue\Traits\Authorizable;
@@ -278,7 +278,7 @@ class Component extends VueProp implements AuthorizableContract
                     break;
                 }
             }
-            $message = 'Value must be: '.implode(', ', $type);
+            $message = 'Value must be: ' . implode(', ', $type);
         }
 
         if (! $valid) {
@@ -486,11 +486,8 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Throw a MethodNotFoundException.
      *
-     * @param array  $others
-     * @param string $method
-     *
-     * @throws \Fjord\Exceptions\MethodNotFoundException
-     *
+     * @param  array  $others
+     * @param  string $method
      * @return void
      */
     public function methodNotFound($method, $options = [])
@@ -509,7 +506,7 @@ class Component extends VueProp implements AuthorizableContract
             implode(', ', $this->getSupportedMethods())
         );
 
-        throw new MethodNotFoundException($message, $options);
+        throw new BadMethodCallException($message, $options);
     }
 
     /**
@@ -537,11 +534,8 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Call component method.
      *
-     * @param string $method
-     * @param array  $params
-     *
-     * @throws \Fjord\Exceptions\MethodNotFoundException
-     *
+     * @param  string $method
+     * @param  array  $params
      * @return void
      */
     public function __call($method, $params = [])

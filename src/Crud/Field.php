@@ -3,15 +3,17 @@
 namespace Fjord\Crud;
 
 use Closure;
+use Fjord\Exceptions\Traceable\BadMethodCallException;
 use Fjord\Exceptions\Traceable\InvalidArgumentException;
 use Fjord\Exceptions\Traceable\MissingAttributeException;
+use Fjord\Support\HasAttributes;
 use Fjord\Support\VueProp;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 class Field extends VueProp
 {
-    use ForwardsCalls;
+    use ForwardsCalls, HasAttributes;
 
     /**
      * Model class.
@@ -26,13 +28,6 @@ class Field extends VueProp
      * @var string
      */
     protected $formInstance;
-
-    /**
-     * Field attributes.
-     *
-     * @var array
-     */
-    protected $attributes = [];
 
     /**
      * Authorize closure for field.
@@ -185,19 +180,18 @@ class Field extends VueProp
     }
 
     /**
-     * Set dependency.
+     * Add dependency.
      *
-     * @param string     $key
-     * @param string|int $value
-     *
-     * @return void
+     * @param  FieldDependency $dependency
+     * @return $this
      */
-    public function dependsOn(string $key, $value)
+    public function addDependency(FieldDependency $dependency)
     {
-        $this->setAttribute('dependsOn', [
-            'key'   => $key,
-            'value' => $value,
-        ]);
+        if ($this->hasAttribute('dependencies')) {
+            $this->dependencies[] = $dependency;
+        } else {
+            $this->setAttribute('dependencies', collect([$dependency]));
+        }
 
         return $this;
     }
@@ -443,35 +437,6 @@ class Field extends VueProp
     }
 
     /**
-     * Set field attribute.
-     *
-     * @param string             $name
-     * @param string|int|closure $value
-     *
-     * @return self
-     */
-    public function setAttribute(string $name, $value = true)
-    {
-        if ($value instanceof Closure) {
-            $value = Closure::bind($value, $this)();
-        }
-
-        $this->attributes[$name] = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get attributes.
-     *
-     * @return array
-     */
-    public function getAttributes()
-    {
-        return $this->attributes;
-    }
-
-    /**
      * Get avaliable slots.
      *
      * @return array
@@ -489,22 +454,6 @@ class Field extends VueProp
     public function getRequired()
     {
         return $this->required;
-    }
-
-    /**
-     * Get attribute.
-     *
-     * @param string $name
-     *
-     * @return any
-     */
-    public function getAttribute(string $name)
-    {
-        if ($name == 'authorized') {
-            return $this->authorized();
-        }
-
-        return $this->attributes[$name] ?? null;
     }
 
     /**
@@ -543,5 +492,28 @@ class Field extends VueProp
     public function __set(string $name, $value)
     {
         return $this->setAttribute($name, $value);
+    }
+
+    /**
+     * Call field method.
+     *
+     * @param  string $method
+     * @param  array  $parameters
+     * @return mixed
+     *
+     * @throws BadMethodCallException
+     */
+    public function __call($method, $parameters = [])
+    {
+        try {
+            return $this->addDependency(
+                FieldDependency::make($method, ...$parameters)
+            );
+        } catch (InvalidArgumentException $e) {
+        }
+
+        throw new BadMethodCallException(sprintf(
+            'Call to undefined method %s::%s()', static::class, $method
+        ));
     }
 }
