@@ -27,8 +27,7 @@ class TraceableException extends Exception implements Traceable
     /**
      * Set trace.
      *
-     * @param array $trace
-     *
+     * @param  array $trace
      * @return void
      */
     public function setTrace($trace)
@@ -52,8 +51,7 @@ class TraceableException extends Exception implements Traceable
     /**
      * Find trace by options.
      *
-     * @param array $options
-     *
+     * @param  array      $options
      * @return array|null
      */
     public function findTrace(array $options)
@@ -76,9 +74,8 @@ class TraceableException extends Exception implements Traceable
     /**
      * Has trace options.
      *
-     * @param array $trace
-     * @param array $options
-     *
+     * @param  array $trace
+     * @param  array $options
      * @return bool
      */
     protected function hasTraceOptions($trace, $options)
