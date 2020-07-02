@@ -3,7 +3,7 @@
 namespace FjordTest\Crud;
 
 use Fjord\Crud\CrudShow;
-use Fjord\Exceptions\InvalidArgumentException;
+use Fjord\Exceptions\Traceable\InvalidArgumentException;
 use FjordTest\BackendTestCase;
 use Illuminate\Database\Eloquent\Model;
 

@@ -2,7 +2,7 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
-use Fjord\Exceptions\InvalidArgumentException;
+use Fjord\Exceptions\Traceable\InvalidArgumentException;
 
 class ManyRelationField extends LaravelRelationField
 {

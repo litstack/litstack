@@ -3,6 +3,7 @@
 namespace FjordTest\Fields;
 
 use Fjord\Crud\Field;
+use Fjord\Exceptions\Traceable\MissingAttributeException;
 use Fjord\User\Models\FjordUser;
 use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
@@ -65,7 +66,7 @@ class FieldTest extends BackendTestCase
         $field = $this->getField(DummyField::class);
         $field->required = ['title'];
 
-        $this->expectException(\Fjord\Crud\Exceptions\MissingAttributeException::class);
+        $this->expectException(MissingAttributeException::class);
         $field->checkComplete();
 
         $field->setAttribute('title', 'something');

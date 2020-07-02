@@ -114,4 +114,22 @@ class FormListItem extends FjordFormModel
     {
         return new ListCollection($models);
     }
+
+    /**
+     * Get all of the current attributes on the model.
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        $attributes = parent::getAttributes();
+
+        // Removing [depth] attribute to avoid exception when saving since depth
+        // column does not exist in database.
+        if (array_key_exists('depth', $attributes)) {
+            unset($attributes['depth']);
+        }
+
+        return $attributes;
+    }
 }

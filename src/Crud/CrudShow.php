@@ -4,7 +4,7 @@ namespace Fjord\Crud;
 
 use Closure;
 use Fjord\Crud\Container\CanHaveCharts;
-use Fjord\Exceptions\InvalidArgumentException;
+use Fjord\Exceptions\Traceable\InvalidArgumentException;
 
 class CrudShow extends BaseForm
 {
@@ -27,11 +27,10 @@ class CrudShow extends BaseForm
     /**
      * Register new Field.
      *
-     * @param mixed  $field
-     * @param string $id
-     * @param array  $params
-     *
-     * @return Field $field
+     * @param  mixed  $field
+     * @param  string $id
+     * @param  array  $params
+     * @return Field  $field
      */
     public function registerField($field, string $id, $params = [])
     {
@@ -57,8 +56,7 @@ class CrudShow extends BaseForm
     /**
      * Add Vue component.
      *
-     * @param string $component
-     *
+     * @param  string               $component
      * @return \Fjord\Vue\Component
      */
     public function component($component)
@@ -81,8 +79,7 @@ class CrudShow extends BaseForm
     /**
      * Create a new Card.
      *
-     * @param any ...$params
-     *
+     * @param  any  ...$params
      * @return void
      */
     public function info(string $title = '')
@@ -99,9 +96,8 @@ class CrudShow extends BaseForm
     /**
      * Create b-card wrapper.
      *
-     * @param int     $cols
-     * @param Closure $closure
-     *
+     * @param  int     $cols
+     * @param  Closure $closure
      * @return void
      */
     public function card(Closure $closure)

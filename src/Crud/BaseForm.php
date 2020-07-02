@@ -14,7 +14,7 @@ use Fjord\Crud\Fields\Relations\MorphOne;
 use Fjord\Crud\Fields\Relations\MorphToMany;
 use Fjord\Crud\Fields\Relations\MorphToRegistrar;
 use Fjord\Crud\Models\FormField;
-use Fjord\Exceptions\MethodNotFoundException;
+use Fjord\Exceptions\Traceable\BadMethodCallException;
 use Fjord\Support\Facades\Fjord;
 use Fjord\Support\Facades\Form as FormFacade;
 use Fjord\Support\VueProp;
@@ -318,9 +318,13 @@ class BaseForm extends VueProp
             return $this->registerField($this->relations[$relationType], $name);
         }
 
-        throw new InvalidArgumentException(sprintf('Relation %s not supported. Supported relations: %s', lcfirst(class_basename($relationType)), implode(', ', collect(array_keys($this->relations))->map(function ($relation) {
-            return lcfirst(class_basename($relation));
-        })->toArray())));
+        throw new InvalidArgumentException(sprintf(
+            'Relation %s not supported. Supported relations: %s',
+            lcfirst(class_basename($relationType)),
+            implode(', ', collect(array_keys($this->relations))->map(function ($relation) {
+                return lcfirst(class_basename($relation));
+            })->toArray())
+        ));
     }
 
     /**
@@ -462,27 +466,12 @@ class BaseForm extends VueProp
     }
 
     /**
-     * Throw a method not allowed HTTP exception.
-     *
-     * @param array  $others
-     * @param string $method
-     *
-     * @throws \Fjord\Exceptions\MethodNotFoundException
-     *
-     * @return void
-     */
-    protected function methodNotAllowed($method)
-    {
-        throw new MethodNotFoundException(sprintf('The %s method is not found for this form. Supported fields: %s.', $method, implode(', ', array_merge(['relation'], array_keys(FormFacade::getFields()))), ), ['function' => '__call', 'class' => self::class]);
-    }
-
-    /**
      * Call form method.
      *
      * @param string $method
      * @param array  $params
      *
-     * @throws \Fjord\Exceptions\MethodNotFoundException
+     * @throws \Fjord\Exceptions\Traceable\BadMethodCallException
      *
      * @return void
      */
@@ -496,6 +485,9 @@ class BaseForm extends VueProp
             return $this->macroCall($method, $params);
         }
 
-        $this->methodNotAllowed($method);
+        throw new BadMethodCallException(
+            sprintf('Call to undefined method %s::%s()', static::class, $method),
+            ['function' => '__call', 'class' => self::class]
+        );
     }
 }

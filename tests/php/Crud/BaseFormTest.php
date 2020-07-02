@@ -4,7 +4,7 @@ namespace FjordTest\Crud;
 
 use Fjord\Crud\BaseForm;
 use Fjord\Crud\Field;
-use Fjord\Exceptions\MethodNotFoundException;
+use Fjord\Exceptions\Traceable\BadMethodCallException;
 use Fjord\Support\Facades\Fjord;
 use Fjord\Vue\Component;
 use FjordTest\BackendTestCase;
@@ -23,7 +23,7 @@ class BaseFormTest extends BackendTestCase
     /** @test */
     public function it_fails_when_not_existing_field_gets_called()
     {
-        $this->expectException(MethodNotFoundException::class);
+        $this->expectException(BadMethodCallException::class);
         $this->form->someFormField();
     }
 

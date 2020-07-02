@@ -1,11 +1,10 @@
 <?php
 
-namespace Fjord\Exceptions;
+namespace Fjord\Support;
 
 use Exception;
-use Fjord\Exceptions\Contracts\Traceable;
 
-class TraceableException extends Exception implements Traceable
+trait TraceableException
 {
     /**
      * Create new TraceableException instance.
@@ -19,19 +18,19 @@ class TraceableException extends Exception implements Traceable
     {
         parent::__construct($message, $code, $previous);
 
-        $this->setTrace(
-            $this->findTrace($options)
-        );
+        $this->setTrace($options);
     }
 
     /**
      * Set trace.
      *
-     * @param  array $trace
+     * @param  array $options
      * @return void
      */
-    public function setTrace($trace)
+    public function setTrace($options)
     {
+        $trace = $this->findTrace($options);
+
         if (! $trace) {
             return;
         }
@@ -54,17 +53,13 @@ class TraceableException extends Exception implements Traceable
      * @param  array      $options
      * @return array|null
      */
-    public function findTrace(array $options)
+    protected function findTrace(array $options)
     {
         if (empty($options)) {
             return;
         }
 
         foreach ($this->getTrace() as $trace) {
-            if (! array_key_exists('class', $trace)) {
-                continue;
-            }
-
             if ($this->hasTraceOptions($trace, $options)) {
                 return $trace;
             }

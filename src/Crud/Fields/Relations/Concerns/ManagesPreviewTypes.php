@@ -2,7 +2,7 @@
 
 namespace Fjord\Crud\Fields\Relations\Concerns;
 
-use Fjord\Exceptions\InvalidArgumentException;
+use Fjord\Exceptions\Traceable\InvalidArgumentException;
 
 trait ManagesPreviewTypes
 {

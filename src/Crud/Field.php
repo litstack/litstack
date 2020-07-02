@@ -3,9 +3,8 @@
 namespace Fjord\Crud;
 
 use Closure;
-use Fjord\Crud\Exceptions\MissingAttributeException;
-use Fjord\Exceptions\InvalidArgumentException;
-use Fjord\Exceptions\MethodNotFoundException;
+use Fjord\Exceptions\Traceable\InvalidArgumentException;
+use Fjord\Exceptions\Traceable\MissingAttributeException;
 use Fjord\Support\VueProp;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
@@ -123,11 +122,8 @@ class Field extends VueProp
     /**
      * Validate field id.
      *
-     * @param string $model
-     * @param string $id
-     *
-     * @throws \Fjord\Exceptions\InvalidArgumentException
-     *
+     * @param  string $model
+     * @param  string $id
      * @return void
      */
     protected function validateFieldId($model, $id)
@@ -463,31 +459,6 @@ class Field extends VueProp
         $this->attributes[$name] = $value;
 
         return $this;
-    }
-
-    /**
-     * Throw a MethodNotFoundException.
-     *
-     * @param array  $others
-     * @param string $method
-     *
-     * @throws \Fjord\Exceptions\MethodNotFoundException
-     *
-     * @return void
-     */
-    protected function methodNotFound($method)
-    {
-        throw new MethodNotFoundException(
-            sprintf(
-                'The %s method is not found for the %s field.',
-                $method,
-                class_basename(static::class),
-            ),
-            [
-                'function' => '__call',
-                'class'    => self::class,
-            ]
-        );
     }
 
     /**

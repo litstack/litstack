@@ -4,7 +4,7 @@ namespace Fjord\Crud\Fields\Relations;
 
 use Closure;
 use Fjord\Crud\Fields\Traits\HasBaseField;
-use Fjord\Exceptions\InvalidArgumentException;
+use InvalidArgumentException;
 
 class MorphToRegistrar extends LaravelRelationField
 {
@@ -78,6 +78,6 @@ class MorphToRegistrar extends LaravelRelationField
      */
     public function preview(Closure $closure)
     {
-        throw new InvalidArgumentException('form is not available for MorphTo relations.');
+        throw new InvalidArgumentException('Form is not available for MorphTo relations.');
     }
 }

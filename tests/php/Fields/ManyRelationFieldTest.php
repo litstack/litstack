@@ -3,6 +3,7 @@
 namespace FjordTest\Fields;
 
 use Fjord\Crud\Fields\Relations\ManyRelationField;
+use Fjord\Exceptions\Traceable\InvalidArgumentException;
 use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithConfig;
 use FjordTest\Traits\InteractsWithFields;
@@ -32,14 +33,14 @@ class ManyRelationFieldTest extends BackendTestCase
     /** @test */
     public function test_sortable_method_throws_exception_when_orderBy_is_not_set()
     {
-        $this->expectException(\Fjord\Exceptions\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->field->sortable();
     }
 
     /** @test */
     public function test_sortable_method_throws_exception_when_model_is_not_set()
     {
-        $this->expectException(\Fjord\Exceptions\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->setUnaccessibleProperty($this->field, 'relatedModelClass', null);
 
         $this->field->sortable();

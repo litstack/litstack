@@ -4,7 +4,7 @@ namespace Fjord\Vue;
 
 use ErrorException;
 use Exception;
-use Fjord\Exceptions\InvalidArgumentException;
+use Fjord\Exceptions\Traceable\InvalidArgumentException;
 use Fjord\Support\VueProp;
 use Fjord\Vue\Contracts\AuthorizableContract;
 use Fjord\Vue\Traits\Authorizable;
