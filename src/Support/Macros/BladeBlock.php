@@ -20,11 +20,12 @@ class BladeBlock
      * Compile block directive.
      *
      * @param string $expression
-     *
      * @return string
      */
     protected function compileBlock($expression)
     {
-        return Blade::compileString("@include('fjord::partials.block', ['repeatables' => $expression])");
+        $expression = Blade::stripParentheses($expression);
+        
+        return "<?php echo \$__env->make('fjord::partials.block', ['repeatables' => $expression], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
     }
 }
