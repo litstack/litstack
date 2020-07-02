@@ -39,11 +39,11 @@ class ListCollection extends Collection
             if (is_array($item)) {
                 $item = clone (object) $item;
             }
-            
+
             if ($item->parent_id != $parent_id) {
                 continue;
             }
-            
+
             $item->depth = $depth;
             $this->setDepth($listItems, $item->id, $depth + 1);
         }
