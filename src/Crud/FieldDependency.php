@@ -73,7 +73,7 @@ class FieldDependency extends VueProp
         }
 
         foreach ($this->conditions as $available) {
-            $orCondition = 'or' . ucfirst($available);
+            $orCondition = 'or'.ucfirst($available);
             if ($orCondition == $condition) {
                 return true;
             }
