@@ -25,7 +25,7 @@ class BladeBlock
     protected function compileBlock($expression)
     {
         $expression = Blade::stripParentheses($expression);
-        
+
         return "<?php echo \$__env->make('fjord::partials.block', ['repeatables' => $expression], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
     }
 }
