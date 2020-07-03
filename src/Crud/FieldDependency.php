@@ -72,11 +72,7 @@ class FieldDependency extends VueProp
             return in_array($condition, self::$conditions);
         }
 
-<<<<<<< HEAD
         foreach (self::$conditions as $available) {
-=======
-        foreach ($this->conditions as $available) {
->>>>>>> 4dbf491a39a16b0dba1808a15889bb8db5802d5b
             $orCondition = 'or'.ucfirst($available);
             if ($orCondition == $condition) {
                 return true;
