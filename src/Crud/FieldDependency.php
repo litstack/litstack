@@ -13,7 +13,7 @@ class FieldDependency extends VueProp
      *
      * @var array
      */
-    protected $conditions = [
+    protected static $conditions = [
         'when',
         'whenContains',
     ];
@@ -49,7 +49,7 @@ class FieldDependency extends VueProp
      */
     public function __construct(string $condition, Field $dependent, $value)
     {
-        if (! $this->conditionExists($condition)) {
+        if (! self::conditionExists($condition)) {
             throw new InvalidArgumentException(
                 "Condition [{$condition}] is not available"
             );
@@ -66,14 +66,14 @@ class FieldDependency extends VueProp
      * @param  string $condition
      * @return bool
      */
-    public function conditionExists(string $condition)
+    public static function conditionExists(string $condition)
     {
         if (! Str::startsWith($condition, 'or')) {
-            return in_array($condition, $this->conditions);
+            return in_array($condition, self::$conditions);
         }
 
-        foreach ($this->conditions as $available) {
-            $orCondition = 'or' . ucfirst($available);
+        foreach (self::$conditions as $available) {
+            $orCondition = 'or'.ucfirst($available);
             if ($orCondition == $condition) {
                 return true;
             }

@@ -6,7 +6,7 @@
     "scripts": {
         "test": "npm run test:js && npm run test:php",
         "test:js": "./node_modules/.bin/jest .*.spec.js",
-        "test:php": "rm -rf vendor/orchestra && composer install && php tests/install && vendor/bin/phpunit"
+        "test:php": "composer test"
     },
     "jest": {
         "moduleFileExtensions": [

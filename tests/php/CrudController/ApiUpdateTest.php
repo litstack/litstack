@@ -38,14 +38,6 @@ class ApiUpdateTest extends FrontendTestCase
     }
 
     /** @test */
-    public function test_update_returns_404_when_form_does_not_exist()
-    {
-        $url = $this->getCrudRoute("/{$this->post->id}/api/other_form");
-        $response = $this->put($url);
-        $response->assertStatus(404);
-    }
-
-    /** @test */
     public function test_update_method_updates_attribute()
     {
         $url = $this->getCrudRoute("/{$this->post->id}/api/show");

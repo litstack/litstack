@@ -43,7 +43,6 @@ class ListField extends RelationField
      */
     public function setDefaultAttributes()
     {
-        $this->search(true);
         $this->maxDepth(3);
     }
 
