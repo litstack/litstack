@@ -16,6 +16,7 @@ use Fjord\Crud\Fields\Media\File;
 use Fjord\Crud\Fields\Media\Image;
 use Fjord\Crud\Fields\Modal;
 use Fjord\Crud\Fields\Password;
+use Fjord\Crud\Fields\Radio;
 use Fjord\Crud\Fields\Range;
 use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Crud\Fields\Relations\OneRelation;
@@ -70,6 +71,7 @@ class ServiceProvider extends LaravelServiceProvider
         'oneRelation'  => OneRelation::class,
         'manyRelation' => ManyRelation::class,
         'list'         => ListField::class,
+        'radio'        => Radio::class,
     ];
 
     /**

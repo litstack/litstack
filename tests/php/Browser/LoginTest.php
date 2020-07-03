@@ -25,9 +25,13 @@ class LoginTest extends FrontendTestCase
         ]);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_shows_login_page_on_route_prefix()
     {
+        $this->skipIfChromedriverIsNotRunning();
+
         $this->browse(function ($browser) {
             $browser->visit(config('fjord.route_prefix'))
                 ->assertSee('Login')
@@ -35,9 +39,13 @@ class LoginTest extends FrontendTestCase
         });
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_can_login()
     {
+        $this->skipIfChromedriverIsNotRunning();
+
         $this->browse(function ($browser) {
             $browser->visit(config('fjord.route_prefix'))
                 ->type('email', $this->user->email)

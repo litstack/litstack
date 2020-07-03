@@ -17,6 +17,8 @@ class PublishesTest extends FrontendTestCase
     /** @test */
     public function test_form_settings_config()
     {
+        $this->skipIfChromedriverIsNotRunning();
+
         $this->browse(function ($browser) {
             $url = fjord()->url(
                 fjord()->config('form.collections.settings')->route_prefix
@@ -31,6 +33,8 @@ class PublishesTest extends FrontendTestCase
     /** @test */
     public function test_form_home_config()
     {
+        $this->skipIfChromedriverIsNotRunning();
+
         $this->browse(function ($browser) {
             $url = fjord()->url(
                 fjord()->config('form.pages.home')->route_prefix

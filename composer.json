@@ -3,6 +3,9 @@
     "description": "Fjord: A Laravel CMS/Admin-Panel",
     "type": "project",
     "license": "MIT",
+    "scripts": {
+        "test": "rm -rf vendor/orchestra && composer install && php tests/install && vendor/bin/phpunit"
+    },
     "require": {
         "php": "^7.4",
         "aw-studio/fjord-permissions": "^1.1",

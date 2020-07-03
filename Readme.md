@@ -11,8 +11,6 @@
 
 Fjord is a Laravel package for building Admin-Interfaces that help maintaining the data of your applications. It provides an intuitive interface and the tools needed to manage your project's Users, Models and free Forms for Pages, Settings etc.
 
-
-
 ![Fjord Interface](./docs/fjord_preview.png 'Fjord Interface')
 
 ## Features
@@ -53,6 +51,20 @@ It's all setup now, visit http://yourapp.tld/admin
 ## Demo
 
 Try the [Demo](https://demo.fjord-admin.com)
+
+## Testing
+
+Run the tests via **composer**:
+
+```shell
+composer test
+```
+
+Some tests require a chromedriver to be running on port `9515`. If you want to cover them as well before pushing to your repository you may start a chromedriver before:
+
+```shell
+chromedriver --port=9515
+```
 
 ## License
 

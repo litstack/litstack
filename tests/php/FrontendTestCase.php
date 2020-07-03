@@ -4,6 +4,7 @@ namespace FjordTest;
 
 use Exception;
 use Facebook\WebDriver\Chrome\ChromeOptions;
+use Facebook\WebDriver\Exception\WebDriverCurlException;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use FjordTest\Traits\TestHelpers;
@@ -64,6 +65,34 @@ class FrontendTestCase extends OrchestraDuskTestCase
         parent::tearDown();
 
         $this->tearDownTraits();
+    }
+
+    /**
+     * Determine if Webriver is running.
+     *
+     * @return bool
+     */
+    public function isChomedriverRunning()
+    {
+        try {
+            $this->driver();
+        } catch (WebDriverCurlException $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Skip test if chromedriver is not running.
+     *
+     * @return void
+     */
+    public function skipIfChromedriverIsNotRunning()
+    {
+        if (! $this->isChomedriverRunning()) {
+            $this->markTestSkipped('Requires chromdriver to be running on port 9515');
+        }
     }
 
     /**

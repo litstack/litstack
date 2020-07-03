@@ -31,19 +31,6 @@ class FieldListTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_search_method()
-    {
-        $this->field->search();
-        $this->assertTrue($this->field->getAttribute('search'));
-
-        $this->field->search(false);
-        $this->assertFalse($this->field->getAttribute('search'));
-
-        // Assert method returns field instance.
-        $this->assertEquals($this->field, $this->field->search());
-    }
-
-    /** @test */
     public function test_icons_method()
     {
         $this->field->icons(['dummy_icon']);

@@ -28,7 +28,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '@fj-sass/_variables';
 .fj-form-item-checkboxes {
     height: $button-md-height / 1.5;

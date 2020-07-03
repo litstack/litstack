@@ -48,25 +48,11 @@ class ListField extends RelationField
     }
 
     /**
-     * Set search.
-     *
-     * @param bool $search
-     *
-     * @return self
-     */
-    public function search(bool $search = true)
-    {
-        $this->setAttribute('search', $search);
-
-        return $this;
-    }
-
-    /**
      * Preview title.
      *
      * @param string $title
      *
-     * @return self
+     * @return $this
      */
     public function previewTitle(string $title)
     {
