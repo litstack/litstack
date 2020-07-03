@@ -54,7 +54,17 @@ Try the [Demo](https://demo.fjord-admin.com)
 
 ## Testing
 
-Run the tests via **composer**:
+Tests are divided into two parts. `PHP` tests for the backend via [PHPUnit](https://phpunit.readthedocs.io/en/9.2/) and `Javascript` test for the frontend via [Jest](https://jestjs.io/). Depending on what you are working on you may only want to test one part.
+
+Installing the test dependencies can be done by installing the composer and/or npm packages:
+
+```shell
+composer install && npm install
+```
+
+### PHP Tests
+
+Run the php tests via **composer**:
 
 ```shell
 composer test
@@ -64,6 +74,14 @@ Some tests require a chromedriver to be running on port `9515`. If you want to c
 
 ```shell
 chromedriver --port=9515
+```
+
+### Javascript Tests
+
+Run the javascript tests via **npm**:
+
+```shell
+npm test:js
 ```
 
 ## License

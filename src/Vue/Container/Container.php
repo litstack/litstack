@@ -159,7 +159,7 @@ abstract class Container extends VueProp
             return $this->getAttribute($name);
         }
 
-        throw new InvalidArgumentException("Property [{$name}] does not exist on " . static::class);
+        throw new InvalidArgumentException("Property [{$name}] does not exist on ".static::class);
     }
 
     /**

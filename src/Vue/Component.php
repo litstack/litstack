@@ -278,7 +278,7 @@ class Component extends VueProp implements AuthorizableContract
                     break;
                 }
             }
-            $message = 'Value must be: ' . implode(', ', $type);
+            $message = 'Value must be: '.implode(', ', $type);
         }
 
         if (! $valid) {
