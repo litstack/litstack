@@ -12,8 +12,7 @@ use Fjord\Crud\Repositories\ListRepository;
 
 class ListField extends RelationField
 {
-    use HasBaseField;
-    use FieldHasForm;
+    use HasBaseField, FieldHasForm;
 
     /**
      * Field Vue component.

@@ -13,40 +13,50 @@ class ListCollection extends Collection
      *
      * @return void
      */
-    public function __construct($items = [])
+    public function __construct($items = [], $setDepth = false)
     {
         parent::__construct($items);
 
-        $this->setDepth();
+        if ($setDepth) {
+            $this->setDepth();
+        }
     }
 
     /**
      * Set list items depth.
      *
-     * @param self $listItems
-     * @param int  $parent_id
-     * @param int  $depth
-     *
      * @return void
      */
-    protected function setDepth(self $listItems = null, $parent_id = 0, $depth = 1)
+    public function setDepth()
     {
-        if (! $listItems) {
-            $listItems = $this;
-        }
-
-        foreach ($listItems as $item) {
+        foreach ($this->items as $key => $item) {
+            // In some cases $item is not a Model instance but an array.
+            // Converting $item to an object in that case.
             if (is_array($item)) {
-                $item = clone (object) $item;
+                $this->items[$key]['depth'] = $this->getDepth((object) $item);
+            } else {
+                $this->items[$key]->depth = $this->getDepth($item);
             }
-
-            if ($item->parent_id != $parent_id) {
-                continue;
-            }
-
-            $item->depth = $depth;
-            $this->setDepth($listItems, $item->id, $depth + 1);
         }
+    }
+
+    /**
+     * Get depth for item.
+     *
+     * @param  array|FormListItem $item
+     * @return int
+     */
+    protected function getDepth($item)
+    {
+        $depth = 1;
+
+        $parent_id = $item->parent_id ?? 0;
+
+        if ($parent = collect($this->items)->where('id', $parent_id)->first()) {
+            $depth += $this->getDepth($parent);
+        }
+
+        return $depth;
     }
 
     /**
