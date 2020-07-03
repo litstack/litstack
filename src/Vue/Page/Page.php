@@ -336,6 +336,7 @@ class Page
             ->withProps(array_merge([
                 'page' => collect($this->render()),
             ], $this->props))
+            ->withTitle($this->title)
             ->render();
     }
 
