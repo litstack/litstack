@@ -91,7 +91,7 @@ class FrontendTestCase extends OrchestraDuskTestCase
     public function skipIfChromedriverIsNotRunning()
     {
         if (! $this->isChomedriverRunning()) {
-            $this->markTestSkipped('Requires chromdriver to be running on port 9515');
+            $this->markTestSkipped('Requires chromedriver to be running on port 9515');
         }
     }
 

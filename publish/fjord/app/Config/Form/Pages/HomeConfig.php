@@ -40,13 +40,13 @@ class HomeConfig extends FormConfig
     /**
      * Setup create and edit form.
      *
-     * @param \Fjord\Crud\CrudShow $form
+     * @param \Fjord\Crud\CrudShow $page
      *
      * @return void
      */
-    public function show(CrudShow $form)
+    public function show(CrudShow $page)
     {
-        $form->card(function ($form) {
+        $page->card(function ($form) {
             $form->input('title')
                 ->translatable()
                 ->title('Title');

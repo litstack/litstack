@@ -53,26 +53,26 @@ class ProfileSettingsConfig extends CrudConfig
     /**
      * Setup create and edit form.
      *
-     * @param \Fjord\Crud\CrudShow $form
+     * @param \Fjord\Crud\CrudShow $page
      *
      * @return void
      */
-    public function show(CrudShow $container)
+    public function show(CrudShow $page)
     {
         // settings
-        $container->info(ucwords(__f('base.general')))->width(4);
-        $container->card(fn ($form) => $this->settings($form))
+        $page->info(ucwords(__f('base.general')))->width(4);
+        $page->card(fn ($form) => $this->settings($form))
             ->width(8)->class('mb-5');
 
         // language
-        $this->language($container);
+        $this->language($page);
 
         // security
-        $container->info(ucwords(__f('base.security')))->width(4);
+        $page->info(ucwords(__f('base.security')))->width(4);
 
-        $container->group(function ($container) {
-            $container->card(fn ($form) => $this->security($form));
-            $container->component('fj-profile-security');
+        $page->group(function ($page) {
+            $page->card(fn ($form) => $this->security($form));
+            $page->component('fj-profile-security');
         })->width(8);
     }
 

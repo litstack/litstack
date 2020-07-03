@@ -52,14 +52,14 @@ class UserConfig extends CrudConfig
     /**
      * Build user index table.
      *
-     * @param CrudIndex $table
+     * @param CrudIndex $page
      *
      * @return void
      */
-    public function index(CrudIndex $container)
+    public function index(CrudIndex $page)
     {
-        $container->table(fn ($table) => $this->indexTable($table))
-            ->query(fn ($query) => $query->with('ordered_roles'))
+        $page->table(fn ($table) => $this->indexTable($table))
+            ->query(fn ($query)  => $query->with('ordered_roles'))
             ->sortByDefault('id.desc')
             ->search('username', 'first_name', 'last_name', 'email');
     }
@@ -95,13 +95,13 @@ class UserConfig extends CrudConfig
     /**
      * Crud show container.
      *
-     * @param CrudShow $container
+     * @param CrudShow $page
      *
      * @return void
      */
-    public function show(CrudShow $container)
+    public function show(CrudShow $page)
     {
-        $container->card(function ($form) {
+        $page->card(function ($form) {
             $form->input('first_name')
                 ->width(1 / 2)
                 ->creationRules('required')

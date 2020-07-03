@@ -12,6 +12,7 @@ use Fjord\Crud\Config\Factories\CrudFormConfigFactory;
 use Fjord\Crud\Config\Factories\CrudIndexConfigFactory;
 use Fjord\Crud\Config\Traits\HasCrudIndex;
 use Fjord\Crud\Config\Traits\HasCrudShow;
+use Fjord\Vue\Components\BladeComponent;
 use Fjord\Vue\Components\FieldWrapperCardComponent;
 use Fjord\Vue\Components\FieldWrapperComponent;
 use Fjord\Vue\Components\FieldWrapperGroupComponent;
@@ -66,6 +67,7 @@ class FjordPackage extends Package
 
         // Other
         'fj-info'                => InfoComponent::class,
+        'fj-blade'               => BladeComponent::class,
         'fj-field-wrapper'       => FieldWrapperComponent::class,
         'fj-field-wrapper-card'  => FieldWrapperCardComponent::class,
         'fj-field-wrapper-group' => FieldWrapperGroupComponent::class,

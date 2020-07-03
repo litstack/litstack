@@ -40,13 +40,13 @@ class SettingsConfig extends FormConfig
     /**
      * Setup form.
      *
-     * @param \Fjord\Crud\CrudShow $form
+     * @param \Fjord\Crud\CrudShow $page
      *
      * @return void
      */
-    public function show(CrudShow $container)
+    public function show(CrudShow $page)
     {
-        $container->card(function ($form) {
+        $page->card(function ($form) {
             $form->input('title')
                 ->title('Title')
                 ->width(12)

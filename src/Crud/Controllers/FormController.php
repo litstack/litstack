@@ -106,14 +106,23 @@ abstract class FormController extends CrudBaseController
             'form_type'  => 'show',
         ]);
 
-        return view('fjord::app')->withComponent($this->config->component)
-            ->withTitle('Form '.$this->config->names['singular'])
-            ->withProps([
-                'crud-model'        => crud($model),
-                'config'            => $config,
-                'header-components' => ['fj-crud-preview'],
-                'controls'          => [],
+        $page = $this->config->show
+            ->title($this->config->names['singular'])
+            ->bind([
+                'crud-model' => crud($model),
+                'config'     => $config,
             ]);
+
+        return $page;
+
+        // return view('fjord::app')->withComponent($this->config->component)
+        //     ->withTitle('Form '.$this->config->names['singular'])
+        //     ->withProps([
+        //         'crud-model'        => crud($model),
+        //         'config'            => $config,
+        //         'header-components' => ['fj-crud-preview'],
+        //         'controls'          => [],
+        //     ]);
     }
 
     /**

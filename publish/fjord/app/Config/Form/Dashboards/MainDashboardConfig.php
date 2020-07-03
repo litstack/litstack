@@ -40,13 +40,13 @@ class MainDashboardConfig extends FormConfig
     /**
      * Setup create and edit form.
      *
-     * @param \Fjord\Crud\CrudShow $container
+     * @param \Fjord\Crud\CrudShow $page
      *
      * @return void
      */
-    public function show(CrudShow $container)
+    public function show(CrudShow $page)
     {
-        $container->card(function ($form) {
+        $page->card(function ($form) {
             $form->info()->text('<a href="https://www.fjord-admin.com/docs/charts/basics/">Read to docs to learn how to create charts for your dashboard in no time.</a>');
         });
     }

@@ -4,11 +4,11 @@ namespace Fjord\Crud;
 
 use Closure;
 use Fjord\Config\ConfigHandler;
-use Fjord\Vue\Container\Container;
-use Fjord\Vue\Container\Traits\Expandable;
-use Fjord\Vue\Container\Traits\HasCharts;
+use Fjord\Vue\Page\Page;
+use Fjord\Vue\Page\Traits\Expandable;
+use Fjord\Vue\Page\Traits\HasCharts;
 
-class CrudIndex extends Container
+class CrudIndex extends Page
 {
     use HasCharts, Expandable;
 
@@ -33,6 +33,8 @@ class CrudIndex extends Container
      */
     public function __construct(ConfigHandler $config)
     {
+        parent::__construct();
+
         $this->config = $config;
         $this->setDefaults();
     }

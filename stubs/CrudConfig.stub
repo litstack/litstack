@@ -49,17 +49,17 @@ class DummyClassnameConfig extends CrudConfig
     }
 
     /**
-     * Build index table.
+     * Build index page.
      *
-     * @param Fjord\Crud\CrudIndex $container
+     * @param Fjord\Crud\CrudIndex $page
      * @return void
      */
-    public function index(CrudIndex $container)
+    public function index(CrudIndex $page)
     {
         // Expand html container to full width.
-        $container->expand(false);
+        $page->expand(false);
 
-        $container->table(function ($table) {
+        $page->table(function ($table) {
             $table->col('title')
                 ->value('{title}')
                 ->sortBy('title');
@@ -74,14 +74,14 @@ class DummyClassnameConfig extends CrudConfig
     }
 
     /**
-     * Setup create and edit form.
+     * Setup show page.
      *
-     * @param \Fjord\Crud\CrudShow $container
+     * @param \Fjord\Crud\CrudShow $page
      * @return void
      */
-    public function show(CrudShow $container)
+    public function show(CrudShow $page)
     {
-        $container->card(function($form) {
+        $page->card(function($form) {
 
             $form->input('title')
                 ->title('Title')

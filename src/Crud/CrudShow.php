@@ -4,8 +4,8 @@ namespace Fjord\Crud;
 
 use Closure;
 use Fjord\Exceptions\Traceable\InvalidArgumentException;
-use Fjord\Vue\Container\Traits\Expandable;
-use Fjord\Vue\Container\Traits\HasCharts;
+use Fjord\Vue\Page\Traits\Expandable;
+use Fjord\Vue\Page\Traits\HasCharts;
 
 class CrudShow extends BaseForm
 {
@@ -24,6 +24,13 @@ class CrudShow extends BaseForm
      * @var bool
      */
     protected $inCard = false;
+
+    /**
+     * Page root Vue Component.
+     *
+     * @var string
+     */
+    protected $rootComponent = 'fj-crud-form-page';
 
     /**
      * Register new Field.

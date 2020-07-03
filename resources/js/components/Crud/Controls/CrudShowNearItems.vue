@@ -1,8 +1,8 @@
 <template>
     <div class="fj-near-items">
         <b-button
-            :href="`${Fjord.baseURL}${routePrefix}/${nearItems.previous}/edit`"
-            :disabled="!nearItems.previous"
+            :href="`${Fjord.baseURL}${routePrefix}/${previous}/edit`"
+            :disabled="!previous"
             variant="outline-secondary"
             size="sm"
             class="btn-square"
@@ -10,8 +10,8 @@
             <fa-icon icon="chevron-left" class="fj-near-items__prev" />
         </b-button>
         <b-button
-            :href="`${Fjord.baseURL}${routePrefix}/${nearItems.next}/edit`"
-            :disabled="!nearItems.next"
+            :href="`${Fjord.baseURL}${routePrefix}/${next}/edit`"
+            :disabled="!next"
             variant="outline-secondary"
             size="sm"
             class="btn-square"
@@ -25,9 +25,8 @@
 export default {
     name: 'CrudShowNearItems',
     props: {
-        nearItems: {
-            type: Object
-        },
+        previous: {},
+        next: {},
         routePrefix: {
             type: String,
             required: true

@@ -17,12 +17,12 @@ use Fjord\Crud\Models\FormField;
 use Fjord\Exceptions\Traceable\BadMethodCallException;
 use Fjord\Support\Facades\Fjord;
 use Fjord\Support\Facades\Form as FormFacade;
-use Fjord\Vue\Container\Container;
+use Fjord\Vue\Page\Page;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use InvalidArgumentException;
 
-class BaseForm extends Container
+class BaseForm extends Page
 {
     use Macroable {
         __call as macroCall;
@@ -88,6 +88,8 @@ class BaseForm extends Container
      */
     public function __construct(string $model)
     {
+        parent::__construct();
+
         $this->model = $model;
         $this->registeredFields = collect([]);
     }

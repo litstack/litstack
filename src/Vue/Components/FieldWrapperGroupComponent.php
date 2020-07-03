@@ -4,7 +4,6 @@ namespace Fjord\Vue\Components;
 
 use Fjord\Crud\FieldDependency;
 use Fjord\Vue\Component;
-use InvalidArgumentException;
 
 class FieldWrapperGroupComponent extends Component
 {
@@ -29,18 +28,7 @@ class FieldWrapperGroupComponent extends Component
             'dependencies' => [
                 'default' => collect([]),
             ],
-            'dependsOn' => [
-                'type' => 'object',
-
-            ],
         ];
-    }
-
-    public function dependsOn(string $key, $value)
-    {
-        $this->props['dependsOn'] = ['key' => $key, 'value' => $value];
-
-        return $this;
     }
 
     /**
@@ -65,11 +53,10 @@ class FieldWrapperGroupComponent extends Component
      */
     public function __call($method, $parameters = [])
     {
-        try {
+        if (FieldDependency::conditionExists($method)) {
             return $this->addDependency(
                 FieldDependency::make($method, ...$parameters)
             );
-        } catch (InvalidArgumentException $e) {
         }
 
         return parent::__call($method, $parameters);

@@ -158,7 +158,7 @@ class BaseFormTest extends BackendTestCase
             $field1, $field2,
         ]);
 
-        $this->form->toJson();
+        $this->form->render();
     }
 }
 

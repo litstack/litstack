@@ -83,8 +83,8 @@ class Repeatable extends VueProp
     public function render(): array
     {
         return [
-            'form'    => $this->form->toArray(),
-            'preview' => $this->preview->toArray(),
+            'form'    => $this->form,
+            'preview' => $this->preview,
         ];
     }
 

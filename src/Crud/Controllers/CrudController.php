@@ -116,7 +116,6 @@ abstract class CrudController extends CrudBaseController
     public function index(CrudReadRequest $request)
     {
         $config = $this->config->get(
-            'index',
             'route_prefix',
             'names',
             'sortBy',
@@ -129,13 +128,15 @@ abstract class CrudController extends CrudBaseController
             'permissions'
         );
 
-        return view('fjord::app')
-            ->withTitle($config['names']['plural'])
-            ->withComponent($this->config->indexComponent)
-            ->withProps([
-                'config'           => $config,
-                'headerComponents' => [],
+        $page = $this->config->index
+            ->title($this->config->names['plural'])
+            ->bind([
+                'config' => $config,
             ]);
+
+        $page->navigation->right->component('fj-crud-create-button');
+
+        return $page;
     }
 
     /**
@@ -222,18 +223,38 @@ abstract class CrudController extends CrudBaseController
         $previous = $this->model::where('id', '<', $id)->orderBy('id', 'desc')->select('id')->first()->id ?? null;
         $next = $this->model::where('id', '>', $id)->orderBy('id')->select('id')->first()->id ?? null;
 
-        return view('fjord::app')->withComponent($this->config->formComponent)
-            ->withTitle($this->config->names['singular'])
-            ->withProps([
+        $page = $this->config->show
+            ->title($this->config->names['singular'])
+            ->bindToView([
+                'model'  => $model,
+                'config' => $this->config,
+            ])
+            ->bindToVue([
                 'crud-model' => crud($model),
                 'config'     => $config,
-                'backRoute'  => $this->config->route_prefix,
-                'nearItems'  => [
-                    'next'     => $next,
-                    'previous' => $previous,
-                ],
-                'controls' => [],
             ]);
+
+        // Show near items.
+        $page->navigation->left->component('fj-crud-show-near-items')->bind([
+            'next'         => $next,
+            'previous'     => $previous,
+            'route-prefix' => $this->config->routePrefix,
+        ]);
+
+        return $page;
+
+        // return view('fjord::app')->withComponent($this->config->formComponent)
+        //     ->withTitle($this->config->names['singular'])
+        //     ->withProps([
+        //         'crud-model' => crud($model),
+        //         'config'     => $config,
+        //         'backRoute'  => $this->config->route_prefix,
+        //         'nearItems'  => [
+        //             'next'     => $next,
+        //             'previous' => $previous,
+        //         ],
+        //         'controls' => [],
+        //     ]);
     }
 
     /**
