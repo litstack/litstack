@@ -316,7 +316,7 @@ class ConfigHandler
      *
      * @return mixed
      */
-    public function __call(string $method, $parameters = [])
+    public function __call($method, $parameters)
     {
         $method = $this->getMethodName($method);
 

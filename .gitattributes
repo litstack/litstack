@@ -1,5 +1,6 @@
 * text=auto
 
+/public linguist-generated
 /docs export-ignore
 /.github export-ignore
 /tests export-ignore

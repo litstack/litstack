@@ -5,7 +5,6 @@ namespace Fjord\Crud\Repositories\Relations;
 use Fjord\Crud\Fields\Relations\BelongsTo;
 use Fjord\Crud\Repositories\BaseFieldRepository;
 use Fjord\Crud\Requests\CrudUpdateRequest;
-use Illuminate\Support\Facades\DB;
 
 class BelongsToRepository extends BaseFieldRepository
 {
@@ -38,18 +37,10 @@ class BelongsToRepository extends BaseFieldRepository
     {
         $related = $this->getRelated($request, $model);
 
-        $belongsToMany = $this->field->getRelationQuery($model);
+        $belongsTo = $this->field->getRelationQuery($model);
 
-        $query = [
-            $belongsToMany->getForeignPivotKeyName() => $model->{$belongsToMany->getParentKeyName()},
-            $belongsToMany->getRelatedPivotKeyName() => $related->{$belongsToMany->getRelatedKeyName()},
-        ];
-
-        if ($this->field->sortable) {
-            $query[$this->field->orderColumn] = $belongsToMany->count();
-        }
-
-        DB::table($belongsToMany->getTable())->insert($query);
+        $model->{$belongsTo->getForeignKeyName()} = $related->{$belongsTo->getOwnerKeyName()};
+        $model->save();
     }
 
     /**
@@ -62,13 +53,10 @@ class BelongsToRepository extends BaseFieldRepository
      */
     public function destroy(CrudUpdateRequest $request, $model)
     {
-        $related = $this->getRelated($request, $model);
+        $belongsTo = $this->field->getRelationQuery($model);
 
-        $belongsToMany = $this->field->getRelationQuery($model);
-
-        return DB::table($belongsToMany->getTable())->where([
-            $belongsToMany->getForeignPivotKeyName() => $model->{$belongsToMany->getParentKeyName()},
-            $belongsToMany->getRelatedPivotKeyName() => $related->{$belongsToMany->getRelatedKeyName()},
-        ])->delete();
+        $model->update([
+            $belongsTo->getForeignKeyName() => null,
+        ]);
     }
 }

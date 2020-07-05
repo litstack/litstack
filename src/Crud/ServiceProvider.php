@@ -30,6 +30,7 @@ use Fjord\Crud\Repositories\ListRepository;
 use Fjord\Crud\Repositories\MediaRepository;
 use Fjord\Crud\Repositories\ModalRepository;
 use Fjord\Crud\Repositories\RelationRepository;
+use Fjord\Crud\Repositories\Relations\BelongsToManyRepository;
 use Fjord\Crud\Repositories\Relations\BelongsToRepository;
 use Fjord\Crud\Repositories\Relations\HasManyRepository;
 use Fjord\Crud\Repositories\Relations\HasOneRepository;
@@ -126,7 +127,7 @@ class ServiceProvider extends LaravelServiceProvider
             $rep->register('one-relation', OneRelationRepository::class);
             $rep->register('many-relation', ManyRelationRepository::class);
             $rep->register('belongs-to', BelongsToRepository::class);
-            $rep->register('belongs-to', BelongsToRepository::class);
+            $rep->register('belongs-to-many', BelongsToManyRepository::class);
             $rep->register('has-many', HasManyRepository::class);
             $rep->register('has-one', HasOneRepository::class);
             $rep->register('morph-one', MorphOneRepository::class);
