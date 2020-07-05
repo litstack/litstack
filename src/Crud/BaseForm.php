@@ -354,19 +354,19 @@ class BaseForm extends Page
      * Call form method.
      *
      * @param  string $method
-     * @param  array  $params
+     * @param  array  $parameters
      * @return void
      *
      * @throws \Fjord\Exceptions\Traceable\BadMethodCallException
      */
-    public function __call($method, $params = [])
+    public function __call($method, $parameters)
     {
         if (FormFacade::fieldExists($method)) {
-            return $this->registerField(FormFacade::getField($method), ...$params);
+            return $this->registerField(FormFacade::getField($method), ...$parameters);
         }
 
         if (static::hasMacro($method)) {
-            return $this->macroCall($method, $params);
+            return $this->macroCall($method, $parameters);
         }
 
         throw new BadMethodCallException(

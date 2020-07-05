@@ -503,7 +503,7 @@ class Field extends VueProp
      *
      * @throws BadMethodCallException
      */
-    public function __call($method, $parameters = [])
+    public function __call($method, $parameters)
     {
         if (FieldDependency::conditionExists($method)) {
             return $this->addDependency(

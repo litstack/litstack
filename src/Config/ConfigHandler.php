@@ -111,7 +111,7 @@ class ConfigHandler
         $instance = new $factory($this);
 
         if (! is_subclass_of($factory, ConfigFactory::class)) {
-            throw new TypeError("Config factory {$factory} must extend ".ConfigFactory::class.'.');
+            throw new TypeError("Config factory {$factory} must extend " . ConfigFactory::class . '.');
         }
 
         $this->factories[] = $instance;
@@ -316,7 +316,7 @@ class ConfigHandler
      *
      * @return mixed
      */
-    public function __call(string $method, $parameters = [])
+    public function __call($method, $parameters)
     {
         $method = $this->getMethodName($method);
 
