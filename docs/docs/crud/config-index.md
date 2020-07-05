@@ -2,12 +2,12 @@
 
 [[toc]]
 
-Each Crud configuration can have an index page that shows an overview of the models. On this page you can display an **index table** and add your own `Vue` components to display additional data. The frontend **container** of the index page is configured in the `index` function.
+Each Crud configuration can have an index page that shows an overview of the models. This index page is configured in the `index` method of its corresponding config. The first parameter is an instance of `Fjord\Page\Page` so all functions described in the [Fjord Page](/docs/basics/page) documentation can be used.
 
 ```php
 use Fjord\Crud\CrudIndex;
 
-public function index(CrudIndex $container)
+public function index(CrudIndex $page)
 {
     // Build your index page here.
 }
@@ -22,9 +22,9 @@ The index table is built using the method `table` like this:
 ```php
 use Fjord\Crud\CrudIndex;
 
-public function index(CrudIndex $container)
+public function index(CrudIndex $page)
 {
-    $container->table(function($table) {
+    $page->table(function($table) {
         $table->col('Name')->value('{first_name} {last_name}');
     });
 }
@@ -39,9 +39,9 @@ In the `query` method the `query` for the index table is initialized. Here you h
 ```php
 use Fjord\Crud\CrudIndex;
 
-public function index(CrudIndex $container)
+public function index(CrudIndex $page)
 {
-    $container->table(...)
+    $page->table(...)
         ->query(function($query) {
             $query->with('department')
             ->withCount('projects_count');
@@ -56,9 +56,9 @@ All attributes to be searched for are specified in `search`. You can also specif
 ```php
 use Fjord\Crud\CrudIndex;
 
-public function index(CrudIndex $container)
+public function index(CrudIndex $page)
 {
-    $container->table(...)->search('title', 'department.name');
+    $page->table(...)->search('title', 'department.name');
 }
 ```
 
@@ -69,9 +69,9 @@ You can sort by all model `attributes` as well as `relations` `attributes`. The 
 ```php
 use Fjord\Crud\CrudIndex;
 
-public function index(CrudIndex $container)
+public function index(CrudIndex $page)
 {
-    $container->table(...)->sortByDefault('id.desc');
+    $page->table(...)->sortByDefault('id.desc');
 }
 ```
 
@@ -80,9 +80,9 @@ In this example you can see how the array for the sort attributes can look like 
 ```php
 use Fjord\Crud\CrudIndex;
 
-public function index(CrudIndex $container)
+public function index(CrudIndex $page)
 {
-    $container->table(...)
+    $page->table(...)
         ->sortBy([
             'id.desc' => 'New first',
             'id.asc' => 'Old first',
@@ -99,9 +99,9 @@ Filters are specified in groups. Laravel's model [`scopes`](https://laravel.com/
 ```php
 use Fjord\Crud\CrudIndex;
 
-public function index(CrudIndex $container)
+public function index(CrudIndex $page)
 {
-    $container->table(...)
+    $page->table(...)
         ->filter([
             'Department' => [
                 'development' => 'Development',
@@ -131,8 +131,8 @@ The maximum number of items to be displayed on a page is defined in `perPage`. T
 ```php
 use Fjord\Crud\CrudIndex;
 
-public function index(CrudIndex $container)
+public function index(CrudIndex $page)
 {
-    $container->table(...)->perPage(5);
+    $page->table(...)->perPage(5);
 }
 ```

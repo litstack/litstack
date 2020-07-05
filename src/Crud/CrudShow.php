@@ -82,7 +82,7 @@ class CrudShow extends Page
     /**
      * Add group wrapper.
      *
-     * @param  Closure $closure
+     * @param  Closure   $closure
      * @return Component
      */
     public function group(Closure $closure)

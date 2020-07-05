@@ -93,3 +93,11 @@ The data is now accessible in Blade Views and is passed to Vue components as pro
 $page->bindToView($data);
 $page->bindToVue($data);
 ```
+
+## Expand Container
+
+The container of your Page has a maximum width by default. However, you can expand the container to the full width. For example, to be able to display large tables completely.
+
+```php
+$page->expand();
+```
