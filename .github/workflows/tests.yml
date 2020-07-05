@@ -43,12 +43,13 @@ jobs:
               run: |
                   composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
                   composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+                  php tests/install
 
             - name: Start Chrome Driver
               run: ./vendor/bin/dusk-updater detect --auto-update && ./vendor/laravel/dusk/bin/chromedriver-linux &
 
             - name: Run PHP tests via PHPUnit
-              run: composer test
+              run: vendor/bin/phpunit
 
     windows_tests:
         runs-on: windows-latest
@@ -86,12 +87,13 @@ jobs:
               run: |
                   composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
                   composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+                  php tests/install
 
             - name: Start Chrome Driver
               run: ./vendor/bin/dusk-updater detect --auto-update && ./vendor/laravel/dusk/bin/chromedriver-linux &
 
             - name: Run PHP tests via PHPUnit
-              run: composer test
+              run: vendor/bin/phpunit
 
     js-tests:
         runs-on: ubuntu-latest
