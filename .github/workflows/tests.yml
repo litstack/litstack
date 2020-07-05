@@ -42,7 +42,7 @@ jobs:
             - name: Install dependencies
               run: |
                   composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-                  composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-suggest
+                  composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
             - name: Start Chrome Driver
               run: ./vendor/bin/dusk-updater detect --auto-update && ./vendor/laravel/dusk/bin/chromedriver-linux &
@@ -78,14 +78,14 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
-                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
+                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
                   tools: composer:v2
                   coverage: none
 
             - name: Install dependencies
               run: |
                   composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-                  composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-suggest
+                  composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
             - name: Start Chrome Driver
               run: ./vendor/bin/dusk-updater detect --auto-update && ./vendor/laravel/dusk/bin/chromedriver-linux &
