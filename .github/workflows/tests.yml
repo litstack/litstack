@@ -43,14 +43,11 @@ jobs:
                   composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
                   composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-suggest
 
-            - name: Install Fjord & other testing dependencies
-              run: php tests/install
-
             - name: Start Chrome Driver
               run: ./vendor/bin/dusk-updater detect --auto-update && ./vendor/laravel/dusk/bin/chromedriver-linux &
 
             - name: Run PHP tests via PHPUnit
-              run: npm run test:php
+              run: composer test
 
     js-tests:
         runs-on: ubuntu-latest
