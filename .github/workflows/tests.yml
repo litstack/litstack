@@ -52,18 +52,17 @@ jobs:
             - name: Run PHP tests via PHPUnit
               run: npm run test:php
 
-              js-tests:
-              
-    runs-on: ubuntu-latest
+    js-tests:
+        runs-on: ubuntu-latest
 
         name: JavaScript tests
 
         steps:
-            -   name: Checkout code
-                uses: actions/checkout@v1
+            - name: Checkout code
+              uses: actions/checkout@v1
 
-            -   name: Install dependencies
-                run: yarn install --non-interactive
+            - name: Install dependencies
+              run: yarn install --non-interactive
 
-            -   name: Run javascript tests via Jest
-                run: yarn run test:js
+            - name: Run javascript tests via Jest
+              run: yarn run test:js
