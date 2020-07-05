@@ -4,14 +4,10 @@ namespace Fjord\Crud;
 
 use Closure;
 use Fjord\Config\ConfigHandler;
-use Fjord\Vue\Page\Page;
-use Fjord\Vue\Page\Traits\Expandable;
-use Fjord\Vue\Page\Traits\HasCharts;
+use Fjord\Page\Page;
 
 class CrudIndex extends Page
 {
-    use HasCharts, Expandable;
-
     /**
      * ConfigHandler instance.
      *

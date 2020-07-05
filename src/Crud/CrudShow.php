@@ -3,20 +3,18 @@
 namespace Fjord\Crud;
 
 use Closure;
+use Fjord\Crud\Fields\Component;
 use Fjord\Exceptions\Traceable\InvalidArgumentException;
-use Fjord\Vue\Page\Traits\Expandable;
-use Fjord\Vue\Page\Traits\HasCharts;
+use Fjord\Page\Page;
+use Illuminate\Support\Traits\ForwardsCalls;
+use Illuminate\Support\Traits\Macroable;
 
-class CrudShow extends BaseForm
+class CrudShow extends Page
 {
-    use HasCharts, Expandable;
-
-    /**
-     * List of Vue components and its props.
-     *
-     * @var array
-     */
-    protected $components = [];
+    use ForwardsCalls,
+        Macroable {
+            __call as macroCall;
+        }
 
     /**
      * Is registering component in card.
@@ -33,6 +31,68 @@ class CrudShow extends BaseForm
     protected $rootComponent = 'fj-crud-form-page';
 
     /**
+     * Form instance.
+     *
+     * @var BaseForm
+     */
+    protected $form;
+
+    /**
+     * Create new CrudShow instance.
+     */
+    public function __construct(BaseForm $form)
+    {
+        parent::__construct();
+
+        $this->form = $form;
+
+        // Add form lifecycle hooks.
+        $this->form->registering(fn ($field) => $this->registeringField($field));
+        $this->form->registered(fn ($field) => $this->registeredField($field));
+    }
+
+    /**
+     * Registering field lifecycle hook.
+     *
+     * @param  Field $field
+     * @return void
+     */
+    protected function registeringField($field)
+    {
+        if (! $this->inCard()) {
+            throw new InvalidArgumentException('Fields must be registered inside a card.', [
+                'function' => '__call',
+            ]);
+        }
+    }
+
+    /**
+     * Registered Field lifecycle hook.
+     *
+     * @param  Field $field
+     * @return void
+     */
+    protected function registeredField($field)
+    {
+        return $this->wrapper
+            ->component('fj-field')
+            ->prop('field', $field);
+    }
+
+    /**
+     * Add group wrapper.
+     *
+     * @param  Closure $closure
+     * @return Component
+     */
+    public function group(Closure $closure)
+    {
+        return $this->wrapper('fj-field-wrapper-group', function () use ($closure) {
+            $closure($this);
+        });
+    }
+
+    /**
      * Register new Field.
      *
      * @param  mixed  $field
@@ -40,16 +100,16 @@ class CrudShow extends BaseForm
      * @param  array  $params
      * @return Field  $field
      */
-    public function registerField($field, string $id, $params = [])
-    {
-        if (! $this->inWrapper()) {
-            throw new InvalidArgumentException('Fields must be registered inside a wrapper.', [
-                'function' => '__call',
-            ]);
-        }
+    // public function registerField($field, string $id, $params = [])
+    // {
+    //     if (! $this->inWrapper()) {
+    //         throw new InvalidArgumentException('Fields must be registered inside a wrapper.', [
+    //             'function' => '__call',
+    //         ]);
+    //     }
 
-        return parent::registerField($field, $id, $params);
-    }
+    //     return $this->form->registerField($field, $id, $params);
+    // }
 
     /**
      * Is registering component in card.
@@ -61,6 +121,24 @@ class CrudShow extends BaseForm
         return $this->inCard;
     }
 
+    // public function wrapper($component, Closure $closure)
+    // {
+    //     $wrapper = parent::wrapper($component, function ($self, $wrapper) use ($closure) {
+    //         $wrapper = $this->form->wrapper($wrapper, function ($form, $wrapper) use ($closure) {
+    //             $closure($form, $wrapper);
+
+    //             array_pop($this->components);
+
+    //             $this->components[] = $wrapper;
+    //             $this->wrapper = $wrapper;
+    //         });
+    //     });
+
+    //     //dd($this, $wrapper->title('abc'));
+
+    //     return $wrapper;
+    // }
+
     /**
      * Add Vue component.
      *
@@ -70,18 +148,18 @@ class CrudShow extends BaseForm
     public function component($component)
     {
         if ($this->inCard()) {
-            return parent::component($component);
+            return $this->form->component($component);
         }
-
-        $component = component($component);
 
         if ($this->inWrapper()) {
+            $component = component($component);
+
             $this->wrapper->component($component);
-        } else {
-            $this->components[] = $component;
+
+            return $component;
         }
 
-        return $component;
+        return parent::component($component);
     }
 
     /**
@@ -112,7 +190,7 @@ class CrudShow extends BaseForm
     {
         return $this->wrapper('fj-field-wrapper-card', function ($form) use ($closure) {
             $this->inCard = true;
-            $closure($form);
+            $closure($this);
             $this->inCard = false;
         });
     }
@@ -122,10 +200,11 @@ class CrudShow extends BaseForm
      *
      * @return array
      */
-    public function getComponents()
-    {
-        return $this->components;
-    }
+    // public function getComponents()
+    // {
+
+    //     return $this->forwardCallTo($this->form, 'getComponents', []);
+    // }
 
     /**
      * Get attributes.
@@ -134,8 +213,28 @@ class CrudShow extends BaseForm
      */
     public function render(): array
     {
-        return array_merge(parent::render(), [
-            'components' => collect($this->components),
-        ]);
+        return array_merge($this->form->render(), parent::render());
+    }
+
+    /**
+     * Get form instance.
+     *
+     * @return void
+     */
+    public function getForm()
+    {
+        return $this->form;
+    }
+
+    /**
+     * Call CrudShow method.
+     *
+     * @param  string $method
+     * @param  array  $parameters
+     * @return mixed
+     */
+    public function __call($method, $parameters = [])
+    {
+        return $this->forwardCallTo($this->form, $method, $parameters);
     }
 }

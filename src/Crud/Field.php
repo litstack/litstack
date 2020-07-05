@@ -417,8 +417,7 @@ class Field extends VueProp
      * setNameDefault => name
      * setCamelCaseDefault => camelCase
      *
-     * @param string $method
-     *
+     * @param  string $method
      * @return string
      */
     protected function getDefaultSetterAttributeName(string $method)
@@ -463,18 +462,17 @@ class Field extends VueProp
      */
     public function render(): array
     {
-        foreach ($this->props as $name => $value) {
-            $this->attributes[$name] = $value;
-        }
+        // foreach ($this->props as $name => $value) {
+        //     $this->attributes[$name] = $value;
+        // }
 
-        return $this->attributes;
+        return array_merge($this->attributes, $this->props);
     }
 
     /**
      * Get attribute.
      *
-     * @param string $name
-     *
+     * @param  string $name
      * @return any
      */
     public function __get(string $name)
@@ -485,8 +483,7 @@ class Field extends VueProp
     /**
      * Get attribute.
      *
-     * @param string $name
-     *
+     * @param  string $name
      * @return any
      */
     public function __set(string $name, $value)

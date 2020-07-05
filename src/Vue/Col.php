@@ -4,9 +4,9 @@ namespace Fjord\Vue;
 
 use ErrorException;
 use Exception;
+use Fjord\Contracts\Vue\Authorizable as AuthorizableContract;
 use Fjord\Exceptions\Traceable\InvalidArgumentException;
 use Fjord\Support\VueProp;
-use Fjord\Vue\Contracts\AuthorizableContract;
 use Fjord\Vue\Traits\Authorizable;
 
 class Col extends VueProp implements AuthorizableContract

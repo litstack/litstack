@@ -2,8 +2,8 @@
 
 namespace Fjord\Vue;
 
+use Fjord\Contracts\Vue\Authorizable as AuthorizableContract;
 use Fjord\Support\VueProp;
-use Fjord\Vue\Contracts\AuthorizableContract;
 use Fjord\Vue\Traits\Authorizable;
 
 class Table extends VueProp implements AuthorizableContract

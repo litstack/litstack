@@ -3,6 +3,7 @@
 namespace Fjord\Crud;
 
 use Closure;
+use Fjord\Contracts\Crud\Form;
 use Fjord\Crud\Fields\Block\Block;
 use Fjord\Crud\Fields\Component;
 use Fjord\Crud\Fields\Relations\BelongsTo;
@@ -15,18 +16,22 @@ use Fjord\Crud\Fields\Relations\MorphToMany;
 use Fjord\Crud\Fields\Relations\MorphToRegistrar;
 use Fjord\Crud\Models\FormField;
 use Fjord\Exceptions\Traceable\BadMethodCallException;
+use Fjord\Page\BasePage;
 use Fjord\Support\Facades\Fjord;
 use Fjord\Support\Facades\Form as FormFacade;
-use Fjord\Vue\Page\Page;
+use Fjord\Vue\Traits\RenderableAsProp;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use InvalidArgumentException;
 
-class BaseForm extends Page
+class BaseForm extends BasePage implements Form, Arrayable, Jsonable
 {
-    use Macroable {
-        __call as macroCall;
-    }
+    use RenderableAsProp,
+        Macroable {
+            __call as macroCall;
+        }
 
     /**
      * Available relations.
@@ -74,6 +79,13 @@ class BaseForm extends Page
     protected $routePrefix;
 
     /**
+     * Registering field hooks.
+     *
+     * @var array
+     */
+    protected $registeringFieldHooks = [];
+
+    /**
      * List of closure's that get called after registering a field.
      *
      * @var array
@@ -88,8 +100,6 @@ class BaseForm extends Page
      */
     public function __construct(string $model)
     {
-        parent::__construct();
-
         $this->model = $model;
         $this->registeredFields = collect([]);
     }
@@ -103,10 +113,17 @@ class BaseForm extends Page
     public function component($component)
     {
         return $this->registerField(FormFacade::getField('component'), $component);
+
+        if ($this->inWrapper()) {
+            dd('a');
+            parent::component($component->comp);
+        }
+
+        return $component;
     }
 
     /**
-     * Add form group.
+     * Add group wrapper.
      *
      * @param  Closure   $closure
      * @return Component
@@ -187,6 +204,10 @@ class BaseForm extends Page
             $fieldInstance = new $field($id, $this->model, $this->routePrefix, $this);
         }
 
+        foreach ($this->registeringFieldHooks as $hook) {
+            $hook($fieldInstance);
+        }
+
         $this->registrar = $fieldInstance;
 
         if ($fieldInstance->register()) {
@@ -207,12 +228,23 @@ class BaseForm extends Page
     }
 
     /**
+     * Before registering field hook.
+     *
+     * @param  Closure $closure
+     * @return void
+     */
+    public function registering(Closure $closure)
+    {
+        $this->registeringFieldHooks[] = $closure;
+    }
+
+    /**
      * Add after registering field hook.
      *
      * @param  Closure $closure
      * @return void
      */
-    public function afterRegisteringField(Closure $closure)
+    public function registered(Closure $closure)
     {
         $this->registerFieldHooks[] = $closure;
     }

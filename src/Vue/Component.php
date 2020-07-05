@@ -4,9 +4,9 @@ namespace Fjord\Vue;
 
 use Closure;
 use Exception;
+use Fjord\Contracts\Vue\Authorizable as AuthorizableContract;
 use Fjord\Exceptions\Traceable\BadMethodCallException;
 use Fjord\Support\VueProp;
-use Fjord\Vue\Contracts\AuthorizableContract;
 use Fjord\Vue\Traits\Authorizable;
 use InvalidArgumentException;
 

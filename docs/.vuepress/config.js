@@ -87,9 +87,9 @@ module.exports = {
                     title: 'Basics',
                     collapsable: false,
                     children: [
+                        ['docs/basics/page', 'Fjord Page'],
                         ['docs/basics/navigation', 'Navigation'],
                         ['docs/basics/localization', 'Localization'],
-                        ['docs/basics/vue', 'Extend With Vue'],
                         ['docs/basics/helpers', 'Helpers']
                     ]
                 },

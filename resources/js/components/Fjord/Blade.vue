@@ -3,12 +3,7 @@ export default {
     name: 'Blade',
     render(createElement) {
         const render = {
-            template: '<div>' + this.view + '</div>',
-            methods: {
-                markComplete() {
-                    console.log('the method called');
-                }
-            }
+            template: '<div class="w-100">' + this.view + '</div>'
         };
         return createElement(render, {
             props: {

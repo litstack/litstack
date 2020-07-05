@@ -84,7 +84,7 @@ class ListField extends RelationField
     {
         $form = new BaseForm($this->model);
 
-        $form->afterRegisteringField(function ($field) {
+        $form->registered(function ($field) {
             $field->setAttribute('params', [
                 'field_id'     => $this->id,
                 'list_item_id' => null,

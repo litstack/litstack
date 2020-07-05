@@ -6,6 +6,7 @@ use BadMethodCallException;
 use Fjord\Config\ConfigHandler;
 use Fjord\Crud\BaseForm;
 use Fjord\Crud\Controllers\CrudBaseController;
+use Fjord\Crud\CrudShow;
 use Illuminate\Support\Str;
 
 class ApiLoader
@@ -55,6 +56,10 @@ class ApiLoader
 
         $form = $this->config->{$type};
 
+        if ($form instanceof CrudShow) {
+            $form = $form->getForm();
+        }
+
         if (! $form instanceof BaseForm) {
             return false;
         }
@@ -99,10 +104,12 @@ class ApiLoader
      */
     protected function callLoadOrFail($method, $parameters)
     {
-        $result = $this->{str_replace('OrFail', '', $method)}(...$parameters);
+        $qualtifiedMethod = str_replace('OrFail', '', $method);
+
+        $result = $this->{$qualtifiedMethod}(...$parameters);
 
         if (! $result) {
-            abort(404);
+            abort(404, debug("Result not found for [{$qualtifiedMethod}]."));
         }
 
         return $result;
