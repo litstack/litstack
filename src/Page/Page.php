@@ -106,10 +106,6 @@ class Page extends BasePage implements Expandable
             throw new NotLoggedInException(static::class.' requires an authentificated fjord_user.');
         }
 
-        foreach ($this->views as $view) {
-            $view->with($this->viewData);
-        }
-
         return array_merge([
             'slots'      => collect($this->slots),
             'title'      => $this->title,

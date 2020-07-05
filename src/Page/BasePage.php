@@ -150,6 +150,10 @@ abstract class BasePage implements Page
      */
     public function render(): array
     {
+        foreach ($this->views as $view) {
+            $view->with($this->viewData);
+        }
+
         return array_merge([
             'components' => collect($this->components),
             'props'      => $this->props,

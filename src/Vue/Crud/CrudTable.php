@@ -60,15 +60,20 @@ class CrudTable extends Table
      *
      * @return \Fjord\Vue\Crud\CrudTableComponent $col
      */
-    public function component(string $component)
+    public function component($component)
     {
         $component = parent::component($component);
 
-        $component->link($this->defaultLink());
+        $component->prop('link', $this->defaultLink());
 
         return $component;
     }
 
+    /**
+     * Get default link.
+     *
+     * @return void
+     */
     public function defaultLink()
     {
         if (! $this->config->has('show')) {
