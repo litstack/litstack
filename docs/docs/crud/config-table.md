@@ -127,8 +127,7 @@ $table->toggle('active')
 With the `view` method you can easily add Blad Views to your table column:
 
 ```php
-$table->view('columns.hello')
-    ->label('Hello');
+$table->view('columns.hello')->label('Hello');
 ```
 
 ```html
