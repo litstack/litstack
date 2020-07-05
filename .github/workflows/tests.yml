@@ -22,12 +22,6 @@ jobs:
         name: p ${{ matrix.php }} - l ${{ matrix.laravel }} - ${{ matrix.stability }}
 
         steps:
-            - name: Update apt
-              run: sudo apt-get update --fix-missing
-
-            - name: Install ffmpeg
-              run: sudo apt-get install ffmpeg
-
             - name: Checkout code
               uses: actions/checkout@v2
 
@@ -44,31 +38,32 @@ jobs:
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
                   coverage: none
 
-            - name: Setup node 12
-              uses: actions/setup-node@v1
-              with:
-                  node-version: 12.x
-
-            - name: Fix Imagick Policy
-              run: sudo sed -i 's/none/read|write/g' /etc/ImageMagick-6/policy.xml
-
             - name: Install dependencies
               run: |
                   composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
                   composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-suggest
-                  npm install
 
             - name: Install Fjord & other testing dependencies
               run: php tests/install
 
-            - name: Detect Chrome
-              run: ./vendor/bin/dusk-updater detect --auto-update
-
             - name: Start Chrome Driver
-              run: ./vendor/laravel/dusk/bin/chromedriver-linux &
-
-            - name: Run javascript tests via Jest
-              run: npm run test:js --verbose
+              run: ./vendor/bin/dusk-updater detect --auto-update && ./vendor/laravel/dusk/bin/chromedriver-linux &
 
             - name: Run PHP tests via PHPUnit
               run: npm run test:php
+
+              js-tests:
+              
+    runs-on: ubuntu-latest
+
+        name: JavaScript tests
+
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v1
+
+            -   name: Install dependencies
+                run: yarn install --non-interactive
+
+            -   name: Run javascript tests via Jest
+                run: yarn run test:js
