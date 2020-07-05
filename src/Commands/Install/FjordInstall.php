@@ -157,7 +157,7 @@ class FjordInstall extends Command
         // the resource path itself, which is present for shure
         $this->callSilent('config:clear');
 
-        File::copyDirectory(fjord_path('publish/fjord'), base_path('fjord'));
+        File::copyDirectory(realpath(fjord_path('publish/fjord')), base_path('fjord'));
 
         $composer = json_decode(File::get(base_path('composer.json')), true);
         $composer['autoload']['psr-4']['FjordApp\\'] = 'fjord/app/';
@@ -173,6 +173,6 @@ class FjordInstall extends Command
     private function makeModelDirs()
     {
         $this->makeDirectory(app_path('Models'));
-        $this->makeDirectory(app_path('Models/Translations'));
+        $this->makeDirectory(app_path('Models').DIRECTORY_SEPARATOR.'Translations');
     }
 }

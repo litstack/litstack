@@ -47,12 +47,12 @@ Additionally, each chart type needs a specific configuration, which are linked b
 
 ## Register Charts
 
-Charts can be registered on crud show and index pages as well as in forms.
+Charts can be registered on pages that extend the `Fjord\Page\Page` class. For example: `CrudShow` and `CrudIndex`.
 
 ```php
 use FjordApp\Config\Charts\SalesCountChart;
 
-$container->chart(SalesCountChart::class);
+$page->chart(SalesCountChart::class);
 ```
 
 :::tip
