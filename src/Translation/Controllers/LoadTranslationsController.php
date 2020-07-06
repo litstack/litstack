@@ -62,7 +62,7 @@ class LoadTranslationsController extends Controller
     {
         foreach (fjord()->app()->get('translator')->getPaths() as $path) {
             foreach (config('fjord.translatable.locales') as $locale) {
-                $dir = realpath($path.'/'.$locale);
+                $dir = realpath($path.DIRECTORY_SEPARATOR.$locale);
                 $this->getTranslationsFromPath($locale, $dir);
             }
         }
