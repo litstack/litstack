@@ -3,8 +3,8 @@
         <b-radio-group
             :checked="value"
             :options="field.options"
-            @input="$emit('input', $event)"
             :stacked="field.stacked"
+            @input="$emit('input', $event)"
         />
     </fj-base-field>
 </template>
