@@ -39,11 +39,18 @@ class Page extends BasePage implements Expandable
     protected $back;
 
     /**
-     * Navigation instance.
+     * Navigation instance. Represents Vue component [fj-navigation] in [fj-page].
      *
      * @var Navigation
      */
-    public $navigation;
+    protected $navigation;
+
+    /**
+     * Header instance. Represents Vue component [fj-header] in [fj-page].
+     *
+     * @var Header
+     */
+    protected $header;
 
     /**
      * Create new Page instance.
@@ -53,6 +60,7 @@ class Page extends BasePage implements Expandable
     public function __construct()
     {
         $this->navigation = new Navigation;
+        $this->header = new Header;
     }
 
     /**
@@ -73,6 +81,16 @@ class Page extends BasePage implements Expandable
     }
 
     /**
+     * Get header instance.
+     *
+     * @return Header
+     */
+    public function getHeader()
+    {
+        return $this->header;
+    }
+
+    /**
      * Set page title.
      *
      * @param  string $title
@@ -80,7 +98,7 @@ class Page extends BasePage implements Expandable
      */
     public function title(string $title)
     {
-        $this->title = $title;
+        $this->header->setTitle($title);
 
         return $this;
     }
@@ -92,7 +110,57 @@ class Page extends BasePage implements Expandable
      */
     public function getTitle()
     {
-        return $this->title;
+        return $this->header->getTitle();
+    }
+
+    /**
+     * Get navigation slot "left".
+     *
+     * @return Slot
+     */
+    public function navigationLeft()
+    {
+        return $this->navigation->getLeftSlot();
+    }
+
+    /**
+     * Get navigation slot "controls".
+     *
+     * @return Slot
+     */
+    public function navigationControls()
+    {
+        return $this->navigation->getControlsSlot();
+    }
+
+    /**
+     * Get navigation slot "right".
+     *
+     * @return Slot
+     */
+    public function navigationRight()
+    {
+        return $this->navigation->getRightSlot();
+    }
+
+    /**
+     * Get header slot "left".
+     *
+     * @return Slot
+     */
+    public function headerLeft()
+    {
+        return $this->header->getLeftSlot();
+    }
+
+    /**
+     * Get header slot "right".
+     *
+     * @return Slot
+     */
+    public function headerRight()
+    {
+        return $this->header->getRightSlot();
     }
 
     /**
@@ -106,12 +174,34 @@ class Page extends BasePage implements Expandable
             throw new NotLoggedInException(static::class.' requires an authentificated fjord_user.');
         }
 
+        $this->bindDataToSlotViews();
+
         return array_merge([
             'slots'      => collect($this->slots),
             'title'      => $this->title,
             'navigation' => $this->navigation,
             'back'       => $this->back,
         ], parent::render());
+    }
+
+    /**
+     * Bind data to slot views.
+     *
+     * @return void
+     */
+    protected function bindDataToSlotViews()
+    {
+        foreach ([
+            $this->navigationRight(),
+            $this->navigationLeft(),
+            $this->navigationControls(),
+            $this->headerLeft(),
+            $this->headerRight(),
+        ] as $slot) {
+            foreach ($slot->getViews() as $view) {
+                $view->with($this->viewData);
+            }
+        }
     }
 
     /**

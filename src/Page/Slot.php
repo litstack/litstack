@@ -3,6 +3,8 @@
 namespace Fjord\Page;
 
 use Fjord\Support\VueProp;
+use Fjord\Vue\Component;
+use Illuminate\Contracts\View\View;
 
 class Slot extends VueProp
 {
@@ -14,9 +16,16 @@ class Slot extends VueProp
     protected $components = [];
 
     /**
+     * View stack.
+     *
+     * @var array
+     */
+    protected $views = [];
+
+    /**
      * Add component to Slot.
      *
-     * @return $this
+     * @return Component
      */
     public function component($component)
     {
@@ -25,6 +34,35 @@ class Slot extends VueProp
         $this->components[] = $component;
 
         return $component;
+    }
+
+    /**
+     * Add Blade View to stack.
+     *
+     * @param  string|View $view
+     * @return View
+     */
+    public function view($view)
+    {
+        if (! $view instanceof View) {
+            $view = view($view);
+        }
+
+        $this->views[] = $view;
+
+        $this->component('fj-blade')->prop('view', $view);
+
+        return $view;
+    }
+
+    /**
+     * Get views.
+     *
+     * @return void
+     */
+    public function getViews()
+    {
+        return $this->views;
     }
 
     /**

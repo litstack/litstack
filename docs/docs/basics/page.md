@@ -30,7 +30,7 @@ This will show an empty page with the title `My Page`:
 
 ![Page with Title](./screens/page_title.png 'Page with Title')
 
-## Adding Blade Views
+## View
 
 You can easily integrate your own blade components with using `view`:
 
@@ -56,7 +56,7 @@ And voila we have our first Page with content saying `Hello World!` using pure B
 
 ![Page with View](./screens/page_view.png 'Page with View')
 
-## Adding Vue Components
+## Component
 
 Just like blade views, Vue components can be easily integrated. To do this, the **name** of the Vue components must be passed as the first parameter to the `component method:
 
@@ -79,7 +79,7 @@ $page->component('my-component')->bind([
 ]);
 ```
 
-## Binding Global Page Data
+## Bind Data
 
 You may want to bind global data to all views and components contained in the page. This can be done by passing an array containing the data to the `bind` method like this:
 
@@ -94,10 +94,47 @@ $page->bindToView($data);
 $page->bindToVue($data);
 ```
 
-## Expand Container
+## Expand
 
 The container of your Page has a maximum width by default. However, you can expand the container to the full width. For example, to be able to display large tables completely.
 
 ```php
 $page->expand();
+```
+
+## Slots
+
+On a page there are different **slots** to which elements such as buttons can be added. These slots are located in two areas:
+
+-   **navigation** - a sticky bar on the top of every page
+-   **header** - contains a title that describes the pages content
+
+The following screenshot shows the existing slots where they are located.
+
+![navigation](./screens/page_slots.jpg 'navigation')
+
+Views or Vue components can be added to each slot:
+
+```php
+$page->navigationLeft()->view('my_button');
+$page->navigationLeft()->component('my-button');
+```
+
+### Navigation
+
+Available slots for the **navigation** slots are: `left`, `right`, `controls`
+
+```php
+$page->navigationLeft();
+$page->navigationRight();
+$page->navigationControls();
+```
+
+### Header
+
+Available slots for the **header** slots are: `left`, `right`
+
+```php
+$page->headerLeft();
+$page->headerRight();
 ```

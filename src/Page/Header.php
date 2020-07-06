@@ -4,8 +4,15 @@ namespace Fjord\Page;
 
 use Fjord\Support\VueProp;
 
-class Navigation extends VueProp
+class Header extends VueProp
 {
+    /**
+     * Header title.
+     *
+     * @var string
+     */
+    protected $title;
+
     /**
      * Slot "left".
      *
@@ -21,13 +28,6 @@ class Navigation extends VueProp
     protected $right;
 
     /**
-     * Slot "controls".
-     *
-     * @var Slot
-     */
-    protected $controls;
-
-    /**
      * Create new Navigation instance.
      *
      * @return void
@@ -36,7 +36,6 @@ class Navigation extends VueProp
     {
         $this->left = new Slot;
         $this->right = new Slot;
-        $this->controls = new Slot;
     }
 
     /**
@@ -60,13 +59,24 @@ class Navigation extends VueProp
     }
 
     /**
-     * Get controls slot.
+     * Get title.
      *
-     * @return Slot
+     * @return string
      */
-    public function getControlsSlot()
+    public function getTitle()
     {
-        return $this->controls;
+        return $this->title;
+    }
+
+    /**
+     * Set title.
+     *
+     * @param  string $title
+     * @return void
+     */
+    public function setTitle(string $title)
+    {
+        $this->title = $title;
     }
 
     /**
@@ -77,9 +87,9 @@ class Navigation extends VueProp
     public function render(): array
     {
         return [
-            'left'     => $this->left,
-            'right'    => $this->right,
-            'controls' => $this->controls,
+            'left'  => $this->left,
+            'right' => $this->right,
+            'title' => $this->title,
         ];
     }
 }
