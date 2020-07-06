@@ -101,7 +101,7 @@ class i18nGenerator
         return preg_replace_callback(
             "/(?<!mailto|tel|{$escapedEscapeChar}):\w+/",
             function ($matches) {
-                return '{' . strtolower(mb_substr($matches[0], 1)) . '}';
+                return '{'.strtolower(mb_substr($matches[0], 1)).'}';
             },
             $string
         );
