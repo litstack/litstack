@@ -2,8 +2,6 @@
 
 namespace Fjord\Vue;
 
-
-
 class TableComponent extends Component
 {
     /**
@@ -15,24 +13,24 @@ class TableComponent extends Component
     {
         return [
             'link' => [
-                'type' => ['boolean', 'string'],
+                'type'    => ['boolean', 'string'],
                 'default' => false,
             ],
             'small' => [
-                'type' => 'boolean',
+                'type'    => 'boolean',
                 'default' => false,
             ],
             'sortBy' => [
-                'type' => 'string',
-                'default' => 'id.desc'
+                'type'    => 'string',
+                'default' => 'id.desc',
             ],
             'label' => [
-                'type' => 'string',
-                'default' => ''
+                'type'    => 'string',
+                'default' => '',
             ],
             'value' => [
                 'type' => ['string', 'integer'],
-            ]
+            ],
         ];
     }
 
@@ -47,6 +45,7 @@ class TableComponent extends Component
         unset($array['name']);
         $array['component'] = $this->name;
         $array = array_merge($array['props']->toArray(), $array);
+
         return $array;
     }
 
@@ -64,6 +63,7 @@ class TableComponent extends Component
      * Set sort_by key.
      *
      * @param string $key
+     *
      * @return void
      */
     public function sortBy(string $key)

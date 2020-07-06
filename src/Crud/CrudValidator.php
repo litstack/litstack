@@ -4,25 +4,32 @@ namespace Fjord\Crud;
 
 class CrudValidator
 {
+    public const UPDATE = 'update';
+
+    public const CREATION = 'creation';
+
     /**
      * Validate update or create request.
      *
-     * @param CrudUpdateRequest|CrudCreateRequest $request
-     * @param BaseForm $form
+     * @param array       $attributes
+     * @param BaseForm    $form
+     * @param string|null $type
+     *
      * @return void
      */
-    public static function validate($request, $form)
+    public static function validate(array $attributes, BaseForm $form, $type = null)
     {
-        $rules = $form->getRules($request);
+        $rules = $form->getRules($type);
         $attributeNames = self::getValidationAttributeNames($form);
 
-        $request->validate($rules, __f('validation'), $attributeNames);
+        validator()->validate($attributes, $rules, __f('validation', $attributeNames));
     }
 
     /**
      * Get validaton attribute names form field titles.
      *
      * @param BaseForm $form
+     *
      * @return array
      */
     protected static function getValidationAttributeNames($form)
@@ -30,10 +37,9 @@ class CrudValidator
         $names = [];
 
         foreach ($form->getRegisteredFields() as $field) {
-
             $title = $field->getTitle();
 
-            if (!$field->translatable) {
+            if (! $field->translatable) {
                 $names[$field->local_key] = $title;
             } else {
                 foreach (config('translatable.locales') as $locale) {

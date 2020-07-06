@@ -4,7 +4,7 @@ namespace Fjord\Crud\Fields\Relations;
 
 use Closure;
 use Fjord\Crud\Fields\Traits\HasBaseField;
-use Fjord\Exceptions\InvalidArgumentException;
+use InvalidArgumentException;
 
 class MorphToRegistrar extends LaravelRelationField
 {
@@ -23,13 +23,13 @@ class MorphToRegistrar extends LaravelRelationField
      * @var array
      */
     public $required = [
-        'morphTypes'
+        'morphTypes',
     ];
 
     /**
      * Should field be registered in form.
      *
-     * @return boolean
+     * @return bool
      */
     public function register()
     {
@@ -40,19 +40,20 @@ class MorphToRegistrar extends LaravelRelationField
      * Add morph types.
      *
      * @param Closure $callback
+     *
      * @return self
      */
     public function morphTypes(Closure $closure)
     {
         $this->setAttribute('morphTypes', []);
 
-        $selectId = (new $this->model)->{$this->id}()->getMorphType();
+        $selectId = (new $this->model())->{$this->id}()->getMorphType();
 
         $select = $this->formInstance->select($selectId)
             ->title(__f('base.item_select', ['item' => $this->title]))
             ->storable(false);
 
-        $morph = new MorphTypeManager($this->id, $this->formInstance, $selectId);
+        $morph = new MorphTypeManager($this->id, $this->formInstance, $select);
 
         $closure($morph);
 
@@ -72,10 +73,11 @@ class MorphToRegistrar extends LaravelRelationField
      * Build relation index table.
      *
      * @param Closure $closure
+     *
      * @return void
      */
     public function preview(Closure $closure)
     {
-        throw new InvalidArgumentException('form is not available for MorphTo relations.');
+        throw new InvalidArgumentException('Form is not available for MorphTo relations.');
     }
 }

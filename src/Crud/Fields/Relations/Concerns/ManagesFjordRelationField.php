@@ -8,6 +8,7 @@ trait ManagesFjordRelationField
      * Set related model.
      *
      * @param string $mode
+     *
      * @return void
      */
     public function model(string $model)
@@ -18,7 +19,7 @@ trait ManagesFjordRelationField
 
         $this->setOrderDefaults();
 
-        if (!$this->query) {
+        if (! $this->query) {
             $this->query = $model::query();
         }
 

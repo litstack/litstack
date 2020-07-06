@@ -23,6 +23,10 @@ String.prototype.endsWith = function(suffix) {
     return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };
 
+String.prototype.lowercaseFirst = function() {
+    return this.charAt(0).toLowerCase() + this.slice(1);
+};
+
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 };
@@ -48,4 +52,10 @@ String.prototype.hash = function() {
         hash |= 0; // Convert to 32bit integer
     }
     return hash;
+};
+
+String.prototype.slugify = function() {
+    return this.replace(/[A-Z]/g, m => '-' + m.toLowerCase())
+        .replace(/ /g, '-')
+        .replace(/[^\w-]+/g, '');
 };

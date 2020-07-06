@@ -2,19 +2,17 @@
 
 namespace FjordTest;
 
-use Closure;
-use Mockery as m;
 use BadMethodCallException;
-use FjordTest\BackendTestCase;
-use Illuminate\Support\Facades\DB;
 use Fjord\Crud\Models\FormRelation;
-use FjordTest\TestSupport\Models\Tag;
-use FjordTest\TestSupport\Models\Post;
-use FjordTest\TestSupport\Models\User;
 use Fjord\Support\Macros\BuilderSearch;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
+use FjordTest\TestSupport\Models\Post;
+use FjordTest\TestSupport\Models\Tag;
 use FjordTest\TestSupport\Models\TranslatablePost;
+use FjordTest\TestSupport\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Mockery as m;
 
 class BuilderMacroSearchTest extends BackendTestCase
 {
@@ -41,7 +39,7 @@ class BuilderMacroSearchTest extends BackendTestCase
         $model = m::mock(BuilderMacroSearchModel::class);
 
         $this->passthruAllExcept($model, BuilderMacroSearchModel::class, ['posts']);
-        $model->shouldReceive("search")->passthru();
+        $model->shouldReceive('search')->passthru();
         $model->shouldReceive('posts')->once()->passthru();
 
         // posts exists
@@ -55,7 +53,7 @@ class BuilderMacroSearchTest extends BackendTestCase
     public function test_whereAttributeLike_function_for_non_translatable_model()
     {
         $builder = m::mock(Builder::class);
-        $builder->shouldReceive('getModel')->andReturn(new Post)->twice();
+        $builder->shouldReceive('getModel')->andReturn(new Post())->twice();
 
         $builder->shouldReceive('where')->with('text', 'LIKE', '%dan%')->once();
         $this->macro->whereAttributeLike($builder, 'text', 'dan', $or = false);
@@ -67,7 +65,7 @@ class BuilderMacroSearchTest extends BackendTestCase
     public function test_whereAttributeLike_function_for_translatable_model()
     {
         $builder = m::mock(Builder::class);
-        $builder->shouldReceive('getModel')->andReturn(new TranslatablePost);
+        $builder->shouldReceive('getModel')->andReturn(new TranslatablePost());
 
         $builder->shouldReceive('whereTranslationLike')->with('text', '%dan%')->once();
         $this->macro->whereAttributeLike($builder, 'text', 'dan', $or = false);
@@ -132,7 +130,7 @@ class BuilderMacroSearchTest extends BackendTestCase
         $post = TranslatablePost::create([]);
         $post->update([
             'en' => ['text' => 'english post'],
-            'de' => ['text' => 'german post']
+            'de' => ['text' => 'german post'],
         ]);
 
         // Try one locale
@@ -152,14 +150,13 @@ class BuilderMacroSearchTest extends BackendTestCase
         $model = TranslatablePost::create([]);
         $model->update([
             'en' => ['text' => 'english post'],
-            'de' => ['text' => 'german post']
+            'de' => ['text' => 'german post'],
         ]);
         $model2 = TranslatablePost::create([]);
         $model2->update([
             'en' => ['text' => 'other'],
-            'de' => ['text' => 'other']
+            'de' => ['text' => 'other'],
         ]);
-
 
         // Try one locale
         $models = TranslatablePost::search('text', 'english')->get();
@@ -178,18 +175,18 @@ class BuilderMacroSearchTest extends BackendTestCase
         $model = TranslatablePost::create([]);
         $model->update([
             'en' => ['text' => 'english model'],
-            'de' => ['text' => 'german model']
+            'de' => ['text' => 'german model'],
         ]);
         $related = TranslatablePost::create([]);
         $related->update([
             'en' => ['text' => 'related english related'],
-            'de' => ['text' => 'related german related']
+            'de' => ['text' => 'related german related'],
         ]);
 
         factory(FormRelation::class, 1)->create([
             'name' => 'translatablePosts',
             'from' => $model,
-            'to' => $related,
+            'to'   => $related,
         ]);
 
         $results = TranslatablePost::search('translatablePosts.text', 'related english')->get();
@@ -237,8 +234,8 @@ class BuilderMacroSearchTest extends BackendTestCase
     {
         DB::table('taggables')->insert([
             'taggable_type' => get_class($related),
-            'taggable_id' => $related->id,
-            'tag_id' => $tag->id
+            'taggable_id'   => $related->id,
+            'tag_id'        => $tag->id,
         ]);
     }
 }

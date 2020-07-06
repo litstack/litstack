@@ -2,15 +2,14 @@
 
 namespace FjordTest\CrudController;
 
-use FjordTest\BackendTestCase;
-use Fjord\Crud\Models\FormBlock;
 use Fjord\Crud\Models\FormListItem;
+use FjordTest\BackendTestCase;
 use FjordTest\TestSupport\Models\Post;
 use FjordTest\Traits\InteractsWithCrud;
 
 /**
  * This test is using the Crud Post.
- * 
+ *
  * @see FjordTest\TestSupport\Config\PostConfig
  * @see FjordTest\TestSupport\Models\Post
  */
@@ -27,12 +26,19 @@ class ApiListTest extends BackendTestCase
     }
 
     // Store
+
     /** @test */
     public function it_can_store_list_item()
     {
         $this->assertEquals(0, FormListItem::count());
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list");
-        $result = $this->post($url)->assertStatus(200)->decodeResponseJson();
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/store");
+
+        $result = $this->post($url, [
+            'field_id' => 'test_list',
+            'payload'  => [
+                'test_list_input' => 'some text',
+            ],
+        ])->assertStatus(200)->decodeResponseJson();
         $this->assertEquals(1, FormListItem::count());
 
         $listItem = $this->post->test_list()->first();
@@ -43,13 +49,20 @@ class ApiListTest extends BackendTestCase
     }
 
     // Store
+
     /** @test */
-    public function it_can_store_multiple_list_item_and_add_order_column()
+    public function it_can_store_multiple_list_item_and_automatically_adds_order_column()
     {
         $this->assertEquals(0, FormListItem::count());
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list");
-        $result = $this->post($url)->assertStatus(200);
-        $result = $this->post($url)->assertStatus(200);
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/store");
+        $params = [
+            'field_id' => 'test_list',
+            'payload'  => [
+                'test_list_input' => 'some text',
+            ],
+        ];
+        $result = $this->post($url, $params)->assertStatus(200);
+        $result = $this->post($url, $params)->assertStatus(200);
         $this->assertEquals(2, FormListItem::count());
 
         $listItem = $this->post->test_list->last();
@@ -57,29 +70,31 @@ class ApiListTest extends BackendTestCase
     }
 
     // Store
+
     /** @test */
     public function it_cannot_store_for_not_existing_parent_id()
     {
         $this->assertEquals(0, FormListItem::count());
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list");
-        $request = $this->post($url, [
-            'parent_id' => 10
-        ])->assertStatus(404);
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/store");
+        $request = $this->post($url)->assertStatus(404);
     }
 
     // Store
+
     /** @test */
     public function it_can_store_for_existing_parent_id()
     {
         $this->assertEquals(0, FormListItem::count());
         $parent = $this->createListItem();
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list");
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/store");
         $request = $this->post($url, [
-            'parent_id' => $parent->id
+            'field_id'  => 'test_list',
+            'parent_id' => $parent->id,
         ])->assertStatus(200);
     }
 
     // Destroy
+
     /** @test */
     public function it_can_destroy_list_item()
     {
@@ -87,12 +102,18 @@ class ApiListTest extends BackendTestCase
         $listItem2 = $this->createListItem();
         $this->assertEquals(2, FormListItem::count());
 
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/{$listItem2->id}");
-        $request = $this->delete($url)->assertStatus(200);
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/destroy");
+        $request = $this->delete($url, [
+            'field_id' => 'test_list',
+            'payload'  => [
+                'list_item_id' => $listItem2->id,
+            ],
+        ])->assertStatus(200);
         $this->assertFalse($this->post->test_list()->where('id', $listItem2->id)->exists());
     }
 
     // Load
+
     /** @test */
     public function it_can_load_all_list_items()
     {
@@ -100,32 +121,16 @@ class ApiListTest extends BackendTestCase
         $listItem2 = $this->createListItem();
         $this->assertEquals(2, FormListItem::count());
 
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list");
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/index");
 
-        $result = $this->get($url)->assertStatus(200)->decodeResponseJson();
+        $result = $this->post($url, ['field_id' => 'test_list'])->assertStatus(200)->decodeResponseJson();
         $this->assertCount(2, $result);
-        $this->assertEquals($listItem1->id, $result[0]["attributes"]['id']);
-        $this->assertEquals($listItem2->id, $result[1]["attributes"]['id']);
-    }
-
-    // Load
-    /** @test */
-    public function it_can_load_single_list_item()
-    {
-        $listItem1 = $this->createListItem();
-        $listItem2 = $this->createListItem();
-        $this->assertEquals(2, FormListItem::count());
-
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/{$listItem1->id}");
-        $result = $this->get($url)->assertStatus(200)->decodeResponseJson();
-        $this->assertEquals($listItem1->id, $result["attributes"]['id']);
-
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/{$listItem2->id}");
-        $result = $this->get($url)->assertStatus(200)->decodeResponseJson();
-        $this->assertEquals($listItem2->id, $result["attributes"]['id']);
+        $this->assertEquals($listItem1->id, $result[0]['attributes']['id']);
+        $this->assertEquals($listItem2->id, $result[1]['attributes']['id']);
     }
 
     // Update
+
     /** @test */
     public function it_can_update_list_item()
     {
@@ -134,17 +139,22 @@ class ApiListTest extends BackendTestCase
         $this->assertEquals(1, FormListItem::count());
 
         // Update listItem.
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/{$listItem->id}");
-        $request = $this->put($url, [
-            'test_list_input' => 'some text'
-        ]);
-        $request->assertStatus(200);
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list");
+        $this->put($url, [
+            'field_id'     => 'test_list',
+            'list_item_id' => $listItem->id,
+            'payload'      => [
+                'test_list_input' => 'some text',
+            ],
+        ])->assertStatus(200);
+
         $listItem = $this->post->test_list()->first();
 
         $this->assertEquals('some text', $listItem->test_list_input);
     }
 
     // Order
+
     /** @test */
     public function it_can_order_list_items()
     {
@@ -152,13 +162,16 @@ class ApiListTest extends BackendTestCase
         $listItem2 = $this->createListItem();
         $listItem3 = $this->createListItem();
 
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/order");
-        $this->put($url, [
-            'items' => [
-                ['id' => $listItem1->id, 'order_column' => 2],
-                ['id' => $listItem2->id, 'order_column' => 3],
-                ['id' => $listItem3->id, 'order_column' => 1],
-            ]
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/order");
+        $r = $this->put($url, [
+            'field_id' => 'test_list',
+            'payload'  => [
+                'items' => [
+                    ['id' => $listItem1->id, 'order_column' => 2],
+                    ['id' => $listItem2->id, 'order_column' => 3],
+                    ['id' => $listItem3->id, 'order_column' => 1],
+                ],
+            ],
         ])->assertStatus(200);
 
         $listItems = $this->post->test_list()->orderBy('order_column')->get();
@@ -169,6 +182,7 @@ class ApiListTest extends BackendTestCase
     }
 
     // Order
+
     /** @test */
     public function it_can_order_list_items_and_update_parent_ids()
     {
@@ -176,13 +190,17 @@ class ApiListTest extends BackendTestCase
         $listItem2 = $this->createListItem();
         $listItem3 = $this->createListItem();
 
-        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/order");
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/order");
         $this->put($url, [
-            'items' => [
-                ['id' => $listItem1->id, 'order_column' => 1],
-                ['id' => $listItem2->id, 'order_column' => 1, 'parent_id' => 1],
-                ['id' => $listItem3->id, 'order_column' => 1, 'parent_id' => 2],
-            ]
+            'field_id' => 'test_list',
+            'payload'  => [
+                'items' => [
+                    ['id' => $listItem1->id, 'order_column' => 1],
+                    ['id' => $listItem2->id, 'order_column' => 1, 'parent_id' => $listItem1->id],
+                    ['id' => $listItem3->id, 'order_column' => 1, 'parent_id' => $listItem2->id],
+                ],
+            ],
+
         ])->assertStatus(200);
 
         $listItems = $this->post->test_list()->orderBy('id')->get();
@@ -193,15 +211,39 @@ class ApiListTest extends BackendTestCase
         $this->assertEquals(2, $listItems[2]->parent_id);
     }
 
+    // Order
+
+    /** @test */
+    public function it_fails_to_order_when_max_depth_is_reached()
+    {
+        $listItem1 = $this->createListItem();
+        $listItem2 = $this->createListItem();
+        $listItem3 = $this->createListItem();
+        $listItem4 = $this->createListItem();
+
+        $url = $this->getCrudRoute("/{$this->post->id}/show/list/test_list/order");
+        $this->put($url, [
+            'field_id' => 'test_list',
+            'payload'  => [
+                'items' => [
+                    ['id' => $listItem1->id, 'order_column' => 1],
+                    ['id' => $listItem2->id, 'order_column' => 1, 'parent_id' => $listItem1->id],
+                    ['id' => $listItem3->id, 'order_column' => 1, 'parent_id' => $listItem2->id],
+                    ['id' => $listItem4->id, 'order_column' => 1, 'parent_id' => $listItem3->id],
+                ],
+            ],
+        ])->assertStatus(405);
+    }
+
     public function createListItem($parent_id = 0)
     {
         return FormListItem::create([
-            'config_type' => \FjordApp\Config\Crud\PostConfig::class,
-            'model_type' => get_class($this->post),
-            'model_id' => $this->post->id,
-            'field_id' => 'test_list',
-            'parent_id' => $parent_id,
-            'order_column' => $this->post->test_list()->count()
+            'config_type'  => \FjordApp\Config\Crud\PostConfig::class,
+            'model_type'   => get_class($this->post),
+            'model_id'     => $this->post->id,
+            'field_id'     => 'test_list',
+            'parent_id'    => $parent_id,
+            'order_column' => $this->post->test_list()->count(),
         ]);
     }
 }

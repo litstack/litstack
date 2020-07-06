@@ -3,13 +3,13 @@
 namespace Fjord\Crud\Fields\Relations;
 
 use Closure;
+use Fjord\Crud\RelationField;
+use Fjord\Support\Facades\Config;
+use Fjord\Support\Facades\Crud;
 use Fjord\Vue\Table;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Fjord\Crud\RelationField;
-use Fjord\Support\Facades\Crud;
-use Fjord\Support\Facades\Config;
-use Fjord\Exceptions\InvalidArgumentException;
+use InvalidArgumentException;
 
 class LaravelRelationField extends RelationField
 {
@@ -44,8 +44,8 @@ class LaravelRelationField extends RelationField
     /**
      * Create new Field instance.
      *
-     * @param string $id
-     * @param string $model
+     * @param string      $id
+     * @param string      $model
      * @param string|null $routePrefix
      */
     public function __construct(string $id, string $model, $routePrefix, $form)
@@ -72,9 +72,9 @@ class LaravelRelationField extends RelationField
     /**
      * Set model and query builder.
      *
-     * @return self
-     * 
      * @throws \InvalidArgumentException
+     *
+     * @return self
      */
     protected function initializeRelationField()
     {
@@ -88,7 +88,7 @@ class LaravelRelationField extends RelationField
 
         // Set relation attributes.
         if (method_exists($this, 'setRelationAttributes')) {
-            $this->setRelationAttributes($this->getRelationQuery(new $this->model));
+            $this->setRelationAttributes($this->getRelationQuery(new $this->model()));
         }
 
         return $this;
@@ -98,19 +98,20 @@ class LaravelRelationField extends RelationField
      * Set related model class.
      *
      * @param string $model
+     *
      * @return $this
      */
     protected function setRelatedModelClass(string $model)
     {
         $this->relatedModelClass = $model;
 
-        $relatedConfigKey = "crud." . Str::snake(class_basename($model));
+        $relatedConfigKey = 'crud.'.Str::snake(class_basename($model));
 
-        if (Config::exists($relatedConfigKey) && !$this->relatedConfig) {
+        if (Config::exists($relatedConfigKey) && ! $this->relatedConfig) {
             $this->use($relatedConfigKey);
         }
 
-        if (!$this->names) {
+        if (! $this->names) {
             $this->names(Crud::names($model));
         }
     }
@@ -119,16 +120,17 @@ class LaravelRelationField extends RelationField
      * Merge related config.
      *
      * @param string $configKey
+     *
      * @return void
      */
     protected function mergeRelatedConfig($configKey)
     {
-        if (!Config::exists($configKey)) {
+        if (! Config::exists($configKey)) {
             return;
         }
         $relatedConfig = Config::get($configKey);
 
-        if (!$this->related_route_prefix) {
+        if (! $this->related_route_prefix) {
             $this->routePrefix($relatedConfig->route_prefix);
         }
         if ($relatedConfig->has('index')) {
@@ -153,7 +155,7 @@ class LaravelRelationField extends RelationField
      */
     protected function setOrderDefaults()
     {
-        $orders = $this->getRelationQuery(new $this->model)->getQuery()->getQuery()->orders;
+        $orders = $this->getRelationQuery(new $this->model())->getQuery()->getQuery()->orders;
 
         if (empty($orders)) {
             return;
@@ -161,7 +163,7 @@ class LaravelRelationField extends RelationField
 
         $order = $orders[0];
         if (method_exists($this->relation, 'getTable')) {
-            $orderColumn = str_replace($this->relation->getTable() . '.', '', $order['column']);
+            $orderColumn = str_replace($this->relation->getTable().'.', '', $order['column']);
         } else {
             $orderColumn = $order['column'];
         }
@@ -174,6 +176,7 @@ class LaravelRelationField extends RelationField
      * Set index query modifier.
      *
      * @param Closure $closure
+     *
      * @return self
      */
     public function query(Closure $closure)
@@ -187,18 +190,19 @@ class LaravelRelationField extends RelationField
      * Use related config.
      *
      * @param string $config
+     *
      * @return void
      */
     public function use(string $config)
     {
         $this->relatedConfig = Config::get($config);
 
-        if (!$this->relatedConfig) {
+        if (! $this->relatedConfig) {
             throw new InvalidArgumentException("Couldn't find config {$config}");
         }
 
         if ($this->relatedConfig->model != $this->getRelatedModelClass() && $this->getRelatedModelClass() != null) {
-            throw new InvalidArgumentException("Related config {$config} must be using model " . $this->getRelatedModelClass());
+            throw new InvalidArgumentException("Related config {$config} must be using model ".$this->getRelatedModelClass());
         }
 
         if (method_exists($this, 'model')) {
@@ -224,6 +228,7 @@ class LaravelRelationField extends RelationField
      * Get relation query for model.
      *
      * @param mixed $model
+     *
      * @return mixed
      */
     public function getRelationQuery($model)
@@ -241,7 +246,7 @@ class LaravelRelationField extends RelationField
     protected function getRelatedInstance()
     {
         return $this->getRelationQuery(
-            new $this->model
+            new $this->model()
         )->getRelated();
     }
 
@@ -249,11 +254,12 @@ class LaravelRelationField extends RelationField
      * Modify preview query with eager loads and accessors to append.
      *
      * @param Builder $query
+     *
      * @return Builder
      */
     protected function modifyQuery($query)
     {
-        if (!$this->previewModifier instanceof Closure) {
+        if (! $this->previewModifier instanceof Closure) {
             return $query;
         }
 
@@ -267,11 +273,12 @@ class LaravelRelationField extends RelationField
      * Build relation index table.
      *
      * @param Closure $closure
+     *
      * @return $this
      */
     public function preview(Closure $closure)
     {
-        $table = new Table;
+        $table = new Table();
 
         $closure($table);
 
@@ -284,11 +291,12 @@ class LaravelRelationField extends RelationField
      * Singular and plural name.
      *
      * @param Closure $closure
+     *
      * @return $this
      */
     public function names(array $names)
     {
-        if (!array_key_exists('singular', $names) || !array_key_exists('plural', $names)) {
+        if (! array_key_exists('singular', $names) || ! array_key_exists('plural', $names)) {
             throw new InvalidArgumentException('Singular and plural name may be present.');
         }
 
@@ -301,6 +309,7 @@ class LaravelRelationField extends RelationField
      * Set prefix to related config.
      *
      * @param string $routePrefix
+     *
      * @return $this
      */
     public function routePrefix(string $routePrefix)
@@ -311,9 +320,10 @@ class LaravelRelationField extends RelationField
     }
 
     /**
-     * Set search keys
+     * Set search keys.
      *
      * @param array ...$keys
+     *
      * @return $this
      */
     public function search(...$keys)
@@ -334,6 +344,7 @@ class LaravelRelationField extends RelationField
      * Set query initial builder.
      *
      * @param Closure $closure
+     *
      * @return void
      */
     public function filter(Closure $closure)
@@ -356,7 +367,8 @@ class LaravelRelationField extends RelationField
     /**
      * Small table.
      *
-     * @param boolean $small
+     * @param bool $small
+     *
      * @return self
      */
     public function small($small = true)
@@ -369,7 +381,8 @@ class LaravelRelationField extends RelationField
     /**
      * Confirm delete in modal.
      *
-     * @param boolean $confirm
+     * @param bool $confirm
+     *
      * @return self
      */
     public function confirm($confirm = true)

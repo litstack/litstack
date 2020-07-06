@@ -7,13 +7,23 @@ import ResultsHandler from './savings.results';
 Vue.use(ToastPlugin);
 
 const initialState = {
+    /**
+     * Save jobs.
+     */
     jobs: []
 };
 
 const getters = {
+    /**
+     * Save job getter.
+     */
     saveJobs(state) {
         return state.jobs;
     },
+
+    /**
+     * canSave getter. Determines if save jobs exists.
+     */
     canSave(state) {
         return state.jobs.length > 0;
     }

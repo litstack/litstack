@@ -26,6 +26,13 @@
             @addItem="addListItem"
             @deleteItem="deleteListItem"
         />
+        <fj-field-list-modal
+            v-if="newModel"
+            :item="newModel"
+            :model="model"
+            :field="newField"
+            :modalId="modalId()"
+        />
     </fj-base-field>
 </template>
 
@@ -55,6 +62,8 @@ export default {
     },
     data() {
         return {
+            newModel: null,
+            newField: null,
             busy: false,
             list: [],
             input: [
@@ -86,14 +95,36 @@ export default {
         };
     },
     beforeMount() {
-        //this.list = this.unflatten(copy);
+        this.newField = Fjord.clone(this.field);
+        this.newField._method = 'post';
+
+        Fjord.bus.$on('saved', this.checkForCreatedField);
     },
     async mounted() {
         this.busy = true;
-        //await this.loadItems();
+        await this.loadItems();
         this.busy = false;
     },
     methods: {
+        checkForCreatedField(results) {
+            if (!this.newModel) {
+                return;
+            }
+
+            if (
+                !results.hasSucceeded(
+                    'put',
+                    `${this.field.route_prefix}/list/store`
+                )
+            ) {
+                return;
+            }
+
+            this.$bvModal.hide(this.modalId());
+            this.newModel = null;
+            this.loadItems();
+        },
+
         itemToast(key) {
             this.$bvToast.toast(this.__(key, { item: this.__item() }), {
                 variant: 'success'
@@ -108,9 +139,10 @@ export default {
                     parent_id: item.parent_id
                 };
             });
+
             let response = await this.sendOrderListItems({ items });
             if (!response) {
-                return;
+                return this.loadItems();
             }
 
             this.$bvToast.toast(
@@ -121,11 +153,18 @@ export default {
             );
         },
 
-        sendOrderListItems(payload) {
+        async sendOrderListItems(payload) {
             try {
-                return axios.put(
-                    `${this.field.route_prefix}/list/${this.field.id}/order`,
-                    payload
+                // return await axios.put(
+                //     `${this.field.route_prefix}/list/${this.field.id}/order`,
+                //     payload
+                // );
+                return await axios.post(
+                    `${this.field.route_prefix}/list/order`,
+                    {
+                        field_id: this.field.id,
+                        payload
+                    }
                 );
             } catch (e) {
                 console.log(e);
@@ -137,10 +176,10 @@ export default {
          */
         async deleteListItem(item) {
             let response = await this.sendDeleteListItem(item);
+            await this.loadItems();
             if (!response) {
                 return;
             }
-            await this.loadItems();
 
             this.itemToast('base.item_deleted');
         },
@@ -148,11 +187,17 @@ export default {
         /**
          * Send delete list item.
          */
-        sendDeleteListItem(item) {
+        async sendDeleteListItem(item) {
             try {
-                return axios.delete(
-                    `${this.field.route_prefix}/list/${this.field.id}/${item.id}`
-                );
+                // return await axios.delete(
+                //     `${this.field.route_prefix}/list/${this.field.id}/${item.id}`
+                // );
+                return await axios.post(`${this.apiRoute}/destroy`, {
+                    field_id: this.field.id,
+                    payload: {
+                        list_item_id: item.id
+                    }
+                });
             } catch (e) {
                 console.log(e);
             }
@@ -174,11 +219,11 @@ export default {
         /**
          * Send loat items.
          */
-        sendLoadItems(parent) {
+        async sendLoadItems(parent) {
             try {
-                return axios.get(
-                    `${this.field.route_prefix}/list/${this.field.id}`
-                );
+                return await axios.post(`${this.apiRoute}/index`, {
+                    field_id: this.field.id
+                });
             } catch (e) {
                 console.log(e);
             }
@@ -188,31 +233,38 @@ export default {
          * Add list.
          */
         async addListItem(parent) {
-            let response = await this.sendAddListItem(parent);
+            let response = await this.sendCreateListItem(parent);
             if (!response) {
                 return;
             }
-            await this.loadItems();
 
-            this.itemToast('base.item_added');
-        },
-
-        __item() {
-            return this.__('base.item_item', { item: this.field.title });
+            this.newModel = this.crud(response.data);
+            this.$nextTick(() => {
+                this.$bvModal.show(this.modalId());
+            });
         },
 
         /**
-         * Send add list item request.
+         * Send create list item request.
          */
-        sendAddListItem(parent) {
+        async sendCreateListItem(parent) {
             try {
-                return axios.post(
-                    `${this.field.route_prefix}/list/${this.field.id}`,
-                    { parent_id: parent ? parent.id : null }
-                );
+                return await axios.post(`${this.apiRoute}/create`, {
+                    field_id: this.field.id,
+                    payload: {
+                        parent_id: parent.id || null
+                    }
+                });
             } catch (e) {
                 console.log(e);
             }
+        },
+
+        /**
+         * Translate item.
+         */
+        __item() {
+            return this.__('base.item_item', { item: this.field.title });
         },
 
         /**
@@ -348,6 +400,13 @@ export default {
             }
 
             return tree;
+        },
+
+        /**
+         * Create modal id.
+         */
+        modalId() {
+            return `list-modal-${this.field.route_prefix}-${this.field.local_key}-create`;
         }
     },
     computed: {
@@ -363,6 +422,10 @@ export default {
          */
         unflattened() {
             return this.unflatten(this.input);
+        },
+
+        apiRoute() {
+            return `${this.field.route_prefix}/list`;
         }
     }
 };

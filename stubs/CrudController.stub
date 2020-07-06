@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Controllers\CrudController;
 
-class DummyClassname extends CrudController
+class DummyClass extends CrudController
 {
     /**
      * Crud model class name.

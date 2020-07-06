@@ -2,10 +2,10 @@
 
 namespace FjordApp\Controllers\User;
 
-use Fjord\User\Models\FjordUser;
-use Illuminate\Database\Eloquent\Builder;
 use Fjord\Crud\Controllers\CrudController;
 use Fjord\Crud\Requests\CrudDeleteRequest;
+use Fjord\User\Models\FjordUser;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserController extends CrudController
 {
@@ -20,11 +20,12 @@ class UserController extends CrudController
      * Delete all.
      *
      * @param CrudDeleteRequest $request
+     *
      * @return void
      */
     public function destroyAll(CrudDeleteRequest $request)
     {
-        if (!is_array($request->ids)) {
+        if (! is_array($request->ids)) {
             abort(404);
         }
 
@@ -32,25 +33,26 @@ class UserController extends CrudController
 
         if (in_array(fjord_user()->id, $ids)) {
             return response()->json([
-                'message' => 'You cannot delete yourself.'
+                'message' => 'You cannot delete yourself.',
             ], 405);
         }
 
         $this->delete($this->query()->whereIn('id', $ids));
 
         return response()->json([
-            'message' => __f_choice('messages.deleted_items', count($request->ids))
+            'message' => __f_choice('messages.deleted_items', count($request->ids)),
         ], 200);
     }
 
     /**
      * Authorize request for permission operation and authenticated fjord-user.
-     * Operations: create, read, update, delete
+     * Operations: create, read, update, delete.
      *
      * @param FjordUser $user
-     * @param string $operation
-     * @param string $id
-     * @return boolean
+     * @param string    $operation
+     * @param string    $id
+     *
+     * @return bool
      */
     public function authorize(FjordUser $user, string $operation, $id = null): bool
     {

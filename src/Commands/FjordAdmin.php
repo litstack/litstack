@@ -2,8 +2,8 @@
 
 namespace Fjord\Commands;
 
-use Illuminate\Console\Command;
 use Fjord\User\Models\FjordUser;
+use Illuminate\Console\Command;
 use Spatie\Permission\Models\Role;
 
 class FjordAdmin extends Command
@@ -23,24 +23,15 @@ class FjordAdmin extends Command
     protected $description = 'This wizard will generate an admin user for you';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
      */
     public function handle()
     {
-        if (!Role::where('name', 'admin')->exists()) {
+        if (! Role::where('name', 'admin')->exists()) {
             $this->error('You may run fjord:install before fjord:admin.');
+
             return;
         }
 
@@ -52,11 +43,11 @@ class FjordAdmin extends Command
 
         $user = FjordUser::firstOrCreate([
             'username' => $username,
-            'email' => $email,
+            'email'    => $email,
         ], [
-            'password' => bcrypt($password),
+            'password'   => bcrypt($password),
             'first_name' => $first_name,
-            'last_name' => $last_name,
+            'last_name'  => $last_name,
         ]);
 
         $user->assignRole('admin');

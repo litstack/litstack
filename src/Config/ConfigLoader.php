@@ -2,12 +2,12 @@
 
 namespace Fjord\Config;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 /**
  * Config singleton.
- * 
+ *
  * @see \Fjord\Support\Facades\Config
  */
 class ConfigLoader
@@ -30,6 +30,7 @@ class ConfigLoader
      * Get key.
      *
      * @param sring $key
+     *
      * @return string
      */
     public function getKey(string $key)
@@ -40,6 +41,7 @@ class ConfigLoader
         if ($this->isKeyPath($key)) {
             return $this->getKeyFromPath($key);
         }
+
         return $key;
     }
 
@@ -47,29 +49,32 @@ class ConfigLoader
      * Is key namespace.
      *
      * @param string $key
-     * @return boolean
+     *
+     * @return bool
      */
     protected function isKeyNamespace(string $key)
     {
-        return !Str::contains($key, '.') && Str::contains($key, '\\');
+        return ! Str::contains($key, '.') && Str::contains($key, '\\');
     }
 
     /**
      * Is key path.
      *
      * @param string $key
-     * @return boolean
+     *
+     * @return bool
      */
     protected function isKeyPath(string $key)
     {
-        return !Str::contains($key, '.') && Str::contains($key, '/');
+        return ! Str::contains($key, '.') && Str::contains($key, '/');
     }
 
     /**
      * Get config by key.
      *
      * @param string $key
-     * @param array ...$params
+     * @param array  ...$params
+     *
      * @return mixed
      */
     public function get(string $key, ...$params)
@@ -81,7 +86,7 @@ class ConfigLoader
             return $this->loaded[$key];
         }
 
-        if (!$this->exists($key)) {
+        if (! $this->exists($key)) {
             return;
         }
 
@@ -104,22 +109,24 @@ class ConfigLoader
      * Get namespace of config by key.
      *
      * @param string $key
+     *
      * @return string
      */
     public function getNamespaceFromKey(string $key)
     {
         $name = '';
         foreach (explode('.', $key) as $part) {
-            $name .= "\\" . ucfirst(Str::camel($part));
+            $name .= '\\'.ucfirst(Str::camel($part));
         }
 
-        return $this->namespace . $name . "Config";
+        return $this->namespace.$name.'Config';
     }
 
     /**
      * Get config from path.
      *
      * @param string $path
+     *
      * @return ConfigHandler
      */
     public function getFromPath(string $path)
@@ -133,6 +140,7 @@ class ConfigLoader
      * Get path from key.
      *
      * @param string $key
+     *
      * @return string
      */
     public function getPathFromKey(string $key)
@@ -140,13 +148,15 @@ class ConfigLoader
         $path = collect(explode('.', $key))
             ->map(fn ($item) => ucfirst(Str::camel($item)))
             ->implode('/');
+
         return base_path("fjord/app/Config/{$path}Config.php");
     }
 
     /**
-     * Get key from path
+     * Get key from path.
      *
      * @param string $path
+     *
      * @return string
      */
     public function getKeyFromPath(string $path)
@@ -160,13 +170,14 @@ class ConfigLoader
      * Explode path.
      *
      * @param string $path
+     *
      * @return array
      */
     protected function explodePath(string $path)
     {
         // Replacing path for windows and unix.
         $modified = str_replace('\\', '/', $path);
-        $modified = str_replace(base_path('fjord/app/Config') . '/', '', $modified);
+        $modified = str_replace(base_path('fjord/app/Config').'/', '', $modified);
         $modified = str_replace('Config.php', '', $modified);
 
         return explode('/', $modified);
@@ -176,6 +187,7 @@ class ConfigLoader
      * Get key from namespace.
      *
      * @param string $namespace
+     *
      * @return string
      */
     public function getKeyFromNamespace(string $namespace)
@@ -189,7 +201,8 @@ class ConfigLoader
      * Check if config class exists.
      *
      * @param string $key
-     * @return boolean
+     *
+     * @return bool
      */
     public function exists(string $key)
     {

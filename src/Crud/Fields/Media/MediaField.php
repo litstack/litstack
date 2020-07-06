@@ -17,6 +17,7 @@ class MediaField extends RelationField
      * Set sortable.
      *
      * @param bool $sortable
+     *
      * @return $this
      */
     public function sortable(bool $sortable = true)
@@ -30,6 +31,7 @@ class MediaField extends RelationField
      * Set override.
      *
      * @param bool $override
+     *
      * @return $this
      */
     public function override(bool $override = true)
@@ -42,7 +44,8 @@ class MediaField extends RelationField
     /**
      * Set max files.
      *
-     * @param integer $maxFiles
+     * @param int $maxFiles
+     *
      * @return $this
      */
     public function maxFiles(int $maxFiles)
@@ -55,7 +58,8 @@ class MediaField extends RelationField
     /**
      * Set max image size.
      *
-     * @param integer $size
+     * @param int $size
+     *
      * @return $this
      */
     public function maxFileSize(int $size)
@@ -69,6 +73,7 @@ class MediaField extends RelationField
      * Accept mime types.
      *
      * @param string $mimeTypes
+     *
      * @return $this
      */
     public function accept($mimeTypes)
@@ -82,18 +87,20 @@ class MediaField extends RelationField
      * Get relation query for model.
      *
      * @param mixed $model
-     * @param boolean $query
+     * @param bool  $query
+     *
      * @return mixed
      */
     public function getRelationQuery($model)
     {
-        return $model->media()->where('collection', $this->id);
+        return $model->media()->where('collection_name', $this->id);
     }
 
     /**
      * Get results.
      *
      * @param mixed $model
+     *
      * @return mixed
      */
     public function getResults($model)

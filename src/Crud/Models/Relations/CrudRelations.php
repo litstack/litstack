@@ -2,11 +2,12 @@
 
 namespace Fjord\Crud\Models\Relations;
 
+use Fjord\Crud\Fields\ListField\ListRelation;
 use Fjord\Crud\Models\FormBlock;
 use Fjord\Crud\Models\FormListItem;
 use Fjord\Crud\Models\FormRelation;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\ServiceProvider;
 
 class CrudRelations extends ServiceProvider
 {
@@ -33,27 +34,16 @@ class CrudRelations extends ServiceProvider
         Builder::macro('listItems', function (string $fieldId) {
             $model = $this->getModel();
 
+            $morphMany = $model->morphMany(FormListItem::class, 'model');
 
-            $relation = $model->morphMany(FormListItem::class, 'model');
-
-            //dd($relation);
-
-            /*
             $relation = new ListRelation(
-                $this,
-                $model,
+                $morphMany->getQuery(),
+                $morphMany->getParent(),
                 $morphMany->getQualifiedMorphType(),
                 $morphMany->getQualifiedForeignKeyName(),
-                $model->getKeyName()
+                $morphMany->getLocalKeyName()
             );
-            */
 
-            /*
-            $relation = $model->morphMany(FormListItem::class, 'model')
-                ->with('translations')
-                ->orderBy('order_column');
-
-                */
             if ($fieldId) {
                 $relation->where('field_id', $fieldId);
             }
@@ -92,7 +82,7 @@ class CrudRelations extends ServiceProvider
     public function manyRelation()
     {
         Builder::macro('manyRelation', function (string $related, string $fieldId) {
-            $instance = new $related;
+            $instance = new $related();
             $model = $this->getModel();
 
             return $model->belongsToMany($related, 'form_relations', 'from_model_id', 'to_model_id', $model->getKeyName(), $instance->getKeyName())
@@ -111,7 +101,7 @@ class CrudRelations extends ServiceProvider
     public function oneRelation()
     {
         Builder::macro('oneRelation', function (string $related, string $fieldId) {
-            $instance = new $related;
+            $instance = new $related();
             $model = $this->getModel();
 
             return $model->hasOneThrough($related, FormRelation::class, 'from_model_id', $model->getKeyName(), $instance->getKeyName(), 'to_model_id')

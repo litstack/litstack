@@ -20,7 +20,7 @@ class OneRelationField extends LaravelRelationField
      */
     protected $availablePreviewTypes = [
         'table' => [],
-        'link' => ['linkValue', 'related_route_prefix']
+        'link'  => ['linkValue', 'related_route_prefix'],
     ];
 
     /**
@@ -40,9 +40,10 @@ class OneRelationField extends LaravelRelationField
 
     /**
      * Set link text.
-     * Example: "{first_name} {last_name}"
+     * Example: "{first_name} {last_name}".
      *
      * @param string $text
+     *
      * @return $this
      */
     public function linkValue(string $text)

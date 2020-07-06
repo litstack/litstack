@@ -20,10 +20,15 @@ trait ManagesConfig
      */
     protected function loadConfig()
     {
-        if (!$route = Request::route()) {
+        if (! $route = Request::route()) {
             return;
         }
 
         return $route->getConfig();
+    }
+
+    public function getConfig()
+    {
+        return $this->config;
     }
 }

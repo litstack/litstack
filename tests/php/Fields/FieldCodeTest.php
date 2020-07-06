@@ -4,9 +4,9 @@ namespace FjordTest\Fields;
 
 use Fjord\Crud\BaseField;
 use Fjord\Crud\Fields\Code;
+use Fjord\Crud\Fields\Traits\FieldHasRules;
 use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
-use Fjord\Crud\Fields\Traits\FieldHasRules;
 
 class FieldCodeTest extends BackendTestCase
 {

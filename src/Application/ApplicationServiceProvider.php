@@ -2,20 +2,19 @@
 
 namespace Fjord\Application;
 
-use Illuminate\Support\Str;
-use Illuminate\Routing\Router;
-use Fjord\Support\Facades\Config;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\View;
-use Fjord\Support\Facades\FjordRoute;
-use Illuminate\View\View as ViewClass;
-use Illuminate\Support\ServiceProvider;
-use Fjord\Commands\FjordFormPermissions;
-use Fjord\Application\Kernel\HandleViewComposer;
 use Fjord\Application\Composer\HttpErrorComposer;
-use Fjord\Application\Kernel\HandleRouteMiddleware;
 use Fjord\Application\Controllers\NotFoundController;
+use Fjord\Application\Kernel\HandleRouteMiddleware;
+use Fjord\Application\Kernel\HandleViewComposer;
+use Fjord\Commands\FjordFormPermissions;
+use Fjord\Support\Facades\Config;
+use Fjord\Support\Facades\FjordRoute;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
+use Illuminate\View\View as ViewClass;
 
 class ApplicationServiceProvider extends ServiceProvider
 {
@@ -33,23 +32,25 @@ class ApplicationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Fix: config_type
+     * Fix: config_type.
      */
     public function fixMigrations()
     {
-        if (app()->runningInConsole()) return;
+        if (app()->runningInConsole()) {
+            return;
+        }
         // Fix: config_type
         try {
-            if (!\Illuminate\Support\Facades\Schema::hasColumn('form_blocks', 'form_type')) {
+            if (! \Illuminate\Support\Facades\Schema::hasColumn('form_blocks', 'form_type')) {
                 \Illuminate\Support\Facades\Schema::table('form_blocks', fn ($table) => $table->string('form_type')->after('model_id'));
             }
-            if (!\Illuminate\Support\Facades\Schema::hasColumn('form_blocks', 'config_type')) {
+            if (! \Illuminate\Support\Facades\Schema::hasColumn('form_blocks', 'config_type')) {
                 \Illuminate\Support\Facades\Schema::table('form_blocks', fn ($table) => $table->string('config_type')->after('model_id'));
             }
-            if (!\Illuminate\Support\Facades\Schema::hasColumn('form_fields', 'form_type')) {
+            if (! \Illuminate\Support\Facades\Schema::hasColumn('form_fields', 'form_type')) {
                 \Illuminate\Support\Facades\Schema::table('form_fields', fn ($table) => $table->string('form_type')->after('id'));
             }
-            if (!\Illuminate\Support\Facades\Schema::hasColumn('form_fields', 'config_type')) {
+            if (! \Illuminate\Support\Facades\Schema::hasColumn('form_fields', 'config_type')) {
                 \Illuminate\Support\Facades\Schema::table('form_fields', fn ($table) => $table->string('config_type')->after('id'));
             }
             $this->fixFormFields();
@@ -58,7 +59,7 @@ class ApplicationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Fix: config_type
+     * Fix: config_type.
      */
     public function fixFormFields()
     {
@@ -67,13 +68,13 @@ class ApplicationServiceProvider extends ServiceProvider
             $key = "form.{$field->collection}.{$field->form_name}";
             $name = '';
             foreach (explode('.', $key) as $part) {
-                $name .= "\\" . ucfirst(Str::camel($part));
+                $name .= '\\'.ucfirst(Str::camel($part));
             }
 
-            $type = "FjordApp\Config" . $name . "Config";
+            $type = "FjordApp\Config".$name.'Config';
             DB::table('form_fields')->where('id', $field->id)->update([
                 'config_type' => $type,
-                'form_type' => 'show'
+                'form_type'   => 'show',
             ]);
         }
     }
@@ -82,6 +83,7 @@ class ApplicationServiceProvider extends ServiceProvider
      * Bootstrap the application services.
      *
      * @param \Illuminate\Routing\Router $router
+     *
      * @return void
      */
     public function boot(Router $router): void
@@ -92,7 +94,7 @@ class ApplicationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Add css files from config fjord.assets.css
+     * Add css files from config fjord.assets.css.
      *
      * @return void
      */
@@ -108,6 +110,7 @@ class ApplicationServiceProvider extends ServiceProvider
      * Handle kernel methods "handleRoute" and "handleView".
      *
      * @param \Illuminate\Routing\Router $router
+     *
      * @return void
      */
     protected function handleKernel(Router $router)
@@ -126,7 +129,7 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     public function fjordErrorPages()
     {
-        // Register route {any} after all service providers have been booted to 
+        // Register route {any} after all service providers have been booted to
         // not override other routes.
         $this->app->booted(function () {
             FjordRoute::get('{any}', NotFoundController::class)

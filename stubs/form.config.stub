@@ -1,0 +1,56 @@
+<?php
+
+namespace DummyNamespace;
+
+use Fjord\Crud\CrudShow;
+use Fjord\Crud\Config\FormConfig;
+use FjordApp\Controllers\Form\DummyCollection\DummyController;
+
+class DummyClass extends FormConfig
+{
+    /**
+     * Controller class.
+     *
+     * @var string
+     */
+    public $controller = DummyController::class;
+
+    /**
+     * Form route prefix.
+     *
+     * @return string
+     */
+    public function routePrefix()
+    {
+        return "DummyControllerRouteName/DummyFormRouteName";
+    }
+
+    /**
+     * Form singular name. This name will be displayed in the navigation.
+     *
+     * @return array
+     */
+    public function names()
+    {
+        return [
+            'singular' => 'DummyFormName',
+        ];
+    }
+
+    /**
+     * Setup form page.
+     *
+     * @param \Fjord\Crud\CrudShow $page
+     * @return void
+     */
+    public function show(CrudShow $page)
+    {
+        $page->card(function($form) {
+
+            $form->input('text')
+                ->title('text');
+
+            // ...
+        });
+    }
+}

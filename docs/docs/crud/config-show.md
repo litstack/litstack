@@ -2,12 +2,12 @@
 
 [[toc]]
 
-In the `show` method of a **Form** or a **CRUD** config all components and fields are configured for editing the data.
+In the `show` method of a **Form** or a **CRUD** config all components and fields are configured for editing the data. The first parameter is an instance of `Fjord\Page\Page` so all functions described in the [Fjord Page](/docs/basics/page) documentation can be used.
 
 ```php
 use Fjord\Crud\CrudShow;
 
-public function show(CrudShow $container)
+public function show(CrudShow $page)
 {
     // Define the page here.
 }
@@ -20,9 +20,9 @@ Form fields must be grouped into `cards`. You are free to create only one or any
 ```php
 use Fjord\Crud\CrudShow;
 
-public function show(CrudShow $container)
+public function show(CrudShow $page)
 {
-    $container->card(function ($form) {
+    $page->card(function ($form) {
 
         // Build your form in here.
 
@@ -46,21 +46,6 @@ $form->group(function($form) {
 })->width(6);
 ```
 
-## Component
-
-With `component` a custom **Vue component** can be integrated.
-
-```php
-use Fjord\Crud\CrudShow;
-
-public function show(CrudShow $container)
-{
-    $container->component('my-component');
-
-    // ...
-}
-```
-
 Read the [Extend Vue](/docs/basics/vue.html#bootstrap-vue) section to learn how to register your own Vue components.
 
 ## Info
@@ -70,27 +55,12 @@ A good content administration interface includes **descriptions** that help the 
 ```php
 use Fjord\Crud\CrudShow;
 
-public function show(CrudShow $container)
+public function show(CrudShow $page)
 {
-    $container->info('Address')
+    $page->info('Address')
         ->width(4)
         ->text('This address appears on your <a href="'.route('invoices').'">invoices</a>.')
         ->text(...);
-
-    // ...
-}
-```
-
-## Container Size
-
-By default, the container on the show page has a maximum width. If you want the containers to expand to the maximum width for a better overview, this can be achieved with the `expand` method.
-
-```php
-use Fjord\Crud\CrudShow;
-
-public function show(CrudShow $container)
-{
-    $container->expand();
 
     // ...
 }

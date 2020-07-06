@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class FormFieldTranslation extends Model
 {
     /**
-     * No timestamps
+     * No timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
     /**
-     * Fillable attributes
+     * Fillable attributes.
      *
      * @var array
      */
@@ -26,6 +26,6 @@ class FormFieldTranslation extends Model
      * @var array
      */
     protected $casts = [
-        'value' => 'json'
+        'value' => 'json',
     ];
 }

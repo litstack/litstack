@@ -3,13 +3,12 @@
 namespace FjordTest\CrudController;
 
 use FjordTest\BackendTestCase;
-use FjordTest\FrontendTestCase;
 use FjordTest\TestSupport\Models\Post;
 use FjordTest\Traits\InteractsWithCrud;
 
 /**
  * This test is using the Crud Post.
- * 
+ *
  * @see FjordApp\Config\Crud\PostConfig
  * @see FjordTest\TestSupport\Models\Post
  */
@@ -29,7 +28,7 @@ class ApiStoreTest extends BackendTestCase
     public function test_creationRule_validation_fails()
     {
         // Asserting 302 since we have the creationRule required for the title.
-        $url = $this->getCrudRoute("/show");
+        $url = $this->getCrudRoute('/api/show');
         $response = $this->post($url);
         $response->assertStatus(302);
     }
@@ -38,16 +37,18 @@ class ApiStoreTest extends BackendTestCase
     public function test_global_rule_validation_fails()
     {
         // Asserting 302 since we have the rule min:2 for the title.
-        $url = $this->getCrudRoute("/show");
-        $response = $this->post($url, ['title' => 'a']);
+        $url = $this->getCrudRoute('/api/show');
+        $response = $this->post($url, ['payload' => ['title' => 'a']]);
         $response->assertStatus(302);
     }
 
     /** @test */
     public function it_stores_model()
     {
-        $url = $this->getCrudRoute("/show");
-        $response = $this->post($url, ['title' => 'dummy title']);
+        $url = $this->getCrudRoute('/api/show');
+        $response = $this->post($url, [
+            'payload' => ['title' => 'dummy title'],
+        ]);
         $response->assertStatus(200);
 
         $this->assertCount(1, Post::all());

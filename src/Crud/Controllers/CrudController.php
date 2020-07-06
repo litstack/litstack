@@ -2,32 +2,20 @@
 
 namespace Fjord\Crud\Controllers;
 
-use Illuminate\Http\Request;
-use Fjord\Crud\RelationField;
-use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Fields\Media\MediaField;
-use Fjord\Crud\Requests\CrudReadRequest;
-use Illuminate\Database\Eloquent\Builder;
+use Fjord\Crud\RelationField;
 use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudDeleteRequest;
+use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
+use Fjord\User\Models\FjordUser;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
-abstract class CrudController
+abstract class CrudController extends CrudBaseController
 {
-    use Api\CrudBaseApi,
-        Api\CrudHasIndex,
-        Api\CrudHasRelations,
-        Api\CrudHasBlock,
-        Api\CrudHasList,
-        Api\CrudHasMedia,
-        Api\CrudHasOrder,
-        Api\CrudHasModal,
-        Concerns\ManagesForm,
-        Concerns\ManagesConfig,
-        Concerns\ManagesCrud;
-
     /**
-     * The Model Class e.g. App\Models\Post
+     * The Model Class e.g. App\Models\Post.
      *
      * @var string
      */
@@ -35,24 +23,18 @@ abstract class CrudController
 
     /**
      * Authorize request for permission operation and authenticated fjord-user.
-     * Operations: create, read, update, delete
+     * Operations: create, read, update, delete.
      *
      * @param \Fjord\User\Models\FjordUser $user
-     * @param string $operation
-     * @return boolean
+     * @param string                       $operation
+     *
+     * @return bool
      */
     //abstract public function authorize(FjordUser $user, string $operation, $id = null);
 
     /**
-     * Initial query.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    abstract public function query(): Builder;
-
-    /**
      * Create new CrudController instance.
-     * 
+     *
      * @return void
      */
     public function __construct()
@@ -64,7 +46,8 @@ abstract class CrudController
      * Load model.
      *
      * @param CrudReadRequest $request
-     * @param int $id
+     * @param int             $id
+     *
      * @return array
      */
     public function load(CrudReadRequest $request, $id)
@@ -81,6 +64,7 @@ abstract class CrudController
      * Delete by query.
      *
      * @param Builder $query
+     *
      * @return void
      */
     public function delete(Builder $query)
@@ -92,6 +76,7 @@ abstract class CrudController
      * Delete one.
      *
      * @param CrudDeleteRequest $request
+     *
      * @return void
      */
     public function destroy(CrudDeleteRequest $request, $id)
@@ -105,18 +90,19 @@ abstract class CrudController
      * Delete all.
      *
      * @param CrudDeleteRequest $request
+     *
      * @return void
      */
     public function destroyAll(CrudDeleteRequest $request)
     {
-        if (!is_array($request->ids)) {
+        if (! is_array($request->ids)) {
             abort(405);
         }
 
         $this->delete($this->query()->whereIn('id', $request->ids));
 
         return response()->json([
-            'message' => __f_choice('messages.deleted_items', count($request->ids))
+            'message' => __f_choice('messages.deleted_items', count($request->ids)),
         ], 200);
     }
 
@@ -124,12 +110,12 @@ abstract class CrudController
      * Show Crud index.
      *
      * @param CrudReadRequest $request
+     *
      * @return View
      */
     public function index(CrudReadRequest $request)
     {
         $config = $this->config->get(
-            'index',
             'route_prefix',
             'names',
             'sortBy',
@@ -142,19 +128,22 @@ abstract class CrudController
             'permissions'
         );
 
-        return view('fjord::app')
-            ->withTitle($config['names']['plural'])
-            ->withComponent($this->config->indexComponent)
-            ->withProps([
+        $page = $this->config->index
+            ->title($this->config->names['plural'])
+            ->bind([
                 'config' => $config,
-                'headerComponents' => [],
             ]);
+
+        $page->navigationRight()->component('fj-crud-create-button');
+
+        return $page;
     }
 
     /**
      * Show Crud create.
      *
      * @param CrudCreateRequest $request
+     *
      * @return void
      */
     public function create(CrudCreateRequest $request)
@@ -171,27 +160,28 @@ abstract class CrudController
         return view('fjord::app')
             ->withComponent($this->config->formComponent)
             ->withTitle(__f('base.item_create', [
-                'item' => $config['names']['singular']
+                'item' => $config['names']['singular'],
             ]))
             ->withProps([
-                'crud-model' => crud(new $this->model),
-                'config' => $config,
-                'headerComponents' => []
+                'crud-model'       => crud(new $this->model()),
+                'config'           => $config,
+                'headerComponents' => [],
             ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(CrudReadRequest $request, $id)
     {
         // Eager loads relations.
         $query = $this->query();
-        foreach ($this->getForm('show')->getRegisteredFields() as $field) {
-            if ($field instanceof RelationField && !$field instanceof MediaField) {
+        foreach ($this->config->show->getRegisteredFields() as $field) {
+            if ($field instanceof RelationField && ! $field instanceof MediaField) {
                 $query->with($field->getRelationName());
             }
         }
@@ -202,7 +192,7 @@ abstract class CrudController
         $model->last_edit;
 
         // Append media.
-        foreach ($this->getForm('show')->getRegisteredFields() as $field) {
+        foreach ($this->config->show->getRegisteredFields() as $field) {
             if ($field instanceof MediaField) {
                 $model->append($field->id);
             }
@@ -220,7 +210,7 @@ abstract class CrudController
 
         // Set readonly if the user has no update permission for this crud.
         foreach ($config['form']->getRegisteredFields() as $field) {
-            if (!$config['permissions']['update']) {
+            if (! $config['permissions']['update']) {
                 $field->readonly();
             }
         }
@@ -233,24 +223,32 @@ abstract class CrudController
         $previous = $this->model::where('id', '<', $id)->orderBy('id', 'desc')->select('id')->first()->id ?? null;
         $next = $this->model::where('id', '>', $id)->orderBy('id')->select('id')->first()->id ?? null;
 
-        return view('fjord::app')->withComponent($this->config->formComponent)
-            ->withTitle($this->config->names['singular'])
-            ->withProps([
+        $page = $this->config->show
+            ->title($this->config->names['singular'])
+            ->bindToView([
+                'model'  => $model,
+                'config' => $this->config,
+            ])
+            ->bindToVue([
                 'crud-model' => crud($model),
-                'config' => $config,
-                'backRoute' => $this->config->route_prefix,
-                'nearItems' => [
-                    'next' => $next,
-                    'previous' => $previous
-                ],
-                'controls' => [],
+                'config'     => $config,
             ]);
+
+        // Show near items.
+        $page->navigationLeft()->component('fj-crud-show-near-items')->bind([
+            'next'         => $next,
+            'previous'     => $previous,
+            'route-prefix' => $this->config->routePrefix,
+        ]);
+
+        return $page;
     }
 
     /**
      * Sort.
      *
      * @param CrudUpdateRequest $request
+     *
      * @return void
      */
     public function order(CrudUpdateRequest $request)
@@ -264,7 +262,7 @@ abstract class CrudController
         foreach ($ids as $order => $id) {
             $model = $models->where('id', $id)->first();
 
-            if (!$model) {
+            if (! $model) {
                 continue;
             }
             $model->{$this->config->orderColumn} = $order;

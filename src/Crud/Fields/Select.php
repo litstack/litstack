@@ -26,6 +26,7 @@ class Select extends BaseField
      * Set select options.
      *
      * @param array $options
+     *
      * @return self
      */
     public function options(array $options)

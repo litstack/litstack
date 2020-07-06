@@ -2,8 +2,8 @@
 
 namespace FjordApp\Config\Form\Collections;
 
-use Fjord\Crud\CrudShow;
 use Fjord\Crud\Config\FormConfig;
+use Fjord\Crud\CrudShow;
 use FjordApp\Controllers\Form\Collections\SettingsController;
 
 class SettingsConfig extends FormConfig
@@ -22,7 +22,7 @@ class SettingsConfig extends FormConfig
      */
     public function routePrefix()
     {
-        return "settings";
+        return 'settings';
     }
 
     /**
@@ -33,19 +33,20 @@ class SettingsConfig extends FormConfig
     public function names()
     {
         return [
-            'singular' => 'Settings'
+            'singular' => 'Settings',
         ];
     }
 
     /**
      * Setup form.
      *
-     * @param \Fjord\Crud\CrudShow $form
+     * @param \Fjord\Crud\CrudShow $page
+     *
      * @return void
      */
-    public function show(CrudShow $container)
+    public function show(CrudShow $page)
     {
-        $container->card(function ($form) {
+        $page->card(function ($form) {
             $form->input('title')
                 ->title('Title')
                 ->width(12)

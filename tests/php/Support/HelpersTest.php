@@ -2,10 +2,10 @@
 
 namespace FjordTest\Support;
 
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Fjord\Crud\Models\Traits\Translatable;
 use FjordTest\BackendTestCase;
 use Illuminate\Database\Eloquent\Model;
-use Fjord\Crud\Models\Traits\Translatable;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
 class HelpersTest extends BackendTestCase
 {
@@ -13,9 +13,9 @@ class HelpersTest extends BackendTestCase
     public function test_is_translatale_method()
     {
         $this->assertFalse(is_translatable(HelpersNonTranslatableModel::class));
-        $this->assertFalse(is_translatable(new HelpersNonTranslatableModel));
+        $this->assertFalse(is_translatable(new HelpersNonTranslatableModel()));
         $this->assertTrue(is_translatable(HelpersTranslatableModel::class));
-        $this->assertTrue(is_translatable(new HelpersTranslatableModel));
+        $this->assertTrue(is_translatable(new HelpersTranslatableModel()));
     }
 
     /** @test */

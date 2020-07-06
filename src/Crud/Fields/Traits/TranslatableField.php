@@ -7,7 +7,8 @@ trait TranslatableField
     /**
      * Set field translatable.
      *
-     * @param boolean $translatable
+     * @param bool $translatable
+     *
      * @return self
      */
     public function translatable(bool $translatable = true)
@@ -18,9 +19,9 @@ trait TranslatableField
     }
 
     /**
-     * Set translatable default attribute
+     * Set translatable default attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function setTranslatableDefault(): bool
     {

@@ -10,73 +10,6 @@ The main task of an admin panel is to manage data. Fjord offers easy editing and
 
 The `fjord/app/Config/Crud` directory contains all configuration files for your CRUD-Models. Each model has its own file and is set up individually. Configurations can be created for existing Models.
 
-<!--
-## Translatable
-
-For the translation of models, the [Astronomic Translatable](https://docs.astrotomic.info/laravel-translatable/installation#migrations) package is used.
-
-### Migration
-
-To translate Models, an extra translation table is needed. For `posts` this could be `posts_translations`. The translation table contains all attributes to be translated. In the following example the `title` and `text` would be translatable.
-
-```php{13,14}
-// create_posts_table.php
-
-Schema::create('posts', function(Blueprint $table) {
-    $table->increments('id');
-    $table->timestamps();
-});
-
-Schema::create('post_translations', function(Blueprint $table) {
-    $table->increments('id');
-    $table->integer('post_id')->unsigned();
-    $table->string('locale')->index();
-
-    $table->string('title');
-    $table->text('text');
-
-    $table->unique(['post_id', 'locale']);
-    $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
-});
-```
-
-### Model
-
-A model must be created for each table. In `App\Models\Post` the translatable attributes are specified in `translatedAttributes` and in `App\Models\Translation\PostTranslation` the attributes must be specified as **fillable** like so:
-
-```php
-namespace App\Models\Translation;
-
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Fjord\Crud\Models\Traits\Translatable;
-
-class Post extends Model implements TranslatableContract
-{
-    use Translatable;
-
-    public $translatedAttributes = ['title', 'text'];
-}
-```
-
-::: warning
-Be careful to include the correct `trait`. Fjord uses `Fjord\Crud\Models\Traits\Translatable` differently than Astronomic.
-:::
-
-```php
-namespace App\Models\Translation;
-
-class PostTranslation extends Model
-{
-    public $timestamps = false;
-    protected $fillable = ['title', 'text'];
-}
-```
-
-## Media
-
-## Sluggable
--->
-
 ## Create
 
 In order to create your index table and update & edit form three things are needed.
@@ -227,26 +160,6 @@ public $model = Article::class;
  * @var string
  */
 public $controller = ArticleController::class;
-```
-
-### Container Size
-
-By default, the containers for the index table and the create & update form have a maximum width. If you want the containers to expand to the maximum width for a better overview, this can be achieved with `expandIndexContainer` and `expandFormContainer`.
-
-```php
-/**
- * Set bootstrap container on index page to fluid.
- *
- * @var boolean
- */
-public $expandIndexContainer = true;
-
-/**
- * Set bootstrap container on create and update page to fluid.
- *
- * @var boolean
- */
-public $expandFormContainer = true;
 ```
 
 ### Index Table, Create & Update Form

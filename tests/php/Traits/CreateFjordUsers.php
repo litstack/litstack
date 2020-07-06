@@ -20,7 +20,7 @@ trait CreateFjordUsers
      */
     protected $fjordUsersToCreate = [
         'admin@admin.com' => 'admin',
-        'user@user.com' => 'user',
+        'user@user.com'   => 'user',
     ];
 
     /**

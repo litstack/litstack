@@ -2,21 +2,21 @@
 
 namespace Fjord;
 
-use Illuminate\Support\Str;
-use Illuminate\Routing\Router;
-use Fjord\Support\Facades\Config;
 use Fjord\Crud\Fields\Block\Block;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\File;
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\ServiceProvider;
+use Fjord\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 /**
- * Service providers and console commands that should be registered without 
- * Fjord being installed. All services that should only be registered if Fjord 
- * is installed are specified in \Fjord\FjordPackage. 
+ * Service providers and console commands that should be registered without
+ * Fjord being installed. All services that should only be registered if Fjord
+ * is installed are specified in \Fjord\FjordPackage.
  */
 class FjordServiceProvider extends ServiceProvider
 {
@@ -47,8 +47,8 @@ class FjordServiceProvider extends ServiceProvider
      * @var array
      */
     protected $aliases = [
-        'Fjord' => Support\Facades\Fjord::class,
-        'FjordApp' => Support\Facades\FjordApp::class,
+        'Fjord'     => Support\Facades\Fjord::class,
+        'FjordApp'  => Support\Facades\FjordApp::class,
         'FjordLang' => Support\Facades\FjordLang::class,
     ];
 
@@ -64,7 +64,8 @@ class FjordServiceProvider extends ServiceProvider
     /**
      * Create a new FjordServiceProvider instance.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @param \Illuminate\Contracts\Foundation\Application $app
+     *
      * @return void
      */
     public function __construct($app)
@@ -78,12 +79,13 @@ class FjordServiceProvider extends ServiceProvider
      * Bootstrap the application services.
      *
      * @param Router $router
+     *
      * @return void
      */
     public function boot(Router $router)
     {
         // Load Fjord views.
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'fjord');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'fjord');
 
         $this->middlewares($router);
 
@@ -94,6 +96,7 @@ class FjordServiceProvider extends ServiceProvider
      * Register middlewares.
      *
      * @param Router $router
+     *
      * @return void
      */
     protected function middlewares(Router $router)
@@ -122,17 +125,17 @@ class FjordServiceProvider extends ServiceProvider
 
     /**
      * Merge fjord config.
-     * https://laravel.com/docs/7.x/packages#configuration
+     * https://laravel.com/docs/7.x/packages#configuration.
      *
      * @return void
      */
     public function config()
     {
-        // Merging the new fjord config from vendor package folder to the one 
-        // that is located in config/fjord.php, to avoid errors when older 
+        // Merging the new fjord config from vendor package folder to the one
+        // that is located in config/fjord.php, to avoid errors when older
         // version of Fjord was installed before.
         $this->mergeConfigFrom(
-            __DIR__ . '/../publish/config/fjord.php',
+            __DIR__.'/../publish/config/fjord.php',
             'fjord'
         );
     }
@@ -160,7 +163,7 @@ class FjordServiceProvider extends ServiceProvider
      */
     protected function lightsOn()
     {
-        if (!$this->app['fjord']->installed()) {
+        if (! $this->app['fjord']->installed()) {
             return;
         }
 
@@ -181,33 +184,52 @@ class FjordServiceProvider extends ServiceProvider
         $this->app[\FjordApp\Kernel::class];
 
         // Fix: config_type
-        if (app()->runningInConsole() || env('APP_ENV') == 'testing' || env('APP_ENV') === null) return;
-        if (!DB::table('form_blocks')->where('config_type', '')->exists()) {
+        if (app()->runningInConsole() || env('APP_ENV') == 'testing' || env('APP_ENV') === null) {
             return;
         }
-        foreach (File::allFiles(base_path('fjord/app/Config')) as $configPath) {
-            if (!Str::endsWith(basename($configPath), 'Config.php')) {
-                continue;
-            }
-
-            try {
-                $namespace = 'FjordApp\\Config\\' . collect(explode('/', str_replace('.php', '', str_replace(base_path('fjord/app/Config') . '/', '', $configPath))))
-                    ->map(fn ($item) => ucfirst(Str::camel($item)))
-                    ->implode('\\');
-                $config = Config::get($namespace);
-                $fields = $config->show->getRegisteredFields();
-            } catch (\Throwable $e) {
-                continue;
-            }
-            foreach ($fields as $field) {
-                if (!$field instanceof Block) {
+        if (! DB::table('form_blocks')->where('config_type', '')->exists()) {
+            return;
+        }
+        $this->app->booted(function () {
+            foreach (File::allFiles(base_path('fjord/app/Config')) as $configPath) {
+                if (! Str::endsWith(basename($configPath), 'Config.php')) {
                     continue;
                 }
-                DB::table('form_blocks')->where('model_type', $config->model)->where('config_type', '')->update([
-                    'config_type' => get_class($config->getConfig())
-                ]);
+
+                try {
+                    $namespace = 'FjordApp\\Config\\'.collect(explode('/', str_replace('.php', '', str_replace(base_path('fjord/app/Config').'/', '', $configPath))))
+                        ->map(fn ($item) => ucfirst(Str::camel($item)))
+                        ->implode('\\');
+
+                    $config = Config::get($namespace);
+                    $fields = $config->show->getRegisteredFields();
+                } catch (\Throwable $e) {
+                    continue;
+                }
+                if (! $config->has('show')) {
+                    continue;
+                }
+
+                foreach ($fields as $field) {
+                    if (! $field instanceof Block) {
+                        continue;
+                    }
+
+                    $query = DB::table('form_blocks')->where('model_type', $config->model)->where('config_type', '');
+                    if ($config->model == FormField::class) {
+                        $formField = DB::table('form_fields')->where('config_type', $namespace)->first();
+
+                        if (! $formField) {
+                            return;
+                        }
+                        $query->where('model_id', $formField->id);
+                    }
+                    $query->update([
+                        'config_type' => get_class($config->getConfig()),
+                    ]);
+                }
             }
-        }
+        });
     }
 
     /**
@@ -235,7 +257,7 @@ class FjordServiceProvider extends ServiceProvider
             $this->app->register($provider);
         }
 
-        if (!fjord()->installed()) {
+        if (! fjord()->installed()) {
             return;
         }
     }
@@ -247,7 +269,7 @@ class FjordServiceProvider extends ServiceProvider
      */
     protected function artisan()
     {
-        if (!App::runningInConsole()) {
+        if (! App::runningInConsole()) {
             return;
         }
 
@@ -263,11 +285,11 @@ class FjordServiceProvider extends ServiceProvider
     protected function publish()
     {
         $this->publishes([
-            __DIR__ . '/../publish/config' => config_path(),
+            __DIR__.'/../publish/config' => config_path(),
         ], 'config');
 
         $this->publishes([
-            __DIR__ . '/../publish/database/migrations' => database_path('migrations'),
+            __DIR__.'/../publish/database/migrations' => database_path('migrations'),
         ], 'migrations');
     }
 
@@ -278,6 +300,6 @@ class FjordServiceProvider extends ServiceProvider
      */
     protected function loadFactories()
     {
-        $this->app[Factory::class]->load(__DIR__ . '/Factories');
+        $this->app[Factory::class]->load(__DIR__.'/Factories');
     }
 }

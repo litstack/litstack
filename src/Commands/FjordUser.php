@@ -2,9 +2,9 @@
 
 namespace Fjord\Commands;
 
-use Illuminate\Console\Command;
 use Fjord\Support\Facades\Fjord;
 use Fjord\User\Models\FjordUser as FjordUserModel;
+use Illuminate\Console\Command;
 
 class FjordUser extends Command
 {
@@ -23,24 +23,15 @@ class FjordUser extends Command
     protected $description = 'This wizard will generate an user for you';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
      */
     public function handle()
     {
-        if (!Fjord::installed()) {
+        if (! Fjord::installed()) {
             $this->error('You may run fjord:install before fjord:user.');
+
             return;
         }
 
@@ -52,11 +43,11 @@ class FjordUser extends Command
 
         $user = FjordUserModel::firstOrCreate([
             'username' => $username,
-            'email' => $email,
+            'email'    => $email,
         ], [
-            'password' => bcrypt($password),
+            'password'   => bcrypt($password),
             'first_name' => $first_name,
-            'last_name' => $last_name,
+            'last_name'  => $last_name,
         ]);
 
         $user->assignRole('user');

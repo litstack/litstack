@@ -2,14 +2,13 @@
 
 namespace FjordTest\Crud;
 
-use Mockery as m;
-use Fjord\Crud\Field;
 use Fjord\Crud\BaseForm;
-use Fjord\Vue\Component;
-use FjordTest\BackendTestCase;
+use Fjord\Crud\Field;
+use Fjord\Exceptions\Traceable\BadMethodCallException;
 use Fjord\Support\Facades\Fjord;
+use FjordTest\BackendTestCase;
 use Illuminate\Database\Eloquent\Model;
-use Fjord\Exceptions\MethodNotFoundException;
+use Mockery as m;
 
 class BaseFormTest extends BackendTestCase
 {
@@ -23,7 +22,7 @@ class BaseFormTest extends BackendTestCase
     /** @test */
     public function it_fails_when_not_existing_field_gets_called()
     {
-        $this->expectException(MethodNotFoundException::class);
+        $this->expectException(BadMethodCallException::class);
         $this->form->someFormField();
     }
 
@@ -95,43 +94,6 @@ class BaseFormTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_wrapper()
-    {
-        $this->assertFalse($this->form->inWrapper());
-        $this->form->wrapper('dummy-wrapper', function ($form) {
-            $this->assertTrue($form->inWrapper());
-        });
-        $this->assertFalse($this->form->inWrapper());
-    }
-
-    /** @test */
-    public function wrapper_returns_wrapping_component()
-    {
-        $component = $this->form->wrapper('dummy-wrapper', function ($form) {
-            //
-        });
-
-        $this->assertInstanceOf(Component::class, $component);
-        $this->assertEquals('dummy-wrapper', $component->getName());
-    }
-
-    /** @test */
-    public function test_wrapper_in_wrapper()
-    {
-        $this->assertFalse($this->form->inWrapper());
-        $this->form->wrapper('dummy-wrapper', function ($form) {
-            $this->form->wrapper('nested-dummy-wrapper', function ($form) {
-                $this->assertTrue($form->inWrapper());
-            });
-
-            $this->assertTrue($form->inWrapper());
-            $children = $form->getWrapper()->children;
-            $this->assertEquals(1, $children->count());
-        });
-        $this->assertFalse($this->form->inWrapper());
-    }
-
-    /** @test */
     public function it_appends_fields_to_wrapper()
     {
         $this->form->wrapper('dummy-wrapper', function ($form) {
@@ -140,8 +102,8 @@ class BaseFormTest extends BackendTestCase
 
             $children = $form->getWrapper()->children;
             $this->assertCount(2, $children);
-            $this->assertEquals("dummy-field", $children[0]->field->id);
-            $this->assertEquals("other-field", $children[1]->field->id);
+            $this->assertEquals('dummy-field', $children[0]->field->id);
+            $this->assertEquals('other-field', $children[1]->field->id);
         });
     }
 
@@ -179,7 +141,6 @@ class BaseFormTest extends BackendTestCase
         $this->form->registerField(DummyBaseFormFieldMock::class, 'dummy-field');
         $this->form->registerField(DummyBaseFormFieldMock::class, 'other-field');
 
-
         $field = $this->form->findField('dummy-field');
         $this->assertEquals('dummy-field', $field->id);
         $field = $this->form->findField('other-field');
@@ -194,10 +155,10 @@ class BaseFormTest extends BackendTestCase
         $field2 = m::mock('field');
         $field2->shouldReceive('checkComplete')->once();
         $this->setUnaccessibleProperty($this->form, 'registeredFields', [
-            $field1, $field2
+            $field1, $field2,
         ]);
 
-        $this->form->toJson();
+        $this->form->render();
     }
 }
 

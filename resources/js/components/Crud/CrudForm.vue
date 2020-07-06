@@ -128,7 +128,7 @@ export default {
             let response;
             try {
                 response = await axios.get(
-                    `${this.config.route_prefix}/${this.model.id}/load`
+                    `${this.config.route_prefix}/${this.model.id}/api/show/default/load`
                 );
             } catch (e) {
                 console.log(e);
@@ -140,14 +140,14 @@ export default {
             let result;
             result = results.findSucceeded(
                 'put',
-                `${this.config.route_prefix}/${this.model.id}`
+                `${this.config.route_prefix}/${this.model.id}/api/show`
             );
             if (result) {
                 this.model = this.crud(result.data);
             }
             result = results.findSucceeded(
                 'post',
-                `${this.config.route_prefix}/show`
+                `${this.config.route_prefix}/api/show`
             );
             if (result) {
                 this.model = this.crud(result.data);

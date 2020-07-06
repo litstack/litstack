@@ -2,17 +2,18 @@
 
 namespace Fjord\Application\Bootstrap;
 
-use FjordApp\Kernel;
 use Fjord\Application\Application;
-use Illuminate\Support\Facades\App;
+use FjordApp\Kernel;
 use Illuminate\Console\Application as Artisan;
+use Illuminate\Support\Facades\App;
 
 class BootstrapKernel
 {
     /**
      * Registers artisan commands of all fjord packages.
-     * 
+     *
      * @param \Fjord\Application\Application $app
+     *
      * @return void
      */
     public function bootstrap(Application $app, Kernel $kernel)
@@ -29,6 +30,7 @@ class BootstrapKernel
      * Register package components.
      *
      * @param mixed $package
+     *
      * @return void
      */
     public function registerComponents($components)
@@ -42,6 +44,7 @@ class BootstrapKernel
      * Register package extensions.
      *
      * @param mixed $package
+     *
      * @return void
      */
     public function registerProviders($providers)
@@ -55,6 +58,7 @@ class BootstrapKernel
      * Register package extensions.
      *
      * @param mixed $package
+     *
      * @return void
      */
     public function registerExtensions($extensions)
@@ -68,11 +72,12 @@ class BootstrapKernel
      * Register package commands.
      *
      * @param mxied $package
+     *
      * @return void
      */
     public function registerCommands($commands)
     {
-        if (!App::runningInConsole()) {
+        if (! App::runningInConsole()) {
             return;
         }
 

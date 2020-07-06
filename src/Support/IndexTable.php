@@ -2,22 +2,22 @@
 
 namespace Fjord\Support;
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use InvalidArgumentException;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use InvalidArgumentException;
 
 class IndexTable
 {
     /**
-     * Query builder
+     * Query builder.
      *
      * @var \Illuminate\Database\Eloquent\Builder
      */
     protected $query;
 
     /**
-     * Request
+     * Request.
      *
      * @var Request
      */
@@ -47,8 +47,9 @@ class IndexTable
     /**
      * Create new IndexTable instance.
      *
-     * @param Builder $query
+     * @param Builder      $query
      * @param Request|null $request
+     *
      * @return void
      */
     public function __construct($query, Request $request = null)
@@ -61,6 +62,7 @@ class IndexTable
      * Create new IndexTable with query.
      *
      * @param Builder $query
+     *
      * @return void
      */
     public static function query($query)
@@ -72,6 +74,7 @@ class IndexTable
      * Set request.
      *
      * @param Request $request
+     *
      * @return self
      */
     public function request(Request $request)
@@ -85,6 +88,7 @@ class IndexTable
      * Set search keys.
      *
      * @param array $keys
+     *
      * @return self
      */
     public function search(array $keys)
@@ -107,8 +111,9 @@ class IndexTable
     /**
      * Delete selected items.
      *
-     * @param string $class
+     * @param string  $class
      * @param Request $request
+     *
      * @return void
      */
     public static function deleteSelected($class, Request $request)
@@ -120,6 +125,7 @@ class IndexTable
      * Except.
      *
      * @param array $except
+     *
      * @return void
      */
     public function except(array $except)
@@ -133,6 +139,7 @@ class IndexTable
      * Only.
      *
      * @param array $only
+     *
      * @return void
      */
     public function only(array $only)
@@ -145,20 +152,20 @@ class IndexTable
     /**
      * Fetch items.
      *
-     * @return array
-     * 
      * @throws \InvalidArgumentException
+     *
+     * @return array
      */
     public function get()
     {
-        if (!$this->request) {
+        if (! $this->request) {
             throw new InvalidArgumentException('Missing argument request for IndexTable.');
         }
 
         $actions = ['filter', 'search', 'order', 'paginate'];
-        if (!empty($this->only)) {
+        if (! empty($this->only)) {
             $actions = $this->only;
-        } else if (!empty($this->except)) {
+        } elseif (! empty($this->except)) {
             foreach ($this->except as $action) {
                 if (($key = array_search($action, $actions)) !== false) {
                     unset($actions[$key]);
@@ -190,7 +197,7 @@ class IndexTable
 
         return [
             'count' => $total ?? 0,
-            'items' => $items
+            'items' => $items,
         ];
     }
 
@@ -201,7 +208,7 @@ class IndexTable
      */
     protected function applyFilterToQuery()
     {
-        if (!$this->request->filter) {
+        if (! $this->request->filter) {
             return;
         }
 
@@ -217,7 +224,7 @@ class IndexTable
      */
     protected function applySearchToQuery()
     {
-        if (!$this->request->search) {
+        if (! $this->request->search) {
             return;
         }
 
@@ -234,7 +241,7 @@ class IndexTable
      */
     protected function applySortToQuery()
     {
-        if (!$this->request->sort_by) {
+        if (! $this->request->sort_by) {
             return;
         }
         // Get sort key and direction.
@@ -249,17 +256,18 @@ class IndexTable
 
         if (Str::endsWith($key, '.asc') || Str::endsWith($key, 'desc')) {
             $direction = last(explode('.', $key));
-            $key = str_replace(".{$direction}", "", $key);
+            $key = str_replace(".{$direction}", '', $key);
         }
 
         return [$key, $direction];
     }
 
     /**
-     * Apply pagination to query. An instance of the Builder is passed here 
+     * Apply pagination to query. An instance of the Builder is passed here
      * because this part should not be applied to the count query.
      *
      * @param Builder $query
+     *
      * @return Buider
      */
     protected function applyPaginationToQuery($query)

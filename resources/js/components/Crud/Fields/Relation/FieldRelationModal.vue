@@ -68,14 +68,29 @@ export default {
             this.$emit('select', item);
         },
         async loadItems(payload) {
-            let response = await axios.post(
-                `${this.field.route_prefix}/${this.field.id}/index`,
-                payload
-            );
+            let response = await this.sendLoadItems(payload);
+
+            if (!response) {
+                return;
+            }
 
             this.items = this.crud(response.data.items);
 
             return response;
+        },
+
+        /**
+         * Send load items request.
+         */
+        async sendLoadItems(payload) {
+            try {
+                return await axios.post(
+                    `${this.field.route_prefix}/relation/index`,
+                    { field_id: this.field.id, ...payload }
+                );
+            } catch (e) {
+                console.log(e);
+            }
         }
     },
     computed: {

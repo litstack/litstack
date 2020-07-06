@@ -3,10 +3,11 @@
 namespace FjordTest\Fields;
 
 use Fjord\Crud\Field;
-use FjordTest\BackendTestCase;
+use Fjord\Exceptions\Traceable\MissingAttributeException;
 use Fjord\User\Models\FjordUser;
-use Illuminate\Support\Facades\Auth;
+use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
+use Illuminate\Support\Facades\Auth;
 
 class FieldTest extends BackendTestCase
 {
@@ -65,20 +66,11 @@ class FieldTest extends BackendTestCase
         $field = $this->getField(DummyField::class);
         $field->required = ['title'];
 
-        $this->expectException(\Fjord\Crud\Exceptions\MissingAttributeException::class);
+        $this->expectException(MissingAttributeException::class);
         $field->checkComplete();
 
         $field->setAttribute('title', 'something');
         $this->assertTrue($field->checkComplete());
-    }
-
-    /** @test */
-    public function it_fails_when_attribute_is_not_available()
-    {
-        $field = $this->getField(DummyField::class);
-
-        $this->expectException(\Fjord\Exceptions\MethodNotFoundException::class);
-        $field->something();
     }
 
     /** @test */

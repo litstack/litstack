@@ -15,16 +15,6 @@ class FjordGuard extends Command
     protected $signature = 'fjord:guard';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
@@ -34,7 +24,7 @@ class FjordGuard extends Command
         $config = require config_path('auth.php');
         $replace = file_get_contents(config_path('auth.php'));
 
-        if (!array_key_exists('fjord', $config['guards'])) {
+        if (! array_key_exists('fjord', $config['guards'])) {
             $this->info('generating fjord guard');
             $replace = str_replace(
                 "'guards' => [",
@@ -47,7 +37,7 @@ class FjordGuard extends Command
             );
         }
 
-        if (!array_key_exists('fjord_users', $config['providers'])) {
+        if (! array_key_exists('fjord_users', $config['providers'])) {
             $this->info('generating fjord_users provider');
             $replace = str_replace(
                 "'providers' => [",
@@ -60,7 +50,7 @@ class FjordGuard extends Command
             );
         }
 
-        if (!array_key_exists('fjord_users', $config['passwords'])) {
+        if (! array_key_exists('fjord_users', $config['passwords'])) {
             $this->info('generating fjord_users broker');
             $replace = str_replace(
                 "'passwords' => [",
@@ -74,7 +64,6 @@ class FjordGuard extends Command
                 $replace
             );
         }
-
 
         File::put(config_path('auth.php'), $replace);
     }

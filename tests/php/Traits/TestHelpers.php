@@ -10,9 +10,10 @@ trait TestHelpers
     /**
      * Pass thru all method except for the given names.
      *
-     * @param mock $mock
+     * @param mock  $mock
      * @param mixed $class
      * @param array $without
+     *
      * @return void
      */
     protected function passthruAllExcept($mock, $class, array $without)
@@ -28,14 +29,15 @@ trait TestHelpers
      * Calling protected or private class method.
      *
      * @param mixed|string $abstract
-     * @param string $method
-     * @param array $params
+     * @param string       $method
+     * @param array        $params
+     *
      * @return mixed
      */
     protected function callUnaccessibleMethod($abstract, string $method, array $params = [])
     {
         $class = $abstract;
-        if (!is_string($abstract)) {
+        if (! is_string($abstract)) {
             $class = get_class($abstract);
         }
 
@@ -53,9 +55,10 @@ trait TestHelpers
     /**
      * Set protected or private class property value.
      *
-     * @param mixed $instance
+     * @param mixed  $instance
      * @param string $property
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return void
      */
     public function setUnaccessibleProperty($instance, string $property, $value)
@@ -68,23 +71,26 @@ trait TestHelpers
     /**
      * Get protected or private class property value.
      *
-     * @param mixed $instance
+     * @param mixed  $instance
      * @param string $property
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return mixed
      */
     public function getUnaccessibleProperty($instance, string $property)
     {
         $reflection = new ReflectionProperty(get_class($instance), $property);
         $reflection->setAccessible(true);
+
         return $reflection->getValue($instance);
     }
 
     /**
      * Assert class has trait.
      *
-     * @param string $trait
+     * @param string       $trait
      * @param string|mixed $class
+     *
      * @return void
      */
     public function assertHasTrait(string $trait, $class)

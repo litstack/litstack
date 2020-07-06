@@ -3,9 +3,8 @@
 namespace Fjord\User;
 
 use Fjord\Support\Facades\Package;
-use Illuminate\Support\Facades\Route;
-use Fjord\User\Controllers\ProfileController;
 use Fjord\User\Controllers\FjordUserController;
+use Fjord\User\Controllers\ProfileController;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
@@ -27,13 +26,13 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     }
 
     /**
-     * Add nav presets
+     * Add nav presets.
      *
      * @return void
      */
     public function addNavPresets()
     {
-        if (!$config = fjord()->config('user.profile_settings')) {
+        if (! $config = fjord()->config('user.profile_settings')) {
             return;
         }
 
@@ -42,12 +41,13 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 $id = app()->runningInConsole()
                     ? '{user_id}'
                     : fjord_user()->id;
+
                 return fjord()->url(
                     "$config->route_prefix/{$id}"
                 );
             },
             'title' => fn () => __f('fj.profile'),
-            'icon' => fa('user-cog'),
+            'icon'  => fa('user-cog'),
         ]);
     }
 
@@ -58,18 +58,9 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     protected function mapUserRoleRoutes()
     {
-        $this->package->route()->group(function () {
-            Route::group([
-                'config' => 'user.profile_settings',
-                'prefix' => '/profile',
-                'as' => 'profile.'
-            ], function () {
-                Route::get('/sessions', ProfileController::class . '@sessions')->name('sessions');
-            });
-        });
-
-        $this->package->route()->get('/fjord/users', FjordUserController::class . '@showIndex')->name('users');
-        $this->package->route()->post('/fjord/users-index', FjordUserController::class . '@fetchIndex')->name('users.index');
-        $this->package->route()->post('/fjord/users/delete-all', FjordUserController::class . '@deleteAll')->name('users.delete');
+        $this->package->route()->get('profile-sessions', ProfileController::class.'@sessions')->name('sessions');
+        $this->package->route()->get('/fjord/users', FjordUserController::class.'@showIndex')->name('users');
+        $this->package->route()->post('/fjord/users-index', FjordUserController::class.'@fetchIndex')->name('users.index');
+        $this->package->route()->post('/fjord/users/delete-all', FjordUserController::class.'@deleteAll')->name('users.delete');
     }
 }

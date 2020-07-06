@@ -3,11 +3,11 @@
 namespace FjordTest\Fields;
 
 use Fjord\Crud\BaseField;
+use Fjord\Crud\Fields\Traits\FieldHasRules;
+use Fjord\Crud\Fields\Traits\TranslatableField;
 use Fjord\Crud\Fields\Wysiwyg;
 use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
-use Fjord\Crud\Fields\Traits\FieldHasRules;
-use Fjord\Crud\Fields\Traits\TranslatableField;
 
 class FieldWysiwygTest extends BackendTestCase
 {
@@ -53,11 +53,11 @@ class FieldWysiwygTest extends BackendTestCase
     /** @test */
     public function test_css_method()
     {
-        $this->field->css(__DIR__ . '/wysiwyg.css');
-        $this->assertStringContainsString("dummycss", $this->field->getAttribute('css'));
+        $this->field->css(__DIR__.'/wysiwyg.css');
+        $this->assertStringContainsString('dummycss', $this->field->getAttribute('css'));
 
         // Assert method returns field instance.
-        $this->assertEquals($this->field, $this->field->css(__DIR__ . '/wysiwyg.css'));
+        $this->assertEquals($this->field, $this->field->css(__DIR__.'/wysiwyg.css'));
     }
 
     /** @test */

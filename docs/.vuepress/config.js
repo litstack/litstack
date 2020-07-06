@@ -88,8 +88,8 @@ module.exports = {
                     collapsable: false,
                     children: [
                         ['docs/basics/navigation', 'Navigation'],
+                        ['docs/basics/page', 'Fjord Page'],
                         ['docs/basics/localization', 'Localization'],
-                        ['docs/basics/vue', 'Extend With Vue'],
                         ['docs/basics/helpers', 'Helpers']
                     ]
                 },
@@ -109,12 +109,12 @@ module.exports = {
                     collapsable: true,
                     children: [
                         ['docs/fields/introduction', 'Introduction'],
-                        ['docs/fields/validation', 'Validation'],
                         ['docs/fields/input', 'Input'],
                         ['docs/fields/textarea', 'Textarea'],
                         ['docs/fields/wysiwyg', 'WYSIWYG'],
                         ['docs/fields/boolean', 'Boolean'],
                         ['docs/fields/checkboxes', 'Checkboxes'],
+                        ['docs/fields/radio', 'Radio'],
                         ['docs/fields/range', 'Range'],
                         ['docs/fields/select', 'Select'],
                         ['docs/fields/date-time', 'Date/Time'],
@@ -125,9 +125,24 @@ module.exports = {
                         ['docs/fields/relation', 'Relation'],
                         ['docs/fields/one_relation', 'oneRelation'],
                         ['docs/fields/many_relation', 'manyRelation'],
+                        ['docs/fields/list', 'List'],
                         ['docs/fields/block', 'Block'],
                         ['docs/fields/modal', 'Modal'],
-                        ['docs/fields/component', 'Component']
+                        ['docs/fields/component', 'Component'],
+                        ['docs/fields/validation', 'Validation'],
+                        ['docs/fields/conditions', 'Conditional Fields']
+                    ]
+                },
+                {
+                    title: 'Charts',
+                    collapsable: true,
+                    children: [
+                        ['docs/charts/basics', 'Basics'],
+                        ['docs/charts/area', 'Area Chart'],
+                        ['docs/charts/bar', 'Bar Chart'],
+                        ['docs/charts/number', 'Number'],
+                        ['docs/charts/donut', 'Donut Chart'],
+                        ['docs/charts/progress', 'Progress']
                     ]
                 },
                 {
@@ -138,24 +153,28 @@ module.exports = {
                         ['docs/frontend/vue', 'Vue'],
                         ['docs/frontend/components', 'Vue Components']
                     ]
-                }
-                /*
+                },
                 {
-                    title: 'Package Development',
-                    collapsable: true,
-                    children: [['docs/package/basics', 'Basics']]
-                }
-                */
-                /*
-                {
-                    title: 'Digging Deeper',
+                    title: 'Official Packages',
                     collapsable: false,
                     children: [
-                        ['docs/deeper/package', 'Package Development'],
-                        ['docs/deeper/lifecycle', 'Lifecycle']
+                        ['docs/packages/fjord-ui-kit', 'Fjord UI Kit'],
+                        ['docs/packages/fjord-pages', 'Fjord Pages']
                     ]
                 }
-                */
+                // {
+                //     title: 'Package Development',
+                //     collapsable: true,
+                //     children: [['docs/package/basics', 'Basics']]
+                // },
+                // {
+                //     title: 'Digging Deeper',
+                //     collapsable: false,
+                //     children: [
+                //         ['docs/deeper/package', 'Package Development'],
+                //         ['docs/deeper/lifecycle', 'Lifecycle']
+                //     ]
+                // }
             ]
         }
     }

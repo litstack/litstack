@@ -2,8 +2,8 @@
 
 namespace FjordApp\Controllers\Form\Pages;
 
-use Fjord\User\Models\FjordUser;
 use Fjord\Crud\Controllers\FormController;
+use Fjord\User\Models\FjordUser;
 use FjordApp\Config\Form\Pages\HomeConfig;
 
 class HomeController extends FormController
@@ -17,11 +17,12 @@ class HomeController extends FormController
 
     /**
      * Authorize request for authenticated fjord-user and permission operation.
-     * Operations: read, update
+     * Operations: read, update.
      *
      * @param FjordUser $user
-     * @param string $operation
-     * @return boolean
+     * @param string    $operation
+     *
+     * @return bool
      */
     public function authorize(FjordUser $user, string $operation): bool
     {

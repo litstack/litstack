@@ -12,12 +12,12 @@ features:
     - title: Code Driven Configuration
       details: Easy to deploy. Configure your Admin panel inside the code.
     - title: Infinitely Extendable
-      details: Extend the backend however you like with custom Vue components and packages.
+      details: Extend the backend however you like using Blade or Vue components and packages.
 
 footer: MIT Licensed | Made with ❤️ in Kiel
 ---
 
-![Fjord Interface](./fjord_preview.png 'Fjord Interface')
+![Fjord Interface](./fjord_screen.png 'Fjord Interface')
 
 ## Editable Models In No Time
 

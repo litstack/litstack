@@ -25,14 +25,15 @@ class ConfigFactory
      * Handle config method.
      *
      * @param Instance $config
-     * @param string $method
-     * @param array $parameters
+     * @param string   $method
+     * @param array    $parameters
+     *
      * @return mixed
      */
     public function handle($method, $parameters)
     {
         $closure = function (...$params) use ($method, $parameters) {
-            // Merge parameters coming from the factory and from calling the 
+            // Merge parameters coming from the factory and from calling the
             // config attribute function
             $params = array_merge($params, $parameters);
 

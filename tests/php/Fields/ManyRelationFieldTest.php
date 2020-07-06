@@ -2,15 +2,17 @@
 
 namespace FjordTest\Fields;
 
+use Fjord\Crud\Fields\Relations\ManyRelationField;
+use Fjord\Exceptions\Traceable\InvalidArgumentException;
 use FjordTest\BackendTestCase;
-use Illuminate\Database\Eloquent\Model;
 use FjordTest\Traits\InteractsWithConfig;
 use FjordTest\Traits\InteractsWithFields;
-use Fjord\Crud\Fields\Relations\ManyRelationField;
+use Illuminate\Database\Eloquent\Model;
 
 class ManyRelationFieldTest extends BackendTestCase
 {
-    use InteractsWithFields, InteractsWithConfig;
+    use InteractsWithFields;
+    use InteractsWithConfig;
 
     public function setUp(): void
     {
@@ -25,21 +27,21 @@ class ManyRelationFieldTest extends BackendTestCase
 
     public function getConfig()
     {
-        return new ManyRelationFieldRelationConfig;
+        return new ManyRelationFieldRelationConfig();
     }
 
     /** @test */
     public function test_sortable_method_throws_exception_when_orderBy_is_not_set()
     {
-        $this->expectException(\Fjord\Exceptions\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->field->sortable();
     }
 
     /** @test */
     public function test_sortable_method_throws_exception_when_model_is_not_set()
     {
-        $this->expectException(\Fjord\Exceptions\InvalidArgumentException::class);
-        $this->setUnaccessibleProperty($this->field, 'model', null);
+        $this->expectException(InvalidArgumentException::class);
+        $this->setUnaccessibleProperty($this->field, 'relatedModelClass', null);
 
         $this->field->sortable();
     }

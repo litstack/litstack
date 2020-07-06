@@ -2,8 +2,7 @@
 
 namespace Fjord\Crud\Fields\Relations;
 
-use Fjord\Crud\Fields\Relations\ManyRelation;
-use Fjord\Exceptions\InvalidArgumentException;
+use Fjord\Exceptions\Traceable\InvalidArgumentException;
 
 class ManyRelationField extends LaravelRelationField
 {
@@ -23,7 +22,7 @@ class ManyRelationField extends LaravelRelationField
      */
     protected $availablePreviewTypes = [
         'table' => [],
-        'tags' => ['tagVariant', 'tagValue']
+        'tags'  => ['tagVariant', 'tagValue'],
     ];
 
     /**
@@ -46,9 +45,10 @@ class ManyRelationField extends LaravelRelationField
     }
 
     /**
-     * Set showTableHead
+     * Set showTableHead.
      *
-     * @param boolean $show
+     * @param bool $show
+     *
      * @return $this
      */
     public function showTableHead(bool $show = true)
@@ -61,7 +61,8 @@ class ManyRelationField extends LaravelRelationField
     /**
      * Set perPage.
      *
-     * @param integer $perPage
+     * @param int $perPage
+     *
      * @return $this
      */
     public function perPage(int $perPage)
@@ -75,6 +76,7 @@ class ManyRelationField extends LaravelRelationField
      * Set tag view.
      *
      * @param string $value
+     *
      * @return $this
      */
     public function tagVariant(string $value)
@@ -86,9 +88,10 @@ class ManyRelationField extends LaravelRelationField
 
     /**
      * Set tag value.
-     * Example: "{first_name} {last_name}"
+     * Example: "{first_name} {last_name}".
      *
      * @param string $value
+     *
      * @return $this
      */
     public function tagValue(string $value)
@@ -102,6 +105,7 @@ class ManyRelationField extends LaravelRelationField
      * Set tag view.
      *
      * @param string $value
+     *
      * @return $this
      */
     public function tags(string $value)
@@ -114,7 +118,8 @@ class ManyRelationField extends LaravelRelationField
     /**
      * Set searchable.
      *
-     * @param boolean $searchable
+     * @param bool $searchable
+     *
      * @return $this
      */
     public function searchable(bool $searchable = true)
@@ -131,17 +136,17 @@ class ManyRelationField extends LaravelRelationField
      */
     public function sortable($sort = true)
     {
-        if (!$this->model) {
+        $relatedModel = $this->getRelatedModelClass();
+
+        if (! $relatedModel) {
             throw new InvalidArgumentException('You may set a related Model before making the Field sortable.', [
                 'function' => 'sortable',
-                'class' => 'Fjord\Crud\ManyRelationField'
             ]);
         }
 
-        if (empty($this->getRelationQuery(new $this->model)->getQuery()->getQuery()->orders)) {
-            throw new InvalidArgumentException('You may add orderBy to the related query for ' . $this->id . ' in ' . $this->model . '.', [
+        if (empty($this->getRelationQuery(new $this->model())->getQuery()->getQuery()->orders)) {
+            throw new InvalidArgumentException('You may add [orderBy] to the related query for '.$this->id.' in '.$this->model.'.', [
                 'function' => 'sortable',
-                'class' => 'Fjord\Crud\ManyRelationField'
             ]);
         }
 

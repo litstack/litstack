@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Fjord;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class ExampleController extends Controller
 {
@@ -12,7 +12,7 @@ class ExampleController extends Controller
         return view('fjord::app')
             ->withComponent('example')
             ->withProps([
-                'title' => 'Component Title'
+                'title' => 'Component Title',
             ]);
     }
 }

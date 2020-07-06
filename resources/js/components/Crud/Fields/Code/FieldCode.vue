@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import methods from '../methods';
 import 'codemirror/lib/codemirror.css';
 
 const path = require('path');

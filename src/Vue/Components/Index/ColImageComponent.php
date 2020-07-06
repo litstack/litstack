@@ -15,18 +15,18 @@ class ColImageComponent extends TableComponent
     {
         $props = [
             'src' => [
-                'type' => 'string',
-                'required' => true
+                'type'     => 'string',
+                'required' => true,
             ],
             'maxWidth' => [
-                'type' => 'string'
+                'type' => 'string',
             ],
             'maxHeight' => [
-                'type' => 'string'
+                'type' => 'string',
             ],
             'square' => [
-                'type' => 'string'
-            ]
+                'type' => 'string',
+            ],
         ];
 
         return array_merge(

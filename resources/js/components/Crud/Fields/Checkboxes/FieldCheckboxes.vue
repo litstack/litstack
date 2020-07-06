@@ -3,6 +3,7 @@
         <b-checkbox-group
             :checked="value"
             :options="field.options"
+            :stacked="field.stacked"
             @input="$emit('input', $event)"
             class="fj-form-item-checkboxes"
         />
@@ -28,7 +29,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '@fj-sass/_variables';
 .fj-form-item-checkboxes {
     height: $button-md-height / 1.5;

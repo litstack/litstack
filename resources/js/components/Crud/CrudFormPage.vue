@@ -1,0 +1,104 @@
+<template>
+    <fj-page :page="page" :model="model" />
+</template>
+
+<script>
+export default {
+    name: 'CrudFormPage',
+    props: {
+        page: {
+            type: Object,
+            required: true
+        },
+        crudModel: {
+            type: Object,
+            required: true
+        },
+        config: {
+            type: Object,
+            required: true
+        }
+    },
+    data() {
+        return {
+            model: {}
+        };
+    },
+    beforeMount() {
+        this.model = this.crud(this.crudModel);
+
+        this.$store.commit('SET_CONFIG', this.config);
+
+        Fjord.bus.$on('saved', this.saved);
+        Fjord.bus.$on('field:updated', this.reloadModel);
+    },
+    methods: {
+        async reloadModel() {
+            let response;
+            try {
+                response = await axios.get(
+                    `${this.config.route_prefix}/${this.model.id}/api/show/default/load`
+                );
+            } catch (e) {
+                console.log(e);
+                return;
+            }
+            this.model = this.crud(response.data);
+        },
+        saved(results) {
+            let result;
+            result = results.findSucceeded(
+                'put',
+                `${this.config.route_prefix}/${this.model.id}/api/show`
+            );
+            if (result) {
+                this.model = this.crud(result.data);
+            }
+            result = results.findSucceeded(
+                'post',
+                `${this.config.route_prefix}/api/show`
+            );
+            if (result) {
+                this.model = this.crud(result.data);
+            }
+
+            if (
+                window.location.pathname.split('/').pop() == 'create' &&
+                this.model.id
+            ) {
+                setTimeout(() => {
+                    window.location.replace(`${this.model.id}`);
+                }, 1);
+            }
+        },
+        scrollToFormFieldFromHash() {
+            if (!window.location.hash) {
+                return;
+            }
+            let hash = window.location.hash.replace('#', '');
+            let elements = document.getElementsByClassName(
+                `fj-form-item-${hash}`
+            );
+            if (elements.length < 1) {
+                return;
+            }
+            // Scroll to first one.
+            let element = elements[0];
+            let pos = element.style.position;
+            let top = element.style.top;
+            element.style.position = 'relative';
+            element.style.top = '-30px';
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            element.style.top = top;
+            element.style.position = pos;
+        }
+    },
+    computed: {
+        isCreate() {
+            return window.location.pathname.split('/').pop() == 'create';
+        }
+    }
+};
+</script>
+
+<style></style>

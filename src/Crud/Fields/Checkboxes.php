@@ -26,6 +26,7 @@ class Checkboxes extends BaseField
      * Set options.
      *
      * @param array $options
+     *
      * @return $this
      */
     public function options(array $options)
@@ -36,10 +37,24 @@ class Checkboxes extends BaseField
     }
 
     /**
+     * Set stacked.
+     *
+     * @param  bool  $stacked
+     * @return $this
+     */
+    public function stacked($stacked = true)
+    {
+        $this->setAttribute('stacked', $stacked);
+
+        return $this;
+    }
+
+    /**
      * Cast field value.
      *
      * @param mixed $value
-     * @return boolean
+     *
+     * @return bool
      */
     public function cast($value)
     {

@@ -15,6 +15,7 @@ trait ManagesFiles
      * Add css file to the Fjord application.
      *
      * @param string $path
+     *
      * @return void
      */
     public function addCssFile(string $path)

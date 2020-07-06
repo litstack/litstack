@@ -3,9 +3,9 @@
 namespace Fjord\Crud\Fields\Block;
 
 use Closure;
-use Fjord\Crud\RelationField;
-use Fjord\Crud\Models\FormField;
 use Fjord\Crud\Fields\Traits\HasBaseField;
+use Fjord\Crud\Models\FormField;
+use Fjord\Crud\RelationField;
 
 class Block extends RelationField
 {
@@ -26,7 +26,7 @@ class Block extends RelationField
     public $required = ['title', 'repeatables'];
 
     /**
-     * Set default field attributes
+     * Set default field attributes.
      *
      * @return void
      */
@@ -39,7 +39,8 @@ class Block extends RelationField
     /**
      * Set block width.
      *
-     * @param integer|float $width
+     * @param int|float $width
+     *
      * @return $this
      */
     public function blockWidth($width)
@@ -53,12 +54,13 @@ class Block extends RelationField
      * Add repeatables.
      *
      * @param Closure|Repeatables $closure
+     *
      * @return $this
      */
     public function repeatables($closure)
     {
         $repeatables = $closure;
-        if (!$closure instanceof Repeatables) {
+        if (! $closure instanceof Repeatables) {
             $repeatables = new Repeatables($this);
             $closure($repeatables);
         }
@@ -72,7 +74,8 @@ class Block extends RelationField
      * Check if block has repeatable.
      *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasRepeatable(string $name)
     {
@@ -83,9 +86,10 @@ class Block extends RelationField
      * Check if block has repeatable.
      *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
-    public function getRepeatable(string $name)
+    public function getRepeatable($name)
     {
         return $this->repeatables->get($name);
     }
@@ -94,12 +98,13 @@ class Block extends RelationField
      * Get relation query for model.
      *
      * @param mixed $model
-     * @param boolean $query
+     * @param bool  $query
+     *
      * @return mixed
      */
     public function getRelationQuery($model)
     {
-        if (!$model instanceof FormField) {
+        if (! $model instanceof FormField) {
             return $model->{$this->id}();
         }
 

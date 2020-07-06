@@ -2,7 +2,6 @@
 
 namespace Fjord\Application\Navigation;
 
-use Closure;
 use Fjord\Support\Facades\Package;
 use Illuminate\Contracts\Support\Arrayable;
 
@@ -19,13 +18,14 @@ class Navigation implements Arrayable
      * Navigation title.
      *
      * @param string $title
+     *
      * @return string $title
      */
     public function title(string $title)
     {
         return [
             'title' => $title,
-            'type' => 'title',
+            'type'  => 'title',
         ];
     }
 
@@ -34,11 +34,12 @@ class Navigation implements Arrayable
      *
      * @param array $params
      * @param array $children
+     *
      * @return array $entry
      */
     public function group(array $params, array $children = [])
     {
-        if (!$this->authorize($params)) {
+        if (! $this->authorize($params)) {
             return;
         }
 
@@ -53,7 +54,8 @@ class Navigation implements Arrayable
      * Navigation entry.
      *
      * @param string|array $title
-     * @param array $params
+     * @param array        $params
+     *
      * @return array $entry
      */
     public function entry($title, array $params = [])
@@ -64,13 +66,13 @@ class Navigation implements Arrayable
             $title = $title['title'];
         }
 
-        if (!$this->authorize($params)) {
+        if (! $this->authorize($params)) {
             return;
         }
 
         return array_merge($params, [
             'title' => $title,
-            'type' => 'entry'
+            'type'  => 'entry',
         ]);
     }
 
@@ -78,29 +80,22 @@ class Navigation implements Arrayable
      * Navigation entry preset.
      *
      * @param string $name
-     * @param array $params
-     * @return array $entry
+     * @param array  $params
+     *
+     * @return array
      */
     public function preset(string $name, array $params = [])
     {
-        $preset = Package::navEntry($name, $params);
-
-        $title = $preset['title'] ?? null;
-        if ($title instanceof Closure) {
-            $preset['title'] = $preset['title']();
-        }
-
-        if ($preset['link'] instanceof Closure) {
-            $preset['link'] = $preset['link']();
-        }
-
-        return $this->entry($preset);
+        return $this->entry(
+            Package::navPreset($name, $params)
+        );
     }
 
     /**
-     * Navigation section.
+     * Add navigation section.
      *
      * @param array $entries
+     *
      * @return void
      */
     public function section(array $entries)
@@ -122,15 +117,16 @@ class Navigation implements Arrayable
      * Authorize navigation entry.
      *
      * @param array $params
-     * @return boolean
+     *
+     * @return bool
      */
     protected function authorize(array $params)
     {
-        if (!array_key_exists('authorize', $params)) {
+        if (! array_key_exists('authorize', $params)) {
             return true;
         }
 
-        if (!is_callable($params['authorize'])) {
+        if (! is_callable($params['authorize'])) {
             return $params['authorize'];
         }
 

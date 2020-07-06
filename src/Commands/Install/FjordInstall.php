@@ -2,21 +2,16 @@
 
 namespace Fjord\Commands\Install;
 
-use Fjord\User\Models\FjordUser;
 use Fjord\Commands\Traits\RolesAndPermissions;
-use Fjord\Crud\Config\CrudConfig;
-use FjordApp\Controllers\User\ProfileSettingsController;
+use Fjord\User\Models\FjordUser;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\App;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Str;
 
 class FjordInstall extends Command
 {
-    use RolesAndPermissions,
-        InstallVendorConfigs;
+    use RolesAndPermissions;
+    use InstallVendorConfigs;
 
     /**
      * The name and signature of the console command.
@@ -51,12 +46,12 @@ class FjordInstall extends Command
     public function handle(Filesystem $filesystem)
     {
         // http://patorjk.com/software/taag/#p=display&h=1&v=0&f=Slant&t=Fjord%20Install
-        $this->info("    ______ _                   __   ____              __          __ __");
-        $this->info("   / ____/(_)____   _____ ____/ /  /  _/____   _____ / /_ ____ _ / // /");
+        $this->info('    ______ _                   __   ____              __          __ __');
+        $this->info('   / ____/(_)____   _____ ____/ /  /  _/____   _____ / /_ ____ _ / // /');
         $this->info("  / /_   / // __ \ / ___// __  /   / / / __ \ / ___// __// __ `// // / ");
-        $this->info(" / __/  / // /_/ // /   / /_/ /  _/ / / / / /(__  )/ /_ / /_/ // // /  ");
+        $this->info(' / __/  / // /_/ // /   / /_/ /  _/ / / / / /(__  )/ /_ / /_/ // // /  ');
         $this->info("/_/  __/ / \____//_/    \__,_/  /___//_/ /_//____/ \__/ \__,_//_//_/   ");
-        $this->info("    /___/                                                              ");
+        $this->info('    /___/                                                              ');
 
         $this->info("\n----- start -----\n");
         $this->vendorConfigs();
@@ -84,11 +79,11 @@ class FjordInstall extends Command
         }
         $user = FjordUser::firstOrCreate([
             'username' => 'admin',
-            'email' => 'admin@admin.com',
+            'email'    => 'admin@admin.com',
         ], [
             'first_name' => 'admin',
-            'last_name' => '',
-            'password' => bcrypt('secret')
+            'last_name'  => '',
+            'password'   => bcrypt('secret'),
         ]);
 
         $user->assignRole('admin');
@@ -100,6 +95,7 @@ class FjordInstall extends Command
      * Make directory if not exists.
      *
      * @param string $path
+     *
      * @return void
      */
     private function makeDirectory(string $path)
@@ -114,11 +110,12 @@ class FjordInstall extends Command
     public function migrations()
     {
         $migrations = $this->option('migrations');
+
         return $migrations !== 'false' && $migrations !== false;
     }
 
     /**
-     * Publish Fjord config and assets
+     * Publish Fjord config and assets.
      *
      * @return void
      */
@@ -128,13 +125,13 @@ class FjordInstall extends Command
         if ($this->migrations()) {
             $this->callSilent('vendor:publish', [
                 '--provider' => "Fjord\FjordServiceProvider",
-                '--tag' => "migrations"
+                '--tag'      => 'migrations',
             ]);
         }
 
         $this->callSilent('vendor:publish', [
             '--provider' => "Fjord\FjordServiceProvider",
-            '--tag' => "config"
+            '--tag'      => 'config',
         ]);
 
         // migrate tables
@@ -160,7 +157,7 @@ class FjordInstall extends Command
         // the resource path itself, which is present for shure
         $this->callSilent('config:clear');
 
-        File::copyDirectory(fjord_path('publish/fjord'), base_path('fjord'));
+        File::copyDirectory(realpath(fjord_path('publish/fjord')), base_path('fjord'));
 
         $composer = json_decode(File::get(base_path('composer.json')), true);
         $composer['autoload']['psr-4']['FjordApp\\'] = 'fjord/app/';
@@ -169,13 +166,13 @@ class FjordInstall extends Command
     }
 
     /**
-     * Create Model 
+     * Create Model.
      *
      * @return void
      */
     private function makeModelDirs()
     {
         $this->makeDirectory(app_path('Models'));
-        $this->makeDirectory(app_path('Models/Translations'));
+        $this->makeDirectory(app_path('Models').DIRECTORY_SEPARATOR.'Translations');
     }
 }

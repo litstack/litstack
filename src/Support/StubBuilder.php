@@ -2,8 +2,8 @@
 
 namespace Fjord\Support;
 
-use Illuminate\Support\Str;
 use File;
+use Illuminate\Support\Str;
 
 class StubBuilder
 {
@@ -37,7 +37,7 @@ class StubBuilder
     public function with(array $attributes)
     {
         foreach ($attributes as $key => $value) {
-            $dummyKey = 'Dummy' . ucfirst($key);
+            $dummyKey = 'Dummy'.ucfirst($key);
 
             if (array_key_exists($dummyKey, $this->attributes)) {
                 $this->attributes[$dummyKey] .= "\n$value";
@@ -59,7 +59,7 @@ class StubBuilder
         $fileContents = $this->stubString;
 
         foreach ($this->neededDummies as $dummy) {
-            if (!array_key_exists($dummy, $this->attributes)) {
+            if (! array_key_exists($dummy, $this->attributes)) {
                 $fileContents = str_replace($dummy, '', $fileContents);
             } else {
                 $fileContents = str_replace($dummy, $this->attributes[$dummy], $fileContents);
@@ -79,7 +79,7 @@ class StubBuilder
             $attributeName = lcfirst(str_replace('with', '', $method));
 
             $this->with([
-                $attributeName => $parameters[0]
+                $attributeName => $parameters[0],
             ]);
         }
     }

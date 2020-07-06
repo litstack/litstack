@@ -2,17 +2,18 @@
 
 namespace Fjord\Application\Bootstrap;
 
-use Illuminate\Console\Application as Artisan;
-use Fjord\Support\Facades\Package;
 use Fjord\Application\Application;
+use Fjord\Support\Facades\Package;
+use Illuminate\Console\Application as Artisan;
 use Illuminate\Support\Facades\App;
 
 class RegisterPackages
 {
     /**
      * Registers artisan commands of all fjord packages.
-     * 
+     *
      * @param \Fjord\Application\Application $app
+     *
      * @return void
      */
     public function bootstrap(Application $app)
@@ -31,6 +32,7 @@ class RegisterPackages
      * Register package components.
      *
      * @param mixed $package
+     *
      * @return void
      */
     public function registerComponents($package)
@@ -44,6 +46,7 @@ class RegisterPackages
      * Register package extensions.
      *
      * @param mixed $package
+     *
      * @return void
      */
     public function registerProviders($package)
@@ -57,6 +60,7 @@ class RegisterPackages
      * Register package extensions.
      *
      * @param mixed $package
+     *
      * @return void
      */
     public function registerExtensions($package)
@@ -70,11 +74,12 @@ class RegisterPackages
      * Register package commands.
      *
      * @param mxied $package
+     *
      * @return void
      */
     public function registerCommands($package)
     {
-        if (!App::runningInConsole()) {
+        if (! App::runningInConsole()) {
             return;
         }
 

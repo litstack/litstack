@@ -9,7 +9,7 @@ class MorphTo extends OneRelationField
     use HasBaseField;
 
     /**
-     * Id divider
+     * Id divider.
      */
     const ID_DIVIDER = '-';
 
@@ -19,7 +19,7 @@ class MorphTo extends OneRelationField
      * @var array
      */
     protected $props = [
-        'type' => 'morphTo'
+        'type' => 'morphTo',
     ];
 
     /**
@@ -32,8 +32,8 @@ class MorphTo extends OneRelationField
     /**
      * Create new Field instance.
      *
-     * @param string $id
-     * @param string $model
+     * @param string      $id
+     * @param string      $model
      * @param string|null $routePrefix
      */
     public function __construct(string $id, string $model, $routePrefix, $form)
@@ -41,7 +41,7 @@ class MorphTo extends OneRelationField
         $dividedId = explode(static::ID_DIVIDER, $id);
         $this->relatedModelClass = last($dividedId);
         $this->setAttribute('morphType', last($dividedId));
-        $id = $dividedId[0] . static::ID_DIVIDER . (new $this->morphType)->getTable();
+        $id = $dividedId[0].static::ID_DIVIDER.(new $this->morphType())->getTable();
 
         parent::__construct($id, $model, $routePrefix, $form);
 
@@ -50,7 +50,7 @@ class MorphTo extends OneRelationField
 
     public function getRelatedInstance()
     {
-        return (new $this->morphType);
+        return new $this->morphType();
     }
 
     /**
@@ -64,9 +64,10 @@ class MorphTo extends OneRelationField
     }
 
     /**
-     * Get relation
+     * Get relation.
      *
      * @param mixed $model
+     *
      * @return void
      */
     public function getRelationQuery($model)
@@ -92,13 +93,14 @@ class MorphTo extends OneRelationField
      */
     public function getRelated()
     {
-        return new $this->morphType;
+        return new $this->morphType();
     }
 
     /**
      * Get results for model.
      *
      * @param mixed $model
+     *
      * @return mixed
      */
     public function getResults($model)
@@ -106,8 +108,8 @@ class MorphTo extends OneRelationField
         $query = $this->relation($model);
 
         // Nullable morphTo.
-        if (!$model->{$query->getMorphType()}) {
-            return null;
+        if (! $model->{$query->getMorphType()}) {
+            return;
         }
 
         return $query->getResults();

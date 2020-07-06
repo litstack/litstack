@@ -2,8 +2,8 @@
 
 namespace Fjord\Crud\Models;
 
-use Fjord\Crud\Fields\ListField;
-use Fjord\Crud\Fields\Block\Block;
+use Fjord\Crud\Fields\ListField\ListCollection;
+use Fjord\Crud\Fields\ListField\ListField;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class FormListItem extends FjordFormModel
@@ -18,7 +18,7 @@ class FormListItem extends FjordFormModel
     /**
      * No timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
@@ -44,7 +44,7 @@ class FormListItem extends FjordFormModel
      * @var array
      */
     protected $casts = [
-        'value' => 'json'
+        'value' => 'json',
     ];
 
     /**
@@ -101,5 +101,35 @@ class FormListItem extends FjordFormModel
         unset($items['model']);
 
         return $items;
+    }
+
+    /**
+     * Create a new Eloquent Collection instance.
+     *
+     * @param array $models
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function newCollection(array $models = [])
+    {
+        return new ListCollection($models);
+    }
+
+    /**
+     * Get all of the current attributes on the model.
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        $attributes = parent::getAttributes();
+
+        // Removing [depth] attribute to avoid exception when saving since depth
+        // column does not exist in database.
+        if (array_key_exists('depth', $attributes)) {
+            unset($attributes['depth']);
+        }
+
+        return $attributes;
     }
 }

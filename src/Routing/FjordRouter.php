@@ -2,11 +2,7 @@
 
 namespace Fjord\Routing;
 
-use Form;
 use Closure;
-use ReflectionClass;
-use ReflectionMethod;
-use Illuminate\Support\Str;
 use Fjord\Support\Facades\Package;
 use Illuminate\Support\Facades\Route;
 
@@ -32,8 +28,8 @@ class FjordRouter
     ];
 
     /**
-     * Initialize defaults for a Fjord route. 
-     * Fjord Routes should always be created 
+     * Initialize defaults for a Fjord route.
+     * Fjord Routes should always be created
      * with \Fjord\Support\Facades\FjordRoute.
      *
      * @return \Illuminate\Support\Facades\Route
@@ -60,8 +56,9 @@ class FjordRouter
     /**
      * Create a route group with shared attributes.
      *
-     * @param  Closure|array|string  $attributes
-     * @param  Closure  $closure
+     * @param Closure|array|string $attributes
+     * @param Closure              $closure
+     *
      * @return void
      */
     public function group($attributes, Closure $closure = null)
@@ -69,18 +66,19 @@ class FjordRouter
         if (is_callable($attributes) || is_string($attributes)) {
             return $this->getRoutePreset()->group($attributes);
         }
-        $attributes['prefix'] = config('fjord.route_prefix') . '/' . ($attributes['prefix'] ?? '');
-        $attributes['as'] = 'fjord.' . ($attributes['as'] ?? '');
+        $attributes['prefix'] = config('fjord.route_prefix').'/'.($attributes['prefix'] ?? '');
+        $attributes['as'] = 'fjord.'.($attributes['as'] ?? '');
         $attributes['middleware'] = array_merge($attributes['middlewares'] ?? [], $this->middlewares);
         Route::group($attributes, $closure);
     }
 
     /**
      * Initialize defaults for a Fjord package route.
-     * Routes for a Fjord package should always be created 
-     * with \Fjord\Support\Facades\FjordRoute@package
-     * 
+     * Routes for a Fjord package should always be created
+     * with \Fjord\Support\Facades\FjordRoute@package.
+     *
      * @param string $package
+     *
      * @return Illuminate\Support\Facades\Route $route
      */
     public function package($package)
@@ -94,7 +92,7 @@ class FjordRouter
 
     /**
      * Public route using Fjord route prefix.
-     * 
+     *
      * @return \Illuminate\Support\Facades\Route
      */
     public function public()

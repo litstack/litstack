@@ -10,6 +10,7 @@ trait FieldHasForm
      * Add form.
      *
      * @param Closure $closure
+     *
      * @return this
      */
     abstract public function form(Closure $closure);
@@ -21,7 +22,7 @@ trait FieldHasForm
      */
     public function getRegisteredFields()
     {
-        if (!array_key_exists('form', $this->attributes)) {
+        if (! array_key_exists('form', $this->attributes)) {
             return collect([]);
         }
 

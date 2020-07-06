@@ -2,33 +2,15 @@
 
 namespace Fjord\Crud\Controllers;
 
-use Illuminate\Http\Request;
-use Fjord\Crud\Models\FormEdit;
 use Fjord\Crud\Models\FormField;
-use Fjord\User\Models\FjordUser;
-use Fjord\Crud\Fields\Block\Block;
-use Illuminate\Support\Facades\Route;
+use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\FormReadRequest;
+use Fjord\User\Models\FjordUser;
 use Illuminate\Database\Eloquent\Builder;
-use Fjord\Crud\Requests\CrudCreateRequest;
-use Fjord\Crud\Requests\CrudUpdateRequest;
-use Fjord\Crud\Requests\FormUpdateRequest;
 
-abstract class FormController
+abstract class FormController extends CrudBaseController
 {
-    use Api\CrudBaseApi,
-        Api\CrudHasIndex,
-        Api\CrudHasRelations,
-        Api\CrudHasBlock,
-        Api\CrudHasList,
-        Api\CrudHasMedia,
-        Api\CrudHasOrder,
-        Api\CrudHasModal,
-        Concerns\ManagesConfig,
-        Concerns\ManagesForm,
-        Concerns\ManagesCrud;
-
     /**
      * Crud model class name.
      *
@@ -38,11 +20,12 @@ abstract class FormController
 
     /**
      * Authorize request for permission operation and authenticated fjord-user.
-     * Operations: read, update
+     * Operations: read, update.
      *
      * @param \Fjord\User\Models\FjordUser $user
-     * @param string $operation
-     * @return boolean
+     * @param string                       $operation
+     *
+     * @return bool
      */
     public function authorize(FjordUser $user, string $operation): bool
     {
@@ -61,7 +44,8 @@ abstract class FormController
      * Load model.
      *
      * @param CrudReadRequest $request
-     * @param int $id
+     * @param int             $id
+     *
      * @return array
      */
     public function load(CrudReadRequest $request, $id)
@@ -88,6 +72,7 @@ abstract class FormController
      * Edit form.
      *
      * @param FormReadRequest $request
+     *
      * @return View $view
      */
     public function show(CrudReadRequest $request)
@@ -108,7 +93,7 @@ abstract class FormController
 
         // Set readonly if the user has no update permission for this crud.
         foreach ($config['form']->getRegisteredFields() as $field) {
-            if (!$config['permissions']['update']) {
+            if (! $config['permissions']['update']) {
                 $field->readonly();
             }
         }
@@ -116,25 +101,26 @@ abstract class FormController
         $model = FormField::firstOrCreate([
             'config_type' => get_class($this->config->getConfig()),
         ], [
-            'form_name' => $this->config->formName,
+            'form_name'  => $this->config->formName,
             'collection' => $this->config->collection,
-            'form_type' => 'show',
+            'form_type'  => 'show',
         ]);
 
-        return view('fjord::app')->withComponent($this->config->component)
-            ->withTitle("Form " . $this->config->names['singular'])
-            ->withProps([
+        $page = $this->config->show
+            ->title($this->config->names['singular'])
+            ->bind([
                 'crud-model' => crud($model),
-                'config' => $config,
-                'header-components' => ['fj-crud-preview'],
-                'controls' => [],
+                'config'     => $config,
             ]);
+
+        return $page;
     }
 
     /**
      * Deny storing form FormField model.
      *
-     * @param  \Fjord\Crud\Requests\CrudCreateRequest  $request
+     * @param \Fjord\Crud\Requests\CrudCreateRequest $request
+     *
      * @return mixed
      */
     public function store(CrudCreateRequest $request)
@@ -149,6 +135,5 @@ abstract class FormController
      */
     public function fillModelAttributes($model, $request, $fields)
     {
-        return;
     }
 }

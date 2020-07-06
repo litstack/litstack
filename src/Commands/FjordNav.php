@@ -3,8 +3,8 @@
 namespace Fjord\Commands;
 
 use Closure;
-use Illuminate\Console\Command;
 use Fjord\Support\Facades\Package;
+use Illuminate\Console\Command;
 
 class FjordNav extends Command
 {
@@ -23,16 +23,6 @@ class FjordNav extends Command
     protected $description = 'List all navigation entry presets';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
@@ -41,7 +31,6 @@ class FjordNav extends Command
     {
         $entries = [];
         foreach (Package::all() as $name => $package) {
-
             $packageName = Package::hasRootAccess($name) ? '' : $name;
             foreach ($package->getNavPresets() as $key => $preset) {
                 $link = $preset['link'] instanceof Closure
@@ -49,8 +38,8 @@ class FjordNav extends Command
                     : $preset['link'];
                 $entries[] = [
                     'package' => $packageName,
-                    'key' => $key,
-                    'link' => $link
+                    'key'     => $key,
+                    'link'    => $link,
                 ];
             }
         }
@@ -58,7 +47,7 @@ class FjordNav extends Command
         $this->table([
             'Package',
             'Key',
-            'Link'
+            'Link',
         ], $entries);
     }
 }

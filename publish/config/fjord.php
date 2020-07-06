@@ -14,7 +14,6 @@ return [
 
     'route_prefix' => 'admin',
 
-
     /*
     |--------------------------------------------------------------------------
     | Fjord Resource-Path
@@ -25,7 +24,6 @@ return [
     | default: resources/fjord
     |
     */
-
 
     'resource_path' => 'fjord',
 
@@ -52,7 +50,7 @@ return [
     |
     */
 
-    'default_route' => 'form/pages/home',
+    'default_route' => 'pages/home',
 
     /*
     |--------------------------------------------------------------------------
@@ -64,7 +62,7 @@ return [
     */
 
     'login' => [
-        'username' => true
+        'username' => true,
     ],
 
     /*
@@ -95,12 +93,11 @@ return [
 
         'locales' => [
             'en',
-            'de'
+            'de',
         ],
 
         'fallback_locale' => 'en',
     ],
-
 
     /*
     |--------------------------------------------------------------------------
@@ -116,12 +113,11 @@ return [
 
     'assets' => [
         // Set path to the app.js file.
-        'js' => null,
+        'js'  => null,
         'css' => [
             // Put path to css files that should be included here...
         ],
     ],
-
 
     /*
     |--------------------------------------------------------------------------
@@ -142,10 +138,9 @@ return [
             'sm' => [300, 300, 8],
             'md' => [500, 500, 3],
             'lg' => [900, 900, 2],
-            'xl' => [1400, 1400, 1]
-        ]
+            'xl' => [1400, 1400, 1],
+        ],
     ],
-
 
     /*
     |--------------------------------------------------------------------------
@@ -161,14 +156,13 @@ return [
         'pages' => [
             // Should Pages be translatable by default.
             'translatable' => true,
-            'route_prefix' => 'pages'
+            'route_prefix' => 'pages',
         ],
         'settings' => [
             'translatable' => false,
         ],
-        'collections' => []
+        'collections' => [],
     ],
-
 
     /*
     |--------------------------------------------------------------------------
@@ -182,10 +176,9 @@ return [
     'crud' => [
         'preview' => [
             // devices: mobile / tablet / desktop
-            'default_device' => 'desktop'
-        ]
+            'default_device' => 'desktop',
+        ],
     ],
-
 
     /*
     |--------------------------------------------------------------------------
@@ -195,5 +188,5 @@ return [
     |
     */
 
-    'roles_permissions' => true
+    'roles_permissions' => true,
 ];

@@ -14,7 +14,7 @@ class MorphMany extends ManyRelationField
      * @var array
      */
     protected $props = [
-        'type' => 'morphMany'
+        'type' => 'morphMany',
     ];
 
     /**
@@ -25,7 +25,7 @@ class MorphMany extends ManyRelationField
     public $requiredAttributes = [
         'title',
         'model',
-        'preview'
+        'preview',
     ];
 
     /**

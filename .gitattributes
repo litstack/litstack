@@ -1,8 +1,10 @@
 * text=auto
 
+/public linguist-generated
 /docs export-ignore
 /.github export-ignore
 /tests export-ignore
+.styleci.yml export-ignore
 .babelrc export-ignore
 .prettierrc export-ignore
 .gitattributes export-ignore

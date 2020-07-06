@@ -3,31 +3,35 @@
 namespace Fjord\Crud;
 
 use Closure;
+use Fjord\Contracts\Crud\Form;
 use Fjord\Crud\Fields\Block\Block;
-use Fjord\Support\VueProp;
-use Illuminate\Support\Str;
-use InvalidArgumentException;
 use Fjord\Crud\Fields\Component;
-use Fjord\Crud\Fields\Input;
-use Fjord\Crud\Models\FormField;
-use Fjord\Support\Facades\Fjord;
-use Fjord\Crud\Fields\Relations\HasOne;
-use Fjord\Crud\Fields\Relations\HasMany;
-use Illuminate\Support\Traits\Macroable;
-use Fjord\Crud\Fields\Relations\MorphOne;
 use Fjord\Crud\Fields\Relations\BelongsTo;
-use Fjord\Crud\Fields\Relations\MorphMany;
-use Fjord\Crud\Fields\Relations\MorphToMany;
-use Fjord\Exceptions\MethodNotFoundException;
 use Fjord\Crud\Fields\Relations\BelongsToMany;
+use Fjord\Crud\Fields\Relations\HasMany;
+use Fjord\Crud\Fields\Relations\HasOne;
+use Fjord\Crud\Fields\Relations\MorphMany;
+use Fjord\Crud\Fields\Relations\MorphOne;
+use Fjord\Crud\Fields\Relations\MorphToMany;
 use Fjord\Crud\Fields\Relations\MorphToRegistrar;
+use Fjord\Crud\Models\FormField;
+use Fjord\Exceptions\Traceable\BadMethodCallException;
+use Fjord\Page\BasePage;
+use Fjord\Support\Facades\Fjord;
 use Fjord\Support\Facades\Form as FormFacade;
+use Fjord\Vue\Traits\RenderableAsProp;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Macroable;
+use InvalidArgumentException;
 
-class BaseForm extends VueProp
+class BaseForm extends BasePage implements Form, Arrayable, Jsonable
 {
-    use Macroable {
-        __call as macroCall;
-    }
+    use RenderableAsProp,
+        Macroable {
+            __call as macroCall;
+        }
 
     /**
      * Available relations.
@@ -36,13 +40,13 @@ class BaseForm extends VueProp
      */
     protected $relations = [
         \Illuminate\Database\Eloquent\Relations\BelongsToMany::class => BelongsToMany::class,
-        \Illuminate\Database\Eloquent\Relations\BelongsTo::class => BelongsTo::class,
-        \Illuminate\Database\Eloquent\Relations\MorphOne::class => MorphOne::class,
-        \Illuminate\Database\Eloquent\Relations\MorphTo::class => MorphToRegistrar::class,
-        \Illuminate\Database\Eloquent\Relations\MorphToMany::class => MorphToMany::class,
-        \Illuminate\Database\Eloquent\Relations\MorphMany::class => MorphMany::class,
-        \Illuminate\Database\Eloquent\Relations\HasMany::class => HasMany::class,
-        \Illuminate\Database\Eloquent\Relations\HasOne::class => HasOne::class,
+        \Illuminate\Database\Eloquent\Relations\BelongsTo::class     => BelongsTo::class,
+        \Illuminate\Database\Eloquent\Relations\MorphOne::class      => MorphOne::class,
+        \Illuminate\Database\Eloquent\Relations\MorphTo::class       => MorphToRegistrar::class,
+        \Illuminate\Database\Eloquent\Relations\MorphToMany::class   => MorphToMany::class,
+        \Illuminate\Database\Eloquent\Relations\MorphMany::class     => MorphMany::class,
+        \Illuminate\Database\Eloquent\Relations\HasMany::class       => HasMany::class,
+        \Illuminate\Database\Eloquent\Relations\HasOne::class        => HasOne::class,
     ];
 
     /**
@@ -53,8 +57,8 @@ class BaseForm extends VueProp
     protected $model;
 
     /**
-     * Field that is being registered is stored in here. When the next 
-     * field is called this field will be checked for required properties. 
+     * Field that is being registered is stored in here. When the next
+     * field is called this field will be checked for required properties.
      *
      * @var Field
      */
@@ -63,7 +67,7 @@ class BaseForm extends VueProp
     /**
      * Registered fields.
      *
-     * @var array 
+     * @var array
      */
     protected $registeredFields = [];
 
@@ -75,160 +79,77 @@ class BaseForm extends VueProp
     protected $routePrefix;
 
     /**
-     * Current col that Fields should be registered to.
-     *
-     * @var Component
-     */
-    protected $col;
-
-    /**
-     * Current wrapper component.
-     *
-     * @var Component
-     */
-    protected $wrapper;
-
-    /**
-     * Wrapper component stack.
+     * Registering field hooks.
      *
      * @var array
      */
-    protected $wrapperStack = [];
+    protected $registeringFieldHooks = [];
+
+    /**
+     * List of closure's that get called after registering a field.
+     *
+     * @var array
+     */
+    protected $registerFieldHooks = [];
 
     /**
      * Create new BaseForm instance.
      *
-     * @param string $model
+     * @param  string $model
+     * @return void
      */
     public function __construct(string $model)
     {
         $this->model = $model;
-
         $this->registeredFields = collect([]);
     }
 
     /**
-     * Is registering component in wrapper.
+     * Add Vue component field.
      *
-     * @return boolean
+     * @param  string|Component     $component
+     * @return \Fjord\Vue\Component
      */
-    public function inWrapper()
+    public function component($component)
     {
-        return $this->wrapper != null;
-    }
-
-    /**
-     * Get current card.
-     *
-     * @return array $card
-     */
-    public function getWrapper()
-    {
-        return $this->wrapper;
-    }
-
-    /**
-     * Get new wrapper
-     * 
-     * @param string|Component $component
-     * @return component
-     */
-    protected function getNewWrapper($component)
-    {
-        if (is_string($component)) {
-            $component = component($component);
-        }
+        return $this->registerField(FormFacade::getField('component'), $component);
 
         if ($this->inWrapper()) {
-            $wrapper = component('fj-field-wrapper');
-        } else {
-            $wrapper = $this->component('fj-field-wrapper');
+            dd('a');
+            parent::component($component->comp);
         }
 
-        return $wrapper->wrapperComponent($component);
+        return $component;
     }
 
     /**
-     * Create wrapper.
+     * Add group wrapper.
      *
-     * @param string|Component $component
-     * @param Closure $closure
-     * @return self
-     */
-    public function wrapper($component, Closure $closure)
-    {
-        $newWrapper = $this->getNewWrapper($component);
-
-        return $this->registerWrapper($newWrapper, $closure);
-    }
-
-    /**
-     * Register new wrapper.
-     * 
-     * @return Component
-     */
-    public function registerWrapper($wrapper, $closure)
-    {
-        if ($this->inWrapper()) {
-
-            $this->wrapper
-                ->component($wrapper);
-
-            $this->wrapperStack[] = $this->wrapper;
-        }
-
-        $this->wrapper = $wrapper;
-        $closure($this);
-        $this->wrapper = !empty($this->wrapperStack)
-            ? array_pop($this->wrapperStack)
-            : null;
-
-        return $wrapper->wrapperComponent;
-    }
-
-    /**
-     * Formfield group.
-     *
-     * @param Closure $closure
+     * @param  Closure   $closure
      * @return Component
      */
     public function group(Closure $closure)
     {
-        return $this->wrapper('fj-field-wrapper-group', function ($form) use ($closure) {
+        return $this->wrapper('fj-field-wrapper-group', function () use ($closure) {
             $closure($this);
         });
     }
 
     /**
-     * Register column wrapper.
-     *
-     * @param int $cols
-     * @param Closure $closure
-     * @return void
-     */
-    public function col(int $cols, Closure $closure)
-    {
-        return $this->wrapper('fj-col', function ($form) use ($closure) {
-            $this->wrapper('b-row', function ($form) use ($closure) {
-                $closure($this);
-            });
-        })->prop('cols', $cols);
-    }
-
-    /**
      * Get rules for request.
      *
-     * @param CrudUpdateRequest|CrudCreateRequest $request
+     * @param  CrudCreateRequest|CrudUpdateRequest $request
+     * @param  string|null                         $type
      * @return array
      */
-    public function getRules($request)
+    public function getRules($type = null)
     {
         $rules = [];
         foreach ($this->registeredFields as $field) {
-            if (!method_exists($field, 'getRules')) {
+            if (! method_exists($field, 'getRules')) {
                 continue;
             }
-            $fieldRules = $field->getRules($request);
+            $fieldRules = $field->getRules($type);
             if ($field->translatable) {
                 // Attach rules for translatable fields.
                 foreach (config('translatable.locales') as $locale) {
@@ -238,13 +159,14 @@ class BaseForm extends VueProp
                 $rules[$field->local_key] = $fieldRules;
             }
         }
+
         return $rules;
     }
 
     /**
      * Set form route prefix.
      *
-     * @param string $prefix
+     * @param  string $prefix
      * @return void
      */
     public function setRoutePrefix(string $prefix)
@@ -252,6 +174,7 @@ class BaseForm extends VueProp
         if (Str::startsWith($prefix, Fjord::url(''))) {
             $prefix = Str::replaceFirst(Fjord::url(''), '', $prefix);
         }
+
         $this->routePrefix = $prefix;
     }
 
@@ -268,10 +191,10 @@ class BaseForm extends VueProp
     /**
      * Register new Field.
      *
-     * @param mixed $field
-     * @param string $id
-     * @param array $params
-     * @return Field $field
+     * @param  mixed  $field
+     * @param  string $id
+     * @param  array  $params
+     * @return Field  $field
      */
     public function registerField($field, string $id, $params = [])
     {
@@ -281,38 +204,67 @@ class BaseForm extends VueProp
             $fieldInstance = new $field($id, $this->model, $this->routePrefix, $this);
         }
 
+        foreach ($this->registeringFieldHooks as $hook) {
+            $hook($fieldInstance);
+        }
+
         $this->registrar = $fieldInstance;
 
         if ($fieldInstance->register()) {
             $this->registeredFields[] = $fieldInstance;
         }
 
-        if ($this->inWrapper() && !$this->col && $fieldInstance->register()) {
+        if ($this->inWrapper() && $fieldInstance->register()) {
             $this->wrapper
                 ->component('fj-field')
                 ->prop('field', $fieldInstance);
+        }
+
+        foreach ($this->registerFieldHooks as $hook) {
+            $hook($fieldInstance);
         }
 
         return $fieldInstance;
     }
 
     /**
+     * Before registering field hook.
+     *
+     * @param  Closure $closure
+     * @return void
+     */
+    public function registering(Closure $closure)
+    {
+        $this->registeringFieldHooks[] = $closure;
+    }
+
+    /**
+     * Add after registering field hook.
+     *
+     * @param  Closure $closure
+     * @return void
+     */
+    public function registered(Closure $closure)
+    {
+        $this->registerFieldHooks[] = $closure;
+    }
+
+    /**
      * Register new Relation.
      *
-     * @param string $name
      * @return mixed
-     * 
+     *
      * @throws \InvalidArgumentException
      */
     public function relation(string $name)
     {
-        if ($this->model == FormField::class) {
-            throw new InvalidArgumentException("Laravel relations are not available in Forms. Use fields oneRelation or manyRelation instead.");
+        if (FormField::class === $this->model) {
+            throw new InvalidArgumentException('Laravel relations are not available in Forms. Use fields oneRelation or manyRelation instead.');
         }
 
-        $relationType = get_class((new $this->model)->$name());
+        $relationType = \get_class((new $this->model())->{$name}());
 
-        if (array_key_exists($relationType, $this->relations)) {
+        if (\array_key_exists($relationType, $this->relations)) {
             return $this->registerField($this->relations[$relationType], $name);
         }
 
@@ -326,20 +278,9 @@ class BaseForm extends VueProp
     }
 
     /**
-     * Add Vue component field.
-     *
-     * @param string $component
-     * @return \Fjord\Vue\Component
-     */
-    public function component(string $component)
-    {
-        return $this->registerField(FormFacade::getField('component'), $component);
-    }
-
-    /**
      * Get registered fields.
      *
-     * @return void
+     * @return array
      */
     public function getRegisteredFields()
     {
@@ -349,17 +290,17 @@ class BaseForm extends VueProp
     /**
      * Find registered field.
      *
-     * @param string $fieldId
+     * @param  string     $fieldId
      * @return Field|void
      */
-    public function findField(string $fieldId)
+    public function findField($fieldId)
     {
         foreach ($this->registeredFields as $field) {
             if ($field instanceof Component) {
                 continue;
             }
 
-            if ($field->id == $fieldId) {
+            if ($field->id === $fieldId) {
                 return $field;
             }
         }
@@ -368,35 +309,34 @@ class BaseForm extends VueProp
     /**
      * Check if form has field.
      *
-     * @param string $fieldId
-     * @return boolean
+     * @return bool
      */
     public function hasField(string $fieldId)
     {
         if ($this->findField($fieldId)) {
             return true;
         }
+
         return false;
     }
 
     /**
      * Check if field with form exists.
      *
-     * @param string $name
-     * @param string $repeatable
-     * @return boolean
+     * @param  string $repeatable
+     * @return bool
      */
     public function hasForm(string $name, string $repeatable = null)
     {
-        if (!$field = $this->findField($name)) {
+        if (! $field = $this->findField($name)) {
             return false;
         }
 
-        if (!$field instanceof Block) {
+        if (! $field instanceof Block) {
             return method_exists($field, 'form');
         }
 
-        if (!$repeatable) {
+        if (! $repeatable) {
             return false;
         }
 
@@ -406,29 +346,28 @@ class BaseForm extends VueProp
     /**
      * Get form from field.
      *
-     * @param string $name
-     * @param string $repeatable
+     * @param  string   $repeatable
      * @return BaseForm
      */
     public function getForm(string $name, string $repeatable = null)
     {
-        if (!$this->hasForm($name, $repeatable)) {
+        if (! $this->hasForm($name, $repeatable)) {
             return;
         }
 
-        if (!$field = $this->findField($name)) {
+        if (! $field = $this->findField($name)) {
             return;
         }
 
-        if (!$field instanceof Block) {
+        if (! $field instanceof Block) {
             return $field->form;
         }
 
-        return $field->getRepeatable($repeatable);
+        return $field->getRepeatable($repeatable)->getForm();
     }
 
     /**
-     * Get attributes.
+     * Render Form.
      *
      * @return array
      */
@@ -438,54 +377,33 @@ class BaseForm extends VueProp
             $field->checkComplete();
         }
 
-        return [
-            'fields' => $this->registeredFields
-        ];
-    }
-
-    /**
-     * Throw a method not allowed HTTP exception.
-     *
-     * @param  array  $others
-     * @param  string  $method
-     * @return void
-     *
-     * @throws \Fjord\Exceptions\MethodNotFoundException
-     */
-    protected function methodNotAllowed($method)
-    {
-        throw new MethodNotFoundException(
-            sprintf(
-                "The %s method is not found for this form. Supported fields: %s.",
-                $method,
-                implode(', ', array_merge(['relation'], array_keys(FormFacade::getFields()))),
-            ),
-            [
-                'function' => '__call',
-                'class' => self::class
-            ]
-        );
+        return array_merge(parent::render(), [
+            'fields' => $this->registeredFields,
+        ]);
     }
 
     /**
      * Call form method.
      *
-     * @param string $method
-     * @param array $params
+     * @param  string $method
+     * @param  array  $parameters
      * @return void
-     * 
-     * @throws \Fjord\Exceptions\MethodNotFoundException
+     *
+     * @throws \Fjord\Exceptions\Traceable\BadMethodCallException
      */
-    public function __call($method, $params = [])
+    public function __call($method, $parameters)
     {
         if (FormFacade::fieldExists($method)) {
-            return $this->registerField(FormFacade::getField($method), ...$params);
+            return $this->registerField(FormFacade::getField($method), ...$parameters);
         }
 
         if (static::hasMacro($method)) {
-            return $this->macroCall($method, $params);
+            return $this->macroCall($method, $parameters);
         }
 
-        $this->methodNotAllowed($method);
+        throw new BadMethodCallException(
+            sprintf('Call to undefined method %s::%s()', static::class, $method),
+            ['function' => '__call', 'class' => self::class]
+        );
     }
 }

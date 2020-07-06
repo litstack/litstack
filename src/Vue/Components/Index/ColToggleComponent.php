@@ -15,8 +15,8 @@ class ColToggleComponent extends TableComponent
     {
         $props = [
             'routePrefix' => [
-                'type' => 'string',
-                'required' => true
+                'type'     => 'string',
+                'required' => true,
             ],
         ];
 

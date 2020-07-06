@@ -2,11 +2,15 @@
 
 namespace Fjord\Crud\Models;
 
+use BadMethodCallException;
 use Fjord\Crud\Fields\Block\Block;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Traits\ForwardsCalls;
 
 class FormBlock extends FjordFormModel
 {
+    use ForwardsCalls;
+
     /**
      * Translation model.
      *
@@ -17,7 +21,7 @@ class FormBlock extends FjordFormModel
     /**
      * No timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
@@ -35,7 +39,7 @@ class FormBlock extends FjordFormModel
         'type',
         'content',
         'order_column',
-        'value'
+        'value',
     ];
 
     /**
@@ -63,11 +67,41 @@ class FormBlock extends FjordFormModel
     }
 
     /**
+     * Get Blade x component name.
+     *
+     * @return string|null
+     */
+    public function getXAttribute()
+    {
+        return $this->getRepeatable()->getX();
+    }
+
+    /**
+     * Get view name.
+     *
+     * @return string|null
+     */
+    public function getViewAttribute()
+    {
+        return $this->getRepeatable()->getView();
+    }
+
+    /**
      * Get fields from config.
      *
      * @return Field
      */
     public function getFieldsAttribute()
+    {
+        return $this->getRepeatable()->getRegisteredFields();
+    }
+
+    /**
+     * Get repeatable.
+     *
+     * @return Repeatables
+     */
+    public function getRepeatable()
     {
         $fields = $this->getForm()->getRegisteredFields();
 
@@ -75,7 +109,7 @@ class FormBlock extends FjordFormModel
             if ($field instanceof Block && $field->id == $this->field_id) {
 
                 // Returning fields from repeatables form.
-                return $field->repeatables->{$this->type}->getRegisteredFields();
+                return $field->repeatables->{$this->type};
             }
         }
     }
@@ -93,5 +127,22 @@ class FormBlock extends FjordFormModel
         unset($items['model']);
 
         return $items;
+    }
+
+    /**
+     * Modified calls.
+     *
+     * @param string $method
+     * @param array  $params
+     *
+     * @return mixed
+     */
+    public function __call($method, $params = [])
+    {
+        try {
+            return parent::__call($method, $params);
+        } catch (BadMethodCallException $e) {
+            return $this->forwardCallTo($this->getRepeatable(), $method, $params);
+        }
     }
 }

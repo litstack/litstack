@@ -14,7 +14,7 @@ class PackageDiscoverServiceProvider extends ArtisanServiceProvider
     protected function registerPackageDiscoverCommand()
     {
         $this->app->singleton('command.package.discover', function () {
-            return new PackageDiscoverCommand;
+            return new PackageDiscoverCommand();
         });
     }
 }

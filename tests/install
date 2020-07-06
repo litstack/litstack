@@ -1,16 +1,15 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 // Installing Fjord and starting test after, to load namespaces of created FjordApp.
 
-use FjordTest\BackendTestCase;
 use FjordTest\FrontendTestCase;
 use Illuminate\Support\Facades\Artisan;
 
 // Creating database.sqlite
-shell_exec('php ' . __DIR__ . '/../vendor/orchestra/testbench-dusk/create-sqlite-db');
+shell_exec('php '.__DIR__.'/../vendor/orchestra/testbench-dusk/create-sqlite-db');
 
 $test = new FrontendTestCase;
 $test->setUp();

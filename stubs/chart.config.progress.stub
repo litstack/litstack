@@ -1,0 +1,48 @@
+<?php
+
+namespace DummyNamespace;
+
+use Fjord\Chart\Chart;
+use Illuminate\Support\Collection; 
+use Fjord\Chart\Config\ProgressChartConfig;
+
+class DummyClass extends ProgressChartConfig
+{
+    /**
+     * Model class.
+     *
+     * @var string
+     */
+    public $model = \App\Models\Model::class;
+
+    /**
+     * Chart title.
+     *
+     * @return string
+     */
+    public function title(): string
+    {
+        return 'Progress';
+    }
+
+    /**
+     * Calculate value.
+     *
+     * @param Builder $query
+     * @return integer
+     */
+    public function value($query)
+    {
+        return $this->count($query);
+    }
+
+    /**
+     * Get goal value.
+     *
+     * @return integer|float
+     */
+    public function goal()
+    {
+        return 100;
+    }
+}

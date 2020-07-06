@@ -3,7 +3,6 @@
 namespace Fjord\Commands;
 
 use Illuminate\Console\Command;
-use Fjord\Support\Facades\Package;
 
 class FjordComponents extends Command
 {
@@ -22,16 +21,6 @@ class FjordComponents extends Command
     protected $description = 'List all registered components that can be extended.';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
@@ -42,7 +31,7 @@ class FjordComponents extends Command
         foreach (fjord_app()->get('components')->all() as $name => $options) {
             $component = component($name);
             $components[] = [
-                'name' => $name,
+                'name'  => $name,
                 'props' => implode(', ', array_keys($component->getAvailableProps())),
                 'slots' => implode(', ', array_keys($component->getAvailableSlots())),
             ];
@@ -51,7 +40,7 @@ class FjordComponents extends Command
         $this->table([
             'Name',
             'Props',
-            'Slots'
+            'Slots',
         ], $components);
     }
 }

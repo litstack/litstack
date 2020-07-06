@@ -2,9 +2,9 @@
 
 namespace FjordApp\Config\Crud;
 
+use Fjord\Crud\Config\CrudConfig;
 use Fjord\Crud\CrudShow;
 use Fjord\Vue\Crud\CrudTable;
-use Fjord\Crud\Config\CrudConfig;
 
 class PostConfig extends CrudConfig
 {
@@ -31,7 +31,7 @@ class PostConfig extends CrudConfig
     {
         return [
             'singular' => 'Article',
-            'plural' => 'Articles',
+            'plural'   => 'Articles',
         ];
     }
 
@@ -39,6 +39,7 @@ class PostConfig extends CrudConfig
      * Build index table.
      *
      * @param \Fjord\Crud\CrudIndex $table
+     *
      * @return void
      */
     public function index(CrudTable $container)
@@ -52,7 +53,7 @@ class PostConfig extends CrudConfig
             ->search('name')
             ->sortBy([
                 'id.desc' => __f('fj.sort_new_to_old'),
-                'id.asc' => __f('fj.sort_old_to_new'),
+                'id.asc'  => __f('fj.sort_old_to_new'),
             ])
             ->width(12);
     }
@@ -61,6 +62,7 @@ class PostConfig extends CrudConfig
      * Setup create and edit form.
      *
      * @param \Fjord\Crud\CrudShow $form
+     *
      * @return void
      */
     public function show(CrudShow $form)
@@ -74,11 +76,11 @@ class PostConfig extends CrudConfig
      * Define form sections in methods to keep the overview.
      *
      * @param \Fjord\Crud\CrudShow $form
+     *
      * @return void
      */
     protected function mainCard(CrudShow $form)
     {
-
         $form->input('title')
             ->updateRules('max:15')
             ->creationRules('required')

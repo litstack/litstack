@@ -17,6 +17,7 @@ trait Authorizable
      * Set authorize closure.
      *
      * @param Closure $closure
+     *
      * @return $this
      */
     public function authorize(Closure $closure)
@@ -29,11 +30,11 @@ trait Authorizable
     /**
      * Check if is authorized.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAuthorized(): bool
     {
-        if (!$this->authorizeClosure) {
+        if (! $this->authorizeClosure) {
             return true;
         }
 

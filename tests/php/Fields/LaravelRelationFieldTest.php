@@ -2,15 +2,16 @@
 
 namespace FjordTest\Fields;
 
-use FjordTest\BackendTestCase;
-use FjordTest\Traits\InteractsWithFields;
 use Fjord\Crud\Fields\Relations\LaravelRelationField;
+use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithConfig;
+use FjordTest\Traits\InteractsWithFields;
 use Illuminate\Database\Eloquent\Model;
 
 class LaravelRelationFieldTest extends BackendTestCase
 {
-    use InteractsWithFields, InteractsWithConfig;
+    use InteractsWithFields;
+    use InteractsWithConfig;
 
     public function setUp(): void
     {
@@ -25,7 +26,7 @@ class LaravelRelationFieldTest extends BackendTestCase
 
     public function getConfig(string $key, ...$params)
     {
-        return new LaravelRelationFieldRelationConfig;
+        return new LaravelRelationFieldRelationConfig();
     }
 
     /** @test */
@@ -63,7 +64,7 @@ class LaravelRelationFieldTest extends BackendTestCase
         };
 
         $this->field->query($modifier);
-        $this->field->getRelationQuery(new LaravelRelationFieldModel);
+        $this->field->getRelationQuery(new LaravelRelationFieldModel());
 
         $this->assertTrue($this->modifierCalled);
     }
@@ -72,7 +73,7 @@ class LaravelRelationFieldTest extends BackendTestCase
     public function test_getRelatedInstance_method()
     {
         $result = $this->callUnaccessibleMethod($this->field, 'getRelatedInstance');
-        $this->assertEquals(new LaravelRelationFieldRelation, $result);
+        $this->assertEquals(new LaravelRelationFieldRelation(), $result);
     }
 
     /** @test */

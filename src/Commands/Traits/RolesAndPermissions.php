@@ -2,17 +2,27 @@
 
 namespace Fjord\Commands\Traits;
 
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 trait RolesAndPermissions
 {
+    /**
+     * Create default roles.
+     *
+     * @return void
+     */
     public function createDefaultRoles()
     {
         Role::firstOrCreate(['guard_name' => 'fjord', 'name' => 'admin']);
         Role::firstOrCreate(['guard_name' => 'fjord', 'name' => 'user']);
     }
 
+    /**
+     * Create default permissions.
+     *
+     * @return void
+     */
     public function createDefaultPermissions()
     {
         $admin = Role::where('name', 'admin')->first();
@@ -30,7 +40,7 @@ trait RolesAndPermissions
             'delete fjord-user-roles',
             // Fjord user role permissions.
             'read fjord-role-permissions',
-            'update fjord-role-permissions'
+            'update fjord-role-permissions',
         ];
 
         // create permissions and give them to admin

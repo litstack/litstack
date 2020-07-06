@@ -2,12 +2,12 @@
 
 namespace Fjord\Config;
 
-use TypeError;
+use BadMethodCallException;
+use Fjord\Support\Facades\Config;
+use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
-use BadMethodCallException;
-use Illuminate\Support\Str;
-use Fjord\Support\Facades\Config;
+use TypeError;
 
 class ConfigHandler
 {
@@ -53,7 +53,7 @@ class ConfigHandler
 
     /**
      * Get namespace of config.
-     * 
+     *
      * @return string
      */
     public function getType()
@@ -70,16 +70,13 @@ class ConfigHandler
     {
         $reflector = new ReflectionClass($this->config);
         $parent = $reflector->getParentClass();
-        $uses = array_merge(
-            class_uses($this->config),
-            $parent ? class_uses($parent->name) : []
-        );
+        $uses = class_uses_recursive($this->config);
 
         foreach (fjord()->getConfigFactories() as $dependency => $factory) {
 
             // Matching parent class.
             if ($parent) {
-                if ($parent->name == $dependency) {
+                if ($this->config instanceof $dependency) {
                     $this->registerFactory($factory);
                 }
             }
@@ -104,16 +101,17 @@ class ConfigHandler
      * Register config factory.
      *
      * @param string $factory
-     * @return void
-     * 
+     *
      * @throws \TypeError
+     *
+     * @return void
      */
     public function registerFactory($factory)
     {
         $instance = new $factory($this);
 
-        if (!is_subclass_of($factory, ConfigFactory::class)) {
-            throw new TypeError("Config factory {$factory} must extend " . ConfigFactory::class . ".");
+        if (! is_subclass_of($factory, ConfigFactory::class)) {
+            throw new TypeError("Config factory {$factory} must extend ".ConfigFactory::class.'.');
         }
 
         $this->factories[] = $instance;
@@ -136,6 +134,7 @@ class ConfigHandler
      * Load select config attributes.
      *
      * @param string|array ...$keys
+     *
      * @return array $attributes
      */
     public function get(...$keys)
@@ -150,6 +149,7 @@ class ConfigHandler
                 ) {
                     return;
                 }
+
                 return $reflect->name;
             })->filter()->toArray();
         }
@@ -166,7 +166,8 @@ class ConfigHandler
      * Check if config has method.
      *
      * @param string $method
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasMethod(string $method)
     {
@@ -176,7 +177,7 @@ class ConfigHandler
     /**
      * Config has attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function has(string $attribute)
     {
@@ -191,6 +192,7 @@ class ConfigHandler
      * Get config attribute from loaded stack or new.
      *
      * @param string $name
+     *
      * @return mixed
      */
     public function getAttribute(string $name)
@@ -213,7 +215,8 @@ class ConfigHandler
      * Call config method and store attributes.
      *
      * @param string $method
-     * @param array ...$parameters
+     * @param array  ...$parameters
+     *
      * @return mixed
      */
     public function callMethod($method, $parameters)
@@ -229,7 +232,8 @@ class ConfigHandler
      * Set attribute.
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return void
      */
     public function setAttribute(string $name, $value)
@@ -241,7 +245,8 @@ class ConfigHandler
      * Check if a method has a factory.
      *
      * @param string $method
-     * @return boolean
+     *
+     * @return bool
      */
     public function methodHasFactory(string $method)
     {
@@ -252,6 +257,7 @@ class ConfigHandler
      * Get factory for method.
      *
      * @param string $method
+     *
      * @return Instance
      */
     public function getMethodFactory(string $method)
@@ -263,12 +269,13 @@ class ConfigHandler
      * Resolve config method.
      *
      * @param string $name
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return array
      */
     protected function resolveMethod($method, $parameters = [])
     {
-        if (!$this->methodHasFactory($method)) {
+        if (! $this->methodHasFactory($method)) {
             return $this->callMethod($method, $parameters);
         }
 
@@ -291,6 +298,7 @@ class ConfigHandler
      * Get method name.
      *
      * @param string $method
+     *
      * @return string
      */
     public function getMethodName(string $method)
@@ -302,12 +310,13 @@ class ConfigHandler
      * Call config class method.
      *
      * @param string $method
-     * @param array $parameters
-     * @return mixed
-     * 
+     * @param array  $parameters
+     *
      * @throws BadMethodCallException
+     *
+     * @return mixed
      */
-    public function __call(string $method, $parameters = [])
+    public function __call($method, $parameters)
     {
         $method = $this->getMethodName($method);
 
@@ -326,6 +335,7 @@ class ConfigHandler
      * Get config attribute.
      *
      * @param string $name
+     *
      * @return mixed
      */
     public function __get(string $name)

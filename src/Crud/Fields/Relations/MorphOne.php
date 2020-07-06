@@ -14,7 +14,7 @@ class MorphOne extends OneRelationField
      * @var array
      */
     protected $props = [
-        'type' => 'morphOne'
+        'type' => 'morphOne',
     ];
 
     /**

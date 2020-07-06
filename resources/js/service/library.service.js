@@ -13,12 +13,16 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import VueDropzone from 'vue2-dropzone';
 //import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
+import VueApexCharts from 'vue-apexcharts';
+
 import BootstrapVue from 'bootstrap-vue';
 import VueCodemirror from 'vue-codemirror';
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import Draggable from 'vuedraggable';
 import VueLodash from 'vue-lodash';
 import lodash from 'lodash';
+
+window.numeral = require('numeral');
 
 // FontAwesome
 library.add(far);
@@ -45,6 +49,8 @@ Vue.use(VueDropzone);
 Vue.use(VueLodash, { lodash });
 
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
+
+Vue.component('apexchart', VueApexCharts);
 
 // prototypes
 Vue.prototype.$bus = Bus;

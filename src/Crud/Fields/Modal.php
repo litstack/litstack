@@ -40,6 +40,7 @@ class Modal extends BaseField
      * Set modal preview.
      *
      * @param string $variant
+     *
      * @return $this
      */
     public function preview(string $preview)
@@ -53,6 +54,7 @@ class Modal extends BaseField
      * Set modal variant.
      *
      * @param string $variant
+     *
      * @return $this
      */
     public function variant(string $variant)
@@ -66,6 +68,7 @@ class Modal extends BaseField
      * Set modal name.
      *
      * @param string $name
+     *
      * @return $this
      */
     public function name(string $name)
@@ -79,6 +82,7 @@ class Modal extends BaseField
      * Set modal window size.
      *
      * @param string $size
+     *
      * @return $this
      */
     public function size(string $size)
@@ -91,7 +95,8 @@ class Modal extends BaseField
     /**
      * Set confirmWithPassword.
      *
-     * @param boolean $confirmWithPassword
+     * @param bool $confirmWithPassword
+     *
      * @return $this
      */
     public function confirmWithPassword(bool $confirmWithPassword = true)
@@ -105,6 +110,7 @@ class Modal extends BaseField
      * Add form to modal.
      *
      * @param Closure $closure
+     *
      * @return void
      */
     public function form(Closure $closure)
@@ -112,8 +118,14 @@ class Modal extends BaseField
         $form = new BaseForm($this->model);
 
         $form->setRoutePrefix(
-            "$this->route_prefix/modal/{modal_id}"
+            "$this->route_prefix/modal"
         );
+
+        $form->registered(function ($field) {
+            $field->setAttribute('params', [
+                'field_id' => $this->id,
+            ]);
+        });
 
         $closure($form);
 

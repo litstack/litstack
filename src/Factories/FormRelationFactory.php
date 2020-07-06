@@ -6,25 +6,22 @@ use Faker\Generator as Faker;
 use Fjord\Crud\Models\FormRelation;
 
 $factory->define(FormRelation::class, function (Faker $faker, $args) {
-    if (!array_key_exists('name', $args)) {
+    if (! array_key_exists('name', $args)) {
         throw new InvalidArgumentException('Missing parameter "name".');
     }
-    if (!array_key_exists('from', $args)) {
+    if (! array_key_exists('from', $args)) {
         throw new InvalidArgumentException('Missing parameter "from".');
     }
-    if (!array_key_exists('to', $args)) {
+    if (! array_key_exists('to', $args)) {
         throw new InvalidArgumentException('Missing parameter "to".');
     }
 
-    //$field_id = $args['name'];
-    //   unset($args['name']);
-
     return [
-        'field_id' => $args['name'],
-        'from_model_id' => $args['from']->id,
+        'field_id'        => $args['name'],
+        'from_model_id'   => $args['from']->id,
         'from_model_type' => get_class($args['from']),
-        'to_model_id' => $args['to']->id,
-        'to_model_type' => get_class($args['to']),
+        'to_model_id'     => $args['to']->id,
+        'to_model_type'   => get_class($args['to']),
     ];
 });
 

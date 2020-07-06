@@ -2,13 +2,12 @@
 
 namespace Fjord\Vue;
 
-use Closure;
-use Exception;
 use ErrorException;
+use Exception;
+use Fjord\Contracts\Vue\Authorizable as AuthorizableContract;
+use Fjord\Exceptions\Traceable\InvalidArgumentException;
 use Fjord\Support\VueProp;
 use Fjord\Vue\Traits\Authorizable;
-use Fjord\Vue\Contracts\AuthorizableContract;
-use Fjord\Exceptions\InvalidArgumentException;
 
 class Col extends VueProp implements AuthorizableContract
 {
@@ -37,7 +36,8 @@ class Col extends VueProp implements AuthorizableContract
     /**
      * Set link.
      *
-     * @param string|boolean $link
+     * @param string|bool $link
+     *
      * @return $this
      */
     public function link($link)
@@ -63,6 +63,7 @@ class Col extends VueProp implements AuthorizableContract
      * Set sort_by.
      *
      * @param string $key
+     *
      * @return $this
      */
     public function sortBy(string $key)
@@ -76,6 +77,7 @@ class Col extends VueProp implements AuthorizableContract
      * Set label.
      *
      * @param string $label
+     *
      * @return $this
      */
     public function label(string $label)
@@ -89,9 +91,10 @@ class Col extends VueProp implements AuthorizableContract
      * Regular expression for column value.
      *
      * @param string $regex
-     * @return $this
-     * 
+     *
      * @throws InvalidArgumentException
+     *
+     * @return $this
      */
     public function regex($regex, string $replace = '')
     {
@@ -104,7 +107,7 @@ class Col extends VueProp implements AuthorizableContract
         } catch (ErrorException $e) {
             throw new InvalidArgumentException($e->getMessage(), [
                 'function' => 'regex',
-                'class' => self::class
+                'class'    => self::class,
             ]);
         }
 
@@ -112,9 +115,10 @@ class Col extends VueProp implements AuthorizableContract
     }
 
     /**
-     * Max characters for field
+     * Max characters for field.
      *
-     * @param boolean $strip
+     * @param bool $strip
+     *
      * @return $this
      */
     public function stripHtml(bool $strip = true)
@@ -125,9 +129,10 @@ class Col extends VueProp implements AuthorizableContract
     }
 
     /**
-     * Max characters for field
+     * Max characters for field.
      *
      * @param int $max
+     *
      * @return $this
      */
     public function maxChars(int $max = 100)
@@ -138,7 +143,7 @@ class Col extends VueProp implements AuthorizableContract
     }
 
     /**
-     * Get attributes
+     * Get attributes.
      *
      * @return array
      */
@@ -153,6 +158,7 @@ class Col extends VueProp implements AuthorizableContract
      * Set value.
      *
      * @param string $value
+     *
      * @return self
      */
     public function value(string $value)
@@ -165,9 +171,9 @@ class Col extends VueProp implements AuthorizableContract
     /**
      * Check if all required props have been set.
      *
-     * @return boolean
-     * 
      * @throws \Exception
+     *
+     * @return bool
      */
     public function checkComplete()
     {

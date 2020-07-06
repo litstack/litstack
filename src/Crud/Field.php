@@ -3,20 +3,20 @@
 namespace Fjord\Crud;
 
 use Closure;
-use Exception;
+use Fjord\Exceptions\Traceable\BadMethodCallException;
+use Fjord\Exceptions\Traceable\InvalidArgumentException;
+use Fjord\Exceptions\Traceable\MissingAttributeException;
+use Fjord\Support\HasAttributes;
 use Fjord\Support\VueProp;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
-use Fjord\Exceptions\MethodNotFoundException;
-use Fjord\Exceptions\InvalidArgumentException;
-use Fjord\Crud\Exceptions\MissingAttributeException;
 
 class Field extends VueProp
 {
-    use ForwardsCalls;
+    use ForwardsCalls, HasAttributes;
 
     /**
-     * Model class
+     * Model class.
      *
      * @var string
      */
@@ -28,13 +28,6 @@ class Field extends VueProp
      * @var string
      */
     protected $formInstance;
-
-    /**
-     * Field attributes.
-     *
-     * @var array
-     */
-    protected $attributes = [];
 
     /**
      * Authorize closure for field.
@@ -60,31 +53,31 @@ class Field extends VueProp
     /**
      * Saveable field.
      *
-     * @var boolean
+     * @var bool
      */
     protected $save = true;
 
     /**
      * Fill to attribute.
      *
-     * @var boolean
+     * @var bool
      */
     public $fill = true;
 
     /**
-     * Extensions
+     * Repository class.
      *
-     * @var array
+     * @var string
      */
-    public $extensions = [];
+    protected $repository;
 
     /**
      * Create new Field instance.
      *
-     * @param string $id
-     * @param string $model
+     * @param string      $id
+     * @param string      $model
      * @param string|null $routePrefix
-     * @param mixed $form
+     * @param mixed       $form
      */
     public function __construct(string $id, string $model, $routePrefix, $form)
     {
@@ -106,19 +99,33 @@ class Field extends VueProp
     }
 
     /**
+     * Get repository instance.
+     *
+     * @return null|instance
+     */
+    public function getRepository()
+    {
+        if (! $this->repository) {
+            return;
+        }
+
+        return app()->make($this->repository, [
+            'field' => $this,
+        ]);
+    }
+
+    /**
      * Validate field id.
      *
-     * @param string $model
-     * @param string $id
+     * @param  string $model
+     * @param  string $id
      * @return void
-     * 
-     * @throws \Fjord\Exceptions\InvalidArgumentException
      */
     protected function validateFieldId($model, $id)
     {
         if ($id == 'media') {
             throw new InvalidArgumentException('The field id cannot be "media".', [
-                'function' => '__call'
+                'function' => '__call',
             ]);
         }
     }
@@ -148,20 +155,21 @@ class Field extends VueProp
     /**
      * Fill model.
      *
-     * @param mixed $model
+     * @param mixed  $model
      * @param string $attributeName
-     * @param mixed $attributeValue
+     * @param mixed  $attributeValue
+     *
      * @return void
      */
     public function fillModel($model, $attributeName, $attributeValue)
     {
-        return;
     }
 
     /**
      * Set readonly attribute.
      *
-     * @param boolean $readonly
+     * @param bool $readonly
+     *
      * @return $this
      */
     public function readonly(bool $readonly = true)
@@ -172,18 +180,18 @@ class Field extends VueProp
     }
 
     /**
-     * Set dependency.
+     * Add dependency.
      *
-     * @param string $key
-     * @param string|int $value
-     * @return void
+     * @param  FieldDependency $dependency
+     * @return $this
      */
-    public function dependsOn(string $key, $value)
+    public function addDependency(FieldDependency $dependency)
     {
-        $this->setAttribute('dependsOn', [
-            'key' => $key,
-            'value' => $value
-        ]);
+        if ($this->hasAttribute('dependencies')) {
+            $this->dependencies[] = $dependency;
+        } else {
+            $this->setAttribute('dependencies', collect([$dependency]));
+        }
 
         return $this;
     }
@@ -191,7 +199,7 @@ class Field extends VueProp
     /**
      * Is field saveable.
      *
-     * @return boolean
+     * @return bool
      */
     public function canSave()
     {
@@ -201,7 +209,7 @@ class Field extends VueProp
     /**
      * Should field be registered in form.
      *
-     * @return boolean
+     * @return bool
      */
     public function register()
     {
@@ -212,6 +220,7 @@ class Field extends VueProp
      * Format value before saving it to database.
      *
      * @param string $value
+     *
      * @return void
      */
     public function format($value)
@@ -223,6 +232,7 @@ class Field extends VueProp
      * Cast model value for e.g. boolean.
      *
      * @param Model $value
+     *
      * @return mixed
      */
     public function cast($value)
@@ -234,6 +244,7 @@ class Field extends VueProp
      * Transform model value.
      *
      * @param Model $value
+     *
      * @return mixed
      */
     public function transform($value)
@@ -252,7 +263,7 @@ class Field extends VueProp
             if ($propertyName == 'required') {
                 continue;
             }
-            if (!Str::endsWith($propertyName, 'Required')) {
+            if (! Str::endsWith($propertyName, 'Required')) {
                 continue;
             }
             $this->required = array_merge($this->required, $propertyValue);
@@ -262,9 +273,9 @@ class Field extends VueProp
     /**
      * Check if all required props have been set.
      *
-     * @return boolean
-     * 
      * @throws \Exception
+     *
+     * @return bool
      */
     public function checkComplete()
     {
@@ -294,14 +305,16 @@ class Field extends VueProp
      *
      * @param string $slot
      * @param string $component
-     * @return void
-     * 
+     *
      * @throws \InvalidArgumentException
+     *
+     * @return void
      */
     public function slot(string $slot, string $component)
     {
-        if (!$this->slotExists($slot)) {
+        if (! $this->slotExists($slot)) {
             $field = class_basename(static::class);
+
             throw new InvalidArgumentException("Slot {$slot} does not exist for Field {$field}");
         }
 
@@ -316,6 +329,7 @@ class Field extends VueProp
      * Check if slot exists.
      *
      * @param string $slot
+     *
      * @return void
      */
     public function slotExists(string $slot)
@@ -330,6 +344,7 @@ class Field extends VueProp
      * Get slot method name.
      *
      * @param string $slot
+     *
      * @return string
      */
     protected function getSlotMethodName(string $slot)
@@ -341,6 +356,7 @@ class Field extends VueProp
      * Set authorize closure.
      *
      * @param Closure $closure
+     *
      * @return void
      */
     public function authorize(Closure $closure)
@@ -351,15 +367,16 @@ class Field extends VueProp
     /**
      * Execute authorize method.
      *
-     * @return boolean
+     * @return bool
      */
     public function authorized()
     {
-        if (!$this->authorize) {
+        if (! $this->authorize) {
             return true;
         }
 
         $closure = $this->authorize;
+
         return $closure(fjord_user());
     }
 
@@ -371,7 +388,7 @@ class Field extends VueProp
     public function setDefaultsFromClassMethods()
     {
         foreach (get_class_methods($this) as $method) {
-            if (!Str::startsWith($method, 'set') || !Str::endsWith($method, 'Default')) {
+            if (! Str::startsWith($method, 'set') || ! Str::endsWith($method, 'Default')) {
                 continue;
             }
             $attributeName = $this->getDefaultSetterAttributeName($method);
@@ -396,11 +413,11 @@ class Field extends VueProp
 
     /**
      * Get attribute name from setter method name.
-     * 
+     *
      * setNameDefault => name
      * setCamelCaseDefault => camelCase
      *
-     * @param string $method
+     * @param  string $method
      * @return string
      */
     protected function getDefaultSetterAttributeName(string $method)
@@ -416,58 +433,6 @@ class Field extends VueProp
                 )
             )
         );
-    }
-
-    /**
-     * Set field attribute.
-     *
-     * @param string $name
-     * @param string|int|closure $value
-     * @return self
-     */
-    public function setAttribute(string $name, $value = true)
-    {
-        if ($value instanceof Closure) {
-            $value = Closure::bind($value, $this)();
-        }
-
-        $this->attributes[$name] = $value;
-
-        return $this;
-    }
-
-    /**
-     * Throw a MethodNotFoundException.
-     *
-     * @param  array  $others
-     * @param  string  $method
-     * @return void
-     *
-     * @throws \Fjord\Exceptions\MethodNotFoundException
-     */
-    protected function methodNotFound($method)
-    {
-        throw new MethodNotFoundException(
-            sprintf(
-                'The %s method is not found for the %s field.',
-                $method,
-                class_basename(static::class),
-            ),
-            [
-                'function' => '__call',
-                'class' => self::class
-            ]
-        );
-    }
-
-    /**
-     * Get attributes.
-     *
-     * @return array
-     */
-    public function getAttributes()
-    {
-        return $this->attributes;
     }
 
     /**
@@ -491,61 +456,23 @@ class Field extends VueProp
     }
 
     /**
-     * Get attribute.
-     *
-     * @param string $name
-     * @return any
-     */
-    public function getAttribute(string $name)
-    {
-        if ($name == 'authorized') {
-            return $this->authorized();
-        }
-
-        return $this->attributes[$name] ?? null;
-    }
-
-    /**
      * Render field.
      *
      * @return array
      */
     public function render(): array
     {
-        foreach ($this->props as $name => $value) {
-            $this->attributes[$name] = $value;
-        }
+        // foreach ($this->props as $name => $value) {
+        //     $this->attributes[$name] = $value;
+        // }
 
-        return $this->attributes;
-    }
-
-    /**
-     * Call field method.
-     *
-     * @param string $method
-     * @param array $params
-     * @return static|void
-     * 
-     * @throws \Fjord\Exceptions\MethodNotFoundException
-     */
-    public function __call($method, $params = [])
-    {
-        /*
-        // TODO: Discuss field extensions.
-        foreach ($this->extensions as $extension) {
-            if (method_exists($extension, $method)) {
-                return $this->forwardCallTo($extension, $method, $params);
-            }
-        }
-        */
-
-        $this->methodNotFound($method);
+        return array_merge($this->attributes, $this->props);
     }
 
     /**
      * Get attribute.
      *
-     * @param string $name
+     * @param  string $name
      * @return any
      */
     public function __get(string $name)
@@ -556,11 +483,33 @@ class Field extends VueProp
     /**
      * Get attribute.
      *
-     * @param string $name
+     * @param  string $name
      * @return any
      */
     public function __set(string $name, $value)
     {
         return $this->setAttribute($name, $value);
+    }
+
+    /**
+     * Call field method.
+     *
+     * @param  string $method
+     * @param  array  $parameters
+     * @return mixed
+     *
+     * @throws BadMethodCallException
+     */
+    public function __call($method, $parameters)
+    {
+        if (FieldDependency::conditionExists($method)) {
+            return $this->addDependency(
+                FieldDependency::make($method, ...$parameters)
+            );
+        }
+
+        throw new BadMethodCallException(sprintf(
+            'Call to undefined method %s::%s()', static::class, $method
+        ));
     }
 }

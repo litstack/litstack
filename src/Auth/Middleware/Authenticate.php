@@ -2,24 +2,25 @@
 
 namespace Fjord\Auth\Middleware;
 
-use Throwable;
-use Illuminate\Support\Carbon;
 use Fjord\Auth\Models\FjordSession;
 use Fjord\Support\Facades\FjordLang;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Session;
+use Throwable;
 
 class Authenticate extends Middleware
 {
     /**
      * Determine if the user is logged in to any of the given guards.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  array  $guards
-     * @return void
+     * @param \Illuminate\Http\Request $request
+     * @param array                    $guards
      *
      * @throws \Illuminate\Auth\AuthenticationException
+     *
+     * @return void
      */
     protected function authenticate($request, array $guards)
     {
@@ -48,6 +49,7 @@ class Authenticate extends Middleware
      * Store Fjord session.
      *
      * @param \Illuminate\Http\Request $request
+     *
      * @return void
      */
     protected function storeFjordSession($request)
@@ -59,11 +61,11 @@ class Authenticate extends Middleware
         if (FjordSession::where($query)->exists()) {
             FjordSession::where($query)->update(
                 [
-                    'user_agent' => $request->server('HTTP_USER_AGENT'),
-                    'ip_address' => $request->ip(),
-                    'session_id' => Session::getId(),
+                    'user_agent'    => $request->server('HTTP_USER_AGENT'),
+                    'ip_address'    => $request->ip(),
+                    'session_id'    => Session::getId(),
                     'fjord_user_id' => fjord_user()->id,
-                    'last_activity' => Carbon::now()
+                    'last_activity' => Carbon::now(),
                 ],
             );
         } else {
@@ -72,10 +74,10 @@ class Authenticate extends Middleware
                     'session_id' => Session::getId(),
                 ],
                 [
-                    'user_agent' => $request->server('HTTP_USER_AGENT'),
-                    'ip_address' => $request->ip(),
+                    'user_agent'    => $request->server('HTTP_USER_AGENT'),
+                    'ip_address'    => $request->ip(),
                     'fjord_user_id' => fjord_user()->id,
-                    'last_activity' => Carbon::now()
+                    'last_activity' => Carbon::now(),
                 ],
             );
         }
@@ -84,12 +86,13 @@ class Authenticate extends Middleware
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return string
      */
     protected function redirectTo($request)
     {
-        if (!$request->expectsJson()) {
+        if (! $request->expectsJson()) {
             return route('fjord.login');
         }
     }
@@ -97,19 +100,20 @@ class Authenticate extends Middleware
     /**
      * Store session location after response is sent.
      *
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
+     *
      * @return void
      */
     public function terminate($request, $response)
     {
         $session = FjordSession::where('session_id', Session::getId())->first();
 
-        if (!$session) {
+        if (! $session) {
             return;
         }
 
-        if (!is_array($session->payload)) {
+        if (! is_array($session->payload)) {
             $session->payload = [];
         }
 
@@ -120,15 +124,15 @@ class Authenticate extends Middleware
 
         $location = $this->fetchLocation();
 
-        if (!$location) {
+        if (! $location) {
             return;
         }
 
         $session->update([
             'payload' => ['location' => [
-                'city' => $location['city'] ?? '',
+                'city'    => $location['city'] ?? '',
                 'country' => $location['country'] ?? '',
-            ]]
+            ]],
         ]);
     }
 
@@ -141,6 +145,7 @@ class Authenticate extends Middleware
     {
         try {
             $response = (new \GuzzleHttp\Client())->request('GET', 'https://ipinfo.io/json');
+
             return json_decode($response->getBody(), true);
         } catch (Throwable $e) {
             return false;

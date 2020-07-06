@@ -2,13 +2,13 @@
 
 namespace FjordTest\Fields;
 
-use Mockery as m;
 use Fjord\Crud\BaseField;
-use FjordTest\BackendTestCase;
 use Fjord\Crud\Fields\Password;
-use Illuminate\Support\Facades\Hash;
-use FjordTest\Traits\InteractsWithFields;
 use Fjord\Crud\Fields\Traits\FieldHasRules;
+use FjordTest\BackendTestCase;
+use FjordTest\Traits\InteractsWithFields;
+use Illuminate\Support\Facades\Hash;
+use Mockery as m;
 
 class FieldPasswordTest extends BackendTestCase
 {

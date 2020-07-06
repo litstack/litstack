@@ -2,17 +2,17 @@
 
 namespace Fjord\User\Controllers;
 
-use Illuminate\Http\Request;
 use Fjord\Support\IndexTable;
 use Fjord\User\Models\FjordUser;
-use Fjord\User\Requests\FjordUserReadRequest;
 use Fjord\User\Requests\FjordUserDeleteRequest;
+use Fjord\User\Requests\FjordUserReadRequest;
+use Illuminate\Http\Request;
 
 class FjordUserController
 {
     /**
      * Create new FjordUserController instance.
-     * 
+     *
      * @return void
      */
     public function __construct()
@@ -24,6 +24,7 @@ class FjordUserController
      * Show user index.
      *
      * @param FjordUserReadRequest $request
+     *
      * @return void
      */
     public function showIndex(FjordUserReadRequest $request)
@@ -47,6 +48,7 @@ class FjordUserController
      * Delete multiple users.
      *
      * @param Request $request
+     *
      * @return void
      */
     public function deleteAll(FjordUserDeleteRequest $request)
@@ -55,8 +57,8 @@ class FjordUserController
 
         return response([
             'message' => __f('fj.deleted_all', [
-                'count' => count($request->ids)
-            ])
+                'count' => count($request->ids),
+            ]),
         ]);
     }
 
@@ -64,6 +66,7 @@ class FjordUserController
      * Fetch index.
      *
      * @param Request $request
+     *
      * @return array
      */
     public function fetchIndex(FjordUserReadRequest $request)

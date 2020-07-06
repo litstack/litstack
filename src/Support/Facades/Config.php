@@ -6,8 +6,8 @@ use Fjord\Support\FjordFacade;
 
 /**
  * @method static \Fjord\Config\ConfigHandler get(string $key)
- * @method static bool exists(string $key): 
- * 
+ * @method static bool exists(string $key):
+ *
  * @see \Fjord\Config\ConfigLoader
  */
 class Config extends FjordFacade

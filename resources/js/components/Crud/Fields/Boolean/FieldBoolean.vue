@@ -11,8 +11,6 @@
 </template>
 
 <script>
-import methods from '../methods';
-
 export default {
     name: 'FieldBoolean',
     props: {

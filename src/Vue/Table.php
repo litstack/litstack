@@ -2,10 +2,11 @@
 
 namespace Fjord\Vue;
 
-use Closure;
+use Fjord\Contracts\Vue\Authorizable as AuthorizableContract;
 use Fjord\Support\VueProp;
+use Fjord\Vue\Components\BladeTableComponent;
 use Fjord\Vue\Traits\Authorizable;
-use Fjord\Vue\Contracts\AuthorizableContract;
+use Illuminate\Contracts\View\View;
 
 class Table extends VueProp implements AuthorizableContract
 {
@@ -22,6 +23,7 @@ class Table extends VueProp implements AuthorizableContract
      * Add table column to cols stack.
      *
      * @param string $label
+     *
      * @return \Fjord\Vue\Col $col
      */
     public function col(string $label = '')
@@ -37,13 +39,14 @@ class Table extends VueProp implements AuthorizableContract
      * Add toggle column.
      *
      * @param string $key
+     *
      * @return ColImageComponent
      */
     public function toggle(string $key)
     {
         $component = $this->component('fj-col-toggle');
 
-        $component->link(false);
+        $component->prop('link', false);
         $component->prop('local_key', $key);
 
         return $component;
@@ -72,7 +75,7 @@ class Table extends VueProp implements AuthorizableContract
     {
         $component = $this->component('fj-col-crud-relation');
 
-        $component->label($label);
+        $component->prop('label', $label);
 
         return $component;
     }
@@ -81,15 +84,25 @@ class Table extends VueProp implements AuthorizableContract
      * Add table column to cols stack and set component.
      *
      * @param string $component
+     *
      * @return mixed
      */
-    public function component(string $component)
+    public function component($component)
     {
         $component = component($component, TableComponent::class);
 
         $this->cols[] = $component;
 
         return $component;
+    }
+
+    public function view($view)
+    {
+        if (! $view instanceof View) {
+            $view = view($view);
+        }
+
+        return $this->component(new BladeTableComponent('fj-blade'))->prop('view', $view);
     }
 
     /**

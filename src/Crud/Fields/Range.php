@@ -36,7 +36,8 @@ class Range extends BaseField
     /**
      * Set step.
      *
-     * @param integer $step
+     * @param int $step
+     *
      * @return $this
      */
     public function step(int $step)
@@ -49,7 +50,8 @@ class Range extends BaseField
     /**
      * Set max.
      *
-     * @param integer $max
+     * @param int $max
+     *
      * @return $this
      */
     public function max(int $max)
@@ -62,7 +64,8 @@ class Range extends BaseField
     /**
      * Set min.
      *
-     * @param integer $min
+     * @param int $min
+     *
      * @return $this
      */
     public function min(int $min)
@@ -76,11 +79,12 @@ class Range extends BaseField
      * Cast field value.
      *
      * @param mixed $value
-     * @return boolean
+     *
+     * @return bool
      */
     public function cast($value)
     {
-        if (!is_numeric($value)) {
+        if (! is_numeric($value)) {
             return 0;
         }
 

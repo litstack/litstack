@@ -21,6 +21,8 @@ class NavigationConfig extends Config
 }
 ```
 
+![navigation](./screens/navigation.jpg 'navigation')
+
 ## Structure
 
 The navigation structure is defined in an array. Simple entries, group titles and nested entries can be created. All entries are grouped within sections like this:

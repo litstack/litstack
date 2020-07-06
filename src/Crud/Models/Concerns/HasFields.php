@@ -2,6 +2,7 @@
 
 namespace Fjord\Crud\Models\Concerns;
 
+use Fjord\Crud\Fields\Media\MediaField;
 use Fjord\Crud\RelationField;
 
 trait HasFields
@@ -13,7 +14,7 @@ trait HasFields
      */
     public function getFieldsAttribute()
     {
-        return $this->getForm()->getRegisteredFields();
+        return $this->getForm()->getRegisteredFields() ?? [];
     }
 
     /**
@@ -40,7 +41,8 @@ trait HasFields
      * Check if field with id exists.
      *
      * @param string $id
-     * @return boolean
+     *
+     * @return bool
      */
     public function fieldExists(string $id)
     {
@@ -50,7 +52,8 @@ trait HasFields
     /**
      * Find field by id.
      *
-     * @param  string $id
+     * @param string $id
+     *
      * @return \Fjord\Crud\Field
      */
     public function findField($id)
@@ -67,7 +70,7 @@ trait HasFields
      *
      * @return void
      */
-    public function getFormattedFieldValue($field,  $locale = null)
+    public function getFormattedFieldValue($field, $locale = null)
     {
         return $field->cast(
             $this->getFieldValue($field, $locale)
@@ -78,24 +81,32 @@ trait HasFields
      * Get field value.
      *
      * @param Field $field
+     *
      * @return mixed
      */
-    public function getFieldValue($field)
+    public function getFieldValue($field, $locale = null)
     {
-        if ($field instanceof RelationField) {
-            return $this->{$field->id};
+        if ($field instanceof MediaField) {
+            $media = $this->getMedia($field->id);
+            if ($field->maxFiles == 1) {
+                $media = $media->first();
+            }
+
+            return $media;
         }
 
-        if (!is_translatable(static::class)) {
-            return $this->{$field->id};
+        if ($field instanceof RelationField) {
+            return $this->getRelationValue($field->id);
+        }
+
+        if (! $locale) {
+            $locale = app()->getLocale();
         }
 
         if ($field->translatable) {
-            $value = $this->translation[app()->getLocale()] ?? [];
-        } else {
-            $value = $this->translation[config('translatable.fallback_locale')] ?? [];
+            return $this->getTranslatedFieldValue($field, app()->getLocale());
         }
 
-        return $value['value'] ?? null;
+        return $this->value[$field->local_key] ?? null;
     }
 }

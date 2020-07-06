@@ -9,6 +9,8 @@
 -->
 
 <script>
+import dependencyMethods from './dependecy_methods';
+
 export default {
     name: 'FieldWrapperGroup',
 
@@ -49,10 +51,10 @@ export default {
         model: {
             required: true
         },
-        dependsOn: {
-            type: Object,
+        dependencies: {
+            type: Array,
             default() {
-                return {};
+                return [];
             }
         }
     },
@@ -63,34 +65,30 @@ export default {
          * @return {Boolean}
          */
         shouldRender() {
-            if (!this.dependsOn) {
+            if (!this.dependencies) {
                 return true;
             }
-            return this.dependsOn.value == this.dependencyValue;
+
+            return this.fulfillsConditions;
         }
     },
     data() {
         return {
-            dependencyValue: null
+            /**
+             * Determines if the field fulfills conditions.
+             */
+            fulfillsConditions: true
         };
     },
     beforeMount() {
-        this.detectDepencyChanges();
-        Fjord.bus.$on('fieldChanged', this.detectDepencyChanges);
+        // Render dependency stuff.
+        this.resolveDependecies(this.dependencies);
+        Fjord.bus.$on('fieldChanged', () =>
+            this.resolveDependecies(this.dependencies)
+        );
     },
     methods: {
-        /**
-         * Detect depency changes.
-         */
-        detectDepencyChanges() {
-            if (!this.dependsOn) {
-                return true;
-            }
-            if (this.model[this.dependsOn.key] == this.dependencyValue) {
-                return;
-            }
-            this.dependencyValue = this.model[this.dependsOn.key];
-        }
+        ...dependencyMethods
     }
 };
 </script>

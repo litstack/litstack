@@ -3,12 +3,11 @@
 namespace Fjord\Support\Macros;
 
 use Closure;
-use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BuilderSort
 {
@@ -21,7 +20,7 @@ class BuilderSort
 
     /**
      * Create new BuilderSearch instance.
-     * 
+     *
      * @return void
      */
     public function __construct()
@@ -30,6 +29,7 @@ class BuilderSort
 
         Builder::macro('sort', function (string $column, string $direction = 'asc') use ($self) {
             $self->setQuery($this);
+
             return $self->sort($column, $direction);
         });
     }
@@ -38,6 +38,7 @@ class BuilderSort
      * Set query builder instance.
      *
      * @param Builder $query
+     *
      * @return void
      */
     public function setQuery(Builder $query)
@@ -50,12 +51,14 @@ class BuilderSort
      *
      * @param string $column
      * @param string $direction
+     *
      * @return Builder
      */
     public function sort(string $column, string $direction): Builder
     {
         if ($this->isRelatedColumn($column)) {
             [$related, $column] = explode('.', $column);
+
             return $this->sortByRelation($related, $column, $direction);
         }
 
@@ -66,7 +69,8 @@ class BuilderSort
      * Contains column string related column.
      *
      * @param string $column
-     * @return boolean
+     *
+     * @return bool
      */
     protected function isRelatedColumn(string $column)
     {
@@ -76,10 +80,11 @@ class BuilderSort
     /**
      * Sort by related column.
      *
-     * @param string $related
-     * @param string $column
-     * @param string $direction
+     * @param string  $related
+     * @param string  $column
+     * @param string  $direction
      * @param Closure $closure
+     *
      * @return Builder
      */
     protected function sortByRelation(
@@ -95,7 +100,7 @@ class BuilderSort
         if ($relation instanceof HasOne) {
             $foreignKey = $relation->getForeignKeyName();
             $localKey = $relation->getLocalKeyName();
-        } else if ($relation instanceof BelongsTo) {
+        } elseif ($relation instanceof BelongsTo) {
             $foreignKey = $relation->getOwnerKeyName();
             $localKey = $relation->getForeignKeyName();
         } else {
@@ -125,11 +130,12 @@ class BuilderSort
      *
      * @param string $column
      * @param string $direction
+     *
      * @return Builder
      */
     protected function sortColumn(string $column, string $direction): Builder
     {
-        if (!is_attribute_translatable($column, $this->getModel())) {
+        if (! is_attribute_translatable($column, $this->getModel())) {
             return $this->query->orderBy($column, $direction);
         } else {
             return $this->sortByTranslation($column, $direction);
@@ -137,10 +143,11 @@ class BuilderSort
     }
 
     /**
-     * Order by translated column
+     * Order by translated column.
      *
      * @param string $column
      * @param string $direction
+     *
      * @return Builder
      */
     protected function sortByTranslation(string $column, string $direction): Builder
