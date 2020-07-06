@@ -45,7 +45,13 @@ trait RenderableAsProp
         // to an array using Laravel's collection method toArray. To ensure that
         // all nested objects are converted, the array is converted to a
         // collection instance, which then calls the toArray method on all it's items.
-        $rendered = collect($this->render());
+        $rendered = collect($this->render())->map(function ($item) {
+            if (is_array($item)) {
+                return collect($item);
+            }
+
+            return $item;
+        });
 
         return $this->filterAuthorized($rendered);
     }
