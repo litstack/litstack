@@ -147,8 +147,8 @@ class FjordServiceProvider extends ServiceProvider
      */
     protected function fjord()
     {
-        $this->app->singleton('fjord', function () {
-            return new Fjord\Fjord();
+        $this->app->singleton('fjord', function ($app) {
+            return new Fjord\Fjord($app);
         });
 
         $this->app->singleton('fjord.router', function ($app) {

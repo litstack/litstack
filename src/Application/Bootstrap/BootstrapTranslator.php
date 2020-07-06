@@ -17,7 +17,8 @@ class BootstrapTranslator
      */
     public function bootstrap(Application $app)
     {
-        $translator = new Translator($app);
-        $app->bind('translator', $translator);
+        app()->singleton('fjord.translator', function () {
+            return new Translator();
+        });
     }
 }

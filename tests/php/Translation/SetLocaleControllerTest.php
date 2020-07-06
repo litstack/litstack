@@ -4,6 +4,7 @@ namespace FjordTest\Translation;
 
 use Fjord\Translation\Controllers\SetLocaleController;
 use FjordTest\BackendTestCase;
+use FjordTest\Traits\CreateFjordUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mockery as m;
@@ -11,6 +12,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SetLocaleControllerTest extends BackendTestCase
 {
+    use CreateFjordUsers;
+
     /** @test */
     public function test_invoke_method()
     {
@@ -41,5 +44,17 @@ class SetLocaleControllerTest extends BackendTestCase
         $this->expectException(NotFoundHttpException::class);
 
         (new SetLocaleController)($request);
+    }
+
+    /** @test */
+    public function test_route()
+    {
+        app('config')->set('translation.locales', ['en']);
+
+        $this->actingAs($this->admin, 'fjord');
+        $this->assertEquals(null, $this->admin->locale);
+        $response = $this->post(fjord()->url('set-locale'), ['locale' => 'en']);
+        $response->assertStatus(200);
+        $this->assertEquals('en', $this->admin->refresh()->locale);
     }
 }

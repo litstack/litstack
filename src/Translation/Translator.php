@@ -22,23 +22,6 @@ class Translator
     protected $namespaces = [];
 
     /**
-     * Fjord application instance.
-     *
-     * @var Fjord\Application\Application
-     */
-    protected $app;
-
-    /**
-     * Create new Translator instance.
-     *
-     * @param Fjord\Application\Application $app
-     */
-    public function __construct(Application $app)
-    {
-        $this->app = $app;
-    }
-
-    /**
      * Get translation for Fjord application.
      *
      * @param  string $key

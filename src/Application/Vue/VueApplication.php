@@ -90,7 +90,7 @@ class VueApplication
         $this->props = [
             'config'       => collect(config('fjord')),
             'auth'         => fjord_user(),
-            'app-locale'   => $this->app->get('translator')->getLocale(),
+            'app-locale'   => fjord()->getLocale(),
             'translatable' => collect([
                 'language'        => app()->getLocale(),
                 'languages'       => collect(config('translatable.locales')),
