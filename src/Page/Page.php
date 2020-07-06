@@ -18,13 +18,6 @@ class Page extends BasePage implements Expandable
     protected $rootComponent = 'fj-page';
 
     /**
-     * CrudIndex container slots.
-     *
-     * @var array
-     */
-    protected $slots = [];
-
-    /**
      * Go back route & text.
      *
      * @var array|null
@@ -170,7 +163,6 @@ class Page extends BasePage implements Expandable
         $this->bindDataToSlotViews();
 
         return array_merge([
-            'slots'      => collect($this->slots),
             'navigation' => $this->navigation,
             'header'     => $this->header,
             'back'       => $this->back,

@@ -4,6 +4,7 @@ namespace Fjord\Page;
 
 use Fjord\Contracts\Page\Page;
 use Fjord\Support\HasAttributes;
+use Illuminate\Contracts\View\View;
 use InvalidArgumentException;
 
 abstract class BasePage implements Page
