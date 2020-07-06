@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Application\Translation;
+namespace Fjord\Translation;
 
 use Fjord\Support\Facades\FjordLang;
 use Illuminate\Support\ServiceProvider;

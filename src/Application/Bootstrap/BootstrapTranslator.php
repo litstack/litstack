@@ -3,7 +3,7 @@
 namespace Fjord\Application\Bootstrap;
 
 use Fjord\Application\Application;
-use Fjord\Application\Translation\Translator;
+use Fjord\Translation\Translator;
 
 class BootstrapTranslator
 {
