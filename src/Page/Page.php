@@ -25,13 +25,6 @@ class Page extends BasePage implements Expandable
     protected $slots = [];
 
     /**
-     * Page title.
-     *
-     * @var string
-     */
-    protected $title;
-
-    /**
      * Go back route & text.
      *
      * @var array|null
@@ -171,15 +164,15 @@ class Page extends BasePage implements Expandable
     public function render(): array
     {
         if (! fjord_user()) {
-            throw new NotLoggedInException(static::class.' requires an authentificated fjord_user.');
+            throw new NotLoggedInException(static::class.' requires an authentificated fjord_user to render.');
         }
 
         $this->bindDataToSlotViews();
 
         return array_merge([
             'slots'      => collect($this->slots),
-            'title'      => $this->title,
             'navigation' => $this->navigation,
+            'header'     => $this->header,
             'back'       => $this->back,
         ], parent::render());
     }
@@ -216,7 +209,7 @@ class Page extends BasePage implements Expandable
             ->withProps(array_merge([
                 'page' => collect($this->render()),
             ], $this->props))
-            ->withTitle($this->title)
+            ->withTitle($this->getTitle())
             ->render();
     }
 }

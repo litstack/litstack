@@ -134,7 +134,7 @@ abstract class CrudController extends CrudBaseController
                 'config' => $config,
             ]);
 
-        $page->navigation->right->component('fj-crud-create-button');
+        $page->navigationRight()->component('fj-crud-create-button');
 
         return $page;
     }
@@ -235,26 +235,13 @@ abstract class CrudController extends CrudBaseController
             ]);
 
         // Show near items.
-        $page->navigation->left->component('fj-crud-show-near-items')->bind([
+        $page->navigationLeft()->component('fj-crud-show-near-items')->bind([
             'next'         => $next,
             'previous'     => $previous,
             'route-prefix' => $this->config->routePrefix,
         ]);
 
         return $page;
-
-        // return view('fjord::app')->withComponent($this->config->formComponent)
-        //     ->withTitle($this->config->names['singular'])
-        //     ->withProps([
-        //         'crud-model' => crud($model),
-        //         'config'     => $config,
-        //         'backRoute'  => $this->config->route_prefix,
-        //         'nearItems'  => [
-        //             'next'     => $next,
-        //             'previous' => $previous,
-        //         ],
-        //         'controls' => [],
-        //     ]);
     }
 
     /**

@@ -22,9 +22,26 @@
             </template>
         </fj-navigation>
         <fj-header>
-            <h3 class="d-flex justify-content-between align-items-baseline">
-                {{ page.title }}
-            </h3>
+            <h3
+                class="d-flex justify-content-between align-items-baseline"
+                v-html="page.header.title"
+            />
+            <template slot="actions">
+                <components
+                    v-for="(component, key) in page.header.left.components"
+                    :key="key"
+                    :is="component.name"
+                    v-bind="{ ...component.props, ...page.props, ...$attrs }"
+                />
+            </template>
+            <template slot="actions-right">
+                <components
+                    v-for="(component, key) in page.header.right.components"
+                    :key="key"
+                    :is="component.name"
+                    v-bind="{ ...component.props, ...page.props, ...$attrs }"
+                />
+            </template>
         </fj-header>
         <b-row>
             <fj-col :width="12">
