@@ -74,6 +74,11 @@ class CrudShow extends Page
      */
     protected function registeredField($field)
     {
+        // $this->wrapper
+        //     ->component('fj-field')
+        //     ->prop('field', $field);
+        // dd($field, $this);
+
         return $this->wrapper
             ->component('fj-field')
             ->prop('field', $field);
@@ -93,25 +98,6 @@ class CrudShow extends Page
     }
 
     /**
-     * Register new Field.
-     *
-     * @param  mixed  $field
-     * @param  string $id
-     * @param  array  $params
-     * @return Field  $field
-     */
-    // public function registerField($field, string $id, $params = [])
-    // {
-    //     if (! $this->inWrapper()) {
-    //         throw new InvalidArgumentException('Fields must be registered inside a wrapper.', [
-    //             'function' => '__call',
-    //         ]);
-    //     }
-
-    //     return $this->form->registerField($field, $id, $params);
-    // }
-
-    /**
      * Is registering component in card.
      *
      * @return bool
@@ -121,24 +107,6 @@ class CrudShow extends Page
         return $this->inCard;
     }
 
-    // public function wrapper($component, Closure $closure)
-    // {
-    //     $wrapper = parent::wrapper($component, function ($self, $wrapper) use ($closure) {
-    //         $wrapper = $this->form->wrapper($wrapper, function ($form, $wrapper) use ($closure) {
-    //             $closure($form, $wrapper);
-
-    //             array_pop($this->components);
-
-    //             $this->components[] = $wrapper;
-    //             $this->wrapper = $wrapper;
-    //         });
-    //     });
-
-    //     //dd($this, $wrapper->title('abc'));
-
-    //     return $wrapper;
-    // }
-
     /**
      * Add Vue component.
      *
@@ -147,9 +115,9 @@ class CrudShow extends Page
      */
     public function component($component)
     {
-        if ($this->inCard()) {
-            return $this->form->component($component);
-        }
+        // if ($this->inCard()) {
+        //     return $this->form->component($component);
+        // }
 
         if ($this->inWrapper()) {
             $component = component($component);
@@ -194,17 +162,6 @@ class CrudShow extends Page
             $this->inCard = false;
         });
     }
-
-    /**
-     * Get CrudForm components.
-     *
-     * @return array
-     */
-    // public function getComponents()
-    // {
-
-    //     return $this->forwardCallTo($this->form, 'getComponents', []);
-    // }
 
     /**
      * Get attributes.

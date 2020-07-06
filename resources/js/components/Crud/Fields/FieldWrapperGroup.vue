@@ -25,17 +25,13 @@ export default {
             return;
         }
 
-        let vm = createElement(
+        return createElement(
             'fj-col',
             {
                 props: { width: this.width }
             },
             [createElement('b-row', this.$slots.default)]
         );
-
-        //vm.$forceUpdate();
-
-        return vm;
     },
 
     props: {

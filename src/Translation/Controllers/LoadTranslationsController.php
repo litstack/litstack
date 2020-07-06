@@ -1,14 +1,19 @@
 <?php
 
-namespace Fjord\Application\Controllers;
+namespace Fjord\Translation\Controllers;
 
-use Fjord\Application\Translation\i18nGenerator;
+use Fjord\Translation\i18nGenerator;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 
-class TranslationsController extends Controller
+class LoadTranslationsController extends Controller
 {
+    /**
+     * Translations.
+     *
+     * @var array
+     */
     protected $translations = [];
 
     /**

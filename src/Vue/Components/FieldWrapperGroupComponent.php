@@ -16,7 +16,7 @@ class FieldWrapperGroupComponent extends Component
     {
         return [
             'width' => [
-                'type'     => 'integer',
+                'type'     => ['integer', 'double'],
                 'required' => false,
                 'default'  => 12,
             ],

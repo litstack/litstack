@@ -1,30 +1,25 @@
 <?php
 
-namespace Fjord\Actions;
+namespace Fjord\Translation\Controllers;
 
 use Illuminate\Http\Request;
 
-class SetLocale
+class SetLocaleController
 {
     /**
      * Set locale.
      *
-     * @param Request $request
-     *
-     * @return void
+     * @param  Request  $request
+     * @return Response
      */
     public function __invoke(Request $request)
     {
-        $user = auth()->user();
-
         if (! in_array($request->locale, config('fjord.translatable.locales'))) {
-            return response()->json('method not allowed', 405);
+            abort(404, "Locale [{$request->locale}] is not available.");
         }
 
-        $user->update([
+        fjord_user()->update([
             'locale' => $request->locale,
         ]);
-
-        return response()->json('success', 200);
     }
 }
