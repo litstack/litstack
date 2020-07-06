@@ -2,6 +2,8 @@
 
 If fields should depend on the value of other fields, field conditions can be used.
 
+![radio conditions](./screens/conditions/conditions_radio.gif 'radio conditions')
+
 The following example shows an input field that only gets displayed if the select field `type` has the value `news`:
 
 ```php{10}

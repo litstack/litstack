@@ -114,6 +114,7 @@ module.exports = {
                         ['docs/fields/wysiwyg', 'WYSIWYG'],
                         ['docs/fields/boolean', 'Boolean'],
                         ['docs/fields/checkboxes', 'Checkboxes'],
+                        ['docs/fields/radio', 'Radio'],
                         ['docs/fields/range', 'Range'],
                         ['docs/fields/select', 'Select'],
                         ['docs/fields/date-time', 'Date/Time'],
