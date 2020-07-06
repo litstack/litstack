@@ -41,9 +41,8 @@ class Translator
     /**
      * Get translation for Fjord application.
      *
-     * @param string $key
-     * @param array  $replace
-     *
+     * @param  string $key
+     * @param  array  $replace
      * @return string
      */
     public function trans(string $key = null, $replace = [])
@@ -60,10 +59,9 @@ class Translator
     /**
      * Get choice translation for Fjord application.
      *
-     * @param string               $key
-     * @param \Countable|int|array $number
-     * @param array                $replace
-     *
+     * @param  string               $key
+     * @param  \Countable|int|array $number
+     * @param  array                $replace
      * @return string
      */
     public function choice(string $key = null, $number, $replace = [])
@@ -80,8 +78,7 @@ class Translator
     /**
      * Get language key.
      *
-     * @param string $key
-     *
+     * @param  string      $key
      * @return string|bool
      */
     protected function getLangKey(string $key = null)
@@ -147,8 +144,7 @@ class Translator
     /**
      * Check if the Fjord application is running in a locale.
      *
-     * @param string $locale
-     *
+     * @param  string $locale
      * @return bool
      */
     public function isLocale(string $locale)
@@ -159,8 +155,7 @@ class Translator
     /**
      * Get namespace from path.
      *
-     * @param string $path
-     *
+     * @param  string $path
      * @return string $namespace
      */
     protected function getNamespaceFromPath(string $path)
@@ -171,8 +166,7 @@ class Translator
     /**
      * Add path.
      *
-     * @param string $path
-     *
+     * @param  string $path
      * @return void
      */
     public function addPath(string $path)
