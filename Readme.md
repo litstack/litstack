@@ -11,7 +11,7 @@
 
 Fjord is a Laravel package for building Admin-Interfaces that help maintaining the data of your applications. It provides an intuitive interface and the tools needed to manage your project's Users, Models and free Forms for Pages, Settings etc.
 
-![Fjord Interface](./docs/fjord_preview.png 'Fjord Interface')
+![Fjord Interface](./docs/fjord_screen.png 'Fjord Interface')
 
 ## Features
 

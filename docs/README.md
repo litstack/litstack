@@ -17,7 +17,7 @@ features:
 footer: MIT Licensed | Made with ❤️ in Kiel
 ---
 
-![Fjord Interface](./fjord_preview_new.png 'Fjord Interface')
+![Fjord Interface](./fjord_screen.png 'Fjord Interface')
 
 ## Editable Models In No Time
 
