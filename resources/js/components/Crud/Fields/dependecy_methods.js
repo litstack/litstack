@@ -6,11 +6,11 @@ export default {
      * @return {undefined}
      */
     resolveDependecies(dependencies) {
-        if (!Array.isArray(dependencies)) {
+        if (!dependencies || !Array.isArray(dependencies)) {
             return;
         }
 
-        let fulfilled = false;
+        let fulfilled = true;
         for (let i in dependencies) {
             let dependency = dependencies[i];
 

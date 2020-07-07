@@ -12,13 +12,10 @@
 <script>
 export default {
     name: 'Locales',
-    props: {
-        config: {
-            type: Object,
-            default() {
-                return Fjord.config.translatable;
-            }
-        }
+    data() {
+        return {
+            config: Fjord.config.translatable
+        };
     },
     methods: {
         async setAppLocale(locale) {
