@@ -20,6 +20,8 @@ use Fjord\Crud\Fields\Radio;
 use Fjord\Crud\Fields\Range;
 use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Crud\Fields\Relations\OneRelation;
+use Fjord\Crud\Fields\Route;
+use Fjord\Crud\Fields\Route\RouteCollectionResolver;
 use Fjord\Crud\Fields\Select;
 use Fjord\Crud\Fields\Textarea;
 use Fjord\Crud\Fields\Wysiwyg;
@@ -73,6 +75,7 @@ class ServiceProvider extends LaravelServiceProvider
         'manyRelation' => ManyRelation::class,
         'list'         => ListField::class,
         'radio'        => Radio::class,
+        'route'        => Route::class,
     ];
 
     /**
@@ -106,6 +109,10 @@ class ServiceProvider extends LaravelServiceProvider
         $this->registerFields();
 
         $this->registerApiRepositories();
+
+        $this->app->singleton('fjord.crud.route.resolver', function () {
+            return new RouteCollectionResolver;
+        });
     }
 
     /**

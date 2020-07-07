@@ -211,7 +211,7 @@ class Field extends VueProp
      *
      * @return bool
      */
-    public function register()
+    public function shouldBeRegistered()
     {
         return true;
     }
@@ -462,10 +462,6 @@ class Field extends VueProp
      */
     public function render(): array
     {
-        // foreach ($this->props as $name => $value) {
-        //     $this->attributes[$name] = $value;
-        // }
-
         return array_merge($this->attributes, $this->props);
     }
 

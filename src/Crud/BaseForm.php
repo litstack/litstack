@@ -210,11 +210,11 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
 
         $this->registrar = $fieldInstance;
 
-        if ($fieldInstance->register()) {
+        if ($fieldInstance->shouldBeRegistered()) {
             $this->registeredFields[] = $fieldInstance;
         }
 
-        if ($this->inWrapper() && $fieldInstance->register()) {
+        if ($this->inWrapper() && $fieldInstance->shouldBeRegistered()) {
             $this->wrapper
                 ->component('fj-field')
                 ->prop('field', $fieldInstance);

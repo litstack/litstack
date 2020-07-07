@@ -157,16 +157,29 @@ abstract class CrudController extends CrudBaseController
         $config['form'] = $config['show'];
         unset($config['show']);
 
-        return view('fjord::app')
-            ->withComponent($this->config->formComponent)
-            ->withTitle(__f('base.item_create', [
-                'item' => $config['names']['singular'],
-            ]))
-            ->withProps([
-                'crud-model'       => crud(new $this->model()),
-                'config'           => $config,
-                'headerComponents' => [],
+        $page = $this->config->show
+            ->title($this->config->names['singular'])
+            ->bindToView([
+                'model'  => new $this->model(),
+                'config' => $this->config,
+            ])
+            ->bindToVue([
+                'crud-model' => crud(new $this->model()),
+                'config'     => $config,
             ]);
+
+        return $page;
+
+        // return view('fjord::app')
+        //     ->withComponent($this->config->formComponent)
+        //     ->withTitle(__f('base.item_create', [
+        //         'item' => $config['names']['singular'],
+        //     ]))
+        //     ->withProps([
+        //         'crud-model'       => crud(new $this->model()),
+        //         'config'           => $config,
+        //         'headerComponents' => [],
+        //     ]);
     }
 
     /**
