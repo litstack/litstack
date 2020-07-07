@@ -46,6 +46,7 @@ class FieldRouteTest extends BackendTestCase
         Route::register('name', $closure);
     }
 
+    /** @test */
     public function test_collection_method()
     {
         $this->assertEquals($this->field, $this->field->collection('dummy-collection'));

@@ -45,7 +45,7 @@ class RouteItem implements Arrayable, Jsonable
      * @param  RouteCollection $collection
      * @return void
      */
-    public function __construct(string $title, string $id, Closure $resolver, RouteCollection $collection = null)
+    public function __construct($title, $id, Closure $resolver, RouteCollection $collection = null)
     {
         $this->title = $title;
         $this->id = $id;

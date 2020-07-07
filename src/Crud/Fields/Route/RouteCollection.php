@@ -5,7 +5,6 @@ namespace Fjord\Crud\Fields\Route;
 use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 class RouteCollection extends Collection
 {
@@ -46,12 +45,12 @@ class RouteCollection extends Collection
      * Add named route to collection.
      *
      * @param  string         $title
+     * @param  string         $id
      * @param  Closure|string $resolver
      * @return $this
      */
-    public function route(string $title, $resolver)
+    public function route($title, $id, $resolver)
     {
-        $id = Str::snake($title);
         $this->items[$id] = new RouteItem($title, $id, $resolver, $this);
 
         return $this;
@@ -61,12 +60,12 @@ class RouteCollection extends Collection
      * Add route group.
      *
      * @param  string  $title
+     * @param  string  $id
      * @param  Closure $closure
      * @return $this
      */
-    public function group(string $title, Closure $closure)
+    public function group($title, $id, Closure $closure)
     {
-        $id = Str::snake($title);
         $this->items[$id] = $collection = new self([], $this);
         $collection->setId($id);
         $collection->setTitle($title);
@@ -81,7 +80,7 @@ class RouteCollection extends Collection
      * @param  string $id
      * @return void
      */
-    public function setId(string $id)
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -106,7 +105,7 @@ class RouteCollection extends Collection
      * @param  string $title
      * @return void
      */
-    public function setTitle(string $title)
+    public function setTitle($title)
     {
         $this->title = $title;
     }
@@ -127,7 +126,7 @@ class RouteCollection extends Collection
      * @param  string         $id
      * @return RouteItem|null
      */
-    public function findRoute(string $id)
+    public function findRoute($id)
     {
         $dottedItems = Arr::dot($this->onlySelfToArray());
 

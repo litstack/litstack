@@ -85,6 +85,12 @@ class Route extends BaseField
         })->toArray();
     }
 
+    /**
+     * Cast value.
+     *
+     * @param  string|null    $value
+     * @return RouteItem|null
+     */
     public function cast($value)
     {
         return app(RouteCast::class)->get(null, '', $value, []);

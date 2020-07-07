@@ -16,10 +16,10 @@ Route::register('app', function($collection) {
 
 ### Add Route
 
-The selectable routes are configured in the closure using the `route` method. The first parameter is the **title** that represents the route and the second parameter is a function that returns the actual route.
+The selectable routes are configured in the closure using the `route` method. The first parameter is the **title** that represents the route followed by an idendifier and a function that returns the actual route.
 
 ```php
-$collection->route('Home', function() {
+$collection->route('Home', 'home', function() {
     return route('home');
 });
 ```
@@ -28,7 +28,7 @@ $collection->route('Home', function() {
 Use the [arrow function](https://www.php.net/manual/en/functions.arrow.php) short cut:
 
 ```php
-$collection->route('Home', fn($locale) => route('home'));
+$collection->route('Home', 'home', fn($locale) => route('home'));
 ```
 
 :::
@@ -42,7 +42,9 @@ $collection->group('Articles', function($group) {
     $articles = Article::all();
 
     foreach($articles as $article) {
-        $group->route($article->title, fn() => route('articles.show', $article->id));
+        $group->route($article->title, $article->id, function() use ($article) {
+            return route('articles.show', $article->id));
+        });
     }
 });
 ```
@@ -52,7 +54,7 @@ $collection->group('Articles', function($group) {
 The closure in which the route is returned is given the current **locale** as parameter.
 
 ```php
-$collection->route('Home', function($locale) {
+$collection->route('Home', 'home' function($locale) {
     return route("{$locale}.home");
 });
 ```
