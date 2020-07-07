@@ -2,7 +2,6 @@
 
 namespace Fjord\Crud\Controllers;
 
-use Closure;
 use Fjord\Crud\Actions\ActionResolver;
 use Fjord\Crud\Api\ApiLoader;
 use Fjord\Crud\Api\ApiRequest;
@@ -79,26 +78,9 @@ abstract class CrudBaseController
             abort(404, debug("Missing table action [{$key}] in ".get_class($this->config->getConfig())));
         }
 
-        $result = $this->resolveAction($request, $action);
-
-        if (! $result) {
-            return response()->json(['message' => 'Action ausgeführt!']);
-        }
-
-        return $result;
-    }
-
-    protected function resolveAction(Request $request, $action)
-    {
         $models = $this->query()->whereIn('id', $request->ids ?? [])->get();
 
-        if ($action instanceof Closure) {
-            return $action($models);
-        }
-
-        if (is_array($action)) {
-            return app()->call([new $action[0], $action[1]], ['models' => $models]);
-        }
+        return $action->resolve($models);
     }
 
     /**

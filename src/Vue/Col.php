@@ -117,8 +117,7 @@ class Col extends VueProp implements AuthorizableContract
     /**
      * Max characters for field.
      *
-     * @param bool $strip
-     *
+     * @param  bool  $strip
      * @return $this
      */
     public function stripHtml(bool $strip = true)

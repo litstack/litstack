@@ -15310,6 +15310,11 @@ input[type=color].form-control:disabled {
   right: 0 !important;
 }
 
+.b-toaster-bottom-full .b-toaster-slot {
+  padding-right: 1rem !important;
+  padding-left: 1rem !important;
+}
+
 .b-toaster-bottom-right .b-toaster-slot {
   bottom: 1rem !important;
   right: 1rem !important;

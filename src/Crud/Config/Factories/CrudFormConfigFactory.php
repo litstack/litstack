@@ -34,23 +34,4 @@ class CrudFormConfigFactory extends ConfigFactory
 
         return $page;
     }
-
-    /**
-     * Setup crud-show component form.
-     *
-     * @param \Fjord\Config\ConfigHandler $config
-     * @param Closure                     $method
-     *
-     * @return \Fjord\Vue\Component
-     */
-    public function component(ConfigHandler $config, Closure $method)
-    {
-        $component = component('fj-crud-form');
-
-        $component->slot('headerControls', 'fj-crud-preview');
-
-        $method($component);
-
-        return $component;
-    }
 }
