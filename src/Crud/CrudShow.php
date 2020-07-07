@@ -74,11 +74,6 @@ class CrudShow extends Page
      */
     protected function registeredField($field)
     {
-        // $this->wrapper
-        //     ->component('fj-field')
-        //     ->prop('field', $field);
-        // dd($field, $this);
-
         return $this->wrapper
             ->component('fj-field')
             ->prop('field', $field);
@@ -115,10 +110,6 @@ class CrudShow extends Page
      */
     public function component($component)
     {
-        // if ($this->inCard()) {
-        //     return $this->form->component($component);
-        // }
-
         if ($this->inWrapper()) {
             $component = component($component);
 
