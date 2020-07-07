@@ -28,6 +28,8 @@ class CrudFormConfigFactory extends ConfigFactory
 
         $page = new CrudShow($form);
 
+        $page->navigationRight()->component('fj-crud-language');
+
         $method($page);
 
         return $page;
