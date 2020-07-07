@@ -183,6 +183,10 @@ class CrudShow extends Page
      */
     public function __call($method, $parameters = [])
     {
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $parameters);
+        }
+
         return $this->forwardCallTo($this->form, $method, $parameters);
     }
 }
