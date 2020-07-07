@@ -6,6 +6,7 @@ use Exception;
 use Fjord\Application\Application;
 use Fjord\Vue\Component;
 use Illuminate\View\View;
+use LogicException;
 
 class VueApplication
 {
@@ -222,8 +223,7 @@ class VueApplication
     /**
      * Checks if prop exists.
      *
-     * @param string $name
-     *
+     * @param  string $name
      * @return bool
      */
     protected function propExists(string $name)
@@ -234,18 +234,19 @@ class VueApplication
     /**
      * Check if all required props are passed to view.
      *
-     * @param array $data
-     *
-     * @throws \Exception
-     *
+     * @param  array $data
      * @return void
+     *
+     * @throws \LogicException
      */
     protected function checkForRequiredProps($data)
     {
         foreach ($this->required as $name) {
-            if (! array_key_exists($name, $data)) {
-                throw new Exception("Missing required variable \"{$name}\" for view fjord::app.");
+            if (array_key_exists($name, $data)) {
+                continue;
             }
+
+            throw new LogicException("Missing required view data [{$name}] for [fjord::app].");
         }
     }
 

@@ -4,6 +4,7 @@ namespace FjordTest;
 
 use Fjord\Fjord\Discover\PackageDiscoverCommand;
 use Fjord\Support\Facades\Fjord;
+use FjordTest\Traits\ActingAsFjordUserMock;
 use FjordTest\Traits\CreateFjordUsers;
 use FjordTest\Traits\InteractsWithConfig;
 use FjordTest\Traits\InteractsWithCrud;
@@ -48,6 +49,9 @@ trait FjordTestCase
         }
         if (isset($uses[InteractsWithCrud::class])) {
             $this->setUpCrud();
+        }
+        if (isset($uses[ActingAsFjordUserMock::class])) {
+            $this->actingAsFjordUserMock();
         }
     }
 
