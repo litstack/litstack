@@ -125,6 +125,7 @@ module.exports = {
                         ['docs/fields/relation', 'Relation'],
                         ['docs/fields/one_relation', 'oneRelation'],
                         ['docs/fields/many_relation', 'manyRelation'],
+                        ['docs/fields/route', 'Route'],
                         ['docs/fields/list', 'List'],
                         ['docs/fields/block', 'Block'],
                         ['docs/fields/modal', 'Modal'],
