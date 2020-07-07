@@ -93,13 +93,9 @@ abstract class CrudController extends CrudBaseController
      *
      * @return void
      */
-    public function destroyAll(CrudDeleteRequest $request)
+    public function destroyAll(CrudDeleteRequest $request, $models)
     {
-        if (! is_array($request->ids)) {
-            abort(405);
-        }
-
-        $this->delete($this->query()->whereIn('id', $request->ids));
+        $models->map(fn ($item) => $item->delete());
 
         return response()->json([
             'message' => __f_choice('messages.deleted_items', count($request->ids)),

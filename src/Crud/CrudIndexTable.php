@@ -32,6 +32,13 @@ class CrudIndexTable extends VueProp
     protected $config;
 
     /**
+     * Table actions.
+     *
+     * @var array
+     */
+    protected $actions = [];
+
+    /**
      * Query modifier for eager loads and selections.
      *
      * @var \Illuminate\Database\Eloquent\Builder
@@ -82,10 +89,12 @@ class CrudIndexTable extends VueProp
             'id.asc'  => __f('fj.sort_old_to_new'),
         ]);
         $this->setAttribute('sortable', false);
-        $this->addControl(
-            component('fj-index-delete-all')
-                ->routePrefix($this->config->route_prefix)
-        );
+
+        $this->action(ucfirst(__f('base.delete')), [$this->config->controller, 'destroyAll']);
+        // $this->addControl(
+        //     component('fj-index-delete-all')
+        //         ->routePrefix($this->config->route_prefix)
+        // );
     }
 
     /**
@@ -113,35 +122,34 @@ class CrudIndexTable extends VueProp
     }
 
     /**
-     * Add table control.
+     * Add an action.
      *
-     * @param string|\Fjord\Vue\Component $control
-     *
-     * @return $this
+     * @param  string                     $title
+     * @param  array|string|callable|null $action
+     * @return void
      */
-    public function addControl($control)
+    public function action($title, $action)
     {
         $controls = $this->getAttribute('controls');
-        $controls[] = component($control)->toArray();
-        $this->setAttribute('controls', $controls);
+        $controls[] = component('fj-crud-index-table-action')
+            ->prop('title', $title)
+            ->prop('route-id', count($controls))
+            ->prop('route-prefix', $this->config->routePrefix())
+            ->toArray();
+        $this->actions[] = $action;
 
         return $this;
     }
 
     /**
-     * Set table controls.
+     * Get action by key.
      *
-     * @param array|Collection $controls
-     *
-     * @return $this
+     * @param  string $key
+     * @return mixed
      */
-    public function controls($controls)
+    public function getAction($key)
     {
-        foreach ($controls as $control) {
-            $this->addControl($control);
-        }
-
-        return $this;
+        return $this->actions[$key];
     }
 
     /**

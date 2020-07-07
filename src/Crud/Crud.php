@@ -87,7 +87,7 @@ class Crud
 
                 Package::get('aw-studio/fjord')->addNavPreset($config->getKey(), [
                     'link'      => Fjord::url($config->routePrefix),
-                    'title'     => fn () => ucfirst($config->names['plural']),
+                    'title'     => fn ()     => ucfirst($config->names['plural']),
                     'authorize' => function (FjordUser $user) use ($config) {
                         return (new $config->controller())->authorize($user, 'read');
                     },
@@ -121,7 +121,7 @@ class Crud
                 // Nav preset.
                 Package::get('aw-studio/fjord')->addNavPreset("form.{$collection}.{$form}", [
                     'link'      => Fjord::url($config->route_prefix),
-                    'title'     => fn () => ucfirst($config->names['singular']),
+                    'title'     => fn ()     => ucfirst($config->names['singular']),
                     'authorize' => function (FjordUser $user) use ($config) {
                         return (new $config->controller())->authorize($user, 'read');
                     },
@@ -176,57 +176,13 @@ class Crud
      */
     protected function makeFieldRoutes(string $controller, string $identifier = 'id')
     {
+        RouteFacade::post('/run-action/{key}', [$controller, 'runAction']);
         // Api
         RouteFacade::any('/api/{form_type}/{repository?}/{method?}/{child_method?}', [$controller, 'api'])->name('api');
         RouteFacade::any('/{id}/api/{form_type}/{repository?}/{method?}/{child_method?}', [$controller, 'api'])->name('api');
 
-        // // For refreshing.
-        // RouteFacade::get("/{{$identifier}}/load", [$controller, "load"])->name('load');
-
-        // // Update
-        // RouteFacade::put("/{{$identifier}}/{form}", [$controller, "update"])->name('update');
-
-        // // Modal
-        // RouteFacade::put("/{{$identifier}}/{form}/modal/{modal_id}", [$controller, 'updateModal'])->name("modal.update");
-
-        // // Media
-        // RouteFacade::put("/{{$identifier}}/{form}/media/order", [$controller, 'orderMedia'])->name("media.order");
-        // RouteFacade::put("/{{$identifier}}/{form}/media/{media_id}", [$controller, 'updateMedia'])->name("media.update");
-        // RouteFacade::post("/{{$identifier}}/{form}/media", [$controller, 'storeMedia'])->name("media.store");
-        // RouteFacade::delete("/{{$identifier}}/{form}/media/{media_id}", [$controller, 'destroyMedia'])->name("media.destroy");
-
         // List
         RouteFacade::get("/{{$identifier}}/{form}/list/{field_id}", [$controller, 'loadListItems'])->name('list.index');
         RouteFacade::get("/{{$identifier}}/{form}/list/{field_id}/{list_item_id}", [$controller, 'loadListItem'])->name('list.load');
-
-        // RouteFacade::post("/{{$identifier}}/{form}/list/{field_id}/create", [$controller, "createListItem"])->name("list.create");
-        // RouteFacade::put("/{{$identifier}}/{form}/list/{field_id}/order", [$controller, "orderList"])->name("list.order");
-        // RouteFacade::post("/{{$identifier}}/{form}/list/{field_id}/{parent_id?}", [$controller, "storeListItem"])->name("list.store");
-        // RouteFacade::put("/{{$identifier}}/{form}/list/{field_id}/{list_item_id}", [$controller, "updateListItem"])->name("list.update");
-        // RouteFacade::delete("/{{$identifier}}/{form}/list/{field_id}/{list_item_id}", [$controller, "destroyListItem"])->name("list.destroy");
-        // // Block
-        // RouteFacade::get("/{{$identifier}}/{form}/block/{field_id}", [$controller, "loadRepeatables"])->name("block.index");
-        // RouteFacade::get("/{{$identifier}}/{form}/block/{field_id}/{block_id}", [$controller, "loadRepeatable"])->name("block.load");
-        // RouteFacade::post("/{{$identifier}}/{form}/block/{field_id}", [$controller, "storeRepeatable"])->name("block.store");
-        // RouteFacade::put("/{{$identifier}}/{form}/block/{field_id}/{block_id}", [$controller, "updateRepeatable"])->name("block.update");
-        // RouteFacade::delete("/{{$identifier}}/{form}/block/{field_id}/{block_id}", [$controller, "destroyRepeatable"])->name("block.destroy");
-        // // Block/List Media
-        // RouteFacade::post("/{{$identifier}}/{form}/block/{field_id}/{block_id}/media", [$controller, "storeBlockMedia"])->name("block.media.store");
-        // RouteFacade::put("/{{$identifier}}/{form}/block/{field_id}/{block_id}/media/order", [$controller, 'orderBlockMedia'])->name("block.media.order");
-        // RouteFacade::put("/{{$identifier}}/{form}/block/{field_id}/{block_id}/media/{media_id}", [$controller, "updateBlockMedia"])->name("block.media.update");
-        // RouteFacade::delete("/{{$identifier}}/{form}/block/{field_id}/{block_id}/media/{media_id}", [$controller, "destroyBlockMedia"])->name("block.media.destroy");
-        // // Block/List Relations
-        // RouteFacade::post("/{{$identifier}}/{form}/block/{field_id}/{block_id}/{relation}/index", [$controller, "blockRelationIndex"])->name("block.relation.index");
-        // RouteFacade::post("/{{$identifier}}/{form}/block/{field_id}/{block_id}/{relation}", [$controller, "loadBlockRelations"])->name("block.relation.load");
-        // RouteFacade::put("/{{$identifier}}/{form}/block/{field_id}/{block_id}/{relation}/order", [$controller, "orderBlockRelation"])->name("block.relation.order");
-        // RouteFacade::delete("/{{$identifier}}/{form}/block/{field_id}/{block_id}/{relation}/{relation_id}",  [$controller, "destroyBlockRelation"])->name("block.relation.delete");
-        // RouteFacade::post("/{{$identifier}}/{form}/block/{field_id}/{block_id}/{relation}/{relation_id}", [$controller, "createBlockRelation"])->name("block.relation.store");
-
-        // Relations
-        // RouteFacade::post("/{{$identifier}}/{form}/{relation}/index", [$controller, "relationIndex"])->name("relation.index");
-        // RouteFacade::post("/{{$identifier}}/{form}/{relation}", [$controller, "loadRelations"])->name("relation.load");
-        // RouteFacade::put("/{{$identifier}}/{form}/{relation}/order", [$controller, "orderRelation"])->name("relation.order");
-        // RouteFacade::delete("/{{$identifier}}/{form}/{relation}/{relation_id}",  [$controller, "destroyRelation"])->name("relation.delete");
-        // RouteFacade::post("/{{$identifier}}/{form}/{relation}/{relation_id}", [$controller, "createRelation"])->name("relation.store");
     }
 }
