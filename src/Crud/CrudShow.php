@@ -186,7 +186,7 @@ class CrudShow extends Page
         if (static::hasMacro($method)) {
             return $this->macroCall($method, $parameters);
         }
-        
+
         return $this->forwardCallTo($this->form, $method, $parameters);
     }
 }
