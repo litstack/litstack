@@ -9,10 +9,25 @@ use Illuminate\Support\Str;
 
 class RouteCollection extends Collection
 {
+    /**
+     * Route collection id.
+     *
+     * @var string
+     */
     protected $id;
 
+    /**
+     * Route collection title.
+     *
+     * @var string
+     */
     protected $title;
 
+    /**
+     * Route collection parent.
+     *
+     * @var null|RouteCollection
+     */
     protected $parent;
 
     /**
@@ -85,11 +100,22 @@ class RouteCollection extends Collection
         return $this->parent->getId().".{$this->id}";
     }
 
+    /**
+     * Set title.
+     *
+     * @param  string $title
+     * @return void
+     */
     public function setTitle(string $title)
     {
         $this->title = $title;
     }
 
+    /**
+     * Get title.
+     *
+     * @return void
+     */
     public function getTitle()
     {
         return $this->title;

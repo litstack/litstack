@@ -62,6 +62,12 @@ class Route extends BaseField
         $this->setAttribute('options', $this->renderCollection($collection));
     }
 
+    /**
+     * Render route collection.
+     *
+     * @param  RouteCollection $collection
+     * @return array
+     */
     protected function renderCollection(RouteCollection $collection)
     {
         return $collection->map(function ($item) {
@@ -81,7 +87,7 @@ class Route extends BaseField
 
     public function cast($value)
     {
-        return (new RouteCast)->get(null, '', $value, []);
+        return app(RouteCast::class)->get(null, '', $value, []);
     }
 
     /**
