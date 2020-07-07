@@ -4,7 +4,6 @@ namespace FjordTest\Fields;
 
 use Fjord\Crud\Fields\Route\RouteCollection;
 use Fjord\Crud\Fields\Route\RouteItem;
-use Fjord\Fjord\Fjord;
 use FjordTest\BackendTestCase;
 use Mockery as m;
 
@@ -50,12 +49,10 @@ class RouteItemTest extends BackendTestCase
     /** @test */
     public function test_resolver_receives_locale()
     {
-        $fjord = m::mock(Fjord::class);
-        $fjord->shouldReceive('getLocale')->andReturn('de');
-        app()->bind('fjord', fn () => $fjord);
+        app()->setLocale('dummy-locale');
         $item = new RouteItem('', '', function (...$parameters) {
             $this->assertNotEmpty($parameters);
-            $this->assertEquals('de', $parameters[0]);
+            $this->assertEquals('dummy-locale', $parameters[0]);
         });
         $item->resolve();
     }

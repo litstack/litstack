@@ -129,6 +129,6 @@ class RouteItem implements Arrayable, Jsonable
             return $this->resolved;
         }
 
-        return $this->resolved = call_user_func($this->resolver, fjord()->getLocale());
+        return $this->resolved = call_user_func($this->resolver, app()->getLocale());
     }
 }
