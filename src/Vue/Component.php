@@ -454,6 +454,17 @@ class Component extends VueProp implements AuthorizableContract
     }
 
     /**
+     * Get prop by name.
+     *
+     * @param  string $name
+     * @return mixed
+     */
+    public function getProp($name)
+    {
+        return $this->props[$name] ?? null;
+    }
+
+    /**
      * Get available props.
      *
      * @return array

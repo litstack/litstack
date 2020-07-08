@@ -5,8 +5,8 @@ namespace FjordApp\Config\User;
 use Fjord\Crud\Config\CrudConfig;
 use Fjord\Crud\CrudIndex;
 use Fjord\Crud\CrudShow;
+use Fjord\Page\Table\ColumnBuilder;
 use Fjord\User\Models\FjordUser;
-use Fjord\Vue\Crud\CrudTable;
 use FjordApp\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,7 +59,7 @@ class UserConfig extends CrudConfig
     public function index(CrudIndex $page)
     {
         $page->table(fn ($table) => $this->indexTable($table))
-            ->query(fn ($query) => $query->with('ordered_roles'))
+            ->query(fn ($query)  => $query->with('ordered_roles'))
             ->sortByDefault('id.desc')
             ->search('username', 'first_name', 'last_name', 'email');
     }
@@ -67,11 +67,10 @@ class UserConfig extends CrudConfig
     /**
      * User index table.
      *
-     * @param \Fjord\Vue\Crud\CrudTable $table
-     *
+     * @param  ColumnBuilder $table
      * @return void
      */
-    public function indexTable(CrudTable $table)
+    public function indexTable(ColumnBuilder $table)
     {
         $table->col()
             ->value('{first_name} {last_name}')

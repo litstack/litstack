@@ -70,6 +70,8 @@ class CrudIndex extends Page
             $builder = new ColumnBuilder
         );
         $table->model($this->config->model);
+        $table->singularName($this->config->names['singular']);
+        $table->pluralName($this->config->names['plural']);
         $table->action(ucfirst(__f('base.delete')), $this->config->controller.'@test');
 
         $closure($builder);

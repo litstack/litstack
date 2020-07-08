@@ -4,6 +4,7 @@ namespace Fjord\Page\Table;
 
 use Fjord\Support\VueProp;
 use Fjord\Vue\Components\BladeTableComponent;
+use Fjord\Vue\TableComponent;
 use Illuminate\Contracts\View\View;
 
 class ColumnBuilder extends VueProp
