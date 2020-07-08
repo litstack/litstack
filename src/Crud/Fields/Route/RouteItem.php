@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
 
 class RouteItem implements Arrayable, Jsonable
 {
@@ -100,7 +101,9 @@ class RouteItem implements Arrayable, Jsonable
      */
     public function trimmed()
     {
-        return trim($this->resolve(), '/');
+        $trimmed = Str::replaceFirst(config('app.url'), '', $this->resolve());
+
+        return trim($trimmed, '/');
     }
 
     /**

@@ -80,6 +80,14 @@ class RouteItemTest extends BackendTestCase
     }
 
     /** @test */
+    public function test_trimmed_method_trims_app_url()
+    {
+        app('config')->set('app.url', 'https://www.fjord-admin.com');
+        $item = new RouteItem('', '', fn () => 'https://www.fjord-admin.com/dummy/route');
+        $this->assertEquals('dummy/route', $item->trimmed());
+    }
+
+    /** @test */
     public function test_decodeRoute_method()
     {
         $item = new RouteItem('', '', fn () => '/dummy/%20');
