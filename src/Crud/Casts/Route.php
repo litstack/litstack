@@ -4,6 +4,7 @@ namespace Fjord\Crud\Casts;
 
 use Fjord\Crud\Fields\Route\RouteCollection;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use InvalidArgumentException;
 
 class Route implements CastsAttributes
 {
@@ -41,12 +42,16 @@ class Route implements CastsAttributes
      * @param  string $id
      * @return void
      */
-    protected function findRoute(string $id)
+    protected function findRoute($id)
     {
         $partials = explode('.', $id);
         $collection = array_shift($partials);
         $id = implode('.', $partials);
 
-        return RouteCollection::resolve($collection)->findRoute($id);
+        try {
+            return RouteCollection::resolve($collection)->findRoute($id);
+        } catch (InvalidArgumentException $e) {
+            return;
+        }
     }
 }

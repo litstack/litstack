@@ -107,11 +107,34 @@ class RouteItemTest extends BackendTestCase
         $request = m::mock(Request::class);
         app()->bind('request', fn () => $request);
 
-        $request->shouldReceive('is')->withArgs(['dummy/route'])->once()->andReturn(true);
-        $request->shouldReceive('is')->withArgs(['dummy/route'])->once()->andReturn(false);
+        $request->shouldReceive('is')->withArgs(['dummy/route*'])->once()->andReturn(true);
+        $request->shouldReceive('is')->withArgs(['dummy/route*'])->once()->andReturn(false);
         $item = new RouteItem('', '', fn () => '/dummy/route');
         $this->assertTrue($item->isActive());
         $this->assertFalse($item->isActive());
+    }
+
+    /** @test */
+    public function test_isActive_method_for_base_route()
+    {
+        $request = m::mock(Request::class);
+        app()->bind('request', fn () => $request);
+
+        $request->shouldReceive('is')->withArgs([''])->once()->andReturn(true);
+        $item = new RouteItem('', '', fn () => '/');
+        $this->assertTrue($item->isActive());
+    }
+
+    /** @test */
+    public function test_isActive_method_for_base_locale_route()
+    {
+        $request = m::mock(Request::class);
+        app()->bind('request', fn () => $request);
+        app('config')->set('translatable.locales', ['de']);
+
+        $request->shouldReceive('is')->withArgs(['de'])->once()->andReturn(true);
+        $item = new RouteItem('', '', fn () => '/de');
+        $this->assertTrue($item->isActive());
     }
 
     /** @test */
@@ -120,7 +143,7 @@ class RouteItemTest extends BackendTestCase
         $request = m::mock(Request::class);
         app()->bind('request', fn () => $request);
 
-        $request->shouldReceive('is')->withArgs(['dummy/route'])->once()->andReturn(true);
+        $request->shouldReceive('is')->withArgs(['dummy/route*'])->once()->andReturn(true);
         $item = new RouteItem('', '', fn () => '/dummy/route');
         $this->assertEquals('dummy-class', $item->isActive('dummy-class'));
     }
