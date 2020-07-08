@@ -61,8 +61,7 @@ class ManyRelationField extends LaravelRelationField
     /**
      * Set perPage.
      *
-     * @param int $perPage
-     *
+     * @param  int   $perPage
      * @return $this
      */
     public function perPage(int $perPage)
@@ -73,10 +72,22 @@ class ManyRelationField extends LaravelRelationField
     }
 
     /**
+     * Set max items.
+     *
+     * @param  int   $maxItems
+     * @return $this
+     */
+    public function maxItems(int $maxItems)
+    {
+        $this->setAttribute('maxItems', $maxItems);
+
+        return $this;
+    }
+
+    /**
      * Set tag view.
      *
-     * @param string $value
-     *
+     * @param  string $value
      * @return $this
      */
     public function tagVariant(string $value)
@@ -90,8 +101,7 @@ class ManyRelationField extends LaravelRelationField
      * Set tag value.
      * Example: "{first_name} {last_name}".
      *
-     * @param string $value
-     *
+     * @param  string $value
      * @return $this
      */
     public function tagValue(string $value)
@@ -104,8 +114,7 @@ class ManyRelationField extends LaravelRelationField
     /**
      * Set tag view.
      *
-     * @param string $value
-     *
+     * @param  string $value
      * @return $this
      */
     public function tags(string $value)
@@ -118,8 +127,7 @@ class ManyRelationField extends LaravelRelationField
     /**
      * Set searchable.
      *
-     * @param bool $searchable
-     *
+     * @param  bool  $searchable
      * @return $this
      */
     public function searchable(bool $searchable = true)

@@ -35,6 +35,8 @@ class MorphManyRepository extends BaseFieldRepository
      */
     public function create(CrudUpdateRequest $request, $model)
     {
+        $this->checkMaxItems($model);
+
         $related = $this->getRelated($request, $model);
 
         $morphMany = $this->field->getRelationQuery($model);
