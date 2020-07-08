@@ -37,6 +37,8 @@ class BelongsToManyRepository extends BaseFieldRepository
      */
     public function create(CrudUpdateRequest $request, $model)
     {
+        $this->checkMaxItems($model);
+
         $related = $this->getRelated($request, $model);
 
         $belongsToMany = $this->field->getRelationQuery($model);

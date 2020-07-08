@@ -1,6 +1,6 @@
 # Fjord Ui Kit
 
-A package with helpful Blade components for your
+A package with helper functions and Blade components for your
 [fjord](https://github.com/aw-studio/fjord) project.
 
 ## Setup
@@ -50,4 +50,34 @@ The component requires an image parameter with a media model:
 
 ```php
 <x-fj-image :image="$model->image"/>
+```
+
+The component lazy loads images and previews a minified base64 version of the
+image untill it is loaded:
+![fjord lazy loading](./screens/lazy.png)
+
+You may disable lazy loading by setting the `lazy` attribute to false:
+
+```php
+<x-fj-image :image="$model->image" :lazy="false" />
+```
+
+## Helpers
+
+### `child_is_active`
+
+The child is active determines wether a list item has a child with an active
+route. The following example will add the `is-active` class when a list item has
+an active `route` that is added from route field.
+
+```php
+$form->route('route_field')->collection('app')->title('Pick a route.');
+```
+
+```php
+@foreach($data->list as $item)
+	<span class="child_is_active($item, 'route_field', 'is-active')">
+		{{ $item->title }}
+	</span>
+@endforeach
 ```

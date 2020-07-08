@@ -13,7 +13,8 @@ return [
             'unlink'   => 'Unlink relation',
             'edit'     => 'Edit relation',
             'messages' => [
-                'confirm_unlink' => 'Please confirm that you wish to unlink the item.',
+                'confirm_unlink'    => 'Please confirm that you wish to unlink the item.',
+                'max_items_reached' => 'A maximum of :count items can be selected.',
             ],
         ],
         'wysiwyg' => [

@@ -2,6 +2,8 @@
 
 With the route picker field you can select a route from a predefined list.
 
+[[toc]]
+
 ## Register Routes
 
 To be able to select routes in your route field you must first register a route collection in a [service provider](https://laravel.com/docs/7.x/providers). The registered collection can then be used again and again in different places. The following example registers a collection with the name **app**.
@@ -77,4 +79,31 @@ use Fjord\Crud\Casts\Route;
 $casts = [
     'route' => Route::class
 ];
+```
+
+## Frontend
+
+You can output the value of your route directly in Blade, for example in the **href** attribute like this:
+
+```php
+<a href="{{ $model->route }}">My Link</a>
+```
+
+You can check if the route is active:
+
+```php
+@if($model->route->isActive())
+    Hello World!
+@endif
+```
+
+You may use the `isActive` method to add optional classes to your link:
+
+```php
+<a
+    href="{{ $model->route }}"
+    class="$model->route->isActive('active-class')"
+>
+    My Link
+</a>
 ```

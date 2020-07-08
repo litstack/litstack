@@ -36,6 +36,8 @@ class ManyRelationRepository extends BaseFieldRepository
      */
     public function create(CrudUpdateRequest $request, $model)
     {
+        $this->checkMaxItems($model);
+
         $related = $this->getRelated($request, $model);
 
         $order_column = $this->field->getRelationQuery($model)->count();
