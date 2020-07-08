@@ -7,7 +7,7 @@
         "test": "rm -rf vendor/orchestra && composer install && php tests/install && vendor/bin/phpunit"
     },
     "require": {
-        "php": "^7.4",
+        "php": ">=7.4",
         "aw-studio/fjord-permissions": "^1.1",
         "spatie/eloquent-sortable": "^3.6|^3.7|^3.8",
         "spatie/laravel-permission": "^2.37|^3.0|^3.11",
