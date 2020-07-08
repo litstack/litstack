@@ -132,6 +132,7 @@ $form->relation('tags')
 | `query`         | Modify preview query with eager loads and accessors that should be displayed.                             |
 | `confirm`       | Modal pops when unlinkin the relation and asks to confirm. (default: `true`)                              |
 | `sortable`      | Sortable relation (only works for `many` relations).                                                      |
+| `maxItems`      | Set a maximum number of selectable items (only works for `many` relations).                               |
 | `showTableHead` | Whether the table head should be shown. (default: `false`)                                                |
 | `type`          | The preview type (default: `table`) can be `tags` for **many relations** and `link` for **one relations** |
 | `tagValue`      | The attribute that should be displayed in the tag.                                                        |

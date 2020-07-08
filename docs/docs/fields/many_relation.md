@@ -31,5 +31,6 @@ public function articles()
 | `query`         | Modify preview query with eager loads and accessors that should be displayed. |
 | `filter`        | Initial query builder for the selectable relations.                           |
 | `confirm`       | Modal pops when unlinkin the relation and asks to confirm.                    |
+| `maxItems`      | Set a maximum number of selectable items.                                     |
 | `sortable`      | Is relation sortable.                                                         |
 | `showTableHead` | Whether the table head should be shown. (default: `false`)                    |
