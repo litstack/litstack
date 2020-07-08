@@ -76,7 +76,7 @@ class RouteItem implements Arrayable, Jsonable
             return $this->id;
         }
 
-        return $this->collection->getId().".{$this->id}";
+        return $this->collection->getId() . ".{$this->id}";
     }
 
     /**
@@ -87,7 +87,13 @@ class RouteItem implements Arrayable, Jsonable
      */
     public function isActive($value = null)
     {
-        if (! Request::is(trim($this->decodeRoute($trimmed = true)))) {
+        $pattern = trim($this->decodeRoute($trimmed = true));
+        
+        if ($this->decodeRoute($trimmed = true) != '' && ! in_array($this->decodeRoute($trimmed = true), config('translatable.locales'))) {
+            $pattern .= '*';
+        }
+
+        if (! Request::is($pattern)) {
             return false;
         }
 
