@@ -184,7 +184,7 @@ export default {
          * Image path.
          */
         imgPath(image) {
-            return `/storage/${image.id}/${image.file_name}`;
+            return image.url;
         },
 
         /**
