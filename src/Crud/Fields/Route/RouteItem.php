@@ -5,6 +5,7 @@ namespace Fjord\Crud\Fields\Route;
 use Closure;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Support\Facades\Request;
 
 class RouteItem implements Arrayable, Jsonable
 {
@@ -78,6 +79,68 @@ class RouteItem implements Arrayable, Jsonable
     }
 
     /**
+     * Check's if the route is active and returns value if value is not null.
+     *
+     * @param  mixed $value
+     * @return mixed
+     */
+    public function isActive($value = null)
+    {
+        if (! Request::is(trim($this->decodeRoute($trimmed = true)))) {
+            return false;
+        }
+
+        return $value !== null ? $value : true;
+    }
+
+    /**
+     * Get trimmed route.
+     *
+     * @return string
+     */
+    public function trimmed()
+    {
+        return trim($this->resolve(), '/');
+    }
+
+    /**
+     * Get the current decoded route info for the route.
+     *
+     * @param  bool   $trimmed
+     * @return string
+     */
+    public function decodeRoute($trimmed = false)
+    {
+        return rawurldecode($trimmed ? $this->trimmed() : $this->route());
+    }
+
+    /**
+     * Get route.
+     *
+     * @return string
+     */
+    public function route()
+    {
+        $route = $this->resolve();
+
+        return $route == '' ? '/' : $route;
+    }
+
+    /**
+     * Resolve route.
+     *
+     * @return string
+     */
+    public function resolve()
+    {
+        if ($this->resolved) {
+            return $this->resolved;
+        }
+
+        return $this->resolved = call_user_func($this->resolver, app()->getLocale());
+    }
+
+    /**
      * To array.
      *
      * @return string
@@ -106,29 +169,5 @@ class RouteItem implements Arrayable, Jsonable
     public function __toString()
     {
         return $this->resolve();
-    }
-
-    /**
-     * Get route.
-     *
-     * @return string
-     */
-    public function route()
-    {
-        return $this->resolve();
-    }
-
-    /**
-     * Resolve route.
-     *
-     * @return string
-     */
-    public function resolve()
-    {
-        if ($this->resolved) {
-            return $this->resolved;
-        }
-
-        return $this->resolved = call_user_func($this->resolver, app()->getLocale());
     }
 }

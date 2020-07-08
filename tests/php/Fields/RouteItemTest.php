@@ -5,6 +5,7 @@ namespace FjordTest\Fields;
 use Fjord\Crud\Fields\Route\RouteCollection;
 use Fjord\Crud\Fields\Route\RouteItem;
 use FjordTest\BackendTestCase;
+use Illuminate\Http\Request;
 use Mockery as m;
 
 class RouteItemTest extends BackendTestCase
@@ -55,5 +56,64 @@ class RouteItemTest extends BackendTestCase
             $this->assertEquals('dummy-locale', $parameters[0]);
         });
         $item->resolve();
+    }
+
+    /** @test */
+    public function test_route_method_returns_resolved()
+    {
+        $item = new RouteItem('', '', fn () => '/dummy-url');
+        $this->assertEquals('/dummy-url', $item->route());
+    }
+
+    /** @test */
+    public function test_route_method_returns_default()
+    {
+        $item = new RouteItem('', '', fn () => null);
+        $this->assertEquals('/', $item->route());
+    }
+
+    /** @test */
+    public function test_trimmed_method()
+    {
+        $item = new RouteItem('', '', fn () => '/dummy/route');
+        $this->assertEquals('dummy/route', $item->trimmed());
+    }
+
+    /** @test */
+    public function test_decodeRoute_method()
+    {
+        $item = new RouteItem('', '', fn () => '/dummy/%20');
+        $this->assertEquals('/dummy/ ', $item->decodeRoute());
+    }
+
+    /** @test */
+    public function test_decodeRoute_method_trimmed()
+    {
+        $item = new RouteItem('', '', fn () => '/dummy/%20');
+        $this->assertEquals('dummy/ ', $item->decodeRoute(true));
+    }
+
+    /** @test */
+    public function test_isActive_method()
+    {
+        $request = m::mock(Request::class);
+        app()->bind('request', fn () => $request);
+
+        $request->shouldReceive('is')->withArgs(['dummy/route'])->once()->andReturn(true);
+        $request->shouldReceive('is')->withArgs(['dummy/route'])->once()->andReturn(false);
+        $item = new RouteItem('', '', fn () => '/dummy/route');
+        $this->assertTrue($item->isActive());
+        $this->assertFalse($item->isActive());
+    }
+
+    /** @test */
+    public function test_isActive_method_returns_value()
+    {
+        $request = m::mock(Request::class);
+        app()->bind('request', fn () => $request);
+
+        $request->shouldReceive('is')->withArgs(['dummy/route'])->once()->andReturn(true);
+        $item = new RouteItem('', '', fn () => '/dummy/route');
+        $this->assertEquals('dummy-class', $item->isActive('dummy-class'));
     }
 }
