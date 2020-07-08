@@ -9,7 +9,6 @@
     "require": {
         "php": ">=7.4",
         "aw-studio/fjord-permissions": "^1.1",
-        "spatie/eloquent-sortable": "^3.6|^3.7|^3.8",
         "spatie/laravel-permission": "^2.37|^3.0|^3.11",
         "astrotomic/laravel-translatable": "^11.1|^11.8",
         "cviebrock/eloquent-sluggable": "^4.8|^6.0|^7.0",
