@@ -95,7 +95,8 @@ class RouteItem implements Arrayable, Jsonable
     }
 
     /**
-     * Get trimmed route.
+     * Get trimmed route. This method is used to prepare the resolved route for
+     * the [Request::is] check.
      *
      * @return string
      */
