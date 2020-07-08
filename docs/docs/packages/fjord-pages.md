@@ -3,7 +3,7 @@
 Fjord pages help you to quickly add new pages to your fjord application. This
 turns your Fjord admin panel into a **cms**.
 
-![fjord pages](./screen.png 'fjord pages')
+![fjord pages](./screens/pages_screen.png 'fjord pages')
 
 Install the package via composer:
 
