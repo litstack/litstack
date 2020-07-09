@@ -92,7 +92,7 @@ class FieldListCollectionTest extends BackendTestCase
 
         $this->assertCount(1, $collection);
         $this->assertEquals($item1, $collection->first());
-        $this->assertArrayHasKey('children', $collection->first());
+        $this->assertTrue($collection->first()->relationLoaded('children'));
         $this->assertEquals($item2, $collection->first()->children->first());
     }
 

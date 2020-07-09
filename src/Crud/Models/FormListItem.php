@@ -72,6 +72,26 @@ class FormListItem extends FjordFormModel
     }
 
     /**
+     * Children relation.
+     *
+     * @return void
+     */
+    public function children()
+    {
+        return $this->hasMany(self::class, 'parent_id');
+    }
+
+    /**
+     * Parent relation.
+     *
+     * @return void
+     */
+    public function parent()
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+
+    /**
      * Get fields from config.
      *
      * @return Field
@@ -131,5 +151,21 @@ class FormListItem extends FjordFormModel
         }
 
         return $attributes;
+    }
+
+    /**
+     * Boot FormListItem.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function ($model) {
+            foreach ($model->children as $child) {
+                $child->delete();
+            }
+        });
     }
 }
