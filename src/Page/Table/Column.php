@@ -20,7 +20,7 @@ class Column extends VueProp
      */
     public function __construct($label = null)
     {
-        if ($label) {
+        if ($label !== null) {
             $this->label($label);
             $this->value($label);
         }
