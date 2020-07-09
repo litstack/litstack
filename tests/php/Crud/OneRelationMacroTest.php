@@ -76,8 +76,7 @@ class OneRelationMacroTest extends BackendTestCase
 
     protected function getModel($name)
     {
-        $model = m::mock($this->model);
-        $this->passthruAllExcept($model, $this->model, [$name]);
+        $model = m::mock($this->model)->makePartial();
         $model->shouldReceive($name)->andReturn(
             $this->model->oneRelation(get_class($this->related), $name)
         );

@@ -99,8 +99,7 @@ class ManyRelationMacroTest extends BackendTestCase
 
     protected function getModel($name)
     {
-        $model = m::mock($this->model);
-        $this->passthruAllExcept($model, $this->model, [$name]);
+        $model = m::mock($this->model)->makePartial();
         $model->shouldReceive($name)->andReturn(
             $this->model->manyRelation(get_class($this->related1), $name)
         );
