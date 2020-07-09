@@ -15,7 +15,7 @@ class Route implements CastsAttributes
      * @param  string                              $key
      * @param  mixed                               $value
      * @param  array                               $attributes
-     * @return array
+     * @return RouteItem|null
      */
     public function get($model, $key, $value, $attributes)
     {
@@ -39,8 +39,8 @@ class Route implements CastsAttributes
     /**
      * Find route by id.
      *
-     * @param  string $id
-     * @return void
+     * @param  string         $id
+     * @return RouteItem|void
      */
     protected function findRoute($id)
     {

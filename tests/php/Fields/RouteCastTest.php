@@ -20,4 +20,14 @@ class RouteCastTest extends BackendTestCase
         $result = $cast->get(null, '', 'main.test', []);
         $this->assertEquals('result', $result);
     }
+
+    /** @test */
+    public function test_get_method_returns_null_when_route_collection_cannot_be_resolved()
+    {
+        $collection = m::mock('route_collection');
+        $collection->shouldReceive('findRoute')->withArgs(['test'])->andReturn('result');
+        $cast = new Route;
+        $result = $cast->get(null, '', 'main.test', []);
+        $this->assertEquals(null, $result);
+    }
 }
