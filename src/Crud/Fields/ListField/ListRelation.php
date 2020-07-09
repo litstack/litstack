@@ -13,7 +13,9 @@ class ListRelation extends MorphMany
      */
     public function getResults()
     {
-        return parent::getResults()->sortBy('order_column')->unflattenList();
+        return parent::getResults()
+            ->sortBy('order_column')
+            ->unflattenList();
     }
 
     /**

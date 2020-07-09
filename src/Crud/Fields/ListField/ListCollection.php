@@ -2,15 +2,16 @@
 
 namespace Fjord\Crud\Fields\ListField;
 
+use Fjord\Crud\Models\FormListItem;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class ListCollection extends Collection
 {
     /**
      * Create a new collection.
      *
-     * @param mixed $items
-     *
+     * @param  mixed $items
      * @return void
      */
     public function __construct($items = [], $setDepth = false)
@@ -106,7 +107,7 @@ class ListCollection extends Collection
 
         foreach ($unflattened as $item) {
             $item->setAttribute('depth', $depth);
-            $item->setAttribute('children', $this->unflattenList($listItems, $item->id, $depth + 1));
+            $item->setRelation('children', $this->unflattenList($listItems, $item->id, $depth + 1));
         }
 
         return $unflattened;
