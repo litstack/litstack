@@ -2,6 +2,8 @@
 
 A range slider.
 
+![Range slider](./screens/range/example.png 'Range slide')
+
 ```php
  $form->range('range')
     ->title('Range')
