@@ -8,24 +8,6 @@ use ReflectionProperty;
 trait TestHelpers
 {
     /**
-     * Pass thru all method except for the given names.
-     *
-     * @param mock  $mock
-     * @param mixed $class
-     * @param array $without
-     *
-     * @return void
-     */
-    protected function passthruAllExcept($mock, $class, array $without)
-    {
-        $methods = get_class_methods($class);
-        foreach ($without as $method) {
-            unset($methods[array_search($method, $methods)]);
-        }
-        $mock->shouldReceive(...$methods)->passthru();
-    }
-
-    /**
      * Calling protected or private class method.
      *
      * @param mixed|string $abstract
