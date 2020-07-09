@@ -6,6 +6,7 @@ use Fjord\Support\VueProp;
 use Fjord\Vue\Components\BladeTableComponent;
 use Fjord\Vue\TableComponent;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\View as ViewFactory;
 
 class ColumnBuilder extends VueProp
 {
@@ -47,7 +48,7 @@ class ColumnBuilder extends VueProp
     public function view($view)
     {
         if (! $view instanceof View) {
-            $view = view($view);
+            $view = ViewFactory::make($view);
         }
 
         $this->component(new BladeTableComponent('fj-blade'))->prop('view', $view);
@@ -82,8 +83,8 @@ class ColumnBuilder extends VueProp
     /**
      * Add relation column.
      *
-     * @param  string $label
-     * @return void
+     * @param  string         $label
+     * @return TableComponent
      */
     public function relation($label = '')
     {
