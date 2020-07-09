@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 
+/**
+ * The FjordFormModel stores field data in as json in a column.
+ */
 class FjordFormModel extends Model implements HasMedia, TranslatableContract
 {
     use Traits\HasMedia;
@@ -98,14 +101,12 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     }
 
     /**
-     * Update FormField.
+     * Prepare attributes for save.
      *
-     * @param array $attributes
-     * @param array $options
-     *
-     * @return void
+     * @param  array $attributes
+     * @return array
      */
-    public function update(array $attributes = [], array $options = [])
+    public function prepareAttributesForSave($attributes)
     {
         $translations = $this->getTranslationsArray();
         foreach (config('translatable.locales') as $locale) {
@@ -124,7 +125,22 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
             }
         }
 
-        return parent::update($attributes, $options);
+        return $attributes;
+    }
+
+    /**
+     * Update model.
+     *
+     * @param  array $attributes
+     * @param  array $options
+     * @return void
+     */
+    public function update(array $attributes = [], array $options = [])
+    {
+        return parent::update(
+            $this->prepareAttributesForSave($attributes),
+            $options
+        );
     }
 
     /**

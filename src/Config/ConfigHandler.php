@@ -58,7 +58,7 @@ class ConfigHandler
      */
     public function getType()
     {
-        return get_class($this->config);
+        return $this->config === null ? null : get_class($this->config);
     }
 
     /**
