@@ -36,15 +36,25 @@ class Component extends VueProp implements AuthorizableContract
     {
         $this->name = $name;
 
-        $this->mount();
+        $this->beforeMount();
     }
 
     /**
-     * Mount component.
+     * Before mount lifecycle hook.
      *
      * @return void
      */
-    protected function mount()
+    protected function beforeMount()
+    {
+        //
+    }
+
+    /**
+     * Mounted lifecycle hook.
+     *
+     * @return void
+     */
+    protected function mounted()
     {
         //
     }
@@ -198,6 +208,8 @@ class Component extends VueProp implements AuthorizableContract
     public function render(): array
     {
         $this->checkComplete();
+
+        $this->mounted();
 
         return [
             'name'  => $this->name,

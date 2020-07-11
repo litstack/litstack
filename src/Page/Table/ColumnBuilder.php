@@ -4,9 +4,11 @@ namespace Fjord\Page\Table;
 
 use Fjord\Contracts\Page\Column;
 use Fjord\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
+use Fjord\Page\Table\Components\BladeColumnComponent;
+use Fjord\Page\Table\Components\ImageComponent;
+use Fjord\Page\Table\Components\RelationComponent;
+use Fjord\Page\Table\Components\ToggleComponent;
 use Fjord\Support\VueProp;
-use Fjord\Vue\Components\BladeTableComponent;
-use Fjord\Vue\TableComponent;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\View as ViewFactory;
 
@@ -33,12 +35,12 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add table column to cols stack and set component.
      *
-     * @param  string $component
-     * @return mixed
+     * @param  string          $component
+     * @return ColumnComponent
      */
     public function component($component): Column
     {
-        return $this->columns[] = component($component, TableComponent::class);
+        return $this->columns[] = component($component, ColumnComponent::class);
     }
 
     /**
@@ -53,7 +55,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
             $view = ViewFactory::make($view);
         }
 
-        $this->component(new BladeTableComponent('fj-blade'))->prop('view', $view);
+        $this->component(new BladeColumnComponent('fj-blade'))->prop('view', $view);
 
         return $view;
     }
@@ -61,12 +63,12 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add toggle column.
      *
-     * @param  string    $key
-     * @return Component
+     * @param  string          $key
+     * @return ToggleComponent
      */
     public function toggle($attribute)
     {
-        return $this->component('fj-col-toggle')
+        return $this->component(new ToggleComponent('fj-col-toggle'))
             ->prop('link', false)
             ->prop('local_key', $attribute);
     }
@@ -74,23 +76,23 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add image column.
      *
-     * @param  string            $label
-     * @return ColImageComponent
+     * @param  string         $label
+     * @return ImageComponent
      */
     public function image($label = '')
     {
-        return $this->component('fj-col-image')->label($label);
+        return $this->component(new ImageComponent('fj-col-image'))->label($label);
     }
 
     /**
      * Add relation column.
      *
-     * @param  string         $label
-     * @return TableComponent
+     * @param  string            $label
+     * @return RelationComponent
      */
     public function relation($label = '')
     {
-        return $this->component('fj-col-crud-relation')->prop('label', $label);
+        return $this->component(new RelationComponent('fj-col-crud-relation'))->prop('label', $label);
     }
 
     /**

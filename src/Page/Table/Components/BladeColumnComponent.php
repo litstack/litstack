@@ -1,11 +1,10 @@
 <?php
 
-namespace Fjord\Vue\Components;
+namespace Fjord\Page\Table\Components;
 
-use Fjord\Vue\TableComponent;
 use Illuminate\Contracts\View\View;
 
-class BladeTableComponent extends TableComponent
+class BladeColumnComponent extends ColumnComponent
 {
     /**
      * Get array.

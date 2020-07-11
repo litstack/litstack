@@ -11,37 +11,42 @@ class FieldWrapperComponent extends Component
      *
      * @return array
      */
-    protected function props()
+    // protected function props()
+    // {
+    //     return [
+    //         'wrapperComponent' => [
+    //             'type'     => Component::class,
+    //             'required' => true,
+    //         ],
+    //         'children' => [
+    //             'type'     => ['array', 'object'],
+    //             'required' => true,
+    //             'default'  => function () {
+    //                 return collect([]);
+    //             },
+    //         ],
+    //     ];
+    // }
+
+    public function beforeMount()
     {
-        return [
-            'wrapperComponent' => [
-                'type'     => Component::class,
-                'required' => true,
-            ],
-            'children' => [
-                'type'     => ['array', 'object'],
-                'required' => true,
-                'default'  => function () {
-                    return collect([]);
-                },
-            ],
-        ];
+        $this->props['children'] = collect([]);
+    }
+
+    public function wrapperComponent(Component $component)
+    {
+        return $this->prop('wrapperComponent', $component);
     }
 
     /**
      * Add child component.
      *
-     * @param mixed $name
-     *
+     * @param  mixed $name
      * @return void
      */
     public function component($component)
     {
-        if (is_string($component)) {
-            $component = component($component);
-        }
-
-        $this->props['children'][] = $component;
+        $this->props['children'][] = component($component);
 
         return $component;
     }

@@ -4,10 +4,13 @@ namespace FjordTest\Page;
 
 use Fjord\Page\Table\Column;
 use Fjord\Page\Table\ColumnBuilder;
-use Fjord\Vue\Components\BladeTableComponent;
+use Fjord\Page\Table\Components\BladeColumnComponent;
+use Fjord\Page\Table\Components\ColumnComponent;
 use Fjord\Vue\TableComponent;
 use FjordTest\BackendTestCase;
+use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Support\Facades\View;
+use Mockery as m;
 
 class ColumnBuilderTest extends BackendTestCase
 {
@@ -57,11 +60,12 @@ class ColumnBuilderTest extends BackendTestCase
     public function test_view_method_registers_blade_table_component()
     {
         $builder = new ColumnBuilder;
-        View::partialMock()->shouldReceive('make')->withArgs(['dummy_view'])->andReturn('result');
-        $builder->view('dummy_view');
+        $view = m::mock(ViewContract::class);
+        View::partialMock()->shouldReceive('make')->withArgs(['dummy_view'])->andReturn($view);
+        $this->assertEquals($view, $builder->view('dummy_view'));
         $columns = $this->getUnaccessibleProperty($builder, 'columns');
         $this->assertCount(1, $columns);
-        $this->assertInstanceOf(BladeTableComponent::class, $columns[0]);
+        $this->assertInstanceOf(BladeColumnComponent::class, $columns[0]);
     }
 
     /** @test */
@@ -69,7 +73,7 @@ class ColumnBuilderTest extends BackendTestCase
     {
         $builder = new ColumnBuilder;
         $result = $builder->toggle('active');
-        $this->assertInstanceOf(TableComponent::class, $result);
+        $this->assertInstanceOf(ColumnComponent::class, $result);
         $this->assertEquals('fj-col-toggle', $result->getName());
     }
 
@@ -94,7 +98,7 @@ class ColumnBuilderTest extends BackendTestCase
     {
         $builder = new ColumnBuilder;
         $result = $builder->image('Image');
-        $this->assertInstanceOf(TableComponent::class, $result);
+        $this->assertInstanceOf(ColumnComponent::class, $result);
         $this->assertEquals('fj-col-image', $result->getName());
     }
 
@@ -111,7 +115,7 @@ class ColumnBuilderTest extends BackendTestCase
     {
         $builder = new ColumnBuilder;
         $result = $builder->relation('User');
-        $this->assertInstanceOf(TableComponent::class, $result);
+        $this->assertInstanceOf(ColumnComponent::class, $result);
         $this->assertEquals('fj-col-crud-relation', $result->getName());
     }
 

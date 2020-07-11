@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Pages\Table;
+namespace Fjord\Page\Table\Components;
 
 use ErrorException;
 use Fjord\Contracts\Page\Column;
@@ -67,11 +67,13 @@ class ColumnComponent extends Component implements Column
     /**
      * Set regular expression and replace for column value.
      *
-     * @param  string                   $regex
+     * @param  string $regex
+     * @param  string $replace
      * @return $this
+     *
      * @throws InvalidArgumentException
      */
-    public function regex($regex, string $replace = '')
+    public function regex($regex, $replace)
     {
         $this->prop('regex', $regex);
         $this->prop('regex_replace', $replace);
