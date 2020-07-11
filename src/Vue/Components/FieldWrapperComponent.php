@@ -46,7 +46,9 @@ class FieldWrapperComponent extends Component
      */
     public function component($component)
     {
-        $this->props['children'][] = component($component);
+        $component = component($component);
+
+        $this->props['children'][] = $component;
 
         return $component;
     }

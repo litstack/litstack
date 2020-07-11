@@ -5,8 +5,8 @@ namespace Fjord\Crud\Fields\Block;
 use Closure;
 use Fjord\Crud\BaseForm;
 use Fjord\Crud\Models\FormBlock;
+use Fjord\Page\Table\Table;
 use Fjord\Support\VueProp;
-use Fjord\Vue\Table;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 class Repeatable extends VueProp
