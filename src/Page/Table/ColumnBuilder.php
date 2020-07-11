@@ -2,7 +2,7 @@
 
 namespace Fjord\Page\Table;
 
-use Fjord\Contracts\Page\Column;
+use Fjord\Contracts\Page\Column as ColumnContract;
 use Fjord\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
 use Fjord\Page\Table\Components\BladeColumnComponent;
 use Fjord\Page\Table\Components\ImageComponent;
@@ -27,7 +27,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      * @param  string $label
      * @return Column
      */
-    public function col($label = ''): Column
+    public function col($label = ''): ColumnContract
     {
         return $this->columns[] = new Column($label);
     }
@@ -38,7 +38,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      * @param  string          $component
      * @return ColumnComponent
      */
-    public function component($component): Column
+    public function component($component): ColumnContract
     {
         return $this->columns[] = component($component, ColumnComponent::class);
     }

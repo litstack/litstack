@@ -6,29 +6,12 @@ use Closure;
 use Fjord\Contracts\Page\Table as TableContract;
 use Fjord\Exceptions\Traceable\MissingAttributeException;
 use Fjord\Support\HasAttributes;
-use Fjord\Support\VueProp;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use InvalidArgumentException;
 
-class Table extends VueProp implements TableContract
+class Table extends BaseTable implements TableContract
 {
     use HasAttributes;
-
-    /**
-     * Table column builder.
-     *
-     * @var ColumnBuilder
-     */
-    protected $builder;
-
-    /**
-     * Table route prefix.
-     *
-     * @var string
-     */
-    protected $routePrefix;
 
     /**
      * Table model class.
@@ -74,11 +57,10 @@ class Table extends VueProp implements TableContract
     public function __construct($routePrefix, ColumnBuilder $builder)
     {
         $this->routePrefix($routePrefix);
-        $this->builder = $builder;
         $this->component = component($this->componentName)
             ->prop('table', $this);
 
-        $this->setDefaults();
+        parent::__construct($builder);
     }
 
     /**
@@ -112,123 +94,6 @@ class Table extends VueProp implements TableContract
     }
 
     /**
-     * Set singular name.
-     *
-     * @param  string $name
-     * @return $this
-     */
-    public function singularName($name)
-    {
-        $this->setAttribute('singularName', $name);
-
-        return $this;
-    }
-
-    /**
-     * Set plural name.
-     *
-     * @param  string $name
-     * @return void
-     */
-    public function pluralName($name)
-    {
-        $this->setAttribute('pluralName', $name);
-
-        return $this;
-    }
-
-    /**
-     * Table card width.
-     *
-     * @param  int|float $width
-     * @return $this
-     */
-    public function width($width)
-    {
-        $this->component->prop('width', $width);
-
-        return $this;
-    }
-
-    /**
-     * Per page.
-     *
-     * @param  int   $perPage
-     * @return $this
-     */
-    public function perPage(int $perPage)
-    {
-        $this->setAttribute('perPage', $perPage);
-
-        return $this;
-    }
-
-    /**
-     * Set sort by default.
-     *
-     * @param  string $key
-     * @return $this
-     */
-    public function sortByDefault(string $attribute)
-    {
-        $this->setAttribute('sortByDefault', $attribute);
-
-        return $this;
-    }
-
-    /**
-     * Set search keys.
-     *
-     * @param  array $keys
-     * @return void
-     */
-    public function search(...$keys)
-    {
-        $keys = Arr::wrap($keys);
-        if (count($keys) == 1) {
-            if (is_array($keys[0])) {
-                $keys = $keys[0];
-            }
-        }
-
-        $this->setAttribute('search', $keys);
-
-        return $this;
-    }
-
-    /**
-     * Set sortBy keys.
-     *
-     * @param  array $sortBy
-     * @return void
-     */
-    public function sortBy(...$keys)
-    {
-        $keys = Arr::wrap($keys);
-        if (count($keys) == 1) {
-            if (is_array($keys[0])) {
-                $keys = $keys[0];
-            }
-        }
-        $this->setAttribute('sortBy', $keys);
-
-        return $this;
-    }
-
-    /**
-     * Set table filters.
-     *
-     * @param  array $filter
-     * @return $this
-     */
-    public function filter(array $filter)
-    {
-        $this->setAttribute('filter', $filter);
-
-        return $this;
-    }
-
-    /**
      * Set table model.
      *
      * @param  string $model
@@ -247,56 +112,6 @@ class Table extends VueProp implements TableContract
         }
 
         return $this;
-    }
-
-    /**
-     * Add an action.
-     *
-     * @param  string                     $title
-     * @param  array|string|callable|null $action
-     * @return $this
-     */
-    public function action($title, $action)
-    {
-        $id = count($this->actions);
-        $this->actions[$id] = $action = new TableAction($title, $action);
-
-        $action->route($this->getActionRoutePrefix()."{$id}");
-        $controls = $this->getAttribute('controls');
-        $controls[] = $action->getComponent()->toArray();
-
-        return $this;
-    }
-
-    /**
-     * Get action route prefix.
-     *
-     * @return string
-     */
-    protected function getActionRoutePrefix()
-    {
-        return $this->getAttribute('route_prefix').'/run-action/';
-    }
-
-    /**
-     * Get action by id.
-     *
-     * @param  string $key
-     * @return mixed
-     */
-    public function getAction($id)
-    {
-        return $this->actions[$id];
-    }
-
-    /**
-     * Get builder.
-     *
-     * @return ColumnBuilder
-     */
-    public function getBuilder()
-    {
-        return $this->builder;
     }
 
     /**
@@ -351,43 +166,6 @@ class Table extends VueProp implements TableContract
             throw new MissingAttributeException('Missing attribute [model] for '.static::class);
         }
 
-        return array_merge($this->attributes, [
-            'cols' => $this->builder,
-        ]);
-    }
-
-    /**
-     * Get attribute by name.
-     *
-     * @param  string $name
-     * @return mixed
-     *
-     * @throws InvalidArgumentException
-     */
-    public function __get($name)
-    {
-        if ($this->hasAttribute($name)) {
-            return $this->getAttribute($name);
-        }
-
-        throw new InvalidArgumentException("Property [{$name}] does not exist on ".static::class);
-    }
-
-    /**
-     * Set attribute value.
-     *
-     * @param  string $attribute
-     * @param  mixed  $value
-     * @return void
-     */
-    public function __set($attribute, $value)
-    {
-        if ($this->hasAttribute($attribute)) {
-            $this->attribute[$attribute] = $value;
-
-            return;
-        }
-
-        $this->{$attribute} = $value;
+        return parent::render();
     }
 }

@@ -17,6 +17,4 @@ interface Table
     public function sortBy(...$keys);
 
     public function filter(array $filter);
-
-    public function action($title, $action);
 }

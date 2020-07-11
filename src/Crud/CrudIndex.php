@@ -66,14 +66,15 @@ class CrudIndex extends Page
     {
         $this->table = $table = new Table(
             $this->config->routePrefix(),
-            $builder = new CrudColumnBuilder($this)
+            $builder = new CrudColumnBuilder($this->config)
         );
 
         $table->model($this->config->model);
         $table->singularName($this->config->names['singular']);
         $table->pluralName($this->config->names['plural']);
 
-        $table->action(ucfirst(__f('base.delete')), $this->config->controller.'@test');
+        // TODO:
+        //$table->action(ucfirst(__f('base.delete')), $this->config->controller.'@test');
 
         $closure($builder);
         $this->component($table->getComponent());

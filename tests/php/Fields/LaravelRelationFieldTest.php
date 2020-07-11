@@ -147,7 +147,7 @@ class LaravelRelationFieldTest extends BackendTestCase
     public function test_preview_closure_receives_table_instance()
     {
         $this->field->preview(function ($table) {
-            $this->assertInstanceOf(\Fjord\Vue\Table::class, $table);
+            $this->assertInstanceOf(\Fjord\Page\BaseTable::class, $table);
         });
     }
 
@@ -157,7 +157,7 @@ class LaravelRelationFieldTest extends BackendTestCase
         $this->field->preview(function ($table) {
         });
 
-        $this->assertInstanceOf(\Fjord\Vue\Table::class, $this->field->getAttribute('preview'));
+        $this->assertInstanceOf(\Fjord\Page\BaseTable::class, $this->field->getAttribute('preview'));
     }
 }
 

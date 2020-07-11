@@ -17,6 +17,11 @@ class InfoComponent extends Component implements Resizable
         $this->heading('h4');
     }
 
+    public function title($title)
+    {
+        return $this->prop('title', $title);
+    }
+
     public function heading($heading)
     {
         return $this->prop('heading', $heading);

@@ -6,7 +6,6 @@ use Fjord\Page\Table\Column;
 use Fjord\Page\Table\ColumnBuilder;
 use Fjord\Page\Table\Components\BladeColumnComponent;
 use Fjord\Page\Table\Components\ColumnComponent;
-use Fjord\Vue\TableComponent;
 use FjordTest\BackendTestCase;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Support\Facades\View;
@@ -35,7 +34,7 @@ class ColumnBuilderTest extends BackendTestCase
     public function test_component_method_returns_table_component()
     {
         $builder = new ColumnBuilder;
-        $this->assertInstanceOf(TableComponent::class, $builder->component('dummy-component'));
+        $this->assertInstanceOf(ColumnComponent::class, $builder->component('dummy-component'));
     }
 
     /** @test */
@@ -45,15 +44,16 @@ class ColumnBuilderTest extends BackendTestCase
         $builder->component('dummy-component');
         $columns = $this->getUnaccessibleProperty($builder, 'columns');
         $this->assertCount(1, $columns);
-        $this->assertInstanceOf(TableComponent::class, $columns[0]);
+        $this->assertInstanceOf(ColumnComponent::class, $columns[0]);
     }
 
     /** @test */
     public function test_view_method_returns_view()
     {
         $builder = new ColumnBuilder;
-        View::partialMock()->shouldReceive('make')->withArgs(['dummy_view'])->andReturn('result');
-        $this->assertEquals('result', $builder->view('dummy_view'));
+        $view = m::mock(ViewContract::class);
+        View::partialMock()->shouldReceive('make')->withArgs(['dummy_view'])->andReturn($view);
+        $this->assertEquals($view, $builder->view('dummy_view'));
     }
 
     /** @test */
@@ -62,7 +62,7 @@ class ColumnBuilderTest extends BackendTestCase
         $builder = new ColumnBuilder;
         $view = m::mock(ViewContract::class);
         View::partialMock()->shouldReceive('make')->withArgs(['dummy_view'])->andReturn($view);
-        $this->assertEquals($view, $builder->view('dummy_view'));
+        $builder->view('dummy_view');
         $columns = $this->getUnaccessibleProperty($builder, 'columns');
         $this->assertCount(1, $columns);
         $this->assertInstanceOf(BladeColumnComponent::class, $columns[0]);

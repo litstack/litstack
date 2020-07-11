@@ -4,9 +4,9 @@ namespace Fjord\Crud\Fields\Relations;
 
 use Closure;
 use Fjord\Crud\RelationField;
+use Fjord\Page\Table\ColumnBuilder;
 use Fjord\Support\Facades\Config;
 use Fjord\Support\Facades\Crud;
-use Fjord\Vue\Table;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
@@ -212,7 +212,7 @@ class LaravelRelationField extends RelationField
             if ($this->relatedConfig->index) {
                 $table = clone $this->relatedConfig->index
                     ->getTable()
-                    ->getTable()
+                    ->getBuilder()
                     ->disableLink();
 
                 $this->setAttribute('preview', $table);
@@ -272,17 +272,16 @@ class LaravelRelationField extends RelationField
     /**
      * Build relation index table.
      *
-     * @param Closure $closure
-     *
+     * @param  Closure $closure
      * @return $this
      */
     public function preview(Closure $closure)
     {
-        $table = new Table();
+        $builder = new ColumnBuilder;
 
-        $closure($table);
+        $closure($builder);
 
-        $this->attributes['preview'] = $table;
+        $this->attributes['preview'] = $builder;
 
         return $this;
     }
