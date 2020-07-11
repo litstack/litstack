@@ -3,12 +3,13 @@
 namespace Fjord\Page\Table;
 
 use ErrorException;
+use Fjord\Contracts\Page\Column as ColumnInterface;
 use Fjord\Exceptions\MissingAttributeException;
 use Fjord\Exceptions\Traceable\InvalidArgumentException;
 use Fjord\Support\HasAttributes;
 use Fjord\Support\VueProp;
 
-class Column extends VueProp
+class Column extends VueProp implements ColumnInterface
 {
     use HasAttributes;
 
@@ -32,7 +33,7 @@ class Column extends VueProp
      * @param  string $label
      * @return $this
      */
-    public function label(string $label)
+    public function label($label)
     {
         $this->setAttribute('label', $label);
 
@@ -95,11 +96,12 @@ class Column extends VueProp
      * Set regular expression and replace for column value.
      *
      * @param  string $regex
+     * @param  string $replace
      * @return $this
      *
      * @throws InvalidArgumentException
      */
-    public function regex($regex, string $replace = '')
+    public function regex($regex, $replace)
     {
         $this->setAttribute('regex', $regex);
         $this->setAttribute('regex_replace', $replace);
@@ -136,7 +138,7 @@ class Column extends VueProp
      * @param  int   $max
      * @return $this
      */
-    public function maxChars(int $max = 100)
+    public function maxChars(int $max)
     {
         $this->attributes['max_chars'] = $max;
 

@@ -5,7 +5,6 @@ namespace Fjord\Crud;
 use Closure;
 use Fjord\Config\ConfigHandler;
 use Fjord\Page\Page;
-use Fjord\Page\Table\ColumnBuilder;
 use Fjord\Page\Table\Table;
 
 class CrudIndex extends Page
@@ -67,11 +66,13 @@ class CrudIndex extends Page
     {
         $this->table = $table = new Table(
             $this->config->routePrefix(),
-            $builder = new ColumnBuilder
+            $builder = new CrudColumnBuilder($this)
         );
+
         $table->model($this->config->model);
         $table->singularName($this->config->names['singular']);
         $table->pluralName($this->config->names['plural']);
+
         $table->action(ucfirst(__f('base.delete')), $this->config->controller.'@test');
 
         $closure($builder);

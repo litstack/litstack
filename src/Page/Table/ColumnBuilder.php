@@ -2,13 +2,15 @@
 
 namespace Fjord\Page\Table;
 
+use Fjord\Contracts\Page\Column;
+use Fjord\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
 use Fjord\Support\VueProp;
 use Fjord\Vue\Components\BladeTableComponent;
 use Fjord\Vue\TableComponent;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\View as ViewFactory;
 
-class ColumnBuilder extends VueProp
+class ColumnBuilder extends VueProp implements ColumnBuilderContract
 {
     /**
      * Table column stack.
@@ -23,7 +25,7 @@ class ColumnBuilder extends VueProp
      * @param  string $label
      * @return Column
      */
-    public function col($label = '')
+    public function col($label = ''): Column
     {
         return $this->columns[] = new Column($label);
     }
@@ -34,7 +36,7 @@ class ColumnBuilder extends VueProp
      * @param  string $component
      * @return mixed
      */
-    public function component($component)
+    public function component($component): Column
     {
         return $this->columns[] = component($component, TableComponent::class);
     }
@@ -45,7 +47,7 @@ class ColumnBuilder extends VueProp
      * @param  View|string $view
      * @return View
      */
-    public function view($view)
+    public function view($view): View
     {
         if (! $view instanceof View) {
             $view = ViewFactory::make($view);
@@ -62,11 +64,11 @@ class ColumnBuilder extends VueProp
      * @param  string    $key
      * @return Component
      */
-    public function toggle($key)
+    public function toggle($attribute)
     {
         return $this->component('fj-col-toggle')
             ->prop('link', false)
-            ->prop('local_key', $key);
+            ->prop('local_key', $attribute);
     }
 
     /**

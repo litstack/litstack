@@ -3,6 +3,7 @@
 namespace Fjord\Page\Table;
 
 use Closure;
+use Fjord\Contracts\Page\Table as TableContract;
 use Fjord\Exceptions\Traceable\MissingAttributeException;
 use Fjord\Support\HasAttributes;
 use Fjord\Support\VueProp;
@@ -11,7 +12,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
-class Table extends VueProp
+class Table extends VueProp implements TableContract
 {
     use HasAttributes;
 
@@ -65,7 +66,7 @@ class Table extends VueProp
     protected $component;
 
     /**
-     * Create new CrudIndexTable instance.
+     * Create new Table instance.
      *
      * @param string        $routePrefix
      * @param ColumnBuilder $builder
@@ -168,9 +169,9 @@ class Table extends VueProp
      * @param  string $key
      * @return $this
      */
-    public function sortByDefault(string $key)
+    public function sortByDefault(string $attribute)
     {
-        $this->setAttribute('sortByDefault', $key);
+        $this->setAttribute('sortByDefault', $attribute);
 
         return $this;
     }
