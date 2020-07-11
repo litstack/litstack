@@ -213,7 +213,7 @@ class LaravelRelationField extends RelationField
                 $table = clone $this->relatedConfig->index
                     ->getTable()
                     ->getBuilder()
-                    ->disableLink();
+                    ->disableLinks();
 
                 $this->setAttribute('preview', $table);
             }

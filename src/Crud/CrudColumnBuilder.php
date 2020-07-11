@@ -48,6 +48,20 @@ class CrudColumnBuilder extends ColumnBuilder
     }
 
     /**
+     * Disable link on all table columns.
+     *
+     * @return $this
+     */
+    public function disableLinks()
+    {
+        foreach ($this->columns as $col) {
+            $col->link(false);
+        }
+
+        return $this;
+    }
+
+    /**
      * Get default link.
      *
      * @return string|bool
