@@ -26,6 +26,13 @@ class Component extends VueProp implements AuthorizableContract
     protected $props = [];
 
     /**
+     * Event handlers.
+     *
+     * @var array
+     */
+    protected $events = [];
+
+    /**
      * Create new Component instance.
      *
      * @param  string $name
@@ -60,13 +67,17 @@ class Component extends VueProp implements AuthorizableContract
     }
 
     /**
-     * Available props.
+     * Add event handler.
      *
-     * @return array
+     * @param  string $event
+     * @param  string $handler
+     * @return $this
      */
-    protected function props()
+    public function on($event, $handler)
     {
-        return [];
+        $this->events[$event] = $handler;
+
+        return $this;
     }
 
     /**
@@ -212,8 +223,9 @@ class Component extends VueProp implements AuthorizableContract
         $this->mounted();
 
         return [
-            'name'  => $this->name,
-            'props' => collect($this->props),
+            'name'   => $this->name,
+            'props'  => collect($this->props),
+            'events' => $this->events,
         ];
     }
 }

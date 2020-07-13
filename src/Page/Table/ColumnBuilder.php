@@ -5,6 +5,7 @@ namespace Fjord\Page\Table;
 use Fjord\Contracts\Page\Column as ColumnContract;
 use Fjord\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
 use Fjord\Page\Table\Components\BladeColumnComponent;
+use Fjord\Page\Table\Components\ColumnComponent;
 use Fjord\Page\Table\Components\ImageComponent;
 use Fjord\Page\Table\Components\RelationComponent;
 use Fjord\Page\Table\Components\ToggleComponent;
