@@ -7,11 +7,11 @@
     <a href="https://packagist.org/packages/aw-studio/fjord"><img src="https://img.shields.io/github/license/aw-studio/fjord?color=%2331c653" alt="License"></a>
 </p>
 
-# Fjord: Laravel Content-Administration
+# Laravel Content-Administration
 
-Fjord is a Laravel package for building Admin-Interfaces that help maintaining the data of your applications. It provides an intuitive interface and the tools needed to manage your project's Users, Models and free Forms for Pages, Settings etc.
+This is a package for building Admin-Interfaces that help maintaining the data of your applications. It provides an intuitive interface and the tools needed to manage your project's Users, Models and free Forms for Pages, Settings etc.
 
-![Fjord Interface](./docs/fjord_preview.png 'Fjord Interface')
+![Interface](./docs/fjord_preview.png 'Interface')
 
 ## Features
 
@@ -25,7 +25,7 @@ Fjord is a Laravel package for building Admin-Interfaces that help maintaining t
 -   Translatable
 -   Headless
 
-## Learning Fjord
+## Documentation
 
 Read the [Docs](https://www.fjord-admin.com) and learn how to build your custom Admin panel. Use your knowledge about Laravel standards and do much work in little time.
 
@@ -86,4 +86,4 @@ npm test:js
 
 ## License
 
-Fjord is an open-sourced software licensed under the [MIT license](LICENSE.md).
+The package is an open-sourced software licensed under the [MIT license](LICENSE.md).
