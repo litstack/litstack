@@ -1,6 +1,6 @@
 # Laravel Content-Administration
 
-<p align="center">
+<p>
     <a href="https://github.com/aw-studio/fjord/actions"><img src="https://github.com/aw-studio/fjord/workflows/tests/badge.svg" alt="Build Status"></a>
     <a href="https://packagist.org/packages/aw-studio/fjord"><img src="https://img.shields.io/packagist/dt/aw-studio/fjord?color=%234951f2" alt="Total Downloads"></a>
     <a href="https://packagist.org/packages/aw-studio/fjord"><img src="https://img.shields.io/github/v/release/aw-studio/fjord?color=%2383c2ff&label=stable" alt="Latest Stable Version"></a>
