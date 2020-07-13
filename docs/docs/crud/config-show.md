@@ -77,9 +77,7 @@ public function previewRoute($article)
 }
 ```
 
-Now the page can be previewed for the devices **desktop**, **tablet** or **mobile** like in the following screenshot:
-
-![Fjord Crud Preview](./preview.png 'Fjord Crud Preview')
+Now the page can be previewed for the devices **desktop**, **tablet** or **mobile**.
 
 ### Default Device
 

@@ -1,10 +1,10 @@
 # Package Development
 
-Packages can extend the functionality and the Fjord interface. You can use them to integrate your own Vue components into the application or extend existing components.
+Packages can extend the functionality and the admin interface. You can use them to integrate your own Vue components into the application or extend existing components.
 
 ## Setup
 
-For Fjord to be able to discover your package it must be specified in the composer.json as follows:
+For the application to be able to discover your package it must be specified in the composer.json as follows:
 
 ```json
 {

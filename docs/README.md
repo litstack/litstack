@@ -1,14 +1,13 @@
 ---
 home: true
-heroText: null
-heroImage: /fjord-logo-padding.svg
-tagline: Beautiful Content Administration
+heroText: 'Laravel Content-Administration'
+tagline: null
 actionText: Get Started →
 actionLink: /docs/getting-started/installation.html
 
 features:
     - title: Laravel
-      details: Just integrate Fjord into existing projects and do a lot with little learning using your knowledge about Laravel standards.
+      details: Just integrate the package into existing projects and do a lot with little learning using your knowledge about Laravel standards.
     - title: Code Driven Configuration
       details: Easy to deploy. Configure your Admin panel inside the code.
     - title: Infinitely Extendable

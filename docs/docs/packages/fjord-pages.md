@@ -1,9 +1,9 @@
-# Fjord Pages
+# Pages
 
-Fjord pages help you to quickly add new pages to your fjord application. This
-turns your Fjord admin panel into a **cms**.
+Pages help you to quickly add new pages to your admin application. This
+turns your admin panel into a **cms**.
 
-![fjord pages](./screens/pages_screen.png 'fjord pages')
+![pages](./screens/pages_screen.jpg 'pages')
 
 Install the package via composer:
 
@@ -26,7 +26,7 @@ example `blog`:
 php artisan fjord:pages Blog
 ```
 
-A config is created and two controllers, one for the fjord backend in
+A config is created and two controllers, one for the backend in
 `./fjord/app/Controllers/Pages` and one for your application in
 `./app/Http/Controllers/Pages`.
 

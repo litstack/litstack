@@ -2,7 +2,7 @@
 
 [[toc]]
 
-The main task of an admin panel is to manage data. Fjord offers easy editing and managing of [Laravel Eloquent Models](https://laravel.com/docs/7.x/eloquent). For a clear administration of models, a suitable `index` table and the corresponding `create` and `update` form are needed. Fjord also comes with powerful open source packages to make models `translatable`, `sluggable` and to attach `media`. The following packages are used for this:
+The main task of an admin panel is to manage data. The package offers easy editing and managing of [Laravel Eloquent Models](https://laravel.com/docs/7.x/eloquent). For a clear administration of models, a suitable `index` table and the corresponding `create` and `update` form are needed. The package also comes with powerful open source packages to make models `translatable`, `sluggable` and to attach `media`. The following packages are used for this:
 
 -   [Astronomic Translatable](https://docs.astrotomic.info/laravel-translatable/)
 -   [Spatie Medialibrary](https://docs.spatie.be/laravel-medialibrary/v8/introduction/)

@@ -1,10 +1,10 @@
 # Extend With Vue
 
-The Fjord interface can be extended with custom Vue components for numerous purposes.
+The admin interface can be extended with custom Vue components for numerous purposes.
 
 ## Setup
 
-To include your own `Vue` components in the Fjord application, the locale npm package `vendor/aw-studio/fjord` has to be installed. This can be done using the following artisan command:
+To include your own `Vue` components in the admin application, the locale npm package `vendor/aw-studio/laravel-content-administration` has to be installed. This can be done using the following artisan command:
 
 ```shell
 php artisan fjord:extend
@@ -37,7 +37,7 @@ Components that are created in the `components` folder are automatically registe
 Run `npm run watch` and you are good to go.
 
 ::: warning
-Dont forget to compile your assets every time you **update** your Fjord version.
+Dont forget to compile your assets every time you **update** the package.
 :::
 
 ## Register Vue Components
@@ -46,4 +46,4 @@ Vue Components that are located in the `./fjord/resources/js/components` folder 
 
 ## Bootstrap Vue
 
-To make it easy to build uniform Fjord pages, Fjord uses [Bootstrap Vue](https://bootstrap-vue.org/docs/components) for all frontend components. Bootstrap Vue comes with a large number of components to cover all the necessary areas needed to build an application.
+To make it easy to build uniform Fjord pages, the package uses [Bootstrap Vue](https://bootstrap-vue.org/docs/components) for all frontend components. Bootstrap Vue comes with a large number of components to cover all the necessary areas needed to build an application.
