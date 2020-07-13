@@ -25,7 +25,7 @@ This is a package for building Admin-Interfaces that help maintaining the data o
 
 ## Documentation
 
-Read the [Docs](https://www.fjord-admin.com) and learn how to build your custom Admin panel. Use your knowledge about Laravel standards and do much work in little time.
+Read the [Docs](https://relaxed-lovelace-429a31.netlify.app/) and learn how to build your custom Admin panel. Use your knowledge about Laravel standards and do much work in little time.
 
 Feel free to ask us anything on our [discord chanel](https://discord.gg/u4qpb5P).
 
