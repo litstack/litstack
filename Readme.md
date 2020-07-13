@@ -46,10 +46,6 @@ php artisan fjord:admin
 
 It's all setup now, visit http://yourapp.tld/admin
 
-## Demo
-
-Try the [Demo](https://demo.fjord-admin.com)
-
 ## Testing
 
 Tests are divided into two parts. `PHP` tests for the backend via [PHPUnit](https://phpunit.readthedocs.io/en/9.2/) and `Javascript` test for the frontend via [Jest](https://jestjs.io/). Depending on what you are working on you may only want to test one part.
