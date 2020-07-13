@@ -1,11 +1,11 @@
+# Laravel Content-Administration
+
 <p align="center">
     <a href="https://github.com/aw-studio/fjord/actions"><img src="https://github.com/aw-studio/fjord/workflows/tests/badge.svg" alt="Build Status"></a>
     <a href="https://packagist.org/packages/aw-studio/fjord"><img src="https://img.shields.io/packagist/dt/aw-studio/fjord?color=%234951f2" alt="Total Downloads"></a>
     <a href="https://packagist.org/packages/aw-studio/fjord"><img src="https://img.shields.io/github/v/release/aw-studio/fjord?color=%2383c2ff&label=stable" alt="Latest Stable Version"></a>
     <a href="https://packagist.org/packages/aw-studio/fjord"><img src="https://img.shields.io/github/license/aw-studio/fjord?color=%2331c653" alt="License"></a>
 </p>
-
-# Laravel Content-Administration
 
 This is a package for building Admin-Interfaces that help maintaining the data of your applications. It provides an intuitive interface and the tools needed to manage your project's Users, Models and free Forms for Pages, Settings etc.
 
