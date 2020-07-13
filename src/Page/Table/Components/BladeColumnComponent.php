@@ -2,10 +2,31 @@
 
 namespace Fjord\Page\Table\Components;
 
+use Fjord\Vue\Traits\StaticComponentName;
 use Illuminate\Contracts\View\View;
 
 class BladeColumnComponent extends ColumnComponent
 {
+    use StaticComponentName;
+
+    /**
+     * Component name.
+     *
+     * @var string
+     */
+    protected $name = 'fj-blade';
+
+    /**
+     * Set blade view.
+     *
+     * @param  View  $view
+     * @return $this
+     */
+    public function view(View $view)
+    {
+        return $this->prop('view', $view);
+    }
+
     /**
      * Get array.
      *

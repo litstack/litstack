@@ -50,7 +50,7 @@ class ColumnComponent extends Component implements Column
      */
     public function link($link)
     {
-        $this->prop('link', $link);
+        return $this->prop('link', $link);
     }
 
     /**
@@ -61,7 +61,7 @@ class ColumnComponent extends Component implements Column
      */
     public function sortBy($attribute)
     {
-        $this->prop('sort_by', $attribute);
+        return $this->prop('sort_by', $attribute);
     }
 
     /**

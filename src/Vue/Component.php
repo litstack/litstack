@@ -36,7 +36,6 @@ class Component extends VueProp implements AuthorizableContract
      * Create new Component instance.
      *
      * @param  string $name
-     * @param  array  $options
      * @return void
      */
     public function __construct(string $name)

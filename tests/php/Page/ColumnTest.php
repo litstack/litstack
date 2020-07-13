@@ -97,7 +97,7 @@ class ColumnTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_render_method_returns_attributes()
+    public function it_renders_attributes()
     {
         $column = new Column('');
         $column->setAttribute('dummy', 'value');
