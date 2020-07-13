@@ -7,10 +7,7 @@ export default {
                 ...this.$listeners,
                 ...this.events
             },
-            props: {
-                ...this.component.props,
-                ...this.$attrs
-            }
+            attrs: this.props
         });
     },
     props: {
@@ -23,6 +20,14 @@ export default {
         return {
             events: {}
         };
+    },
+    computed: {
+        props() {
+            return {
+                ...this.$attrs,
+                ...this.component.props
+            };
+        }
     },
     beforeMount() {
         this.setEvents();
