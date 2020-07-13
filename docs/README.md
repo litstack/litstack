@@ -17,7 +17,7 @@ features:
 footer: MIT Licensed | Made with ❤️ in Kiel
 ---
 
-![Fjord Interface](./fjord_preview.png 'Fjord Interface')
+![Interface](./preview.png 'Interface')
 
 ## Editable Models In No Time
 
@@ -37,4 +37,4 @@ $form->group(function ($col) {
 })->width(2 / 3);
 ```
 
-![Fjord Interface](./example_form.png 'Fjord Interface')
+![Interface](./example_form.png 'Interface')
