@@ -3,6 +3,7 @@
 namespace Fjord\Page\Table;
 
 use Fjord\Contracts\Page\Table as TableContract;
+use Fjord\Page\Actions\DropdownItemAction;
 use Fjord\Support\HasAttributes;
 use Fjord\Support\VueProp;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,6 +29,13 @@ class BaseTable extends VueProp implements TableContract
     protected $routePrefix;
 
     /**
+     * Action factory.
+     *
+     * @var string
+     */
+    protected $actionFactory;
+
+    /**
      * Create new Table instance.
      *
      * @param ColumnBuilder $builder
@@ -35,8 +43,23 @@ class BaseTable extends VueProp implements TableContract
     public function __construct(ColumnBuilder $builder)
     {
         $this->builder = $builder;
+        $this->actionFactory = new DropdownItemAction;
 
         $this->setDefaults();
+    }
+
+    /**
+     * Add action.
+     *
+     * @param  string $title
+     * @param  string $action
+     * @return $this
+     */
+    public function action($title, $action)
+    {
+        $this->actions[] = $this->actionFactory->make($title, $action);
+
+        return $this;
     }
 
     /**
@@ -204,7 +227,8 @@ class BaseTable extends VueProp implements TableContract
     public function render(): array
     {
         return array_merge($this->attributes, [
-            'cols' => $this->builder,
+            'cols'    => $this->builder,
+            'actions' => $this->actions,
         ]);
     }
 

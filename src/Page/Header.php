@@ -33,10 +33,10 @@ class Header extends VueProp
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($page)
     {
-        $this->left = new Slot(new ButtonSmAction);
-        $this->right = new Slot(new ButtonSmAction);
+        $this->left = new Slot($page, new ButtonSmAction);
+        $this->right = new Slot($page, new ButtonSmAction);
     }
 
     /**

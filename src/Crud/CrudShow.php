@@ -52,6 +52,21 @@ class CrudShow extends Page
     }
 
     /**
+     * Resolve action component.
+     *
+     * @param  \Fjord\Vue\Component $component
+     * @return void
+     */
+    public function resolveAction($component)
+    {
+        $component->on('click', RunCrudActionEvent::class)
+            ->prop('eventData', array_merge(
+                $component->getProp('eventData'),
+                ['model' => $this->form->getModel()]
+            ));
+    }
+
+    /**
      * Registering field lifecycle hook.
      *
      * @param  Field $field

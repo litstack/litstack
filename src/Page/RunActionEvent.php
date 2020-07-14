@@ -2,10 +2,17 @@
 
 namespace Fjord\Page;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class RunActionEvent
 {
+    /**
+     * Handle RunActionEvent.
+     *
+     * @param  Request $request
+     * @return mixed
+     */
     public function handle(Request $request)
     {
         if (! class_exists($request->action)) {
@@ -14,6 +21,34 @@ class RunActionEvent
 
         $action = app()->make($request->action);
 
-        return app()->call([$action, 'run']);
+        $result = app()->call([$action, 'run'], $this->getBindings($request));
+
+        if (! $result instanceof JsonResponse) {
+            return $this->defaultResponse();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get default response.
+     *
+     * @return JsonResponse
+     */
+    protected function defaultResponse()
+    {
+        return new JsonResponse([
+            'message' => 'Action executed.',
+        ]);
+    }
+
+    /**
+     * Get action bindings.
+     *
+     * @return array
+     */
+    protected function getBindings(Request $request)
+    {
+        return [];
     }
 }

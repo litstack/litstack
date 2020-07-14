@@ -19,6 +19,12 @@ export default {
         component: {
             type: Object,
             required: true
+        },
+        eventData: {
+            type: Object,
+            default() {
+                return {};
+            }
         }
     },
     data() {
@@ -80,12 +86,14 @@ export default {
             if (!response) {
                 return;
             }
+
+            this.$emit('eventHandled', response);
         },
         async sendHandleEvent(handler, data) {
             try {
                 return await axios.post(`handle-event`, {
-                    ...this.props,
-                    ...this.$attrs,
+                    ...this.eventData,
+                    ...(this.component.props.eventData || {}),
                     ...data,
                     handler
                 });

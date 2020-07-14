@@ -24,7 +24,7 @@ abstract class BaseAction implements ActionFactory
     protected function prepared($title, $action)
     {
         return $this->createComponent()
-            ->prop('action', $action)
+            ->prop('eventData', ['action' => $action])
             ->on('click', RunActionEvent::class)
             ->content($title);
     }

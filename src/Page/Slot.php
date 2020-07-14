@@ -24,6 +24,13 @@ class Slot extends VueProp
     protected $views = [];
 
     /**
+     * Parent page.
+     *
+     * @var string
+     */
+    protected $page;
+
+    /**
      * Action factory.
      *
      * @var string
@@ -33,11 +40,13 @@ class Slot extends VueProp
     /**
      * Create new Slot instance.
      *
+     * @param  BasePage      $page
      * @param  ActionFactory $actionFactory
      * @return void
      */
-    public function __construct(ActionFactory $actionFactory)
+    public function __construct(BasePage $page, ActionFactory $actionFactory)
     {
+        $this->page = $page;
         $this->actionFactory = $actionFactory;
     }
 
@@ -46,13 +55,17 @@ class Slot extends VueProp
      *
      * @param  string $title
      * @param  string $action
-     * @return void
+     * @return $this
      */
     public function action($title, $action)
     {
-        return $this->component(
+        $component = $this->component(
             $this->actionFactory->make($title, $action)
         );
+
+        $this->page->resolveAction($component);
+
+        return $component;
     }
 
     /**

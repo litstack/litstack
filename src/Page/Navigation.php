@@ -34,11 +34,12 @@ class Navigation extends VueProp
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($page)
     {
-        $this->left = new Slot(new ButtonAction);
-        $this->right = new Slot(new ButtonAction);
-        $this->controls = new Slot(new DropdownItemAction);
+        $this->page = $page;
+        $this->left = new Slot($page, new ButtonAction);
+        $this->right = new Slot($page, new ButtonAction);
+        $this->controls = new Slot($page, new DropdownItemAction);
     }
 
     /**
