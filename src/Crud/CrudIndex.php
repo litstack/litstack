@@ -4,6 +4,7 @@ namespace Fjord\Crud;
 
 use Closure;
 use Fjord\Config\ConfigHandler;
+use Fjord\Crud\Actions\DestroyAction;
 use Fjord\Page\Page;
 use Fjord\Page\Table\Table;
 
@@ -89,11 +90,31 @@ class CrudIndex extends Page
         $table->pluralName($this->config->names['plural']);
 
         // TODO:
+        $table->action(ucfirst(__f('base.delete')), DestroyAction::class);
+
         //$table->action(ucfirst(__f('base.delete')), $this->config->controller.'@test');
 
         $closure($builder);
         $this->component($table->getComponent());
 
         return $table;
+    }
+
+    /**
+     * Render CrudIndex.
+     *
+     * @return array
+     */
+    public function render(): array
+    {
+        foreach ($this->table->getActions() as $component) {
+            $component->on('click', RunCrudActionEvent::class)
+                ->prop('eventData', array_merge(
+                    $component->getProp('eventData'),
+                    ['model' => $this->config->model]
+                ));
+        }
+
+        return parent::render();
     }
 }

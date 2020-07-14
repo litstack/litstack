@@ -5,6 +5,7 @@ namespace Fjord\Crud\Config\Factories;
 use Closure;
 use Fjord\Config\ConfigFactory;
 use Fjord\Config\ConfigHandler;
+use Fjord\Crud\Actions\DestroyAction;
 use Fjord\Crud\BaseForm;
 use Fjord\Crud\CrudShow;
 
@@ -27,6 +28,8 @@ class CrudFormConfigFactory extends ConfigFactory
         );
 
         $page = new CrudShow($form);
+
+        $page->navigationControls()->action(ucfirst(__f('base.delete')), DestroyAction::class);
 
         $page->navigationRight()->component('fj-crud-language');
 
