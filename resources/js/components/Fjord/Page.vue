@@ -4,17 +4,9 @@
             :back="goBack.route || false"
             :back-text="goBack.text || ''"
         >
-            <template slot="left">
+            <template :slot="slot" v-for="(part, slot) in page.navigation">
                 <fj-base-component
-                    v-for="(component, key) in page.navigation.left.components"
-                    :component="component"
-                    :key="key"
-                    v-bind="{ ...page.props, ...$attrs }"
-                />
-            </template>
-            <template slot="right">
-                <fj-base-component
-                    v-for="(component, key) in page.navigation.right.components"
+                    v-for="(component, key) in part.components"
                     :component="component"
                     :key="key"
                     v-bind="{ ...page.props, ...$attrs }"

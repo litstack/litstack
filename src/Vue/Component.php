@@ -33,6 +33,20 @@ class Component extends VueProp implements AuthorizableContract
     protected $events = [];
 
     /**
+     * The name of the slot, if this component is the child of another component.
+     *
+     * @var array
+     */
+    protected $slot = [];
+
+    /**
+     * Children.
+     *
+     * @var array
+     */
+    protected $children = [];
+
+    /**
      * Create new Component instance.
      *
      * @param  string $name
@@ -63,6 +77,43 @@ class Component extends VueProp implements AuthorizableContract
     protected function mounted()
     {
         //
+    }
+
+    /**
+     * The name of the slot, if this component is the child of another component.
+     *
+     * @param  string $name
+     * @return $this
+     */
+    public function slot($name)
+    {
+        $this->slot = $name;
+
+        return $this;
+    }
+
+    /**
+     * Add child component.
+     *
+     * @param  mixed $component
+     * @return $this
+     */
+    public function child($component)
+    {
+        $this->children[] = $component;
+
+        return $this;
+    }
+
+    /**
+     * Add content.
+     *
+     * @param  string $content
+     * @return $this
+     */
+    public function content($content)
+    {
+        return $this->child($content);
     }
 
     /**
@@ -222,9 +273,11 @@ class Component extends VueProp implements AuthorizableContract
         $this->mounted();
 
         return [
-            'name'   => $this->name,
-            'props'  => collect($this->props),
-            'events' => $this->events,
+            'name'     => $this->name,
+            'props'    => collect($this->props),
+            'events'   => $this->events,
+            'slot'     => $this->slot,
+            'children' => $this->children,
         ];
     }
 }

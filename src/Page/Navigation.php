@@ -2,6 +2,8 @@
 
 namespace Fjord\Page;
 
+use Fjord\Page\Actions\ButtonAction;
+use Fjord\Page\Actions\DropdownItemAction;
 use Fjord\Support\VueProp;
 
 class Navigation extends VueProp
@@ -34,9 +36,9 @@ class Navigation extends VueProp
      */
     public function __construct()
     {
-        $this->left = new Slot;
-        $this->right = new Slot;
-        $this->controls = new Slot;
+        $this->left = new Slot(new ButtonAction);
+        $this->right = new Slot(new ButtonAction);
+        $this->controls = new Slot(new DropdownItemAction);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Fjord\Page;
 
+use Fjord\Contracts\Page\ActionFactory;
 use Fjord\Support\VueProp;
 use Fjord\Vue\Component;
 use Illuminate\Contracts\View\View;
@@ -21,6 +22,38 @@ class Slot extends VueProp
      * @var array
      */
     protected $views = [];
+
+    /**
+     * Action factory.
+     *
+     * @var string
+     */
+    protected $actionFactory;
+
+    /**
+     * Create new Slot instance.
+     *
+     * @param  ActionFactory $actionFactory
+     * @return void
+     */
+    public function __construct(ActionFactory $actionFactory)
+    {
+        $this->actionFactory = $actionFactory;
+    }
+
+    /**
+     * Add action.
+     *
+     * @param  string $title
+     * @param  string $action
+     * @return void
+     */
+    public function action($title, $action)
+    {
+        return $this->component(
+            $this->actionFactory->make($title, $action)
+        );
+    }
 
     /**
      * Add component to Slot.

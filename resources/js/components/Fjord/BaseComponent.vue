@@ -2,13 +2,18 @@
 export default {
     name: 'BaseComponent',
     render(createElement) {
-        return createElement(this.component.name, {
-            on: {
-                ...this.$listeners,
-                ...this.events
+        return createElement(
+            this.component.name,
+            {
+                on: {
+                    ...this.$listeners,
+                    ...this.events
+                },
+                attrs: this.props,
+                slot: this.slot
             },
-            attrs: this.props
-        });
+            [this.createChildren(createElement)]
+        );
     },
     props: {
         component: {
@@ -27,12 +32,37 @@ export default {
                 ...this.$attrs,
                 ...this.component.props
             };
+        },
+        slot() {
+            return this.component.slot;
+        },
+        children() {
+            return this.component.children;
         }
     },
     beforeMount() {
         this.setEvents();
     },
     methods: {
+        createChildren(createElement) {
+            let children = [];
+            for (let i in this.children) {
+                let child = this.children[i];
+                if (typeof child === 'object') {
+                    children.push(
+                        createElement('fj-base-component', {
+                            attrs: { ...this.props, ...child.props },
+                            props: {
+                                component: child
+                            }
+                        })
+                    );
+                } else {
+                    children.push(child);
+                }
+            }
+            return children;
+        },
         setEvents() {
             if (!this.component.events) {
                 return;
@@ -53,7 +83,12 @@ export default {
         },
         async sendHandleEvent(handler, data) {
             try {
-                return await axios.post(`handle-event`, { ...data, handler });
+                return await axios.post(`handle-event`, {
+                    ...this.props,
+                    ...this.$attrs,
+                    ...data,
+                    handler
+                });
             } catch (e) {
                 console.log(e);
             }

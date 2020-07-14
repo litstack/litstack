@@ -2,6 +2,7 @@
 
 namespace Fjord\Page;
 
+use Fjord\Page\Actions\ButtonSmAction;
 use Fjord\Support\VueProp;
 
 class Header extends VueProp
@@ -34,8 +35,8 @@ class Header extends VueProp
      */
     public function __construct()
     {
-        $this->left = new Slot;
-        $this->right = new Slot;
+        $this->left = new Slot(new ButtonSmAction);
+        $this->right = new Slot(new ButtonSmAction);
     }
 
     /**
