@@ -26,6 +26,13 @@ class Component extends VueProp implements AuthorizableContract
     protected $props = [];
 
     /**
+     * Component classes.
+     *
+     * @var array
+     */
+    protected $classes = [];
+
+    /**
      * Event handlers.
      *
      * @var array
@@ -165,13 +172,9 @@ class Component extends VueProp implements AuthorizableContract
      * @param  string $value
      * @return void
      */
-    public function class(string $value)
+    public function class(string $class)
     {
-        if (! $this->hasProp('class')) {
-            return $this->prop('class', $value);
-        }
-
-        $this->props['class'] .= " {$value}";
+        $this->classes[] = $class;
 
         return $this;
     }
@@ -278,6 +281,7 @@ class Component extends VueProp implements AuthorizableContract
             'events'   => $this->events,
             'slot'     => $this->slot,
             'children' => $this->children,
+            'classes'  => $this->classes,
         ];
     }
 }

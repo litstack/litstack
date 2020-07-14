@@ -1,7 +1,7 @@
 <template>
-    <div class="fj-near-items">
+    <div class="fj-near-items d-inline-block">
         <b-button
-            :href="`${Fjord.baseURL}${routePrefix}/${previous}/edit`"
+            :href="`${Fjord.baseURL}${routePrefix}/${previous}`"
             :disabled="!previous"
             variant="outline-secondary"
             size="sm"
@@ -10,7 +10,7 @@
             <fa-icon icon="chevron-left" class="fj-near-items__prev" />
         </b-button>
         <b-button
-            :href="`${Fjord.baseURL}${routePrefix}/${next}/edit`"
+            :href="`${Fjord.baseURL}${routePrefix}/${next}`"
             :disabled="!next"
             variant="outline-secondary"
             size="sm"

@@ -8,7 +8,7 @@
                 <fj-base-component
                     v-for="(component, key) in part.components"
                     :component="component"
-                    :key="key"
+                    :key="`${slot}-${key}`"
                     v-bind="{ ...page.props, ...$attrs }"
                 />
             </template>
@@ -23,7 +23,7 @@
                     v-for="(component, key) in page.header.left.components"
                     v-bind="{ ...page.props, ...$attrs }"
                     :component="component"
-                    :key="key"
+                    :key="`header-left-${key}`"
                 />
             </template>
             <template slot="actions-right">
@@ -31,7 +31,7 @@
                     v-for="(component, key) in page.header.right.components"
                     v-bind="{ ...page.props, ...$attrs }"
                     :component="component"
-                    :key="key"
+                    :key="`header-right-${key}`"
                 />
             </template>
         </fj-header>

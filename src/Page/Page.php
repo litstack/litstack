@@ -71,7 +71,7 @@ class Page extends BasePage implements Expandable
     {
         $this->back = [
             'text'  => $text,
-            'route' => $text,
+            'route' => $route,
         ];
 
         return $this;

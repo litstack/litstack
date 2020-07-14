@@ -15,7 +15,7 @@ class ButtonAction extends BaseAction
     public function make($title, $action)
     {
         return $this->prepared($title, $action)
-            ->variant('outline-primary');
+            ->variant('primary');
     }
 
     /**

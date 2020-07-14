@@ -5,6 +5,7 @@ export default {
         return createElement(
             this.component.name,
             {
+                class: this.component.classes,
                 on: {
                     ...this.$listeners,
                     ...this.events

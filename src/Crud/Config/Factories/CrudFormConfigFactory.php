@@ -33,6 +33,8 @@ class CrudFormConfigFactory extends ConfigFactory
 
         $page->navigationRight()->component('fj-crud-language');
 
+        $page->goBack($config->names['plural'], $config->route_prefix);
+
         $method($page);
 
         return $page;
