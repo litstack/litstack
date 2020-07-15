@@ -6,7 +6,7 @@ For the relation field only the name of the relation must be specified. The type
 
 The relations Field can only be used for **Crud Models** and not in **Forms** or **Blocks**. For Forms or Blocks the [oneRelation](/docs/fields/one_relation.html) or [manyRelation](/docs/fields/many_relation.html) field can be used.
 
-![relation picker](./screens/relation/picker.png 'relation picker')
+![relation picker](./screens/relation/picker.jpg 'relation picker')
 
 ```php
 $form->relation('articles')

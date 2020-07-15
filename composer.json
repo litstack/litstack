@@ -1,6 +1,6 @@
 {
     "name": "aw-studio/fjord",
-    "description": "Fjord: A Laravel CMS/Admin-Panel",
+    "description": "Laravel Content-Administration",
     "type": "project",
     "license": "MIT",
     "scripts": {

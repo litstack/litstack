@@ -2,23 +2,20 @@
 
 [[toc]]
 
-## Setup
-
-An existing Laravel project is required to install Fjord as well as a database connection.
-
 ## Requirements
 
-Fjord requires **PHP 7.4+** and **Laravel 7+**. As well as all [requirements](https://docs.spatie.be/laravel-medialibrary/v8/requirements) of **spatie/laravel-medialibrary 8.2+**.
+An existing Laravel project is required to install the package as well as a database connection.
+The package requires **PHP 7.4+** and **Laravel 7+**. As well as all [requirements](https://docs.spatie.be/laravel-medialibrary/v8/requirements) of **spatie/laravel-medialibrary 8.2+**.
 
-## Installing Fjord
+## Setup
 
-Installing Fjord into an existing Laravel application via Composer:
+Installing the package into an existing Laravel application via Composer:
 
 ```shell
 composer require aw-studio/fjord
 ```
 
-Fjord will automatically register the needed service providers. The next step is to process all publishes and migrations by typing the following artisan command:
+The application will automatically register the needed service providers. The next step is to process all publishes and migrations by typing the following artisan command:
 
 ```shell
 php artisan fjord:install

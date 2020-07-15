@@ -1,10 +1,10 @@
-# Fjord Page
+# Page
 
 [[toc]]
 
-Fjord Pages are the fundamental part of fjord. They provide a convenient and yet powerfull way to configure pages for the Vue application in PHP. They can be used to integrate **Blade Views**, **Vue components** or ready-made components such as **charts** or form fields for models.
+Pages are the fundamental part of package. They provide a convenient and yet powerfull way to configure pages for the Vue application in PHP. They can be used to integrate **Blade Views**, **Vue components** or ready-made components such as **charts** or form fields for models.
 
-Fjord pages are used to configure forms with fields, index pages, dashboards with charts or basicly any kind of page for the Fjord backend.
+Pages are used to configure forms with fields, index pages, dashboards with charts or basicly any kind of page for the admin backend.
 
 ## Create a Page
 
@@ -28,7 +28,7 @@ class MyPageController
 
 This will show an empty page with the title `My Page`:
 
-![Page with Title](./screens/page_title.png 'Page with Title')
+![Page with Title](./screens/page_title.jpg 'Page with Title')
 
 ## View
 
@@ -54,7 +54,7 @@ return $page->title('My Page');
 
 And voila we have our first Page with content saying `Hello World!` using pure Blade.
 
-![Page with View](./screens/page_view.png 'Page with View')
+![Page with View](./screens/page_view.jpg 'Page with View')
 
 ## Component
 

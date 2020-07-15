@@ -1,17 +1,15 @@
-<p align="center" style="margin: 50px 0 !important;"><a href="https://www.fjord-admin.com" target="_blank" rel="noopener"><img src="./docs/fjord-logo-padding.svg" width="420"></p>
+# Laravel Content-Administration
 
-<p align="center">
+<p>
     <a href="https://github.com/aw-studio/fjord/actions"><img src="https://github.com/aw-studio/fjord/workflows/tests/badge.svg" alt="Build Status"></a>
     <a href="https://packagist.org/packages/aw-studio/fjord"><img src="https://img.shields.io/packagist/dt/aw-studio/fjord?color=%234951f2" alt="Total Downloads"></a>
     <a href="https://packagist.org/packages/aw-studio/fjord"><img src="https://img.shields.io/github/v/release/aw-studio/fjord?color=%2383c2ff&label=stable" alt="Latest Stable Version"></a>
     <a href="https://packagist.org/packages/aw-studio/fjord"><img src="https://img.shields.io/github/license/aw-studio/fjord?color=%2331c653" alt="License"></a>
 </p>
 
-# Fjord: Laravel Content-Administration
+This is a package for building Admin-Interfaces that help maintaining the data of your applications. It provides an intuitive interface and the tools needed to manage your project's Users, Models and free Forms for Pages, Settings etc.
 
-Fjord is a Laravel package for building Admin-Interfaces that help maintaining the data of your applications. It provides an intuitive interface and the tools needed to manage your project's Users, Models and free Forms for Pages, Settings etc.
-
-![Fjord Interface](./docs/fjord_preview.png 'Fjord Interface')
+![Interface](./docs/preview.png 'Interface')
 
 ## Features
 
@@ -25,9 +23,9 @@ Fjord is a Laravel package for building Admin-Interfaces that help maintaining t
 -   Translatable
 -   Headless
 
-## Learning Fjord
+## Documentation
 
-Read the [Docs](https://www.fjord-admin.com) and learn how to build your custom Admin panel. Use your knowledge about Laravel standards and do much work in little time.
+Read the [Docs](https://relaxed-lovelace-429a31.netlify.app/) and learn how to build your custom Admin panel. Use your knowledge about Laravel standards and do much work in little time.
 
 Feel free to ask us anything on our [discord chanel](https://discord.gg/u4qpb5P).
 
@@ -47,10 +45,6 @@ php artisan fjord:admin
 ```
 
 It's all setup now, visit http://yourapp.tld/admin
-
-## Demo
-
-Try the [Demo](https://demo.fjord-admin.com)
 
 ## Testing
 
@@ -86,4 +80,4 @@ npm test:js
 
 ## License
 
-Fjord is an open-sourced software licensed under the [MIT license](LICENSE.md).
+The package is an open-sourced software licensed under the [MIT license](LICENSE.md).

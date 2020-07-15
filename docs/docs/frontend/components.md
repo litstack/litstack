@@ -2,13 +2,13 @@
 
 [[toc]]
 
-Fjord comes along with **bootstrap-vue** and a few components that can be used to build pages that fit the Fjord style. To ensure that users of the Fjord interface can find their way around quickly and easily on all sites, it is recommended to follow the following guidelines.
+The package comes along with **bootstrap-vue** and a few components that can be used to build pages that fit the package's style. To ensure that users of the admin interface can find their way around quickly and easily on all sites, it is recommended to follow the following guidelines.
 
-Fjord components have the prefix `fj-`.
+The package's components have the prefix `fj-`.
 
 ## Custom Pages
 
-Custom pages for the Fjord admin panel consist of a `container`, the topbar `navigation` and a `header`. The following content can be created as you like.
+Custom pages for the admin panel consist of a `container`, the topbar `navigation` and a `header`. The following content can be created as you like.
 
 The following example shows how the root template of a page looks like.
 
@@ -53,7 +53,7 @@ The topbar navigation is designed to make it easier for the user to navigate thr
 
 ### Go Back
 
-In the topbar navigation a **back** button can be displayed. All pages in Fjord should be reached via at most one more link from the main navigation, i.e. an **overview** page and the **detail** page.
+In the topbar navigation a **back** button can be displayed. All pages in admin application should be reached via at most one more link from the main navigation, i.e. an **overview** page and the **detail** page.
 
 To display the back link a text for the button and a link must be passed as prop to the navigation.
 
@@ -122,7 +122,7 @@ As well the header can contain controls that should be displayed under the heade
 
 ## Spinner
 
-The Fjord spinner can be displayed with the component `fj-spinner`.
+The spinner can be displayed with the component `fj-spinner`.
 
 ```javascript
 <template v-if="busy">

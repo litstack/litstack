@@ -2,7 +2,7 @@
 
 ## From v2.2 to v2.3
 
-Updating Fjord v2.2 to v2.3 is not that easy. Fjord 2.3 has some structural changes in the config files. These changes make cool features like charts and more possible in the future. The following steps explain what has to be done to upgrade Fjord.
+Updating v2.2 to v2.3 is not that easy. Version 2.3 has some structural changes in the config files. These changes make cool features like charts and more possible in the future. The following steps explain what has to be done to upgrade the app.
 
 ### 1. Update Dependencies
 
@@ -16,7 +16,7 @@ composer update aw-studio/fjord-permissions
 
 The trait `HasCrudForm` is deprecated. However it is only used in form configs that are located in `./fjord/app/Config/Form`. Just search for `HasCrudForm` and remove the trait from all config files.
 
-### 3. Update Fjord
+### 3. Update
 
 Update `aw-studio/fjord`:
 

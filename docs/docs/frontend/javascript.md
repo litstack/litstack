@@ -25,7 +25,7 @@ async func() {
 For requests that shouldn't use the fjord `route_prefix` the global `_axios` can be used.
 :::
 
-## Fjord
+## Helpers
 
 In javascript and all Vue components the global variable `Fjord` is available. This includes the following helpers:
 
