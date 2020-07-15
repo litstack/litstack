@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <title>Fjord - @yield('title')</title>
+    <title>@yield('title')</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,11 +28,11 @@
             <div class="fj-content">
                 <div class="fj-container fj-landing-page container sm">
 
-                    <div class="text-center">
+                    {{-- <div class="text-center">
                         <div class="fj-brand">
                             @include('fjord::partials.logo')
                         </div>
-                    </div>
+                    </div> --}}
                     
                     @yield('content')
             

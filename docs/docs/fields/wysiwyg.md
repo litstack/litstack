@@ -2,8 +2,6 @@
 
 A **W**hat-**Y**ou-**S**ee-**I**s-**W**hat-You-**G**et editor using [tiptap](https://github.com/scrumpy/tiptap).
 
-![Image expand](./screens/wysiwyg/example.png 'Image expand')
-
 ```php
 $form->wysiwyg('text')
     ->translatable()

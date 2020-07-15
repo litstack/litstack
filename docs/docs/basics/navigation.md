@@ -2,7 +2,7 @@
 
 [[toc]]
 
-Your Fjord app by default contains two navigation instances: the top bar and your main navigation. The top navigation is for managing the admin interface, such as language, users and permissions. The main navigation is intended for the administration of data in your application.
+Your admin app by default contains two navigation instances: the top bar and your main navigation. The top navigation is for managing the admin interface, such as language, users and permissions. The main navigation is intended for the administration of data in your application.
 
 Both navigation instances are configured in `fjord/app/Config/NavigationConfig.php` which looks as follows:
 
@@ -66,7 +66,7 @@ $nav->group([
 
 ## Authorization
 
-To hide navigation entries from users without the necessary permission, an `authorize` closure can be specified in which permissions for the logged in Fjord user can be queried.
+To hide navigation entries from users without the necessary permission, an `authorize` closure can be specified in which permissions for the logged in admin user can be queried.
 
 ```php
 use Fjord\User\Models\FjordUser;

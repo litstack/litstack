@@ -1,7 +1,7 @@
 const meta = {
-    title: 'Fjord | Laravel Content-Administration',
+    title: 'Laravel Content-Administration',
     description:
-        'Fjord is a multilanguage admin-panel scaffolding package that helps you creating CRUD in seconds via Artisan-commands. It also lets you manage the "static" content of each of your websites pages (Headlines, Text, Images), as well repetitive mixed contents you define. Generating content as well as passing it to your views and retrieving it is super simple.',
+        'A multilanguage admin-panel scaffolding package that helps you creating CRUD in seconds via Artisan-commands. It also lets you manage the "static" content of each of your websites pages (Headlines, Text, Images), as well repetitive mixed contents you define. Generating content as well as passing it to your views and retrieving it is super simple.',
     url: 'https://www.fjord-admin.com'
 };
 
@@ -40,7 +40,7 @@ let head = [
 
 module.exports = {
     base: '/',
-    title: 'Fjord',
+    title: 'Laravel Content-Administration',
     description: 'description',
     head,
     plugins: [
@@ -60,7 +60,7 @@ module.exports = {
         ]
     ],
     themeConfig: {
-        logo: '/logo.svg',
+        //logo: '/logo.svg',
         repo: 'aw-studio/fjord',
         editLinks: true,
         docsDir: 'docs',
@@ -69,7 +69,7 @@ module.exports = {
                 text: 'Documentation',
                 link: '/docs/getting-started/installation'
             },
-            { text: '🕹 Demo', link: 'https://demo.fjord-admin.com/admin' },
+            //{ text: '🕹 Demo', link: 'https://demo.fjord-admin.com/admin' },
             { text: 'Discord', link: 'https://discord.gg/u4qpb5P' }
         ],
         sidebar: {
@@ -88,7 +88,7 @@ module.exports = {
                     collapsable: false,
                     children: [
                         ['docs/basics/navigation', 'Navigation'],
-                        ['docs/basics/page', 'Fjord Page'],
+                        ['docs/basics/page', 'Page'],
                         ['docs/basics/localization', 'Localization'],
                         ['docs/basics/helpers', 'Helpers']
                     ]
@@ -159,8 +159,8 @@ module.exports = {
                     title: 'Official Packages',
                     collapsable: false,
                     children: [
-                        ['docs/packages/fjord-ui-kit', 'Fjord UI Kit'],
-                        ['docs/packages/fjord-pages', 'Fjord Pages']
+                        ['docs/packages/fjord-ui-kit', 'UI Kit'],
+                        ['docs/packages/fjord-pages', 'Pages']
                     ]
                 }
                 // {

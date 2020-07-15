@@ -2,10 +2,10 @@
 
 [[toc]]
 
-Fjord includes a variety of global helper **PHP** `functions`.
+The package includes a variety of global helper **PHP** `functions`.
 
 ::: tip
-Fjord includes useful **Vue** `mixins` as well. Read the [Vue mixins](/docs/frontend/vue#mixins) section to learn more about the existing `mixins`.
+The package includes useful **Vue** `mixins` as well. Read the [Vue mixins](/docs/frontend/vue#mixins) section to learn more about the existing `mixins`.
 :::
 
 ### Fjord Facade
@@ -23,13 +23,13 @@ Fjord includes useful **Vue** `mixins` as well. Read the [Vue mixins](/docs/fron
 
 ## Fjord Facade
 
-The `Fjord` singleton contains some helpers which are related to the Fjord application.
+The `Fjord` singleton contains some helpers which are related to the application.
 
 <a name="method-php-fjord-installed"></a>
 
 ### `installed()`
 
-The `installed` method checks if Fjord has been installed. This can be useful in service providers.
+The `installed` method checks if the package has been installed. This can be useful in service providers.
 
 ```php
 use Fjord\Support\Facades\Fjord;
@@ -73,7 +73,7 @@ If you don't want to use the route name to call a route but directly specify the
 
 ### `__f($key, $replace)`
 
-The `__f` method returns the translation using the Fjord application locale for the authenticated Fjord user.
+The `__f` method returns the translation using the application locale for the authenticated user.
 
 ```php
 __f('messages.welcome', ['name' => 'Spatie'])
@@ -109,7 +109,7 @@ Fjord::installed();
 
 ### `fjord_user()`
 
-The `fjord_user` method returns the authenticated Fjord user model.
+The `fjord_user` method returns the authenticated user model.
 
 ```php
 <span>{{ fjord_user()->email }}</span>

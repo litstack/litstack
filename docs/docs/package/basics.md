@@ -1,12 +1,12 @@
 # Packages
 
-Fjord offers not only an interface to manage and administer data, users and permissions, but also the possibility to integrate packages into the system. When creating the packages, the developer is free to decide what the packages should be able to do.
+The package offers not only an interface to manage and administer data, users and permissions, but also the possibility to integrate packages into the system. When creating the packages, the developer is free to decide what the packages should be able to do.
 
 Packages can offer the possibility to be extended by other packages, or to intervene in existing packages.
 
 ## Setup
 
-For Fjord to be able to discover your package it must be specified in the composer.json as follows:
+For the package to be able to discover your package it must be specified in the composer.json as follows:
 
 ```json
 {

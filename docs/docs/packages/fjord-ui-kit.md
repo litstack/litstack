@@ -1,4 +1,4 @@
-# Fjord Ui Kit
+# Ui Kit
 
 A package with helper functions and Blade components for your
 [fjord](https://github.com/aw-studio/fjord) project.
