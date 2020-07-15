@@ -22,7 +22,7 @@
         >
             {{ message }}
         </b-form-invalid-feedback>
-        <b-modal :id="modalId" :size="field.size">
+        <b-modal :id="modalId" :size="field.size" centered>
             <span slot="modal-title" v-html="field.name" />
             <b-row>
                 <fj-field
@@ -36,7 +36,10 @@
                 />
             </b-row>
             <template slot="modal-footer">
-                <button @click.prevent="cancel()" class="btn btn-secondary">
+                <button
+                    @click.prevent="$bvModal.hide(modalId)"
+                    class="btn btn-secondary"
+                >
                     {{ __('base.close').capitalize() }}
                 </button>
                 <b-button
