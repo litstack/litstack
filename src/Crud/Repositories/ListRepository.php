@@ -129,8 +129,10 @@ class ListRepository extends BaseFieldRepository
         $listItem->form_type = $payload->form_type ?? 'show';
         $listItem->parent_id = $parent->id ?? 0;
         $listItem->order_column = $order_column;
-        $listItem->value = $payload;
+        //$listItem->value = $payload;
         $listItem->save();
+
+        $listItem->update($payload);
 
         return crud($listItem);
     }
