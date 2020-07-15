@@ -4,7 +4,7 @@ namespace Fjord\Page\Slots;
 
 use Fjord\Vue\Components\ButtonComponent;
 
-class ButtonSlot extends BaseSlot
+class ButtonSmSlot extends BaseSlot
 {
     /**
      * Set action.
@@ -24,7 +24,7 @@ class ButtonSlot extends BaseSlot
      */
     protected function getActionComponent()
     {
-        $component = (new ButtonComponent)->variant('outline-primary');
+        $component = (new ButtonComponent)->variant('outline-primary')->size('sm');
 
         return $this->component($component);
     }
