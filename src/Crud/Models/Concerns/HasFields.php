@@ -15,10 +15,10 @@ trait HasFields
     public function getFieldsAttribute()
     {
         if (! $form = $this->getForm()) {
-            return [];
+            return collect([]);
         }
 
-        return $form->getRegisteredFields() ?? [];
+        return $form->getRegisteredFields() ?? collect([]);
     }
 
     /**

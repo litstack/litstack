@@ -205,9 +205,11 @@ abstract class CrudController extends CrudBaseController
         $model->last_edit;
 
         // Append media.
-        foreach ($this->config->show->getRegisteredFields() as $field) {
-            if ($field instanceof MediaField) {
-                $model->append($field->id);
+        if (! $model instanceof FjordFormModel) {
+            foreach ($this->config->show->getRegisteredFields() as $field) {
+                if ($field instanceof MediaField) {
+                    $model->append($field->id);
+                }
             }
         }
 
