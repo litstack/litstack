@@ -125,11 +125,7 @@ class ListRepository extends BaseFieldRepository
         $listItem->form_type = $payload->form_type ?? 'show';
         $listItem->parent_id = $parent->id ?? 0;
         $listItem->order_column = $order_column;
-<<<<<<< HEAD
-        //$listItem->value = $payload;
-=======
         $listItem->value = (object) [];
->>>>>>> vue
         $listItem->save();
 
         $listItem->update((array) $payload);
