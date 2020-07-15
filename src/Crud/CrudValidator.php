@@ -22,7 +22,7 @@ class CrudValidator
         $rules = $form->getRules($type);
         $attributeNames = self::getValidationAttributeNames($form);
 
-        validator()->validate($attributes, $rules, __f('validation', $attributeNames));
+        validator()->validate($attributes, $rules, __f('validation'), $attributeNames);
     }
 
     /**
@@ -38,6 +38,8 @@ class CrudValidator
 
         foreach ($form->getRegisteredFields() as $field) {
             $title = $field->getTitle();
+
+            $localKey = str_replace('_', ' ', $field->local_key);
 
             if (! $field->translatable) {
                 $names[$field->local_key] = $title;
