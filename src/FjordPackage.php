@@ -49,6 +49,7 @@ class FjordPackage extends Package
         Commands\FjordCrud::class,
         Commands\FjordForm::class,
         Commands\FjordChart::class,
+        Commands\FjordAction::class,
         Commands\FjordExtend::class,
         Commands\FjordExtension::class,
         Commands\FjordController::class,
