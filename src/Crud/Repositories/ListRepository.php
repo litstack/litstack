@@ -132,7 +132,7 @@ class ListRepository extends BaseFieldRepository
         //$listItem->value = $payload;
         $listItem->save();
 
-        $listItem->update($payload);
+        $listItem->update((array) $payload);
 
         return crud($listItem);
     }
