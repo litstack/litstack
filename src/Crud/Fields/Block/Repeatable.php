@@ -5,8 +5,8 @@ namespace Fjord\Crud\Fields\Block;
 use Closure;
 use Fjord\Crud\BaseForm;
 use Fjord\Crud\Models\FormBlock;
+use Fjord\Page\Table\ColumnBuilder;
 use Fjord\Support\VueProp;
-use Fjord\Vue\Table;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 class Repeatable extends VueProp
@@ -66,7 +66,7 @@ class Repeatable extends VueProp
             ]);
         });
 
-        $this->preview = new Table();
+        $this->preview = new ColumnBuilder;
 
         $closure($form, $this->preview);
 

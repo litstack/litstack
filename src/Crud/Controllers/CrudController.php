@@ -8,9 +8,8 @@ use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudDeleteRequest;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
-use Fjord\User\Models\FjordUser;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 abstract class CrudController extends CrudBaseController
 {
@@ -87,23 +86,19 @@ abstract class CrudController extends CrudBaseController
     }
 
     /**
-     * Delete all.
+     * Delete action.
      *
-     * @param CrudDeleteRequest $request
-     *
-     * @return void
+     * @param  CrudDeleteRequest            $request
+     * @param  Collection                   $models
+     * @return Illuminate\Http\JsonResponse
      */
-    public function destroyAll(CrudDeleteRequest $request)
+    public function deleteAction(CrudDeleteRequest $request, Collection $models)
     {
-        if (! is_array($request->ids)) {
-            abort(405);
-        }
-
-        $this->delete($this->query()->whereIn('id', $request->ids));
+        $models->map(fn ($item) => $item->delete());
 
         return response()->json([
-            'message' => __f_choice('messages.deleted_items', count($request->ids)),
-        ], 200);
+            'message' => __f_choice('messages.deleted_items', count($models)),
+        ]);
     }
 
     /**
@@ -169,17 +164,6 @@ abstract class CrudController extends CrudBaseController
             ]);
 
         return $page;
-
-        // return view('fjord::app')
-        //     ->withComponent($this->config->formComponent)
-        //     ->withTitle(__f('base.item_create', [
-        //         'item' => $config['names']['singular'],
-        //     ]))
-        //     ->withProps([
-        //         'crud-model'       => crud(new $this->model()),
-        //         'config'           => $config,
-        //         'headerComponents' => [],
-        //     ]);
     }
 
     /**
@@ -262,8 +246,7 @@ abstract class CrudController extends CrudBaseController
     /**
      * Sort.
      *
-     * @param CrudUpdateRequest $request
-     *
+     * @param  CrudUpdateRequest $request
      * @return void
      */
     public function order(CrudUpdateRequest $request)

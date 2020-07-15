@@ -29,8 +29,8 @@
                     variant="outline-secondary"
                     size="md"
                     class="dropdown-md-square"
-                    :class="{ disabled: _.isEmpty(controls) }"
-                    v-bind:disabled="_.isEmpty(controls)"
+                    :class="{ disabled: _.isEmpty(this.$slots.controls) }"
+                    v-bind:disabled="_.isEmpty(this.$slots.controls)"
                     right
                     no-caret
                 >
@@ -38,11 +38,7 @@
                         <fa-icon icon="ellipsis-h" />
                     </template>
 
-                    <fj-slot
-                        v-for="(component, key) in controls"
-                        :key="key"
-                        v-bind="component"
-                    />
+                    <slot name="controls" />
                 </b-dropdown>
                 <slot name="right" />
                 <div

@@ -24,16 +24,17 @@
                     <b-dropdown
                         style="margin-left: 1px;"
                         size="sm"
-                        :text="trans_choice('base.action', controls.length)"
+                        :text="trans_choice('base.action', actions.length)"
                         class="btn-brl-none"
                         variant="outline-secondary"
                     >
-                            <fj-slot
-                                v-for="(component, key) in controls"
+                            <fj-base-component
+                                v-for="(component, key) in actions"
                                 :key="key"
-                                v-bind="component"
+                                :component="component"
                                 :selectedItems="selectedItems"
-                                @reload="reload"
+                                :event-data="{ids: _.map(selectedItems, 'id')}"
+                                @eventHandled="reload"
                             />
                             
                         </b-dropdown>
@@ -47,7 +48,7 @@
 <script>
 import { mapGetters } from 'vuex';
 export default {
-    name: 'BaseIndexTableSelectedItemsControls',
+    name: 'BaseIndexTableSelectedItemsActions',
     props: {
         items: {
             required: true,
@@ -57,7 +58,7 @@ export default {
             type: Array,
             required: true
         },
-        controls: {
+        actions: {
             required: true,
             type: Array
         }

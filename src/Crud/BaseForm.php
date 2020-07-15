@@ -105,6 +105,16 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     }
 
     /**
+     * Get model class.
+     *
+     * @return string
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
      * Add Vue component field.
      *
      * @param  string|Component     $component

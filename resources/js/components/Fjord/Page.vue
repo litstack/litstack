@@ -4,20 +4,12 @@
             :back="goBack.route || false"
             :back-text="goBack.text || ''"
         >
-            <template slot="left">
-                <components
-                    v-for="(component, key) in page.navigation.left.components"
-                    :key="key"
-                    :is="component.name"
-                    v-bind="{ ...component.props, ...page.props, ...$attrs }"
-                />
-            </template>
-            <template slot="right">
-                <components
-                    v-for="(component, key) in page.navigation.right.components"
-                    :key="key"
-                    :is="component.name"
-                    v-bind="{ ...component.props, ...page.props, ...$attrs }"
+            <template :slot="slot" v-for="(part, slot) in page.navigation">
+                <fj-base-component
+                    v-for="(component, key) in part.components"
+                    :component="component"
+                    :key="`${slot}-${key}`"
+                    v-bind="{ ...page.props, ...$attrs }"
                 />
             </template>
         </fj-navigation>
@@ -27,34 +19,30 @@
                 v-html="page.header.title"
             />
             <template slot="actions">
-                <components
+                <fj-base-component
                     v-for="(component, key) in page.header.left.components"
-                    :key="key"
-                    :is="component.name"
-                    v-bind="{ ...component.props, ...page.props, ...$attrs }"
+                    v-bind="{ ...page.props, ...$attrs }"
+                    :component="component"
+                    :key="`header-left-${key}`"
                 />
             </template>
             <template slot="actions-right">
-                <components
+                <fj-base-component
                     v-for="(component, key) in page.header.right.components"
-                    :key="key"
-                    :is="component.name"
-                    v-bind="{ ...component.props, ...page.props, ...$attrs }"
+                    v-bind="{ ...page.props, ...$attrs }"
+                    :component="component"
+                    :key="`header-right-${key}`"
                 />
             </template>
         </fj-header>
         <b-row>
             <fj-col :width="12">
                 <b-row>
-                    <components
+                    <fj-base-component
                         v-for="(component, key) in page.components"
+                        v-bind="{ ...page.props, ...$attrs }"
+                        :component="component"
                         :key="key"
-                        :is="component.name"
-                        v-bind="{
-                            ...component.props,
-                            ...page.props,
-                            ...$attrs
-                        }"
                     />
                 </b-row>
             </fj-col>

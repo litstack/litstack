@@ -1,0 +1,72 @@
+<?php
+
+namespace Fjord\Contracts\Page;
+
+interface Column
+{
+    /**
+     * Set column label.
+     *
+     * @param  string $label
+     * @return $this
+     */
+    public function label($label);
+
+    /**
+     * Set the column value.
+     *
+     * @param  string $value
+     * @return $this
+     */
+    public function value($value);
+
+    /**
+     * Reduce column to minimum width.
+     *
+     * @param  bool  $small
+     * @return $this
+     */
+    public function small(bool $small = true);
+
+    /**
+     * Set column link.
+     *
+     * @param  string|bool $link
+     * @return $this
+     */
+    public function link($link);
+
+    /**
+     * Set attribute by which the column should be sorted.
+     *
+     * @param  string $attribute
+     * @return $this
+     */
+    public function sortBy($attribute);
+
+    /**
+     * Set regular expression and replace for column value.
+     *
+     * @param  string $regex
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     */
+    public function regex($regex, $replace);
+
+    /**
+     * Strip html from column value.
+     *
+     * @param  bool  $strip
+     * @return $this
+     */
+    public function stripHtml(bool $strip = true);
+
+    /**
+     * Set a maxium of characters that should be displayed in the column.
+     *
+     * @param  int   $max
+     * @return $this
+     */
+    public function maxChars(int $max);
+}

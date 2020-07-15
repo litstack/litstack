@@ -3,6 +3,7 @@
 namespace FjordTest\Fields;
 
 use Fjord\Crud\Fields\Relations\LaravelRelationField;
+use Fjord\Page\Table\ColumnBuilder;
 use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithConfig;
 use FjordTest\Traits\InteractsWithFields;
@@ -147,7 +148,7 @@ class LaravelRelationFieldTest extends BackendTestCase
     public function test_preview_closure_receives_table_instance()
     {
         $this->field->preview(function ($table) {
-            $this->assertInstanceOf(\Fjord\Vue\Table::class, $table);
+            $this->assertInstanceOf(ColumnBuilder::class, $table);
         });
     }
 
@@ -157,7 +158,7 @@ class LaravelRelationFieldTest extends BackendTestCase
         $this->field->preview(function ($table) {
         });
 
-        $this->assertInstanceOf(\Fjord\Vue\Table::class, $this->field->getAttribute('preview'));
+        $this->assertInstanceOf(ColumnBuilder::class, $this->field->getAttribute('preview'));
     }
 }
 

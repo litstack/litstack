@@ -58,6 +58,32 @@ abstract class CrudBaseController
     }
 
     /**
+     * Run action.
+     *
+     * @param  Request $request
+     * @param  string  $key
+     * @return void
+     */
+    public function runAction(Request $request, $key)
+    {
+        if (! $index = $this->config->index) {
+            abort(404, debug('Missing [index] configuration on '.get_class($this->config->getConfig())));
+        }
+
+        if (! $table = $index->getTable()) {
+            abort(404, debug('Missing index table configuration in '.get_class($this->config->getConfig())));
+        }
+
+        if (! $action = $table->getAction($key)) {
+            abort(404, debug("Missing table action [{$key}] in ".get_class($this->config->getConfig())));
+        }
+
+        $models = $this->query()->whereIn('id', $request->ids ?? [])->get();
+
+        return $action->resolve($models);
+    }
+
+    /**
      * Find or faild model by identifier.
      *
      * @param string|int $id

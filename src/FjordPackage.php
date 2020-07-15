@@ -12,13 +12,13 @@ use Fjord\Crud\Config\Factories\CrudFormConfigFactory;
 use Fjord\Crud\Config\Factories\CrudIndexConfigFactory;
 use Fjord\Crud\Config\Traits\HasCrudIndex;
 use Fjord\Crud\Config\Traits\HasCrudShow;
+use Fjord\Page\Table\Components\ImageComponent;
+use Fjord\Page\Table\Components\RelationComponent;
+use Fjord\Page\Table\Components\ToggleComponent;
 use Fjord\Vue\Components\BladeComponent;
 use Fjord\Vue\Components\FieldWrapperCardComponent;
 use Fjord\Vue\Components\FieldWrapperComponent;
 use Fjord\Vue\Components\FieldWrapperGroupComponent;
-use Fjord\Vue\Components\Index\ColCrudRelationComponent;
-use Fjord\Vue\Components\Index\ColImageComponent;
-use Fjord\Vue\Components\Index\ColToggleComponent;
 use Fjord\Vue\Components\InfoComponent;
 
 class FjordPackage extends Package
@@ -31,6 +31,7 @@ class FjordPackage extends Package
     protected $providers = [
         \Fjord\Translation\TranslationServiceProvider::class,
         \Fjord\Application\ApplicationRouteServiceProvider::class,
+        \Fjord\Vue\VueRouteServiceProvider::class,
         \Fjord\Chart\ServiceProvider::class,
         \Fjord\Crud\ServiceProvider::class,
         \Fjord\User\ServiceProvider::class,
@@ -71,9 +72,9 @@ class FjordPackage extends Package
         'fj-field-wrapper'       => FieldWrapperComponent::class,
         'fj-field-wrapper-card'  => FieldWrapperCardComponent::class,
         'fj-field-wrapper-group' => FieldWrapperGroupComponent::class,
-        'fj-col-image'           => ColImageComponent::class,
-        'fj-col-toggle'          => ColToggleComponent::class,
-        'fj-col-crud-relation'   => ColCrudRelationComponent::class,
+        'fj-col-image'           => ImageComponent::class,
+        'fj-col-toggle'          => ToggleComponent::class,
+        'fj-col-crud-relation'   => RelationComponent::class,
     ];
 
     /**

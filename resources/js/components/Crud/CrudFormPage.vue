@@ -1,5 +1,5 @@
 <template>
-    <fj-page :page="page" :model="model" />
+    <fj-page :page="page" :model="model" :event-data="{ ids: [model.id] }" />
 </template>
 
 <script>

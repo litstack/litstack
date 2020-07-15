@@ -49,12 +49,12 @@
                     />
                 </fj-base-index-table-form>
 
-                <fj-base-index-table-selected-items-controls
-                    :controls="controls"
+                <fj-base-index-table-selected-items-actions
+                    :actions="actions"
                     :items="items"
                     :selectedItems="selectedItems"
-                    @reload="executedControls"
-                    v-if="!!controls.length"
+                    @reload="executedActions"
+                    v-if="!!actions.length"
                 />
 
                 <fj-base-index-table
@@ -166,7 +166,7 @@ export default {
                 return [];
             }
         },
-        controls: {
+        actions: {
             type: Array,
             default: () => {
                 return [];
@@ -339,7 +339,7 @@ export default {
                 ? true
                 : false;
         },
-        executedControls() {
+        executedActions() {
             this.selectedItems = [];
             this._loadItems();
         },
