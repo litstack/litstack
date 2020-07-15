@@ -14,7 +14,11 @@ trait HasFields
      */
     public function getFieldsAttribute()
     {
-        return $this->getForm()->getRegisteredFields() ?? [];
+        if (! $form = $this->getForm()) {
+            return [];
+        }
+
+        return $form->getRegisteredFields() ?? [];
     }
 
     /**
@@ -24,7 +28,11 @@ trait HasFields
      */
     public function getForm()
     {
-        return $this->config->{$this->getFormType()};
+        if (! $config = $this->config) {
+            return;
+        }
+
+        return $config->{$this->getFormType()};
     }
 
     /**
