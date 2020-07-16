@@ -93,7 +93,11 @@ class FormBlock extends FjordFormModel
      */
     public function getFieldsAttribute()
     {
-        return $this->getRepeatable()->getRegisteredFields();
+        if (! $repeatable = $this->getRepeatable()) {
+            return collect([]);
+        }
+
+        return $repeatable->getRegisteredFields();
     }
 
     /**

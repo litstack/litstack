@@ -112,16 +112,7 @@ abstract class CrudController extends CrudBaseController
     public function index(CrudReadRequest $request)
     {
         $config = $this->config->get(
-            'route_prefix',
-            'names',
-            'sortBy',
-            'sortByDefault',
-            'perPage',
-            'filter',
-            'expandIndexContainer',
-            'sortable',
-            'orderColumn',
-            'permissions'
+            'route_prefix', 'names', 'permissions'
         );
 
         $page = $this->config->index
