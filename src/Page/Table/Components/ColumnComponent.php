@@ -112,4 +112,17 @@ class ColumnComponent extends Component implements Column
     {
         return $this->prop('max_chars', $max);
     }
+
+    /**
+     * Render ColumnComponent.
+     *
+     * @return array
+     */
+    public function render(): array
+    {
+        return array_merge(
+            $this->props,
+            parent::render(),
+        );
+    }
 }
