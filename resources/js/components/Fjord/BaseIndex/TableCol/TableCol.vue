@@ -9,8 +9,8 @@
         @click="openItem"
     >
         <component
-            v-if="col.component !== undefined"
-            :is="col.component"
+            v-if="col.name !== undefined"
+            :is="col.name"
             :item="item"
             :col="col"
             :format="getColValue"
@@ -143,7 +143,7 @@ export default {
             return value;
         },
         getColComponentProps() {
-            if (!this.col.component) {
+            if (!this.col.name) {
                 return {};
             }
 
