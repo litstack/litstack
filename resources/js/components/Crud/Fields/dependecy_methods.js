@@ -14,6 +14,14 @@ export default {
         for (let i in dependencies) {
             let dependency = dependencies[i];
 
+            if (typeof dependency != 'object') {
+                continue;
+            }
+
+            if (!('condition' in dependency)) {
+                continue;
+            }
+
             let conditionMethod = this.getDependencyConditionMethod(dependency);
 
             if (!conditionMethod) {

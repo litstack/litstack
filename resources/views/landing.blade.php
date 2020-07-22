@@ -26,7 +26,7 @@
 
         <main>
             <div class="fj-content">
-                <div class="fj-container fj-landing-page container sm">
+                <div class="fj-container fj-landing-page container sm pt-5">
 
                     {{-- <div class="text-center">
                         <div class="fj-brand">

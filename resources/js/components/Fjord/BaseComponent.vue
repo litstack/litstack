@@ -13,7 +13,7 @@ export default {
                 attrs: this.props,
                 slot: this.slot
             },
-            [this.createChildren(createElement)]
+            [this.createChildren(createElement), this.$slots.default]
         );
     },
     props: {
