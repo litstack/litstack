@@ -29,7 +29,7 @@ export default {
     methods: {
         translateRole(role) {
             return this.$te(`roles.${role.name}`)
-                ? this.$t(`roles.${role.name}`).toString()
+                ? this.__(`roles.${role.name}`).toString()
                 : role.name.capitalize();
         },
         async removeRole(role) {
@@ -43,7 +43,7 @@ export default {
             }
 
             this.$bvToast.toast(
-                this.$t('fj.role_removed', {
+                this.$t('fjpermissions.role_removed', {
                     username: this.item.name,
                     role: this.translateRole(role)
                 }),

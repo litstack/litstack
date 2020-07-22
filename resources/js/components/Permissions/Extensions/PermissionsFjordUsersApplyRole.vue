@@ -3,7 +3,13 @@
         <template v-slot:button-content>
             <fa-icon icon="cogs" />
         </template>
-        <b-dropdown-group :header="$t('fj.assign_role')">
+        <b-dropdown-group
+            :header="
+                __('base.item_assign', {
+                    item: __('base.role')
+                }).capitalizeAll()
+            "
+        >
             <b-dropdown-item
                 href="#"
                 v-for="(role, key) in roles"
@@ -11,7 +17,9 @@
                 @click="assignRole(role)"
                 >{{
                     $te(`roles.${role.name}`)
-                        ? $t(`roles.${role.name}`).toString()
+                        ? __(`roles.${role.name}`)
+                              .toString()
+                              .capitalize()
                         : role.name.capitalize()
                 }}</b-dropdown-item
             >
@@ -45,9 +53,9 @@ export default {
             );
 
             this.$bvToast.toast(
-                this.$t('fj.role_assigned', {
+                this.__('fjpermissions.role_assigned', {
                     username: this.item.name,
-                    role: this.$t(`roles.${role.name}`)
+                    role: this.__(`roles.${role.name}`)
                 }),
                 {
                     variant: 'success'

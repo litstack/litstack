@@ -271,12 +271,13 @@ class VueApplication
      *
      * @param string $name
      * @param $value
-     *
-     * @return void
+     * @return $this
      */
     public function setProp(string $name, $value)
     {
         $this->props[$name] = $value;
+
+        return $this;
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Fjord\Permissions\Composer;
 
 use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
 
 class PermissionsComposer
 {
@@ -17,7 +18,8 @@ class PermissionsComposer
         fjord()
             ->app()
             ->get('vue')
-            ->setProp('permissions', $this->getPermissions());
+            ->setProp('permissions', $this->getPermissions())
+            ->setProp('roles', Role::all());
     }
 
     /**
