@@ -36,6 +36,10 @@ export default {
             type: Object,
             required: true
         },
+        permissions: {
+            type: Array,
+            required: true
+        },
         appLocale: {
             type: String,
             required: true
@@ -58,6 +62,7 @@ export default {
             this.axiosResponseError
         );
 
+        this.$store.commit('SET_PERMISSIONS', this.permissions);
         this.$store.commit('SET_LANGUAGES', this.translatable.languages);
         this.$store.commit('SET_LANGUAGE', this.translatable.language);
         this.$store.commit(

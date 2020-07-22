@@ -31,6 +31,7 @@ class FjordPackage extends Package
     protected $providers = [
         \Fjord\Translation\TranslationServiceProvider::class,
         \Fjord\Application\ApplicationRouteServiceProvider::class,
+        \Fjord\Permissions\PermissionsServiceProvider::class,
         \Fjord\Vue\VueRouteServiceProvider::class,
         \Fjord\Chart\ServiceProvider::class,
         \Fjord\Crud\ServiceProvider::class,

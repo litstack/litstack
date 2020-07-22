@@ -28,7 +28,6 @@ class Packages
      */
     protected $rootAccess = [
         'aw-studio/fjord',
-        'aw-studio/fjord-permissions',
     ];
 
     /**
