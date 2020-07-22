@@ -8,16 +8,16 @@ class Package extends FjordPackage
 {
     /**
      * List of service providers to be registered for this package.
-     * 
+     *
      * @var array
      */
     protected $providers = [
-        \FjordPermissions\ServiceProvider::class
+        \FjordPermissions\ServiceProvider::class,
     ];
 
     /**
      * List of components this package contains.
-     * 
+     *
      * @var array
      */
     protected $components = [
@@ -26,7 +26,7 @@ class Package extends FjordPackage
 
     /**
      * List of handlers for config files.
-     * 
+     *
      * @var array
      */
     protected $configHandler = [];
@@ -37,6 +37,6 @@ class Package extends FjordPackage
      * @var array
      */
     protected $extensions = [
-        'fj-crud-index' => \FjordPermissions\Extensions\UsersExtension::class
+        'fj-crud-index' => \FjordPermissions\Extensions\UsersExtension::class,
     ];
 }

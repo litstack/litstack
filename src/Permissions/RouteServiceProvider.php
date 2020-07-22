@@ -54,7 +54,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     {
         $this->package->addNavPreset('permissions', [
             'link'      => route('fjord.aw-studio.fjord.permissions'),
-            'title'     => fn ()     => __f('fj.permissions'),
+            'title'     => fn () => __f('fj.permissions'),
             'icon'      => fa('unlock-alt'),
             'authorize' => function ($user) {
                 return $user->can('read fjord-role-permissions');
