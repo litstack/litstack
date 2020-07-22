@@ -96,7 +96,7 @@ export default {
             let job = {
                 route: this.field.route_prefix,
                 method: this.field._method,
-                params: { [this.field.local_key]: newPassword },
+                params: { payload: { [this.field.local_key]: newPassword } },
                 key: this.field.local_key
             };
 
