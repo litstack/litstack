@@ -60,6 +60,10 @@ class DiscoverPackages
                 continue;
             }
 
+            if (! class_exists($config['package'])) {
+                continue;
+            }
+
             $packages[$name] = new $config['package']($name, $config);
         }
 
