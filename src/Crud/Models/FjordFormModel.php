@@ -79,10 +79,15 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
 
         foreach (config('translatable.locales') as $locale) {
             $translation = $this->translations->where('locale', $locale)->first();
+
             if (! $translation) {
                 continue;
             }
-            $value = $translation->value ?? [];
+
+            $value = array_merge(
+                $this->getTranslatedAttributesFromTranslation($translation),
+                $translation->value ?? []
+            );
 
             foreach ($this->fields as $field) {
                 if (! $field->translatable) {
@@ -101,6 +106,26 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     }
 
     /**
+     * Get translated attribute and the corresponding values from translation model.
+     *
+     * @param  Model $translation
+     * @return array
+     */
+    public function getTranslatedAttributesFromTranslation(Model $translation)
+    {
+        $attributes = [];
+        foreach ($translation->toArray() as $name => $value) {
+            if (! in_array($name, $this->translatedAttributes)) {
+                continue;
+            }
+
+            $attributes[$name] = $value;
+        }
+
+        return $attributes;
+    }
+
+    /**
      * Prepare attributes for save.
      *
      * @param  array $attributes
@@ -113,9 +138,20 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
             if (! array_key_exists($locale, $attributes)) {
                 continue;
             }
+
             $translation = array_merge($translations[$locale] ?? [], $attributes[$locale]);
 
-            $attributes[$locale] = ['value' => $translation];
+            $translatedAttributes = ['value' => []];
+
+            foreach ($translation as $name => $value) {
+                if (! in_array($name, $this->translatedAttributes)) {
+                    $translatedAttributes['value'][$name] = $value;
+                } else {
+                    $translatedAttributes[$name] = $value;
+                }
+            }
+
+            $attributes[$locale] = $translatedAttributes;
         }
 
         $attributes['value'] = $this->value ?? [];
