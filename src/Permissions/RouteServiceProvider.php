@@ -10,8 +10,18 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRoute
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
+    /**
+     * Package instance.
+     *
+     * @var mixed
+     */
     protected $package;
 
+    /**
+     * Boot application services.
+     *
+     * @return void
+     */
     public function boot()
     {
         $this->package = Package::get('aw-studio/fjord');
@@ -25,12 +35,22 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         });
     }
 
+    /**
+     * Map routes.
+     *
+     * @return void
+     */
     public function map()
     {
         $this->mapRolePermissionRoutes();
     }
 
-    public function addNavPresets()
+    /**
+     * Add [permissions] nav preset.
+     *
+     * @return void
+     */
+    protected function addNavPresets()
     {
         $this->package->addNavPreset('permissions', [
             'link'      => route('fjord.aw-studio.fjord.permissions'),
@@ -42,6 +62,11 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         ]);
     }
 
+    /**
+     * Map role/permissions routes.
+     *
+     * @return void
+     */
     protected function mapRolePermissionRoutes()
     {
         $route = $this->package->route()
