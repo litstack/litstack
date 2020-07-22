@@ -42,4 +42,5 @@ return [
     'delete'          => 'löschen',
     'permissions'     => 'Berechtigungen',
     'group'           => 'Gruppe',
+    'unauthorized'    => 'Nicht authorisiert!',
 ];

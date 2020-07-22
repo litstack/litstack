@@ -89,7 +89,7 @@ export default {
             if (this.field.noScore) {
                 return;
             }
-            this.field.hint = `Password strength: <b>${this.scoreStrength}</b>`;
+            //this.field.hint = `Password strength: <b>${this.scoreStrength}</b>`;
             this.$refs.form.$forceUpdate();
         },
         addSaveJob(newPassword) {

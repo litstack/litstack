@@ -92,6 +92,16 @@ class FormListItem extends FjordFormModel
     }
 
     /**
+     * Determines if the list item has a parent.
+     *
+     * @return bool
+     */
+    public function hasParent()
+    {
+        return (bool) $this->parent_id;
+    }
+
+    /**
      * Get fields from config.
      *
      * @return Field

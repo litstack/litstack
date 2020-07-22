@@ -51,6 +51,16 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
     ];
 
     /**
+     * Determines if the user has the admin role.
+     *
+     * @return bool
+     */
+    public function getIsAdminAttribute()
+    {
+        return $this->hasRole('admin');
+    }
+
+    /**
      * Send password reset notification.
      *
      * @param string $token

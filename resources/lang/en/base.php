@@ -42,4 +42,5 @@ return [
     'delete'          => 'delete',
     'permissions'     => 'permissions',
     'group'           => 'group',
+    'unauthorized'    => 'This action is unauthorized!',
 ];

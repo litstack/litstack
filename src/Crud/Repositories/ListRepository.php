@@ -28,9 +28,11 @@ class ListRepository extends BaseFieldRepository
      */
     public function index(CrudReadRequest $request, $model)
     {
-        return crud(
-            $this->field->getRelationQuery($model)->getFlat()
-        );
+        $items = $this->field->getRelationQuery($model)->getFlat()->filter(function (FormListItem $item) {
+            return $this->field->itemAuthorized($item, 'read');
+        });
+
+        return crud($items);
     }
 
     /**
@@ -53,6 +55,8 @@ class ListRepository extends BaseFieldRepository
 
         $listItem = $this->getListItem($model, $request->list_item_id);
 
+        $this->checkAuthorized($listItem, 'update');
+
         $listItem->update($attributes);
 
         return crud($listItem);
@@ -69,6 +73,8 @@ class ListRepository extends BaseFieldRepository
     public function create(CrudUpdateRequest $request, $model, $payload)
     {
         $parent = $this->getParent($model, $payload->parent_id ?? 0);
+
+        $this->checkAuthorized($parent, 'create');
 
         $newDepth = ($parent->depth ?? 0) + 1;
         $this->checkMaxDepth($newDepth, $this->field->maxDepth);
@@ -93,6 +99,8 @@ class ListRepository extends BaseFieldRepository
     public function store(CrudUpdateRequest $request, $model, $payload)
     {
         $parent = $this->getParent($model, $request->parent_id ?? 0);
+
+        $this->checkAuthorized($parent, 'create');
 
         if ($request->parent_id && ! $parent) {
             abort(404, debug("Couldn't find parent list item wit id [{$request->parent_id}]."));
@@ -254,5 +262,18 @@ class ListRepository extends BaseFieldRepository
         return abort(405, __f('crud.fields.list.messages.max_depth', [
             'count' => $maxDepth,
         ]));
+    }
+
+    /**
+     * Checks authorized.
+     *
+     * @param  FormListItem $item
+     * @return void
+     */
+    protected function checkAuthorized(FormListItem $item = null, $operation)
+    {
+        if (! $this->field->itemAuthorized($item, $operation)) {
+            abort(405, __f('base.unauthorized'));
+        }
     }
 }
