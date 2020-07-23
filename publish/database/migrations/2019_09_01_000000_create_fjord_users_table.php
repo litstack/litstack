@@ -20,7 +20,7 @@ class CreateFjordUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->string('locale')->nullable();
             $table->timestamps();

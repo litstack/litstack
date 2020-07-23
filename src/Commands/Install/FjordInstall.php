@@ -77,14 +77,26 @@ class FjordInstall extends Command
         if (config('app.env') == 'production') {
             return;
         }
-        $user = FjordUser::firstOrCreate([
-            'username' => 'admin',
-            'email'    => 'admin@admin.com',
-        ], [
+        if (FjordUser::where('username', 'admin')->orWhere('email', 'admin@admin')->exists()) {
+            return;
+        }
+        // $user = FjordUser::firstOrCreate([
+        //     'username' => 'admin',
+        //     'email'    => 'admin@admin.com',
+        // ], [
+        //     'first_name' => 'admin',
+        //     'last_name'  => '',
+        //     'password'   => bcrypt('secret'),
+        // ]);
+        $user = new FjordUser([
+            'username'   => 'admin',
+            'email'      => 'admin@admin.com',
             'first_name' => 'admin',
             'last_name'  => '',
-            'password'   => bcrypt('secret'),
         ]);
+
+        $user->password = bcrypt('secret');
+        $user->save();
 
         $user->assignRole('admin');
 

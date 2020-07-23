@@ -49,8 +49,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     /**
      * Register media conversions for field.
      *
-     * @param SpatieMedia $media
-     *
+     * @param  SpatieMedia $media
      * @return void
      */
     public function registerMediaConversions(SpatieMedia $media = null): void
