@@ -34,10 +34,9 @@ class Password extends BaseField
     /**
      * Fill model.
      *
-     * @param mixed   $model
-     * @param Request $request
-     * @param string  $attributeName
-     * @param mixed   $attributeValue
+     * @param mixed  $model
+     * @param string $attributeName
+     * @param mixed  $attributeValue
      *
      * @return void
      */
@@ -47,7 +46,7 @@ class Password extends BaseField
             return;
         }
 
-        $model->{$attributeName} = $attributeValue;
+        $model->{$attributeName} = bcrypt($attributeValue);
     }
 
     /**
@@ -153,17 +152,5 @@ class Password extends BaseField
     public function cast($value)
     {
         return (string) $value;
-    }
-
-    /**
-     * Format value before saving it to database.
-     *
-     * @param string $value
-     *
-     * @return void
-     */
-    public function format($value)
-    {
-        return bcrypt($value);
     }
 }

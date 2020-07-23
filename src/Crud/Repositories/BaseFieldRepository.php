@@ -63,6 +63,17 @@ abstract class BaseFieldRepository
             }
 
             $field->fillModel($model, $field->local_key, $attributes[$field->local_key]);
+
+            unset($attributes[$field->local_key]);
+        }
+
+        return $attributes;
+    }
+
+    protected function getRegisteredFields()
+    {
+        if (method_exists('getRegisteredFields', $this->field)) {
+            return $this->field->getRegisteredFields();
         }
     }
 

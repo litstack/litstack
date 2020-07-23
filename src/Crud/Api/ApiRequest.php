@@ -268,12 +268,14 @@ class ApiRequest
      */
     protected function makeRepository(string $repository, Closure $fieldGetter)
     {
+        $field = $fieldGetter();
+
         try {
             return app()->make($repository, [
                 'config'     => $this->controller->getConfig(),
                 'controller' => $this->controller,
-                'field'      => $fieldGetter(),
-                'form'       => $this->getForm(),
+                'field'      => $field,
+                'form'       => $this->getForm($field),
             ]);
         } catch (TypeError $e) {
             abort(404, debug($e->getMessage()));
@@ -285,8 +287,12 @@ class ApiRequest
      *
      * @return BaseForm|null
      */
-    public function getForm()
+    public function getForm(Field $field = null)
     {
+        if ($field && $field->form instanceof BaseForm) {
+            return $field->form;
+        }
+
         return $this->loader->loadFormOrFail($this->request->route('form_type') ?? 'show');
     }
 

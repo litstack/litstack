@@ -29,16 +29,7 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
      * @var array
      */
     protected $fillable = [
-        'username', 'first_name', 'last_name', 'email', 'password', 'locale',
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
+        'username', 'first_name', 'last_name', 'email', 'locale',
     ];
 
     /**
