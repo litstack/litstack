@@ -96,8 +96,7 @@ class FjordPackage extends Package
     /**
      * Boot application.
      *
-     * @param Application $app
-     *
+     * @param  Application $app
      * @return void
      */
     public function boot(Application $app)

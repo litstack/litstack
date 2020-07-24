@@ -36,6 +36,16 @@ class Fjord
     }
 
     /**
+     * Determines if the application is translatable.
+     *
+     * @return bool
+     */
+    public function isAppTranslatable()
+    {
+        return count(config('translatable.locales')) > 1;
+    }
+
+    /**
      * Bind Fjord Application instance when Fjord is installed.
      *
      * @param  \Fjord\Application\Application $app
