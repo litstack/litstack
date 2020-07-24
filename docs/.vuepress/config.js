@@ -114,7 +114,6 @@ module.exports = {
                         ['docs/fields/block', 'Block'],
                         ['docs/fields/boolean', 'Boolean'],
                         ['docs/fields/checkboxes', 'Checkboxes'],
-                        ['docs/fields/code', 'Code Editor'],
                         ['docs/fields/date-time', 'Date/Time'],
                         ['docs/fields/icon', 'Icon'],
                         ['docs/fields/image', 'Image'],
