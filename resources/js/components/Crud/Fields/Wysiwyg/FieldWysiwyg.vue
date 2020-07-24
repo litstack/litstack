@@ -218,6 +218,26 @@
                             </div>
                         </b-dropdown>
 
+                        <fj-field-wysiwyg-table
+                            :is-active="isActive"
+                            :commands="commands"
+                        />
+
+                        <!-- <b-button
+                            class="btn-square"
+                            size="sm"
+                            variant="outline-secondary"
+                            @click="
+                                commands.createTable({
+                                    rowsCount: 3,
+                                    colsCount: 3,
+                                    withHeaderRow: false
+                                })
+                            "
+                        >
+                            <fa-icon icon="table" />
+                        </b-button> -->
+
                         <b-button
                             variant="outline-secondary"
                             size="sm"
@@ -235,6 +255,19 @@
                         >
                             <fa-icon icon="redo" />
                         </b-button>
+
+                        <!-- <button
+                            class="btn-square"
+                            @click="
+                                commands.createTable({
+                                    rowsCount: 3,
+                                    colsCount: 3,
+                                    withHeaderRow: false
+                                })
+                            "
+                        >
+                            <fa-icon name="table" />
+                        </button> -->
                     </div>
                 </editor-menu-bar>
 
@@ -271,7 +304,11 @@ import {
     Italic,
     Strike,
     Underline,
-    History
+    History,
+    Table,
+    TableHeader,
+    TableCell,
+    TableRow
 } from 'tiptap-extensions';
 import CustomLink from './Nodes/CustomLink';
 import FontColor from './Nodes/FontColor';
@@ -321,7 +358,11 @@ export default {
                     new Strike(),
                     new Underline(),
                     new History(),
-                    new FontColor()
+                    new FontColor(),
+                    new Table({ resizable: true }),
+                    new TableHeader(),
+                    new TableCell(),
+                    new TableRow()
                 ]
             }),
 
@@ -430,6 +471,23 @@ export default {
         p {
             line-height: 1.25rem;
             font-size: $input-font-size;
+        }
+        table,
+        th,
+        td {
+            border: 1px solid $border-color;
+        }
+        table {
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+        th,
+        td {
+            min-width: 2rem;
+            padding: 0.5rem;
+            p {
+                margin-bottom: 0;
+            }
         }
     }
 
