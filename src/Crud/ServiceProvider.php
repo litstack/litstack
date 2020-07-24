@@ -6,7 +6,6 @@ use Fjord\Crud\Api\ApiRepositories;
 use Fjord\Crud\Fields\Block\Block;
 use Fjord\Crud\Fields\Boolean;
 use Fjord\Crud\Fields\Checkboxes;
-use Fjord\Crud\Fields\Code;
 use Fjord\Crud\Fields\Component;
 use Fjord\Crud\Fields\Datetime;
 use Fjord\Crud\Fields\Icon;
@@ -57,7 +56,6 @@ class ServiceProvider extends LaravelServiceProvider
         'password'     => Password::class,
         'select'       => Select::class,
         'boolean'      => Boolean::class,
-        'code'         => Code::class,
         'icon'         => Icon::class,
         'datetime'     => Datetime::class,
         'dt'           => Datetime::class,
