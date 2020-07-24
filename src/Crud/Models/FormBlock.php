@@ -67,16 +67,6 @@ class FormBlock extends FjordFormModel
     }
 
     /**
-     * Get Blade x component name.
-     *
-     * @return string|null
-     */
-    public function getXAttribute()
-    {
-        return $this->getRepeatable()->getX();
-    }
-
-    /**
      * Get view name.
      *
      * @return string|null

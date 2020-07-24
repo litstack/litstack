@@ -455,3 +455,32 @@ if (! function_exists('medialibrary_config')) {
         return 'media-library';
     }
 }
+
+if (! function_exists('call_unaccessible_method')) {
+    /**
+     * Calling protected or private class method.
+     *
+     * @param mixed|string $abstract
+     * @param string       $method
+     * @param array        $params
+     *
+     * @return mixed
+     */
+    function call_unaccessible_method($abstract, string $method, array $params = [])
+    {
+        $class = $abstract;
+        if (! is_string($abstract)) {
+            $class = get_class($abstract);
+        }
+
+        $class = new ReflectionClass($class);
+        $method = $class->getMethod($method);
+        $method->setAccessible(true);
+
+        if ($method->isStatic()) {
+            return $method->invokeArgs(null, $params);
+        }
+
+        return $method->invokeArgs($abstract, $params);
+    }
+}

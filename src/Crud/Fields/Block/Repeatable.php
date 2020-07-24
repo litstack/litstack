@@ -7,7 +7,9 @@ use Fjord\Crud\BaseForm;
 use Fjord\Crud\Models\FormBlock;
 use Fjord\Page\Table\ColumnBuilder;
 use Fjord\Support\VueProp;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Traits\ForwardsCalls;
+use Illuminate\View\Compilers\ComponentTagCompiler;
 
 class Repeatable extends VueProp
 {
@@ -106,6 +108,24 @@ class Repeatable extends VueProp
     public function getX()
     {
         return $this->xComponent;
+    }
+
+    /**
+     * Resolves Blade x component.
+     *
+     * @return void
+     */
+    public function getXClass(...$params)
+    {
+        if (! $this->xComponent) {
+            return;
+        }
+
+        return call_unaccessible_method(
+            app(ComponentTagCompiler::class),
+            'componentClass',
+            [$this->xComponent]
+        );
     }
 
     /**
