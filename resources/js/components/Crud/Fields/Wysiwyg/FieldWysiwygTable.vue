@@ -66,6 +66,9 @@ export default {
         },
         commands: {
             required: true
+        },
+        field: {
+            required: true
         }
     },
     watch: {
@@ -93,7 +96,7 @@ export default {
             this.commands.createTable({
                 rowsCount: 3,
                 colsCount: 3,
-                withHeaderRow: false
+                withHeaderRow: this.field.tableHasHeader
             });
         },
         deleteTable(event) {

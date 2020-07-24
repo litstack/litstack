@@ -221,6 +221,7 @@
                         <fj-field-wysiwyg-table
                             :is-active="isActive"
                             :commands="commands"
+                            :field="field"
                         />
 
                         <!-- <b-button

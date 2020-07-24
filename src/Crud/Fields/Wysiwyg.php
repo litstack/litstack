@@ -38,9 +38,8 @@ class Wysiwyg extends BaseField
     /**
      * Set font colors.
      *
-     * @param array $colors
-     *
-     * @return void
+     * @param  array $colors
+     * @return $this
      */
     public function colors($colors, ...$more)
     {
@@ -54,13 +53,25 @@ class Wysiwyg extends BaseField
     /**
      * Add custom css to editor.
      *
-     * @param string $path
-     *
-     * @return void
+     * @param  string $path
+     * @return $this
      */
     public function css(string $path)
     {
         $this->setAttribute('css', File::get($path));
+
+        return $this;
+    }
+
+    /**
+     * Determines if the wysiwyg table has a header.
+     *
+     * @param  bool  $hasHeader
+     * @return $this
+     */
+    public function tableHasHeader(bool $hasHeader = true)
+    {
+        $this->setAttribute('tableHasHeader', $hasHeader);
 
         return $this;
     }
