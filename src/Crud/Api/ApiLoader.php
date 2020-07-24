@@ -28,8 +28,9 @@ class ApiLoader
     /**
      * Create new ApiLoader instance.
      *
-     * @param CrudBaseController $controller
-     * @param ConfigHandler      $config
+     * @param  CrudBaseController $controller
+     * @param  ConfigHandler      $config
+     * @return void
      */
     public function __construct(CrudBaseController $controller, ConfigHandler $config)
     {
@@ -40,8 +41,7 @@ class ApiLoader
     /**
      * Load form by form_type.
      *
-     * @param string $type
-     *
+     * @param  string        $type
      * @return BaseForm|null
      */
     public function loadForm($type)
@@ -70,9 +70,8 @@ class ApiLoader
     /**
      * Load field from form by field_id.
      *
-     * @param BaseForm $form
-     * @param string   $field_id
-     *
+     * @param  BaseForm   $form
+     * @param  string     $field_id
      * @return Field|null
      */
     public function loadField(BaseForm $form, $field_id)
@@ -83,8 +82,7 @@ class ApiLoader
     /**
      * Load model by id.
      *
-     * @param string|int $id
-     *
+     * @param  string|int $id
      * @return mixed
      */
     public function loadModel($id)
@@ -95,12 +93,11 @@ class ApiLoader
     /**
      * Call load or fail with Http NotFoundHttpException exception.
      *
-     * @param string     $method
-     * @param parameters $parameters
+     * @param  string     $method
+     * @param  parameters $parameters
+     * @return mixed
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return mixed
      */
     protected function callLoadOrFail($method, $parameters)
     {
@@ -118,12 +115,11 @@ class ApiLoader
     /**
      * Call method.
      *
-     * @param string $method
-     * @param array  $parameters
+     * @param  string $method
+     * @param  array  $parameters
+     * @return mixed
      *
      * @throws \BadMethodCallException
-     *
-     * @return mixed
      */
     public function __call($method, $parameters = [])
     {

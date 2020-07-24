@@ -7,7 +7,7 @@
     <a href="https://packagist.org/packages/aw-studio/fjord"><img src="https://img.shields.io/github/license/aw-studio/fjord?color=%2331c653" alt="License"></a>
 </p>
 
-This is a package for building Admin-Interfaces that help maintaining the data of your applications. It provides an intuitive interface and the tools needed to manage your project's Users, Models and free Forms for Pages, Settings etc.
+A package for building Admin-Interfaces that help maintaining the data of your applications. It provides an intuitive interface and the tools needed to manage your project's Users, Models and free Forms for Pages, Settings etc.
 
 ![Interface](./docs/preview.png 'Interface')
 
