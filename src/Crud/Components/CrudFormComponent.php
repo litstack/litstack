@@ -29,18 +29,4 @@ class CrudFormComponent extends RootComponent
     {
         return $this->props['config']['model'] == $model;
     }
-
-    /**
-     * Should extension be executed.
-     *
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function resolveExtension(string $name = ''): bool
-    {
-        $currentName = $this->props['formConfig']['names']['table'];
-
-        return $name == $currentName;
-    }
 }

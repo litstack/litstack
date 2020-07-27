@@ -25,6 +25,9 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        //dd(Application::class);
+        //$this->app->alias('abc', 'fjord.app');
+
         $this->registerFormPermissionsCommand();
 
         // Fix: config_type

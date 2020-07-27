@@ -102,7 +102,9 @@ class ServiceProvider extends LaravelServiceProvider
             return new Form();
         });
 
-        $this->app['fjord.app']->singleton('crud', new Crud());
+        $this->app['fjord.app']->singleton('crud', function () {
+            return new Crud;
+        });
 
         $this->registerFields();
 

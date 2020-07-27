@@ -2,6 +2,7 @@
 
 namespace Fjord\Application\Package;
 
+use Fjord\Application\Application;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
 
@@ -33,11 +34,10 @@ class Packages
     /**
      * Create instance.
      *
-     * @param array $packages
-     *
+     * @param  array $packages
      * @return void
      */
-    public function __construct($app)
+    public function __construct(Application $app)
     {
         $this->app = $app;
     }

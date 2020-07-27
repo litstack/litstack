@@ -87,6 +87,27 @@ class Component extends VueProp implements AuthorizableContract
     }
 
     /**
+     * Rendering lifecycle hook.
+     *
+     * @return void
+     */
+    protected function rendering()
+    {
+        //
+    }
+
+    /**
+     * Rendered lifecycle hook.
+     *
+     * @param  array $rendered
+     * @return void
+     */
+    protected function rendered($rendered)
+    {
+        //
+    }
+
+    /**
      * The name of the slot, if this component is the child of another component.
      *
      * @param  string $name
@@ -273,9 +294,10 @@ class Component extends VueProp implements AuthorizableContract
     {
         $this->checkComplete();
 
+        $this->rendering();
         $this->mounted();
 
-        return [
+        $rendered = [
             'name'     => $this->name,
             'props'    => collect($this->props),
             'events'   => $this->events,
@@ -283,5 +305,9 @@ class Component extends VueProp implements AuthorizableContract
             'children' => $this->children,
             'classes'  => $this->classes,
         ];
+
+        $this->rendered($rendered);
+
+        return $rendered;
     }
 }

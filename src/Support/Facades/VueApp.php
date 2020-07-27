@@ -2,12 +2,10 @@
 
 namespace Fjord\Support\Facades;
 
-use Fjord\Support\FjordFacade;
-
-class VueApp extends FjordFacade
+class VueApp extends Fjord
 {
     protected static function getFacadeAccessor()
     {
-        return 'vue';
+        return 'fjord.app.vue';
     }
 }

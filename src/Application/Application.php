@@ -10,7 +10,6 @@ use Illuminate\View\View;
  * The Application class manages all depencies for the view fjord::app:
  * Bootstrapping Application,
  * Registering and booting packages,
- * Registering and executing extensions,
  * Registering and calling config handlers,
  * Binding css files for fjord,
  * Bind composer to the fjord::app view.
@@ -18,20 +17,6 @@ use Illuminate\View\View;
 class Application
 {
     use Concerns\ManagesFiles;
-
-    /**
-     * The application's bindings.
-     *
-     * @var array[]
-     */
-    protected $bindings = [];
-
-    /**
-     * The Fjord extension provided by your application.
-     *
-     * @var array
-     */
-    protected $extensions = [];
 
     /**
      * Registered config factories.
@@ -73,8 +58,7 @@ class Application
     /**
      * Run the given array of bootstrap classes.
      *
-     * @param string[] $bootstrappers
-     *
+     * @param  array $bootstrappers
      * @return void
      */
     public function bootstrapWith(array $bootstrappers, $kernel)
@@ -99,15 +83,14 @@ class Application
     /**
      * Boot packages and build Vue application.
      *
-     * @param Illuminate\View\View $view
-     *
+     * @param  Illuminate\View\View $view
      * @return void
      */
     public function build(View $view)
     {
         $this->bootPackages();
 
-        $this->get('vue')->build($view);
+        $this->get('vue')->bindView($view);
     }
 
     /**
@@ -123,71 +106,33 @@ class Application
     }
 
     /**
-     * Get extensions.
-     *
-     * @return array
-     */
-    public function getExtensions()
-    {
-        return $this->extensions;
-    }
-
-    /**
      * Get Fjord application binding.
      *
-     * @param string $binding
-     *
+     * @param  string   $binding
      * @return instance
      */
-    public function get($binding)
+    public function get($abstract)
     {
-        return $this->bindings[$binding] ?? null;
+        return app()->get($this->getAbstract($abstract));
     }
 
     /**
      * Register a binding with the application.
      *
-     * @param string   $abstract
-     * @param Instance $instance
-     * @param bool     $shared
-     *
+     * @param  string         $abstract
+     * @param  Closure|string $concrete
      * @return void
      */
-    public function bind($abstract, $instance)
+    public function bind($abstract, $concrete)
     {
-        $this->bindings[$abstract] = $instance;
-    }
-
-    /**
-     * Register extension class.
-     *
-     * @param string $component
-     * @param string $extension
-     *
-     * @return void
-     */
-    public function registerExtension(string $key, string $extension)
-    {
-        $component = $key;
-        $name = '';
-        if (Str::contains($key, '::')) {
-            $component = explode('::', $key)[0];
-            $name = explode('::', $key)[1];
-        }
-
-        $this->extensions[] = [
-            'component' => $component,
-            'name'      => $name,
-            'extension' => $extension,
-        ];
+        app()->bind($this->getAbstract($abstract), $concrete);
     }
 
     /**
      * Register config handler.
      *
-     * @param string $dependency
-     * @param string $handler
-     *
+     * @param  string $dependency
+     * @param  string $handler
      * @return void
      */
     public function registerConfigFactory(string $dependency, string $factory)
@@ -196,7 +141,7 @@ class Application
     }
 
     /**
-     * Get config handler.
+     * Get config factories.
      *
      * @return array
      */
@@ -218,13 +163,23 @@ class Application
     /**
      * Register a shared binding in the application.
      *
-     * @param string   $abstract
-     * @param Instance $instance
-     *
+     * @param  string         $abstract
+     * @param  Closure|string $concrete
      * @return void
      */
-    public function singleton(string $abstract, $instance)
+    public function singleton($abstract, $concrete)
     {
-        return $this->bind($abstract, $instance);
+        app()->singleton($this->getAbstract($abstract), $concrete);
+    }
+
+    /**
+     * Get abstract for fjord application.
+     *
+     * @param  string $abstract
+     * @return string
+     */
+    public function getAbstract($abstract)
+    {
+        return Str::start($abstract, 'fjord.app.');
     }
 }

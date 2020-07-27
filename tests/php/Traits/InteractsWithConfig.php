@@ -33,17 +33,18 @@ trait InteractsWithConfig
      */
     public function overrideConfigLoaderSingleton()
     {
-        $loader = new ConfigLoader(
-            function (string $key) {
-                return $this->configExists($key);
-            },
-            function ($key, ...$params) {
-                return new ConfigHandler(
-                    $this->getConfig($key, ...$params)
-                );
-            }
-        );
-        $this->app['fjord.app']->singleton('config.loader', $loader);
+        $this->app['fjord.app']->singleton('config.loader', function () {
+            return new ConfigLoader(
+                function (string $key) {
+                    return $this->configExists($key);
+                },
+                function ($key, ...$params) {
+                    return new ConfigHandler(
+                        $this->getConfig($key, ...$params)
+                    );
+                }
+            );
+        });
     }
 }
 

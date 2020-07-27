@@ -2,12 +2,12 @@
 
 namespace Fjord\Support\Facades;
 
-use Fjord\Support\FjordFacade;
+use Illuminate\Support\Facades\Facade;
 
-class Package extends FjordFacade
+class Package extends Facade
 {
     public static function getFacadeAccessor()
     {
-        return 'packages';
+        return 'fjord.app.packages';
     }
 }

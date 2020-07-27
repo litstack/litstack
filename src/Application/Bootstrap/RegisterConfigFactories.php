@@ -8,7 +8,7 @@ use Fjord\Support\Facades\Package;
 class RegisterConfigFactories
 {
     /**
-     * Registers extensions from packages.
+     * Registers config factories from packages.
      *
      * @param \Fjord\Application\Application $app
      *

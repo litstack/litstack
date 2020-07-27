@@ -4,7 +4,7 @@ namespace FjordTest\Foundation;
 
 use FjordTest\BackendTestCase;
 use FjordTest\Traits\ActingAsFjordUserMock;
-use LogicException;
+use Throwable;
 
 /**
  * Testing view [fjord::app].
@@ -16,7 +16,7 @@ class FjordAppViewTest extends BackendTestCase
     /** @test */
     public function it_fails_when_component_data_is_missing()
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(Throwable::class);
         view('fjord::app')->render();
     }
 

@@ -30,13 +30,4 @@ class Package extends FjordPackage
      * @var array
      */
     protected $configHandler = [];
-
-    /**
-     * List of extensions for other packages.
-     *
-     * @var array
-     */
-    protected $extensions = [
-        'fj-crud-index' => \FjordPermissions\Extensions\UsersExtension::class,
-    ];
 }

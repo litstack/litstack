@@ -18,8 +18,8 @@ class PermissionsComposer
         fjord()
             ->app()
             ->get('vue')
-            ->setProp('permissions', $this->getPermissions())
-            ->setProp('roles', Role::all());
+            ->prop('permissions', $this->getPermissions())
+            ->prop('roles', Role::all());
     }
 
     /**

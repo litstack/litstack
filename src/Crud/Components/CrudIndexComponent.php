@@ -4,7 +4,6 @@ namespace Fjord\Crud\Components;
 
 use Closure;
 use Fjord\Vue\RootComponent;
-use Illuminate\Support\Str;
 
 class CrudIndexComponent extends RootComponent
 {
@@ -47,17 +46,5 @@ class CrudIndexComponent extends RootComponent
     public function isModel(string $model)
     {
         return $this->props['config']['model'] == $model;
-    }
-
-    /**
-     * Should extension be executed.
-     *
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function resolveExtension(string $name = ''): bool
-    {
-        return Str::endsWith($this->props['config']['route_prefix'], $name);
     }
 }
