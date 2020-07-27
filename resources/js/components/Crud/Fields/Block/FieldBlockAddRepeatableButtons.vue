@@ -53,18 +53,28 @@ export default {
 
             Fjord.bus.$emit('field:updated', 'block:added');
 
-            this.showNewRepeatableToast();
+            this.showNewRepeatableToast(type);
         },
 
         /**
          * Send add repeatable request.
          */
         async sendAddRepeatable(payload) {
+            payload = {
+                field_id: this.field.id,
+                ...(this.field.params || {}),
+                payload
+            };
+
+            if ('field_id' in (this.field.params || {})) {
+                payload.child_field_id = this.field.id;
+            }
+
             try {
-                return await axios.post(`${this.field.route_prefix}/block`, {
-                    field_id: this.field.id,
+                return await axios.post(
+                    `${this.field.route_prefix}/block`,
                     payload
-                });
+                );
             } catch (e) {
                 console.log(e);
                 return;
@@ -74,7 +84,7 @@ export default {
         /**
          * Show new repeatable toast.
          */
-        showNewRepeatableToast() {
+        showNewRepeatableToast(type) {
             this.$bvToast.toast(this.$t('fj.new_block', { type }), {
                 variant: 'success'
             });

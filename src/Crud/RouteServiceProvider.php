@@ -23,6 +23,9 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     public function boot()
     {
         parent::boot();
+
+        $this->mapCrudRoutes();
+        $this->mapFormRoutes();
     }
 
     /**
@@ -69,17 +72,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     }
 
     /**
-     * Map routes.
-     *
-     * @return void
-     */
-    public function map()
-    {
-        $this->mapCrudRoutes();
-        $this->mapFormRoutes();
-    }
-
-    /**
      * Map crud routes.
      *
      * @return void
@@ -118,9 +110,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 continue;
             }
 
-            Crud::routes(
-                $config
-            );
+            Crud::routes($config);
         }
     }
 

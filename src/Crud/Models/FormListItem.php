@@ -5,6 +5,7 @@ namespace Fjord\Crud\Models;
 use Fjord\Crud\Fields\ListField\ListCollection;
 use Fjord\Crud\Fields\ListField\ListField;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Collection;
 
 class FormListItem extends FjordFormModel
 {
@@ -104,18 +105,22 @@ class FormListItem extends FjordFormModel
     /**
      * Get fields from config.
      *
-     * @return Field
+     * @return Collection
      */
-    public function getFieldsAttribute()
+    public function getFieldsAttribute(): Collection
     {
-        $fields = $this->getForm()->getRegisteredFields();
+        if (! $form = $this->getForm()) {
+            return collect([]);
+        }
 
-        foreach ($fields as $field) {
+        foreach ($form->getRegisteredFields() as $field) {
             if ($field instanceof ListField && $field->id == $this->field_id) {
                 // Returning fields from repeatables form.
                 return $field->getRegisteredFields();
             }
         }
+
+        return collect([]);
     }
 
     /**

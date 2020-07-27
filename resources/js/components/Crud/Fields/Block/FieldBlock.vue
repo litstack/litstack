@@ -26,13 +26,14 @@
             >
                 <fj-field-repeatable
                     ref="block"
-                    v-for="(block, index) in sortableBlocks"
-                    :key="index"
+                    v-for="block in sortableBlocks"
+                    :key="block.id"
                     :block="block"
                     :field="field"
                     :model="model"
                     :width="field.blockWidth"
                     :reload="reloadBlock"
+                    :model-id="modelId || model.id"
                     :preview="field.repeatables[block.type].preview"
                     :fields="field.repeatables[block.type].form.fields"
                     :set-route-prefix="setFieldsRoutePrefixBlockId"
@@ -77,7 +78,9 @@ export default {
          */
         model: {
             type: Object
-        }
+        },
+
+        modelId: {}
     },
     data() {
         return {
@@ -157,6 +160,18 @@ export default {
                 if (this.field.readonly) {
                     fields[i].readonly = true;
                 }
+
+                if (!('field_id' in (this.field.params || {}))) {
+                    fields[i].params.child_repeatable_id = block.id;
+                } else {
+                    if ('child_repeatable_id' in this.field.params) {
+                        fields[
+                            i
+                        ].params.child_repeatable_id = this.field.params.child_repeatable_id;
+                    }
+                    fields[i].params.child_field_id = this.field.id;
+                    fields[i].params.field_id = this.field.params.field_id;
+                }
             }
             return fields;
         },
@@ -204,9 +219,7 @@ export default {
             try {
                 return await axios.post(
                     `${this.field.route_prefix}/block/index`,
-                    {
-                        field_id: this.field.id
-                    }
+                    this.qualifyPayload({})
                 );
             } catch (e) {
                 console.log(e);
@@ -233,6 +246,11 @@ export default {
          */
         async deleteBlock(block) {
             let response = await this.sendDeleteBlock(block);
+
+            if (!response) {
+                return;
+            }
+
             this.sortableBlocks.splice(this.sortableBlocks.indexOf(block), 1);
 
             Fjord.bus.$emit('field:updated', 'block:deleted');
@@ -249,10 +267,10 @@ export default {
             try {
                 return await axios.post(
                     `${this.field.route_prefix}/block/destroy`,
-                    {
-                        field_id: this.field.id,
+                    this.qualifyPayload({
+                        //field_id: this.field.id,
                         repeatable_id: block.id
-                    }
+                    })
                 );
             } catch (e) {
                 console.log(e);
@@ -266,6 +284,7 @@ export default {
             let payload = {
                 ids: this.sortableBlocks.map(item => item.id)
             };
+
             let response = await this.sendNewOrder(payload);
 
             if (!response) {
@@ -274,7 +293,7 @@ export default {
 
             Fjord.bus.$emit('field:updated', 'block:ordered');
 
-            this.$bvToast.toast(this.$t('fj.order_changed'), {
+            this.$bvToast.toast(this.__('fj.order_changed'), {
                 variant: 'success'
             });
         },
@@ -286,14 +305,27 @@ export default {
             try {
                 return await axios.put(
                     `${this.field.route_prefix}/block/order`,
-                    {
-                        field_id: this.field.id,
+                    this.qualifyPayload({
                         payload
-                    }
+                    })
                 );
             } catch (e) {
                 console.log(e);
             }
+        },
+
+        qualifyPayload(payload = {}) {
+            payload = {
+                field_id: this.field.id,
+                ...(this.field.params || {}),
+                ...payload
+            };
+
+            if ('field_id' in (this.field.params || {})) {
+                payload.child_field_id = this.field.id;
+            }
+
+            return payload;
         }
     }
 };

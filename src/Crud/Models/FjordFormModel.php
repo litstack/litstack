@@ -133,6 +133,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     public function prepareAttributesForSave($attributes)
     {
         $translations = $this->getTranslationsArray();
+
         foreach (config('translatable.locales') as $locale) {
             if (! array_key_exists($locale, $attributes)) {
                 continue;
@@ -181,8 +182,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     /**
      * Get a relationship.
      *
-     * @param string $key
-     *
+     * @param  string $key
      * @return mixed
      */
     public function getRelationValue($key)
@@ -200,21 +200,6 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
         if (method_exists($this, $key) || in_array($key, $this->fieldIds)) {
             return $this->getRelationshipFromMethod($key);
         }
-    }
-
-    /**
-     * Get translated field value.
-     *
-     * @param Field  $field
-     * @param string $locale
-     *
-     * @return void
-     */
-    public function getTranslatedFieldValue($field, string $locale)
-    {
-        $value = $this->translation[$locale] ?? [];
-
-        return $value[$field->local_key] ?? null;
     }
 
     /**
@@ -244,8 +229,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     /**
      * Get attribute.
      *
-     * @param string $key
-     *
+     * @param  string $key
      * @return void
      */
     public function getAttribute($key)
@@ -264,8 +248,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     /**
      * Set field ids to be able to check if field exists in getAttribute method.
      *
-     * @param array $ids
-     *
+     * @param  array $ids
      * @return void
      */
     public function setFieldIds(array $ids)
@@ -276,9 +259,8 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     /**
      * Create a new model instance that is existing.
      *
-     * @param array       $attributes
-     * @param string|null $connection
-     *
+     * @param  array       $attributes
+     * @param  string|null $connection
      * @return static
      */
     public function newFromBuilder($attributes = [], $connection = null)

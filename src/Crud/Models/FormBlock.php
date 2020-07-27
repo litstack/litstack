@@ -5,6 +5,7 @@ namespace Fjord\Crud\Models;
 use BadMethodCallException;
 use Fjord\Crud\Fields\Block\Block;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 class FormBlock extends FjordFormModel
@@ -67,6 +68,20 @@ class FormBlock extends FjordFormModel
     }
 
     /**
+     * Get form.
+     *
+     * @return BaseForm|null
+     */
+    public function getForm()
+    {
+        if (! $config = $this->config) {
+            return;
+        }
+
+        return $config->{$this->getFormType()};
+    }
+
+    /**
      * Get view name.
      *
      * @return string|null
@@ -79,9 +94,9 @@ class FormBlock extends FjordFormModel
     /**
      * Get fields from config.
      *
-     * @return Field
+     * @return Collection
      */
-    public function getFieldsAttribute()
+    public function getFieldsAttribute(): Collection
     {
         if (! $repeatable = $this->getRepeatable()) {
             return collect([]);
@@ -100,10 +115,20 @@ class FormBlock extends FjordFormModel
         $fields = $this->getForm()->getRegisteredFields();
 
         foreach ($fields as $field) {
-            if ($field instanceof Block && $field->id == $this->field_id) {
+            if (! $field instanceof Block) {
+                continue;
+            }
+
+            if ($field->id == $this->field_id) {
 
                 // Returning fields from repeatables form.
                 return $field->repeatables->{$this->type};
+            }
+
+            foreach ($field->getRegisteredFields() as $blockField) {
+                if ($field instanceof Block && $field->id == $this->field_id) {
+                    return $field->repeatables->{$this->type};
+                }
             }
         }
     }

@@ -41,8 +41,7 @@ class Crud
     /**
      * Authorize crud controller.
      *
-     * @param string $key
-     *
+     * @param  string $key
      * @return bool
      */
     public function authorize(string $controller, string $operation)
@@ -68,10 +67,9 @@ class Crud
     /**
      * Make routes for Crud Model.
      *
-     * @param string $prefix
-     * @param string $model
-     * @param string $controller
-     *
+     * @param  string $prefix
+     * @param  string $model
+     * @param  string $controller
      * @return void
      */
     public function routes($config)
@@ -87,7 +85,7 @@ class Crud
 
                 Package::get('aw-studio/fjord')->addNavPreset($config->getKey(), [
                     'link'      => Fjord::url($config->routePrefix),
-                    'title'     => fn () => ucfirst($config->names['plural']),
+                    'title'     => fn ()     => ucfirst($config->names['plural']),
                     'authorize' => function (FjordUser $user) use ($config) {
                         return (new $config->controller())->authorize($user, 'read');
                     },
@@ -99,8 +97,7 @@ class Crud
     /**
      * Make routes for Forms.
      *
-     * @param ConfigHandler $config
-     *
+     * @param  ConfigHandler $config
      * @return void
      */
     public function formRoutes($config)
@@ -121,7 +118,7 @@ class Crud
                 // Nav preset.
                 Package::get('aw-studio/fjord')->addNavPreset("form.{$collection}.{$form}", [
                     'link'      => Fjord::url($config->route_prefix),
-                    'title'     => fn () => ucfirst($config->names['singular']),
+                    'title'     => fn ()     => ucfirst($config->names['singular']),
                     'authorize' => function (FjordUser $user) use ($config) {
                         return (new $config->controller())->authorize($user, 'read');
                     },
@@ -143,8 +140,7 @@ class Crud
     /**
      * Make Crud Model routes.
      *
-     * @param string $controller
-     *
+     * @param  string $controller
      * @return void
      */
     protected function makeCrudRoutes($config, string $identifier = 'id')
