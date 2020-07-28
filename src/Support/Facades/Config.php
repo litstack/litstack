@@ -5,7 +5,7 @@ namespace Fjord\Support\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Fjord\Config\ConfigHandler get(string $key)
+ * @method static \Fjord\Config\ConfigHandler|null get(string $key)
  * @method static bool exists(string $key):
  *
  * @see \Fjord\Config\ConfigLoader

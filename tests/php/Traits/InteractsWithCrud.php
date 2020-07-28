@@ -20,7 +20,9 @@ trait InteractsWithCrud
      */
     public function getCrudRoute(string $route)
     {
-        return fjord()->url(strip_slashes(Config::get(PostConfig::class)->route_prefix."/{$route}"));
+        return fjord()->url(strip_slashes(
+            Config::get($this->config ?? PostConfig::class)->route_prefix."/{$route}"
+        ));
     }
 
     /**
@@ -64,6 +66,7 @@ trait InteractsWithCrud
         }
 
         File::copy(__DIR__.'/../TestSupport/Config/PostConfig.php', base_path('fjord/app/Config/Crud/PostConfig.php'));
+        File::copy(__DIR__.'/../TestSupport/Config/BlockInBlockConfig.php', base_path('fjord/app/Config/Crud/BlockInBlockConfig.php'));
     }
 
     /**

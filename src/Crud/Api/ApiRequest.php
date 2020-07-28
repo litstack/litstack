@@ -95,8 +95,9 @@ class ApiRequest
         $model = $this->getModel();
 
         if ($this->hasChild()) {
-            $model = $this->getParentModel($repository, $model);
+            $parentRepository = $repository;
             $repository = $this->getChildRepository($repository);
+            $model = $this->getParentModel($parentRepository, $repository, $model);
         }
 
         if (! method_exists($repository, $this->method)) {
@@ -169,14 +170,15 @@ class ApiRequest
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    public function getParentModel($parentRepository, $model)
+    public function getParentModel($parentRepository, $childRepository, $model)
     {
         if (! method_exists($parentRepository, 'getModel')) {
             abort(404, debug('Missing [getModel] method on '.get_class($parentRepository)));
         }
 
         $model = app()->call([$parentRepository, 'getModel'], [
-            'model' => $model,
+            'model'           => $model,
+            'childRepository' => $childRepository,
         ]);
 
         if (! $model) {
@@ -216,9 +218,9 @@ class ApiRequest
     /**
      * Get child field getter.
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return Closure
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     protected function getChildFieldGetter($parentRepository)
     {
@@ -332,11 +334,11 @@ class ApiRequest
      */
     protected function setAbstracts()
     {
-        if ($this->hasChild()) {
-            $this->childAbstract = $this->request->route('method');
-        }
-
         $this->abstract = $this->request->route('repository') ?? 'default';
+
+        if ($this->hasChild()) {
+            $this->childAbstract = $this->request->route('method') ?? $this->abstract;
+        }
     }
 
     /**

@@ -2,6 +2,7 @@
     <div class="mt-2">
         <b-button
             class="mr-2"
+            :class="`fj-block-add-${type}`"
             size="sm"
             v-for="(repeatables, type) in field.repeatables"
             :key="type"

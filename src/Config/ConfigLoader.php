@@ -206,6 +206,8 @@ class ConfigLoader
      */
     public function exists(string $key)
     {
+        $this->getPathFromKey($key);
+
         return File::exists(
             $this->getPathFromKey($key),
         );

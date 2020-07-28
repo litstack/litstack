@@ -1,5 +1,9 @@
 <template>
-    <fj-base-field :field="field" :model="model">
+    <fj-base-field
+        :field="field"
+        :model="model"
+        :class="`fj-block-${field.id}`"
+    >
         <template slot="title-right">
             <a href="#" @click="toggleExpand" v-if="!this.create">
                 <fa-icon :icon="expandedAll ? 'angle-up' : 'angle-down'" />

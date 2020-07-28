@@ -126,8 +126,8 @@ class FormBlock extends FjordFormModel
             }
 
             foreach ($field->getRegisteredFields() as $blockField) {
-                if ($field instanceof Block && $field->id == $this->field_id) {
-                    return $field->repeatables->{$this->type};
+                if ($blockField instanceof Block && $blockField->id == $this->field_id) {
+                    return $blockField->repeatables->{$this->type};
                 }
             }
         }

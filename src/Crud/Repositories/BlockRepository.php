@@ -189,13 +189,22 @@ class BlockRepository extends BaseFieldRepository
      * @param  mixed     $model
      * @return FormBlock
      */
-    public function getModel(Request $request, $model)
+    public function getModel(Request $request, $model, $childRepository)
     {
         if (! $request->child_repeatable_id) {
             return $this->getRepeatable($model, $request->repeatable_id);
         }
 
-        return $this->getRepeatable($model, $request->child_repeatable_id);
+        $childRepeatable = $this->getRepeatable($model, $request->child_repeatable_id);
+
+        if ($childRepository instanceof self) {
+            return $childRepeatable;
+        }
+
+        // Loading child block for media and relation requests.
+        return FormBlock::where('model_type', FormBlock::class)
+            ->where('model_id', $childRepeatable->id)
+            ->where('id', $request->repeatable_id)->firstOrFail();
     }
 
     /**

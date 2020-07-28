@@ -8,6 +8,7 @@ use Fjord\Crud\Models\FormBlock;
 use Fjord\Page\Table\ColumnBuilder;
 use Fjord\Support\VueProp;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\View\Compilers\ComponentTagCompiler;
 
@@ -22,6 +23,8 @@ class Repeatable extends VueProp
      */
     protected $viewName;
 
+    protected $viewData = [];
+
     /**
      * Blade x component name.
      *
@@ -29,8 +32,18 @@ class Repeatable extends VueProp
      */
     protected $xComponent;
 
+    /**
+     * BlockForm instance.
+     *
+     * @var BlockForm
+     */
     protected $form;
 
+    /**
+     * Preview.
+     *
+     * @var ColumnBuilder
+     */
     protected $preview;
 
     /**
@@ -44,6 +57,8 @@ class Repeatable extends VueProp
 
     protected function getRoutePrefix()
     {
+        return Str::finish("{$this->field->route_prefix}", '/block');
+
         return strip_slashes("{$this->field->route_prefix}/block");
     }
 
@@ -131,8 +146,7 @@ class Repeatable extends VueProp
     /**
      * Set blade x component.
      *
-     * @param string $component
-     *
+     * @param  string $component
      * @return $this
      */
     public function x(string $component)
@@ -145,13 +159,13 @@ class Repeatable extends VueProp
     /**
      * Add blade x component.
      *
-     * @param string $view
-     *
+     * @param  string $view
      * @return $this
      */
-    public function view(string $name)
+    public function view(string $name, $data = [])
     {
         $this->viewName = $name;
+        $this->viewData = $data;
 
         return $this;
     }
@@ -173,7 +187,7 @@ class Repeatable extends VueProp
      */
     public function getView()
     {
-        return $this->viewName;
+        return view($this->viewName, $this->viewData);
     }
 
     /**
@@ -199,9 +213,8 @@ class Repeatable extends VueProp
     /**
      * Handle dynamic method calls to the repeatable.
      *
-     * @param string $method
-     * @param array  $parameters
-     *
+     * @param  string $method
+     * @param  array  $parameters
      * @return mixed
      */
     public function __call($method, $parameters)

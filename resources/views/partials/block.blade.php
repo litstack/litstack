@@ -1,10 +1,7 @@
 
 @foreach($repeatables as $rep)
     @if($rep->hasView())
-        @include($rep->view, [
-            'data' => $rep            
-        ])
-        
+        {!! $rep->view->with('rep', $rep) !!}
     @elseif($rep->hasX())
         {{-- 
             The [?? Dummy::class] is required to make the blade compiler think 
