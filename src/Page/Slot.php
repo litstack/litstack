@@ -63,9 +63,11 @@ class Slot extends VueProp
             $this->actionFactory->make($title, $action)
         );
 
+        $wrapper = $component->getProp('wrapper');
+
         $this->page->resolveAction($component);
 
-        return $component;
+        return $wrapper;
     }
 
     /**

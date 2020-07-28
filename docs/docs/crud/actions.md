@@ -13,8 +13,6 @@ php artisan fjord:action MyAction
 These then end up in the folder `./fjord/app/Actions`.
 
 ```php
-<?php
-
 namespace FjordApp\Actions;
 
 use Illuminate\Support\Collection;
@@ -27,6 +25,60 @@ class MyAction
     }
 }
 ```
+
+## Confirm Modal
+
+If your action has the function modal, the execution of the action must be confirmed via a modal.
+
+```php
+namespace FjordApp\Actions;
+
+use Illuminate\Support\Collection;
+use Fjord\Page\Actions\ActionModal;
+
+class MyAction
+{
+    public function modal(ActionModal $modal)
+    {
+        $modal->confirmVariant('primary')
+            ->confirmText('Run')
+            ->message('Do you want to run the Action?')
+    }
+
+    public function run(Collection $models)
+    {
+        // Do Something.
+    }
+}
+```
+
+## Fields
+
+Form fields can be added to the confirm modal of an action. The values of these fields are passed to the action.
+
+```php
+use Illuminate\Support\Collection;
+use Fjord\Page\Actions\ActionModal;
+use Fjord\Page\Actions\AttributeBag;
+
+public function modal(ActionModal $modal)
+{
+    $modal->form(function($form) {
+        $form->text('message')->title('Message');
+    });
+}
+
+public function run(Collection $models, AttributeBag $attributes)
+{
+    foreach($models as $model) {
+        Mail::to($model)->send(new ExampleEmail($attributes->message));
+    }
+}
+```
+
+<center>
+  <img src="./screens/action_modal_fields.png" alt="action fields" height="250"/>
+</center>
 
 ## Display
 

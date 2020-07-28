@@ -179,7 +179,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
      * @param  string $prefix
      * @return void
      */
-    public function setRoutePrefix(string $prefix)
+    public function setRoutePrefix($prefix)
     {
         if (Str::startsWith($prefix, Fjord::url(''))) {
             $prefix = Str::replaceFirst(Fjord::url(''), '', $prefix);

@@ -25,6 +25,10 @@ trait TranslatableField
      */
     public function setTranslatableDefault(): bool
     {
+        if (! class_exists($this->model)) {
+            return false;
+        }
+
         return is_attribute_translatable($this->id, $this->model);
     }
 }

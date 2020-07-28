@@ -2,6 +2,7 @@
 
 namespace Fjord\Page;
 
+use Fjord\Page\Actions\AttributeBag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,11 @@ class RunActionEvent
 
         $action = app()->make($request->action);
 
-        $result = app()->call([$action, 'run'], $this->getBindings($request));
+        $bindings = array_merge($this->getBindings($request), [
+            'attributes' => new AttributeBag($request->all()['attributes'] ?? []),
+        ]);
+
+        $result = app()->call([$action, 'run'], $bindings);
 
         if (! $result instanceof JsonResponse) {
             return $this->defaultResponse();

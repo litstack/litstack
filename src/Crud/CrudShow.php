@@ -59,7 +59,7 @@ class CrudShow extends Page
      */
     public function resolveAction($component)
     {
-        $component->on('click', RunCrudActionEvent::class)
+        $component->on('run', RunCrudActionEvent::class)
             ->prop('eventData', array_merge(
                 $component->getProp('eventData'),
                 ['model' => $this->form->getModel()]

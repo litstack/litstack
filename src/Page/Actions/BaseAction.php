@@ -15,17 +15,28 @@ abstract class BaseAction implements ActionFactory
     abstract protected function createComponent();
 
     /**
-     * Get's prepared component.
+     * Create an action component.
      *
-     * @param  string $title
-     * @param  string $action
-     * @return mixed
+     * @param  string          $action
+     * @return ButtonComponent
      */
-    protected function prepared($title, $action)
+    public function make($title, $action)
     {
-        return $this->createComponent()
-            ->prop('eventData', ['action' => $action])
-            ->on('click', RunActionEvent::class)
-            ->content($title);
+        $actionInstance = app()->make($action);
+
+        $component = component('fj-action')
+            ->prop('wrapper', $this->createComponent()->content($title))
+            ->on('run', RunActionEvent::class)
+            ->prop('eventData', ['action' => $action]);
+
+        if (method_exists($actionInstance, 'modal')) {
+            $component->prop('modal', $modal = new ActionModal);
+
+            $actionInstance->modal(
+                $modal->title($title)
+            );
+        }
+
+        return $component;
     }
 }
