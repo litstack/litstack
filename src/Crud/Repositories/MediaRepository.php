@@ -94,9 +94,8 @@ class MediaRepository extends BaseFieldRepository
     /**
      * Store media to model.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
      * @return Response
      */
     protected function storeMediaToModel($request, $model)
@@ -122,6 +121,8 @@ class MediaRepository extends BaseFieldRepository
             ->preservingOriginal()
             ->withCustomProperties($customProperties)
             ->toMediaCollection($request->collection);
+
+        $media->url = $media->getUrl();
 
         return response()->json($media, 200);
     }
