@@ -2,6 +2,9 @@
 
 namespace Fjord\Crud\Repositories;
 
+use Fjord\Config\ConfigHandler;
+use Fjord\Crud\BaseForm;
+use Fjord\Crud\Controllers\CrudBaseController;
 use Fjord\Crud\Fields\Media\MediaField;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
@@ -17,8 +20,13 @@ class MediaRepository extends BaseFieldRepository
 
     /**
      * Create new MediaRepository instance.
+     *
+     * @param ConfigHandler      $config
+     * @param CrudBaseController $controller
+     * @param BaseForm           $form
+     * @param MediaField         $field
      */
-    public function __construct($config, $controller, $form, MediaField $field)
+    public function __construct(ConfigHandler $config, $controller, $form, MediaField $field)
     {
         parent::__construct($config, $controller, $form, $field);
     }
@@ -26,10 +34,9 @@ class MediaRepository extends BaseFieldRepository
     /**
      * Update media custom_properties.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     * @param object            $payload
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
+     * @param  object            $payload
      * @return void
      */
     public function update(CrudUpdateRequest $request, $model, $payload)
@@ -43,9 +50,8 @@ class MediaRepository extends BaseFieldRepository
     /**
      * Store new media in model.
      *
-     * @param CrudReadRequest $request
-     * @param mixed           $model
-     *
+     * @param  CrudReadRequest $request
+     * @param  mixed           $model
      * @return void
      */
     public function store(CrudUpdateRequest $request, $model)
@@ -59,9 +65,8 @@ class MediaRepository extends BaseFieldRepository
     /**
      * Destroy media from model.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)
@@ -74,9 +79,8 @@ class MediaRepository extends BaseFieldRepository
     /**
      * Order media.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
      * @return void
      */
     public function order(CrudUpdateRequest $request, $model)
@@ -130,8 +134,7 @@ class MediaRepository extends BaseFieldRepository
     /**
      * Destroy previous media if there are to many.
      *
-     * @param mixed $model
-     *
+     * @param  mixed $model
      * @return void
      */
     public function destroyPreviousMedia($model)
