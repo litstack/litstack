@@ -15,7 +15,7 @@ class RegisterSingletons
     public function bootstrap(Application $app)
     {
         foreach ($app->singletons() as $abstract => $class) {
-            app()->singleton($app->getAbstract($abstract), function () use ($app, $class) {
+            app()->singleton($app->getAbstract($abstract), function () use ($class) {
                 return app()->make($class);
             });
         }

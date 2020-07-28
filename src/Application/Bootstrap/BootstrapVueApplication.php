@@ -18,7 +18,7 @@ class BootstrapVueApplication
      */
     public function bootstrap(Application $app)
     {
-        $app->singleton('vue', function () use ($app) {
+        $app->singleton('vue', function () {
             return new AppComponent;
         });
     }
