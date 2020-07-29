@@ -65,6 +65,7 @@ class PostConfig extends CrudConfig
 
         $form->list('test_list')
             ->title('Test List')
+            ->previewTitle('{test_list_input}')
             ->form(function ($form) {
                 $form->input('test_list_input')->title('Hi');
             });

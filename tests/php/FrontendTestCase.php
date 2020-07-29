@@ -131,7 +131,7 @@ class FrontendTestCase extends OrchestraDuskTestCase
     {
         $options = (new ChromeOptions())->addArguments([
             '--disable-gpu',
-            '--headless',
+            //'--headless',
             '--window-size=1920,1080',
         ]);
 

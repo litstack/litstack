@@ -166,7 +166,9 @@ export default {
                 }
 
                 if (!('field_id' in (this.field.params || {}))) {
-                    fields[i].params.child_repeatable_id = block.id;
+                    if (block.id != fields[i].params.repeatable_id) {
+                        fields[i].params.child_repeatable_id = block.id;
+                    }
                 } else {
                     if ('child_repeatable_id' in this.field.params) {
                         fields[
