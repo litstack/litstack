@@ -140,7 +140,7 @@ class ApiBlockTest extends BackendTestCase
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/block");
         $request = $this->put($url, [
             'payload' => [
-                'text' => 'some text',
+                app()->getLocale() => ['text' => 'some text'],
             ],
             'field_id'        => 'content',
             'repeatable_id'   => $block->id,
