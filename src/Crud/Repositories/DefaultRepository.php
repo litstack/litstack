@@ -3,6 +3,7 @@
 namespace Fjord\Crud\Repositories;
 
 use Fjord\Crud\CrudValidator;
+use Fjord\Crud\Models\FjordFormModel;
 use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
@@ -81,6 +82,10 @@ class DefaultRepository extends BaseFieldRepository
         $this->controller->fillOnStore($model);
 
         $model->save();
+
+        if ($model instanceof FjordFormModel) {
+            $model->update($attributes);
+        }
 
         return crud($model);
     }
