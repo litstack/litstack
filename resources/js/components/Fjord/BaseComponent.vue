@@ -11,7 +11,8 @@ export default {
                     ...this.events
                 },
                 attrs: this.props,
-                slot: this.slot
+                slot: this.slot,
+                ref: 'component'
             },
             [this.createChildren(createElement), this.$slots.default]
         );
@@ -30,14 +31,16 @@ export default {
     },
     data() {
         return {
-            events: {}
+            events: {},
+            sendingEventRequest: false
         };
     },
     computed: {
         props() {
             return {
                 ...this.$attrs,
-                ...this.component.props
+                ...this.component.props,
+                sendingEventRequest: this.sendingEventRequest
             };
         },
         slot() {
@@ -82,7 +85,9 @@ export default {
             }
         },
         async handleEvent(handler, data) {
+            this.sendingEventRequest = true;
             let response = await this.sendHandleEvent(handler, data);
+            this.sendingEventRequest = false;
 
             if (!response) {
                 return;

@@ -4,6 +4,7 @@ namespace Fjord\Vue\Components;
 
 use Fjord\Vue\Component;
 use Fjord\Vue\Traits\StaticComponentName;
+use Illuminate\Support\Str;
 
 class ButtonComponent extends Component
 {
@@ -15,6 +16,16 @@ class ButtonComponent extends Component
      * @var string
      */
     protected $name = 'b-button';
+
+    /**
+     * Before mount.
+     *
+     * @return void
+     */
+    public function beforeMount()
+    {
+        $this->variant('secondary');
+    }
 
     /**
      * Set button variant.
@@ -36,5 +47,24 @@ class ButtonComponent extends Component
     public function size($size)
     {
         return $this->prop('size', $size);
+    }
+
+    /**
+     * Set button outline.
+     *
+     * @param  bool  $outline
+     * @return $this
+     */
+    public function outline(bool $outline = true)
+    {
+        if ($outline) {
+            return $this->variant(
+                Str::start($this->getProp('variant'), 'outline-')
+            );
+        }
+
+        return $this->variant(
+            preg_replace('/^(?:'.preg_quote('outline-', '/').')+/u', '', $this->getProp('variant'))
+        );
     }
 }
