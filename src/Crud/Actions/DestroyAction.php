@@ -2,23 +2,54 @@
 
 namespace Fjord\Crud\Actions;
 
+use Fjord\Crud\Requests\CrudDeleteRequest;
+use Fjord\Page\Actions\ActionModal;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class DestroyAction
 {
-    public function run(Collection $models)
+    /**
+     * Create the modal.
+     *
+     * @param  ActionModal $model
+     * @return void
+     */
+    public function modal(ActionModal $modal)
+    {
+        $modal->message(__f('messages.actions.are_you_sure'))
+            ->confirmVariant('danger')
+            ->confirmText(ucfirst(__f('base.delete')));
+    }
+
+    /**
+     * Run the action.
+     *
+     * @param  Collection $models
+     * @return Response
+     */
+    public function run(CrudDeleteRequest $request, Collection $models)
     {
         $models->map(fn ($item) => $item->delete());
 
-        return $this->resolveResponse($models);
+        return $this->resolveResponse($request, $models);
     }
 
-    protected function resolveResponse($models)
+    /**
+     * Resolve the response for the given request.
+     *
+     * @param  Request    $request
+     * @param  Collection $models
+     * @return Response
+     */
+    protected function resolveResponse(Request $request, Collection $models)
     {
         $route = Route::matchesUri(
-            request()->headers->get('referer'), 'GET'
+            $request->headers->get('referer'), 'GET'
         );
 
         if (! $route) {
@@ -29,12 +60,19 @@ class DestroyAction
             return $this->successMessage($models);
         }
 
+        // Redirect to index if referer route is "show" of the crud.
         return redirect(
             route(Str::replaceLast('show', 'index', $route->getName()))
         );
     }
 
-    protected function successMessage($models)
+    /**
+     * Creates success response.
+     *
+     * @param  Collection   $models
+     * @return JsonResponse
+     */
+    protected function successMessage(Collection $models)
     {
         return success(__f_choice('messages.deleted_items', count($models)));
     }
