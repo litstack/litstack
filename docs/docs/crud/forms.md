@@ -31,7 +31,7 @@ protected $groups = [
 ];
 ```
 
-The migration can now simply be rolled back and re-run using the artisan command `fjord:nav-permissions`.
+The migration can now simply be rolled back and re-run using the artisan command `fjord:form-permissions`.
 
 ```shell
 php artisan fjord:nav-permissions
