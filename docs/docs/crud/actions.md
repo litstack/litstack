@@ -26,6 +26,19 @@ class MyAction
 }
 ```
 
+## Redirects
+
+If you want to redirect to another page after you have performed your action, you can return one of the Laravel helpers for [redirects](https://laravel.com/docs/7.x/redirects).
+
+```php
+public function run(Collection $models)
+{
+    // Do Something.
+
+    return redirect('your/redirect/url');
+}
+```
+
 ## Confirm Modal
 
 If your action has the function modal, the execution of the action must be confirmed via a modal.
@@ -42,7 +55,7 @@ class MyAction
     {
         $modal->confirmVariant('primary')
             ->confirmText('Run')
-            ->message('Do you want to run the Action?')
+            ->message('Do you want to run the Action?');
     }
 
     public function run(Collection $models)
@@ -54,7 +67,7 @@ class MyAction
 
 ## Fields
 
-Form fields can be added to the confirm modal of an action. The values of these fields are passed to the action.
+Form fields can be added to the confirm modal of an action. The values of these fields are passed to the action. This allows you, for example, to let the user type in a message to be sent by mail, as shown the following example.
 
 ```php
 use Illuminate\Support\Collection;
