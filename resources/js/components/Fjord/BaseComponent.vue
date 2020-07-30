@@ -93,6 +93,12 @@ export default {
                 return;
             }
 
+            let responseURL = response.request.responseURL;
+
+            if (!responseURL.endsWith('handle-event')) {
+                window.location.href = responseURL;
+            }
+
             this.$emit('eventHandled', response);
         },
         async sendHandleEvent(handler, data) {

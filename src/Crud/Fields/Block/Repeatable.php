@@ -128,7 +128,8 @@ class Repeatable extends VueProp
     /**
      * Resolves Blade x component.
      *
-     * @return void
+     * @param  array       $params
+     * @return string|null
      */
     public function getXClass(...$params)
     {
