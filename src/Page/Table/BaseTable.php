@@ -2,6 +2,7 @@
 
 namespace Fjord\Page\Table;
 
+use Fjord\Contracts\Page\Action;
 use Fjord\Contracts\Page\Table as TableContract;
 use Fjord\Page\Actions\DropdownItemAction;
 use Fjord\Support\HasAttributes;
@@ -20,6 +21,13 @@ class BaseTable extends VueProp implements TableContract
      * @var ColumnBuilder
      */
     protected $builder;
+
+    /**
+     * Table actions.
+     *
+     * @var array
+     */
+    protected $actions = [];
 
     /**
      * Table route prefix.

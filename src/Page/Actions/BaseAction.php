@@ -4,6 +4,7 @@ namespace Fjord\Page\Actions;
 
 use Fjord\Contracts\Page\ActionFactory;
 use Fjord\Page\RunActionEvent;
+use Fjord\Vue\Component;
 
 abstract class BaseAction implements ActionFactory
 {
@@ -17,8 +18,8 @@ abstract class BaseAction implements ActionFactory
     /**
      * Create an action component.
      *
-     * @param  string          $action
-     * @return ButtonComponent
+     * @param  string    $action
+     * @return Component
      */
     public function make($title, $action)
     {

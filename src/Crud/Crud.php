@@ -41,7 +41,8 @@ class Crud
     /**
      * Authorize crud controller.
      *
-     * @param  string $key
+     * @param  string $controller
+     * @param  string $operation
      * @return bool
      */
     public function authorize(string $controller, string $operation)
@@ -78,14 +79,14 @@ class Crud
             RouteFacade::group([
                 'config' => $config->getKey(),
                 'prefix' => "$config->routePrefix",
-                'as'     => $config->getKey(),
+                'as'     => $config->getKey().'.',
             ], function () use ($config) {
                 $this->makeCrudRoutes($config);
                 $this->makeFieldRoutes($config->controller);
 
                 Package::get('aw-studio/fjord')->addNavPreset($config->getKey(), [
                     'link'      => Fjord::url($config->routePrefix),
-                    'title'     => fn () => ucfirst($config->names['plural']),
+                    'title'     => fn ()     => ucfirst($config->names['plural']),
                     'authorize' => function (FjordUser $user) use ($config) {
                         return (new $config->controller())->authorize($user, 'read');
                     },
@@ -109,7 +110,7 @@ class Crud
             RouteFacade::group([
                 'config' => $config->getKey(),
                 'prefix' => $config->route_prefix,
-                'as'     => $config->getKey(),
+                'as'     => $config->getKey().'.',
             ], function () use ($config, $collection, $form) {
                 //require fjord_path('src/Crud/routes.php');
                 $this->makeFormRoutes($config->controller);
@@ -118,7 +119,7 @@ class Crud
                 // Nav preset.
                 Package::get('aw-studio/fjord')->addNavPreset("form.{$collection}.{$form}", [
                     'link'      => Fjord::url($config->route_prefix),
-                    'title'     => fn () => ucfirst($config->names['singular']),
+                    'title'     => fn ()     => ucfirst($config->names['singular']),
                     'authorize' => function (FjordUser $user) use ($config) {
                         return (new $config->controller())->authorize($user, 'read');
                     },

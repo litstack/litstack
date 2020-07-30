@@ -80,7 +80,7 @@ class CrudIndex extends Page
      */
     public function table(Closure $closure)
     {
-        $this->table = $table = new Table(
+        $this->table = $table = new CrudIndexTable(
             $this->config->routePrefix(),
             $builder = new CrudColumnBuilder($this->config)
         );
@@ -89,10 +89,7 @@ class CrudIndex extends Page
         $table->singularName($this->config->names['singular']);
         $table->pluralName($this->config->names['plural']);
 
-        // TODO:
         $table->action(ucfirst(__f('base.delete')), DestroyAction::class);
-
-        //$table->action(ucfirst(__f('base.delete')), $this->config->controller.'@test');
 
         $closure($builder);
         $this->component($table->getComponent());

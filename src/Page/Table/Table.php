@@ -21,13 +21,6 @@ class Table extends BaseTable implements TableContract
     protected $model;
 
     /**
-     * Table actions.
-     *
-     * @var array
-     */
-    protected $actions = [];
-
-    /**
      * Query modifier for eager loads and selections.
      *
      * @var \Illuminate\Database\Eloquent\Builder
