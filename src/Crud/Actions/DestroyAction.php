@@ -2,7 +2,6 @@
 
 namespace Fjord\Crud\Actions;
 
-use Fjord\Crud\Requests\CrudDeleteRequest;
 use Fjord\Page\Actions\ActionModal;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -29,10 +28,11 @@ class DestroyAction
     /**
      * Run the action.
      *
+     * @param  Request    $request
      * @param  Collection $models
      * @return Response
      */
-    public function run(CrudDeleteRequest $request, Collection $models)
+    public function run(Request $request, Collection $models)
     {
         $models->map(fn ($item) => $item->delete());
 
