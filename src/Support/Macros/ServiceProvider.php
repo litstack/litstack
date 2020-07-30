@@ -18,6 +18,7 @@ class ServiceProvider extends LaravelServiceProvider
         CrudMetaMacro::class,
         BladeBlock::class,
         RouteMatchesUri::class,
+        Responses::class,
     ];
 
     /**

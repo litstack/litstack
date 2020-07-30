@@ -42,7 +42,7 @@ class RoleController
 
         // Can't take away own admin role.
         if ($role->name == 'admin' && $user->id == fjord_user()->id) {
-            return danger(__f('fjpermissions.cant_remove_admin_role'));
+            return response()->danger(__f('fjpermissions.cant_remove_admin_role'));
         }
 
         // Remove role.

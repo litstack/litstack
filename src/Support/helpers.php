@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -33,78 +32,6 @@ if (! function_exists('debug')) {
         }
 
         return value($value);
-    }
-}
-
-if (! function_exists('success')) {
-    /**
-     * Returns JsonResponse with variant "success".
-     *
-     * @param  string       $message
-     * @param  int          $status
-     * @param  array        $headers
-     * @param  int          $options
-     * @return JsonResponse
-     */
-    function success($message, $status = 200, array $headers = [], $options = 0)
-    {
-        $data = ['message' => $message, 'variant' => 'success'];
-
-        return new JsonResponse($data, $status, $headers, $options);
-    }
-}
-
-if (! function_exists('info')) {
-    /**
-     * Returns JsonResponse with variant "info".
-     *
-     * @param  string       $message
-     * @param  int          $status
-     * @param  array        $headers
-     * @param  int          $options
-     * @return JsonResponse
-     */
-    function info($message, $status = 200, array $headers = [], $options = 0)
-    {
-        $data = ['message' => $message, 'variant' => 'info'];
-
-        return new JsonResponse($data, $status, $headers, $options);
-    }
-}
-
-if (! function_exists('warning')) {
-    /**
-     * Returns JsonResponse with variant "warning".
-     *
-     * @param  string       $message
-     * @param  int          $status
-     * @param  array        $headers
-     * @param  int          $options
-     * @return JsonResponse
-     */
-    function warning($message, $status = 200, array $headers = [], $options = 0)
-    {
-        $data = ['message' => $message, 'variant' => 'warning'];
-
-        return new JsonResponse($data, $status, $headers, $options);
-    }
-}
-
-if (! function_exists('danger')) {
-    /**
-     * Returns JsonResponse with variant "danger".
-     *
-     * @param  string       $message
-     * @param  int          $status
-     * @param  array        $headers
-     * @param  int          $options
-     * @return JsonResponse
-     */
-    function danger($message, $status = 405, array $headers = [], $options = 0)
-    {
-        $data = ['message' => $message, 'variant' => 'danger'];
-
-        return new JsonResponse($data, $status, $headers, $options);
     }
 }
 

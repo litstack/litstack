@@ -5,7 +5,8 @@ namespace Fjord\Page;
 use Fjord\Page\Actions\AttributeBag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class RunActionEvent
 {
@@ -29,11 +30,26 @@ class RunActionEvent
 
         $result = app()->call([$action, 'run'], $bindings);
 
-        if (! $result instanceof Response) {
-            return $this->defaultResponse();
+        return $this->response($result);
+    }
+
+    /**
+     * Gets response for the given result.
+     *
+     * @param  mixed $result
+     * @return mixed
+     */
+    protected function response($result)
+    {
+        if ($result instanceof SymfonyResponse) {
+            return $result;
         }
 
-        return $result;
+        if ($result instanceof Response) {
+            return $result;
+        }
+
+        return $this->defaultResponse();
     }
 
     /**
@@ -43,7 +59,7 @@ class RunActionEvent
      */
     protected function defaultResponse()
     {
-        return success('Action executed.');
+        return response()->success('Action executed.');
     }
 
     /**

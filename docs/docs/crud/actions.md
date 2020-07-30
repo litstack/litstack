@@ -1,5 +1,7 @@
 # Actions
 
+[[toc]]
+
 Actions are a useful feature to create reusable tasks for models. These can then be inserted at the desired position, in your index table or on a detail page of a model.
 
 ## Create
@@ -25,6 +27,33 @@ class MyAction
     }
 }
 ```
+
+## Responses
+
+When a `message` is returned via a json response, a toast is displayed in the lower right corner of the page containing the message. This can be displayed in four variants: `success`, `info`, `warning`, `danger`. The default is `success`.
+
+```php
+public function run(Collection $models)
+{
+    return response()->json(['message' => 'Hello there!', 'variant' => 'info']);
+}
+```
+
+There is a helper for each vairant:
+
+```php
+return response()->success('My message.');
+return response()->info('My message.');
+return response()->warning('My message.');
+return response()->danger('My message.');
+```
+
+<center>
+  <img src="./screens/message_success.png" alt="message success" width="350"/>
+  <img src="./screens/message_info.png" alt="message info" width="350"/>
+  <img src="./screens/message_warning.png" alt="message warning" width="350"/>
+  <img src="./screens/message_danger.png" alt="message danger" width="350"/>
+</center>
 
 ## Redirects
 
