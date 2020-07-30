@@ -40,11 +40,11 @@ if (! function_exists('success')) {
     /**
      * Returns JsonResponse with variant "success".
      *
-     * @param  string $message
-     * @param  int    $status
-     * @param  array  $headers
-     * @param  int    $options
-     * @return bool
+     * @param  string       $message
+     * @param  int          $status
+     * @param  array        $headers
+     * @param  int          $options
+     * @return JsonResponse
      */
     function success($message, $status = 200, array $headers = [], $options = 0)
     {
@@ -58,11 +58,11 @@ if (! function_exists('info')) {
     /**
      * Returns JsonResponse with variant "info".
      *
-     * @param  string $message
-     * @param  int    $status
-     * @param  array  $headers
-     * @param  int    $options
-     * @return bool
+     * @param  string       $message
+     * @param  int          $status
+     * @param  array        $headers
+     * @param  int          $options
+     * @return JsonResponse
      */
     function info($message, $status = 200, array $headers = [], $options = 0)
     {
@@ -76,11 +76,11 @@ if (! function_exists('warning')) {
     /**
      * Returns JsonResponse with variant "warning".
      *
-     * @param  string $message
-     * @param  int    $status
-     * @param  array  $headers
-     * @param  int    $options
-     * @return bool
+     * @param  string       $message
+     * @param  int          $status
+     * @param  array        $headers
+     * @param  int          $options
+     * @return JsonResponse
      */
     function warning($message, $status = 200, array $headers = [], $options = 0)
     {
@@ -94,11 +94,11 @@ if (! function_exists('danger')) {
     /**
      * Returns JsonResponse with variant "danger".
      *
-     * @param  string $message
-     * @param  int    $status
-     * @param  array  $headers
-     * @param  int    $options
-     * @return bool
+     * @param  string       $message
+     * @param  int          $status
+     * @param  array        $headers
+     * @param  int          $options
+     * @return JsonResponse
      */
     function danger($message, $status = 405, array $headers = [], $options = 0)
     {
