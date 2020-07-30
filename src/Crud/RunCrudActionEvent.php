@@ -14,6 +14,10 @@ class RunCrudActionEvent extends RunActionEvent
      */
     protected function getBindings(Request $request)
     {
+        if (! $request->ids) {
+            return ['models' => collect([])];
+        }
+
         return [
             'models' => $request->model::whereIn('id', $request->ids)->get(),
         ];
