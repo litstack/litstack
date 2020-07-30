@@ -128,11 +128,10 @@ export default {
             let job = {
                 route: `${this.field.route_prefix}/media`,
                 method: 'put',
-                params: {
+                params: this.qualifyParams({
                     payload: { custom_properties: image.custom_properties },
-                    field_id: this.field.id,
                     media_id: this.image.id
-                }
+                })
             };
 
             this.$store.dispatch('saveJob', job);
@@ -168,8 +167,26 @@ export default {
          */
         getMediaUrl(id) {
             return `${this.field.route_prefix}/media/${id}`;
+        },
+
+        /**
+         * Get qualified params.
+         */
+        qualifyParams(params) {
+            params = {
+                field_id: this.field.id,
+                ...(this.field.params || {}),
+                ...params
+            };
+
+            if (params.field_id != this.field.id) {
+                params.child_field_id = this.field.id;
+            }
+
+            return params;
         }
     },
+
     computed: {
         ...mapGetters(['language', 'canSave'])
     }

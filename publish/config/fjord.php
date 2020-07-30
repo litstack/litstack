@@ -16,33 +16,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Fjord Resource-Path
-    |--------------------------------------------------------------------------
-    |
-    | Set the resource-path in which the fjord form-settings are stored.
-    |
-    | default: resources/fjord
-    |
-    */
-
-    'resource_path' => 'fjord',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Fjord Navigation-Path
-    |--------------------------------------------------------------------------
-    |
-    | Set the path in the fjord-resource-directory in which the fjord
-    | navigations are stored.
-    |
-    | default: resources/fjord/navigation
-    |
-    */
-
-    'navigation_path' => 'navigation',
-
-    /*
-    |--------------------------------------------------------------------------
     | Fjord Default-Route
     |--------------------------------------------------------------------------
     |
@@ -144,28 +117,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Fjord Forms
-    |--------------------------------------------------------------------------
-    |
-    | You may add as many form-types as you like to the already existing 'pages'
-    | and 'settings' forms.
-    |
-    */
-
-    'forms' => [
-        'pages' => [
-            // Should Pages be translatable by default.
-            'translatable' => true,
-            'route_prefix' => 'pages',
-        ],
-        'settings' => [
-            'translatable' => false,
-        ],
-        'collections' => [],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Fjord CRUD
     |--------------------------------------------------------------------------
     |
@@ -179,14 +130,4 @@ return [
             'default_device' => 'desktop',
         ],
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Roles & Permissions
-    |--------------------------------------------------------------------------
-    |
-    |
-    */
-
-    'roles_permissions' => true,
 ];

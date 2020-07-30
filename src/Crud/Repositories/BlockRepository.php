@@ -191,7 +191,7 @@ class BlockRepository extends BaseFieldRepository
      */
     public function getModel(Request $request, $model, $childRepository)
     {
-        if (! $request->child_repeatable_id) {
+        if (! $request->child_repeatable_id || $request->child_repeatable_id == $request->repeatable_id) {
             return $this->getRepeatable($model, $request->repeatable_id);
         }
 
