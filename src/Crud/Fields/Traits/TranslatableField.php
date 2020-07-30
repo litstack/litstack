@@ -31,7 +31,7 @@ trait TranslatableField
         if (! class_exists($this->model)) {
             return false;
         }
-        
+
         if (new $this->model instanceof FjordFormModel) {
             return Fjord::isAppTranslatable();
         }
