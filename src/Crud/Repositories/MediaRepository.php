@@ -72,7 +72,7 @@ class MediaRepository extends BaseFieldRepository
     public function destroy(CrudUpdateRequest $request, $model)
     {
         if ($model->media()->findOrFail($request->media_id)->delete()) {
-            return response()->json(['message' => __f('fj.image_deleted')], 200);
+            return success(__f('fj.image_deleted'));
         }
     }
 
