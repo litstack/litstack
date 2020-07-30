@@ -4,6 +4,7 @@ namespace Fjord\Crud\Fields;
 
 use Fjord\Crud\BaseField;
 use Illuminate\Support\Facades\Hash;
+use LogicException;
 
 class Password extends BaseField
 {
@@ -53,9 +54,17 @@ class Password extends BaseField
      * Set default attributes.
      *
      * @return void
+     *
+     * @throws LogicException
      */
     public function setDefaultAttributes()
     {
+        if (in_array($this->id, (new $this->model)->getFillable())) {
+            throw new LogicException(
+                "Remove [{$this->id}] from your fillable attributes in [{$this->model}] in order to use the password field.",
+            );
+        }
+
         $this->minScore(1);
         $this->noScore(false);
     }
