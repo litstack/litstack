@@ -38,9 +38,8 @@ class Application
      * @var array
      */
     protected $singletons = [
-        'packages'      => Package\Packages::class,
-        'config.loader' => \Fjord\Config\ConfigLoader::class,
-        'components'    => Vue\Components::class,
+        'packages'   => Package\Packages::class,
+        'components' => Vue\Components::class,
     ];
 
     /**

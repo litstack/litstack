@@ -330,11 +330,18 @@ if (! function_exists('fjord_app')) {
     /**
      * Get Fjord application instance.
      *
-     * @return \Fjord\Application\Application
+     * @param  string|null $abstract
+     * @return mixed
      */
-    function fjord_app()
+    function fjord_app($abstract = null)
     {
-        return app()->get('fjord.app');
+        $app = app()->get('fjord.app');
+
+        if (! $abstract) {
+            return $app;
+        }
+
+        return $app->get($abstract);
     }
 }
 

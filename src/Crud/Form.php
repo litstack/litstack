@@ -107,13 +107,27 @@ class Form
     }
 
     /**
-     * Register field.
+     * Add field.
      *
      * @param  string $alias
      * @param  string $field
      * @return void
      */
-    public function registerField(string $alias, $field)
+    public function field($alias, $field)
+    {
+        $this->fields[$alias] = $field;
+    }
+
+    /**
+     * Register field.
+     *
+     * @param  string $alias
+     * @param  string $field
+     * @return void
+     *
+     * @deprecated
+     */
+    public function registerField($alias, $field)
     {
         $this->fields[$alias] = $field;
     }

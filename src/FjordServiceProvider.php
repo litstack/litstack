@@ -184,7 +184,7 @@ class FjordServiceProvider extends ServiceProvider
         $this->app[\FjordApp\Kernel::class];
 
         // Fix: config_type
-        if (app()->runningInConsole() || env('APP_ENV') == 'testing' || env('APP_ENV') === null) {
+        if (app()->runningInConsole() || env('APP_ENV') == 'testing' || is_null(env('APP_ENV'))) {
             return;
         }
         if (! DB::table('form_blocks')->where('config_type', '')->exists()) {

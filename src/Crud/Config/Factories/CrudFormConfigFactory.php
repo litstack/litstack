@@ -15,9 +15,8 @@ class CrudFormConfigFactory extends ConfigFactory
     /**
      * Setup create and edit form.
      *
-     * @param \Fjord\Config\ConfigHandler $config
-     * @param Closure                     $method
-     *
+     * @param  \Fjord\Config\ConfigHandler $config
+     * @param  Closure                     $method
      * @return \Fjord\Crud\CrudForm
      */
     public function show(ConfigHandler $config, Closure $method)

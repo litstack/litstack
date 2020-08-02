@@ -158,6 +158,6 @@ class RouteCollection extends Collection
      */
     public static function resolve($collection)
     {
-        return app('fjord.crud.route.resolver')->resolve($collection);
+        return fjord_app('crud.route.resolver')->resolve($collection);
     }
 }

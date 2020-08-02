@@ -15,7 +15,7 @@ $form->manyRelation('article')
 In the Model:
 
 ```php
-public function articles()
+public function article()
 {
     return $this->oneRelation('App/Models/Article', 'article');
 }

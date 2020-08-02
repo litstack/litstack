@@ -59,7 +59,7 @@ class UserConfig extends CrudConfig
     public function index(CrudIndex $page)
     {
         $page->table(fn ($table) => $this->indexTable($table))
-            ->query(fn ($query) => $query->with('ordered_roles'))
+            ->query(fn ($query)  => $query->with('ordered_roles'))
             ->sortByDefault('id.desc')
             ->search('username', 'first_name', 'last_name', 'email');
     }
@@ -82,7 +82,7 @@ class UserConfig extends CrudConfig
 
         $table->component('fj-permissions-fjord-users-roles')
             ->link(false)
-            ->label(__f('fj.roles'));
+            ->label(ucfirst(__f('base.roles')));
 
         $table->component('fj-permissions-fjord-users-apply-role')
             ->authorize(fn ($user) => $user->can('update fjord-user-roles'))

@@ -85,7 +85,6 @@ class ServiceProvider extends LaravelServiceProvider
     {
         $this->app->register(CrudRelations::class);
         $this->app->register(RouteServiceProvider::class);
-        $this->app->register(FieldServiceProvider::class);
     }
 
     /**
@@ -95,23 +94,47 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function register()
     {
+        $this->registerForm();
+
+        $this->registerCrud();
+
+        $this->registerApiRepositories();
+    }
+
+    /**
+     * Register the singleton.
+     *
+     * @return void
+     */
+    protected function registerCrud()
+    {
+        $this->callAfterResolving('fjord.app', function ($app) {
+            $app->singleton('crud', function () {
+                return new Crud;
+            });
+
+            $app->singleton('crud.route.resolver', function () {
+                return new RouteCollectionResolver;
+            });
+        });
+    }
+
+    /**
+     * Register the singleton.
+     *
+     * @return void
+     */
+    protected function registerForm()
+    {
         $loader = AliasLoader::getInstance();
         $loader->alias('Form', FormFacade::class);
 
         $this->app->singleton('fjord.form', function () {
-            return new Form();
-        });
+            $form = new Form();
 
-        $this->app['fjord.app']->singleton('crud', function () {
-            return new Crud;
-        });
+            $this->registerFields($form);
 
-        $this->registerFields();
-
-        $this->registerApiRepositories();
-
-        $this->app->singleton('fjord.crud.route.resolver', function () {
-            return new RouteCollectionResolver;
+            return $form;
         });
     }
 
@@ -148,12 +171,13 @@ class ServiceProvider extends LaravelServiceProvider
     /**
      * Register fields.
      *
+     * @param  Form $field
      * @return void
      */
-    protected function registerFields()
+    protected function registerFields(Form $form)
     {
         foreach ($this->fields as $alias => $field) {
-            FormFacade::registerField($alias, $field);
+            $form->field($alias, $field);
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace Fjord\Fjord;
 
 use Fjord\Application\Application;
+use Fjord\Support\Facades\Config;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Traits\ForwardsCalls;
@@ -144,7 +145,7 @@ class Fjord
      */
     public function config($key, ...$params)
     {
-        return $this->app->get('config.loader')->get($key, ...$params);
+        return Config::get($key, ...$params);
     }
 
     /**
