@@ -34,7 +34,7 @@ class BlockInBlockTest extends FrontendTestCase
                 ->visit($url)
                 ->waitFor('.fj-block-content')
                 ->click('.fj-block-content .fj-block-add-card')
-                ->waitFor('.fj-block-content .fj-block', 1)
+                ->waitFor('.fj-block-content .fj-block')
                 ->waitUsing(3, 5, function () {
                     return ! $this->post->refresh()->content->isEmpty();
                 }, 'Parent Block was not created.');
@@ -53,9 +53,9 @@ class BlockInBlockTest extends FrontendTestCase
                  ->visit($url)
                  ->waitFor('.fj-block-content')
                  ->click('.fj-block-content .fj-block-add-card')
-                 ->waitFor('.fj-block-content .fj-block', 1)
+                 ->waitFor('.fj-block-content .fj-block')
                  ->click('.fj-block-content .fj-block-card .fj-block-add-text')
-                 ->waitFor('.fj-block-card .fj-block', 1)
+                 ->waitFor('.fj-block-card .fj-block')
                  ->waitUsing(3, 5, function () {
                      return ! $this->post->refresh()->content->first()->card->isEmpty();
                  }, 'Child block was not created.')
@@ -77,9 +77,9 @@ class BlockInBlockTest extends FrontendTestCase
                  ->visit($url)
                  ->waitFor('.fj-block-content')
                  ->click('.fj-block-content .fj-block-add-card')
-                 ->waitFor('.fj-block-content .fj-block', 1)
+                 ->waitFor('.fj-block-content .fj-block')
                  ->click('.fj-block-content .fj-block-card .fj-block-add-text')
-                 ->waitFor('.fj-block-card .fj-block', 1)
+                 ->waitFor('.fj-block-card .fj-block')
                  ->type('.fj-block-card .fj-block textarea', 'Hello World')
                  ->waitFor('.fj-save-button .btn-primary')
                  ->click('.fj-save-button .btn-primary')
