@@ -40,16 +40,20 @@ $gray: $gray-600 !default;
 
 $theme-colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
-$theme-colors: map-merge(( //'primary': $primary,
-        //'secondary': $secondary,
-        //'success': $success,
-        //'info': $info,
-        //'warning': $warning,
-        //'danger': $danger,
-        //'light': $light,
-        //'dark': $dark,
-        'gray': $gray),
-    $theme-colors);
+$theme-colors: map-merge(
+    (
+        //'primary': $primary,
+            //'secondary': $secondary,
+            //'success': $success,
+            //'info': $info,
+            //'warning': $warning,
+            //'danger': $danger,
+            //'light': $light,
+            //'dark': $dark,
+            'gray': $gray
+    ),
+    $theme-colors
+);
 
 // Options
 //
@@ -82,13 +86,16 @@ $spacer-x: 2rem;
 // This variable affects the `.h-*` and `.w-*` classes.
 $sizes: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
-$sizes: map-merge(( //25: 25%,
-        //50: 50%,
-        //75: 75%,
-        //100: 100%,
-        //auto: auto
+$sizes: map-merge(
+    (
+        //25: 25%,
+            //50: 50%,
+            //75: 75%,
+            //100: 100%,
+            //auto: auto
     ),
-    $sizes);
+    $sizes
+);
 
 // Body
 //
@@ -118,16 +125,20 @@ $body-bg: $gray-200 !default;
 //
 // Define the maximum width of `.container` for different screen sizes.
 
-$grid-breakpoints: (xs: 0,
+$grid-breakpoints: (
+    xs: 0,
     sm: 576px,
     md: 768px,
     lg: 992px,
-    xl: 1200px) !default;
+    xl: 1200px
+) !default;
 
-$container-max-widths: (sm: 540px,
+$container-max-widths: (
+    sm: 540px,
     md: 720px,
     lg: 960px,
-    xl: 1140px) !default;
+    xl: 1140px
+) !default;
 
 // Grid columns
 //
@@ -210,7 +221,7 @@ $line-height-base: 1.5 !default;
 
 //$headings-margin-bottom:      $spacer / 2 !default;
 //$headings-font-family:        null !default;
-//$headings-font-weight:        500 !default;
+$headings-font-weight: 500 !default;
 //$headings-line-height:        1.2 !default;
 //$headings-color:              null !default;
 
@@ -297,7 +308,7 @@ $table-striped-order: even !default;
 $input-btn-padding-y: 0.3125rem !default;
 $input-btn-padding-x: 1.25rem !default;
 //$input-btn-font-family:       null !default;
-$input-btn-font-size: .875rem !default;
+$input-btn-font-size: 0.875rem !default;
 $input-btn-line-height: 2;
 
 //$input-btn-focus-width:       .2rem !default;
@@ -323,7 +334,7 @@ $input-btn-font-size-sm: $font-size-sm * 0.8 !default;
 //$input-padding-y:                       $input-btn-padding-y !default;
 $input-padding-x: 0.75rem !default;
 //$input-font-family:                     $input-btn-font-family !default;
-$input-font-size: .9rem !default;
+$input-font-size: 0.9rem !default;
 //$input-font-weight:                     $font-weight-base !default;
 //$input-line-height:                     $input-btn-line-height !default;
 //

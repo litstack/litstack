@@ -23,8 +23,7 @@ class FjordUserController
     /**
      * Show user index.
      *
-     * @param FjordUserReadRequest $request
-     *
+     * @param  FjordUserReadRequest $request
      * @return void
      */
     public function showIndex(FjordUserReadRequest $request)

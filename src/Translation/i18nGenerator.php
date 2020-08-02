@@ -3,8 +3,9 @@
 namespace Fjord\Translation;
 
 /**
- * Generator inspired by martinlindhe
- * https://github.com/martinlindhe/laravel-vue-i18n-generator.
+ * Generator inspired by martinlindhe.
+ *
+ * @see https://github.com/martinlindhe/laravel-vue-i18n-generator
  */
 class i18nGenerator
 {
@@ -25,8 +26,7 @@ class i18nGenerator
     /**
      * Create new i18nGenerator instance.
      *
-     * @param array $translations
-     *
+     * @param  array $translations
      * @return void
      */
     public function __construct(array $translations)
@@ -37,8 +37,7 @@ class i18nGenerator
     /**
      * Convert translations array.
      *
-     * @param array $translations
-     *
+     * @param  array $translations
      * @return array
      */
     public static function convert(array $translations)
@@ -69,8 +68,7 @@ class i18nGenerator
     /**
      * Convert nested array.
      *
-     * @param array $array
-     *
+     * @param  array $array
      * @return array
      */
     public function convertArray(array $array)
@@ -90,8 +88,7 @@ class i18nGenerator
     /**
      * Turn Laravel style ":link" into vue-i18n style "{link}".
      *
-     * @param string $string
-     *
+     * @param  string $string
      * @return string
      */
     protected function convertString(string $string)

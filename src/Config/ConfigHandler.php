@@ -21,7 +21,7 @@ class ConfigHandler
     /**
      * Instance of config class.
      *
-     * @var \Fjord\Config\ConfigFile
+     * @var mixed
      */
     protected $config;
 
@@ -59,6 +59,17 @@ class ConfigHandler
     public function getType()
     {
         return $this->config === null ? null : get_class($this->config);
+    }
+
+    /**
+     * Determines if config is an instance of the given abstract.
+     *
+     * @param  string $abstract
+     * @return bool
+     */
+    public function instanceOf($abstract)
+    {
+        return $this->config instanceof $abstract;
     }
 
     /**

@@ -10,6 +10,11 @@ class InfoComponent extends Component implements Resizable
 {
     use CanBeResized;
 
+    /**
+     * Before mount lifecycle hook.
+     *
+     * @return void
+     */
     public function beforeMount()
     {
         $this->props['text'] = collect([]);
@@ -17,11 +22,23 @@ class InfoComponent extends Component implements Resizable
         $this->heading('h4');
     }
 
+    /**
+     * Sets the title.
+     *
+     * @param  string $title
+     * @return $this
+     */
     public function title($title)
     {
         return $this->prop('title', $title);
     }
 
+    /**
+     * Sets the heading.
+     *
+     * @param  string $heading
+     * @return $this
+     */
     public function heading($heading)
     {
         return $this->prop('heading', $heading);

@@ -11,6 +11,11 @@ class FieldWrapperGroupComponent extends Component implements Resizable
 {
     use CanBeResized;
 
+    /**
+     * Before mount lifecycle hook.
+     *
+     * @return void
+     */
     public function beforeMount()
     {
         $this->props['dependencies'][] = collect([]);

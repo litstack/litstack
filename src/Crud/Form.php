@@ -41,9 +41,7 @@ class Form
 
         $items = new FormFieldCollection($query->get());
 
-        $items = $this->getGroups($items, $loadingCollection, $loadingForm);
-
-        return $items;
+        return $this->getGroups($items, $loadingCollection, $loadingForm);
     }
 
     /**

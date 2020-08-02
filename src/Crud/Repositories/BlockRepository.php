@@ -129,7 +129,7 @@ class BlockRepository extends BaseFieldRepository
      * @param  CrudUpdateRequest $request
      * @param  mixed             $model
      * @param  object            $payload
-     * @return void
+     * @return mixed
      */
     public function order(CrudUpdateRequest $request, $model, $payload)
     {
@@ -139,9 +139,7 @@ class BlockRepository extends BaseFieldRepository
 
         $query = $this->field->getRelationQuery($model);
 
-        $order = $this->orderField($query, $this->field, $payload->ids);
-
-        return $order;
+        return $this->orderField($query, $this->field, $payload->ids);
     }
 
     /**
@@ -235,8 +233,6 @@ class BlockRepository extends BaseFieldRepository
      */
     protected function getRepeatable($model, $id)
     {
-        $repeatable = $model->{$this->field->id}()->findOrFail($id);
-
-        return $repeatable;
+        return $model->{$this->field->id}()->findOrFail($id);
     }
 }

@@ -221,9 +221,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
         }
 
         // For not translated fields.
-        $attributes = array_merge($attributes['value'], $attributes);
-
-        return $attributes;
+        return array_merge($attributes['value'], $attributes);
     }
 
     /**
