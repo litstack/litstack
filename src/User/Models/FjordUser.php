@@ -12,9 +12,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class FjordUser extends Authenticatable implements CanResetPasswordContract
 {
-    use Notifiable;
-    use HasRoles;
-    use CanResetPassword;
+    use Notifiable, HasRoles, CanResetPassword;
 
     /**
      * Guard name.
@@ -31,6 +29,13 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
     protected $fillable = [
         'username', 'first_name', 'last_name', 'email', 'locale',
     ];
+
+    /**
+     * Hidden attributes.
+     *
+     * @var array
+     */
+    protected $hidden = ['password'];
 
     /**
      * The attributes that should be cast to native types.

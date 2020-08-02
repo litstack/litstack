@@ -52,13 +52,11 @@ export default {
         model: {
             required: true,
             type: Object
-        },
-        value: {
-            required: true
         }
     },
     data() {
         return {
+            value: '',
             show: false,
             password: null
         };
