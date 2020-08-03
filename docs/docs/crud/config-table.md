@@ -24,6 +24,17 @@ It is also possible to specify the attribute of relations. In this case attribut
 $table->col('Product')->value('{product.name}');
 ```
 
+Maybe you want to display a value representative for a state, this can be achived by passing the attribute name as the first and an array of options as the second parameter to the value method:
+
+```php
+use App\Modols\Product;
+
+$table->col('State')->value('state', [
+    Product::AVAILABLE    => 'available',
+    Product::OUT_OF_STOCK => 'out of stock',
+]);
+```
+
 ## Small
 
 With the function `small` the column is reduced to the minimum width.
