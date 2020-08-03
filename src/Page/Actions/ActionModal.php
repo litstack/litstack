@@ -7,6 +7,7 @@ use Fjord\Crud\BaseForm;
 use Fjord\Crud\Field;
 use Fjord\Vue\Component;
 use Fjord\Vue\Traits\StaticComponentName;
+use InvalidArgumentException;
 
 class ActionModal extends Component
 {
@@ -70,6 +71,10 @@ class ActionModal extends Component
      */
     public function size($size)
     {
+        if (! in_array($size, ['sm', 'md', 'lg', 'xl'])) {
+            throw new InvalidArgumentException("Invalid size [{$size}], valid sizes are: sm, md, lg, xl");
+        }
+
         return $this->prop('size', $size);
     }
 
@@ -101,7 +106,7 @@ class ActionModal extends Component
      * @param  bool  $only
      * @return $this
      */
-    public function confirmOnly($only = true)
+    public function confirmOnly(bool $only = true)
     {
         return $this->prop('ok-only', $only);
     }
