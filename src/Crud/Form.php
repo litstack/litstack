@@ -20,9 +20,9 @@ class Form
      * returned where the respective collection or form can be called with the
      * name.
      *
-     * @param  string              $collection
-     * @param  string              $name
-     * @return FormFieldCollection
+     * @param  string                        $collection
+     * @param  string                        $name
+     * @return FormFieldCollection|FormField
      */
     public function load(string $collection = null, string $name = null)
     {
