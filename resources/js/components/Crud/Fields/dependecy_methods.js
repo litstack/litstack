@@ -57,6 +57,13 @@ export default {
     },
 
     /**
+     * Determinces if whenNot condition is fulfilled.
+     */
+    fulfillsWhenNot(dependency) {
+        return this.model[dependency.attribute] != dependency.value;
+    },
+
+    /**
      * Determinces if whenContains condition is fulfilled.
      */
     fulfillsWhenContains(dependency) {

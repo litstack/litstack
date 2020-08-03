@@ -15,6 +15,7 @@ class FieldDependency extends VueProp
      */
     protected static $conditions = [
         'when',
+        'whenNot',
         'whenContains',
     ];
 
