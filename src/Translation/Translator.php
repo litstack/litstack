@@ -24,19 +24,24 @@ class Translator
     /**
      * Get translation for Fjord application.
      *
-     * @param  string $key
-     * @param  array  $replace
+     * @param  string      $key
+     * @param  array       $replace
+     * @param  string|null $locale
      * @return string
      */
-    public function trans(string $key = null, $replace = [])
+    public function trans(string $key = null, $replace = [], $locale = null)
     {
+        if (is_null($locale)) {
+            $locale = $this->getLocale();
+        }
+
         $langKey = $this->getLangKey($key);
 
         if ($langKey === false) {
             return $key;
         }
 
-        return __($langKey, $replace, $this->getLocale());
+        return __($langKey, $replace, $locale);
     }
 
     /**

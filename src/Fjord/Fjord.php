@@ -95,17 +95,18 @@ class Fjord
     /**
      * Get translation for Fjord application.
      *
-     * @param  string $key
-     * @param  array  $replace
+     * @param  string      $key
+     * @param  array       $replace
+     * @param  string|null $locale
      * @return string
      */
-    public function trans(string $key = null, $replace = [])
+    public function trans(string $key = null, $replace = [], $locale = null)
     {
         if (is_null($key)) {
             return $key;
         }
 
-        return $this->laravel['fjord.translator']->trans($key, $replace);
+        return $this->laravel['fjord.translator']->trans($key, $replace, $locale);
     }
 
     /**
@@ -127,13 +128,14 @@ class Fjord
     /**
      * Get translation for Fjord application.
      *
-     * @param  string $key
-     * @param  array  $replace
+     * @param  string      $key
+     * @param  array       $replace
+     * @param  string|null $locale
      * @return string
      */
-    public function __(string $key = null, $replace = [])
+    public function __(string $key = null, $replace = [], $locale = null)
     {
-        return $this->trans($key, $replace);
+        return $this->trans($key, $replace, $locale);
     }
 
     /**
@@ -149,9 +151,9 @@ class Fjord
     }
 
     /**
-     * Get authenticated Fjord user.
+     * Gets the  authenticated Fjord user.
      *
-     * @return \Fjord\User\Models\FjordUser $user
+     * @return \Fjord\User\Models\FjordUser|null
      */
     public function user()
     {
