@@ -43,12 +43,14 @@ class Column extends VueProp implements ColumnInterface
     /**
      * Set value.
      *
-     * @param  string $value
+     * @param  string     $value
+     * @param  array|null $options
      * @return $this
      */
-    public function value($value)
+    public function value($value, array $options = null)
     {
         $this->setAttribute('value', $value);
+        $this->setAttribute('value_options', $options);
 
         return $this;
     }
