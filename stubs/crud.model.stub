@@ -16,7 +16,6 @@ class DummyClassname extends Model DummyImplement
      * Don't forget to also set them fillable in the coresponding translation-model!
      */
 
-    
     /**
      * Fillable attributes
      *
@@ -25,7 +24,6 @@ class DummyClassname extends Model DummyImplement
     protected $fillable = ['title', 'text'];
     DummyVars
     DummyWiths
-
     DummySluggable
 
     DummyGetAttributes

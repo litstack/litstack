@@ -1,0 +1,76 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+use Fjord\Support\Migration\MigratePermissions;
+
+class DummyClassname extends Migration
+{
+    use MigratePermissions;
+
+    /**
+     * Permissions that should be created for this crud.
+     *
+     * @var array
+     */
+    protected $permissions = [
+        'create DummyTablename',
+        'read DummyTablename',
+        'update DummyTablename',
+        'delete DummyTablename',
+    ];
+
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('DummyTablename', function (Blueprint $table) {
+            $table->bigIncrements('id');
+
+            // Enter all non-translated columns here.
+            // Set them to fillable in your model.
+
+            //$table->string('title');
+
+            DummySlug
+
+            $table->boolean('active')->default(true);
+
+            $table->timestamps();
+        });
+        
+        Schema::create('DummyTranslationTablename', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('DummyForeignId')->unsigned();
+            $table->string('locale')->index();
+
+            // Set all columns that are translated here.
+            // Set them to fillable in the translation Model.
+
+            //$table->string('title')->nullable();
+            //$table->text('text')->nullable();
+
+            $table->unique(['DummyForeignId', 'locale']);
+            $table->foreign('DummyForeignId')->references('id')->on('DummyTablename')->onDelete('cascade');
+        });
+
+        $this->upPermissions();
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('DummyTranslationTablename');
+        Schema::dropIfExists('DummyTablename');
+
+        $this->downPermissions();
+    }
+}
