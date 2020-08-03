@@ -15,7 +15,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 /**
  * The FjordFormModel stores field data in as json in a column.
  */
-class FjordFormModel extends Model implements HasMedia, TranslatableContract
+abstract class FjordFormModel extends Model implements HasMedia, TranslatableContract
 {
     use Traits\HasMedia;
     use Translatable;

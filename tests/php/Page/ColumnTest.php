@@ -4,10 +4,10 @@ namespace FjordTest\Page;
 
 use Fjord\Exceptions\MissingAttributeException;
 use Fjord\Page\Table\Column;
-use FjordTest\BackendTestCase;
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 
-class ColumnTest extends BackendTestCase
+class ColumnTest extends TestCase
 {
     /** @test */
     public function test_constructor_sets_label_and_value()

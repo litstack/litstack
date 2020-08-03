@@ -19,10 +19,35 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->package = Package::get('aw-studio/fjord');
 
         parent::boot();
+
         $provider = $this;
+
         $this->app->booted(function () use ($provider) {
             $provider->addNavPresets();
         });
+    }
+
+    /**
+     * Map routes.
+     *
+     * @return void
+     */
+    public function map()
+    {
+        $this->mapUserRoleRoutes();
+    }
+
+    /**
+     * Map user role routes.
+     *
+     * @return void
+     */
+    protected function mapUserRoleRoutes()
+    {
+        $this->package->route()->get('profile-sessions', ProfileController::class.'@sessions')->name('sessions');
+        $this->package->route()->get('/fjord/users', FjordUserController::class.'@showIndex')->name('users');
+        $this->package->route()->post('/fjord/users-index', FjordUserController::class.'@fetchIndex')->name('users.index');
+        $this->package->route()->post('/fjord/users/delete-all', FjordUserController::class.'@deleteAll')->name('users.delete');
     }
 
     /**
@@ -49,18 +74,5 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             'title' => fn () => __f('fj.profile'),
             'icon'  => fa('user-cog'),
         ]);
-    }
-
-    public function map()
-    {
-        $this->mapUserRoleRoutes();
-    }
-
-    protected function mapUserRoleRoutes()
-    {
-        $this->package->route()->get('profile-sessions', ProfileController::class.'@sessions')->name('sessions');
-        $this->package->route()->get('/fjord/users', FjordUserController::class.'@showIndex')->name('users');
-        $this->package->route()->post('/fjord/users-index', FjordUserController::class.'@fetchIndex')->name('users.index');
-        $this->package->route()->post('/fjord/users/delete-all', FjordUserController::class.'@deleteAll')->name('users.delete');
     }
 }

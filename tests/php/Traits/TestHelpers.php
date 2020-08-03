@@ -53,18 +53,23 @@ trait TestHelpers
     /**
      * Get protected or private class property value.
      *
-     * @param mixed  $instance
-     * @param string $property
-     * @param mixed  $value
-     *
+     * @param  mixed  $object
+     * @param  string $property
+     * @param  mixed  $value
      * @return mixed
      */
-    public function getUnaccessibleProperty($instance, string $property)
+    public function getUnaccessibleProperty($object, string $property)
     {
-        $reflection = new ReflectionProperty(get_class($instance), $property);
+        if (! is_string($object)) {
+            $class = get_class($object);
+        } else {
+            $class = $object;
+        }
+
+        $reflection = new ReflectionProperty($class, $property);
         $reflection->setAccessible(true);
 
-        return $reflection->getValue($instance);
+        return $reflection->getValue($object);
     }
 
     /**

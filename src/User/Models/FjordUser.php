@@ -6,10 +6,16 @@ use Fjord\Auth\Models\FjordSession;
 use Fjord\Auth\Notifications\ResetPasswordNotification;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * Fjord\User\Models\FjordUser.
+ *
+ * @property-read bool $is_admin
+ */
 class FjordUser extends Authenticatable implements CanResetPasswordContract
 {
     use Notifiable, HasRoles, CanResetPassword;
@@ -59,8 +65,7 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
     /**
      * Send password reset notification.
      *
-     * @param string $token
-     *
+     * @param  string $token
      * @return void
      */
     public function sendPasswordResetNotification($token)
@@ -85,21 +90,19 @@ class FjordUser extends Authenticatable implements CanResetPasswordContract
     /**
      * Has role admin scope.
      *
-     * @param $query
-     *
-     * @return $query
+     * @param  Builder $query
+     * @return Builder $query
      */
     public function scopeAdmin($query)
     {
-        return $query->role('admin');
+        $query->role('admin');
     }
 
     /**
      * Has role user scope.
      *
-     * @param  $query
-     *
-     * @return $query
+     * @param  Builder $query
+     * @return Builder $query
      */
     public function scopeUser($query)
     {

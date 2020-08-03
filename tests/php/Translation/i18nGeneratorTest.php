@@ -3,10 +3,13 @@
 namespace FjordTest\Fields;
 
 use Fjord\Translation\i18nGenerator;
-use FjordTest\BackendTestCase;
+use FjordTest\Traits\TestHelpers;
+use PHPUnit\Framework\TestCase;
 
-class i18nGeneratorTest extends BackendTestCase
+class i18nGeneratorTest extends TestCase
 {
+    use TestHelpers;
+
     public function setUp(): void
     {
         parent::setUp();

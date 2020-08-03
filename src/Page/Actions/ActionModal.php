@@ -12,6 +12,11 @@ class ActionModal extends Component
 {
     use StaticComponentName;
 
+    /**
+     * Component name.
+     *
+     * @var string
+     */
     protected $name = 'b-modal';
 
     /**
@@ -21,6 +26,11 @@ class ActionModal extends Component
      */
     protected $form;
 
+    /**
+     * Handle beforeMount.
+     *
+     * @return void
+     */
     public function beforeMount()
     {
         $this->confirmVariant('primary');
@@ -29,62 +39,101 @@ class ActionModal extends Component
         //$this->prop('footer-variant', 'ligjt');
     }
 
+    /**
+     * Set modal message.
+     *
+     * @param  string $message
+     * @return void
+     */
     public function message($message)
     {
-        $this->prop('message', $message);
-
-        return $this;
+        return $this->prop('message', $message);
     }
 
+    /**
+     * Set modal title.
+     *
+     * @param  string $title
+     * @return $this
+     */
     public function title($title)
     {
-        $this->prop('title-html', $title);
-
-        return $this;
+        return $this->prop('title-html', $title);
     }
 
+    /**
+     * Set modal size.
+     * Possible sizes: sm, md, lg, xl.
+     *
+     * @param  string $size
+     * @return void
+     */
     public function size($size)
     {
-        $this->prop('size', $size);
-
-        return $this;
+        return $this->prop('size', $size);
     }
 
+    /**
+     * Set confirm vairant.
+     *
+     * @param  string $variant
+     * @return $this
+     */
     public function confirmVariant(string $variant)
     {
-        $this->prop('ok-variant', $variant);
-
-        return $this;
+        return $this->prop('ok-variant', $variant);
     }
 
+    /**
+     * Set confirm text.
+     *
+     * @param  string $text
+     * @return $this
+     */
     public function confirmText($text)
     {
-        $this->prop('ok-title-html', $text);
-
-        return $this;
+        return $this->prop('ok-title-html', $text);
     }
 
+    /**
+     * Remove cancel button.
+     *
+     * @param  bool  $only
+     * @return $this
+     */
     public function confirmOnly($only = true)
     {
-        $this->prop('ok-only', $only);
-
-        return $this;
+        return $this->prop('ok-only', $only);
     }
 
+    /**
+     * Set cancel button variant.
+     *
+     * @param  string $variant
+     * @return $this
+     */
     public function cancelVariant(string $variant)
     {
-        $this->prop('cancel-variant', $variant);
-
-        return $this;
+        return $this->prop('cancel-variant', $variant);
     }
 
+    /**
+     * Set cancel button text.
+     *
+     * @param  string $title
+     * @return $this
+     */
     public function cancelText($title)
     {
-        $this->prop('cancel-title-html', $title);
-
-        return $this;
+        return $this->prop('cancel-title-html', $title);
     }
 
+    /**
+     * Create modal form.
+     *
+     * @param  Closure $closure
+     * @return $this
+     */
     public function form(Closure $closure)
     {
         $form = new BaseForm('');
@@ -102,6 +151,11 @@ class ActionModal extends Component
         return $this;
     }
 
+    /**
+     * Render ActionModal.
+     *
+     * @return array
+     */
     public function render(): array
     {
         return array_merge(parent::render(), [

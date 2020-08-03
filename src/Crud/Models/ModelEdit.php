@@ -3,6 +3,8 @@
 namespace Fjord\Crud\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class ModelEdit extends Model
 {
@@ -30,12 +32,22 @@ class ModelEdit extends Model
             ->diffForHumans();
     }
 
-    public function user()
+    /**
+     * User relation.
+     *
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(\Fjord\User\Models\FjordUser::class, 'fjord_user_id');
     }
 
-    public function model(): morphTo
+    /**
+     * Model relation.
+     *
+     * @return MorphTo
+     */
+    public function model(): MorphTo
     {
         return $this->morphTo();
     }

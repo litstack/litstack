@@ -6,8 +6,6 @@ use Fjord\Application\Application;
 use Fjord\Application\Navigation\Config as NavigationConfig;
 use Fjord\Application\Navigation\NavigationConfigFactory;
 use Fjord\Application\Package\FjordPackage as Package;
-use Fjord\Crud\Components\CrudFormComponent;
-use Fjord\Crud\Components\CrudIndexComponent;
 use Fjord\Crud\Config\Factories\CrudFormConfigFactory;
 use Fjord\Crud\Config\Factories\CrudIndexConfigFactory;
 use Fjord\Crud\Config\Traits\HasCrudIndex;
@@ -64,11 +62,6 @@ class FjordPackage extends Package
      * @var array
      */
     protected $components = [
-        // Root
-        'fj-crud-index' => CrudIndexComponent::class,
-        'fj-crud-form'  => CrudFormComponent::class,
-
-        // Other
         'fj-info'                => InfoComponent::class,
         'fj-blade'               => BladeComponent::class,
         'fj-field-wrapper'       => FieldWrapperComponent::class,

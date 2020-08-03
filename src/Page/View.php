@@ -14,7 +14,7 @@ class View extends VueProp
         $this->view = $view;
     }
 
-    public function render()
+    public function render(): array
     {
         return [
             'component',

@@ -3,10 +3,10 @@
 namespace FjordTest\Page;
 
 use Fjord\Page\Table\Components\ColumnComponent;
-use FjordTest\BackendTestCase;
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 
-class ColumnComponentTest extends BackendTestCase
+class ColumnComponentTest extends TestCase
 {
     public function setUp(): void
     {

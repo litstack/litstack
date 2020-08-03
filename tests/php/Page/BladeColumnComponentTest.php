@@ -4,11 +4,11 @@ namespace FjordTest\Page;
 
 use Fjord\Page\Table\Components\BladeColumnComponent;
 use Fjord\Page\Table\Components\ColumnComponent;
-use FjordTest\BackendTestCase;
 use Illuminate\Contracts\View\View;
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
-class BladeColumnComponentTest extends BackendTestCase
+class BladeColumnComponentTest extends TestCase
 {
     public function setUp(): void
     {
