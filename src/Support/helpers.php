@@ -205,7 +205,7 @@ if (! function_exists('asset_time')) {
      */
     function asset_time()
     {
-        return config('app.env') == 'production' ? '' : '?t='.time();
+        return production() ? '' : '?t='.time();
     }
 }
 

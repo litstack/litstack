@@ -11,8 +11,7 @@ class BootstrapTranslator
      * Bootstrap VueApplication instance and bind it to
      * the Fjord application.
      *
-     * @param Fjord\Application\Application $app
-     *
+     * @param  Fjord\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app)

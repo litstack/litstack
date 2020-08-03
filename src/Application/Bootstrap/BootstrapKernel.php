@@ -12,8 +12,7 @@ class BootstrapKernel
     /**
      * Registers artisan commands of all fjord packages.
      *
-     * @param \Fjord\Application\Application $app
-     *
+     * @param  \Fjord\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app, Kernel $kernel)

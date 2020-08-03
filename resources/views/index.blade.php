@@ -18,7 +18,7 @@
 
     <link href="{{ route('fjord.css') }}" rel="stylesheet"/>
     
-    @foreach(fjord_app()->getCssFiles() as $path)
+    @foreach(fjord_app()->getStyles() as $path)
         <link href="{{ $path }}{{ asset_time() }}" rel="stylesheet">
     @endforeach
 
@@ -57,6 +57,10 @@
     <!-- fjord app js -->
     <script src="{{ fjord_js() }}" defer></script>
 
+    @foreach(fjord_app()->getScripts() as $src)
+        <script src="{{ $src }}"></script>
+    @endforeach
+
     <script type="text/javascript">
         function makeVisible(){
             let spinner = document.getElementById("fj-spinner");
@@ -82,7 +86,7 @@
                         toasterSlot.classList.add('sticky')
                     }
                     
-                }else{
+                } else {
                     header.classList.remove('sticky')
                     if(toasterSlot){
                         toasterSlot.classList.remove('sticky')

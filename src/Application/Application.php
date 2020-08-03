@@ -16,7 +16,7 @@ use Illuminate\View\View;
  */
 class Application
 {
-    use Concerns\ManagesFiles;
+    use Concerns\ManagesAssets;
 
     /**
      * Registered config factories.

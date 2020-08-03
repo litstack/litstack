@@ -10,8 +10,7 @@ class RegisterConfigFactories
     /**
      * Registers config factories from packages.
      *
-     * @param \Fjord\Application\Application $app
-     *
+     * @param  \Fjord\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app)

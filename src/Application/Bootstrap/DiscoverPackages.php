@@ -17,6 +17,8 @@ class DiscoverPackages
 
     /**
      * Set the manifest path.
+     *
+     * @return void
      */
     public function __construct()
     {
@@ -27,8 +29,7 @@ class DiscoverPackages
      * Initialize Packages instance with all Fjord packages
      * and bind instance to the application.
      *
-     * @param Fjord\Application\Application $app
-     *
+     * @param  Fjord\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app)

@@ -85,8 +85,7 @@ class ApplicationServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application services.
      *
-     * @param \Illuminate\Routing\Router $router
-     *
+     * @param  \Illuminate\Routing\Router $router
      * @return void
      */
     public function boot(Router $router): void
@@ -105,15 +104,14 @@ class ApplicationServiceProvider extends ServiceProvider
     {
         $files = config('fjord.assets.css') ?? [];
         foreach ($files as $file) {
-            $this->app['fjord.app']->addCssFile($file);
+            $this->app['fjord.app']->style($file);
         }
     }
 
     /**
      * Handle kernel methods "handleRoute" and "handleView".
      *
-     * @param \Illuminate\Routing\Router $router
-     *
+     * @param  \Illuminate\Routing\Router $router
      * @return void
      */
     protected function handleKernel(Router $router)
