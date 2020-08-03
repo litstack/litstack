@@ -3,13 +3,10 @@
 namespace Fjord\Test\Page;
 
 use Fjord\Page\Actions\AttributeBag;
-use FjordTest\Traits\TestHelpers;
 use PHPUnit\Framework\TestCase;
 
 class AttributeBagTest extends TestCase
 {
-    use TestHelpers;
-
     /** @test */
     public function test_magic_method_get()
     {
