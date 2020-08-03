@@ -2,14 +2,10 @@
 
 namespace Fjord\Test\Page;
 
-use Fjord\Crud\BaseForm;
 use Fjord\Page\Actions\ActionModal;
 use Fjord\Vue\Traits\StaticComponentName;
 use FjordTest\Traits\TestHelpers;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Facade;
 use InvalidArgumentException;
-use Mockery as m;
 use PHPUnit\Framework\TestCase;
 
 class ActionModalTest extends TestCase
@@ -97,20 +93,6 @@ class ActionModalTest extends TestCase
         $modal = new ActionModal();
         $this->assertInstanceOf(ActionModal::class, $modal->cancelText('nope'));
         $this->assertSame('nope', $modal->getProp('cancel-title-html'));
-    }
-
-    /** @test */
-    public function test_form_method()
-    {
-        $fjord = m::mock('fjord');
-        $fjord->shouldReceive('url');
-        $app = new Application;
-        $app['fjord'] = $fjord;
-        Facade::setFacadeApplication($app);
-
-        $modal = new ActionModal();
-        $this->assertInstanceOf(ActionModal::class, $modal->form(fn (BaseForm $form) => null));
-        $this->assertInstanceOf(BaseForm::class, $this->getUnaccessibleProperty($modal, 'form'));
     }
 
     /** @test */
