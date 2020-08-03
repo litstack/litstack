@@ -155,7 +155,7 @@ $grid-gutter-width: 30px !default;
 //$line-height-lg: 1.5 !default;
 //$line-height-sm: 1.5 !default;
 
-//$border-width: 1px !default;
+$border-width: 1px !default;
 $border-color: $secondary !default;
 
 $border-radius: 0.625rem !default;
@@ -501,7 +501,7 @@ $dropdown-item-padding-x: $input-btn-padding-x !default;
 // Modals
 
 // Padding applied to the modal body
-$modal-inner-padding: 2rem !default;
+$modal-inner-padding: 1.5rem !default;
 //
 //// Margin between elements in footer, must be lower than or equal to 2 * $modal-inner-padding
 //$modal-footer-margin-between: 0.5rem !default;
@@ -513,8 +513,8 @@ $modal-inner-padding: 2rem !default;
 //
 //$modal-content-color: null !default;
 //$modal-content-bg: $white !default;
-//$modal-content-border-color: rgba($black, 0.2) !default;
-//$modal-content-border-width: $border-width !default;
+$modal-content-border-color: $border-color !default;
+$modal-content-border-width: $border-width !default;
 //$modal-content-border-radius: $border-radius-lg !default;
 //$modal-content-inner-border-radius: subtract(
 //    $modal-content-border-radius,
@@ -525,13 +525,14 @@ $modal-inner-padding: 2rem !default;
 //
 //$modal-backdrop-bg: $black !default;
 //$modal-backdrop-opacity: 0.5 !default;
-//$modal-header-border-color: $border-color !default;
-//$modal-footer-border-color: $modal-header-border-color !default;
-//$modal-header-border-width: $modal-content-border-width !default;
-//$modal-footer-border-width: $modal-header-border-width !default;
+// $modal-header-border-color: $border-color !default;
+$modal-header-border-width: 0 !default;
+$modal-footer-border-width: $border-width !default;
+$modal-footer-border-color: $gray-400 !default;
 $modal-header-padding-y: $modal-inner-padding !default;
 $modal-header-padding-x: $modal-inner-padding !default;
-//$modal-header-padding: $modal-header-padding-y $modal-header-padding-x !default; // Keep this for backwards compatibility
+$modal-header-padding: $modal-header-padding-y $modal-header-padding-x 0
+    $modal-header-padding-x !default; // Keep this for backwards compatibility
 //
 //$modal-xl: 1140px !default;
 //$modal-lg: 800px !default;
