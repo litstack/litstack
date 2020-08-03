@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\ResponseFactory;
 
-class Responses
+class ResponseMacros
 {
     /**
      * Register the macros.
