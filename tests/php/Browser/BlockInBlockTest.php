@@ -35,7 +35,7 @@ class BlockInBlockTest extends FrontendTestCase
                 ->waitFor('.fj-block-content')
                 ->click('.fj-block-content .fj-block-add-card')
                 ->waitFor('.fj-block-content .fj-block')
-                ->waitUsing(3, 5, function () {
+                ->waitUsing(1, 10, function () {
                     return ! $this->post->refresh()->content->isEmpty();
                 }, 'Parent Block was not created.');
         });
@@ -56,10 +56,10 @@ class BlockInBlockTest extends FrontendTestCase
                  ->waitFor('.fj-block-content .fj-block')
                  ->click('.fj-block-content .fj-block-card .fj-block-add-text')
                  ->waitFor('.fj-block-card .fj-block')
-                 ->waitUsing(3, 5, function () {
+                 ->waitUsing(1, 10, function () {
                      return ! $this->post->refresh()->content->first()->card->isEmpty();
                  }, 'Child block was not created.')
-                 ->waitUsing(3, 5, function () {
+                 ->waitUsing(1, 10, function () {
                      return $this->post->content->first()->card->first() instanceof FormBlock;
                  }, 'Child block is not an instanceof FormBlock.');
         });
@@ -83,7 +83,7 @@ class BlockInBlockTest extends FrontendTestCase
                  ->type('.fj-block-card .fj-block textarea', 'Hello World')
                  ->waitFor('.fj-save-button .btn-primary')
                  ->click('.fj-save-button .btn-primary')
-                ->waitUsing(3, 5, function () {
+                ->waitUsing(1, 10, function () {
                     $repeatable = $this->post->refresh()->content->first()->card->first();
 
                     return $repeatable->text == 'Hello World';
