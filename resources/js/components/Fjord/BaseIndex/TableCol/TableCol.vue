@@ -108,19 +108,16 @@ export default {
             let value = '';
 
             if (col.value_options) {
-                return col.value_options[item[col.value]];
+                value = col.value_options[item[col.value]];
+            } else {
+                value = col.value;
             }
 
             // Regex for has {value} pattern.
-            if (/{(.*?)}/.test(col.value)) {
-                value = this._format(col.value, item);
-            } else if (
-                item[col.value] !== undefined &&
-                item[col.value] !== null
-            ) {
-                value = item[col.value];
-            } else {
-                value = col.value;
+            if (/{(.*?)}/.test(value)) {
+                value = this._format(value, item);
+            } else if (item[value] !== undefined && item[value] !== null) {
+                value = item[value];
             }
 
             return this.format(value);
