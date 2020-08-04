@@ -3,12 +3,12 @@
 namespace FjordTest\Fields;
 
 use Fjord\Crud\Fields\ListField\ListRelation;
-use FjordTest\BackendTestCase;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
-class FieldListRelationTest extends BackendTestCase
+class FieldListRelationTest extends TestCase
 {
     /** @test */
     public function getResults_calls_sort_by_and_unflattenList()

@@ -8,6 +8,7 @@ use Fjord\Exceptions\Traceable\InvalidArgumentException;
 use Fjord\Exceptions\Traceable\MissingAttributeException;
 use Fjord\Support\HasAttributes;
 use Fjord\Support\VueProp;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
 
@@ -194,6 +195,36 @@ class Field extends VueProp
         }
 
         return $this;
+    }
+
+    /**
+     * Resolve field dependencies.
+     *
+     * @param  self|string $field
+     * @param  int|string  $value
+     * @return array
+     *
+     * @throws InvalidArgumentException
+     */
+    protected function resolveDependencyArguments($field, $value)
+    {
+        if (is_string($field)) {
+            if (! $field = $this->formInstance->findField($fieldId = $field)) {
+                throw new InvalidArgumentException("Couldn't find field [{$fieldId}]");
+            }
+        }
+
+        return [$field, $value];
+    }
+
+    /**
+     * Get dependencies.
+     *
+     * @return Collection
+     */
+    public function getDependencies()
+    {
+        return $this->dependencies ?: collect([]);
     }
 
     /**
@@ -500,7 +531,7 @@ class Field extends VueProp
     {
         if (FieldDependency::conditionExists($method)) {
             return $this->addDependency(
-                FieldDependency::make($method, ...$parameters)
+                FieldDependency::make($method, ...$this->resolveDependencyArguments(...$parameters))
             );
         }
 

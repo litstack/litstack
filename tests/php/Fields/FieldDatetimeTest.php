@@ -5,17 +5,15 @@ namespace FjordTest\Fields;
 use Carbon\CarbonInterface;
 use Fjord\Crud\BaseField;
 use Fjord\Crud\Fields\Datetime;
-use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
+use PHPUnit\Framework\TestCase;
 
-class FieldDatetimeTest extends BackendTestCase
+class FieldDatetimeTest extends TestCase
 {
     use InteractsWithFields;
 
     public function setUp(): void
     {
-        parent::setUp();
-
         $this->field = $this->getField(Datetime::class);
     }
 

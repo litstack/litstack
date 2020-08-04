@@ -30,6 +30,7 @@ class FieldDependencyTest extends TestCase
         $conditions = $this->getUnaccessibleProperty(FieldDependency::class, 'conditions');
 
         $this->assertContains('when', $conditions);
+        $this->assertContains('whenNot', $conditions);
         $this->assertContains('whenContains', $conditions);
     }
 

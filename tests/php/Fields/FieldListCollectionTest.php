@@ -3,10 +3,10 @@
 namespace FjordTest\Fields;
 
 use Fjord\Crud\Fields\ListField\ListCollection;
-use FjordTest\BackendTestCase;
 use Illuminate\Database\Eloquent\Model;
+use PHPUnit\Framework\TestCase;
 
-class FieldListCollectionTest extends BackendTestCase
+class FieldListCollectionTest extends TestCase
 {
     /** @test */
     public function it_sets_depth_when_created_and_setDepth_is_true()

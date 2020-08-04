@@ -4,17 +4,15 @@ namespace FjordTest\Fields;
 
 use Fjord\Crud\BaseField;
 use Fjord\Crud\Fields\Range;
-use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
+use PHPUnit\Framework\TestCase;
 
-class FieldRangeTest extends BackendTestCase
+class FieldRangeTest extends TestCase
 {
     use InteractsWithFields;
 
     public function setUp(): void
     {
-        parent::setUp();
-
         $this->field = $this->getField(Range::class);
     }
 

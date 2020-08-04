@@ -5,17 +5,16 @@ namespace FjordTest\Fields;
 use Fjord\Crud\BaseField;
 use Fjord\Crud\Fields\Select;
 use Fjord\Crud\Fields\Traits\FieldHasRules;
-use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
+use FjordTest\Traits\TestHelpers;
+use PHPUnit\Framework\TestCase;
 
-class FieldSelectTest extends BackendTestCase
+class FieldSelectTest extends TestCase
 {
-    use InteractsWithFields;
+    use InteractsWithFields, TestHelpers;
 
     public function setUp(): void
     {
-        parent::setUp();
-
         $this->field = $this->getField(Select::class);
     }
 
