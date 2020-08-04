@@ -67,10 +67,7 @@ class Table extends BaseTable implements TableContract
         $this->sortByDefault('id.desc');
         $this->perPage(10);
         $this->search(['title']);
-        $this->sortBy([
-            'id.desc' => __f('fj.sort_new_to_old'),
-            'id.asc'  => __f('fj.sort_old_to_new'),
-        ]);
+        $this->sortBy($this->numericOrder());
     }
 
     /**
@@ -84,6 +81,34 @@ class Table extends BaseTable implements TableContract
         $this->setAttribute('route_prefix', $routePrefix);
 
         return $this;
+    }
+
+    /**
+     * Gets alphabetic order configuration.
+     *
+     * @param  string $column
+     * @return array
+     */
+    public function alphabeticOrder($column = 'title')
+    {
+        return [
+            "{$column}.desc" => 'A -> Z',
+            "{$column}.asc"  => 'Z -> A',
+        ];
+    }
+
+    /**
+     * Gets numeric order configuration.
+     *
+     * @param  string $column
+     * @return array
+     */
+    public function numericOrder($column = 'id')
+    {
+        return [
+            "{$column}.desc" => __f('fj.sort_new_to_old'),
+            "{$column}.asc"  => __f('fj.sort_old_to_new'),
+        ];
     }
 
     /**
