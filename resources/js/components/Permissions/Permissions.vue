@@ -154,7 +154,7 @@ export default {
                 'SET_FJ_PERMISSIONS_ROLE',
                 this.findRole(payload.tab.id)
             );
-            let response = await axios.post('index', payload);
+            let response = await axios.post('permissions/index', payload);
             this.permissions = response.data.unique_items;
             this.count = response.data.count;
 

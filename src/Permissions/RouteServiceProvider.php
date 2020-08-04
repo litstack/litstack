@@ -54,7 +54,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     {
         $this->package->addNavPreset('permissions', [
             'link'      => route('fjord.aw-studio.fjord.permissions'),
-            'title'     => fn () => __f('fj.permissions'),
+            'title'     => fn ()     => __f('fj.permissions'),
             'icon'      => fa('unlock-alt'),
             'authorize' => function ($user) {
                 return $user->can('read fjord-role-permissions');
@@ -90,7 +90,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             ->name('role.destroy');
 
         $this->package->route()
-            ->post('/index', PermissionController::class.'@fetchIndex')
+            ->post('permissions/index', PermissionController::class.'@fetchIndex')
             ->name('permissions.index');
 
         $this->package->route()
