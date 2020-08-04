@@ -108,6 +108,35 @@ class Component extends VueProp implements AuthorizableContract
     }
 
     /**
+     * Add single prop.
+     *
+     * @param  string $name
+     * @param  mixed  $value
+     * @return self
+     */
+    public function prop(string $name, $value = true)
+    {
+        $this->props[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Bind multiple props.
+     *
+     * @param  array $props
+     * @return self
+     */
+    public function bind(array $props)
+    {
+        foreach ($props as $name => $value) {
+            $this->prop($name, $value);
+        }
+
+        return $this;
+    }
+
+    /**
      * The name of the slot, if this component is the child of another component.
      *
      * @param  string $name
@@ -121,6 +150,16 @@ class Component extends VueProp implements AuthorizableContract
     }
 
     /**
+     * Gets slot name.
+     *
+     * @return string|null
+     */
+    public function getSlot()
+    {
+        return $this->slot;
+    }
+
+    /**
      * Add child component.
      *
      * @param  mixed $component
@@ -131,6 +170,16 @@ class Component extends VueProp implements AuthorizableContract
         $this->children[] = $component;
 
         return $this;
+    }
+
+    /**
+     * Get children.
+     *
+     * @return array
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 
     /**
@@ -159,32 +208,14 @@ class Component extends VueProp implements AuthorizableContract
     }
 
     /**
-     * Bind multiple props.
+     * Gets event handler.
      *
-     * @param  array $props
-     * @return self
+     * @param  string      $event
+     * @return string|null
      */
-    public function bind(array $props)
+    public function getEventHandler($event)
     {
-        foreach ($props as $name => $value) {
-            $this->prop($name, $value);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Add single prop.
-     *
-     * @param  string $name
-     * @param  mixed  $value
-     * @return self
-     */
-    public function prop(string $name, $value = true)
-    {
-        $this->props[$name] = $value;
-
-        return $this;
+        return $this->events[$event];
     }
 
     /**
@@ -195,9 +226,21 @@ class Component extends VueProp implements AuthorizableContract
      */
     public function class(string $class)
     {
-        $this->classes[] = $class;
+        if (! in_array($class, $this->classes)) {
+            $this->classes[] = $class;
+        }
 
         return $this;
+    }
+
+    /**
+     * Get classes.
+     *
+     * @return void
+     */
+    public function getClasses()
+    {
+        return $this->classes;
     }
 
     /**

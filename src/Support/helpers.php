@@ -1,5 +1,6 @@
 <?php
 
+use Fjord\Support\Facades\Vue;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -62,9 +63,8 @@ if (! function_exists('component')) {
     /**
      * Get a new Vue component instance.
      *
-     * @param \Fjord\Vue\Component|string $name
-     * @param mixed                       $fallback
-     *
+     * @param  \Fjord\Vue\Component|string $name
+     * @param  string                      $fallback
      * @return \Fjord\Vue\Component|mixed
      */
     function component($name, $fallback = null)
@@ -73,15 +73,11 @@ if (! function_exists('component')) {
             return $name;
         }
 
-        if (fjord()->get('components')->isRegistered($name)) {
-            return fjord()->get('components')->component($name);
+        if (Vue::has($name) || is_null($fallback)) {
+            return Vue::make($name);
         }
 
-        if ($fallback) {
-            return new $fallback($name);
-        }
-
-        return new \Fjord\Vue\Component($name);
+        return new $fallback($name);
     }
 }
 

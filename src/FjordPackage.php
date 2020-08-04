@@ -31,7 +31,7 @@ class FjordPackage extends Package
         \Fjord\Translation\TranslationServiceProvider::class,
         \Fjord\Application\ApplicationRouteServiceProvider::class,
         \Fjord\Permissions\PermissionsServiceProvider::class,
-        \Fjord\Vue\VueRouteServiceProvider::class,
+        \Fjord\Vue\VueServiceProvider::class,
         \Fjord\Chart\ServiceProvider::class,
         \Fjord\Crud\ServiceProvider::class,
         \Fjord\User\ServiceProvider::class,

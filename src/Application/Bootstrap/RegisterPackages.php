@@ -4,6 +4,7 @@ namespace Fjord\Application\Bootstrap;
 
 use Fjord\Application\Application;
 use Fjord\Support\Facades\Package;
+use Fjord\Support\Facades\Vue;
 use Illuminate\Console\Application as Artisan;
 use Illuminate\Support\Facades\App;
 
@@ -35,7 +36,7 @@ class RegisterPackages
     public function registerComponents($package)
     {
         foreach ($package->components() as $name => $component) {
-            $this->app->get('components')->register($name, $component);
+            Vue::component($name, $component);
         }
     }
 
