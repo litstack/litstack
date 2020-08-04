@@ -4,17 +4,15 @@ namespace FjordTest\Fields;
 
 use Fjord\Crud\BaseField;
 use Fjord\Crud\Fields\Checkboxes;
-use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
+use PHPUnit\Framework\TestCase;
 
-class FieldCheckboxesTest extends BackendTestCase
+class FieldCheckboxesTest extends TestCase
 {
     use InteractsWithFields;
 
     public function setUp(): void
     {
-        parent::setUp();
-
         $this->field = $this->getField(Checkboxes::class);
     }
 

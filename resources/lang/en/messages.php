@@ -5,4 +5,7 @@ return [
     'deleted_items'               => 'Deleted :count item.|Deleted :count items.',
     'cant_be_undone'              => 'This action cannot be undone.',
     'The given data was invalid.' => 'The given data was invalid.',
+    'actions'                     => [
+        'are_you_sure' => 'Are you sure? This action cannot be undone.',
+    ],
 ];

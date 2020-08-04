@@ -6,7 +6,6 @@ use Fjord\Crud\Api\ApiRepositories;
 use Fjord\Crud\Fields\Block\Block;
 use Fjord\Crud\Fields\Boolean;
 use Fjord\Crud\Fields\Checkboxes;
-use Fjord\Crud\Fields\Code;
 use Fjord\Crud\Fields\Component;
 use Fjord\Crud\Fields\Datetime;
 use Fjord\Crud\Fields\Icon;
@@ -20,6 +19,8 @@ use Fjord\Crud\Fields\Radio;
 use Fjord\Crud\Fields\Range;
 use Fjord\Crud\Fields\Relations\ManyRelation;
 use Fjord\Crud\Fields\Relations\OneRelation;
+use Fjord\Crud\Fields\Route;
+use Fjord\Crud\Fields\Route\RouteCollectionResolver;
 use Fjord\Crud\Fields\Select;
 use Fjord\Crud\Fields\Textarea;
 use Fjord\Crud\Fields\Wysiwyg;
@@ -55,7 +56,6 @@ class ServiceProvider extends LaravelServiceProvider
         'password'     => Password::class,
         'select'       => Select::class,
         'boolean'      => Boolean::class,
-        'code'         => Code::class,
         'icon'         => Icon::class,
         'datetime'     => Datetime::class,
         'dt'           => Datetime::class,
@@ -73,6 +73,7 @@ class ServiceProvider extends LaravelServiceProvider
         'manyRelation' => ManyRelation::class,
         'list'         => ListField::class,
         'radio'        => Radio::class,
+        'route'        => Route::class,
     ];
 
     /**
@@ -84,7 +85,6 @@ class ServiceProvider extends LaravelServiceProvider
     {
         $this->app->register(CrudRelations::class);
         $this->app->register(RouteServiceProvider::class);
-        $this->app->register(FieldServiceProvider::class);
     }
 
     /**
@@ -94,18 +94,48 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function register()
     {
+        $this->registerForm();
+
+        $this->registerCrud();
+
+        $this->registerApiRepositories();
+    }
+
+    /**
+     * Register the singleton.
+     *
+     * @return void
+     */
+    protected function registerCrud()
+    {
+        $this->callAfterResolving('fjord.app', function ($app) {
+            $app->singleton('crud', function () {
+                return new Crud;
+            });
+
+            $app->singleton('crud.route.resolver', function () {
+                return new RouteCollectionResolver;
+            });
+        });
+    }
+
+    /**
+     * Register the singleton.
+     *
+     * @return void
+     */
+    protected function registerForm()
+    {
         $loader = AliasLoader::getInstance();
         $loader->alias('Form', FormFacade::class);
 
         $this->app->singleton('fjord.form', function () {
-            return new Form();
+            $form = new Form();
+
+            $this->registerFields($form);
+
+            return $form;
         });
-
-        $this->app['fjord.app']->singleton('crud', new Crud());
-
-        $this->registerFields();
-
-        $this->registerApiRepositories();
     }
 
     /**
@@ -141,12 +171,13 @@ class ServiceProvider extends LaravelServiceProvider
     /**
      * Register fields.
      *
+     * @param  Form $field
      * @return void
      */
-    protected function registerFields()
+    protected function registerFields(Form $form)
     {
         foreach ($this->fields as $alias => $field) {
-            FormFacade::registerField($alias, $field);
+            $form->field($alias, $field);
         }
     }
 }

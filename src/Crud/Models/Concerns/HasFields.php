@@ -2,29 +2,40 @@
 
 namespace Fjord\Crud\Models\Concerns;
 
+use Fjord\Crud\Field;
 use Fjord\Crud\Fields\Media\MediaField;
+use Fjord\Crud\Models\Media;
 use Fjord\Crud\RelationField;
+use Illuminate\Support\Collection;
 
 trait HasFields
 {
     /**
      * Get fields from config.
      *
-     * @return Field
+     * @return Collection
      */
-    public function getFieldsAttribute()
+    public function getFieldsAttribute(): Collection
     {
-        return $this->getForm()->getRegisteredFields() ?? [];
+        if (! $form = $this->getForm()) {
+            return collect([]);
+        }
+
+        return $form->getRegisteredFields() ?? collect([]);
     }
 
     /**
      * Get form.
      *
-     * @return BaseForm
+     * @return BaseForm|null
      */
     public function getForm()
     {
-        return $this->config->{$this->getFormType()};
+        if (! $config = $this->config) {
+            return;
+        }
+
+        return $config->{$this->getFormType()};
     }
 
     /**
@@ -38,10 +49,9 @@ trait HasFields
     }
 
     /**
-     * Check if field with id exists.
+     * Determines if field with id exists.
      *
-     * @param string $id
-     *
+     * @param  string $id
      * @return bool
      */
     public function fieldExists(string $id)
@@ -52,8 +62,7 @@ trait HasFields
     /**
      * Find field by id.
      *
-     * @param string $id
-     *
+     * @param  string            $id
      * @return \Fjord\Crud\Field
      */
     public function findField($id)
@@ -68,9 +77,11 @@ trait HasFields
     /**
      * Get formatted values for the given form_field type.
      *
-     * @return void
+     * @param  Field       $field
+     * @param  string|null $locale
+     * @return mixed
      */
-    public function getFormattedFieldValue($field, $locale = null)
+    public function getFormattedFieldValue(Field $field, $locale = null)
     {
         return $field->cast(
             $this->getFieldValue($field, $locale)
@@ -78,35 +89,67 @@ trait HasFields
     }
 
     /**
-     * Get field value.
+     * Gets field value.
      *
-     * @param Field $field
-     *
+     * @param  Field       $field
+     * @param  string|null $locale
      * @return mixed
      */
-    public function getFieldValue($field, $locale = null)
+    public function getFieldValue(Field $field, $locale = null)
     {
         if ($field instanceof MediaField) {
-            $media = $this->getMedia($field->id);
-            if ($field->maxFiles == 1) {
-                $media = $media->first();
-            }
-
-            return $media;
+            return $this->getMediaFieldValue($field);
         }
 
         if ($field instanceof RelationField) {
             return $this->getRelationValue($field->id);
         }
 
-        if (! $locale) {
-            $locale = app()->getLocale();
-        }
-
         if ($field->translatable) {
-            return $this->getTranslatedFieldValue($field, app()->getLocale());
+            return $this->getTranslatedFieldValue($field, $locale ?: app()->getLocale());
         }
 
         return $this->value[$field->local_key] ?? null;
+    }
+
+    /**
+     * Get value for relation field.
+     *
+     * @param  RelationField $field
+     * @return mixed
+     */
+    public function getRelationFieldValue(RelationField $field)
+    {
+        return $this->getRelationValue($field->id);
+    }
+
+    /**
+     * Get value for media field.
+     *
+     * @param  MediaField       $field
+     * @return Collection|Media
+     */
+    public function getMediaFieldValue(MediaField $field)
+    {
+        $media = $this->getMedia($field->id);
+        if ($field->maxFiles == 1) {
+            $media = $media->first();
+        }
+
+        return $media;
+    }
+
+    /**
+     * Get translated field value.
+     *
+     * @param  Field  $field
+     * @param  string $locale
+     * @return mixed
+     */
+    public function getTranslatedFieldValue(Field $field, string $locale)
+    {
+        $value = $this->translation[$locale] ?? [];
+
+        return $value[$field->local_key] ?? null;
     }
 }

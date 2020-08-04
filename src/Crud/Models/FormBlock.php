@@ -5,6 +5,7 @@ namespace Fjord\Crud\Models;
 use BadMethodCallException;
 use Fjord\Crud\Fields\Block\Block;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 class FormBlock extends FjordFormModel
@@ -67,13 +68,17 @@ class FormBlock extends FjordFormModel
     }
 
     /**
-     * Get Blade x component name.
+     * Get form.
      *
-     * @return string|null
+     * @return BaseForm|null
      */
-    public function getXAttribute()
+    public function getForm()
     {
-        return $this->getRepeatable()->getX();
+        if (! $config = $this->config) {
+            return;
+        }
+
+        return $config->{$this->getFormType()};
     }
 
     /**
@@ -89,11 +94,15 @@ class FormBlock extends FjordFormModel
     /**
      * Get fields from config.
      *
-     * @return Field
+     * @return Collection
      */
-    public function getFieldsAttribute()
+    public function getFieldsAttribute(): Collection
     {
-        return $this->getRepeatable()->getRegisteredFields();
+        if (! $repeatable = $this->getRepeatable()) {
+            return collect([]);
+        }
+
+        return $repeatable->getRegisteredFields();
     }
 
     /**
@@ -106,10 +115,20 @@ class FormBlock extends FjordFormModel
         $fields = $this->getForm()->getRegisteredFields();
 
         foreach ($fields as $field) {
-            if ($field instanceof Block && $field->id == $this->field_id) {
+            if (! $field instanceof Block) {
+                continue;
+            }
+
+            if ($field->id == $this->field_id) {
 
                 // Returning fields from repeatables form.
                 return $field->repeatables->{$this->type};
+            }
+
+            foreach ($field->getRegisteredFields() as $blockField) {
+                if ($blockField instanceof Block && $blockField->id == $this->field_id) {
+                    return $blockField->repeatables->{$this->type};
+                }
             }
         }
     }

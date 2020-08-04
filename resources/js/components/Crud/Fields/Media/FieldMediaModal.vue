@@ -61,17 +61,18 @@
                     v-if="!field.readonly"
                 >
                     <i class="far fa-trash-alt"></i>
-                    {{ $t('fj.delete') }}
+                    {{ __('fj.delete') }}
                 </b-button>
             </div>
-            <div>
+            <div class="d-flex">
+                <fj-crud-language class="mr-2" v-if="this.field.translatable" />
                 <b-button
                     class="fj-save-button"
                     variant="primary"
                     :disabled="!canSave"
                     @click="Fjord.bus.$emit('save')"
                 >
-                    {{ $t('fj.save') }}
+                    {{ __('fj.save') }}
                 </b-button>
             </div>
         </div>
@@ -107,7 +108,25 @@ export default {
             required: true
         }
     },
+    data() {
+        return {
+            original: {}
+        };
+    },
+    beforeMount() {
+        this.setOriginal();
+    },
     methods: {
+        setOriginal() {
+            if (this.image.custom_properties) {
+                this.original = this.image.custom_properties;
+            }
+        },
+
+        getDefaultProperties() {
+            return { alt: '', title: '' };
+        },
+
         /**
          * Handle custom property input changed.
          */
@@ -116,10 +135,9 @@ export default {
                 image.custom_properties[key] = value;
             } else {
                 if (!(this.language in image.custom_properties)) {
-                    image.custom_properties[this.language] = {
-                        alt: '',
-                        title: ''
-                    };
+                    image.custom_properties[
+                        this.language
+                    ] = this.getDefaultProperties();
                 }
 
                 image.custom_properties[this.language][key] = value;
@@ -128,14 +146,17 @@ export default {
             let job = {
                 route: `${this.field.route_prefix}/media`,
                 method: 'put',
-                params: {
+                params: this.qualifyParams({
                     payload: { custom_properties: image.custom_properties },
-                    field_id: this.field.id,
                     media_id: this.image.id
-                }
+                })
             };
 
-            this.$store.dispatch('saveJob', job);
+            if (this.hasValueChanged(image.custom_properties)) {
+                this.$store.commit('ADD_SAVE_JOB', job);
+            } else {
+                this.$store.commit('REMOVE_SAVE_JOB', job);
+            }
         },
 
         /**
@@ -157,6 +178,14 @@ export default {
         },
 
         /**
+         * Determines if the custom properties have changed.
+         */
+        hasValueChanged(value) {
+            // TODO:
+            return true;
+        },
+
+        /**
          * Handle delet image click.
          */
         async destroy(id, index) {
@@ -168,15 +197,33 @@ export default {
          */
         getMediaUrl(id) {
             return `${this.field.route_prefix}/media/${id}`;
+        },
+
+        /**
+         * Get qualified params.
+         */
+        qualifyParams(params) {
+            params = {
+                field_id: this.field.id,
+                ...(this.field.params || {}),
+                ...params
+            };
+
+            if (params.field_id != this.field.id) {
+                params.child_field_id = this.field.id;
+            }
+
+            return params;
         }
     },
+
     computed: {
         ...mapGetters(['language', 'canSave'])
     }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .fj-image-preview {
     width: 100%;
     height: 100%;

@@ -32,8 +32,18 @@ export default {
             type: Object,
             required: true
         },
+        roles: {
+            type: Array,
+            default() {
+                return [];
+            }
+        },
         auth: {
             type: Object,
+            required: true
+        },
+        permissions: {
+            type: Array,
             required: true
         },
         appLocale: {
@@ -58,6 +68,8 @@ export default {
             this.axiosResponseError
         );
 
+        this.$store.commit('SET_ROLES', this.roles);
+        this.$store.commit('SET_PERMISSIONS', this.permissions);
         this.$store.commit('SET_LANGUAGES', this.translatable.languages);
         this.$store.commit('SET_LANGUAGE', this.translatable.language);
         this.$store.commit(

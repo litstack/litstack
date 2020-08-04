@@ -4,6 +4,8 @@ namespace Fjord\Application;
 
 use Fjord\Application\Controllers\FileController;
 use Fjord\Support\Facades\FjordRoute;
+use Fjord\Translation\Controllers\LoadTranslationsController;
+use Fjord\Translation\Controllers\SetLocaleController;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -42,8 +44,8 @@ class ApplicationRouteServiceProvider extends LaravelRouteServiceProvider
     protected function mapFjordRoutes()
     {
         FjordRoute::group(function () {
-            Route::post('/set-locale', 'Fjord\Actions\SetLocale')->name('set-locale');
-            Route::get('/lang.js', 'Fjord\Application\Controllers\TranslationsController@i18n')->name('fjord-translations');
+            Route::post('/set-locale', SetLocaleController::class)->name('set-locale');
+            Route::get('/lang.js', LoadTranslationsController::class.'@i18n')->name('fjord-translations');
         });
     }
 

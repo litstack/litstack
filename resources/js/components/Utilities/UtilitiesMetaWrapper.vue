@@ -1,5 +1,5 @@
 <template>
-    <fj-col class="d-flex justify-content-around">
+    <fj-col class="d-flex">
         <div
             class="meta-wrapper"
             :style="`max-width: calc(${googleMetaMaxWidth} + 2rem + 2px)`"

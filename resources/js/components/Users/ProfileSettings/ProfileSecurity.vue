@@ -30,16 +30,16 @@ export default {
             sessions: [],
             tableCols: [
                 {
-                    component: 'fj-profile-security-session-device',
+                    name: 'fj-profile-security-session-device',
                     label: this.__('base.device').capitalize(),
                     small: true
                 },
                 {
-                    component: 'fj-profile-security-session-current',
+                    name: 'fj-profile-security-session-current',
                     label: ''
                 },
                 {
-                    component: 'fj-profile-security-session-location',
+                    name: 'fj-profile-security-session-location',
                     label: this.__('base.location').capitalize()
                 },
                 {
@@ -47,7 +47,7 @@ export default {
                     label: this.__('profile.last_activity').capitalizeAll()
                 },
                 {
-                    component: 'fj-profile-security-session-logout',
+                    name: 'fj-profile-security-session-logout',
                     label: '',
                     small: true
                 }

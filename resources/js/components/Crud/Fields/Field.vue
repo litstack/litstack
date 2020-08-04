@@ -329,10 +329,27 @@ export default {
          */
         hasValueChanged() {
             if (!this.field.translatable) {
-                return this.original != this.value;
+                return this.compareValues(this.original, this.value);
             }
 
-            return this.original[this.language] != this.value;
+            return this.compareValues(this.original[this.language], this.value);
+        },
+
+        /**
+         * Compares values.
+         *
+         * @return {Boolean}
+         */
+        compareValues(original, value) {
+            if (original !== null) {
+                return original != this.value;
+            }
+
+            if (Array.isArray(value)) {
+                return value.length > 0;
+            }
+
+            return !!value;
         },
 
         /**

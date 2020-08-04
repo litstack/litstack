@@ -65,8 +65,7 @@ class Components
     /**
      * Get new component instance.
      *
-     * @param string $name
-     *
+     * @param  string $name
      * @return void
      */
     public function component(string $name)

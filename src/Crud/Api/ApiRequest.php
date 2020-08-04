@@ -65,11 +65,10 @@ class ApiRequest
     /**
      * Create new CrudApi request.
      *
-     * @param ApiRepositories    $repositories
-     * @param Request            $request
-     * @param ApiLoader          $loader
-     * @param CrudBaseController $controller
-     *
+     * @param  ApiRepositories    $repositories
+     * @param  Request            $request
+     * @param  ApiLoader          $loader
+     * @param  CrudBaseController $controller
      * @return void
      */
     public function __construct(ApiRepositories $repositories, Request $request, ApiLoader $loader, CrudBaseController $controller)
@@ -86,9 +85,9 @@ class ApiRequest
     /**
      * Handle api request.
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return mixed
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function handle()
     {
@@ -96,8 +95,9 @@ class ApiRequest
         $model = $this->getModel();
 
         if ($this->hasChild()) {
-            $model = $this->getParentModel($repository, $model);
+            $parentRepository = $repository;
             $repository = $this->getChildRepository($repository);
+            $model = $this->getParentModel($parentRepository, $repository, $model);
         }
 
         if (! method_exists($repository, $this->method)) {
@@ -113,7 +113,7 @@ class ApiRequest
         try {
             $response = app()->call([$repository, $this->method], $inject);
         } catch (BindingResolutionException $e) {
-            abort(404, $e->getMessage());
+            abort(404, debug($e->getMessage()));
         }
 
         $this->storeEdit();
@@ -162,23 +162,23 @@ class ApiRequest
     }
 
     /**
-     * Get child model.
+     * Get parent model.
      *
-     * @param mixed $parentRepository
-     * @param mixed $model
+     * @param  mixed $parentRepository
+     * @param  mixed $model
+     * @return mixed
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return mixed
      */
-    public function getParentModel($parentRepository, $model)
+    public function getParentModel($parentRepository, $childRepository, $model)
     {
         if (! method_exists($parentRepository, 'getModel')) {
             abort(404, debug('Missing [getModel] method on '.get_class($parentRepository)));
         }
 
         $model = app()->call([$parentRepository, 'getModel'], [
-            'model' => $model,
+            'model'           => $model,
+            'childRepository' => $childRepository,
         ]);
 
         if (! $model) {
@@ -204,8 +204,7 @@ class ApiRequest
     /**
      * Get child repository instance.
      *
-     * @param mixed $parentRepository
-     *
+     * @param  mixed $parentRepository
      * @return mixed
      */
     protected function getChildRepository($parentRepository)
@@ -219,9 +218,9 @@ class ApiRequest
     /**
      * Get child field getter.
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return Closure
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     protected function getChildFieldGetter($parentRepository)
     {
@@ -259,21 +258,22 @@ class ApiRequest
     /**
      * Make repository instance with bindings.
      *
-     * @param string  $repository
-     * @param Closure $fieldGetter
+     * @param  string  $repository
+     * @param  Closure $fieldGetter
+     * @return mixed
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return mixed
      */
     protected function makeRepository(string $repository, Closure $fieldGetter)
     {
+        $field = $fieldGetter();
+
         try {
             return app()->make($repository, [
                 'config'     => $this->controller->getConfig(),
                 'controller' => $this->controller,
-                'field'      => $fieldGetter(),
-                'form'       => $this->getForm(),
+                'field'      => $field,
+                'form'       => $this->getForm($field),
             ]);
         } catch (TypeError $e) {
             abort(404, debug($e->getMessage()));
@@ -285,16 +285,19 @@ class ApiRequest
      *
      * @return BaseForm|null
      */
-    public function getForm()
+    public function getForm(Field $field = null)
     {
+        if ($field && $field->form instanceof BaseForm) {
+            return $field->form;
+        }
+
         return $this->loader->loadFormOrFail($this->request->route('form_type') ?? 'show');
     }
 
     /**
      * Get field instance.
      *
-     * @param string|null $field_id
-     *
+     * @param  string|null $field_id
      * @return Field|null
      */
     public function getField($field_id)
@@ -309,17 +312,16 @@ class ApiRequest
     /**
      * Pass field id or throw Http NotFoundException.
      *
-     * @param string     $field_id
-     * @param Field|null $field
+     * @param  string     $field_id
+     * @param  Field|null $field
+     * @return Field
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return Field
      */
     protected function passFieldOrFail($field_id, $field)
     {
         if ($field_id && ! $field) {
-            abort(404, debug("Couln't find field [{$field_id}]."));
+            abort(404, debug("Couldn't find field [{$field_id}]."));
         }
 
         return $field;
@@ -332,11 +334,11 @@ class ApiRequest
      */
     protected function setAbstracts()
     {
-        if ($this->hasChild()) {
-            $this->childAbstract = $this->request->route('method');
-        }
-
         $this->abstract = $this->request->route('repository') ?? 'default';
+
+        if ($this->hasChild()) {
+            $this->childAbstract = $this->request->route('method') ?? $this->abstract;
+        }
     }
 
     /**
@@ -352,8 +354,7 @@ class ApiRequest
     /**
      * Get repository method from request.
      *
-     * @param Request $request
-     *
+     * @param  Request $request
      * @return string
      */
     protected function getMethodFromRequest(Request $request)

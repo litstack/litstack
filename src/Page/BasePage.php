@@ -48,9 +48,7 @@ abstract class BasePage implements Page
      */
     public function component($component)
     {
-        if (is_string($component)) {
-            $component = component($component);
-        }
+        $component = component($component);
 
         if ($this->inWrapper()) {
             $this->wrapper->component($component);

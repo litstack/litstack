@@ -24,6 +24,11 @@ class CrudMetaMacro
                             'width' => $metaMaxWith,
                         ]));
 
+                    $meta->input('meta_keywords')
+                        ->title('Meta-Keywords')
+                        ->placeholder('Keyword1, Keyword2, …')
+                        ->hint(__f('crud.meta.keywords_hint'));
+
                     $meta->input('meta_description')
                         ->title('Meta-Beschreibung')
                         ->placeholder('Meta-Beschreibung')

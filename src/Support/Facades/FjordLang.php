@@ -2,12 +2,12 @@
 
 namespace Fjord\Support\Facades;
 
-use Fjord\Support\FjordFacade;
+use Illuminate\Support\Facades\Facade;
 
-class FjordLang extends FjordFacade
+class FjordLang extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'translator';
+        return 'fjord.translator';
     }
 }

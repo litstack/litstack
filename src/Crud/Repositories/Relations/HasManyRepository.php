@@ -35,6 +35,8 @@ class HasManyRepository extends BaseFieldRepository
      */
     public function create(CrudUpdateRequest $request, $model)
     {
+        $this->checkMaxItems($model);
+
         $related = $this->getRelated($request, $model);
 
         $hasMany = $this->field->getRelationQuery($model);

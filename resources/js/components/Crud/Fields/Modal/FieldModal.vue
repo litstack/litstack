@@ -22,7 +22,7 @@
         >
             {{ message }}
         </b-form-invalid-feedback>
-        <b-modal :id="modalId" :size="field.size">
+        <b-modal :id="modalId" :size="field.size" centered>
             <span slot="modal-title" v-html="field.name" />
             <b-row>
                 <fj-field
@@ -36,7 +36,10 @@
                 />
             </b-row>
             <template slot="modal-footer">
-                <button @click.prevent="cancel()" class="btn btn-secondary">
+                <button
+                    @click.prevent="$bvModal.hide(modalId)"
+                    class="btn btn-secondary"
+                >
                     {{ __('base.close').capitalize() }}
                 </button>
                 <b-button
@@ -74,7 +77,7 @@ export default {
         };
     },
     beforeMount() {
-        this.formatRoutePrefixes();
+        this.fields = Fjord.clone(this.field.form.fields);
         Fjord.bus.$on('saveCanceled', this.resetErrors);
         Fjord.bus.$on('saved', this.resetErrors);
     },
@@ -97,17 +100,6 @@ export default {
         },
         cancel() {
             this.$bvModal.hide(this.modalId);
-        },
-        formatRoutePrefixes() {
-            let fields = Fjord.clone(this.field.form.fields);
-            for (let i in fields) {
-                fields[i].route_prefix = fields[i].route_prefix.replace(
-                    '{modal_id}',
-                    this.field.id
-                );
-            }
-
-            this.fields = fields;
         }
     }
 };

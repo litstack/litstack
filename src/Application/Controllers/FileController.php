@@ -47,7 +47,7 @@ class FileController extends Controller
      */
     public function fjordLogo()
     {
-        return $this->sendFile(fjord_path('public/images/fjord-logo.png'))
+        return $this->sendFile(fjord_path('public/images/logo.png'))
             ->header('Content-Type', 'image/png');
     }
 

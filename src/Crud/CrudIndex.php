@@ -4,7 +4,9 @@ namespace Fjord\Crud;
 
 use Closure;
 use Fjord\Config\ConfigHandler;
+use Fjord\Crud\Actions\DestroyAction;
 use Fjord\Page\Page;
+use Fjord\Page\Table\Table;
 
 class CrudIndex extends Page
 {
@@ -36,6 +38,21 @@ class CrudIndex extends Page
     }
 
     /**
+     * Resolve action component.
+     *
+     * @param  \Fjord\Vue\Component $component
+     * @return void
+     */
+    public function resolveAction($component)
+    {
+        $component->on('run', RunCrudActionEvent::class)
+            ->prop('eventData', array_merge(
+                $component->getProp('eventData'),
+                ['model' => $this->config->model]
+            ));
+    }
+
+    /**
      * Set defaults.
      *
      * @return void
@@ -58,21 +75,43 @@ class CrudIndex extends Page
     /**
      * Create CrudIndex table.
      *
-     * @param Closure $closure
-     *
-     * @return $this
+     * @param  Closure                 $closure
+     * @return \Fjord\Page\Table\Table
      */
     public function table(Closure $closure)
     {
-        $table = new CrudIndexTable($this->config);
+        $this->table = $table = new CrudIndexTable(
+            $this->config->routePrefix(),
+            $builder = new CrudColumnBuilder($this->config)
+        );
 
-        $this->table = $table;
+        $table->model($this->config->model);
+        $table->singularName($this->config->names['singular']);
+        $table->pluralName($this->config->names['plural']);
 
-        $closure($table->getTable());
+        $table->action(ucfirst(__f('base.delete')), DestroyAction::class);
 
-        $this->component($table->getComponent())
-            ->prop('table', $table);
+        $closure($builder);
+        $this->component($table->getComponent());
 
         return $table;
+    }
+
+    /**
+     * Render CrudIndex.
+     *
+     * @return array
+     */
+    public function render(): array
+    {
+        foreach ($this->table->getActions() as $component) {
+            $component->on('click', RunCrudActionEvent::class)
+                ->prop('eventData', array_merge(
+                    $component->getProp('eventData'),
+                    ['model' => $this->config->model]
+                ));
+        }
+
+        return parent::render();
     }
 }

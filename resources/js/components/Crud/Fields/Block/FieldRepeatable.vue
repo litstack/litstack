@@ -20,6 +20,7 @@
                     :field="field"
                     :model="model"
                     :fields="_fields"
+                    :model-id="modelId"
                     @changed="changed"
                     @reload="_reload"
                 />
@@ -55,6 +56,9 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        modelId: {
+            required: true
         },
         width: {
             type: [String, Number],

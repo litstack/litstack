@@ -1,0 +1,15 @@
+<?php
+
+namespace DummyNamespace;
+
+class DummyClass
+{
+    public function run($models)
+    {
+        // 
+
+        return response()->json([
+            'message' => 'Action executed.',
+        ]);
+    }
+}

@@ -22,25 +22,25 @@ class ListRepository extends BaseFieldRepository
     /**
      * Load list items for model.
      *
-     * @param CrudReadRequest $request
-     * @param mixed           $model
-     *
+     * @param  CrudReadRequest $request
+     * @param  mixed           $model
      * @return CrudJs
      */
     public function index(CrudReadRequest $request, $model)
     {
-        return crud(
-            $this->field->getRelationQuery($model)->getFlat()
-        );
+        $items = $this->field->getRelationQuery($model)->getFlat()->filter(function (FormListItem $item) {
+            return $this->field->itemAuthorized($item, 'read');
+        });
+
+        return crud($items);
     }
 
     /**
      * Update list item.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     * @param object            $payload
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
+     * @param  object            $payload
      * @return CrudJs
      */
     public function update(CrudUpdateRequest $request, $model, $payload)
@@ -55,6 +55,8 @@ class ListRepository extends BaseFieldRepository
 
         $listItem = $this->getListItem($model, $request->list_item_id);
 
+        $this->checkAuthorized($listItem, 'update');
+
         $listItem->update($attributes);
 
         return crud($listItem);
@@ -63,15 +65,16 @@ class ListRepository extends BaseFieldRepository
     /**
      * Send new list item model.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     * @param object            $payload
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
+     * @param  object            $payload
      * @return CrudJs
      */
     public function create(CrudUpdateRequest $request, $model, $payload)
     {
         $parent = $this->getParent($model, $payload->parent_id ?? 0);
+
+        $this->checkAuthorized($parent, 'create');
 
         $newDepth = ($parent->depth ?? 0) + 1;
         $this->checkMaxDepth($newDepth, $this->field->maxDepth);
@@ -88,18 +91,19 @@ class ListRepository extends BaseFieldRepository
     /**
      * Store new list item to database.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     * @param object            $payload
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
+     * @param  object            $payload
      * @return CrudJs
      */
     public function store(CrudUpdateRequest $request, $model, $payload)
     {
         $parent = $this->getParent($model, $request->parent_id ?? 0);
 
+        $this->checkAuthorized($parent, 'create');
+
         if ($request->parent_id && ! $parent) {
-            abort(404);
+            abort(404, debug("Couldn't find parent list item wit id [{$request->parent_id}]."));
         }
 
         if ($parent) {
@@ -129,8 +133,10 @@ class ListRepository extends BaseFieldRepository
         $listItem->form_type = $payload->form_type ?? 'show';
         $listItem->parent_id = $parent->id ?? 0;
         $listItem->order_column = $order_column;
-        $listItem->value = $payload;
+        $listItem->value = (object) [];
         $listItem->save();
+
+        $listItem->update((array) $payload);
 
         return crud($listItem);
     }
@@ -138,8 +144,7 @@ class ListRepository extends BaseFieldRepository
     /**
      * Destory list item.
      *
-     * @param CrudReadRequest $request
-     *
+     * @param  CrudReadRequest $request
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model, $payload)
@@ -150,10 +155,9 @@ class ListRepository extends BaseFieldRepository
     /**
      * Order list.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     * @param object            $payload
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
+     * @param  object            $payload
      * @return void
      */
     public function order(CrudUpdateRequest $request, $model, $payload)
@@ -198,8 +202,7 @@ class ListRepository extends BaseFieldRepository
     /**
      * Get child field.
      *
-     * @param string $field_id
-     *
+     * @param  string     $field_id
      * @return Field|null
      */
     public function getField($field_id)
@@ -210,9 +213,8 @@ class ListRepository extends BaseFieldRepository
     /**
      * Get list item model.
      *
-     * @param Request $request
-     * @param mixed   $model
-     *
+     * @param  Request  $request
+     * @param  mixed    $model
      * @return ListItem
      */
     public function getModel(Request $request, $model)
@@ -223,8 +225,7 @@ class ListRepository extends BaseFieldRepository
     /**
      * Get list item.
      *
-     * @param string|int $id
-     *
+     * @param  string|int $id
      * @return ListItem
      */
     protected function getListItem($model, $id)
@@ -235,23 +236,21 @@ class ListRepository extends BaseFieldRepository
     /**
      * Get parent by id.
      *
-     * @param string|int $parentId
-     *
+     * @param  string|int   $parentId
      * @return FormListItem
      */
     protected function getParent($model, $parentId = 0)
     {
-        return $this->field->getRelationQuery($model)
-            ->getFlat()
-            ->find($parentId);
+        return $this->field->getRelationQuery($model)->find($parentId);
+        // ->getFlat()
+        // ->find($parentId);
     }
 
     /**
      * Check max depth.
      *
-     * @param int $depth
-     * @param int $maxDepth
-     *
+     * @param  int  $depth
+     * @param  int  $maxDepth
      * @return void
      */
     protected function checkMaxDepth(int $depth, int $maxDepth)
@@ -263,5 +262,18 @@ class ListRepository extends BaseFieldRepository
         return abort(405, __f('crud.fields.list.messages.max_depth', [
             'count' => $maxDepth,
         ]));
+    }
+
+    /**
+     * Checks authorized.
+     *
+     * @param  FormListItem $item
+     * @return void
+     */
+    protected function checkAuthorized(FormListItem $item = null, $operation)
+    {
+        if (! $this->field->itemAuthorized($item, $operation)) {
+            abort(405, __f('base.unauthorized'));
+        }
     }
 }

@@ -4,6 +4,7 @@ namespace Fjord\Crud\Fields;
 
 use Fjord\Crud\BaseField;
 use Illuminate\Support\Facades\Hash;
+use LogicException;
 
 class Password extends BaseField
 {
@@ -34,10 +35,9 @@ class Password extends BaseField
     /**
      * Fill model.
      *
-     * @param mixed   $model
-     * @param Request $request
-     * @param string  $attributeName
-     * @param mixed   $attributeValue
+     * @param mixed  $model
+     * @param string $attributeName
+     * @param mixed  $attributeValue
      *
      * @return void
      */
@@ -47,16 +47,24 @@ class Password extends BaseField
             return;
         }
 
-        $model->{$attributeName} = $attributeValue;
+        $model->{$attributeName} = bcrypt($attributeValue);
     }
 
     /**
      * Set default attributes.
      *
      * @return void
+     *
+     * @throws LogicException
      */
     public function setDefaultAttributes()
     {
+        if (in_array($this->id, (new $this->model)->getFillable())) {
+            throw new LogicException(
+                "Remove [{$this->id}] from your fillable attributes in [{$this->model}] in order to use the password field.",
+            );
+        }
+
         $this->minScore(1);
         $this->noScore(false);
     }
@@ -153,17 +161,5 @@ class Password extends BaseField
     public function cast($value)
     {
         return (string) $value;
-    }
-
-    /**
-     * Format value before saving it to database.
-     *
-     * @param string $value
-     *
-     * @return void
-     */
-    public function format($value)
-    {
-        return bcrypt($value);
     }
 }

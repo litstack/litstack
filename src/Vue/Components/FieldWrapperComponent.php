@@ -7,39 +7,35 @@ use Fjord\Vue\Component;
 class FieldWrapperComponent extends Component
 {
     /**
-     * Available props.
+     * Before mount lifecycle hook.
      *
-     * @return array
+     * @return void
      */
-    protected function props()
+    public function beforeMount()
     {
-        return [
-            'wrapperComponent' => [
-                'type'     => Component::class,
-                'required' => true,
-            ],
-            'children' => [
-                'type'     => ['array', 'object'],
-                'required' => true,
-                'default'  => function () {
-                    return collect([]);
-                },
-            ],
-        ];
+        $this->props['children'] = collect([]);
+    }
+
+    /**
+     * Set wrapper component.
+     *
+     * @param  Component $component
+     * @return $thi
+     */
+    public function wrapperComponent(Component $component)
+    {
+        return $this->prop('wrapperComponent', $component);
     }
 
     /**
      * Add child component.
      *
-     * @param mixed $name
-     *
+     * @param  mixed $name
      * @return void
      */
     public function component($component)
     {
-        if (is_string($component)) {
-            $component = component($component);
-        }
+        $component = component($component);
 
         $this->props['children'][] = $component;
 

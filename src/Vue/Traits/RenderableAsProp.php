@@ -11,7 +11,7 @@ trait RenderableAsProp
      *
      * @return array
      */
-    abstract protected function render(): array;
+    abstract public function render(): array;
 
     /**
      * Get array.

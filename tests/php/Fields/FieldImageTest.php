@@ -4,12 +4,13 @@ namespace FjordTest\Fields;
 
 use Fjord\Crud\Fields\Media\Image;
 use Fjord\Crud\Fields\Traits\HasBaseField;
-use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
+use FjordTest\Traits\TestHelpers;
+use PHPUnit\Framework\TestCase;
 
-class FieldImageTest extends BackendTestCase
+class FieldImageTest extends TestCase
 {
-    use InteractsWithFields;
+    use InteractsWithFields, TestHelpers;
 
     public function setUp(): void
     {

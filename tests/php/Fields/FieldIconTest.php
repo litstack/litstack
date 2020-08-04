@@ -4,17 +4,15 @@ namespace FjordTest\Fields;
 
 use Fjord\Crud\BaseField;
 use Fjord\Crud\Fields\Icon;
-use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
+use PHPUnit\Framework\TestCase;
 
-class FieldIconTest extends BackendTestCase
+class FieldIconTest extends TestCase
 {
     use InteractsWithFields;
 
     public function setUp(): void
     {
-        parent::setUp();
-
         $this->field = $this->getField(Icon::class);
     }
 

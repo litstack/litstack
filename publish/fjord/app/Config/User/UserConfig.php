@@ -5,8 +5,8 @@ namespace FjordApp\Config\User;
 use Fjord\Crud\Config\CrudConfig;
 use Fjord\Crud\CrudIndex;
 use Fjord\Crud\CrudShow;
+use Fjord\Page\Table\ColumnBuilder;
 use Fjord\User\Models\FjordUser;
-use Fjord\Vue\Crud\CrudTable;
 use FjordApp\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -67,11 +67,10 @@ class UserConfig extends CrudConfig
     /**
      * User index table.
      *
-     * @param \Fjord\Vue\Crud\CrudTable $table
-     *
+     * @param  ColumnBuilder $table
      * @return void
      */
-    public function indexTable(CrudTable $table)
+    public function indexTable(ColumnBuilder $table)
     {
         $table->col()
             ->value('{first_name} {last_name}')
@@ -83,7 +82,7 @@ class UserConfig extends CrudConfig
 
         $table->component('fj-permissions-fjord-users-roles')
             ->link(false)
-            ->label(__f('fj.roles'));
+            ->label(ucfirst(__f('base.roles')));
 
         $table->component('fj-permissions-fjord-users-apply-role')
             ->authorize(fn ($user) => $user->can('update fjord-user-roles'))

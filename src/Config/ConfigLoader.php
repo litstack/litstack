@@ -177,7 +177,7 @@ class ConfigLoader
     {
         // Replacing path for windows and unix.
         $modified = str_replace('\\', '/', $path);
-        $modified = str_replace(base_path('fjord/app/Config').'/', '', $modified);
+        $modified = str_replace(str_replace('\\', '/', base_path('fjord/app/Config')).'/', '', $modified);
         $modified = str_replace('Config.php', '', $modified);
 
         return explode('/', $modified);
@@ -206,6 +206,8 @@ class ConfigLoader
      */
     public function exists(string $key)
     {
+        $this->getPathFromKey($key);
+
         return File::exists(
             $this->getPathFromKey($key),
         );

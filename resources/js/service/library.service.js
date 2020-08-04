@@ -16,7 +16,6 @@ import VueDropzone from 'vue2-dropzone';
 import VueApexCharts from 'vue-apexcharts';
 
 import BootstrapVue from 'bootstrap-vue';
-import VueCodemirror from 'vue-codemirror';
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import Draggable from 'vuedraggable';
 import VueLodash from 'vue-lodash';
@@ -43,7 +42,7 @@ Vue.use(BootstrapVue, {
         toaster: 'b-toaster-bottom-right'
     }
 });
-Vue.use(VueCodemirror);
+
 Vue.use(Draggable);
 Vue.use(VueDropzone);
 Vue.use(VueLodash, { lodash });

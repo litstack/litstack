@@ -5,6 +5,7 @@ namespace Fjord\Crud\Models;
 use Fjord\Crud\Fields\ListField\ListCollection;
 use Fjord\Crud\Fields\ListField\ListField;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Collection;
 
 class FormListItem extends FjordFormModel
 {
@@ -72,20 +73,54 @@ class FormListItem extends FjordFormModel
     }
 
     /**
+     * Children relation.
+     *
+     * @return void
+     */
+    public function children()
+    {
+        return $this->hasMany(self::class, 'parent_id');
+    }
+
+    /**
+     * Parent relation.
+     *
+     * @return void
+     */
+    public function parent()
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+
+    /**
+     * Determines if the list item has a parent.
+     *
+     * @return bool
+     */
+    public function hasParent()
+    {
+        return (bool) $this->parent_id;
+    }
+
+    /**
      * Get fields from config.
      *
-     * @return Field
+     * @return Collection
      */
-    public function getFieldsAttribute()
+    public function getFieldsAttribute(): Collection
     {
-        $fields = $this->getForm()->getRegisteredFields();
+        if (! $form = $this->getForm()) {
+            return collect([]);
+        }
 
-        foreach ($fields as $field) {
+        foreach ($form->getRegisteredFields() as $field) {
             if ($field instanceof ListField && $field->id == $this->field_id) {
                 // Returning fields from repeatables form.
                 return $field->getRegisteredFields();
             }
         }
+
+        return collect([]);
     }
 
     /**
@@ -131,5 +166,21 @@ class FormListItem extends FjordFormModel
         }
 
         return $attributes;
+    }
+
+    /**
+     * Boot FormListItem.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function ($model) {
+            foreach ($model->children as $child) {
+                $child->delete();
+            }
+        });
     }
 }

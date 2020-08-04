@@ -346,7 +346,7 @@ export default {
 .fj-chart {
     &__title {
         h4 {
-            font-weight: 700;
+            //font-weight: 700;
             font-size: 1.25rem;
             margin: 0;
             max-width: 70%;

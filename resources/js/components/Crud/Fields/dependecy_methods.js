@@ -6,13 +6,21 @@ export default {
      * @return {undefined}
      */
     resolveDependecies(dependencies) {
-        if (!Array.isArray(dependencies)) {
+        if (!dependencies || !Array.isArray(dependencies)) {
             return;
         }
 
-        let fulfilled = false;
+        let fulfilled = true;
         for (let i in dependencies) {
             let dependency = dependencies[i];
+
+            if (typeof dependency != 'object') {
+                continue;
+            }
+
+            if (!('condition' in dependency)) {
+                continue;
+            }
 
             let conditionMethod = this.getDependencyConditionMethod(dependency);
 
@@ -46,6 +54,13 @@ export default {
      */
     fulfillsWhen(dependency) {
         return this.model[dependency.attribute] == dependency.value;
+    },
+
+    /**
+     * Determinces if whenNot condition is fulfilled.
+     */
+    fulfillsWhenNot(dependency) {
+        return this.model[dependency.attribute] != dependency.value;
     },
 
     /**

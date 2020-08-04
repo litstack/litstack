@@ -80,11 +80,10 @@ class BuilderSort
     /**
      * Sort by related column.
      *
-     * @param string  $related
-     * @param string  $column
-     * @param string  $direction
-     * @param Closure $closure
-     *
+     * @param  string  $related
+     * @param  string  $column
+     * @param  string  $direction
+     * @param  Closure $closure
      * @return Builder
      */
     protected function sortByRelation(
@@ -128,9 +127,8 @@ class BuilderSort
     /**
      * Sort column.
      *
-     * @param string $column
-     * @param string $direction
-     *
+     * @param  string  $column
+     * @param  string  $direction
      * @return Builder
      */
     protected function sortColumn(string $column, string $direction): Builder
@@ -145,9 +143,8 @@ class BuilderSort
     /**
      * Order by translated column.
      *
-     * @param string $column
-     * @param string $direction
-     *
+     * @param  string  $column
+     * @param  string  $direction
      * @return Builder
      */
     protected function sortByTranslation(string $column, string $direction): Builder

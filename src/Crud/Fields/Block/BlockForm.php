@@ -10,11 +10,10 @@ class BlockForm extends BaseForm
     /**
      * Laravel relations not allowed for block.
      *
-     * @param string $name
+     * @param  string $name
+     * @return mixed
      *
      * @throws \InvalidArgumentException
-     *
-     * @return mixed
      */
     public function relation(string $name)
     {

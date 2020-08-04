@@ -102,7 +102,7 @@ export default {
             return this.item.hasOwnProperty('component');
         },
         isSection() {
-            return Array.isArray(this.item);
+            return Array.isArray(this.item) || !('type' in this.item);
         },
         isTitle() {
             return this.item.type === 'title';

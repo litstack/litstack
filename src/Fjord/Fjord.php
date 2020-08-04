@@ -3,6 +3,8 @@
 namespace Fjord\Fjord;
 
 use Fjord\Application\Application;
+use Fjord\Support\Facades\Config;
+use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Traits\ForwardsCalls;
 
@@ -18,10 +20,36 @@ class Fjord
     protected $app;
 
     /**
+     * Laravel application instance.
+     *
+     * @var LaravelApplication
+     */
+    protected $laravel;
+
+    /**
+     * Create Fjord application.
+     *
+     * @param LaravelApplication $laravel
+     */
+    public function __construct(LaravelApplication $laravel)
+    {
+        $this->laravel = $laravel;
+    }
+
+    /**
+     * Determines if the application is translatable.
+     *
+     * @return bool
+     */
+    public function isAppTranslatable()
+    {
+        return count(config('translatable.locales')) > 1;
+    }
+
+    /**
      * Bind Fjord Application instance when Fjord is installed.
      *
-     * @param \Fjord\Application\Application $app
-     *
+     * @param  \Fjord\Application\Application $app
      * @return void
      */
     public function bindApp(Application $app)
@@ -42,8 +70,7 @@ class Fjord
     /**
      * Get Fjord url.
      *
-     * @param string $url
-     *
+     * @param  string $url
      * @return string
      */
     public function url(string $url)
@@ -68,26 +95,25 @@ class Fjord
     /**
      * Get translation for Fjord application.
      *
-     * @param string $key
-     * @param array  $replace
-     *
+     * @param  string      $key
+     * @param  array       $replace
+     * @param  string|null $locale
      * @return string
      */
-    public function trans(string $key = null, $replace = [])
+    public function trans(string $key = null, $replace = [], $locale = null)
     {
         if (is_null($key)) {
             return $key;
         }
 
-        return $this->app->get('translator')->trans($key, $replace);
+        return $this->laravel['fjord.translator']->trans($key, $replace, $locale);
     }
 
     /**
      * Get choice translation for Fjord application.
      *
-     * @param string $key
-     * @param array  $replace
-     *
+     * @param  string $key
+     * @param  array  $replace
      * @return string
      */
     public function trans_choice(string $key = null, $number, $replace = [])
@@ -96,39 +122,38 @@ class Fjord
             return $key;
         }
 
-        return $this->app->get('translator')->choice($key, $number, $replace);
+        return $this->laravel['fjord.translator']->choice($key, $number, $replace);
     }
 
     /**
      * Get translation for Fjord application.
      *
-     * @param string $key
-     * @param array  $replace
-     *
+     * @param  string      $key
+     * @param  array       $replace
+     * @param  string|null $locale
      * @return string
      */
-    public function __(string $key = null, $replace = [])
+    public function __(string $key = null, $replace = [], $locale = null)
     {
-        return $this->trans($key, $replace);
+        return $this->trans($key, $replace, $locale);
     }
 
     /**
      * Load config.
      *
-     * @param string $key
-     * @param array  $params
-     *
+     * @param  string             $key
+     * @param  array              $params
      * @return ConfigHandler|null
      */
     public function config($key, ...$params)
     {
-        return $this->app->get('config.loader')->get($key, ...$params);
+        return Config::get($key, ...$params);
     }
 
     /**
-     * Get authenticated Fjord user.
+     * Gets the  authenticated Fjord user.
      *
-     * @return \Fjord\User\Models\FjordUser $user
+     * @return \Fjord\User\Models\FjordUser|null
      */
     public function user()
     {
@@ -142,7 +167,7 @@ class Fjord
      */
     public function getLocale()
     {
-        return $this->app()->get('translator')->getLocale();
+        return $this->laravel['fjord.translator']->getLocale();
     }
 
     /**
@@ -188,13 +213,12 @@ class Fjord
     /**
      * Forward call to Fjord Application.
      *
-     * @param string $method
-     * @param array  $params
-     *
+     * @param  string $method
+     * @param  array  $params
      * @return mixed
      */
-    public function __call($method, $params = [])
+    public function __call($method, $parameters)
     {
-        return $this->forwardCallTo($this->app, $method, $params);
+        return $this->forwardCallTo($this->app, $method, $parameters);
     }
 }

@@ -3,12 +3,13 @@
 namespace FjordTest\Fields;
 
 use Fjord\Crud\Field;
-use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
+use FjordTest\Traits\TestHelpers;
+use PHPUnit\Framework\TestCase;
 
-class SlotFieldTest extends BackendTestCase
+class SlotFieldTest extends TestCase
 {
-    use InteractsWithFields;
+    use InteractsWithFields, TestHelpers;
 
     public function setUp(): void
     {

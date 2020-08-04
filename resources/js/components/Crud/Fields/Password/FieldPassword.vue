@@ -52,13 +52,11 @@ export default {
         model: {
             required: true,
             type: Object
-        },
-        value: {
-            required: true
         }
     },
     data() {
         return {
+            value: '',
             show: false,
             password: null
         };
@@ -89,14 +87,17 @@ export default {
             if (this.field.noScore) {
                 return;
             }
-            this.field.hint = `Password strength: <b>${this.scoreStrength}</b>`;
+            //this.field.hint = `Password strength: <b>${this.scoreStrength}</b>`;
             this.$refs.form.$forceUpdate();
         },
         addSaveJob(newPassword) {
             let job = {
                 route: this.field.route_prefix,
                 method: this.field._method,
-                params: { [this.field.local_key]: newPassword },
+                params: {
+                    payload: { [this.field.local_key]: newPassword },
+                    ...(this.field.params || {})
+                },
                 key: this.field.local_key
             };
 

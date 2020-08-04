@@ -2,46 +2,53 @@
 
 namespace Fjord\Vue\Components;
 
+use Fjord\Contracts\Vue\Resizable;
 use Fjord\Vue\Component;
+use Fjord\Vue\Traits\CanBeResized;
 
-class InfoComponent extends Component
+class InfoComponent extends Component implements Resizable
 {
+    use CanBeResized;
+
     /**
-     * Available props.
+     * Before mount lifecycle hook.
      *
-     * @return array
+     * @return void
      */
-    protected function props()
+    public function beforeMount()
     {
-        return [
-            'title' => [
-                'type'     => 'string',
-                'required' => false,
-            ],
-            'text' => [
-                'type'     => 'array',
-                'required' => true,
-                'default'  => [],
-            ],
-            'width' => [
-                'type'     => 'integer',
-                'required' => false,
-                'default'  => 4,
-            ],
-            'heading' => [
-                'type'     => 'string',
-                'required' => true,
-                'default'  => 'h4',
-            ],
-        ];
+        $this->props['text'] = collect([]);
+        $this->width(12);
+        $this->heading('h4');
+    }
+
+    /**
+     * Sets the title.
+     *
+     * @param  string $title
+     * @return $this
+     */
+    public function title($title)
+    {
+        return $this->prop('title', $title);
+    }
+
+    /**
+     * Sets the heading.
+     *
+     * @param  string $heading
+     * @return $this
+     */
+    public function heading($heading)
+    {
+        return $this->prop('heading', $heading);
     }
 
     /**
      * Add text.
      *
-     * @param string $name
-     *
-     * @return self
+     * @param  string $name
+     * @return $this
      */
     public function text(string $text)
     {

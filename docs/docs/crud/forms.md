@@ -2,7 +2,7 @@
 
 [[toc]]
 
-Fjord forms provide a convenient way to store, organize and maintain data of many kinds, such as your page content. You may create as many `Forms` as you like.
+Forms provide a convenient way to store, organize and maintain data of many kinds, such as your page content. You may create as many `Forms` as you like.
 
 Forms are divided into form `collections` to keep the overview. For example, the forms **home** and **faq**, which contain the page content for the pages **home** and **faq**, can be included in the `collection` **pages**.
 
@@ -31,7 +31,7 @@ protected $groups = [
 ];
 ```
 
-The migration can now simply be rolled back and re-run using the artisan command `fjord:nav-permissions`.
+The migration can now simply be rolled back and re-run using the artisan command `fjord:form-permissions`.
 
 ```shell
 php artisan fjord:nav-permissions

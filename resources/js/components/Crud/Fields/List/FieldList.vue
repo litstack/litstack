@@ -1,38 +1,51 @@
 <template>
     <fj-base-field :field="field" :model="model">
-        <template slot="title-right">
-            <b-button
-                variant="secondary"
-                class="mb-2"
-                size="sm"
-                @click="addListItem"
-            >
-                {{
-                    __('base.item_add', {
-                        item: __('base.item_item', { item: field.title })
-                    })
-                }}
-            </b-button>
+        <template v-if="!field.readonly && !this.create">
+            <template slot="title-right">
+                <b-button
+                    variant="secondary"
+                    class="mb-2"
+                    size="sm"
+                    @click="addListItem"
+                >
+                    {{
+                        __('base.item_add', {
+                            item: __('base.item_item', { item: field.title })
+                        })
+                    }}
+                </b-button>
+            </template>
+            <div class="d-flex justify-content-around w-100" v-if="busy">
+                <fj-spinner />
+            </div>
+            <nested-draggable
+                v-else
+                :children="list"
+                :field="field"
+                :model="model"
+                @end="orderListItems"
+                @addItem="addListItem"
+                @deleteItem="deleteListItem"
+            />
+            <fj-field-list-modal
+                v-if="newModel"
+                :item="newModel"
+                :model="model"
+                :field="newField"
+                :modalId="modalId()"
+            />
+            <b-alert
+                class="w-100"
+                show
+                variant="info"
+                v-html="
+                    __('base.no_item_selected', { item: `${field.title} item` })
+                "
+            />
         </template>
-        <div class="d-flex justify-content-around w-100" v-if="busy">
-            <fj-spinner />
-        </div>
-        <nested-draggable
-            v-else
-            :children="list"
-            :field="field"
-            :model="model"
-            @end="orderListItems"
-            @addItem="addListItem"
-            @deleteItem="deleteListItem"
-        />
-        <fj-field-list-modal
-            v-if="newModel"
-            :item="newModel"
-            :model="model"
-            :field="newField"
-            :modalId="modalId()"
-        />
+        <template v-else>
+            <fj-field-alert-not-created :field="field" class="mb-0" />
+        </template>
     </fj-base-field>
 </template>
 
@@ -424,8 +437,20 @@ export default {
             return this.unflatten(this.input);
         },
 
+        /**
+         * Gets api route.
+         */
         apiRoute() {
             return `${this.field.route_prefix}/list`;
+        },
+
+        /**
+         * Is on create page.
+         *
+         * @return {Boolean}
+         */
+        create() {
+            return this.model.id === undefined;
         }
     }
 };

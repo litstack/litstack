@@ -51,7 +51,9 @@ const methods = {
             ? this.$t(`messages.${message}`)
             : message;
 
-        this.$bvToast.toast(message, { variant: 'danger' });
+        this.$bvToast.toast(message, {
+            variant: 'danger'
+        });
 
         return Promise.reject(error);
     }

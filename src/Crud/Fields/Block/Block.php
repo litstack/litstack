@@ -4,8 +4,9 @@ namespace Fjord\Crud\Fields\Block;
 
 use Closure;
 use Fjord\Crud\Fields\Traits\HasBaseField;
-use Fjord\Crud\Models\FormField;
+use Fjord\Crud\Models\FjordFormModel;
 use Fjord\Crud\RelationField;
+use Illuminate\Support\Collection;
 
 class Block extends RelationField
 {
@@ -53,8 +54,7 @@ class Block extends RelationField
     /**
      * Add repeatables.
      *
-     * @param Closure|Repeatables $closure
-     *
+     * @param  Closure|Repeatables $closure
      * @return $this
      */
     public function repeatables($closure)
@@ -73,8 +73,7 @@ class Block extends RelationField
     /**
      * Check if block has repeatable.
      *
-     * @param string $name
-     *
+     * @param  string $name
      * @return bool
      */
     public function hasRepeatable(string $name)
@@ -85,29 +84,55 @@ class Block extends RelationField
     /**
      * Check if block has repeatable.
      *
-     * @param string $name
-     *
+     * @param  string $name
      * @return bool
      */
     public function getRepeatable($name)
     {
         return $this->repeatables->get($name);
+        // if () {
+        //     return $repeatable;
+        // }
+
+        // foreach ($this->getRegisteredFields() as $field) {
+        //     if (! $field instanceof self) {
+        //         continue;
+        //     }
+
+        //     if ($repeatable = $field->getRepeatable($name)) {
+        //         return $repeatable;
+        //     }
+        // }
     }
 
     /**
      * Get relation query for model.
      *
-     * @param mixed $model
-     * @param bool  $query
-     *
+     * @param  mixed $model
+     * @param  bool  $query
      * @return mixed
      */
     public function getRelationQuery($model)
     {
-        if (! $model instanceof FormField) {
+        if (! $model instanceof FjordFormModel) {
             return $model->{$this->id}();
         }
 
         return $model->repeatables($this->id);
+    }
+
+    /**
+     * Get registered fields.
+     *
+     * @return Collection
+     */
+    public function getRegisteredFields()
+    {
+        $fields = collect([]);
+        foreach ($this->repeatables->repeatables as $repeatable) {
+            $fields = $fields->merge($repeatable->getRegisteredFields());
+        }
+
+        return $fields;
     }
 }

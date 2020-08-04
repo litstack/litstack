@@ -95,6 +95,9 @@ export default {
                     opacity: 1,
                     colors: []
                 },
+                legend: {
+                    show: false
+                },
                 tooltip: {
                     enabled: true,
                     theme: 'dark',

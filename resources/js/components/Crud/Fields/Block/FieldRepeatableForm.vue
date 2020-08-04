@@ -4,7 +4,7 @@
             v-for="(field, key) in fields"
             :key="key"
             :field="field"
-            :model-id="model.id"
+            :model-id="modelId"
             :model="block"
             v-on="$listeners"
         />
@@ -26,6 +26,9 @@ export default {
         model: {
             required: true,
             type: Object
+        },
+        modelId: {
+            required: true
         },
         fields: {
             type: Array,

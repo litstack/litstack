@@ -13,7 +13,8 @@ return [
             'unlink'   => 'Verknüpfung aufheben',
             'edit'     => 'Verknüpfung bearbeiten',
             'messages' => [
-                'confirm_unlink' => 'Bitte bestätigen Sie, dass Sie die Verknüpfung aufheben möchten.',
+                'confirm_unlink'    => 'Bitte bestätigen Sie, dass Sie die Verknüpfung aufheben möchten.',
+                'max_items_reached' => 'Es können maximal :count items ausgewählt werden..',
             ],
         ],
         'wysiwyg' => [
@@ -29,6 +30,7 @@ return [
     ],
     'meta' => [
         'title_hint'       => 'Leicht verständlicher sinnvoller Satz. Gibt eine Vorstellung, worum es im Seiteninhalt geht. Maximal :width breit.',
+        'keywords_hint'    => 'Die wichtigsten Schlüsselwörter des Seiteninhaltes. Einzelne (wenige) Wörter durch Kommata getrennt.',
         'description_hint' => 'Kurze aber aussagekräftige Inhaltsangabe der Seite. Beinhaltet die wichtigsten Schlüsselwörter des Seiteninhaltes.',
     ],
 ];

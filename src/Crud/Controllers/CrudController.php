@@ -3,14 +3,14 @@
 namespace Fjord\Crud\Controllers;
 
 use Fjord\Crud\Fields\Media\MediaField;
+use Fjord\Crud\Models\FjordFormModel;
 use Fjord\Crud\RelationField;
 use Fjord\Crud\Requests\CrudCreateRequest;
 use Fjord\Crud\Requests\CrudDeleteRequest;
 use Fjord\Crud\Requests\CrudReadRequest;
 use Fjord\Crud\Requests\CrudUpdateRequest;
-use Fjord\User\Models\FjordUser;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 abstract class CrudController extends CrudBaseController
 {
@@ -87,23 +87,19 @@ abstract class CrudController extends CrudBaseController
     }
 
     /**
-     * Delete all.
+     * Delete action.
      *
-     * @param CrudDeleteRequest $request
-     *
-     * @return void
+     * @param  CrudDeleteRequest            $request
+     * @param  Collection                   $models
+     * @return Illuminate\Http\JsonResponse
      */
-    public function destroyAll(CrudDeleteRequest $request)
+    public function deleteAction(CrudDeleteRequest $request, Collection $models)
     {
-        if (! is_array($request->ids)) {
-            abort(405);
-        }
+        $models->map(fn ($item) => $item->delete());
 
-        $this->delete($this->query()->whereIn('id', $request->ids));
-
-        return response()->json([
-            'message' => __f_choice('messages.deleted_items', count($request->ids)),
-        ], 200);
+        return response()->success(
+            __f_choice('messages.deleted_items', count($models))
+        );
     }
 
     /**
@@ -116,16 +112,7 @@ abstract class CrudController extends CrudBaseController
     public function index(CrudReadRequest $request)
     {
         $config = $this->config->get(
-            'route_prefix',
-            'names',
-            'sortBy',
-            'sortByDefault',
-            'perPage',
-            'filter',
-            'expandIndexContainer',
-            'sortable',
-            'orderColumn',
-            'permissions'
+            'route_prefix', 'names', 'permissions'
         );
 
         $page = $this->config->index
@@ -157,16 +144,18 @@ abstract class CrudController extends CrudBaseController
         $config['form'] = $config['show'];
         unset($config['show']);
 
-        return view('fjord::app')
-            ->withComponent($this->config->formComponent)
-            ->withTitle(__f('base.item_create', [
-                'item' => $config['names']['singular'],
-            ]))
-            ->withProps([
-                'crud-model'       => crud(new $this->model()),
-                'config'           => $config,
-                'headerComponents' => [],
+        $page = $this->config->show
+            ->title($this->config->names['singular'])
+            ->bindToView([
+                'model'  => new $this->model(),
+                'config' => $this->config,
+            ])
+            ->bindToVue([
+                'crud-model' => crud(new $this->model()),
+                'config'     => $config,
             ]);
+
+        return $page;
     }
 
     /**
@@ -192,9 +181,11 @@ abstract class CrudController extends CrudBaseController
         $model->last_edit;
 
         // Append media.
-        foreach ($this->config->show->getRegisteredFields() as $field) {
-            if ($field instanceof MediaField) {
-                $model->append($field->id);
+        if (! $model instanceof FjordFormModel) {
+            foreach ($this->config->show->getRegisteredFields() as $field) {
+                if ($field instanceof MediaField) {
+                    $model->append($field->id);
+                }
             }
         }
 
@@ -247,8 +238,7 @@ abstract class CrudController extends CrudBaseController
     /**
      * Sort.
      *
-     * @param CrudUpdateRequest $request
-     *
+     * @param  CrudUpdateRequest $request
      * @return void
      */
     public function order(CrudUpdateRequest $request)

@@ -2,7 +2,7 @@
 
 [[toc]]
 
-Fjord `tables` can be easily configured in the backend. You can easily display attributes, relationships or include your own `Vue` components to adjust the table as needed. The following explains how to customize the tables to your needs.
+`tables` can be easily configured in the backend. You can easily display attributes, relationships or include your own `Vue` components to adjust the table as needed. The following explains how to customize the tables to your needs.
 
 ## Text
 
@@ -22,6 +22,17 @@ It is also possible to specify the attribute of relations. In this case attribut
 
 ```php
 $table->col('Product')->value('{product.name}');
+```
+
+Maybe you want to display a value representative for a state, this can be achived by passing the attribute name as the first and an array of options as the second parameter to the value method:
+
+```php
+use App\Modols\Product;
+
+$table->col('State')->value('state', [
+    Product::AVAILABLE    => 'available',
+    Product::OUT_OF_STOCK => 'out of stock',
+]);
 ```
 
 ## Small

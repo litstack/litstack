@@ -45,8 +45,19 @@ class Page extends BasePage implements Expandable
      */
     public function __construct()
     {
-        $this->navigation = new Navigation;
-        $this->header = new Header;
+        $this->navigation = new Navigation($this);
+        $this->header = new Header($this);
+    }
+
+    /**
+     * Resolve action component.
+     *
+     * @param  \Fjord\Vue\Component $component
+     * @return void
+     */
+    public function resolveAction($component)
+    {
+        //
     }
 
     /**
@@ -60,7 +71,7 @@ class Page extends BasePage implements Expandable
     {
         $this->back = [
             'text'  => $text,
-            'route' => $text,
+            'route' => $route,
         ];
 
         return $this;

@@ -29,9 +29,8 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Load repeatable.
      *
-     * @param CrudReadRequest $request
-     * @param mixed           $model
-     *
+     * @param  CrudReadRequest $request
+     * @param  mixed           $model
      * @return CrudJs
      */
     public function load(CrudReadRequest $request, $model)
@@ -44,9 +43,8 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Fetch all repeatables.
      *
-     * @param CrudReadRequest $request
-     * @param mixed           $model
-     *
+     * @param  CrudReadRequest $request
+     * @param  mixed           $model
      * @return CrudJs
      */
     public function index(CrudReadRequest $request, $model)
@@ -57,9 +55,8 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Destroy repeatable.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)
@@ -70,15 +67,17 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Update repeatable.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     * @param object            $payload
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
+     * @param  object            $payload
      * @return CrudJs
      */
     public function update(CrudUpdateRequest $request, $model, $payload)
     {
         $type = $request->repeatable_type;
+
+        $repeatableModel = $this->getRepeatable($model, $request->repeatable_id ?? 0);
+
         $repeatable = $this->field->getRepeatable($type) ?:
             abort(404, debug("Repeatable [{$type}] not found for block field [{$this->field->id}]"));
 
@@ -90,7 +89,6 @@ class BlockRepository extends BaseFieldRepository
 
         $attributes = $this->formatAttributes((array) $payload, $repeatable->getRegisteredFields());
 
-        $repeatableModel = $this->getRepeatable($model, $request->repeatable_id ?? 0);
         $repeatableModel->update($attributes);
 
         return crud($repeatable);
@@ -99,10 +97,9 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Store new repeatable in database.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     * @param object            $payload
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
+     * @param  object            $payload
      * @return CrudJs
      */
     public function store(CrudUpdateRequest $request, $model, $payload)
@@ -129,11 +126,10 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Update repeatable order.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     * @param object            $payload
-     *
-     * @return void
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
+     * @param  object            $payload
+     * @return mixed
      */
     public function order(CrudUpdateRequest $request, $model, $payload)
     {
@@ -143,48 +139,78 @@ class BlockRepository extends BaseFieldRepository
 
         $query = $this->field->getRelationQuery($model);
 
-        $order = $this->orderField($query, $this->field, $payload->ids);
-
-        return $order;
+        return $this->orderField($query, $this->field, $payload->ids);
     }
 
     /**
      * Get child field.
      *
-     * @param Request $request
-     * @param string  $field_id
-     *
+     * @param  Request    $request
+     * @param  string     $field_id
      * @return Field|null
      */
     public function getField(Request $request, $field_id)
     {
-        if (! $repeatable = $this->field->getRepeatable($request->repeatable_type)) {
-            abort(404, debug("Missing [{$request->repeatable_type}] repeatable."));
+        if ($repeatable = $this->field->getRepeatable($request->repeatable_type)) {
+            if ($field = $repeatable->findField($field_id)) {
+                return $field;
+            }
         }
 
-        return $repeatable->findField($field_id);
+        foreach ($this->field->repeatables->repeatables as $repeatable) {
+            foreach ($repeatable->getRegisteredFields() as $field) {
+                if (! $field instanceof Block) {
+                    continue;
+                }
+
+                if (! $childRepeatable = $field->getRepeatable($request->repeatable_type)) {
+                    continue;
+                }
+
+                if ($childField = $repeatable->findField($field_id)) {
+                    return $childField;
+                }
+
+                if ($childField = $childRepeatable->findField($field_id)) {
+                    return $childField;
+                }
+            }
+        }
+
+        abort(404, debug("Missing [{$request->repeatable_type}] repeatable."));
     }
 
     /**
      * Get repeatable model.
      *
-     * @param Request $request
-     * @param mixed   $model
-     *
+     * @param  Request   $request
+     * @param  mixed     $model
      * @return FormBlock
      */
-    public function getModel(Request $request, $model)
+    public function getModel(Request $request, $model, $childRepository)
     {
-        return $this->getRepeatable($model, $request->repeatable_id);
+        if (! $request->child_repeatable_id || $request->child_repeatable_id == $request->repeatable_id) {
+            return $this->getRepeatable($model, $request->repeatable_id);
+        }
+
+        $childRepeatable = $this->getRepeatable($model, $request->child_repeatable_id);
+
+        if ($childRepository instanceof self) {
+            return $childRepeatable;
+        }
+
+        // Loading child block for media and relation requests.
+        return FormBlock::where('model_type', FormBlock::class)
+            ->where('model_id', $childRepeatable->id)
+            ->where('id', $request->repeatable_id)->firstOrFail();
     }
 
     /**
      * Get order column for new repeatable.
      *
-     * @param Request $request
-     * @param mixed   $model
-     * @param string  $type
-     *
+     * @param  Request $request
+     * @param  mixed   $model
+     * @param  string  $type
      * @return int
      */
     protected function getOrderColumnForNewRepeatable(Request $request, $model, $type)
@@ -201,9 +227,8 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Get repeatable.
      *
-     * @param mixed      $model
-     * @param int|string $id
-     *
+     * @param  mixed      $model
+     * @param  int|string $id
      * @return FormBlock
      */
     protected function getRepeatable($model, $id)

@@ -52,6 +52,21 @@ class CrudShow extends Page
     }
 
     /**
+     * Resolve action component.
+     *
+     * @param  \Fjord\Vue\Component $component
+     * @return void
+     */
+    public function resolveAction($component)
+    {
+        $component->on('run', RunCrudActionEvent::class)
+            ->prop('eventData', array_merge(
+                $component->getProp('eventData'),
+                ['model' => $this->form->getModel()]
+            ));
+    }
+
+    /**
      * Registering field lifecycle hook.
      *
      * @param  Field $field
@@ -93,25 +108,6 @@ class CrudShow extends Page
     }
 
     /**
-     * Register new Field.
-     *
-     * @param  mixed  $field
-     * @param  string $id
-     * @param  array  $params
-     * @return Field  $field
-     */
-    // public function registerField($field, string $id, $params = [])
-    // {
-    //     if (! $this->inWrapper()) {
-    //         throw new InvalidArgumentException('Fields must be registered inside a wrapper.', [
-    //             'function' => '__call',
-    //         ]);
-    //     }
-
-    //     return $this->form->registerField($field, $id, $params);
-    // }
-
-    /**
      * Is registering component in card.
      *
      * @return bool
@@ -121,24 +117,6 @@ class CrudShow extends Page
         return $this->inCard;
     }
 
-    // public function wrapper($component, Closure $closure)
-    // {
-    //     $wrapper = parent::wrapper($component, function ($self, $wrapper) use ($closure) {
-    //         $wrapper = $this->form->wrapper($wrapper, function ($form, $wrapper) use ($closure) {
-    //             $closure($form, $wrapper);
-
-    //             array_pop($this->components);
-
-    //             $this->components[] = $wrapper;
-    //             $this->wrapper = $wrapper;
-    //         });
-    //     });
-
-    //     //dd($this, $wrapper->title('abc'));
-
-    //     return $wrapper;
-    // }
-
     /**
      * Add Vue component.
      *
@@ -147,10 +125,6 @@ class CrudShow extends Page
      */
     public function component($component)
     {
-        if ($this->inCard()) {
-            return $this->form->component($component);
-        }
-
         if ($this->inWrapper()) {
             $component = component($component);
 
@@ -192,19 +166,8 @@ class CrudShow extends Page
             $this->inCard = true;
             $closure($this);
             $this->inCard = false;
-        });
+        })->class('mb-5');
     }
-
-    /**
-     * Get CrudForm components.
-     *
-     * @return array
-     */
-    // public function getComponents()
-    // {
-
-    //     return $this->forwardCallTo($this->form, 'getComponents', []);
-    // }
 
     /**
      * Get attributes.
@@ -235,6 +198,10 @@ class CrudShow extends Page
      */
     public function __call($method, $parameters = [])
     {
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $parameters);
+        }
+
         return $this->forwardCallTo($this->form, $method, $parameters);
     }
 }

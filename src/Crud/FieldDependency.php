@@ -15,6 +15,7 @@ class FieldDependency extends VueProp
      */
     protected static $conditions = [
         'when',
+        'whenNot',
         'whenContains',
     ];
 
@@ -80,6 +81,36 @@ class FieldDependency extends VueProp
         }
 
         return false;
+    }
+
+    /**
+     * Gets depandant.
+     *
+     * @return Field
+     */
+    public function getDependent()
+    {
+        return $this->dependent;
+    }
+
+    /**
+     * Gets condition.
+     *
+     * @return string
+     */
+    public function getCondition()
+    {
+        return $this->condition;
+    }
+
+    /**
+     * Get dependency value.
+     *
+     * @return string|int
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 
     /**

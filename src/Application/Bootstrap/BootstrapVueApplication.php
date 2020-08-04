@@ -2,6 +2,7 @@
 
 namespace Fjord\Application\Bootstrap;
 
+use Fjord\Application\AppComponent;
 use Fjord\Application\Application;
 use Fjord\Application\Vue\VueApplication;
 
@@ -17,6 +18,8 @@ class BootstrapVueApplication
      */
     public function bootstrap(Application $app)
     {
-        $app->bind('vue', new VueApplication($app));
+        $app->singleton('vue', function () {
+            return new AppComponent;
+        });
     }
 }

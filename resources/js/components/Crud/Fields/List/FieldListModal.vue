@@ -1,5 +1,5 @@
 <template>
-    <b-modal :id="modalId" :size="field.modalSize">
+    <b-modal :id="modalId" :size="field.modalSize" centered>
         <span slot="modal-title" v-html="_format(field.previewTitle, item)" />
         <b-row>
             <fj-field
@@ -12,17 +12,27 @@
             />
         </b-row>
         <template slot="modal-footer">
-            <button @click.prevent="cancel()" class="btn btn-secondary">
-                {{ __('base.close').capitalize() }}
-            </button>
-            <b-button
-                class="fj-save-button"
-                variant="primary"
-                v-bind:disabled="!canSave"
-                @click="Fjord.bus.$emit('save')"
-            >
-                {{ __('base.save').capitalize() }}
-            </b-button>
+            <div class="d-flex justify-content-between w-100">
+                <div>
+                    <fj-crud-language />
+                </div>
+                <div>
+                    <button
+                        @click.prevent="$bvModal.hide(modalId)"
+                        class="btn btn-secondary"
+                    >
+                        {{ __('base.close').capitalize() }}
+                    </button>
+                    <b-button
+                        class="fj-save-button"
+                        variant="primary"
+                        v-bind:disabled="!canSave"
+                        @click="Fjord.bus.$emit('save')"
+                    >
+                        {{ __('base.save').capitalize() }}
+                    </b-button>
+                </div>
+            </div>
         </template>
     </b-modal>
 </template>

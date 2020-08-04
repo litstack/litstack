@@ -10,7 +10,7 @@ The CRUD config returns an array in which the editability and further points are
 
 ## Preview Route
 
-The preview route is optional and can be set to view the edited model directly in `mobile`, `tablet` and `desktop` view. the default device can be specified in the fjord config under the key `crud.preview.default_device`.
+The preview route is optional and can be set to view the edited model directly in `mobile`, `tablet` and `desktop` view. The default device can be specified in the fjord config under the key `crud.preview.default_device`.
 
 There are several ways to define a route that can be used according to your needs.
 
@@ -134,7 +134,7 @@ The sorting possibilities are defined in `sort_by` by setting the attribute and 
 
 ## Form Fields
 
-For each fillable attribute of the model form fields can be specified to make them editable. [Read more about Fjord form fields](/{{route}}/{{version}}/form-fields).
+For each fillable attribute of the model form fields can be specified to make them editable. [Read more about form fields](/{{route}}/{{version}}/form-fields).
 
 Form fields used for a CRUD model may in some cases come with requirements described below.
 

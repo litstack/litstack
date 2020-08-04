@@ -41,14 +41,19 @@ class FjordUser extends Command
         $email = $this->ask('Enter the email');
         $password = $this->secret('Enter the password');
 
-        $user = FjordUserModel::firstOrCreate([
-            'username' => $username,
-            'email'    => $email,
-        ], [
-            'password'   => bcrypt($password),
+        if (FjordUserModel::where('username', $username)->orWhere('email', $email)->exists()) {
+            return;
+        }
+
+        $user = new FjordUserModel([
+            'username'   => $username,
+            'email'      => $email,
             'first_name' => $first_name,
             'last_name'  => $last_name,
         ]);
+
+        $user->password = bcrypt($password);
+        $user->save();
 
         $user->assignRole('user');
 

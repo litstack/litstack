@@ -46,6 +46,48 @@ You can now receive the block data like this:
 Post::find($id)->content;
 ```
 
+## Binding Views
+
+You can directly bind a view to a repeatable to use it in the frontend where you display your block:
+
+```php{3}
+$repeatables->add('text', function($form, $preview) {
+    // ...
+})->view('repeatables.text');
+```
+
+You may even bind Blade x components using the `x` method:
+
+```php{3}
+$repeatables->add('text', function($form, $preview) {
+    // ...
+})->x('repeatables.text');
+```
+
+## Frontend
+
+To use the repeatables of a block in the frontend you can loop over them and display the content depending on the repeatable `type`, like this:
+
+```php
+@foreach($model->content as $repeatable)
+    @if($repeatable->type == 'text')
+        {{ $repeatable->text }}
+    @elseif($repeatable->type == 'text')
+        {{-- ... --}}
+    @endif
+@endforeach
+```
+
+However you can simply use the blade directive `block`, which does exactly that for you.
+
+```php
+@block($model->content)
+```
+
+:::warning
+The `block` directive needs a View or a Blade x component bound to the repeatable to be able to display it.
+:::
+
 ## Methods
 
 | Method        | Description                                        |
@@ -54,3 +96,11 @@ Post::find($id)->content;
 | `repeatables` | A closure where all repeatable blocks are defined. |
 | `width`       | Width of the field.                                |
 | `blockWidth`  | Width of a block.                                  |
+
+## Repeatable Methods
+
+| Method  | Description                                      |
+| ------- | ------------------------------------------------ |
+| `title` | The title for the repeatable.                    |
+| `view`  | The View describing the repeatable.              |
+| `x`     | The Blade x component describing the repeatable. |

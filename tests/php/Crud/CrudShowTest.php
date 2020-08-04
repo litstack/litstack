@@ -71,23 +71,6 @@ class CrudShowTest extends BackendTestCase
         $this->assertCount(1, $components);
         $this->assertEquals($component, $components[0]);
     }
-
-    /** @test */
-    public function it_registeres_component_field_when_inside_card()
-    {
-        $card = $this->page->card(function ($page) {
-            $component = $this->page->component('dummy-component');
-        });
-
-        $components = $this->page->getComponents();
-        $fields = $this->page->getRegisteredFields();
-
-        $this->assertCount(1, $components);
-        $this->assertCount(1, $fields);
-        $this->assertEquals('fj-field-wrapper', $components[0]->getName());
-        $this->assertEquals('fj-field-wrapper-card', $components[0]->wrapperComponent->getName());
-        $this->assertInstanceof(\Fjord\Crud\Fields\Component::class, $fields[0]);
-    }
 }
 
 class CrudFormDummyModel extends Model

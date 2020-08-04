@@ -2,14 +2,14 @@
 
 namespace Fjord\Support\Facades;
 
-use Fjord\Support\FjordFacade;
+use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static array names(string $model)
  *
  * @see \Fjord\Crud\Crud
  */
-class Crud extends FjordFacade
+class Crud extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -18,6 +18,26 @@ class Crud extends FjordFacade
      */
     protected static function getFacadeAccessor()
     {
-        return 'crud';
+        return 'fjord.app.crud';
+    }
+
+    public static function getFacadeRoot()
+    {
+        return static::resolveFacadeInstance(static::getFacadeAccessor());
+    }
+
+    protected static function resolveFacadeInstance($name)
+    {
+        if (is_object($name)) {
+            return $name;
+        }
+
+        if (isset(static::$resolvedInstance[$name])) {
+            return static::$resolvedInstance[$name];
+        }
+
+        if (static::$app) {
+            return static::$resolvedInstance[$name] = static::$app[$name];
+        }
     }
 }

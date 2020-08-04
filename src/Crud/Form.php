@@ -20,9 +20,9 @@ class Form
      * returned where the respective collection or form can be called with the
      * name.
      *
-     * @param  string              $collection
-     * @param  string              $name
-     * @return FormFieldCollection
+     * @param  string                        $collection
+     * @param  string                        $name
+     * @return FormFieldCollection|FormField
      */
     public function load(string $collection = null, string $name = null)
     {
@@ -41,9 +41,7 @@ class Form
 
         $items = new FormFieldCollection($query->get());
 
-        $items = $this->getGroups($items, $loadingCollection, $loadingForm);
-
-        return $items;
+        return $this->getGroups($items, $loadingCollection, $loadingForm);
     }
 
     /**
@@ -109,13 +107,27 @@ class Form
     }
 
     /**
-     * Register field.
+     * Add field.
      *
      * @param  string $alias
      * @param  string $field
      * @return void
      */
-    public function registerField(string $alias, $field)
+    public function field($alias, $field)
+    {
+        $this->fields[$alias] = $field;
+    }
+
+    /**
+     * Register field.
+     *
+     * @param  string $alias
+     * @param  string $field
+     * @return void
+     *
+     * @deprecated
+     */
+    public function registerField($alias, $field)
     {
         $this->fields[$alias] = $field;
     }

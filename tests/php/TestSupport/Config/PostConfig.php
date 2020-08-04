@@ -8,25 +8,10 @@ use Fjord\Vue\Crud\CrudTable;
 
 class PostConfig extends CrudConfig
 {
-    /**
-     * Model class.
-     *
-     * @var string
-     */
     public $model = \FjordTest\TestSupport\Models\Post::class;
 
-    /**
-     * Controller class.
-     *
-     * @var string
-     */
     public $controller = \FjordTest\TestSupport\Controllers\PostController::class;
 
-    /**
-     * Model singular and plural name.
-     *
-     * @return array
-     */
     public function names()
     {
         return [
@@ -35,13 +20,6 @@ class PostConfig extends CrudConfig
         ];
     }
 
-    /**
-     * Build index table.
-     *
-     * @param \Fjord\Crud\CrudIndex $table
-     *
-     * @return void
-     */
     public function index(CrudTable $container)
     {
         $container->table(function ($table) {
@@ -58,13 +36,6 @@ class PostConfig extends CrudConfig
             ->width(12);
     }
 
-    /**
-     * Setup create and edit form.
-     *
-     * @param \Fjord\Crud\CrudShow $form
-     *
-     * @return void
-     */
     public function show(CrudShow $form)
     {
         $form->card(function ($form) {
@@ -72,13 +43,6 @@ class PostConfig extends CrudConfig
         });
     }
 
-    /**
-     * Define form sections in methods to keep the overview.
-     *
-     * @param \Fjord\Crud\CrudShow $form
-     *
-     * @return void
-     */
     protected function mainCard(CrudShow $form)
     {
         $form->input('title')
@@ -101,6 +65,7 @@ class PostConfig extends CrudConfig
 
         $form->list('test_list')
             ->title('Test List')
+            ->previewTitle('{test_list_input}')
             ->form(function ($form) {
                 $form->input('test_list_input')->title('Hi');
             });

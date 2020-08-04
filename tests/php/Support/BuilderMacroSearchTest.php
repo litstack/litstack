@@ -36,10 +36,9 @@ class BuilderMacroSearchTest extends BackendTestCase
     /** @test */
     public function it_notices_related_attributes()
     {
-        $model = m::mock(BuilderMacroSearchModel::class);
+        $model = m::mock(BuilderMacroSearchModel::class)->makePartial();
 
-        $this->passthruAllExcept($model, BuilderMacroSearchModel::class, ['posts']);
-        $model->shouldReceive('search')->passthru();
+        $model->shouldReceive('search')->twice()->passthru();
         $model->shouldReceive('posts')->once()->passthru();
 
         // posts exists

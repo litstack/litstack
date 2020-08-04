@@ -2,7 +2,9 @@
 
 namespace FjordTest\Fields;
 
+use Fjord\Crud\BaseForm;
 use Fjord\Crud\Field;
+use Fjord\Crud\FieldDependency;
 use Fjord\Exceptions\Traceable\MissingAttributeException;
 use Fjord\User\Models\FjordUser;
 use FjordTest\BackendTestCase;
@@ -132,6 +134,32 @@ class FieldTest extends BackendTestCase
             $this->assertEquals($user, $fjordUser);
         });
         $field->authorized();
+    }
+
+    /** @test */
+    public function test_dependency_using_field_instance()
+    {
+        $form = new BaseForm('model');
+        $dependent = $form->input('dependent');
+        $field = $form->input('field');
+
+        $this->assertSame($field, $field->when($dependent, 'dummy-value'));
+        $this->assertCount(1, $field->getDependencies());
+        $this->assertInstanceOf(FieldDependency::class, $dependency = $field->getDependencies()->first());
+        $this->assertSame($dependent, $dependency->getDependent());
+    }
+
+    /** @test */
+    public function test_dependency_using_field_id()
+    {
+        $form = new BaseForm('model');
+        $dependent = $form->input('dependent');
+        $field = $form->input('field');
+
+        $this->assertSame($field, $field->when('dependent', 'dummy-value'));
+        $this->assertCount(1, $field->getDependencies());
+        $this->assertInstanceOf(FieldDependency::class, $dependency = $field->getDependencies()->first());
+        $this->assertSame($dependent, $dependency->getDependent());
     }
 }
 

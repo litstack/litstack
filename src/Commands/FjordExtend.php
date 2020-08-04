@@ -44,7 +44,7 @@ class FjordExtend extends Command
      */
     protected function runNpmInstall($base, $verbose = false)
     {
-        $cmd = "cd {$base}; npm i vendor/aw-studio/fjord vendor/aw-studio/fjord-permissions";
+        $cmd = "cd {$base}; npm i vendor/aw-studio/fjord";
         if ($verbose) {
             passthru($cmd);
         } else {

@@ -2,33 +2,25 @@
 
 namespace Fjord\Vue\Components;
 
+use Fjord\Contracts\Vue\Resizable;
 use Fjord\Crud\FieldDependency;
 use Fjord\Vue\Component;
+use Fjord\Vue\Traits\CanBeResized;
 
-class FieldWrapperGroupComponent extends Component
+class FieldWrapperGroupComponent extends Component implements Resizable
 {
+    use CanBeResized;
+
     /**
-     * Available props.
+     * Before mount lifecycle hook.
      *
-     * @return array
+     * @return void
      */
-    protected function props()
+    public function beforeMount()
     {
-        return [
-            'width' => [
-                'type'     => 'integer',
-                'required' => false,
-                'default'  => 12,
-            ],
-            'class' => [
-                'type'     => 'string',
-                'required' => false,
-                'default'  => 'mb-4',
-            ],
-            'dependencies' => [
-                'default' => collect([]),
-            ],
-        ];
+        $this->props['dependencies'][] = collect([]);
+        $this->class('mb-4');
+        $this->width(12);
     }
 
     /**
@@ -58,7 +50,5 @@ class FieldWrapperGroupComponent extends Component
                 FieldDependency::make($method, ...$parameters)
             );
         }
-
-        return parent::__call($method, $parameters);
     }
 }

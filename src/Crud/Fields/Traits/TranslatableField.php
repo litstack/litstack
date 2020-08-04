@@ -2,6 +2,9 @@
 
 namespace Fjord\Crud\Fields\Traits;
 
+use Fjord\Crud\Models\FjordFormModel;
+use Fjord\Support\Facades\Fjord;
+
 trait TranslatableField
 {
     /**
@@ -25,6 +28,14 @@ trait TranslatableField
      */
     public function setTranslatableDefault(): bool
     {
+        if (! class_exists($this->model)) {
+            return false;
+        }
+
+        if (new $this->model instanceof FjordFormModel) {
+            return Fjord::isAppTranslatable();
+        }
+
         return is_attribute_translatable($this->id, $this->model);
     }
 }

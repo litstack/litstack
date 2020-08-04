@@ -22,8 +22,7 @@ if (! function_exists('debug')) {
     /**
      * Return default value in debug mode.
      *
-     * @param mixed $value
-     *
+     * @param  mixed $value
      * @return mixed
      */
     function debug($value)
@@ -206,7 +205,7 @@ if (! function_exists('asset_time')) {
      */
     function asset_time()
     {
-        return config('app.env') == 'production' ? '' : '?t='.time();
+        return production() ? '' : '?t='.time();
     }
 }
 
@@ -331,11 +330,18 @@ if (! function_exists('fjord_app')) {
     /**
      * Get Fjord application instance.
      *
-     * @return \Fjord\Application\Application
+     * @param  string|null $abstract
+     * @return mixed
      */
-    function fjord_app()
+    function fjord_app($abstract = null)
     {
-        return app()->get('fjord.app');
+        $app = app()->get('fjord.app');
+
+        if (! $abstract) {
+            return $app;
+        }
+
+        return $app->get($abstract);
     }
 }
 
@@ -453,5 +459,34 @@ if (! function_exists('medialibrary_config')) {
         }
         // For new versions.
         return 'media-library';
+    }
+}
+
+if (! function_exists('call_unaccessible_method')) {
+    /**
+     * Calling protected or private class method.
+     *
+     * @param mixed|string $abstract
+     * @param string       $method
+     * @param array        $params
+     *
+     * @return mixed
+     */
+    function call_unaccessible_method($abstract, string $method, array $params = [])
+    {
+        $class = $abstract;
+        if (! is_string($abstract)) {
+            $class = get_class($abstract);
+        }
+
+        $class = new ReflectionClass($class);
+        $method = $class->getMethod($method);
+        $method->setAccessible(true);
+
+        if ($method->isStatic()) {
+            return $method->invokeArgs(null, $params);
+        }
+
+        return $method->invokeArgs($abstract, $params);
     }
 }

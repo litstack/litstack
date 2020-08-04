@@ -147,8 +147,7 @@ class FrontendTestCase extends OrchestraDuskTestCase
     /**
      * Determine the application's base URL.
      *
-     * @var string
-     *
+     * @var    string
      * @return string
      */
     protected function baseUrl()
@@ -159,9 +158,9 @@ class FrontendTestCase extends OrchestraDuskTestCase
     /**
      * Return the default user to authenticate.
      *
-     * @throws \Exception
-     *
      * @return \App\User|int|null
+     *
+     * @throws \Exception
      */
     protected function user()
     {

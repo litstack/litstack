@@ -46,7 +46,6 @@ class Repeatables extends VueProp
      *
      * @param string  $name
      * @param Closure $closure
-     *
      * @return
      */
     public function add(string $name, Closure $closure)
@@ -58,6 +57,24 @@ class Repeatables extends VueProp
         $this->repeatables[$name] = $rep;
 
         return $rep;
+    }
+
+    /**
+     * Add nested block repeatable.
+     *
+     * @param  string     $name
+     * @param  Closure    $closure
+     * @return Repeatable
+     */
+    public function block($name, Closure $closure)
+    {
+        return $this->add($name, fn ($form, $preview) => $form
+                ->block($name)
+                ->title($name)
+                ->repeatables($closure)
+            )->view('fjord::repeatables.block', [
+                'type' => $name,
+            ]);
     }
 
     /**

@@ -2,9 +2,11 @@
 
 A relation picker. Relation pickers can be created for any relation of your model.
 
-For the relation field only the name of the relation must be specified. The type of the relation is automatically recognized and displayed accordingly.
+![relation picker](./screens/relation/picker.jpg 'relation picker')
 
-The relations Field can only be used for **Crud Models** and not in **Forms** or **Blocks**. For Forms or Blocks the [oneRelation](/docs/fields/one_relation.html) or [manyRelation](/docs/fields/many_relation.html) field can be used.
+The relation field requires the name of the relation that should be edited. The type of the relation is automatically recognized and displayed accordingly.
+
+The relations Field can only be used for **Crud Models** and not in **Forms** or **Blocks**. For Forms or Blocks the [oneRelation](#onerelation-and-manyrelation) or [manyRelation](#onerelation-and-manyrelation) field can be used.
 
 ```php
 $form->relation('articles')
@@ -120,6 +122,36 @@ $form->relation('tags')
 
 ![Relation Tags](./screens/relation/tags.png 'Relation Tags')
 
+## oneRelation And manyRelation
+
+Every Laravel relation needs its corresponding database setup. For example the belongsTo relation needs an extra column that stores the id of the related Model. However you migth want to create relations without going through the process of creating a new migration to add the required columns/tables. For this there is the `oneRelation` and `manyRelation`. They can simply be added to your Models or Forms.
+
+The following example shows the simplep setup of a the relation field that works for both:
+
+```php
+use App\Models\Article;
+
+$form->manyRelation('articles')
+    ->title('Articles')
+    ->model(Article::class)
+    ->preview(function($preview) {
+        //...
+    });
+```
+
+In the Model:
+
+```php
+public function articles()
+{
+    return $this->manyRelation('App/Models/Article', 'articles');
+}
+```
+
+:::tip
+`oneRelation` and `manyRelation` can be used in Forms.
+:::
+
 ## Methods
 
 | Method          | Description                                                                                               |
@@ -132,6 +164,7 @@ $form->relation('tags')
 | `query`         | Modify preview query with eager loads and accessors that should be displayed.                             |
 | `confirm`       | Modal pops when unlinkin the relation and asks to confirm. (default: `true`)                              |
 | `sortable`      | Sortable relation (only works for `many` relations).                                                      |
+| `maxItems`      | Set a maximum number of selectable items (only works for `many` relations).                               |
 | `showTableHead` | Whether the table head should be shown. (default: `false`)                                                |
 | `type`          | The preview type (default: `table`) can be `tags` for **many relations** and `link` for **one relations** |
 | `tagValue`      | The attribute that should be displayed in the tag.                                                        |

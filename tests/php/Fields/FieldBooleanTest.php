@@ -4,17 +4,15 @@ namespace FjordTest\Fields;
 
 use Fjord\Crud\BaseField;
 use Fjord\Crud\Fields\Boolean;
-use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
+use PHPUnit\Framework\TestCase;
 
-class FieldBooleanTest extends BackendTestCase
+class FieldBooleanTest extends TestCase
 {
     use InteractsWithFields;
 
     public function setUp(): void
     {
-        parent::setUp();
-
         $this->field = $this->getField(Boolean::class);
     }
 

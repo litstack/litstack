@@ -2,7 +2,12 @@
     left: 0 !important;
     right: 0 !important;
 }
-
+.b-toaster-bottom-full {
+    .b-toaster-slot {
+        padding-right: $toast-margin !important;
+        padding-left: $toast-margin !important;
+    }
+}
 .b-toaster-bottom-right {
     .b-toaster-slot {
         bottom: $toast-margin !important;
@@ -93,6 +98,6 @@
 .b-toast-info {
     .toast-body::before {
         content: '\f05a';
-        color: $primary;
+        color: $info;
     }
 }

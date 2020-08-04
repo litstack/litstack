@@ -13,22 +13,6 @@
 </template>
 
 <script>
-/*
-:cols="cols"
-:items="items"
-:count="count"
-:sortable="config.sortable"
-:order-column="config.orderColumn"
-:per-page="config.perPage"
-:load-items="loadItems"
-:name-singular="config.names.singular"
-:name-plural="config.names.plural"
-:sort-by="config.sortBy"
-:sort-by-default="config.sortByDefault"
-:filter="config.filter"
-:controls="slots.indexControls"
-@sorted="sorted"
-*/
 export default {
     name: 'CrudIndexTable',
     props: {

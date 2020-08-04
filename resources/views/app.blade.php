@@ -7,11 +7,8 @@
 @endsection
 
 @section('content')
-    @php
-        //dd(\Fjord\Support\Facades\VueApp::props());
-    @endphp
     @include('fjord::vue.component', [
         'component' => 'fjord-app',
-        'props' => \Fjord\Support\Facades\VueApp::props()
+        'props' => ((array) \Fjord\Support\Facades\VueApp::render())['props']
     ])
 @endsection

@@ -105,6 +105,16 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     }
 
     /**
+     * Get model class.
+     *
+     * @return string
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
      * Add Vue component field.
      *
      * @param  string|Component     $component
@@ -169,7 +179,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
      * @param  string $prefix
      * @return void
      */
-    public function setRoutePrefix(string $prefix)
+    public function setRoutePrefix($prefix)
     {
         if (Str::startsWith($prefix, Fjord::url(''))) {
             $prefix = Str::replaceFirst(Fjord::url(''), '', $prefix);
@@ -210,11 +220,11 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
 
         $this->registrar = $fieldInstance;
 
-        if ($fieldInstance->register()) {
+        if ($fieldInstance->shouldBeRegistered()) {
             $this->registeredFields[] = $fieldInstance;
         }
 
-        if ($this->inWrapper() && $fieldInstance->register()) {
+        if ($this->inWrapper() && $fieldInstance->shouldBeRegistered()) {
             $this->wrapper
                 ->component('fj-field')
                 ->prop('field', $fieldInstance);

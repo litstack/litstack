@@ -1,7 +1,7 @@
 const meta = {
-    title: 'Fjord | Laravel Content-Administration',
+    title: 'Laravel Content-Administration',
     description:
-        'Fjord is a multilanguage admin-panel scaffolding package that helps you creating CRUD in seconds via Artisan-commands. It also lets you manage the "static" content of each of your websites pages (Headlines, Text, Images), as well repetitive mixed contents you define. Generating content as well as passing it to your views and retrieving it is super simple.',
+        'A multilanguage admin-panel scaffolding package that helps you creating CRUD in seconds via Artisan-commands. It also lets you manage the "static" content of each of your websites pages (Headlines, Text, Images), as well repetitive mixed contents you define. Generating content as well as passing it to your views and retrieving it is super simple.',
     url: 'https://www.fjord-admin.com'
 };
 
@@ -40,7 +40,7 @@ let head = [
 
 module.exports = {
     base: '/',
-    title: 'Fjord',
+    title: 'Laravel Content-Administration',
     description: 'description',
     head,
     plugins: [
@@ -60,7 +60,7 @@ module.exports = {
         ]
     ],
     themeConfig: {
-        logo: '/logo.svg',
+        //logo: '/logo.svg',
         repo: 'aw-studio/fjord',
         editLinks: true,
         docsDir: 'docs',
@@ -69,7 +69,7 @@ module.exports = {
                 text: 'Documentation',
                 link: '/docs/getting-started/installation'
             },
-            { text: '🕹 Demo', link: 'https://demo.fjord-admin.com/admin' },
+            //{ text: '🕹 Demo', link: 'https://demo.fjord-admin.com/admin' },
             { text: 'Discord', link: 'https://discord.gg/u4qpb5P' }
         ],
         sidebar: {
@@ -88,7 +88,7 @@ module.exports = {
                     collapsable: false,
                     children: [
                         ['docs/basics/navigation', 'Navigation'],
-                        ['docs/basics/page', 'Fjord Page'],
+                        ['docs/basics/page', 'Page'],
                         ['docs/basics/localization', 'Localization'],
                         ['docs/basics/helpers', 'Helpers']
                     ]
@@ -101,7 +101,8 @@ module.exports = {
                         ['docs/crud/forms', 'Forms'],
                         ['docs/crud/config-index', 'Index Config'],
                         ['docs/crud/config-show', 'Show Config'],
-                        ['docs/crud/config-table', 'Table']
+                        ['docs/crud/config-table', 'Table'],
+                        ['docs/crud/actions', 'Actions']
                     ]
                 },
                 {
@@ -109,25 +110,24 @@ module.exports = {
                     collapsable: true,
                     children: [
                         ['docs/fields/introduction', 'Introduction'],
-                        ['docs/fields/input', 'Input'],
-                        ['docs/fields/textarea', 'Textarea'],
-                        ['docs/fields/wysiwyg', 'WYSIWYG'],
+
+                        ['docs/fields/block', 'Block'],
                         ['docs/fields/boolean', 'Boolean'],
                         ['docs/fields/checkboxes', 'Checkboxes'],
+                        ['docs/fields/date-time', 'Date/Time'],
+                        ['docs/fields/icon', 'Icon'],
+                        ['docs/fields/image', 'Image'],
+                        ['docs/fields/input', 'Input'],
+                        ['docs/fields/list', 'List'],
+                        ['docs/fields/modal', 'Modal'],
+                        ['docs/fields/password', 'Password'],
                         ['docs/fields/radio', 'Radio'],
                         ['docs/fields/range', 'Range'],
-                        ['docs/fields/select', 'Select'],
-                        ['docs/fields/date-time', 'Date/Time'],
-                        ['docs/fields/image', 'Image'],
-                        ['docs/fields/icon', 'Icon'],
-                        ['docs/fields/code', 'Code Editor'],
-                        ['docs/fields/password', 'Password'],
                         ['docs/fields/relation', 'Relation'],
-                        ['docs/fields/one_relation', 'oneRelation'],
-                        ['docs/fields/many_relation', 'manyRelation'],
-                        ['docs/fields/list', 'List'],
-                        ['docs/fields/block', 'Block'],
-                        ['docs/fields/modal', 'Modal'],
+                        ['docs/fields/route', 'Route'],
+                        ['docs/fields/select', 'Select'],
+                        ['docs/fields/textarea', 'Textarea'],
+                        ['docs/fields/wysiwyg', 'WYSIWYG'],
                         ['docs/fields/component', 'Component'],
                         ['docs/fields/validation', 'Validation'],
                         ['docs/fields/conditions', 'Conditional Fields']
@@ -158,8 +158,8 @@ module.exports = {
                     title: 'Official Packages',
                     collapsable: false,
                     children: [
-                        ['docs/packages/fjord-ui-kit', 'Fjord UI Kit'],
-                        ['docs/packages/fjord-pages', 'Fjord Pages']
+                        ['docs/packages/fjord-ui-kit', 'UI Kit'],
+                        ['docs/packages/fjord-pages', 'Pages']
                     ]
                 }
                 // {

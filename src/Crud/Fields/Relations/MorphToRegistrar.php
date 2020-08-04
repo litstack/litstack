@@ -31,7 +31,7 @@ class MorphToRegistrar extends LaravelRelationField
      *
      * @return bool
      */
-    public function register()
+    public function shouldBeRegistered()
     {
         return false;
     }

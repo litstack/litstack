@@ -7,6 +7,7 @@ use Fjord\Crud\BaseForm;
 use Fjord\Crud\Fields\Traits\FieldHasForm;
 use Fjord\Crud\Fields\Traits\HasBaseField;
 use Fjord\Crud\Models\FormField;
+use Fjord\Crud\Models\FormListItem;
 use Fjord\Crud\RelationField;
 use Fjord\Crud\Repositories\ListRepository;
 
@@ -34,6 +35,13 @@ class ListField extends RelationField
      * @return string
      */
     protected $repository = ListRepository::class;
+
+    /**
+     * Authorized Closure.
+     *
+     * @var Closure
+     */
+    protected $authorizeItemClosure;
 
     /**
      * Set default attributes.
@@ -71,6 +79,34 @@ class ListField extends RelationField
         $this->setAttribute('maxDepth', $depth);
 
         return $this;
+    }
+
+    /**
+     * Add authorize closure.
+     *
+     * @param  Closure $closure
+     * @return $this
+     */
+    public function authorizeItem(Closure $closure)
+    {
+        $this->authorizeItemClosure = $closure;
+
+        return $this;
+    }
+
+    /**
+     * Determines if the given item is authorized.
+     *
+     * @param  FormListItem $item
+     * @return bool
+     */
+    public function itemAuthorized(FormListItem $item = null, $operation)
+    {
+        if (! $this->authorizeItemClosure) {
+            return true;
+        }
+
+        return call_user_func($this->authorizeItemClosure, fjord_user(), $item, $operation);
     }
 
     /**

@@ -170,10 +170,9 @@ export default {
             try {
                 return await axios.post(
                     `${this.field.route_prefix}/media/order`,
-                    {
-                        field_id: this.field.id,
+                    this.qualifyParams({
                         ...payload
-                    }
+                    })
                 );
             } catch (e) {
                 console.log(e);
@@ -184,7 +183,7 @@ export default {
          * Image path.
          */
         imgPath(image) {
-            return `/storage/${image.id}/${image.file_name}`;
+            return image.url;
         },
 
         /**
@@ -216,10 +215,9 @@ export default {
             try {
                 return await axios.post(
                     `${this.field.route_prefix}/media/destroy`,
-                    {
-                        field_id: this.field.id,
+                    this.qualifyParams({
                         media_id: media.id
-                    }
+                    })
                 );
             } catch (e) {
                 console.log(e);
@@ -231,6 +229,23 @@ export default {
          */
         deleteImageModalId(image) {
             return `fj-delete-image-${this.field.id}-${image.id}`;
+        },
+
+        /**
+         * Get qualified params.
+         */
+        qualifyParams(params) {
+            params = {
+                field_id: this.field.id,
+                ...(this.field.params || {}),
+                ...params
+            };
+
+            if (params.field_id != this.field.id) {
+                params.child_field_id = this.field.id;
+            }
+
+            return params;
         }
     }
 };

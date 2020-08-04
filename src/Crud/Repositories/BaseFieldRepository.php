@@ -6,6 +6,7 @@ use Fjord\Config\ConfigHandler;
 use Fjord\Crud\BaseForm;
 use Fjord\Crud\Controllers\CrudBaseController;
 use Fjord\Crud\Field;
+use Illuminate\Support\Collection;
 
 abstract class BaseFieldRepository
 {
@@ -33,10 +34,11 @@ abstract class BaseFieldRepository
     /**
      * Create new BaseFieldRepository instance.
      *
-     * @param ConfigHandler      $config
-     * @param CrudBaseController $controller
-     * @param BaseForm           $form
-     * @param Field              $field
+     * @param  ConfigHandler      $config
+     * @param  CrudBaseController $controller
+     * @param  BaseForm           $form
+     * @param  Field              $field
+     * @return void
      */
     public function __construct(ConfigHandler $config, CrudBaseController $controller, BaseForm $form, Field $field = null)
     {
@@ -47,12 +49,22 @@ abstract class BaseFieldRepository
     }
 
     /**
+     * Set form.
+     *
+     * @param  BaseForm $form
+     * @return void
+     */
+    public function setForm(BaseForm $form)
+    {
+        $this->form = $form;
+    }
+
+    /**
      * Fill attributes to model.
      *
-     * @param mixed $model
-     * @param array $attributes
-     * @param array $fields
-     *
+     * @param  mixed $model
+     * @param  array $attributes
+     * @param  array $fields
      * @return void
      */
     protected function fillAttributesToModel($model, array $attributes)
@@ -67,11 +79,24 @@ abstract class BaseFieldRepository
     }
 
     /**
+     * Get registered fields.
+     *
+     * @return Collection
+     */
+    protected function getRegisteredFields(): Collection
+    {
+        if (method_exists('getRegisteredFields', $this->field)) {
+            return $this->field->getRegisteredFields();
+        }
+
+        return collect([]);
+    }
+
+    /**
      * Filter request attributes.
      *
-     * @param array      $attributes
-     * @param Collection $fields
-     *
+     * @param  array      $attributes
+     * @param  Collection $fields
      * @return array
      */
     protected function formatAttributes(array $attributes, $fields)
@@ -95,10 +120,9 @@ abstract class BaseFieldRepository
     /**
      * Order models.
      *
-     * @param Builder $query
-     * @param Field   $field
-     * @param array   $ids
-     *
+     * @param  Builder $query
+     * @param  Field   $field
+     * @param  array   $ids
      * @return void
      */
     protected function orderField($query, Field $field, array $ids)

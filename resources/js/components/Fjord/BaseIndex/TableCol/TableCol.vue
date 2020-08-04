@@ -9,8 +9,8 @@
         @click="openItem"
     >
         <component
-            v-if="col.component !== undefined"
-            :is="col.component"
+            v-if="col.name !== undefined"
+            :is="col.name"
             :item="item"
             :col="col"
             :format="getColValue"
@@ -99,7 +99,7 @@ export default {
             window.location.href = this.link;
         },
         setValue() {
-            this.value = this.getColValue(this.col.value, this.item);
+            this.value = this.getColValue(this.col, this.item);
         },
         reload() {
             this.$emit('reload');
@@ -107,13 +107,20 @@ export default {
         getColValue(col, item) {
             let value = '';
 
+            if (col.value_options) {
+                return col.value_options[item[col.value]];
+            }
+
             // Regex for has {value} pattern.
-            if (/{(.*?)}/.test(col)) {
-                value = this._format(col, item);
-            } else if (item[col] !== undefined && item[col] !== null) {
-                value = item[col];
+            if (/{(.*?)}/.test(col.value)) {
+                value = this._format(col.value, item);
+            } else if (
+                item[col.value] !== undefined &&
+                item[col.value] !== null
+            ) {
+                value = item[col.value];
             } else {
-                value = col;
+                value = col.value;
             }
 
             return this.format(value);
@@ -143,7 +150,7 @@ export default {
             return value;
         },
         getColComponentProps() {
-            if (!this.col.component) {
+            if (!this.col.name) {
                 return {};
             }
 

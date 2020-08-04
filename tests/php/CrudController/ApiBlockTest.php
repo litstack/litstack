@@ -6,6 +6,8 @@ use Fjord\Crud\Models\FormBlock;
 use FjordTest\BackendTestCase;
 use FjordTest\TestSupport\Models\Post;
 use FjordTest\Traits\InteractsWithCrud;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * This test is using the Crud Post.
@@ -21,6 +23,7 @@ class ApiBlockTest extends BackendTestCase
     {
         parent::setUp();
 
+        Storage::fake();
         $this->post = Post::create([]);
         $this->actingAs($this->admin, 'fjord');
     }
@@ -140,7 +143,7 @@ class ApiBlockTest extends BackendTestCase
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/block");
         $request = $this->put($url, [
             'payload' => [
-                'text' => 'some text',
+                app()->getLocale() => ['text' => 'some text'],
             ],
             'field_id'        => 'content',
             'repeatable_id'   => $block->id,
@@ -150,6 +153,28 @@ class ApiBlockTest extends BackendTestCase
         $block = $this->getRepeatables('text')->first();
         $this->assertEquals('some text', $block->text);
     }
+
+    // /** @test */
+    // public function it_can_upload_media_to_block()
+    // {
+    //     // Creating 2 block.
+    //     $block = $this->createRepeatable('image', 'media_repeatables');
+    //     $this->assertCount(1, $this->getRepeatables('image', 'media_repeatables'));
+
+    //     // Update block.
+    //     $url = $this->getCrudRoute("/{$this->post->id}/api/show/block");
+    //     $request = $this->put($url, [
+    //         'collection'      => 'images',
+    //         'field_id'        => 'media_repeatables',
+    //         'repeatable_id'   => $block->id,
+    //         'repeatable_type' => 'image',
+    //         'media'           => UploadedFile::fake()->image('test_png.png'),
+    //     ]);
+    //     $request->assertStatus(200);
+    //     $block = $this->getRepeatables('image', 'media_repeatables')->first();
+    //     $this->assertNotNull($block->images);
+    //     $this->assertEquals('test_png.png', $block->images->first()->file_name);
+    // }
 
     // Update
 
@@ -170,11 +195,11 @@ class ApiBlockTest extends BackendTestCase
         $this->assertEquals('', $block->text);
     }
 
-    public function getRepeatables($type = null)
+    public function getRepeatables($type = null, $fieldId = 'content')
     {
         $query = FormBlock::where('model_type', get_class($this->post))
             ->where('model_id', $this->post->id)
-            ->where('field_id', 'content');
+            ->where('field_id', $fieldId);
 
         if ($type) {
             $query->where('type', $type);
@@ -183,14 +208,14 @@ class ApiBlockTest extends BackendTestCase
         return $query->get();
     }
 
-    public function createRepeatable($type = 'text')
+    public function createRepeatable($type = 'text', $fieldId = 'content')
     {
         return FormBlock::create([
             'config_type' => \FjordApp\Config\Crud\PostConfig::class,
             'type'        => $type,
             'model_type'  => get_class($this->post),
             'model_id'    => $this->post->id,
-            'field_id'    => 'content',
+            'field_id'    => $fieldId,
         ]);
     }
 }

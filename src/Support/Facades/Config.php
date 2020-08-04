@@ -2,15 +2,15 @@
 
 namespace Fjord\Support\Facades;
 
-use Fjord\Support\FjordFacade;
+use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Fjord\Config\ConfigHandler get(string $key)
+ * @method static \Fjord\Config\ConfigHandler|null get(string $key)
  * @method static bool exists(string $key):
  *
  * @see \Fjord\Config\ConfigLoader
  */
-class Config extends FjordFacade
+class Config extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -19,6 +19,6 @@ class Config extends FjordFacade
      */
     protected static function getFacadeAccessor()
     {
-        return 'config.loader';
+        return 'fjord.app.config.loader';
     }
 }

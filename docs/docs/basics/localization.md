@@ -2,9 +2,9 @@
 
 [[toc]]
 
-Fjord can be managed multilingual. The translation in the frontend can be done in `php` using [laravel's localization](https://laravel.com/docs/7.x/localization) service or in `vue` using [vue-i18n](https://kazupon.github.io/vue-i18n/docs/formatting.html). It uses the syntax of **laravel**. All translation strings are formatted so they can be used in `vue-i18n` as well.
+The application can be managed multilingual. The translation in the frontend can be done in `php` using [laravel's localization](https://laravel.com/docs/7.x/localization) service or in `vue` using [vue-i18n](https://kazupon.github.io/vue-i18n/docs/formatting.html). It uses the syntax of **laravel**. All translation strings are formatted so they can be used in `vue-i18n` as well.
 
-In Laravel applications that include Fjord, there are **two** different locales, one for your website and one for the Fjord application. So for example, a user can manage German content in the Fjord application and still see the interface in the English version.
+In Laravel applications that include the package, there are **two** different locales, one for your website and one for the admin application. So for example, a user can manage german content in the admin application and still see the interface in the english version.
 
 The following examples refer to the translations which look like this:
 
@@ -18,7 +18,7 @@ return [
 
 ## PHP
 
-To compile for the locale of the Fjord interface the `__f()` helper method is used, just like `__()` from laravel's [localization](https://laravel.com/docs/7.x/localization#retrieving-translation-strings).
+To compile for the locale of the admin interface the `__f()` helper method is used, just like `__()` from laravel's [localization](https://laravel.com/docs/7.x/localization#retrieving-translation-strings).
 
 ```php
 __f('messages.welcome', ['name', 'Jannes'])
@@ -70,7 +70,7 @@ if (FjordApp::isLocale('en')) {
 
 ## Add Path
 
-By default the path `fjord/resources/lang` is imported for the Fjord translation. You can register any number of paths with localization files in your service providers. However, it is recommended to keep the translations for the Fjord application and your website separate.
+By default the path `fjord/resources/lang` is imported for the admin translation. You can register any number of paths with localization files in your service providers. However, it is recommended to keep the translations for the admin application and your website separate.
 
 All translation attributes are merged, which makes it easy to extend existing localizations for parts like **validation** or others.
 

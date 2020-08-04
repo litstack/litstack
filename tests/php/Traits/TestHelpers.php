@@ -8,24 +8,6 @@ use ReflectionProperty;
 trait TestHelpers
 {
     /**
-     * Pass thru all method except for the given names.
-     *
-     * @param mock  $mock
-     * @param mixed $class
-     * @param array $without
-     *
-     * @return void
-     */
-    protected function passthruAllExcept($mock, $class, array $without)
-    {
-        $methods = get_class_methods($class);
-        foreach ($without as $method) {
-            unset($methods[array_search($method, $methods)]);
-        }
-        $mock->shouldReceive(...$methods)->passthru();
-    }
-
-    /**
      * Calling protected or private class method.
      *
      * @param mixed|string $abstract
@@ -71,18 +53,23 @@ trait TestHelpers
     /**
      * Get protected or private class property value.
      *
-     * @param mixed  $instance
-     * @param string $property
-     * @param mixed  $value
-     *
+     * @param  mixed  $object
+     * @param  string $property
+     * @param  mixed  $value
      * @return mixed
      */
-    public function getUnaccessibleProperty($instance, string $property)
+    public function getUnaccessibleProperty($object, string $property)
     {
-        $reflection = new ReflectionProperty(get_class($instance), $property);
+        if (! is_string($object)) {
+            $class = get_class($object);
+        } else {
+            $class = $object;
+        }
+
+        $reflection = new ReflectionProperty($class, $property);
         $reflection->setAccessible(true);
 
-        return $reflection->getValue($instance);
+        return $reflection->getValue($object);
     }
 
     /**

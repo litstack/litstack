@@ -41,14 +41,19 @@ class FjordAdmin extends Command
         $email = $this->ask('Enter the admin email');
         $password = $this->secret('Enter the admin password');
 
-        $user = FjordUser::firstOrCreate([
-            'username' => $username,
-            'email'    => $email,
-        ], [
-            'password'   => bcrypt($password),
+        if (FjordUser::where('username', $username)->orWhere('email', $email)->exists()) {
+            return;
+        }
+
+        $user = new FjordUser([
+            'username'   => $username,
+            'email'      => $email,
             'first_name' => $first_name,
             'last_name'  => $last_name,
         ]);
+
+        $user->password = bcrypt($password);
+        $user->save();
 
         $user->assignRole('admin');
 

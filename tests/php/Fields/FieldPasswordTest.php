@@ -36,8 +36,9 @@ class FieldPasswordTest extends BackendTestCase
     /** @test */
     public function it_hashes_password()
     {
-        $formatted = $this->field->format('secret');
-        $this->assertTrue(Hash::check('secret', $formatted));
+        $model = (object) [];
+        $this->field->fillModel($model, 'password', 'secret');
+        $this->assertTrue(Hash::check('secret', $model->password));
     }
 
     /** @test */
@@ -47,7 +48,7 @@ class FieldPasswordTest extends BackendTestCase
         $model->password = 'none';
 
         $this->field->fillModel($model, 'password', 'dummy_password');
-        $this->assertEquals($model->password, 'dummy_password');
+        $this->assertTrue(Hash::check('dummy_password', $model->password));
     }
 
     /** @test */

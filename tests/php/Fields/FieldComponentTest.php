@@ -3,16 +3,17 @@
 namespace FjordTest\Fields;
 
 use Fjord\Crud\Fields\Component;
-use FjordTest\BackendTestCase;
+use FjordTest\Traits\InteractsWithComponents;
 use FjordTest\Traits\InteractsWithFields;
+use PHPUnit\Framework\TestCase;
 
-class FieldComponentTest extends BackendTestCase
+class FieldComponentTest extends TestCase
 {
-    use InteractsWithFields;
+    use InteractsWithFields, InteractsWithComponents;
 
     public function setUp(): void
     {
-        parent::setUp();
+        $this->setupApplication();
 
         $this->field = $this->getField(Component::class, 'dummy-component');
     }

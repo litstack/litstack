@@ -30,21 +30,6 @@ class Kernel
     ];
 
     /**
-     * The Fjord extension provided by your application.
-     *
-     * @var array
-     */
-    protected $extensions = [];
-
-    /**
-     * Formatted array of extensions to allow multiple extensions
-     * for one component.
-     *
-     * @var array
-     */
-    protected $formattedExtensions = [];
-
-    /**
      * Fjord application service providers.
      *
      * @var array
@@ -94,33 +79,7 @@ class Kernel
      */
     public function bootstrap()
     {
-        $this->registerRootExtensions();
-
         $this->app->bootstrapWith($this->bootstrappers, $this);
-    }
-
-    /**
-     * Register all extensions that are defined in the $extensions variable.
-     *
-     * @return void
-     */
-    protected function registerRootExtensions()
-    {
-        foreach ($this->extensions as $component => $extension) {
-            $this->registerExtension($component, $extension);
-        }
-    }
-
-    /**
-     * Execute extensions for the given components.
-     *
-     * @param Illuminate\View\View $view
-     *
-     * @return void
-     */
-    public function extend(View $view)
-    {
-        //
     }
 
     /**
@@ -133,18 +92,5 @@ class Kernel
     public function build(View $view)
     {
         $this->app->build($view);
-    }
-
-    /**
-     * Register extension class.
-     *
-     * @param string $component
-     * @param string $extension
-     *
-     * @return void
-     */
-    public function registerExtension(string $key, string $extension)
-    {
-        $this->app->registerExtension($key, $extension);
     }
 }

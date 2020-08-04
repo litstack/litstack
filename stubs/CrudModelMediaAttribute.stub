@@ -1,9 +1,0 @@
-    /**
-     * Image attribute.
-     *
-     * @return \Fjord\Crud\Models\Media
-     */
-    public function getImageAttribute()
-    {
-        return $this->getMedia('image');
-    }

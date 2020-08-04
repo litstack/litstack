@@ -12,7 +12,10 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 
-class FjordFormModel extends Model implements HasMedia, TranslatableContract
+/**
+ * The FjordFormModel stores field data in as json in a column.
+ */
+abstract class FjordFormModel extends Model implements HasMedia, TranslatableContract
 {
     use Traits\HasMedia;
     use Translatable;
@@ -46,8 +49,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     /**
      * Register media conversions for field.
      *
-     * @param SpatieMedia $media
-     *
+     * @param  SpatieMedia $media
      * @return void
      */
     public function registerMediaConversions(SpatieMedia $media = null): void
@@ -76,10 +78,15 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
 
         foreach (config('translatable.locales') as $locale) {
             $translation = $this->translations->where('locale', $locale)->first();
+
             if (! $translation) {
                 continue;
             }
-            $value = $translation->value ?? [];
+
+            $value = array_merge(
+                $this->getTranslatedAttributesFromTranslation($translation),
+                $translation->value ?? []
+            );
 
             foreach ($this->fields as $field) {
                 if (! $field->translatable) {
@@ -98,23 +105,53 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     }
 
     /**
-     * Update FormField.
+     * Get translated attribute and the corresponding values from translation model.
      *
-     * @param array $attributes
-     * @param array $options
-     *
-     * @return void
+     * @param  Model $translation
+     * @return array
      */
-    public function update(array $attributes = [], array $options = [])
+    public function getTranslatedAttributesFromTranslation(Model $translation)
+    {
+        $attributes = [];
+        foreach ($translation->toArray() as $name => $value) {
+            if (! in_array($name, $this->translatedAttributes)) {
+                continue;
+            }
+
+            $attributes[$name] = $value;
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Prepare attributes for save.
+     *
+     * @param  array $attributes
+     * @return array
+     */
+    public function prepareAttributesForSave($attributes)
     {
         $translations = $this->getTranslationsArray();
+
         foreach (config('translatable.locales') as $locale) {
             if (! array_key_exists($locale, $attributes)) {
                 continue;
             }
+
             $translation = array_merge($translations[$locale] ?? [], $attributes[$locale]);
 
-            $attributes[$locale] = ['value' => $translation];
+            $translatedAttributes = ['value' => []];
+
+            foreach ($translation as $name => $value) {
+                if (! in_array($name, $this->translatedAttributes)) {
+                    $translatedAttributes['value'][$name] = $value;
+                } else {
+                    $translatedAttributes[$name] = $value;
+                }
+            }
+
+            $attributes[$locale] = $translatedAttributes;
         }
 
         $attributes['value'] = $this->value ?? [];
@@ -124,14 +161,28 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
             }
         }
 
-        return parent::update($attributes, $options);
+        return $attributes;
+    }
+
+    /**
+     * Update model.
+     *
+     * @param  array $attributes
+     * @param  array $options
+     * @return void
+     */
+    public function update(array $attributes = [], array $options = [])
+    {
+        return parent::update(
+            $this->prepareAttributesForSave($attributes),
+            $options
+        );
     }
 
     /**
      * Get a relationship.
      *
-     * @param string $key
-     *
+     * @param  string $key
      * @return mixed
      */
     public function getRelationValue($key)
@@ -149,21 +200,6 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
         if (method_exists($this, $key) || in_array($key, $this->fieldIds)) {
             return $this->getRelationshipFromMethod($key);
         }
-    }
-
-    /**
-     * Get translated field value.
-     *
-     * @param Field  $field
-     * @param string $locale
-     *
-     * @return void
-     */
-    public function getTranslatedFieldValue($field, string $locale)
-    {
-        $value = $this->translation[$locale] ?? [];
-
-        return $value[$field->local_key] ?? null;
     }
 
     /**
@@ -185,16 +221,13 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
         }
 
         // For not translated fields.
-        $attributes = array_merge($attributes['value'], $attributes);
-
-        return $attributes;
+        return array_merge($attributes['value'], $attributes);
     }
 
     /**
      * Get attribute.
      *
-     * @param string $key
-     *
+     * @param  string $key
      * @return void
      */
     public function getAttribute($key)
@@ -213,8 +246,7 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     /**
      * Set field ids to be able to check if field exists in getAttribute method.
      *
-     * @param array $ids
-     *
+     * @param  array $ids
      * @return void
      */
     public function setFieldIds(array $ids)
@@ -225,9 +257,8 @@ class FjordFormModel extends Model implements HasMedia, TranslatableContract
     /**
      * Create a new model instance that is existing.
      *
-     * @param array       $attributes
-     * @param string|null $connection
-     *
+     * @param  array       $attributes
+     * @param  string|null $connection
      * @return static
      */
     public function newFromBuilder($attributes = [], $connection = null)

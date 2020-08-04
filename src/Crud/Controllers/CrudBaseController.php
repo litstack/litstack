@@ -24,8 +24,7 @@ abstract class CrudBaseController
     /**
      * Fill model on store.
      *
-     * @param mixed $model
-     *
+     * @param  mixed $model
      * @return void
      */
     public function fillOnStore($model)
@@ -36,8 +35,7 @@ abstract class CrudBaseController
     /**
      * Fill model on update.
      *
-     * @param mixed $model
-     *
+     * @param  mixed $model
      * @return void
      */
     public function fillOnUpdate($model)
@@ -48,8 +46,7 @@ abstract class CrudBaseController
     /**
      * Delete by query.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return void
      */
     public function delete(Builder $query)
@@ -58,10 +55,35 @@ abstract class CrudBaseController
     }
 
     /**
+     * Run action.
+     *
+     * @param  Request $request
+     * @param  string  $key
+     * @return void
+     */
+    public function runAction(Request $request, $key)
+    {
+        if (! $index = $this->config->index) {
+            abort(404, debug('Missing [index] configuration on '.get_class($this->config->getConfig())));
+        }
+
+        if (! $table = $index->getTable()) {
+            abort(404, debug('Missing index table configuration in '.get_class($this->config->getConfig())));
+        }
+
+        if (! $action = $table->getAction($key)) {
+            abort(404, debug("Missing table action [{$key}] in ".get_class($this->config->getConfig())));
+        }
+
+        $models = $this->query()->whereIn('id', $request->ids ?? [])->get();
+
+        return $action->resolve($models);
+    }
+
+    /**
      * Find or faild model by identifier.
      *
-     * @param string|int $id
-     *
+     * @param  string|int $id
      * @return void
      */
     public function findOrFail($id)
@@ -72,9 +94,8 @@ abstract class CrudBaseController
     /**
      * Perform crud api call.
      *
-     * @param Request        $request
-     * @param ActionResolver $resolver
-     *
+     * @param  Request        $request
+     * @param  ActionResolver $resolver
      * @return mixed
      */
     public function api(Request $request)
@@ -90,9 +111,8 @@ abstract class CrudBaseController
     /**
      * Load index table items.
      *
-     * @param CrudReadRequest $request
-     *
-     * @return array $items
+     * @param  CrudReadRequest $request
+     * @return array           $items
      */
     public function indexTable(CrudReadRequest $request)
     {

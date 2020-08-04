@@ -6,12 +6,13 @@ use Fjord\Crud\BaseField;
 use Fjord\Crud\Fields\Input;
 use Fjord\Crud\Fields\Traits\FieldHasRules;
 use Fjord\Crud\Fields\Traits\TranslatableField;
-use FjordTest\BackendTestCase;
 use FjordTest\Traits\InteractsWithFields;
+use FjordTest\Traits\TestHelpers;
+use PHPUnit\Framework\TestCase;
 
-class FieldInputTest extends BackendTestCase
+class FieldInputTest extends TestCase
 {
-    use InteractsWithFields;
+    use InteractsWithFields, TestHelpers;
 
     public function setUp(): void
     {

@@ -9,7 +9,7 @@ class DummyClassname extends Model
     DummyUses
 
     /**
-     * Timestamps
+     * Wether the model uses the default timestamp columns.
      *
      * @var boolean
      */
@@ -22,5 +22,5 @@ class DummyClassname extends Model
      */
     protected $fillable = ['title'];
 
-    DummySluggable
+DummySluggable
 }

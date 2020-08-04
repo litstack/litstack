@@ -12,8 +12,7 @@ class RegisterPackages
     /**
      * Registers artisan commands of all fjord packages.
      *
-     * @param \Fjord\Application\Application $app
-     *
+     * @param  \Fjord\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app)
@@ -24,15 +23,13 @@ class RegisterPackages
             $this->registerCommands($package);
             $this->registerProviders($package);
             $this->registerComponents($package);
-            $this->registerExtensions($package);
         }
     }
 
     /**
      * Register package components.
      *
-     * @param mixed $package
-     *
+     * @param  mixed $package
      * @return void
      */
     public function registerComponents($package)
@@ -43,10 +40,9 @@ class RegisterPackages
     }
 
     /**
-     * Register package extensions.
+     * Register package providers.
      *
-     * @param mixed $package
-     *
+     * @param  mixed $package
      * @return void
      */
     public function registerProviders($package)
@@ -57,24 +53,9 @@ class RegisterPackages
     }
 
     /**
-     * Register package extensions.
-     *
-     * @param mixed $package
-     *
-     * @return void
-     */
-    public function registerExtensions($package)
-    {
-        foreach ($package->extensions() as $component => $extension) {
-            $this->app->registerExtension($component, $extension);
-        }
-    }
-
-    /**
      * Register package commands.
      *
-     * @param mxied $package
-     *
+     * @param  mxied $package
      * @return void
      */
     public function registerCommands($package)

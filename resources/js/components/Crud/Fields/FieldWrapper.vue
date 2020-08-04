@@ -1,16 +1,13 @@
 <template>
-    <component
-        :is="wrapperComponent.name"
-        v-bind="{ ...$attrs, ...wrapperComponent.props }"
-    >
-        <component
-            v-for="(child, key) in children"
-            :is="child.name"
+    <fj-base-component :component="wrapperComponent" v-bind="{ ...$attrs }">
+        <fj-base-component
+            v-for="(component, key) in children"
+            :component="component"
             :key="key"
-            v-bind="{ ...$attrs, ...child.props }"
+            v-bind="$attrs"
             v-on="$listeners"
         />
-    </component>
+    </fj-base-component>
 </template>
 
 <script>

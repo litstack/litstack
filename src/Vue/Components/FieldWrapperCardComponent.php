@@ -2,32 +2,33 @@
 
 namespace Fjord\Vue\Components;
 
+use Fjord\Contracts\Vue\Resizable;
 use Fjord\Vue\Component;
+use Fjord\Vue\Traits\CanBeResized;
 
-class FieldWrapperCardComponent extends Component
+class FieldWrapperCardComponent extends Component implements Resizable
 {
+    use CanBeResized;
+
     /**
-     * Available props.
+     * Handle beforeMount.
      *
-     * @return array
+     * @return void
      */
-    protected function props()
+    public function beforeMount()
     {
-        return [
-            'title' => [
-                'type'     => 'string',
-                'required' => false,
-            ],
-            'width' => [
-                'type'     => ['integer', 'double'],
-                'required' => false,
-                'default'  => 12,
-            ],
-            'class' => [
-                'type'     => 'string',
-                'required' => false,
-                'default'  => 'mb-4',
-            ],
-        ];
+        $this->class('mb-4');
+        $this->width(12);
+    }
+
+    /**
+     * Set the title.
+     *
+     * @param  string $title
+     * @return $this
+     */
+    public function title($title)
+    {
+        return $this->prop('title', $title);
     }
 }

@@ -12,8 +12,7 @@ class BootstrapKernel
     /**
      * Registers artisan commands of all fjord packages.
      *
-     * @param \Fjord\Application\Application $app
-     *
+     * @param  \Fjord\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app, Kernel $kernel)
@@ -22,15 +21,12 @@ class BootstrapKernel
         $this->kernel = $kernel;
 
         $this->registerProviders($kernel->providers);
-        //$this->registerComponents();
-        //$this->registerExtensions();
     }
 
     /**
      * Register package components.
      *
-     * @param mixed $package
-     *
+     * @param  mixed $package
      * @return void
      */
     public function registerComponents($components)
@@ -41,10 +37,9 @@ class BootstrapKernel
     }
 
     /**
-     * Register package extensions.
+     * Register package providers.
      *
-     * @param mixed $package
-     *
+     * @param  mixed $package
      * @return void
      */
     public function registerProviders($providers)
@@ -55,24 +50,9 @@ class BootstrapKernel
     }
 
     /**
-     * Register package extensions.
-     *
-     * @param mixed $package
-     *
-     * @return void
-     */
-    public function registerExtensions($extensions)
-    {
-        foreach ($extensions as $component => $extension) {
-            $this->app->registerExtension($component, $extension);
-        }
-    }
-
-    /**
      * Register package commands.
      *
-     * @param mxied $package
-     *
+     * @param  mxied $package
      * @return void
      */
     public function registerCommands($commands)
