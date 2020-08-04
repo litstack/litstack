@@ -8,6 +8,6 @@ class Package extends Facade
 {
     public static function getFacadeAccessor()
     {
-        return 'fjord.app.packages';
+        return 'fjord.packages';
     }
 }

@@ -12,13 +12,12 @@ class BootstrapVueApplication
      * Bootstrap VueApplication instance and bind it to
      * the Fjord application.
      *
-     * @param Fjord\Application\Application $app
-     *
+     * @param  Fjord\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app)
     {
-        $app->singleton('vue', function () {
+        $app->singleton('vue.app', function () {
             return new AppComponent;
         });
     }

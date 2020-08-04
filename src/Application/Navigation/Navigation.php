@@ -96,6 +96,8 @@ class Navigation implements Arrayable
     public function section(array $entries)
     {
         $this->entries[] = $entries;
+
+        return $this;
     }
 
     /**

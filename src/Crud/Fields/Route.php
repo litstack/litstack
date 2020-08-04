@@ -105,6 +105,6 @@ class Route extends BaseField
      */
     public static function register(string $name, Closure $closure)
     {
-        app('fjord.app.crud.route.resolver')->register($name, $closure);
+        app('fjord.crud.route.resolver')->register($name, $closure);
     }
 }

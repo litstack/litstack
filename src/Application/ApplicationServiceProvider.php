@@ -10,10 +10,8 @@ use Fjord\Commands\FjordFormPermissions;
 use Fjord\Support\Facades\Config;
 use Fjord\Support\Facades\FjordRoute;
 use Illuminate\Routing\Router;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
 use Illuminate\View\View as ViewClass;
 
 class ApplicationServiceProvider extends ServiceProvider
@@ -25,61 +23,7 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //dd(Application::class);
-        //$this->app->alias('abc', 'fjord.app');
-
         $this->registerFormPermissionsCommand();
-
-        // Fix: config_type
-        $this->fixMigrations();
-    }
-
-    /**
-     * Fix: config_type.
-     */
-    public function fixMigrations()
-    {
-        if (app()->runningInConsole()) {
-            return;
-        }
-        // Fix: config_type
-        try {
-            if (! \Illuminate\Support\Facades\Schema::hasColumn('form_blocks', 'form_type')) {
-                \Illuminate\Support\Facades\Schema::table('form_blocks', fn ($table) => $table->string('form_type')->after('model_id'));
-            }
-            if (! \Illuminate\Support\Facades\Schema::hasColumn('form_blocks', 'config_type')) {
-                \Illuminate\Support\Facades\Schema::table('form_blocks', fn ($table) => $table->string('config_type')->after('model_id'));
-            }
-            if (! \Illuminate\Support\Facades\Schema::hasColumn('form_fields', 'form_type')) {
-                \Illuminate\Support\Facades\Schema::table('form_fields', fn ($table) => $table->string('form_type')->after('id'));
-            }
-            if (! \Illuminate\Support\Facades\Schema::hasColumn('form_fields', 'config_type')) {
-                \Illuminate\Support\Facades\Schema::table('form_fields', fn ($table) => $table->string('config_type')->after('id'));
-            }
-            $this->fixFormFields();
-        } catch (\Throwable $e) {
-        }
-    }
-
-    /**
-     * Fix: config_type.
-     */
-    public function fixFormFields()
-    {
-        $fields = DB::table('form_fields')->where('config_type', '')->get();
-        foreach ($fields as $field) {
-            $key = "form.{$field->collection}.{$field->form_name}";
-            $name = '';
-            foreach (explode('.', $key) as $part) {
-                $name .= '\\'.ucfirst(Str::camel($part));
-            }
-
-            $type = "FjordApp\Config".$name.'Config';
-            DB::table('form_fields')->where('id', $field->id)->update([
-                'config_type' => $type,
-                'form_type'   => 'show',
-            ]);
-        }
     }
 
     /**

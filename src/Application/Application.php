@@ -44,8 +44,7 @@ class Application
     /**
      * Bind composer to fjord::app view.
      *
-     * @param string $composer
-     *
+     * @param  string                   $composer
      * @return \Illuminate\View\Factory
      */
     public function composer(string $composer)
@@ -88,7 +87,7 @@ class Application
     {
         $this->bootPackages();
 
-        $this->get('vue')->bindView($view);
+        $this->get('vue.app')->bindView($view);
     }
 
     /**
@@ -178,6 +177,6 @@ class Application
      */
     public function getAbstract($abstract)
     {
-        return Str::start($abstract, 'fjord.app.');
+        return Str::start($abstract, 'fjord.');
     }
 }

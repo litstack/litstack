@@ -156,7 +156,7 @@ class RenderComponentTest extends Component
         $this->renderingCalled = true;
     }
 
-    public function rendered()
+    public function rendered($rendered)
     {
         $this->renderedCalled = true;
     }

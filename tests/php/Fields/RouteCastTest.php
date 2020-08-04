@@ -15,7 +15,7 @@ class RouteCastTest extends BackendTestCase
         $collection = m::mock('route_collection');
         $resolver->shouldReceive('resolve')->withArgs(['main'])->andReturn($collection);
         $collection->shouldReceive('findRoute')->withArgs(['test'])->andReturn('result');
-        app()->bind('fjord.app.crud.route.resolver', fn () => $resolver);
+        app()->bind('fjord.crud.route.resolver', fn () => $resolver);
         $cast = new Route;
         $result = $cast->get(null, '', 'main.test', []);
         $this->assertEquals('result', $result);

@@ -18,7 +18,7 @@ class Crud extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'fjord.app.crud';
+        return 'fjord.crud';
     }
 
     public static function getFacadeRoot()
