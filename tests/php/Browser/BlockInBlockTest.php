@@ -55,7 +55,7 @@ class BlockInBlockTest extends FrontendTestCase
                  ->click('.fj-block-content .fj-block-add-card')
                  ->waitFor('.fj-block-content .fj-block')
                  ->click('.fj-block-content .fj-block-card .fj-block-add-text')
-                 ->waitFor('.fj-block-card .fj-block')
+                 ->waitFor('.fj-block-card .fj-block', 10)
                  ->waitUsing(1, 10, function () {
                      return ! $this->post->refresh()->content->first()->card->isEmpty();
                  }, 'Child block was not created.')
@@ -79,7 +79,7 @@ class BlockInBlockTest extends FrontendTestCase
                  ->click('.fj-block-content .fj-block-add-card')
                  ->waitFor('.fj-block-content .fj-block')
                  ->click('.fj-block-content .fj-block-card .fj-block-add-text')
-                 ->waitFor('.fj-block-card .fj-block')
+                 ->waitFor('.fj-block-card .fj-block', 10)
                  ->type('.fj-block-card .fj-block textarea', 'Hello World')
                  ->waitFor('.fj-save-button .btn-primary')
                  ->click('.fj-save-button .btn-primary')
