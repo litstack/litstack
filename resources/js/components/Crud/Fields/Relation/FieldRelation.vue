@@ -75,17 +75,41 @@
                     <span v-html="_format(field.tagValue, relation)" />
                 </b-form-tag>
             </div>
-            <div
-                v-else-if="field.previewType == 'link'"
-                class="fj-field-relation-link"
-            >
-                <component
-                    :is="field.related_route_prefix ? 'a' : 'span'"
-                    :href="relatedLink(selectedRelations[0])"
-                    v-if="selectedRelations.length > 0 && busy == false"
-                    v-html="_format(field.linkValue, selectedRelations[0])"
-                />
-            </div>
+            <template v-else-if="field.previewType == 'link'">
+                <b-overlay
+                    :show="busy"
+                    rounded="md"
+                    opacity="0.6"
+                    spinner-variant="primary"
+                    spinner-type="grow"
+                    class="w-100 mt-2"
+                >
+                    <div
+                        class="fj-field-relation-link form-control d-flex justify-content-between br-2"
+                    >
+                        <template
+                            v-if="selectedRelations.length > 0 && busy == false"
+                        >
+                            <component
+                                :is="field.related_route_prefix ? 'a' : 'span'"
+                                :href="relatedLink(selectedRelations[0])"
+                                v-html="
+                                    _format(
+                                        field.linkValue,
+                                        selectedRelations[0]
+                                    )
+                                "
+                            />
+                            <div>
+                                <fj-field-relation-col-unlink
+                                    :item="selectedRelations[0]"
+                                    @unlink="removeRelation"
+                                />
+                            </div>
+                        </template>
+                    </div>
+                </b-overlay>
+            </template>
 
             <fj-field-relation-confirm-delete
                 v-for="(relation, index) in selectedRelations"
@@ -194,7 +218,7 @@ export default {
         this.modalCols = Fjord.clone(this.field.preview);
         this.cols.push({
             label: '',
-            component: 'fj-field-relation-col-link',
+            name: 'fj-field-relation-col-link',
             props: {
                 field: this.field
             },
@@ -203,14 +227,14 @@ export default {
         if (!this.field.readonly) {
             this.cols.push({
                 label: '',
-                component: 'fj-field-relation-col-unlink',
+                name: 'fj-field-relation-col-unlink',
                 small: true
             });
         }
         if (!_.isEmpty(this.field.form)) {
             this.cols.push({
                 label: '',
-                component: 'fj-field-relation-col-edit',
+                name: 'fj-field-relation-col-edit',
                 props: {
                     field: this.field
                 },
