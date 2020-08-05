@@ -29,7 +29,7 @@ class Textarea extends BaseField
      *
      * @return void
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
         $this->rows(3);
         $this->maxRows(5);

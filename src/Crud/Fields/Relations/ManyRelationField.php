@@ -30,9 +30,9 @@ class ManyRelationField extends LaravelRelationField
      *
      * @return void
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
-        parent::setDefaultAttributes();
+        parent::mount();
 
         $this->setAttribute('many', true);
         $this->setAttribute('previewType', 'table');

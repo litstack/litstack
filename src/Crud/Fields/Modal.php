@@ -29,7 +29,7 @@ class Modal extends BaseField
      *
      * @return void
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
         $this->size('md');
         $this->variant('secondary');

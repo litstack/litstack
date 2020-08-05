@@ -60,9 +60,9 @@ class LaravelRelationField extends RelationField
      *
      * @return array
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
-        parent::setDefaultAttributes();
+        parent::mount();
 
         $this->search('title');
         $this->confirm();

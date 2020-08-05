@@ -95,7 +95,7 @@ class Field extends VueProp
         $this->setAttribute('class', '');
 
         $this->setDefaultsFromClassMethods();
-        $this->setDefaultAttributes();
+        $this->mount();
         $this->mergeRequiredAttributes();
     }
 
@@ -124,6 +124,7 @@ class Field extends VueProp
      */
     protected function validateFieldId($model, $id)
     {
+        // Media is reserved for the media relation.
         if ($id == 'media') {
             throw new InvalidArgumentException('The field id cannot be "media".', [
                 'function' => '__call',
@@ -433,7 +434,7 @@ class Field extends VueProp
      *
      * @return void
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
         // Set the field default attributes in here.
 

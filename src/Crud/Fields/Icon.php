@@ -27,7 +27,7 @@ class Icon extends BaseField
      *
      * @return void
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
         $this->icons(require fjord_path('src/Crud/Fields/Defaults/fontawesome_icons.php'));
         $this->search(true);

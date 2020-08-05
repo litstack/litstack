@@ -30,7 +30,7 @@ class Wysiwyg extends BaseField
      *
      * @return void
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
         //
     }

@@ -31,7 +31,7 @@ class Block extends RelationField
      *
      * @return void
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
         $this->blockWidth(12);
         $this->setAttribute('orderColumn', 'order_column');

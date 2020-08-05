@@ -27,7 +27,7 @@ class Range extends BaseField
      *
      * @return void
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
         $this->setAttribute('step', 1);
         $this->setAttribute('min', 1);

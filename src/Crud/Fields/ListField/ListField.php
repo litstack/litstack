@@ -48,7 +48,7 @@ class ListField extends RelationField
      *
      * @return void
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
         $this->maxDepth(3);
     }

@@ -177,7 +177,7 @@ class DummyField extends Field
 {
     use DummyFieldTrait;
 
-    public function setDefaultAttributes()
+    public function mount()
     {
         $this->setAttribute('default', 'value');
     }

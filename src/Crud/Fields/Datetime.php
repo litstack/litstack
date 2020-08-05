@@ -29,7 +29,7 @@ class Datetime extends BaseField
      *
      * @return void
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
         $this->formatted('l');
         $this->inline(false);
@@ -39,8 +39,7 @@ class Datetime extends BaseField
     /**
      * Set formatted.
      *
-     * @param string $format
-     *
+     * @param  string $format
      * @return $this
      */
     public function formatted(string $format)
@@ -53,8 +52,7 @@ class Datetime extends BaseField
     /**
      * Set inline.
      *
-     * @param bool $inline
-     *
+     * @param  bool  $inline
      * @return $this
      */
     public function inline(bool $inline = true)
@@ -67,13 +65,18 @@ class Datetime extends BaseField
     /**
      * Set only date.
      *
-     * @param bool $date
-     *
+     * @param  bool  $date
      * @return $this
      */
-    public function onlyDate(bool $date = true)
+    public function onlyDate(bool $dateOnly = true)
     {
-        $this->setAttribute('only_date', $date);
+        $this->setAttribute('only_date', $dateOnly);
+
+        if (! $dateOnly) {
+            $this->formatted('llll');
+        } else {
+            $this->formatted('l');
+        }
 
         return $this;
     }
@@ -81,8 +84,7 @@ class Datetime extends BaseField
     /**
      * Cast field value.
      *
-     * @param mixed $value
-     *
+     * @param  mixed $value
      * @return bool
      */
     public function cast($value)

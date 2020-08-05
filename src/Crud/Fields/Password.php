@@ -57,7 +57,7 @@ class Password extends BaseField
      *
      * @throws LogicException
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
         if (in_array($this->id, (new $this->model)->getFillable())) {
             throw new LogicException(

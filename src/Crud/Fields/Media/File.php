@@ -15,7 +15,7 @@ class File extends MediaField
      *
      * @return void
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
         $this->setAttribute('type', 'file');
         $this->maxFileSize(12);

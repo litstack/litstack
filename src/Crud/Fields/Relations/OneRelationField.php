@@ -28,9 +28,9 @@ class OneRelationField extends LaravelRelationField
      *
      * @return void
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
-        parent::setDefaultAttributes();
+        parent::mount();
 
         $this->setAttribute('many', false);
         $this->type('table');

@@ -22,7 +22,7 @@ class Component extends Field
      *
      * @return void
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
         $this->setComponent($this->id);
     }

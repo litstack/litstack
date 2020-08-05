@@ -43,7 +43,7 @@ class Input extends BaseField
      *
      * @return void
      */
-    public function setDefaultAttributes()
+    public function mount()
     {
         $this->type('text');
     }
