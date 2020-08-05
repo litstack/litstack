@@ -103,8 +103,7 @@ export default {
                 this.handleFileDownload(response);
             }
 
-            console.log(response);
-            // FileDownload(response.data, 'report.csv')
+            Fjord.bus.$emit('reload');
 
             this.$emit('eventHandled', response);
         },
@@ -122,7 +121,7 @@ export default {
         },
 
         isFileDownload(response) {
-            if (!'content-disposition' in response.headers) {
+            if (!response.headers['content-disposition']) {
                 return false;
             }
 

@@ -250,6 +250,8 @@ export default {
 
         this.sort_by_key = this.sortByDefault || null;
 
+        Fjord.bus.$on('reload', this._loadItems);
+
         this.$on('reload', this._loadItems);
         this.$on('refreshSelected', () => {
             this.selectedItems = _.clone(this.selected);
