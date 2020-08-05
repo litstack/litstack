@@ -34,6 +34,41 @@ class ColumnTest extends TestCase
     }
 
     /** @test */
+    public function test_right_method()
+    {
+        $column = new Column();
+        $this->assertEquals($column, $column->right());
+        $this->assertTrue($column->getAttribute('text_right'));
+
+        $column->right(false);
+        $this->assertFalse($column->getAttribute('text_right'));
+    }
+
+    /** @test */
+    public function test_center_method()
+    {
+        $column = new Column();
+        $this->assertEquals($column, $column->center());
+        $this->assertTrue($column->getAttribute('text_center'));
+
+        $column->center(false);
+        $this->assertFalse($column->getAttribute('text_center'));
+    }
+
+    /** @test */
+    public function test_center_and_right_method_cancel_each_other()
+    {
+        $column = new Column();
+        $column->right();
+        $column->center();
+        $this->assertTrue($column->getAttribute('text_center'));
+        $this->assertFalse($column->getAttribute('text_right'));
+        $column->right();
+        $this->assertFalse($column->getAttribute('text_center'));
+        $this->assertTrue($column->getAttribute('text_right'));
+    }
+
+    /** @test */
     public function test_small_method()
     {
         $column = new Column();

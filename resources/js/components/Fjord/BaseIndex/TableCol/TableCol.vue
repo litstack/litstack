@@ -3,7 +3,9 @@
         :class="{
             'col-sm': isSmall(col),
             'fj-table-col': true,
-            pointer: col.link
+            pointer: col.link,
+            'text-right': col.text_right,
+            'text-center': col.text_center
         }"
         :style="colWidth"
         @click="openItem"

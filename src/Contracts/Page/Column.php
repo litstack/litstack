@@ -21,6 +21,22 @@ interface Column
     public function value($value);
 
     /**
+     * Set text align to right or left.
+     *
+     * @param  bool  $right
+     * @return $this
+     */
+    public function right(bool $right = true);
+
+    /**
+     * Set text align to center.
+     *
+     * @param  bool  $center
+     * @return $this
+     */
+    public function center(bool $center = true);
+
+    /**
      * Reduce column to minimum width.
      *
      * @param  bool  $small

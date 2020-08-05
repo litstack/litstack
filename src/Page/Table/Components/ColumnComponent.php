@@ -32,6 +32,40 @@ class ColumnComponent extends Component implements Column
     }
 
     /**
+     * Set text align to right or left.
+     *
+     * @param  bool  $right
+     * @return $this
+     */
+    public function right(bool $right = true)
+    {
+        $this->prop('text_right', $right);
+
+        if ($right) {
+            $this->center(false);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set text align to center.
+     *
+     * @param  bool  $center
+     * @return $this
+     */
+    public function center(bool $center = true)
+    {
+        $this->prop('text_center', $center);
+
+        if ($center) {
+            $this->right(false);
+        }
+
+        return $this;
+    }
+
+    /**
      * Reduce column to minimum width.
      *
      * @param  bool  $small

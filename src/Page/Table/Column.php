@@ -69,6 +69,40 @@ class Column extends VueProp implements ColumnInterface
     }
 
     /**
+     * Set text align to right or left.
+     *
+     * @param  bool  $right
+     * @return $this
+     */
+    public function right(bool $right = true)
+    {
+        $this->setAttribute('text_right', $right);
+
+        if ($right) {
+            $this->center(false);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set text align to center.
+     *
+     * @param  bool  $center
+     * @return $this
+     */
+    public function center(bool $center = true)
+    {
+        $this->setAttribute('text_center', $center);
+
+        if ($center) {
+            $this->right(false);
+        }
+
+        return $this;
+    }
+
+    /**
      * Set column link.
      *
      * @param  string|bool $link

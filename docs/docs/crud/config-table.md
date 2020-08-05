@@ -35,6 +35,15 @@ $table->col('State')->value('state', [
 ]);
 ```
 
+## Text Align
+
+You may set the text align to right like shown in the following examples:
+
+```php
+$table->col('amount')->value('{amount} €')->right();
+$table->col('state')->value('{state}')->center();
+```
+
 ## Small
 
 With the function `small` the column is reduced to the minimum width.
