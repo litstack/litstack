@@ -99,6 +99,13 @@ export default {
                 window.location.href = responseURL;
             }
 
+            if (this.isFileDownload(response)) {
+                this.handleFileDownload(response);
+            }
+
+            console.log(response);
+            // FileDownload(response.data, 'report.csv')
+
             this.$emit('eventHandled', response);
         },
         async sendHandleEvent(handler, data) {
@@ -112,6 +119,48 @@ export default {
             } catch (e) {
                 console.log(e);
             }
+        },
+
+        isFileDownload(response) {
+            if (!'content-disposition' in response.headers) {
+                return false;
+            }
+
+            if (
+                !response.headers['content-disposition'].startsWith(
+                    'attachment'
+                )
+            ) {
+                return false;
+            }
+
+            if (
+                !response.headers['content-disposition'].includes('filename=')
+            ) {
+                return false;
+            }
+
+            return true;
+        },
+
+        handleFileDownload(response) {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute(
+                'download',
+                this.getDownloadResponseFileName(response)
+            );
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        },
+
+        getDownloadResponseFileName(response) {
+            let split = response.headers['content-disposition'].split(
+                'filename='
+            );
+            return split[split.length - 1];
         }
     }
 };

@@ -247,4 +247,32 @@ class TableTest extends BackendTestCase
         $this->assertArrayHasKey('cols', $rendered = $table->render());
         $this->assertEquals($builder, $rendered['cols']);
     }
+
+    /** @test */
+    public function test_alphabeticOrder_method()
+    {
+        $this->assertEquals([
+            'title.desc' => 'A -> Z',
+            'title.asc'  => 'Z -> A',
+        ], Table::alphabeticOrder());
+
+        $this->assertEquals([
+            'foo.desc' => 'A -> Z',
+            'foo.asc'  => 'Z -> A',
+        ], Table::alphabeticOrder('foo'));
+    }
+
+    /** @test */
+    public function test_numericOrder_method()
+    {
+        $this->assertEquals([
+            'id.desc' => 'New first',
+            'id.asc'  => 'Old first',
+        ], Table::numericOrder());
+
+        $this->assertEquals([
+            'foo.desc' => 'New first',
+            'foo.asc'  => 'Old first',
+        ], Table::numericOrder('foo'));
+    }
 }

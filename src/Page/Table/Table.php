@@ -67,7 +67,7 @@ class Table extends BaseTable implements TableContract
         $this->sortByDefault('id.desc');
         $this->perPage(10);
         $this->search(['title']);
-        $this->sortBy($this->numericOrder());
+        $this->sortBy(self::numericOrder());
     }
 
     /**
@@ -89,7 +89,7 @@ class Table extends BaseTable implements TableContract
      * @param  string $column
      * @return array
      */
-    public function alphabeticOrder($column = 'title')
+    public static function alphabeticOrder($column = 'title')
     {
         return [
             "{$column}.desc" => 'A -> Z',
@@ -103,7 +103,7 @@ class Table extends BaseTable implements TableContract
      * @param  string $column
      * @return array
      */
-    public function numericOrder($column = 'id')
+    public static function numericOrder($column = 'id')
     {
         return [
             "{$column}.desc" => __f('fj.sort_new_to_old'),
