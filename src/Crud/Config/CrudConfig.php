@@ -69,17 +69,17 @@ abstract class CrudConfig
     /**
      * Get crud route prefix.
      *
-     * @return string $route
+     * @return string
      */
     public function routePrefix()
     {
-        return 'crud/'.(new $this->model())->getTable();
+        return 'crud/'.Str::slug((new $this->model())->getTable());
     }
 
     /**
      * Model singular and plural name.
      *
-     * @return array $names
+     * @return array
      */
     public function names()
     {
@@ -94,8 +94,7 @@ abstract class CrudConfig
     /**
      * Index component.
      *
-     * @param Component $component
-     *
+     * @param  Component $component
      * @return void
      */
     public function indexComponent($component)
@@ -106,8 +105,7 @@ abstract class CrudConfig
     /**
      * Form component.
      *
-     * @param Component $component
-     *
+     * @param  Component $component
      * @return void
      */
     public function formComponent($component)

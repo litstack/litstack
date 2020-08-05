@@ -125,6 +125,7 @@ return [
     */
 
     'crud' => [
+
         'preview' => [
             // devices: mobile / tablet / desktop
             'default_device' => 'desktop',
