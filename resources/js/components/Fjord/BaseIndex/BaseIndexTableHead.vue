@@ -3,7 +3,14 @@
         <tr>
             <th v-if="sortable"></th>
             <th v-if="!noSelect"><slot name="checkbox" /></th>
-            <th v-for="(col, key) in cols" :key="key">
+            <th
+                v-for="(col, key) in cols"
+                :key="key"
+                :class="{
+                    'text-right': col.text_right,
+                    'text-center': col.text_center
+                }"
+            >
                 <div
                     @click="sortCol(col.value, col.sort_by, key)"
                     :class="{
