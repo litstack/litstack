@@ -31,7 +31,7 @@ class Datetime extends BaseField
      */
     public function setDefaultAttributes()
     {
-        $this->formatted('llll');
+        $this->formatted('l');
         $this->inline(false);
         $this->onlyDate(true);
     }
