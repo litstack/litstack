@@ -92,6 +92,10 @@ public function index(CrudIndex $page)
 }
 ```
 
+:::tip
+In case of long loading times when sorted by relation attributes it can help to add an [index](https://laravel.com/docs/7.x/migrations#indexes) on the column that connects the relation.
+:::
+
 ## Filter
 
 Filters are specified in groups. Laravel's model [`scopes`](https://laravel.com/docs/7.x/eloquent#local-scopes) are used to filter the index table as shown in the example:

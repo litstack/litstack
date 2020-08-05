@@ -64,6 +64,16 @@ $table->col('Name')
     ->sortBy('first_name'); // Sorting the column by first_name.
 ```
 
+You may even sort by related column.
+
+```php
+$table->col('Product')->value('{product.name}')->sortBy('product.name');
+```
+
+:::tip
+In case of long loading times when sorted by relation attributes it can help to add an [index](https://laravel.com/docs/7.x/migrations#indexes) on the column that connects the relation.
+:::
+
 ## Strip Html
 
 For example, if you want to display the value of a `wysiwyg` field, it makes sense to strip the **html tags** and specify a maximum number of characters like this:
