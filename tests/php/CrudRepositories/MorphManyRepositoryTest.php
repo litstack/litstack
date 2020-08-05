@@ -41,7 +41,6 @@ class MorphManyRepositoryTest extends BackendTestCase
     public function tearDown(): void
     {
         Schema::dropIfExists('posts');
-        Schema::dropIfExists('videos');
         Schema::dropIfExists('comments');
     }
 
