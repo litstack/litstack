@@ -5,6 +5,7 @@ namespace Fjord\Page;
 use Fjord\Contracts\Page\ActionFactory;
 use Fjord\Support\VueProp;
 use Fjord\Vue\Component;
+use Fjord\Vue\Components\ButtonComponent;
 use Illuminate\Contracts\View\View;
 
 class Slot extends VueProp
@@ -53,9 +54,9 @@ class Slot extends VueProp
     /**
      * Add action.
      *
-     * @param  string $title
-     * @param  string $action
-     * @return $this
+     * @param  string                $title
+     * @param  string                $action
+     * @return ButtonComponent|$this
      */
     public function action($title, $action)
     {
