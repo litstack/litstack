@@ -36,6 +36,7 @@ use Fjord\Crud\Repositories\Relations\BelongsToRepository;
 use Fjord\Crud\Repositories\Relations\HasManyRepository;
 use Fjord\Crud\Repositories\Relations\HasOneRepository;
 use Fjord\Crud\Repositories\Relations\ManyRelationRepository;
+use Fjord\Crud\Repositories\Relations\MorphManyRepository;
 use Fjord\Crud\Repositories\Relations\MorphOneRepository;
 use Fjord\Crud\Repositories\Relations\MorphToManyRepository;
 use Fjord\Crud\Repositories\Relations\MorphToRepository;
@@ -163,6 +164,7 @@ class ServiceProvider extends LaravelServiceProvider
             $rep->register('morph-one', MorphOneRepository::class);
             $rep->register('morph-to-many', MorphToManyRepository::class);
             $rep->register('morph-to', MorphToRepository::class);
+            $rep->register('morph-many', MorphManyRepository::class);
 
             return $rep;
         });

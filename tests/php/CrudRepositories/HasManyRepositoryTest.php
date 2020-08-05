@@ -8,7 +8,6 @@ use Fjord\Crud\BaseForm;
 use Fjord\Crud\Controllers\CrudController;
 use Fjord\Crud\Fields\Relations\HasMany;
 use Fjord\Crud\Repositories\Relations\HasManyRepository;
-use Fjord\Crud\Repositories\Relations\HasOneRepository;
 use Fjord\Crud\Requests\CrudUpdateRequest;
 use FjordTest\BackendTestCase;
 use Illuminate\Database\Eloquent\Model;
@@ -40,8 +39,8 @@ class HasManyRepositoryTest extends BackendTestCase
 
     public function tearDown(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('phone');
+        Schema::dropIfExists('posts');
+        Schema::dropIfExists('comments');
     }
 
     /** @test */
@@ -92,8 +91,8 @@ class HasManyRepositoryTest extends BackendTestCase
     public function test_repository_is_registered()
     {
         $this->assertEquals(
-            HasOneRepository::class,
-            app(ApiRepositories::class)->find('has-one')
+            HasManyRepository::class,
+            app(ApiRepositories::class)->find('has-many')
         );
     }
 }
