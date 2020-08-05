@@ -204,9 +204,9 @@ $font-size-lg: $font-size-base * 1.25 !default;
 $font-size-sm: $font-size-base * 0.9 !default;
 
 //$font-weight-lighter:         lighter !default;
-//$font-weight-light:           300 !default;
-//$font-weight-normal:          400 !default;
-//$font-weight-bold:            700 !default;
+$font-weight-light: 300 !default;
+$font-weight-normal: 400 !default;
+$font-weight-bold: 700 !default;
 //$font-weight-bolder:          bolder !default;
 
 //$font-weight-base:            $font-weight-normal !default;
@@ -451,9 +451,9 @@ $toast-border-radius: $border-radius !default;
 // Badges
 
 //$badge-font-size:                   75% !default;
-//$badge-font-weight:                 $font-weight-bold !default;
-//$badge-padding-y:                   .25em !default;
-//$badge-padding-x:                   .4em !default;
+$badge-font-weight: 500 !default;
+$badge-padding-y: 0.4em !default;
+$badge-padding-x: 0.5em !default;
 $badge-border-radius: $border-radius-xs !default;
 
 //$badge-transition:                  $btn-transition !default;

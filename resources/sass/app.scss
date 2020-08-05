@@ -5,12 +5,18 @@
 @import '_variables';
 @import '_loading';
 
+// Mixins
+@import '_mixins/_badge';
+
 // Modules
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-vue/src/index';
 @import '~cropperjs/src/index';
 
+@import '_mixins/_badge';
+
 // Bootstrap Components
+@import '_bs/_badge';
 @import '_bs/_btn';
 @import '_bs/_card';
 @import '_bs/_dropdown';
