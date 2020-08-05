@@ -106,5 +106,5 @@ class MorphManyRepositoryComment extends Model
 {
     public $table = 'comments';
     public $timestamps = false;
-    protected $fillable = ['commentable_id', 'commentable_string'];
+    protected $fillable = ['commentable_id', 'commentable_type'];
 }

@@ -19,6 +19,8 @@ class MorphOneRepository extends BaseFieldRepository
 
     /**
      * Create new MorphManyRepository instance.
+     *
+     * @return void
      */
     public function __construct($config, $controller, $form, MorphOne $field)
     {
@@ -28,9 +30,8 @@ class MorphOneRepository extends BaseFieldRepository
     /**
      * Create new MorphOne relation.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
      * @return void
      */
     public function create(CrudUpdateRequest $request, $model)
@@ -57,9 +58,8 @@ class MorphOneRepository extends BaseFieldRepository
     /**
      * Remove MorphOne relation.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)
