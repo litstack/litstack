@@ -8,19 +8,21 @@
             'text-center': col.text_center
         }"
         :style="colWidth"
-        @click="openItem"
     >
-        <component
-            v-if="col.name !== undefined"
-            :is="col.name"
-            :item="item"
-            :col="col"
-            :format="getColValue"
-            @reload="reload"
-            v-on="$listeners"
-            v-bind="getColComponentProps()"
-        />
-        <span v-else v-html="value" />
+        <component :is="true ? 'a' : 'span'" :href="link">
+            <component
+                v-if="col.name !== undefined"
+                :is="col.name"
+                :item="item"
+                :col="col"
+                :format="getColValue"
+                @reload="reload"
+                v-on="$listeners"
+                v-bind="getColComponentProps()"
+            />
+
+            <span v-else v-html="value" />
+        </component>
     </b-td>
 </template>
 
@@ -94,12 +96,6 @@ export default {
         }
     },
     methods: {
-        openItem() {
-            if (!this.link) {
-                return;
-            }
-            window.location.href = this.link;
-        },
         setValue() {
             this.value = this.getColValue(this.col, this.item);
         },
@@ -168,3 +164,11 @@ export default {
     }
 };
 </script>
+<style lang="scss">
+table.b-table tr td > a {
+    color: unset;
+    &:hover {
+        text-decoration: none;
+    }
+}
+</style>

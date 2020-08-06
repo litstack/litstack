@@ -105,7 +105,7 @@ jobs:
               uses: actions/checkout@v1
 
             - name: Install dependencies
-              run: yarn install --non-interactive
+              run: npm install --non-interactive
 
             - name: Run javascript tests via Jest
-              run: yarn run test:js
+              run: npm run test:js
