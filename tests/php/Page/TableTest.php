@@ -118,6 +118,26 @@ class TableTest extends BackendTestCase
     }
 
     /** @test */
+    public function test_cast_method()
+    {
+        $builder = m::mock(ColumnBuilder::class);
+        $table = new Table('', $builder);
+
+        $this->assertSame($table, $table->cast('active', 'boolean'));
+        $this->assertEquals(['active' => 'boolean'], $table->getCasts());
+    }
+
+    /** @test */
+    public function test_casts_method()
+    {
+        $builder = m::mock(ColumnBuilder::class);
+        $table = new Table('', $builder);
+
+        $this->assertSame($table, $table->casts(['active' => 'boolean']));
+        $this->assertEquals(['active' => 'boolean'], $table->getCasts());
+    }
+
+    /** @test */
     public function test_search_method_with_array()
     {
         $builder = m::mock(ColumnBuilder::class);

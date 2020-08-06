@@ -42,6 +42,13 @@ class Table extends BaseTable implements TableContract
     protected $component;
 
     /**
+     * Casts used for this table.
+     *
+     * @var array
+     */
+    protected $casts = [];
+
+    /**
      * Create new Table instance.
      *
      * @param string        $routePrefix
@@ -130,6 +137,43 @@ class Table extends BaseTable implements TableContract
         }
 
         return $this;
+    }
+
+    /**
+     * Add cast for attribute.
+     *
+     * @param  string $attribute
+     * @param  string $cast
+     * @return $this
+     */
+    public function cast($attribute, $cast)
+    {
+        $this->casts([$attribute => $cast]);
+
+        return $this;
+    }
+
+    /**
+     * Add multiple table casts.
+     *
+     * @param  array $casts
+     * @return $this
+     */
+    public function casts(array $casts)
+    {
+        $this->casts = array_merge($this->casts, $casts);
+
+        return $this;
+    }
+
+    /**
+     * Get table casts.
+     *
+     * @return array
+     */
+    public function getCasts()
+    {
+        return $this->casts;
     }
 
     /**

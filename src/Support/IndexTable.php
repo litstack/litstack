@@ -45,11 +45,17 @@ class IndexTable
     protected $searchKeys = [];
 
     /**
+     * Model casts.
+     *
+     * @var array
+     */
+    protected $casts = [];
+
+    /**
      * Create new IndexTable instance.
      *
-     * @param Builder      $query
-     * @param Request|null $request
-     *
+     * @param  Builder      $query
+     * @param  Request|null $request
      * @return void
      */
     public function __construct($query, Request $request = null)
@@ -61,8 +67,7 @@ class IndexTable
     /**
      * Create new IndexTable with query.
      *
-     * @param Builder $query
-     *
+     * @param  Builder $query
      * @return void
      */
     public static function query($query)
@@ -73,8 +78,7 @@ class IndexTable
     /**
      * Set request.
      *
-     * @param Request $request
-     *
+     * @param  Request $request
      * @return self
      */
     public function request(Request $request)
@@ -87,13 +91,25 @@ class IndexTable
     /**
      * Set search keys.
      *
-     * @param array $keys
-     *
-     * @return self
+     * @param  array $keys
+     * @return $this
      */
     public function search(array $keys)
     {
         $this->searchKeys = $keys;
+
+        return $this;
+    }
+
+    /**
+     * Set casts for index table.
+     *
+     * @param  array $casts
+     * @return $this
+     */
+    public function casts(array $casts)
+    {
+        $this->casts = $casts;
 
         return $this;
     }
@@ -111,9 +127,8 @@ class IndexTable
     /**
      * Delete selected items.
      *
-     * @param string  $class
-     * @param Request $request
-     *
+     * @param  string  $class
+     * @param  Request $request
      * @return void
      */
     public static function deleteSelected($class, Request $request)
@@ -124,8 +139,7 @@ class IndexTable
     /**
      * Except.
      *
-     * @param array $except
-     *
+     * @param  array $except
      * @return void
      */
     public function except(array $except)
@@ -138,8 +152,7 @@ class IndexTable
     /**
      * Only.
      *
-     * @param array $only
-     *
+     * @param  array $only
      * @return void
      */
     public function only(array $only)
@@ -153,7 +166,6 @@ class IndexTable
      * Fetch items.
      *
      * @throws \InvalidArgumentException
-     *
      * @return array
      */
     public function get()
@@ -193,7 +205,7 @@ class IndexTable
 
         $total = $this->query->count();
 
-        $items = $itemsQuery->get();
+        $items = $itemsQuery->get()->each->mergeCasts($this->casts);
 
         return [
             'count' => $total ?? 0,
@@ -250,6 +262,12 @@ class IndexTable
         return $this->query->sort($key, $direction);
     }
 
+    /**
+     * Parse sort key.
+     *
+     * @param  string $key
+     * @return array
+     */
     public function parseSortKey(string $key)
     {
         $direction = 'asc';
@@ -266,8 +284,7 @@ class IndexTable
      * Apply pagination to query. An instance of the Builder is passed here
      * because this part should not be applied to the count query.
      *
-     * @param Builder $query
-     *
+     * @param  Builder $query
      * @return Buider
      */
     protected function applyPaginationToQuery($query)
