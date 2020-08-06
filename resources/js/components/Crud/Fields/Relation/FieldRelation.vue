@@ -100,7 +100,7 @@
                                     )
                                 "
                             />
-                            <div>
+                            <div v-if="!field.readonly">
                                 <fj-field-relation-col-unlink
                                     :item="selectedRelations[0]"
                                     @unlink="removeRelation"
