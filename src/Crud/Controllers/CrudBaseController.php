@@ -122,6 +122,7 @@ abstract class CrudBaseController
         $index = IndexTable::query($query)
             ->request($request)
             ->search($table->getAttribute('search'))
+            ->casts($table->getCasts())
             ->get();
 
         $index['items'] = crud($index['items']);
