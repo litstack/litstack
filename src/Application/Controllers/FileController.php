@@ -30,6 +30,17 @@ class FileController extends Controller
     }
 
     /**
+     * prism.js.
+     *
+     * @return response
+     */
+    public function prismJs()
+    {
+        return $this->sendFile(fjord_path('public/js/prism.js'))
+            ->header('Content-Type', 'application/javascript; charset=utf-8');
+    }
+
+    /**
      * app.css.
      *
      * @return response

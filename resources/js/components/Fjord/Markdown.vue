@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import Prism from 'prismjs';
-import marked from 'marked';
-import { languages } from 'prismjs/components';
-require(`prismjs/components/prism-markup-templating`);
+// import Prism from 'prismjs';
+// import marked from 'marked';
+// import { languages } from 'prismjs/components';
+// require(`prismjs/components/prism-markup-templating`);
 
 export default {
     name: 'Markdown',
@@ -17,33 +17,34 @@ export default {
         }
     },
     beforeMount() {
-        this.loadLanguages();
+        // this.loadLanguages();
     },
     methods: {
-        loadLanguages() {
-            for (let language in languages) {
-                try {
-                    require(`prismjs/components/prism-${language}`);
-                } catch (e) {}
-            }
-        }
+        // loadLanguages() {
+        //     for (let language in languages) {
+        //         try {
+        //             require(`prismjs/components/prism-${language}`);
+        //         } catch (e) {}
+        //     }
+        // }
     },
     computed: {
         compiledMarkdown() {
-            return marked(this.markdown, {
-                sanitize: true,
-                highlight: function(code, language) {
-                    if (!language in Prism.languages) {
-                        return code;
-                    }
+            return this.markdown;
+            // return marked(this.markdown, {
+            //     sanitize: true,
+            //     highlight: function(code, language) {
+            //         if (!language in Prism.languages) {
+            //             return code;
+            //         }
 
-                    return Prism.highlight(
-                        code,
-                        Prism.languages[language],
-                        language
-                    );
-                }
-            });
+            //         return Prism.highlight(
+            //             code,
+            //             Prism.languages[language],
+            //             language
+            //         );
+            //     }
+            // });
         }
     }
 };

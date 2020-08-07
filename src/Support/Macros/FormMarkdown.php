@@ -3,6 +3,8 @@
 namespace Fjord\Support\Macros;
 
 use Fjord\Crud\BaseForm;
+use Fjord\Support\Facades\FjordApp;
+use ParsedownExtra;
 
 class FormMarkdown
 {
@@ -14,8 +16,11 @@ class FormMarkdown
     public function __construct()
     {
         BaseForm::macro('markdown', function (string $markup) {
-            return $this->component('fj-field-markdown')
-                ->prop('markdown', $markup);
+            FjordApp::script(fjord()->url('js/prism.js'));
+
+            $parsed = (new ParsedownExtra)->text($markup);
+
+            return $this->component('fj-field-markdown')->prop('markdown', $parsed);
         });
     }
 }
