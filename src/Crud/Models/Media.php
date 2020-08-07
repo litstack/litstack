@@ -41,8 +41,7 @@ class Media extends MediaModel
     /**
      * Get custom_properties as attribute.
      *
-     * @param string $name
-     *
+     * @param  string $name
      * @return mixed
      */
     public function getAttribute($name)

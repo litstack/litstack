@@ -81,7 +81,7 @@ pre[class*='language-'] {
 :not(pre) > code[class*='language-'],
 pre[class*='language-'] {
     background: #f5f8fb;
-    box-shadow: 1px 1px 9px rgba(0, 0, 0, 0.075);
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.075);
     color: $primary;
 }
 

@@ -37,9 +37,8 @@ class FjordExtend extends Command
     /**
      * Run npm install.
      *
-     * @param string $base
-     * @param bool   $verbose
-     *
+     * @param  string $base
+     * @param  bool   $verbose
      * @return void
      */
     protected function runNpmInstall($base, $verbose = false)

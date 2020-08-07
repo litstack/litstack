@@ -1,31 +1,51 @@
-<template>
-    <component
-        :is="wrapper"
-        variant="outline-primary"
-        :text="language"
-        split
-        split-variant="primary"
-    >
-        <component
-            :is="child"
-            v-for="(lang, index) in languages"
-            :key="index"
-            @click="setLanguage(lang)"
-            :class="{ active: active(lang) }"
-            :active="active(lang)"
-            variant="outline-primary"
-            size="md"
-        >
-            {{ lang }}
-        </component>
-    </component>
-</template>
-
 <script>
 import { mapGetters } from 'vuex';
 
 export default {
     name: 'CrudLanguage',
+    render(createElement) {
+        if (this.languages.length < 2) {
+            return;
+        }
+
+        let children = [];
+
+        for (let i = 0; i < this.languages.length; i++) {
+            let lang = this.languages[i];
+            children.push(
+                createElement(
+                    this.child,
+
+                    {
+                        class: { active: this.active(lang) },
+                        attrs: {
+                            variant: 'outline-primary',
+                            size: 'md'
+                        },
+                        on: {
+                            click: () => this.setLanguage(lang)
+                        },
+                        key: i
+                    },
+
+                    lang
+                )
+            );
+        }
+
+        return createElement(
+            this.wrapper,
+            {
+                attrs: {
+                    variant: 'outline-primary',
+                    split: true,
+                    'split-variant': 'primary',
+                    text: this.language
+                }
+            },
+            children
+        );
+    },
     methods: {
         /**
          * Set edit language.
