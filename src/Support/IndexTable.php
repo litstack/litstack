@@ -256,6 +256,7 @@ class IndexTable
         if (! $this->request->sort_by) {
             return;
         }
+
         // Get sort key and direction.
         [$key, $direction] = $this->parseSortKey($this->request->sort_by);
 

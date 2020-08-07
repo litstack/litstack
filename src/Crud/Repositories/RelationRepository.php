@@ -66,7 +66,7 @@ class RelationRepository extends BaseFieldRepository
             $relations = IndexTable::query($query)
                 ->request($request)
                 ->search($this->field->search)
-                ->only(['filter', 'paginate'])
+                ->only(['filter', 'paginate', 'search'])
                 ->get();
         }
 
