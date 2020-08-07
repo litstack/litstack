@@ -21,6 +21,9 @@ import Draggable from 'vuedraggable';
 import VueLodash from 'vue-lodash';
 import lodash from 'lodash';
 
+import vSelect from 'vue-select';
+Vue.component('v-select', vSelect);
+
 window.numeral = require('numeral');
 
 // FontAwesome
@@ -35,12 +38,12 @@ Vue.use(BootstrapVue, {
     BTooltip: {
         delay: {
             show: 800,
-            hide: 100
-        }
+            hide: 100,
+        },
     },
     BToast: {
-        toaster: 'b-toaster-bottom-right'
-    }
+        toaster: 'b-toaster-bottom-right',
+    },
 });
 
 Vue.use(Draggable);

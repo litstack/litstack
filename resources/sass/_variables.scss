@@ -40,20 +40,16 @@ $gray: $gray-600 !default;
 
 $theme-colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
-$theme-colors: map-merge(
-    (
-        //'primary': $primary,
-            //'secondary': $secondary,
-            //'success': $success,
-            //'info': $info,
-            //'warning': $warning,
-            //'danger': $danger,
-            //'light': $light,
-            //'dark': $dark,
-            'gray': $gray
-    ),
-    $theme-colors
-);
+$theme-colors: map-merge(( //'primary': $primary,
+        //'secondary': $secondary,
+        //'success': $success,
+        //'info': $info,
+        //'warning': $warning,
+        //'danger': $danger,
+        //'light': $light,
+        //'dark': $dark,
+        'gray': $gray),
+    $theme-colors);
 
 // Options
 //
@@ -86,16 +82,13 @@ $spacer-x: 2rem;
 // This variable affects the `.h-*` and `.w-*` classes.
 $sizes: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
-$sizes: map-merge(
-    (
-        //25: 25%,
-            //50: 50%,
-            //75: 75%,
-            //100: 100%,
-            //auto: auto
+$sizes: map-merge(( //25: 25%,
+        //50: 50%,
+        //75: 75%,
+        //100: 100%,
+        //auto: auto
     ),
-    $sizes
-);
+    $sizes);
 
 // Body
 //
@@ -125,20 +118,16 @@ $body-bg: $gray-200 !default;
 //
 // Define the maximum width of `.container` for different screen sizes.
 
-$grid-breakpoints: (
-    xs: 0,
+$grid-breakpoints: (xs: 0,
     sm: 576px,
     md: 768px,
     lg: 992px,
-    xl: 1200px
-) !default;
+    xl: 1200px) !default;
 
-$container-max-widths: (
-    sm: 540px,
+$container-max-widths: (sm: 540px,
     md: 720px,
     lg: 960px,
-    xl: 1140px
-) !default;
+    xl: 1140px) !default;
 
 // Grid columns
 //
@@ -159,6 +148,7 @@ $border-width: 1px !default;
 $border-color: $secondary !default;
 
 $border-radius: 0.625rem !default;
+$border-radius-md: $border-radius !default;
 $border-radius-lg: 0.8rem !default;
 $border-radius-sm: 0.4375rem !default;
 $border-radius-xs: 0.25rem !default;
@@ -531,8 +521,7 @@ $modal-footer-border-width: $border-width !default;
 $modal-footer-border-color: $gray-400 !default;
 $modal-header-padding-y: $modal-inner-padding !default;
 $modal-header-padding-x: $modal-inner-padding !default;
-$modal-header-padding: $modal-header-padding-y $modal-header-padding-x 0
-    $modal-header-padding-x !default; // Keep this for backwards compatibility
+$modal-header-padding: $modal-header-padding-y $modal-header-padding-x 0 $modal-header-padding-x !default; // Keep this for backwards compatibility
 //
 //$modal-xl: 1140px !default;
 //$modal-lg: 800px !default;
