@@ -3,6 +3,7 @@
 namespace Fjord\Chart\Config;
 
 use Fjord\Chart\Chart;
+use Fjord\Support\Bootstrap;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,7 @@ abstract class ChartConfig
      *
      * @var string
      */
-    public $variant = 'primary';
+    public $variant = Bootstrap::PRIMARY;
 
     /**
      * Chart title.

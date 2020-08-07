@@ -2,6 +2,7 @@
 
 namespace Fjord\Page\Actions;
 
+use Fjord\Support\Bootstrap;
 use Fjord\Vue\Components\ButtonComponent;
 
 class ButtonAction extends BaseAction
@@ -13,6 +14,6 @@ class ButtonAction extends BaseAction
      */
     protected function createComponent()
     {
-        return (new ButtonComponent)->variant('primary');
+        return (new ButtonComponent)->variant(Bootstrap::PRIMARY);
     }
 }
