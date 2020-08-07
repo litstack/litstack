@@ -6,7 +6,7 @@ use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route as RouteFacade;
 
 /**
- * @macro bool matchesUri(string $uri, string $metho = null)
+ * @macro bool matchesUri(string $uri, string $method = null)
  *
  * @see \Illuminate\Routing\Matching\MethodValidator
  * @see \Illuminate\Routing\Matching\UriValidator

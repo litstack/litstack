@@ -2,14 +2,21 @@
 
 namespace DummyNamespace;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
+
 class DummyClass
 {
-    public function run($models)
+    /**
+     * Run the action.
+     *
+     * @param  Collection  $models
+     * @return JsonResponse
+     */
+    public function run(Collection $models)
     {
         // 
 
-        return response()->json([
-            'message' => 'Action executed.',
-        ]);
+        return response()->success('Action executed.');
     }
 }

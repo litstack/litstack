@@ -47,8 +47,7 @@ class DummyConfigClassName extends FormConfig
     {
         $page->card(function($form) {
 
-            $form->input('text')
-                ->title('text');
+            $form->input('text')->title('text');
 
             // ...
         });
