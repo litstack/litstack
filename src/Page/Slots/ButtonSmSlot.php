@@ -24,7 +24,10 @@ class ButtonSmSlot extends BaseSlot
      */
     protected function getActionComponent()
     {
-        $component = (new ButtonComponent)->variant('outline-primary')->size('sm');
+        $component = (new ButtonComponent)
+            ->variant(Bootstrap::PRIMARY)
+            ->outline()
+            ->size('sm');
 
         return $this->component($component);
     }

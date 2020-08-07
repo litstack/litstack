@@ -5,6 +5,7 @@ namespace Fjord\Page\Actions;
 use Closure;
 use Fjord\Crud\BaseForm;
 use Fjord\Crud\Field;
+use Fjord\Support\Bootstrap;
 use Fjord\Vue\Component;
 use Fjord\Vue\Traits\StaticComponentName;
 use InvalidArgumentException;
@@ -34,7 +35,7 @@ class ActionModal extends Component
      */
     public function beforeMount()
     {
-        $this->confirmVariant('primary');
+        $this->confirmVariant(Bootstrap::PRIMARY);
         $this->confirmText('Run');
         $this->size('md');
         //$this->prop('footer-variant', 'ligjt');

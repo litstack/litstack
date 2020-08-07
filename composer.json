@@ -8,6 +8,7 @@
     },
     "require": {
         "php": ">=7.4",
+        "erusev/parsedown-extra": "^0.8.1",
         "spatie/laravel-permission": "^2.37|^3.0|^3.11",
         "astrotomic/laravel-translatable": "^11.1|^11.8",
         "cviebrock/eloquent-sluggable": "^4.8|^6.0|^7.0",
