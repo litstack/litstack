@@ -93,6 +93,7 @@
         "vue-ctk-date-time-picker": "^2.4.0",
         "vue-i18n": "^8.15.3",
         "vue-lodash": "^2.1.2",
+        "vue-select": "^3.10.7",
         "vue2-dropzone": "^3.5.9",
         "vuedraggable": "^2.23.2",
         "vuex": "^3.1.3"
