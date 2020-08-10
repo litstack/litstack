@@ -4,6 +4,7 @@ namespace Fjord\Page\Table;
 
 use Fjord\Contracts\Page\Column as ColumnContract;
 use Fjord\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
+use Fjord\Page\Table\Casts\MoneyColumn;
 use Fjord\Page\Table\Components\BladeColumnComponent;
 use Fjord\Page\Table\Components\ColumnComponent;
 use Fjord\Page\Table\Components\ImageComponent;
@@ -49,6 +50,29 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     public function col($label = ''): ColumnContract
     {
         return $this->columns[] = new Column($label, $this->table);
+    }
+
+    /**
+     * Create new Money column.
+     *
+     * @param  string $column
+     * @param  string $currency
+     * @return Column
+     */
+    public function money($column, $currency = 'EUR', $locale = null)
+    {
+        if ($this->table) {
+            $this->table->cast(
+                $column,
+                MoneyColumn::class.":{$currency},{$locale}"
+            );
+        }
+
+        return $this->col(ucfirst($column))
+            ->class('fj-col-money')
+            ->value("{{$column}}")
+            ->sortBy($column)
+            ->right();
     }
 
     /**

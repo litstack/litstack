@@ -6,6 +6,7 @@ use Fjord\Page\Table\Column;
 use Fjord\Page\Table\ColumnBuilder;
 use Fjord\Page\Table\Components\BladeColumnComponent;
 use Fjord\Page\Table\Components\ColumnComponent;
+use Fjord\Page\Table\Table;
 use FjordTest\BackendTestCase;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Support\Facades\View;
@@ -125,6 +126,26 @@ class ColumnBuilderTest extends BackendTestCase
         $builder = new ColumnBuilder;
         $result = $builder->relation('User');
         $this->assertEquals('User', $result->getProp('label'));
+    }
+
+    /** @test */
+    public function test_money_method_adds_cast_to_table()
+    {
+        $table = m::mock(Table::class);
+        $table->shouldReceive('cast')->withArgs(['amount', MoneyColumn::class.':EUR,'])->once();
+        $builder = new ColumnBuilder;
+        $builder->setTable($table);
+        $builder->money('amount');
+    }
+
+    /** @test */
+    public function test_money_method_with_currency_and_local_parameter()
+    {
+        $table = m::mock(Table::class);
+        $table->shouldReceive('cast')->withArgs(['amount', MoneyColumn::class.':EUR,en_US'])->once();
+        $builder = new ColumnBuilder;
+        $builder->setTable($table);
+        $builder->money('amount', 'EUR', 'en_US');
     }
 
     /** @test */
