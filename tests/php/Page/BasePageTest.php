@@ -55,11 +55,11 @@ class BasePageTest extends BackendTestCase
         $this->assertFalse($this->page->inWrapper());
     }
 
-    // /** @test */
-    // public function test_view_method_returns_view()
-    // {
-    //     $this->assertInstanceOf(View::class, $this->page->view('fjord::app'));
-    // }
+    /** @test */
+    public function test_view_method_returns_view()
+    {
+        $this->assertInstanceOf(Component::class, $this->page->view('fjord::app'));
+    }
 
     /** @test */
     public function test_view_method_adds_blade_component()
