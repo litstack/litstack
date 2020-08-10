@@ -4,6 +4,7 @@ namespace Fjord\Crud\Fields;
 
 use Carbon\CarbonInterface;
 use Fjord\Crud\BaseField;
+use Fjord\Support\Facades\FjordApp;
 use Illuminate\Support\Carbon;
 
 class Datetime extends BaseField
@@ -31,9 +32,23 @@ class Datetime extends BaseField
      */
     public function mount()
     {
+        $this->includeCtkScript();
+
         $this->formatted('l');
         $this->inline(false);
         $this->onlyDate(true);
+    }
+
+    /**
+     * Inlcude ctk datetime picker script.
+     *
+     * @see https://github.com/chronotruck/vue-ctk-date-time-picker
+     *
+     * @return void
+     */
+    protected function includeCtkScript()
+    {
+        FjordApp::script(fjord()->route('ctk.js'));
     }
 
     /**

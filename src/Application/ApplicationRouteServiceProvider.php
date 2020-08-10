@@ -59,6 +59,7 @@ class ApplicationRouteServiceProvider extends LaravelRouteServiceProvider
         FjordRoute::get('js/app.js', FileController::class.'@fjordJs')->name('js');
         FjordRoute::public()->get('js/app2.js', FileController::class.'@fjord2Js')->name('app2.js');
         FjordRoute::public()->get('js/prism.js', FileController::class.'@prismJs')->name('prism.js');
+        FjordRoute::public()->get('js/ctk.js', FileController::class.'@ctkJs')->name('ctk.js');
         FjordRoute::public()->get('css/app.css', FileController::class.'@fjordCss')->name('css');
         FjordRoute::public()->get('images/fjord-logo.png', FileController::class.'@fjordLogo')->name('logo');
         FjordRoute::public()->get('favicon/favicon-32x32.png', FileController::class.'@fjordFaviconBig')->name('favicon-big');

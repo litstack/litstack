@@ -41,6 +41,17 @@ class FileController extends Controller
     }
 
     /**
+     * ctk.js.
+     *
+     * @return response
+     */
+    public function ctkJs()
+    {
+        return $this->sendFile(fjord_path('public/js/ctk.js'))
+            ->header('Content-Type', 'application/javascript; charset=utf-8');
+    }
+
+    /**
      * app.css.
      *
      * @return response

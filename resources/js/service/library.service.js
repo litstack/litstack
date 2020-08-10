@@ -16,7 +16,15 @@ import VueDropzone from 'vue2-dropzone';
 import VueApexCharts from 'vue-apexcharts';
 
 import BootstrapVue from 'bootstrap-vue';
-import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
+// import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
+
+if ('vue-ctk-date-time-picker' in window) {
+    Vue.component(
+        'vue-ctk-date-time-picker',
+        window['vue-ctk-date-time-picker']
+    );
+}
+
 import Draggable from 'vuedraggable';
 import VueLodash from 'vue-lodash';
 import lodash from 'lodash';
@@ -38,19 +46,17 @@ Vue.use(BootstrapVue, {
     BTooltip: {
         delay: {
             show: 800,
-            hide: 100,
-        },
+            hide: 100
+        }
     },
     BToast: {
-        toaster: 'b-toaster-bottom-right',
-    },
+        toaster: 'b-toaster-bottom-right'
+    }
 });
 
 Vue.use(Draggable);
 Vue.use(VueDropzone);
 Vue.use(VueLodash, { lodash });
-
-Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 
 Vue.component('apexchart', VueApexCharts);
 
