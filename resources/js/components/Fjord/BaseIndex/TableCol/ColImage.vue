@@ -37,7 +37,7 @@ export default {
     },
     computed: {
         srcValue() {
-            return this.format(this.src, this.item);
+            return this.format({ value: this.src }, this.item);
         },
         style() {
             if (this.square) {

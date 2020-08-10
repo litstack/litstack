@@ -86,6 +86,17 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     }
 
     /**
+     * Add avatar image column.
+     *
+     * @param  string         $label
+     * @return ImageComponent
+     */
+    public function avatar($label = '')
+    {
+        return $this->image($label)->circle();
+    }
+
+    /**
      * Add relation column.
      *
      * @param  string            $label

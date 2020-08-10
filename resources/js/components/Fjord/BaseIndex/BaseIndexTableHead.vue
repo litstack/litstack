@@ -109,6 +109,7 @@ export default {
 .fj-index-table-head {
     th {
         padding-bottom: 0.75rem;
+        white-space: nowrap;
     }
     span {
         font-weight: 600;

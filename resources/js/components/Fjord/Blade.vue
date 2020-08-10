@@ -3,7 +3,7 @@ export default {
     name: 'Blade',
     render(createElement) {
         const render = {
-            template: '<div class="w-100">' + this.view + '</div>',
+            template: this.getTemplate(createElement),
             props: Object.keys(this.$attrs)
         };
         return createElement(render, {
@@ -14,6 +14,29 @@ export default {
         view: {
             required: true,
             type: String
+        },
+        wrapper: {}
+    },
+    methods: {
+        getTemplate(createElement) {
+            if (this.wrapper) {
+                return (
+                    '<fj-base-component :component="' +
+                    this.escapeHtmlSpecialChars(JSON.stringify(this.wrapper)) +
+                    '">' +
+                    this.view +
+                    '</fj-base-component>'
+                );
+            }
+            return '<div class="w-100">' + this.view + '</div>';
+        },
+        escapeHtmlSpecialChars(str) {
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
         }
     }
 };

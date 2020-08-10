@@ -9,13 +9,15 @@
         </b-col>
         <b-col
             cols="12"
-            class="d-flex justify-content-between fj-base-container-header__actions"
+            class="d-flex justify-content-between fj-container-header__actions"
         >
-            <div v-if="!$slots['actions'] && $slots['actions-right']" />
+            <div>
+                <slot name="actions" />
+            </div>
 
-            <slot name="actions" />
-
-            <slot name="actions-right" />
+            <div>
+                <slot name="actions-right" />
+            </div>
         </b-col>
     </b-row>
 </template>
@@ -54,21 +56,12 @@ export default {
 
     &__navigations,
     &__actions {
-        > div.indent {
-            &:first-child {
-                margin-left: -($btn-padding-x);
+        > div {
+            &:first-child > * {
+                margin-right: map-get($spacers, 2);
             }
-            &:last-child {
-                margin-right: -($btn-padding-x);
-            }
-
-            &.sm {
-                &:first-child {
-                    margin-left: -($btn-padding-x-sm);
-                }
-                &:last-child {
-                    margin-right: -($btn-padding-x-sm);
-                }
+            &:last-child > * {
+                margin-left: map-get($spacers, 2);
             }
         }
     }

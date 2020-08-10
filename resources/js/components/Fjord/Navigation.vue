@@ -9,7 +9,7 @@
                     size="sm"
                     variant="link"
                     v-if="back"
-                    class="mr-2 fj-page-navigation__go_back"
+                    class="fj-page-navigation__go_back"
                     :href="`${Fjord.baseURL}${back}`"
                 >
                     <fa-icon icon="list-ul" class="mr-1" />
@@ -218,6 +218,12 @@ export default {
         }
     }
 
+    &-left {
+        > div > * {
+            margin-right: map-get($spacers, 2);
+        }
+    }
+
     .fj-save-button {
         transform: translateX(50vw);
         display: flex;
@@ -236,7 +242,7 @@ export default {
             &:first-child {
                 > div,
                 > .btn {
-                    margin-right: map-get($spacers, 3);
+                    // margin-right: map-get($spacers, 3);
                 }
             }
             &:last-child {

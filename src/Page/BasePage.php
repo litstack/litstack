@@ -4,6 +4,7 @@ namespace Fjord\Page;
 
 use Fjord\Contracts\Page\Page;
 use Fjord\Support\HasAttributes;
+use Fjord\Vue\Components\BladeComponent;
 use Illuminate\Contracts\View\View;
 use InvalidArgumentException;
 
@@ -72,20 +73,19 @@ abstract class BasePage implements Page
     /**
      * Bind view to page.
      *
-     * @param  string|View $view
-     * @return void
+     * @param  string|View    $view
+     * @param  array          $data
+     * @return BladeComponent
      */
-    public function view($view)
+    public function view($view, array $data = [])
     {
         if (! $view instanceof View) {
-            $view = view($view);
+            $view = view($view, $data);
         }
 
         $this->views[] = $view;
 
-        $this->component('fj-blade')->prop('view', $view);
-
-        return $view;
+        return $this->component('fj-blade')->prop('view', $view);
     }
 
     /**

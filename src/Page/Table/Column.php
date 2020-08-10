@@ -65,6 +65,8 @@ class Column extends VueProp implements ColumnInterface
     {
         $this->setAttribute('small', $small);
 
+        $this->center();
+
         return $this;
     }
 

@@ -4,34 +4,7 @@ namespace Fjord\Page\Table\Components;
 
 class ImageComponent extends ColumnComponent
 {
-    /**
-     * Prop options.
-     *
-     * @return array
-     */
-    // protected function props()
-    // {
-    //     $props = [
-    //         'src' => [
-    //             'type'     => 'string',
-    //             'required' => true,
-    //         ],
-    //         'maxWidth' => [
-    //             'type' => 'string',
-    //         ],
-    //         'maxHeight' => [
-    //             'type' => 'string',
-    //         ],
-    //         'square' => [
-    //             'type' => 'string',
-    //         ],
-    //     ];
-
-    //     return array_merge(
-    //         parent::props(),
-    //         $props
-    //     );
-    // }
+    protected $imageClasses = [];
 
     public function src($src)
     {
@@ -51,5 +24,26 @@ class ImageComponent extends ColumnComponent
     public function square(bool $square = true)
     {
         return $this->prop('square', $square);
+    }
+
+    public function imageClass($class)
+    {
+        if (! in_array($class, $this->imageClasses)) {
+            $this->imageClasses[] = $class;
+        }
+
+        return $this;
+    }
+
+    public function circle()
+    {
+        return $this->imageClass('rounded-circle');
+    }
+
+    public function render(): array
+    {
+        $this->prop('imageClasses', $this->imageClasses);
+
+        return parent::render();
     }
 }

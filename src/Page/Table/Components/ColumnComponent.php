@@ -73,6 +73,8 @@ class ColumnComponent extends Component implements Column
      */
     public function small(bool $small = true)
     {
+        $this->center();
+
         return $this->prop('small', $small);
     }
 

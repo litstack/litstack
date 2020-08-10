@@ -84,7 +84,6 @@ class FjordServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        // Load Fjord views.
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'fjord');
 
         $this->middlewares($router);

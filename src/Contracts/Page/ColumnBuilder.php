@@ -2,6 +2,7 @@
 
 namespace Fjord\Contracts\Page;
 
+use Fjord\Page\Table\Components\ImageComponent;
 use Illuminate\Contracts\View\View;
 
 interface ColumnBuilder
@@ -33,10 +34,18 @@ interface ColumnBuilder
     /**
      * Registers image column.
      *
-     * @param  string $label
-     * @return mixed
+     * @param  string         $label
+     * @return ImageComponent
      */
     public function image($label = '');
+
+    /**
+     * Add avatar image column.
+     *
+     * @param  string         $label
+     * @return ImageComponent
+     */
+    public function avatar($label = '');
 
     /**
      * Registers relation column.

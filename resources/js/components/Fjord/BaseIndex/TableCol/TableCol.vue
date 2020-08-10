@@ -9,7 +9,11 @@
         }"
         :style="colWidth"
     >
-        <component :is="true ? 'a' : 'span'" :href="link">
+        <component
+            :is="true ? 'a' : 'span'"
+            :href="link"
+            :target="isExternal(link) ? '_blank' : ''"
+        >
             <component
                 v-if="col.name !== undefined"
                 :is="col.name"
@@ -92,10 +96,34 @@ export default {
                 return;
             }
 
-            return `${this.baseURL}${this._format(this.col.link, this.item)}`;
+            let path = this._format(this.col.link, this.item);
+
+            if (!path.includes('//')) {
+                return `${this.baseURL}${path}`;
+            }
+
+            return path;
         }
     },
     methods: {
+        isExternal(url) {
+            let domain = function(url) {
+                return url
+                    .replace('http://', '')
+                    .replace('https://', '')
+                    .split('/')[0];
+            };
+
+            if (!url) {
+                return false;
+            }
+
+            if (!url.includes('//')) {
+                return false;
+            }
+
+            return domain(location.href) !== domain(url);
+        },
         setValue() {
             this.value = this.getColValue(this.col, this.item);
         },
