@@ -4,9 +4,9 @@ namespace FjordTest\Page;
 
 use Fjord\Page\Table\Casts\MoneyColumn;
 use Fjord\Support\Facades\FjordApp;
-use PHPUnit\Framework\TestCase;
+use FjordTest\BackendTestCase;
 
-class MoneyColumnTest extends TestCase
+class MoneyColumnTest extends BackendTestCase
 {
     /** @test */
     public function it_formats_for_the_default_when_no_locale_is_given()
@@ -38,7 +38,7 @@ class MoneyColumnTest extends TestCase
     /** @test */
     public function it_formats_for_the_locale()
     {
-        FjordApp::partialMock()->shouldReceive('getLocale')->once();
+        FjordApp::partialMock()->shouldNotReceive('getLocale');
         $cast = new MoneyColumn('USD', 'de_DE');
 
         $this->assertSame('10,00 $', str_replace("\xc2\xa0", ' ', $cast->get(null, null, 10.00, null)));

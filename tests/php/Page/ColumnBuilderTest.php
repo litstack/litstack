@@ -2,6 +2,7 @@
 
 namespace FjordTest\Page;
 
+use Fjord\Page\Table\Casts\MoneyColumn;
 use Fjord\Page\Table\Column;
 use Fjord\Page\Table\ColumnBuilder;
 use Fjord\Page\Table\Components\BladeColumnComponent;
