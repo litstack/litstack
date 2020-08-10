@@ -57,8 +57,7 @@ class Table extends BaseTable implements TableContract
     public function __construct($routePrefix, ColumnBuilder $builder)
     {
         $this->routePrefix($routePrefix);
-        $this->component = component($this->componentName)
-            ->prop('table', $this);
+        $this->component = component($this->componentName)->prop('table', $this);
 
         parent::__construct($builder);
     }

@@ -2,19 +2,27 @@
 
 namespace Fjord\Translation;
 
-use Fjord\Support\Facades\FjordLang;
 use Illuminate\Support\ServiceProvider;
 
 class TranslationServiceProvider extends ServiceProvider
 {
     /**
-     * Boot application services.
+     * Register translator.
      *
      * @return void
      */
-    public function boot()
+    public function register()
     {
-        // Language path
-        FjordLang::addPath(fjord_path('resources/lang'));
+        $this->app->singleton('fjord.translator', function () {
+            $translator = new Translator();
+
+            $translator->addPath(
+                fjord_path('resources/lang')
+            );
+
+            return $translator;
+        });
+
+        $this->app->bind(Translator::class, 'fjord.translator');
     }
 }

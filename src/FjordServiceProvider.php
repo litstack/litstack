@@ -168,8 +168,8 @@ class FjordServiceProvider extends ServiceProvider
 
         $this->app->register(Application\ApplicationServiceProvider::class);
 
-        $this->app->singleton('fjord.app', function () {
-            return new Application\Application();
+        $this->app->singleton('fjord.app', function ($app) {
+            return new Application\Application($app);
         });
 
         $this->app->singleton(\FjordApp\Kernel::class, function ($app) {

@@ -2,6 +2,8 @@
 
 namespace Fjord\Application;
 
+use Fjord\Translation\Translator;
+use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\Facades\View as ViewFactory;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -33,6 +35,13 @@ class Application
     protected $hasBeenBootstrapped = false;
 
     /**
+     * Laravel Application instance.
+     *
+     * @var LaravelApplication
+     */
+    protected $laravel;
+
+    /**
      * Singleton classes.
      *
      * @var array
@@ -40,6 +49,38 @@ class Application
     protected $singletons = [
         'packages' => Package\Packages::class,
     ];
+
+    /**
+     * Create new Application instance.
+     *
+     * @param  LaravelApplication $laravel
+     * @return void
+     */
+    public function __construct(LaravelApplication $laravel)
+    {
+        $this->laravel = $laravel;
+    }
+
+    /**
+     * Get locale for the Fjord application.
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->laravel[Translator::class]->getLocale();
+    }
+
+    /**
+     * Check if the Fjord application is running in a locale.
+     *
+     * @param  string $locale
+     * @return bool
+     */
+    public function isLocale(string $locale)
+    {
+        return $this->laravel[Translator::class]->isLocale($locale);
+    }
 
     /**
      * Bind composer to fjord::app view.
@@ -110,7 +151,7 @@ class Application
      */
     public function get($abstract)
     {
-        return app()->get($this->getAbstract($abstract));
+        return $this->laravel->get($this->getAbstract($abstract));
     }
 
     /**
@@ -122,7 +163,7 @@ class Application
      */
     public function bind($abstract, $concrete)
     {
-        app()->bind($this->getAbstract($abstract), $concrete);
+        $this->laravel->bind($this->getAbstract($abstract), $concrete);
     }
 
     /**
@@ -166,7 +207,7 @@ class Application
      */
     public function singleton($abstract, $concrete)
     {
-        app()->singleton($this->getAbstract($abstract), $concrete);
+        $this->laravel->singleton($this->getAbstract($abstract), $concrete);
     }
 
     /**

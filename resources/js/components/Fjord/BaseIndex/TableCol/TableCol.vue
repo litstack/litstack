@@ -5,7 +5,8 @@
             'fj-table-col': true,
             pointer: col.link,
             'text-right': col.text_right,
-            'text-center': col.text_center
+            'text-center': col.text_center,
+            ...col.classes
         }"
         :style="colWidth"
     >
@@ -198,5 +199,8 @@ table.b-table tr td > a {
     &:hover {
         text-decoration: none;
     }
+}
+.fj-col-money {
+    font-variant-numeric: tabular-nums;
 }
 </style>

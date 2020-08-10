@@ -51,6 +51,7 @@ class BaseTable extends VueProp implements TableContract
     public function __construct(ColumnBuilder $builder)
     {
         $this->builder = $builder;
+        $this->builder->setTable($this);
         $this->actionFactory = new DropdownItemAction;
 
         $this->setDefaults();

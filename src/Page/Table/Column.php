@@ -4,6 +4,7 @@ namespace Fjord\Page\Table;
 
 use ErrorException;
 use Fjord\Contracts\Page\Column as ColumnInterface;
+use Fjord\Contracts\Page\Table;
 use Fjord\Exceptions\MissingAttributeException;
 use Fjord\Exceptions\Traceable\InvalidArgumentException;
 use Fjord\Support\HasAttributes;
@@ -12,6 +13,13 @@ use Fjord\Support\VueProp;
 class Column extends VueProp implements ColumnInterface
 {
     use HasAttributes;
+
+    /**
+     * Column classes.
+     *
+     * @var array
+     */
+    protected $classes = [];
 
     /**
      * Create new Col instance.
@@ -25,6 +33,17 @@ class Column extends VueProp implements ColumnInterface
             $this->label($label);
             $this->value($label);
         }
+    }
+
+    /**
+     * Set parent table.
+     *
+     * @param  Table $table
+     * @return void
+     */
+    public function setTable(Table $table)
+    {
+        $this->table = $table;
     }
 
     /**
@@ -51,6 +70,21 @@ class Column extends VueProp implements ColumnInterface
     {
         $this->setAttribute('value', $value);
         $this->setAttribute('value_options', $options);
+
+        return $this;
+    }
+
+    /**
+     * Set column class.
+     *
+     * @param  string $class
+     * @return $this
+     */
+    public function class($class)
+    {
+        if (! in_array($class, $this->classes)) {
+            $this->classes[$class] = $class;
+        }
 
         return $this;
     }
@@ -211,6 +245,9 @@ class Column extends VueProp implements ColumnInterface
     {
         $this->checkComplete();
 
-        return $this->attributes;
+        return array_merge(
+            $this->attributes,
+            ['classes' => $this->classes]
+        );
     }
 }

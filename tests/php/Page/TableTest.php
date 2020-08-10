@@ -16,7 +16,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_getComponent_method_returns_component()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->assertInstanceOf(Component::class, $table->getComponent());
@@ -25,7 +25,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_route_prefix_attribute_isset_on_initializing()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('route/prefix', $builder);
 
         $this->assertEquals('route/prefix', $table->getAttribute('route_prefix'));
@@ -34,7 +34,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_default_attributes()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('route/prefix', $builder);
 
         $this->assertTrue($table->hasAttribute('controls'));
@@ -47,7 +47,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_routePrefix_method()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->assertEquals($table, $table->routePrefix('dumm-route/prefix'));
@@ -57,7 +57,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_singularName_method()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->assertEquals($table, $table->singularName('dummy name'));
@@ -67,7 +67,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_pluralName_method()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->assertEquals($table, $table->pluralName('dummy names'));
@@ -77,7 +77,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_width_method()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->assertEquals($table, $table->width(12));
@@ -91,7 +91,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_perPage_method()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->assertEquals($table, $table->perPage(7));
@@ -101,7 +101,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_sortByDefault_method()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->assertEquals($table, $table->sortByDefault('name'));
@@ -111,7 +111,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_search_method_returns_itself()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->assertEquals($table, $table->search([]));
@@ -120,7 +120,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_cast_method()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->assertSame($table, $table->cast('active', 'boolean'));
@@ -130,7 +130,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_casts_method()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->assertSame($table, $table->casts(['active' => 'boolean']));
@@ -140,7 +140,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_search_method_with_array()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $table->search(['first_name', 'last_name']);
@@ -150,7 +150,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_search_method_arguments()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $table->search('first_name', 'last_name');
@@ -160,7 +160,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_sortBy_method()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->assertEquals($table, $table->sortBy(['name' => 'Name']));
@@ -170,7 +170,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_filter_method()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->assertEquals($table, $table->filter(['Group' => ['scope' => 'Name']]));
@@ -180,7 +180,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_model_method()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->assertEquals($table, $table->model('DummyModel'));
@@ -190,7 +190,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_model_method_sets_names()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->assertEquals($table, $table->model('DummyModel'));
@@ -201,7 +201,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_model_method_does_not_override_names()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $table->singularName('singular');
@@ -215,7 +215,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_query_modifier_receives_query()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $query = m::mock(Builder::class);
@@ -230,7 +230,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_getBuilder_method()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->assertEquals($builder, $table->getBuilder());
@@ -239,7 +239,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function test_renderering_fails_when_model_is_not_set()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $this->expectException(MissingAttributeException::class);
@@ -249,7 +249,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function it_renders_attributes()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $table->model('Model');
@@ -260,7 +260,7 @@ class TableTest extends BackendTestCase
     /** @test */
     public function it_renders_columns()
     {
-        $builder = m::mock(ColumnBuilder::class);
+        $builder = m::mock(ColumnBuilder::class)->makePartial();
         $table = new Table('', $builder);
 
         $table->model('Model');

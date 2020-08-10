@@ -4,6 +4,7 @@ namespace Fjord\Fjord;
 
 use Fjord\Application\Application;
 use Fjord\Support\Facades\Config;
+use Fjord\Translation\Translator;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Traits\ForwardsCalls;
@@ -106,7 +107,7 @@ class Fjord
             return $key;
         }
 
-        return $this->laravel['fjord.translator']->trans($key, $replace, $locale);
+        return $this->laravel[Translator::class]->trans($key, $replace, $locale);
     }
 
     /**
@@ -122,7 +123,7 @@ class Fjord
             return $key;
         }
 
-        return $this->laravel['fjord.translator']->choice($key, $number, $replace);
+        return $this->laravel[Translator::class]->choice($key, $number, $replace);
     }
 
     /**
@@ -167,7 +168,7 @@ class Fjord
      */
     public function getLocale()
     {
-        return $this->laravel['fjord.translator']->getLocale();
+        return $this->laravel[Translator::class]->getLocale();
     }
 
     /**

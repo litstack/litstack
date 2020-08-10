@@ -6,22 +6,13 @@ use Fjord\Page\Table\Column;
 use Fjord\Page\Table\ColumnBuilder;
 use Fjord\Page\Table\Components\BladeColumnComponent;
 use Fjord\Page\Table\Components\ColumnComponent;
-use FjordTest\Traits\InteractsWithComponents;
-use FjordTest\Traits\TestHelpers;
+use FjordTest\BackendTestCase;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Support\Facades\View;
 use Mockery as m;
-use PHPUnit\Framework\TestCase;
 
-class ColumnBuilderTest extends TestCase
+class ColumnBuilderTest extends BackendTestCase
 {
-    use TestHelpers, InteractsWithComponents;
-
-    public function setUp(): void
-    {
-        $this->setupApplication();
-    }
-
     /** @test */
     public function test_col_method_returns_column()
     {

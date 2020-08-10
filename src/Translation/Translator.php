@@ -91,7 +91,7 @@ class Translator
     /**
      * Get locale for Fjord application.
      *
-     * @return string $locale
+     * @return string
      */
     public function getLocale()
     {

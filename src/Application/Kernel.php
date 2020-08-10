@@ -21,7 +21,6 @@ class Kernel
      */
     protected $bootstrappers = [
         Bootstrap\RegisterSingletons::class,
-        Bootstrap\BootstrapTranslator::class,
         Bootstrap\BootstrapKernel::class,
         Bootstrap\DiscoverPackages::class,
         Bootstrap\RegisterConfigFactories::class,

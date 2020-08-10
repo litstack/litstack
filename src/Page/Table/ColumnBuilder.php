@@ -23,6 +23,24 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     protected $columns = [];
 
     /**
+     * Parent table instance.
+     *
+     * @var Table
+     */
+    protected $table;
+
+    /**
+     * Set table instance.
+     *
+     * @param  Table $table
+     * @return void
+     */
+    public function setTable(Table $table = null)
+    {
+        $this->table = $table;
+    }
+
+    /**
      * Add column.
      *
      * @param  string $label
@@ -30,7 +48,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      */
     public function col($label = ''): ColumnContract
     {
-        return $this->columns[] = new Column($label);
+        return $this->columns[] = new Column($label, $this->table);
     }
 
     /**
