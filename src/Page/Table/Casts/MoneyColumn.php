@@ -53,6 +53,8 @@ class MoneyColumn extends ColumnCast
      */
     public function get($model, $key, $value, $attributes)
     {
+        // dd($this->formatter);
+
         return $this->formatter->formatCurrency($value, $this->currency);
     }
 }
