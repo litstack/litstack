@@ -71,9 +71,7 @@ jobs:
                 include:
                     - laravel: 7.*
 
-        name:
-            p ${{ matrix.php }} - l ${{ matrix.laravel }} - ${{ matrix.stability
-            }} - Windows
+        name: p ${{ matrix.php }} - l ${{ matrix.laravel }} - Windows
 
         steps:
             - name: Checkout code

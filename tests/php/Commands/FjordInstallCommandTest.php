@@ -33,7 +33,7 @@ class FjordInstallCommandTest extends BackendTestCase
     {
         $translatable = require config_path('translatable.php');
 
-        dd(File::get(config_path('translatable.php')));
+        // dd(File::get(config_path('translatable.php')));
         $this->assertCount(2, $translatable['locales']);
         $this->assertTrue(in_array('de', $translatable['locales']));
         $this->assertTrue(in_array('en', $translatable['locales']));

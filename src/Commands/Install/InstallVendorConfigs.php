@@ -48,15 +48,9 @@ trait InstallVendorConfigs
         ]);
 
         $replace = file_get_contents(config_path('translatable.php'));
-        $replace = str_replace(
-            "'fr',
-        'es' => [
-            'MX', // mexican spanish
-            'CO', // colombian spanish
-        ],",
-            "'de'",
-            $replace
-        );
+
+        $replace = str_replace(Str::between($replace, "en',\n", "spanish\n")."spanish\n", "        'de',\n", $replace);
+        $replace = Str::replaceFirst("        ],\n", '', $replace);
         File::put(config_path('translatable.php'), $replace);
 
         // set correct namespace for translation models
