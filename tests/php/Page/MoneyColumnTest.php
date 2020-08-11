@@ -20,7 +20,7 @@ class MoneyColumnTest extends BackendTestCase
     /** @test */
     public function it_formats_to_EUR_currency_by_default()
     {
-        FjordApp::partialMock()->shouldReceive('getLocale');
+        FjordApp::partialMock()->shouldReceive('getLocale')->andReturn('de_DE');
         $cast = new MoneyColumn();
 
         $this->assertSame('10,00 €', str_replace("\xc2\xa0", ' ', $cast->get(null, null, 10.00, null)));
@@ -29,7 +29,7 @@ class MoneyColumnTest extends BackendTestCase
     /** @test */
     public function it_formats_by_the_given_currency()
     {
-        FjordApp::partialMock()->shouldReceive('getLocale');
+        FjordApp::partialMock()->shouldReceive('getLocale')->andReturn('de_DE');
         $cast = new MoneyColumn('USD');
 
         $this->assertSame('10,00 $', str_replace("\xc2\xa0", ' ', $cast->get(null, null, 10.00, null)));
@@ -38,7 +38,7 @@ class MoneyColumnTest extends BackendTestCase
     /** @test */
     public function it_formats_for_the_locale()
     {
-        FjordApp::partialMock()->shouldNotReceive('getLocale');
+        FjordApp::partialMock()->shouldNotReceive('getLocale')->andReturn('de_DE');
         $cast = new MoneyColumn('USD', 'de_DE');
 
         $this->assertSame('10,00 $', str_replace("\xc2\xa0", ' ', $cast->get(null, null, 10.00, null)));
