@@ -67,7 +67,7 @@ jobs:
             matrix:
                 php: [7.4]
                 laravel: [7.*]
-                stability: [prefer-lowest, prefer-stable]
+                stability: [prefer-stable]
                 include:
                     - laravel: 7.*
 
