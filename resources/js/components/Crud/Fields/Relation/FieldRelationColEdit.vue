@@ -4,7 +4,7 @@
         size="sm"
         class="btn-square"
         v-b-tooltip.hover
-        :title="$t('crud.fields.relation.edit')"
+        :title="__('crud.fields.relation.edit')"
     >
         <fa-icon icon="edit" @click="edit(item)" />
         <fj-field-relation-form

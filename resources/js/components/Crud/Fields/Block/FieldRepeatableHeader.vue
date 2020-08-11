@@ -6,7 +6,7 @@
                     <div
                         class="fj-draggable__dragbar fj-block__dragbar"
                         v-b-tooltip
-                        :title="$t('fj.change_order')"
+                        :title="__('fj.change_order')"
                         v-if="sortable"
                     >
                         <i class="fas fa-grip-horizontal text-secondary"></i>
@@ -24,7 +24,7 @@
                     <b-button
                         variant="transparent"
                         v-b-tooltip
-                        :title="$t('fj.delete_model', { model: 'Block' })"
+                        :title="__('fj.delete_model', { model: 'Block' })"
                         size="sm"
                         class="btn-square fj-block-delete"
                         @click="$emit('deleteItem')"
@@ -35,7 +35,7 @@
                 <b-td class="col-sm pl-2 pr-0" v-if="fields.length > 0">
                     <b-button
                         variant="outline-secondary"
-                        :title="$t('crud.fields.blocks.expand')"
+                        :title="__('crud.fields.blocks.expand')"
                         size="sm"
                         class="btn-square"
                         @click="$emit('toggleExpand')"

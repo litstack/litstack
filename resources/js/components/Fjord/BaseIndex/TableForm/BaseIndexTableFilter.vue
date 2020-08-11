@@ -8,7 +8,7 @@
     >
         <template v-slot:button-content>
             <fa-icon icon="filter" />
-            <span class="d-none d-lg-inline-block">{{ $t('fj.filter') }}</span>
+            <span class="d-none d-lg-inline-block">{{ __('fj.filter') }}</span>
         </template>
 
         <b-dropdown-group

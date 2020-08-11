@@ -86,7 +86,7 @@ export default {
          * Show new repeatable toast.
          */
         showNewRepeatableToast(type) {
-            this.$bvToast.toast(this.$t('fj.new_block', { type }), {
+            this.$bvToast.toast(this.__('fj.new_block', { type }), {
                 variant: 'success'
             });
         }

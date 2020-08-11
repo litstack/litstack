@@ -4,7 +4,7 @@
             show
             variant="warning"
             v-html="
-                $t('fj.not_created', {
+                __('fj.not_created', {
                     relation: field.title,
                     model: 'Item'
                 })

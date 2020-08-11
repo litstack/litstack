@@ -1,7 +1,7 @@
 <template>
     <b-form-input
         :placeholder="
-            $t('fj.search_models', {
+            __('fj.search_models', {
                 models: namePlural
             })
         "
@@ -18,22 +18,22 @@ export default {
         },
         namePlural: {
             type: String
-        },
+        }
     },
     data() {
         return {
-            query: "",
-            typingDelay: 500,
-        }
+            query: '',
+            typingDelay: 500
+        };
     },
     watch: {
         query(val) {
             setTimeout(() => {
                 if (this.query == val) {
-                    this.$emit('search', val)
+                    this.$emit('search', val);
                 }
             }, this.typingDelay);
-        },
+        }
     }
 };
 </script>

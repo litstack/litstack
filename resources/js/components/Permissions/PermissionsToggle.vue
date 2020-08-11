@@ -60,10 +60,10 @@ export default {
             }
 
             this.$bvToast.toast(
-                this.$t('fj.permission_updated', {
-                    operation: this.$t(`fj.${this.operation}`),
+                this.__('fj.permission_updated', {
+                    operation: this.__(`fj.${this.operation}`),
                     group: this.$te(`permissions.${this.group}`)
-                        ? this.$t(`permissions.${this.group}`).toString()
+                        ? this.__(`permissions.${this.group}`).toString()
                         : this.group.capitalize()
                 }),
                 {

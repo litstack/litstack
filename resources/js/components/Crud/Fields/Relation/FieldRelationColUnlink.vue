@@ -4,7 +4,7 @@
         size="sm"
         class="btn-square"
         v-b-tooltip.hover
-        :title="$t('crud.fields.relation.unlink')"
+        :title="__('crud.fields.relation.unlink')"
         @click="$emit('unlink', item)"
     >
         <fa-icon icon="unlink" />

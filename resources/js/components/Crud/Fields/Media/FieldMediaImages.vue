@@ -156,7 +156,7 @@ export default {
                 return;
             }
 
-            this.$bvToast.toast(this.$t('fj.order_changed'), {
+            this.$bvToast.toast(this.__('fj.order_changed'), {
                 variant: 'success'
             });
             this.$emit('newOrder');
