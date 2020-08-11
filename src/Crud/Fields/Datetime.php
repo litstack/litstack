@@ -43,7 +43,6 @@ class Datetime extends BaseField
      * Inlcude ctk datetime picker script.
      *
      * @see https://github.com/chronotruck/vue-ctk-date-time-picker
-     *
      * @return void
      */
     protected function includeCtkScript()

@@ -19,6 +19,7 @@
                 :maxlength="field.max"
                 :required="field.required"
                 :state="state"
+                :autofocus="field.autofocus"
                 v-bind:readonly="field.readonly"
                 @input="$emit('input', $event)"
             />
