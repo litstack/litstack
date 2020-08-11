@@ -24,6 +24,8 @@ class CrudIndexConfigFactory extends ConfigFactory
             $page->navigationRight()->component('fj-crud-create-button');
         }
 
+        $page->title($config->names['plural'] ?? '');
+
         $method($page);
 
         return $page;
