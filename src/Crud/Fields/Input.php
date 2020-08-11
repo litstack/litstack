@@ -91,6 +91,19 @@ class Input extends BaseField
     }
 
     /**
+     * Enable autofocus.
+     *
+     * @param  bool $focus
+     * @return void
+     */
+    public function autofocus($focus = true)
+    {
+        $this->setAttribute('autofocus', $focus);
+
+        return $this;
+    }
+
+    /**
      * Cast field value.
      *
      * @param mixed $value
