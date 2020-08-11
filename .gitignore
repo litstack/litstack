@@ -4,6 +4,7 @@
 /storage/*.key
 /vendor
 /.vscode
+/images
 composer.phar
 composer.lock
 package-lock.json

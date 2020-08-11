@@ -7,7 +7,23 @@ on:
         - cron: '0 0 * * *'
 
 jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        name: Build
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v1
+
+            - name: Install dependencies
+              run: yarn install --non-interactive
+
+            - name: Make Production Build
+              run: yarn run production
+
     linux_tests:
+        needs: build
         runs-on: ubuntu-latest
 
         strategy:
@@ -60,6 +76,7 @@ jobs:
               run: vendor/bin/phpunit
 
     windows_tests:
+        needs: build
         runs-on: windows-latest
 
         strategy:
