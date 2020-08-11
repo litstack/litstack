@@ -35,11 +35,11 @@ class LaravelRelationField extends RelationField
     protected $relatedModelClass;
 
     /**
-     * Required field attributes.
+     * The attributes that should be cast.
      *
      * @var array
      */
-    public $laravelRelationFieldRequired = ['preview'];
+    protected $casts = [];
 
     /**
      * Create new Field instance.
@@ -73,7 +73,6 @@ class LaravelRelationField extends RelationField
      * Set model and query builder.
      *
      * @throws \InvalidArgumentException
-     *
      * @return self
      */
     protected function initializeRelationField()
@@ -97,8 +96,7 @@ class LaravelRelationField extends RelationField
     /**
      * Set related model class.
      *
-     * @param string $model
-     *
+     * @param  string $model
      * @return $this
      */
     protected function setRelatedModelClass(string $model)
@@ -119,8 +117,7 @@ class LaravelRelationField extends RelationField
     /**
      * Merge related config.
      *
-     * @param string $configKey
-     *
+     * @param  string $configKey
      * @return void
      */
     protected function mergeRelatedConfig($configKey)
@@ -175,8 +172,7 @@ class LaravelRelationField extends RelationField
     /**
      * Set index query modifier.
      *
-     * @param Closure $closure
-     *
+     * @param  Closure $closure
      * @return self
      */
     public function query(Closure $closure)
@@ -189,8 +185,7 @@ class LaravelRelationField extends RelationField
     /**
      * Use related config.
      *
-     * @param string $config
-     *
+     * @param  string $config
      * @return void
      */
     public function use(string $config)
@@ -227,8 +222,7 @@ class LaravelRelationField extends RelationField
     /**
      * Get relation query for model.
      *
-     * @param mixed $model
-     *
+     * @param  mixed $model
      * @return mixed
      */
     public function getRelationQuery($model)
@@ -253,12 +247,13 @@ class LaravelRelationField extends RelationField
     /**
      * Modify preview query with eager loads and accessors to append.
      *
-     * @param Builder $query
-     *
+     * @param  Builder $query
      * @return Builder
      */
     protected function modifyQuery($query)
     {
+        $query->withCasts($this->casts);
+
         if (! $this->previewModifier instanceof Closure) {
             return $query;
         }
@@ -279,6 +274,10 @@ class LaravelRelationField extends RelationField
     {
         $builder = new ColumnBuilder;
 
+        // In order for the column builder to set a cast when creating a money
+        // field, it is necessary to pass the field instance to the column builder.
+        $builder->setParent($this);
+
         $closure($builder);
 
         $this->attributes['preview'] = $builder;
@@ -289,8 +288,7 @@ class LaravelRelationField extends RelationField
     /**
      * Singular and plural name.
      *
-     * @param Closure $closure
-     *
+     * @param  Closure $closure
      * @return $this
      */
     public function names(array $names)
@@ -307,8 +305,7 @@ class LaravelRelationField extends RelationField
     /**
      * Set prefix to related config.
      *
-     * @param string $routePrefix
-     *
+     * @param  string $routePrefix
      * @return $this
      */
     public function routePrefix(string $routePrefix)
@@ -321,8 +318,7 @@ class LaravelRelationField extends RelationField
     /**
      * Set search keys.
      *
-     * @param array ...$keys
-     *
+     * @param  array ...$keys
      * @return $this
      */
     public function search(...$keys)
@@ -342,9 +338,8 @@ class LaravelRelationField extends RelationField
     /**
      * Set query initial builder.
      *
-     * @param Closure $closure
-     *
-     * @return void
+     * @param  Closure $closure
+     * @return $this
      */
     public function filter(Closure $closure)
     {
@@ -354,20 +349,58 @@ class LaravelRelationField extends RelationField
     }
 
     /**
+     * Set cast for the given attribute.
+     *
+     * @param  string $attribute
+     * @param  string $cast
+     * @return $this
+     */
+    public function cast($attribute, $cast)
+    {
+        $this->casts[$attribute] = $cast;
+
+        return $this;
+    }
+
+    /**
+     * Set cast for the given attribute.
+     *
+     * @param  array $casts
+     * @return $this
+     */
+    public function casts(array $casts)
+    {
+        foreach ($casts as $attribute => $cast) {
+            $this->cast($attribute, $cast);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get casted attributes.
+     *
+     * @return array
+     */
+    public function getCasts()
+    {
+        return $this->casts;
+    }
+
+    /**
      * Get relation query builder.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function getQuery()
     {
-        return $this->query;
+        return $this->query->withCasts($this->casts);
     }
 
     /**
      * Small table.
      *
-     * @param bool $small
-     *
+     * @param  bool $small
      * @return self
      */
     public function small($small = true)
@@ -380,8 +413,7 @@ class LaravelRelationField extends RelationField
     /**
      * Confirm delete in modal.
      *
-     * @param bool $confirm
-     *
+     * @param  bool $confirm
      * @return self
      */
     public function confirm($confirm = true)

@@ -65,7 +65,7 @@ class Icon extends BaseField
      * @param  mixed $value
      * @return bool
      */
-    public function cast($value)
+    public function castValue($value)
     {
         return (string) $value;
     }

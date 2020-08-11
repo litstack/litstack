@@ -82,7 +82,7 @@ class Range extends BaseField
      *
      * @return bool
      */
-    public function cast($value)
+    public function castValue($value)
     {
         if (! is_numeric($value)) {
             return 0;

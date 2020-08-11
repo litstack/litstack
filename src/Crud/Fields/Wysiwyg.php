@@ -83,7 +83,7 @@ class Wysiwyg extends BaseField
      *
      * @return bool
      */
-    public function cast($value)
+    public function castValue($value)
     {
         return (string) $value;
     }

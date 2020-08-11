@@ -145,6 +145,38 @@ class LaravelRelationFieldTest extends BackendTestCase
     }
 
     /** @test */
+    public function test_cast_method_sets_cast()
+    {
+        $this->field->cast('foo', 'bar');
+        $this->assertEquals(['foo' => 'bar'], $this->field->getCasts());
+    }
+
+    /** @test */
+    public function test_casts_method_sets_casts()
+    {
+        $this->field->casts(['foo' => 'bar']);
+        $this->assertEquals(['foo' => 'bar'], $this->field->getCasts());
+    }
+
+    /** @test */
+    public function test_casts_are_applied_to_raw_query()
+    {
+        $this->field->cast('foo', 'bar');
+        $casts = $this->field->getQuery()->getModel()->getCasts();
+        $this->assertArrayHasKey('foo', $casts);
+        $this->assertSame('bar', $casts['foo']);
+    }
+
+    /** @test */
+    public function test_casts_are_applied_to_relation_query()
+    {
+        $this->field->cast('foo', 'bar');
+        $casts = $this->field->getRelationQuery(new LaravelRelationFieldModel)->getModel()->getCasts();
+        $this->assertArrayHasKey('foo', $casts);
+        $this->assertSame('bar', $casts['foo']);
+    }
+
+    /** @test */
     public function test_preview_closure_receives_table_instance()
     {
         $this->field->preview(function ($table) {
@@ -159,6 +191,15 @@ class LaravelRelationFieldTest extends BackendTestCase
         });
 
         $this->assertInstanceOf(ColumnBuilder::class, $this->field->getAttribute('preview'));
+    }
+
+    /** @test */
+    public function test_preview_sets_itself_as_column_builder_parent()
+    {
+        $this->field->preview(function ($table) {
+        });
+
+        $this->assertSame($this->field, $this->field->getAttribute('preview')->getParent());
     }
 }
 

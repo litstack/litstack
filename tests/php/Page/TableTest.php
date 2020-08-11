@@ -216,9 +216,11 @@ class TableTest extends BackendTestCase
     public function test_query_modifier_receives_query()
     {
         $builder = m::mock(ColumnBuilder::class)->makePartial();
+
         $table = new Table('', $builder);
 
         $query = m::mock(Builder::class);
+        $query->shouldReceive('withCasts');
         $table->query(function (...$parameters) use ($query) {
             $this->assertNotEmpty($parameters);
             $this->assertEquals($query, $parameters[0]);

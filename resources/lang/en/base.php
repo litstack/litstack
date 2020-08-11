@@ -17,6 +17,8 @@ return [
     'profile'          => 'profile',
     'password'         => 'password',
     'name'             => 'name',
+    'user'             => 'user',
+    'users'            => 'users',
     'email'            => 'e-mail',
     'language'         => 'Language',
     'system_language'  => 'System language',

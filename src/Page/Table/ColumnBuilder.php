@@ -4,6 +4,7 @@ namespace Fjord\Page\Table;
 
 use Fjord\Contracts\Page\Column as ColumnContract;
 use Fjord\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
+use Fjord\Crud\Fields\Relations\LaravelRelationField;
 use Fjord\Page\Table\Casts\MoneyColumn;
 use Fjord\Page\Table\Components\BladeColumnComponent;
 use Fjord\Page\Table\Components\ColumnComponent;
@@ -24,21 +25,31 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     protected $columns = [];
 
     /**
-     * Parent table instance.
+     * Parent instance.
      *
-     * @var Table
+     * @var Table|LaravelRelationField|null
      */
-    protected $table;
+    protected $parent;
 
     /**
      * Set table instance.
      *
-     * @param  Table $table
+     * @param  Table|LaravelRelationField $parent
      * @return void
      */
-    public function setTable(Table $table = null)
+    public function setParent($parent)
     {
-        $this->table = $table;
+        $this->parent = $parent;
+    }
+
+    /**
+     * Gets parent.
+     *
+     * @return Table|LaravelRelationField|null
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 
     /**
@@ -49,7 +60,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      */
     public function col($label = ''): ColumnContract
     {
-        return $this->columns[] = new Column($label, $this->table);
+        return $this->columns[] = new Column($label);
     }
 
     /**
@@ -61,8 +72,8 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      */
     public function money($column, $currency = 'EUR', $locale = null)
     {
-        if ($this->table) {
-            $this->table->cast(
+        if ($this->parent) {
+            $this->parent->cast(
                 $column,
                 MoneyColumn::class.":{$currency},{$locale}"
             );

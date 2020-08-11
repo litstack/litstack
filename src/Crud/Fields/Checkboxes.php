@@ -56,7 +56,7 @@ class Checkboxes extends BaseField
      *
      * @return bool
      */
-    public function cast($value)
+    public function castValue($value)
     {
         if (is_array($value)) {
             return $value;

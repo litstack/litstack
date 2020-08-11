@@ -44,8 +44,8 @@ class UserConfig extends CrudConfig
     public function names()
     {
         return [
-            'singular' => ucfirst(__f('fj.users')),
-            'plural'   => ucfirst(__f('fj.users')),
+            'singular' => ucfirst(__f('base.user')),
+            'plural'   => ucfirst(__f('base.users')),
         ];
     }
 
