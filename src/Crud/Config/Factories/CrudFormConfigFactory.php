@@ -39,6 +39,8 @@ class CrudFormConfigFactory extends ConfigFactory
             $page->goBack($config->names['plural'], $config->route_prefix);
         }
 
+        $page->title($config->names['singular'] ?? '');
+
         $method($page);
 
         return $page;

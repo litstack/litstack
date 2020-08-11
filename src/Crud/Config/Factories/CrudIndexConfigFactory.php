@@ -20,6 +20,8 @@ class CrudIndexConfigFactory extends ConfigFactory
     {
         $index = new CrudIndex($config);
 
+        $index->title($config->names['plural'] ?? '');
+
         $method($index);
 
         return $index;

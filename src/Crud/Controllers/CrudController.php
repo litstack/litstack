@@ -25,9 +25,8 @@ abstract class CrudController extends CrudBaseController
      * Authorize request for permission operation and authenticated fjord-user.
      * Operations: create, read, update, delete.
      *
-     * @param \Fjord\User\Models\FjordUser $user
-     * @param string                       $operation
-     *
+     * @param  \Fjord\User\Models\FjordUser $user
+     * @param  string                       $operation
      * @return bool
      */
     //abstract public function authorize(FjordUser $user, string $operation, $id = null);
@@ -45,9 +44,8 @@ abstract class CrudController extends CrudBaseController
     /**
      * Load model.
      *
-     * @param CrudReadRequest $request
-     * @param int             $id
-     *
+     * @param  CrudReadRequest $request
+     * @param  int             $id
      * @return array
      */
     public function load(CrudReadRequest $request, $id)
@@ -63,8 +61,7 @@ abstract class CrudController extends CrudBaseController
     /**
      * Delete by query.
      *
-     * @param Builder $query
-     *
+     * @param  Builder $query
      * @return void
      */
     public function delete(Builder $query)
@@ -75,8 +72,7 @@ abstract class CrudController extends CrudBaseController
     /**
      * Delete one.
      *
-     * @param CrudDeleteRequest $request
-     *
+     * @param  CrudDeleteRequest $request
      * @return void
      */
     public function destroy(CrudDeleteRequest $request, $id)
@@ -105,8 +101,7 @@ abstract class CrudController extends CrudBaseController
     /**
      * Show Crud index.
      *
-     * @param CrudReadRequest $request
-     *
+     * @param  CrudReadRequest $request
      * @return View
      */
     public function index(CrudReadRequest $request)
@@ -115,11 +110,9 @@ abstract class CrudController extends CrudBaseController
             'route_prefix', 'names', 'permissions'
         );
 
-        $page = $this->config->index
-            ->title($this->config->names['plural'])
-            ->bind([
-                'config' => $config,
-            ]);
+        $page = $this->config->index->bind([
+            'config' => $config,
+        ]);
 
         $page->navigationRight()->component('fj-crud-create-button');
 
@@ -129,8 +122,7 @@ abstract class CrudController extends CrudBaseController
     /**
      * Show Crud create.
      *
-     * @param CrudCreateRequest $request
-     *
+     * @param  CrudCreateRequest $request
      * @return void
      */
     public function create(CrudCreateRequest $request)
@@ -144,16 +136,13 @@ abstract class CrudController extends CrudBaseController
         $config['form'] = $config['show'];
         unset($config['show']);
 
-        $page = $this->config->show
-            ->title($this->config->names['singular'])
-            ->bindToView([
-                'model'  => new $this->model(),
-                'config' => $this->config,
-            ])
-            ->bindToVue([
-                'crud-model' => crud(new $this->model()),
-                'config'     => $config,
-            ]);
+        $page = $this->config->show->bindToView([
+            'model'  => new $this->model(),
+            'config' => $this->config,
+        ])->bindToVue([
+            'crud-model' => crud(new $this->model()),
+            'config'     => $config,
+        ]);
 
         return $page;
     }
@@ -161,8 +150,7 @@ abstract class CrudController extends CrudBaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     *
+     * @param  int                       $id
      * @return \Illuminate\Http\Response
      */
     public function show(CrudReadRequest $request, $id)
@@ -211,19 +199,15 @@ abstract class CrudController extends CrudBaseController
             $config['preview_route'] = $this->config->previewRoute($model);
         }
 
-        $previous = $this->model::where('id', '<', $id)->orderBy('id', 'desc')->select('id')->first()->id ?? null;
-        $next = $this->model::where('id', '>', $id)->orderBy('id')->select('id')->first()->id ?? null;
+        $page = $this->config->show->bindToView([
+            'model'  => $model,
+            'config' => $this->config,
+        ])->bindToVue([
+            'crud-model' => crud($model),
+            'config'     => $config,
+        ]);
 
-        $page = $this->config->show
-            ->title($this->config->names['singular'])
-            ->bindToView([
-                'model'  => $model,
-                'config' => $this->config,
-            ])
-            ->bindToVue([
-                'crud-model' => crud($model),
-                'config'     => $config,
-            ]);
+        [$previous, $next] = $this->closeSiblings($id);
 
         // Show near items.
         $page->navigationLeft()->component('fj-crud-show-near-items')->bind([
@@ -258,5 +242,28 @@ abstract class CrudController extends CrudBaseController
             $model->{$this->config->orderColumn} = $order;
             $model->save();
         }
+    }
+
+    /**
+     * Get close siblings.
+     *
+     * @param  int   $id
+     * @return array
+     */
+    protected function closeSiblings($id)
+    {
+        $previous = $this->query()
+            ->where('id', '<', $id)
+            ->orderBy('id', 'desc')
+            ->select('id')
+            ->first()->id ?? null;
+
+        $next = $this->query()
+            ->where('id', '>', $id)
+            ->orderBy('id')
+            ->select('id')
+            ->first()->id ?? null;
+
+        return [$previous, $next];
     }
 }
