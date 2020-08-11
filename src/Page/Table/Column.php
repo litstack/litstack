@@ -64,12 +64,14 @@ class Column extends VueProp implements ColumnInterface
      *
      * @param  string     $value
      * @param  array|null $options
+     * @param  mixed      $default
      * @return $this
      */
-    public function value($value, array $options = null)
+    public function value($value, array $options = null, $default = null)
     {
         $this->setAttribute('value', $value);
         $this->setAttribute('value_options', $options);
+        $this->setAttribute('default_value', $default);
 
         return $this;
     }
