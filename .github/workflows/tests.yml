@@ -101,10 +101,10 @@ jobs:
                   composer update --${{ matrix.stability }} --prefer-dist --no-interaction
                   php tests/install
 
-            # - name: Start Chrome Driver
-            #   run:
-            #       ./vendor/bin/dusk-updater detect --auto-update &&
-            #       ./vendor/laravel/dusk/bin/chromedriver-linux &
+            - name: Start Chrome Driver
+              run:
+                  ./vendor/bin/dusk-updater detect --auto-update &&
+                  ./vendor/laravel/dusk/bin/chromedriver-linux &
 
             - name: Run PHP tests via PHPUnit
               run: vendor/bin/phpunit
