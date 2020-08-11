@@ -1,0 +1,31 @@
+name: build
+
+on:
+    push:
+    # pull_request:
+    #     types: [closed]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        # if: github.event.pull_request.merged
+
+        steps:
+            - name: checkout
+              # if: github.event.pull_request.merged
+              uses: actions/checkout@v1
+
+            - name: Install dependencies
+              run: yarn install --non-interactive
+
+            - name: Make Production Build
+              run: yarn run production
+
+            - uses: stefanzweifel/git-auto-commit-action@v4
+              with:
+                  commit_message: Apply production build from CI
+
+                  file_pattern: public/js/*.js public/css/*.css
+
+                  commit_user_name: Production Bot
+                  commit_user_email: bot@aw-studio.de
