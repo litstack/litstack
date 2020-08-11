@@ -8,7 +8,7 @@
     >
         <template v-slot:button-content>
             <fa-icon icon="sort-amount-down" />
-            <span class="d-none d-lg-inline-block">{{ $t('fj.sort') }}</span>
+            <span class="d-none d-lg-inline-block">{{ __('fj.sort') }}</span>
         </template>
 
         <b-dropdown-item

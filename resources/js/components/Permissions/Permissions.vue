@@ -136,7 +136,7 @@ export default {
                 this.roleNames.push({
                     id: role.id,
                     title: this.$te(tKey)
-                        ? this.$t(tKey).toString()
+                        ? this.__(tKey).toString()
                         : role.name.capitalize()
                 });
             }

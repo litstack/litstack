@@ -48,7 +48,7 @@
                     v-bind:disabled="!canSave"
                     @click="Fjord.bus.$emit('save')"
                 >
-                    {{ $t('fj.save') }}
+                    {{ __('fj.save') }}
                 </b-button>
             </template>
         </b-modal>

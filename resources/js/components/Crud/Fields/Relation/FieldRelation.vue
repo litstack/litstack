@@ -358,7 +358,7 @@ export default {
             }
 
             this.$bvToast.toast(
-                this.$t('fj.relation_added', {
+                this.__('fj.relation_added', {
                     relation: this.field.title
                 }),
                 {
@@ -429,7 +429,7 @@ export default {
                 return;
             }
 
-            this.$bvToast.toast(this.$t('fj.relation_unlinked'), {
+            this.$bvToast.toast(this.__('fj.relation_unlinked'), {
                 variant: 'success'
             });
 
@@ -489,7 +489,7 @@ export default {
             this.$emit('reload');
             Fjord.bus.$emit('field:updated', 'relation:ordered');
 
-            this.$bvToast.toast(this.$t('fj.order_changed'), {
+            this.$bvToast.toast(this.__('fj.order_changed'), {
                 variant: 'success'
             });
         },

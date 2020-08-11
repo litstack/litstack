@@ -3,7 +3,7 @@
         <fj-navigation>
             <fj-user-create @userCreated="userCreated" slot="right" />
         </fj-navigation>
-        <fj-header :title="'Fjord ' + $t('fj.users')" />
+        <fj-header :title="'Fjord ' + __('fj.users')" />
 
         <b-row>
             <b-col>
@@ -12,8 +12,8 @@
                     :cols="config.index"
                     :items="users"
                     :load-items="loadUsers"
-                    :name-singular="$t('fj.user')"
-                    :name-plural="$t('fj.users')"
+                    :name-singular="__('fj.user')"
+                    :name-plural="__('fj.users')"
                     :per-page="config.perPage"
                     :sort-by="config.sortBy"
                     :sort-by-default="config.sortByDefault"

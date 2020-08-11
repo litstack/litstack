@@ -2,13 +2,13 @@
     <div class="d-inline-block">
         <b-button variant="primary" @click="visible = !visible">
             <fa-icon icon="plus" />
-            {{ $t('fj.add_model', { model: 'Fjord ' + $t('fj.user') }) }}
+            {{ __('fj.add_model', { model: 'Fjord ' + __('fj.user') }) }}
         </b-button>
         <b-modal
             v-model="visible"
-            :title="$t('fj.add_model', { model: 'Fjord ' + $t('fj.user') })"
+            :title="__('fj.add_model', { model: 'Fjord ' + __('fj.user') })"
         >
-            <b-form-group :label="$t('fj.enter_username')" label-for="username">
+            <b-form-group :label="__('fj.enter_username')" label-for="username">
                 <b-form-input
                     id="username"
                     v-model="user.username"
@@ -39,7 +39,7 @@
                 </b-form-invalid-feedback>
             </b-form-group>
             <b-form-group
-                :label="$t('fj.enter_email')"
+                :label="__('fj.enter_email')"
                 label-for="email"
                 :state="emailState"
             >
@@ -53,7 +53,7 @@
                 </b-form-invalid-feedback>
             </b-form-group>
             <b-form-group
-                :label="$t('fj.enter_password')"
+                :label="__('fj.enter_password')"
                 label-for="password"
                 :state="passwordState"
             >
@@ -89,7 +89,7 @@
                 name="check-button"
                 switch
             >
-                {{ $t('fj.user_reset_link') }}
+                {{ __('fj.user_reset_link') }}
             </b-form-checkbox>
             <template v-slot:modal-footer>
                 <div class="w-100">
@@ -108,8 +108,8 @@
                     >
                         <fa-icon icon="user" />
                         {{
-                            $t(`fj.create_model`, {
-                                model: 'Fjord ' + $t('fj.user')
+                            __(`fj.create_model`, {
+                                model: 'Fjord ' + __('fj.user')
                             })
                         }}
                         <b-spinner
@@ -160,7 +160,7 @@ export default {
             this.visible = false;
             this.init();
             this.$bvToast.toast(
-                this.$t('fj.model_saved', { model: 'Fjord User' }),
+                this.__('fj.model_saved', { model: 'Fjord User' }),
                 {
                     variant: 'success'
                 }

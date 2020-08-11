@@ -50,7 +50,7 @@
                         variant="outline-secondary"
                         class="btn-square mr-3"
                         v-b-tooltip
-                        :title="$t('fj.undo_changes')"
+                        :title="__('fj.undo_changes')"
                         @click="Fjord.bus.$emit('cancelSave')"
                     >
                         <fa-icon icon="undo" />
@@ -61,7 +61,7 @@
                         :disabled="!canSave"
                         @click="Fjord.bus.$emit('save')"
                     >
-                        {{ $t('fj.save') }}
+                        {{ __('fj.save') }}
                     </b-button>
                 </div>
             </div>
