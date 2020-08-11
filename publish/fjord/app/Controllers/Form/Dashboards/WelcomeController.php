@@ -5,7 +5,7 @@ namespace FjordApp\Controllers\Form\Dashboards;
 use Fjord\Crud\Controllers\FormController;
 use Fjord\User\Models\FjordUser;
 
-class MainDashboardController extends FormController
+class WelcomeController extends FormController
 {
     /**
      * Form config class.
