@@ -34,6 +34,22 @@ class ColumnTest extends TestCase
     }
 
     /** @test */
+    public function test_value_method_with_options()
+    {
+        $column = new Column();
+        $column->value('col', ['foo' => 'bar']);
+        $this->assertEquals(['foo' => 'bar'], $column->getAttribute('value_options'));
+    }
+
+    /** @test */
+    public function test_value_method_with_default_value()
+    {
+        $column = new Column();
+        $column->value('foor', [], 'bar');
+        $this->assertEquals('bar', $column->getAttribute('default_value'));
+    }
+
+    /** @test */
     public function test_right_method()
     {
         $column = new Column();
