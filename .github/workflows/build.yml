@@ -2,16 +2,16 @@ name: build
 
 on:
     pull_request:
-    #     types: [closed]
+        types: [closed]
 
 jobs:
     build:
         runs-on: ubuntu-latest
-        # if: github.event.pull_request.merged
+        if: github.event.pull_request.merged
 
         steps:
             - name: checkout
-              # if: github.event.pull_request.merged
+              if: github.event.pull_request.merged
               uses: actions/checkout@v1
 
             - name: Install dependencies
@@ -20,11 +20,14 @@ jobs:
             - name: Make Production Build
               run: yarn run production
 
-            - uses: stefanzweifel/git-auto-commit-action@v4
+            - name: Commit production build
+              uses: EndBug/add-and-commit@v4
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                  commit_message: Apply production build from CI
+                  add: '.'
 
-                  file_pattern: public/js/*.js public/css/*.css
+                  author_name: Production Bot
+                  author_email: bot@aw-studio.de
 
-                  commit_user_name: Production Bot
-                  commit_user_email: bot@aw-studio.de
+                  message: 'Apply production build form CI'

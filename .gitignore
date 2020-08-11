@@ -8,6 +8,7 @@
 composer.phar
 composer.lock
 package-lock.json
+yarn.lock
 .env
 .DS_Store
 .env.backup
