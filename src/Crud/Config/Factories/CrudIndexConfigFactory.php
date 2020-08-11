@@ -18,12 +18,14 @@ class CrudIndexConfigFactory extends ConfigFactory
      */
     public function index(ConfigHandler $config, Closure $method)
     {
-        $index = new CrudIndex($config);
+        $page = new CrudIndex($config);
 
-        $index->title($config->names['plural'] ?? '');
+        if ($config->has('show')) {
+            $page->navigationRight()->component('fj-crud-create-button');
+        }
 
-        $method($index);
+        $method($page);
 
-        return $index;
+        return $page;
     }
 }

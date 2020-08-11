@@ -114,8 +114,6 @@ abstract class CrudController extends CrudBaseController
             'config' => $config,
         ]);
 
-        $page->navigationRight()->component('fj-crud-create-button');
-
         return $page;
     }
 
