@@ -21,11 +21,10 @@ jobs:
             - name: Make Production Build
               run: yarn run production
 
+            - name: Commit build
             - uses: stefanzweifel/git-auto-commit-action@v4
               with:
                   commit_message: Apply production build from CI
-
-                  file_pattern: public/js/*.js public/css/*.css
 
                   commit_user_name: Production Bot
                   commit_user_email: bot@aw-studio.de
