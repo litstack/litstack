@@ -267,7 +267,7 @@ class Field extends VueProp
      *
      * @return mixed
      */
-    public function cast($value)
+    public function castValue($value)
     {
         return $value;
     }

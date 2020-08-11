@@ -28,12 +28,12 @@ class FieldRouteTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_cast_returns_integer()
+    public function test_value_cast_returns_integer()
     {
         $cast = m::mock(RouteCast::class);
         app()->bind(RouteCast::class, fn () => $cast);
         $cast->shouldReceive('get')->withArgs([null, '', 'value', []])->andReturn('result');
-        $this->assertEquals('result', $this->field->cast('value'));
+        $this->assertEquals('result', $this->field->castValue('value'));
     }
 
     /** @test */

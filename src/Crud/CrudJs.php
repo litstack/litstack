@@ -36,7 +36,7 @@ class CrudJs extends VueProp
         return [
             'attributes'   => $this->getModelAttributes(),
             'translatable' => is_translatable($this->model),
-            'cast'         => $this->usesJsonCast(),
+            'cast'         => $this->usesJsoncastValue(),
         ];
     }
 
@@ -89,7 +89,7 @@ class CrudJs extends VueProp
      *
      * @return bool
      */
-    public function usesJsonCast()
+    public function usesJsoncastValue()
     {
         return $this->model instanceof FormField
             || $this->model instanceof FormBlock;

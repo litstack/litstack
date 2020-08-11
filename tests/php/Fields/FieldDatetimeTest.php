@@ -26,9 +26,9 @@ class FieldDatetimeTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_cast_returns_carbon_instance()
+    public function test_value_cast_returns_carbon_instance()
     {
-        $this->assertInstanceof(CarbonInterface::class, $this->field->cast('00-00-00'));
+        $this->assertInstanceof(CarbonInterface::class, $this->field->castValue('00-00-00'));
     }
 
     /** @test */

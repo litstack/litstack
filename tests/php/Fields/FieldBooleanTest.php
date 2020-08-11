@@ -23,9 +23,9 @@ class FieldBooleanTest extends TestCase
     }
 
     /** @test */
-    public function test_cast()
+    public function test_castValue()
     {
-        $this->assertIsBool($this->field->cast(1));
-        $this->assertIsBool($this->field->cast(0));
+        $this->assertIsBool($this->field->castValue(1));
+        $this->assertIsBool($this->field->castValue(0));
     }
 }

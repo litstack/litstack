@@ -135,7 +135,7 @@ class ColumnBuilderTest extends BackendTestCase
         $table = m::mock(Table::class);
         $table->shouldReceive('cast')->withArgs(['amount', MoneyColumn::class.':EUR,'])->once();
         $builder = new ColumnBuilder;
-        $builder->setTable($table);
+        $builder->setParent($table);
         $builder->money('amount');
     }
 
@@ -145,7 +145,7 @@ class ColumnBuilderTest extends BackendTestCase
         $table = m::mock(Table::class);
         $table->shouldReceive('cast')->withArgs(['amount', MoneyColumn::class.':EUR,en_US'])->once();
         $builder = new ColumnBuilder;
-        $builder->setTable($table);
+        $builder->setParent($table);
         $builder->money('amount', 'EUR', 'en_US');
     }
 

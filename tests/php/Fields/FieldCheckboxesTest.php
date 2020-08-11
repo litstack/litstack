@@ -23,10 +23,10 @@ class FieldCheckboxesTest extends TestCase
     }
 
     /** @test */
-    public function test_cast()
+    public function test_value_cast()
     {
-        $this->assertIsArray($this->field->cast('["a"]'));
-        $this->assertIsArray($this->field->cast(['a']));
+        $this->assertIsArray($this->field->castValue('["a"]'));
+        $this->assertIsArray($this->field->castValue(['a']));
     }
 
     /** @test */

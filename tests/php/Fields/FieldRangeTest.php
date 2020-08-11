@@ -23,11 +23,11 @@ class FieldRangeTest extends TestCase
     }
 
     /** @test */
-    public function test_cast_returns_integer()
+    public function test_value_cast_returns_integer()
     {
-        $this->assertIsInt($this->field->cast('1'));
-        $this->assertIsInt($this->field->cast('1.5'));
-        $this->assertIsInt($this->field->cast('text'));
+        $this->assertIsInt($this->field->castValue('1'));
+        $this->assertIsInt($this->field->castValue('1.5'));
+        $this->assertIsInt($this->field->castValue('text'));
     }
 
     /** @test */

@@ -102,7 +102,7 @@ class Datetime extends BaseField
      * @param  mixed $value
      * @return bool
      */
-    public function cast($value)
+    public function castValue($value)
     {
         if ($value instanceof CarbonInterface) {
             return $value;
