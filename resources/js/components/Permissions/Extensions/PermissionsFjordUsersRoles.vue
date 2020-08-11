@@ -43,7 +43,7 @@ export default {
             }
 
             this.$bvToast.toast(
-                this.$t('fjpermissions.role_removed', {
+                this.__('fjpermissions.role_removed', {
                     username: this.item.name,
                     role: this.translateRole(role)
                 }),

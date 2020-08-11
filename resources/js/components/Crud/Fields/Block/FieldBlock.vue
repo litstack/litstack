@@ -267,7 +267,7 @@ export default {
 
             Fjord.bus.$emit('field:updated', 'block:deleted');
 
-            this.$bvToast.toast(this.$t('fj.deleted_block'), {
+            this.$bvToast.toast(this.__('fj.deleted_block'), {
                 variant: 'success'
             });
         },

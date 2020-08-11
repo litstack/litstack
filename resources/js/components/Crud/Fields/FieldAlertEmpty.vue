@@ -2,7 +2,7 @@
     <b-alert
         show
         variant="info"
-        v-html="$t('fj.no_relation_selected', { relation: field.title })"
+        v-html="__('fj.no_relation_selected', { relation: field.title })"
     />
 </template>
 

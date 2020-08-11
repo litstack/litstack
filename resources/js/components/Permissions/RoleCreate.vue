@@ -74,7 +74,7 @@ export default {
             this.visible = false;
 
             this.$bvToast.toast(
-                this.$t('fjpermissions.added_role', {
+                this.__('fjpermissions.added_role', {
                     role: role.name.capitalize()
                 }),
                 {

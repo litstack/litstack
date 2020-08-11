@@ -7,7 +7,7 @@
     >
         <fa-icon icon="eye" />
 
-        {{ $t('fj.preview') }}
+        {{ __('fj.preview') }}
 
         <fj-page-preview :show="true" :route="config.preview_route" />
     </b-button>

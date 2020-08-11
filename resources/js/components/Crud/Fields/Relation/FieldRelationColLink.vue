@@ -4,7 +4,7 @@
         size="sm"
         class="btn-square"
         v-b-tooltip.hover
-        :title="$t('crud.fields.relation.goto')"
+        :title="__('crud.fields.relation.goto')"
         :href="link"
     >
         <fa-icon icon="eye" />
