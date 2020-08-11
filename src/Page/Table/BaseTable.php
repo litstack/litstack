@@ -58,6 +58,19 @@ class BaseTable extends VueProp implements TableContract
     }
 
     /**
+     * Set actions.
+     *
+     * @param  array $actions
+     * @return $this
+     */
+    public function setActions($actions)
+    {
+        $this->actions = $actions;
+
+        return $this;
+    }
+
+    /**
      * Add action.
      *
      * @param  string $title
