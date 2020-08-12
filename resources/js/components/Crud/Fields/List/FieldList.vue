@@ -138,6 +138,9 @@ export default {
             this.loadItems();
         },
 
+        /**
+         * Show item toast.
+         */
         itemToast(key) {
             this.$bvToast.toast(this.__(key, { item: this.__item() }), {
                 variant: 'success'
