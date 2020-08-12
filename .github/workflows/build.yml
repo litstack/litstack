@@ -30,4 +30,4 @@ jobs:
                   author_name: Production Bot
                   author_email: bot@aw-studio.de
 
-                  message: 'Apply production build form CI'
+                  message: 'Apply production build from CI'
