@@ -1,31 +1,30 @@
 name: build
 
 on:
-    pull_request:
-        types: [closed]
+    push:
+        paths:
+            - 'resources/js/**'
+            - 'resources/sass/**'
 
 jobs:
     build:
         runs-on: ubuntu-latest
-        if: github.event.pull_request.merged
 
         steps:
             - name: checkout
-              if: github.event.pull_request.merged
               uses: actions/checkout@v2
 
             - name: Install dependencies
               run: yarn install --non-interactive
 
-            - name: Make Production Build
+            - name: Make production build
               run: yarn run production
 
             - name: Commit production build
               uses: EndBug/add-and-commit@v4
               env:
-                  GITHUB_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                  ref: ${{ github.head_ref }}
                   add: '.'
 
                   author_name: Production Bot
