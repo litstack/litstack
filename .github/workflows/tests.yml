@@ -16,6 +16,14 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v1
 
+            - name: Cache dependencies
+              uses: actions/cache@v2
+              with:
+                  path: ~/.npm
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-node-
+
             - name: Install dependencies
               run: yarn install --non-interactive
 
@@ -47,8 +55,7 @@ jobs:
               uses: actions/cache@v1
               with:
                   path: ~/.composer/cache/files
-                  key:
-                      dependencies-laravel-${{ matrix.laravel }}-php-${{
+                  key: dependencies-laravel-${{ matrix.laravel }}-php-${{
                       matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
             - name: Setup PHP
@@ -68,8 +75,7 @@ jobs:
                   php tests/install
 
             - name: Start Chrome Driver
-              run:
-                  ./vendor/bin/dusk-updater detect --auto-update &&
+              run: ./vendor/bin/dusk-updater detect --auto-update &&
                   ./vendor/laravel/dusk/bin/chromedriver-linux &
 
             - name: Run PHP tests via PHPUnit
@@ -98,8 +104,7 @@ jobs:
               uses: actions/cache@v1
               with:
                   path: ~/.composer/cache/files
-                  key:
-                      dependencies-laravel-${{ matrix.laravel }}-php-${{
+                  key: dependencies-laravel-${{ matrix.laravel }}-php-${{
                       matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
             - name: Setup PHP
@@ -119,8 +124,7 @@ jobs:
                   php tests/install
 
             - name: Start Chrome Driver
-              run:
-                  ./vendor/bin/dusk-updater detect --auto-update &&
+              run: ./vendor/bin/dusk-updater detect --auto-update &&
                   ./vendor/laravel/dusk/bin/chromedriver-linux &
 
             - name: Run PHP tests via PHPUnit
