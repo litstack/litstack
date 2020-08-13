@@ -17,9 +17,10 @@ export default {
 <style lang="scss">
 @import '@fj-sass/_variables';
 
-/* PrismJS 1.15.0
-https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+markup-templating+php&plugins=line-numbers */
 /**
+ * PrismJS 1.15.0
+ * https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+markup-templating+php&plugins=line-numbers 
+ *
  * prism.js default theme for JavaScript, CSS and HTML
  * Based on dabblet (http://dabblet.com)
  * @author Lea Verou
