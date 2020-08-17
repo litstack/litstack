@@ -29,7 +29,10 @@ jobs:
               with:
                   add: '.'
 
-                  author_name: Production Bot
-                  author_email: bot@aw-studio.de
+                  author_name: ${{ github.event.pusher.name }}
+                  author_email: ${{ github.event.pusher.email }}
 
-                  message: 'Apply production build from CI'
+                  message: "Apply production build from CI
+                  
+                  
+                  Co-authored-by: aw-ci-bot <bot@aw-studio.de>"
