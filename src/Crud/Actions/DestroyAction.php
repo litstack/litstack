@@ -34,7 +34,7 @@ class DestroyAction
      */
     public function run(Request $request, Collection $models)
     {
-        $models->map(fn ($item) => $item->delete());
+        $models->each->delete();
 
         return $this->resolveResponse($request, $models);
     }
