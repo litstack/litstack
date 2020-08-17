@@ -1,5 +1,6 @@
 .list-group {
-    .collapse {
+    .collapse,
+    .collapsing {
         .list-group-item:not(.active) {
             background-color: $list-group-collapsed-bg;
         }

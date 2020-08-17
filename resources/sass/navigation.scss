@@ -37,7 +37,8 @@ div#fjord-app .fj-navigation {
         }
     }
 
-    .collapse {
+    .collapse,
+    .collapsing {
         padding: 0;
         background-color: $list-group-collapsed-bg;
 
