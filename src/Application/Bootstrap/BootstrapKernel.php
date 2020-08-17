@@ -24,19 +24,6 @@ class BootstrapKernel
     }
 
     /**
-     * Register package components.
-     *
-     * @param  mixed $package
-     * @return void
-     */
-    public function registerComponents($components)
-    {
-        foreach ($components as $name => $component) {
-            $this->app->get('components')->register($name, $component);
-        }
-    }
-
-    /**
      * Register package providers.
      *
      * @param  mixed $package
@@ -47,22 +34,5 @@ class BootstrapKernel
         foreach ($providers as $provider) {
             app()->register($provider);
         }
-    }
-
-    /**
-     * Register package commands.
-     *
-     * @param  mxied $package
-     * @return void
-     */
-    public function registerCommands($commands)
-    {
-        if (! App::runningInConsole()) {
-            return;
-        }
-
-        Artisan::starting(function ($artisan) use ($commands) {
-            $artisan->resolveCommands($commands);
-        });
     }
 }

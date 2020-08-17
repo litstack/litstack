@@ -24,6 +24,20 @@ class ApplicationServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerFormPermissionsCommand();
+
+        $this->registerVueApplication();
+    }
+
+    /**
+     * Register Vue application component.
+     *
+     * @return void
+     */
+    protected function registerVueApplication()
+    {
+        $this->app->singleton('fjord.vue.app', function () {
+            return new AppComponent;
+        });
     }
 
     /**
@@ -46,10 +60,12 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     public function addCssFilesFromConfig()
     {
-        $files = config('fjord.assets.css') ?? [];
-        foreach ($files as $file) {
-            $this->app['fjord.app']->style($file);
-        }
+        $this->app->afterResolving('fjord.app', function ($fjordApp) {
+            $files = config('fjord.assets.css') ?? [];
+            foreach ($files as $file) {
+                $fjordApp->style($file);
+            }
+        });
     }
 
     /**

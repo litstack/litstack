@@ -48,6 +48,7 @@ class PublishesTest extends FrontendTestCase
                 ->loginAs($this->admin, 'fjord')
                 ->visit($url)
                 ->assertSeeIn('h3', 'Home');
+            // sleep(20);
         });
     }
 

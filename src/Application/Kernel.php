@@ -24,7 +24,6 @@ class Kernel
         Bootstrap\BootstrapKernel::class,
         Bootstrap\DiscoverPackages::class,
         Bootstrap\RegisterConfigFactories::class,
-        Bootstrap\BootstrapVueApplication::class,
         Bootstrap\RegisterPackages::class,
     ];
 
@@ -56,7 +55,7 @@ class Kernel
      */
     public function handleRoute($route)
     {
-        // TODO: Find something to do for here.
+        // TODO: ...
     }
 
     /**
