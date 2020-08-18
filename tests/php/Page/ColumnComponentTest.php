@@ -12,7 +12,7 @@ class ColumnComponentTest extends TestCase
     {
         parent::setUp();
 
-        $this->component = new ColumnComponent('dummy-component');
+        $this->component = new ColumnComponent('foo');
     }
 
     /** @test */
