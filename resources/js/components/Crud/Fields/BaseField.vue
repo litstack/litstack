@@ -2,7 +2,7 @@
     <fj-col :width="width" :class="field.class">
         <div :class="`pb-4 fjord-form fj-form-item-${field.id}`">
             <h6 class="fj-form-item-title mb-0 d-flex justify-content-between">
-                <label :for="field.id" v-else v-html="field.title"></label>
+                <label :for="field.id" v-html="field.title"></label>
                 <div>
                     <slot name="title-right" />
                     <b-badge v-if="field.translatable" variant="secondary">
