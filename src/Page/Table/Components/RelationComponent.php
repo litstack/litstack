@@ -50,5 +50,6 @@ class RelationComponent extends ColumnComponent
      */
     public function link($link)
     {
+        return $this;
     }
 }
