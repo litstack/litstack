@@ -1,7 +1,7 @@
 <template>
     <div class="fj-col-relation" v-if="relation">
         {{ format(value, relation) }}
-        <a :href="`${Fjord.baseURL}${relationLink}/${relation.id}/edit`">
+        <a :href="`${Fjord.baseURL}${relationLink}/${relation.id}`">
             <fa-icon icon="external-link-alt" />
         </a>
     </div>
