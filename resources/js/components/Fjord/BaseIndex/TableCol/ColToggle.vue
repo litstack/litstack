@@ -30,7 +30,7 @@ export default {
     methods: {
         async update(val) {
             let response = await axios.put(
-                `${this.routePrefix}/${this.item.id}`,
+                `${this.routePrefix}/${this.item.id}/api`,
                 {
                     [this.local_key]: val
                 }
