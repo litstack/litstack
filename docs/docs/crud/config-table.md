@@ -130,13 +130,11 @@ $table->image('Image')
 In a normal table column you can directly display attributes for relations. With the relation method, a link to the corresponding CRUD form can be displayed as well. Therefore the `related` name of the relation and `routePrefix` of the corresponding CRUD config must be specified.
 
 ```php
-use App\Models\Product;
-
 $table->relation('Product')
     ->related('product') // Relation name.
     ->value('{name}') // Related attribute to be displayed.
     ->routePrefix(
-        Crud::config(Product::class)->route_prefix
+        Config::get(ProductConfig::class)->route_prefix
     )
     ->sortBy('product.name');
 ```
