@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Vue;
+namespace Lit\Vue;
 
 use Closure;
-use Fjord\Contracts\Vue\Vue as VueContract;
+use Lit\Contracts\Vue\Vue as VueContract;
 
 class Vue implements VueContract
 {

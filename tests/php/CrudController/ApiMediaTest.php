@@ -1,20 +1,20 @@
 <?php
 
-namespace FjordTest\CrudController;
+namespace Tests\CrudController;
 
-use FjordTest\BackendTestCase;
-use FjordTest\TestSupport\Models\Post;
-use FjordTest\Traits\InteractsWithCrud;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Tests\BackendTestCase;
+use Tests\TestSupport\Models\Post;
+use Tests\Traits\InteractsWithCrud;
 
 /**
  * This test is using the Crud Post.
  *
- * @see FjordApp\Config\Crud\PostConfig
- * @see FjordTest\TestSupport\Models\Post
+ * @see LitApp\Config\Crud\PostConfig
+ * @see Tests\TestSupport\Models\Post
  */
 class ApiMediaTest extends BackendTestCase
 {
@@ -26,7 +26,7 @@ class ApiMediaTest extends BackendTestCase
 
         Storage::fake();
         $this->post = Post::create([]);
-        $this->actingAs($this->admin, 'fjord');
+        $this->actingAs($this->admin, 'lit');
     }
 
     public function tearDown(): void
@@ -48,7 +48,7 @@ class ApiMediaTest extends BackendTestCase
     public function it_returns_404_when_no_collection_is_given()
     {
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/media/store");
-        $response = $this->post($url);
+        $response = $this->json('POST', $url);
         $response->assertStatus(404);
     }
 
@@ -56,7 +56,7 @@ class ApiMediaTest extends BackendTestCase
     public function it_returns_404_when_media_is_not_sent()
     {
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/media");
-        $response = $this->post($url, [
+        $response = $this->json('POST', $url, [
             'collection' => 'test_image',
         ]);
         $response->assertStatus(404);

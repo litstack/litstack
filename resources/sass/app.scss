@@ -32,7 +32,7 @@
 @import '_bs/_tooltip';
 @import '_bs/_textarea';
 
-// Fjord Components
+// Lit Components
 @import '_fj/_blockquote';
 @import '_fj/_blocks';
 @import '_fj/_spinner';
@@ -51,60 +51,60 @@
 // Atoms
 //@import '_atoms/border';
 //@import '_atoms/bs-buttons';
-//@import '_atoms/fjord-brand';
-//@import '_atoms/fjord-card';
-//@import '_atoms/fjord-search';
-//@import '_atoms/fjord-draggable';
-//@import '_atoms/fjord-spinner';
-//@import '_atoms/fjord-hide';
-//@import '_atoms/fjord-table';
+//@import '_atoms/lit-brand';
+//@import '_atoms/lit-card';
+//@import '_atoms/lit-search';
+//@import '_atoms/lit-draggable';
+//@import '_atoms/lit-spinner';
+//@import '_atoms/lit-hide';
+//@import '_atoms/lit-table';
 
 // Molecules
-//@import '_molecules/fjord-topbar';
-//@import '_molecules/fjord-dropzone';
-//@import '_molecules/fjord-form';
-//@import '_molecules/fjord-tabs';
-//@import '_molecules/fjord-modal';
-//@import '_molecules/fjord-block';
-//@import '_molecules/fjord-cropper';
-//@import '_molecules/fjord-toast';
+//@import '_molecules/lit-topbar';
+//@import '_molecules/lit-dropzone';
+//@import '_molecules/lit-form';
+//@import '_molecules/lit-tabs';
+//@import '_molecules/lit-modal';
+//@import '_molecules/lit-block';
+//@import '_molecules/lit-cropper';
+//@import '_molecules/lit-toast';
 
 body,
 html {
-    background-color: $body-bg;
-    font-family: 'Inter', sans-serif;
+	background-color: $body-bg;
+	font-family: 'Inter', sans-serif;
 
-    * {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
+	* {
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
 }
 
-div#fjord-app {
-    background-color: $body-bg;
-    min-height: 100vh;
+div#lit-app {
+	background-color: $body-bg;
+	min-height: 100vh;
 
-    .btn:focus {
-        outline: none !important;
-        box-shadow: none !important;
-    }
+	.btn:focus {
+		outline: none !important;
+		box-shadow: none !important;
+	}
 }
 
 .form-control-expand {
-    flex-grow: 1;
+	flex-grow: 1;
 }
 
 .modal-backdrop {
-    opacity: 0.5 !important;
+	opacity: 0.5 !important;
 }
 
 .fj-trash {
-    svg:hover {
-        cursor: pointer;
-        color: black;
-    }
+	svg:hover {
+		cursor: pointer;
+		color: black;
+	}
 }
 
 .fj-draggable__dragbar {
-    cursor: pointer;
+	cursor: pointer;
 }

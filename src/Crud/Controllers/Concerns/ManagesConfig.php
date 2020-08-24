@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Controllers\Concerns;
+namespace Lit\Crud\Controllers\Concerns;
 
 use Illuminate\Support\Facades\Request;
 
@@ -9,14 +9,14 @@ trait ManagesConfig
     /**
      * Config instance.
      *
-     * @var \Fjord\Config\ConfigHandler
+     * @var \Lit\Config\ConfigHandler
      */
     protected $config;
 
     /**
      * Get config.
      *
-     * @return \Fjord\Config\ConfigHandler
+     * @return \Lit\Config\ConfigHandler
      */
     protected function loadConfig()
     {
@@ -30,7 +30,7 @@ trait ManagesConfig
     /**
      * Get crud/form config.
      *
-     * @return \Fjord\Config\ConfigHandler
+     * @return \Lit\Config\ConfigHandler
      */
     public function getConfig()
     {

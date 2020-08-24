@@ -1,14 +1,14 @@
 <?php
 
-namespace Fjord\Chart\Loader;
+namespace Lit\Chart\Loader;
 
 use BadMethodCallException;
 use Carbon\CarbonInterface;
 use Closure;
 use Exception;
-use Fjord\Chart\ChartRequest;
-use Fjord\Chart\Contracts\Engine;
-use Fjord\Config\ConfigHandler;
+use Lit\Chart\ChartRequest;
+use Lit\Chart\Contracts\Engine;
+use Lit\Config\ConfigHandler;
 use Illuminate\Support\Str;
 
 abstract class ChartLoader
@@ -35,8 +35,8 @@ abstract class ChartLoader
     /**
      * Create new DonutLoader instance.
      *
-     * @param \Fjord\Config\ConfigHandler   $config
-     * @param \Fjord\Chart\Contracts\Engine $engine
+     * @param \Lit\Config\ConfigHandler   $config
+     * @param \Lit\Chart\Contracts\Engine $engine
      */
     public function __construct(ConfigHandler $config, Engine $engine)
     {

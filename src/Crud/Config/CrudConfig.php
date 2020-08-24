@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Crud\Config;
+namespace Lit\Crud\Config;
 
-use Fjord\Crud\Config\Traits\HasCrudIndex;
-use Fjord\Crud\Config\Traits\HasCrudShow;
-use Fjord\Support\Facades\Crud;
+use Lit\Crud\Config\Traits\HasCrudIndex;
+use Lit\Crud\Config\Traits\HasCrudShow;
+use Lit\Support\Facades\Crud;
 use Illuminate\Support\Str;
 
 abstract class CrudConfig
@@ -58,7 +58,7 @@ abstract class CrudConfig
         $operations = ['create', 'read', 'update', 'delete'];
 
         foreach ($operations as $operation) {
-            $permissions[$operation] = fjord_user()
+            $permissions[$operation] = lit_user()
                 ? Crud::authorize($this->controller, $operation)
                 : false;
         }

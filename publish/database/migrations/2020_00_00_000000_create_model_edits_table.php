@@ -15,15 +15,15 @@ class CreateModelEditsTable extends Migration
     {
         Schema::create('model_edits', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('fjord_user_id');
+            $table->unsignedBigInteger('lit_user_id');
             $table->string('model_type');
             $table->unsignedBigInteger('model_id');
             $table->text('payload');
             $table->timestamp('created_at');
 
-            $table->foreign('fjord_user_id')
+            $table->foreign('lit_user_id')
                 ->references('id')
-                ->on('fjord_users')
+                ->on('lit_users')
                 ->onDelete('cascade');
         });
     }

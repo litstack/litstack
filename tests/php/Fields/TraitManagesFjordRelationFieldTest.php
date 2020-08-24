@@ -1,15 +1,15 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\Fields\Relations\Concerns\ManagesFjordRelationField;
-use Fjord\Crud\Fields\Relations\LaravelRelationField;
-use FjordTest\BackendTestCase;
-use FjordTest\Traits\InteractsWithConfig;
-use FjordTest\Traits\InteractsWithFields;
+use Lit\Crud\Fields\Relations\Concerns\ManagesLitRelationField;
+use Lit\Crud\Fields\Relations\LaravelRelationField;
+use Tests\BackendTestCase;
+use Tests\Traits\InteractsWithConfig;
+use Tests\Traits\InteractsWithFields;
 use Illuminate\Database\Eloquent\Model;
 
-class TraitManagesFjordRelationFieldTest extends BackendTestCase
+class TraitManagesLitRelationFieldTest extends BackendTestCase
 {
     use InteractsWithFields;
     use InteractsWithConfig;
@@ -19,54 +19,54 @@ class TraitManagesFjordRelationFieldTest extends BackendTestCase
         parent::setUp();
 
         $this->field = $this->getField(
-            ManagesFjordRelationFieldField::class,
+            ManagesLitRelationFieldField::class,
             'dummy_relation',
-            ManagesFjordRelationFieldModel::class
+            ManagesLitRelationFieldModel::class
         );
     }
 
     public function getConfig(string $key, ...$params)
     {
-        return new ManagesFjordRelationFieldConfig();
+        return new ManagesLitRelationFieldConfig();
     }
 
     /** @test */
     public function test_model_method_sets_model_attribute()
     {
-        $this->field->model(ManagesFjordRelationFieldRelation::class);
-        $this->assertEquals(ManagesFjordRelationFieldRelation::class, $this->field->getAttribute('model'));
+        $this->field->model(ManagesLitRelationFieldRelation::class);
+        $this->assertEquals(ManagesLitRelationFieldRelation::class, $this->field->getAttribute('model'));
     }
 
     /** @test */
     public function test_model_method_sets_model_query()
     {
-        $this->field->model(ManagesFjordRelationFieldRelation::class);
-        $this->assertEquals(ManagesFjordRelationFieldRelation::query(), $this->getUnaccessibleProperty($this->field, 'query'));
+        $this->field->model(ManagesLitRelationFieldRelation::class);
+        $this->assertEquals(ManagesLitRelationFieldRelation::query(), $this->getUnaccessibleProperty($this->field, 'query'));
     }
 }
 
-class ManagesFjordRelationFieldConfig
+class ManagesLitRelationFieldConfig
 {
     public $names = ['singular' => ''];
     public $search = '';
     public $route_prefix = '';
     public $index = null;
-    public $model = ManagesFjordRelationFieldRelation::class;
+    public $model = ManagesLitRelationFieldRelation::class;
 }
 
-class ManagesFjordRelationFieldField extends LaravelRelationField
+class ManagesLitRelationFieldField extends LaravelRelationField
 {
-    use ManagesFjordRelationField;
+    use ManagesLitRelationField;
 
     public function setOrderDefaults()
     {
     }
 }
 
-class ManagesFjordRelationFieldModel extends Model
+class ManagesLitRelationFieldModel extends Model
 {
 }
 
-class ManagesFjordRelationFieldRelation extends Model
+class ManagesLitRelationFieldRelation extends Model
 {
 }

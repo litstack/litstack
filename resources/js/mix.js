@@ -1,18 +1,18 @@
 const mix = require('laravel-mix');
 
-mix.js('fjord/resources/js/app.js', 'public/fjord/js').sass(
-    'fjord/resources/sass/app.scss',
-    'public/fjord/css'
+mix.js('lit/resources/js/app.js', 'public/lit/js').sass(
+	'lit/resources/sass/app.scss',
+	'public/lit/css'
 );
 
-// Fjord
+// Lit
 mix.webpackConfig({
-    resolve: {
-        alias: {
-            '@fj-js': __dirname,
-            '@fj-sass': path.resolve(__dirname, '../sass/')
-        }
-    }
+	resolve: {
+		alias: {
+			'@lit-js': __dirname,
+			'@lit-sass': path.resolve(__dirname, '../sass/'),
+		},
+	},
 });
 
 module.exports = {};

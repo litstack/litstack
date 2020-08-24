@@ -1,32 +1,32 @@
 <?php
 
-namespace Fjord\Exceptions\Solutions;
+namespace Lit\Exceptions\Solutions;
 
 use Facade\IgnitionContracts\RunnableSolution;
 use Illuminate\Support\Facades\Artisan;
 
-class InstallFjordSolution implements RunnableSolution
+class InstallLitSolution implements RunnableSolution
 {
     public function getSolutionTitle(): string
     {
-        return 'Fjord is not installed';
+        return 'Lit is not installed';
     }
 
     public function getDocumentationLinks(): array
     {
         return [
-            'Fjord Installation' => 'https://www.fjord-admin.com/docs/getting-started/installation/',
+            'Lit Installation' => 'https://www.lit-admin.com/docs/getting-started/installation/',
         ];
     }
 
     public function getSolutionActionDescription(): string
     {
-        return 'Install fjord using `php artisan fjord:install`.';
+        return 'Install lit using `php artisan lit:install`.';
     }
 
     public function getRunButtonText(): string
     {
-        return 'Install Fjord';
+        return 'Install Lit';
     }
 
     public function getSolutionDescription(): string
@@ -41,6 +41,6 @@ class InstallFjordSolution implements RunnableSolution
 
     public function run(array $parameters = [])
     {
-        Artisan::call('fjord:install');
+        Artisan::call('lit:install');
     }
 }

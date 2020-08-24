@@ -1,14 +1,14 @@
 <?php
 
-namespace Fjord\Support\Facades;
+namespace Lit\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Fjord\Config\ConfigHandler|null get(string $key)
+ * @method static \Lit\Config\ConfigHandler|null get(string $key)
  * @method static bool exists(string $key):
  *
- * @see \Fjord\Config\ConfigLoader
+ * @see \Lit\Config\ConfigLoader
  */
 class Config extends Facade
 {
@@ -19,6 +19,6 @@ class Config extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'fjord.app.config.loader';
+        return 'lit.app.config.loader';
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Test\Support;
+namespace Lit\Test\Support;
 
-use Fjord\Support\Macros\ResponseMacros;
+use Lit\Support\Macros\ResponseMacros;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Contracts\View\Factory as ViewFactoryContract;

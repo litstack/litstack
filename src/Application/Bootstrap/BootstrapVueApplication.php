@@ -1,18 +1,18 @@
 <?php
 
-namespace Fjord\Application\Bootstrap;
+namespace Lit\Application\Bootstrap;
 
-use Fjord\Application\AppComponent;
-use Fjord\Application\Application;
-use Fjord\Application\Vue\VueApplication;
+use Lit\Application\AppComponent;
+use Lit\Application\Application;
+use Lit\Application\Vue\VueApplication;
 
 class BootstrapVueApplication
 {
     /**
      * Bootstrap VueApplication instance and bind it to
-     * the Fjord application.
+     * the Lit application.
      *
-     * @param  Fjord\Application\Application $app
+     * @param  Lit\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app)

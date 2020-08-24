@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Page\Table;
+namespace Lit\Page\Table;
 
-use Fjord\Contracts\Page\Action;
-use Fjord\Contracts\Page\Table as TableContract;
-use Fjord\Page\Actions\DropdownItemAction;
-use Fjord\Support\HasAttributes;
-use Fjord\Support\VueProp;
+use Lit\Contracts\Page\Action;
+use Lit\Contracts\Page\Table as TableContract;
+use Lit\Page\Actions\DropdownItemAction;
+use Lit\Support\HasAttributes;
+use Lit\Support\VueProp;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
@@ -106,8 +106,8 @@ class BaseTable extends VueProp implements TableContract
         $this->perPage(10);
         $this->search(['title']);
         $this->sortBy([
-            'id.desc' => __f('fj.sort_new_to_old'),
-            'id.asc'  => __f('fj.sort_old_to_new'),
+            'id.desc' => __f('lit.sort_new_to_old'),
+            'id.asc'  => __f('lit.sort_old_to_new'),
         ]);
     }
 

@@ -1,30 +1,30 @@
 <?php
 
-namespace FjordTest\Foundation;
+namespace Tests\Foundation;
 
-use FjordTest\BackendTestCase;
-use FjordTest\Traits\ActingAsFjordUserMock;
+use Tests\BackendTestCase;
+use Tests\Traits\ActingAsLitUserMock;
 use Throwable;
 
 /**
- * Testing view [fjord::app].
+ * Testing view [lit::app].
  */
-class FjordAppViewTest extends BackendTestCase
+class LitAppViewTest extends BackendTestCase
 {
-    use ActingAsFjordUserMock;
+    use ActingAsLitUserMock;
 
     /** @test */
     public function it_fails_when_component_data_is_missing()
     {
         $this->expectException(Throwable::class);
-        view('fjord::app')->render();
+        view('lit::app')->render();
     }
 
     // TODO: Test it sets view data.
     // /** @test */
     // public function test_view_gets_data()
     // {
-    //     $view = view('fjord::app')->withComponent('dummy');
+    //     $view = view('lit::app')->withComponent('dummy');
 
     //     $view->render();
 

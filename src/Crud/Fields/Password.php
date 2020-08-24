@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Lit\Crud\Fields;
 
-use Fjord\Crud\BaseField;
+use Lit\Crud\BaseField;
 use Illuminate\Support\Facades\Hash;
 use LogicException;
 
@@ -140,7 +140,7 @@ class Password extends BaseField
         }
 
         $confirmationRule = function ($attribute, $value, $fail) {
-            if (! Hash::check($value, fjord_user()->password)) {
+            if (! Hash::check($value, lit_user()->password)) {
                 return $fail(__f('validation.incorrect_password'));
             }
         };

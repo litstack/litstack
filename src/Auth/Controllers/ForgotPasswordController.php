@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Auth\Controllers;
+namespace Lit\Auth\Controllers;
 
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\JsonResponse;
@@ -19,7 +19,7 @@ class ForgotPasswordController
      */
     protected function guard()
     {
-        return Auth::guard('fjord');
+        return Auth::guard('lit');
     }
 
     /**
@@ -29,7 +29,7 @@ class ForgotPasswordController
      */
     protected function broker()
     {
-        return Password::broker('fjord_users');
+        return Password::broker('lit_users');
     }
 
     /**

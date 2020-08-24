@@ -1,10 +1,10 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\BaseField;
-use Fjord\Crud\Fields\Checkboxes;
-use FjordTest\Traits\InteractsWithFields;
+use Lit\Crud\BaseField;
+use Lit\Crud\Fields\Checkboxes;
+use Tests\Traits\InteractsWithFields;
 use PHPUnit\Framework\TestCase;
 
 class FieldCheckboxesTest extends TestCase

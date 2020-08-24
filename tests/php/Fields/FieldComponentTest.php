@@ -1,10 +1,10 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\Fields\Component;
-use FjordTest\Traits\InteractsWithComponents;
-use FjordTest\Traits\InteractsWithFields;
+use Lit\Crud\Fields\Component;
+use Tests\Traits\InteractsWithComponents;
+use Tests\Traits\InteractsWithFields;
 use PHPUnit\Framework\TestCase;
 
 class FieldComponentTest extends TestCase
@@ -22,7 +22,7 @@ class FieldComponentTest extends TestCase
     public function it_sets_component()
     {
         $component = component('dummy-component');
-        $this->assertInstanceOf(\Fjord\Vue\Component::class, $this->field->getComponent());
+        $this->assertInstanceOf(\Lit\Vue\Component::class, $this->field->getComponent());
         $this->assertEquals($component, $this->field->getComponent());
     }
 }

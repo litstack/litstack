@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Support\Macros;
+namespace Lit\Support\Macros;
 
-use Fjord\Crud\CrudShow;
+use Lit\Crud\CrudShow;
 
 class CrudMetaMacro
 {

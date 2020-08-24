@@ -1,0 +1,225 @@
+<?php
+
+namespace Lit\Foundation;
+
+use Lit\Application\Application;
+use Lit\Support\Facades\Config;
+use Lit\Translation\Translator;
+use Illuminate\Foundation\Application as LaravelApplication;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Traits\ForwardsCalls;
+
+class Lit
+{
+    use ForwardsCalls;
+
+    /**
+     * Lit Application.
+     *
+     * @var \Lit\Application\Application
+     */
+    protected $app;
+
+    /**
+     * Laravel application instance.
+     *
+     * @var LaravelApplication
+     */
+    protected $laravel;
+
+    /**
+     * Create Lit application.
+     *
+     * @param LaravelApplication $laravel
+     */
+    public function __construct(LaravelApplication $laravel)
+    {
+        $this->laravel = $laravel;
+    }
+
+    /**
+     * Determines if the application is translatable.
+     *
+     * @return bool
+     */
+    public function isAppTranslatable()
+    {
+        return count(config('translatable.locales')) > 1;
+    }
+
+    /**
+     * Bind Lit Application instance when Lit is installed.
+     *
+     * @param  \Lit\Application\Application $app
+     * @return void
+     */
+    public function bindApp(Application $app)
+    {
+        $this->app = $app;
+    }
+
+    /**
+     * Get Lit application.
+     *
+     * @return \Lit\Application\Application $app
+     */
+    public function app()
+    {
+        return $this->app;
+    }
+
+    /**
+     * Get Lit url.
+     *
+     * @param  string $url
+     * @return string
+     */
+    public function url(string $url)
+    {
+        return strip_slashes(
+            '/'.config('lit.route_prefix').'/'.$url
+        );
+    }
+
+    /**
+     * Get Lit route by name.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public function route(string $name)
+    {
+        return route("lit.{$name}");
+    }
+
+    /**
+     * Get translation for Lit application.
+     *
+     * @param  string      $key
+     * @param  array       $replace
+     * @param  string|null $locale
+     * @return string
+     */
+    public function trans(string $key = null, $replace = [], $locale = null)
+    {
+        if (is_null($key)) {
+            return $key;
+        }
+
+        return $this->laravel[Translator::class]->trans($key, $replace, $locale);
+    }
+
+    /**
+     * Get choice translation for Lit application.
+     *
+     * @param  string $key
+     * @param  array  $replace
+     * @return string
+     */
+    public function trans_choice(string $key = null, $number, $replace = [])
+    {
+        if (is_null($key)) {
+            return $key;
+        }
+
+        return $this->laravel[Translator::class]->choice($key, $number, $replace);
+    }
+
+    /**
+     * Get translation for Lit application.
+     *
+     * @param  string      $key
+     * @param  array       $replace
+     * @param  string|null $locale
+     * @return string
+     */
+    public function __(string $key = null, $replace = [], $locale = null)
+    {
+        return $this->trans($key, $replace, $locale);
+    }
+
+    /**
+     * Load config.
+     *
+     * @param  string             $key
+     * @param  array              $params
+     * @return ConfigHandler|null
+     */
+    public function config($key, ...$params)
+    {
+        return Config::get($key, ...$params);
+    }
+
+    /**
+     * Gets the  authenticated Lit user.
+     *
+     * @return \Lit\User\Models\LitUser|null
+     */
+    public function user()
+    {
+        return lit_user();
+    }
+
+    /**
+     * Get locale for Lit application.
+     *
+     * @return void
+     */
+    public function getLocale()
+    {
+        return $this->laravel[Translator::class]->getLocale();
+    }
+
+    /**
+     * Checks if lit has been installed.
+     *
+     * @return bool
+     */
+    public function installed()
+    {
+        if (! config()->has('lit')) {
+            return false;
+        }
+
+        if (! class_exists(\LitApp\Kernel::class)) {
+            return false;
+        }
+
+        if (! File::exists(base_path('bootstrap/cache/lit.php'))) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Determines wether composer dumpautoload needs to be called.
+     *
+     * @return void
+     */
+    public function needsDumpAutoload()
+    {
+        if ($this->installed()) {
+            return false;
+        }
+
+        if (! class_exists(\LitApp\Kernel::class)) {
+            return false;
+        }
+
+        return ! File::exists(base_path('bootstrap/cache/lit.php'));
+    }
+
+    /**
+     * Forward call to Lit Application.
+     *
+     * @param  string $method
+     * @param  array  $params
+     * @return mixed
+     */
+    public function __call($method, $parameters)
+    {
+        return $this->forwardCallTo($this->app, $method, $parameters);
+    }
+}

@@ -9,13 +9,13 @@
                     <strong>
                         {{
                             trans_choice(
-                                'fj.n_items_selected',
+                                'lit.n_items_selected',
                                 selectedItems.length
                             )
                         }}
                         {{
                             selectedItems.length == items.length
-                                ? `(${__('fj.all')})`
+                                ? `(${__('lit.all')})`
                                 : ''
                         }}
                     </strong>
@@ -28,7 +28,7 @@
                         class="btn-brl-none"
                         variant="outline-secondary"
                     >
-                            <fj-base-component
+                            <lit-base-component
                                 v-for="(component, key) in actions"
                                 :key="key"
                                 :component="component"

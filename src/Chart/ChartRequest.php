@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Chart;
+namespace Lit\Chart;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;

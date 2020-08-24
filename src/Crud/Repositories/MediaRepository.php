@@ -1,13 +1,13 @@
 <?php
 
-namespace Fjord\Crud\Repositories;
+namespace Lit\Crud\Repositories;
 
-use Fjord\Config\ConfigHandler;
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Controllers\CrudBaseController;
-use Fjord\Crud\Fields\Media\MediaField;
-use Fjord\Crud\Requests\CrudReadRequest;
-use Fjord\Crud\Requests\CrudUpdateRequest;
+use Lit\Config\ConfigHandler;
+use Lit\Crud\BaseForm;
+use Lit\Crud\Controllers\CrudBaseController;
+use Lit\Crud\Fields\Media\MediaField;
+use Lit\Crud\Requests\CrudReadRequest;
+use Lit\Crud\Requests\CrudUpdateRequest;
 
 class MediaRepository extends BaseFieldRepository
 {
@@ -72,7 +72,7 @@ class MediaRepository extends BaseFieldRepository
     public function destroy(CrudUpdateRequest $request, $model)
     {
         if ($model->media()->findOrFail($request->media_id)->delete()) {
-            return response()->success(__f('fj.image_deleted'));
+            return response()->success(__f('lit.image_deleted'));
         }
     }
 

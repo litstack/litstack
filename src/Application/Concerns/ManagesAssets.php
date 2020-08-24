@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Application\Concerns;
+namespace Lit\Application\Concerns;
 
 trait ManagesAssets
 {

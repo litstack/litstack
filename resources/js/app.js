@@ -1,10 +1,10 @@
 /**
  * This file is used for building the app via webpack.mix
  */
-import Fjord from './fjord';
+import Lit from './lit';
 
 const store = {};
 
-new Fjord({
-    store
+new Lit({
+	store,
 });

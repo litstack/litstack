@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Crud\Repositories;
+namespace Lit\Crud\Repositories;
 
-use Fjord\Crud\CrudValidator;
-use Fjord\Crud\Fields\ListField\ListField;
-use Fjord\Crud\Models\FormListItem;
-use Fjord\Crud\Requests\CrudReadRequest;
-use Fjord\Crud\Requests\CrudUpdateRequest;
+use Lit\Crud\CrudValidator;
+use Lit\Crud\Fields\ListField\ListField;
+use Lit\Crud\Models\ListItem;
+use Lit\Crud\Requests\CrudReadRequest;
+use Lit\Crud\Requests\CrudUpdateRequest;
 use Illuminate\Http\Request;
 
 class ListRepository extends BaseFieldRepository
@@ -28,7 +28,7 @@ class ListRepository extends BaseFieldRepository
      */
     public function index(CrudReadRequest $request, $model)
     {
-        $items = $this->field->getRelationQuery($model)->getFlat()->filter(function (FormListItem $item) {
+        $items = $this->field->getRelationQuery($model)->getFlat()->filter(function (ListItem $item) {
             return $this->field->itemAuthorized($item, 'read');
         });
 
@@ -79,7 +79,7 @@ class ListRepository extends BaseFieldRepository
         $newDepth = ($parent->depth ?? 0) + 1;
         $this->checkMaxDepth($newDepth, $this->field->maxDepth);
 
-        $listItem = new FormListItem([
+        $listItem = new ListItem([
             'parent_id'   => $parent->id ?? 0,
             'config_type' => get_class($this->config->getConfig()),
             'form_type'   => $request->form_type ?? 'show',
@@ -116,7 +116,7 @@ class ListRepository extends BaseFieldRepository
             CrudValidator::CREATION
         );
 
-        $order_column = FormListItem::where([
+        $order_column = ListItem::where([
             'config_type' => $this->config->getType(),
             'form_type'   => $payload->form_type ?? 'show',
             'model_type'  => get_class($model),
@@ -125,7 +125,7 @@ class ListRepository extends BaseFieldRepository
             'parent_id'   => $parent->id ?? 0,
         ])->count();
 
-        $listItem = new FormListItem();
+        $listItem = new ListItem();
         $listItem->model_type = get_class($model);
         $listItem->model_id = $model->id;
         $listItem->field_id = $this->field->id;
@@ -237,7 +237,7 @@ class ListRepository extends BaseFieldRepository
      * Get parent by id.
      *
      * @param  string|int   $parentId
-     * @return FormListItem
+     * @return ListItem
      */
     protected function getParent($model, $parentId = 0)
     {
@@ -267,10 +267,10 @@ class ListRepository extends BaseFieldRepository
     /**
      * Checks authorized.
      *
-     * @param  FormListItem $item
+     * @param  ListItem $item
      * @return void
      */
-    protected function checkAuthorized(FormListItem $item = null, $operation)
+    protected function checkAuthorized(ListItem $item = null, $operation)
     {
         if (! $this->field->itemAuthorized($item, $operation)) {
             abort(405, __f('base.unauthorized'));

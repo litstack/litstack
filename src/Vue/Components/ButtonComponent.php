@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Vue\Components;
+namespace Lit\Vue\Components;
 
-use Fjord\Vue\Component;
-use Fjord\Vue\Traits\StaticComponentName;
+use Lit\Vue\Component;
+use Lit\Vue\Traits\StaticComponentName;
 use Illuminate\Support\Str;
 
 class ButtonComponent extends Component

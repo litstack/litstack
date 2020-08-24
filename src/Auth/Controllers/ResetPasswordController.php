@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Auth\Controllers;
+namespace Lit\Auth\Controllers;
 
-use Fjord\Support\Facades\Fjord;
+use Lit\Support\Facades\Lit;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -50,10 +50,10 @@ class ResetPasswordController
      */
     public function __construct()
     {
-        $this->redirectTo = Fjord::url('login');
+        $this->redirectTo = Lit::url('login');
 
-        $this->defaultUrl = Fjord::url(
-            config('fjord.default_route')
+        $this->defaultUrl = Lit::url(
+            config('lit.default_route')
         );
     }
 
@@ -64,7 +64,7 @@ class ResetPasswordController
      */
     protected function guard()
     {
-        return Auth::guard('fjord');
+        return Auth::guard('lit');
     }
 
     /**
@@ -74,7 +74,7 @@ class ResetPasswordController
      */
     public function broker()
     {
-        return Password::broker('fjord_users');
+        return Password::broker('lit_users');
     }
 
     /**
@@ -87,7 +87,7 @@ class ResetPasswordController
      */
     public function showResetForm(Request $request, $token = null)
     {
-        return view('fjord::auth.passwords.reset')
+        return view('lit::auth.passwords.reset')
             ->with([
                 'token' => $token,
                 'email' => $request->email,

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Chart\Engine;
+namespace Lit\Chart\Engine;
 
-use Fjord\Chart\Contracts\Engine;
+use Lit\Chart\Contracts\Engine;
 
 abstract class ChartEngine implements Engine
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Lit\Crud;
 
-use Fjord\Support\VueProp;
+use Lit\Support\VueProp;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 

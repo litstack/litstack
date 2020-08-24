@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Lit\Crud;
 
-use Fjord\Page\RunActionEvent;
+use Lit\Page\RunActionEvent;
 use Illuminate\Http\Request;
 
 class RunCrudActionEvent extends RunActionEvent

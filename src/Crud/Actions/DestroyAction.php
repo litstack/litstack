@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Actions;
+namespace Lit\Crud\Actions;
 
-use Fjord\Page\Actions\ActionModal;
+use Lit\Page\Actions\ActionModal;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;

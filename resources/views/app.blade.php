@@ -1,4 +1,4 @@
-@extends('fjord::index')
+@extends('lit::index')
 
 @section('title')
     @isset($title)
@@ -7,8 +7,8 @@
 @endsection
 
 @section('content')
-    @include('fjord::vue.component', [
-        'component' => 'fjord-app',
-        'props' => ((array) \Fjord\Support\Facades\VueApp::render())['props']
+    @include('lit::vue.component', [
+        'component' => 'lit-app',
+        'props' => ((array) \Lit\Support\Facades\VueApp::render())['props']
     ])
 @endsection

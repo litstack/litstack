@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Page\Actions;
+namespace Lit\Page\Actions;
 
-use Fjord\Support\Bootstrap;
-use Fjord\Vue\Components\ButtonComponent;
+use Lit\Support\Bootstrap;
+use Lit\Vue\Components\ButtonComponent;
 
 class ButtonAction extends BaseAction
 {

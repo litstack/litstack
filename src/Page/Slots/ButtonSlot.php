@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Page\Slots;
+namespace Lit\Page\Slots;
 
-use Fjord\Support\Bootstrap;
-use Fjord\Vue\Components\ButtonComponent;
+use Lit\Support\Bootstrap;
+use Lit\Vue\Components\ButtonComponent;
 
 class ButtonSlot extends BaseSlot
 {

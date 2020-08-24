@@ -1,23 +1,23 @@
 <?php
 
-namespace Fjord\Crud\Config\Factories;
+namespace Lit\Crud\Config\Factories;
 
 use Closure;
-use Fjord\Config\ConfigFactory;
-use Fjord\Config\ConfigHandler;
-use Fjord\Crud\Actions\DestroyAction;
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Config\CrudConfig;
-use Fjord\Crud\CrudShow;
+use Lit\Config\ConfigFactory;
+use Lit\Config\ConfigHandler;
+use Lit\Crud\Actions\DestroyAction;
+use Lit\Crud\BaseForm;
+use Lit\Crud\Config\CrudConfig;
+use Lit\Crud\CrudShow;
 
 class CrudFormConfigFactory extends ConfigFactory
 {
     /**
      * Setup create and edit form.
      *
-     * @param  \Fjord\Config\ConfigHandler $config
+     * @param  \Lit\Config\ConfigHandler $config
      * @param  Closure                     $method
-     * @return \Fjord\Crud\CrudForm
+     * @return \Lit\Crud\CrudForm
      */
     public function show(ConfigHandler $config, Closure $method)
     {

@@ -1,14 +1,14 @@
 <?php
 
-namespace Fjord\Page\Table;
+namespace Lit\Page\Table;
 
 use ErrorException;
-use Fjord\Contracts\Page\Column as ColumnInterface;
-use Fjord\Contracts\Page\Table;
-use Fjord\Exceptions\MissingAttributeException;
-use Fjord\Exceptions\Traceable\InvalidArgumentException;
-use Fjord\Support\HasAttributes;
-use Fjord\Support\VueProp;
+use Lit\Contracts\Page\Column as ColumnInterface;
+use Lit\Contracts\Page\Table;
+use Lit\Exceptions\MissingAttributeException;
+use Lit\Exceptions\Traceable\InvalidArgumentException;
+use Lit\Support\HasAttributes;
+use Lit\Support\VueProp;
 
 class Column extends VueProp implements ColumnInterface
 {

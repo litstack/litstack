@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Models\Traits;
+namespace Lit\Crud\Models\Traits;
 
 use Astrotomic\Translatable\Translatable as AstronomicTranslatable;
 

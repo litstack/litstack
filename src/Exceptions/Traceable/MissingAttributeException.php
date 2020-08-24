@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Exceptions\Traceable;
+namespace Lit\Exceptions\Traceable;
 
-use Fjord\Contracts\Exceptions\Traceable;
-use Fjord\Support\TraceableException;
+use Lit\Contracts\Exceptions\Traceable;
+use Lit\Support\TraceableException;
 use LogicException;
 
 class MissingAttributeException extends LogicException implements Traceable

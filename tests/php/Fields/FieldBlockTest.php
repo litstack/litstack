@@ -1,12 +1,12 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\Fields\Block\Block;
-use Fjord\Crud\Fields\Block\Repeatables;
-use Fjord\Crud\Fields\Traits\HasBaseField;
-use FjordTest\BackendTestCase;
-use FjordTest\Traits\InteractsWithFields;
+use Lit\Crud\Fields\Block\Block;
+use Lit\Crud\Fields\Block\Repeatables;
+use Lit\Crud\Fields\Traits\HasBaseField;
+use Tests\BackendTestCase;
+use Tests\Traits\InteractsWithFields;
 
 class FieldBlockTest extends BackendTestCase
 {

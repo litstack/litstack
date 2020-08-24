@@ -1,13 +1,13 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Lit\Crud;
 
 use Illuminate\Support\Collection;
 
 class FormFieldCollection extends Collection
 {
     /**
-     * The \AwStudio\Fjord\Form\FormField::class items contained in the collection.
+     * The \AwStudio\Lit\Form\FormField::class items contained in the collection.
      *
      * @var array
      */

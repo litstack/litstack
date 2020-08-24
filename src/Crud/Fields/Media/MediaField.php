@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields\Media;
+namespace Lit\Crud\Fields\Media;
 
-use Fjord\Crud\RelationField;
+use Lit\Crud\RelationField;
 
 class MediaField extends RelationField
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Lit\Crud;
 
-use Fjord\Crud\Fields\Traits\HasBaseField;
+use Lit\Crud\Fields\Traits\HasBaseField;
 
 class BaseField extends Field
 {

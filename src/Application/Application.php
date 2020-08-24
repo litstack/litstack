@@ -1,20 +1,20 @@
 <?php
 
-namespace Fjord\Application;
+namespace Lit\Application;
 
-use Fjord\Translation\Translator;
+use Lit\Translation\Translator;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\Facades\View as ViewFactory;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 /**
- * The Application class manages all depencies for the view fjord::app:
+ * The Application class manages all depencies for the view lit::app:
  * Bootstrapping Application,
  * Registering and booting packages,
  * Registering and calling config handlers,
- * Binding css files for fjord,
- * Bind composer to the fjord::app view.
+ * Binding css files for lit,
+ * Bind composer to the lit::app view.
  */
 class Application
 {
@@ -62,7 +62,7 @@ class Application
     }
 
     /**
-     * Get locale for the Fjord application.
+     * Get locale for the Lit application.
      *
      * @return string
      */
@@ -72,7 +72,7 @@ class Application
     }
 
     /**
-     * Check if the Fjord application is running in a locale.
+     * Check if the Lit application is running in a locale.
      *
      * @param  string $locale
      * @return bool
@@ -83,14 +83,14 @@ class Application
     }
 
     /**
-     * Bind composer to fjord::app view.
+     * Bind composer to lit::app view.
      *
      * @param  string                   $composer
      * @return \Illuminate\View\Factory
      */
     public function composer(string $composer)
     {
-        return ViewFactory::composer('fjord::app', $composer);
+        return ViewFactory::composer('lit::app', $composer);
     }
 
     /**
@@ -144,7 +144,7 @@ class Application
     }
 
     /**
-     * Get Fjord application binding.
+     * Get Lit application binding.
      *
      * @param  string   $binding
      * @return instance
@@ -211,13 +211,13 @@ class Application
     }
 
     /**
-     * Get abstract for fjord application.
+     * Get abstract for lit application.
      *
      * @param  string $abstract
      * @return string
      */
     public function getAbstract($abstract)
     {
-        return Str::start($abstract, 'fjord.');
+        return Str::start($abstract, 'lit.');
     }
 }

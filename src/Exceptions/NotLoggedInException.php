@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Exceptions;
+namespace Lit\Exceptions;
 
 use LogicException;
 

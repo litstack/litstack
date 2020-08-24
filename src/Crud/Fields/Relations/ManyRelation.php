@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Crud\Fields\Relations;
+namespace Lit\Crud\Fields\Relations;
 
-use Fjord\Crud\Fields\Traits\HasBaseField;
+use Lit\Crud\Fields\Traits\HasBaseField;
 
 class ManyRelation extends ManyRelationField
 {
-    use Concerns\ManagesFjordRelationField;
+    use Concerns\ManagesLitRelationField;
     use HasBaseField;
 
     /**

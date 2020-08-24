@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Page;
+namespace Lit\Page;
 
-use Fjord\Contracts\Page\Page;
-use Fjord\Support\HasAttributes;
-use Fjord\Vue\Components\BladeComponent;
+use Lit\Contracts\Page\Page;
+use Lit\Support\HasAttributes;
+use Lit\Vue\Components\BladeComponent;
 use Illuminate\Contracts\View\View;
 use InvalidArgumentException;
 
@@ -44,8 +44,8 @@ abstract class BasePage implements Page
     /**
      * Add Vue component to stack.
      *
-     * @param  \Fjord\Vue\Component|string $component
-     * @return \Fjord\Vue\Component
+     * @param  \Lit\Vue\Component|string $component
+     * @return \Lit\Vue\Component
      */
     public function component($component)
     {

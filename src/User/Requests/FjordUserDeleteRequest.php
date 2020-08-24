@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\User\Requests;
+namespace Lit\User\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FjordUserDeleteRequest extends FormRequest
+class LitUserDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class FjordUserDeleteRequest extends FormRequest
      */
     public function authorize()
     {
-        return fjord_user()->can('delete fjord-users');
+        return lit_user()->can('delete lit-users');
     }
 
     /**

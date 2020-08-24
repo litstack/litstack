@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Crud\Repositories;
+namespace Lit\Crud\Repositories;
 
-use Fjord\Config\ConfigHandler;
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Controllers\CrudBaseController;
-use Fjord\Crud\Field;
+use Lit\Config\ConfigHandler;
+use Lit\Crud\BaseForm;
+use Lit\Crud\Controllers\CrudBaseController;
+use Lit\Crud\Field;
 use Illuminate\Support\Collection;
 
 abstract class BaseFieldRepository
@@ -13,7 +13,7 @@ abstract class BaseFieldRepository
     /**
      * Field instance.
      *
-     * @var \Fjord\Crud\Field
+     * @var \Lit\Crud\Field
      */
     protected $field;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Page\Table\Components;
+namespace Lit\Page\Table\Components;
 
-use Fjord\Vue\Traits\StaticComponentName;
+use Lit\Vue\Traits\StaticComponentName;
 use Illuminate\Contracts\View\View;
 
 class BladeColumnComponent extends ColumnComponent

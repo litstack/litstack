@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Page;
+namespace Lit\Page;
 
-use Fjord\Page\Actions\ButtonAction;
-use Fjord\Page\Actions\ButtonSmAction;
-use Fjord\Page\Actions\DropdownItemAction;
-use Fjord\Support\VueProp;
+use Lit\Page\Actions\ButtonAction;
+use Lit\Page\Actions\ButtonSmAction;
+use Lit\Page\Actions\DropdownItemAction;
+use Lit\Support\VueProp;
 
 class Navigation extends VueProp
 {

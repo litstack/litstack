@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Lit\Crud\Fields;
 
-use Fjord\Crud\BaseField;
+use Lit\Crud\BaseField;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 

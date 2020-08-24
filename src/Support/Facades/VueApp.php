@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Support\Facades;
+namespace Lit\Support\Facades;
 
-class VueApp extends Fjord
+class VueApp extends Lit
 {
     protected static function getFacadeAccessor()
     {
-        return 'fjord.vue.app';
+        return 'lit.vue.app';
     }
 }

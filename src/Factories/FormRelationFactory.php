@@ -3,9 +3,9 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use Faker\Generator as Faker;
-use Fjord\Crud\Models\FormRelation;
+use Lit\Crud\Models\Relation;
 
-$factory->define(FormRelation::class, function (Faker $faker, $args) {
+$factory->define(Relation::class, function (Faker $faker, $args) {
     if (! array_key_exists('name', $args)) {
         throw new InvalidArgumentException('Missing parameter "name".');
     }
@@ -25,7 +25,7 @@ $factory->define(FormRelation::class, function (Faker $faker, $args) {
     ];
 });
 
-$factory->afterMaking(FormRelation::class, function (FormRelation $relation) {
+$factory->afterMaking(Relation::class, function (Relation $relation) {
     $attributes = $relation->getAttributes();
     unset($attributes['name']);
     unset($attributes['from']);

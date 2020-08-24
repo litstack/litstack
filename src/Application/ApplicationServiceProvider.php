@@ -1,14 +1,14 @@
 <?php
 
-namespace Fjord\Application;
+namespace Lit\Application;
 
-use Fjord\Application\Composer\HttpErrorComposer;
-use Fjord\Application\Controllers\NotFoundController;
-use Fjord\Application\Kernel\HandleRouteMiddleware;
-use Fjord\Application\Kernel\HandleViewComposer;
-use Fjord\Commands\FjordFormPermissions;
-use Fjord\Support\Facades\Config;
-use Fjord\Support\Facades\FjordRoute;
+use Lit\Application\Composer\HttpErrorComposer;
+use Lit\Application\Controllers\NotFoundController;
+use Lit\Application\Kernel\HandleRouteMiddleware;
+use Lit\Application\Kernel\HandleViewComposer;
+use Lit\Commands\LitFormPermissions;
+use Lit\Support\Facades\Config;
+use Lit\Support\Facades\LitRoute;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -35,7 +35,7 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     protected function registerVueApplication()
     {
-        $this->app->singleton('fjord.vue.app', function () {
+        $this->app->singleton('lit.vue.app', function () {
             return new AppComponent;
         });
     }
@@ -49,21 +49,21 @@ class ApplicationServiceProvider extends ServiceProvider
     public function boot(Router $router): void
     {
         $this->handleKernel($router);
-        $this->fjordErrorPages();
+        $this->litErrorPages();
         $this->addCssFilesFromConfig();
     }
 
     /**
-     * Add css files from config fjord.assets.css.
+     * Add css files from config lit.assets.css.
      *
      * @return void
      */
     public function addCssFilesFromConfig()
     {
-        $this->app->afterResolving('fjord.app', function ($fjordApp) {
-            $files = config('fjord.assets.css') ?? [];
+        $this->app->afterResolving('lit.app', function ($litApp) {
+            $files = config('lit.assets.css') ?? [];
             foreach ($files as $file) {
-                $fjordApp->style($file);
+                $litApp->style($file);
             }
         });
     }
@@ -80,31 +80,31 @@ class ApplicationServiceProvider extends ServiceProvider
         $router->pushMiddlewareToGroup('web', HandleRouteMiddleware::class);
 
         // Kernel method handleView gets executed here.
-        View::composer('fjord::app', HandleViewComposer::class);
+        View::composer('lit::app', HandleViewComposer::class);
     }
 
     /**
-     * Better Fjord error pages.
+     * Better Lit error pages.
      *
      * @return void
      */
-    public function fjordErrorPages()
+    public function litErrorPages()
     {
         // Register route {any} after all service providers have been booted to
         // not override other routes.
         $this->app->booted(function () {
-            FjordRoute::get('{any}', NotFoundController::class)
+            LitRoute::get('{any}', NotFoundController::class)
                 ->where('any', '.*')
                 ->name('not_found');
         });
 
-        // Set view composer for error pages to use fjord error pages when needed.
+        // Set view composer for error pages to use lit error pages when needed.
         View::composer('errors::*', HttpErrorComposer::class);
 
         // This macro is needed to override the error page view.
         ViewClass::macro('setView', function (string $view) {
             $this->view = $view;
-            $this->setPath(view('fjord::app')->getPath());
+            $this->setPath(view('lit::app')->getPath());
 
             return $this;
         });
@@ -118,11 +118,11 @@ class ApplicationServiceProvider extends ServiceProvider
     protected function registerFormPermissionsCommand()
     {
         // Bind singleton.
-        $this->app->singleton('fjord.command.form-permissions', function ($app) {
+        $this->app->singleton('lit.command.form-permissions', function ($app) {
             // Passing migrator to command.
-            return new FjordFormPermissions($app['migrator']);
+            return new LitFormPermissions($app['migrator']);
         });
         // Registering command.
-        $this->commands(['fjord.command.form-permissions']);
+        $this->commands(['lit.command.form-permissions']);
     }
 }

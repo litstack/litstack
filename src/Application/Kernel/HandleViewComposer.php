@@ -1,19 +1,19 @@
 <?php
 
-namespace Fjord\Application\Kernel;
+namespace Lit\Application\Kernel;
 
 use Illuminate\View\View;
 
 class HandleViewComposer
 {
     /**
-     * Execute Fjord kernel method handleView.
+     * Execute Lit kernel method handleView.
      *
      * @param  Illuminate\View\View $view
      * @return void
      */
     public function compose(View $view)
     {
-        app()->get(\FjordApp\Kernel::class)->handleView($view);
+        app()->get(\LitApp\Kernel::class)->handleView($view);
     }
 }

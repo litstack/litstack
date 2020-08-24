@@ -1,26 +1,26 @@
 <?php
 
-namespace Fjord\Permissions\Controllers;
+namespace Lit\Permissions\Controllers;
 
-use Fjord\Permissions\Requests\Role\CreateRoleRequest;
-use Fjord\Permissions\Requests\Role\DeleteRoleRequest;
-use Fjord\Permissions\Requests\Role\UpdateRoleRequest;
-use Fjord\User\Models\FjordUser;
+use Lit\Permissions\Requests\Role\CreateRoleRequest;
+use Lit\Permissions\Requests\Role\DeleteRoleRequest;
+use Lit\Permissions\Requests\Role\UpdateRoleRequest;
+use Lit\User\Models\LitUser;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
 class RoleController
 {
     /**
-     * Assign role to fjord-user.
+     * Assign role to lit-user.
      *
      * @param  Request   $request
-     * @param  FjordUser $user_id
+     * @param  LitUser $user_id
      * @return void
      */
     public function assignRoleToUser(UpdateRoleRequest $request, $user_id, $role_id)
     {
-        $user = FjordUser::findOrFail($user_id);
+        $user = LitUser::findOrFail($user_id);
 
         $role = Role::findOrFail($role_id);
 
@@ -28,20 +28,20 @@ class RoleController
     }
 
     /**
-     * Remove role to from fjord-user.
+     * Remove role to from lit-user.
      *
      * @param  Request   $request
-     * @param  FjordUser $user_id
+     * @param  LitUser $user_id
      * @return void
      */
     public function removeRoleFromUser(UpdateRoleRequest $request, $user_id, $role_id)
     {
-        $user = FjordUser::findOrFail($user_id);
+        $user = LitUser::findOrFail($user_id);
 
         $role = $user->roles()->findOrFail($role_id);
 
         // Can't take away own admin role.
-        if ($role->name == 'admin' && $user->id == fjord_user()->id) {
+        if ($role->name == 'admin' && $user->id == lit_user()->id) {
             return response()->danger(__f('fjpermissions.cant_remove_admin_role'));
         }
 
@@ -88,7 +88,7 @@ class RoleController
             abort(422, __f('fjpermissions.cant_delete_role', ['role' => $roleName]));
         }
 
-        // FjordUsers with the role to be deleted are assigned the role user.
+        // LitUsers with the role to be deleted are assigned the role user.
         foreach ($role->users as $user) {
             if ($user->roles()->count() > 1) {
                 continue;

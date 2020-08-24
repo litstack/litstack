@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Config;
+namespace Lit\Config;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 /**
  * Config singleton.
  *
- * @see \Fjord\Support\Facades\Config
+ * @see \Lit\Support\Facades\Config
  */
 class ConfigLoader
 {
@@ -17,7 +17,7 @@ class ConfigLoader
      *
      * @var string
      */
-    protected $namespace = "FjordApp\Config";
+    protected $namespace = "LitApp\Config";
 
     /**
      * Stack of loaded instances.
@@ -149,7 +149,7 @@ class ConfigLoader
             ->map(fn ($item) => ucfirst(Str::camel($item)))
             ->implode('/');
 
-        return base_path("fjord/app/Config/{$path}Config.php");
+        return base_path("lit/app/Config/{$path}Config.php");
     }
 
     /**
@@ -177,7 +177,7 @@ class ConfigLoader
     {
         // Replacing path for windows and unix.
         $modified = str_replace('\\', '/', $path);
-        $modified = str_replace(str_replace('\\', '/', base_path('fjord/app/Config')).'/', '', $modified);
+        $modified = str_replace(str_replace('\\', '/', base_path('lit/app/Config')).'/', '', $modified);
         $modified = str_replace('Config.php', '', $modified);
 
         return explode('/', $modified);
@@ -192,7 +192,7 @@ class ConfigLoader
      */
     public function getKeyFromNamespace(string $namespace)
     {
-        return collect(explode('\\', Str::replaceLast('Config', '', str_replace('FjordApp\\Config\\', '', $namespace))))
+        return collect(explode('\\', Str::replaceLast('Config', '', str_replace('LitApp\\Config\\', '', $namespace))))
             ->map(fn ($item) => Str::snake($item))
             ->implode('.');
     }

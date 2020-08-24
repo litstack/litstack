@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Crud\Fields\Relations;
+namespace Lit\Crud\Fields\Relations;
 
 use Closure;
-use Fjord\Crud\Fields\Traits\HasBaseField;
+use Lit\Crud\Fields\Traits\HasBaseField;
 use InvalidArgumentException;
 
 class MorphToRegistrar extends LaravelRelationField

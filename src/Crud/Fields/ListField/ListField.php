@@ -1,15 +1,15 @@
 <?php
 
-namespace Fjord\Crud\Fields\ListField;
+namespace Lit\Crud\Fields\ListField;
 
 use Closure;
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Fields\Traits\FieldHasForm;
-use Fjord\Crud\Fields\Traits\HasBaseField;
-use Fjord\Crud\Models\FormField;
-use Fjord\Crud\Models\FormListItem;
-use Fjord\Crud\RelationField;
-use Fjord\Crud\Repositories\ListRepository;
+use Lit\Crud\BaseForm;
+use Lit\Crud\Fields\Traits\FieldHasForm;
+use Lit\Crud\Fields\Traits\HasBaseField;
+use Lit\Crud\Models\FormField;
+use Lit\Crud\Models\ListItem;
+use Lit\Crud\RelationField;
+use Lit\Crud\Repositories\ListRepository;
 
 class ListField extends RelationField
 {
@@ -97,16 +97,16 @@ class ListField extends RelationField
     /**
      * Determines if the given item is authorized.
      *
-     * @param  FormListItem $item
+     * @param  ListItem $item
      * @return bool
      */
-    public function itemAuthorized(FormListItem $item = null, $operation)
+    public function itemAuthorized(ListItem $item = null, $operation)
     {
         if (! $this->authorizeItemClosure) {
             return true;
         }
 
-        return call_user_func($this->authorizeItemClosure, fjord_user(), $item, $operation);
+        return call_user_func($this->authorizeItemClosure, lit_user(), $item, $operation);
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Test;
+namespace Lit\Test;
 
-use Fjord\Application\Application;
+use Lit\Application\Application;
 use Illuminate\Foundation\Application as LaravelApplication;
 use PHPUnit\Framework\TestCase;
 

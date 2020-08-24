@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Vue;
+namespace Lit\Vue;
 
-use Fjord\Support\Facades\FjordRoute;
+use Lit\Support\Facades\LitRoute;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 
 class VueRouteServiceProvider extends RouteServiceProvider
@@ -14,6 +14,6 @@ class VueRouteServiceProvider extends RouteServiceProvider
      */
     public function map()
     {
-        FjordRoute::post('handle-event', EventController::class);
+        LitRoute::post('handle-event', EventController::class);
     }
 }

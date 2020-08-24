@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Lit\Crud;
 
-use Fjord\Crud\Models\FormField;
+use Lit\Crud\Models\FormField;
 use Illuminate\Support\Collection;
 
 class Form

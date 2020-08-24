@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\User;
+namespace Lit\User;
 
-use Fjord\Support\Facades\Package;
-use Fjord\User\Controllers\FjordUserController;
-use Fjord\User\Controllers\ProfileController;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
+use Lit\Support\Facades\Package;
+use Lit\User\Controllers\LitUserController;
+use Lit\User\Controllers\ProfileController;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -16,7 +16,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     public function boot()
     {
-        $this->package = Package::get('aw-studio/fjord');
+        $this->package = Package::get('litstack/litstack');
 
         parent::boot();
 
@@ -45,9 +45,9 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     protected function mapUserRoleRoutes()
     {
         $this->package->route()->get('profile-sessions', ProfileController::class.'@sessions')->name('sessions');
-        $this->package->route()->get('/fjord/users', FjordUserController::class.'@showIndex')->name('users');
-        $this->package->route()->post('/fjord/users-index', FjordUserController::class.'@fetchIndex')->name('users.index');
-        $this->package->route()->post('/fjord/users/delete-all', FjordUserController::class.'@deleteAll')->name('users.delete');
+        $this->package->route()->get('/lit/users', LitUserController::class.'@showIndex')->name('users');
+        $this->package->route()->post('/lit/users-index', LitUserController::class.'@fetchIndex')->name('users.index');
+        $this->package->route()->post('/lit/users/delete-all', LitUserController::class.'@deleteAll')->name('users.delete');
     }
 
     /**
@@ -57,7 +57,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     public function addNavPresets()
     {
-        if (! $config = fjord()->config('user.profile_settings')) {
+        if (! $config = lit()->config('user.profile_settings')) {
             return;
         }
 
@@ -65,13 +65,13 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             'link' => function () use ($config) {
                 $id = app()->runningInConsole()
                     ? '{user_id}'
-                    : fjord_user()->id;
+                    : lit_user()->id;
 
-                return fjord()->url(
+                return lit()->url(
                     "$config->route_prefix/{$id}"
                 );
             },
-            'title' => fn () => __f('fj.profile'),
+            'title' => fn () => __f('lit.profile'),
             'icon'  => fa('user-cog'),
         ]);
     }

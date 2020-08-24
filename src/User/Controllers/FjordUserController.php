@@ -1,32 +1,32 @@
 <?php
 
-namespace Fjord\User\Controllers;
+namespace Lit\User\Controllers;
 
-use Fjord\Support\IndexTable;
-use Fjord\User\Models\FjordUser;
-use Fjord\User\Requests\FjordUserDeleteRequest;
-use Fjord\User\Requests\FjordUserReadRequest;
+use Lit\Support\IndexTable;
+use Lit\User\Models\LitUser;
+use Lit\User\Requests\LitUserDeleteRequest;
+use Lit\User\Requests\LitUserReadRequest;
 use Illuminate\Http\Request;
 
-class FjordUserController
+class LitUserController
 {
     /**
-     * Create new FjordUserController instance.
+     * Create new LitUserController instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->config = fjord()->config('user.user_index');
+        $this->config = lit()->config('user.user_index');
     }
 
     /**
      * Show user index.
      *
-     * @param  FjordUserReadRequest $request
+     * @param  LitUserReadRequest $request
      * @return void
      */
-    public function showIndex(FjordUserReadRequest $request)
+    public function showIndex(LitUserReadRequest $request)
     {
         $config = $this->config->get(
             'sortBy',
@@ -36,7 +36,7 @@ class FjordUserController
             'filter'
         );
 
-        return view('fjord::app')->withComponent('fj-users')
+        return view('lit::app')->withComponent('fj-users')
             ->withTitle('Users')
             ->withProps([
                 'config' => $config,
@@ -50,12 +50,12 @@ class FjordUserController
      *
      * @return void
      */
-    public function deleteAll(FjordUserDeleteRequest $request)
+    public function deleteAll(LitUserDeleteRequest $request)
     {
-        IndexTable::deleteSelected(FjordUser::class, $request);
+        IndexTable::deleteSelected(LitUser::class, $request);
 
         return response([
-            'message' => __f('fj.deleted_all', [
+            'message' => __f('lit.deleted_all', [
                 'count' => count($request->ids),
             ]),
         ]);
@@ -68,7 +68,7 @@ class FjordUserController
      *
      * @return array
      */
-    public function fetchIndex(FjordUserReadRequest $request)
+    public function fetchIndex(LitUserReadRequest $request)
     {
         $query = $this->config->index_query
             ->with('ordered_roles');

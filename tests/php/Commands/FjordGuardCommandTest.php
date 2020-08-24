@@ -1,11 +1,11 @@
 <?php
 
-namespace FjordTest\Commands;
+namespace Tests\Commands;
 
-use FjordTest\BackendTestCase;
-use FjordTest\Traits\RefreshLaravel;
+use Tests\BackendTestCase;
+use Tests\Traits\RefreshLaravel;
 
-class FjordGuardCommandTest extends BackendTestCase
+class LitGuardCommandTest extends BackendTestCase
 {
     use RefreshLaravel;
 
@@ -13,7 +13,7 @@ class FjordGuardCommandTest extends BackendTestCase
     {
         parent::setUp();
 
-        $this->artisan('fjord:guard');
+        $this->artisan('lit:guard');
     }
 
     public function tearDown(): void
@@ -22,18 +22,18 @@ class FjordGuardCommandTest extends BackendTestCase
     }
 
     /** @test */
-    public function it_creates_fjord_guard()
+    public function it_creates_lit_guard()
     {
         $authConfig = require config_path('auth.php');
 
-        $this->assertArrayHasKey('fjord', $authConfig['guards']);
+        $this->assertArrayHasKey('lit', $authConfig['guards']);
     }
 
     /** @test */
-    public function it_creates_fjord_users_provider()
+    public function it_creates_lit_users_provider()
     {
         $authConfig = require config_path('auth.php');
 
-        $this->assertArrayHasKey('fjord_users', $authConfig['providers']);
+        $this->assertArrayHasKey('lit_users', $authConfig['providers']);
     }
 }

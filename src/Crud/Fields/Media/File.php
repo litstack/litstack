@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Crud\Fields\Media;
+namespace Lit\Crud\Fields\Media;
 
-use Fjord\Crud\Fields\Traits\HasBaseField;
-use Fjord\Crud\Fields\Traits\TranslatableField;
+use Lit\Crud\Fields\Traits\HasBaseField;
+use Lit\Crud\Fields\Traits\TranslatableField;
 
 class File extends MediaField
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Crud\Api;
+namespace Lit\Crud\Api;
 
 use BadMethodCallException;
-use Fjord\Config\ConfigHandler;
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Controllers\CrudBaseController;
-use Fjord\Crud\CrudShow;
+use Lit\Config\ConfigHandler;
+use Lit\Crud\BaseForm;
+use Lit\Crud\Controllers\CrudBaseController;
+use Lit\Crud\CrudShow;
 use Illuminate\Support\Str;
 
 class ApiLoader

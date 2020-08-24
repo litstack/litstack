@@ -1,13 +1,13 @@
 <?php
 
-namespace Fjord\Page\Slots;
+namespace Lit\Page\Slots;
 
 class DropdownButtonSlot extends BaseSlot
 {
     /**
      * Get action compoent.
      *
-     * @return Fjord\Vue\Component
+     * @return Lit\Vue\Component
      */
     protected function getActionComponent()
     {

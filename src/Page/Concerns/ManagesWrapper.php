@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Page\Concerns;
+namespace Lit\Page\Concerns;
 
 use Closure;
 

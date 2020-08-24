@@ -1,9 +1,9 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Translation\i18nGenerator;
-use FjordTest\Traits\TestHelpers;
+use Lit\Translation\i18nGenerator;
+use Tests\Traits\TestHelpers;
 use PHPUnit\Framework\TestCase;
 
 class i18nGeneratorTest extends TestCase

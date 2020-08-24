@@ -1,10 +1,10 @@
 <?php
 
-namespace FjordPermissions;
+namespace LitPermissions;
 
-use Fjord\Application\Package\FjordPackage;
+use Lit\Application\Package\LitPackage;
 
-class Package extends FjordPackage
+class Package extends LitPackage
 {
     /**
      * List of service providers to be registered for this package.
@@ -12,7 +12,7 @@ class Package extends FjordPackage
      * @var array
      */
     protected $providers = [
-        \FjordPermissions\ServiceProvider::class,
+        \LitPermissions\ServiceProvider::class,
     ];
 
     /**

@@ -1,13 +1,13 @@
 <?php
 
-namespace Fjord\Crud\Models\Relations;
+namespace Lit\Crud\Models\Relations;
 
-use Fjord\Crud\Fields\ListField\ListRelation;
-use Fjord\Crud\Models\FormBlock;
-use Fjord\Crud\Models\FormListItem;
-use Fjord\Crud\Models\FormRelation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\ServiceProvider;
+use Lit\Crud\Fields\ListField\ListRelation;
+use Lit\Crud\Models\ListItem;
+use Lit\Crud\Models\Relation;
+use Lit\Crud\Models\Repeatable;
 
 class CrudRelations extends ServiceProvider
 {
@@ -34,7 +34,7 @@ class CrudRelations extends ServiceProvider
         Builder::macro('listItems', function (string $fieldId) {
             $model = $this->getModel();
 
-            $morphMany = $model->morphMany(FormListItem::class, 'model');
+            $morphMany = $model->morphMany(ListItem::class, 'model');
 
             $relation = new ListRelation(
                 $morphMany->getQuery(),
@@ -62,7 +62,7 @@ class CrudRelations extends ServiceProvider
         Builder::macro('repeatables', function ($fieldId = null) {
             $model = $this->getModel();
 
-            $relation = $model->morphMany(FormBlock::class, 'model')
+            $relation = $model->morphMany(Repeatable::class, 'model')
                 ->with('translations')
                 ->orderBy('order_column');
 
@@ -85,11 +85,11 @@ class CrudRelations extends ServiceProvider
             $instance = new $related();
             $model = $this->getModel();
 
-            return $model->belongsToMany($related, 'form_relations', 'from_model_id', 'to_model_id', $model->getKeyName(), $instance->getKeyName())
-                ->where('form_relations.from_model_type', get_class($model))
-                ->where('form_relations.to_model_type', $related)
+            return $model->belongsToMany($related, 'lit_relations', 'from_model_id', 'to_model_id', $model->getKeyName(), $instance->getKeyName())
+                ->where('lit_relations.from_model_type', get_class($model))
+                ->where('lit_relations.to_model_type', $related)
                 ->where('field_id', $fieldId)
-                ->orderBy('form_relations.order_column');
+                ->orderBy('lit_relations.order_column');
         });
     }
 
@@ -104,11 +104,11 @@ class CrudRelations extends ServiceProvider
             $instance = new $related();
             $model = $this->getModel();
 
-            return $model->hasOneThrough($related, FormRelation::class, 'from_model_id', $model->getKeyName(), $instance->getKeyName(), 'to_model_id')
-                ->where('form_relations.from_model_type', get_class($model))
-                ->where('form_relations.to_model_type', $related)
+            return $model->hasOneThrough($related, Relation::class, 'from_model_id', $model->getKeyName(), $instance->getKeyName(), 'to_model_id')
+                ->where('lit_relations.from_model_type', get_class($model))
+                ->where('lit_relations.to_model_type', $related)
                 ->where('field_id', $fieldId)
-                ->orderBy('form_relations.order_column');
+                ->orderBy('lit_relations.order_column');
         });
     }
 }

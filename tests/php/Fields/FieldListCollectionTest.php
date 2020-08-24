@@ -1,8 +1,8 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\Fields\ListField\ListCollection;
+use Lit\Crud\Fields\ListField\ListCollection;
 use Illuminate\Database\Eloquent\Model;
 use PHPUnit\Framework\TestCase;
 

@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <title>@yield('title') - Fjord</title>
+    <title>@yield('title') - Lit</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -10,31 +10,31 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="icon" type="image/png" sizes="32x32" href="{{route('fjord.favicon-big')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{route('fjord.favicon-small')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{route('lit.favicon-big')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{route('lit.favicon-small')}}">
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
 
-    <link href="{{ route('fjord.css') }}" rel="stylesheet"/>
+    <link href="{{ route('lit.css') }}" rel="stylesheet"/>
     
-    @foreach(fjord_app()->getStyles() as $path)
+    @foreach(lit_app()->getStyles() as $path)
         <link href="{{ $path }}{{ asset_time() }}" rel="stylesheet">
     @endforeach
 
-    @include('fjord::partials.google_analytics')
+    @include('lit::partials.google_analytics')
 
 </head>
 
 <body onload="makeVisible()">
     @php
-        fjord()->config('navigation')->topbar;
-        fjord()->config('navigation')->main;
+        lit()->config('navigation')->topbar;
+        lit()->config('navigation')->main;
     @endphp
-    <div id="fjord-app">
+    <div id="lit-app">
 
-            @include('fjord::partials.topbar.topbar')
-            @include('fjord::partials.navigation')
+            @include('lit::partials.topbar.topbar')
+            @include('lit::partials.navigation')
             <b-button
             variant="primary"
             class="d-block d-lg-none btn-square fj-main-navigation-toggle"
@@ -47,24 +47,24 @@
                 @yield('content') 
             </div>
             
-             @include('fjord::partials.spinner')
+             @include('lit::partials.spinner')
         </main>
 
     </div>
 
-    <!-- fjord translations -->
-    <script src="{{ fjord()->route('fjord-translations') }}"></script>
-    <!-- fjord app js -->
-    <script src="{{ fjord_js() }}" defer></script>
+    <!-- lit translations -->
+    <script src="{{ lit()->route('lit-translations') }}"></script>
+    <!-- lit app js -->
+    <script src="{{ lit_js() }}" defer></script>
 
-    @foreach(fjord_app()->getScripts() as $src)
+    @foreach(lit_app()->getScripts() as $src)
         <script src="{{ $src }}"></script>
     @endforeach
 
     <script type="text/javascript">
         function makeVisible(){
             let spinner = document.getElementById("fj-spinner");
-            let main = document.querySelector("div#fjord-app > main");
+            let main = document.querySelector("div#lit-app > main");
             if(spinner && main) {
                 spinner.classList.add('loaded');
                 main.classList.add('loaded');
@@ -102,7 +102,7 @@
                 .classList.toggle('visible');
                 
                 document
-                .querySelector('#fjord-app')
+                .querySelector('#lit-app')
                 .classList.toggle('navigation-visible');
             }
             

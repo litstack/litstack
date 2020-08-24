@@ -1,19 +1,19 @@
 <?php
 
-namespace FjordTest\CrudController;
+namespace Tests\CrudController;
 
-use Fjord\Crud\Models\FormBlock;
-use FjordTest\BackendTestCase;
-use FjordTest\TestSupport\Models\Post;
-use FjordTest\Traits\InteractsWithCrud;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Lit\Crud\Models\Repeatable;
+use Tests\BackendTestCase;
+use Tests\TestSupport\Models\Post;
+use Tests\Traits\InteractsWithCrud;
 
 /**
  * This test is using the Crud Post.
  *
- * @see FjordApp\Config\Crud\PostConfig
- * @see FjordTest\TestSupport\Models\Post
+ * @see LitApp\Config\Crud\PostConfig
+ * @see Tests\TestSupport\Models\Post
  */
 class ApiBlockTest extends BackendTestCase
 {
@@ -25,7 +25,7 @@ class ApiBlockTest extends BackendTestCase
 
         Storage::fake();
         $this->post = Post::create([]);
-        $this->actingAs($this->admin, 'fjord');
+        $this->actingAs($this->admin, 'lit');
     }
 
     // Store
@@ -197,7 +197,7 @@ class ApiBlockTest extends BackendTestCase
 
     public function getRepeatables($type = null, $fieldId = 'content')
     {
-        $query = FormBlock::where('model_type', get_class($this->post))
+        $query = Repeatable::where('model_type', get_class($this->post))
             ->where('model_id', $this->post->id)
             ->where('field_id', $fieldId);
 
@@ -210,8 +210,8 @@ class ApiBlockTest extends BackendTestCase
 
     public function createRepeatable($type = 'text', $fieldId = 'content')
     {
-        return FormBlock::create([
-            'config_type' => \FjordApp\Config\Crud\PostConfig::class,
+        return Repeatable::create([
+            'config_type' => \LitApp\Config\Crud\PostConfig::class,
             'type'        => $type,
             'model_type'  => get_class($this->post),
             'model_id'    => $this->post->id,

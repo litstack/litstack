@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Contracts\Page;
+namespace Lit\Contracts\Page;
 
 interface ActionFactory
 {
@@ -9,7 +9,7 @@ interface ActionFactory
      *
      * @param  string              $title
      * @param  string              $action
-     * @return Fjord\Vue\Component
+     * @return Lit\Vue\Component
      */
     public function make($title, $action);
 }

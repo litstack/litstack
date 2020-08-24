@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Vue\Components;
+namespace Lit\Vue\Components;
 
-use Fjord\Contracts\Vue\Resizable;
-use Fjord\Crud\FieldDependency;
-use Fjord\Vue\Component;
-use Fjord\Vue\Traits\CanBeResized;
+use Lit\Contracts\Vue\Resizable;
+use Lit\Crud\FieldDependency;
+use Lit\Vue\Component;
+use Lit\Vue\Traits\CanBeResized;
 
 class FieldWrapperGroupComponent extends Component implements Resizable
 {

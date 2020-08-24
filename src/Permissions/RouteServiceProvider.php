@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Permissions;
+namespace Lit\Permissions;
 
-use Fjord\Permissions\Controllers\PermissionController;
-use Fjord\Permissions\Controllers\RoleController;
-use Fjord\Permissions\Controllers\RolePermissionController;
-use Fjord\Support\Facades\Package;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
+use Lit\Permissions\Controllers\PermissionController;
+use Lit\Permissions\Controllers\RoleController;
+use Lit\Permissions\Controllers\RolePermissionController;
+use Lit\Support\Facades\Package;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -24,7 +24,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     public function boot()
     {
-        $this->package = Package::get('aw-studio/fjord');
+        $this->package = Package::get('litstack/litstack');
 
         parent::boot();
 
@@ -53,11 +53,11 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     protected function addNavPresets()
     {
         $this->package->addNavPreset('permissions', [
-            'link'      => route('fjord.aw-studio.fjord.permissions'),
-            'title'     => fn () => __f('fj.permissions'),
+            'link'      => route('lit.permissions'),
+            'title'     => fn ()     => __f('lit.permissions'),
             'icon'      => fa('unlock-alt'),
             'authorize' => function ($user) {
-                return $user->can('read fjord-role-permissions');
+                return $user->can('read lit-role-permissions');
             },
         ]);
     }
@@ -74,11 +74,11 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             ->name('permissions');
 
         $this->package->route()
-            ->post('/fjord-user/{user_id}/role/{role_id}', RoleController::class.'@assignRoleToUser')
+            ->post('/lit-user/{user_id}/role/{role_id}', RoleController::class.'@assignRoleToUser')
             ->name('role.assign');
 
         $this->package->route()
-            ->delete('/fjord-user/{user_id}/role/{role_id}', RoleController::class.'@removeRoleFromUser')
+            ->delete('/lit-user/{user_id}/role/{role_id}', RoleController::class.'@removeRoleFromUser')
             ->name('role.remove');
 
         $this->package->route()

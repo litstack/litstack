@@ -1,23 +1,23 @@
 <?php
 
-namespace Fjord\Exceptions;
+namespace Lit\Exceptions;
 
 use Exception;
 use Facade\IgnitionContracts\ProvidesSolution;
 use Facade\IgnitionContracts\Solution;
-use Fjord\Exceptions\Solutions\FjordSolution;
-use Fjord\Exceptions\Solutions\InstallFjordSolution;
+use Lit\Exceptions\Solutions\LitSolution;
+use Lit\Exceptions\Solutions\InstallLitSolution;
 
-class MissingFjordEnvironmentException extends Exception implements ProvidesSolution
+class MissingLitEnvironmentException extends Exception implements ProvidesSolution
 {
     public function getSolution(): Solution
     {
-        if (fjord()->needsDumpAutoload()) {
-            return FjordSolution::create('Missing Fjord package cache.')
+        if (lit()->needsDumpAutoload()) {
+            return LitSolution::create('Missing Lit package cache.')
                 ->setSolutionDescription('Call `composer dumpautoload`.')
                 ->withoutDocs();
         }
 
-        return new InstallFjordSolution();
+        return new InstallLitSolution();
     }
 }

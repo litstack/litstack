@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Chart\Loader;
+namespace Lit\Chart\Loader;
 
 use Carbon\CarbonInterface;
 use Closure;
-use Fjord\Chart\ChartSet;
+use Lit\Chart\ChartSet;
 
 class BarLoader extends ChartLoader
 {

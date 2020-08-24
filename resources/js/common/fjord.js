@@ -1,57 +1,57 @@
 import Bus from './event.bus';
-import store from '@fj-js/store';
+import store from '@lit-js/store';
 
-const Fjord = {
-    bus: Bus,
-    config: {},
-    baseURL: null,
+const Lit = {
+	bus: Bus,
+	config: {},
+	baseURL: null,
 
-    /**
-     * Get authenticated fjord-user model.
-     *
-     * @return {Object}
-     */
-    user() {
-        return store.getters.auth;
-    },
+	/**
+	 * Get authenticated lit-user model.
+	 *
+	 * @return {Object}
+	 */
+	user() {
+		return store.getters.auth;
+	},
 
-    /**
-     * Get Fjord application locale.
-     *
-     * @param {Object} obj
-     * @return {String}
-     */
-    getLocale() {
-        return i18n.locale;
-    },
+	/**
+	 * Get Lit application locale.
+	 *
+	 * @param {Object} obj
+	 * @return {String}
+	 */
+	getLocale() {
+		return i18n.locale;
+	},
 
-    /**
-     * Check if Fjord application locale is locale.
-     *
-     * @param {Object} obj
-     * @return {Boolean}
-     */
-    isLocale(locale) {
-        return i18n.locale == locale;
-    },
+	/**
+	 * Check if Lit application locale is locale.
+	 *
+	 * @param {Object} obj
+	 * @return {Boolean}
+	 */
+	isLocale(locale) {
+		return i18n.locale == locale;
+	},
 
-    /**
-     * Clone object.
-     *
-     * @param {Object} obj
-     */
-    clone(obj) {
-        return JSON.parse(JSON.stringify(obj));
-    }
+	/**
+	 * Clone object.
+	 *
+	 * @param {Object} obj
+	 */
+	clone(obj) {
+		return JSON.parse(JSON.stringify(obj));
+	},
 };
 
-window.Fjord = Fjord;
+window.Lit = Lit;
 
-const setConfig = config => {
-    window.Fjord.config = config;
-    window.Fjord.baseURL = store.state.config.baseURL;
+const setConfig = (config) => {
+	window.Lit.config = config;
+	window.Lit.baseURL = store.state.config.baseURL;
 };
 
 Bus.$on('configSet', setConfig);
 
-export default Fjord;
+export default Lit;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Fields\Relations;
+namespace Lit\Crud\Fields\Relations;
 
 class OneRelationField extends LaravelRelationField
 {

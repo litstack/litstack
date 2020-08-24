@@ -1,12 +1,12 @@
 <?php
 
-namespace FjordTest\Page;
+namespace Tests\Page;
 
-use Fjord\Exceptions\Traceable\MissingAttributeException;
-use Fjord\Page\Table\ColumnBuilder;
-use Fjord\Page\Table\Table;
-use Fjord\Vue\Component;
-use FjordTest\BackendTestCase;
+use Lit\Exceptions\Traceable\MissingAttributeException;
+use Lit\Page\Table\ColumnBuilder;
+use Lit\Page\Table\Table;
+use Lit\Vue\Component;
+use Tests\BackendTestCase;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Mockery as m;

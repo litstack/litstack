@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Crud\Controllers;
+namespace Lit\Crud\Controllers;
 
-use Fjord\Crud\Actions\ActionResolver;
-use Fjord\Crud\Api\ApiLoader;
-use Fjord\Crud\Api\ApiRequest;
-use Fjord\Crud\Requests\CrudReadRequest;
-use Fjord\Support\IndexTable;
+use Lit\Crud\Actions\ActionResolver;
+use Lit\Crud\Api\ApiLoader;
+use Lit\Crud\Api\ApiRequest;
+use Lit\Crud\Requests\CrudReadRequest;
+use Lit\Support\IndexTable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 

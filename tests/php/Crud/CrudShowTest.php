@@ -1,12 +1,12 @@
 <?php
 
-namespace FjordTest\Crud;
+namespace Tests\Crud;
 
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\CrudShow;
-use Fjord\Exceptions\Traceable\InvalidArgumentException;
-use FjordTest\BackendTestCase;
 use Illuminate\Database\Eloquent\Model;
+use Lit\Crud\BaseForm;
+use Lit\Crud\CrudShow;
+use Lit\Exceptions\Traceable\InvalidArgumentException;
+use Tests\BackendTestCase;
 
 class CrudShowTest extends BackendTestCase
 {

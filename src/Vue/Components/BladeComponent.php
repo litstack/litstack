@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Vue\Components;
+namespace Lit\Vue\Components;
 
-use Fjord\Vue\Component;
+use Lit\Vue\Component;
 use Illuminate\Contracts\View\View;
 
 class BladeComponent extends Component

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Config\Traits;
+namespace Lit\Config\Traits;
 
-use Fjord\Vue\Table;
+use Lit\Vue\Table;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -15,7 +15,7 @@ trait HasIndex
     /**
      * Setup index table.
      *
-     * @param \Fjord\Vue\Table $table
+     * @param \Lit\Vue\Table $table
      *
      * @return void
      */
@@ -41,8 +41,8 @@ trait HasIndex
     public function sortBy()
     {
         return [
-            'id.desc' => __f('fj.sort_new_to_old'),
-            'id.asc'  => __f('fj.sort_old_to_new'),
+            'id.desc' => __f('lit.sort_new_to_old'),
+            'id.asc'  => __f('lit.sort_old_to_new'),
         ];
     }
 

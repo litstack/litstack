@@ -1,17 +1,17 @@
 <?php
 
-namespace Fjord\Application\Navigation;
+namespace Lit\Application\Navigation;
 
 use Closure;
-use Fjord\Config\ConfigFactory;
-use Fjord\Config\ConfigHandler;
+use Lit\Config\ConfigFactory;
+use Lit\Config\ConfigHandler;
 
 class NavigationConfigFactory extends ConfigFactory
 {
     /**
      * Resolve query.
      *
-     * @param \Fjord\Config\ConfigHandler $config
+     * @param \Lit\Config\ConfigHandler $config
      * @param Closure                     $method
      *
      * @return Navigation
@@ -24,7 +24,7 @@ class NavigationConfigFactory extends ConfigFactory
     /**
      * Resolve query.
      *
-     * @param \Fjord\Config\ConfigHandler $config
+     * @param \Lit\Config\ConfigHandler $config
      * @param Closure                     $method
      *
      * @return Navigation

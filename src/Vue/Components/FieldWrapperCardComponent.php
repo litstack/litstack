@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Vue\Components;
+namespace Lit\Vue\Components;
 
-use Fjord\Contracts\Vue\Resizable;
-use Fjord\Vue\Component;
-use Fjord\Vue\Traits\CanBeResized;
+use Lit\Contracts\Vue\Resizable;
+use Lit\Vue\Component;
+use Lit\Vue\Traits\CanBeResized;
 
 class FieldWrapperCardComponent extends Component implements Resizable
 {

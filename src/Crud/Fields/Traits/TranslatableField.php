@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Crud\Fields\Traits;
+namespace Lit\Crud\Fields\Traits;
 
-use Fjord\Crud\Models\FjordFormModel;
-use Fjord\Support\Facades\Fjord;
+use Lit\Crud\Models\LitFormModel;
+use Lit\Support\Facades\Lit;
 
 trait TranslatableField
 {
@@ -32,8 +32,8 @@ trait TranslatableField
             return false;
         }
 
-        if (new $this->model instanceof FjordFormModel) {
-            return Fjord::isAppTranslatable();
+        if (new $this->model instanceof LitFormModel) {
+            return Lit::isAppTranslatable();
         }
 
         return is_attribute_translatable($this->id, $this->model);

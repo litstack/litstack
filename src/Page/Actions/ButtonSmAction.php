@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Page\Actions;
+namespace Lit\Page\Actions;
 
-use Fjord\Vue\Components\ButtonComponent;
+use Lit\Vue\Components\ButtonComponent;
 
 class ButtonSmAction extends BaseAction
 {

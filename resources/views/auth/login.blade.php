@@ -1,4 +1,4 @@
-@extends('fjord::landing')
+@extends('lit::landing')
 
 @section('title')
     Login
@@ -21,7 +21,7 @@
                                         class="form-control @error('email') is-invalid @enderror" 
                                         name="email" 
                                         required 
-                                        @if(config('fjord.login.username'))
+                                        @if(config('lit.login.username'))
                                         placeholder="{{ ucfirst(__f('login.email_or_username')) }} "
                                         type="text"
                                         @else
@@ -91,7 +91,7 @@
 
             const data = new FormData(document.forms.login);
 
-            let promise = axios.post('{{ Fjord::route('login.post') }}', data)
+            let promise = axios.post('{{ Lit::route('login.post') }}', data)
             promise.then(function(response) {
                 window.location = response.data
             })

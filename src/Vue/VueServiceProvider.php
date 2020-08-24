@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Vue;
+namespace Lit\Vue;
 
-use Fjord\Contracts\Vue\Vue as VueContract;
 use Illuminate\Support\ServiceProvider;
+use Lit\Contracts\Vue\Vue as VueContract;
 
 class VueServiceProvider extends ServiceProvider
 {
@@ -14,11 +14,11 @@ class VueServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('fjord.vue', function ($app) {
+        $this->app->singleton('lit.vue', function ($app) {
             return new Vue();
         });
 
-        $this->app->bind(VueContract::class, 'fjord.vue');
+        $this->app->bind(VueContract::class, 'lit.vue');
 
         $this->app->register(VueRouteServiceProvider::class);
     }

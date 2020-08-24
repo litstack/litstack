@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Contracts\Exceptions;
+namespace Lit\Contracts\Exceptions;
 
 use Exception;
 

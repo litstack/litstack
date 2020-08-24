@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Config\Traits;
+namespace Lit\Crud\Config\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 

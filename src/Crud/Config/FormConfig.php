@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Crud\Config;
+namespace Lit\Crud\Config;
 
-use Fjord\Crud\Models\FormField;
-use Fjord\Support\Facades\Crud;
+use Lit\Crud\Models\FormField;
+use Lit\Support\Facades\Crud;
 use Illuminate\Support\Str;
 
 class FormConfig

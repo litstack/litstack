@@ -1,15 +1,15 @@
 <?php
 
-namespace Fjord\Chart;
+namespace Lit\Chart;
 
-use Fjord\Chart\Config\AreaChartConfig;
-use Fjord\Chart\Config\BarChartConfig;
-use Fjord\Chart\Config\DonutChartConfig;
-use Fjord\Chart\Config\NumberChartConfig;
-use Fjord\Chart\Config\ProgressChartConfig;
-use Fjord\Chart\Contracts\Engine;
-use Fjord\Config\ConfigHandler;
-use Fjord\Support\VueProp;
+use Lit\Chart\Config\AreaChartConfig;
+use Lit\Chart\Config\BarChartConfig;
+use Lit\Chart\Config\DonutChartConfig;
+use Lit\Chart\Config\NumberChartConfig;
+use Lit\Chart\Config\ProgressChartConfig;
+use Lit\Chart\Contracts\Engine;
+use Lit\Config\ConfigHandler;
+use Lit\Support\VueProp;
 
 class Chart extends VueProp
 {
@@ -23,7 +23,7 @@ class Chart extends VueProp
     /**
      * Chart engine.
      *
-     * @var \Fjord\Chart\Contracts\Engine
+     * @var \Lit\Chart\Contracts\Engine
      */
     protected $engine;
 
@@ -37,7 +37,7 @@ class Chart extends VueProp
     /**
      * Create new Chart instance.
      *
-     * @param \Fjord\Chart\Contracts\Engine $engine
+     * @param \Lit\Chart\Contracts\Engine $engine
      * @param ConfigHandler                 $config
      */
     public function __construct(Engine $engine, ConfigHandler $config)
@@ -72,7 +72,7 @@ class Chart extends VueProp
     /**
      * Get engine.
      *
-     * @return \Fjord\Chart\Contracts\Engine
+     * @return \Lit\Chart\Contracts\Engine
      */
     public function getEngine()
     {
@@ -184,7 +184,7 @@ class Chart extends VueProp
     /**
      * Chart engine.
      *
-     * @return \Fjord\Vue\Component
+     * @return \Lit\Vue\Component
      */
     public function component()
     {

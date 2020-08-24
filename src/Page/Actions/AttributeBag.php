@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Page\Actions;
+namespace Lit\Page\Actions;
 
-use Fjord\Support\HasAttributes;
+use Lit\Support\HasAttributes;
 
 class AttributeBag
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Lit\Crud\Fields;
 
-use Fjord\Crud\BaseField;
+use Lit\Crud\BaseField;
 
 class Icon extends BaseField
 {
@@ -29,7 +29,7 @@ class Icon extends BaseField
      */
     public function mount()
     {
-        $this->icons(require fjord_path('src/Crud/Fields/Defaults/fontawesome_icons.php'));
+        $this->icons(require lit_path('src/Crud/Fields/Defaults/fontawesome_icons.php'));
         $this->search(true);
     }
 

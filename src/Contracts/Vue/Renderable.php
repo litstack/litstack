@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Contracts\Vue;
+namespace Lit\Contracts\Vue;
 
 interface Renderable
 {

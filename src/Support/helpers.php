@@ -1,6 +1,6 @@
 <?php
 
-use Fjord\Support\Facades\Vue;
+use Lit\Support\Facades\Vue;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +42,7 @@ if (! function_exists('crud')) {
      *
      * @param mixed $model
      *
-     * @return \Fjord\Crud\CrudJs|Collection
+     * @return \Lit\Crud\CrudJs|Collection
      */
     function crud($model)
     {
@@ -55,7 +55,7 @@ if (! function_exists('crud')) {
             return $cruds;
         }
 
-        return new \Fjord\Crud\CrudJs($model);
+        return new \Lit\Crud\CrudJs($model);
     }
 }
 
@@ -63,13 +63,13 @@ if (! function_exists('component')) {
     /**
      * Get a new Vue component instance.
      *
-     * @param  \Fjord\Vue\Component|string $name
+     * @param  \Lit\Vue\Component|string $name
      * @param  string                      $fallback
-     * @return \Fjord\Vue\Component|mixed
+     * @return \Lit\Vue\Component|mixed
      */
     function component($name, $fallback = null)
     {
-        if ($name instanceof \Fjord\Vue\Component) {
+        if ($name instanceof \Lit\Vue\Component) {
             return $name;
         }
 
@@ -147,49 +147,49 @@ if (! function_exists('split_path')) {
     }
 }
 
-if (! function_exists('fjord_js')) {
+if (! function_exists('lit_js')) {
     /**
-     * Get the Fjord app.js file path.
+     * Get the Lit app.js file path.
      *
      * @return string
      */
-    function fjord_js()
+    function lit_js()
     {
-        $js_path = config('fjord.assets.js')
-            ? config('fjord.assets.js')
-            : route('fjord.js');
+        $js_path = config('lit.assets.js')
+            ? config('lit.assets.js')
+            : route('lit.js');
 
-        if (config('fjord.assets.js')) {
-            $js_path .= '?v='.filemtime(ltrim(config('fjord.assets.js'), '/'));
+        if (config('lit.assets.js')) {
+            $js_path .= '?v='.filemtime(ltrim(config('lit.assets.js'), '/'));
         }
 
         return $js_path;
     }
 }
 
-if (! function_exists('fjord_css')) {
+if (! function_exists('lit_css')) {
     /**
-     * Get the Fjord app.css file path.
+     * Get the Lit app.css file path.
      *
      * @return string
      */
-    function fjord_css()
+    function lit_css()
     {
-        return config('fjord.assets.app.css')
-            ? config('fjord.assets.app.css')
-            : route('fjord.css');
+        return config('lit.assets.app.css')
+            ? config('lit.assets.app.css')
+            : route('lit.css');
     }
 }
 
-if (! function_exists('fjord_user')) {
+if (! function_exists('lit_user')) {
     /**
-     * Get the authenticated Fjord user.
+     * Get the authenticated Lit user.
      *
-     * @return \Fjord\User\Models\FjordUser
+     * @return \Lit\User\Models\LitUser
      */
-    function fjord_user()
+    function lit_user()
     {
-        return Auth::guard('fjord')->user();
+        return Auth::guard('lit')->user();
     }
 }
 
@@ -216,7 +216,7 @@ if (! function_exists('__f')) {
      */
     function __f($key = null, $replace = [])
     {
-        return fjord()->trans($key, $replace);
+        return lit()->trans($key, $replace);
     }
 }
 
@@ -231,7 +231,7 @@ if (! function_exists('__f_choice')) {
      */
     function __f_choice($key, $number, $replace = [])
     {
-        return fjord()->trans_choice($key, $number, $replace);
+        return lit()->trans_choice($key, $number, $replace);
     }
 }
 
@@ -246,7 +246,7 @@ if (! function_exists('__f_c')) {
      */
     function __f_c($key, $number, $replace = [])
     {
-        return fjord()->trans_choice($key, $number, $replace);
+        return lit()->trans_choice($key, $number, $replace);
     }
 }
 
@@ -268,70 +268,70 @@ if (! function_exists('__f_')) {
     }
 }
 
-if (! function_exists('fjord_config_path')) {
+if (! function_exists('lit_config_path')) {
     /**
-     * Path to Fjord config files.
+     * Path to Lit config files.
      *
      * @param string $path
      *
      * @return void
      */
-    function fjord_config_path($path = '')
+    function lit_config_path($path = '')
     {
-        return base_path('fjord/app/Config'.($path ? DIRECTORY_SEPARATOR.$path : $path));
+        return base_path('lit/app/Config'.($path ? DIRECTORY_SEPARATOR.$path : $path));
     }
 }
 
-if (! function_exists('fjord_resource_path')) {
+if (! function_exists('lit_resource_path')) {
     /**
-     * Path to Fjord resources.
+     * Path to Lit resources.
      *
      * @param string $path
      *
      * @return void
      */
-    function fjord_resource_path($path = '')
+    function lit_resource_path($path = '')
     {
-        return base_path('fjord/resources'.($path ? DIRECTORY_SEPARATOR.$path : $path));
+        return base_path('lit/resources'.($path ? DIRECTORY_SEPARATOR.$path : $path));
     }
 }
 
-if (! function_exists('fjord_path')) {
+if (! function_exists('lit_path')) {
     /**
-     * Path to Fjord composer package.
+     * Path to Lit composer package.
      *
      * @param string $path
      *
      * @return string
      */
-    function fjord_path(string $path = '')
+    function lit_path(string $path = '')
     {
         return realpath(__DIR__.'/../../').($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
 }
 
-if (! function_exists('fjord')) {
+if (! function_exists('lit')) {
     /**
-     * Get Fjord facade.
+     * Get Lit facade.
      *
-     * @return Fjord\Fjord\Fjord
+     * @return Lit\Foundation\Lit
      */
-    function fjord()
+    function lit()
     {
-        return app()->get('fjord');
+        return app()->get('lit');
     }
 }
 
-if (! function_exists('fjord_app')) {
+if (! function_exists('lit_app')) {
     /**
-     * Get Fjord application instance.
+     * Get Lit application instance.
      *
      * @param  string|null $abstract
      * @return mixed
      */
-    function fjord_app($abstract = null)
+    function lit_app($abstract = null)
     {
-        $app = app()->get('fjord.app');
+        $app = app()->get('lit.app');
 
         if (! $abstract) {
             return $app;

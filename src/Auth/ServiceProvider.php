@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Auth;
+namespace Lit\Auth;
 
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
@@ -13,6 +13,6 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function boot()
     {
-        $this->app->register(\Fjord\Auth\RouteServiceProvider::class);
+        $this->app->register(\Lit\Auth\RouteServiceProvider::class);
     }
 }

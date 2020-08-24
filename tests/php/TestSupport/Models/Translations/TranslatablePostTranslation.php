@@ -1,6 +1,6 @@
 <?php
 
-namespace FjordTest\TestSupport\Models\Translations;
+namespace Tests\TestSupport\Models\Translations;
 
 use Illuminate\Database\Eloquent\Model;
 

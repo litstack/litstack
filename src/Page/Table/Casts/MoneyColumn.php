@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Page\Table\Casts;
+namespace Lit\Page\Table\Casts;
 
-use Fjord\Page\Table\ColumnCast;
-use Fjord\Support\Facades\FjordApp;
+use Lit\Page\Table\ColumnCast;
+use Lit\Support\Facades\LitApp;
 use NumberFormatter;
 
 class MoneyColumn extends ColumnCast
@@ -32,7 +32,7 @@ class MoneyColumn extends ColumnCast
     public function __construct($currency = 'EUR', $locale = null)
     {
         if (! $locale) {
-            $locale = FjordApp::getLocale();
+            $locale = LitApp::getLocale();
         }
 
         $this->currency = $currency;

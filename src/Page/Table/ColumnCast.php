@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Page\Table;
+namespace Lit\Page\Table;
 
 abstract class ColumnCast
 {

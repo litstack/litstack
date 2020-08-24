@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Vue\Traits;
+namespace Lit\Vue\Traits;
 
 trait StaticComponentName
 {

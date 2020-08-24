@@ -1,10 +1,10 @@
 <?php
 
-namespace FjordTest\Crud;
+namespace Tests\Crud;
 
-use Fjord\Crud\CrudValidator;
-use FjordTest\BackendTestCase;
+use Lit\Crud\CrudValidator;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class CrudValidatorTest extends BackendTestCase
 {

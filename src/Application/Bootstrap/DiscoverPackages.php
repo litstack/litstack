@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Application\Bootstrap;
+namespace Lit\Application\Bootstrap;
 
-use Fjord\Application\Application;
-use Fjord\Application\Package\Packages;
+use Lit\Application\Application;
+use Lit\Application\Package\Packages;
 use Illuminate\Support\Facades\File;
 
 class DiscoverPackages
@@ -22,14 +22,14 @@ class DiscoverPackages
      */
     public function __construct()
     {
-        $this->path = base_path('bootstrap/cache/fjord.php');
+        $this->path = base_path('bootstrap/cache/lit.php');
     }
 
     /**
-     * Initialize Packages instance with all Fjord packages
+     * Initialize Packages instance with all Lit packages
      * and bind instance to the application.
      *
-     * @param  Fjord\Application\Application $app
+     * @param  Lit\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app)
@@ -41,8 +41,8 @@ class DiscoverPackages
 
     /**
      * Get all packages that are discovered by the
-     * \Fjord\Foundation\Console\PackageDiscoverCommand and compiled to the
-     * manifest in bootstrap/cache/fjord.php.
+     * \Lit\Foundation\Console\PackageDiscoverCommand and compiled to the
+     * manifest in bootstrap/cache/lit.php.
      *
      * @return array $packages
      */

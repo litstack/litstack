@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Application\Navigation;
+namespace Lit\Application\Navigation;
 
-use Fjord\Support\Facades\Package;
+use Lit\Support\Facades\Package;
 use Illuminate\Contracts\Support\Arrayable;
 
 class Navigation implements Arrayable
@@ -126,6 +126,6 @@ class Navigation implements Arrayable
             return $params['authorize'];
         }
 
-        return $params['authorize'](fjord_user());
+        return $params['authorize'](lit_user());
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Page\Table\Components;
+namespace Lit\Page\Table\Components;
 
 use ErrorException;
-use Fjord\Contracts\Page\Column;
-use Fjord\Exceptions\Traceable\InvalidArgumentException;
-use Fjord\Vue\Component;
+use Lit\Contracts\Page\Column;
+use Lit\Exceptions\Traceable\InvalidArgumentException;
+use Lit\Vue\Component;
 
 class ColumnComponent extends Component implements Column
 {

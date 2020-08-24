@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Repositories\Relations\Concerns;
+namespace Lit\Crud\Repositories\Relations\Concerns;
 
 use Illuminate\Http\Request;
 

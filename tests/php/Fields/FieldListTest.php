@@ -1,12 +1,12 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Fields\ListField\ListField;
-use Fjord\Crud\RelationField;
-use FjordTest\BackendTestCase;
-use FjordTest\Traits\InteractsWithFields;
+use Lit\Crud\BaseForm;
+use Lit\Crud\Fields\ListField\ListField;
+use Lit\Crud\RelationField;
+use Tests\BackendTestCase;
+use Tests\Traits\InteractsWithFields;
 use Illuminate\Database\Eloquent\Model;
 use Mockery as m;
 

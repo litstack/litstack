@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Lit\Crud\Fields;
 
 use Closure;
-use Fjord\Crud\BaseField;
-use Fjord\Crud\Casts\Route as RouteCast;
-use Fjord\Crud\Fields\Route\RouteCollection;
-use Fjord\Crud\Fields\Traits\FieldHasRules;
+use Lit\Crud\BaseField;
+use Lit\Crud\Casts\Route as RouteCast;
+use Lit\Crud\Fields\Route\RouteCollection;
+use Lit\Crud\Fields\Traits\FieldHasRules;
 
 class Route extends BaseField
 {
@@ -105,6 +105,6 @@ class Route extends BaseField
      */
     public static function register(string $name, Closure $closure)
     {
-        app('fjord.crud.route.resolver')->register($name, $closure);
+        app('lit.crud.route.resolver')->register($name, $closure);
     }
 }

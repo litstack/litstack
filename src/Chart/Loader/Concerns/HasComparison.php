@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Chart\Loader\Concerns;
+namespace Lit\Chart\Loader\Concerns;
 
 trait HasComparison
 {

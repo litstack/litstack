@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Auth\Middleware;
+namespace Lit\Auth\Middleware;
 
-use Fjord\Auth\Models\FjordSession;
-use Fjord\Support\Facades\FjordLang;
+use Lit\Auth\Models\LitSession;
+use Lit\Support\Facades\LitLang;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Support\Carbon;
@@ -27,56 +27,56 @@ class Authenticate extends Middleware
         try {
             parent::authenticate($request, $guards);
         } catch (AuthenticationException $e) {
-            // Delete fjord_session from db when user is logged out.
-            FjordSession::where('session_id', Session::getId())->delete();
+            // Delete lit_session from db when user is logged out.
+            LitSession::where('session_id', Session::getId())->delete();
 
             throw $e;
         }
 
-        $this->storeFjordSession($request);
+        $this->storeLitSession($request);
         $this->setUserLocale();
     }
 
     protected function setUserLocale()
     {
-        if (fjord_user()->locale === null) {
-            fjord_user()->locale = FjordLang::getBrowserLocale();
-            fjord_user()->save();
+        if (lit_user()->locale === null) {
+            lit_user()->locale = LitLang::getBrowserLocale();
+            lit_user()->save();
         }
     }
 
     /**
-     * Store Fjord session.
+     * Store Lit session.
      *
      * @param \Illuminate\Http\Request $request
      *
      * @return void
      */
-    protected function storeFjordSession($request)
+    protected function storeLitSession($request)
     {
         $query = [
             'user_agent' => $request->server('HTTP_USER_AGENT'),
             'ip_address' => $request->ip(),
         ];
-        if (FjordSession::where($query)->exists()) {
-            FjordSession::where($query)->update(
+        if (LitSession::where($query)->exists()) {
+            LitSession::where($query)->update(
                 [
                     'user_agent'    => $request->server('HTTP_USER_AGENT'),
                     'ip_address'    => $request->ip(),
                     'session_id'    => Session::getId(),
-                    'fjord_user_id' => fjord_user()->id,
+                    'lit_user_id' => lit_user()->id,
                     'last_activity' => Carbon::now(),
                 ],
             );
         } else {
-            FjordSession::updateOrCreate(
+            LitSession::updateOrCreate(
                 [
                     'session_id' => Session::getId(),
                 ],
                 [
                     'user_agent'    => $request->server('HTTP_USER_AGENT'),
                     'ip_address'    => $request->ip(),
-                    'fjord_user_id' => fjord_user()->id,
+                    'lit_user_id' => lit_user()->id,
                     'last_activity' => Carbon::now(),
                 ],
             );
@@ -93,7 +93,7 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return route('fjord.login');
+            return route('lit.login');
         }
     }
 
@@ -107,7 +107,7 @@ class Authenticate extends Middleware
      */
     public function terminate($request, $response)
     {
-        $session = FjordSession::where('session_id', Session::getId())->first();
+        $session = LitSession::where('session_id', Session::getId())->first();
 
         if (! $session) {
             return;

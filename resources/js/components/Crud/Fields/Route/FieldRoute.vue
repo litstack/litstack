@@ -1,5 +1,5 @@
 <template>
-	<fj-base-field :field="field" :model="model">
+	<lit-base-field :field="field" :model="model">
 		<template v-if="!field.readonly">
 			<b-select
 				:value="value"
@@ -13,7 +13,7 @@
 			<b-input class="form-control" :value="value" type="text" readonly />
 		</template>
 		<slot />
-	</fj-base-field>
+	</lit-base-field>
 </template>
 
 <script>

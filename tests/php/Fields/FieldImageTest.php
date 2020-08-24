@@ -1,11 +1,11 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\Fields\Media\Image;
-use Fjord\Crud\Fields\Traits\HasBaseField;
-use FjordTest\Traits\InteractsWithFields;
-use FjordTest\Traits\TestHelpers;
+use Lit\Crud\Fields\Media\Image;
+use Lit\Crud\Fields\Traits\HasBaseField;
+use Tests\Traits\InteractsWithFields;
+use Tests\Traits\TestHelpers;
 use PHPUnit\Framework\TestCase;
 
 class FieldImageTest extends TestCase

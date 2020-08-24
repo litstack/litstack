@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Lit\Crud;
 
-use Fjord\Contracts\Page\Action;
-use Fjord\Page\Table\Table;
+use Lit\Contracts\Page\Action;
+use Lit\Page\Table\Table;
 
 class CrudIndexTable extends Table
 {

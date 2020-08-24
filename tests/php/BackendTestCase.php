@@ -1,16 +1,14 @@
 <?php
 
-namespace FjordTest;
+namespace Tests;
 
-use FjordTest\Traits\TestHelpers;
+use Tests\Traits\TestHelpers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\Dusk\TestCase as OrchestraDuskTestCase;
 
 class BackendTestCase extends OrchestraDuskTestCase
 {
-    use RefreshDatabase;
-    use FjordTestCase;
-    use TestHelpers;
+    use RefreshDatabase, LitTestCase, TestHelpers;
 
     /**
      * Setup the test environment.

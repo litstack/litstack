@@ -1,3 +1,3 @@
-import Fjord from './fjord';
+import Lit from './lit';
 
-export default Fjord;
+export default Lit;

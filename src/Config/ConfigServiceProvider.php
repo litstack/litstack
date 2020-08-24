@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Config;
+namespace Lit\Config;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -13,7 +13,7 @@ class ConfigServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('fjord.app.config.loader', function ($app) {
+        $this->app->singleton('lit.app.config.loader', function ($app) {
             return new ConfigLoader();
         });
     }

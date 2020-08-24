@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Lit\Crud\Fields;
 
 use Carbon\CarbonInterface;
-use Fjord\Crud\BaseField;
-use Fjord\Support\Facades\FjordApp;
+use Lit\Crud\BaseField;
+use Lit\Support\Facades\LitApp;
 use Illuminate\Support\Carbon;
 
 class Datetime extends BaseField
@@ -47,7 +47,7 @@ class Datetime extends BaseField
      */
     protected function includeCtkScript()
     {
-        FjordApp::script(fjord()->route('ctk.js'));
+        LitApp::script(lit()->route('ctk.js'));
     }
 
     /**

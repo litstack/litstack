@@ -1,16 +1,16 @@
 <?php
 
-namespace Fjord\Chart;
+namespace Lit\Chart;
 
-use Fjord\Chart\Contracts\Engine;
-use Fjord\Chart\Loader\AreaLoader;
-use Fjord\Chart\Loader\BarLoader;
-use Fjord\Chart\Loader\ChartLoader;
-use Fjord\Chart\Loader\DonutLoader;
-use Fjord\Chart\Loader\NumberLoader;
-use Fjord\Chart\Loader\ProgressLoader;
-use Fjord\Config\ConfigHandler;
-use Fjord\Support\Facades\Config;
+use Lit\Chart\Contracts\Engine;
+use Lit\Chart\Loader\AreaLoader;
+use Lit\Chart\Loader\BarLoader;
+use Lit\Chart\Loader\ChartLoader;
+use Lit\Chart\Loader\DonutLoader;
+use Lit\Chart\Loader\NumberLoader;
+use Lit\Chart\Loader\ProgressLoader;
+use Lit\Config\ConfigHandler;
+use Lit\Support\Facades\Config;
 
 class ChartController
 {
@@ -24,7 +24,7 @@ class ChartController
     public function __invoke(ChartRequest $request)
     {
         $config = Config::get($request->key) ?: abort(404);
-        $factory = app('fjord.chart.factory');
+        $factory = app('lit.chart.factory');
         $chart = $factory->make($config);
         $engine = $factory->getResolver()->resolve($config->engine);
 

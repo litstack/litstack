@@ -2,9 +2,9 @@
 
 namespace DummyNamespace;
 
-use Fjord\Chart\Chart;
+use Lit\Chart\Chart;
 use Illuminate\Support\Collection; 
-use Fjord\Chart\Config\BarChartConfig;
+use Lit\Chart\Config\BarChartConfig;
 
 class DummyClass extends BarChartConfig
 {

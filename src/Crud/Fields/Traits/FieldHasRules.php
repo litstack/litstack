@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields\Traits;
+namespace Lit\Crud\Fields\Traits;
 
-use Fjord\Crud\CrudValidator;
+use Lit\Crud\CrudValidator;
 
 trait FieldHasRules
 {

@@ -2,14 +2,14 @@
 
 namespace Tests\CrudRepositories;
 
-use Fjord\Config\ConfigHandler;
-use Fjord\Crud\Api\ApiRepositories;
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Controllers\CrudController;
-use Fjord\Crud\Fields\Relations\MorphOne;
-use Fjord\Crud\Repositories\Relations\MorphOneRepository;
-use Fjord\Crud\Requests\CrudUpdateRequest;
-use FjordTest\BackendTestCase;
+use Lit\Config\ConfigHandler;
+use Lit\Crud\Api\ApiRepositories;
+use Lit\Crud\BaseForm;
+use Lit\Crud\Controllers\CrudController;
+use Lit\Crud\Fields\Relations\MorphOne;
+use Lit\Crud\Repositories\Relations\MorphOneRepository;
+use Lit\Crud\Requests\CrudUpdateRequest;
+use Tests\BackendTestCase;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

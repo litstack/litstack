@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Support;
+namespace Lit\Support;
 
 use File;
 use Illuminate\Support\Str;

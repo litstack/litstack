@@ -1,11 +1,11 @@
 <?php
 
-namespace FjordTest\Page;
+namespace Tests\Page;
 
-use Fjord\Page\BasePage;
-use Fjord\Vue\Component;
-use Fjord\Vue\Components\BladeComponent;
-use FjordTest\BackendTestCase;
+use Lit\Page\BasePage;
+use Lit\Vue\Component;
+use Lit\Vue\Components\BladeComponent;
+use Tests\BackendTestCase;
 use Illuminate\View\View;
 use Mockery as m;
 
@@ -58,13 +58,13 @@ class BasePageTest extends BackendTestCase
     /** @test */
     public function test_view_method_returns_view()
     {
-        $this->assertInstanceOf(Component::class, $this->page->view('fjord::app'));
+        $this->assertInstanceOf(Component::class, $this->page->view('lit::app'));
     }
 
     /** @test */
     public function test_view_method_adds_blade_component()
     {
-        $this->page->view('fjord::app');
+        $this->page->view('lit::app');
 
         $this->assertCount(1, $this->page->getComponents());
         $this->assertInstanceOf(BladeComponent::class, $this->page->getComponents()[0]);

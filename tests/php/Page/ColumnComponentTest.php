@@ -1,8 +1,8 @@
 <?php
 
-namespace FjordTest\Page;
+namespace Tests\Page;
 
-use Fjord\Page\Table\Components\ColumnComponent;
+use Lit\Page\Table\Components\ColumnComponent;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 

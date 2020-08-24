@@ -6,30 +6,30 @@ import savings from './modules/savings.module';
 import auth from './modules/auth.module';
 
 const modules = {
-    config,
-    permissions,
-    savings,
-    auth
+	config,
+	permissions,
+	savings,
+	auth,
 };
 
-class FjordStore {
-    constructor(modules) {
-        this.store = null;
+class LitStore {
+	constructor(modules) {
+		this.store = null;
 
-        return new Proxy(this, this);
-    }
+		return new Proxy(this, this);
+	}
 
-    createStore(assign = {}) {
-        this.store = new Vuex.Store({
-            modules: Object.assign(assign, modules)
-        });
-    }
+	createStore(assign = {}) {
+		this.store = new Vuex.Store({
+			modules: Object.assign(assign, modules),
+		});
+	}
 
-    get(target, prop) {
-        return this[prop] || this.store[prop];
-    }
+	get(target, prop) {
+		return this[prop] || this.store[prop];
+	}
 }
 
-export const store = new FjordStore();
+export const store = new LitStore();
 
 export default store;

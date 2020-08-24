@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Lit\Crud\Fields;
 
-use Fjord\Crud\Field;
-use Fjord\Exceptions\MethodNotFoundException;
+use Lit\Crud\Field;
+use Lit\Exceptions\MethodNotFoundException;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 class Component extends Field
@@ -56,7 +56,7 @@ class Component extends Field
      * @param string $method
      * @param array  $params
      *
-     * @throws \Fjord\Exceptions\MethodNotFoundException
+     * @throws \Lit\Exceptions\MethodNotFoundException
      *
      * @return static|void
      */

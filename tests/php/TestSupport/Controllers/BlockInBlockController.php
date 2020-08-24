@@ -1,9 +1,9 @@
 <?php
 
-namespace FjordTest\TestSupport\Controllers;
+namespace Tests\TestSupport\Controllers;
 
-use Fjord\Crud\Controllers\CrudController;
-use Fjord\User\Models\FjordUser;
+use Lit\Crud\Controllers\CrudController;
+use Lit\User\Models\LitUser;
 use Illuminate\Database\Eloquent\Builder;
 
 class BlockInBlockController extends CrudController
@@ -13,9 +13,9 @@ class BlockInBlockController extends CrudController
      *
      * @var string
      */
-    protected $model = \FjordTest\TestSupport\Models\Post::class;
+    protected $model = \Tests\TestSupport\Models\Post::class;
 
-    public function authorize(FjordUser $user, string $operation): bool
+    public function authorize(LitUser $user, string $operation): bool
     {
         return true;
     }

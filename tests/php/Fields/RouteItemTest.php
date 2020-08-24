@@ -1,10 +1,10 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\Fields\Route\RouteCollection;
-use Fjord\Crud\Fields\Route\RouteItem;
-use FjordTest\BackendTestCase;
+use Lit\Crud\Fields\Route\RouteCollection;
+use Lit\Crud\Fields\Route\RouteItem;
+use Tests\BackendTestCase;
 use Illuminate\Http\Request;
 use Mockery as m;
 
@@ -82,8 +82,8 @@ class RouteItemTest extends BackendTestCase
     /** @test */
     public function test_trimmed_method_trims_app_url()
     {
-        app('config')->set('app.url', 'https://www.fjord-admin.com');
-        $item = new RouteItem('', '', fn () => 'https://www.fjord-admin.com/dummy/route');
+        app('config')->set('app.url', 'https://www.lit-admin.com');
+        $item = new RouteItem('', '', fn () => 'https://www.lit-admin.com/dummy/route');
         $this->assertEquals('dummy/route', $item->trimmed());
     }
 

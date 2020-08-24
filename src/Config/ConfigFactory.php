@@ -1,13 +1,13 @@
 <?php
 
-namespace Fjord\Config;
+namespace Lit\Config;
 
 class ConfigFactory
 {
     /**
      * ConfigHandler instance.
      *
-     * @var \Fjord\Config\ConfigHandler
+     * @var \Lit\Config\ConfigHandler
      */
     protected $handler;
 

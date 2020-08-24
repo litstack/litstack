@@ -1,9 +1,9 @@
 <?php
 
-namespace FjordTest\Support;
+namespace Tests\Support;
 
-use Fjord\Support\IndexTable;
-use FjordTest\BackendTestCase;
+use Lit\Support\IndexTable;
+use Tests\BackendTestCase;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Mockery as m;

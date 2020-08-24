@@ -1,10 +1,10 @@
 <?php
 
-namespace FjordTest\Support;
+namespace Tests\Support;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Fjord\Crud\Models\Traits\Translatable;
-use FjordTest\BackendTestCase;
+use Lit\Crud\Models\Traits\Translatable;
+use Tests\BackendTestCase;
 use Illuminate\Database\Eloquent\Model;
 
 class HelpersTest extends BackendTestCase

@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Fjord\Vue\Component;
+use Lit\Vue\Component;
 use PHPUnit\Framework\TestCase;
 
 class ComponentTest extends TestCase

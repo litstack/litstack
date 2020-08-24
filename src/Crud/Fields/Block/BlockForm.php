@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields\Block;
+namespace Lit\Crud\Fields\Block;
 
-use Fjord\Crud\BaseForm;
+use Lit\Crud\BaseForm;
 use InvalidArgumentException;
 
 class BlockForm extends BaseForm

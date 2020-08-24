@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Page\Traits;
+namespace Lit\Page\Traits;
 
 trait Expandable
 {

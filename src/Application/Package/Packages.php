@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Application\Package;
+namespace Lit\Application\Package;
 
-use Fjord\Application\Application;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
+use Lit\Application\Application;
 
 class Packages
 {
@@ -16,9 +16,9 @@ class Packages
     protected $packages = [];
 
     /**
-     * Fjord application instance.
+     * Lit application instance.
      *
-     * @var \Fjord\Application\Application
+     * @var \Lit\Application\Application
      */
     protected $app;
 
@@ -28,7 +28,7 @@ class Packages
      * @var array
      */
     protected $rootAccess = [
-        'aw-studio/fjord',
+        'litstack/litstack',
     ];
 
     /**

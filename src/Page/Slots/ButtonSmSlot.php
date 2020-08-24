@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Page\Slots;
+namespace Lit\Page\Slots;
 
-use Fjord\Vue\Components\ButtonComponent;
+use Lit\Vue\Components\ButtonComponent;
 
 class ButtonSmSlot extends BaseSlot
 {

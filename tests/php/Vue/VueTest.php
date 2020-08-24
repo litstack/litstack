@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use Fjord\Vue\Component;
-use Fjord\Vue\Vue;
+use Lit\Vue\Component;
+use Lit\Vue\Vue;
 use PHPUnit\Framework\TestCase;
 
 class VueTest extends TestCase

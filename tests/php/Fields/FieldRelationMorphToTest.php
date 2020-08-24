@@ -1,11 +1,11 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Fields\Relations\MorphToRegistrar;
-use FjordTest\BackendTestCase;
-use FjordTest\Traits\InteractsWithFields;
+use Lit\Crud\BaseForm;
+use Lit\Crud\Fields\Relations\MorphToRegistrar;
+use Tests\BackendTestCase;
+use Tests\Traits\InteractsWithFields;
 use Illuminate\Database\Eloquent\Model;
 
 class FieldRelationMorphToTest extends BackendTestCase
@@ -37,10 +37,10 @@ class FieldRelationMorphToTest extends BackendTestCase
     {
         $this->field->morphTypes(function ($morph) {
             $type = $morph->to(MorphToRelationFirst::class);
-            $this->assertInstanceOf(\Fjord\Crud\Fields\Relations\MorphTo::class, $type);
+            $this->assertInstanceOf(\Lit\Crud\Fields\Relations\MorphTo::class, $type);
 
             $type = $morph->to(MorphToRelationSecond::class);
-            $this->assertInstanceOf(\Fjord\Crud\Fields\Relations\MorphTo::class, $type);
+            $this->assertInstanceOf(\Lit\Crud\Fields\Relations\MorphTo::class, $type);
         });
 
         $this->assertCount(2, $this->field->getAttribute('morphTypes'));

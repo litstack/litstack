@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Contracts\Page;
+namespace Lit\Contracts\Page;
 
-use Fjord\Page\Table\Components\ImageComponent;
+use Lit\Page\Table\Components\ImageComponent;
 use Illuminate\Contracts\View\View;
 
 interface ColumnBuilder

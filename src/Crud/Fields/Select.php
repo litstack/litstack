@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Lit\Crud\Fields;
 
-use Fjord\Crud\BaseField;
+use Lit\Crud\BaseField;
 
 class Select extends BaseField
 {

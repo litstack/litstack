@@ -2,9 +2,9 @@
 
 namespace DummyNamespace;
 
-use Fjord\Crud\CrudShow;
-use Fjord\Crud\Config\FormConfig;
-use FjordApp\Controllers\Form\DummyCollection\DummyController;
+use Lit\Crud\CrudShow;
+use Lit\Crud\Config\FormConfig;
+use LitApp\Controllers\Form\DummyCollection\DummyController;
 
 class DummyClass extends FormConfig
 {
@@ -40,7 +40,7 @@ class DummyClass extends FormConfig
     /**
      * Setup form page.
      *
-     * @param \Fjord\Crud\CrudShow $page
+     * @param \Lit\Crud\CrudShow $page
      * @return void
      */
     public function show(CrudShow $page)

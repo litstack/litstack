@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Crud\Repositories\Relations;
+namespace Lit\Crud\Repositories\Relations;
 
-use Fjord\Crud\Fields\Relations\MorphToMany;
-use Fjord\Crud\Repositories\BaseFieldRepository;
-use Fjord\Crud\Requests\CrudUpdateRequest;
+use Lit\Crud\Fields\Relations\MorphToMany;
+use Lit\Crud\Repositories\BaseFieldRepository;
+use Lit\Crud\Requests\CrudUpdateRequest;
 use Illuminate\Support\Facades\DB;
 
 class MorphToManyRepository extends BaseFieldRepository

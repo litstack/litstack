@@ -1,9 +1,9 @@
 <?php
 
-namespace FjordTest\Crud;
+namespace Tests\Crud;
 
-use Fjord\Support\Facades\Form;
-use FjordTest\BackendTestCase;
+use Lit\Support\Facades\Form;
+use Tests\BackendTestCase;
 
 class FormTest extends BackendTestCase
 {

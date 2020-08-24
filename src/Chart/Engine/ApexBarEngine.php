@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Chart\Engine;
+namespace Lit\Chart\Engine;
 
-use Fjord\Chart\ChartSet;
+use Lit\Chart\ChartSet;
 
 class ApexBarEngine extends ChartEngine
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Permissions\Controllers;
+namespace Lit\Permissions\Controllers;
 
-use Fjord\Permissions\Models\RolePermission;
-use Fjord\Permissions\Requests\RolePermission\UpdateRolePermissionRequest;
+use Lit\Permissions\Models\RolePermission;
+use Lit\Permissions\Requests\RolePermission\UpdateRolePermissionRequest;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Permission\Models\Role;
 

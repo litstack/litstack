@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Test\Page;
+namespace Lit\Test\Page;
 
-use Fjord\Page\Actions\ActionModal;
-use Fjord\Vue\Traits\StaticComponentName;
-use FjordTest\Traits\TestHelpers;
+use Lit\Page\Actions\ActionModal;
+use Lit\Vue\Traits\StaticComponentName;
+use Tests\Traits\TestHelpers;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 

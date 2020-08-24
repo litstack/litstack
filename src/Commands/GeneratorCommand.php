@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Commands;
+namespace Lit\Commands;
 
 use Illuminate\Console\GeneratorCommand as LaravelGeneratorCommand;
 use Illuminate\Support\Str;
@@ -14,17 +14,17 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
      */
     protected function rootNamespace()
     {
-        return 'FjordApp\\';
+        return 'LitApp\\';
     }
 
     /**
-     * Get fjord base path.
+     * Get lit base path.
      *
      * @return string
      */
-    protected function getFjordPath()
+    protected function getLitPath()
     {
-        return base_path('fjord/app');
+        return base_path('lit/app');
     }
 
     /**
@@ -37,6 +37,6 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
     {
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
 
-        return $this->getFjordPath().'/'.str_replace('\\', '/', $name).'.php';
+        return $this->getLitPath().'/'.str_replace('\\', '/', $name).'.php';
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Requests\Traits;
+namespace Lit\Crud\Requests\Traits;
 
 use Illuminate\Http\Request;
 use ReflectionClass;
@@ -17,7 +17,7 @@ trait AuthorizeController
      */
     public function authorizeController(Request $request, string $operation, $controller = null): bool
     {
-        if (! fjord_user()) {
+        if (! lit_user()) {
             return false;
         }
 
@@ -30,10 +30,10 @@ trait AuthorizeController
 
         if (count($params) == 2) {
             return with(new $controller())
-                ->authorize(fjord_user(), $operation);
+                ->authorize(lit_user(), $operation);
         }
 
         return with(new $controller())
-            ->authorize(fjord_user(), $operation, $request->id);
+            ->authorize(lit_user(), $operation, $request->id);
     }
 }

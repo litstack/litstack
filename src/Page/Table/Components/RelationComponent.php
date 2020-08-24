@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Page\Table\Components;
+namespace Lit\Page\Table\Components;
 
 class RelationComponent extends ColumnComponent
 {

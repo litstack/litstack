@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'fjord-user-roles' => 'User Roles',
-    'fjord-users'      => 'Users',
+    'lit-user-roles' => 'User Roles',
+    'lit-users'      => 'Users',
 ];

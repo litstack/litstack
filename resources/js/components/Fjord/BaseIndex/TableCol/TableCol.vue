@@ -2,7 +2,7 @@
 	<b-td
 		:class="{
 			'col-sm': isSmall(col),
-			'fj-table-col': true,
+			'lit-table-col': true,
 			pointer: col.link,
 			'text-right': col.text_right,
 			'text-center': col.text_center,
@@ -65,7 +65,7 @@ export default {
 		// Can be called from parents to refresh value.
 		this.$on('refresh', this.setValue);
 
-		Fjord.bus.$on('languageChanged', this.setValue);
+		Lit.bus.$on('languageChanged', this.setValue);
 	},
 	computed: {
 		...mapGetters(['baseURL']),
@@ -108,7 +108,7 @@ export default {
 	},
 	methods: {
 		isExternal(url) {
-			let domain = function(url) {
+			let domain = function (url) {
 				return url
 					.replace('http://', '')
 					.replace('https://', '')
@@ -204,7 +204,7 @@ table.b-table tr td > a {
 		text-decoration: none;
 	}
 }
-.fj-col-money {
+.lit-col-money {
 	font-variant-numeric: tabular-nums;
 }
 </style>

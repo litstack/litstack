@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Crud\Fields\Block;
+namespace Lit\Crud\Fields\Block;
 
 use Closure;
-use Fjord\Crud\Fields\Traits\HasBaseField;
-use Fjord\Crud\Models\FjordFormModel;
-use Fjord\Crud\RelationField;
+use Lit\Crud\Fields\Traits\HasBaseField;
+use Lit\Crud\Models\LitFormModel;
+use Lit\Crud\RelationField;
 use Illuminate\Support\Collection;
 
 class Block extends RelationField
@@ -114,7 +114,7 @@ class Block extends RelationField
      */
     public function getRelationQuery($model)
     {
-        if (! $model instanceof FjordFormModel) {
+        if (! $model instanceof LitFormModel) {
             return $model->{$this->id}();
         }
 

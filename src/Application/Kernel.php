@@ -1,15 +1,15 @@
 <?php
 
-namespace Fjord\Application;
+namespace Lit\Application;
 
 use Illuminate\View\View;
 
 class Kernel
 {
     /**
-     * Fjord application instance.
+     * Lit application instance.
      *
-     * @var Fjord\Application\Application
+     * @var Lit\Application\Application
      */
     protected $app;
 
@@ -28,16 +28,16 @@ class Kernel
     ];
 
     /**
-     * Fjord application service providers.
+     * Lit application service providers.
      *
      * @var array
      */
     public $providers = [];
 
     /**
-     * Create a new Fjord kernel instance.
+     * Create a new Lit kernel instance.
      *
-     * @param \Fjord\Application\Application $app
+     * @param \Lit\Application\Application $app
      *
      * @return void
      */
@@ -59,7 +59,7 @@ class Kernel
     }
 
     /**
-     * Handle fjord::app view before it gets executed.
+     * Handle lit::app view before it gets executed.
      *
      * @return void
      */

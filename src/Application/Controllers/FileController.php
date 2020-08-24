@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Application\Controllers;
+namespace Lit\Application\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\File;
@@ -12,9 +12,9 @@ class FileController extends Controller
      *
      * @return response
      */
-    public function fjordJs()
+    public function litJs()
     {
-        return $this->sendFile(fjord_path('public/js/app.js'))
+        return $this->sendFile(lit_path('public/js/app.js'))
             ->header('Content-Type', 'application/javascript; charset=utf-8');
     }
 
@@ -23,9 +23,9 @@ class FileController extends Controller
      *
      * @return response
      */
-    public function fjord2Js()
+    public function lit2Js()
     {
-        return $this->sendFile(fjord_path('public/js/app2.js'))
+        return $this->sendFile(lit_path('public/js/app2.js'))
             ->header('Content-Type', 'application/javascript; charset=utf-8');
     }
 
@@ -36,7 +36,7 @@ class FileController extends Controller
      */
     public function prismJs()
     {
-        return $this->sendFile(fjord_path('public/js/prism.js'))
+        return $this->sendFile(lit_path('public/js/prism.js'))
             ->header('Content-Type', 'application/javascript; charset=utf-8');
     }
 
@@ -47,7 +47,7 @@ class FileController extends Controller
      */
     public function ctkJs()
     {
-        return $this->sendFile(fjord_path('public/js/ctk.js'))
+        return $this->sendFile(lit_path('public/js/ctk.js'))
             ->header('Content-Type', 'application/javascript; charset=utf-8');
     }
 
@@ -56,20 +56,20 @@ class FileController extends Controller
      *
      * @return response
      */
-    public function fjordCss()
+    public function litCss()
     {
-        return $this->sendFile(fjord_path('public/css/app.css'))
+        return $this->sendFile(lit_path('public/css/app.css'))
             ->header('Content-Type', 'text/css');
     }
 
     /**
-     * fjord-logo.png.
+     * lit-logo.png.
      *
      * @return response
      */
-    public function fjordLogo()
+    public function litLogo()
     {
-        return $this->sendFile(fjord_path('public/images/logo.png'))
+        return $this->sendFile(lit_path('public/images/logo.png'))
             ->header('Content-Type', 'image/png');
     }
 
@@ -78,9 +78,9 @@ class FileController extends Controller
      *
      * @return response
      */
-    public function fjordFaviconBig()
+    public function litFaviconBig()
     {
-        return $this->sendFile(fjord_path('public/favicon/favicon-32x32.png'))
+        return $this->sendFile(lit_path('public/favicon/favicon-32x32.png'))
             ->header('Content-Type', 'image/png');
     }
 
@@ -89,9 +89,9 @@ class FileController extends Controller
      *
      * @return response
      */
-    public function fjordFaviconSmall()
+    public function litFaviconSmall()
     {
-        return $this->sendFile(fjord_path('public/favicon/favicon-16x16.png'))
+        return $this->sendFile(lit_path('public/favicon/favicon-16x16.png'))
             ->header('Content-Type', 'image/png');
     }
 

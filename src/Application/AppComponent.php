@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Application;
+namespace Lit\Application;
 
-use Fjord\Vue\Component;
-use Fjord\Vue\Traits\StaticComponentName;
+use Lit\Vue\Component;
+use Lit\Vue\Traits\StaticComponentName;
 use Illuminate\Contracts\View\View;
 use LogicException;
 
@@ -16,7 +16,7 @@ class AppComponent extends Component
      *
      * @var string
      */
-    protected $name = 'fjord-app';
+    protected $name = 'lit-app';
 
     /**
      * Rendering.
@@ -25,9 +25,9 @@ class AppComponent extends Component
      */
     public function rendering()
     {
-        $this->prop('config', collect(config('fjord')));
-        $this->prop('auth', fjord_user());
-        $this->prop('app-locale', fjord()->getLocale());
+        $this->prop('config', collect(config('lit')));
+        $this->prop('auth', lit_user());
+        $this->prop('app-locale', lit()->getLocale());
         $this->prop('translatable', collect([
             'language'        => app()->getLocale(),
             'languages'       => collect(config('translatable.locales')),
@@ -46,7 +46,7 @@ class AppComponent extends Component
             return;
         }
 
-        throw new LogicException('Missing required view data [component] for [fjord::app]');
+        throw new LogicException('Missing required view data [component] for [lit::app]');
     }
 
     /**

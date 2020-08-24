@@ -1,16 +1,16 @@
 <?php
 
-namespace Fjord\Application\Bootstrap;
+namespace Lit\Application\Bootstrap;
 
-use Fjord\Application\Application;
-use Fjord\Support\Facades\Package;
+use Lit\Application\Application;
+use Lit\Support\Facades\Package;
 
 class RegisterConfigFactories
 {
     /**
      * Registers config factories from packages.
      *
-     * @param  \Fjord\Application\Application $app
+     * @param  \Lit\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app)

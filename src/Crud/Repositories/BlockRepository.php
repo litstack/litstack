@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Crud\Repositories;
+namespace Lit\Crud\Repositories;
 
-use Fjord\Crud\CrudValidator;
-use Fjord\Crud\Fields\Block\Block;
-use Fjord\Crud\Models\FormBlock;
-use Fjord\Crud\Requests\CrudReadRequest;
-use Fjord\Crud\Requests\CrudUpdateRequest;
+use Lit\Crud\CrudValidator;
+use Lit\Crud\Fields\Block\Block;
+use Lit\Crud\Models\Repeatable;
+use Lit\Crud\Requests\CrudReadRequest;
+use Lit\Crud\Requests\CrudUpdateRequest;
 use Illuminate\Http\Request;
 
 class BlockRepository extends BaseFieldRepository
@@ -110,7 +110,7 @@ class BlockRepository extends BaseFieldRepository
 
         $order_column = $this->getOrderColumnForNewRepeatable($request, $model, $type);
 
-        $block = new FormBlock();
+        $block = new Repeatable();
         $block->type = $type;
         $block->model_type = get_class($model);
         $block->model_id = $model->id;
@@ -185,7 +185,7 @@ class BlockRepository extends BaseFieldRepository
      *
      * @param  Request   $request
      * @param  mixed     $model
-     * @return FormBlock
+     * @return Repeatable
      */
     public function getModel(Request $request, $model, $childRepository)
     {
@@ -200,7 +200,7 @@ class BlockRepository extends BaseFieldRepository
         }
 
         // Loading child block for media and relation requests.
-        return FormBlock::where('model_type', FormBlock::class)
+        return Repeatable::where('model_type', Repeatable::class)
             ->where('model_id', $childRepeatable->id)
             ->where('id', $request->repeatable_id)->firstOrFail();
     }
@@ -215,7 +215,7 @@ class BlockRepository extends BaseFieldRepository
      */
     protected function getOrderColumnForNewRepeatable(Request $request, $model, $type)
     {
-        return FormBlock::where([
+        return Repeatable::where([
             'type'        => $type,
             'model_type'  => get_class($model),
             'model_id'    => $model->id,
@@ -229,7 +229,7 @@ class BlockRepository extends BaseFieldRepository
      *
      * @param  mixed      $model
      * @param  int|string $id
-     * @return FormBlock
+     * @return Repeatable
      */
     protected function getRepeatable($model, $id)
     {

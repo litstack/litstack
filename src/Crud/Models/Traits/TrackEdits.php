@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Models\Traits;
+namespace Lit\Crud\Models\Traits;
 
-use Fjord\Crud\Models\ModelEdit;
+use Lit\Crud\Models\ModelEdit;
 
 trait TrackEdits
 {
@@ -28,14 +28,14 @@ trait TrackEdits
      */
     public function edited($action = 'update')
     {
-        if (! fjord_user()) {
+        if (! lit_user()) {
             return;
         }
 
         $edit = new ModelEdit();
         $edit->model_type = static::class;
         $edit->model_id = $this->id;
-        $edit->fjord_user_id = fjord_user()->id;
+        $edit->lit_user_id = lit_user()->id;
         $edit->created_at = \Carbon\Carbon::now();
         $edit->payload = ['action' => $action];
         $edit->save();

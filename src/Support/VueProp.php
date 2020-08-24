@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Support;
+namespace Lit\Support;
 
-use Fjord\Contracts\Vue\Renderable;
-use Fjord\Vue\Traits\RenderableAsProp;
+use Lit\Contracts\Vue\Renderable;
+use Lit\Vue\Traits\RenderableAsProp;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 

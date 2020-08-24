@@ -1,17 +1,17 @@
 <?php
 
-namespace Fjord\Page\Table;
+namespace Lit\Page\Table;
 
-use Fjord\Contracts\Page\Column as ColumnContract;
-use Fjord\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
-use Fjord\Crud\Fields\Relations\LaravelRelationField;
-use Fjord\Page\Table\Casts\MoneyColumn;
-use Fjord\Page\Table\Components\BladeColumnComponent;
-use Fjord\Page\Table\Components\ColumnComponent;
-use Fjord\Page\Table\Components\ImageComponent;
-use Fjord\Page\Table\Components\RelationComponent;
-use Fjord\Page\Table\Components\ToggleComponent;
-use Fjord\Support\VueProp;
+use Lit\Contracts\Page\Column as ColumnContract;
+use Lit\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
+use Lit\Crud\Fields\Relations\LaravelRelationField;
+use Lit\Page\Table\Casts\MoneyColumn;
+use Lit\Page\Table\Components\BladeColumnComponent;
+use Lit\Page\Table\Components\ColumnComponent;
+use Lit\Page\Table\Components\ImageComponent;
+use Lit\Page\Table\Components\RelationComponent;
+use Lit\Page\Table\Components\ToggleComponent;
+use Lit\Support\VueProp;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\View as ViewFactory;
 

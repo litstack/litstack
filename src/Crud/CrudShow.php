@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Lit\Crud;
 
 use Closure;
-use Fjord\Crud\Fields\Component;
-use Fjord\Exceptions\Traceable\InvalidArgumentException;
-use Fjord\Page\Page;
+use Lit\Crud\Fields\Component;
+use Lit\Exceptions\Traceable\InvalidArgumentException;
+use Lit\Page\Page;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Support\Traits\Macroable;
 
@@ -54,7 +54,7 @@ class CrudShow extends Page
     /**
      * Resolve action component.
      *
-     * @param  \Fjord\Vue\Component $component
+     * @param  \Lit\Vue\Component $component
      * @return void
      */
     public function resolveAction($component)
@@ -121,7 +121,7 @@ class CrudShow extends Page
      * Add Vue component.
      *
      * @param  string               $component
-     * @return \Fjord\Vue\Component
+     * @return \Lit\Vue\Component
      */
     public function component($component)
     {

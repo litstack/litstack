@@ -1,22 +1,22 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Lit\Crud;
 
-use Fjord\Crud\Requests\CrudCreateRequest;
-use Fjord\Crud\Requests\CrudDeleteRequest;
-use Fjord\Crud\Requests\CrudReadRequest;
-use Fjord\Crud\Requests\CrudUpdateRequest;
-use Fjord\Support\Facades\Fjord;
-use Fjord\Support\Facades\Package;
-use Fjord\User\Models\FjordUser;
 use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
+use Lit\Crud\Requests\CrudCreateRequest;
+use Lit\Crud\Requests\CrudDeleteRequest;
+use Lit\Crud\Requests\CrudReadRequest;
+use Lit\Crud\Requests\CrudUpdateRequest;
+use Lit\Support\Facades\Lit;
+use Lit\Support\Facades\Package;
+use Lit\User\Models\LitUser;
 
 /**
  * Crud singleton.
  *
- * @see \Fjord\Support\Facades\Crud
+ * @see \Lit\Support\Facades\Crud
  */
 class Crud
 {
@@ -75,7 +75,7 @@ class Crud
      */
     public function routes($config)
     {
-        Package::get('aw-studio/fjord')->route()->group(function () use ($config) {
+        Package::get('litstack/litstack')->route()->group(function () use ($config) {
             RouteFacade::group([
                 'config' => $config->getKey(),
                 'prefix' => "$config->routePrefix",
@@ -84,10 +84,10 @@ class Crud
                 $this->makeCrudRoutes($config);
                 $this->makeFieldRoutes($config->controller);
 
-                Package::get('aw-studio/fjord')->addNavPreset($config->getKey(), [
-                    'link'      => Fjord::url($config->routePrefix),
-                    'title'     => fn () => ucfirst($config->names['plural']),
-                    'authorize' => function (FjordUser $user) use ($config) {
+                Package::get('litstack/litstack')->addNavPreset($config->getKey(), [
+                    'link'      => Lit::url($config->routePrefix),
+                    'title'     => fn ()     => ucfirst($config->names['plural']),
+                    'authorize' => function (LitUser $user) use ($config) {
                         return (new $config->controller())->authorize($user, 'read');
                     },
                 ]);
@@ -103,7 +103,7 @@ class Crud
      */
     public function formRoutes($config)
     {
-        Package::get('aw-studio/fjord')->route()->group(function () use ($config) {
+        Package::get('litstack/litstack')->route()->group(function () use ($config) {
             $form = $config->formName;
             $collection = $config->collection;
 
@@ -112,15 +112,15 @@ class Crud
                 'prefix' => $config->route_prefix,
                 'as'     => $config->getKey().'.',
             ], function () use ($config, $collection, $form) {
-                //require fjord_path('src/Crud/routes.php');
+                //require lit_path('src/Crud/routes.php');
                 $this->makeFormRoutes($config->controller);
                 $this->makeFieldRoutes($config->controller);
 
                 // Nav preset.
-                Package::get('aw-studio/fjord')->addNavPreset("form.{$collection}.{$form}", [
-                    'link'      => Fjord::url($config->route_prefix),
-                    'title'     => fn () => ucfirst($config->names['singular']),
-                    'authorize' => function (FjordUser $user) use ($config) {
+                Package::get('litstack/litstack')->addNavPreset("form.{$collection}.{$form}", [
+                    'link'      => Lit::url($config->route_prefix),
+                    'title'     => fn ()     => ucfirst($config->names['singular']),
+                    'authorize' => function (LitUser $user) use ($config) {
                         return (new $config->controller())->authorize($user, 'read');
                     },
                 ]);

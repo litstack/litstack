@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Translation;
+namespace Lit\Translation;
 
 /**
  * Generator inspired by martinlindhe.

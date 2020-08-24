@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields\Relations;
+namespace Lit\Crud\Fields\Relations;
 
-use Fjord\Exceptions\Traceable\InvalidArgumentException;
+use Lit\Exceptions\Traceable\InvalidArgumentException;
 
 class ManyRelationField extends LaravelRelationField
 {

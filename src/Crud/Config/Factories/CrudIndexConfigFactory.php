@@ -1,20 +1,20 @@
 <?php
 
-namespace Fjord\Crud\Config\Factories;
+namespace Lit\Crud\Config\Factories;
 
 use Closure;
-use Fjord\Config\ConfigFactory;
-use Fjord\Config\ConfigHandler;
-use Fjord\Crud\CrudIndex;
+use Lit\Config\ConfigFactory;
+use Lit\Config\ConfigHandler;
+use Lit\Crud\CrudIndex;
 
 class CrudIndexConfigFactory extends ConfigFactory
 {
     /**
      * Setup index table.
      *
-     * @param  \Fjord\Config\Types\CrudConfig $config
+     * @param  \Lit\Config\Types\CrudConfig $config
      * @param  Closure                        $method
-     * @return \Fjord\Vue\Crud\CrudTable
+     * @return \Lit\Vue\Crud\CrudTable
      */
     public function index(ConfigHandler $config, Closure $method)
     {

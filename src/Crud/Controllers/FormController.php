@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Crud\Controllers;
+namespace Lit\Crud\Controllers;
 
-use Fjord\Crud\Models\FormField;
-use Fjord\Crud\Requests\CrudCreateRequest;
-use Fjord\Crud\Requests\CrudReadRequest;
-use Fjord\Crud\Requests\FormReadRequest;
-use Fjord\User\Models\FjordUser;
+use Lit\Crud\Models\FormField;
+use Lit\Crud\Requests\CrudCreateRequest;
+use Lit\Crud\Requests\CrudReadRequest;
+use Lit\Crud\Requests\FormReadRequest;
+use Lit\User\Models\LitUser;
 use Illuminate\Database\Eloquent\Builder;
 
 abstract class FormController extends CrudBaseController
@@ -19,15 +19,15 @@ abstract class FormController extends CrudBaseController
     protected $model = FormField::class;
 
     /**
-     * Authorize request for permission operation and authenticated fjord-user.
+     * Authorize request for permission operation and authenticated lit-user.
      * Operations: read, update.
      *
-     * @param \Fjord\User\Models\FjordUser $user
+     * @param \Lit\User\Models\LitUser $user
      * @param string                       $operation
      *
      * @return bool
      */
-    public function authorize(FjordUser $user, string $operation): bool
+    public function authorize(LitUser $user, string $operation): bool
     {
         return true;
     }
@@ -117,7 +117,7 @@ abstract class FormController extends CrudBaseController
     /**
      * Deny storing form FormField model.
      *
-     * @param \Fjord\Crud\Requests\CrudCreateRequest $request
+     * @param \Lit\Crud\Requests\CrudCreateRequest $request
      *
      * @return mixed
      */

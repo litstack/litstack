@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Chart\Config\Concerns;
+namespace Lit\Chart\Config\Concerns;
 
 use Closure;
 use Illuminate\Support\Collection;

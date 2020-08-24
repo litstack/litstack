@@ -1,8 +1,8 @@
 <?php
 
-namespace FjordTest\Page;
+namespace Tests\Page;
 
-use Fjord\Page\Table\Components\RelationComponent;
+use Lit\Page\Table\Components\RelationComponent;
 use PHPUnit\Framework\TestCase;
 
 class RelationComponentTest extends TestCase

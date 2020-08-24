@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Crud\Repositories\Relations;
+namespace Lit\Crud\Repositories\Relations;
 
-use Fjord\Crud\Fields\Relations\OneRelationField;
-use Fjord\Crud\Models\FormRelation;
-use Fjord\Crud\Repositories\BaseFieldRepository;
-use Fjord\Crud\Requests\CrudUpdateRequest;
+use Lit\Crud\Fields\Relations\OneRelationField;
+use Lit\Crud\Models\Relation;
+use Lit\Crud\Repositories\BaseFieldRepository;
+use Lit\Crud\Requests\CrudUpdateRequest;
 
 class OneRelationRepository extends BaseFieldRepository
 {
@@ -39,9 +39,9 @@ class OneRelationRepository extends BaseFieldRepository
         ];
 
         // Replace previous relation with new one.
-        FormRelation::where($query)->delete();
+        Relation::where($query)->delete();
         $query['to_model_id'] = $related->id;
-        FormRelation::create($query);
+        Relation::create($query);
     }
 
     /**
@@ -64,6 +64,6 @@ class OneRelationRepository extends BaseFieldRepository
             'field_id'        => $this->field->id,
         ];
 
-        FormRelation::where($query)->delete();
+        Relation::where($query)->delete();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Support\Macros;
+namespace Lit\Support\Macros;
 
 use Illuminate\Support\Facades\Blade;
 
@@ -26,6 +26,6 @@ class BladeBlock
     {
         $expression = Blade::stripParentheses($expression);
 
-        return "<?php echo \$__env->make('fjord::partials.block', ['repeatables' => $expression], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
+        return "<?php echo \$__env->make('lit::partials.block', ['repeatables' => $expression], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
     }
 }

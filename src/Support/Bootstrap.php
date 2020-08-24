@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Support;
+namespace Lit\Support;
 
 /**
  * @see https://getbootstrap.com

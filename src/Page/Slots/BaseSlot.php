@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Page\Slots;
+namespace Lit\Page\Slots;
 
-use Fjord\Support\VueProp;
-use Fjord\Vue\Component;
+use Lit\Support\VueProp;
+use Lit\Vue\Component;
 use Illuminate\Contracts\View\View;
 
 abstract class BaseSlot extends VueProp
@@ -25,7 +25,7 @@ abstract class BaseSlot extends VueProp
     /**
      * Get action compoent.
      *
-     * @return Fjord\Vue\Component
+     * @return Lit\Vue\Component
      */
     abstract protected function getActionComponent();
 
@@ -33,7 +33,7 @@ abstract class BaseSlot extends VueProp
      * Add action.
      *
      * @param  string              $action
-     * @return Fjord\Vue\Component
+     * @return Lit\Vue\Component
      */
     public function action($action)
     {

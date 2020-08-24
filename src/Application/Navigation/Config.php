@@ -1,13 +1,13 @@
 <?php
 
-namespace Fjord\Application\Navigation;
+namespace Lit\Application\Navigation;
 
 abstract class Config
 {
     /**
      * Build topbar navigation.
      *
-     * @param FjordNavigation $nav
+     * @param LitNavigation $nav
      *
      * @return void
      */
@@ -16,7 +16,7 @@ abstract class Config
     /**
      * Build main navigation.
      *
-     * @param FjordNavigation $nav
+     * @param LitNavigation $nav
      *
      * @return void
      */

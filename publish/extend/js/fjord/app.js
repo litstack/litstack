@@ -1,13 +1,13 @@
-import Fjord from 'fjord';
-import FjordPermissions from 'fjord-permissions';
+import Lit from 'lit';
+import LitPermissions from 'lit-permissions';
 
 require('./service/component.service');
 
 const store = {};
 
 // Use permission package
-Fjord.use(FjordPermissions);
+Lit.use(LitPermissions);
 
-new Fjord({
-    store
+new Lit({
+	store,
 });

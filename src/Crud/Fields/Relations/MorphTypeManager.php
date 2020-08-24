@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Crud\Fields\Relations;
+namespace Lit\Crud\Fields\Relations;
 
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Field;
+use Lit\Crud\BaseForm;
+use Lit\Crud\Field;
 
 class MorphTypeManager
 {

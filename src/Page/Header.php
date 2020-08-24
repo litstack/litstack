@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Page;
+namespace Lit\Page;
 
-use Fjord\Page\Actions\ButtonSmAction;
-use Fjord\Support\VueProp;
+use Lit\Page\Actions\ButtonSmAction;
+use Lit\Support\VueProp;
 
 class Header extends VueProp
 {

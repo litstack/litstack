@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Fields\Route;
+namespace Lit\Crud\Fields\Route;
 
 use Closure;
 use Illuminate\Contracts\Support\Arrayable;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Chart\Config;
+namespace Lit\Chart\Config;
 
 abstract class AreaChartConfig extends ChartConfig
 {

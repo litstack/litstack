@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Commands\Install;
+namespace Lit\Commands\Install;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
@@ -93,7 +93,7 @@ trait InstallVendorConfigs
         $content = file_get_contents(config_path(medialibrary_config_key().'.php'));
         $content = str_replace(
             'Spatie\MediaLibrary\MediaCollections\Models\Media::class',
-            'Fjord\Crud\Models\Media::class',
+            'Lit\Crud\Models\Media::class',
             $content
         );
         File::put(config_path(medialibrary_config_key().'.php'), $content);

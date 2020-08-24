@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Fields\ListField;
+namespace Lit\Crud\Fields\ListField;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 

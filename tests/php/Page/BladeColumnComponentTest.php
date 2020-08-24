@@ -1,9 +1,9 @@
 <?php
 
-namespace FjordTest\Page;
+namespace Tests\Page;
 
-use Fjord\Page\Table\Components\BladeColumnComponent;
-use Fjord\Page\Table\Components\ColumnComponent;
+use Lit\Page\Table\Components\BladeColumnComponent;
+use Lit\Page\Table\Components\ColumnComponent;
 use Illuminate\Contracts\View\View;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;

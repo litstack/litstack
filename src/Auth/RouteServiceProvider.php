@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Auth;
+namespace Lit\Auth;
 
-use Fjord\Auth\Controllers\AuthController;
-use Fjord\Auth\Controllers\ResetPasswordController;
-use Fjord\Support\Facades\FjordRoute;
+use Lit\Auth\Controllers\AuthController;
+use Lit\Auth\Controllers\ResetPasswordController;
+use Lit\Support\Facades\LitRoute;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
@@ -36,26 +36,26 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     protected function mapAuthRoutes()
     {
-        FjordRoute::public()
+        LitRoute::public()
             ->get('login', AuthController::class.'@login')
             ->name('login');
 
-        FjordRoute::public()
+        LitRoute::public()
             ->post('login', AuthController::class.'@authenticate')
             ->name('login.post');
 
-        FjordRoute::post('logout', AuthController::class.'@logout')
+        LitRoute::post('logout', AuthController::class.'@logout')
             ->name('logout');
 
-        FjordRoute::post('logout/session', AuthController::class.'@logoutSession')
+        LitRoute::post('logout/session', AuthController::class.'@logoutSession')
             ->name('logout.session');
 
-        FjordRoute::post('/fjord/register', AuthController::class.'@register')
+        LitRoute::post('/lit/register', AuthController::class.'@register')
             ->name('register');
 
-        FjordRoute::public()
-            ->get('/fjord/password/reset/{token}', ResetPasswordController::class.'@showResetForm')->name('password.reset');
-        FjordRoute::public()
-            ->post('/fjord/password/reset', ResetPasswordController::class.'@reset')->name('password.request');
+        LitRoute::public()
+            ->get('/lit/password/reset/{token}', ResetPasswordController::class.'@showResetForm')->name('password.reset');
+        LitRoute::public()
+            ->post('/lit/password/reset', ResetPasswordController::class.'@reset')->name('password.request');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace FjordTest\Traits;
+namespace Tests\Traits;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;

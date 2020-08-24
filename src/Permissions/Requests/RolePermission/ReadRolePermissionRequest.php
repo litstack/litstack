@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Permissions\Requests\RolePermission;
+namespace Lit\Permissions\Requests\RolePermission;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +13,7 @@ class ReadRolePermissionRequest extends FormRequest
      */
     public function authorize()
     {
-        return fjord_user()->can('read fjord-role-permissions');
+        return lit_user()->can('read lit-role-permissions');
     }
 
     public function rules()

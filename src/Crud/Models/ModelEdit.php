@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Models;
+namespace Lit\Crud\Models;
 
-use Fjord\User\Models\FjordUser;
+use Lit\User\Models\LitUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -47,7 +47,7 @@ class ModelEdit extends Model
     public function getTimeAttribute()
     {
         return $this->created_at
-            ->locale(fjord()->getLocale())
+            ->locale(lit()->getLocale())
             ->diffForHumans();
     }
 
@@ -58,7 +58,7 @@ class ModelEdit extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(FjordUser::class, 'fjord_user_id');
+        return $this->belongsTo(LitUser::class, 'lit_user_id');
     }
 
     /**

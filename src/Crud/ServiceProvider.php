@@ -1,47 +1,47 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Lit\Crud;
 
-use Fjord\Crud\Api\ApiRepositories;
-use Fjord\Crud\Fields\Block\Block;
-use Fjord\Crud\Fields\Boolean;
-use Fjord\Crud\Fields\Checkboxes;
-use Fjord\Crud\Fields\Component;
-use Fjord\Crud\Fields\Datetime;
-use Fjord\Crud\Fields\Icon;
-use Fjord\Crud\Fields\Input;
-use Fjord\Crud\Fields\ListField\ListField;
-use Fjord\Crud\Fields\Media\File;
-use Fjord\Crud\Fields\Media\Image;
-use Fjord\Crud\Fields\Modal;
-use Fjord\Crud\Fields\Password;
-use Fjord\Crud\Fields\Radio;
-use Fjord\Crud\Fields\Range;
-use Fjord\Crud\Fields\Relations\ManyRelation;
-use Fjord\Crud\Fields\Relations\OneRelation;
-use Fjord\Crud\Fields\Route;
-use Fjord\Crud\Fields\Route\RouteCollectionResolver;
-use Fjord\Crud\Fields\Select;
-use Fjord\Crud\Fields\Textarea;
-use Fjord\Crud\Fields\Wysiwyg;
-use Fjord\Crud\Models\Relations\CrudRelations;
-use Fjord\Crud\Repositories\BlockRepository;
-use Fjord\Crud\Repositories\DefaultRepository;
-use Fjord\Crud\Repositories\ListRepository;
-use Fjord\Crud\Repositories\MediaRepository;
-use Fjord\Crud\Repositories\ModalRepository;
-use Fjord\Crud\Repositories\RelationRepository;
-use Fjord\Crud\Repositories\Relations\BelongsToManyRepository;
-use Fjord\Crud\Repositories\Relations\BelongsToRepository;
-use Fjord\Crud\Repositories\Relations\HasManyRepository;
-use Fjord\Crud\Repositories\Relations\HasOneRepository;
-use Fjord\Crud\Repositories\Relations\ManyRelationRepository;
-use Fjord\Crud\Repositories\Relations\MorphManyRepository;
-use Fjord\Crud\Repositories\Relations\MorphOneRepository;
-use Fjord\Crud\Repositories\Relations\MorphToManyRepository;
-use Fjord\Crud\Repositories\Relations\MorphToRepository;
-use Fjord\Crud\Repositories\Relations\OneRelationRepository;
-use Fjord\Support\Facades\Form as FormFacade;
+use Lit\Crud\Api\ApiRepositories;
+use Lit\Crud\Fields\Block\Block;
+use Lit\Crud\Fields\Boolean;
+use Lit\Crud\Fields\Checkboxes;
+use Lit\Crud\Fields\Component;
+use Lit\Crud\Fields\Datetime;
+use Lit\Crud\Fields\Icon;
+use Lit\Crud\Fields\Input;
+use Lit\Crud\Fields\ListField\ListField;
+use Lit\Crud\Fields\Media\File;
+use Lit\Crud\Fields\Media\Image;
+use Lit\Crud\Fields\Modal;
+use Lit\Crud\Fields\Password;
+use Lit\Crud\Fields\Radio;
+use Lit\Crud\Fields\Range;
+use Lit\Crud\Fields\Relations\ManyRelation;
+use Lit\Crud\Fields\Relations\OneRelation;
+use Lit\Crud\Fields\Route;
+use Lit\Crud\Fields\Route\RouteCollectionResolver;
+use Lit\Crud\Fields\Select;
+use Lit\Crud\Fields\Textarea;
+use Lit\Crud\Fields\Wysiwyg;
+use Lit\Crud\Models\Relations\CrudRelations;
+use Lit\Crud\Repositories\BlockRepository;
+use Lit\Crud\Repositories\DefaultRepository;
+use Lit\Crud\Repositories\ListRepository;
+use Lit\Crud\Repositories\MediaRepository;
+use Lit\Crud\Repositories\ModalRepository;
+use Lit\Crud\Repositories\RelationRepository;
+use Lit\Crud\Repositories\Relations\BelongsToManyRepository;
+use Lit\Crud\Repositories\Relations\BelongsToRepository;
+use Lit\Crud\Repositories\Relations\HasManyRepository;
+use Lit\Crud\Repositories\Relations\HasOneRepository;
+use Lit\Crud\Repositories\Relations\ManyRelationRepository;
+use Lit\Crud\Repositories\Relations\MorphManyRepository;
+use Lit\Crud\Repositories\Relations\MorphOneRepository;
+use Lit\Crud\Repositories\Relations\MorphToManyRepository;
+use Lit\Crud\Repositories\Relations\MorphToRepository;
+use Lit\Crud\Repositories\Relations\OneRelationRepository;
+use Lit\Support\Facades\Form as FormFacade;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
@@ -109,7 +109,7 @@ class ServiceProvider extends LaravelServiceProvider
      */
     protected function registerCrud()
     {
-        $this->callAfterResolving('fjord.app', function ($app) {
+        $this->callAfterResolving('lit.app', function ($app) {
             $app->singleton('crud', function () {
                 return new Crud;
             });
@@ -130,7 +130,7 @@ class ServiceProvider extends LaravelServiceProvider
         $loader = AliasLoader::getInstance();
         $loader->alias('Form', FormFacade::class);
 
-        $this->app->singleton('fjord.form', function () {
+        $this->app->singleton('lit.form', function () {
             $form = new Form();
 
             $this->registerFields($form);

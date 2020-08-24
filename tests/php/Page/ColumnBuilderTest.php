@@ -1,14 +1,14 @@
 <?php
 
-namespace FjordTest\Page;
+namespace Tests\Page;
 
-use Fjord\Page\Table\Casts\MoneyColumn;
-use Fjord\Page\Table\Column;
-use Fjord\Page\Table\ColumnBuilder;
-use Fjord\Page\Table\Components\BladeColumnComponent;
-use Fjord\Page\Table\Components\ColumnComponent;
-use Fjord\Page\Table\Table;
-use FjordTest\BackendTestCase;
+use Lit\Page\Table\Casts\MoneyColumn;
+use Lit\Page\Table\Column;
+use Lit\Page\Table\ColumnBuilder;
+use Lit\Page\Table\Components\BladeColumnComponent;
+use Lit\Page\Table\Components\ColumnComponent;
+use Lit\Page\Table\Table;
+use Tests\BackendTestCase;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Support\Facades\View;
 use Mockery as m;

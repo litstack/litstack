@@ -1,13 +1,13 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Fjord\Crud\Field;
-use Fjord\Crud\Fields\Traits\TranslatableField as TranslatableFieldTrait;
-use Fjord\Crud\Models\Traits\Translatable;
-use FjordTest\BackendTestCase;
-use FjordTest\Traits\InteractsWithFields;
+use Lit\Crud\Field;
+use Lit\Crud\Fields\Traits\TranslatableField as TranslatableFieldTrait;
+use Lit\Crud\Models\Traits\Translatable;
+use Tests\BackendTestCase;
+use Tests\Traits\InteractsWithFields;
 use Illuminate\Database\Eloquent\Model;
 
 class TraitTranslatableFieldTest extends BackendTestCase

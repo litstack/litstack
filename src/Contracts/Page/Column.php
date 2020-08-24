@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Contracts\Page;
+namespace Lit\Contracts\Page;
 
 interface Column
 {

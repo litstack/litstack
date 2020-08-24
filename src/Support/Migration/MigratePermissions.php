@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Support\Migration;
+namespace Lit\Support\Migration;
 
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -14,12 +14,12 @@ trait MigratePermissions
      */
     protected function upPermissions()
     {
-        $admin = Role::where('guard_name', 'fjord')
+        $admin = Role::where('guard_name', 'lit')
             ->where('name', 'admin')
             ->first();
 
         foreach ($this->permissions as $permission) {
-            Permission::firstOrCreate(['guard_name' => 'fjord', 'name' => $permission]);
+            Permission::firstOrCreate(['guard_name' => 'lit', 'name' => $permission]);
             $admin->givePermissionTo($permission);
         }
     }
@@ -31,11 +31,11 @@ trait MigratePermissions
      */
     protected function downPermissions()
     {
-        $admin = Role::where('guard_name', 'fjord')
+        $admin = Role::where('guard_name', 'lit')
             ->where('name', 'admin')
             ->first();
 
-        $permissions = Permission::where('guard_name', 'fjord')
+        $permissions = Permission::where('guard_name', 'lit')
             ->whereIn('name', $this->permissions)
             ->get();
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Crud\Repositories\Relations;
+namespace Lit\Crud\Repositories\Relations;
 
-use Fjord\Crud\Fields\Relations\ManyRelationField;
-use Fjord\Crud\Models\FormRelation;
-use Fjord\Crud\Repositories\BaseFieldRepository;
-use Fjord\Crud\Requests\CrudUpdateRequest;
+use Lit\Crud\Fields\Relations\ManyRelationField;
+use Lit\Crud\Models\Relation;
+use Lit\Crud\Repositories\BaseFieldRepository;
+use Lit\Crud\Requests\CrudUpdateRequest;
 
 class ManyRelationRepository extends BaseFieldRepository
 {
@@ -52,11 +52,11 @@ class ManyRelationRepository extends BaseFieldRepository
         ];
 
         // Check if relation already exists.
-        if (FormRelation::where($query)->exists()) {
+        if (Relation::where($query)->exists()) {
             abort(404);
         }
 
-        FormRelation::create($query);
+        Relation::create($query);
     }
 
     /**
@@ -79,6 +79,6 @@ class ManyRelationRepository extends BaseFieldRepository
             'field_id'        => $this->field->id,
         ];
 
-        FormRelation::where($query)->delete();
+        Relation::where($query)->delete();
     }
 }

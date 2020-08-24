@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Page;
+namespace Lit\Page;
 
-use Fjord\Contracts\Page\ActionFactory;
-use Fjord\Support\VueProp;
-use Fjord\Vue\Component;
-use Fjord\Vue\Components\ButtonComponent;
+use Lit\Contracts\Page\ActionFactory;
+use Lit\Support\VueProp;
+use Lit\Vue\Component;
+use Lit\Vue\Components\ButtonComponent;
 use Illuminate\Contracts\View\View;
 
 class Slot extends VueProp

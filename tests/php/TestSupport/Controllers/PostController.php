@@ -1,9 +1,9 @@
 <?php
 
-namespace FjordTest\TestSupport\Controllers;
+namespace Tests\TestSupport\Controllers;
 
-use Fjord\Crud\Controllers\CrudController;
-use Fjord\User\Models\FjordUser;
+use Lit\Crud\Controllers\CrudController;
+use Lit\User\Models\LitUser;
 use Illuminate\Database\Eloquent\Builder;
 
 class PostController extends CrudController
@@ -13,18 +13,18 @@ class PostController extends CrudController
      *
      * @var string
      */
-    protected $model = \FjordTest\TestSupport\Models\Post::class;
+    protected $model = \Tests\TestSupport\Models\Post::class;
 
     /**
-     * Authorize request for permission operation and authenticated fjord-user.
+     * Authorize request for permission operation and authenticated lit-user.
      * Operations: create, read, update, delete.
      *
-     * @param FjordUser $user
+     * @param LitUser $user
      * @param string    $operation
      *
      * @return bool
      */
-    public function authorize(FjordUser $user, string $operation): bool
+    public function authorize(LitUser $user, string $operation): bool
     {
         return true;
     }

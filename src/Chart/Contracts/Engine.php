@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Chart\Contracts;
+namespace Lit\Chart\Contracts;
 
-use Fjord\Chart\ChartSet;
+use Lit\Chart\ChartSet;
 
 interface Engine
 {

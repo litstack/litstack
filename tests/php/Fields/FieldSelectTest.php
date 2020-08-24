@@ -1,12 +1,12 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\BaseField;
-use Fjord\Crud\Fields\Select;
-use Fjord\Crud\Fields\Traits\FieldHasRules;
-use FjordTest\Traits\InteractsWithFields;
-use FjordTest\Traits\TestHelpers;
+use Lit\Crud\BaseField;
+use Lit\Crud\Fields\Select;
+use Lit\Crud\Fields\Traits\FieldHasRules;
+use Tests\Traits\InteractsWithFields;
+use Tests\Traits\TestHelpers;
 use PHPUnit\Framework\TestCase;
 
 class FieldSelectTest extends TestCase

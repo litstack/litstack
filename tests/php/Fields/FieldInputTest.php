@@ -1,13 +1,13 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\BaseField;
-use Fjord\Crud\Fields\Input;
-use Fjord\Crud\Fields\Traits\FieldHasRules;
-use Fjord\Crud\Fields\Traits\TranslatableField;
-use FjordTest\Traits\InteractsWithFields;
-use FjordTest\Traits\TestHelpers;
+use Lit\Crud\BaseField;
+use Lit\Crud\Fields\Input;
+use Lit\Crud\Fields\Traits\FieldHasRules;
+use Lit\Crud\Fields\Traits\TranslatableField;
+use Tests\Traits\InteractsWithFields;
+use Tests\Traits\TestHelpers;
 use PHPUnit\Framework\TestCase;
 
 class FieldInputTest extends TestCase

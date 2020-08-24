@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Application\Composer;
+namespace Lit\Application\Composer;
 
-use Fjord\Application\Kernel\HandleViewComposer;
+use Lit\Application\Kernel\HandleViewComposer;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -10,20 +10,20 @@ use Illuminate\View\View;
 class HttpErrorComposer
 {
     /**
-     * Show Fjord error pages.
+     * Show Lit error pages.
      *
      * @param  View $view
      * @return void
      */
     public function compose(View $view)
     {
-        $fjordPrefix = strip_slashes('/'.config('fjord.route_prefix').'/');
-        if (! Str::startsWith(Request::getRequestUri(), $fjordPrefix)) {
+        $litPrefix = strip_slashes('/'.config('lit.route_prefix').'/');
+        if (! Str::startsWith(Request::getRequestUri(), $litPrefix)) {
             return;
         }
 
-        // Compose Fjord error pages only when logged in.
-        if (! fjord_user()) {
+        // Compose Lit error pages only when logged in.
+        if (! lit_user()) {
             return;
         }
 
@@ -36,8 +36,8 @@ class HttpErrorComposer
             $view->offsetUnset($key);
         }
 
-        // Fjord view.
-        $view->setView('fjord::app')
+        // Lit view.
+        $view->setView('lit::app')
             ->withComponent("fj-error-{$error}")
             ->withProps([]);
 

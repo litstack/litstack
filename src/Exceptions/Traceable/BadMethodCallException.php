@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Exceptions\Traceable;
+namespace Lit\Exceptions\Traceable;
 
 use BadMethodCallException as BaseBadMethodCallException;
-use Fjord\Contracts\Exceptions\Traceable;
-use Fjord\Support\TraceableException;
+use Lit\Contracts\Exceptions\Traceable;
+use Lit\Support\TraceableException;
 
 class BadMethodCallException extends BaseBadMethodCallException implements Traceable
 {

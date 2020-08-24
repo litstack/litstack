@@ -1,13 +1,13 @@
 <?php
 
-namespace Fjord\Exceptions\Solutions;
+namespace Lit\Exceptions\Solutions;
 
 use Facade\IgnitionContracts\BaseSolution;
 
-class FjordSolution extends BaseSolution
+class LitSolution extends BaseSolution
 {
     /**
-     * Create new FjordSolution instance.
+     * Create new LitSolution instance.
      *
      * @param string $title
      *
@@ -17,7 +17,7 @@ class FjordSolution extends BaseSolution
     {
         parent::__construct($title);
 
-        $this->setDocsLink('https://www.fjord-admin.com/');
+        $this->setDocsLink('https://www.lit-admin.com/');
     }
 
     /**
@@ -42,7 +42,7 @@ class FjordSolution extends BaseSolution
     public function setDocsLink(string $link)
     {
         $this->setDocumentationLinks([
-            'Fjord Docs' => $link,
+            'Lit Docs' => $link,
         ]);
 
         return $this;

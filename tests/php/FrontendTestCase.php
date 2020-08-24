@@ -1,22 +1,20 @@
 <?php
 
-namespace FjordTest;
+namespace Tests;
 
 use Exception;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Exception\WebDriverCurlException;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
-use FjordTest\Traits\TestHelpers;
+use Tests\Traits\TestHelpers;
 use Laravel\Dusk\Browser;
 use Laravel\Dusk\Chrome\SupportsChrome;
 use Orchestra\Testbench\Dusk\TestCase as OrchestraDuskTestCase;
 
 class FrontendTestCase extends OrchestraDuskTestCase
 {
-    use SupportsChrome;
-    use FjordTestCase;
-    use TestHelpers;
+    use SupportsChrome, LitTestCase, TestHelpers;
 
     /**
      * The base serve host URL to use while testing the application.

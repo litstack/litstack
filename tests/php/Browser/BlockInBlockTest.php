@@ -1,12 +1,12 @@
 <?php
 
-namespace FjordTest\Browser;
+namespace Tests\Browser;
 
-use Fjord\Crud\Models\FormBlock;
-use FjordApp\Config\Crud\BlockInBlockConfig;
-use FjordTest\FrontendTestCase;
-use FjordTest\TestSupport\Models\Post;
-use FjordTest\Traits\InteractsWithCrud;
+use Lit\Crud\Models\FormBlock;
+use LitApp\Config\Crud\BlockInBlockConfig;
+use Tests\FrontendTestCase;
+use Tests\TestSupport\Models\Post;
+use Tests\Traits\InteractsWithCrud;
 
 class BlockInBlockTest extends FrontendTestCase
 {
@@ -19,7 +19,7 @@ class BlockInBlockTest extends FrontendTestCase
         parent::setUp();
 
         $this->post = Post::create([]);
-        $this->actingAs($this->admin, 'fjord');
+        $this->actingAs($this->admin, 'lit');
     }
 
     /** @test */
@@ -30,7 +30,7 @@ class BlockInBlockTest extends FrontendTestCase
         $this->browse(function ($browser) {
             $url = $this->getCrudRoute("/{$this->post->id}/");
             $browser
-                ->loginAs($this->admin, 'fjord')
+                ->loginAs($this->admin, 'lit')
                 ->visit($url)
                 ->waitFor('.fj-block-content')
                 ->click('.fj-block-content .fj-block-add-card')
@@ -50,7 +50,7 @@ class BlockInBlockTest extends FrontendTestCase
         $this->browse(function ($browser) {
             $url = $this->getCrudRoute("/{$this->post->id}/");
             $browser
-                 ->loginAs($this->admin, 'fjord')
+                 ->loginAs($this->admin, 'lit')
                  ->visit($url)
                  ->waitFor('.fj-block-content')
                  ->click('.fj-block-content .fj-block-add-card')
@@ -75,7 +75,7 @@ class BlockInBlockTest extends FrontendTestCase
         $this->browse(function ($browser) {
             $url = $this->getCrudRoute("/{$this->post->id}/");
             $browser
-                 ->loginAs($this->admin, 'fjord')
+                 ->loginAs($this->admin, 'lit')
                  ->visit($url)
                  ->waitFor('.fj-block-content')
                  ->click('.fj-block-content .fj-block-add-card')

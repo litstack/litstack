@@ -1,10 +1,10 @@
 <?php
 
-namespace FjordTest\Translation;
+namespace Tests\Translation;
 
-use Fjord\Translation\Controllers\SetLocaleController;
-use FjordTest\BackendTestCase;
-use FjordTest\Traits\CreateFjordUsers;
+use Lit\Translation\Controllers\SetLocaleController;
+use Tests\BackendTestCase;
+use Tests\Traits\CreateLitUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mockery as m;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SetLocaleControllerTest extends BackendTestCase
 {
-    use CreateFjordUsers;
+    use CreateLitUsers;
 
     /** @test */
     public function test_invoke_method()
@@ -23,7 +23,7 @@ class SetLocaleControllerTest extends BackendTestCase
         $guard = m::mock('guard');
         $guard->shouldReceive('user')->andReturn($user);
         $auth = Auth::partialMock();
-        $auth->shouldReceive('guard')->withArgs(['fjord'])->andReturn($guard);
+        $auth->shouldReceive('guard')->withArgs(['lit'])->andReturn($guard);
 
         $request = m::mock(Request::class);
         $request->shouldReceive('all')->andReturn(['locale' => 'en']);
@@ -51,9 +51,9 @@ class SetLocaleControllerTest extends BackendTestCase
     {
         app('config')->set('translation.locales', ['en']);
 
-        $this->actingAs($this->admin, 'fjord');
+        $this->actingAs($this->admin, 'lit');
         $this->assertEquals(null, $this->admin->locale);
-        $response = $this->post(fjord()->url('set-locale'), ['locale' => 'en']);
+        $response = $this->post(lit()->url('set-locale'), ['locale' => 'en']);
         $response->assertStatus(200);
         $this->assertEquals('en', $this->admin->refresh()->locale);
     }

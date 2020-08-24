@@ -1,10 +1,10 @@
 <?php
 
-namespace FjordTest;
+namespace Tests;
 
-use Fjord\Crud\Field;
-use Fjord\Crud\FieldDependency;
-use FjordTest\Traits\TestHelpers;
+use Lit\Crud\Field;
+use Lit\Crud\FieldDependency;
+use Tests\Traits\TestHelpers;
 use InvalidArgumentException;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;

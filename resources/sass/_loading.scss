@@ -10,48 +10,48 @@ $ph-spacer: $grid-gutter-width / 1.5 !default;
 $ph-animation-duration: 0.8s !default;
 
 .ph-col-1 {
-    flex: 0 0 percentage(1 / 12);
+	flex: 0 0 percentage(1 / 12);
 }
 .ph-col-3 {
-    flex: 0 0 percentage(3 / 12);
+	flex: 0 0 percentage(3 / 12);
 }
 .ph-col-5 {
-    flex: 0 0 percentage(5 / 12);
+	flex: 0 0 percentage(5 / 12);
 }
 .ph-col-7 {
-    flex: 0 0 percentage(7 / 12);
+	flex: 0 0 percentage(7 / 12);
 }
 .ph-col-9 {
-    flex: 0 0 percentage(9 / 12);
+	flex: 0 0 percentage(9 / 12);
 }
 .ph-col-11 {
-    flex: 0 0 percentage(11 / 12);
+	flex: 0 0 percentage(11 / 12);
 }
 
-div#fjord-app {
-    .ph-item {
-        border-width: 0;
+div#lit-app {
+	.ph-item {
+		border-width: 0;
 
-        div {
-            border-radius: $ph-border-radius;
-        }
-    }
+		div {
+			border-radius: $ph-border-radius;
+		}
+	}
 
-    .fj-nav-loader {
-        padding-top: $ph-gutter - $nav-padding-top;
+	.fj-nav-loader {
+		padding-top: $ph-gutter - $nav-padding-top;
 
-        .fj-ph-entry {
-            height: $font-size-base;
-            margin: $list-group-item-padding-y 0;
-        }
-        .fj-ph-divider {
-            height: $nav-padding-top;
-        }
-        .fj-ph-title {
-            height: $nav-title-font-size;
-            margin: $list-group-item-padding-y 0;
-        }
-    }
+		.fj-ph-entry {
+			height: $font-size-base;
+			margin: $list-group-item-padding-y 0;
+		}
+		.fj-ph-divider {
+			height: $nav-padding-top;
+		}
+		.fj-ph-title {
+			height: $nav-title-font-size;
+			margin: $list-group-item-padding-y 0;
+		}
+	}
 }
 
 @import '~placeholder-loading/src/scss/placeholder-loading';

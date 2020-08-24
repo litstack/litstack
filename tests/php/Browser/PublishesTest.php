@@ -1,17 +1,17 @@
 <?php
 
-namespace FjordTest\Browser;
+namespace Tests\Browser;
 
-use FjordApp\Config\Form\Collections\SettingsConfig;
-use FjordApp\Config\Form\Pages\HomeConfig;
-use FjordApp\Config\User\ProfileSettingsConfig;
-use FjordApp\Config\User\UserConfig;
-use FjordTest\FrontendTestCase;
-use FjordTest\Traits\CreateFjordUsers;
+use LitApp\Config\Form\Collections\SettingsConfig;
+use LitApp\Config\Form\Pages\HomeConfig;
+use LitApp\Config\User\ProfileSettingsConfig;
+use LitApp\Config\User\UserConfig;
+use Tests\FrontendTestCase;
+use Tests\Traits\CreateLitUsers;
 
 class PublishesTest extends FrontendTestCase
 {
-    use CreateFjordUsers;
+    use CreateLitUsers;
 
     public function setUp(): void
     {
@@ -24,11 +24,11 @@ class PublishesTest extends FrontendTestCase
         $this->skipIfChromedriverIsNotRunning();
 
         $this->browse(function ($browser) {
-            $url = fjord()->url(
-                fjord()->config(SettingsConfig::class)->route_prefix
+            $url = lit()->url(
+                lit()->config(SettingsConfig::class)->route_prefix
             );
             $browser
-                ->loginAs($this->admin, 'fjord')
+                ->loginAs($this->admin, 'lit')
                 ->visit($url)
                 ->assertSeeIn('h3', 'Settings');
         });
@@ -40,12 +40,12 @@ class PublishesTest extends FrontendTestCase
         $this->skipIfChromedriverIsNotRunning();
 
         $this->browse(function ($browser) {
-            $url = fjord()->url(
-                fjord()->config(HomeConfig::class)->route_prefix
+            $url = lit()->url(
+                lit()->config(HomeConfig::class)->route_prefix
             );
 
             $browser
-                ->loginAs($this->admin, 'fjord')
+                ->loginAs($this->admin, 'lit')
                 ->visit($url)
                 ->assertSeeIn('h3', 'Home');
             // sleep(20);
@@ -58,12 +58,12 @@ class PublishesTest extends FrontendTestCase
         $this->skipIfChromedriverIsNotRunning();
 
         $this->browse(function ($browser) {
-            $url = fjord()->url(
-                fjord()->config(ProfileSettingsConfig::class)->route_prefix.'/'.$this->admin->id
+            $url = lit()->url(
+                lit()->config(ProfileSettingsConfig::class)->route_prefix.'/'.$this->admin->id
             );
 
             $browser
-                ->loginAs($this->admin, 'fjord')
+                ->loginAs($this->admin, 'lit')
                 ->visit($url)
                 ->assertSeeIn('h3', 'Profile Settings');
         });
@@ -75,12 +75,12 @@ class PublishesTest extends FrontendTestCase
         $this->skipIfChromedriverIsNotRunning();
 
         $this->browse(function ($browser) {
-            $url = fjord()->url(
-                fjord()->config(UserConfig::class)->route_prefix
+            $url = lit()->url(
+                lit()->config(UserConfig::class)->route_prefix
             );
 
             $browser
-                ->loginAs($this->admin, 'fjord')
+                ->loginAs($this->admin, 'lit')
                 ->visit($url)
                 ->assertSeeIn('h3', 'Users');
         });

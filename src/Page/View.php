@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Page;
+namespace Lit\Page;
 
-use Fjord\Support\VueProp;
+use Lit\Support\VueProp;
 use Illuminate\Contracts\View\View as LaravelView;
 
 class View extends VueProp

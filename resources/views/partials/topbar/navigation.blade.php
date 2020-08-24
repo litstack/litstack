@@ -6,7 +6,7 @@
     @php
     $first = true;
     @endphp
-    @foreach(fjord()->config('navigation')->topbar as $section)
+    @foreach(lit()->config('navigation')->topbar as $section)
         @if($first)
             @php
             $first = false;
@@ -34,6 +34,6 @@
         @endforeach
     @endforeach
     <b-dropdown-divider></b-dropdown-divider>
-    <fj-logout :url="'{{route('fjord.logout')}}'"></fj-logout>
+    <fj-logout :url="'{{route('lit.logout')}}'"></fj-logout>
     
 </b-dropdown>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Contracts\Crud;
+namespace Lit\Contracts\Crud;
 
 interface Form
 {

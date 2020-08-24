@@ -1,17 +1,17 @@
 <?php
 
-namespace FjordTest\Translation;
+namespace Tests\Translation;
 
-use Fjord\Translation\Translator;
-use FjordTest\BackendTestCase;
+use Lit\Translation\Translator;
+use Tests\BackendTestCase;
 
 class TranslatorTest extends BackendTestCase
 {
     /** @test */
-    public function test_registered_translator_has_fjord_path()
+    public function test_registered_translator_has_lit_path()
     {
         $this->assertContains(
-            fjord_path('resources/lang'),
+            lit_path('resources/lang'),
             $this->app[Translator::class]->getPaths()
         );
     }

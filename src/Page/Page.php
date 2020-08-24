@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Page;
+namespace Lit\Page;
 
-use Fjord\Contracts\Page\Expandable;
-use Fjord\Exceptions\NotLoggedInException;
+use Lit\Contracts\Page\Expandable;
+use Lit\Exceptions\NotLoggedInException;
 
 class Page extends BasePage implements Expandable
 {
@@ -52,7 +52,7 @@ class Page extends BasePage implements Expandable
     /**
      * Resolve action component.
      *
-     * @param  \Fjord\Vue\Component $component
+     * @param  \Lit\Vue\Component $component
      * @return void
      */
     public function resolveAction($component)
@@ -167,8 +167,8 @@ class Page extends BasePage implements Expandable
      */
     public function render(): array
     {
-        if (! fjord_user()) {
-            throw new NotLoggedInException(static::class.' requires an authentificated fjord_user to render.');
+        if (! lit_user()) {
+            throw new NotLoggedInException(static::class.' requires an authentificated lit_user to render.');
         }
 
         $this->bindDataToSlotViews();
@@ -207,7 +207,7 @@ class Page extends BasePage implements Expandable
      */
     public function __toString()
     {
-        return view('fjord::app')
+        return view('lit::app')
             ->withComponent($this->rootComponent)
             ->withProps(array_merge([
                 'page' => collect($this->render()),

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Support\Macros;
+namespace Lit\Support\Macros;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;

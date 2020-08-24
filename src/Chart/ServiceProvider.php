@@ -1,15 +1,15 @@
 <?php
 
-namespace Fjord\Chart;
+namespace Lit\Chart;
 
 use Carbon\CarbonInterface;
-use Fjord\Chart\Engine\ApexAreaEngine;
-use Fjord\Chart\Engine\ApexBarEngine;
-use Fjord\Chart\Engine\ApexDonutEngine;
-use Fjord\Chart\Engine\ApexEngine;
-use Fjord\Chart\Engine\ApexProgressEngine;
-use Fjord\Chart\Engine\ChartEngineResolver;
-use Fjord\Chart\Engine\NumberEngine;
+use Lit\Chart\Engine\ApexAreaEngine;
+use Lit\Chart\Engine\ApexBarEngine;
+use Lit\Chart\Engine\ApexDonutEngine;
+use Lit\Chart\Engine\ApexEngine;
+use Lit\Chart\Engine\ApexProgressEngine;
+use Lit\Chart\Engine\ChartEngineResolver;
+use Lit\Chart\Engine\NumberEngine;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
@@ -46,8 +46,8 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function registerChartFactory()
     {
-        $this->app->singleton('fjord.chart.factory', function () {
-            return new ChartFactory($this->app['fjord.chart.engine.resolver']);
+        $this->app->singleton('lit.chart.factory', function () {
+            return new ChartFactory($this->app['lit.chart.engine.resolver']);
         });
     }
 
@@ -58,7 +58,7 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function registerChartEngineResolver()
     {
-        $this->app->singleton('fjord.chart.engine.resolver', function () {
+        $this->app->singleton('lit.chart.engine.resolver', function () {
             $resolver = new ChartEngineResolver();
 
             $this->registerApexEngine($resolver);

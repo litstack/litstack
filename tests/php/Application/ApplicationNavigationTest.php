@@ -2,8 +2,8 @@
 
 namespace Tests\Application;
 
-use Fjord\Application\Navigation\Navigation;
-use FjordTest\BackendTestCase;
+use Lit\Application\Navigation\Navigation;
+use Tests\BackendTestCase;
 
 class ApplicationNavigationTest extends BackendTestCase
 {

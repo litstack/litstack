@@ -1,6 +1,6 @@
 <?php
 
-use Fjord\Support\Migration\MigratePermissions;
+use Lit\Support\Migration\MigratePermissions;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

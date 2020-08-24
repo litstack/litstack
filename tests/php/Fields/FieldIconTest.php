@@ -1,10 +1,10 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\BaseField;
-use Fjord\Crud\Fields\Icon;
-use FjordTest\Traits\InteractsWithFields;
+use Lit\Crud\BaseField;
+use Lit\Crud\Fields\Icon;
+use Tests\Traits\InteractsWithFields;
 use PHPUnit\Framework\TestCase;
 
 class FieldIconTest extends TestCase

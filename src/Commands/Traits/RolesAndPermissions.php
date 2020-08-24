@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Commands\Traits;
+namespace Lit\Commands\Traits;
 
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -14,8 +14,8 @@ trait RolesAndPermissions
      */
     public function createDefaultRoles()
     {
-        Role::firstOrCreate(['guard_name' => 'fjord', 'name' => 'admin']);
-        Role::firstOrCreate(['guard_name' => 'fjord', 'name' => 'user']);
+        Role::firstOrCreate(['guard_name' => 'lit', 'name' => 'admin']);
+        Role::firstOrCreate(['guard_name' => 'lit', 'name' => 'user']);
     }
 
     /**
@@ -28,24 +28,24 @@ trait RolesAndPermissions
         $admin = Role::where('name', 'admin')->first();
 
         $permissions = [
-            // Fjord users.
-            'create fjord-users',
-            'read fjord-users',
-            'update fjord-users',
-            'delete fjord-users',
-            // Fjord user roles.
-            'create fjord-user-roles',
-            'read fjord-user-roles',
-            'update fjord-user-roles',
-            'delete fjord-user-roles',
-            // Fjord user role permissions.
-            'read fjord-role-permissions',
-            'update fjord-role-permissions',
+            // Lit users.
+            'create lit-users',
+            'read lit-users',
+            'update lit-users',
+            'delete lit-users',
+            // Lit user roles.
+            'create lit-user-roles',
+            'read lit-user-roles',
+            'update lit-user-roles',
+            'delete lit-user-roles',
+            // Lit user role permissions.
+            'read lit-role-permissions',
+            'update lit-role-permissions',
         ];
 
         // create permissions and give them to admin
         foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['guard_name' => 'fjord', 'name' => $permission]);
+            Permission::firstOrCreate(['guard_name' => 'lit', 'name' => $permission]);
             $admin->givePermissionTo($permission);
         }
     }

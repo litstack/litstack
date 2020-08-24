@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Lit\Crud;
 
 use Closure;
-use Fjord\Config\ConfigHandler;
-use Fjord\Crud\Actions\DestroyAction;
-use Fjord\Page\Page;
-use Fjord\Page\Table\Table;
+use Lit\Config\ConfigHandler;
+use Lit\Crud\Actions\DestroyAction;
+use Lit\Page\Page;
+use Lit\Page\Table\Table;
 
 class CrudIndex extends Page
 {
@@ -40,7 +40,7 @@ class CrudIndex extends Page
     /**
      * Resolve action component.
      *
-     * @param  \Fjord\Vue\Component $component
+     * @param  \Lit\Vue\Component $component
      * @return void
      */
     public function resolveAction($component)
@@ -76,7 +76,7 @@ class CrudIndex extends Page
      * Create CrudIndex table.
      *
      * @param  Closure                 $closure
-     * @return \Fjord\Page\Table\Table
+     * @return \Lit\Page\Table\Table
      */
     public function table(Closure $closure)
     {

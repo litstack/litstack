@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import Bus from '@fj-js/common/event.bus';
+import Bus from '@lit-js/common/event.bus';
 
 // FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -19,10 +19,10 @@ import BootstrapVue from 'bootstrap-vue';
 // import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 
 if ('vue-ctk-date-time-picker' in window) {
-    Vue.component(
-        'vue-ctk-date-time-picker',
-        window['vue-ctk-date-time-picker']
-    );
+	Vue.component(
+		'vue-ctk-date-time-picker',
+		window['vue-ctk-date-time-picker']
+	);
 }
 
 import Draggable from 'vuedraggable';
@@ -43,15 +43,15 @@ Vue.component('fa-icon', FontAwesomeIcon);
 // Modules
 Vue.use(Vuex);
 Vue.use(BootstrapVue, {
-    BTooltip: {
-        delay: {
-            show: 800,
-            hide: 100
-        }
-    },
-    BToast: {
-        toaster: 'b-toaster-bottom-right'
-    }
+	BTooltip: {
+		delay: {
+			show: 800,
+			hide: 100,
+		},
+	},
+	BToast: {
+		toaster: 'b-toaster-bottom-right',
+	},
 });
 
 Vue.use(Draggable);

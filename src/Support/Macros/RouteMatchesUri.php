@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Support\Macros;
+namespace Lit\Support\Macros;
 
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route as RouteFacade;

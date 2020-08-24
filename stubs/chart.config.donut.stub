@@ -2,8 +2,8 @@
 
 namespace DummyNamespace;
 
-use Fjord\Chart\Chart;
-use Fjord\Chart\Config\DonutChartConfig;
+use Lit\Chart\Chart;
+use Lit\Chart\Config\DonutChartConfig;
 
 class DummyClass extends DonutChartConfig
 {

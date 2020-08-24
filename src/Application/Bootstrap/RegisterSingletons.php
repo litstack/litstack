@@ -1,15 +1,15 @@
 <?php
 
-namespace Fjord\Application\Bootstrap;
+namespace Lit\Application\Bootstrap;
 
-use Fjord\Application\Application;
+use Lit\Application\Application;
 
 class RegisterSingletons
 {
     /**
      * Bind singletons to app.
      *
-     * @param  Fjord\Application\Application $app
+     * @param  Lit\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app)

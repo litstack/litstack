@@ -1,37 +1,37 @@
-.fjord-draggable {
-    padding: 20px;
-    border: 1px solid $border;
-    border-radius: 3px;
-    background: $draggable;
-    margin-bottom: 0.5rem;
-    &__dragbar {
-        cursor: grab;
-        margin: 0 -20px;
-        margin-top: -20px;
-        padding-top: 10px;
-        height: 32px;
-        &:hover {
-            //background: rgba(0, 0, 0, 0.05);
-            background-image: linear-gradient(
-                to right,
-                rgba(0, 0, 0, 0),
-                rgba(0, 0, 0, 0.05),
-                rgba(0, 0, 0, 0)
-            );
-        }
-    }
+.lit-draggable {
+	padding: 20px;
+	border: 1px solid $border;
+	border-radius: 3px;
+	background: $draggable;
+	margin-bottom: 0.5rem;
+	&__dragbar {
+		cursor: grab;
+		margin: 0 -20px;
+		margin-top: -20px;
+		padding-top: 10px;
+		height: 32px;
+		&:hover {
+			//background: rgba(0, 0, 0, 0.05);
+			background-image: linear-gradient(
+				to right,
+				rgba(0, 0, 0, 0),
+				rgba(0, 0, 0, 0.05),
+				rgba(0, 0, 0, 0)
+			);
+		}
+	}
 }
 .draggable-tr {
-    background: $draggable;
-    border: 1px solid $border;
-    td {
-        border: none !important;
-    }
-    &.sortable-ghost {
-        transform: scale(1.02) !important;
-        box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.6);
-        outline: 1px solid darken($border, 10%);
-        outline-offset: -1px;
-        border: 1px solid $border;
-    }
+	background: $draggable;
+	border: 1px solid $border;
+	td {
+		border: none !important;
+	}
+	&.sortable-ghost {
+		transform: scale(1.02) !important;
+		box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.6);
+		outline: 1px solid darken($border, 10%);
+		outline-offset: -1px;
+		border: 1px solid $border;
+	}
 }

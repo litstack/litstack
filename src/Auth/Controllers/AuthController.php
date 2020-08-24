@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Auth\Controllers;
+namespace Lit\Auth\Controllers;
 
-use Fjord\Auth\Actions\AuthenticationAction;
-use Fjord\Auth\Requests\FjordSessionLogoutRequest;
-use Fjord\Support\Facades\Fjord;
-use Fjord\User\Models\FjordUser;
+use Lit\Auth\Actions\AuthenticationAction;
+use Lit\Auth\Requests\LitSessionLogoutRequest;
+use Lit\Support\Facades\Lit;
+use Lit\User\Models\LitUser;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -29,13 +29,13 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->defaultUrl = Fjord::url(
-            config('fjord.default_route')
+        $this->defaultUrl = Lit::url(
+            config('lit.default_route')
         );
     }
 
     /**
-     * Authenticate FjordUser.
+     * Authenticate LitUser.
      *
      * @param Request $request
      *
@@ -92,7 +92,7 @@ class AuthController extends Controller
             'password' => 'required',
         ];
 
-        if (config('fjord.login.username')) {
+        if (config('lit.login.username')) {
             return $rules;
         }
 
@@ -118,11 +118,11 @@ class AuthController extends Controller
      */
     public function login()
     {
-        if (fjord_user()) {
+        if (lit_user()) {
             return redirect($this->defaultUrl);
         }
 
-        return view('fjord::auth.login');
+        return view('lit::auth.login');
     }
 
     /**
@@ -134,19 +134,19 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return view('fjord::auth.login');
+        return view('lit::auth.login');
     }
 
     /**
      * Logout session.
      *
-     * @param FjordSessionLogoutRequest $request
+     * @param LitSessionLogoutRequest $request
      *
      * @return void
      */
-    public function logoutSession(FjordSessionLogoutRequest $request)
+    public function logoutSession(LitSessionLogoutRequest $request)
     {
-        $session = fjord_user()->sessions()->findOrFail($request->id);
+        $session = lit_user()->sessions()->findOrFail($request->id);
 
         Session::getHandler()->destroy($session->session_id);
 
@@ -158,7 +158,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Create new FjordUser.
+     * Create new LitUser.
      *
      * @param Request                  $request
      * @param ForgotPasswordController $sendResetLink
@@ -168,20 +168,20 @@ class AuthController extends Controller
     public function register(Request $request, ForgotPasswordController $sendResetLink)
     {
         $rules = [
-            'username'   => ['string', 'max:255', 'unique:fjord_users'],
+            'username'   => ['string', 'max:255', 'unique:lit_users'],
             'first_name' => ['string', 'max:255'],
             'last_name'  => ['string', 'max:255'],
-            'email'      => ['required', 'string', 'email', 'max:255', 'unique:fjord_users'],
+            'email'      => ['required', 'string', 'email', 'max:255', 'unique:lit_users'],
             'password'   => ['required', 'string', 'min:8'],
         ];
 
         $request->validate($rules);
 
-        $user = FjordUser::create([
+        $user = LitUser::create([
             'username'   => $request->username,
             'first_name' => $request->first_name,
             'last_name'  => $request->last_name,
-            'locale'     => $request->locale ?? config('fjord.locale'),
+            'locale'     => $request->locale ?? config('lit.locale'),
             'email'      => $request->email,
             'password'   => Hash::make($request->password),
         ]);

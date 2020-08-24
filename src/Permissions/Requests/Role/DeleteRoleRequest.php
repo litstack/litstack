@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Permissions\Requests\Role;
+namespace Lit\Permissions\Requests\Role;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +13,7 @@ class DeleteRoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return fjord_user()->can('create fjord-user-roles');
+        return lit_user()->can('create lit-user-roles');
     }
 
     public function rules()

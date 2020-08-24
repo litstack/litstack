@@ -1,10 +1,10 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\Fields\Route\RouteCollection;
-use Fjord\Crud\Fields\Route\RouteCollectionResolver;
-use FjordTest\BackendTestCase;
+use Lit\Crud\Fields\Route\RouteCollection;
+use Lit\Crud\Fields\Route\RouteCollectionResolver;
+use Tests\BackendTestCase;
 use InvalidArgumentException;
 
 class RouteCollectionResolverTest extends BackendTestCase

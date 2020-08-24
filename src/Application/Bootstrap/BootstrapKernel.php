@@ -1,18 +1,18 @@
 <?php
 
-namespace Fjord\Application\Bootstrap;
+namespace Lit\Application\Bootstrap;
 
-use Fjord\Application\Application;
-use FjordApp\Kernel;
+use Lit\Application\Application;
+use LitApp\Kernel;
 use Illuminate\Console\Application as Artisan;
 use Illuminate\Support\Facades\App;
 
 class BootstrapKernel
 {
     /**
-     * Registers artisan commands of all fjord packages.
+     * Registers artisan commands of all lit packages.
      *
-     * @param  \Fjord\Application\Application $app
+     * @param  \Lit\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app, Kernel $kernel)

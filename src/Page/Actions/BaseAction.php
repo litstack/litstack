@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Page\Actions;
+namespace Lit\Page\Actions;
 
-use Fjord\Contracts\Page\ActionFactory;
-use Fjord\Page\RunActionEvent;
-use Fjord\Vue\Component;
+use Lit\Contracts\Page\ActionFactory;
+use Lit\Page\RunActionEvent;
+use Lit\Vue\Component;
 
 abstract class BaseAction implements ActionFactory
 {

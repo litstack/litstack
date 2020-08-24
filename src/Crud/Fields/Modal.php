@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Lit\Crud\Fields;
 
 use Closure;
-use Fjord\Crud\BaseField;
-use Fjord\Crud\BaseForm;
+use Lit\Crud\BaseField;
+use Lit\Crud\BaseForm;
 
 class Modal extends BaseField
 {

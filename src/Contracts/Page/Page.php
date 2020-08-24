@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Contracts\Page;
+namespace Lit\Contracts\Page;
 
 interface Page
 {
@@ -16,7 +16,7 @@ interface Page
      * Adds Vue component to page.
      *
      * @param  string               $name
-     * @return \Fjord\Vue\Component
+     * @return \Lit\Vue\Component
      */
     public function component($name);
 

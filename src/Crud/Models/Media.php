@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Models;
+namespace Lit\Crud\Models;
 
 use Spatie\MediaLibrary\MediaCollections\Models\Media as MediaModel;
 

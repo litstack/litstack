@@ -1,13 +1,13 @@
 <?php
 
-namespace Fjord\Crud\Repositories\Relations;
+namespace Lit\Crud\Repositories\Relations;
 
-use Fjord\Config\ConfigHandler;
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Controllers\CrudBaseController;
-use Fjord\Crud\Fields\Relations\MorphMany;
-use Fjord\Crud\Repositories\BaseFieldRepository;
-use Fjord\Crud\Requests\CrudUpdateRequest;
+use Lit\Config\ConfigHandler;
+use Lit\Crud\BaseForm;
+use Lit\Crud\Controllers\CrudBaseController;
+use Lit\Crud\Fields\Relations\MorphMany;
+use Lit\Crud\Repositories\BaseFieldRepository;
+use Lit\Crud\Requests\CrudUpdateRequest;
 
 class MorphManyRepository extends BaseFieldRepository
 {

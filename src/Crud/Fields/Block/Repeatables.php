@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Crud\Fields\Block;
+namespace Lit\Crud\Fields\Block;
 
 use Closure;
-use Fjord\Support\VueProp;
+use Lit\Support\VueProp;
 use Illuminate\Support\Traits\Macroable;
 
 class Repeatables extends VueProp
@@ -72,7 +72,7 @@ class Repeatables extends VueProp
                 ->block($name)
                 ->title($name)
                 ->repeatables($closure)
-            )->view('fjord::repeatables.block', [
+            )->view('lit::repeatables.block', [
                 'type' => $name,
             ]);
     }

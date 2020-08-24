@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Application;
+namespace Lit\Application;
 
-use Fjord\Application\Controllers\FileController;
-use Fjord\Support\Facades\FjordRoute;
-use Fjord\Translation\Controllers\LoadTranslationsController;
-use Fjord\Translation\Controllers\SetLocaleController;
+use Lit\Application\Controllers\FileController;
+use Lit\Support\Facades\LitRoute;
+use Lit\Translation\Controllers\LoadTranslationsController;
+use Lit\Translation\Controllers\SetLocaleController;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +19,7 @@ class ApplicationRouteServiceProvider extends LaravelRouteServiceProvider
      */
     public function map()
     {
-        $this->mapFjordRoutes();
+        $this->mapLitRoutes();
         $this->mapFileRoutes();
         $this->mapAppRoutes();
     }
@@ -31,21 +31,21 @@ class ApplicationRouteServiceProvider extends LaravelRouteServiceProvider
      */
     protected function mapAppRoutes()
     {
-        if (File::exists(base_path('fjord/routes/fjord.php'))) {
-            FjordRoute::group(base_path('fjord/routes/fjord.php'));
+        if (File::exists(base_path('lit/routes/lit.php'))) {
+            LitRoute::group(base_path('lit/routes/lit.php'));
         }
     }
 
     /**
-     * Map fjord routes.
+     * Map lit routes.
      *
      * @return void
      */
-    protected function mapFjordRoutes()
+    protected function mapLitRoutes()
     {
-        FjordRoute::group(function () {
+        LitRoute::group(function () {
             Route::post('/set-locale', SetLocaleController::class)->name('set-locale');
-            Route::get('/lang.js', LoadTranslationsController::class.'@i18n')->name('fjord-translations');
+            Route::get('/lang.js', LoadTranslationsController::class.'@i18n')->name('lit-translations');
         });
     }
 
@@ -56,13 +56,13 @@ class ApplicationRouteServiceProvider extends LaravelRouteServiceProvider
      */
     protected function mapFileRoutes()
     {
-        FjordRoute::get('js/app.js', FileController::class.'@fjordJs')->name('js');
-        FjordRoute::public()->get('js/app2.js', FileController::class.'@fjord2Js')->name('app2.js');
-        FjordRoute::public()->get('js/prism.js', FileController::class.'@prismJs')->name('prism.js');
-        FjordRoute::public()->get('js/ctk.js', FileController::class.'@ctkJs')->name('ctk.js');
-        FjordRoute::public()->get('css/app.css', FileController::class.'@fjordCss')->name('css');
-        FjordRoute::public()->get('images/fjord-logo.png', FileController::class.'@fjordLogo')->name('logo');
-        FjordRoute::public()->get('favicon/favicon-32x32.png', FileController::class.'@fjordFaviconBig')->name('favicon-big');
-        FjordRoute::public()->get('favicon/favicon-16x16.png', FileController::class.'@fjordFaviconSmall')->name('favicon-small');
+        LitRoute::get('js/app.js', FileController::class.'@litJs')->name('js');
+        LitRoute::public()->get('js/app2.js', FileController::class.'@lit2Js')->name('app2.js');
+        LitRoute::public()->get('js/prism.js', FileController::class.'@prismJs')->name('prism.js');
+        LitRoute::public()->get('js/ctk.js', FileController::class.'@ctkJs')->name('ctk.js');
+        LitRoute::public()->get('css/app.css', FileController::class.'@litCss')->name('css');
+        LitRoute::public()->get('images/lit-logo.png', FileController::class.'@litLogo')->name('logo');
+        LitRoute::public()->get('favicon/favicon-32x32.png', FileController::class.'@litFaviconBig')->name('favicon-big');
+        LitRoute::public()->get('favicon/favicon-16x16.png', FileController::class.'@litFaviconSmall')->name('favicon-small');
     }
 }

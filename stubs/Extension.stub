@@ -2,18 +2,18 @@
 
 namespace DummyNamespace;
 
-use Fjord\User\Models\FjordUser;
-use Fjord\Application\Vue\Extension;
+use Lit\User\Models\LitUser;
+use Lit\Application\Vue\Extension;
 
 class DummyClass extends Extension
 {
     /**
      * Has user permission for this extension.
      * 
-     * @var \Fjord\Fjord\Models\FjordUser $user
+     * @var \Lit\Lit\Models\LitUser $user
      * @return boolean
      */
-    public function authenticate(FjordUser $user)
+    public function authenticate(LitUser $user)
     {
         return true;
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Test\Page;
+namespace Lit\Test\Page;
 
-use Fjord\Page\Actions\AttributeBag;
+use Lit\Page\Actions\AttributeBag;
 use PHPUnit\Framework\TestCase;
 
 class AttributeBagTest extends TestCase

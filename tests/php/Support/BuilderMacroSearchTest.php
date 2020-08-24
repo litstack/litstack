@@ -1,18 +1,18 @@
 <?php
 
-namespace FjordTest;
+namespace Tests;
 
 use BadMethodCallException;
-use Fjord\Crud\Models\FormRelation;
-use Fjord\Support\Macros\BuilderSearch;
-use FjordTest\TestSupport\Models\Post;
-use FjordTest\TestSupport\Models\Tag;
-use FjordTest\TestSupport\Models\TranslatablePost;
-use FjordTest\TestSupport\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Lit\Crud\Models\Relation;
+use Lit\Support\Macros\BuilderSearch;
 use Mockery as m;
+use Tests\TestSupport\Models\Post;
+use Tests\TestSupport\Models\Tag;
+use Tests\TestSupport\Models\TranslatablePost;
+use Tests\TestSupport\Models\User;
 
 class BuilderMacroSearchTest extends BackendTestCase
 {
@@ -182,7 +182,7 @@ class BuilderMacroSearchTest extends BackendTestCase
             'de' => ['text' => 'related german related'],
         ]);
 
-        factory(FormRelation::class, 1)->create([
+        factory(Relation::class, 1)->create([
             'name' => 'translatablePosts',
             'from' => $model,
             'to'   => $related,

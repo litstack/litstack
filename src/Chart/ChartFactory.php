@@ -1,23 +1,23 @@
 <?php
 
-namespace Fjord\Chart;
+namespace Lit\Chart;
 
-use Fjord\Chart\Engine\ChartEngineResolver;
-use Fjord\Config\ConfigHandler;
+use Lit\Chart\Engine\ChartEngineResolver;
+use Lit\Config\ConfigHandler;
 
 class ChartFactory
 {
     /**
      * Chart engine resolver instance.
      *
-     * @var \Fjord\Chart\Engine\ChartEngineResolver
+     * @var \Lit\Chart\Engine\ChartEngineResolver
      */
     protected $resolver;
 
     /**
      * Create new ConfigFactory instance..
      *
-     * @param \Fjord\Chart\Engine\ChartEngineResolver $resolver
+     * @param \Lit\Chart\Engine\ChartEngineResolver $resolver
      */
     public function __construct(ChartEngineResolver $resolver)
     {
@@ -51,7 +51,7 @@ class ChartFactory
     /**
      * Get engine resolver.
      *
-     * @return \Fjord\Chart\Engine\ChartEngineResolver
+     * @return \Lit\Chart\Engine\ChartEngineResolver
      */
     public function getResolver()
     {

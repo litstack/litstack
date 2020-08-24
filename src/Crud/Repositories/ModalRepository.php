@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Crud\Repositories;
+namespace Lit\Crud\Repositories;
 
-use Fjord\Crud\CrudValidator;
-use Fjord\Crud\Fields\Modal;
-use Fjord\Crud\Requests\CrudUpdateRequest;
+use Lit\Crud\CrudValidator;
+use Lit\Crud\Fields\Modal;
+use Lit\Crud\Requests\CrudUpdateRequest;
 
 class ModalRepository extends BaseFieldRepository
 {

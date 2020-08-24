@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Translation;
+namespace Lit\Translation;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -13,16 +13,16 @@ class TranslationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('fjord.translator', function () {
+        $this->app->singleton('lit.translator', function () {
             $translator = new Translator();
 
             $translator->addPath(
-                fjord_path('resources/lang')
+                lit_path('resources/lang')
             );
 
             return $translator;
         });
 
-        $this->app->bind(Translator::class, 'fjord.translator');
+        $this->app->bind(Translator::class, 'lit.translator');
     }
 }

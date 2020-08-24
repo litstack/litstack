@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Config;
+namespace Lit\Config;
 
 use BadMethodCallException;
-use Fjord\Support\Facades\Config;
+use Lit\Support\Facades\Config;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
@@ -83,7 +83,7 @@ class ConfigHandler
         $parent = $reflector->getParentClass();
         $uses = class_uses_recursive($this->config);
 
-        foreach (fjord()->getConfigFactories() as $dependency => $factory) {
+        foreach (lit()->getConfigFactories() as $dependency => $factory) {
 
             // Matching parent class.
             if ($parent) {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Support\Macros;
+namespace Lit\Support\Macros;
 
-use Fjord\Crud\BaseForm;
-use Fjord\Support\Facades\FjordApp;
+use Lit\Crud\BaseForm;
+use Lit\Support\Facades\LitApp;
 use ParsedownExtra;
 
 class FormMarkdown
@@ -16,7 +16,7 @@ class FormMarkdown
     public function __construct()
     {
         BaseForm::macro('markdown', function (string $markup) {
-            FjordApp::script(fjord()->url('js/prism.js'));
+            LitApp::script(lit()->url('js/prism.js'));
 
             $parsed = (new ParsedownExtra)->text($markup);
 

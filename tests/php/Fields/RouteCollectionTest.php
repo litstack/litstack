@@ -1,10 +1,10 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\Fields\Route\RouteCollection;
-use Fjord\Crud\Fields\Route\RouteItem;
-use FjordTest\BackendTestCase;
+use Lit\Crud\Fields\Route\RouteCollection;
+use Lit\Crud\Fields\Route\RouteItem;
+use Tests\BackendTestCase;
 
 class RouteCollectionTest extends BackendTestCase
 {

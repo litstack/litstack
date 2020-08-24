@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Permissions\Controllers;
+namespace Lit\Permissions\Controllers;
 
-use Fjord\Page\Table\ColumnBuilder;
-use Fjord\Page\Table\Table;
-use Fjord\Permissions\Models\RolePermission;
-use Fjord\Permissions\Requests\RolePermission\ReadRolePermissionRequest;
-use Fjord\Support\IndexTable;
+use Lit\Page\Table\ColumnBuilder;
+use Lit\Page\Table\Table;
+use Lit\Permissions\Models\RolePermission;
+use Lit\Permissions\Requests\RolePermission\ReadRolePermissionRequest;
+use Lit\Support\IndexTable;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
@@ -31,13 +31,13 @@ class PermissionController extends Controller
     {
         $config = [
             'sortBy' => [
-                'id.desc' => __f('fj.sort_new_to_old'),
-                'id.asc'  => __f('fj.sort_old_to_new'),
+                'id.desc' => __f('lit.sort_new_to_old'),
+                'id.asc'  => __f('lit.sort_old_to_new'),
             ],
             'sortByDefault' => 'id.desc',
         ];
 
-        return view('fjord::app')->withComponent('fj-permissions')
+        return view('lit::app')->withComponent('fj-permissions')
             ->withTitle('Permissions')
             ->withProps([
                 'cols'             => $this->getCols(),
@@ -82,7 +82,7 @@ class PermissionController extends Controller
         }
 
         $index->component('fj-permissions-toggle-all')
-            ->label(ucfirst(__f('fj.toggle_all')))
+            ->label(ucfirst(__f('lit.toggle_all')))
             ->small();
 
         return $index;
@@ -100,7 +100,7 @@ class PermissionController extends Controller
             '*',
             DB::raw("SUBSTRING_INDEX(name, ' ', 1) AS operation"),
             DB::raw("SUBSTRING_INDEX(name, ' ', -1) AS permission_group"),
-        ])->whereRaw("SUBSTRING_INDEX(name, ' ', -1) != 'fjord-role-permissions'");
+        ])->whereRaw("SUBSTRING_INDEX(name, ' ', -1) != 'lit-role-permissions'");
 
         $data = IndexTable::query($query)
             ->request($request)
