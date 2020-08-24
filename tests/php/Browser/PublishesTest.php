@@ -2,7 +2,6 @@
 
 namespace Tests\Browser;
 
-use LitApp\Config\Form\Collections\SettingsConfig;
 use LitApp\Config\Form\Pages\HomeConfig;
 use LitApp\Config\User\ProfileSettingsConfig;
 use LitApp\Config\User\UserConfig;
@@ -16,22 +15,6 @@ class PublishesTest extends FrontendTestCase
     public function setUp(): void
     {
         parent::setUp();
-    }
-
-    /** @test */
-    public function test_form_settings_config()
-    {
-        $this->skipIfChromedriverIsNotRunning();
-
-        $this->browse(function ($browser) {
-            $url = lit()->url(
-                lit()->config(SettingsConfig::class)->route_prefix
-            );
-            $browser
-                ->loginAs($this->admin, 'lit')
-                ->visit($url)
-                ->assertSeeIn('h3', 'Settings');
-        });
     }
 
     /** @test */
