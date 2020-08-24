@@ -20,7 +20,7 @@ const model = new CrudModel({
 	},
 });
 
-const FjBaseField = {
+const LitBaseField = {
 	template: '<div><slot/></div>',
 };
 
@@ -31,7 +31,7 @@ describe('WYSIWYG-field', () => {
 		const wrapper = shallowMount(Wysiwyg, {
 			store,
 			localVue: Vue,
-			stubs: { FjBaseField },
+			stubs: { LitBaseField },
 			propsData: { field, model, value: '' },
 		});
 
@@ -45,7 +45,7 @@ describe('WYSIWYG-field', () => {
 		const wrapper = shallowMount(Wysiwyg, {
 			store,
 			localVue: Vue,
-			stubs: { FjBaseField },
+			stubs: { LitBaseField },
 			propsData: { field: { ...field, ...css }, model, value: '' },
 		});
 
@@ -58,7 +58,7 @@ describe('WYSIWYG-field methods', () => {
 		const wrapper = shallowMount(Wysiwyg, {
 			store,
 			localVue: Vue,
-			stubs: { FjBaseField },
+			stubs: { LitBaseField },
 			propsData: { field, model, value: '' },
 		});
 

@@ -18,7 +18,7 @@ const model = new CrudModel({
 	},
 });
 
-const FjBaseField = {
+const LitBaseField = {
 	template: '<div><slot/></div>',
 };
 
@@ -29,7 +29,7 @@ describe('Input field', () => {
 		const wrapper = mount(Input, {
 			store,
 			localVue: Vue,
-			stubs: { FjBaseField },
+			stubs: { LitBaseField },
 			propsData: { field, model, value: '' },
 		});
 
@@ -40,7 +40,7 @@ describe('Input field', () => {
 		const wrapper = mount(Input, {
 			store,
 			localVue: Vue,
-			stubs: { FjBaseField },
+			stubs: { LitBaseField },
 			propsData: { field, model, value: '' },
 		});
 
@@ -58,7 +58,7 @@ describe('Input field', () => {
 		const wrapper = mount(Input, {
 			store,
 			localVue: Vue,
-			stubs: { FjBaseField },
+			stubs: { LitBaseField },
 			propsData: { field: fieldWithTypeEmail, model, value: '' },
 		});
 
@@ -74,7 +74,7 @@ describe('Input field', () => {
 		const wrapper = mount(Input, {
 			store,
 			localVue: Vue,
-			stubs: { FjBaseField },
+			stubs: { LitBaseField },
 			propsData: { field: fieldWithPrepend, model, value: '' },
 		});
 
@@ -92,7 +92,7 @@ describe('Input field', () => {
 		const wrapper = mount(Input, {
 			store,
 			localVue: Vue,
-			stubs: { FjBaseField },
+			stubs: { LitBaseField },
 			propsData: { field: fieldWithPrepend, model, value: '' },
 		});
 

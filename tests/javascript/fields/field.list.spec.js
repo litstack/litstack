@@ -18,7 +18,7 @@ const model = new CrudModel({
 	},
 });
 
-const FjBaseField = {
+const LitBaseField = {
 	template: '<div><slot/></div>',
 };
 
@@ -29,7 +29,7 @@ describe('List field', () => {
 		const wrapper = mount(List, {
 			store,
 			localVue: Vue,
-			stubs: { FjBaseField },
+			stubs: { LitBaseField },
 			propsData: { field, model, value: '' },
 		});
 
@@ -42,7 +42,7 @@ describe('List field methods', () => {
 		const wrapper = mount(List, {
 			store,
 			localVue: Vue,
-			stubs: { FjBaseField },
+			stubs: { LitBaseField },
 			propsData: { field, model, value: '' },
 		});
 
@@ -71,7 +71,7 @@ describe('List field methods', () => {
 		const wrapper = mount(List, {
 			store,
 			localVue: Vue,
-			stubs: { FjBaseField },
+			stubs: { LitBaseField },
 			propsData: { field, model, value: '' },
 		});
 
@@ -131,7 +131,7 @@ describe('List field methods', () => {
 		const wrapper = mount(List, {
 			store,
 			localVue: Vue,
-			stubs: { FjBaseField },
+			stubs: { LitBaseField },
 			propsData: { field, model, value: '' },
 		});
 
