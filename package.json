@@ -21,8 +21,8 @@
 		},
 		"moduleNameMapper": {
 			"lit-test": "<rootDir>/tests/javascript/bootstrap.js",
-			"@fj-js(.*)$": "<rootDir>/resources/js/$1",
-			"@fj-sass(.*)$": "<rootDir>/resources/sass/$1"
+			"@lit-js(.*)$": "<rootDir>/resources/js/$1",
+			"@lit-sass(.*)$": "<rootDir>/resources/sass/$1"
 		}
 	},
 	"config": {

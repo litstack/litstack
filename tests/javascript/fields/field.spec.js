@@ -1,9 +1,9 @@
 require('lit-test');
 
 import { mount, shallowMount } from '@vue/test-utils';
-import CrudModel from '@fj-js/crud/model';
-import Field from '@fj-js/components/Crud/Fields/Field';
-import LitStore from '@fj-js/store';
+import CrudModel from '@lit-js/crud/model';
+import Field from '@lit-js/components/Crud/Fields/Field';
+import LitStore from '@lit-js/store';
 import Vue from 'vue';
 
 const stubs = { TestField: { template: '<div class="test-field"/>' } };

@@ -2,9 +2,9 @@ import 'babel-polyfill';
 require('lit-test');
 
 import { mount, shallowMount } from '@vue/test-utils';
-import List from '@fj-js/components/Crud/Fields/List/FieldList';
-import CrudModel from '@fj-js/crud/model';
-import LitStore from '@fj-js/store';
+import List from '@lit-js/components/Crud/Fields/List/FieldList';
+import CrudModel from '@lit-js/crud/model';
+import LitStore from '@lit-js/store';
 
 const field = {
 	local_key: 'list',
@@ -33,7 +33,7 @@ describe('List field', () => {
 			propsData: { field, model, value: '' },
 		});
 
-		expect(wrapper.find('.fj-list').exists()).toBe(true);
+		expect(wrapper.find('.lit-list').exists()).toBe(true);
 	});
 });
 

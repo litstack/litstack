@@ -1,9 +1,9 @@
 require('lit-test');
 
 import { mount, shallowMount } from '@vue/test-utils';
-import Wysiwyg from '@fj-js/components/Crud/Fields/Wysiwyg/FieldWysiwyg';
-import CrudModel from '@fj-js/crud/model';
-import LitStore from '@fj-js/store';
+import Wysiwyg from '@lit-js/components/Crud/Fields/Wysiwyg/FieldWysiwyg';
+import CrudModel from '@lit-js/crud/model';
+import LitStore from '@lit-js/store';
 import Vue from 'vue';
 
 const field = {
@@ -35,7 +35,7 @@ describe('WYSIWYG-field', () => {
 			propsData: { field, model, value: '' },
 		});
 
-		expect(wrapper.find('.fj-field-wysiwyg__content').exists()).toBe(true);
+		expect(wrapper.find('.lit-field-wysiwyg__content').exists()).toBe(true);
 	});
 
 	it('renders custom css wrapper', () => {
@@ -49,7 +49,7 @@ describe('WYSIWYG-field', () => {
 			propsData: { field: { ...field, ...css }, model, value: '' },
 		});
 
-		expect(wrapper.find('.fj-field-wysiwyg__css').exists()).toBe(true);
+		expect(wrapper.find('.lit-field-wysiwyg__css').exists()).toBe(true);
 	});
 });
 

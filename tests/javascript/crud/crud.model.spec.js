@@ -1,7 +1,7 @@
 require('lit-test');
 
-import CrudModel from '@fj-js/crud/model';
-import store from '@fj-js/store';
+import CrudModel from '@lit-js/crud/model';
+import store from '@lit-js/store';
 
 describe('CrudModel getter', () => {
 	it('returns normal attribute value', () => {

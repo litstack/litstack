@@ -76,7 +76,7 @@ class ColumnBuilderTest extends BackendTestCase
         $builder = new ColumnBuilder;
         $result = $builder->toggle('active');
         $this->assertInstanceOf(ColumnComponent::class, $result);
-        $this->assertEquals('fj-col-toggle', $result->getName());
+        $this->assertEquals('lit-col-toggle', $result->getName());
     }
 
     /** @test */
@@ -101,7 +101,7 @@ class ColumnBuilderTest extends BackendTestCase
         $builder = new ColumnBuilder;
         $result = $builder->image('Image');
         $this->assertInstanceOf(ColumnComponent::class, $result);
-        $this->assertEquals('fj-col-image', $result->getName());
+        $this->assertEquals('lit-col-image', $result->getName());
     }
 
     /** @test */
@@ -118,7 +118,7 @@ class ColumnBuilderTest extends BackendTestCase
         $builder = new ColumnBuilder;
         $result = $builder->relation('User');
         $this->assertInstanceOf(ColumnComponent::class, $result);
-        $this->assertEquals('fj-col-crud-relation', $result->getName());
+        $this->assertEquals('lit-col-crud-relation', $result->getName());
     }
 
     /** @test */

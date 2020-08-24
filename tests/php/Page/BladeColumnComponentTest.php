@@ -26,7 +26,7 @@ class BladeColumnComponentTest extends TestCase
     /** @test */
     public function it_has_correct_name()
     {
-        $this->assertEquals('fj-blade', $this->component->getName());
+        $this->assertEquals('lit-blade', $this->component->getName());
     }
 
     /** @test */

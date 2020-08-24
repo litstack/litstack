@@ -1,9 +1,9 @@
 require('lit-test');
 
 import { mount, shallowMount } from '@vue/test-utils';
-import Input from '@fj-js/components/Crud/Fields/Input/FieldInput';
-import CrudModel from '@fj-js/crud/model';
-import LitStore from '@fj-js/store';
+import Input from '@lit-js/components/Crud/Fields/Input/FieldInput';
+import CrudModel from '@lit-js/crud/model';
+import LitStore from '@lit-js/store';
 import Vue from 'vue';
 
 const field = {
@@ -33,7 +33,7 @@ describe('Input field', () => {
 			propsData: { field, model, value: '' },
 		});
 
-		expect(wrapper.find('.fj-field-input').exists()).toBe(true);
+		expect(wrapper.find('.lit-field-input').exists()).toBe(true);
 	});
 
 	it('renders default input type text', () => {
@@ -44,7 +44,9 @@ describe('Input field', () => {
 			propsData: { field, model, value: '' },
 		});
 
-		expect(wrapper.find('.fj-field-input').attributes('type')).toBe('text');
+		expect(wrapper.find('.lit-field-input').attributes('type')).toBe(
+			'text'
+		);
 	});
 
 	it('renders different input type', () => {
@@ -60,7 +62,7 @@ describe('Input field', () => {
 			propsData: { field: fieldWithTypeEmail, model, value: '' },
 		});
 
-		let inputType = wrapper.find('.fj-field-input').attributes('type');
+		let inputType = wrapper.find('.lit-field-input').attributes('type');
 		expect(inputType).toBe('email');
 	});
 

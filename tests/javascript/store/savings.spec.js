@@ -1,7 +1,7 @@
 require('lit-test');
 
-import store from '@fj-js/store';
-import { methods } from '@fj-js/store/modules/savings.module';
+import store from '@lit-js/store';
+import { methods } from '@lit-js/store/modules/savings.module';
 
 beforeEach(() => {});
 
