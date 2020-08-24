@@ -10,8 +10,7 @@ class NavigationConfig extends Config
     /**
      * Topbar navigation entries.
      *
-     * @param \Lit\Application\Navigation\Navigation $nav
-     *
+     * @param  \Lit\Application\Navigation\Navigation $nav
      * @return void
      */
     public function topbar(Navigation $nav)
@@ -28,19 +27,12 @@ class NavigationConfig extends Config
             ]),
             $nav->preset('permissions'),
         ]);
-
-        $nav->section([
-            $nav->preset('form.collections.settings', [
-                'icon' => fa('cog'),
-            ]),
-        ]);
     }
 
     /**
      * Main navigation entries.
      *
-     * @param \Lit\Application\Navigation\Navigation $nav
-     *
+     * @param  \Lit\Application\Navigation\Navigation $nav
      * @return void
      */
     public function main(Navigation $nav)

@@ -2,9 +2,9 @@
 
 namespace Lit\Crud\Config;
 
-use Lit\Crud\Models\FormField;
-use Lit\Support\Facades\Crud;
 use Illuminate\Support\Str;
+use Lit\Crud\Models\Form;
+use Lit\Support\Facades\Crud;
 
 class FormConfig
 {
@@ -15,7 +15,7 @@ class FormConfig
      *
      * @var string
      */
-    public $model = FormField::class;
+    public $model = Form::class;
 
     /**
      * Controller class.
@@ -29,7 +29,7 @@ class FormConfig
      */
     public function __construct()
     {
-        $this->model = FormField::class;
+        $this->model = Form::class;
     }
 
     /**

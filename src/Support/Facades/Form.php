@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Facade;
 use Lit\Support\FacadeNeedsLitInstalled;
 
 /**
- * @method static \Lit\Crud\FormFieldCollection|\Lit\Crud\Models\FormField load(string $collection = null, string $name = null)
+ * @method static \Lit\Crud\FormCollection|\Lit\Crud\Models\Form load(string $collection = null, string $name = null)
  * @method static field(string $alias, string $field)
  * @method static bool fieldExists(string $alias)
  *

@@ -8,8 +8,8 @@ mix.js('resources/js/app.js', 'public/js').sass(
 mix.webpackConfig({
 	resolve: {
 		alias: {
-			'@fj-js': path.resolve(__dirname, 'resources/js/'),
-			'@fj-sass': path.resolve(__dirname, 'resources/sass/'),
+			'@lit-js': path.resolve(__dirname, 'resources/js/'),
+			'@lit-sass': path.resolve(__dirname, 'resources/sass/'),
 		},
 	},
 });

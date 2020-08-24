@@ -7,10 +7,10 @@ use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Exception\WebDriverCurlException;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
-use Tests\Traits\TestHelpers;
 use Laravel\Dusk\Browser;
 use Laravel\Dusk\Chrome\SupportsChrome;
 use Orchestra\Testbench\Dusk\TestCase as OrchestraDuskTestCase;
+use Tests\Traits\TestHelpers;
 
 class FrontendTestCase extends OrchestraDuskTestCase
 {

@@ -3,8 +3,8 @@
 namespace Lit\Crud;
 
 use Carbon\CarbonInterface;
+use Lit\Crud\Models\Form;
 use Lit\Crud\Models\Repeatable;
-use Lit\Crud\Models\FormField;
 use Lit\Support\VueProp;
 
 class CrudJs extends VueProp
@@ -91,7 +91,7 @@ class CrudJs extends VueProp
      */
     public function usesJsoncastValue()
     {
-        return $this->model instanceof FormField
+        return $this->model instanceof Form
             || $this->model instanceof Repeatable;
     }
 }

@@ -2,16 +2,12 @@
 
 namespace Lit;
 
-use Lit\Crud\Fields\Block\Block;
-use Lit\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
+use Lit\Support\Facades\Config;
 
 /**
  * Service providers and console commands that should be registered without
@@ -181,54 +177,6 @@ class LitServiceProvider extends ServiceProvider
 
         // Initialize kernel singleton.
         $this->app[\LitApp\Kernel::class];
-
-        // Fix: config_type
-        if (app()->runningInConsole() || env('APP_ENV') == 'testing' || is_null(env('APP_ENV'))) {
-            return;
-        }
-        if (! DB::table('form_blocks')->where('config_type', '')->exists()) {
-            return;
-        }
-        $this->app->booted(function () {
-            foreach (File::allFiles(base_path('lit/app/Config')) as $configPath) {
-                if (! Str::endsWith(basename($configPath), 'Config.php')) {
-                    continue;
-                }
-
-                try {
-                    $namespace = 'LitApp\\Config\\'.collect(explode('/', str_replace('.php', '', str_replace(base_path('lit/app/Config').'/', '', $configPath))))
-                        ->map(fn ($item) => ucfirst(Str::camel($item)))
-                        ->implode('\\');
-
-                    $config = Config::get($namespace);
-                    $fields = $config->show->getRegisteredFields();
-                } catch (\Throwable $e) {
-                    continue;
-                }
-                if (! $config->has('show')) {
-                    continue;
-                }
-
-                foreach ($fields as $field) {
-                    if (! $field instanceof Block) {
-                        continue;
-                    }
-
-                    $query = DB::table('form_blocks')->where('model_type', $config->model)->where('config_type', '');
-                    if ($config->model == FormField::class) {
-                        $formField = DB::table('form_fields')->where('config_type', $namespace)->first();
-
-                        if (! $formField) {
-                            return;
-                        }
-                        $query->where('model_id', $formField->id);
-                    }
-                    $query->update([
-                        'config_type' => get_class($config->getConfig()),
-                    ]);
-                }
-            }
-        });
     }
 
     /**

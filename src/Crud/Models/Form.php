@@ -4,7 +4,6 @@ namespace Lit\Crud\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Lit\Crud\Models\Traits\TrackEdits;
-use Lit\Support\Facades\Config;
 
 class Form extends LitFormModel
 {
@@ -74,16 +73,4 @@ class Form extends LitFormModel
     protected $casts = [
         'value' => 'json',
     ];
-
-    /**
-     * Fix: config_type.
-     */
-    public function fixConfigType($model)
-    {
-        if ($model->collection && $model->form_name && ! $model->config_type) {
-            $model->update([
-                'config_type' => Config::getNamespaceFromKey("form.{$model->collection}.{$model->form_name}"),
-            ]);
-        }
-    }
 }

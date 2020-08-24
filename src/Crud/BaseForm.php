@@ -3,6 +3,11 @@
 namespace Lit\Crud;
 
 use Closure;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Macroable;
+use InvalidArgumentException;
 use Lit\Contracts\Crud\Form;
 use Lit\Crud\Fields\Block\Block;
 use Lit\Crud\Fields\Component;
@@ -14,17 +19,12 @@ use Lit\Crud\Fields\Relations\MorphMany;
 use Lit\Crud\Fields\Relations\MorphOne;
 use Lit\Crud\Fields\Relations\MorphToMany;
 use Lit\Crud\Fields\Relations\MorphToRegistrar;
-use Lit\Crud\Models\FormField;
+use Lit\Curd\Models\Form as FormModel;
 use Lit\Exceptions\Traceable\BadMethodCallException;
 use Lit\Page\BasePage;
-use Lit\Support\Facades\Lit;
 use Lit\Support\Facades\Form as FormFacade;
+use Lit\Support\Facades\Lit;
 use Lit\Vue\Traits\RenderableAsProp;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Jsonable;
-use Illuminate\Support\Str;
-use Illuminate\Support\Traits\Macroable;
-use InvalidArgumentException;
 
 class BaseForm extends BasePage implements Form, Arrayable, Jsonable
 {
@@ -117,7 +117,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     /**
      * Add Vue component field.
      *
-     * @param  string|Component     $component
+     * @param  string|Component   $component
      * @return \Lit\Vue\Component
      */
     public function component($component)
@@ -268,7 +268,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
      */
     public function relation(string $name)
     {
-        if (FormField::class === $this->model) {
+        if (FormModel::class === $this->model) {
             throw new InvalidArgumentException('Laravel relations are not available in Forms. Use fields oneRelation or manyRelation instead.');
         }
 

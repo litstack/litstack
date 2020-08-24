@@ -265,11 +265,6 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     {
         $model = parent::newFromBuilder($attributes, $connection);
 
-        // FIX: config_type
-        if (method_exists($this, 'fixConfigType')) {
-            $this->fixConfigType($model);
-        }
-
         // Set field ids to be able to check if field exists in getAttribute
         // method.
         $model->setFieldIds($model->fields->map(function ($field) {

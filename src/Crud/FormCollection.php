@@ -4,17 +4,17 @@ namespace Lit\Crud;
 
 use Illuminate\Support\Collection;
 
-class FormFieldCollection extends Collection
+class FormCollection extends Collection
 {
     /**
-     * The \AwStudio\Lit\Form\FormField::class items contained in the collection.
+     * The Form items contained in the collection.
      *
      * @var array
      */
     protected $items = [];
 
     /**
-     * Get collection groups in this FormFieldCollection.
+     * Get collection groups in this FormCollection.
      *
      * @return array
      */
@@ -24,7 +24,7 @@ class FormFieldCollection extends Collection
     }
 
     /**
-     * Get form_name groups in this FormFieldCollection.
+     * Get form_name groups in this FormCollection.
      *
      * @return array
      */
@@ -64,22 +64,22 @@ class FormFieldCollection extends Collection
     public function getAttribute(string $key, $query = false)
     {
         // Return values for array key if items is not a list.
-        // This returns FormFields models
+        // This returns Form models
         if (array_key_exists($key, $this->items)) {
             return $this->items[$key];
         }
 
-        $formField = $this->where('field_id', $key)->first();
+        $form = $this->where('field_id', $key)->first();
 
-        if (! $formField) {
+        if (! $form) {
             return;
         }
 
         if ($query) {
-            return $formField->$key();
+            return $form->$key();
         }
 
-        return $formField->getFormattedFieldValue($formField->field);
+        return $form->getFormattedFieldValue($form->field);
     }
 
     /**

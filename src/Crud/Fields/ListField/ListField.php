@@ -6,7 +6,7 @@ use Closure;
 use Lit\Crud\BaseForm;
 use Lit\Crud\Fields\Traits\FieldHasForm;
 use Lit\Crud\Fields\Traits\HasBaseField;
-use Lit\Crud\Models\FormField;
+use Lit\Crud\Models\Form;
 use Lit\Crud\Models\ListItem;
 use Lit\Crud\RelationField;
 use Lit\Crud\Repositories\ListRepository;
@@ -148,7 +148,7 @@ class ListField extends RelationField
      */
     public function getRelationQuery($model)
     {
-        if (! $model instanceof FormField) {
+        if (! $model instanceof Form) {
             return $model->{$this->id}();
         }
 
