@@ -11,6 +11,6 @@ class DropdownButtonSlot extends BaseSlot
      */
     protected function getActionComponent()
     {
-        return $this->component('fj-page-action');
+        return $this->component('lit-page-action');
     }
 }

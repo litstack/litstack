@@ -11,7 +11,7 @@ class ApexProgressEngine extends ChartEngine
      *
      * @var string
      */
-    protected $component = 'fj-chart-apex-progress';
+    protected $component = 'lit-chart-apex-progress';
 
     /**
      * Render chart by type.

@@ -16,7 +16,7 @@ class CrudMetaMacro
         CrudShow::macro('meta', function () {
             $this->card(function ($card) {
                 $metaMaxWith = '520px';
-                $card->wrapper('fj-utilities-meta-wrapper', function ($meta) use ($metaMaxWith) {
+                $card->wrapper('lit-utilities-meta-wrapper', function ($meta) use ($metaMaxWith) {
                     $meta->input('meta_title')
                         ->title('Meta-Title')
                         ->placeholder('Meta-Title')
@@ -36,7 +36,7 @@ class CrudMetaMacro
                         ->max(156)
                         ->rules('max:156');
 
-                    $meta->component('fj-utilities-meta');
+                    $meta->component('lit-utilities-meta');
                 })->prop('google-meta-max-width', $metaMaxWith);
             })->title('Meta-Info');
         });

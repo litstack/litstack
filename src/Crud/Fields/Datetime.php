@@ -16,7 +16,7 @@ class Datetime extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-date-time';
+    protected $component = 'lit-field-date-time';
 
     /**
      * Required field attributes.

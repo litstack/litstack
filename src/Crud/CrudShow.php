@@ -28,7 +28,7 @@ class CrudShow extends Page
      *
      * @var string
      */
-    protected $rootComponent = 'fj-crud-form-page';
+    protected $rootComponent = 'lit-crud-form-page';
 
     /**
      * Form instance.
@@ -90,7 +90,7 @@ class CrudShow extends Page
     protected function registeredField($field)
     {
         return $this->wrapper
-            ->component('fj-field')
+            ->component('lit-field')
             ->prop('field', $field);
     }
 
@@ -102,7 +102,7 @@ class CrudShow extends Page
      */
     public function group(Closure $closure)
     {
-        return $this->wrapper('fj-field-wrapper-group', function () use ($closure) {
+        return $this->wrapper('lit-field-wrapper-group', function () use ($closure) {
             $closure($this);
         });
     }
@@ -144,7 +144,7 @@ class CrudShow extends Page
      */
     public function info(string $title = '')
     {
-        $info = $this->component('fj-info')->title($title);
+        $info = $this->component('lit-info')->title($title);
 
         if ($this->inCard()) {
             $info->heading('h6');
@@ -162,7 +162,7 @@ class CrudShow extends Page
      */
     public function card(Closure $closure)
     {
-        return $this->wrapper('fj-field-wrapper-card', function ($form) use ($closure) {
+        return $this->wrapper('lit-field-wrapper-card', function ($form) use ($closure) {
             $this->inCard = true;
             $closure($this);
             $this->inCard = false;

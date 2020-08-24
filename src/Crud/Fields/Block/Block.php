@@ -17,7 +17,7 @@ class Block extends RelationField
      *
      * @var string
      */
-    protected $component = 'fj-field-block';
+    protected $component = 'lit-field-block';
 
     /**
      * Required field attributes.

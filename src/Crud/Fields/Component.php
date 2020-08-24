@@ -15,7 +15,7 @@ class Component extends Field
      *
      * @var string
      */
-    protected $component = 'fj-field-component';
+    protected $component = 'lit-field-component';
 
     /**
      * Set default attributes.

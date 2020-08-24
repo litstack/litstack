@@ -37,17 +37,17 @@ div#lit-app {
 		}
 	}
 
-	.fj-nav-loader {
+	.lit-nav-loader {
 		padding-top: $ph-gutter - $nav-padding-top;
 
-		.fj-ph-entry {
+		.lit-ph-entry {
 			height: $font-size-base;
 			margin: $list-group-item-padding-y 0;
 		}
-		.fj-ph-divider {
+		.lit-ph-divider {
 			height: $nav-padding-top;
 		}
-		.fj-ph-title {
+		.lit-ph-title {
 			height: $nav-title-font-size;
 			margin: $list-group-item-padding-y 0;
 		}

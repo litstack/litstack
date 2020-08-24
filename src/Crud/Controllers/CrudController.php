@@ -208,7 +208,7 @@ abstract class CrudController extends CrudBaseController
         [$previous, $next] = $this->closeSiblings($id);
 
         // Show near items.
-        $page->navigationLeft()->component('fj-crud-show-near-items')->bind([
+        $page->navigationLeft()->component('lit-crud-show-near-items')->bind([
             'next'         => $next,
             'previous'     => $previous,
             'route-prefix' => $this->config->routePrefix,

@@ -11,7 +11,7 @@ class NumberEngine extends ChartEngine
      *
      * @var string
      */
-    protected $component = 'fj-chart-number';
+    protected $component = 'lit-chart-number';
 
     /**
      * Render chart by type.

@@ -188,7 +188,7 @@ class Chart extends VueProp
      */
     public function component()
     {
-        return component('fj-chart')->bind(array_merge(
+        return component('lit-chart')->bind(array_merge(
             ['component' => $this->engine->getComponent()],
             ['chart' => $this]
         ));

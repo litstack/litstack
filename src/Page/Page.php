@@ -15,7 +15,7 @@ class Page extends BasePage implements Expandable
      *
      * @var string
      */
-    protected $rootComponent = 'fj-page';
+    protected $rootComponent = 'lit-page';
 
     /**
      * Go back route & text.
@@ -25,14 +25,14 @@ class Page extends BasePage implements Expandable
     protected $back;
 
     /**
-     * Navigation instance. Represents Vue component [fj-navigation] in [fj-page].
+     * Navigation instance. Represents Vue component [lit-navigation] in [lit-page].
      *
      * @var Navigation
      */
     protected $navigation;
 
     /**
-     * Header instance. Represents Vue component [fj-header] in [fj-page].
+     * Header instance. Represents Vue component [lit-header] in [lit-page].
      *
      * @var Header
      */

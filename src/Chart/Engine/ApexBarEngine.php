@@ -11,7 +11,7 @@ class ApexBarEngine extends ChartEngine
      *
      * @var string
      */
-    protected $component = 'fj-chart-apex-bar';
+    protected $component = 'lit-chart-apex-bar';
 
     /**
      * Render chart by type.

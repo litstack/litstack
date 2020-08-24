@@ -99,7 +99,7 @@ class Slot extends VueProp
 
         $this->views[] = $view;
 
-        $this->component('fj-blade')->prop('view', $view);
+        $this->component('lit-blade')->prop('view', $view);
 
         return $view;
     }

@@ -18,11 +18,11 @@ div#lit-app {
 		overflow: hidden;
 		overflow-y: scroll;
 
-		> .fj-content {
+		> .lit-content {
 			display: none;
 		}
 
-		&.loaded > .fj-content {
+		&.loaded > .lit-content {
 			display: block;
 		}
 	}

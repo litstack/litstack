@@ -32,7 +32,7 @@ class Table extends BaseTable implements TableContract
      *
      * @var string
      */
-    protected $componentName = 'fj-page-table';
+    protected $componentName = 'lit-page-table';
 
     /**
      * Vue component instance.

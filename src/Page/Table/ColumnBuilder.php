@@ -80,7 +80,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
         }
 
         return $this->col(ucfirst($column))
-            ->class('fj-col-money')
+            ->class('lit-col-money')
             ->value("{{$column}}")
             ->sortBy($column)
             ->right();
@@ -109,7 +109,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
             $view = ViewFactory::make($view);
         }
 
-        $this->component(new BladeColumnComponent('fj-blade'))->prop('view', $view);
+        $this->component(new BladeColumnComponent('lit-blade'))->prop('view', $view);
 
         return $view;
     }
@@ -122,7 +122,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      */
     public function toggle($attribute)
     {
-        return $this->component(new ToggleComponent('fj-col-toggle'))
+        return $this->component(new ToggleComponent('lit-col-toggle'))
             ->prop('link', false)
             ->prop('local_key', $attribute);
     }
@@ -135,7 +135,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      */
     public function image($label = '')
     {
-        return $this->component(new ImageComponent('fj-col-image'))->label($label);
+        return $this->component(new ImageComponent('lit-col-image'))->label($label);
     }
 
     /**
@@ -157,7 +157,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      */
     public function relation($label = '')
     {
-        return $this->component(new RelationComponent('fj-col-crud-relation'))->prop('label', $label);
+        return $this->component(new RelationComponent('lit-col-crud-relation'))->prop('label', $label);
     }
 
     /**

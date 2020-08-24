@@ -33,7 +33,7 @@ class CrudFormConfigFactory extends ConfigFactory
             $page->navigationControls()->action(ucfirst(__f('base.delete')), DestroyAction::class);
         }
 
-        $page->navigationRight()->component('fj-crud-language');
+        $page->navigationRight()->component('lit-crud-language');
 
         if ($config->has('index')) {
             $page->goBack($config->names['plural'], $config->route_prefix);

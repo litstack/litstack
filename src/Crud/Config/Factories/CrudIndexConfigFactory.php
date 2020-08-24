@@ -21,7 +21,7 @@ class CrudIndexConfigFactory extends ConfigFactory
         $page = new CrudIndex($config);
 
         if ($config->has('show')) {
-            $page->navigationRight()->component('fj-crud-create-button');
+            $page->navigationRight()->component('lit-crud-create-button');
         }
 
         $page->title($config->names['plural'] ?? '');

@@ -14,7 +14,7 @@ class BladeColumnComponent extends ColumnComponent
      *
      * @var string
      */
-    protected $name = 'fj-blade';
+    protected $name = 'lit-blade';
 
     /**
      * Set blade view.

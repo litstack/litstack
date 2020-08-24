@@ -11,7 +11,7 @@ class OneRelationField extends LaravelRelationField
      *
      * @var string
      */
-    protected $component = 'fj-field-relation';
+    protected $component = 'lit-field-relation';
 
     /**
      * Available preview types.

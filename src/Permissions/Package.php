@@ -21,7 +21,7 @@ class Package extends LitPackage
      * @var array
      */
     protected $components = [
-        // 'fj-permissions' => PermissionsComponent::class
+        // 'lit-permissions' => PermissionsComponent::class
     ];
 
     /**

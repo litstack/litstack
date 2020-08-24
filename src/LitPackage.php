@@ -62,14 +62,14 @@ class LitPackage extends Package
      * @var array
      */
     protected $components = [
-        'fj-info'                => InfoComponent::class,
-        'fj-blade'               => BladeComponent::class,
-        'fj-field-wrapper'       => FieldWrapperComponent::class,
-        'fj-field-wrapper-card'  => FieldWrapperCardComponent::class,
-        'fj-field-wrapper-group' => FieldWrapperGroupComponent::class,
-        'fj-col-image'           => ImageComponent::class,
-        'fj-col-toggle'          => ToggleComponent::class,
-        'fj-col-crud-relation'   => RelationComponent::class,
+        'lit-info'                => InfoComponent::class,
+        'lit-blade'               => BladeComponent::class,
+        'lit-field-wrapper'       => FieldWrapperComponent::class,
+        'lit-field-wrapper-card'  => FieldWrapperCardComponent::class,
+        'lit-field-wrapper-group' => FieldWrapperGroupComponent::class,
+        'lit-col-image'           => ImageComponent::class,
+        'lit-col-toggle'          => ToggleComponent::class,
+        'lit-col-crud-relation'   => RelationComponent::class,
     ];
 
     /**

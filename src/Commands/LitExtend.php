@@ -43,7 +43,7 @@ class LitExtend extends Command
      */
     protected function runNpmInstall($base, $verbose = false)
     {
-        $cmd = "cd {$base}; npm i vendor/aw-studio/fjord";
+        $cmd = "cd {$base}; npm i vendor/litstack/litstack";
         if ($verbose) {
             passthru($cmd);
         } else {

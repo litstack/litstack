@@ -1,17 +1,9 @@
 <template>
-    <fj-base-container>
-        <fj-base-header :title="title" />
-    </fj-base-container>
+	<div>Hello World!</div>
 </template>
 
 <script>
 export default {
-    name: 'Example',
-    props: {
-        title: {
-            required: true,
-            type: String
-        }
-    }
+	name: 'Example',
 };
 </script>

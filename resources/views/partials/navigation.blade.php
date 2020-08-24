@@ -1,8 +1,8 @@
 @auth('lit')
-    <nav class="fj-navigation">
+    <nav class="lit-navigation">
 
         @include('lit::partials.nav_loader')
 
-        <fj-main-navigation :items="{{collect(lit()->config('navigation')->main)}}"></fj-navigation>
+        <lit-main-navigation :items="{{collect(lit()->config('navigation')->main)}}"></lit-navigation>
     </nav>
 @endauth

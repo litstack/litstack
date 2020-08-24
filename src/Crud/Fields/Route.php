@@ -17,7 +17,7 @@ class Route extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-route';
+    protected $component = 'lit-field-route';
 
     /**
      * Required attributes.

@@ -38,7 +38,7 @@ class HttpErrorComposer
 
         // Lit view.
         $view->setView('lit::app')
-            ->withComponent("fj-error-{$error}")
+            ->withComponent("lit-error-{$error}")
             ->withProps([]);
 
         with(new HandleViewComposer())->compose($view);

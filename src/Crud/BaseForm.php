@@ -140,7 +140,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
      */
     public function group(Closure $closure)
     {
-        return $this->wrapper('fj-field-wrapper-group', function () use ($closure) {
+        return $this->wrapper('lit-field-wrapper-group', function () use ($closure) {
             $closure($this);
         });
     }
@@ -226,7 +226,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
 
         if ($this->inWrapper() && $fieldInstance->shouldBeRegistered()) {
             $this->wrapper
-                ->component('fj-field')
+                ->component('lit-field')
                 ->prop('field', $fieldInstance);
         }
 

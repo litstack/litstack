@@ -30,24 +30,24 @@ import i18n from './common/i18n';
 
 const plugins = [];
 
-function Lit(options) {
+function Litstack(options) {
 	this.store = null;
 	this._mixins = mixins;
 
 	this._init(options);
 }
 
-Lit.use = function (plugin) {
+Litstack.use = function(plugin) {
 	plugins.push(plugin);
 
 	return this;
 };
 
-Lit.getPlugins = function () {
+Litstack.getPlugins = function() {
 	return plugins;
 };
 
-Lit.prototype._init = function (options) {
+Litstack.prototype._init = function(options) {
 	if ('store' in options) {
 		this._store_modules = Object.assign(options.store, this._store_modules);
 
@@ -75,7 +75,7 @@ Lit.prototype._init = function (options) {
 	this._vue();
 };
 
-Lit.prototype._vue = function () {
+Litstack.prototype._vue = function() {
 	this.app = new Vue({
 		el: '#lit-app',
 		i18n,
@@ -89,4 +89,4 @@ Lit.prototype._vue = function () {
 	});
 };
 
-export default Lit;
+export default Litstack;

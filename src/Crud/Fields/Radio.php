@@ -13,7 +13,7 @@ class Radio extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-radio';
+    protected $component = 'lit-field-radio';
 
     /**
      * Required attributes.

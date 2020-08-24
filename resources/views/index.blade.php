@@ -37,13 +37,13 @@
             @include('lit::partials.navigation')
             <b-button
             variant="primary"
-            class="d-block d-lg-none btn-square fj-main-navigation-toggle"
+            class="d-block d-lg-none btn-square lit-main-navigation-toggle"
         >
             <fa-icon icon="stream" />
         </b-button>
 
         <main>
-            <div class="fj-content">
+            <div class="lit-content">
                 @yield('content') 
             </div>
             
@@ -63,7 +63,7 @@
 
     <script type="text/javascript">
         function makeVisible(){
-            let spinner = document.getElementById("fj-spinner");
+            let spinner = document.getElementById("lit-spinner");
             let main = document.querySelector("div#lit-app > main");
             if(spinner && main) {
                 spinner.classList.add('loaded');
@@ -71,8 +71,8 @@
             }
         
             main.addEventListener('scroll', e => {
-                //let container = document.querySelector('.fj-container');
-                let header = document.querySelector('.fj-page-navigation');
+                //let container = document.querySelector('.lit-container');
+                let header = document.querySelector('.lit-page-navigation');
 
                 let toasterSlot = document.querySelector('.b-toaster-slot');
 
@@ -98,7 +98,7 @@
             
             const toggleSidebar = () => {
                 document
-                .querySelector('.fj-navigation')
+                .querySelector('.lit-navigation')
                 .classList.toggle('visible');
                 
                 document
@@ -107,7 +107,7 @@
             }
             
   
-            document.querySelector('.fj-main-navigation-toggle').addEventListener('click', e => {
+            document.querySelector('.lit-main-navigation-toggle').addEventListener('click', e => {
                 toggleSidebar()
             })
         }

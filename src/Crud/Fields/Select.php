@@ -13,7 +13,7 @@ class Select extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-select';
+    protected $component = 'lit-field-select';
 
     /**
      * Required attributes.

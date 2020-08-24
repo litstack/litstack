@@ -36,7 +36,7 @@ class LitUserController
             'filter'
         );
 
-        return view('lit::app')->withComponent('fj-users')
+        return view('lit::app')->withComponent('lit-users')
             ->withTitle('Users')
             ->withProps([
                 'config' => $config,

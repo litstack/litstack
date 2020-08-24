@@ -15,7 +15,7 @@ class Textarea extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-textarea';
+    protected $component = 'lit-field-textarea';
 
     /**
      * Required field attributes.

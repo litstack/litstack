@@ -13,7 +13,7 @@ class Range extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-range';
+    protected $component = 'lit-field-range';
 
     /**
      * Required field attributes.

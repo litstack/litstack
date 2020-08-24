@@ -25,7 +25,7 @@ abstract class BaseAction implements ActionFactory
     {
         $actionInstance = app()->make($action);
 
-        $component = component('fj-action')
+        $component = component('lit-action')
             ->prop('wrapper', $this->createComponent()->content($title))
             ->on('run', RunActionEvent::class)
             ->prop('eventData', ['action' => $action]);

@@ -16,7 +16,7 @@ class Password extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-password';
+    protected $component = 'lit-field-password';
 
     /**
      * Required field attributes.

@@ -21,7 +21,7 @@
                 @isset($entry['link'])
                     <b-dropdown-item href="{{ $entry['link'] }}">
                         @if(array_key_exists('icon', $entry))
-                            <div class="mr-2 d-inline-block fj-topbar__icon">{!! $entry['icon'] !!}</div>
+                            <div class="mr-2 d-inline-block lit-topbar__icon">{!! $entry['icon'] !!}</div>
                         @endif
                          {{ $entry['title'] }}
                     </b-dropdown-item>
@@ -34,6 +34,6 @@
         @endforeach
     @endforeach
     <b-dropdown-divider></b-dropdown-divider>
-    <fj-logout :url="'{{route('lit.logout')}}'"></fj-logout>
+    <lit-logout :url="'{{route('lit.logout')}}'"></lit-logout>
     
 </b-dropdown>

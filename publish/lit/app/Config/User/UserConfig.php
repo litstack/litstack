@@ -2,13 +2,13 @@
 
 namespace LitApp\Config\User;
 
+use Illuminate\Support\Facades\Route;
 use Lit\Crud\Config\CrudConfig;
 use Lit\Crud\CrudIndex;
 use Lit\Crud\CrudShow;
 use Lit\Page\Table\ColumnBuilder;
 use Lit\User\Models\LitUser;
 use LitApp\Controllers\User\UserController;
-use Illuminate\Support\Facades\Route;
 
 class UserConfig extends CrudConfig
 {
@@ -59,7 +59,7 @@ class UserConfig extends CrudConfig
     public function index(CrudIndex $page)
     {
         $page->table(fn ($table) => $this->indexTable($table))
-            ->query(fn ($query) => $query->with('ordered_roles'))
+            ->query(fn ($query)  => $query->with('ordered_roles'))
             ->sortByDefault('id.desc')
             ->search('username', 'first_name', 'last_name', 'email');
     }
@@ -80,11 +80,11 @@ class UserConfig extends CrudConfig
             ->value('email')
             ->label('E-Mail');
 
-        $table->component('fj-permissions-lit-users-roles')
+        $table->component('lit-permissions-lit-users-roles')
             ->link(false)
             ->label(ucfirst(__f('base.roles')));
 
-        $table->component('fj-permissions-lit-users-apply-role')
+        $table->component('lit-permissions-lit-users-apply-role')
             ->authorize(fn ($user) => $user->can('update lit-user-roles'))
             ->label('')
             ->link(false)

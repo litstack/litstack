@@ -28,7 +28,7 @@ class BladeComponent extends Component
      */
     public function width($width)
     {
-        $this->wrapper('fj-col')->prop('width', $width);
+        $this->wrapper('lit-col')->prop('width', $width);
 
         return $this;
     }

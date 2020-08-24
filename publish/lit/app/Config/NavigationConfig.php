@@ -20,7 +20,7 @@ class NavigationConfig extends Config
         ]);
 
         $nav->section([
-            $nav->title(__f('fj.user_administration')),
+            $nav->title(__f('lit.user_administration')),
 
             $nav->preset('user.user', [
                 'icon' => fa('users'),

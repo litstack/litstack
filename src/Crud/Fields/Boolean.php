@@ -13,7 +13,7 @@ class Boolean extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-boolean';
+    protected $component = 'lit-field-boolean';
 
     /**
      * Cast field value.

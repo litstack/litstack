@@ -20,7 +20,7 @@ class FormMarkdown
 
             $parsed = (new ParsedownExtra)->text($markup);
 
-            return $this->component('fj-field-markdown')->prop('markdown', $parsed);
+            return $this->component('lit-field-markdown')->prop('markdown', $parsed);
         });
     }
 }

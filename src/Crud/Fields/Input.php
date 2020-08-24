@@ -15,7 +15,7 @@ class Input extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-input';
+    protected $component = 'lit-field-input';
 
     /**
      * Required field attributes.

@@ -13,7 +13,7 @@ class Icon extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-icon';
+    protected $component = 'lit-field-icon';
 
     /**
      * Required field attributes.

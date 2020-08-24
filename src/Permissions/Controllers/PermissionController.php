@@ -37,7 +37,7 @@ class PermissionController extends Controller
             'sortByDefault' => 'id.desc',
         ];
 
-        return view('lit::app')->withComponent('fj-permissions')
+        return view('lit::app')->withComponent('lit-permissions')
             ->withTitle('Permissions')
             ->withProps([
                 'cols'             => $this->getCols(),
@@ -71,17 +71,17 @@ class PermissionController extends Controller
     {
         $index = new ColumnBuilder;
 
-        $index->component('fj-index-group-name')
+        $index->component('lit-index-group-name')
             ->label(ucfirst(__f('base.group')))
             ->sortBy('permission_group');
 
         foreach ($this->getUniqueOperations() as $operation) {
-            $index->component('fj-permissions-toggle')
+            $index->component('lit-permissions-toggle')
                 ->prop('operation', $operation)
                 ->label(ucfirst(__f("base.{$operation}")));
         }
 
-        $index->component('fj-permissions-toggle-all')
+        $index->component('lit-permissions-toggle-all')
             ->label(ucfirst(__f('lit.toggle_all')))
             ->small();
 
@@ -112,7 +112,7 @@ class PermissionController extends Controller
 
         $data['count'] = $data['unique_items']->count();
 
-        // Converting Object to array for component fj-index-table.
+        // Converting Object to array for component lit-index-table.
         $data['unique_items'] = array_values($data['unique_items']->toArray());
 
         return $data;

@@ -85,7 +85,7 @@ abstract class BasePage implements Page
 
         $this->views[] = $view;
 
-        return $this->component('fj-blade')->prop('view', $view);
+        return $this->component('lit-blade')->prop('view', $view);
     }
 
     /**

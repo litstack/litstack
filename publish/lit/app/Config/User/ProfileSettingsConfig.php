@@ -72,7 +72,7 @@ class ProfileSettingsConfig extends CrudConfig
 
         $page->group(function ($page) {
             $page->card(fn ($form) => $this->security($form));
-            $page->component('fj-profile-security');
+            $page->component('lit-profile-security');
         })->width(8);
     }
 
@@ -127,7 +127,7 @@ class ProfileSettingsConfig extends CrudConfig
         $form->info(ucwords(__f('base.language')))->width(4)
             ->text(__f('profile.messages.language'));
 
-        $form->card(fn ($form) => $form->component('fj-locales')->class('mb-4'))
+        $form->card(fn ($form) => $form->component('lit-locales')->class('mb-4'))
             ->width(8)
             ->class('mb-5');
     }

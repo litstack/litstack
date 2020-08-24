@@ -25,11 +25,11 @@
     <div id="lit-app" class="no-nav">
 
         <main>
-            <div class="fj-content">
-                <div class="fj-container fj-landing-page container sm pt-5">
+            <div class="lit-content">
+                <div class="lit-container lit-landing-page container sm pt-5">
 
                     {{-- <div class="text-center">
-                        <div class="fj-brand">
+                        <div class="lit-brand">
                             @include('lit::partials.logo')
                         </div>
                     </div> --}}
@@ -49,7 +49,7 @@
 
     <script type="text/javascript">
         function makeVisible(){
-            let spinner = document.getElementById("fj-spinner");
+            let spinner = document.getElementById("lit-spinner");
             let main = document.querySelector("div#lit-app > main");
             if(spinner && main) {
                 spinner.classList.add('loaded');

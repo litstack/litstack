@@ -15,7 +15,7 @@ class Modal extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-modal';
+    protected $component = 'lit-field-modal';
 
     /**
      * Required field attributes.

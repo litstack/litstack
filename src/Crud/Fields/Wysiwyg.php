@@ -16,7 +16,7 @@ class Wysiwyg extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-wysiwyg';
+    protected $component = 'lit-field-wysiwyg';
 
     /**
      * Required field attributes.

@@ -11,7 +11,7 @@ class MediaField extends RelationField
      *
      * @var string
      */
-    protected $component = 'fj-field-media';
+    protected $component = 'lit-field-media';
 
     /**
      * Set sortable.

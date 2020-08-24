@@ -20,7 +20,7 @@ class ListField extends RelationField
      *
      * @var string
      */
-    protected $component = 'fj-field-list';
+    protected $component = 'lit-field-list';
 
     /**
      * Required field attributes.
