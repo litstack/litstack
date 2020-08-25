@@ -141,7 +141,7 @@ class Password extends BaseField
 
         $confirmationRule = function ($attribute, $value, $fail) {
             if (! Hash::check($value, lit_user()->password)) {
-                return $fail(__f('validation.incorrect_password'));
+                return $fail(__lit('validation.incorrect_password'));
             }
         };
 

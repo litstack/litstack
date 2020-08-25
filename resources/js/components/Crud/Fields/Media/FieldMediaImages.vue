@@ -13,7 +13,7 @@
 		<div
 			:class="{
 				'lit-image-card': true,
-				'lit-image-card__first-big': field.firstBig && index == 0,
+				'lit-image-card__litirst-big': field.firstBig && index == 0,
 			}"
 			v-for="(image, index) in sortable"
 			:key="image.id"
@@ -53,9 +53,11 @@
 				<img
 					v-if="field.type == 'image'"
 					:src="imgPath(image)"
-					:style="`object-fit: ${
-						field.showFullImage ? 'contain' : 'cover'
-					}`"
+					:style="
+						`object-fit: ${
+							field.showFullImage ? 'contain' : 'cover'
+						}`
+					"
 				/>
 				<fa-icon
 					v-else
@@ -300,7 +302,7 @@ export default {
 	background: $body-bg;
 	display: flex;
 
-	&__first-big {
+	&__litirst-big {
 		grid-column: 1 / span 2 !important;
 		grid-row: 1 / span 2 !important;
 	}

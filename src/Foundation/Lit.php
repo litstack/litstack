@@ -2,12 +2,12 @@
 
 namespace Lit\Foundation;
 
-use Lit\Application\Application;
-use Lit\Support\Facades\Config;
-use Lit\Translation\Translator;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Traits\ForwardsCalls;
+use Lit\Application\Application;
+use Lit\Support\Facades\Config;
+use Lit\Translation\Translator;
 
 class Lit
 {
@@ -169,6 +169,36 @@ class Lit
     public function getLocale()
     {
         return $this->laravel[Translator::class]->getLocale();
+    }
+
+    /**
+     * Add css file to the application.
+     *
+     * @param  string $path
+     * @return $this
+     */
+    public function style($path)
+    {
+        if (! $this->app) {
+            return;
+        }
+
+        return $this->app->style($path);
+    }
+
+    /**
+     * Add script to the application.
+     *
+     * @param  string $src
+     * @return $this
+     */
+    public function script($src)
+    {
+        if (! $this->app) {
+            return;
+        }
+
+        return $this->app->script($src);
     }
 
     /**

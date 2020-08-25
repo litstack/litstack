@@ -2,12 +2,12 @@
 
 namespace Tests\Page;
 
+use Illuminate\View\View;
 use Lit\Page\BasePage;
 use Lit\Vue\Component;
 use Lit\Vue\Components\BladeComponent;
-use Tests\BackendTestCase;
-use Illuminate\View\View;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class BasePageTest extends BackendTestCase
 {
@@ -58,13 +58,13 @@ class BasePageTest extends BackendTestCase
     /** @test */
     public function test_view_method_returns_view()
     {
-        $this->assertInstanceOf(Component::class, $this->page->view('lit::app'));
+        $this->assertInstanceOf(Component::class, $this->page->view('litstack::app'));
     }
 
     /** @test */
     public function test_view_method_adds_blade_component()
     {
-        $this->page->view('lit::app');
+        $this->page->view('litstack::app');
 
         $this->assertCount(1, $this->page->getComponents());
         $this->assertInstanceOf(BladeComponent::class, $this->page->getComponents()[0]);

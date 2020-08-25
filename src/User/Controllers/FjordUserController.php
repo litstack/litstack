@@ -55,7 +55,7 @@ class LitUserController
         IndexTable::deleteSelected(LitUser::class, $request);
 
         return response([
-            'message' => __f('lit.deleted_all', [
+            'message' => __lit('lit.deleted_all', [
                 'count' => count($request->ids),
             ]),
         ]);

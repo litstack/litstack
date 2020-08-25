@@ -54,7 +54,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     {
         $this->package->addNavPreset('permissions', [
             'link'      => route('lit.permissions'),
-            'title'     => fn ()     => __f('lit.permissions'),
+            'title'     => fn ()     => __lit('lit.permissions'),
             'icon'      => fa('unlock-alt'),
             'authorize' => function ($user) {
                 return $user->can('read lit-role-permissions');

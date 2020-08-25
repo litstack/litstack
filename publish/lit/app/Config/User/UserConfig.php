@@ -44,8 +44,8 @@ class UserConfig extends CrudConfig
     public function names()
     {
         return [
-            'singular' => ucfirst(__f('base.user')),
-            'plural'   => ucfirst(__f('base.users')),
+            'singular' => ucfirst(__lit('base.user')),
+            'plural'   => ucfirst(__lit('base.users')),
         ];
     }
 
@@ -82,7 +82,7 @@ class UserConfig extends CrudConfig
 
         $table->component('lit-permissions-lit-users-roles')
             ->link(false)
-            ->label(ucfirst(__f('base.roles')));
+            ->label(ucfirst(__lit('base.roles')));
 
         $table->component('lit-permissions-lit-users-apply-role')
             ->authorize(fn ($user) => $user->can('update lit-user-roles'))
@@ -105,13 +105,13 @@ class UserConfig extends CrudConfig
                 ->width(1 / 2)
                 ->creationRules('required')
                 ->rules('min:2')
-                ->title(ucwords(__f('base.first_name')));
+                ->title(ucwords(__lit('base.first_name')));
 
             $form->input('last_name')
                 ->width(1 / 2)
                 ->creationRules('required')
                 ->rules('min:2')
-                ->title(ucwords(__f('base.last_name')));
+                ->title(ucwords(__lit('base.last_name')));
 
             $form->input('email')
                 ->width(1 / 2)
@@ -123,10 +123,10 @@ class UserConfig extends CrudConfig
                 ->width(1 / 2)
                 ->creationRules('required')
                 ->rules('min:2', 'max:60', 'unique:lit_users,username')
-                ->title(ucwords(__f('base.username')));
+                ->title(ucwords(__lit('base.username')));
 
             $form->password('password')
-                ->title(ucwords(__f('base.password')))
+                ->title(ucwords(__lit('base.password')))
                 ->width(1 / 2);
         });
     }

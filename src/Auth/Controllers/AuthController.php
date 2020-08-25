@@ -43,7 +43,7 @@ class AuthController extends Controller
      */
     public function authenticate(Request $request, AuthenticationAction $authentication)
     {
-        $request->validate($this->getAuthenticationRules(), __f('validation'));
+        $request->validate($this->getAuthenticationRules(), __lit('validation'));
 
         $this->denyDefaultAdminInProduction($request);
 
@@ -52,7 +52,7 @@ class AuthController extends Controller
         $attempt = $authentication->execute($request->only('email', 'password'), $remember);
 
         if (! $attempt) {
-            abort(401, __f('login.failed'));
+            abort(401, __lit('login.failed'));
         }
 
         return $this->loginSucceeded();
@@ -77,7 +77,7 @@ class AuthController extends Controller
             return;
         }
 
-        abort(401, __f('login.failed'));
+        abort(401, __lit('login.failed'));
     }
 
     /**

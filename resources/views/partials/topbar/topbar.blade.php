@@ -8,7 +8,7 @@
         <div class="lit-hide" id="lit-topbar-right">
         
             @auth('lit')
-                @include('lit::partials.topbar.navigation')
+                @include('litstack::partials.topbar.navigation')
             @endauth
             
         </div>

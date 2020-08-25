@@ -17,7 +17,7 @@
 
     <link href="{{ route('lit.css') }}" rel="stylesheet"/>
 
-    @include('lit::partials.google_analytics')
+    @include('litstack::partials.google_analytics')
 </head>
 
 
@@ -30,7 +30,7 @@
 
                     {{-- <div class="text-center">
                         <div class="lit-brand">
-                            @include('lit::partials.logo')
+                            @include('litstack::partials.logo')
                         </div>
                     </div> --}}
                     
@@ -39,13 +39,13 @@
                 </div>
             </div>
             
-             @include('lit::partials.spinner')
+             @include('litstack::partials.spinner')
         </main>
         
 
     </div>
 
-    <script src="{{ Lit::route('app2.js') }}" defer></script>
+    <script src="{{ Litstack::route('app2.js') }}" defer></script>
 
     <script type="text/javascript">
         function makeVisible(){

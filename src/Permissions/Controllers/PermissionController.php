@@ -31,8 +31,8 @@ class PermissionController extends Controller
     {
         $config = [
             'sortBy' => [
-                'id.desc' => __f('lit.sort_new_to_old'),
-                'id.asc'  => __f('lit.sort_old_to_new'),
+                'id.desc' => __lit('lit.sort_new_to_old'),
+                'id.asc'  => __lit('lit.sort_old_to_new'),
             ],
             'sortByDefault' => 'id.desc',
         ];
@@ -72,17 +72,17 @@ class PermissionController extends Controller
         $index = new ColumnBuilder;
 
         $index->component('lit-index-group-name')
-            ->label(ucfirst(__f('base.group')))
+            ->label(ucfirst(__lit('base.group')))
             ->sortBy('permission_group');
 
         foreach ($this->getUniqueOperations() as $operation) {
             $index->component('lit-permissions-toggle')
                 ->prop('operation', $operation)
-                ->label(ucfirst(__f("base.{$operation}")));
+                ->label(ucfirst(__lit("base.{$operation}")));
         }
 
         $index->component('lit-permissions-toggle-all')
-            ->label(ucfirst(__f('lit.toggle_all')))
+            ->label(ucfirst(__lit('lit.toggle_all')))
             ->small();
 
         return $index;

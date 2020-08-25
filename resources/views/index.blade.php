@@ -22,7 +22,7 @@
         <link href="{{ $path }}{{ asset_time() }}" rel="stylesheet">
     @endforeach
 
-    @include('lit::partials.google_analytics')
+    @include('litstack::partials.google_analytics')
 
 </head>
 
@@ -33,8 +33,8 @@
     @endphp
     <div id="lit-app">
 
-            @include('lit::partials.topbar.topbar')
-            @include('lit::partials.navigation')
+            @include('litstack::partials.topbar.topbar')
+            @include('litstack::partials.navigation')
             <b-button
             variant="primary"
             class="d-block d-lg-none btn-square lit-main-navigation-toggle"
@@ -47,7 +47,7 @@
                 @yield('content') 
             </div>
             
-             @include('lit::partials.spinner')
+             @include('litstack::partials.spinner')
         </main>
 
     </div>

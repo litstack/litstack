@@ -205,7 +205,7 @@ if (! function_exists('asset_time')) {
     }
 }
 
-if (! function_exists('__f')) {
+if (! function_exists('__lit')) {
     /**
      * Translate by key.
      *
@@ -214,13 +214,13 @@ if (! function_exists('__f')) {
      *
      * @return void
      */
-    function __f($key = null, $replace = [])
+    function __lit($key = null, $replace = [])
     {
         return lit()->trans($key, $replace);
     }
 }
 
-if (! function_exists('__f_choice')) {
+if (! function_exists('__lit_choice')) {
     /**
      * Translate choice by key.
      *
@@ -229,13 +229,13 @@ if (! function_exists('__f_choice')) {
      *
      * @return void
      */
-    function __f_choice($key, $number, $replace = [])
+    function __lit_choice($key, $number, $replace = [])
     {
         return lit()->trans_choice($key, $number, $replace);
     }
 }
 
-if (! function_exists('__f_c')) {
+if (! function_exists('__lit_c')) {
     /**
      * Translate choice by key.
      *
@@ -244,13 +244,13 @@ if (! function_exists('__f_c')) {
      *
      * @return void
      */
-    function __f_c($key, $number, $replace = [])
+    function __lit_c($key, $number, $replace = [])
     {
         return lit()->trans_choice($key, $number, $replace);
     }
 }
 
-if (! function_exists('__f_')) {
+if (! function_exists('__lit_')) {
     /**
      * Translate if key exists or returns default.
      *
@@ -260,10 +260,10 @@ if (! function_exists('__f_')) {
      *
      * @return string
      */
-    function __f_($key, $default, $replace = [])
+    function __lit_($key, $default, $replace = [])
     {
-        return __f($key, $replace) !== $key
-            ? __f($key, $replace)
+        return __lit($key, $replace) !== $key
+            ? __lit($key, $replace)
             : $default;
     }
 }

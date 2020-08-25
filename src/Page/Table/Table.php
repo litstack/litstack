@@ -112,8 +112,8 @@ class Table extends BaseTable implements TableContract
     public static function numericOrder($column = 'id')
     {
         return [
-            "{$column}.desc" => __f('lit.sort_new_to_old'),
-            "{$column}.asc"  => __f('lit.sort_old_to_new'),
+            "{$column}.desc" => __lit('lit.sort_new_to_old'),
+            "{$column}.asc"  => __lit('lit.sort_old_to_new'),
         ];
     }
 

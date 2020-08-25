@@ -72,7 +72,7 @@ class MediaRepository extends BaseFieldRepository
     public function destroy(CrudUpdateRequest $request, $model)
     {
         if ($model->media()->findOrFail($request->media_id)->delete()) {
-            return response()->success(__f('lit.image_deleted'));
+            return response()->success(__lit('lit.image_deleted'));
         }
     }
 
@@ -106,7 +106,7 @@ class MediaRepository extends BaseFieldRepository
     {
         $request->validate([
             'media' => 'required|max:'.$this->field->maxFileSize * 1000,
-        ], __f('validation'), [
+        ], __lit('validation'), [
             'media' => $this->field->title,
         ]);
 

@@ -106,8 +106,8 @@ class BaseTable extends VueProp implements TableContract
         $this->perPage(10);
         $this->search(['title']);
         $this->sortBy([
-            'id.desc' => __f('lit.sort_new_to_old'),
-            'id.asc'  => __f('lit.sort_old_to_new'),
+            'id.desc' => __lit('lit.sort_new_to_old'),
+            'id.asc'  => __lit('lit.sort_old_to_new'),
         ]);
     }
 

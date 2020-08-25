@@ -135,7 +135,7 @@ class BlockRepository extends BaseFieldRepository
     {
         validator()->validate((array) $payload, [
             'ids' => 'required|array',
-        ], __f('validation'));
+        ], __lit('validation'));
 
         $query = $this->field->getRelationQuery($model);
 

@@ -1,4 +1,4 @@
-@extends('lit::landing')
+@extends('litstack::landing')
 
 @section('title')
     Reset Password ({{ $email }})

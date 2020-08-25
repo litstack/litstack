@@ -20,9 +20,9 @@ class DestroyAction
      */
     public function modal(ActionModal $modal)
     {
-        $modal->message(__f('messages.actions.are_you_sure'))
+        $modal->message(__lit('messages.actions.are_you_sure'))
             ->confirmVariant('danger')
-            ->confirmText(ucfirst(__f('base.delete')));
+            ->confirmText(ucfirst(__lit('base.delete')));
     }
 
     /**
@@ -74,6 +74,6 @@ class DestroyAction
      */
     protected function successMessage(Collection $models)
     {
-        return response()->success(__f_choice('messages.deleted_items', count($models)));
+        return response()->success(__lit_choice('messages.deleted_items', count($models)));
     }
 }

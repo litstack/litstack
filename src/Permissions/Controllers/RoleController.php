@@ -42,7 +42,7 @@ class RoleController
 
         // Can't take away own admin role.
         if ($role->name == 'admin' && $user->id == lit_user()->id) {
-            return response()->danger(__f('fjpermissions.cant_remove_admin_role'));
+            return response()->danger(__lit('fjpermissions.cant_remove_admin_role'));
         }
 
         // Remove role.
@@ -82,10 +82,10 @@ class RoleController
 
         // Roles admin & user cannot be deletet.
         if (in_array($role->name, ['admin', 'user'])) {
-            $roleName = __f("roles.{$role->name}") !== "roles.{$role->name}"
-                ? __f("roles.{$role->name}")
+            $roleName = __lit("roles.{$role->name}") !== "roles.{$role->name}"
+                ? __lit("roles.{$role->name}")
                 : ucfirst($role->name);
-            abort(422, __f('fjpermissions.cant_delete_role', ['role' => $roleName]));
+            abort(422, __lit('fjpermissions.cant_delete_role', ['role' => $roleName]));
         }
 
         // LitUsers with the role to be deleted are assigned the role user.

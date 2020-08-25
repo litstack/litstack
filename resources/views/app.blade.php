@@ -1,4 +1,4 @@
-@extends('lit::index')
+@extends('litstack::index')
 
 @section('title')
     @isset($title)
@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    @include('lit::vue.component', [
+    @include('litstack::vue.component', [
         'component' => 'lit-app',
         'props' => ((array) \Lit\Support\Facades\VueApp::render())['props']
     ])

@@ -50,7 +50,7 @@ class MorphToRegistrar extends LaravelRelationField
         $selectId = (new $this->model())->{$this->id}()->getMorphType();
 
         $select = $this->formInstance->select($selectId)
-            ->title(__f('base.item_select', ['item' => $this->title]))
+            ->title(__lit('base.item_select', ['item' => $this->title]))
             ->storable(false);
 
         $morph = new MorphTypeManager($this->id, $this->formInstance, $select);

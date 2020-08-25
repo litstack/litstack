@@ -80,7 +80,7 @@ class LitServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'lit');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'litstack');
 
         $this->middlewares($router);
 

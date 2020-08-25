@@ -89,7 +89,7 @@ class CrudIndex extends Page
         $table->singularName($this->config->names['singular']);
         $table->pluralName($this->config->names['plural']);
 
-        $table->action(ucfirst(__f('base.delete')), DestroyAction::class);
+        $table->action(ucfirst(__lit('base.delete')), DestroyAction::class);
 
         $closure($builder);
         $this->component($table->getComponent());

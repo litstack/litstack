@@ -30,8 +30,8 @@ class ProfileSettingsConfig extends CrudConfig
      */
     public function names()
     {
-        $profileSettingsName = ucwords(__f('base.item_settings', [
-            'item' => __f('base.profile'),
+        $profileSettingsName = ucwords(__lit('base.item_settings', [
+            'item' => __lit('base.profile'),
         ]));
 
         return [
@@ -60,7 +60,7 @@ class ProfileSettingsConfig extends CrudConfig
     public function show(CrudShow $page)
     {
         // settings
-        $page->info(ucwords(__f('base.general')))->width(4);
+        $page->info(ucwords(__lit('base.general')))->width(4);
         $page->card(fn ($form) => $this->settings($form))
             ->width(8)->class('mb-5');
 
@@ -68,7 +68,7 @@ class ProfileSettingsConfig extends CrudConfig
         $this->language($page);
 
         // security
-        $page->info(ucwords(__f('base.security')))->width(4);
+        $page->info(ucwords(__lit('base.security')))->width(4);
 
         $page->group(function ($page) {
             $page->card(fn ($form) => $this->security($form));
@@ -87,11 +87,11 @@ class ProfileSettingsConfig extends CrudConfig
     {
         $form->input('first_name')
             ->width(6)
-            ->title(ucwords(__f('base.first_name')));
+            ->title(ucwords(__lit('base.first_name')));
 
         $form->input('last_name')
             ->width(6)
-            ->title(ucwords(__f('base.last_name')));
+            ->title(ucwords(__lit('base.last_name')));
 
         $form->modal('change_email')
             ->title('E-Mail')
@@ -108,7 +108,7 @@ class ProfileSettingsConfig extends CrudConfig
 
         $form->input('username')
             ->width(6)
-            ->title(ucwords(__f('base.username')));
+            ->title(ucwords(__lit('base.username')));
     }
 
     /**
@@ -124,8 +124,8 @@ class ProfileSettingsConfig extends CrudConfig
             return;
         }
 
-        $form->info(ucwords(__f('base.language')))->width(4)
-            ->text(__f('profile.messages.language'));
+        $form->info(ucwords(__lit('base.language')))->width(4)
+            ->text(__lit('profile.messages.language'));
 
         $form->card(fn ($form) => $form->component('lit-locales')->class('mb-4'))
             ->width(8)
@@ -146,7 +146,7 @@ class ProfileSettingsConfig extends CrudConfig
         $form->modal('change_password')
             ->title('Password')
             ->variant('primary')
-            ->name(fa('user-shield').' '.__f('profile.change_password'))
+            ->name(fa('user-shield').' '.__lit('profile.change_password'))
             ->form(function ($modal) {
                 $modal->password('old_password')
                     ->title('Old Password')

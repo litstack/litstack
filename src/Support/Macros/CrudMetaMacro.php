@@ -20,19 +20,19 @@ class CrudMetaMacro
                     $meta->input('meta_title')
                         ->title('Meta-Title')
                         ->placeholder('Meta-Title')
-                        ->hint(__f('crud.meta.title_hint', [
+                        ->hint(__lit('crud.meta.title_hint', [
                             'width' => $metaMaxWith,
                         ]));
 
                     $meta->input('meta_keywords')
                         ->title('Meta-Keywords')
                         ->placeholder('Keyword1, Keyword2, …')
-                        ->hint(__f('crud.meta.keywords_hint'));
+                        ->hint(__lit('crud.meta.keywords_hint'));
 
                     $meta->input('meta_description')
                         ->title('Meta-Beschreibung')
                         ->placeholder('Meta-Beschreibung')
-                        ->hint(__f('crud.meta.description_hint'))
+                        ->hint(__lit('crud.meta.description_hint'))
                         ->max(156)
                         ->rules('max:156');
 

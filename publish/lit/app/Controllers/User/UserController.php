@@ -40,7 +40,7 @@ class UserController extends CrudController
         $this->delete($this->query()->whereIn('id', $ids));
 
         return response()->json([
-            'message' => __f_choice('messages.deleted_items', count($request->ids)),
+            'message' => __lit_choice('messages.deleted_items', count($request->ids)),
         ], 200);
     }
 

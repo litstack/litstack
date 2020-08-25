@@ -20,8 +20,8 @@
 				<lit-base-index-table-form
 					v-if="
 						searchKeys.length != 0 ||
-						!_.isEmpty(sortBy) ||
-						!_.isEmpty(filter)
+							!_.isEmpty(sortBy) ||
+							!_.isEmpty(filter)
 					"
 				>
 					<b-input-group>
@@ -485,7 +485,7 @@ export default {
 		}
 	}
 
-	&__form {
+	&__litorm {
 		display: flex;
 		flex-direction: row;
 		align-items: stretch;

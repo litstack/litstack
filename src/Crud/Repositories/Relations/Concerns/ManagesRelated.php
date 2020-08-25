@@ -37,7 +37,7 @@ trait ManagesRelated
             return;
         }
 
-        abort(405, __f('crud.fields.relation.messages.max_items_reached', [
+        abort(405, __lit('crud.fields.relation.messages.max_items_reached', [
             'count' => $this->field->maxItems,
         ]));
     }

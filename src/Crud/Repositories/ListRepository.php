@@ -167,7 +167,7 @@ class ListRepository extends BaseFieldRepository
             'payload.items.*.order_column' => 'required|integer',
             'payload.items.*.id'           => 'required|integer',
             'payload.items.*.parent_id'    => 'integer',
-        ], __f('validation'));
+        ], __lit('validation'));
 
         $orderedItems = $payload->items;
         $listItems = $this->field->getRelationQuery($model)->getFlat();
@@ -259,7 +259,7 @@ class ListRepository extends BaseFieldRepository
             return;
         }
 
-        return abort(405, __f('crud.fields.list.messages.max_depth', [
+        return abort(405, __lit('crud.fields.list.messages.max_depth', [
             'count' => $maxDepth,
         ]));
     }
@@ -273,7 +273,7 @@ class ListRepository extends BaseFieldRepository
     protected function checkAuthorized(ListItem $item = null, $operation)
     {
         if (! $this->field->itemAuthorized($item, $operation)) {
-            abort(405, __f('base.unauthorized'));
+            abort(405, __lit('base.unauthorized'));
         }
     }
 }

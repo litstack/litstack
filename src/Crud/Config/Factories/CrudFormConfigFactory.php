@@ -30,7 +30,7 @@ class CrudFormConfigFactory extends ConfigFactory
         $page = new CrudShow($form);
 
         if ($config->instanceOf(CrudConfig::class)) {
-            $page->navigationControls()->action(ucfirst(__f('base.delete')), DestroyAction::class);
+            $page->navigationControls()->action(ucfirst(__lit('base.delete')), DestroyAction::class);
         }
 
         $page->navigationRight()->component('lit-crud-language');
