@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Application\Kernel;
+namespace Ignite\Application\Kernel;
 
 use Closure;
 use Illuminate\Support\Facades\Request;
@@ -17,7 +17,7 @@ class HandleRouteMiddleware
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        app()->get(\LitApp\Kernel::class)->handleRoute(Request::route());
+        app()->get(\Lit\Kernel::class)->handleRoute(Request::route());
 
         return $next($request);
     }

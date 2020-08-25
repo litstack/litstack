@@ -2,8 +2,8 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\Fields\Relations\Concerns\ManagesLitRelationField;
-use Lit\Crud\Fields\Relations\LaravelRelationField;
+use Ignite\Crud\Fields\Relations\Concerns\ManagesLitRelationField;
+use Ignite\Crud\Fields\Relations\LaravelRelationField;
 use Tests\BackendTestCase;
 use Tests\Traits\InteractsWithConfig;
 use Tests\Traits\InteractsWithFields;

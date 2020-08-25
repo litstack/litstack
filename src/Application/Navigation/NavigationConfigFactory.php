@@ -1,17 +1,17 @@
 <?php
 
-namespace Lit\Application\Navigation;
+namespace Ignite\Application\Navigation;
 
 use Closure;
-use Lit\Config\ConfigFactory;
-use Lit\Config\ConfigHandler;
+use Ignite\Config\ConfigFactory;
+use Ignite\Config\ConfigHandler;
 
 class NavigationConfigFactory extends ConfigFactory
 {
     /**
      * Resolve query.
      *
-     * @param \Lit\Config\ConfigHandler $config
+     * @param \Ignite\Config\ConfigHandler $config
      * @param Closure                     $method
      *
      * @return Navigation
@@ -24,7 +24,7 @@ class NavigationConfigFactory extends ConfigFactory
     /**
      * Resolve query.
      *
-     * @param \Lit\Config\ConfigHandler $config
+     * @param \Ignite\Config\ConfigHandler $config
      * @param Closure                     $method
      *
      * @return Navigation

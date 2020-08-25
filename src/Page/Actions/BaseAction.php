@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Page\Actions;
+namespace Ignite\Page\Actions;
 
-use Lit\Contracts\Page\ActionFactory;
-use Lit\Page\RunActionEvent;
-use Lit\Vue\Component;
+use Ignite\Contracts\Page\ActionFactory;
+use Ignite\Page\RunActionEvent;
+use Ignite\Vue\Component;
 
 abstract class BaseAction implements ActionFactory
 {

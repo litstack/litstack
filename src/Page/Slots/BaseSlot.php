@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Page\Slots;
+namespace Ignite\Page\Slots;
 
-use Lit\Support\VueProp;
-use Lit\Vue\Component;
+use Ignite\Support\VueProp;
+use Ignite\Vue\Component;
 use Illuminate\Contracts\View\View;
 
 abstract class BaseSlot extends VueProp

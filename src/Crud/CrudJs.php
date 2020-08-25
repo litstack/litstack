@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Crud;
+namespace Ignite\Crud;
 
 use Carbon\CarbonInterface;
-use Lit\Crud\Models\Form;
-use Lit\Crud\Models\Repeatable;
-use Lit\Support\VueProp;
+use Ignite\Crud\Models\Form;
+use Ignite\Crud\Models\Repeatable;
+use Ignite\Support\VueProp;
 
 class CrudJs extends VueProp
 {

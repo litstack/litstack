@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Commands;
+namespace Ignite\Commands;
 
 use Closure;
-use Lit\Support\Facades\Package;
+use Ignite\Support\Facades\Package;
 use Illuminate\Console\Command;
 
 class LitNav extends Command

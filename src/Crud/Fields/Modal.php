@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
 use Closure;
-use Lit\Crud\BaseField;
-use Lit\Crud\BaseForm;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\BaseForm;
 
 class Modal extends BaseField
 {

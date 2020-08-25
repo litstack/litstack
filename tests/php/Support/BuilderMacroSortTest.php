@@ -3,8 +3,8 @@
 namespace Tests;
 
 use BadMethodCallException;
-use Lit\Crud\Models\FormRelation;
-use Lit\Support\Macros\BuilderSort;
+use Ignite\Crud\Models\FormRelation;
+use Ignite\Support\Macros\BuilderSort;
 use Tests\TestSupport\Models\Post;
 use Tests\TestSupport\Models\TranslatablePost;
 use Tests\TestSupport\Models\User;

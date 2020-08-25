@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Vue;
+namespace Ignite\Vue;
 
 use Exception;
-use Lit\Contracts\Vue\Authorizable as AuthorizableContract;
-use Lit\Support\VueProp;
-use Lit\Vue\Traits\Authorizable;
+use Ignite\Contracts\Vue\Authorizable as AuthorizableContract;
+use Ignite\Support\VueProp;
+use Ignite\Vue\Traits\Authorizable;
 
 class Component extends VueProp implements AuthorizableContract
 {

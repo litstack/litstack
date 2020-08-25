@@ -1,11 +1,11 @@
 <?php
 
-namespace LitApp\Config\User;
+namespace Lit\Config\User;
 
-use Lit\Crud\Config\CrudConfig;
-use Lit\Crud\CrudShow;
-use Lit\User\Models\LitUser;
-use LitApp\Controllers\User\ProfileSettingsController;
+use Ignite\Crud\Config\CrudConfig;
+use Ignite\Crud\CrudShow;
+use Ignite\User\Models\User;
+use Lit\Controllers\User\ProfileSettingsController;
 
 class ProfileSettingsConfig extends CrudConfig
 {
@@ -14,7 +14,7 @@ class ProfileSettingsConfig extends CrudConfig
      *
      * @var string
      */
-    public $model = LitUser::class;
+    public $model = User::class;
 
     /**
      * Controller class.
@@ -53,7 +53,7 @@ class ProfileSettingsConfig extends CrudConfig
     /**
      * Setup create and edit form.
      *
-     * @param \Lit\Crud\CrudShow $page
+     * @param \Ignite\Crud\CrudShow $page
      *
      * @return void
      */
@@ -79,8 +79,7 @@ class ProfileSettingsConfig extends CrudConfig
     /**
      * Profile settings.
      *
-     * @param CrudShow $form
-     *
+     * @param  CrudShow $form
      * @return void
      */
     public function settings($form)
@@ -114,8 +113,7 @@ class ProfileSettingsConfig extends CrudConfig
     /**
      * Change language.
      *
-     * @param CrudShow $form
-     *
+     * @param  CrudShow $form
      * @return void
      */
     public function language($form)
@@ -137,8 +135,7 @@ class ProfileSettingsConfig extends CrudConfig
      * - Change password
      * - Session manager.
      *
-     * @param CrudShow $container
-     *
+     * @param  CrudShow $container
      * @return void
      */
     public function security($form)

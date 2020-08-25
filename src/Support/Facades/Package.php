@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Support\Facades;
+namespace Ignite\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

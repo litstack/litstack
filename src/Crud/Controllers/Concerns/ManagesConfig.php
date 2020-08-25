@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Crud\Controllers\Concerns;
+namespace Ignite\Crud\Controllers\Concerns;
 
 use Illuminate\Support\Facades\Request;
 
@@ -9,14 +9,14 @@ trait ManagesConfig
     /**
      * Config instance.
      *
-     * @var \Lit\Config\ConfigHandler
+     * @var \Ignite\Config\ConfigHandler
      */
     protected $config;
 
     /**
      * Get config.
      *
-     * @return \Lit\Config\ConfigHandler
+     * @return \Ignite\Config\ConfigHandler
      */
     protected function loadConfig()
     {
@@ -30,7 +30,7 @@ trait ManagesConfig
     /**
      * Get crud/form config.
      *
-     * @return \Lit\Config\ConfigHandler
+     * @return \Ignite\Config\ConfigHandler
      */
     public function getConfig()
     {

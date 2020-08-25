@@ -2,10 +2,10 @@
 
 namespace Tests\Page;
 
-use Lit\Exceptions\Traceable\MissingAttributeException;
-use Lit\Page\Table\ColumnBuilder;
-use Lit\Page\Table\Table;
-use Lit\Vue\Component;
+use Ignite\Exceptions\Traceable\MissingAttributeException;
+use Ignite\Page\Table\ColumnBuilder;
+use Ignite\Page\Table\Table;
+use Ignite\Vue\Component;
 use Tests\BackendTestCase;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;

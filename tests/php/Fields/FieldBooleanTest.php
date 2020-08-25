@@ -2,8 +2,8 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\BaseField;
-use Lit\Crud\Fields\Boolean;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\Fields\Boolean;
 use Tests\Traits\InteractsWithFields;
 use PHPUnit\Framework\TestCase;
 

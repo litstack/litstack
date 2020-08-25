@@ -1,13 +1,13 @@
 <?php
 
-namespace Lit\Foundation;
+namespace Ignite\Foundation;
 
+use Ignite\Application\Application;
+use Ignite\Support\Facades\Config;
+use Ignite\Translation\Translator;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Traits\ForwardsCalls;
-use Lit\Application\Application;
-use Lit\Support\Facades\Config;
-use Lit\Translation\Translator;
 
 class Lit
 {
@@ -16,7 +16,7 @@ class Lit
     /**
      * Lit Application.
      *
-     * @var \Lit\Application\Application
+     * @var \Ignite\Application\Application
      */
     protected $app;
 
@@ -50,7 +50,7 @@ class Lit
     /**
      * Bind Lit Application instance when Lit is installed.
      *
-     * @param  \Lit\Application\Application $app
+     * @param  \Ignite\Application\Application $app
      * @return void
      */
     public function bindApp(Application $app)
@@ -61,7 +61,7 @@ class Lit
     /**
      * Get Lit application.
      *
-     * @return \Lit\Application\Application $app
+     * @return \Ignite\Application\Application $app
      */
     public function app()
     {
@@ -154,7 +154,7 @@ class Lit
     /**
      * Gets the  authenticated Lit user.
      *
-     * @return \Lit\User\Models\LitUser|null
+     * @return \Ignite\User\Models\User|null
      */
     public function user()
     {
@@ -212,7 +212,7 @@ class Lit
             return false;
         }
 
-        if (! class_exists(\LitApp\Kernel::class)) {
+        if (! class_exists(\Lit\Kernel::class)) {
             return false;
         }
 
@@ -234,7 +234,7 @@ class Lit
             return false;
         }
 
-        if (! class_exists(\LitApp\Kernel::class)) {
+        if (! class_exists(\Lit\Kernel::class)) {
             return false;
         }
 

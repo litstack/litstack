@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Translation;
+namespace Ignite\Translation;
 
 /**
  * Generator inspired by martinlindhe.

@@ -1,16 +1,16 @@
 <?php
 
-namespace Lit\Application\Bootstrap;
+namespace Ignite\Application\Bootstrap;
 
-use Lit\Application\Application;
-use Lit\Support\Facades\Package;
+use Ignite\Application\Application;
+use Ignite\Support\Facades\Package;
 
 class RegisterConfigFactories
 {
     /**
      * Registers config factories from packages.
      *
-     * @param  \Lit\Application\Application $app
+     * @param  \Ignite\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app)

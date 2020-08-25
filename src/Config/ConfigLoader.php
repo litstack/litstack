@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Config;
+namespace Ignite\Config;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 /**
  * Config singleton.
  *
- * @see \Lit\Support\Facades\Config
+ * @see \Ignite\Support\Facades\Config
  */
 class ConfigLoader
 {
@@ -17,7 +17,7 @@ class ConfigLoader
      *
      * @var string
      */
-    protected $namespace = "LitApp\Config";
+    protected $namespace = "Lit\Config";
 
     /**
      * Stack of loaded instances.
@@ -192,7 +192,7 @@ class ConfigLoader
      */
     public function getKeyFromNamespace(string $namespace)
     {
-        return collect(explode('\\', Str::replaceLast('Config', '', str_replace('LitApp\\Config\\', '', $namespace))))
+        return collect(explode('\\', Str::replaceLast('Config', '', str_replace('Lit\\Config\\', '', $namespace))))
             ->map(fn ($item) => Str::snake($item))
             ->implode('.');
     }

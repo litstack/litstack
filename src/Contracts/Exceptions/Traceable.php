@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Contracts\Exceptions;
+namespace Ignite\Contracts\Exceptions;
 
 use Exception;
 

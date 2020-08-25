@@ -1,12 +1,12 @@
 <?php
 
-namespace Lit\Crud\Repositories;
+namespace Ignite\Crud\Repositories;
 
-use Lit\Crud\CrudValidator;
-use Lit\Crud\Fields\ListField\ListField;
-use Lit\Crud\Models\ListItem;
-use Lit\Crud\Requests\CrudReadRequest;
-use Lit\Crud\Requests\CrudUpdateRequest;
+use Ignite\Crud\CrudValidator;
+use Ignite\Crud\Fields\ListField\ListField;
+use Ignite\Crud\Models\ListItem;
+use Ignite\Crud\Requests\CrudReadRequest;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 use Illuminate\Http\Request;
 
 class ListRepository extends BaseFieldRepository

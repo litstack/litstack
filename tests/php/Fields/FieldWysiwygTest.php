@@ -2,10 +2,10 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\BaseField;
-use Lit\Crud\Fields\Traits\FieldHasRules;
-use Lit\Crud\Fields\Traits\TranslatableField;
-use Lit\Crud\Fields\Wysiwyg;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\Fields\Traits\FieldHasRules;
+use Ignite\Crud\Fields\Traits\TranslatableField;
+use Ignite\Crud\Fields\Wysiwyg;
 use Tests\Traits\InteractsWithFields;
 use Tests\Traits\TestHelpers;
 use PHPUnit\Framework\TestCase;

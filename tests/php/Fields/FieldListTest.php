@@ -2,9 +2,9 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\BaseForm;
-use Lit\Crud\Fields\ListField\ListField;
-use Lit\Crud\RelationField;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Fields\ListField\ListField;
+use Ignite\Crud\RelationField;
 use Tests\BackendTestCase;
 use Tests\Traits\InteractsWithFields;
 use Illuminate\Database\Eloquent\Model;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Chart\Engine;
+namespace Ignite\Chart\Engine;
 
-use Lit\Chart\ChartSet;
+use Ignite\Chart\ChartSet;
 
 class ApexEngine extends ChartEngine
 {

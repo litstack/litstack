@@ -1,11 +1,12 @@
 <?php
 
-namespace Lit\Commands\Install;
+namespace Ignite\Commands\Install;
 
-use Lit\Commands\Traits\RolesAndPermissions;
-use Lit\User\Models\LitUser;
+use Ignite\Commands\Traits\RolesAndPermissions;
+use Ignite\User\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 
 class LitInstall extends Command
@@ -77,10 +78,10 @@ class LitInstall extends Command
         if (config('app.env') == 'production') {
             return;
         }
-        if (LitUser::where('username', 'admin')->orWhere('email', 'admin@admin')->exists()) {
+        if (User::where('username', 'admin')->orWhere('email', 'admin@admin')->exists()) {
             return;
         }
-        // $user = LitUser::firstOrCreate([
+        // $user = User::firstOrCreate([
         //     'username' => 'admin',
         //     'email'    => 'admin@admin.com',
         // ], [
@@ -88,7 +89,7 @@ class LitInstall extends Command
         //     'last_name'  => '',
         //     'password'   => bcrypt('secret'),
         // ]);
-        $user = new LitUser([
+        $user = new User([
             'username'   => 'admin',
             'email'      => 'admin@admin.com',
             'first_name' => 'admin',
@@ -136,18 +137,18 @@ class LitInstall extends Command
         $this->info('publishing lit config & migrations');
         if ($this->migrations()) {
             $this->callSilent('vendor:publish', [
-                '--provider' => "Lit\LitServiceProvider",
+                '--provider' => "Ignite\LitServiceProvider",
                 '--tag'      => 'migrations',
             ]);
         }
 
         $this->callSilent('vendor:publish', [
-            '--provider' => "Lit\LitServiceProvider",
+            '--provider' => "Ignite\LitServiceProvider",
             '--tag'      => 'config',
         ]);
 
-        // migrate tables
-        if (\App::environment(['local', 'staging'])) {
+        // Migrate tables.
+        if (App::environment(['local', 'staging'])) {
             $this->callSilent('migrate');
         } else {
             $this->call('migrate');
@@ -172,8 +173,11 @@ class LitInstall extends Command
         File::copyDirectory(realpath(lit_path('publish/lit')), base_path('lit'));
 
         $composer = json_decode(File::get(base_path('composer.json')), true);
-        $composer['autoload']['psr-4']['LitApp\\'] = 'lit/app/';
-        File::put(base_path('composer.json'), json_encode($composer, JSON_PRETTY_PRINT));
+        $composer['autoload']['psr-4']['Lit\\'] = 'lit/app/';
+        File::put(base_path('composer.json'), json_encode(
+            $composer,
+            JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES
+        ));
         shell_exec('composer dumpautoload');
     }
 

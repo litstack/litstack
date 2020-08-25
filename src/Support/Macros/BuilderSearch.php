@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Support\Macros;
+namespace Ignite\Support\Macros;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;

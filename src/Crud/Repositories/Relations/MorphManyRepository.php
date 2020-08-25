@@ -1,13 +1,13 @@
 <?php
 
-namespace Lit\Crud\Repositories\Relations;
+namespace Ignite\Crud\Repositories\Relations;
 
-use Lit\Config\ConfigHandler;
-use Lit\Crud\BaseForm;
-use Lit\Crud\Controllers\CrudBaseController;
-use Lit\Crud\Fields\Relations\MorphMany;
-use Lit\Crud\Repositories\BaseFieldRepository;
-use Lit\Crud\Requests\CrudUpdateRequest;
+use Ignite\Config\ConfigHandler;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Controllers\CrudBaseController;
+use Ignite\Crud\Fields\Relations\MorphMany;
+use Ignite\Crud\Repositories\BaseFieldRepository;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 
 class MorphManyRepository extends BaseFieldRepository
 {

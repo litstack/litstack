@@ -2,8 +2,8 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\Fields\Route\RouteCollection;
-use Lit\Crud\Fields\Route\RouteItem;
+use Ignite\Crud\Fields\Route\RouteCollection;
+use Ignite\Crud\Fields\Route\RouteItem;
 use Tests\BackendTestCase;
 use Illuminate\Http\Request;
 use Mockery as m;

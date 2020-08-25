@@ -39,23 +39,23 @@
 			"src/Support/helpers.php"
 		],
 		"psr-4": {
-			"Lit\\": "src"
+			"Ignite\\": "src"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
 			"Tests\\": "tests/php",
-			"LitApp\\": "vendor/orchestra/testbench-dusk/laravel/lit/app"
+			"Lit\\": "vendor/orchestra/testbench-dusk/laravel/lit/app"
 		}
 	},
 	"extra": {
 		"laravel": {
 			"providers": [
-				"Lit\\LitServiceProvider"
+				"Ignite\\LitServiceProvider"
 			]
 		},
 		"lit": {
-			"package": "Lit\\LitPackage"
+			"package": "Ignite\\LitPackage"
 		}
 	}
 }

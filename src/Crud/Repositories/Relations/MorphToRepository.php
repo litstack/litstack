@@ -1,14 +1,14 @@
 <?php
 
-namespace Lit\Crud\Repositories\Relations;
+namespace Ignite\Crud\Repositories\Relations;
 
-use Lit\Crud\BaseForm;
-use Lit\Crud\Controllers\CrudBaseController;
-use Lit\Crud\Fields\Relations\MorphOne;
-use Lit\Crud\Fields\Relations\MorphTo;
-use Lit\Crud\Fields\Relations\MorphToRegistrar;
-use Lit\Crud\Repositories\BaseFieldRepository;
-use Lit\Crud\Requests\CrudUpdateRequest;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Controllers\CrudBaseController;
+use Ignite\Crud\Fields\Relations\MorphOne;
+use Ignite\Crud\Fields\Relations\MorphTo;
+use Ignite\Crud\Fields\Relations\MorphToRegistrar;
+use Ignite\Crud\Repositories\BaseFieldRepository;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 
 class MorphToRepository extends BaseFieldRepository
 {

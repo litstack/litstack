@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Chart;
+namespace Ignite\Chart;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;

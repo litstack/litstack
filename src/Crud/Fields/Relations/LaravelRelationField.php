@@ -1,12 +1,12 @@
 <?php
 
-namespace Lit\Crud\Fields\Relations;
+namespace Ignite\Crud\Fields\Relations;
 
 use Closure;
-use Lit\Crud\RelationField;
-use Lit\Page\Table\ColumnBuilder;
-use Lit\Support\Facades\Config;
-use Lit\Support\Facades\Crud;
+use Ignite\Crud\RelationField;
+use Ignite\Page\Table\ColumnBuilder;
+use Ignite\Support\Facades\Config;
+use Ignite\Support\Facades\Crud;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use InvalidArgumentException;

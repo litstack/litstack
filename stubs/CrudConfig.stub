@@ -1,14 +1,14 @@
 <?php
 
-namespace LitApp\Config\Crud;
+namespace Lit\Config\Crud;
 
-use Lit\Crud\CrudShow;
-use Lit\Crud\CrudIndex;
-use Lit\Crud\Config\CrudConfig;
+use Ignite\Crud\CrudShow;
+use Ignite\Crud\CrudIndex;
+use Ignite\Crud\Config\CrudConfig;
 use Illuminate\Support\Str;
 
 use App\Models\DummyClassname;
-use LitApp\Controllers\Crud\DummyClassnameController;
+use Lit\Controllers\Crud\DummyClassnameController;
 
 class DummyClassnameConfig extends CrudConfig
 {
@@ -52,7 +52,7 @@ class DummyClassnameConfig extends CrudConfig
     /**
      * Build index page.
      *
-     * @param Lit\Crud\CrudIndex $page
+     * @param \Ignite\Crud\CrudIndex $page
      * @return void
      */
     public function index(CrudIndex $page)
@@ -77,7 +77,7 @@ class DummyClassnameConfig extends CrudConfig
     /**
      * Setup show page.
      *
-     * @param \Lit\Crud\CrudShow $page
+     * @param \Ignite\Crud\CrudShow $page
      * @return void
      */
     public function show(CrudShow $page)

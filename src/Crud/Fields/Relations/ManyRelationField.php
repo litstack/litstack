@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Crud\Fields\Relations;
+namespace Ignite\Crud\Fields\Relations;
 
-use Lit\Exceptions\Traceable\InvalidArgumentException;
+use Ignite\Exceptions\Traceable\InvalidArgumentException;
 
 class ManyRelationField extends LaravelRelationField
 {

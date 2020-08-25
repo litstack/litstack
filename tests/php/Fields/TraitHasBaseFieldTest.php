@@ -2,8 +2,8 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\Field;
-use Lit\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Field;
+use Ignite\Crud\Fields\Traits\HasBaseField;
 use Tests\BackendTestCase;
 use Tests\Traits\InteractsWithFields;
 

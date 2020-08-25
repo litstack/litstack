@@ -8,9 +8,9 @@ require('./service/component.service');
 require('./service/library.service');
 
 /**
- * The Lit Application
+ * The Litstack Application
  */
-import LitApp from './LitApp';
+import Litstack from './Litstack';
 
 /**
  * A simple event-bus
@@ -77,11 +77,11 @@ Litstack.prototype._init = function(options) {
 
 Litstack.prototype._vue = function() {
 	this.app = new Vue({
-		el: '#lit-app',
+		el: '#litstack',
 		i18n,
 		store: store.store,
 		components: {
-			LitApp,
+			Litstack,
 		},
 		data: {
 			litPlugins: plugins,

@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Crud\Fields\Relations\Concerns;
+namespace Ignite\Crud\Fields\Relations\Concerns;
 
-use Lit\Exceptions\Traceable\InvalidArgumentException;
+use Ignite\Exceptions\Traceable\InvalidArgumentException;
 
 trait ManagesPreviewTypes
 {

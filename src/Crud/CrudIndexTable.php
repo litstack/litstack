@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Crud;
+namespace Ignite\Crud;
 
-use Lit\Contracts\Page\Action;
-use Lit\Page\Table\Table;
+use Ignite\Contracts\Page\Action;
+use Ignite\Page\Table\Table;
 
 class CrudIndexTable extends Table
 {

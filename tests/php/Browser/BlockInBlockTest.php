@@ -2,8 +2,8 @@
 
 namespace Tests\Browser;
 
-use Lit\Crud\Models\FormBlock;
-use LitApp\Config\Crud\BlockInBlockConfig;
+use Ignite\Crud\Models\FormBlock;
+use Lit\Config\Crud\BlockInBlockConfig;
 use Tests\FrontendTestCase;
 use Tests\TestSupport\Models\Post;
 use Tests\Traits\InteractsWithCrud;

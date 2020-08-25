@@ -1,13 +1,13 @@
 <?php
 
-namespace Lit\Page\Actions;
+namespace Ignite\Page\Actions;
 
 class DropdownItemAction extends BaseAction
 {
     /**
      * Create component instance.
      *
-     * @return \Lit\Vue\Component
+     * @return \Ignite\Vue\Component
      */
     protected function createComponent()
     {

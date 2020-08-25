@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Crud\Fields\Block;
+namespace Ignite\Crud\Fields\Block;
 
 use Closure;
-use Lit\Support\VueProp;
+use Ignite\Support\VueProp;
 use Illuminate\Support\Traits\Macroable;
 
 class Repeatables extends VueProp
@@ -69,10 +69,10 @@ class Repeatables extends VueProp
     public function block($name, Closure $closure)
     {
         return $this->add($name, fn ($form, $preview) => $form
-                ->block($name)
-                ->title($name)
-                ->repeatables($closure)
-            )->view('lit::repeatables.block', [
+            ->block($name)
+            ->title($name)
+            ->repeatables($closure)
+            )->view('litstack::repeatables.block', [
                 'type' => $name,
             ]);
     }

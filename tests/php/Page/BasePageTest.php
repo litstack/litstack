@@ -3,9 +3,9 @@
 namespace Tests\Page;
 
 use Illuminate\View\View;
-use Lit\Page\BasePage;
-use Lit\Vue\Component;
-use Lit\Vue\Components\BladeComponent;
+use Ignite\Page\BasePage;
+use Ignite\Vue\Component;
+use Ignite\Vue\Components\BladeComponent;
 use Mockery as m;
 use Tests\BackendTestCase;
 

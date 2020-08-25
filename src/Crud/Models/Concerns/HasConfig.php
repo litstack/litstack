@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Crud\Models\Concerns;
+namespace Ignite\Crud\Models\Concerns;
 
 trait HasConfig
 {

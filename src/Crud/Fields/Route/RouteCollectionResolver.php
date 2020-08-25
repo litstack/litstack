@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Crud\Fields\Route;
+namespace Ignite\Crud\Fields\Route;
 
 use Closure;
 use InvalidArgumentException;

@@ -1,12 +1,12 @@
 <?php
 
-namespace Lit\Permissions\Controllers;
+namespace Ignite\Permissions\Controllers;
 
-use Lit\Page\Table\ColumnBuilder;
-use Lit\Page\Table\Table;
-use Lit\Permissions\Models\RolePermission;
-use Lit\Permissions\Requests\RolePermission\ReadRolePermissionRequest;
-use Lit\Support\IndexTable;
+use Ignite\Page\Table\ColumnBuilder;
+use Ignite\Page\Table\Table;
+use Ignite\Permissions\Models\RolePermission;
+use Ignite\Permissions\Requests\RolePermission\ReadRolePermissionRequest;
+use Ignite\Support\IndexTable;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
@@ -37,7 +37,7 @@ class PermissionController extends Controller
             'sortByDefault' => 'id.desc',
         ];
 
-        return view('lit::app')->withComponent('lit-permissions')
+        return view('litstack::app')->withComponent('lit-permissions')
             ->withTitle('Permissions')
             ->withProps([
                 'cols'             => $this->getCols(),

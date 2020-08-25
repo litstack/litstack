@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Application\Kernel;
+namespace Ignite\Application\Kernel;
 
 use Illuminate\View\View;
 
@@ -14,6 +14,6 @@ class HandleViewComposer
      */
     public function compose(View $view)
     {
-        app()->get(\LitApp\Kernel::class)->handleView($view);
+        app()->get(\Lit\Kernel::class)->handleView($view);
     }
 }

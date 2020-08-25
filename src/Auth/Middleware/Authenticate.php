@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Auth\Middleware;
+namespace Ignite\Auth\Middleware;
 
-use Lit\Auth\Models\LitSession;
-use Lit\Support\Facades\LitLang;
+use Ignite\Auth\Models\LitSession;
+use Ignite\Support\Facades\LitLang;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Support\Carbon;

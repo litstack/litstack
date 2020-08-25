@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Application\Bootstrap;
+namespace Ignite\Application\Bootstrap;
 
-use Lit\Application\Application;
-use Lit\Support\Facades\Package;
-use Lit\Support\Facades\Vue;
+use Ignite\Application\Application;
+use Ignite\Support\Facades\Package;
+use Ignite\Support\Facades\Vue;
 use Illuminate\Console\Application as Artisan;
 use Illuminate\Support\Facades\App;
 
@@ -13,7 +13,7 @@ class RegisterPackages
     /**
      * Registers artisan commands of all lit packages.
      *
-     * @param  \Lit\Application\Application $app
+     * @param  \Ignite\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app)

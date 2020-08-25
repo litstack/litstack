@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Application;
+namespace Ignite\Application;
 
 use Illuminate\View\View;
 
@@ -37,7 +37,7 @@ class Kernel
     /**
      * Create a new Lit kernel instance.
      *
-     * @param \Lit\Application\Application $app
+     * @param \Ignite\Application\Application $app
      *
      * @return void
      */
@@ -59,7 +59,7 @@ class Kernel
     }
 
     /**
-     * Handle lit::app view before it gets executed.
+     * Handle litstack::app view before it gets executed.
      *
      * @return void
      */

@@ -1,6 +1,6 @@
 <?php
 
-namespace LitApp\Providers;
+namespace Lit\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

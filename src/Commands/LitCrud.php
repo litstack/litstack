@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Commands;
+namespace Ignite\Commands;
 
-use Lit\Support\StubBuilder;
+use Ignite\Support\StubBuilder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -107,12 +107,12 @@ class LitCrud extends Command
         // getRoute routename
         $builder->withRoutename(Str::snake(Str::plural($modelName)));
 
-        $builder->withTraits("use Lit\Crud\Models\Traits\TrackEdits;");
+        $builder->withTraits("use Ignite\Crud\Models\Traits\TrackEdits;");
 
         // model has media
         if ($m) {
             $builder->withTraits("use Spatie\MediaLibrary\HasMedia as HasMediaContract;");
-            $builder->withTraits("use Lit\Crud\Models\Traits\HasMedia;");
+            $builder->withTraits("use Ignite\Crud\Models\Traits\HasMedia;");
 
             $attributeContents = file_get_contents(lit_path('stubs/crud.model.media.attribute.stub'));
             $builder->withGetAttributes($attributeContents);
@@ -127,7 +127,7 @@ class LitCrud extends Command
         if ($s) {
             // if is not translated
             if (! $t) {
-                $builder->withTraits("use Lit\Crud\Models\Traits\Sluggable;");
+                $builder->withTraits("use Ignite\Crud\Models\Traits\Sluggable;");
 
                 $sluggableContents = file_get_contents(lit_path('stubs/crud.model.sluggable.stub'));
                 $builder->withSluggable($sluggableContents);
@@ -139,7 +139,7 @@ class LitCrud extends Command
         // model is translatable
         if ($this->translatable) {
             $builder->withTraits("use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;");
-            $builder->withTraits("use Lit\Crud\Models\Traits\Translatable;");
+            $builder->withTraits("use Ignite\Crud\Models\Traits\Translatable;");
             $builder->withVars('
     /**
      * Translated attributes.
@@ -209,7 +209,7 @@ class LitCrud extends Command
 
             // if the model is sluggable, add sluggable trait
             if ($s) {
-                $fileContents = str_replace('DummyTraits', "use Lit\Crud\Models\Traits\Sluggable;\nDummyTraits", $fileContents);
+                $fileContents = str_replace('DummyTraits', "use Ignite\Crud\Models\Traits\Sluggable;\nDummyTraits", $fileContents);
                 $fileContents = str_replace('DummyTraits', "use Illuminate\Database\Eloquent\Builder;\nDummyTraits", $fileContents);
 
                 $sluggableContents = file_get_contents(__DIR__.'/../../stubs/crud.model.sluggable.stub');

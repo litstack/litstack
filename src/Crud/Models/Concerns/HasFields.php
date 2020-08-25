@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Crud\Models\Concerns;
+namespace Ignite\Crud\Models\Concerns;
 
-use Lit\Crud\Field;
-use Lit\Crud\Fields\Media\MediaField;
-use Lit\Crud\Models\Media;
-use Lit\Crud\RelationField;
+use Ignite\Crud\Field;
+use Ignite\Crud\Fields\Media\MediaField;
+use Ignite\Crud\Models\Media;
+use Ignite\Crud\RelationField;
 use Illuminate\Support\Collection;
 
 trait HasFields
@@ -63,7 +63,7 @@ trait HasFields
      * Find field by id.
      *
      * @param  string            $id
-     * @return \Lit\Crud\Field
+     * @return \Ignite\Crud\Field
      */
     public function findField($id)
     {

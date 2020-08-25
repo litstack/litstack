@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Vue\Components;
+namespace Ignite\Vue\Components;
 
-use Lit\Vue\Component;
-use Lit\Vue\Traits\StaticComponentName;
+use Ignite\Vue\Component;
+use Ignite\Vue\Traits\StaticComponentName;
 use Illuminate\Support\Str;
 
 class ButtonComponent extends Component

@@ -1,10 +1,10 @@
 <?php
 
-namespace LitApp\Config\Form\Pages;
+namespace Lit\Config\Form\Pages;
 
-use Lit\Crud\Config\FormConfig;
-use Lit\Crud\CrudShow;
-use LitApp\Controllers\Form\Pages\HomeController;
+use Ignite\Crud\Config\FormConfig;
+use Ignite\Crud\CrudShow;
+use Lit\Controllers\Form\Pages\HomeController;
 
 class HomeConfig extends FormConfig
 {
@@ -40,8 +40,7 @@ class HomeConfig extends FormConfig
     /**
      * Setup create and edit form.
      *
-     * @param \Lit\Crud\CrudShow $page
-     *
+     * @param  \Ignite\Crud\CrudShow $page
      * @return void
      */
     public function show(CrudShow $page)

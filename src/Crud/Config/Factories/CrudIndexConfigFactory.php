@@ -1,20 +1,20 @@
 <?php
 
-namespace Lit\Crud\Config\Factories;
+namespace Ignite\Crud\Config\Factories;
 
 use Closure;
-use Lit\Config\ConfigFactory;
-use Lit\Config\ConfigHandler;
-use Lit\Crud\CrudIndex;
+use Ignite\Config\ConfigFactory;
+use Ignite\Config\ConfigHandler;
+use Ignite\Crud\CrudIndex;
 
 class CrudIndexConfigFactory extends ConfigFactory
 {
     /**
      * Setup index table.
      *
-     * @param  \Lit\Config\Types\CrudConfig $config
+     * @param  \Ignite\Config\Types\CrudConfig $config
      * @param  Closure                        $method
-     * @return \Lit\Vue\Crud\CrudTable
+     * @return \Ignite\Vue\Crud\CrudTable
      */
     public function index(ConfigHandler $config, Closure $method)
     {

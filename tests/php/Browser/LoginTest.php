@@ -2,8 +2,8 @@
 
 namespace Tests\Browser;
 
-use Lit\Support\Facades\Lit;
-use Lit\User\Models\LitUser;
+use Ignite\Support\Facades\Lit;
+use Ignite\User\Models\User;
 use Tests\FrontendTestCase;
 
 /**
@@ -15,10 +15,10 @@ class LoginTest extends FrontendTestCase
     {
         parent::setUp();
 
-        if ($this->user = LitUser::where('email', 'test@test.com')->first()) {
+        if ($this->user = User::where('email', 'test@test.com')->first()) {
             return;
         }
-        $this->user = factory(LitUser::class)->create([
+        $this->user = factory(User::class)->create([
             'username' => 'test',
             'email'    => 'test@test.com',
             'password' => bcrypt('secret'),

@@ -2,14 +2,14 @@
 
 namespace Tests\Traits;
 
-use Lit\User\Models\LitUser;
+use Ignite\User\Models\User;
 use Mockery as m;
 
 trait ActingAsLitUserMock
 {
-    public function actingAsLitUserMock()
+    public function ActingAsLitUserMock()
     {
-        $this->admin = m::mock(LitUser::class)->makePartial();
+        $this->admin = m::mock(User::class)->makePartial();
         $this->actingAs($this->admin, 'lit');
     }
 }

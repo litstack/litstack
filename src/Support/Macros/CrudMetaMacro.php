@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Support\Macros;
+namespace Ignite\Support\Macros;
 
-use Lit\Crud\CrudShow;
+use Ignite\Crud\CrudShow;
 
 class CrudMetaMacro
 {

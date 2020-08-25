@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
 use Carbon\CarbonInterface;
-use Lit\Crud\BaseField;
-use Lit\Support\Facades\LitApp;
+use Ignite\Crud\BaseField;
+use Ignite\Support\Facades\Lit;
 use Illuminate\Support\Carbon;
 
 class Datetime extends BaseField
@@ -47,7 +47,7 @@ class Datetime extends BaseField
      */
     protected function includeCtkScript()
     {
-        LitApp::script(lit()->route('ctk.js'));
+        Lit::script(lit()->route('ctk.js'));
     }
 
     /**

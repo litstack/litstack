@@ -2,7 +2,7 @@
 
 namespace Tests\Translation;
 
-use Lit\Translation\Controllers\SetLocaleController;
+use Ignite\Translation\Controllers\SetLocaleController;
 use Tests\BackendTestCase;
 use Tests\Traits\CreateLitUsers;
 use Illuminate\Http\Request;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Commands;
+namespace Ignite\Commands;
 
 use Illuminate\Database\Console\Migrations\RollbackCommand;
 use Illuminate\Support\Collection;

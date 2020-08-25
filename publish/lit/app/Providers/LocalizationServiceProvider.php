@@ -1,8 +1,8 @@
 <?php
 
-namespace LitApp\Providers;
+namespace Lit\Providers;
 
-use Lit\Support\Facades\LitLang;
+use Ignite\Support\Facades\Lang;
 use Illuminate\Support\ServiceProvider;
 
 class LocalizationServiceProvider extends ServiceProvider
@@ -37,7 +37,7 @@ class LocalizationServiceProvider extends ServiceProvider
     protected function addPaths()
     {
         foreach ($this->paths() as $path) {
-            LitLang::addPath($path);
+            Lang::addPath($path);
         }
     }
 

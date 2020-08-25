@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
-use Lit\Crud\BaseField;
+use Ignite\Crud\BaseField;
 
 class Checkboxes extends BaseField
 {

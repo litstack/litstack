@@ -4,7 +4,7 @@ namespace Tests\Crud;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Lit\Crud\Models\Relation as RelationModel;
+use Ignite\Crud\Models\Relation as RelationModel;
 use Mockery as m;
 use Tests\BackendTestCase;
 use Tests\TestSupport\Models\Post;

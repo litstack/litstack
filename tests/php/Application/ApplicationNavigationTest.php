@@ -2,7 +2,7 @@
 
 namespace Tests\Application;
 
-use Lit\Application\Navigation\Navigation;
+use Ignite\Application\Navigation\Navigation;
 use Tests\BackendTestCase;
 
 class ApplicationNavigationTest extends BackendTestCase

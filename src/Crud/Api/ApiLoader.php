@@ -1,12 +1,12 @@
 <?php
 
-namespace Lit\Crud\Api;
+namespace Ignite\Crud\Api;
 
 use BadMethodCallException;
-use Lit\Config\ConfigHandler;
-use Lit\Crud\BaseForm;
-use Lit\Crud\Controllers\CrudBaseController;
-use Lit\Crud\CrudShow;
+use Ignite\Config\ConfigHandler;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Controllers\CrudBaseController;
+use Ignite\Crud\CrudShow;
 use Illuminate\Support\Str;
 
 class ApiLoader

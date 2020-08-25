@@ -1,12 +1,12 @@
 <?php
 
-namespace Lit\Crud\Repositories;
+namespace Ignite\Crud\Repositories;
 
-use Lit\Crud\CrudValidator;
-use Lit\Crud\Fields\Block\Block;
-use Lit\Crud\Models\Repeatable;
-use Lit\Crud\Requests\CrudReadRequest;
-use Lit\Crud\Requests\CrudUpdateRequest;
+use Ignite\Crud\CrudValidator;
+use Ignite\Crud\Fields\Block\Block;
+use Ignite\Crud\Models\Repeatable;
+use Ignite\Crud\Requests\CrudReadRequest;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 use Illuminate\Http\Request;
 
 class BlockRepository extends BaseFieldRepository

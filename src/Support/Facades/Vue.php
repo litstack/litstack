@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Support\Facades;
+namespace Ignite\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Lit\Vue\Vuew
+ * @see \Ignite\Vue\Vuew
  */
 class Vue extends Facade
 {

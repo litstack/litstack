@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Crud\Fields\Relations;
+namespace Ignite\Crud\Fields\Relations;
 
-use Lit\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Fields\Traits\HasBaseField;
 
 class HasOne extends OneRelationField
 {

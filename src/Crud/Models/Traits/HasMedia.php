@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Crud\Models\Traits;
+namespace Ignite\Crud\Models\Traits;
 
-use Lit\Crud\Models\Media;
+use Ignite\Crud\Models\Media;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;

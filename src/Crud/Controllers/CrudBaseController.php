@@ -1,12 +1,12 @@
 <?php
 
-namespace Lit\Crud\Controllers;
+namespace Ignite\Crud\Controllers;
 
-use Lit\Crud\Actions\ActionResolver;
-use Lit\Crud\Api\ApiLoader;
-use Lit\Crud\Api\ApiRequest;
-use Lit\Crud\Requests\CrudReadRequest;
-use Lit\Support\IndexTable;
+use Ignite\Crud\Actions\ActionResolver;
+use Ignite\Crud\Api\ApiLoader;
+use Ignite\Crud\Api\ApiRequest;
+use Ignite\Crud\Requests\CrudReadRequest;
+use Ignite\Support\IndexTable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 

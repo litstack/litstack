@@ -1,10 +1,10 @@
 <?php
 
-namespace LitApp\Controllers\Form\Pages;
+namespace Lit\Controllers\Form\Pages;
 
-use Lit\Crud\Controllers\FormController;
-use Lit\User\Models\LitUser;
-use LitApp\Config\Form\Pages\HomeConfig;
+use Ignite\Config\Form\Pages\HomeConfig;
+use Ignite\Crud\Controllers\FormController;
+use Ignite\User\Models\User;
 
 class HomeController extends FormController
 {
@@ -16,15 +16,14 @@ class HomeController extends FormController
     protected $config = HomeConfig::class;
 
     /**
-     * Authorize request for authenticated lit-user and permission operation.
+     * Authorize request for authenticated litstack-user and permission operation.
      * Operations: read, update.
      *
-     * @param LitUser $user
-     * @param string    $operation
-     *
+     * @param  User   $user
+     * @param  string $operation
      * @return bool
      */
-    public function authorize(LitUser $user, string $operation): bool
+    public function authorize(User $user, string $operation): bool
     {
         return $user->can("{$operation} pages");
     }

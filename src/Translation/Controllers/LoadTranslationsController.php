@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Translation\Controllers;
+namespace Ignite\Translation\Controllers;
 
-use Lit\Translation\i18nGenerator;
+use Ignite\Translation\i18nGenerator;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;

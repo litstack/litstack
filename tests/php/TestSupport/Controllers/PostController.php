@@ -2,8 +2,8 @@
 
 namespace Tests\TestSupport\Controllers;
 
-use Lit\Crud\Controllers\CrudController;
-use Lit\User\Models\LitUser;
+use Ignite\Crud\Controllers\CrudController;
+use Ignite\User\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
 class PostController extends CrudController
@@ -19,12 +19,12 @@ class PostController extends CrudController
      * Authorize request for permission operation and authenticated lit-user.
      * Operations: create, read, update, delete.
      *
-     * @param LitUser $user
+     * @param User $user
      * @param string    $operation
      *
      * @return bool
      */
-    public function authorize(LitUser $user, string $operation): bool
+    public function authorize(User $user, string $operation): bool
     {
         return true;
     }

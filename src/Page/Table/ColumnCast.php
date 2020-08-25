@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Page\Table;
+namespace Ignite\Page\Table;
 
 abstract class ColumnCast
 {

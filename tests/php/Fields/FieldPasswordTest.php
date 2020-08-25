@@ -2,9 +2,9 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\BaseField;
-use Lit\Crud\Fields\Password;
-use Lit\Crud\Fields\Traits\FieldHasRules;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\Fields\Password;
+use Ignite\Crud\Fields\Traits\FieldHasRules;
 use Tests\BackendTestCase;
 use Tests\Traits\InteractsWithFields;
 use Illuminate\Support\Facades\Hash;

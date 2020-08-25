@@ -2,7 +2,7 @@
 
 namespace Tests\Support;
 
-use Lit\Support\IndexTable;
+use Ignite\Support\IndexTable;
 use Tests\BackendTestCase;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;

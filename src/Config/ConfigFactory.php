@@ -1,13 +1,13 @@
 <?php
 
-namespace Lit\Config;
+namespace Ignite\Config;
 
 class ConfigFactory
 {
     /**
      * ConfigHandler instance.
      *
-     * @var \Lit\Config\ConfigHandler
+     * @var \Ignite\Config\ConfigHandler
      */
     protected $handler;
 

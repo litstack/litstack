@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Foundation\Discover;
+namespace Ignite\Foundation\Discover;
 
 use Exception;
 use Illuminate\Filesystem\Filesystem;
@@ -44,7 +44,7 @@ class PackageDiscoverCommand extends LaravelPackageDiscoverCommand
     /**
      * Execute the console command.
      *
-     * @param \Lit\Foundation\PackageManifest $manifest
+     * @param \Ignite\Foundation\PackageManifest $manifest
      *
      * @return void
      */

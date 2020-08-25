@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Crud\Models;
+namespace Ignite\Crud\Models;
 
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Collection;
-use Lit\Crud\Fields\ListField\ListCollection;
-use Lit\Crud\Fields\ListField\ListField;
+use Ignite\Crud\Fields\ListField\ListCollection;
+use Ignite\Crud\Fields\ListField\ListField;
 
 class ListItem extends LitFormModel
 {

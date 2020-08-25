@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Support;
+namespace Ignite\Support;
 
 trait HasAttributes
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Exceptions\Solutions;
+namespace Ignite\Exceptions\Solutions;
 
 use Facade\IgnitionContracts\RunnableSolution;
 use Illuminate\Support\Facades\Artisan;

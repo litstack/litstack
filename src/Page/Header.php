@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Page;
+namespace Ignite\Page;
 
-use Lit\Page\Actions\ButtonSmAction;
-use Lit\Support\VueProp;
+use Ignite\Page\Actions\ButtonSmAction;
+use Ignite\Support\VueProp;
 
 class Header extends VueProp
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Crud\Actions;
+namespace Ignite\Crud\Actions;
 
-use Lit\Page\Actions\ActionModal;
+use Ignite\Page\Actions\ActionModal;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;

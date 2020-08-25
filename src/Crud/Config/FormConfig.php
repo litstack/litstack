@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Crud\Config;
+namespace Ignite\Crud\Config;
 
 use Illuminate\Support\Str;
-use Lit\Crud\Models\Form;
-use Lit\Support\Facades\Crud;
+use Ignite\Crud\Models\Form;
+use Ignite\Support\Facades\Crud;
 
 class FormConfig
 {

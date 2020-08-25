@@ -2,7 +2,7 @@
 
 namespace Tests\Translation;
 
-use Lit\Translation\Translator;
+use Ignite\Translation\Translator;
 use Tests\BackendTestCase;
 
 class TranslatorTest extends BackendTestCase

@@ -1,17 +1,17 @@
 <?php
 
-namespace Lit\User\Controllers;
+namespace Ignite\User\Controllers;
 
-use Lit\Support\IndexTable;
-use Lit\User\Models\LitUser;
-use Lit\User\Requests\LitUserDeleteRequest;
-use Lit\User\Requests\LitUserReadRequest;
+use Ignite\Support\IndexTable;
+use Ignite\User\Models\User;
+use Ignite\User\Requests\UserDeleteRequest;
+use Ignite\User\Requests\UserReadRequest;
 use Illuminate\Http\Request;
 
-class LitUserController
+class FjordUserController
 {
     /**
-     * Create new LitUserController instance.
+     * Create new UserController instance.
      *
      * @return void
      */
@@ -23,10 +23,10 @@ class LitUserController
     /**
      * Show user index.
      *
-     * @param  LitUserReadRequest $request
+     * @param  UserReadRequest $request
      * @return void
      */
-    public function showIndex(LitUserReadRequest $request)
+    public function showIndex(UserReadRequest $request)
     {
         $config = $this->config->get(
             'sortBy',
@@ -36,7 +36,7 @@ class LitUserController
             'filter'
         );
 
-        return view('lit::app')->withComponent('lit-users')
+        return view('litstack::app')->withComponent('lit-users')
             ->withTitle('Users')
             ->withProps([
                 'config' => $config,
@@ -50,9 +50,9 @@ class LitUserController
      *
      * @return void
      */
-    public function deleteAll(LitUserDeleteRequest $request)
+    public function deleteAll(UserDeleteRequest $request)
     {
-        IndexTable::deleteSelected(LitUser::class, $request);
+        IndexTable::deleteSelected(User::class, $request);
 
         return response([
             'message' => __lit('lit.deleted_all', [
@@ -68,7 +68,7 @@ class LitUserController
      *
      * @return array
      */
-    public function fetchIndex(LitUserReadRequest $request)
+    public function fetchIndex(UserReadRequest $request)
     {
         $query = $this->config->index_query
             ->with('ordered_roles');

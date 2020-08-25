@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Contracts\Page;
+namespace Ignite\Contracts\Page;
 
 interface Column
 {

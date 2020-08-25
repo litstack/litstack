@@ -2,7 +2,7 @@
 
 namespace Lit\Test\Support;
 
-use Lit\Support\Macros\ResponseMacros;
+use Ignite\Support\Macros\ResponseMacros;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Contracts\View\Factory as ViewFactoryContract;

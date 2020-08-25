@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Support\Facades;
+namespace Ignite\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class LitRoute extends Facade
+class Route extends Facade
 {
     /**
      * Get the registered name of the component.

@@ -2,7 +2,7 @@
 
 namespace Tests\Crud;
 
-use Lit\Crud\CrudValidator;
+use Ignite\Crud\CrudValidator;
 use Mockery as m;
 use Tests\BackendTestCase;
 

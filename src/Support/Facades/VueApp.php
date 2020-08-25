@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Support\Facades;
+namespace Ignite\Support\Facades;
 
 class VueApp extends Lit
 {

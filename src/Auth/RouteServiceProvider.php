@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Auth;
+namespace Ignite\Auth;
 
-use Lit\Auth\Controllers\AuthController;
-use Lit\Auth\Controllers\ResetPasswordController;
-use Lit\Support\Facades\LitRoute;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
+use Ignite\Auth\Controllers\AuthController;
+use Ignite\Auth\Controllers\ResetPasswordController;
+use Ignite\Support\Facades\Route;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -36,26 +36,26 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     protected function mapAuthRoutes()
     {
-        LitRoute::public()
+        Route::public()
             ->get('login', AuthController::class.'@login')
             ->name('login');
 
-        LitRoute::public()
+        Route::public()
             ->post('login', AuthController::class.'@authenticate')
             ->name('login.post');
 
-        LitRoute::post('logout', AuthController::class.'@logout')
+        Route::post('logout', AuthController::class.'@logout')
             ->name('logout');
 
-        LitRoute::post('logout/session', AuthController::class.'@logoutSession')
+        Route::post('logout/session', AuthController::class.'@logoutSession')
             ->name('logout.session');
 
-        LitRoute::post('/lit/register', AuthController::class.'@register')
+        Route::post('/lit/register', AuthController::class.'@register')
             ->name('register');
 
-        LitRoute::public()
+        Route::public()
             ->get('/lit/password/reset/{token}', ResetPasswordController::class.'@showResetForm')->name('password.reset');
-        LitRoute::public()
+        Route::public()
             ->post('/lit/password/reset', ResetPasswordController::class.'@reset')->name('password.request');
     }
 }

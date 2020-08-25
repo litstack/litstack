@@ -1,13 +1,13 @@
 <?php
 
-namespace Lit\Crud\Models\Relations;
+namespace Ignite\Crud\Models\Relations;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\ServiceProvider;
-use Lit\Crud\Fields\ListField\ListRelation;
-use Lit\Crud\Models\ListItem;
-use Lit\Crud\Models\Relation;
-use Lit\Crud\Models\Repeatable;
+use Ignite\Crud\Fields\ListField\ListRelation;
+use Ignite\Crud\Models\ListItem;
+use Ignite\Crud\Models\Relation;
+use Ignite\Crud\Models\Repeatable;
 
 class CrudRelations extends ServiceProvider
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Commands;
+namespace Ignite\Commands;
 
 use Illuminate\Console\Command;
 

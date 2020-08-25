@@ -2,9 +2,9 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\BaseField;
-use Lit\Crud\Fields\Select;
-use Lit\Crud\Fields\Traits\FieldHasRules;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\Fields\Select;
+use Ignite\Crud\Fields\Traits\FieldHasRules;
 use Tests\Traits\InteractsWithFields;
 use Tests\Traits\TestHelpers;
 use PHPUnit\Framework\TestCase;

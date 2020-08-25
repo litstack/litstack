@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Application;
+namespace Ignite\Application;
 
-use Lit\Vue\Component;
-use Lit\Vue\Traits\StaticComponentName;
+use Ignite\Vue\Component;
+use Ignite\Vue\Traits\StaticComponentName;
 use Illuminate\Contracts\View\View;
 use LogicException;
 
@@ -46,7 +46,7 @@ class AppComponent extends Component
             return;
         }
 
-        throw new LogicException('Missing required view data [component] for [lit::app]');
+        throw new LogicException('Missing required view data [component] for [litstack::app]');
     }
 
     /**

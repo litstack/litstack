@@ -1,12 +1,12 @@
 <?php
 
-namespace Lit\Crud\Models;
+namespace Ignite\Crud\Models;
 
 use BadMethodCallException;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\ForwardsCalls;
-use Lit\Crud\Fields\Block\Block;
+use Ignite\Crud\Fields\Block\Block;
 
 class Repeatable extends LitFormModel
 {

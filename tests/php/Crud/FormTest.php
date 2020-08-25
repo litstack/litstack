@@ -2,7 +2,7 @@
 
 namespace Tests\Crud;
 
-use Lit\Support\Facades\Form;
+use Ignite\Support\Facades\Form;
 use Tests\BackendTestCase;
 
 class FormTest extends BackendTestCase

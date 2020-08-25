@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Permissions\Requests\Role;
+namespace Ignite\Permissions\Requests\Role;
 
 use Illuminate\Foundation\Http\FormRequest;
 

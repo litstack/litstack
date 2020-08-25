@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Config;
+namespace Ignite\Config;
 
 use BadMethodCallException;
-use Lit\Support\Facades\Config;
+use Ignite\Support\Facades\Config;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;

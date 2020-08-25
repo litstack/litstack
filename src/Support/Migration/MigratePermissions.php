@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Support\Migration;
+namespace Ignite\Support\Migration;
 
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;

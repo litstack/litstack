@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Vue\Components;
+namespace Ignite\Vue\Components;
 
-use Lit\Vue\Component;
+use Ignite\Vue\Component;
 use Illuminate\Contracts\View\View;
 
 class BladeComponent extends Component

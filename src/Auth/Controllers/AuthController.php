@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Auth\Controllers;
+namespace Ignite\Auth\Controllers;
 
-use Lit\Auth\Actions\AuthenticationAction;
-use Lit\Auth\Requests\LitSessionLogoutRequest;
-use Lit\Support\Facades\Lit;
-use Lit\User\Models\LitUser;
+use Ignite\Auth\Actions\AuthenticationAction;
+use Ignite\Auth\Requests\LitSessionLogoutRequest;
+use Ignite\Support\Facades\Lit;
+use Ignite\User\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +35,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Authenticate LitUser.
+     * Authenticate User.
      *
      * @param Request $request
      *
@@ -122,7 +122,7 @@ class AuthController extends Controller
             return redirect($this->defaultUrl);
         }
 
-        return view('lit::auth.login');
+        return view('litstack::auth.login');
     }
 
     /**
@@ -134,7 +134,7 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return view('lit::auth.login');
+        return view('litstack::auth.login');
     }
 
     /**
@@ -158,7 +158,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Create new LitUser.
+     * Create new User.
      *
      * @param Request                  $request
      * @param ForgotPasswordController $sendResetLink
@@ -177,7 +177,7 @@ class AuthController extends Controller
 
         $request->validate($rules);
 
-        $user = LitUser::create([
+        $user = User::create([
             'username'   => $request->username,
             'first_name' => $request->first_name,
             'last_name'  => $request->last_name,

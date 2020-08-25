@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Permissions;
+namespace Ignite\Permissions;
 
-use Lit\Permissions\Composer\PermissionsComposer;
+use Ignite\Permissions\Composer\PermissionsComposer;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 

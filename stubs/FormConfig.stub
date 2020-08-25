@@ -1,10 +1,10 @@
 <?php
 
-namespace LitApp\Config\Form\DummyCollection;
+namespace Lit\Config\Form\DummyCollection;
 
-use Lit\Crud\CrudShow;
-use Lit\Crud\Config\FormConfig;
-use LitApp\Controllers\Form\DummyCollection\DummyController;
+use Ignite\Crud\CrudShow;
+use Ignite\Crud\Config\FormConfig;
+use Lit\Controllers\Form\DummyCollection\DummyController;
 
 class DummyConfigClassName extends FormConfig
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace Lit\Crud\Controllers;
+namespace Ignite\Crud\Controllers;
 
-use Lit\Crud\Fields\Media\MediaField;
-use Lit\Crud\Models\LitFormModel;
-use Lit\Crud\RelationField;
-use Lit\Crud\Requests\CrudCreateRequest;
-use Lit\Crud\Requests\CrudDeleteRequest;
-use Lit\Crud\Requests\CrudReadRequest;
-use Lit\Crud\Requests\CrudUpdateRequest;
+use Ignite\Crud\Fields\Media\MediaField;
+use Ignite\Crud\Models\LitFormModel;
+use Ignite\Crud\RelationField;
+use Ignite\Crud\Requests\CrudCreateRequest;
+use Ignite\Crud\Requests\CrudDeleteRequest;
+use Ignite\Crud\Requests\CrudReadRequest;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
@@ -25,11 +25,11 @@ abstract class CrudController extends CrudBaseController
      * Authorize request for permission operation and authenticated lit-user.
      * Operations: create, read, update, delete.
      *
-     * @param  \Lit\User\Models\LitUser $user
+     * @param  \Ignite\User\Models\User $user
      * @param  string                       $operation
      * @return bool
      */
-    //abstract public function authorize(LitUser $user, string $operation, $id = null);
+    //abstract public function authorize(User $user, string $operation, $id = null);
 
     /**
      * Create new CrudController instance.

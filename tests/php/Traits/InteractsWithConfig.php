@@ -2,8 +2,8 @@
 
 namespace Tests\Traits;
 
-use Lit\Config\ConfigHandler;
-use Lit\Support\Facades\Config;
+use Ignite\Config\ConfigHandler;
+use Ignite\Support\Facades\Config;
 
 trait InteractsWithConfig
 {

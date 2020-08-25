@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use Lit\Vue\Component;
-use Lit\Vue\Vue;
+use Ignite\Vue\Component;
+use Ignite\Vue\Vue;
 use PHPUnit\Framework\TestCase;
 
 class VueTest extends TestCase

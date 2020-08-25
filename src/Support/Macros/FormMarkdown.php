@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Support\Macros;
+namespace Ignite\Support\Macros;
 
-use Lit\Crud\BaseForm;
-use Lit\Support\Facades\LitApp;
+use Ignite\Crud\BaseForm;
+use Ignite\Support\Facades\Lit;
 use ParsedownExtra;
 
 class FormMarkdown
@@ -16,7 +16,7 @@ class FormMarkdown
     public function __construct()
     {
         BaseForm::macro('markdown', function (string $markup) {
-            LitApp::script(lit()->url('js/prism.js'));
+            Lit::script(lit()->url('js/prism.js'));
 
             $parsed = (new ParsedownExtra)->text($markup);
 

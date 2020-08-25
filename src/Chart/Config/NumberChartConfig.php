@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Chart\Config;
+namespace Ignite\Chart\Config;
 
 abstract class NumberChartConfig extends ChartConfig
 {

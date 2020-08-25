@@ -2,7 +2,7 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\Casts\Route;
+use Ignite\Crud\Casts\Route;
 use Tests\BackendTestCase;
 use Mockery as m;
 

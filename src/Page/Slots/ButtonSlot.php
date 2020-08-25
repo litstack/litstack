@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Page\Slots;
+namespace Ignite\Page\Slots;
 
-use Lit\Support\Bootstrap;
-use Lit\Vue\Components\ButtonComponent;
+use Ignite\Support\Bootstrap;
+use Ignite\Vue\Components\ButtonComponent;
 
 class ButtonSlot extends BaseSlot
 {

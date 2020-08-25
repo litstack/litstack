@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Page;
+namespace Ignite\Page;
 
-use Lit\Page\Actions\ButtonAction;
-use Lit\Page\Actions\ButtonSmAction;
-use Lit\Page\Actions\DropdownItemAction;
-use Lit\Support\VueProp;
+use Ignite\Page\Actions\ButtonAction;
+use Ignite\Page\Actions\ButtonSmAction;
+use Ignite\Page\Actions\DropdownItemAction;
+use Ignite\Support\VueProp;
 
 class Navigation extends VueProp
 {

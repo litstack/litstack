@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Crud\Config\Traits;
+namespace Ignite\Crud\Config\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 

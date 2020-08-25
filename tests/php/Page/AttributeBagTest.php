@@ -2,7 +2,7 @@
 
 namespace Lit\Test\Page;
 
-use Lit\Page\Actions\AttributeBag;
+use Ignite\Page\Actions\AttributeBag;
 use PHPUnit\Framework\TestCase;
 
 class AttributeBagTest extends TestCase

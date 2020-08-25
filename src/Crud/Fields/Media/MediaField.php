@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Crud\Fields\Media;
+namespace Ignite\Crud\Fields\Media;
 
-use Lit\Crud\RelationField;
+use Ignite\Crud\RelationField;
 
 class MediaField extends RelationField
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Vue;
+namespace Ignite\Vue;
 
 use Illuminate\Http\Request;
 

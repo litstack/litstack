@@ -9,7 +9,7 @@ import axiosMethods from './common/axios';
 
 export default {
 	inheritAttrs: false,
-	name: 'LitApp',
+	name: 'Lit',
 	computed: {
 		...mapGetters(['canSave']),
 	},

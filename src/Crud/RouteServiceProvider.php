@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Crud;
+namespace Ignite\Crud;
 
-use Lit\Crud\Config\CrudConfig;
-use Lit\Crud\Config\FormConfig;
-use Lit\Support\Facades\Config;
-use Lit\Support\Facades\Crud;
+use Ignite\Crud\Config\CrudConfig;
+use Ignite\Crud\Config\FormConfig;
+use Ignite\Support\Facades\Config;
+use Ignite\Support\Facades\Crud;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\File;
@@ -93,7 +93,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 continue;
             }
 
-            $namespace = str_replace('/', '\\', 'LitApp'.explode('lit/app', str_replace('.php', '', $file))[1]);
+            $namespace = str_replace('/', '\\', 'Lit'.explode('lit/app', str_replace('.php', '', $file))[1]);
             $reflection = new ReflectionClass($namespace);
 
             if (! $reflection->getParentClass()) {

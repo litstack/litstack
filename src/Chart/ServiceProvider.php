@@ -1,15 +1,15 @@
 <?php
 
-namespace Lit\Chart;
+namespace Ignite\Chart;
 
 use Carbon\CarbonInterface;
-use Lit\Chart\Engine\ApexAreaEngine;
-use Lit\Chart\Engine\ApexBarEngine;
-use Lit\Chart\Engine\ApexDonutEngine;
-use Lit\Chart\Engine\ApexEngine;
-use Lit\Chart\Engine\ApexProgressEngine;
-use Lit\Chart\Engine\ChartEngineResolver;
-use Lit\Chart\Engine\NumberEngine;
+use Ignite\Chart\Engine\ApexAreaEngine;
+use Ignite\Chart\Engine\ApexBarEngine;
+use Ignite\Chart\Engine\ApexDonutEngine;
+use Ignite\Chart\Engine\ApexEngine;
+use Ignite\Chart\Engine\ApexProgressEngine;
+use Ignite\Chart\Engine\ChartEngineResolver;
+use Ignite\Chart\Engine\NumberEngine;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 

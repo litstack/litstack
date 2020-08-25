@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Config;
+namespace Ignite\Config;
 
 use Illuminate\Support\ServiceProvider;
 

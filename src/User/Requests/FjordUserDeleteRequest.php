@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\User\Requests;
+namespace Ignite\User\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LitUserDeleteRequest extends FormRequest
+class UserDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

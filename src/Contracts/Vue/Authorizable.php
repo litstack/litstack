@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Contracts\Vue;
+namespace Ignite\Contracts\Vue;
 
 use Closure;
 

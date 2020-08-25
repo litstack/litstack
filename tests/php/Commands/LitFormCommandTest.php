@@ -15,7 +15,7 @@ class LitFormCommandTest extends BackendTestCase
         $this->assertFileExists(base_path('lit/app/Config/Form/Test/HomeConfig.php'));
         $this->assertInstanceOf(
             \Lit\Crud\Config\FormConfig::class,
-            new \LitApp\Config\Form\Pages\HomeConfig()
+            new \Lit\Config\Form\Pages\HomeConfig()
         );
     }
 
@@ -28,7 +28,7 @@ class LitFormCommandTest extends BackendTestCase
         $this->assertFileExists(base_path('lit/app/Config/Form/TestCollection/HomePageConfig.php'));
         $this->assertInstanceOf(
             \Lit\Crud\Config\FormConfig::class,
-            new \LitApp\Config\Form\TestCollection\HomePageConfig()
+            new \Lit\Config\Form\TestCollection\HomePageConfig()
         );
     }
 
@@ -41,7 +41,7 @@ class LitFormCommandTest extends BackendTestCase
         $this->assertFileExists(base_path('lit/app/Config/Form/TestCol/OtherPageConfig.php'));
         $this->assertInstanceOf(
             \Lit\Crud\Config\FormConfig::class,
-            new \LitApp\Config\Form\TestCol\OtherPageConfig()
+            new \Lit\Config\Form\TestCol\OtherPageConfig()
         );
     }
 }

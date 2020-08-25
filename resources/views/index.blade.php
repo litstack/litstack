@@ -31,7 +31,7 @@
         lit()->config('navigation')->topbar;
         lit()->config('navigation')->main;
     @endphp
-    <div id="lit-app">
+    <div id="litstack">
 
             @include('litstack::partials.topbar.topbar')
             @include('litstack::partials.navigation')

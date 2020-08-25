@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Page\Concerns;
+namespace Ignite\Page\Concerns;
 
 use Closure;
 

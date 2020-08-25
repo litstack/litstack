@@ -1,16 +1,16 @@
 <?php
 
-namespace Lit\Chart;
+namespace Ignite\Chart;
 
-use Lit\Chart\Contracts\Engine;
-use Lit\Chart\Loader\AreaLoader;
-use Lit\Chart\Loader\BarLoader;
-use Lit\Chart\Loader\ChartLoader;
-use Lit\Chart\Loader\DonutLoader;
-use Lit\Chart\Loader\NumberLoader;
-use Lit\Chart\Loader\ProgressLoader;
-use Lit\Config\ConfigHandler;
-use Lit\Support\Facades\Config;
+use Ignite\Chart\Contracts\Engine;
+use Ignite\Chart\Loader\AreaLoader;
+use Ignite\Chart\Loader\BarLoader;
+use Ignite\Chart\Loader\ChartLoader;
+use Ignite\Chart\Loader\DonutLoader;
+use Ignite\Chart\Loader\NumberLoader;
+use Ignite\Chart\Loader\ProgressLoader;
+use Ignite\Config\ConfigHandler;
+use Ignite\Support\Facades\Config;
 
 class ChartController
 {

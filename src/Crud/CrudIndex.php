@@ -1,12 +1,12 @@
 <?php
 
-namespace Lit\Crud;
+namespace Ignite\Crud;
 
 use Closure;
-use Lit\Config\ConfigHandler;
-use Lit\Crud\Actions\DestroyAction;
-use Lit\Page\Page;
-use Lit\Page\Table\Table;
+use Ignite\Config\ConfigHandler;
+use Ignite\Crud\Actions\DestroyAction;
+use Ignite\Page\Page;
+use Ignite\Page\Table\Table;
 
 class CrudIndex extends Page
 {
@@ -40,7 +40,7 @@ class CrudIndex extends Page
     /**
      * Resolve action component.
      *
-     * @param  \Lit\Vue\Component $component
+     * @param  \Ignite\Vue\Component $component
      * @return void
      */
     public function resolveAction($component)
@@ -76,7 +76,7 @@ class CrudIndex extends Page
      * Create CrudIndex table.
      *
      * @param  Closure                 $closure
-     * @return \Lit\Page\Table\Table
+     * @return \Ignite\Page\Table\Table
      */
     public function table(Closure $closure)
     {

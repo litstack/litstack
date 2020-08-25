@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Page\Table\Components;
+namespace Ignite\Page\Table\Components;
 
 use ErrorException;
-use Lit\Contracts\Page\Column;
-use Lit\Exceptions\Traceable\InvalidArgumentException;
-use Lit\Vue\Component;
+use Ignite\Contracts\Page\Column;
+use Ignite\Exceptions\Traceable\InvalidArgumentException;
+use Ignite\Vue\Component;
 
 class ColumnComponent extends Component implements Column
 {

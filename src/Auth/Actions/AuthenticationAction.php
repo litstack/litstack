@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Auth\Actions;
+namespace Ignite\Auth\Actions;
 
 use Illuminate\Support\Facades\Auth;
 

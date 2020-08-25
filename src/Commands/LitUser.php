@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Commands;
+namespace Ignite\Commands;
 
-use Lit\Support\Facades\Lit;
-use Lit\User\Models\LitUser as LitUserModel;
 use Illuminate\Console\Command;
+use Ignite\Support\Facades\Lit;
+use Ignite\User\Models\User as UserModel;
 
 class LitUser extends Command
 {
@@ -41,11 +41,11 @@ class LitUser extends Command
         $email = $this->ask('Enter the email');
         $password = $this->secret('Enter the password');
 
-        if (LitUserModel::where('username', $username)->orWhere('email', $email)->exists()) {
+        if (UserModel::where('username', $username)->orWhere('email', $email)->exists()) {
             return;
         }
 
-        $user = new LitUserModel([
+        $user = new UserModel([
             'username'   => $username,
             'email'      => $email,
             'first_name' => $first_name,

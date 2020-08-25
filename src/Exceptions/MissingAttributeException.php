@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Exceptions;
+namespace Ignite\Exceptions;
 
 use LogicException;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Application\Bootstrap;
+namespace Ignite\Application\Bootstrap;
 
-use Lit\Application\Application;
-use Lit\Application\Package\Packages;
+use Ignite\Application\Application;
+use Ignite\Application\Package\Packages;
 use Illuminate\Support\Facades\File;
 
 class DiscoverPackages
@@ -41,7 +41,7 @@ class DiscoverPackages
 
     /**
      * Get all packages that are discovered by the
-     * \Lit\Foundation\Console\PackageDiscoverCommand and compiled to the
+     * \Ignite\Foundation\Console\PackageDiscoverCommand and compiled to the
      * manifest in bootstrap/cache/lit.php.
      *
      * @return array $packages

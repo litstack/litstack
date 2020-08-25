@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Crud\Config;
+namespace Ignite\Crud\Config;
 
-use Lit\Crud\Config\Traits\HasCrudIndex;
-use Lit\Crud\Config\Traits\HasCrudShow;
-use Lit\Support\Facades\Crud;
+use Ignite\Crud\Config\Traits\HasCrudIndex;
+use Ignite\Crud\Config\Traits\HasCrudShow;
+use Ignite\Support\Facades\Crud;
 use Illuminate\Support\Str;
 
 abstract class CrudConfig

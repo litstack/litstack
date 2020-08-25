@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Support\Macros;
+namespace Ignite\Support\Macros;
 
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route as RouteFacade;

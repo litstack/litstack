@@ -1,25 +1,30 @@
 <?php
 
-namespace Lit\User\Models;
+namespace Ignite\User\Models;
 
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Lit\Auth\Models\LitSession;
-use Lit\Auth\Notifications\ResetPasswordNotification;
+use Ignite\Auth\Models\LitSession;
+use Ignite\Auth\Notifications\ResetPasswordNotification;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * Lit\User\Models\LitUser.
+ * Lit\User\Models\User.
  *
  * @property-read bool $is_admin
  */
-class LitUser extends Authenticatable implements CanResetPasswordContract
+class User extends Authenticatable implements CanResetPasswordContract
 {
     use Notifiable, HasRoles, CanResetPassword;
 
+    /**
+     * Database table name.
+     *
+     * @var string
+     */
     public $table = 'lit_users';
 
     /**

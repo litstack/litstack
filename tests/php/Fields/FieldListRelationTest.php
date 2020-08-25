@@ -2,7 +2,7 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\Fields\ListField\ListRelation;
+use Ignite\Crud\Fields\ListField\ListRelation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Mockery as m;

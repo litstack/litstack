@@ -1,16 +1,16 @@
 <?php
 
-namespace LitApp\Config;
+namespace Lit\Config;
 
-use Lit\Application\Navigation\Config;
-use Lit\Application\Navigation\Navigation;
+use Ignite\Application\Navigation\Config;
+use Ignite\Application\Navigation\Navigation;
 
 class NavigationConfig extends Config
 {
     /**
      * Topbar navigation entries.
      *
-     * @param  \Lit\Application\Navigation\Navigation $nav
+     * @param  \Ignite\Application\Navigation\Navigation $nav
      * @return void
      */
     public function topbar(Navigation $nav)
@@ -32,7 +32,7 @@ class NavigationConfig extends Config
     /**
      * Main navigation entries.
      *
-     * @param  \Lit\Application\Navigation\Navigation $nav
+     * @param  \Ignite\Application\Navigation\Navigation $nav
      * @return void
      */
     public function main(Navigation $nav)

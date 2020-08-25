@@ -1,14 +1,14 @@
 <?php
 
-namespace Lit\Support\Facades;
+namespace Ignite\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Lit\Config\ConfigHandler|null get(string $key)
+ * @method static \Ignite\Config\ConfigHandler|null get(string $key)
  * @method static bool exists(string $key):
  *
- * @see \Lit\Config\ConfigLoader
+ * @see \Ignite\Config\ConfigLoader
  */
 class Config extends Facade
 {

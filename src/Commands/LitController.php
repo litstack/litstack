@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Commands;
+namespace Ignite\Commands;
 
 use Illuminate\Support\Str;
 
@@ -20,7 +20,7 @@ class LitController extends GeneratorCommand
      *
      * @var string
      */
-    protected $description = 'This will create a controller to the LitApp namespace.';
+    protected $description = 'This will create a controller to the Lit namespace.';
 
     /**
      * Execute the console command.

@@ -1,14 +1,14 @@
 <?php
 
-namespace Lit\Chart\Loader;
+namespace Ignite\Chart\Loader;
 
 use BadMethodCallException;
 use Carbon\CarbonInterface;
 use Closure;
 use Exception;
-use Lit\Chart\ChartRequest;
-use Lit\Chart\Contracts\Engine;
-use Lit\Config\ConfigHandler;
+use Ignite\Chart\ChartRequest;
+use Ignite\Chart\Contracts\Engine;
+use Ignite\Config\ConfigHandler;
 use Illuminate\Support\Str;
 
 abstract class ChartLoader
@@ -35,8 +35,8 @@ abstract class ChartLoader
     /**
      * Create new DonutLoader instance.
      *
-     * @param \Lit\Config\ConfigHandler   $config
-     * @param \Lit\Chart\Contracts\Engine $engine
+     * @param \Ignite\Config\ConfigHandler   $config
+     * @param \Ignite\Chart\Contracts\Engine $engine
      */
     public function __construct(ConfigHandler $config, Engine $engine)
     {

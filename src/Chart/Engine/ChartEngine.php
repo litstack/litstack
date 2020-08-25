@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Chart\Engine;
+namespace Ignite\Chart\Engine;
 
-use Lit\Chart\Contracts\Engine;
+use Ignite\Chart\Contracts\Engine;
 
 abstract class ChartEngine implements Engine
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Contracts\Crud;
+namespace Ignite\Contracts\Crud;
 
 interface Form
 {

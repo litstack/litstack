@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Chart\Contracts;
+namespace Ignite\Chart\Contracts;
 
-use Lit\Chart\ChartSet;
+use Ignite\Chart\ChartSet;
 
 interface Engine
 {

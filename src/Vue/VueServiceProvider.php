@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Vue;
+namespace Ignite\Vue;
 
 use Illuminate\Support\ServiceProvider;
-use Lit\Contracts\Vue\Vue as VueContract;
+use Ignite\Contracts\Vue\Vue as VueContract;
 
 class VueServiceProvider extends ServiceProvider
 {

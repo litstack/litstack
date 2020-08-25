@@ -14,7 +14,7 @@
 </template>
 <script>
 export default {
-	name: 'PermissionsLitUsersRoles',
+	name: 'PermissionsUsersRoles',
 	props: {
 		item: {
 			required: true,

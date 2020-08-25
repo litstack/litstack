@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Exceptions\Traceable;
+namespace Ignite\Exceptions\Traceable;
 
-use Lit\Contracts\Exceptions\Traceable;
-use Lit\Support\TraceableException;
+use Ignite\Contracts\Exceptions\Traceable;
+use Ignite\Support\TraceableException;
 use InvalidArgumentException as BaseInvalidArgumentException;
 
 class InvalidArgumentException extends BaseInvalidArgumentException implements Traceable

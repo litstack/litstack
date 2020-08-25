@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Application\Package;
+namespace Ignite\Application\Package;
 
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
-use Lit\Application\Application;
+use Ignite\Application\Application;
 
 class Packages
 {
@@ -18,7 +18,7 @@ class Packages
     /**
      * Lit application instance.
      *
-     * @var \Lit\Application\Application
+     * @var \Ignite\Application\Application
      */
     protected $app;
 

@@ -2,8 +2,8 @@
 
 namespace Tests\Page;
 
-use Lit\Page\Table\Components\BladeColumnComponent;
-use Lit\Page\Table\Components\ColumnComponent;
+use Ignite\Page\Table\Components\BladeColumnComponent;
+use Ignite\Page\Table\Components\ColumnComponent;
 use Illuminate\Contracts\View\View;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;

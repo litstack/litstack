@@ -1,14 +1,14 @@
 <?php
 
-namespace Lit\Crud\Models;
+namespace Ignite\Crud\Models;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
-use Lit\Crud\Fields\Media\MediaField;
-use Lit\Crud\Fields\Relations\ManyRelationField;
-use Lit\Crud\RelationField;
-use Lit\Support\Facades\Config;
+use Ignite\Crud\Fields\Media\MediaField;
+use Ignite\Crud\Fields\Relations\ManyRelationField;
+use Ignite\Crud\RelationField;
+use Ignite\Support\Facades\Config;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 

@@ -1,23 +1,23 @@
 <?php
 
-namespace Lit\Crud\Config\Factories;
+namespace Ignite\Crud\Config\Factories;
 
 use Closure;
-use Lit\Config\ConfigFactory;
-use Lit\Config\ConfigHandler;
-use Lit\Crud\Actions\DestroyAction;
-use Lit\Crud\BaseForm;
-use Lit\Crud\Config\CrudConfig;
-use Lit\Crud\CrudShow;
+use Ignite\Config\ConfigFactory;
+use Ignite\Config\ConfigHandler;
+use Ignite\Crud\Actions\DestroyAction;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Config\CrudConfig;
+use Ignite\Crud\CrudShow;
 
 class CrudFormConfigFactory extends ConfigFactory
 {
     /**
      * Setup create and edit form.
      *
-     * @param  \Lit\Config\ConfigHandler $config
+     * @param  \Ignite\Config\ConfigHandler $config
      * @param  Closure                     $method
-     * @return \Lit\Crud\CrudForm
+     * @return \Ignite\Crud\CrudForm
      */
     public function show(ConfigHandler $config, Closure $method)
     {

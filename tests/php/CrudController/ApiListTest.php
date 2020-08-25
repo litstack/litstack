@@ -2,7 +2,7 @@
 
 namespace Tests\CrudController;
 
-use Lit\Crud\Models\ListItem;
+use Ignite\Crud\Models\ListItem;
 use Tests\BackendTestCase;
 use Tests\TestSupport\Models\Post;
 use Tests\Traits\InteractsWithCrud;
@@ -237,7 +237,7 @@ class ApiListTest extends BackendTestCase
     public function createListItem($parent_id = 0)
     {
         return ListItem::create([
-            'config_type'  => \LitApp\Config\Crud\PostConfig::class,
+            'config_type'  => \Lit\Config\Crud\PostConfig::class,
             'model_type'   => get_class($this->post),
             'model_id'     => $this->post->id,
             'field_id'     => 'test_list',

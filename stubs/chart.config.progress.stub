@@ -2,9 +2,9 @@
 
 namespace DummyNamespace;
 
-use Lit\Chart\Chart;
+use Ignite\Chart\Chart;
 use Illuminate\Support\Collection; 
-use Lit\Chart\Config\ProgressChartConfig;
+use Ignite\Chart\Config\ProgressChartConfig;
 
 class DummyClass extends ProgressChartConfig
 {

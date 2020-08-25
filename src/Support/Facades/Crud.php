@@ -1,13 +1,13 @@
 <?php
 
-namespace Lit\Support\Facades;
+namespace Ignite\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static array names(string $model)
  *
- * @see \Lit\Crud\Crud
+ * @see \Ignite\Crud\Crud
  */
 class Crud extends Facade
 {

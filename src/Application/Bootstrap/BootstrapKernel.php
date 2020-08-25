@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Application\Bootstrap;
+namespace Ignite\Application\Bootstrap;
 
-use Lit\Application\Application;
-use LitApp\Kernel;
+use Ignite\Application\Application;
+use Lit\Kernel;
 use Illuminate\Console\Application as Artisan;
 use Illuminate\Support\Facades\App;
 
@@ -12,7 +12,7 @@ class BootstrapKernel
     /**
      * Registers artisan commands of all lit packages.
      *
-     * @param  \Lit\Application\Application $app
+     * @param  \Ignite\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app, Kernel $kernel)

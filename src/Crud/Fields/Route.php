@@ -1,12 +1,12 @@
 <?php
 
-namespace Lit\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
 use Closure;
-use Lit\Crud\BaseField;
-use Lit\Crud\Casts\Route as RouteCast;
-use Lit\Crud\Fields\Route\RouteCollection;
-use Lit\Crud\Fields\Traits\FieldHasRules;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\Casts\Route as RouteCast;
+use Ignite\Crud\Fields\Route\RouteCollection;
+use Ignite\Crud\Fields\Traits\FieldHasRules;
 
 class Route extends BaseField
 {

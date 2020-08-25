@@ -2,7 +2,7 @@
 
 namespace Tests\Fields;
 
-use Lit\Translation\i18nGenerator;
+use Ignite\Translation\i18nGenerator;
 use Tests\Traits\TestHelpers;
 use PHPUnit\Framework\TestCase;
 

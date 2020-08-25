@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Crud\Fields\Block;
+namespace Ignite\Crud\Fields\Block;
 
 use Closure;
-use Lit\Crud\Fields\Traits\HasBaseField;
-use Lit\Crud\Models\LitFormModel;
-use Lit\Crud\RelationField;
+use Ignite\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Models\LitFormModel;
+use Ignite\Crud\RelationField;
 use Illuminate\Support\Collection;
 
 class Block extends RelationField

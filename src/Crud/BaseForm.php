@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Crud;
+namespace Ignite\Crud;
 
 use Closure;
 use Illuminate\Contracts\Support\Arrayable;
@@ -8,23 +8,23 @@ use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use InvalidArgumentException;
-use Lit\Contracts\Crud\Form;
-use Lit\Crud\Fields\Block\Block;
-use Lit\Crud\Fields\Component;
-use Lit\Crud\Fields\Relations\BelongsTo;
-use Lit\Crud\Fields\Relations\BelongsToMany;
-use Lit\Crud\Fields\Relations\HasMany;
-use Lit\Crud\Fields\Relations\HasOne;
-use Lit\Crud\Fields\Relations\MorphMany;
-use Lit\Crud\Fields\Relations\MorphOne;
-use Lit\Crud\Fields\Relations\MorphToMany;
-use Lit\Crud\Fields\Relations\MorphToRegistrar;
-use Lit\Curd\Models\Form as FormModel;
-use Lit\Exceptions\Traceable\BadMethodCallException;
-use Lit\Page\BasePage;
-use Lit\Support\Facades\Form as FormFacade;
-use Lit\Support\Facades\Lit;
-use Lit\Vue\Traits\RenderableAsProp;
+use Ignite\Contracts\Crud\Form;
+use Ignite\Crud\Fields\Block\Block;
+use Ignite\Crud\Fields\Component;
+use Ignite\Crud\Fields\Relations\BelongsTo;
+use Ignite\Crud\Fields\Relations\BelongsToMany;
+use Ignite\Crud\Fields\Relations\HasMany;
+use Ignite\Crud\Fields\Relations\HasOne;
+use Ignite\Crud\Fields\Relations\MorphMany;
+use Ignite\Crud\Fields\Relations\MorphOne;
+use Ignite\Crud\Fields\Relations\MorphToMany;
+use Ignite\Crud\Fields\Relations\MorphToRegistrar;
+use Ignite\Curd\Models\Form as FormModel;
+use Ignite\Exceptions\Traceable\BadMethodCallException;
+use Ignite\Page\BasePage;
+use Ignite\Support\Facades\Form as FormFacade;
+use Ignite\Support\Facades\Lit;
+use Ignite\Vue\Traits\RenderableAsProp;
 
 class BaseForm extends BasePage implements Form, Arrayable, Jsonable
 {
@@ -118,7 +118,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
      * Add Vue component field.
      *
      * @param  string|Component   $component
-     * @return \Lit\Vue\Component
+     * @return \Ignite\Vue\Component
      */
     public function component($component)
     {
@@ -399,7 +399,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
      * @param  array  $parameters
      * @return void
      *
-     * @throws \Lit\Exceptions\Traceable\BadMethodCallException
+     * @throws \Ignite\Exceptions\Traceable\BadMethodCallException
      */
     public function __call($method, $parameters)
     {

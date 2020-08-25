@@ -2,8 +2,8 @@
 
 namespace Tests\Page;
 
-use Lit\Exceptions\MissingAttributeException;
-use Lit\Page\Table\Column;
+use Ignite\Exceptions\MissingAttributeException;
+use Ignite\Page\Table\Column;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 

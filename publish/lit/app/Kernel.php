@@ -1,18 +1,11 @@
 <?php
 
-namespace LitApp;
+namespace Lit;
 
-use Lit\Application\Kernel as LitKernel;
+use Ignite\Application\Kernel as LitstackKernel;
 
-class Kernel extends LitKernel
+class Kernel extends LitstackKernel
 {
-    /**
-     * The Lit extension provided by your application.
-     *
-     * @var array
-     */
-    public $extensions = [];
-
     /**
      * Lit application service providers.
      *

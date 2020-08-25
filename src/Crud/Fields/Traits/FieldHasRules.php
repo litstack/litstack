@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Crud\Fields\Traits;
+namespace Ignite\Crud\Fields\Traits;
 
-use Lit\Crud\CrudValidator;
+use Ignite\Crud\CrudValidator;
 
 trait FieldHasRules
 {

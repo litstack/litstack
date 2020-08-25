@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Crud;
+namespace Ignite\Crud;
 
 use Illuminate\Support\Collection;
-use Lit\Crud\Models\Form as FormModel;
+use Ignite\Crud\Models\Form as FormModel;
 
 class Form
 {

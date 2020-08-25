@@ -2,10 +2,10 @@
 
 namespace Tests;
 
+use Ignite\Foundation\Discover\PackageDiscoverCommand;
+use Ignite\Support\Facades\Lit;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
-use Lit\Foundation\Discover\PackageDiscoverCommand;
-use Lit\Support\Facades\Lit;
 use Tests\Traits\ActingAsLitUserMock;
 use Tests\Traits\CreateLitUsers;
 use Tests\Traits\InteractsWithConfig;
@@ -24,7 +24,7 @@ trait LitTestCase
         \Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         \Spatie\Permission\PermissionServiceProvider::class,
         \Astrotomic\Translatable\TranslatableServiceProvider::class,
-        \Lit\LitServiceProvider::class,
+        \Ignite\LitServiceProvider::class,
     ];
 
     /**
@@ -42,7 +42,7 @@ trait LitTestCase
             $this->fixMigrations();
         }
         if (isset($uses[CreateLitUsers::class])) {
-            $this->createLitUsers();
+            $this->CreateLitUsers();
         }
         if (isset($uses[InteractsWithConfig::class])) {
             $this->overrideConfigLoaderSingleton();
@@ -51,7 +51,7 @@ trait LitTestCase
             $this->setUpCrud();
         }
         if (isset($uses[ActingAsLitUserMock::class])) {
-            $this->actingAsLitUserMock();
+            $this->ActingAsLitUserMock();
         }
     }
 
@@ -90,6 +90,7 @@ trait LitTestCase
      */
     protected function migrate()
     {
+        $this->withoutMockingConsoleOutput();
         $this->artisan('migrate');
         $this->loadMigrationsFrom(__DIR__.'/TestSupport/migrations');
     }
@@ -112,8 +113,7 @@ trait LitTestCase
     /**
      * Get package provider.
      *
-     * @param Application $app
-     *
+     * @param  Application $app
      * @return array
      */
     protected function getPackageProviders($app)
@@ -124,8 +124,7 @@ trait LitTestCase
     /**
      * Setup app environment.
      *
-     * @param Application $app
-     *
+     * @param  Application $app
      * @return void
      */
     protected function getEnvironmentSetUp($app)

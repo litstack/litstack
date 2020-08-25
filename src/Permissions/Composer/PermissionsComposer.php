@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Permissions\Composer;
+namespace Ignite\Permissions\Composer;
 
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;

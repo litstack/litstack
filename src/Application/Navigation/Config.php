@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Application\Navigation;
+namespace Ignite\Application\Navigation;
 
 abstract class Config
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Crud\Models;
+namespace Ignite\Crud\Models;
 
-use Lit\User\Models\LitUser;
+use Ignite\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -58,7 +58,7 @@ class ModelEdit extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(LitUser::class, 'lit_user_id');
+        return $this->belongsTo(User::class, 'lit_user_id');
     }
 
     /**

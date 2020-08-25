@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Crud\Repositories\Relations;
+namespace Ignite\Crud\Repositories\Relations;
 
-use Lit\Crud\Fields\Relations\HasOne;
-use Lit\Crud\Repositories\BaseFieldRepository;
-use Lit\Crud\Requests\CrudUpdateRequest;
+use Ignite\Crud\Fields\Relations\HasOne;
+use Ignite\Crud\Repositories\BaseFieldRepository;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 
 class HasOneRepository extends BaseFieldRepository
 {

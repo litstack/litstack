@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\User\Controllers;
+namespace Ignite\User\Controllers;
 
-use Lit\Support\IndexTable;
+use Ignite\Support\IndexTable;
 use Illuminate\Http\Request;
 
 class ProfileController

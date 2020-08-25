@@ -1,13 +1,13 @@
 <?php
 
-namespace Lit\Page\Actions;
+namespace Ignite\Page\Actions;
 
 use Closure;
-use Lit\Crud\BaseForm;
-use Lit\Crud\Field;
-use Lit\Support\Bootstrap;
-use Lit\Vue\Component;
-use Lit\Vue\Traits\StaticComponentName;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Field;
+use Ignite\Support\Bootstrap;
+use Ignite\Vue\Component;
+use Ignite\Vue\Traits\StaticComponentName;
 use InvalidArgumentException;
 
 class ActionModal extends Component

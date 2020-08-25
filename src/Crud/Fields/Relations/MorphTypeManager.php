@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Crud\Fields\Relations;
+namespace Ignite\Crud\Fields\Relations;
 
-use Lit\Crud\BaseForm;
-use Lit\Crud\Field;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Field;
 
 class MorphTypeManager
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Chart\Loader\Concerns;
+namespace Ignite\Chart\Loader\Concerns;
 
 trait HasOneIteration
 {

@@ -100,13 +100,13 @@
 						variant="primary"
 						size="sm"
 						class="float-right"
-						@click="storeLitUser"
+						@click="storeUser"
 						:disabled="
 							!passwordState ||
-							!emailState ||
-							!usernameState ||
-							!lastnameState ||
-							!firstnameState
+								!emailState ||
+								!usernameState ||
+								!lastnameState ||
+								!firstnameState
 						"
 					>
 						<fa-icon icon="user" />
@@ -146,7 +146,7 @@ export default {
 		};
 	},
 	methods: {
-		async storeLitUser() {
+		async storeUser() {
 			this.busy = true;
 			let response = null;
 			try {

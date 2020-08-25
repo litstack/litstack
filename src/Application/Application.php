@@ -1,20 +1,20 @@
 <?php
 
-namespace Lit\Application;
+namespace Ignite\Application;
 
-use Lit\Translation\Translator;
+use Ignite\Translation\Translator;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\Facades\View as ViewFactory;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 /**
- * The Application class manages all depencies for the view lit::app:
+ * The Application class manages all depencies for the view litstack::app:
  * Bootstrapping Application,
  * Registering and booting packages,
  * Registering and calling config handlers,
  * Binding css files for lit,
- * Bind composer to the lit::app view.
+ * Bind composer to the litstack::app view.
  */
 class Application
 {
@@ -83,14 +83,14 @@ class Application
     }
 
     /**
-     * Bind composer to lit::app view.
+     * Bind composer to litstack::app view.
      *
      * @param  string                   $composer
      * @return \Illuminate\View\Factory
      */
     public function composer(string $composer)
     {
-        return ViewFactory::composer('lit::app', $composer);
+        return ViewFactory::composer('litstack::app', $composer);
     }
 
     /**

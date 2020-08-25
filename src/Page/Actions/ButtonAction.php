@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Page\Actions;
+namespace Ignite\Page\Actions;
 
-use Lit\Support\Bootstrap;
-use Lit\Vue\Components\ButtonComponent;
+use Ignite\Support\Bootstrap;
+use Ignite\Vue\Components\ButtonComponent;
 
 class ButtonAction extends BaseAction
 {

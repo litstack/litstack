@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Translation\Controllers;
+namespace Ignite\Translation\Controllers;
 
 use Illuminate\Http\Request;
 

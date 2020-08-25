@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Crud\Casts;
+namespace Ignite\Crud\Casts;
 
-use Lit\Crud\Fields\Route\RouteCollection;
+use Ignite\Crud\Fields\Route\RouteCollection;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use InvalidArgumentException;
 

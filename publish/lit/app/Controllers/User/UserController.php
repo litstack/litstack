@@ -1,10 +1,9 @@
 <?php
 
-namespace LitApp\Controllers\User;
+namespace Lit\Controllers\User;
 
-use Lit\Crud\Controllers\CrudController;
-use Lit\Crud\Requests\CrudDeleteRequest;
-use Lit\User\Models\LitUser;
+use Ignite\Crud\Controllers\CrudController;
+use Ignite\User\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
 class UserController extends CrudController
@@ -14,47 +13,18 @@ class UserController extends CrudController
      *
      * @var string
      */
-    protected $model = LitUser::class;
+    protected $model = User::class;
 
     /**
-     * Delete all.
-     *
-     * @param CrudDeleteRequest $request
-     *
-     * @return void
-     */
-    public function destroyAll(CrudDeleteRequest $request)
-    {
-        if (! is_array($request->ids)) {
-            abort(404);
-        }
-
-        $ids = $request->ids;
-
-        if (in_array(lit_user()->id, $ids)) {
-            return response()->json([
-                'message' => 'You cannot delete yourself.',
-            ], 405);
-        }
-
-        $this->delete($this->query()->whereIn('id', $ids));
-
-        return response()->json([
-            'message' => __lit_choice('messages.deleted_items', count($request->ids)),
-        ], 200);
-    }
-
-    /**
-     * Authorize request for permission operation and authenticated lit-user.
+     * Authorize request for permission operation and authenticated litstack-user.
      * Operations: create, read, update, delete.
      *
-     * @param LitUser $user
-     * @param string    $operation
-     * @param string    $id
-     *
+     * @param  User   $user
+     * @param  string $operation
+     * @param  string $id
      * @return bool
      */
-    public function authorize(LitUser $user, string $operation, $id = null): bool
+    public function authorize(User $user, string $operation, $id = null): bool
     {
         if ($operation == 'update') {
             return $user->id == $id;

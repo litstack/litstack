@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Crud\Requests\Traits;
+namespace Ignite\Crud\Requests\Traits;
 
 use Illuminate\Http\Request;
 use ReflectionClass;

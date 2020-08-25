@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Crud\Fields\Relations;
+namespace Ignite\Crud\Fields\Relations;
 
 class OneRelationField extends LaravelRelationField
 {

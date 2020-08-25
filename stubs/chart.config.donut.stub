@@ -2,8 +2,8 @@
 
 namespace DummyNamespace;
 
-use Lit\Chart\Chart;
-use Lit\Chart\Config\DonutChartConfig;
+use Ignite\Chart\Chart;
+use Ignite\Chart\Config\DonutChartConfig;
 
 class DummyClass extends DonutChartConfig
 {

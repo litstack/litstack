@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Crud\Fields\Traits;
+namespace Ignite\Crud\Fields\Traits;
 
-use Lit\Crud\Models\LitFormModel;
-use Lit\Support\Facades\Lit;
+use Ignite\Crud\Models\LitFormModel;
+use Ignite\Support\Facades\Lit;
 
 trait TranslatableField
 {

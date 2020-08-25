@@ -1,10 +1,10 @@
 <?php
 
-namespace LitApp\Config\Form\Dashboards;
+namespace Lit\Config\Form\Dashboards;
 
-use Lit\Crud\Config\FormConfig;
-use Lit\Crud\CrudShow;
-use LitApp\Controllers\Form\Dashboards\WelcomeController;
+use Ignite\Crud\Config\FormConfig;
+use Ignite\Crud\CrudShow;
+use Lit\Controllers\Form\Dashboards\WelcomeController;
 
 class WelcomeConfig extends FormConfig
 {
@@ -28,7 +28,7 @@ class WelcomeConfig extends FormConfig
     /**
      * Setup create and edit form.
      *
-     * @param  \Lit\Crud\CrudShow $page
+     * @param  \Ignite\Crud\CrudShow $page
      * @return void
      */
     public function show(CrudShow $page)

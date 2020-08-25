@@ -1,10 +1,10 @@
 <?php
 
-namespace LitApp\Config\Crud;
+namespace Lit\Config\Crud;
 
-use Lit\Crud\Config\CrudConfig;
-use Lit\Crud\CrudShow;
-use Lit\Vue\Crud\CrudTable;
+use Ignite\Crud\Config\CrudConfig;
+use Ignite\Crud\CrudShow;
+use Ignite\Vue\Crud\CrudTable;
 
 class PostConfig extends CrudConfig
 {

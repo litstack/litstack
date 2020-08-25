@@ -2,8 +2,8 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\BaseForm;
-use Lit\Crud\Fields\Relations\MorphToRegistrar;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Fields\Relations\MorphToRegistrar;
 use Tests\BackendTestCase;
 use Tests\Traits\InteractsWithFields;
 use Illuminate\Database\Eloquent\Model;

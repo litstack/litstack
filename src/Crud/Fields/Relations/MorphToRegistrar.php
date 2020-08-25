@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Crud\Fields\Relations;
+namespace Ignite\Crud\Fields\Relations;
 
 use Closure;
-use Lit\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Fields\Traits\HasBaseField;
 use InvalidArgumentException;
 
 class MorphToRegistrar extends LaravelRelationField

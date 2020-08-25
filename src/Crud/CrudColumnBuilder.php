@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Crud;
+namespace Ignite\Crud;
 
-use Lit\Config\ConfigHandler;
-use Lit\Contracts\Page\Column;
-use Lit\Page\Table\ColumnBuilder;
+use Ignite\Config\ConfigHandler;
+use Ignite\Contracts\Page\Column;
+use Ignite\Page\Table\ColumnBuilder;
 
 class CrudColumnBuilder extends ColumnBuilder
 {
@@ -29,7 +29,7 @@ class CrudColumnBuilder extends ColumnBuilder
      * Add table column to cols stack.
      *
      * @param  string                       $label
-     * @return \Lit\Contracts\Page\Column
+     * @return \Ignite\Contracts\Page\Column
      */
     public function col($label = ''): Column
     {

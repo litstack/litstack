@@ -1,12 +1,12 @@
 <?php
 
-namespace Lit\Crud\Repositories;
+namespace Ignite\Crud\Repositories;
 
-use Lit\Crud\CrudValidator;
-use Lit\Crud\Models\LitFormModel;
-use Lit\Crud\Requests\CrudCreateRequest;
-use Lit\Crud\Requests\CrudReadRequest;
-use Lit\Crud\Requests\CrudUpdateRequest;
+use Ignite\Crud\CrudValidator;
+use Ignite\Crud\Models\LitFormModel;
+use Ignite\Crud\Requests\CrudCreateRequest;
+use Ignite\Crud\Requests\CrudReadRequest;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 
 class DefaultRepository extends BaseFieldRepository
 {

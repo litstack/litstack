@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Chart\Loader;
+namespace Ignite\Chart\Loader;
 
 use Carbon\CarbonInterface;
 use Closure;
-use Lit\Chart\ChartSet;
+use Ignite\Chart\ChartSet;
 
 class ProgressLoader extends ChartLoader
 {

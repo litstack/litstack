@@ -2,8 +2,8 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\BaseField;
-use Lit\Crud\Fields\Icon;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\Fields\Icon;
 use Tests\Traits\InteractsWithFields;
 use PHPUnit\Framework\TestCase;
 

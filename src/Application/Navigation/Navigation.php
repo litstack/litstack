@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Application\Navigation;
+namespace Ignite\Application\Navigation;
 
-use Lit\Support\Facades\Package;
+use Ignite\Support\Facades\Package;
 use Illuminate\Contracts\Support\Arrayable;
 
 class Navigation implements Arrayable

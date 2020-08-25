@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Support\Macros;
+namespace Ignite\Support\Macros;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;

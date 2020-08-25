@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Commands;
+namespace Ignite\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
@@ -44,7 +44,7 @@ class LitGuard extends Command
                 "'providers' => [
         'lit_users' => [
             'driver' => 'eloquent',
-            'model' => Lit\User\Models\LitUser::class,
+            'model' => Lit\User\Models\User::class,
         ],",
                 $replace
             );

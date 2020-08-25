@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Crud;
+namespace Ignite\Crud;
 
-use Lit\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Fields\Traits\HasBaseField;
 
 class BaseField extends Field
 {

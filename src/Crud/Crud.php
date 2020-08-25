@@ -1,22 +1,22 @@
 <?php
 
-namespace Lit\Crud;
+namespace Ignite\Crud;
 
 use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
-use Lit\Crud\Requests\CrudCreateRequest;
-use Lit\Crud\Requests\CrudDeleteRequest;
-use Lit\Crud\Requests\CrudReadRequest;
-use Lit\Crud\Requests\CrudUpdateRequest;
-use Lit\Support\Facades\Lit;
-use Lit\Support\Facades\Package;
-use Lit\User\Models\LitUser;
+use Ignite\Crud\Requests\CrudCreateRequest;
+use Ignite\Crud\Requests\CrudDeleteRequest;
+use Ignite\Crud\Requests\CrudReadRequest;
+use Ignite\Crud\Requests\CrudUpdateRequest;
+use Ignite\Support\Facades\Lit;
+use Ignite\Support\Facades\Package;
+use Ignite\User\Models\User;
 
 /**
  * Crud singleton.
  *
- * @see \Lit\Support\Facades\Crud
+ * @see \Ignite\Support\Facades\Crud
  */
 class Crud
 {
@@ -87,7 +87,7 @@ class Crud
                 Package::get('litstack/litstack')->addNavPreset($config->getKey(), [
                     'link'      => Lit::url($config->routePrefix),
                     'title'     => fn ()     => ucfirst($config->names['plural']),
-                    'authorize' => function (LitUser $user) use ($config) {
+                    'authorize' => function (User $user) use ($config) {
                         return (new $config->controller())->authorize($user, 'read');
                     },
                 ]);
@@ -120,7 +120,7 @@ class Crud
                 Package::get('litstack/litstack')->addNavPreset("form.{$collection}.{$form}", [
                     'link'      => Lit::url($config->route_prefix),
                     'title'     => fn ()     => ucfirst($config->names['singular']),
-                    'authorize' => function (LitUser $user) use ($config) {
+                    'authorize' => function (User $user) use ($config) {
                         return (new $config->controller())->authorize($user, 'read');
                     },
                 ]);

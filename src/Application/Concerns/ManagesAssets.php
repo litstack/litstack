@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Application\Concerns;
+namespace Ignite\Application\Concerns;
 
 trait ManagesAssets
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Commands\Traits;
+namespace Ignite\Commands\Traits;
 
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;

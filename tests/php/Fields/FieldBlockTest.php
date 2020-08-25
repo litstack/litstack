@@ -2,9 +2,9 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\Fields\Block\Block;
-use Lit\Crud\Fields\Block\Repeatables;
-use Lit\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Fields\Block\Block;
+use Ignite\Crud\Fields\Block\Repeatables;
+use Ignite\Crud\Fields\Traits\HasBaseField;
 use Tests\BackendTestCase;
 use Tests\Traits\InteractsWithFields;
 

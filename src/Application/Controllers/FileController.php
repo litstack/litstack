@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Application\Controllers;
+namespace Ignite\Application\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\File;

@@ -1,9 +1,9 @@
 <?php
 
-namespace LitApp\Controllers\Form\Dashboards;
+namespace Lit\Controllers\Form\Dashboards;
 
-use Lit\Crud\Controllers\FormController;
-use Lit\User\Models\LitUser;
+use Ignite\Crud\Controllers\FormController;
+use Ignite\User\Models\User;
 
 class WelcomeController extends FormController
 {
@@ -18,12 +18,11 @@ class WelcomeController extends FormController
      * Authorize request for authenticated litstack-user and permission operation.
      * Operations: read, update.
      *
-     * @param LitUser $user
-     * @param string    $operation
-     *
+     * @param  User   $user
+     * @param  string $operation
      * @return bool
      */
-    public function authorize(LitUser $user, string $operation): bool
+    public function authorize(User $user, string $operation): bool
     {
         return true;
     }

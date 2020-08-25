@@ -1,13 +1,13 @@
 <?php
 
-namespace Lit\Crud\Repositories;
+namespace Ignite\Crud\Repositories;
 
-use Lit\Config\ConfigHandler;
-use Lit\Crud\BaseForm;
-use Lit\Crud\Controllers\CrudBaseController;
-use Lit\Crud\Fields\Media\MediaField;
-use Lit\Crud\Requests\CrudReadRequest;
-use Lit\Crud\Requests\CrudUpdateRequest;
+use Ignite\Config\ConfigHandler;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Controllers\CrudBaseController;
+use Ignite\Crud\Fields\Media\MediaField;
+use Ignite\Crud\Requests\CrudReadRequest;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 
 class MediaRepository extends BaseFieldRepository
 {

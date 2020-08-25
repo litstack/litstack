@@ -1,17 +1,17 @@
 <?php
 
-namespace Lit\Page\Table;
+namespace Ignite\Page\Table;
 
-use Lit\Contracts\Page\Column as ColumnContract;
-use Lit\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
-use Lit\Crud\Fields\Relations\LaravelRelationField;
-use Lit\Page\Table\Casts\MoneyColumn;
-use Lit\Page\Table\Components\BladeColumnComponent;
-use Lit\Page\Table\Components\ColumnComponent;
-use Lit\Page\Table\Components\ImageComponent;
-use Lit\Page\Table\Components\RelationComponent;
-use Lit\Page\Table\Components\ToggleComponent;
-use Lit\Support\VueProp;
+use Ignite\Contracts\Page\Column as ColumnContract;
+use Ignite\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
+use Ignite\Crud\Fields\Relations\LaravelRelationField;
+use Ignite\Page\Table\Casts\MoneyColumn;
+use Ignite\Page\Table\Components\BladeColumnComponent;
+use Ignite\Page\Table\Components\ColumnComponent;
+use Ignite\Page\Table\Components\ImageComponent;
+use Ignite\Page\Table\Components\RelationComponent;
+use Ignite\Page\Table\Components\ToggleComponent;
+use Ignite\Support\VueProp;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\View as ViewFactory;
 

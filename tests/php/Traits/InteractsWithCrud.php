@@ -2,9 +2,9 @@
 
 namespace Tests\Traits;
 
-use Lit\Crud\RouteServiceProvider;
-use Lit\Support\Facades\Config;
-use LitApp\Config\Crud\PostConfig;
+use Ignite\Crud\RouteServiceProvider;
+use Ignite\Support\Facades\Config;
+use Lit\Config\Crud\PostConfig;
 use Illuminate\Support\Facades\File;
 
 trait InteractsWithCrud

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Crud\Fields\Relations\Concerns;
+namespace Ignite\Crud\Fields\Relations\Concerns;
 
 trait ManagesLitRelationField
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Support;
+namespace Ignite\Support;
 
-use Lit\Exceptions\MissingLitEnvironmentException;
+use Ignite\Exceptions\MissingLitEnvironmentException;
 
 trait FacadeNeedsLitInstalled
 {

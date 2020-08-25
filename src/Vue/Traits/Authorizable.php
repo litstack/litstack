@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Vue\Traits;
+namespace Ignite\Vue\Traits;
 
 use Closure;
 

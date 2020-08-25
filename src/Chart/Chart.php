@@ -1,15 +1,15 @@
 <?php
 
-namespace Lit\Chart;
+namespace Ignite\Chart;
 
-use Lit\Chart\Config\AreaChartConfig;
-use Lit\Chart\Config\BarChartConfig;
-use Lit\Chart\Config\DonutChartConfig;
-use Lit\Chart\Config\NumberChartConfig;
-use Lit\Chart\Config\ProgressChartConfig;
-use Lit\Chart\Contracts\Engine;
-use Lit\Config\ConfigHandler;
-use Lit\Support\VueProp;
+use Ignite\Chart\Config\AreaChartConfig;
+use Ignite\Chart\Config\BarChartConfig;
+use Ignite\Chart\Config\DonutChartConfig;
+use Ignite\Chart\Config\NumberChartConfig;
+use Ignite\Chart\Config\ProgressChartConfig;
+use Ignite\Chart\Contracts\Engine;
+use Ignite\Config\ConfigHandler;
+use Ignite\Support\VueProp;
 
 class Chart extends VueProp
 {
@@ -23,7 +23,7 @@ class Chart extends VueProp
     /**
      * Chart engine.
      *
-     * @var \Lit\Chart\Contracts\Engine
+     * @var \Ignite\Chart\Contracts\Engine
      */
     protected $engine;
 
@@ -37,7 +37,7 @@ class Chart extends VueProp
     /**
      * Create new Chart instance.
      *
-     * @param \Lit\Chart\Contracts\Engine $engine
+     * @param \Ignite\Chart\Contracts\Engine $engine
      * @param ConfigHandler                 $config
      */
     public function __construct(Engine $engine, ConfigHandler $config)
@@ -72,7 +72,7 @@ class Chart extends VueProp
     /**
      * Get engine.
      *
-     * @return \Lit\Chart\Contracts\Engine
+     * @return \Ignite\Chart\Contracts\Engine
      */
     public function getEngine()
     {
@@ -184,7 +184,7 @@ class Chart extends VueProp
     /**
      * Chart engine.
      *
-     * @return \Lit\Vue\Component
+     * @return \Ignite\Vue\Component
      */
     public function component()
     {

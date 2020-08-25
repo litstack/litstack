@@ -2,10 +2,10 @@
 
 namespace Tests\Commands;
 
-use Lit\User\Models\LitUser;
+use Ignite\User\Models\User;
+use Illuminate\Support\Facades\File;
 use Tests\BackendTestCase;
 use Tests\Traits\RefreshLaravel;
-use Illuminate\Support\Facades\File;
 
 class LitInstallCommandTest extends BackendTestCase
 {
@@ -44,7 +44,7 @@ class LitInstallCommandTest extends BackendTestCase
     {
         $mediaConfig = require config_path('media-library.php');
 
-        $this->assertEquals(\Lit\Crud\Models\Media::class, $mediaConfig['media_model']);
+        $this->assertEquals(\Ignite\Crud\Models\Media::class, $mediaConfig['media_model']);
     }
 
     /** @test */
@@ -60,7 +60,7 @@ class LitInstallCommandTest extends BackendTestCase
     /** @test */
     public function it_creates_default_admin()
     {
-        $this->assertTrue(LitUser::where([
+        $this->assertTrue(User::where([
             'email' => 'admin@admin.com',
         ])->exists());
     }
@@ -68,7 +68,7 @@ class LitInstallCommandTest extends BackendTestCase
     /** @test */
     public function it_assigns_admin_role_to_default_lit_user()
     {
-        $user = LitUser::where([
+        $user = User::where([
             'email' => 'admin@admin.com',
         ])->first();
 
@@ -84,9 +84,9 @@ class LitInstallCommandTest extends BackendTestCase
     public function it_doesnt_create_default_admin_in_production()
     {
         $this->app['config']->set('app.env', 'production');
-        LitUser::where('id', '!=', -1)->delete();
+        User::where('id', '!=', -1)->delete();
         $this->artisan('lit:install --migrations=false');
-        $this->assertFalse(LitUser::where([
+        $this->assertFalse(User::where([
             'email' => 'admin@admin.com',
         ])->exists());
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Commands;
+namespace Ignite\Commands;
 
-use Lit\User\Models\LitUser;
+use Ignite\User\Models\User;
 use Illuminate\Console\Command;
 use Spatie\Permission\Models\Role;
 
@@ -41,11 +41,11 @@ class LitAdmin extends Command
         $email = $this->ask('Enter the admin email');
         $password = $this->secret('Enter the admin password');
 
-        if (LitUser::where('username', $username)->orWhere('email', $email)->exists()) {
+        if (User::where('username', $username)->orWhere('email', $email)->exists()) {
             return;
         }
 
-        $user = new LitUser([
+        $user = new User([
             'username'   => $username,
             'email'      => $email,
             'first_name' => $first_name,

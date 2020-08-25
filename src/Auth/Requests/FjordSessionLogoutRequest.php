@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Auth\Requests;
+namespace Ignite\Auth\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;

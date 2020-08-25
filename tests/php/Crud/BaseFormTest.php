@@ -2,11 +2,11 @@
 
 namespace Tests\Crud;
 
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Field;
+use Ignite\Exceptions\Traceable\BadMethodCallException;
+use Ignite\Support\Facades\Lit;
 use Illuminate\Database\Eloquent\Model;
-use Lit\Crud\BaseForm;
-use Lit\Crud\Field;
-use Lit\Exceptions\Traceable\BadMethodCallException;
-use Lit\Support\Facades\Lit;
 use Mockery as m;
 use Tests\BackendTestCase;
 

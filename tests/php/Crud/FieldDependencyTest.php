@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use Lit\Crud\Field;
-use Lit\Crud\FieldDependency;
+use Ignite\Crud\Field;
+use Ignite\Crud\FieldDependency;
 use Tests\Traits\TestHelpers;
 use InvalidArgumentException;
 use Mockery as m;

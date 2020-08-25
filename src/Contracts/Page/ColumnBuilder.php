@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Contracts\Page;
+namespace Ignite\Contracts\Page;
 
-use Lit\Page\Table\Components\ImageComponent;
+use Ignite\Page\Table\Components\ImageComponent;
 use Illuminate\Contracts\View\View;
 
 interface ColumnBuilder

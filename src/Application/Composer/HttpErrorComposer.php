@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Application\Composer;
+namespace Ignite\Application\Composer;
 
-use Lit\Application\Kernel\HandleViewComposer;
+use Ignite\Application\Kernel\HandleViewComposer;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -37,7 +37,7 @@ class HttpErrorComposer
         }
 
         // Lit view.
-        $view->setView('lit::app')
+        $view->setView('litstack::app')
             ->withComponent("lit-error-{$error}")
             ->withProps([]);
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Crud\Repositories\Relations;
+namespace Ignite\Crud\Repositories\Relations;
 
-use Lit\Crud\Fields\Relations\MorphOne;
-use Lit\Crud\Repositories\BaseFieldRepository;
-use Lit\Crud\Requests\CrudUpdateRequest;
+use Ignite\Crud\Fields\Relations\MorphOne;
+use Ignite\Crud\Repositories\BaseFieldRepository;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 
 class MorphOneRepository extends BaseFieldRepository
 {

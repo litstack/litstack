@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Crud;
+namespace Ignite\Crud;
 
 abstract class RelationField extends Field
 {

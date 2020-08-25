@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Exceptions\Traceable;
+namespace Ignite\Exceptions\Traceable;
 
 use BadMethodCallException as BaseBadMethodCallException;
-use Lit\Contracts\Exceptions\Traceable;
-use Lit\Support\TraceableException;
+use Ignite\Contracts\Exceptions\Traceable;
+use Ignite\Support\TraceableException;
 
 class BadMethodCallException extends BaseBadMethodCallException implements Traceable
 {

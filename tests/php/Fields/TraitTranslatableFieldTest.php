@@ -3,9 +3,9 @@
 namespace Tests\Fields;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Lit\Crud\Field;
-use Lit\Crud\Fields\Traits\TranslatableField as TranslatableFieldTrait;
-use Lit\Crud\Models\Traits\Translatable;
+use Ignite\Crud\Field;
+use Ignite\Crud\Fields\Traits\TranslatableField as TranslatableFieldTrait;
+use Ignite\Crud\Models\Traits\Translatable;
 use Tests\BackendTestCase;
 use Tests\Traits\InteractsWithFields;
 use Illuminate\Database\Eloquent\Model;

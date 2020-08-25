@@ -1,13 +1,13 @@
 <?php
 
-namespace Lit\Translation;
+namespace Ignite\Translation;
 
 use Illuminate\Support\ServiceProvider;
 
 class TranslationServiceProvider extends ServiceProvider
 {
     /**
-     * Register translator.
+     * Register litstack translator.
      *
      * @return void
      */

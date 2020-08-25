@@ -1,14 +1,14 @@
 <?php
 
-namespace Lit\Crud\Controllers;
+namespace Ignite\Crud\Controllers;
 
 use Illuminate\Database\Eloquent\Builder;
-use Lit\Crud\Models\Form;
-use Lit\Crud\Models\Form as FormModel;
-use Lit\Crud\Requests\CrudCreateRequest;
-use Lit\Crud\Requests\CrudReadRequest;
-use Lit\Crud\Requests\FormReadRequest;
-use Lit\User\Models\LitUser;
+use Ignite\Crud\Models\Form;
+use Ignite\Crud\Models\Form as FormModel;
+use Ignite\Crud\Requests\CrudCreateRequest;
+use Ignite\Crud\Requests\CrudReadRequest;
+use Ignite\Crud\Requests\FormReadRequest;
+use Ignite\User\Models\User;
 
 abstract class FormController extends CrudBaseController
 {
@@ -23,12 +23,12 @@ abstract class FormController extends CrudBaseController
      * Authorize request for permission operation and authenticated lit-user.
      * Operations: read, update.
      *
-     * @param \Lit\User\Models\LitUser $user
+     * @param \Ignite\User\Models\User $user
      * @param string                   $operation
      *
      * @return bool
      */
-    public function authorize(LitUser $user, string $operation): bool
+    public function authorize(User $user, string $operation): bool
     {
         return true;
     }
@@ -118,7 +118,7 @@ abstract class FormController extends CrudBaseController
     /**
      * Deny storing form Form model.
      *
-     * @param \Lit\Crud\Requests\CrudCreateRequest $request
+     * @param \Ignite\Crud\Requests\CrudCreateRequest $request
      *
      * @return mixed
      */

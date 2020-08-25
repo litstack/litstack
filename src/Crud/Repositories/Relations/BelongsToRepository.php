@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Crud\Repositories\Relations;
+namespace Ignite\Crud\Repositories\Relations;
 
-use Lit\Crud\Fields\Relations\BelongsTo;
-use Lit\Crud\Repositories\BaseFieldRepository;
-use Lit\Crud\Requests\CrudUpdateRequest;
+use Ignite\Crud\Fields\Relations\BelongsTo;
+use Ignite\Crud\Repositories\BaseFieldRepository;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 
 class BelongsToRepository extends BaseFieldRepository
 {

@@ -45,7 +45,7 @@
 
     </div>
 
-    <script src="{{ Litstack::route('app2.js') }}" defer></script>
+    <script src="{{ Lit::route('app2.js') }}" defer></script>
 
     <script type="text/javascript">
         function makeVisible(){

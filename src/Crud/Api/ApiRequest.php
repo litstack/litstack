@@ -1,14 +1,14 @@
 <?php
 
-namespace Lit\Crud\Api;
+namespace Ignite\Crud\Api;
 
 use Closure;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
-use Lit\Crud\BaseForm;
-use Lit\Crud\Controllers\CrudBaseController;
-use Lit\Crud\Field;
-use Lit\Crud\Models\Traits\TrackEdits;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Controllers\CrudBaseController;
+use Ignite\Crud\Field;
+use Ignite\Crud\Models\Traits\TrackEdits;
 use TypeError;
 
 class ApiRequest

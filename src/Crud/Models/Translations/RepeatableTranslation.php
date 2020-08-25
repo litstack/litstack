@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Crud\Models\Translations;
+namespace Ignite\Crud\Models\Translations;
 
 use Illuminate\Database\Eloquent\Model;
 

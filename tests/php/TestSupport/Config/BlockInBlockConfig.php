@@ -1,9 +1,9 @@
 <?php
 
-namespace LitApp\Config\Crud;
+namespace Lit\Config\Crud;
 
-use Lit\Crud\Config\CrudConfig;
-use Lit\Crud\CrudShow;
+use Ignite\Crud\Config\CrudConfig;
+use Ignite\Crud\CrudShow;
 
 class BlockInBlockConfig extends CrudConfig
 {

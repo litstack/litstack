@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Support;
+namespace Ignite\Support;
 
-use Lit\Contracts\Vue\Renderable;
-use Lit\Vue\Traits\RenderableAsProp;
+use Ignite\Contracts\Vue\Renderable;
+use Ignite\Vue\Traits\RenderableAsProp;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 

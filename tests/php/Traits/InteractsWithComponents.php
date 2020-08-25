@@ -2,7 +2,7 @@
 
 namespace Tests\Traits;
 
-use Lit\Lit\Lit;
+use Ignite\Lit\Lit;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application;
 use Mockery as m;

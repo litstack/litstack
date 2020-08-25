@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Crud\Repositories\Relations;
+namespace Ignite\Crud\Repositories\Relations;
 
-use Lit\Crud\Fields\Relations\ManyRelationField;
-use Lit\Crud\Models\Relation;
-use Lit\Crud\Repositories\BaseFieldRepository;
-use Lit\Crud\Requests\CrudUpdateRequest;
+use Ignite\Crud\Fields\Relations\ManyRelationField;
+use Ignite\Crud\Models\Relation;
+use Ignite\Crud\Repositories\BaseFieldRepository;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 
 class ManyRelationRepository extends BaseFieldRepository
 {

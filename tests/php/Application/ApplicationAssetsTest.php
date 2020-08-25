@@ -2,7 +2,7 @@
 
 namespace Lit\Test;
 
-use Lit\Application\Application;
+use Ignite\Application\Application;
 use Illuminate\Foundation\Application as LaravelApplication;
 use PHPUnit\Framework\TestCase;
 

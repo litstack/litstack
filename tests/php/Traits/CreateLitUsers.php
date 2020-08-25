@@ -2,7 +2,7 @@
 
 namespace Tests\Traits;
 
-use Lit\User\Models\LitUser;
+use Ignite\User\Models\User;
 
 trait CreateLitUsers
 {
@@ -11,14 +11,14 @@ trait CreateLitUsers
      *
      * @var string
      */
-    protected $litUserPassword = 'secret';
+    protected $UserPassword = 'secret';
 
     /**
      * Lit user email's and their roles.
      *
      * @var array
      */
-    protected $litUsersToCreate = [
+    protected $UsersToCreate = [
         'admin@admin.com' => 'admin',
         'user@user.com'   => 'user',
     ];
@@ -28,19 +28,19 @@ trait CreateLitUsers
      *
      * @var array
      */
-    protected $litUsers = [];
+    protected $Users = [];
 
     /**
      * Lit user with admin role.
      *
-     * @var LitUser
+     * @var User
      */
     protected $admin;
 
     /**
      * Lit user with user role.
      *
-     * @var LitUser
+     * @var User
      */
     protected $user;
 
@@ -49,30 +49,30 @@ trait CreateLitUsers
      *
      * @return void
      */
-    public function createLitUsers()
+    public function CreateLitUsers()
     {
-        foreach ($this->litUsersToCreate as $email => $role) {
+        foreach ($this->UsersToCreate as $email => $role) {
 
             // When running a browser test, the factory might not be registered.
             try {
-                $user = factory(LitUser::class)->make()->getAttributes();
+                $user = factory(User::class)->make()->getAttributes();
             } catch (\InvalidArgumentException $e) {
                 return;
             }
 
             unset($user['email']);
-            $litUser = LitUser::firstOrCreate(
+            $User = User::firstOrCreate(
                 ['email' => $email],
                 $user
             )->assignRole($role);
 
             if ($role == 'admin') {
-                $this->admin = $litUser;
+                $this->admin = $User;
             }
             if ($role == 'user') {
-                $this->user = $litUser;
+                $this->user = $User;
             }
         }
-        $this->litUsers = LitUser::all();
+        $this->Users = User::all();
     }
 }

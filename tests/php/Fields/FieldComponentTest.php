@@ -2,7 +2,7 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\Fields\Component;
+use Ignite\Crud\Fields\Component;
 use Tests\Traits\InteractsWithComponents;
 use Tests\Traits\InteractsWithFields;
 use PHPUnit\Framework\TestCase;

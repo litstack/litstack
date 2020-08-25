@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Foundation\Discover;
+namespace Ignite\Foundation\Discover;
 
 use Illuminate\Foundation\Providers\ArtisanServiceProvider;
 

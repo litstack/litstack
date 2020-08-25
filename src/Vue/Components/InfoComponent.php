@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Vue\Components;
+namespace Ignite\Vue\Components;
 
-use Lit\Contracts\Vue\Resizable;
-use Lit\Vue\Component;
-use Lit\Vue\Traits\CanBeResized;
+use Ignite\Contracts\Vue\Resizable;
+use Ignite\Vue\Component;
+use Ignite\Vue\Traits\CanBeResized;
 
 class InfoComponent extends Component implements Resizable
 {

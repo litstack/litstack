@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Auth;
+namespace Ignite\Auth;
 
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
@@ -13,6 +13,6 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function boot()
     {
-        $this->app->register(\Lit\Auth\RouteServiceProvider::class);
+        $this->app->register(\Ignite\Auth\RouteServiceProvider::class);
     }
 }

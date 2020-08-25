@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Chart\Config;
+namespace Ignite\Chart\Config;
 
-use Lit\Chart\Chart;
-use Lit\Support\Bootstrap;
+use Ignite\Chart\Chart;
+use Ignite\Support\Bootstrap;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;

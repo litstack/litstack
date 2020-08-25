@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Crud;
+namespace Ignite\Crud;
 
 use Closure;
-use Lit\Crud\Fields\Component;
-use Lit\Exceptions\Traceable\InvalidArgumentException;
-use Lit\Page\Page;
+use Ignite\Crud\Fields\Component;
+use Ignite\Exceptions\Traceable\InvalidArgumentException;
+use Ignite\Page\Page;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Support\Traits\Macroable;
 
@@ -54,7 +54,7 @@ class CrudShow extends Page
     /**
      * Resolve action component.
      *
-     * @param  \Lit\Vue\Component $component
+     * @param  \Ignite\Vue\Component $component
      * @return void
      */
     public function resolveAction($component)
@@ -121,7 +121,7 @@ class CrudShow extends Page
      * Add Vue component.
      *
      * @param  string               $component
-     * @return \Lit\Vue\Component
+     * @return \Ignite\Vue\Component
      */
     public function component($component)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Crud\Fields\Traits;
+namespace Ignite\Crud\Fields\Traits;
 
 trait FieldHasPlaceholder
 {

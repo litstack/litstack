@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Page;
+namespace Ignite\Page;
 
-use Lit\Contracts\Page\Page;
-use Lit\Support\HasAttributes;
-use Lit\Vue\Components\BladeComponent;
+use Ignite\Contracts\Page\Page;
+use Ignite\Support\HasAttributes;
+use Ignite\Vue\Components\BladeComponent;
 use Illuminate\Contracts\View\View;
 use InvalidArgumentException;
 
@@ -44,8 +44,8 @@ abstract class BasePage implements Page
     /**
      * Add Vue component to stack.
      *
-     * @param  \Lit\Vue\Component|string $component
-     * @return \Lit\Vue\Component
+     * @param  \Ignite\Vue\Component|string $component
+     * @return \Ignite\Vue\Component
      */
     public function component($component)
     {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Page\Table\Casts;
+namespace Ignite\Page\Table\Casts;
 
-use Lit\Page\Table\ColumnCast;
-use Lit\Support\Facades\LitApp;
+use Ignite\Page\Table\ColumnCast;
+use Ignite\Support\Facades\Lit;
 use NumberFormatter;
 
 class MoneyColumn extends ColumnCast
@@ -32,7 +32,7 @@ class MoneyColumn extends ColumnCast
     public function __construct($currency = 'EUR', $locale = null)
     {
         if (! $locale) {
-            $locale = LitApp::getLocale();
+            $locale = Lit::getLocale();
         }
 
         $this->currency = $currency;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Commands;
+namespace Ignite\Commands;
 
 use Illuminate\Console\GeneratorCommand as LaravelGeneratorCommand;
 use Illuminate\Support\Str;
@@ -14,7 +14,7 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
      */
     protected function rootNamespace()
     {
-        return 'LitApp\\';
+        return 'Lit\\';
     }
 
     /**

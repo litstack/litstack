@@ -2,7 +2,7 @@
 
 namespace Tests\Page;
 
-use Lit\Page\Table\Components\RelationComponent;
+use Ignite\Page\Table\Components\RelationComponent;
 use PHPUnit\Framework\TestCase;
 
 class RelationComponentTest extends TestCase

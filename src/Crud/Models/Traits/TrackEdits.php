@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Crud\Models\Traits;
+namespace Ignite\Crud\Models\Traits;
 
-use Lit\Crud\Models\ModelEdit;
+use Ignite\Crud\Models\ModelEdit;
 
 trait TrackEdits
 {

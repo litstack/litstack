@@ -91,7 +91,7 @@
 
             const data = new FormData(document.forms.login);
 
-            let promise = axios.post('{{ Litstack::route('login.post') }}', data)
+            let promise = axios.post('{{ Lit::route('login.post') }}', data)
             promise.then(function(response) {
                 window.location = response.data
             })

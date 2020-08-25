@@ -2,7 +2,7 @@
 
 namespace Tests\Page;
 
-use Lit\Page\Table\Components\ToggleComponent;
+use Ignite\Page\Table\Components\ToggleComponent;
 use PHPUnit\Framework\TestCase;
 
 class ToggleComponentTest extends TestCase

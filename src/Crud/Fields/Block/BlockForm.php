@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Crud\Fields\Block;
+namespace Ignite\Crud\Fields\Block;
 
-use Lit\Crud\BaseForm;
+use Ignite\Crud\BaseForm;
 use InvalidArgumentException;
 
 class BlockForm extends BaseForm

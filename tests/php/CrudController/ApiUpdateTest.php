@@ -9,7 +9,7 @@ use Tests\Traits\InteractsWithCrud;
 /**
  * This test is using the Crud Post.
  *
- * @see LitApp\Config\Crud\PostConfig
+ * @see Lit\Config\Crud\PostConfig
  * @see Tests\TestSupport\Models\Post
  */
 class ApiUpdateTest extends FrontendTestCase

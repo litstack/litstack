@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Permissions\Controllers;
+namespace Ignite\Permissions\Controllers;
 
-use Lit\Permissions\Requests\Role\CreateRoleRequest;
-use Lit\Permissions\Requests\Role\DeleteRoleRequest;
-use Lit\Permissions\Requests\Role\UpdateRoleRequest;
-use Lit\User\Models\LitUser;
+use Ignite\Permissions\Requests\Role\CreateRoleRequest;
+use Ignite\Permissions\Requests\Role\DeleteRoleRequest;
+use Ignite\Permissions\Requests\Role\UpdateRoleRequest;
+use Ignite\User\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -15,12 +15,12 @@ class RoleController
      * Assign role to lit-user.
      *
      * @param  Request   $request
-     * @param  LitUser $user_id
+     * @param  User $user_id
      * @return void
      */
     public function assignRoleToUser(UpdateRoleRequest $request, $user_id, $role_id)
     {
-        $user = LitUser::findOrFail($user_id);
+        $user = User::findOrFail($user_id);
 
         $role = Role::findOrFail($role_id);
 
@@ -31,12 +31,12 @@ class RoleController
      * Remove role to from lit-user.
      *
      * @param  Request   $request
-     * @param  LitUser $user_id
+     * @param  User $user_id
      * @return void
      */
     public function removeRoleFromUser(UpdateRoleRequest $request, $user_id, $role_id)
     {
-        $user = LitUser::findOrFail($user_id);
+        $user = User::findOrFail($user_id);
 
         $role = $user->roles()->findOrFail($role_id);
 
@@ -88,7 +88,7 @@ class RoleController
             abort(422, __lit('fjpermissions.cant_delete_role', ['role' => $roleName]));
         }
 
-        // LitUsers with the role to be deleted are assigned the role user.
+        // Users with the role to be deleted are assigned the role user.
         foreach ($role->users as $user) {
             if ($user->roles()->count() > 1) {
                 continue;

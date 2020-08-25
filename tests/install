@@ -3,10 +3,10 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-// Installing Lit and starting test after, to load namespaces of created LitApp.
+// Installing Lit and starting test after, to load namespaces of created Lit.
 
-use Tests\FrontendTestCase;
 use Illuminate\Support\Facades\Artisan;
+use Tests\FrontendTestCase;
 
 // Creating database.sqlite
 shell_exec('php '.__DIR__.'/../vendor/orchestra/testbench-dusk/create-sqlite-db');

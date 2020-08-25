@@ -17,7 +17,9 @@
 				@click="assignRole(role)"
 				>{{
 					$te(`roles.${role.name}`)
-						? __(`roles.${role.name}`).toString().capitalize()
+						? __(`roles.${role.name}`)
+								.toString()
+								.capitalize()
 						: role.name.capitalize()
 				}}</b-dropdown-item
 			>
@@ -28,7 +30,7 @@
 <script>
 import { mapGetters } from 'vuex';
 export default {
-	name: 'PermissionsLitUsersApplyRole',
+	name: 'PermissionsUsersApplyRole',
 	props: {
 		item: {
 			type: Object,

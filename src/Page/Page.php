@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Page;
+namespace Ignite\Page;
 
-use Lit\Contracts\Page\Expandable;
-use Lit\Exceptions\NotLoggedInException;
+use Ignite\Contracts\Page\Expandable;
+use Ignite\Exceptions\NotLoggedInException;
 
 class Page extends BasePage implements Expandable
 {
@@ -52,7 +52,7 @@ class Page extends BasePage implements Expandable
     /**
      * Resolve action component.
      *
-     * @param  \Lit\Vue\Component $component
+     * @param  \Ignite\Vue\Component $component
      * @return void
      */
     public function resolveAction($component)
@@ -207,7 +207,7 @@ class Page extends BasePage implements Expandable
      */
     public function __toString()
     {
-        return view('lit::app')
+        return view('litstack::app')
             ->withComponent($this->rootComponent)
             ->withProps(array_merge([
                 'page' => collect($this->render()),

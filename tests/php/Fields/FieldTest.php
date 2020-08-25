@@ -2,11 +2,11 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\BaseForm;
-use Lit\Crud\Field;
-use Lit\Crud\FieldDependency;
-use Lit\Exceptions\Traceable\MissingAttributeException;
-use Lit\User\Models\LitUser;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Field;
+use Ignite\Crud\FieldDependency;
+use Ignite\Exceptions\Traceable\MissingAttributeException;
+use Ignite\User\Models\User;
 use Tests\BackendTestCase;
 use Tests\Traits\InteractsWithFields;
 use Illuminate\Support\Facades\Auth;
@@ -123,15 +123,15 @@ class FieldTest extends BackendTestCase
     {
         $field = $this->getField(DummyField::class);
 
-        $litUser = factory(LitUser::class)->create([
+        $User = factory(User::class)->create([
             'username' => 'dummy_lit_user',
         ]);
 
-        Auth::guard('lit')->login($litUser);
+        Auth::guard('lit')->login($User);
 
-        $field->authorize(function ($user) use ($litUser) {
-            $this->assertInstanceOf(LitUser::class, $user);
-            $this->assertEquals($user, $litUser);
+        $field->authorize(function ($user) use ($User) {
+            $this->assertInstanceOf(User::class, $user);
+            $this->assertEquals($user, $User);
         });
         $field->authorized();
     }

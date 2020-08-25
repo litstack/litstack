@@ -1,6 +1,6 @@
 <?php
 
-use Lit\Support\Facades\Vue;
+use Ignite\Support\Facades\Vue;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +42,7 @@ if (! function_exists('crud')) {
      *
      * @param mixed $model
      *
-     * @return \Lit\Crud\CrudJs|Collection
+     * @return \Ignite\Crud\CrudJs|Collection
      */
     function crud($model)
     {
@@ -55,7 +55,7 @@ if (! function_exists('crud')) {
             return $cruds;
         }
 
-        return new \Lit\Crud\CrudJs($model);
+        return new \Ignite\Crud\CrudJs($model);
     }
 }
 
@@ -63,13 +63,13 @@ if (! function_exists('component')) {
     /**
      * Get a new Vue component instance.
      *
-     * @param  \Lit\Vue\Component|string $name
+     * @param  \Ignite\Vue\Component|string $name
      * @param  string                      $fallback
-     * @return \Lit\Vue\Component|mixed
+     * @return \Ignite\Vue\Component|mixed
      */
     function component($name, $fallback = null)
     {
-        if ($name instanceof \Lit\Vue\Component) {
+        if ($name instanceof \Ignite\Vue\Component) {
             return $name;
         }
 
@@ -185,7 +185,7 @@ if (! function_exists('lit_user')) {
     /**
      * Get the authenticated Lit user.
      *
-     * @return \Lit\User\Models\LitUser
+     * @return \Ignite\User\Models\User
      */
     function lit_user()
     {

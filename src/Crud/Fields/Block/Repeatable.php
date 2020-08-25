@@ -1,16 +1,16 @@
 <?php
 
-namespace Lit\Crud\Fields\Block;
+namespace Ignite\Crud\Fields\Block;
 
 use Closure;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\View\Compilers\ComponentTagCompiler;
-use Lit\Crud\BaseForm;
-use Lit\Crud\Models\Repeatable as RepeatableModel;
-use Lit\Page\Table\ColumnBuilder;
-use Lit\Support\VueProp;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Models\Repeatable as RepeatableModel;
+use Ignite\Page\Table\ColumnBuilder;
+use Ignite\Support\VueProp;
 
 class Repeatable extends VueProp
 {

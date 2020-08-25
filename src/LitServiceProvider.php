@@ -1,18 +1,18 @@
 <?php
 
-namespace Lit;
+namespace Ignite;
 
+use Ignite\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
-use Lit\Support\Facades\Config;
 
 /**
  * Service providers and console commands that should be registered without
  * Lit being installed. All services that should only be registered if Lit
- * is installed are specified in \Lit\LitPackage.
+ * is installed are specified in \Ignite\LitPackage.
  */
 class LitServiceProvider extends ServiceProvider
 {
@@ -43,9 +43,7 @@ class LitServiceProvider extends ServiceProvider
      * @var array
      */
     protected $aliases = [
-        'Lit'     => Support\Facades\Lit::class,
-        'LitApp'  => Support\Facades\LitApp::class,
-        'LitLang' => Support\Facades\LitLang::class,
+        'Lit' => Support\Facades\Lit::class,
     ];
 
     /**
@@ -147,7 +145,7 @@ class LitServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('lit.router', function ($app) {
-            return new Routing\LitRouter($app['events'], $app);
+            return new Routing\Router($app['events'], $app);
         });
     }
 
@@ -168,15 +166,15 @@ class LitServiceProvider extends ServiceProvider
             return new Application\Application($app);
         });
 
-        $this->app->singleton(\LitApp\Kernel::class, function ($app) {
-            return new \LitApp\Kernel($app->get('lit.app'));
+        $this->app->singleton(\Lit\Kernel::class, function ($app) {
+            return new \Lit\Kernel($app->get('lit.app'));
         });
 
         // Bind lit
         $this->app['lit']->bindApp($this->app['lit.app']);
 
         // Initialize kernel singleton.
-        $this->app[\LitApp\Kernel::class];
+        $this->app[\Lit\Kernel::class];
     }
 
     /**

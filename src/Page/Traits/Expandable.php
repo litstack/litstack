@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Page\Traits;
+namespace Ignite\Page\Traits;
 
 trait Expandable
 {

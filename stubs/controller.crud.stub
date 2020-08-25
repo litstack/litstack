@@ -4,8 +4,8 @@ namespace DummyNamespace;
 
 use Illuminate\Database\Eloquent\Builder;
 
-use Lit\User\Models\LitUser;
-use Lit\Crud\Controllers\CrudController;
+use Ignite\User\Models\User;
+use Ignite\Crud\Controllers\CrudController;
 
 class DummyClass extends CrudController
 {
@@ -20,12 +20,12 @@ class DummyClass extends CrudController
      * Authorize request for authenticated lit-user and permission operation.
      * Operations: create, read, update, delete
      *
-     * @param LitUser $user
+     * @param User $user
      * @param string $operation
      * @param integer $id
      * @return boolean
      */
-    public function authorize(LitUser $user, string $operation, $id = null): bool
+    public function authorize(User $user, string $operation, $id = null): bool
     {
         return $user->can("{$operation} DummyTableName");
     }

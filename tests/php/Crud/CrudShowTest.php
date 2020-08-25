@@ -3,9 +3,9 @@
 namespace Tests\Crud;
 
 use Illuminate\Database\Eloquent\Model;
-use Lit\Crud\BaseForm;
-use Lit\Crud\CrudShow;
-use Lit\Exceptions\Traceable\InvalidArgumentException;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\CrudShow;
+use Ignite\Exceptions\Traceable\InvalidArgumentException;
 use Tests\BackendTestCase;
 
 class CrudShowTest extends BackendTestCase

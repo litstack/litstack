@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Crud;
+namespace Ignite\Crud;
 
-use Lit\Page\RunActionEvent;
+use Ignite\Page\RunActionEvent;
 use Illuminate\Http\Request;
 
 class RunCrudActionEvent extends RunActionEvent

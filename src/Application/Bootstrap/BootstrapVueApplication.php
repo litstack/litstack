@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Application\Bootstrap;
+namespace Ignite\Application\Bootstrap;
 
-use Lit\Application\AppComponent;
-use Lit\Application\Application;
-use Lit\Application\Vue\VueApplication;
+use Ignite\Application\AppComponent;
+use Ignite\Application\Application;
+use Ignite\Application\Vue\VueApplication;
 
 class BootstrapVueApplication
 {

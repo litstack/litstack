@@ -1,14 +1,14 @@
 <?php
 
-namespace LitApp\Config\User;
+namespace Lit\Config\User;
 
+use Ignite\Crud\Config\CrudConfig;
+use Ignite\Crud\CrudIndex;
+use Ignite\Crud\CrudShow;
+use Ignite\Page\Table\ColumnBuilder;
+use Ignite\User\Models\User;
 use Illuminate\Support\Facades\Route;
-use Lit\Crud\Config\CrudConfig;
-use Lit\Crud\CrudIndex;
-use Lit\Crud\CrudShow;
-use Lit\Page\Table\ColumnBuilder;
-use Lit\User\Models\LitUser;
-use LitApp\Controllers\User\UserController;
+use Lit\Controllers\User\UserController;
 
 class UserConfig extends CrudConfig
 {
@@ -17,7 +17,7 @@ class UserConfig extends CrudConfig
      *
      * @var string
      */
-    public $model = LitUser::class;
+    public $model = User::class;
 
     /**
      * Controller class.
@@ -52,8 +52,7 @@ class UserConfig extends CrudConfig
     /**
      * Build user index table.
      *
-     * @param CrudIndex $page
-     *
+     * @param  CrudIndex $page
      * @return void
      */
     public function index(CrudIndex $page)
@@ -94,8 +93,7 @@ class UserConfig extends CrudConfig
     /**
      * Crud show container.
      *
-     * @param CrudShow $page
-     *
+     * @param  CrudShow $page
      * @return void
      */
     public function show(CrudShow $page)

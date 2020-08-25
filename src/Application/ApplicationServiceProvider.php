@@ -1,14 +1,14 @@
 <?php
 
-namespace Lit\Application;
+namespace Ignite\Application;
 
-use Lit\Application\Composer\HttpErrorComposer;
-use Lit\Application\Controllers\NotFoundController;
-use Lit\Application\Kernel\HandleRouteMiddleware;
-use Lit\Application\Kernel\HandleViewComposer;
-use Lit\Commands\LitFormPermissions;
-use Lit\Support\Facades\Config;
-use Lit\Support\Facades\LitRoute;
+use Ignite\Application\Composer\HttpErrorComposer;
+use Ignite\Application\Controllers\NotFoundController;
+use Ignite\Application\Kernel\HandleRouteMiddleware;
+use Ignite\Application\Kernel\HandleViewComposer;
+use Ignite\Commands\LitFormPermissions;
+use Ignite\Support\Facades\Config;
+use Ignite\Support\Facades\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -60,10 +60,10 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     public function addCssFilesFromConfig()
     {
-        $this->app->afterResolving('lit.app', function ($litApp) {
+        $this->app->afterResolving('lit.app', function ($Lit) {
             $files = config('lit.assets.css') ?? [];
             foreach ($files as $file) {
-                $litApp->style($file);
+                $Lit->style($file);
             }
         });
     }
@@ -80,7 +80,7 @@ class ApplicationServiceProvider extends ServiceProvider
         $router->pushMiddlewareToGroup('web', HandleRouteMiddleware::class);
 
         // Kernel method handleView gets executed here.
-        View::composer('lit::app', HandleViewComposer::class);
+        View::composer('litstack::app', HandleViewComposer::class);
     }
 
     /**
@@ -93,7 +93,7 @@ class ApplicationServiceProvider extends ServiceProvider
         // Register route {any} after all service providers have been booted to
         // not override other routes.
         $this->app->booted(function () {
-            LitRoute::get('{any}', NotFoundController::class)
+            Route::get('{any}', NotFoundController::class)
                 ->where('any', '.*')
                 ->name('not_found');
         });
@@ -104,7 +104,7 @@ class ApplicationServiceProvider extends ServiceProvider
         // This macro is needed to override the error page view.
         ViewClass::macro('setView', function (string $view) {
             $this->view = $view;
-            $this->setPath(view('lit::app')->getPath());
+            $this->setPath(view('litstack::app')->getPath());
 
             return $this;
         });

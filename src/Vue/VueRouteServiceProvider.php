@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Vue;
+namespace Ignite\Vue;
 
-use Lit\Support\Facades\LitRoute;
+use Ignite\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 
 class VueRouteServiceProvider extends RouteServiceProvider
@@ -14,6 +14,6 @@ class VueRouteServiceProvider extends RouteServiceProvider
      */
     public function map()
     {
-        LitRoute::post('handle-event', EventController::class);
+        Route::post('handle-event', EventController::class);
     }
 }

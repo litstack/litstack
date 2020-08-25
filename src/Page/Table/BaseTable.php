@@ -1,12 +1,12 @@
 <?php
 
-namespace Lit\Page\Table;
+namespace Ignite\Page\Table;
 
-use Lit\Contracts\Page\Action;
-use Lit\Contracts\Page\Table as TableContract;
-use Lit\Page\Actions\DropdownItemAction;
-use Lit\Support\HasAttributes;
-use Lit\Support\VueProp;
+use Ignite\Contracts\Page\Action;
+use Ignite\Contracts\Page\Table as TableContract;
+use Ignite\Page\Actions\DropdownItemAction;
+use Ignite\Support\HasAttributes;
+use Ignite\Support\VueProp;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;

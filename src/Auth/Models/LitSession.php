@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Auth\Models;
+namespace Ignite\Auth\Models;
 
 use DeviceDetector\DeviceDetector;
 use Illuminate\Database\Eloquent\Model;

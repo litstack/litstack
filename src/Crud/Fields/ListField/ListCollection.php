@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Crud\Fields\ListField;
+namespace Ignite\Crud\Fields\ListField;
 
-use Lit\Crud\Models\ListItem;
+use Ignite\Crud\Models\ListItem;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 

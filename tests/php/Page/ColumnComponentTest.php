@@ -2,7 +2,7 @@
 
 namespace Tests\Page;
 
-use Lit\Page\Table\Components\ColumnComponent;
+use Ignite\Page\Table\Components\ColumnComponent;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 

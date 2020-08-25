@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Crud\Models;
+namespace Ignite\Crud\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

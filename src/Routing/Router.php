@@ -1,12 +1,12 @@
 <?php
 
-namespace Lit\Routing;
+namespace Ignite\Routing;
 
 use Closure;
-use Lit\Support\Facades\Package;
+use Ignite\Support\Facades\Package;
 use Illuminate\Support\Facades\Route;
 
-class LitRouter
+class Router
 {
     /**
      * Middlewares that are used by Lit routes for authenticated users.
@@ -30,7 +30,7 @@ class LitRouter
     /**
      * Initialize defaults for a Lit route.
      * Lit Routes should always be created
-     * with \Lit\Support\Facades\LitRoute.
+     * with \Ignite\Support\Facades\Route.
      *
      * @return \Illuminate\Support\Facades\Route
      */
@@ -75,7 +75,7 @@ class LitRouter
     /**
      * Initialize defaults for a Lit package route.
      * Routes for a Lit package should always be created
-     * with \Lit\Support\Facades\LitRoute@package.
+     * with \Ignite\Support\Facades\Route@package.
      *
      * @param string $package
      *

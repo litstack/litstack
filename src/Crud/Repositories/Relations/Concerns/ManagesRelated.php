@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Crud\Repositories\Relations\Concerns;
+namespace Ignite\Crud\Repositories\Relations\Concerns;
 
 use Illuminate\Http\Request;
 

@@ -2,13 +2,13 @@
 
 namespace Tests\CrudRepositories;
 
-use Lit\Config\ConfigHandler;
-use Lit\Crud\Api\ApiRepositories;
-use Lit\Crud\BaseForm;
-use Lit\Crud\Controllers\CrudController;
-use Lit\Crud\Fields\Relations\BelongsToMany;
-use Lit\Crud\Repositories\Relations\BelongsToManyRepository;
-use Lit\Crud\Requests\CrudUpdateRequest;
+use Ignite\Config\ConfigHandler;
+use Ignite\Crud\Api\ApiRepositories;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Controllers\CrudController;
+use Ignite\Crud\Fields\Relations\BelongsToMany;
+use Ignite\Crud\Repositories\Relations\BelongsToManyRepository;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 use Tests\BackendTestCase;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;

@@ -2,10 +2,10 @@
 
 namespace Tests\Page;
 
-use Lit\Exceptions\NotLoggedInException;
-use Lit\Page\Header;
-use Lit\Page\Navigation;
-use Lit\Page\Page;
+use Ignite\Exceptions\NotLoggedInException;
+use Ignite\Page\Header;
+use Ignite\Page\Navigation;
+use Ignite\Page\Page;
 use Tests\BackendTestCase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;

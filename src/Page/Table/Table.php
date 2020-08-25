@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Page\Table;
+namespace Ignite\Page\Table;
 
 use Closure;
-use Lit\Contracts\Page\Table as TableContract;
-use Lit\Exceptions\Traceable\MissingAttributeException;
-use Lit\Support\HasAttributes;
+use Ignite\Contracts\Page\Table as TableContract;
+use Ignite\Exceptions\Traceable\MissingAttributeException;
+use Ignite\Support\HasAttributes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
@@ -37,7 +37,7 @@ class Table extends BaseTable implements TableContract
     /**
      * Vue component instance.
      *
-     * @var \Lit\Vue\Component
+     * @var \Ignite\Vue\Component
      */
     protected $component;
 

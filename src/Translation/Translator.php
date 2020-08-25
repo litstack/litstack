@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Translation;
+namespace Ignite\Translation;
 
-use Lit\Application\Application;
+use Ignite\Application\Application;
 use Illuminate\Support\Facades\Lang;
 
 class Translator

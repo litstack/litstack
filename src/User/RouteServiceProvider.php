@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\User;
+namespace Ignite\User;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
-use Lit\Support\Facades\Package;
-use Lit\User\Controllers\LitUserController;
-use Lit\User\Controllers\ProfileController;
+use Ignite\Support\Facades\Package;
+use Ignite\User\Controllers\UserController;
+use Ignite\User\Controllers\ProfileController;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
@@ -45,9 +45,9 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     protected function mapUserRoleRoutes()
     {
         $this->package->route()->get('profile-sessions', ProfileController::class.'@sessions')->name('sessions');
-        $this->package->route()->get('/lit/users', LitUserController::class.'@showIndex')->name('users');
-        $this->package->route()->post('/lit/users-index', LitUserController::class.'@fetchIndex')->name('users.index');
-        $this->package->route()->post('/lit/users/delete-all', LitUserController::class.'@deleteAll')->name('users.delete');
+        $this->package->route()->get('/lit/users', UserController::class.'@showIndex')->name('users');
+        $this->package->route()->post('/lit/users-index', UserController::class.'@fetchIndex')->name('users.index');
+        $this->package->route()->post('/lit/users/delete-all', UserController::class.'@deleteAll')->name('users.delete');
     }
 
     /**

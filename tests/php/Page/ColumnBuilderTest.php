@@ -2,12 +2,12 @@
 
 namespace Tests\Page;
 
-use Lit\Page\Table\Casts\MoneyColumn;
-use Lit\Page\Table\Column;
-use Lit\Page\Table\ColumnBuilder;
-use Lit\Page\Table\Components\BladeColumnComponent;
-use Lit\Page\Table\Components\ColumnComponent;
-use Lit\Page\Table\Table;
+use Ignite\Page\Table\Casts\MoneyColumn;
+use Ignite\Page\Table\Column;
+use Ignite\Page\Table\ColumnBuilder;
+use Ignite\Page\Table\Components\BladeColumnComponent;
+use Ignite\Page\Table\Components\ColumnComponent;
+use Ignite\Page\Table\Table;
 use Tests\BackendTestCase;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Support\Facades\View;

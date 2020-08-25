@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Page\Slots;
+namespace Ignite\Page\Slots;
 
 class DropdownButtonSlot extends BaseSlot
 {

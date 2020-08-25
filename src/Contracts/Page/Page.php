@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Contracts\Page;
+namespace Ignite\Contracts\Page;
 
 interface Page
 {
@@ -16,7 +16,7 @@ interface Page
      * Adds Vue component to page.
      *
      * @param  string               $name
-     * @return \Lit\Vue\Component
+     * @return \Ignite\Vue\Component
      */
     public function component($name);
 

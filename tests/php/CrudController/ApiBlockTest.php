@@ -4,7 +4,7 @@ namespace Tests\CrudController;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Lit\Crud\Models\Repeatable;
+use Ignite\Crud\Models\Repeatable;
 use Tests\BackendTestCase;
 use Tests\TestSupport\Models\Post;
 use Tests\Traits\InteractsWithCrud;
@@ -12,7 +12,7 @@ use Tests\Traits\InteractsWithCrud;
 /**
  * This test is using the Crud Post.
  *
- * @see LitApp\Config\Crud\PostConfig
+ * @see Lit\Config\Crud\PostConfig
  * @see Tests\TestSupport\Models\Post
  */
 class ApiBlockTest extends BackendTestCase
@@ -211,7 +211,7 @@ class ApiBlockTest extends BackendTestCase
     public function createRepeatable($type = 'text', $fieldId = 'content')
     {
         return Repeatable::create([
-            'config_type' => \LitApp\Config\Crud\PostConfig::class,
+            'config_type' => \Lit\Config\Crud\PostConfig::class,
             'type'        => $type,
             'model_type'  => get_class($this->post),
             'model_id'    => $this->post->id,

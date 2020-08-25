@@ -2,7 +2,7 @@
 
 namespace LitPermissions;
 
-use Lit\Application\Package\LitPackage;
+use Ignite\Application\Package\LitPackage;
 
 class Package extends LitPackage
 {

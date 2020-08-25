@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Auth\Controllers;
+namespace Ignite\Auth\Controllers;
 
-use Lit\Support\Facades\Lit;
+use Ignite\Support\Facades\Lit;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -87,7 +87,7 @@ class ResetPasswordController
      */
     public function showResetForm(Request $request, $token = null)
     {
-        return view('lit::auth.passwords.reset')
+        return view('litstack::auth.passwords.reset')
             ->with([
                 'token' => $token,
                 'email' => $request->email,

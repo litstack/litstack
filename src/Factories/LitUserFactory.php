@@ -3,9 +3,9 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use Faker\Generator as Faker;
-use Lit\User\Models\LitUser;
+use Ignite\User\Models\User;
 
-$factory->define(LitUser::class, function (Faker $faker, $args) {
+$factory->define(User::class, function (Faker $faker, $args) {
     return [
         'first_name' => $faker->firstName,
         'last_name'  => $faker->lastName,

@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Page\Actions;
+namespace Ignite\Page\Actions;
 
-use Lit\Support\HasAttributes;
+use Ignite\Support\HasAttributes;
 
 class AttributeBag
 {

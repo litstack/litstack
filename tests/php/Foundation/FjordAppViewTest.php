@@ -9,7 +9,7 @@ use Throwable;
 /**
  * Testing view [lit::app].
  */
-class LitAppViewTest extends BackendTestCase
+class LitViewTest extends BackendTestCase
 {
     use ActingAsLitUserMock;
 

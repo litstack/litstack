@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Crud\Models;
+namespace Ignite\Crud\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Lit\Crud\Models\Traits\TrackEdits;
+use Ignite\Crud\Models\Traits\TrackEdits;
 
 class Form extends LitFormModel
 {

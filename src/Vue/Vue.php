@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Vue;
+namespace Ignite\Vue;
 
 use Closure;
-use Lit\Contracts\Vue\Vue as VueContract;
+use Ignite\Contracts\Vue\Vue as VueContract;
 
 class Vue implements VueContract
 {

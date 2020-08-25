@@ -1,13 +1,13 @@
 <?php
 
-namespace Lit\Crud;
+namespace Ignite\Crud;
 
 use Closure;
-use Lit\Exceptions\Traceable\BadMethodCallException;
-use Lit\Exceptions\Traceable\InvalidArgumentException;
-use Lit\Exceptions\Traceable\MissingAttributeException;
-use Lit\Support\HasAttributes;
-use Lit\Support\VueProp;
+use Ignite\Exceptions\Traceable\BadMethodCallException;
+use Ignite\Exceptions\Traceable\InvalidArgumentException;
+use Ignite\Exceptions\Traceable\MissingAttributeException;
+use Ignite\Support\HasAttributes;
+use Ignite\Support\VueProp;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;

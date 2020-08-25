@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
-use Lit\Crud\Field;
-use Lit\Exceptions\MethodNotFoundException;
+use Ignite\Crud\Field;
+use Ignite\Exceptions\MethodNotFoundException;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 class Component extends Field
@@ -56,7 +56,7 @@ class Component extends Field
      * @param string $method
      * @param array  $params
      *
-     * @throws \Lit\Exceptions\MethodNotFoundException
+     * @throws \Ignite\Exceptions\MethodNotFoundException
      *
      * @return static|void
      */

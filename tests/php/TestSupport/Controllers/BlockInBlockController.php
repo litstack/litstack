@@ -2,8 +2,8 @@
 
 namespace Tests\TestSupport\Controllers;
 
-use Lit\Crud\Controllers\CrudController;
-use Lit\User\Models\LitUser;
+use Ignite\Crud\Controllers\CrudController;
+use Ignite\User\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
 class BlockInBlockController extends CrudController
@@ -15,7 +15,7 @@ class BlockInBlockController extends CrudController
      */
     protected $model = \Tests\TestSupport\Models\Post::class;
 
-    public function authorize(LitUser $user, string $operation): bool
+    public function authorize(User $user, string $operation): bool
     {
         return true;
     }

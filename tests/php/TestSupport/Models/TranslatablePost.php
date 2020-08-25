@@ -3,7 +3,7 @@
 namespace Tests\TestSupport\Models;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Lit\Crud\Models\Traits\Translatable;
+use Ignite\Crud\Models\Traits\Translatable;
 use Tests\TestSupport\Models\Translations\TranslatablePostTranslation;
 use Illuminate\Database\Eloquent\Model;
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace Lit\Page\Table;
+namespace Ignite\Page\Table;
 
 use ErrorException;
-use Lit\Contracts\Page\Column as ColumnInterface;
-use Lit\Contracts\Page\Table;
-use Lit\Exceptions\MissingAttributeException;
-use Lit\Exceptions\Traceable\InvalidArgumentException;
-use Lit\Support\HasAttributes;
-use Lit\Support\VueProp;
+use Ignite\Contracts\Page\Column as ColumnInterface;
+use Ignite\Contracts\Page\Table;
+use Ignite\Exceptions\MissingAttributeException;
+use Ignite\Exceptions\Traceable\InvalidArgumentException;
+use Ignite\Support\HasAttributes;
+use Ignite\Support\VueProp;
 
 class Column extends VueProp implements ColumnInterface
 {

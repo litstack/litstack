@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Exceptions\Solutions;
+namespace Ignite\Exceptions\Solutions;
 
 use Facade\IgnitionContracts\BaseSolution;
 

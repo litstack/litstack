@@ -2,8 +2,8 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\Fields\Relations\ManyRelationField;
-use Lit\Exceptions\Traceable\InvalidArgumentException;
+use Ignite\Crud\Fields\Relations\ManyRelationField;
+use Ignite\Exceptions\Traceable\InvalidArgumentException;
 use Tests\BackendTestCase;
 use Tests\Traits\InteractsWithConfig;
 use Tests\Traits\InteractsWithFields;

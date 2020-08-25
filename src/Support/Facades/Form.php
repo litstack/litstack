@@ -1,16 +1,16 @@
 <?php
 
-namespace Lit\Support\Facades;
+namespace Ignite\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Lit\Support\FacadeNeedsLitInstalled;
+use Ignite\Support\FacadeNeedsLitInstalled;
 
 /**
- * @method static \Lit\Crud\FormCollection|\Lit\Crud\Models\Form load(string $collection = null, string $name = null)
+ * @method static \Ignite\Crud\FormCollection|\Ignite\Crud\Models\Form load(string $collection = null, string $name = null)
  * @method static field(string $alias, string $field)
  * @method static bool fieldExists(string $alias)
  *
- * @see \Lit\Crud\Form
+ * @see \Ignite\Crud\Form
  */
 class Form extends Facade
 {

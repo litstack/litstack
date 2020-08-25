@@ -1,11 +1,11 @@
 <?php
 
-namespace Lit\Page;
+namespace Ignite\Page;
 
-use Lit\Contracts\Page\ActionFactory;
-use Lit\Support\VueProp;
-use Lit\Vue\Component;
-use Lit\Vue\Components\ButtonComponent;
+use Ignite\Contracts\Page\ActionFactory;
+use Ignite\Support\VueProp;
+use Ignite\Vue\Component;
+use Ignite\Vue\Components\ButtonComponent;
 use Illuminate\Contracts\View\View;
 
 class Slot extends VueProp

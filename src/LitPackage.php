@@ -1,23 +1,23 @@
 <?php
 
-namespace Lit;
+namespace Ignite;
 
-use Lit\Application\Application;
-use Lit\Application\Navigation\Config as NavigationConfig;
-use Lit\Application\Navigation\NavigationConfigFactory;
-use Lit\Application\Package\LitPackage as Package;
-use Lit\Crud\Config\Factories\CrudFormConfigFactory;
-use Lit\Crud\Config\Factories\CrudIndexConfigFactory;
-use Lit\Crud\Config\Traits\HasCrudIndex;
-use Lit\Crud\Config\Traits\HasCrudShow;
-use Lit\Page\Table\Components\ImageComponent;
-use Lit\Page\Table\Components\RelationComponent;
-use Lit\Page\Table\Components\ToggleComponent;
-use Lit\Vue\Components\BladeComponent;
-use Lit\Vue\Components\FieldWrapperCardComponent;
-use Lit\Vue\Components\FieldWrapperComponent;
-use Lit\Vue\Components\FieldWrapperGroupComponent;
-use Lit\Vue\Components\InfoComponent;
+use Ignite\Application\Application;
+use Ignite\Application\Navigation\Config as NavigationConfig;
+use Ignite\Application\Navigation\NavigationConfigFactory;
+use Ignite\Application\Package\LitPackage as Package;
+use Ignite\Crud\Config\Factories\CrudFormConfigFactory;
+use Ignite\Crud\Config\Factories\CrudIndexConfigFactory;
+use Ignite\Crud\Config\Traits\HasCrudIndex;
+use Ignite\Crud\Config\Traits\HasCrudShow;
+use Ignite\Page\Table\Components\ImageComponent;
+use Ignite\Page\Table\Components\RelationComponent;
+use Ignite\Page\Table\Components\ToggleComponent;
+use Ignite\Vue\Components\BladeComponent;
+use Ignite\Vue\Components\FieldWrapperCardComponent;
+use Ignite\Vue\Components\FieldWrapperComponent;
+use Ignite\Vue\Components\FieldWrapperGroupComponent;
+use Ignite\Vue\Components\InfoComponent;
 
 class LitPackage extends Package
 {
@@ -27,14 +27,14 @@ class LitPackage extends Package
      * @var array
      */
     protected $providers = [
-        \Lit\Config\ConfigServiceProvider::class,
-        \Lit\Translation\TranslationServiceProvider::class,
-        \Lit\Application\ApplicationRouteServiceProvider::class,
-        \Lit\Permissions\PermissionsServiceProvider::class,
-        \Lit\Vue\VueServiceProvider::class,
-        \Lit\Chart\ServiceProvider::class,
-        \Lit\Crud\ServiceProvider::class,
-        \Lit\User\ServiceProvider::class,
+        \Ignite\Config\ConfigServiceProvider::class,
+        \Ignite\Translation\TranslationServiceProvider::class,
+        \Ignite\Application\ApplicationRouteServiceProvider::class,
+        \Ignite\Permissions\PermissionsServiceProvider::class,
+        \Ignite\Vue\VueServiceProvider::class,
+        \Ignite\Chart\ServiceProvider::class,
+        \Ignite\Crud\ServiceProvider::class,
+        \Ignite\User\ServiceProvider::class,
     ];
 
     /**

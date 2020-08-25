@@ -1,7 +1,7 @@
 <?php
 
+use Ignite\Support\Migration\MigratePermissions;
 use Illuminate\Database\Migrations\Migration;
-use Lit\Support\Migration\MigratePermissions;
 
 class MakePermissions extends Migration
 {

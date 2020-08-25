@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Application\Bootstrap;
+namespace Ignite\Application\Bootstrap;
 
-use Lit\Application\Application;
+use Ignite\Application\Application;
 
 class RegisterSingletons
 {

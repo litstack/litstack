@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Permissions\Controllers;
+namespace Ignite\Permissions\Controllers;
 
-use Lit\Permissions\Models\RolePermission;
-use Lit\Permissions\Requests\RolePermission\UpdateRolePermissionRequest;
+use Ignite\Permissions\Models\RolePermission;
+use Ignite\Permissions\Requests\RolePermission\UpdateRolePermissionRequest;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Permission\Models\Role;
 

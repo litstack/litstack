@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Auth\Controllers;
+namespace Ignite\Auth\Controllers;
 
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\JsonResponse;

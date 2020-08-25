@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Crud\Api;
+namespace Ignite\Crud\Api;
 
 class ApiRepositories
 {

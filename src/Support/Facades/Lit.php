@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Support\Facades;
+namespace Ignite\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Facade;
  * @method static string trans_choice(string $key, int $number, array $replace = [])
  * @method static string __(string $key, array $replace = [], string $locale = null)
  * @method static string getLocale()
- * @method static \Lit\Config\ConfigHandler|null config(string $key, ...$params)
- * @method static \Lit\User\Models\LitUser|null user()
+ * @method static \Ignite\Config\ConfigHandler|null config(string $key, ...$params)
+ * @method static \Ignite\User\Models\User|null user()
  * @method static bool installed()
  *
- * @see \Lit\Foundation\Lit
+ * @see \Ignite\Foundation\Lit
  */
 class Lit extends Facade
 {

@@ -2,8 +2,8 @@
 
 namespace Tests\Fields;
 
-use Lit\Crud\BaseField;
-use Lit\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\Fields\Traits\HasBaseField;
 use Tests\Traits\InteractsWithFields;
 use Tests\Traits\TestHelpers;
 use PHPUnit\Framework\TestCase;

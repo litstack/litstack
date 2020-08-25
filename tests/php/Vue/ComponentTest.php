@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Lit\Vue\Component;
+use Ignite\Vue\Component;
 use PHPUnit\Framework\TestCase;
 
 class ComponentTest extends TestCase

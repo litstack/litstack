@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Page\Slots;
+namespace Ignite\Page\Slots;
 
-use Lit\Vue\Components\ButtonComponent;
+use Ignite\Vue\Components\ButtonComponent;
 
 class ButtonSmSlot extends BaseSlot
 {

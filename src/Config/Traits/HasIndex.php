@@ -1,8 +1,8 @@
 <?php
 
-namespace Lit\Config\Traits;
+namespace Ignite\Config\Traits;
 
-use Lit\Vue\Table;
+use Ignite\Vue\Table;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -15,7 +15,7 @@ trait HasIndex
     /**
      * Setup index table.
      *
-     * @param \Lit\Vue\Table $table
+     * @param \Ignite\Vue\Table $table
      *
      * @return void
      */

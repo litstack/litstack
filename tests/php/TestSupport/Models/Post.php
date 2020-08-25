@@ -2,7 +2,7 @@
 
 namespace Tests\TestSupport\Models;
 
-use Lit\Crud\Models\Traits\HasMedia;
+use Ignite\Crud\Models\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia as HasMediaContract;
 

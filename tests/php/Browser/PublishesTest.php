@@ -2,9 +2,9 @@
 
 namespace Tests\Browser;
 
-use LitApp\Config\Form\Pages\HomeConfig;
-use LitApp\Config\User\ProfileSettingsConfig;
-use LitApp\Config\User\UserConfig;
+use Lit\Config\Form\Pages\HomeConfig;
+use Lit\Config\User\ProfileSettingsConfig;
+use Lit\Config\User\UserConfig;
 use Tests\FrontendTestCase;
 use Tests\Traits\CreateLitUsers;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Permissions\Models;
+namespace Ignite\Permissions\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Lit\Application\Package;
+namespace Ignite\Application\Package;
 
 use Closure;
-use Lit\Application\Application;
-use Lit\Support\Facades\LitRoute;
+use Ignite\Application\Application;
+use Ignite\Support\Facades\Route;
 
 abstract class LitPackage
 {
@@ -151,7 +151,7 @@ abstract class LitPackage
      */
     public function route()
     {
-        return LitRoute::package($this->name);
+        return Route::package($this->name);
     }
 
     /**

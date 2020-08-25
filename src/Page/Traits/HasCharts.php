@@ -1,9 +1,9 @@
 <?php
 
-namespace Lit\Page\Traits;
+namespace Ignite\Page\Traits;
 
-use Lit\Chart\Chart;
-use Lit\Support\Facades\Config;
+use Ignite\Chart\Chart;
+use Ignite\Support\Facades\Config;
 use InvalidArgumentException;
 
 trait HasCharts
@@ -12,7 +12,7 @@ trait HasCharts
      * Add chart.
      *
      * @param  string               $name
-     * @return \Lit\Vue\Component
+     * @return \Ignite\Vue\Component
      */
     public function chart(string $name)
     {

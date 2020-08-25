@@ -2,9 +2,9 @@
 
 namespace DummyNamespace;
 
-use Lit\Chart\Chart;
+use Ignite\Chart\Chart;
 use Illuminate\Support\Collection; 
-use Lit\Chart\Config\AreaChartConfig;
+use Ignite\Chart\Config\AreaChartConfig;
 
 class DummyClass extends AreaChartConfig
 {

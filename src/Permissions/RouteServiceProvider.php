@@ -1,12 +1,12 @@
 <?php
 
-namespace Lit\Permissions;
+namespace Ignite\Permissions;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
-use Lit\Permissions\Controllers\PermissionController;
-use Lit\Permissions\Controllers\RoleController;
-use Lit\Permissions\Controllers\RolePermissionController;
-use Lit\Support\Facades\Package;
+use Ignite\Permissions\Controllers\PermissionController;
+use Ignite\Permissions\Controllers\RoleController;
+use Ignite\Permissions\Controllers\RolePermissionController;
+use Ignite\Support\Facades\Package;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
