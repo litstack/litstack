@@ -394,7 +394,7 @@ class LaravelRelationField extends RelationField
      */
     public function getQuery()
     {
-        return $this->query->withCasts($this->casts);
+        return $this->modifyQuery($this->query);
     }
 
     /**
