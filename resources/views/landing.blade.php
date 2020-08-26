@@ -22,7 +22,7 @@
 
 
 <body onload="makeVisible()">
-    <div id="lit-app" class="no-nav">
+    <div id="litstack" class="no-nav">
 
         <main>
             <div class="lit-content">

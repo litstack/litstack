@@ -67,6 +67,7 @@
 
     <script type="text/javascript">
         function makeVisible(){
+
             let spinner = document.getElementById("lit-spinner");
             let main = document.querySelector("div#litstack > main");
             if(spinner && main) {
@@ -119,6 +120,13 @@
 
     @if(Lit::usesLivewire())
         <livewire:scripts />
+        <script>
+            document.addEventListener("livewire:load", () => {
+                window.livewire.components.hooks.register('beforeDomUpdate', function(component,dom) {
+                    dom.html = new Vue({template:dom.html}).$mount().$el.outerHTML;
+                });
+            });
+        </script>
     @endif
     
 </body>
