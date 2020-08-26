@@ -91,7 +91,7 @@ class User extends Authenticatable implements CanResetPasswordContract
      */
     public function sessions()
     {
-        return $this->hasMany(LitSession::class)->orderByDesc('last_activity');
+        return $this->hasMany(LitSession::class, 'lit_user_id')->orderByDesc('last_activity');
     }
 
     /**

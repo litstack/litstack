@@ -10,7 +10,7 @@ require('./service/library.service');
 /**
  * The Litstack Application
  */
-import Litstack from './Litstack';
+import LitstackApp from './LitstackApp';
 
 /**
  * A simple event-bus
@@ -81,7 +81,7 @@ Litstack.prototype._vue = function() {
 		i18n,
 		store: store.store,
 		components: {
-			Litstack,
+			LitstackApp,
 		},
 		data: {
 			litPlugins: plugins,

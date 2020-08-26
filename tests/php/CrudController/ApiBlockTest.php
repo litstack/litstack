@@ -2,9 +2,9 @@
 
 namespace Tests\CrudController;
 
+use Ignite\Crud\Models\Repeatable;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Ignite\Crud\Models\Repeatable;
 use Tests\BackendTestCase;
 use Tests\TestSupport\Models\Post;
 use Tests\Traits\InteractsWithCrud;
@@ -36,7 +36,7 @@ class ApiBlockTest extends BackendTestCase
         $this->assertCount(0, $this->getRepeatables('text'));
 
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/block/store");
-        $request = $this->post($url, [
+        $request = $this->json('POST', $url, [
             'payload' => [
                 'repeatable_type' => 'text',
             ],

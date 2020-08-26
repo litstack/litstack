@@ -3,13 +3,13 @@
 </template>
 
 <script>
-import Lit from './lit';
+import Litstack from './litstack';
 import { mapGetters } from 'vuex';
 import axiosMethods from './common/axios';
 
 export default {
 	inheritAttrs: false,
-	name: 'Lit',
+	name: 'LitstackApp',
 	computed: {
 		...mapGetters(['canSave']),
 	},
@@ -109,7 +109,7 @@ export default {
 			let results = await this.$store.dispatch('save');
 
 			if (results.hasSucceeded()) {
-				this.$bvToast.toast(this.$t('lit.saved'), {
+				this.$bvToast.toast(this.__('lit.saved'), {
 					variant: 'success',
 				});
 			}
@@ -129,7 +129,7 @@ export default {
 			}
 		},
 		callPluginExtensions() {
-			let plugins = Lit.getPlugins();
+			let plugins = Litstack.getPlugins();
 			for (let i = 0; i < plugins.length; i++) {
 				let plugin = plugins[i];
 				if (!('extensions' in plugin)) {
@@ -143,7 +143,7 @@ export default {
 			}
 		},
 		callPluginMethods(method) {
-			let plugins = Lit.getPlugins();
+			let plugins = Litstack.getPlugins();
 			for (let i = 0; i < plugins.length; i++) {
 				let plugin = plugins[i];
 				if (!(method in plugin)) {

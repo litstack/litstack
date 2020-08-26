@@ -8,7 +8,7 @@
 
 @section('content')
     @include('litstack::vue.component', [
-        'component' => 'lit-app',
-        'props' => ((array) \Lit\Support\Facades\VueApp::render())['props']
+        'component' => 'litstack-app',
+        'props' => ((array) \Ignite\Support\Facades\VueApp::render())['props']
     ])
 @endsection

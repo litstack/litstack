@@ -21,7 +21,7 @@ class LitControllerCommandTest extends BackendTestCase
 
         $this->assertFileExists(base_path('lit/app/Controllers/Form/DummyFormController.php'));
         $this->assertInstanceOf(
-            \Lit\Crud\Controllers\FormController::class,
+            \Ignite\Crud\Controllers\FormController::class,
             new \Lit\Controllers\Form\DummyFormController()
         );
     }
@@ -33,7 +33,7 @@ class LitControllerCommandTest extends BackendTestCase
 
         $this->assertFileExists(base_path('lit/app/Controllers/Crud/DummyCrudController.php'));
         $this->assertInstanceOf(
-            \Lit\Crud\Controllers\CrudController::class,
+            \Ignite\Crud\Controllers\CrudController::class,
             new \Lit\Controllers\Crud\DummyCrudController()
         );
     }

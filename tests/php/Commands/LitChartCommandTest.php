@@ -13,7 +13,7 @@ class LitChartCommandTest extends BackendTestCase
 
         $this->assertFileExists(base_path('lit/app/Config/Charts/DummyDefaultChartConfig.php'));
         $this->assertInstanceOf(
-            \Lit\Chart\Config\AreaChartConfig::class,
+            \Ignite\Chart\Config\AreaChartConfig::class,
             new \Lit\Config\Charts\DummyDefaultChartConfig()
         );
     }
@@ -25,7 +25,7 @@ class LitChartCommandTest extends BackendTestCase
 
         $this->assertFileExists(base_path('lit/app/Config/Charts/DummyAreaChartConfig.php'));
         $this->assertInstanceOf(
-            \Lit\Chart\Config\AreaChartConfig::class,
+            \Ignite\Chart\Config\AreaChartConfig::class,
             new \Lit\Config\Charts\DummyAreaChartConfig()
         );
     }
@@ -37,7 +37,7 @@ class LitChartCommandTest extends BackendTestCase
 
         $this->assertFileExists(base_path('lit/app/Config/Charts/DummyBarChartConfig.php'));
         $this->assertInstanceOf(
-            \Lit\Chart\Config\BarChartConfig::class,
+            \Ignite\Chart\Config\BarChartConfig::class,
             new \Lit\Config\Charts\DummyBarChartConfig()
         );
     }
@@ -49,7 +49,7 @@ class LitChartCommandTest extends BackendTestCase
 
         $this->assertFileExists(base_path('lit/app/Config/Charts/DummyDonutChartConfig.php'));
         $this->assertInstanceOf(
-            \Lit\Chart\Config\DonutChartConfig::class,
+            \Ignite\Chart\Config\DonutChartConfig::class,
             new \Lit\Config\Charts\DummyDonutChartConfig()
         );
     }
@@ -61,7 +61,7 @@ class LitChartCommandTest extends BackendTestCase
 
         $this->assertFileExists(base_path('lit/app/Config/Charts/DummyNumberChartConfig.php'));
         $this->assertInstanceOf(
-            \Lit\Chart\Config\NumberChartConfig::class,
+            \Ignite\Chart\Config\NumberChartConfig::class,
             new \Lit\Config\Charts\DummyNumberChartConfig()
         );
     }
@@ -73,7 +73,7 @@ class LitChartCommandTest extends BackendTestCase
 
         $this->assertFileExists(base_path('lit/app/Config/Charts/DummyProgressChartConfig.php'));
         $this->assertInstanceOf(
-            \Lit\Chart\Config\ProgressChartConfig::class,
+            \Ignite\Chart\Config\ProgressChartConfig::class,
             new \Lit\Config\Charts\DummyProgressChartConfig()
         );
     }

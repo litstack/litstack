@@ -3,9 +3,9 @@
 namespace Tests\Fields;
 
 use Ignite\Crud\Fields\Component;
+use PHPUnit\Framework\TestCase;
 use Tests\Traits\InteractsWithComponents;
 use Tests\Traits\InteractsWithFields;
-use PHPUnit\Framework\TestCase;
 
 class FieldComponentTest extends TestCase
 {
@@ -22,7 +22,7 @@ class FieldComponentTest extends TestCase
     public function it_sets_component()
     {
         $component = component('dummy-component');
-        $this->assertInstanceOf(\Lit\Vue\Component::class, $this->field->getComponent());
+        $this->assertInstanceOf(\Ignite\Vue\Component::class, $this->field->getComponent());
         $this->assertEquals($component, $this->field->getComponent());
     }
 }

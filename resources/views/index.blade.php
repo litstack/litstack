@@ -64,7 +64,7 @@
     <script type="text/javascript">
         function makeVisible(){
             let spinner = document.getElementById("lit-spinner");
-            let main = document.querySelector("div#lit-app > main");
+            let main = document.querySelector("div#litstack > main");
             if(spinner && main) {
                 spinner.classList.add('loaded');
                 main.classList.add('loaded');
@@ -102,7 +102,7 @@
                 .classList.toggle('visible');
                 
                 document
-                .querySelector('#lit-app')
+                .querySelector('#litstack')
                 .classList.toggle('navigation-visible');
             }
             

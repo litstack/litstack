@@ -39,7 +39,6 @@ trait MigratePermissions
             ->whereIn('name', $this->permissions)
             ->get();
 
-        // Delete permissions.
         foreach ($permissions as $permission) {
             $admin->revokePermissionTo($permission->name);
             $permission->delete();

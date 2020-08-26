@@ -3,7 +3,7 @@
 namespace Ignite\Auth\Middleware;
 
 use Ignite\Auth\Models\LitSession;
-use Ignite\Support\Facades\LitLang;
+use Ignite\Support\Facades\Lang;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Support\Carbon;
@@ -15,12 +15,11 @@ class Authenticate extends Middleware
     /**
      * Determine if the user is logged in to any of the given guards.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param array                    $guards
+     * @param  \Illuminate\Http\Request $request
+     * @param  array                    $guards
+     * @return void
      *
      * @throws \Illuminate\Auth\AuthenticationException
-     *
-     * @return void
      */
     protected function authenticate($request, array $guards)
     {
@@ -40,7 +39,7 @@ class Authenticate extends Middleware
     protected function setUserLocale()
     {
         if (lit_user()->locale === null) {
-            lit_user()->locale = LitLang::getBrowserLocale();
+            lit_user()->locale = Lang::getBrowserLocale();
             lit_user()->save();
         }
     }
@@ -64,7 +63,7 @@ class Authenticate extends Middleware
                     'user_agent'    => $request->server('HTTP_USER_AGENT'),
                     'ip_address'    => $request->ip(),
                     'session_id'    => Session::getId(),
-                    'lit_user_id' => lit_user()->id,
+                    'lit_user_id'   => lit_user()->id,
                     'last_activity' => Carbon::now(),
                 ],
             );
@@ -76,7 +75,7 @@ class Authenticate extends Middleware
                 [
                     'user_agent'    => $request->server('HTTP_USER_AGENT'),
                     'ip_address'    => $request->ip(),
-                    'lit_user_id' => lit_user()->id,
+                    'lit_user_id'   => lit_user()->id,
                     'last_activity' => Carbon::now(),
                 ],
             );

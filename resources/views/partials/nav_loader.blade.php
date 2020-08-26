@@ -2,7 +2,7 @@
     <div class="ph-col-12">
         <div class="ph-row">
 
-            @foreach(Litstack::config('navigation')->main as $section)
+            @foreach(Lit::config('navigation')->main as $section)
                 @foreach($section as $item)
                     @if($item['type'] == 'title')
                             <div class="ph-col-{{ ph_cols($item['title']) }} lit-ph-title"></div>

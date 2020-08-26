@@ -44,7 +44,7 @@ class LitGuard extends Command
                 "'providers' => [
         'lit_users' => [
             'driver' => 'eloquent',
-            'model' => Lit\User\Models\User::class,
+            'model' => Ignite\User\Models\User::class,
         ],",
                 $replace
             );

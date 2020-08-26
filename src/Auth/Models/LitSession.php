@@ -29,12 +29,8 @@ class LitSession extends Model
      * @var array
      */
     protected $fillable = [
-        'session_id',
-        'lit_user_id',
-        'ip_address',
-        'user_agent',
-        'payload',
-        'last_activity',
+        'session_id', 'lit_user_id', 'ip_address', 'user_agent',
+        'payload', 'last_activity',
     ];
 
     /**
@@ -61,11 +57,7 @@ class LitSession extends Model
      * @var array
      */
     protected $appends = [
-        'last_activity_readable',
-        'is_current',
-        'browser',
-        'device',
-        'os',
+        'last_activity_readable', 'is_current', 'browser', 'device', 'os',
     ];
 
     /**

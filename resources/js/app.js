@@ -1,10 +1,10 @@
 /**
  * This file is used for building the app via webpack.mix
  */
-import Lit from './lit';
+import Litstack from './litstack';
 
 const store = {};
 
-new Lit({
+new Litstack({
 	store,
 });

@@ -1,3 +1,3 @@
-import Lit from './lit';
+import Litstack from './litstack';
 
-export default Lit;
+export default Litstack;

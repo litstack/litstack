@@ -4,9 +4,9 @@ namespace Tests\Fields;
 
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Fields\Relations\MorphToRegistrar;
+use Illuminate\Database\Eloquent\Model;
 use Tests\BackendTestCase;
 use Tests\Traits\InteractsWithFields;
-use Illuminate\Database\Eloquent\Model;
 
 class FieldRelationMorphToTest extends BackendTestCase
 {
@@ -37,10 +37,10 @@ class FieldRelationMorphToTest extends BackendTestCase
     {
         $this->field->morphTypes(function ($morph) {
             $type = $morph->to(MorphToRelationFirst::class);
-            $this->assertInstanceOf(\Lit\Crud\Fields\Relations\MorphTo::class, $type);
+            $this->assertInstanceOf(\Ignite\Crud\Fields\Relations\MorphTo::class, $type);
 
             $type = $morph->to(MorphToRelationSecond::class);
-            $this->assertInstanceOf(\Lit\Crud\Fields\Relations\MorphTo::class, $type);
+            $this->assertInstanceOf(\Ignite\Crud\Fields\Relations\MorphTo::class, $type);
         });
 
         $this->assertCount(2, $this->field->getAttribute('morphTypes'));
