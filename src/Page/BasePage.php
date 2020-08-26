@@ -89,6 +89,16 @@ abstract class BasePage implements Page
     }
 
     /**
+     * Get views.
+     *
+     * @return array
+     */
+    public function getViews()
+    {
+        return $this->views;
+    }
+
+    /**
      * Bind livewire component to page.
      *
      * @param  string $component
@@ -96,7 +106,7 @@ abstract class BasePage implements Page
      */
     public function livewire($component)
     {
-        $this->view('litstack::partials.livewire', [
+        return $this->view('litstack::partials.livewire', [
             'component' => $component,
         ]);
     }

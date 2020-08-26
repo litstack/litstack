@@ -2,10 +2,10 @@
 
 namespace Tests\Page;
 
-use Illuminate\View\View;
 use Ignite\Page\BasePage;
 use Ignite\Vue\Component;
 use Ignite\Vue\Components\BladeComponent;
+use Illuminate\View\View;
 use Mockery as m;
 use Tests\BackendTestCase;
 
@@ -56,9 +56,18 @@ class BasePageTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_view_method_returns_view()
+    public function test_view_method_returns_component()
     {
         $this->assertInstanceOf(Component::class, $this->page->view('litstack::app'));
+    }
+
+    /** @test */
+    public function test_livewire_method()
+    {
+        $this->assertInstanceOf(Component::class, $this->page->livewire('counter'));
+        $this->assertCount(1, $this->page->getViews());
+        $this->assertSame('litstack::partials.livewire', $this->page->getViews()[0]->getName());
+        $this->assertSame('counter', $this->page->getViews()[0]->getData()['component']);
     }
 
     /** @test */
@@ -76,9 +85,7 @@ class BasePageTest extends BackendTestCase
         $view = m::mock(View::class);
         $view->shouldReceive('with')->withArgs([['data' => 'dummy']]);
         $this->page->view($view);
-        $this->page->bindToView([
-            'data' => 'dummy',
-        ]);
+        $this->page->bindToView(['data' => 'dummy']);
         $this->page->render();
     }
 
