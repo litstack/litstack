@@ -123,7 +123,9 @@
         <script>
             document.addEventListener("livewire:load", () => {
                 window.livewire.components.hooks.register('beforeDomUpdate', function(component,dom) {
-                    dom.html = new Vue({template:dom.html}).$mount().$el.outerHTML;
+                    dom.html = new Vue({template:dom.html})
+                        .$mount()
+                        .$el.outerHTML;
                 });
             });
         </script>

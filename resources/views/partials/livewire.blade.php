@@ -1,1 +1,1 @@
-@livewire($component)
+@livewire($component, get_defined_vars())
