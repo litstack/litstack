@@ -224,6 +224,16 @@ class Lit
     }
 
     /**
+     * Determines if Litstack uses livewire.
+     *
+     * @return bool
+     */
+    public function usesLivewire()
+    {
+        return class_exists(\Livewire\Livewire::class);
+    }
+
+    /**
      * Determines wether composer dumpautoload needs to be called.
      *
      * @return void

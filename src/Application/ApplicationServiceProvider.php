@@ -26,6 +26,8 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->registerFormPermissionsCommand();
 
         $this->registerVueApplication();
+
+        $this->loadAssets();
     }
 
     /**
@@ -50,7 +52,6 @@ class ApplicationServiceProvider extends ServiceProvider
     {
         $this->handleKernel($router);
         $this->litErrorPages();
-        $this->addCssFilesFromConfig();
     }
 
     /**
@@ -58,14 +59,25 @@ class ApplicationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function addCssFilesFromConfig()
+    protected function loadAssets()
     {
-        $this->app->afterResolving('lit.app', function ($Lit) {
-            $files = config('lit.assets.css') ?? [];
-            foreach ($files as $file) {
-                $Lit->style($file);
-            }
+        $this->app->afterResolving('lit.app', function ($app) {
+            $this->loadCssFilesFromConfig($app);
         });
+    }
+
+    /**
+     * Load css files from config.
+     *
+     * @param  Application $app
+     * @return void
+     */
+    protected function loadCssFilesFromConfig(Application $app)
+    {
+        $files = config('lit.assets.css') ?? [];
+        foreach ($files as $file) {
+            $app->style($file);
+        }
     }
 
     /**

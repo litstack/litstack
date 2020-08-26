@@ -24,6 +24,10 @@
 
     @include('litstack::partials.google_analytics')
 
+    @if(Lit::usesLivewire())
+        <livewire:styles />
+    @endif
+
 </head>
 
 <body onload="makeVisible()">
@@ -112,6 +116,11 @@
             })
         }
     </script>
+
+    @if(Lit::usesLivewire())
+        <livewire:scripts />
+    @endif
+    
 </body>
 
 </html>

@@ -89,6 +89,19 @@ abstract class BasePage implements Page
     }
 
     /**
+     * Bind livewire component to page.
+     *
+     * @param  string $component
+     * @return void
+     */
+    public function livewire($component)
+    {
+        $this->view('litstack::partials.livewire', [
+            'component' => $component,
+        ]);
+    }
+
+    /**
      * Bind data to Vue components and Blade views.
      *
      * @param  array $data
