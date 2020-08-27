@@ -40,6 +40,7 @@ export default {
             return {
                 ...this.$attrs,
                 ...this.component.props,
+                eventData: this.eventData,
                 sendingEventRequest: this.sendingEventRequest
             };
         },
