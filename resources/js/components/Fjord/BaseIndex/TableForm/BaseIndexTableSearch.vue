@@ -2,7 +2,7 @@
     <b-form-input
         :placeholder="
             __('fj.search_models', {
-                models: namePlural
+                models: strip(namePlural)
             })
         "
         v-model="query"
@@ -33,6 +33,18 @@ export default {
                     this.$emit('search', val);
                 }
             }, this.typingDelay);
+        }
+    },
+    methods: {
+        /**
+         * Strip tags and content between tags.
+         * Remove last character if it is a space.
+         *
+         * @param  {String}  str
+         * @return {String}
+         */
+        strip(str) {
+            return str.replace(/<.*>/, '').replace(/\ $/, '');
         }
     }
 };
