@@ -2,7 +2,7 @@
 
 @section('title')
     @isset($title)
-        {{ucfirst($title)}}
+        {{ strip_tags(ucfirst($title)) }}
     @endisset
 @endsection
 
