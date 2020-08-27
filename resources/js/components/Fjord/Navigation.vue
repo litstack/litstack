@@ -13,7 +13,7 @@
                     :href="`${Fjord.baseURL}${back}`"
                 >
                     <fa-icon icon="list-ul" class="mr-1" />
-                    {{ backText ? backText : 'Go Back' }}
+                    <span v-html="backText ? backText : 'Go Back'" />
                 </b-button>
                 <div class="d-inline-block">
                     <slot name="left" />
