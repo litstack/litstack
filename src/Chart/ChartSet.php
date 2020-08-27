@@ -141,7 +141,7 @@ class ChartSet
     public function load(CarbonInterface $time)
     {
         $this->time = $time;
-        $this->reset();
+        // $this->reset();
 
         $statements = [];
         for ($i = 0; $i < $this->iterations; $i++) {
@@ -155,7 +155,9 @@ class ChartSet
                 $statements[] = $statement;
             }
 
-            $this->labels[] = $this->getLabelFromTime($time);
+            if (count($this->labels) < $this->iterations) {
+                $this->labels[] = $this->getLabelFromTime($time);
+            }
         }
 
         $this->values[] = $this->convertNullValues(
