@@ -13,7 +13,7 @@
 					:href="`${Lit.baseURL}${back}`"
 				>
 					<fa-icon icon="list-ul" class="mr-1" />
-					{{ backText ? backText : 'Go Back' }}
+					<span v-html="backText ? backText : 'Go Back'" />
 				</b-button>
 				<div class="d-inline-block">
 					<slot name="left" />
@@ -141,7 +141,7 @@ export default {
 		let self = this;
 		document.addEventListener(
 			'keydown',
-			function (e) {
+			function(e) {
 				if (
 					(window.navigator.platform.match('Mac')
 						? e.metaKey
@@ -157,7 +157,7 @@ export default {
 			false
 		);
 
-		this.$nextTick(async function () {
+		this.$nextTick(async function() {
 			await this.saveButtonIsRendered('.lit-save-button');
 			let ww = window.innerWidth;
 			let button = document
