@@ -19,7 +19,6 @@
                     <slot name="left" />
                 </div>
             </div>
-
             <div
                 class="d-flex fj-save-animate fj-page-navigation-right"
                 :style="wrapperStyle"
