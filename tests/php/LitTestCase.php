@@ -142,8 +142,7 @@ trait LitTestCase
             'prefix'   => '',
         ]);
         $config->set('translatable.locales', [
-            'en',
-            'de',
+            'en', 'de',
         ]);
     }
 

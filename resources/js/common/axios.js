@@ -33,6 +33,12 @@ const methods = {
 			return Promise.reject(error);
 		}
 
+		// Show livewire error in development.
+		if (process.env.NODE_ENV == 'development') {
+			livewire.connection.driver.showHtmlModal(error.response.data);
+			return Promise.reject(error);
+		}
+
 		if (typeof error.response.data !== 'object') {
 			return Promise.reject(error);
 		}

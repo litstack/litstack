@@ -115,6 +115,21 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     }
 
     /**
+     * Add livewire component column.
+     *
+     * @param  string $component
+     * @param  array  $data
+     * @return View
+     */
+    public function livewire($component, $data = [])
+    {
+        return $this->view('litstack::partials.livewire', [
+            'component' => $component,
+            'data'      => $data,
+        ]);
+    }
+
+    /**
      * Add toggle column.
      *
      * @param  string          $key

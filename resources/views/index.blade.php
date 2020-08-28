@@ -30,7 +30,7 @@
 
 </head>
 
-<body onload="makeVisible()">
+<body>
     @php
         lit()->config('navigation')->topbar;
         lit()->config('navigation')->main;
@@ -64,59 +64,6 @@
     @foreach(lit_app()->getScripts() as $src)
         <script src="{{ $src }}"></script>
     @endforeach
-
-    <script type="text/javascript">
-        function makeVisible(){
-
-            let spinner = document.getElementById("lit-spinner");
-            let main = document.querySelector("div#litstack > main");
-            if(spinner && main) {
-                spinner.classList.add('loaded');
-                main.classList.add('loaded');
-            }
-        
-            main.addEventListener('scroll', e => {
-                //let container = document.querySelector('.lit-container');
-                let header = document.querySelector('.lit-page-navigation');
-
-                let toasterSlot = document.querySelector('.b-toaster-slot');
-
-                if(!header) {
-                    return;
-                }
-                
-                if(header.getBoundingClientRect().top == 0){
-                    header.classList.add('sticky')
-                    if(toasterSlot){
-                        toasterSlot.classList.add('sticky')
-                    }
-                    
-                } else {
-                    header.classList.remove('sticky')
-                    if(toasterSlot){
-                        toasterSlot.classList.remove('sticky')
-                    }
-                }
-                
-            });
-
-            
-            const toggleSidebar = () => {
-                document
-                .querySelector('.lit-navigation')
-                .classList.toggle('visible');
-                
-                document
-                .querySelector('#litstack')
-                .classList.toggle('navigation-visible');
-            }
-            
-  
-            document.querySelector('.lit-main-navigation-toggle').addEventListener('click', e => {
-                toggleSidebar()
-            })
-        }
-    </script>
 
     @if(Lit::usesLivewire())
         <livewire:scripts />

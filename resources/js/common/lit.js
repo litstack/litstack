@@ -7,6 +7,15 @@ const Lit = {
 	baseURL: null,
 
 	/**
+	 * Get node env.
+	 *
+	 * @return {String}
+	 */
+	env() {
+		return process.env.NODE_ENV;
+	},
+
+	/**
 	 * Get authenticated lit-user model.
 	 *
 	 * @return {Object}

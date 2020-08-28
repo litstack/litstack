@@ -101,13 +101,15 @@ abstract class BasePage implements Page
     /**
      * Bind livewire component to page.
      *
-     * @param  string $component
-     * @return void
+     * @param  string         $component
+     * @param  array          $data
+     * @return BladeComponent
      */
-    public function livewire($component)
+    public function livewire($component, $data = [])
     {
         return $this->view('litstack::partials.livewire', [
             'component' => $component,
+            'data'      => $data,
         ]);
     }
 

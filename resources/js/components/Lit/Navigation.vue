@@ -94,8 +94,77 @@ export default {
 			loaded: false,
 		};
 	},
+	mounted() {
+		let self = this;
+		this.scrollBehavior();
+		this.saveShortCut();
+
+		this.$nextTick(async function() {
+			await this.saveButtonIsRendered('.lit-save-button');
+			let ww = window.innerWidth;
+			let button = document
+				.querySelector('.lit-save-button')
+				.getBoundingClientRect();
+			let offset = ww - button.right;
+
+			this.b = button;
+			this.offset = Math.ceil(offset);
+
+			setTimeout(() => {
+				this.loaded = true;
+			}, 10);
+		});
+	},
 	methods: {
-		// Used with elementIsRendered
+		scrollBehavior() {
+			document
+				.querySelector('div#litstack > main')
+				.addEventListener('scroll', (e) => {
+					let header = document.querySelector('.lit-page-navigation');
+					let toasterSlot = document.querySelector('.b-toaster-slot');
+
+					if (!header) {
+						return;
+					}
+
+					if (header.getBoundingClientRect().top == 0) {
+						header.classList.add('sticky');
+						if (toasterSlot) {
+							toasterSlot.classList.add('sticky');
+						}
+					} else {
+						header.classList.remove('sticky');
+						if (toasterSlot) {
+							toasterSlot.classList.remove('sticky');
+						}
+					}
+				});
+		},
+		/**
+		 * cmd + s shortcut.
+		 */
+		saveShortCut() {
+			document.addEventListener(
+				'keydown',
+				function(e) {
+					if (
+						(window.navigator.platform.match('Mac')
+							? e.metaKey
+							: e.ctrlKey) &&
+						e.keyCode == 83
+					) {
+						e.preventDefault();
+						if (self.canSave) {
+							Lit.bus.$emit('save');
+						}
+					}
+				},
+				false
+			);
+		},
+		/**
+		 * Used with elementIsRendered.
+		 */
 		waitUntilSaveButton(selector, scope, resolve, reject) {
 			let loopCount = 0;
 			let maxLoops = 100;
@@ -123,8 +192,11 @@ export default {
 			checkForElement();
 		},
 
-		// Returns a resolved Promise once the selector returns an element
-		// Useful for when we need to perform an action only when an element is in the DOM
+		/**
+		 * Returns a resolved Promise once the selector returns an element.
+		 * Useful for when we need to perform an action only when an element is
+		 * in the DOM
+		 */
 		saveButtonIsRendered(selector, scope = document) {
 			return new Promise((resolve, reject) => {
 				//start the loop
@@ -137,42 +209,7 @@ export default {
 			});
 		},
 	},
-	mounted() {
-		let self = this;
-		document.addEventListener(
-			'keydown',
-			function(e) {
-				if (
-					(window.navigator.platform.match('Mac')
-						? e.metaKey
-						: e.ctrlKey) &&
-					e.keyCode == 83
-				) {
-					e.preventDefault();
-					if (self.canSave) {
-						Lit.bus.$emit('save');
-					}
-				}
-			},
-			false
-		);
 
-		this.$nextTick(async function() {
-			await this.saveButtonIsRendered('.lit-save-button');
-			let ww = window.innerWidth;
-			let button = document
-				.querySelector('.lit-save-button')
-				.getBoundingClientRect();
-			let offset = ww - button.right;
-
-			this.b = button;
-			this.offset = Math.ceil(offset);
-
-			setTimeout(() => {
-				this.loaded = true;
-			}, 10);
-		});
-	},
 	computed: {
 		...mapGetters(['canSave']),
 		wrapperStyle() {

@@ -6,31 +6,33 @@ window.Cropper = require('cropperjs');
 const axios = require('axios');
 
 window.axios = axios.create({
-    headers: {
-        'X-Requested-With': 'XMLHttpRequest'
-    }
+	headers: {
+		Accept:
+			process.env.NODE_ENV == 'development'
+				? 'text/plain, application/json, */*'
+				: 'application/json, text/plain, */*',
+		'X-Requested-With': 'XMLHttpRequest',
+	},
 });
 
 window._axios = axios.create({
-    headers: {
-        'X-Requested-With': 'XMLHttpRequest'
-    }
+	headers: {
+		'X-Requested-With': 'XMLHttpRequest',
+	},
 });
 
 try {
-    window.$ = window.jQuery = require('jquery');
-    require('bootstrap');
+	window.$ = window.jQuery = require('jquery');
+	require('bootstrap');
 } catch (e) {}
 
 const token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-    window._axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+	window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+	window._axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-    /*
-    console.error(
-        'CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token'
-    );
-    */
+	console.error(
+		'CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token'
+	);
 }

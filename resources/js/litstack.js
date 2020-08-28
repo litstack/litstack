@@ -83,9 +83,6 @@ Litstack.prototype._vue = function() {
 		components: {
 			LitstackApp,
 		},
-		data: {
-			litPlugins: plugins,
-		},
 	});
 };
 

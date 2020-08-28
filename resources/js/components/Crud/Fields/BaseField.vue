@@ -25,9 +25,9 @@
 				class="d-flex justify-content-between"
 				v-if="
 					(field.hint && !noHint) ||
-					field.max ||
-					field.min ||
-					field.maxFiles
+						field.max ||
+						field.min ||
+						field.maxFiles
 				"
 			>
 				<small
@@ -162,6 +162,9 @@ export default {
 		 * @return {Array}
 		 */
 		findErrors(result) {
+			if (typeof result.response.data != typeof {}) {
+				return;
+			}
 			if (!('errors' in result.response.data)) {
 				return;
 			}
