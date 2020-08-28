@@ -2,6 +2,8 @@
 
 namespace Tests\Commands;
 
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Console\CastMakeCommand;
 use Illuminate\Support\Facades\File;
 use Tests\BackendTestCase;
 
@@ -54,6 +56,9 @@ class GeneratorCommandTest extends BackendTestCase
     /** @test */
     public function it_creates_cast()
     {
+        if (! class_exists(CastMakeCommand::class)) {
+            $this->markTestSkipped('Cast command not available in Laravel '.Application::VERSION);
+        }
         $this->artisan('lit:cast', ['name' => 'foo']);
         $this->assertFileExists(base_path('lit/app/Casts/Foo.php'));
         $this->assertTrue(class_exists(\Lit\Casts\Foo::class));

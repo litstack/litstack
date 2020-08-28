@@ -7,6 +7,7 @@ use Ignite\Application\Commands\ComponentCommand;
 use Ignite\Application\Commands\JobCommand;
 use Ignite\Application\Commands\LivewireCommand;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Foundation\Console\CastMakeCommand;
 use Illuminate\Support\ServiceProvider;
 
 class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvider
@@ -89,6 +90,10 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     protected function registerCastCommand($abstract)
     {
+        if (! class_exists(CastMakeCommand::class)) {
+            return;
+        }
+
         $this->app->singleton($abstract, function ($app) {
             return new CastCommand($app['files']);
         });

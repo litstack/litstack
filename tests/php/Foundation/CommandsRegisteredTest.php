@@ -2,6 +2,7 @@
 
 namespace Tests\Foundation;
 
+use Illuminate\Foundation\Console\CastMakeCommand;
 use Illuminate\Support\Facades\Artisan;
 use Tests\BackendTestCase;
 
@@ -41,6 +42,28 @@ class CommandsRegisteredTest extends BackendTestCase
     public function test_nav_command_is_registered()
     {
         $this->assertCommandExists('lit:nav');
+    }
+
+    /** @test */
+    public function test_job_command_is_registered()
+    {
+        $this->assertCommandExists('lit:job');
+    }
+
+    /** @test */
+    public function test_component_command_is_registered()
+    {
+        $this->assertCommandExists('lit:component');
+    }
+
+    /** @test */
+    public function test_cast_command_is_registered()
+    {
+        if (! class_exists(CastMakeCommand::class)) {
+            $this->markTestSkipped('Cast command not available in Laravel '.Application::VERSION);
+        }
+
+        $this->assertCommandExists('lit:cast');
     }
 
     public function assertCommandExists($command)
