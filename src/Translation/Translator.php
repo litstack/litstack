@@ -50,9 +50,10 @@ class Translator
      * @param  string               $key
      * @param  \Countable|int|array $number
      * @param  array                $replace
+     * @param  string|null          $locale
      * @return string
      */
-    public function choice(string $key = null, $number, $replace = [])
+    public function choice(string $key = null, $number, $replace, $locale = null)
     {
         $langKey = $this->getLangKey($key);
 
@@ -60,7 +61,11 @@ class Translator
             return $key;
         }
 
-        return trans_choice($langKey, $number, $replace, $this->getLocale());
+        if (is_null($locale)) {
+            $locale = $this->getLocale();
+        }
+
+        return trans_choice($langKey, $number, $replace, $locale);
     }
 
     /**

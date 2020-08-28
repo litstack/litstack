@@ -28,6 +28,8 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->registerVueApplication();
 
         $this->loadAssets();
+
+        $this->app->register(ArtisanServiceProvider::class);
     }
 
     /**

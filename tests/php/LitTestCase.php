@@ -20,6 +20,7 @@ trait LitTestCase
      * @var array
      */
     public static $packageProviders = [
+        \Livewire\LivewireServiceProvider::class,
         \Cviebrock\EloquentSluggable\ServiceProvider::class,
         \Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         \Spatie\Permission\PermissionServiceProvider::class,

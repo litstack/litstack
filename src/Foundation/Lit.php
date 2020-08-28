@@ -84,8 +84,7 @@ class Lit
     /**
      * Get Lit route by name.
      *
-     * @param string $name
-     *
+     * @param  string $name
      * @return string
      */
     public function route(string $name)
@@ -107,23 +106,39 @@ class Lit
             return $key;
         }
 
-        return $this->laravel[Translator::class]->trans($key, $replace, $locale);
+        return $this->laravel[Translator::class]->trans(
+            $key, $replace, $locale
+        );
     }
 
     /**
      * Get choice translation for Lit application.
      *
-     * @param  string $key
-     * @param  array  $replace
+     * @param  string      $key
+     * @param  int         $number
+     * @param  array       $replace
+     * @param  string|null $locale
      * @return string
      */
-    public function trans_choice(string $key = null, $number, $replace = [])
+    public function transChoice(string $key = null, $number, $replace = [], $locale = null)
     {
         if (is_null($key)) {
             return $key;
         }
 
-        return $this->laravel[Translator::class]->choice($key, $number, $replace);
+        return $this->laravel[Translator::class]->choice(
+            $key, $number, $replace, $locale
+        );
+    }
+
+    /**
+     * Get locale for Lit application.
+     *
+     * @return void
+     */
+    public function getLocale()
+    {
+        return $this->laravel[Translator::class]->getLocale();
     }
 
     /**
@@ -162,20 +177,10 @@ class Lit
     }
 
     /**
-     * Get locale for Lit application.
-     *
-     * @return void
-     */
-    public function getLocale()
-    {
-        return $this->laravel[Translator::class]->getLocale();
-    }
-
-    /**
      * Add css file to the application.
      *
      * @param  string $path
-     * @return $this
+     * @return void
      */
     public function style($path)
     {
@@ -183,14 +188,14 @@ class Lit
             return;
         }
 
-        return $this->app->style($path);
+        $this->app->style($path);
     }
 
     /**
      * Add script to the application.
      *
      * @param  string $src
-     * @return $this
+     * @return void
      */
     public function script($src)
     {
@@ -198,7 +203,27 @@ class Lit
             return;
         }
 
-        return $this->app->script($src);
+        $this->app->script($src);
+    }
+
+    /**
+     * Get litstack application namesapce.
+     *
+     * @return string
+     */
+    public function getNamespace()
+    {
+        return 'Lit\\';
+    }
+
+    /**
+     * Get litstack path.
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return base_path('lit');
     }
 
     /**

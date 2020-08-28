@@ -54,7 +54,6 @@ class LitPackage extends Package
         Commands\LitController::class,
         Commands\LitComponents::class,
         Commands\LitDefaultPermissions::class,
-        Commands\LitLivewireCommand::class,
     ];
 
     /**

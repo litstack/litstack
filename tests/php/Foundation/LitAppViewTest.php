@@ -9,7 +9,7 @@ use Throwable;
 /**
  * Testing view [lit::app].
  */
-class LitViewTest extends BackendTestCase
+class LitAppViewTest extends BackendTestCase
 {
     use ActingAsLitUserMock;
 
@@ -17,7 +17,7 @@ class LitViewTest extends BackendTestCase
     public function it_fails_when_component_data_is_missing()
     {
         $this->expectException(Throwable::class);
-        view('lit::app')->render();
+        view('litstack::app')->render();
     }
 
     // TODO: Test it sets view data.
