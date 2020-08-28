@@ -65,6 +65,30 @@ class GeneratorCommandTest extends BackendTestCase
     }
 
     /** @test */
+    public function it_creates_request()
+    {
+        $this->artisan('lit:request', ['name' => 'foo']);
+        $this->assertFileExists(base_path('lit/app/Http/Requests/Foo.php'));
+        $this->assertTrue(class_exists(\Lit\Http\Requests\Foo::class));
+    }
+
+    /** @test */
+    public function it_creates_provider()
+    {
+        $this->artisan('lit:provider', ['name' => 'foo']);
+        $this->assertFileExists(base_path('lit/app/Providers/Foo.php'));
+        $this->assertTrue(class_exists(\Lit\Providers\Foo::class));
+    }
+
+    /** @test */
+    public function it_creates_resource()
+    {
+        $this->artisan('lit:resource', ['name' => 'foo']);
+        $this->assertFileExists(base_path('lit/app/Http/Resources/Foo.php'));
+        $this->assertTrue(class_exists(\Lit\Http\Resources\Foo::class));
+    }
+
+    /** @test */
     public function it_create_component_and_its_view()
     {
         $this->artisan('lit:component', ['name' => 'Foo']);

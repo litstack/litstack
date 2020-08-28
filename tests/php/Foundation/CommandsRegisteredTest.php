@@ -57,6 +57,24 @@ class CommandsRegisteredTest extends BackendTestCase
     }
 
     /** @test */
+    public function test_request_command_is_registered()
+    {
+        $this->assertCommandExists('lit:request');
+    }
+
+    /** @test */
+    public function test_provider_command_is_registered()
+    {
+        $this->assertCommandExists('lit:provider');
+    }
+
+    /** @test */
+    public function test_resource_command_is_registered()
+    {
+        $this->assertCommandExists('lit:resource');
+    }
+
+    /** @test */
     public function test_cast_command_is_registered()
     {
         if (! class_exists(CastMakeCommand::class)) {
