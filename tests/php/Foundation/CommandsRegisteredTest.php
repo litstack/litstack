@@ -75,6 +75,12 @@ class CommandsRegisteredTest extends BackendTestCase
     }
 
     /** @test */
+    public function test_middelware_command_is_registered()
+    {
+        $this->assertCommandExists('lit:middleware');
+    }
+
+    /** @test */
     public function test_cast_command_is_registered()
     {
         if (! class_exists(CastMakeCommand::class)) {

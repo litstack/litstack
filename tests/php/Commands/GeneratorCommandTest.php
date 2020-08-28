@@ -89,6 +89,14 @@ class GeneratorCommandTest extends BackendTestCase
     }
 
     /** @test */
+    public function it_creates_middleware()
+    {
+        $this->artisan('lit:middleware', ['name' => 'foo']);
+        $this->assertFileExists(base_path('lit/app/Http/Middleware/Foo.php'));
+        $this->assertTrue(class_exists(\Lit\Http\Middleware\Foo::class));
+    }
+
+    /** @test */
     public function it_create_component_and_its_view()
     {
         $this->artisan('lit:component', ['name' => 'Foo']);

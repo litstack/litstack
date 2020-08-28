@@ -6,6 +6,7 @@ use Ignite\Application\Commands\CastCommand;
 use Ignite\Application\Commands\ComponentCommand;
 use Ignite\Application\Commands\JobCommand;
 use Ignite\Application\Commands\LivewireCommand;
+use Ignite\Application\Commands\MiddlewareCommand;
 use Ignite\Application\Commands\ProviderCommand;
 use Ignite\Application\Commands\RequestCommand;
 use Ignite\Application\Commands\ResourceCommand;
@@ -33,7 +34,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
         'Job' => 'lit.command.job',
         // 'ListenerMake'     => 'command.listener.make',
         // 'MailMake'         => 'command.mail.make',
-        // 'MiddlewareMake'   => 'command.middleware.make',
+        'Middleware' => 'lit.command.middleware',
         // 'ModelMake'        => 'command.model.make',
         // 'NotificationMake' => 'command.notification.make',
         // 'ObserverMake'     => 'command.observer.make',
@@ -166,6 +167,19 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     {
         $this->app->singleton($abstract, function ($app) {
             return new ResourceCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param  string $abstract
+     * @return void
+     */
+    protected function registerMiddlewareCommand($abstract)
+    {
+        $this->app->singleton($abstract, function ($app) {
+            return new MiddlewareCommand($app['files']);
         });
     }
 }
