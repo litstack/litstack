@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Controllers\Form\DummyNamespace;
+namespace Lit\Http\Controllers\Form\DummyNamespace;
 
 use Ignite\User\Models\User;
 use Ignite\Crud\Controllers\FormController;

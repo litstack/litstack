@@ -1,6 +1,6 @@
 <?php
 
-namespace Lit\Controllers\Crud;
+namespace Lit\Http\Controllers\Crud;
 
 use Illuminate\Database\Eloquent\Builder;
 

@@ -8,7 +8,7 @@ use Ignite\Crud\Config\CrudConfig;
 use Illuminate\Support\Str;
 
 use App\Models\DummyClassname;
-use Lit\Controllers\Crud\DummyClassnameController;
+use Lit\Http\Controllers\Crud\DummyClassnameController;
 
 class DummyClassnameConfig extends CrudConfig
 {

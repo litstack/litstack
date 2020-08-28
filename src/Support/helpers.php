@@ -64,7 +64,7 @@ if (! function_exists('component')) {
      * Get a new Vue component instance.
      *
      * @param  \Ignite\Vue\Component|string $name
-     * @param  string                      $fallback
+     * @param  string                       $fallback
      * @return \Ignite\Vue\Component|mixed
      */
     function component($name, $fallback = null)
@@ -484,5 +484,23 @@ if (! function_exists('call_unaccessible_method')) {
         }
 
         return $method->invokeArgs($abstract, $params);
+    }
+}
+
+if (! function_exists('set_unaccessible_property')) {
+    /**
+     * Set protected or private class property value.
+     *
+     * @param mixed  $instance
+     * @param string $property
+     * @param mixed  $value
+     *
+     * @return void
+     */
+    function set_unaccessible_property($instance, string $property, $value)
+    {
+        $reflection = new ReflectionProperty(get_class($instance), $property);
+        $reflection->setAccessible(true);
+        $value = $reflection->setValue($instance, $value);
     }
 }

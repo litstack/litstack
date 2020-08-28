@@ -4,7 +4,7 @@ namespace Lit\Config\Form\DummyCollection;
 
 use Ignite\Crud\CrudShow;
 use Ignite\Crud\Config\FormConfig;
-use Lit\Controllers\Form\DummyCollection\DummyController;
+use Lit\Http\Controllers\Form\DummyCollection\DummyController;
 
 class DummyConfigClassName extends FormConfig
 {

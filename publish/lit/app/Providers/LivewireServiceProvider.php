@@ -17,8 +17,8 @@ class LivewireServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadLivewireComponentsFrom(
-            'lit/app/Http/Livewire',
             'Lit\\Http\\Livewire',
+            base_path('lit/app/Http/Livewire'),
             'lit'
         );
     }
