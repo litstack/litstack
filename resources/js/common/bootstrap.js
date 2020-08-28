@@ -1,5 +1,8 @@
+import Bus from './event.bus';
+
 window._ = require('lodash');
 window.Vue = require('vue');
+import store from '@lit-js/store';
 
 window.Cropper = require('cropperjs');
 
@@ -7,10 +10,6 @@ const axios = require('axios');
 
 window.axios = axios.create({
 	headers: {
-		Accept:
-			process.env.NODE_ENV == 'development'
-				? 'text/plain, application/json, */*'
-				: 'application/json, text/plain, */*',
 		'X-Requested-With': 'XMLHttpRequest',
 	},
 });
@@ -19,6 +18,15 @@ window._axios = axios.create({
 	headers: {
 		'X-Requested-With': 'XMLHttpRequest',
 	},
+});
+
+Bus.$on('mounted', () => {
+	if (!store.getters.debug) {
+		return;
+	}
+	console.log();
+	window.axios.defaults.headers['Accept'] =
+		'text/plain, application/json, */*';
 });
 
 try {

@@ -32,6 +32,10 @@ export default {
 			type: Object,
 			required: true,
 		},
+		debug: {
+			type: Boolean,
+			require: true,
+		},
 		roles: {
 			type: Array,
 			default() {
@@ -74,6 +78,8 @@ export default {
 
 		this.$Bus.$on('save', this.save);
 		this.$Bus.$on('cancelSave', this.cancelSave);
+
+		this.$Bus.$emit('mounted');
 	},
 	mounted() {
 		this.loaded();
@@ -93,6 +99,7 @@ export default {
 		 * Fill store.
 		 */
 		fillStore() {
+			this.$store.commit('SET_DEBUG', this.debug);
 			this.$store.commit('SET_ROLES', this.roles);
 			this.$store.commit('SET_PERMISSIONS', this.permissions);
 			this.$store.commit('SET_LANGUAGES', this.translatable.languages);

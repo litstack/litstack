@@ -12,7 +12,7 @@ const Lit = {
 	 * @return {String}
 	 */
 	env() {
-		return process.env.NODE_ENV;
+		return store.getters.env;
 	},
 
 	/**
@@ -56,11 +56,11 @@ const Lit = {
 
 window.Lit = Lit;
 
-const setConfig = (config) => {
-	window.Lit.config = config;
+const setConfig = () => {
+	window.Lit.config = store.state.config;
 	window.Lit.baseURL = store.state.config.baseURL;
 };
 
-Bus.$on('configSet', setConfig);
+Bus.$on('mounted', setConfig);
 
 export default Lit;

@@ -25,6 +25,7 @@ class AppComponent extends Component
      */
     public function rendering()
     {
+        $this->prop('debug', config('app.debug'));
         $this->prop('config', collect(config('lit')));
         $this->prop('auth', lit_user());
         $this->prop('app-locale', lit()->getLocale());

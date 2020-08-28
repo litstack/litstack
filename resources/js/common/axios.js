@@ -29,12 +29,14 @@ const methods = {
 	axiosResponseError(error) {
 		// Any status codes that falls outside the range of 2xx cause this function to trigger
 		// Do something with response error
+
+		console.log(store.getters.debug);
 		if (!error.response) {
 			return Promise.reject(error);
 		}
 
 		// Show livewire error in development.
-		if (process.env.NODE_ENV == 'development') {
+		if (store.getters.debug) {
 			livewire.connection.driver.showHtmlModal(error.response.data);
 			return Promise.reject(error);
 		}
@@ -65,10 +67,10 @@ const methods = {
 	},
 };
 
-const setBaseUrl = (config) => {
+const setBaseUrl = () => {
 	window.axios.defaults.baseURL = store.state.config.baseURL;
 };
 
-Bus.$on('configSet', setBaseUrl);
+Bus.$on('mounted', setBaseUrl);
 
 export default methods;

@@ -30,9 +30,17 @@ const initialState = {
 	 * Base url with a front slash prepended and appended e.g.: "/admin/"
 	 */
 	baseURL: '',
+
+	/**
+	 * Wether debug mode is enabled.
+	 */
+	debug: false,
 };
 
 const getters = {
+	debug(state) {
+		return state.debug;
+	},
 	languages(state) {
 		return state.languages;
 	},
@@ -61,6 +69,9 @@ export const actions = {};
 export const state = Object.assign({}, initialState);
 
 export const mutations = {
+	SET_DEBUG(state, debug) {
+		state.debug = debug;
+	},
 	SET_CONFIG(state, config) {
 		state.config = config;
 	},
@@ -70,7 +81,6 @@ export const mutations = {
 		let slash = config.route_prefix.startsWith('/') ? '' : '/';
 
 		state.baseURL = '' + slash + config.route_prefix + '/';
-		Bus.$emit('configSet', state.lit_config);
 	},
 	SET_LANGUAGES(state, languages) {
 		state.languages = languages;
