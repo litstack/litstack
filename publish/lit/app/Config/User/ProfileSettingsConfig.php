@@ -5,7 +5,7 @@ namespace Lit\Config\User;
 use Ignite\Crud\Config\CrudConfig;
 use Ignite\Crud\CrudShow;
 use Ignite\User\Models\User;
-use Lit\Controllers\User\ProfileSettingsController;
+use Lit\Http\Controllers\User\ProfileSettingsController;
 
 class ProfileSettingsConfig extends CrudConfig
 {

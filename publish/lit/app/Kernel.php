@@ -12,7 +12,7 @@ class Kernel extends LitstackKernel
      * @var array
      */
     public $providers = [
+        Providers\LitstackServiceProvider::class,
         Providers\LocalizationServiceProvider::class,
-        Providers\LitServiceProvider::class,
     ];
 }

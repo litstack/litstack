@@ -2,6 +2,11 @@ import Bus from './event.bus';
 import store from '@lit-js/store';
 
 const methods = {
+	/**
+	 * Handle successfull axios response.
+	 *
+	 * @param {Object} response
+	 */
 	axiosResponseSuccess(response) {
 		if (typeof response.data !== 'object') {
 			return response;
@@ -26,6 +31,12 @@ const methods = {
 
 		return response;
 	},
+
+	/**
+	 * Handle axios error.
+	 *
+	 * @param {Object} error
+	 */
 	axiosResponseError(error) {
 		// Any status codes that falls outside the range of 2xx cause this function to trigger
 		// Do something with response error

@@ -8,7 +8,7 @@ use Ignite\Crud\CrudShow;
 use Ignite\Page\Table\ColumnBuilder;
 use Ignite\User\Models\User;
 use Illuminate\Support\Facades\Route;
-use Lit\Controllers\User\UserController;
+use Lit\Http\Controllers\User\UserController;
 
 class UserConfig extends CrudConfig
 {

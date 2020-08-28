@@ -1,4 +1,5 @@
 import Bus from './event.bus';
+import axiosMethods from './axios';
 
 window._ = require('lodash');
 window.Vue = require('vue');
@@ -13,6 +14,11 @@ window.axios = axios.create({
 		'X-Requested-With': 'XMLHttpRequest',
 	},
 });
+
+window.axios.interceptors.response.use(
+	axiosMethods.axiosResponseSuccess,
+	axiosMethods.axiosResponseError
+);
 
 window._axios = axios.create({
 	headers: {

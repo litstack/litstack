@@ -4,7 +4,7 @@ namespace Lit\Config\Form\Dashboards;
 
 use Ignite\Crud\Config\FormConfig;
 use Ignite\Crud\CrudShow;
-use Lit\Controllers\Form\Dashboards\WelcomeController;
+use Lit\Http\Controllers\Form\Dashboards\WelcomeController;
 
 class WelcomeConfig extends FormConfig
 {
@@ -34,5 +34,7 @@ class WelcomeConfig extends FormConfig
     public function show(CrudShow $page)
     {
         $page->title('Welcome');
+
+        $page->view('lit::welcome');
     }
 }

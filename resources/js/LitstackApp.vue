@@ -5,7 +5,6 @@
 <script>
 import Litstack from './litstack';
 import { mapGetters } from 'vuex';
-import axiosMethods from './common/axios';
 
 export default {
 	inheritAttrs: false,
@@ -67,11 +66,6 @@ export default {
 		};
 	},
 	beforeMount() {
-		axios.interceptors.response.use(
-			this.axiosResponseSuccess,
-			this.axiosResponseError
-		);
-
 		this.fillStore();
 		this.prepareProps();
 		this.setAppLocale();
@@ -93,8 +87,6 @@ export default {
 		});
 	},
 	methods: {
-		...axiosMethods,
-
 		/**
 		 * Fill store.
 		 */

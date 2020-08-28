@@ -4,7 +4,7 @@ namespace Lit\Config\Form\Pages;
 
 use Ignite\Crud\Config\FormConfig;
 use Ignite\Crud\CrudShow;
-use Lit\Controllers\Form\Pages\HomeController;
+use Lit\Http\Controllers\Form\Pages\HomeController;
 
 class HomeConfig extends FormConfig
 {
