@@ -2,23 +2,13 @@
 
 namespace Ignite\Auth;
 
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 use Ignite\Auth\Controllers\AuthController;
 use Ignite\Auth\Controllers\ResetPasswordController;
 use Ignite\Support\Facades\Route;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
-    /**
-     * Boot application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        parent::boot();
-    }
-
     /**
      * Map routes.
      *
@@ -54,8 +44,11 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             ->name('register');
 
         Route::public()
-            ->get('/lit/password/reset/{token}', ResetPasswordController::class.'@showResetForm')->name('password.reset');
+            ->get('/lit/password/reset/{token}', ResetPasswordController::class.'@showResetForm')
+            ->name('password.reset');
+
         Route::public()
-            ->post('/lit/password/reset', ResetPasswordController::class.'@reset')->name('password.request');
+            ->post('/lit/password/reset', ResetPasswordController::class.'@reset')
+            ->name('password.request');
     }
 }

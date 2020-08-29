@@ -5,8 +5,8 @@ namespace Ignite\Permissions\Controllers;
 use Ignite\Permissions\Requests\Role\CreateRoleRequest;
 use Ignite\Permissions\Requests\Role\DeleteRoleRequest;
 use Ignite\Permissions\Requests\Role\UpdateRoleRequest;
-use Ignite\User\Models\User;
 use Illuminate\Http\Request;
+use Lit\Models\User;
 use Spatie\Permission\Models\Role;
 
 class RoleController
@@ -14,8 +14,8 @@ class RoleController
     /**
      * Assign role to lit-user.
      *
-     * @param  Request   $request
-     * @param  User $user_id
+     * @param  Request $request
+     * @param  User    $user_id
      * @return void
      */
     public function assignRoleToUser(UpdateRoleRequest $request, $user_id, $role_id)
@@ -30,8 +30,8 @@ class RoleController
     /**
      * Remove role to from lit-user.
      *
-     * @param  Request   $request
-     * @param  User $user_id
+     * @param  Request $request
+     * @param  User    $user_id
      * @return void
      */
     public function removeRoleFromUser(UpdateRoleRequest $request, $user_id, $role_id)

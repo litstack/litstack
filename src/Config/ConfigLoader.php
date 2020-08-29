@@ -17,7 +17,7 @@ class ConfigLoader
      *
      * @var string
      */
-    protected $namespace = "Lit\Config";
+    protected $namespace = 'Lit\\Config';
 
     /**
      * Stack of loaded instances.
@@ -27,10 +27,40 @@ class ConfigLoader
     protected $loaded = [];
 
     /**
+     * Registered config factories.
+     *
+     * @var array
+     */
+    protected $factories = [];
+
+    /**
+     * Register config factory for the given dependency.
+     *
+     * @param  string $dependency
+     * @param  string $factory
+     * @return $this
+     */
+    public function factory($dependency, $factory)
+    {
+        $this->factories[$dependency] = $factory;
+
+        return $this;
+    }
+
+    /**
+     * Get config factories.
+     *
+     * @return array
+     */
+    public function factories()
+    {
+        return $this->factories;
+    }
+
+    /**
      * Get key.
      *
-     * @param sring $key
-     *
+     * @param  sring  $key
      * @return string
      */
     public function getKey(string $key)
@@ -48,8 +78,7 @@ class ConfigLoader
     /**
      * Is key namespace.
      *
-     * @param string $key
-     *
+     * @param  string $key
      * @return bool
      */
     protected function isKeyNamespace(string $key)
@@ -60,8 +89,7 @@ class ConfigLoader
     /**
      * Is key path.
      *
-     * @param string $key
-     *
+     * @param  string $key
      * @return bool
      */
     protected function isKeyPath(string $key)
@@ -72,9 +100,8 @@ class ConfigLoader
     /**
      * Get config by key.
      *
-     * @param string $key
-     * @param array  ...$params
-     *
+     * @param  string $key
+     * @param  array  ...$params
      * @return mixed
      */
     public function get(string $key, ...$params)

@@ -25,8 +25,8 @@ abstract class CrudController extends CrudBaseController
      * Authorize request for permission operation and authenticated lit-user.
      * Operations: create, read, update, delete.
      *
-     * @param  \Ignite\User\Models\User $user
-     * @param  string                       $operation
+     * @param  \Lit\Models\User $user
+     * @param  string           $operation
      * @return bool
      */
     //abstract public function authorize(User $user, string $operation, $id = null);

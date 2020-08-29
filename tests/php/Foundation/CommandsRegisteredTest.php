@@ -33,15 +33,21 @@ class CommandsRegisteredTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_form_permissions_command_is_registered()
+    public function test_permissions_command_is_registered()
     {
-        $this->assertCommandExists('lit:form-permissions');
+        $this->assertCommandExists('lit:permissions');
     }
 
     /** @test */
     public function test_nav_command_is_registered()
     {
         $this->assertCommandExists('lit:nav');
+    }
+
+    /** @test */
+    public function test_chart_is_registered()
+    {
+        $this->assertCommandExists('lit:chart');
     }
 
     /** @test */

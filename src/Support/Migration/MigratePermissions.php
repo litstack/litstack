@@ -44,4 +44,26 @@ trait MigratePermissions
             $permission->delete();
         }
     }
+
+    /**
+     * Combine operations and groups.
+     *
+     * @param  array $operations
+     * @param  array $groups
+     * @return void
+     */
+    public function combineOperationsAndGroups(array $operations, array $groups)
+    {
+        foreach ($operations as $operation) {
+            foreach ($groups as $group) {
+                $permission = "{$operation} {$group}";
+
+                if (in_array($permission, $this->permissions)) {
+                    continue;
+                }
+
+                $this->permissions[] = $permission;
+            }
+        }
+    }
 }

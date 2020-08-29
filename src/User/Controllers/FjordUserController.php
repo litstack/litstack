@@ -3,10 +3,10 @@
 namespace Ignite\User\Controllers;
 
 use Ignite\Support\IndexTable;
-use Ignite\User\Models\User;
 use Ignite\User\Requests\UserDeleteRequest;
 use Ignite\User\Requests\UserReadRequest;
 use Illuminate\Http\Request;
+use Lit\Models\User;
 
 class FjordUserController
 {

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string __(string $key, array $replace = [], string $locale = null)
  * @method static string getLocale()
  * @method static \Ignite\Config\ConfigHandler|null config(string $key, ...$params)
- * @method static \Ignite\User\Models\User|null user()
+ * @method static \Lit\Models\User|null user()
  * @method static bool installed()
  *
  * @see \Ignite\Foundation\Lit

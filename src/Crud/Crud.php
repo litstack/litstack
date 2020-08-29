@@ -2,16 +2,16 @@
 
 namespace Ignite\Crud;
 
-use Illuminate\Support\Facades\Route as RouteFacade;
-use Illuminate\Support\Str;
-use InvalidArgumentException;
 use Ignite\Crud\Requests\CrudCreateRequest;
 use Ignite\Crud\Requests\CrudDeleteRequest;
 use Ignite\Crud\Requests\CrudReadRequest;
 use Ignite\Crud\Requests\CrudUpdateRequest;
 use Ignite\Support\Facades\Lit;
 use Ignite\Support\Facades\Package;
-use Ignite\User\Models\User;
+use Illuminate\Support\Facades\Route as RouteFacade;
+use Illuminate\Support\Str;
+use InvalidArgumentException;
+use Lit\Models\User;
 
 /**
  * Crud singleton.

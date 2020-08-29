@@ -8,24 +8,9 @@ use Illuminate\Support\Facades\View as ViewFactory;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-/**
- * The Application class manages all depencies for the view litstack::app:
- * Bootstrapping Application,
- * Registering and booting packages,
- * Registering and calling config handlers,
- * Binding css files for lit,
- * Bind composer to the litstack::app view.
- */
 class Application
 {
     use Concerns\ManagesAssets;
-
-    /**
-     * Registered config factories.
-     *
-     * @var array
-     */
-    protected $configFactories = [];
 
     /**
      * Indicates if the application has been bootstrapped before.

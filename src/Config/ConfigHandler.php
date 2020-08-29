@@ -83,7 +83,7 @@ class ConfigHandler
         $parent = $reflector->getParentClass();
         $uses = class_uses_recursive($this->config);
 
-        foreach (lit()->getConfigFactories() as $dependency => $factory) {
+        foreach (Config::factories() as $dependency => $factory) {
 
             // Matching parent class.
             if ($parent) {
@@ -111,11 +111,10 @@ class ConfigHandler
     /**
      * Register config factory.
      *
-     * @param string $factory
+     * @param  string $factory
+     * @return void
      *
      * @throws \TypeError
-     *
-     * @return void
      */
     public function registerFactory($factory)
     {
@@ -144,9 +143,8 @@ class ConfigHandler
     /**
      * Load select config attributes.
      *
-     * @param string|array ...$keys
-     *
-     * @return array $attributes
+     * @param  string|array ...$keys
+     * @return array        $attributes
      */
     public function get(...$keys)
     {
@@ -176,8 +174,7 @@ class ConfigHandler
     /**
      * Check if config has method.
      *
-     * @param string $method
-     *
+     * @param  string $method
      * @return bool
      */
     public function hasMethod(string $method)
@@ -202,8 +199,7 @@ class ConfigHandler
     /**
      * Get config attribute from loaded stack or new.
      *
-     * @param string $name
-     *
+     * @param  string $name
      * @return mixed
      */
     public function getAttribute(string $name)

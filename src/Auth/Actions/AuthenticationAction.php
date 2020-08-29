@@ -9,9 +9,8 @@ class AuthenticationAction
     /**
      * Execute authentication.
      *
-     * @param array $credentials
-     * @param bool  $remember
-     *
+     * @param  array $credentials
+     * @param  bool  $remember
      * @return bool
      */
     public function execute($credentials, bool $remember = false)

@@ -2,13 +2,13 @@
 
 namespace Ignite\Crud\Controllers;
 
-use Illuminate\Database\Eloquent\Builder;
 use Ignite\Crud\Models\Form;
 use Ignite\Crud\Models\Form as FormModel;
 use Ignite\Crud\Requests\CrudCreateRequest;
 use Ignite\Crud\Requests\CrudReadRequest;
 use Ignite\Crud\Requests\FormReadRequest;
-use Ignite\User\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Lit\Models\User;
 
 abstract class FormController extends CrudBaseController
 {
@@ -23,8 +23,8 @@ abstract class FormController extends CrudBaseController
      * Authorize request for permission operation and authenticated lit-user.
      * Operations: read, update.
      *
-     * @param \Ignite\User\Models\User $user
-     * @param string                   $operation
+     * @param \Lit\Models\User $user
+     * @param string           $operation
      *
      * @return bool
      */

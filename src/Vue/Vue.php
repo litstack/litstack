@@ -57,4 +57,14 @@ class Vue implements VueContract
 
         return new Component($name);
     }
+
+    /**
+     * Get all registered vue components.
+     *
+     * @return array
+     */
+    public function all()
+    {
+        return $this->components;
+    }
 }

@@ -2,10 +2,10 @@
 
 namespace Ignite\Crud\Models;
 
-use Ignite\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Lit\Models\User;
 
 class ModelEdit extends Model
 {

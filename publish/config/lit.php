@@ -35,6 +35,7 @@ return [
     */
 
     'login' => [
+
         'username' => true,
     ],
 

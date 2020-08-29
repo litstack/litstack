@@ -6,7 +6,8 @@ use Ignite\Application\Composer\HttpErrorComposer;
 use Ignite\Application\Controllers\NotFoundController;
 use Ignite\Application\Kernel\HandleRouteMiddleware;
 use Ignite\Application\Kernel\HandleViewComposer;
-use Ignite\Commands\LitFormPermissions;
+use Ignite\Application\Providers\ArtisanServiceProvider;
+use Ignite\Application\Providers\RouteServiceProvider;
 use Ignite\Support\Facades\Config;
 use Ignite\Support\Facades\Route;
 use Illuminate\Routing\Router;
@@ -17,19 +18,48 @@ use Illuminate\View\View as ViewClass;
 class ApplicationServiceProvider extends ServiceProvider
 {
     /**
+     * Litstack application service providers.
+     *
+     * @var array
+     */
+    protected $providers = [
+        \Ignite\Config\ConfigServiceProvider::class,
+        \Ignite\Translation\TranslationServiceProvider::class,
+        \Ignite\Permissions\PermissionsServiceProvider::class,
+        \Ignite\Vue\VueServiceProvider::class,
+        \Ignite\Chart\ChartServiceProvider::class,
+        \Ignite\Crud\CrudServiceProvider::class,
+        \Ignite\User\UserServiceProvider::class,
+        \Ignite\Page\PageServiceProvider::class,
+    ];
+
+    /**
      * Register the application services.
      *
      * @return void
      */
     public function register()
     {
-        $this->registerFormPermissionsCommand();
+        $this->app->register(ArtisanServiceProvider::class);
+        $this->app->register(RouteServiceProvider::class);
+
+        $this->registerProviders();
 
         $this->registerVueApplication();
 
         $this->loadAssets();
+    }
 
-        $this->app->register(ArtisanServiceProvider::class);
+    /**
+     * Register providers.
+     *
+     * @return void
+     */
+    protected function registerProviders()
+    {
+        foreach ($this->providers as $provider) {
+            $this->app->register($provider);
+        }
     }
 
     /**
@@ -53,7 +83,7 @@ class ApplicationServiceProvider extends ServiceProvider
     public function boot(Router $router): void
     {
         $this->handleKernel($router);
-        $this->litErrorPages();
+        $this->litstackErrorPages();
     }
 
     /**
@@ -98,11 +128,11 @@ class ApplicationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Better Lit error pages.
+     * Better Litstack error pages.
      *
      * @return void
      */
-    public function litErrorPages()
+    public function litstackErrorPages()
     {
         // Register route {any} after all service providers have been booted to
         // not override other routes.
@@ -122,21 +152,5 @@ class ApplicationServiceProvider extends ServiceProvider
 
             return $this;
         });
-    }
-
-    /**
-     * Register the command.
-     *
-     * @return void
-     */
-    protected function registerFormPermissionsCommand()
-    {
-        // Bind singleton.
-        $this->app->singleton('lit.command.form-permissions', function ($app) {
-            // Passing migrator to command.
-            return new LitFormPermissions($app['migrator']);
-        });
-        // Registering command.
-        $this->commands(['lit.command.form-permissions']);
     }
 }

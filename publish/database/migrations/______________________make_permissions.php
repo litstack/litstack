@@ -8,14 +8,53 @@ class MakePermissions extends Migration
     use MigratePermissions;
 
     /**
-     * Permissions groups that should be created for all forms.
+     * Edit permissions groups that should be created.
+     * Operations: read, update.
      *
      * @var array
      */
-    protected $groups = [
-        'pages',
-        'settings',
+    protected $editPermissionGroups = [
+        // Permissions to link permissions and roles in litstack.
+        'lit-role-permissions',
     ];
+
+    /**
+     * Crud permission groups that should be created.
+     * Operations: create, read, update, delete.
+     *
+     * @var array
+     */
+    protected $crudPermissionGroups = [
+        // Permissions to manage litstack users.
+        'lit-users',
+
+        // Permissions to manage permissions in litstack.
+        'lit-user-roles',
+    ];
+
+    /**
+     * Permissions that should be deleted.
+     * Operations: create, read, update, delete.
+     * @var array
+     */
+    protected $down = [
+
+    ];
+
+    /**
+     * Set permissions for groups.
+     *
+     * @return void
+     */
+    protected function makePermissions()
+    {
+        $this->combineOperationsAndGroups(
+            ['read', 'update'], $this->editPermissionGroups
+        );
+        $this->combineOperationsAndGroups(
+            ['create', 'read', 'update', 'delete'], $this->crudPermissionGroups
+        );
+    }
 
     /**
      * Run the migrations.
@@ -24,7 +63,7 @@ class MakePermissions extends Migration
      */
     public function up()
     {
-        $this->getPermissions();
+        $this->makePermissions();
         $this->upPermissions();
     }
 
@@ -35,20 +74,10 @@ class MakePermissions extends Migration
      */
     public function down()
     {
-        $this->getPermissions();
+        $this->combineOperationsAndGroups(
+            ['create', 'read', 'update', 'delete'], $this->down
+        );
+        $this->makePermissions();
         $this->downPermissions();
-    }
-
-    /**
-     * Set permissions for groups.
-     *
-     * @return void
-     */
-    protected function getPermissions()
-    {
-        foreach ($this->groups as $group) {
-            $this->permissions[] = "read {$group}";
-            $this->permissions[] = "update {$group}";
-        }
     }
 }

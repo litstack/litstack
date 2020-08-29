@@ -185,7 +185,7 @@ if (! function_exists('lit_user')) {
     /**
      * Get the authenticated Lit user.
      *
-     * @return \Ignite\User\Models\User
+     * @return \Lit\Models\User
      */
     function lit_user()
     {
@@ -284,37 +284,48 @@ if (! function_exists('lit_config_path')) {
 
 if (! function_exists('lit_resource_path')) {
     /**
-     * Path to Lit resources.
+     * Get the path to the Litstack resources directory.
      *
-     * @param string $path
-     *
+     * @param  string $path
      * @return void
      */
     function lit_resource_path($path = '')
     {
-        return base_path('lit/resources'.($path ? DIRECTORY_SEPARATOR.$path : $path));
+        return lit()->resourcePath($path);
     }
 }
 
 if (! function_exists('lit_path')) {
     /**
-     * Path to Lit composer package.
+     * Get the path to the litstack "app" directory.
      *
-     * @param string $path
-     *
+     * @param  string $path
      * @return string
      */
     function lit_path(string $path = '')
     {
-        return realpath(__DIR__.'/../../').($path ? DIRECTORY_SEPARATOR.$path : $path);
+        return lit()->path($path);
+    }
+}
+
+if (! function_exists('lit_vendor_path')) {
+    /**
+     * Get the path to the litstack package vendor folder.
+     *
+     * @param  string $path
+     * @return string
+     */
+    function lit_vendor_path(string $path = '')
+    {
+        return lit()->path($path);
     }
 }
 
 if (! function_exists('lit')) {
     /**
-     * Get Lit facade.
+     * Get the Lit facade.
      *
-     * @return Lit\Foundation\Lit
+     * @return Lit\Foundation\Litstack
      */
     function lit()
     {
@@ -326,8 +337,8 @@ if (! function_exists('lit_app')) {
     /**
      * Get Lit application instance.
      *
-     * @param  string|null $abstract
-     * @return mixed
+     * @param  string|null                           $abstract
+     * @return \Ignite\Applicaiton\Application|mixed
      */
     function lit_app($abstract = null)
     {
@@ -345,8 +356,7 @@ if (! function_exists('is_translatable')) {
     /**
      * Is a Model translatable.
      *
-     * @param string|mixed $model
-     *
+     * @param  string|mixed $model
      * @return bool
      */
     function is_translatable($model)

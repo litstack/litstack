@@ -5,13 +5,13 @@ namespace Ignite\Auth\Controllers;
 use Ignite\Auth\Actions\AuthenticationAction;
 use Ignite\Auth\Requests\LitSessionLogoutRequest;
 use Ignite\Support\Facades\Lit;
-use Ignite\User\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Lit\Models\User;
 
 class AuthController extends Controller
 {
@@ -37,8 +37,7 @@ class AuthController extends Controller
     /**
      * Authenticate User.
      *
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return redirect
      */
     public function authenticate(Request $request, AuthenticationAction $authentication)

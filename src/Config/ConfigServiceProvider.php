@@ -17,4 +17,16 @@ class ConfigServiceProvider extends ServiceProvider
             return new ConfigLoader();
         });
     }
+
+    /**
+     * Register config factories.
+     *
+     * @return void
+     */
+    protected function registerConfigFactories()
+    {
+        foreach ($this->configFactories as $dependency => $factory) {
+            $this->app['lit.app']->registerConfigFactory($dependency, $factory);
+        }
+    }
 }

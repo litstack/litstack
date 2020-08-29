@@ -2,13 +2,13 @@
 
 namespace Ignite\Vue;
 
-use Illuminate\Support\ServiceProvider;
 use Ignite\Contracts\Vue\Vue as VueContract;
+use Illuminate\Support\ServiceProvider;
 
 class VueServiceProvider extends ServiceProvider
 {
     /**
-     * Regsiter application services.
+     * Register application services.
      *
      * @return void
      */
