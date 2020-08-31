@@ -6,7 +6,7 @@ use Ignite\Crud\Config\CrudConfig;
 use Ignite\Crud\CrudIndex;
 use Ignite\Crud\CrudShow;
 use Ignite\Page\Table\ColumnBuilder;
-use Ignite\User\Models\User;
+use Lit\Models\User;
 use Illuminate\Support\Facades\Route;
 use Lit\Http\Controllers\User\UserController;
 

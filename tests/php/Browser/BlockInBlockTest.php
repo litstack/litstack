@@ -50,19 +50,19 @@ class BlockInBlockTest extends FrontendTestCase
         $this->browse(function ($browser) {
             $url = $this->getCrudRoute("/{$this->post->id}/");
             $browser
-                 ->loginAs($this->admin, 'lit')
-                 ->visit($url)
-                 ->waitFor('.lit-block-content')
-                 ->click('.lit-block-content .lit-block-add-card')
-                 ->waitFor('.lit-block-content .lit-block')
-                 ->click('.lit-block-content .lit-block-card .lit-block-add-text')
-                 ->waitFor('.lit-block-card .lit-block', 10)
-                 ->waitUsing(1, 10, function () {
-                     return ! $this->post->refresh()->content->first()->card->isEmpty();
-                 }, 'Child block was not created.')
-                 ->waitUsing(1, 10, function () {
-                     return $this->post->content->first()->card->first() instanceof FormBlock;
-                 }, 'Child block is not an instanceof FormBlock.');
+                ->loginAs($this->admin, 'lit')
+                ->visit($url)
+                ->waitFor('.lit-block-content')
+                ->click('.lit-block-content .lit-block-add-card')
+                ->waitFor('.lit-block-content .lit-block')
+                ->click('.lit-block-content .lit-block-card .lit-block-add-text')
+                ->waitFor('.lit-block-card .lit-block', 10)
+                ->waitUsing(1, 10, function () {
+                    return ! $this->post->refresh()->content->first()->card->isEmpty();
+                }, 'Child block was not created.')
+                ->waitUsing(1, 10, function () {
+                    return $this->post->content->first()->card->first() instanceof FormBlock;
+                }, 'Child block is not an instanceof FormBlock.');
         });
     }
 
@@ -75,16 +75,16 @@ class BlockInBlockTest extends FrontendTestCase
         $this->browse(function ($browser) {
             $url = $this->getCrudRoute("/{$this->post->id}/");
             $browser
-                 ->loginAs($this->admin, 'lit')
-                 ->visit($url)
-                 ->waitFor('.lit-block-content')
-                 ->click('.lit-block-content .lit-block-add-card')
-                 ->waitFor('.lit-block-content .lit-block')
-                 ->click('.lit-block-content .lit-block-card .lit-block-add-text')
-                 ->waitFor('.lit-block-card .lit-block', 10)
-                 ->type('.lit-block-card .lit-block textarea', 'Hello World')
-                 ->waitFor('.lit-save-button .btn-primary')
-                 ->click('.lit-save-button .btn-primary')
+                ->loginAs($this->admin, 'lit')
+                ->visit($url)
+                ->waitFor('.lit-block-content')
+                ->click('.lit-block-content .lit-block-add-card')
+                ->waitFor('.lit-block-content .lit-block')
+                ->click('.lit-block-content .lit-block-card .lit-block-add-text')
+                ->waitFor('.lit-block-card .lit-block', 10)
+                ->type('.lit-block-card .lit-block textarea', 'Hello World')
+                ->waitFor('.lit-save-button .btn-primary')
+                ->click('.lit-save-button .btn-primary')
                 ->waitUsing(1, 10, function () {
                     $repeatable = $this->post->refresh()->content->first()->card->first();
 

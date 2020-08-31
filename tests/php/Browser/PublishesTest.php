@@ -2,7 +2,6 @@
 
 namespace Tests\Browser;
 
-use Lit\Config\Form\Pages\HomeConfig;
 use Lit\Config\User\ProfileSettingsConfig;
 use Lit\Config\User\UserConfig;
 use Tests\FrontendTestCase;
@@ -15,24 +14,6 @@ class PublishesTest extends FrontendTestCase
     public function setUp(): void
     {
         parent::setUp();
-    }
-
-    /** @test */
-    public function test_form_home_config()
-    {
-        $this->skipIfChromedriverIsNotRunning();
-
-        $this->browse(function ($browser) {
-            $url = lit()->url(
-                lit()->config(HomeConfig::class)->route_prefix
-            );
-
-            $browser
-                ->loginAs($this->admin, 'lit')
-                ->visit($url)
-                ->assertSeeIn('h3', 'Home');
-            // sleep(20);
-        });
     }
 
     /** @test */

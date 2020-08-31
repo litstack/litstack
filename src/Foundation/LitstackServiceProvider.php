@@ -41,7 +41,7 @@ class LitstackServiceProvider extends ServiceProvider
      * @var array
      */
     protected $aliases = [
-        'Lit' => Support\Facades\Lit::class,
+        'Lit' => \Ignite\Support\Facades\Lit::class,
     ];
 
     /**

@@ -58,8 +58,6 @@ class PresetFactory
             return $merge;
         }
 
-        $preset = array_merge($this->navPresets[$key], $merge);
-
         $title = $preset['title'] ?? null;
         if ($title instanceof Closure) {
             $preset['title'] = $preset['title']();

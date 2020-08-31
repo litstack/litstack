@@ -38,11 +38,9 @@ class NavigationConfig extends Config
     public function main(Navigation $nav)
     {
         $nav->section([
-            $nav->title('Pages'),
+            $nav->title('Models'),
 
-            $nav->preset('form.pages.home', [
-                'icon' => fa('home'),
-            ]),
+            //
         ]);
     }
 }

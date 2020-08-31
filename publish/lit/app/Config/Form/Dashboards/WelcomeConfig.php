@@ -33,8 +33,6 @@ class WelcomeConfig extends FormConfig
      */
     public function show(CrudShow $page)
     {
-        $page->title('Welcome');
-
         $page->view('lit::welcome');
     }
 }

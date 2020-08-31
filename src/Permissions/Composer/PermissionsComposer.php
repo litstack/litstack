@@ -15,9 +15,7 @@ class PermissionsComposer
      */
     public function compose(View $view)
     {
-        lit()
-            ->app()
-            ->get('vue.app')
+        app('lit.vue.app')
             ->prop('permissions', $this->getPermissions())
             ->prop('roles', Role::all());
     }

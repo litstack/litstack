@@ -4,8 +4,8 @@ namespace Lit\Config\User;
 
 use Ignite\Crud\Config\CrudConfig;
 use Ignite\Crud\CrudShow;
-use Ignite\User\Models\User;
 use Lit\Http\Controllers\User\ProfileSettingsController;
+use Lit\Models\User;
 
 class ProfileSettingsConfig extends CrudConfig
 {
@@ -68,12 +68,7 @@ class ProfileSettingsConfig extends CrudConfig
         $this->language($page);
 
         // security
-        $page->info(ucwords(__lit('base.security')))->width(4);
-
-        $page->group(function ($page) {
-            $page->card(fn ($form) => $this->security($form));
-            $page->component('lit-profile-security');
-        })->width(8);
+        $this->security($page);
     }
 
     /**
@@ -135,30 +130,34 @@ class ProfileSettingsConfig extends CrudConfig
      * - Change password
      * - Session manager.
      *
-     * @param  CrudShow $container
+     * @param  CrudShow $page
      * @return void
      */
-    public function security($form)
+    public function security($page)
     {
-        $form->modal('change_password')
-            ->title('Password')
-            ->variant('primary')
-            ->name(fa('user-shield').' '.__lit('profile.change_password'))
-            ->form(function ($modal) {
-                $modal->password('old_password')
-                    ->title('Old Password')
-                    ->confirm();
+        $page->info(ucwords(__lit('base.security')))->width(4);
 
-                $modal->password('password')
-                    ->title('New Password')
-                    ->rules('required', 'min:5')
-                    ->minScore(0);
+        $page->card(function ($form) {
+            $form->modal('change_password')
+                ->title('Password')
+                ->variant('primary')
+                ->name(fa('user-shield').' '.__lit('profile.change_password'))
+                ->form(function ($modal) {
+                    $modal->password('old_password')
+                        ->title('Old Password')
+                        ->confirm();
 
-                $modal->password('password_confirmation')
-                    ->rules('required', 'same:password')
-                    ->dontStore()
-                    ->title('New Password')
-                    ->noScore();
-            });
+                    $modal->password('password')
+                        ->title('New Password')
+                        ->rules('required', 'min:5')
+                        ->minScore(0);
+
+                    $modal->password('password_confirmation')
+                        ->rules('required', 'same:password')
+                        ->dontStore()
+                        ->title('New Password')
+                        ->noScore();
+                });
+        })->width(8);
     }
 }

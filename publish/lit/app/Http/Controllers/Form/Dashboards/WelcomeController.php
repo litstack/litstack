@@ -3,7 +3,7 @@
 namespace Lit\Http\Controllers\Form\Dashboards;
 
 use Ignite\Crud\Controllers\FormController;
-use Ignite\User\Models\User;
+use Lit\Models\User;
 
 class WelcomeController extends FormController
 {

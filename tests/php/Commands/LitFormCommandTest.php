@@ -15,7 +15,7 @@ class LitFormCommandTest extends BackendTestCase
         $this->assertFileExists(base_path('lit/app/Config/Form/Test/HomeConfig.php'));
         $this->assertInstanceOf(
             \Ignite\Crud\Config\FormConfig::class,
-            new \Lit\Config\Form\Pages\HomeConfig()
+            new \Lit\Config\Form\Test\HomeConfig()
         );
     }
 

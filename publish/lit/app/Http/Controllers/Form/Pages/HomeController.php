@@ -4,7 +4,7 @@ namespace Lit\Http\Controllers\Form\Pages;
 
 use Ignite\Config\Form\Pages\HomeConfig;
 use Ignite\Crud\Controllers\FormController;
-use Ignite\User\Models\User;
+use Lit\Models\User;
 
 class HomeController extends FormController
 {
