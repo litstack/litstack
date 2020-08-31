@@ -52,11 +52,8 @@
 	"extra": {
 		"laravel": {
 			"providers": [
-				"Ignite\\LitServiceProvider"
+				"Ignite\\Foundation\\LitstackServiceProvider"
 			]
-		},
-		"lit": {
-			"package": "Ignite\\LitPackage"
 		}
 	}
 }

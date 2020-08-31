@@ -6,9 +6,10 @@ use Ignite\Crud\Requests\CrudCreateRequest;
 use Ignite\Crud\Requests\CrudDeleteRequest;
 use Ignite\Crud\Requests\CrudReadRequest;
 use Ignite\Crud\Requests\CrudUpdateRequest;
+use Ignite\Routing\Router as LitstackRouter;
 use Ignite\Support\Facades\Lit;
-use Ignite\Support\Facades\Package;
-use Illuminate\Support\Facades\Route as RouteFacade;
+use Ignite\Support\Facades\Nav;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Lit\Models\User;
@@ -20,6 +21,24 @@ use Lit\Models\User;
  */
 class Crud
 {
+    /**
+     * Litstack Router instance.
+     *
+     * @var LitstackRouter
+     */
+    protected $router;
+
+    /**
+     * Create new Crud instance.
+     *
+     * @param  LitstackRouter $router
+     * @return void
+     */
+    public function __construct(LitstackRouter $router)
+    {
+        $this->router = $router;
+    }
+
     /**
      * Get model names.
      *
@@ -75,8 +94,8 @@ class Crud
      */
     public function routes($config)
     {
-        Package::get('litstack/litstack')->route()->group(function () use ($config) {
-            RouteFacade::group([
+        $this->router->group(function () use ($config) {
+            Route::group([
                 'config' => $config->getKey(),
                 'prefix' => "$config->routePrefix",
                 'as'     => $config->getKey().'.',
@@ -84,7 +103,7 @@ class Crud
                 $this->makeCrudRoutes($config);
                 $this->makeFieldRoutes($config->controller);
 
-                Package::get('litstack/litstack')->addNavPreset($config->getKey(), [
+                Nav::preset($config->getKey(), [
                     'link'      => Lit::url($config->routePrefix),
                     'title'     => fn ()     => ucfirst($config->names['plural']),
                     'authorize' => function (User $user) use ($config) {
@@ -103,21 +122,21 @@ class Crud
      */
     public function formRoutes($config)
     {
-        Package::get('litstack/litstack')->route()->group(function () use ($config) {
+        $this->router->group(function () use ($config) {
             $form = $config->formName;
             $collection = $config->collection;
 
-            RouteFacade::group([
+            Route::group([
                 'config' => $config->getKey(),
                 'prefix' => $config->route_prefix,
                 'as'     => $config->getKey().'.',
             ], function () use ($config, $collection, $form) {
-                //require lit_path('src/Crud/routes.php');
+                //require lit_vendor_path('src/Crud/routes.php');
                 $this->makeFormRoutes($config->controller);
                 $this->makeFieldRoutes($config->controller);
 
                 // Nav preset.
-                Package::get('litstack/litstack')->addNavPreset("form.{$collection}.{$form}", [
+                Nav::preset("form.{$collection}.{$form}", [
                     'link'      => Lit::url($config->route_prefix),
                     'title'     => fn ()     => ucfirst($config->names['singular']),
                     'authorize' => function (User $user) use ($config) {
@@ -135,7 +154,7 @@ class Crud
      */
     protected function makeFormRoutes(string $controller)
     {
-        RouteFacade::get('/', [$controller, 'show'])->name('show');
+        Route::get('/', [$controller, 'show'])->name('show');
     }
 
     /**
@@ -148,21 +167,21 @@ class Crud
     {
         $controller = $config->controller;
 
-        RouteFacade::post('/order', [$controller, 'order'])->name('order');
-        RouteFacade::post('/delete-all', [$controller, 'destroyAll'])->name('destroy.all');
-        RouteFacade::delete('/{id}', [$controller, 'destroy'])->name('destroy');
+        Route::post('/order', [$controller, 'order'])->name('order');
+        Route::post('/delete-all', [$controller, 'destroyAll'])->name('destroy.all');
+        Route::delete('/{id}', [$controller, 'destroy'])->name('destroy');
 
         // Index routes.
         if ($config->has('index')) {
-            RouteFacade::get('/', [$controller, 'index'])->name('index');
-            RouteFacade::post('/index', [$controller, 'indexTable'])->name('index.items');
+            Route::get('/', [$controller, 'index'])->name('index');
+            Route::post('/index', [$controller, 'indexTable'])->name('index.items');
         }
 
         // Show routes.
         if ($config->has('show')) {
-            RouteFacade::post('/{form}', [$controller, 'store'])->name('store');
-            RouteFacade::get('/create', [$controller, 'create'])->name('create');
-            RouteFacade::get("{{$identifier}}", [$controller, 'show'])->name('show');
+            Route::post('/{form}', [$controller, 'store'])->name('store');
+            Route::get('/create', [$controller, 'create'])->name('create');
+            Route::get("{{$identifier}}", [$controller, 'show'])->name('show');
         }
     }
 
@@ -173,13 +192,13 @@ class Crud
      */
     protected function makeFieldRoutes(string $controller, string $identifier = 'id')
     {
-        RouteFacade::post('/run-action/{key}', [$controller, 'runAction']);
+        Route::post('/run-action/{key}', [$controller, 'runAction']);
         // Api
-        RouteFacade::any('/api/{form_type}/{repository?}/{method?}/{child_method?}', [$controller, 'api'])->name('api');
-        RouteFacade::any('/{id}/api/{form_type}/{repository?}/{method?}/{child_method?}', [$controller, 'api'])->name('api');
+        Route::any('/api/{form_type}/{repository?}/{method?}/{child_method?}', [$controller, 'api'])->name('api');
+        Route::any('/{id}/api/{form_type}/{repository?}/{method?}/{child_method?}', [$controller, 'api'])->name('api');
 
         // List
-        RouteFacade::get("/{{$identifier}}/{form}/list/{field_id}", [$controller, 'loadListItems'])->name('list.index');
-        RouteFacade::get("/{{$identifier}}/{form}/list/{field_id}/{list_item_id}", [$controller, 'loadListItem'])->name('list.load');
+        Route::get("/{{$identifier}}/{form}/list/{field_id}", [$controller, 'loadListItems'])->name('list.index');
+        Route::get("/{{$identifier}}/{form}/list/{field_id}/{list_item_id}", [$controller, 'loadListItem'])->name('list.load');
     }
 }

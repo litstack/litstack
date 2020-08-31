@@ -14,7 +14,7 @@ class FileController extends Controller
      */
     public function litJs()
     {
-        return $this->sendFile(lit_path('public/js/app.js'))
+        return $this->sendFile(lit_vendor_path('public/js/app.js'))
             ->header('Content-Type', 'application/javascript; charset=utf-8');
     }
 
@@ -25,7 +25,7 @@ class FileController extends Controller
      */
     public function lit2Js()
     {
-        return $this->sendFile(lit_path('public/js/app2.js'))
+        return $this->sendFile(lit_vendor_path('public/js/app2.js'))
             ->header('Content-Type', 'application/javascript; charset=utf-8');
     }
 
@@ -36,7 +36,7 @@ class FileController extends Controller
      */
     public function prismJs()
     {
-        return $this->sendFile(lit_path('public/js/prism.js'))
+        return $this->sendFile(lit_vendor_path('public/js/prism.js'))
             ->header('Content-Type', 'application/javascript; charset=utf-8');
     }
 
@@ -47,7 +47,7 @@ class FileController extends Controller
      */
     public function ctkJs()
     {
-        return $this->sendFile(lit_path('public/js/ctk.js'))
+        return $this->sendFile(lit_vendor_path('public/js/ctk.js'))
             ->header('Content-Type', 'application/javascript; charset=utf-8');
     }
 
@@ -58,7 +58,7 @@ class FileController extends Controller
      */
     public function litCss()
     {
-        return $this->sendFile(lit_path('public/css/app.css'))
+        return $this->sendFile(lit_vendor_path('public/css/app.css'))
             ->header('Content-Type', 'text/css');
     }
 
@@ -69,7 +69,7 @@ class FileController extends Controller
      */
     public function litLogo()
     {
-        return $this->sendFile(lit_path('public/images/logo.png'))
+        return $this->sendFile(lit_vendor_path('public/images/logo.png'))
             ->header('Content-Type', 'image/png');
     }
 
@@ -80,7 +80,7 @@ class FileController extends Controller
      */
     public function litFaviconBig()
     {
-        return $this->sendFile(lit_path('public/favicon/favicon-32x32.png'))
+        return $this->sendFile(lit_vendor_path('public/favicon/favicon-32x32.png'))
             ->header('Content-Type', 'image/png');
     }
 
@@ -91,7 +91,7 @@ class FileController extends Controller
      */
     public function litFaviconSmall()
     {
-        return $this->sendFile(lit_path('public/favicon/favicon-16x16.png'))
+        return $this->sendFile(lit_vendor_path('public/favicon/favicon-16x16.png'))
             ->header('Content-Type', 'image/png');
     }
 

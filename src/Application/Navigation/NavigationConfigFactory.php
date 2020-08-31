@@ -12,7 +12,7 @@ class NavigationConfigFactory extends ConfigFactory
      * Resolve query.
      *
      * @param \Ignite\Config\ConfigHandler $config
-     * @param Closure                     $method
+     * @param Closure                      $method
      *
      * @return Navigation
      */
@@ -25,7 +25,7 @@ class NavigationConfigFactory extends ConfigFactory
      * Resolve query.
      *
      * @param \Ignite\Config\ConfigHandler $config
-     * @param Closure                     $method
+     * @param Closure                      $method
      *
      * @return Navigation
      */
@@ -43,7 +43,7 @@ class NavigationConfigFactory extends ConfigFactory
      */
     protected function nav(Closure $method)
     {
-        $nav = new Navigation();
+        $nav = new Navigation(app('lit.navigation'));
 
         $method($nav);
 

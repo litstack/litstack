@@ -14,13 +14,15 @@ trait MigratePermissions
      */
     protected function upPermissions()
     {
-        $admin = Role::where('guard_name', 'lit')
+        $admins = Role::where('guard_name', 'lit')
             ->where('name', 'admin')
-            ->first();
+            ->get();
 
         foreach ($this->permissions as $permission) {
             Permission::firstOrCreate(['guard_name' => 'lit', 'name' => $permission]);
-            $admin->givePermissionTo($permission);
+            foreach ($admins as $admin) {
+                $admin->givePermissionTo($permission);
+            }
         }
     }
 
@@ -31,16 +33,18 @@ trait MigratePermissions
      */
     protected function downPermissions()
     {
-        $admin = Role::where('guard_name', 'lit')
+        $admins = Role::where('guard_name', 'lit')
             ->where('name', 'admin')
-            ->first();
+            ->get();
 
         $permissions = Permission::where('guard_name', 'lit')
             ->whereIn('name', $this->permissions)
             ->get();
 
         foreach ($permissions as $permission) {
-            $admin->revokePermissionTo($permission->name);
+            foreach ($admins as $admin) {
+                $admin->revokePermissionTo($permission->name);
+            }
             $permission->delete();
         }
     }

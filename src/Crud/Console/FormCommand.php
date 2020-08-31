@@ -1,6 +1,6 @@
 <?php
 
-namespace Ignite\Commands;
+namespace Ignite\Crud\Console;
 
 use Ignite\Console\GeneratorCommand;
 use Illuminate\Console\Command;
@@ -65,7 +65,7 @@ class FormCommand extends GeneratorCommand
      */
     public function getStub()
     {
-        return lit_path('stubs/form.config.stub');
+        return lit_vendor_path('stubs/form.config.stub');
     }
 
     /**

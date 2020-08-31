@@ -96,25 +96,23 @@ class CrudCommand extends Command
         }
 
         $implements = [];
-        $uses = ['TrackEdits'];
+        $uses = [];
         $appends = [];
         $with = [];
 
-        $builder = new StubBuilder(lit_path('stubs/crud.model.stub'));
+        $builder = new StubBuilder(lit_vendor_path('stubs/crud.model.stub'));
 
         $builder->withClassname($modelName);
 
         // getRoute routename
         $builder->withRoutename(Str::snake(Str::plural($modelName)));
 
-        $builder->withTraits("use Ignite\Crud\Models\Traits\TrackEdits;");
-
         // model has media
         if ($m) {
             $builder->withTraits("use Spatie\MediaLibrary\HasMedia as HasMediaContract;");
             $builder->withTraits("use Ignite\Crud\Models\Traits\HasMedia;");
 
-            $attributeContents = file_get_contents(lit_path('stubs/crud.model.media.attribute.stub'));
+            $attributeContents = file_get_contents(lit_vendor_path('stubs/crud.model.media.attribute.stub'));
             $builder->withGetAttributes($attributeContents);
 
             $implements[] = 'HasMediaContract';
@@ -129,7 +127,7 @@ class CrudCommand extends Command
             if (! $t) {
                 $builder->withTraits("use Ignite\Crud\Models\Traits\Sluggable;");
 
-                $sluggableContents = file_get_contents(lit_path('stubs/crud.model.sluggable.stub'));
+                $sluggableContents = file_get_contents(lit_vendor_path('stubs/crud.model.sluggable.stub'));
                 $builder->withSluggable($sluggableContents);
 
                 $uses[] = 'Sluggable';
@@ -148,7 +146,7 @@ class CrudCommand extends Command
      */
     public $translatedAttributes = [\'title\', \'text\'];');
 
-            $attributeContents = file_get_contents(lit_path('stubs/crud.model.translation.attribute.stub'));
+            $attributeContents = file_get_contents(lit_vendor_path('stubs/crud.model.translation.attribute.stub'));
             $builder->withGetAttributes($attributeContents);
 
             $implements[] = 'TranslatableContract';

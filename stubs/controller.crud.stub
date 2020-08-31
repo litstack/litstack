@@ -4,7 +4,7 @@ namespace DummyNamespace;
 
 use Illuminate\Database\Eloquent\Builder;
 
-use Ignite\User\Models\User;
+use Lit\User\Models\User;
 use Ignite\Crud\Controllers\CrudController;
 
 class DummyClass extends CrudController

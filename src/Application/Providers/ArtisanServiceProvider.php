@@ -66,6 +66,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     public function register()
     {
         $this->registerCommands();
+        $this->registerCreatorCommands();
     }
 
     /**
@@ -105,7 +106,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     protected function registerNavCommand($abstract)
     {
         $this->app->singleton($abstract, function ($app) {
-            return new NavCommand();
+            return new NavCommand($app['lit.navigation']);
         });
     }
 

@@ -2,13 +2,13 @@
 
 namespace Ignite\Crud;
 
-use Ignite\Commands\FormCommand;
 use Ignite\Crud\Api\ApiRepositories;
 use Ignite\Crud\Config\Factories\CrudFormConfigFactory;
 use Ignite\Crud\Config\Factories\CrudIndexConfigFactory;
 use Ignite\Crud\Config\Traits\HasCrudIndex;
 use Ignite\Crud\Config\Traits\HasCrudShow;
 use Ignite\Crud\Console\CrudCommand;
+use Ignite\Crud\Console\FormCommand;
 use Ignite\Crud\Fields\Block\Block;
 use Ignite\Crud\Fields\Boolean;
 use Ignite\Crud\Fields\Checkboxes;
@@ -209,7 +209,7 @@ class CrudServiceProvider extends LaravelServiceProvider
     {
         $this->callAfterResolving('lit.app', function ($app) {
             $app->singleton('crud', function () {
-                return new Crud;
+                return app(Crud::class);
             });
 
             $app->singleton('crud.route.resolver', function () {

@@ -3,7 +3,6 @@
 namespace Ignite\Routing;
 
 use Closure;
-use Ignite\Support\Facades\Package;
 use Illuminate\Support\Facades\Route;
 
 class Router
@@ -56,9 +55,8 @@ class Router
     /**
      * Create a route group with shared attributes.
      *
-     * @param Closure|array|string $attributes
-     * @param Closure              $closure
-     *
+     * @param  Closure|array|string $attributes
+     * @param  Closure              $closure
      * @return void
      */
     public function group($attributes, Closure $closure = null)
@@ -73,27 +71,9 @@ class Router
     }
 
     /**
-     * Initialize defaults for a Lit package route.
-     * Routes for a Lit package should always be created
-     * with \Ignite\Support\Facades\Route@package.
-     *
-     * @param string $package
-     *
-     * @return Illuminate\Support\Facades\Route $route
-     */
-    public function package($package)
-    {
-        $package = Package::get($package);
-
-        return Route::prefix($package->getRoutePrefix())
-            ->as($package->getRouteAs())
-            ->middleware($this->middlewares);
-    }
-
-    /**
      * Public route using Lit route prefix.
      *
-     * @return \Illuminate\Support\Facades\Route
+     * @return Route
      */
     public function public()
     {

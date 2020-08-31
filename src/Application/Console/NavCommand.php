@@ -3,7 +3,7 @@
 namespace Ignite\Application\Console;
 
 use Closure;
-use Ignite\Support\Facades\Package;
+use Ignite\Application\Navigation\PresetFactory;
 use Illuminate\Console\Command;
 
 class NavCommand extends Command
@@ -23,6 +23,26 @@ class NavCommand extends Command
     protected $description = 'List all navigation entry presets';
 
     /**
+     * Navigation preset factory instance.
+     *
+     * @var PresetFactory
+     */
+    protected $factory;
+
+    /**
+     * Create new NavCommand instance.
+     *
+     * @param  PresetFactory $factory
+     * @return void
+     */
+    public function __construct(PresetFactory $factory)
+    {
+        parent::__construct();
+
+        $this->factory = $factory;
+    }
+
+    /**
      * Execute the console command.
      *
      * @return mixed
@@ -30,22 +50,19 @@ class NavCommand extends Command
     public function handle()
     {
         $entries = [];
-        foreach (Package::all() as $name => $package) {
-            $packageName = Package::hasRootAccess($name) ? '' : $name;
-            foreach ($package->getNavPresets() as $key => $preset) {
-                $link = $preset['link'] instanceof Closure
-                    ? $preset['link']()
-                    : $preset['link'];
-                $entries[] = [
-                    'package' => $packageName,
-                    'key'     => $key,
-                    'link'    => $link,
-                ];
-            }
+        foreach ($this->factory->all() as $preset) {
+            $link = $preset['link'] instanceof Closure
+                ? $preset['link']()
+                : $preset['link'];
+
+            $entries[] = [
+                'keys' => $keys,
+                'link' => $link,
+            ];
         }
 
         $this->table([
-            'Package', 'Key', 'Link',
+            'Keys', 'Link',
         ], $entries);
     }
 }

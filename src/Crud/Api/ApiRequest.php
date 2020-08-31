@@ -3,12 +3,11 @@
 namespace Ignite\Crud\Api;
 
 use Closure;
-use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Http\Request;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Crud\Field;
-use Ignite\Crud\Models\Traits\TrackEdits;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Http\Request;
 use TypeError;
 
 class ApiRequest
@@ -116,35 +115,7 @@ class ApiRequest
             abort(404, debug($e->getMessage()));
         }
 
-        $this->storeEdit();
-
         return $response;
-    }
-
-    /**
-     * Store model edit.
-     *
-     * @return void
-     */
-    protected function storeEdit()
-    {
-        if (in_array($this->method, ['load', 'index'])) {
-            return;
-        }
-
-        $model = $this->getModel();
-
-        if (! $model) {
-            return;
-        }
-
-        if (! in_array(TrackEdits::class, class_uses_recursive($model))) {
-            return;
-        }
-
-        $abstract = $this->hasChild() ? $this->childAbstract : $this->abstract;
-
-        $model->edited("{$abstract}:{$this->method}");
     }
 
     /**

@@ -3,17 +3,16 @@
 namespace Tests\Fields;
 
 use Ignite\Crud\Fields\Component;
-use PHPUnit\Framework\TestCase;
-use Tests\Traits\InteractsWithComponents;
+use Tests\BackendTestCase;
 use Tests\Traits\InteractsWithFields;
 
-class FieldComponentTest extends TestCase
+class FieldComponentTest extends BackendTestCase
 {
-    use InteractsWithFields, InteractsWithComponents;
+    use InteractsWithFields;
 
     public function setUp(): void
     {
-        $this->setupApplication();
+        parent::setUp();
 
         $this->field = $this->getField(Component::class, 'dummy-component');
     }

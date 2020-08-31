@@ -43,7 +43,7 @@ trait ManagesPaths
     {
         $this->vendorPath = rtrim($vendorPath, '\/');
 
-        $this->instance('lit.path.vendor', $this->vendorPath);
+        $this->laravel->instance('lit.path.vendor', $this->vendorPath);
     }
 
     /**
@@ -54,9 +54,9 @@ trait ManagesPaths
     protected function bindPathsInContainer()
     {
         $this->laravel->instance('lit.path', $this->path());
-        $this->instance('lit.path.base', $this->basePath());
-        $this->instance('lit.path.lang', $this->langPath());
-        $this->instance('lit.path.resources', $this->resourcePath());
+        $this->laravel->instance('lit.path.base', $this->basePath());
+        $this->laravel->instance('lit.path.lang', $this->langPath());
+        $this->laravel->instance('lit.path.resources', $this->resourcePath());
     }
 
     /**
@@ -67,7 +67,7 @@ trait ManagesPaths
      */
     public function path($path = '')
     {
-        return $this->basePath.($path ? DIRECTORY_SEPARATOR.$path : $path);
+        return $this->basePath.DIRECTORY_SEPARATOR.'app'.($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
 
     /**
@@ -82,7 +82,7 @@ trait ManagesPaths
     }
 
     /**
-     * Get the path to the Litstack language files.
+     * Get the path to the Litstack package language files.
      *
      * @return string
      */

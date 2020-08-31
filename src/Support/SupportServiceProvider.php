@@ -3,6 +3,9 @@
 namespace Ignite\Support;
 
 use Ignite\Support\Facades\Vue;
+use Ignite\Support\Vue\BladeComponent;
+use Ignite\Support\Vue\ButtonComponent;
+use Ignite\Support\Vue\InfoComponent;
 use Illuminate\Support\ServiceProvider;
 
 class SupportServiceProvider extends ServiceProvider
@@ -15,6 +18,7 @@ class SupportServiceProvider extends ServiceProvider
     protected $vueComponents = [
         'lit-info'  => InfoComponent::class,
         'lit-blade' => BladeComponent::class,
+        'b-button'  => ButtonComponent::class,
     ];
 
     /**

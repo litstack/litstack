@@ -2,8 +2,10 @@
 
 namespace Tests\Commands;
 
-use Ignite\User\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Lit\Models\User;
+use Spatie\Permission\Models\Role;
 use Tests\BackendTestCase;
 use Tests\Traits\RefreshLaravel;
 
@@ -60,7 +62,7 @@ class LitInstallCommandTest extends BackendTestCase
     /** @test */
     public function it_creates_default_admin()
     {
-        $this->assertTrue(User::where([
+        $this->assertTrue(DB::table('lit_users')->where([
             'email' => 'admin@admin.com',
         ])->exists());
     }
@@ -68,14 +70,17 @@ class LitInstallCommandTest extends BackendTestCase
     /** @test */
     public function it_assigns_admin_role_to_default_lit_user()
     {
-        $user = User::where([
+        $user = DB::table('lit_users')->where([
             'email' => 'admin@admin.com',
         ])->first();
 
+        $role = Role::where('name', 'admin')->where('guard_name', 'lit')->first();
+
         $this->assertTrue(
-            $user->roles()
-                ->where('name', 'admin')
-                ->where('guard_name', 'lit')
+            DB::table('model_has_roles')
+                ->where('model_type', 'Lit\\Models\\User')
+                ->where('model_id', $user->id)
+                ->where('role_id', $role->id)
                 ->exists()
         );
     }
@@ -84,9 +89,9 @@ class LitInstallCommandTest extends BackendTestCase
     public function it_doesnt_create_default_admin_in_production()
     {
         $this->app['config']->set('app.env', 'production');
-        User::where('id', '!=', -1)->delete();
+        DB::table('lit_users')->where('id', '!=', -1)->delete();
         $this->artisan('lit:install --migrations=false');
-        $this->assertFalse(User::where([
+        $this->assertFalse(DB::table('lit_users')->where([
             'email' => 'admin@admin.com',
         ])->exists());
     }
@@ -115,5 +120,21 @@ class LitInstallCommandTest extends BackendTestCase
 
         $this->assertDatabaseHas('roles', ['guard_name' => 'lit', 'name' => 'admin']);
         $this->assertDatabaseHas('roles', ['guard_name' => 'lit', 'name' => 'user']);
+    }
+
+    /** @test */
+    public function it_creates_lit_guard()
+    {
+        $authConfig = require config_path('auth.php');
+
+        $this->assertArrayHasKey('lit', $authConfig['guards']);
+    }
+
+    /** @test */
+    public function it_creates_lit_users_provider()
+    {
+        $authConfig = require config_path('auth.php');
+
+        $this->assertArrayHasKey('lit_users', $authConfig['providers']);
     }
 }

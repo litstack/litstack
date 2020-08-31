@@ -2,7 +2,7 @@
 
 namespace Ignite\Auth;
 
-use Ignite\Commands\PermissionsCommand;
+use Ignite\Auth\Console\PermissionsCommand;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class AuthServiceProvider extends LaravelServiceProvider

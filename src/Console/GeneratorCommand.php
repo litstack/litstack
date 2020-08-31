@@ -25,6 +25,8 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
      */
     public function __construct(Filesystem $files, Litstack $litstack)
     {
+        parent::__construct($files);
+
         $this->litstack = $litstack;
     }
 

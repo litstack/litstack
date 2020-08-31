@@ -295,6 +295,19 @@ if (! function_exists('lit_resource_path')) {
     }
 }
 
+if (! function_exists('lit_lang_path')) {
+    /**
+     * Get the path to the Litstack package language files.
+     *
+     * @param  string $path
+     * @return string
+     */
+    function lit_lang_path(string $path = '')
+    {
+        return lit()->langPath($path);
+    }
+}
+
 if (! function_exists('lit_path')) {
     /**
      * Get the path to the litstack "app" directory.
@@ -308,6 +321,19 @@ if (! function_exists('lit_path')) {
     }
 }
 
+if (! function_exists('lit_base_path')) {
+    /**
+     * Get the base path of the "lit" folder.
+     *
+     * @param  string $path
+     * @return string
+     */
+    function lit_base_path(string $path = '')
+    {
+        return lit()->basePath($path);
+    }
+}
+
 if (! function_exists('lit_vendor_path')) {
     /**
      * Get the path to the litstack package vendor folder.
@@ -317,7 +343,7 @@ if (! function_exists('lit_vendor_path')) {
      */
     function lit_vendor_path(string $path = '')
     {
-        return lit()->path($path);
+        return lit()->vendorPath($path);
     }
 }
 

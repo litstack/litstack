@@ -38,7 +38,7 @@ class Litstack
         $this->laravel = $laravel;
 
         $this->setBasePath(base_path('lit'));
-        $this->setVendorPath(__DIR__.'/../../');
+        $this->setVendorPath(realpath(__DIR__.'/../../'));
     }
 
     /**
@@ -237,15 +237,15 @@ class Litstack
      */
     public function installed()
     {
+        if (! realpath(lit_base_path())) {
+            return false;
+        }
+
         if (! config()->has('lit')) {
             return false;
         }
 
         if (! class_exists(\Lit\Kernel::class)) {
-            return false;
-        }
-
-        if (! File::exists(base_path('bootstrap/cache/lit.php'))) {
             return false;
         }
 
@@ -260,24 +260,6 @@ class Litstack
     public function usesLivewire()
     {
         return class_exists(\Livewire\Livewire::class);
-    }
-
-    /**
-     * Determines wether composer dumpautoload needs to be called.
-     *
-     * @return void
-     */
-    public function needsDumpAutoload()
-    {
-        if ($this->installed()) {
-            return false;
-        }
-
-        if (! class_exists(\Lit\Kernel::class)) {
-            return false;
-        }
-
-        return ! File::exists(base_path('bootstrap/cache/lit.php'));
     }
 
     /**

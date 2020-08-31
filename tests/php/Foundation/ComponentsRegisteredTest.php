@@ -57,7 +57,7 @@ class ComponentsRegisteredTest extends BackendTestCase
 
     public function assertComponentRegistered($component)
     {
-        $this->assertComponentRegistered(
+        $this->assertTrue(
             array_key_exists($component, Vue::all()),
             "Failed asserting that vue component {$component} is registered."
         );

@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Ignite\User\Models\User;
+use Lit\Models\User;
 use Ignite\Crud\Controllers\FormController;
 
 class DummyClass extends FormController

@@ -2,7 +2,7 @@
 
 namespace Lit\Http\Controllers\Form\DummyNamespace;
 
-use Ignite\User\Models\User;
+use Lit\Models\User;
 use Ignite\Crud\Controllers\FormController;
 use Ignite\Config\Form\DummyNamespace\DummyConfigClass;
 

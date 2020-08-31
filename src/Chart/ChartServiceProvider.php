@@ -71,6 +71,19 @@ class ChartServiceProvider extends LaravelServiceProvider
      * @param  string $abstract
      * @return void
      */
+    protected function registerChartCommand($abstract)
+    {
+        $this->app->singleton($abstract, function ($app) {
+            return new ChartCommand($app['files'], $app['lit']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param  string $abstract
+     * @return void
+     */
     protected function registerAdminCommand($abstract)
     {
         $this->app->singleton($abstract, function ($app) {

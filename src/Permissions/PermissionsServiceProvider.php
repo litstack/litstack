@@ -15,7 +15,7 @@ class PermissionsServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        lit()->composer(PermissionsComposer::class);
+        lit_app()->composer(PermissionsComposer::class);
     }
 
     /**

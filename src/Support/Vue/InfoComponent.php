@@ -1,6 +1,6 @@
 <?php
 
-namespace Ignite\Vue\Components;
+namespace Ignite\Support\Vue;
 
 use Ignite\Contracts\Vue\Resizable;
 use Ignite\Vue\Component;

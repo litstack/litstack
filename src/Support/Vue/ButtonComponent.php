@@ -1,6 +1,6 @@
 <?php
 
-namespace Ignite\Vue\Components;
+namespace Ignite\Support\Vue;
 
 use Ignite\Vue\Component;
 use Ignite\Vue\Traits\StaticComponentName;

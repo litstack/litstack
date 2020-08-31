@@ -59,11 +59,11 @@ class ChartCommand extends GeneratorCommand
     protected function getStub()
     {
         return [
-            'donut'    => lit_path('stubs/chart.config.donut.stub'),
-            'progress' => lit_path('stubs/chart.config.progress.stub'),
-            'bar'      => lit_path('stubs/chart.config.bar.stub'),
-            'number'   => lit_path('stubs/chart.config.number.stub'),
-            'area'     => lit_path('stubs/chart.config.area.stub'),
+            'donut'    => lit_vendor_path('stubs/chart.config.donut.stub'),
+            'progress' => lit_vendor_path('stubs/chart.config.progress.stub'),
+            'bar'      => lit_vendor_path('stubs/chart.config.bar.stub'),
+            'number'   => lit_vendor_path('stubs/chart.config.number.stub'),
+            'area'     => lit_vendor_path('stubs/chart.config.area.stub'),
         ][$this->chartType];
     }
 
@@ -110,7 +110,9 @@ class ChartCommand extends GeneratorCommand
     {
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
 
-        return $this->getLitPath().'/'.str_replace('\\', '/', $name).'.php';
+        return $this->litstack->path(
+            str_replace('\\', '/', $name).'.php'
+        );
     }
 
     /**

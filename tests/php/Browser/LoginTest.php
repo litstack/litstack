@@ -3,7 +3,7 @@
 namespace Tests\Browser;
 
 use Ignite\Support\Facades\Lit;
-use Ignite\User\Models\User;
+use Lit\Models\User;
 use Tests\FrontendTestCase;
 
 /**

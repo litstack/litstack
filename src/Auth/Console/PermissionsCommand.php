@@ -1,6 +1,6 @@
 <?php
 
-namespace Ignite\Commands;
+namespace Ignite\Auth\Console;
 
 use Illuminate\Database\Console\Migrations\RollbackCommand;
 use Illuminate\Database\Migrations\Migrator;

@@ -3,7 +3,7 @@
 namespace Tests\TestSupport\Controllers;
 
 use Ignite\Crud\Controllers\CrudController;
-use Ignite\User\Models\User;
+use Lit\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
 class PostController extends CrudController

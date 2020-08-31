@@ -27,15 +27,6 @@ class Application
     protected $laravel;
 
     /**
-     * Singleton classes.
-     *
-     * @var array
-     */
-    protected $singletons = [
-        'packages' => Package\Packages::class,
-    ];
-
-    /**
      * Create new Application instance.
      *
      * @param  LaravelApplication $laravel
@@ -104,28 +95,14 @@ class Application
     }
 
     /**
-     * Boot packages and build Vue application.
+     *  Build Vue application.
      *
      * @param  Illuminate\View\View $view
      * @return void
      */
     public function build(View $view)
     {
-        $this->bootPackages();
-
         $this->get('vue.app')->bindView($view);
-    }
-
-    /**
-     * Boot all packages.
-     *
-     * @return void
-     */
-    protected function bootPackages()
-    {
-        foreach ($this->get('packages')->all() as $package) {
-            $package->boot($this);
-        }
     }
 
     /**
@@ -149,28 +126,6 @@ class Application
     public function bind($abstract, $concrete)
     {
         $this->laravel->bind($this->getAbstract($abstract), $concrete);
-    }
-
-    /**
-     * Register config handler.
-     *
-     * @param  string $dependency
-     * @param  string $handler
-     * @return void
-     */
-    public function registerConfigFactory(string $dependency, string $factory)
-    {
-        $this->configFactories[$dependency] = $factory;
-    }
-
-    /**
-     * Get config factories.
-     *
-     * @return array
-     */
-    public function getConfigFactories()
-    {
-        return $this->configFactories;
     }
 
     /**

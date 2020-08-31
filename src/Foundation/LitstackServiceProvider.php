@@ -2,9 +2,8 @@
 
 namespace Ignite\Foundation;
 
-use Ignite\Commands\ExtendCommand;
+use Ignite\Foundation\Console\ExtendCommand;
 use Ignite\Foundation\Console\InstallCommand;
-use Ignite\Routing\Router as LitstackRouter;
 use Ignite\Support\Facades\Config;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Factory;
@@ -21,6 +20,7 @@ class LitstackServiceProvider extends ServiceProvider
      * @var array
      */
     protected $providers = [
+        \Ignite\Routing\RoutingServiceProvider::class,
         \Ignite\Auth\AuthServiceProvider::class,
         \Ignite\Support\SupportServiceProvider::class,
     ];
@@ -50,7 +50,7 @@ class LitstackServiceProvider extends ServiceProvider
      * @var array
      */
     protected $middlewares = [
-        'lit.auth' => Auth\Middleware\Authenticate::class,
+        'lit.auth' => \Ignite\Auth\Middleware\Authenticate::class,
     ];
 
     /**
@@ -61,7 +61,7 @@ class LitstackServiceProvider extends ServiceProvider
     protected $aliasLoader;
 
     /**
-     * Create a new LitServiceProvider instance.
+     * Create a new LitstackServiceProvider instance.
      *
      * @param  \Illuminate\Contracts\Foundation\Application $app
      * @return void
@@ -81,8 +81,6 @@ class LitstackServiceProvider extends ServiceProvider
      */
     public function boot(LaravelRouter $router)
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'litstack');
-
         $this->middlewares($router);
 
         $this->publish();
@@ -173,7 +171,7 @@ class LitstackServiceProvider extends ServiceProvider
         // that is located in config/lit.php, to avoid errors when older
         // version of Lit was installed before.
         $this->mergeConfigFrom(
-            __DIR__.'/../publish/config/lit.php',
+            __DIR__.'/../../publish/config/lit.php',
             'lit'
         );
     }
@@ -187,10 +185,6 @@ class LitstackServiceProvider extends ServiceProvider
     {
         $this->app->singleton('lit', function ($app) {
             return new Litstack($app);
-        });
-
-        $this->app->singleton('lit.router', function ($app) {
-            return new LitstackRouter($app['events'], $app);
         });
     }
 
@@ -253,11 +247,11 @@ class LitstackServiceProvider extends ServiceProvider
     protected function publish()
     {
         $this->publishes([
-            __DIR__.'/../publish/config' => config_path(),
+            __DIR__.'/../../publish/config' => config_path(),
         ], 'config');
 
         $this->publishes([
-            __DIR__.'/../publish/database/migrations' => database_path('migrations'),
+            __DIR__.'/../../publish/database/migrations' => database_path('migrations'),
         ], 'migrations');
     }
 

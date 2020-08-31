@@ -14,9 +14,9 @@ class LightsOn
     protected $laravel;
 
     /**
-     * Lit instance.
+     * Litstack instance.
      *
-     * @var Lit
+     * @var Litstack
      */
     protected $liststack;
 
@@ -24,10 +24,10 @@ class LightsOn
      * Create new LightsOn instance.
      *
      * @param  Application $app
-     * @param  Lit         $litstack
+     * @param  Litstack    $litstack
      * @return void
      */
-    public function __construct(Application $laravel, Lit $litstack)
+    public function __construct(Application $laravel, Litstack $litstack)
     {
         $this->laravel = $laravel;
         $this->litstack = $litstack;
@@ -57,7 +57,7 @@ class LightsOn
         });
 
         // Bind litstack application.
-        $this->litstack->bindApp($this->app['lit.app']);
+        $this->litstack->bindApp($this->laravel['lit.app']);
 
         // Initialize kernel singleton.
         $this->laravel[\Lit\Kernel::class];

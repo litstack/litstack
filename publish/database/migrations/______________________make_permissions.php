@@ -2,24 +2,27 @@
 
 use Ignite\Support\Migration\MigratePermissions;
 use Illuminate\Database\Migrations\Migration;
+use Spatie\Permission\Models\Role;
 
 class MakePermissions extends Migration
 {
     use MigratePermissions;
 
     /**
-     * Edit permissions groups that should be created.
+     * Edit permission groups that should be created.
+     *
      * Operations: read, update.
      *
      * @var array
      */
     protected $editPermissionGroups = [
-        // Permissions to link permissions and roles in litstack.
+        // Permissions to link permissions to roles in litstack.
         'lit-role-permissions',
     ];
 
     /**
      * Crud permission groups that should be created.
+     *
      * Operations: create, read, update, delete.
      *
      * @var array
@@ -33,20 +36,30 @@ class MakePermissions extends Migration
     ];
 
     /**
-     * Permissions that should be deleted.
+     * Permission groups that should be deleted. In case you want to get rid of
+     * previous created permissions.
+     *
      * Operations: create, read, update, delete.
+     *
      * @var array
      */
     protected $down = [
-
+        //
     ];
+
+    /**
+     * Permissions to be created.
+     *
+     * @var array
+     */
+    protected $permissions = [];
 
     /**
      * Set permissions for groups.
      *
      * @return void
      */
-    protected function makePermissions()
+    protected function buildPermissions()
     {
         $this->combineOperationsAndGroups(
             ['read', 'update'], $this->editPermissionGroups
@@ -63,7 +76,9 @@ class MakePermissions extends Migration
      */
     public function up()
     {
-        $this->makePermissions();
+        Role::firstOrCreate(['guard_name' => 'lit', 'name' => 'admin']);
+        Role::firstOrCreate(['guard_name' => 'lit', 'name' => 'user']);
+        $this->buildPermissions();
         $this->upPermissions();
     }
 
@@ -77,7 +92,7 @@ class MakePermissions extends Migration
         $this->combineOperationsAndGroups(
             ['create', 'read', 'update', 'delete'], $this->down
         );
-        $this->makePermissions();
+        $this->buildPermissions();
         $this->downPermissions();
     }
 }

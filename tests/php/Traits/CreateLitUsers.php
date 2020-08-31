@@ -2,7 +2,7 @@
 
 namespace Tests\Traits;
 
-use Ignite\User\Models\User;
+use Lit\Models\User;
 
 trait CreateLitUsers
 {
@@ -11,14 +11,14 @@ trait CreateLitUsers
      *
      * @var string
      */
-    protected $UserPassword = 'secret';
+    protected $userPassword = 'secret';
 
     /**
      * Lit user email's and their roles.
      *
      * @var array
      */
-    protected $UsersToCreate = [
+    protected $usersToCreate = [
         'admin@admin.com' => 'admin',
         'user@user.com'   => 'user',
     ];
@@ -28,7 +28,7 @@ trait CreateLitUsers
      *
      * @var array
      */
-    protected $Users = [];
+    protected $users = [];
 
     /**
      * Lit user with admin role.
@@ -51,7 +51,7 @@ trait CreateLitUsers
      */
     public function CreateLitUsers()
     {
-        foreach ($this->UsersToCreate as $email => $role) {
+        foreach ($this->usersToCreate as $email => $role) {
 
             // When running a browser test, the factory might not be registered.
             try {
@@ -61,18 +61,18 @@ trait CreateLitUsers
             }
 
             unset($user['email']);
-            $User = User::firstOrCreate(
+            $user = User::firstOrCreate(
                 ['email' => $email],
                 $user
             )->assignRole($role);
 
             if ($role == 'admin') {
-                $this->admin = $User;
+                $this->admin = $user;
             }
             if ($role == 'user') {
-                $this->user = $User;
+                $this->user = $user;
             }
         }
-        $this->Users = User::all();
+        $this->user = User::all();
     }
 }

@@ -3,8 +3,8 @@
 namespace Tests\Page;
 
 use Ignite\Page\BasePage;
+use Ignite\Support\Vue\BladeComponent;
 use Ignite\Vue\Component;
-use Ignite\Vue\Components\BladeComponent;
 use Illuminate\View\View;
 use Mockery as m;
 use Tests\BackendTestCase;
@@ -73,7 +73,7 @@ class BasePageTest extends BackendTestCase
     /** @test */
     public function test_view_method_adds_blade_component()
     {
-        $this->page->view('litstack::app');
+        $this->page->view('welcome');
 
         $this->assertCount(1, $this->page->getComponents());
         $this->assertInstanceOf(BladeComponent::class, $this->page->getComponents()[0]);

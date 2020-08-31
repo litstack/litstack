@@ -6,6 +6,7 @@ use Ignite\Application\Composer\HttpErrorComposer;
 use Ignite\Application\Controllers\NotFoundController;
 use Ignite\Application\Kernel\HandleRouteMiddleware;
 use Ignite\Application\Kernel\HandleViewComposer;
+use Ignite\Application\Navigation\PresetFactory;
 use Ignite\Application\Providers\ArtisanServiceProvider;
 use Ignite\Application\Providers\RouteServiceProvider;
 use Ignite\Support\Facades\Config;
@@ -48,6 +49,8 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->registerVueApplication();
 
         $this->loadAssets();
+
+        $this->registerNavigationPresetFactoryApplication();
     }
 
     /**
@@ -75,6 +78,18 @@ class ApplicationServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register Vue application component.
+     *
+     * @return void
+     */
+    protected function registerNavigationPresetFactoryApplication()
+    {
+        $this->app->singleton('lit.navigation', function () {
+            return new PresetFactory;
+        });
+    }
+
+    /**
      * Bootstrap the application services.
      *
      * @param  \Illuminate\Routing\Router $router
@@ -82,6 +97,11 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     public function boot(Router $router): void
     {
+        $this->loadViewsFrom(
+            $this->app['lit']->vendorPath('/resources/views'),
+            'litstack'
+        );
+
         $this->handleKernel($router);
         $this->litstackErrorPages();
     }

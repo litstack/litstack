@@ -5,6 +5,7 @@ namespace Ignite\Page;
 use Ignite\Page\Table\Components\ImageComponent;
 use Ignite\Page\Table\Components\RelationComponent;
 use Ignite\Page\Table\Components\ToggleComponent;
+use Illuminate\Support\ServiceProvider;
 
 class PageServiceProvider extends ServiceProvider
 {

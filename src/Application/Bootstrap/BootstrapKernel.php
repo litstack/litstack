@@ -3,14 +3,13 @@
 namespace Ignite\Application\Bootstrap;
 
 use Ignite\Application\Application;
-use Lit\Kernel;
-use Illuminate\Console\Application as Artisan;
 use Illuminate\Support\Facades\App;
+use Lit\Kernel;
 
 class BootstrapKernel
 {
     /**
-     * Registers artisan commands of all lit packages.
+     * Bootstrap.
      *
      * @param  \Ignite\Application\Application $app
      * @return void
@@ -24,9 +23,9 @@ class BootstrapKernel
     }
 
     /**
-     * Register package providers.
+     * Register providers.
      *
-     * @param  mixed $package
+     * @param  array $providers
      * @return void
      */
     public function registerProviders($providers)

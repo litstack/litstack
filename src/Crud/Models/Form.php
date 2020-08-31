@@ -3,12 +3,9 @@
 namespace Ignite\Crud\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Ignite\Crud\Models\Traits\TrackEdits;
 
 class Form extends LitFormModel
 {
-    use TrackEdits;
-
     /**
      * Database table name.
      *

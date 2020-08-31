@@ -4,8 +4,11 @@ namespace Tests\Fields;
 
 use Ignite\Crud\BaseField;
 use Ignite\Crud\Fields\Icon;
-use Tests\Traits\InteractsWithFields;
+use Ignite\Foundation\Litstack;
+use Illuminate\Container\Container;
+use Illuminate\Foundation\Application;
 use PHPUnit\Framework\TestCase;
+use Tests\Traits\InteractsWithFields;
 
 class FieldIconTest extends TestCase
 {
@@ -13,6 +16,9 @@ class FieldIconTest extends TestCase
 
     public function setUp(): void
     {
+        $app = new Application;
+        $app['lit'] = new Litstack($app);
+        Container::setInstance($app);
         $this->field = $this->getField(Icon::class);
     }
 

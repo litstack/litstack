@@ -14,9 +14,6 @@ trait FacadeNeedsLitInstalled
      */
     protected static function resolveFacadeInstance($name)
     {
-        if (lit()->needsDumpAutoload()) {
-            throw new MissingLitEnvironmentException('Missing lit packages cache. Try [composer dumpautoload].');
-        }
         if (! lit()->installed()) {
             throw new MissingLitEnvironmentException('The '.static::class.' requires lit to be installed.');
         }

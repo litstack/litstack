@@ -2,10 +2,11 @@
 
 namespace Ignite\Foundation\Console;
 
+use Ignite\Foundation\LitstackServiceProvider;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\App;
-use Lit\Models\User;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
 class InstallCommand extends Command
@@ -43,6 +44,8 @@ class InstallCommand extends Command
      */
     public function __construct(Filesystem $files)
     {
+        parent::__construct();
+
         $this->files = $files;
     }
 
@@ -63,12 +66,11 @@ class InstallCommand extends Command
 
         $this->info("\n----- start -----\n");
         $this->vendorConfigs();
-        $this->call('lit:guard');
+        $this->installGuard();
 
         $this->handleLitPublishable();
 
         $this->createDefaultRoles();
-        $this->createDefaultPermissions();
 
         $this->publishLit();
         $this->makeModelDirs();
@@ -101,21 +103,22 @@ class InstallCommand extends Command
         if (config('app.env') == 'production') {
             return;
         }
-        if (User::where('username', 'admin')->orWhere('email', 'admin@admin')->exists()) {
+        if (DB::table('lit_users')->where('username', 'admin')->orWhere('email', 'admin@admin')->exists()) {
             return;
         }
 
-        $user = new User([
+        DB::table('lit_users')->insert([
             'username'   => 'admin',
             'email'      => 'admin@admin.com',
             'first_name' => 'admin',
             'last_name'  => '',
+            'password'   => bcrypt('secret'),
         ]);
-
-        $user->password = bcrypt('secret');
-        $user->save();
-
-        $user->assignRole('admin');
+        DB::table('model_has_roles')->insert([
+            'role_id'    => Role::where('name', 'admin')->where('guard_name', 'lit')->first()->id,
+            'model_type' => 'Lit\\Models\\User',
+            'model_id'   => DB::table('lit_users')->where('email', 'admin@admin.com')->first()->id,
+        ]);
 
         $this->info('created default admin (email: admin@admin.com, password: secret)');
     }
@@ -153,13 +156,13 @@ class InstallCommand extends Command
         $this->info('publishing lit config & migrations');
         if ($this->migrations()) {
             $this->callSilent('vendor:publish', [
-                '--provider' => "Ignite\LitServiceProvider",
+                '--provider' => LitstackServiceProvider::class,
                 '--tag'      => 'migrations',
             ]);
         }
 
         $this->callSilent('vendor:publish', [
-            '--provider' => "Ignite\LitServiceProvider",
+            '--provider' => LitstackServiceProvider::class,
             '--tag'      => 'config',
         ]);
 
@@ -186,7 +189,10 @@ class InstallCommand extends Command
         // the resource path itself, which is present for shure
         $this->callSilent('config:clear');
 
-        $this->files->copyDirectory(realpath(lit_path('publish/lit')), base_path('lit'));
+        $this->files->copyDirectory(
+            realpath(lit_vendor_path('publish/lit')),
+            base_path('lit')
+        );
 
         $composer = json_decode($this->files->get(base_path('composer.json')), true);
         $composer['autoload']['psr-4']['Lit\\'] = 'lit/app/';

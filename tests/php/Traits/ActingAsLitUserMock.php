@@ -2,7 +2,7 @@
 
 namespace Tests\Traits;
 
-use Ignite\User\Models\User;
+use Lit\Models\User;
 use Mockery as m;
 
 trait ActingAsLitUserMock

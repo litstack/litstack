@@ -2,10 +2,8 @@
 
 namespace Tests;
 
-use Ignite\Foundation\Discover\PackageDiscoverCommand;
 use Ignite\Support\Facades\Lit;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\File;
 use Tests\Traits\ActingAsLitUserMock;
 use Tests\Traits\CreateLitUsers;
 use Tests\Traits\InteractsWithConfig;
@@ -25,7 +23,7 @@ trait LitTestCase
         \Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         \Spatie\Permission\PermissionServiceProvider::class,
         \Astrotomic\Translatable\TranslatableServiceProvider::class,
-        \Ignite\LitServiceProvider::class,
+        \Ignite\Foundation\LitstackServiceProvider::class,
     ];
 
     /**
@@ -107,7 +105,6 @@ trait LitTestCase
             return;
         }
         Artisan::call('lit:install');
-        $this->discoverLitPackages();
         $this->refreshApplication();
     }
 
@@ -155,28 +152,5 @@ trait LitTestCase
     protected function getDatabase()
     {
         return ':memory:';
-    }
-
-    /**
-     * Discover installed packages and composer.json packages.
-     *
-     * @return void
-     */
-    protected function discoverLitPackages()
-    {
-        $finder = new PackageDiscoverCommand();
-
-        $vendorPath = realpath(__DIR__.'/../../vendor');
-
-        $manifest = array_merge(
-            // Find packages in current composer json.
-            $finder->filterLitPackages([
-                json_decode(File::get(__DIR__.'/../../composer.json'), true),
-            ]),
-            // Find packages in current composer json.
-            $finder->findLitPackages($vendorPath)
-        );
-
-        $finder->write($manifest);
     }
 }

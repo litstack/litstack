@@ -1,6 +1,6 @@
 <?php
 
-namespace Ignite\Commands;
+namespace Ignite\Foundation\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
@@ -30,6 +30,8 @@ class ExtendCommand extends Command
      */
     public function __construct(Filesystem $files)
     {
+        parent::__construct();
+
         $this->files = $files;
     }
 
@@ -70,7 +72,7 @@ class ExtendCommand extends Command
     protected function extendWebpack()
     {
         $extension = $this->files->get(
-            lit_path('publish/extend/webpack.mix.extension.js')
+            lit_vendor_path('publish/extend/webpack.mix.extension.js')
         );
 
         $webpack = $this->files->get(base_path('webpack.mix.js'));

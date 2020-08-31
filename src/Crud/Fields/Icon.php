@@ -29,7 +29,7 @@ class Icon extends BaseField
      */
     public function mount()
     {
-        $this->icons(require lit_path('src/Crud/Fields/Defaults/fontawesome_icons.php'));
+        $this->icons(require lit_vendor_path('src/Crud/Fields/Defaults/fontawesome_icons.php'));
         $this->search(true);
     }
 

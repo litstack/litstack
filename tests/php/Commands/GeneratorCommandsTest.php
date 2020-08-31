@@ -7,7 +7,7 @@ use Illuminate\Foundation\Console\CastMakeCommand;
 use Illuminate\Support\Facades\File;
 use Tests\BackendTestCase;
 
-class GeneratorCommandTest extends BackendTestCase
+class GeneratorCommandsTest extends BackendTestCase
 {
     public function tearDown(): void
     {

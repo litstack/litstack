@@ -49,9 +49,9 @@ class ControllerCommand extends GeneratorCommand
     protected function getStub()
     {
         return [
-            'default' => lit_path('stubs/controller.default.stub'),
-            'form'    => lit_path('stubs/controller.form.stub'),
-            'crud'    => lit_path('stubs/controller.crud.stub'),
+            'default' => lit_vendor_path('stubs/controller.default.stub'),
+            'form'    => lit_vendor_path('stubs/controller.form.stub'),
+            'crud'    => lit_vendor_path('stubs/controller.crud.stub'),
         ][$this->type];
     }
 

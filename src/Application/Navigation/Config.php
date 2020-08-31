@@ -2,7 +2,7 @@
 
 namespace Ignite\Application\Navigation;
 
-abstract class NavigationConfig
+abstract class Config
 {
     /**
      * Build topbar navigation.
