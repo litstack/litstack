@@ -4,7 +4,7 @@ namespace Tests\Commands;
 
 use Tests\BackendTestCase;
 
-class LitChartCommandTest extends BackendTestCase
+class ChartCommandTest extends BackendTestCase
 {
     /** @test */
     public function it_creates_area_chart_by_default()

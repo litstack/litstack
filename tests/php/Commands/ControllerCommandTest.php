@@ -4,7 +4,7 @@ namespace Tests\Commands;
 
 use Tests\BackendTestCase;
 
-class LitControllerCommandTest extends BackendTestCase
+class ControllerCommandTest extends BackendTestCase
 {
     /** @test */
     public function it_creates_controller()

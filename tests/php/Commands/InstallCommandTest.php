@@ -9,7 +9,7 @@ use Spatie\Permission\Models\Role;
 use Tests\BackendTestCase;
 use Tests\Traits\RefreshLaravel;
 
-class LitInstallCommandTest extends BackendTestCase
+class InstallCommandTest extends BackendTestCase
 {
     use RefreshLaravel;
 

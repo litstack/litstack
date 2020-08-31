@@ -4,7 +4,7 @@ namespace Tests\Commands;
 
 use Tests\BackendTestCase;
 
-class LitFormCommandTest extends BackendTestCase
+class FormCommandTest extends BackendTestCase
 {
     /** @test */
     public function it_creates_form()
