@@ -207,14 +207,11 @@ class CrudServiceProvider extends LaravelServiceProvider
      */
     protected function registerCrud()
     {
-        $this->callAfterResolving('lit.app', function ($app) {
-            $app->singleton('crud', function () {
-                return app(Crud::class);
-            });
-
-            $app->singleton('crud.route.resolver', function () {
-                return new RouteCollectionResolver;
-            });
+        $this->app->singleton('lit.crud', function ($app) {
+            return new Crud($app['lit.router']);
+        });
+        $this->app->singleton('lit.crud.route.resolver', function () {
+            return new RouteCollectionResolver;
         });
     }
 

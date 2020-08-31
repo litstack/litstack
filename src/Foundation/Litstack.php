@@ -3,13 +3,14 @@
 namespace Ignite\Foundation;
 
 use Ignite\Application\Application;
+use Ignite\Contracts\Foundation\Litstack as LitstackContract;
 use Ignite\Support\Facades\Config;
 use Ignite\Translation\Translator;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Traits\ForwardsCalls;
 
-class Litstack
+class Litstack implements LitstackContract
 {
     use ForwardsCalls,
         Concerns\ManagesPaths;
@@ -39,6 +40,7 @@ class Litstack
 
         $this->setBasePath(base_path('lit'));
         $this->setVendorPath(realpath(__DIR__.'/../../'));
+        $this->registerLitstackContainerAliases();
     }
 
     /**
@@ -228,6 +230,31 @@ class Litstack
     public function getPath()
     {
         return base_path('lit');
+    }
+
+    /**
+     * Register the core class aliases in the container.
+     *
+     * @return void
+     */
+    public function registerLitstackContainerAliases()
+    {
+        $groups = [
+            'lit'            => [self::class, \Ignite\Contracts\Foundation\Litstack::class],
+            'lit.app'        => [\Ignite\Application\Application::class],
+            'lit.config'     => [\Ignite\Config\ConfigLoader::class],
+            'lit.crud'       => [\Ignite\Crud\Crud::class],
+            'lit.nav'        => [\Ignite\Application\Navigation\PresetFactory::class],
+            'lit.router'     => [\Ignite\Routing\Router::class],
+            'lit.translator' => [\Ignite\Translation\Translator::class],
+            'lit.vue'        => [\Ignite\Vue\Vue::class, \Ignite\Contracts\Vue\Vue::class],
+        ];
+
+        foreach ($groups as $key => $aliases) {
+            foreach ($aliases as $alias) {
+                $this->laravel->alias($key, $alias);
+            }
+        }
     }
 
     /**

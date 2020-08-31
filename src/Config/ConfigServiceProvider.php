@@ -33,7 +33,7 @@ class ConfigServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('lit.app.config.loader', function ($app) {
+        $this->app->singleton('lit.config', function ($app) {
             $loader = new ConfigLoader();
 
             foreach ($this->factories as $dependency => $factory) {

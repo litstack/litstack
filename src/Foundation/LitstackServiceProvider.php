@@ -177,7 +177,7 @@ class LitstackServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register Lit helper singleton.
+     * Register Lit singleton.
      *
      * @return void
      */

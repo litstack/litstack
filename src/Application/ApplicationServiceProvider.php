@@ -84,7 +84,7 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     protected function registerNavigationPresetFactoryApplication()
     {
-        $this->app->singleton('lit.navigation', function () {
+        $this->app->singleton('lit.nav', function () {
             return new PresetFactory;
         });
     }

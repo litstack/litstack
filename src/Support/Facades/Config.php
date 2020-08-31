@@ -19,6 +19,6 @@ class Config extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'lit.app.config.loader';
+        return 'lit.config';
     }
 }

@@ -13,6 +13,6 @@ class Nav extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'lit.navigation';
+        return 'lit.nav';
     }
 }

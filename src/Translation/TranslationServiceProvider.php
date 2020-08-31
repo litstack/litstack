@@ -22,7 +22,5 @@ class TranslationServiceProvider extends ServiceProvider
 
             return $translator;
         });
-
-        $this->app->bind(Translator::class, 'lit.translator');
     }
 }

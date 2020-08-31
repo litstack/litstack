@@ -106,7 +106,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     protected function registerNavCommand($abstract)
     {
         $this->app->singleton($abstract, function ($app) {
-            return new NavCommand($app['lit.navigation']);
+            return new NavCommand($app['lit.nav']);
         });
     }
 
