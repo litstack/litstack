@@ -110,11 +110,6 @@ class LivewireCommand extends Command
      */
     protected function fixViewNamespace(bool $force = false, bool $inline = false)
     {
-        dd(
-            $this->parser->baseViewPath,
-            resource_path('views')
-        );
-
         if ($inline) {
             return;
         }
@@ -140,7 +135,10 @@ class LivewireCommand extends Command
     protected function mockEnvironment()
     {
         config()->set('livewire.class_namespace', 'Lit\\Http\\Livewire');
-        config()->set('livewire.view_path', base_path('lit/resources/views/livewire'));
+        config()->set(
+            'livewire.view_path',
+            base_path('lit'.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'livewire')
+        );
         set_unaccessible_property(app(), 'namespace', 'Lit\\');
         app()->instance('path', base_path('lit/app'));
         app()->setBasePath(base_path('lit'));
