@@ -3,8 +3,7 @@
 namespace Ignite\Application\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Filesystem\Filesystem as FilesystemFilesystem;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use Livewire\Commands\ComponentParser;
 
