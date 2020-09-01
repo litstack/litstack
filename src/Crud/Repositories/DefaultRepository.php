@@ -47,7 +47,6 @@ class DefaultRepository extends BaseFieldRepository
 
         $model->update($attributes);
 
-
         return crud($model);
     }
 

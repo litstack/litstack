@@ -62,7 +62,7 @@ class PresetFactory
         $preset = array_merge($preset, $merge);
 
         $title = $preset['title'] ?? null;
-        
+
         if ($title instanceof Closure) {
             $preset['title'] = $preset['title']();
         }

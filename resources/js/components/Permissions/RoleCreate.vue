@@ -9,7 +9,7 @@
 			"
 		>
 			<b-form-group
-				:label="__('litpermissions.enter_rolename')"
+				:label="__('lit.permissions.enter_rolename')"
 				label-for="name"
 				:state="nameState"
 			>
