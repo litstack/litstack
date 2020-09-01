@@ -50,7 +50,6 @@ class GeneratorCommandsTest extends BackendTestCase
     {
         $this->artisan('lit:job', ['name' => 'foo']);
         $this->assertFileExists(lit()->getPath('app/Jobs/Foo.php'));
-        $this->assertTrue(class_exists(\Lit\Jobs\Foo::class));
     }
 
     /** @test */
