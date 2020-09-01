@@ -110,6 +110,7 @@ class LivewireCommand extends Command
      */
     protected function fixViewNamespace(bool $force = false, bool $inline = false)
     {
+        dd($this->parser->baseViewPath, resource_path('views'), $this->parser->viewName());
         if ($inline) {
             return;
         }
