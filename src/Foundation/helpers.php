@@ -273,7 +273,7 @@ if (! function_exists('lit_js')) {
     {
         $js_path = config('lit.assets.app_js')
             ? config('lit.assets.app_js')
-            : route('lit.app_js');
+            : route('lit.js');
 
         if (config('lit.assets.app_js')) {
             $js_path .= '?v='.filemtime(ltrim(config('lit.assets.app_js'), '/'));
