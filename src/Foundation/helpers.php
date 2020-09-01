@@ -271,12 +271,12 @@ if (! function_exists('lit_js')) {
      */
     function lit_js()
     {
-        $js_path = config('lit.assets.js')
-            ? config('lit.assets.js')
-            : route('lit.js');
+        $js_path = config('lit.assets.app_js')
+            ? config('lit.assets.app_js')
+            : route('lit.app_js');
 
-        if (config('lit.assets.js')) {
-            $js_path .= '?v='.filemtime(ltrim(config('lit.assets.js'), '/'));
+        if (config('lit.assets.app_js')) {
+            $js_path .= '?v='.filemtime(ltrim(config('lit.assets.app_js'), '/'));
         }
 
         return $js_path;
