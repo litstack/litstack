@@ -34,7 +34,7 @@ class GeneratorCommandsTest extends BackendTestCase
     {
         $this->artisan('lit:livewire', ['name' => 'foo', '--inline' => true]);
         $this->assertFileExists(base_path('lit/app/Http/Livewire/Foo.php'));
-        $this->assertFileDoesNotExist(base_path('lit/resources/views/livewire/foo.blade.php'));
+        $this->assertFalse(file_exists(base_path('lit/resources/views/livewire/foo.blade.php')));
     }
 
     /** @test */
