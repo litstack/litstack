@@ -134,7 +134,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
         // Skipping when CastMakeCommand doesnt exist. The command "make:cast" is
         // not available in older versions of laravel 7.
         if (! class_exists(CastMakeCommand::class)) {
-            unset($this->devCommands['Cast']);
+            unset($this->creatorCommands['Cast']);
 
             return;
         }

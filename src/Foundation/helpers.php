@@ -1,6 +1,9 @@
 <?php
 
 use Ignite\Support\Facades\Vue;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 if (! function_exists('production')) {
     /**
@@ -40,7 +43,7 @@ if (! function_exists('crud')) {
      */
     function crud($model)
     {
-        if ($model instanceof EloquentCollection && $model instanceof Collection) {
+        if ($model instanceof Collection) {
             $cruds = collect([]);
             foreach ($model as $m) {
                 $cruds[] = crud($m);
@@ -318,6 +321,7 @@ if (! function_exists('medialibrary_config')) {
             // For old versions.
             return 'medialibrary';
         }
+        
         // For new versions.
         return 'media-library';
     }

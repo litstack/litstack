@@ -11,7 +11,7 @@ use Illuminate\Foundation\Application;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
 
-class HelpersTest extends TestCase
+class SupportHelpersTest extends TestCase
 {
     public function tearDown(): void
     {
