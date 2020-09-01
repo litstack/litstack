@@ -540,3 +540,28 @@ if (! function_exists('set_unaccessible_property')) {
         $value = $reflection->setValue($instance, $value);
     }
 }
+
+if (! function_exists('get_unaccessible_property')) {
+    /**
+     * Set protected or private class property value.
+     *
+     * @param mixed  $instance
+     * @param string $property
+     * @param mixed  $value
+     *
+     * @return void
+     */
+    function get_unaccessible_property($object, string $property)
+    {
+        if (! is_string($object)) {
+            $class = get_class($object);
+        } else {
+            $class = $object;
+        }
+
+        $reflection = new ReflectionProperty($class, $property);
+        $reflection->setAccessible(true);
+
+        return $reflection->getValue($object);
+    }
+}
