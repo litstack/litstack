@@ -66,7 +66,7 @@
 							class="btn-square"
 							@click="commands.bold"
 						>
-							<fa-icon icon="bold" />
+							<lit-fa-icon icon="bold" />
 						</b-button>
 						<b-button
 							:variant="
@@ -76,7 +76,7 @@
 							class="btn-square"
 							@click="commands.italic"
 						>
-							<fa-icon icon="italic" />
+							<lit-fa-icon icon="italic" />
 						</b-button>
 
 						<b-button
@@ -87,7 +87,7 @@
 							class="btn-square"
 							@click="commands.strike"
 						>
-							<fa-icon icon="strikethrough" />
+							<lit-fa-icon icon="strikethrough" />
 						</b-button>
 
 						<b-button
@@ -98,7 +98,7 @@
 							class="btn-square"
 							@click="commands.underline"
 						>
-							<fa-icon icon="underline" />
+							<lit-fa-icon icon="underline" />
 						</b-button>
 
 						<b-button
@@ -111,7 +111,7 @@
 							class="btn-square"
 							@click="commands.bullet_list"
 						>
-							<fa-icon icon="list-ul" />
+							<lit-fa-icon icon="list-ul" />
 						</b-button>
 
 						<b-button
@@ -124,7 +124,7 @@
 							class="btn-square"
 							@click="commands.ordered_list"
 						>
-							<fa-icon icon="list-ol" />
+							<lit-fa-icon icon="list-ol" />
 						</b-button>
 
 						<b-button
@@ -137,7 +137,7 @@
 							class="btn-square"
 							@click="commands.blockquote"
 						>
-							<fa-icon icon="quote-right" />
+							<lit-fa-icon icon="quote-right" />
 						</b-button>
 
 						<b-dropdown
@@ -153,7 +153,7 @@
 							@show="showLinkMenu(getMarkAttrs('custom_link'))"
 						>
 							<template v-slot:button-content>
-								<fa-icon icon="link" />
+								<lit-fa-icon icon="link" />
 							</template>
 							<b-dropdown-form style="min-width: 340px;">
 								<b-form-input
@@ -200,7 +200,7 @@
 							size="sm"
 						>
 							<template v-slot:button-content>
-								<fa-icon icon="palette" />
+								<lit-fa-icon icon="palette" />
 							</template>
 							<div class="lit-color-palette-wrapper">
 								<b-button
@@ -211,7 +211,9 @@
 									@click="
 										setFontColor(commands.font_color, color)
 									"
-									:style="`background: ${color}; border-color: ${color}`"
+									:style="
+										`background: ${color}; border-color: ${color}`
+									"
 								></b-button>
 							</div>
 						</b-dropdown>
@@ -234,7 +236,7 @@
                                 })
                             "
                         >
-                            <fa-icon icon="table" />
+                            <lit-fa-icon icon="table" />
                         </b-button> -->
 
 						<b-button
@@ -243,7 +245,7 @@
 							class="btn-square"
 							@click="commands.undo"
 						>
-							<fa-icon icon="undo" />
+							<lit-fa-icon icon="undo" />
 						</b-button>
 
 						<b-button
@@ -252,7 +254,7 @@
 							class="btn-square"
 							@click="commands.redo"
 						>
-							<fa-icon icon="redo" />
+							<lit-fa-icon icon="redo" />
 						</b-button>
 
 						<!-- <button
@@ -265,7 +267,7 @@
                                 })
                             "
                         >
-                            <fa-icon name="table" />
+                            <lit-fa-icon name="table" />
                         </button> -->
 					</div>
 				</editor-menu-bar>
@@ -318,7 +320,7 @@ export default {
 		EditorContent,
 		EditorMenuBar,
 		'v-style': {
-			render: function (createElement) {
+			render: function(createElement) {
 				return createElement('style', this.$slots.default);
 			},
 		},

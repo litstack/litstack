@@ -7,7 +7,7 @@
 				v-b-modal="modalId"
 				v-if="!field.readonly && !this.create"
 			>
-				<fa-icon :icon="field.many ? 'plus' : 'link'" />
+				<lit-fa-icon :icon="field.many ? 'plus' : 'link'" />
 				{{
 					field.many
 						? __('lit.add_model', {
@@ -57,13 +57,13 @@
 					class="mt-3 text-center text-secondary"
 					v-if="busy && _.isEmpty(selectedRelations)"
 				>
-					<fa-icon icon="circle-notch" spin />
+					<lit-fa-icon icon="circle-notch" spin />
 				</div>
 				<div
 					v-if="!busy && _.isEmpty(selectedRelations)"
 					class="mt-3 text-center text-secondary"
 				>
-					<fa-icon icon="tags" />
+					<lit-fa-icon icon="tags" />
 				</div>
 				<b-form-tag
 					v-for="(relation, key) in selectedRelations"

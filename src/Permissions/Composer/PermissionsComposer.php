@@ -27,6 +27,6 @@ class PermissionsComposer
      */
     protected function getPermissions()
     {
-        return lit_user()->getAllPermissions();
+        return lit_user()->getAllPermissions()->pluck('name');
     }
 }

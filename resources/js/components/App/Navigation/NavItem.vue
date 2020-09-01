@@ -33,7 +33,10 @@
 					:class="{ active: visible }"
 					v-if="hasChildren"
 				>
-					<fa-icon icon="chevron-right" class="float-right text-sm" />
+					<lit-fa-icon
+						icon="chevron-right"
+						class="float-right text-sm"
+					/>
 				</div>
 			</b-list-group-item>
 			<b-collapse v-if="hasChildren" v-model="visible">

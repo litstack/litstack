@@ -22,7 +22,7 @@
 					:variant="show ? 'primary' : 'outline-secondary'"
 					@click="show = !show"
 				>
-					<fa-icon icon="eye" />
+					<lit-fa-icon icon="eye" />
 				</b-button>
 			</b-input-group-append>
 		</b-input-group>

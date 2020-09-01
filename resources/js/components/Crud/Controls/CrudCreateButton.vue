@@ -4,7 +4,7 @@
 		variant="primary"
 		:href="`${Lit.baseURL}${config.route_prefix}/create`"
 	>
-		<fa-icon icon="plus" />
+		<lit-fa-icon icon="plus" />
 		{{ __('base.item_add', { item: config.names.singular }) }}
 	</b-button>
 </template>

@@ -52,7 +52,6 @@ abstract class FormController extends CrudBaseController
     public function load(CrudReadRequest $request, $id)
     {
         $model = $this->query()->findOrFail($id);
-        $model->last_edit;
 
         return crud(
             $model

@@ -57,7 +57,7 @@
 					:class="isItemSelected(item) ? 'table-primary' : ''"
 				>
 					<td v-if="sortable">
-						<fa-icon
+						<lit-fa-icon
 							icon="grip-horizontal"
 							class="text-secondary lit-draggable__dragbar"
 						/>

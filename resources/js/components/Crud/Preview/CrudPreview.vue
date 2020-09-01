@@ -5,7 +5,7 @@
 		v-b-modal.lit-page-preview
 		v-if="config.preview_route"
 	>
-		<fa-icon icon="eye" />
+		<lit-fa-icon icon="eye" />
 
 		{{ __('lit.preview') }}
 

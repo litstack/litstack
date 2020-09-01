@@ -57,9 +57,7 @@ class Form extends LitFormModel
      * @var array
      */
     protected $with = [
-        'translations',
-        'media',
-        'last_edit',
+        'translations', 'media',
     ];
 
     /**

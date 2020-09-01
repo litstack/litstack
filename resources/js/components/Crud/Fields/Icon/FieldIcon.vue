@@ -16,7 +16,7 @@
 						/>
 						<template v-slot:prepend>
 							<b-input-group-text>
-								<fa-icon icon="search" />
+								<lit-fa-icon icon="search" />
 							</b-input-group-text>
 						</template>
 					</b-input-group>

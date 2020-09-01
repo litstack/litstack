@@ -25,7 +25,7 @@
 					variant="link"
 					class="text-secondary lit-image-card__controls_drag lit-draggable__dragbar"
 				>
-					<fa-icon icon="grip-vertical" />
+					<lit-fa-icon icon="grip-vertical" />
 				</b-button>
 				<b-button
 					v-if="!field.readonly"
@@ -34,7 +34,7 @@
 					class="text-secondary lit-image-card__controls_delete"
 					@click="deleteImage(image, index)"
 				>
-					<fa-icon icon="trash" />
+					<lit-fa-icon icon="trash" />
 				</b-button>
 				<b-button
 					size="sm"
@@ -59,7 +59,7 @@
 						}`
 					"
 				/>
-				<fa-icon
+				<lit-fa-icon
 					v-else
 					:icon="['far', 'file']"
 					class="text-secondary"
@@ -103,7 +103,7 @@
 						"
 						class="lit-trash btn btn-danger btn-sm"
 					>
-						<fa-icon icon="trash" />
+						<lit-fa-icon icon="trash" />
 						{{ __('base.delete').capitalize() }}
 					</a>
 				</template>

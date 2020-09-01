@@ -43,7 +43,7 @@
             variant="primary"
             class="d-block d-lg-none btn-square lit-main-navigation-toggle"
         >
-            <fa-icon icon="stream" />
+            <lit-fa-icon icon="stream" />
         </b-button>
 
         <main>

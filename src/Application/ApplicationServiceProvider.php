@@ -107,29 +107,23 @@ class ApplicationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Add css files from config lit.assets.css.
+     * Add css files from config "lit.assets".
      *
      * @return void
      */
     protected function loadAssets()
     {
         $this->app->afterResolving('lit.app', function ($app) {
-            $this->loadCssFilesFromConfig($app);
-        });
-    }
+            $styles = config('lit.assets.styles') ?? [];
+            foreach ($styles as $style) {
+                $app->style($style);
+            }
 
-    /**
-     * Load css files from config.
-     *
-     * @param  Application $app
-     * @return void
-     */
-    protected function loadCssFilesFromConfig(Application $app)
-    {
-        $files = config('lit.assets.css') ?? [];
-        foreach ($files as $file) {
-            $app->style($file);
-        }
+            $scripts = config('lit.assets.scripts') ?? [];
+            foreach ($scripts as $script) {
+                $app->style($script);
+            }
+        });
     }
 
     /**

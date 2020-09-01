@@ -30,8 +30,8 @@ class PostConfig extends CrudConfig
             ->sortByDefault('id.desc')
             ->search('name')
             ->sortBy([
-                'id.desc' => __f('fj.sort_new_to_old'),
-                'id.asc'  => __f('fj.sort_old_to_new'),
+                'id.desc' => __f('lit.sort_new_to_old'),
+                'id.asc'  => __f('lit.sort_old_to_new'),
             ])
             ->width(12);
     }

@@ -23,11 +23,11 @@ const methods = {
 			variant = response.data.variant;
 		}
 
-		message = this.$te(`messages.${message}`)
-			? this.$t(`messages.${message}`)
+		message = i18n.te(`messages.${message}`)
+			? i18n.t(`messages.${message}`)
 			: message;
 
-		this.$bvToast.toast(message, { variant });
+		toast(message, { variant });
 
 		return response;
 	},
@@ -47,7 +47,10 @@ const methods = {
 		}
 
 		// Show livewire error in development.
-		if (store.getters.debug) {
+		if (
+			store.getters.debug &&
+			!error.response.headers['content-type'].includes('application/json')
+		) {
 			livewire.connection.driver.showHtmlModal(error.response.data);
 			return Promise.reject(error);
 		}
@@ -63,14 +66,14 @@ const methods = {
 		let message = error.response.data.message;
 
 		if ([405, 404].includes(error.response.status) && !message) {
-			message = this.$t('lit.errors.not_found');
+			message = i18n.$t('lit.errors.not_found');
 		}
 
-		message = this.$te(`messages.${message}`)
-			? this.$t(`messages.${message}`)
+		message = i18n.te(`messages.${message}`)
+			? i18n.t(`messages.${message}`)
 			: message;
 
-		this.$bvToast.toast(message, {
+		window.toast(message, {
 			variant: 'danger',
 		});
 

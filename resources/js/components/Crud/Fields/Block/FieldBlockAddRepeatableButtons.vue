@@ -8,7 +8,7 @@
 			:key="type"
 			@click.prevent="add(type)"
 		>
-			<fa-icon icon="plus" />
+			<lit-fa-icon icon="plus" />
 			add {{ type }}
 		</b-button>
 	</div>

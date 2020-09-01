@@ -16,12 +16,14 @@
 				<lit-spinner :variant="reverse" />
 			</div>
 			<div
-				:class="`lit-chart__wrapper ${
-					chart.type == 'number' ? 'lit-chart__number' : ''
-				}`"
-				:style="`display: ${
-					busy ? 'none' : 'block'
-				};height: ${height};`"
+				:class="
+					`lit-chart__wrapper ${
+						chart.type == 'number' ? 'lit-chart__number' : ''
+					}`
+				"
+				:style="
+					`display: ${busy ? 'none' : 'block'};height: ${height};`
+				"
 			>
 				<component
 					v-if="chart.type != 'number'"
@@ -43,8 +45,8 @@
 					<template
 						v-if="
 							chart.type == 'area' ||
-							chart.type == 'bar' ||
-							chart.type == 'number'
+								chart.type == 'bar' ||
+								chart.type == 'number'
 						"
 					>
 						<h3 class="mb-0">
@@ -52,7 +54,10 @@
 								{{ result }}
 							</template>
 							<template v-if="trend">
-								<fa-icon :icon="trendIcon" :class="trendText" />
+								<lit-fa-icon
+									:icon="trendIcon"
+									:class="trendText"
+								/>
 							</template>
 						</h3>
 						<template v-if="trend">

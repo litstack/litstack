@@ -46,10 +46,6 @@ class ModalRepository extends BaseFieldRepository
 
         $model->update($attributes);
 
-        if ($model->last_edit) {
-            $model->load('last_edit');
-        }
-
         return crud($model);
     }
 }

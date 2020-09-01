@@ -6,7 +6,7 @@
 		v-b-tooltip.hover
 		:title="__('crud.fields.relation.edit')"
 	>
-		<fa-icon icon="edit" @click="edit(item)" />
+		<lit-fa-icon icon="edit" @click="edit(item)" />
 		<lit-field-relation-form
 			:item="item"
 			:id="rowModalId(item)"

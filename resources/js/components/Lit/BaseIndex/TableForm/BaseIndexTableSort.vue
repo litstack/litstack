@@ -7,7 +7,7 @@
 		no-caret
 	>
 		<template v-slot:button-content>
-			<fa-icon icon="sort-amount-down" />
+			<lit-fa-icon icon="sort-amount-down" />
 			<span class="d-none d-lg-inline-block">{{ __('lit.sort') }}</span>
 		</template>
 

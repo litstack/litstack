@@ -7,7 +7,7 @@
 		no-caret
 	>
 		<template v-slot:button-content>
-			<fa-icon icon="filter" />
+			<lit-fa-icon icon="filter" />
 			<span class="d-none d-lg-inline-block">{{ __('lit.filter') }}</span>
 		</template>
 

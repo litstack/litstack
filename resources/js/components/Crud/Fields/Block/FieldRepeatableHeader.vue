@@ -29,7 +29,7 @@
 						class="btn-square lit-block-delete"
 						@click="$emit('deleteItem')"
 					>
-						<fa-icon :icon="deleteIcon" />
+						<lit-fa-icon :icon="deleteIcon" />
 					</b-button>
 				</b-td>
 				<b-td class="col-sm pl-2 pr-0" v-if="fields.length > 0">
@@ -40,7 +40,9 @@
 						class="btn-square"
 						@click="$emit('toggleExpand')"
 					>
-						<fa-icon :icon="expand ? 'angle-up' : 'angle-down'" />
+						<lit-fa-icon
+							:icon="expand ? 'angle-up' : 'angle-down'"
+						/>
 					</b-button>
 				</b-td>
 			</b-tr>

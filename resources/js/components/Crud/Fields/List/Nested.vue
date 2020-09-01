@@ -32,7 +32,7 @@
 							class="btn-square lit-block-delete"
 							v-b-modal="modalId(item)"
 						>
-							<fa-icon icon="edit" />
+							<lit-fa-icon icon="edit" />
 						</b-button>
 						<b-button
 							variant="transparent"
@@ -42,7 +42,7 @@
 							class="btn-square lit-block-delete"
 							@click="$emit('addItem', item)"
 						>
-							<fa-icon icon="plus" />
+							<lit-fa-icon icon="plus" />
 						</b-button>
 						<b-button
 							variant="transparent"
@@ -52,7 +52,7 @@
 							class="btn-square lit-block-delete"
 							v-b-modal="`${modalId(item)}-delete`"
 						>
-							<fa-icon icon="trash" />
+							<lit-fa-icon icon="trash" />
 						</b-button>
 					</b-td>
 				</table>

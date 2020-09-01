@@ -37,7 +37,7 @@
 				"
 				class="lit-trash btn btn-danger btn-sm"
 			>
-				<fa-icon icon="trash" />
+				<lit-fa-icon icon="trash" />
 				{{ __('base.delete').capitalize() }}
 			</a>
 		</template>

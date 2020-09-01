@@ -66,6 +66,7 @@ export default {
 		};
 	},
 	beforeMount() {
+		window.toast = this.$bvToast.toast;
 		this.fillStore();
 		this.prepareProps();
 		this.setAppLocale();

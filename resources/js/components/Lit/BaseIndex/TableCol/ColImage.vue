@@ -1,6 +1,6 @@
 <template>
 	<div :class="`lit-col-image ${!srcValue ? 'empty' : ''}`" :style="style">
-		<fa-icon icon="image" v-if="!srcValue" />
+		<lit-fa-icon icon="image" v-if="!srcValue" />
 		<img :src="srcValue" :style="style" v-else />
 	</div>
 </template>

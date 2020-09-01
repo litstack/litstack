@@ -33,7 +33,7 @@
                         style="vertical-align:middle;"
                     >
                         <div class="text-center text-muted">
-                            <fa-icon icon="grip-vertical" />
+                            <lit-fa-icon icon="grip-vertical" />
                         </div>
                     </b-td>
 
@@ -51,7 +51,7 @@
                                     :href="editUrl(relation, model)"
                                     class="btn-transparent d-flex align-items-center"
                                 >
-                                    <fa-icon icon="eye" />
+                                    <lit-fa-icon icon="eye" />
                                 </b-button>
                                 <b-button
                                     v-if="!field.readonly"
@@ -69,7 +69,7 @@
                                               })
                                     "
                                 >
-                                    <fa-icon icon="unlink" />
+                                    <lit-fa-icon icon="unlink" />
                                 </b-button>
                                 <lit-field-relation-confirm-delete
                                     :relation="relation"

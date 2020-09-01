@@ -20,11 +20,11 @@
 				>
 					<span v-html="col.label" />
 					<span class="d-inline-block ml-2" v-if="key == activeCol">
-						<fa-icon
+						<lit-fa-icon
 							icon="sort-amount-down-alt"
 							v-if="sort == 'asc'"
 						/>
-						<fa-icon
+						<lit-fa-icon
 							icon="sort-amount-down"
 							v-if="sort == 'desc'"
 						/>

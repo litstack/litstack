@@ -2,7 +2,7 @@
 	<div class="lit-col-relation" v-if="relation">
 		{{ format(value, relation) }}
 		<a :href="`${Lit.baseURL}${relationLink}/${relation.id}`">
-			<fa-icon icon="external-link-alt" />
+			<lit-fa-icon icon="external-link-alt" />
 		</a>
 	</div>
 </template>

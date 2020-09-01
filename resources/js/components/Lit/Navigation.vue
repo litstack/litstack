@@ -12,7 +12,7 @@
 					class="lit-page-navigation__go_back"
 					:href="`${Lit.baseURL}${back}`"
 				>
-					<fa-icon icon="list-ul" class="mr-1" />
+					<lit-fa-icon icon="list-ul" class="mr-1" />
 					<span v-html="backText ? backText : 'Go Back'" />
 				</b-button>
 				<div class="d-inline-block">
@@ -35,7 +35,7 @@
 					no-caret
 				>
 					<template v-slot:button-content>
-						<fa-icon icon="ellipsis-h" />
+						<lit-fa-icon icon="ellipsis-h" />
 					</template>
 
 					<slot name="controls" />
@@ -53,7 +53,7 @@
 						:title="__('lit.undo_changes')"
 						@click="Lit.bus.$emit('cancelSave')"
 					>
-						<fa-icon icon="undo" />
+						<lit-fa-icon icon="undo" />
 					</b-button>
 					<b-button
 						variant="primary"

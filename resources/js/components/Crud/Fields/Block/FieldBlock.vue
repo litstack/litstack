@@ -6,7 +6,7 @@
 	>
 		<template slot="title-right">
 			<a href="#" @click="toggleExpand" v-if="!this.create">
-				<fa-icon :icon="expandedAll ? 'angle-up' : 'angle-down'" />
+				<lit-fa-icon :icon="expandedAll ? 'angle-up' : 'angle-down'" />
 				{{
 					__(
 						`crud.fields.blocks.${

@@ -1,7 +1,7 @@
 <template>
 	<div class="d-inline-block">
 		<b-button variant="primary" @click="visible = !visible">
-			<fa-icon icon="plus" />
+			<lit-fa-icon icon="plus" />
 			{{ __('lit.add_model', { model: 'Lit ' + __('lit.user') }) }}
 		</b-button>
 		<b-modal
@@ -71,7 +71,7 @@
 							variant="outline-secondary"
 							@click="makePassword"
 						>
-							<fa-icon icon="sync" />
+							<lit-fa-icon icon="sync" />
 						</b-button>
 					</b-input-group-append>
 				</b-input-group>
@@ -109,7 +109,7 @@
 								!firstnameState
 						"
 					>
-						<fa-icon icon="user" />
+						<lit-fa-icon icon="user" />
 						{{
 							__(`lit.create_model`, {
 								model: 'Lit ' + __('lit.user'),

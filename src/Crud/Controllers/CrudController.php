@@ -51,7 +51,6 @@ abstract class CrudController extends CrudBaseController
     public function load(CrudReadRequest $request, $id)
     {
         $model = $this->query()->findOrFail($id);
-        $model->last_edit;
 
         return crud(
             $model
@@ -107,7 +106,9 @@ abstract class CrudController extends CrudBaseController
     public function index(CrudReadRequest $request)
     {
         $config = $this->config->get(
-            'route_prefix', 'names', 'permissions'
+            'route_prefix',
+            'names',
+            'permissions'
         );
 
         $page = $this->config->index->bind([
@@ -163,8 +164,6 @@ abstract class CrudController extends CrudBaseController
 
         // Find model.
         $model = $query->findOrFail($id);
-        // Set last_edit attribute.
-        $model->last_edit;
 
         // Append media.
         if (! $model instanceof LitFormModel) {

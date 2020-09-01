@@ -35,7 +35,7 @@
 						class="float-right"
 						@click="deleteRole(tab)"
 					>
-						<fa-icon icon="trash" />
+						<lit-fa-icon icon="trash" />
 						{{
 							__('base.item_delete', {
 								item: __('base.role'),

@@ -1,7 +1,7 @@
 <template>
 	<b-dropdown-item @click="logout">
 		<div class="mr-2 d-inline-block lit-topbar__icon">
-			<fa-icon icon="sign-out-alt" />
+			<lit-fa-icon icon="sign-out-alt" />
 		</div>
 
 		Logout

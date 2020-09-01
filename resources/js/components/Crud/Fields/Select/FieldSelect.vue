@@ -11,7 +11,7 @@
 			>
 				<template #open-indicator="{ attributes }">
 					<span v-bind="attributes">
-						<fa-icon icon="chevron-down" />
+						<lit-fa-icon icon="chevron-down" />
 					</span>
 				</template>
 			</v-select>

@@ -7,7 +7,7 @@
 			size="sm"
 			class="btn-square"
 		>
-			<fa-icon icon="chevron-left" class="lit-near-items__prev" />
+			<lit-fa-icon icon="chevron-left" class="lit-near-items__prev" />
 		</b-button>
 		<b-button
 			:href="`${Lit.baseURL}${routePrefix}/${next}`"
@@ -16,7 +16,7 @@
 			size="sm"
 			class="btn-square"
 		>
-			<fa-icon icon="chevron-right" class="lit-near-items__next" />
+			<lit-fa-icon icon="chevron-right" class="lit-near-items__next" />
 		</b-button>
 	</div>
 </template>

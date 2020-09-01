@@ -26,7 +26,7 @@
 				>
 					<b-input-group>
 						<b-input-group-prepend is-text>
-							<fa-icon icon="search" />
+							<lit-fa-icon icon="search" />
 						</b-input-group-prepend>
 
 						<lit-base-index-table-search

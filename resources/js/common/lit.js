@@ -57,7 +57,7 @@ const Lit = {
 window.Lit = Lit;
 
 const setConfig = () => {
-	window.Lit.config = store.state.config;
+	window.Lit.config = store.state.config.lit_config;
 	window.Lit.baseURL = store.state.config.baseURL;
 };
 

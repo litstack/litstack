@@ -1,7 +1,7 @@
 <template>
 	<b-form-input
 		:placeholder="
-			__('fj.search_models', {
+			__('lit.search_models', {
 				models: strip(namePlural),
 			})
 		"

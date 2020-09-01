@@ -25,7 +25,7 @@
 				"
 				class="lit-trash btn btn-danger btn-sm"
 			>
-				<fa-icon icon="unlink" />
+				<lit-fa-icon icon="unlink" />
 				{{ __('base.delete').capitalize() }}
 			</a>
 		</template>

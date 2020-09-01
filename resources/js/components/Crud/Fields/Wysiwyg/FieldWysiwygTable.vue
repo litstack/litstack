@@ -9,7 +9,7 @@
 		@show="addTable"
 	>
 		<template v-slot:button-content>
-			<fa-icon icon="table" />
+			<lit-fa-icon icon="table" />
 		</template>
 		<div class="lit-color-palette-wrapper">
 			<b-button
@@ -18,7 +18,7 @@
 				class="btn-square"
 				@click="deleteTable"
 			>
-				<fa-icon icon="trash" />
+				<lit-fa-icon icon="trash" />
 			</b-button>
 			<b-button
 				size="sm"
@@ -26,7 +26,7 @@
 				class="btn-square"
 				@click="addColumnAfter"
 			>
-				<fa-icon icon="plus-square" />
+				<lit-fa-icon icon="plus-square" />
 			</b-button>
 			<b-button
 				size="sm"
@@ -34,7 +34,7 @@
 				class="btn-square"
 				@click="deleteColumn"
 			>
-				<fa-icon icon="minus-square" />
+				<lit-fa-icon icon="minus-square" />
 			</b-button>
 
 			<b-button
@@ -43,7 +43,7 @@
 				class="btn-square"
 				@click="addRowAfter"
 			>
-				<fa-icon icon="plus" />
+				<lit-fa-icon icon="plus" />
 			</b-button>
 			<b-button
 				size="sm"
@@ -51,7 +51,7 @@
 				class="btn-square"
 				@click="deleteRow"
 			>
-				<fa-icon icon="minus" />
+				<lit-fa-icon icon="minus" />
 			</b-button>
 		</div>
 	</b-dropdown>

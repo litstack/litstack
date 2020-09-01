@@ -13,7 +13,7 @@
 					"
 					@click="setDevice('mobile')"
 				>
-					<fa-icon fas icon="mobile-alt" />
+					<lit-fa-icon fas icon="mobile-alt" />
 				</b-button>
 				<b-button
 					class="mr-2 btn-square"
@@ -22,7 +22,7 @@
 					"
 					@click="setDevice('tablet')"
 				>
-					<fa-icon fas icon="tablet-alt" />
+					<lit-fa-icon fas icon="tablet-alt" />
 				</b-button>
 				<b-button
 					@click="setDevice('desktop')"
@@ -31,7 +31,7 @@
 					"
 					class="btn-square"
 				>
-					<fa-icon fas icon="desktop" />
+					<lit-fa-icon fas icon="desktop" />
 				</b-button>
 			</div>
 

@@ -4,6 +4,7 @@ namespace Ignite\Application\Navigation;
 
 use Closure;
 use Illuminate\Support\Arr;
+use InvalidArgumentException;
 
 class PresetFactory
 {
@@ -55,10 +56,13 @@ class PresetFactory
         $preset = $this->findPresetByKey($key);
 
         if (! $preset) {
-            return $merge;
+            throw new InvalidArgumentException("Couldn't find navigation preset for [$key].");
         }
 
+        $preset = array_merge($preset, $merge);
+
         $title = $preset['title'] ?? null;
+        
         if ($title instanceof Closure) {
             $preset['title'] = $preset['title']();
         }

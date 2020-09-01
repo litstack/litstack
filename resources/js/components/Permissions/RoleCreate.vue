@@ -1,6 +1,6 @@
 <template>
 	<b-button variant="primary" @click="visible = true">
-		<fa-icon icon="plus" />
+		<lit-fa-icon icon="plus" />
 		{{ __('base.item_add', { item: __('base.role') }).capitalizeAll() }}
 		<b-modal
 			v-model="visible"
@@ -27,7 +27,7 @@
 						@click="storeRole"
 						:disabled="!nameState"
 					>
-						<fa-icon icon="user-tag" />
+						<lit-fa-icon icon="user-tag" />
 						{{
 							__('base.item_create', {
 								item: __('base.role'),
