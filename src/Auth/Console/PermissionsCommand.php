@@ -55,7 +55,7 @@ class PermissionsCommand extends RollbackCommand
         $migrationsPath = database_path('migrations');
         $migrationPath = Collection::make($migrationsPath)
             ->flatMap(function ($path) {
-                return File::glob($path.'*_make_permissions.php');
+                return File::glob($path.'/*_make_permissions.php');
             })->first();
         $files = [$migrationPath];
 
