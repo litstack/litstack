@@ -110,7 +110,10 @@ class LivewireCommand extends Command
      */
     protected function fixViewNamespace(bool $force = false, bool $inline = false)
     {
-        dd(get_unaccessible_property($this->parser, 'baseViewPath'), resource_path('views'));
+        dd(
+            $this->parser->baseViewPath,
+            resource_path('views')
+        );
 
         if ($inline) {
             return;
