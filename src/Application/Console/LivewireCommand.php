@@ -60,7 +60,7 @@ class LivewireCommand extends Command
      * @param  Filesystem $files
      * @return void
      */
-    public function __construct(FilesystemFilesystem $files)
+    public function __construct(Filesystem $files)
     {
         parent::__construct();
 
