@@ -1,13 +1,13 @@
 <?php
 
-namespace FjordTest\Page;
+namespace Tests\Page;
 
-use Fjord\Page\BasePage;
-use Fjord\Vue\Component;
-use Fjord\Vue\Components\BladeComponent;
-use FjordTest\BackendTestCase;
+use Ignite\Page\BasePage;
+use Ignite\Support\Vue\BladeComponent;
+use Ignite\Vue\Component;
 use Illuminate\View\View;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class BasePageTest extends BackendTestCase
 {
@@ -56,15 +56,24 @@ class BasePageTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_view_method_returns_view()
+    public function test_view_method_returns_component()
     {
-        $this->assertInstanceOf(Component::class, $this->page->view('fjord::app'));
+        $this->assertInstanceOf(Component::class, $this->page->view('litstack::app'));
+    }
+
+    /** @test */
+    public function test_livewire_method()
+    {
+        $this->assertInstanceOf(Component::class, $this->page->livewire('counter'));
+        $this->assertCount(1, $this->page->getViews());
+        $this->assertSame('litstack::partials.livewire', $this->page->getViews()[0]->getName());
+        $this->assertSame('counter', $this->page->getViews()[0]->getData()['component']);
     }
 
     /** @test */
     public function test_view_method_adds_blade_component()
     {
-        $this->page->view('fjord::app');
+        $this->page->view('welcome');
 
         $this->assertCount(1, $this->page->getComponents());
         $this->assertInstanceOf(BladeComponent::class, $this->page->getComponents()[0]);
@@ -76,9 +85,7 @@ class BasePageTest extends BackendTestCase
         $view = m::mock(View::class);
         $view->shouldReceive('with')->withArgs([['data' => 'dummy']]);
         $this->page->view($view);
-        $this->page->bindToView([
-            'data' => 'dummy',
-        ]);
+        $this->page->bindToView(['data' => 'dummy']);
         $this->page->render();
     }
 

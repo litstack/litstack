@@ -1,10 +1,11 @@
 <?php
 
-namespace Fjord\User;
+namespace Ignite\User;
 
-use Fjord\Support\Facades\Package;
-use Fjord\User\Controllers\FjordUserController;
-use Fjord\User\Controllers\ProfileController;
+use Ignite\Support\Facades\Nav;
+use Ignite\Support\Facades\Route as LitstackRoute;
+use Ignite\User\Controllers\ProfileController;
+use Ignite\User\Controllers\UserController;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
@@ -16,8 +17,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     public function boot()
     {
-        $this->package = Package::get('aw-studio/fjord');
-
         parent::boot();
 
         $provider = $this;
@@ -44,10 +43,10 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     protected function mapUserRoleRoutes()
     {
-        $this->package->route()->get('profile-sessions', ProfileController::class.'@sessions')->name('sessions');
-        $this->package->route()->get('/fjord/users', FjordUserController::class.'@showIndex')->name('users');
-        $this->package->route()->post('/fjord/users-index', FjordUserController::class.'@fetchIndex')->name('users.index');
-        $this->package->route()->post('/fjord/users/delete-all', FjordUserController::class.'@deleteAll')->name('users.delete');
+        LitstackRoute::get('profile-sessions', ProfileController::class.'@sessions')->name('sessions');
+        LitstackRoute::get('/lit/users', UserController::class.'@showIndex')->name('users');
+        LitstackRoute::post('/lit/users-index', UserController::class.'@fetchIndex')->name('users.index');
+        LitstackRoute::post('/lit/users/delete-all', UserController::class.'@deleteAll')->name('users.delete');
     }
 
     /**
@@ -57,21 +56,21 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     public function addNavPresets()
     {
-        if (! $config = fjord()->config('user.profile_settings')) {
+        if (! $config = lit()->config('user.profile_settings')) {
             return;
         }
 
-        $this->package->addNavPreset('profile', [
+        Nav::preset('profile', [
             'link' => function () use ($config) {
                 $id = app()->runningInConsole()
                     ? '{user_id}'
-                    : fjord_user()->id;
+                    : lit_user()->id;
 
-                return fjord()->url(
+                return lit()->url(
                     "$config->route_prefix/{$id}"
                 );
             },
-            'title' => fn () => __f('fj.profile'),
+            'title' => fn () => __lit('lit.profile'),
             'icon'  => fa('user-cog'),
         ]);
     }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Page;
+namespace Ignite\Page;
 
-use Fjord\Contracts\Page\Expandable;
-use Fjord\Exceptions\NotLoggedInException;
+use Ignite\Contracts\Page\Expandable;
+use Ignite\Exceptions\NotLoggedInException;
 
 class Page extends BasePage implements Expandable
 {
@@ -15,7 +15,7 @@ class Page extends BasePage implements Expandable
      *
      * @var string
      */
-    protected $rootComponent = 'fj-page';
+    protected $rootComponent = 'lit-page';
 
     /**
      * Go back route & text.
@@ -25,14 +25,14 @@ class Page extends BasePage implements Expandable
     protected $back;
 
     /**
-     * Navigation instance. Represents Vue component [fj-navigation] in [fj-page].
+     * Navigation instance. Represents Vue component [lit-navigation] in [lit-page].
      *
      * @var Navigation
      */
     protected $navigation;
 
     /**
-     * Header instance. Represents Vue component [fj-header] in [fj-page].
+     * Header instance. Represents Vue component [lit-header] in [lit-page].
      *
      * @var Header
      */
@@ -52,7 +52,7 @@ class Page extends BasePage implements Expandable
     /**
      * Resolve action component.
      *
-     * @param  \Fjord\Vue\Component $component
+     * @param  \Ignite\Vue\Component $component
      * @return void
      */
     public function resolveAction($component)
@@ -167,8 +167,8 @@ class Page extends BasePage implements Expandable
      */
     public function render(): array
     {
-        if (! fjord_user()) {
-            throw new NotLoggedInException(static::class.' requires an authentificated fjord_user to render.');
+        if (! lit_user()) {
+            throw new NotLoggedInException(static::class.' requires an authentificated lit_user to render.');
         }
 
         $this->bindDataToSlotViews();
@@ -207,7 +207,7 @@ class Page extends BasePage implements Expandable
      */
     public function __toString()
     {
-        return view('fjord::app')
+        return view('litstack::app')
             ->withComponent($this->rootComponent)
             ->withProps(array_merge([
                 'page' => collect($this->render()),

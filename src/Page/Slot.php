@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Page;
+namespace Ignite\Page;
 
-use Fjord\Contracts\Page\ActionFactory;
-use Fjord\Support\VueProp;
-use Fjord\Vue\Component;
-use Fjord\Vue\Components\ButtonComponent;
+use Ignite\Contracts\Page\ActionFactory;
+use Ignite\Support\VueProp;
+use Ignite\Vue\Component;
+use Ignite\Vue\Components\ButtonComponent;
 use Illuminate\Contracts\View\View;
 
 class Slot extends VueProp
@@ -99,7 +99,7 @@ class Slot extends VueProp
 
         $this->views[] = $view;
 
-        $this->component('fj-blade')->prop('view', $view);
+        $this->component('lit-blade')->prop('view', $view);
 
         return $view;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Chart;
+namespace Ignite\Chart;
 
 use Carbon\CarbonInterface;
 use Closure;

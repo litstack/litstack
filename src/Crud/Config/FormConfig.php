@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Crud\Config;
+namespace Ignite\Crud\Config;
 
-use Fjord\Crud\Models\FormField;
-use Fjord\Support\Facades\Crud;
+use Ignite\Crud\Models\Form;
+use Ignite\Support\Facades\Crud;
 use Illuminate\Support\Str;
 
 class FormConfig
@@ -15,7 +15,7 @@ class FormConfig
      *
      * @var string
      */
-    public $model = FormField::class;
+    public $model = Form::class;
 
     /**
      * Controller class.
@@ -29,7 +29,7 @@ class FormConfig
      */
     public function __construct()
     {
-        $this->model = FormField::class;
+        $this->model = Form::class;
     }
 
     /**

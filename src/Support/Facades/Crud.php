@@ -1,13 +1,13 @@
 <?php
 
-namespace Fjord\Support\Facades;
+namespace Ignite\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static array names(string $model)
  *
- * @see \Fjord\Crud\Crud
+ * @see \Ignite\Crud\Crud
  */
 class Crud extends Facade
 {
@@ -18,7 +18,7 @@ class Crud extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'fjord.crud';
+        return 'lit.crud';
     }
 
     public static function getFacadeRoot()

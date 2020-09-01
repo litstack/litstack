@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields\Relations\Concerns;
+namespace Ignite\Crud\Fields\Relations\Concerns;
 
-use Fjord\Exceptions\Traceable\InvalidArgumentException;
+use Ignite\Exceptions\Traceable\InvalidArgumentException;
 
 trait ManagesPreviewTypes
 {

@@ -1,26 +1,26 @@
 <?php
 
-namespace Fjord\Permissions\Controllers;
+namespace Ignite\Permissions\Controllers;
 
-use Fjord\Permissions\Requests\Role\CreateRoleRequest;
-use Fjord\Permissions\Requests\Role\DeleteRoleRequest;
-use Fjord\Permissions\Requests\Role\UpdateRoleRequest;
-use Fjord\User\Models\FjordUser;
+use Ignite\Permissions\Requests\Role\CreateRoleRequest;
+use Ignite\Permissions\Requests\Role\DeleteRoleRequest;
+use Ignite\Permissions\Requests\Role\UpdateRoleRequest;
 use Illuminate\Http\Request;
+use Lit\Models\User;
 use Spatie\Permission\Models\Role;
 
 class RoleController
 {
     /**
-     * Assign role to fjord-user.
+     * Assign role to lit-user.
      *
-     * @param  Request   $request
-     * @param  FjordUser $user_id
+     * @param  Request $request
+     * @param  User    $user_id
      * @return void
      */
     public function assignRoleToUser(UpdateRoleRequest $request, $user_id, $role_id)
     {
-        $user = FjordUser::findOrFail($user_id);
+        $user = User::findOrFail($user_id);
 
         $role = Role::findOrFail($role_id);
 
@@ -28,21 +28,21 @@ class RoleController
     }
 
     /**
-     * Remove role to from fjord-user.
+     * Remove role to from lit-user.
      *
-     * @param  Request   $request
-     * @param  FjordUser $user_id
+     * @param  Request $request
+     * @param  User    $user_id
      * @return void
      */
     public function removeRoleFromUser(UpdateRoleRequest $request, $user_id, $role_id)
     {
-        $user = FjordUser::findOrFail($user_id);
+        $user = User::findOrFail($user_id);
 
         $role = $user->roles()->findOrFail($role_id);
 
         // Can't take away own admin role.
-        if ($role->name == 'admin' && $user->id == fjord_user()->id) {
-            return response()->danger(__f('fjpermissions.cant_remove_admin_role'));
+        if ($role->name == 'admin' && $user->id == lit_user()->id) {
+            return response()->danger(__lit('fjpermissions.cant_remove_admin_role'));
         }
 
         // Remove role.
@@ -82,13 +82,13 @@ class RoleController
 
         // Roles admin & user cannot be deletet.
         if (in_array($role->name, ['admin', 'user'])) {
-            $roleName = __f("roles.{$role->name}") !== "roles.{$role->name}"
-                ? __f("roles.{$role->name}")
+            $roleName = __lit("roles.{$role->name}") !== "roles.{$role->name}"
+                ? __lit("roles.{$role->name}")
                 : ucfirst($role->name);
-            abort(422, __f('fjpermissions.cant_delete_role', ['role' => $roleName]));
+            abort(422, __lit('fjpermissions.cant_delete_role', ['role' => $roleName]));
         }
 
-        // FjordUsers with the role to be deleted are assigned the role user.
+        // Users with the role to be deleted are assigned the role user.
         foreach ($role->users as $user) {
             if ($user->roles()->count() > 1) {
                 continue;

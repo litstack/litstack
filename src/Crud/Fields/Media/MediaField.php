@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields\Media;
+namespace Ignite\Crud\Fields\Media;
 
-use Fjord\Crud\RelationField;
+use Ignite\Crud\RelationField;
 
 class MediaField extends RelationField
 {
@@ -11,7 +11,7 @@ class MediaField extends RelationField
      *
      * @var string
      */
-    protected $component = 'fj-field-media';
+    protected $component = 'lit-field-media';
 
     /**
      * Set sortable.

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Actions;
+namespace Ignite\Crud\Actions;
 
-use Fjord\Page\Actions\ActionModal;
+use Ignite\Page\Actions\ActionModal;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -20,9 +20,9 @@ class DestroyAction
      */
     public function modal(ActionModal $modal)
     {
-        $modal->message(__f('messages.actions.are_you_sure'))
+        $modal->message(__lit('messages.actions.are_you_sure'))
             ->confirmVariant('danger')
-            ->confirmText(ucfirst(__f('base.delete')));
+            ->confirmText(ucfirst(__lit('base.delete')));
     }
 
     /**
@@ -74,6 +74,6 @@ class DestroyAction
      */
     protected function successMessage(Collection $models)
     {
-        return response()->success(__f_choice('messages.deleted_items', count($models)));
+        return response()->success(__lit_choice('messages.deleted_items', count($models)));
     }
 }

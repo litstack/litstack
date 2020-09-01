@@ -1,24 +1,21 @@
 <?php
 
-namespace Fjord\Vue;
+namespace Ignite\Vue;
 
-use Fjord\Contracts\Vue\Vue as VueContract;
 use Illuminate\Support\ServiceProvider;
 
 class VueServiceProvider extends ServiceProvider
 {
     /**
-     * Regsiter application services.
+     * Register application services.
      *
      * @return void
      */
     public function register()
     {
-        $this->app->singleton('fjord.vue', function ($app) {
+        $this->app->singleton('lit.vue', function ($app) {
             return new Vue();
         });
-
-        $this->app->bind(VueContract::class, 'fjord.vue');
 
         $this->app->register(VueRouteServiceProvider::class);
     }

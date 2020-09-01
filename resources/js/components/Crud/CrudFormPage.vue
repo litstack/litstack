@@ -1,5 +1,5 @@
 <template>
-	<fj-page :page="page" :model="model" :event-data="{ ids: [model.id] }" />
+	<lit-page :page="page" :model="model" :event-data="{ ids: [model.id] }" />
 </template>
 
 <script>
@@ -29,8 +29,8 @@ export default {
 
 		this.$store.commit('SET_CONFIG', this.config);
 
-		Fjord.bus.$on('saved', this.saved);
-		Fjord.bus.$on('field:updated', this.reloadModel);
+		Lit.bus.$on('saved', this.saved);
+		Lit.bus.$on('field:updated', this.reloadModel);
 	},
 	methods: {
 		async reloadModel() {
@@ -77,7 +77,7 @@ export default {
 			}
 			let hash = window.location.hash.replace('#', '');
 			let elements = document.getElementsByClassName(
-				`fj-form-item-${hash}`
+				`lit-form-item-${hash}`
 			);
 			if (elements.length < 1) {
 				return;

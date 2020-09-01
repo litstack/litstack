@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Config;
+namespace Ignite\Config;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 /**
  * Config singleton.
  *
- * @see \Fjord\Support\Facades\Config
+ * @see \Ignite\Support\Facades\Config
  */
 class ConfigLoader
 {
@@ -17,7 +17,7 @@ class ConfigLoader
      *
      * @var string
      */
-    protected $namespace = "FjordApp\Config";
+    protected $namespace = 'Lit\\Config';
 
     /**
      * Stack of loaded instances.
@@ -27,10 +27,40 @@ class ConfigLoader
     protected $loaded = [];
 
     /**
+     * Registered config factories.
+     *
+     * @var array
+     */
+    protected $factories = [];
+
+    /**
+     * Register config factory for the given dependency.
+     *
+     * @param  string $dependency
+     * @param  string $factory
+     * @return $this
+     */
+    public function factory($dependency, $factory)
+    {
+        $this->factories[$dependency] = $factory;
+
+        return $this;
+    }
+
+    /**
+     * Get config factories.
+     *
+     * @return array
+     */
+    public function factories()
+    {
+        return $this->factories;
+    }
+
+    /**
      * Get key.
      *
-     * @param sring $key
-     *
+     * @param  sring  $key
      * @return string
      */
     public function getKey(string $key)
@@ -48,8 +78,7 @@ class ConfigLoader
     /**
      * Is key namespace.
      *
-     * @param string $key
-     *
+     * @param  string $key
      * @return bool
      */
     protected function isKeyNamespace(string $key)
@@ -60,8 +89,7 @@ class ConfigLoader
     /**
      * Is key path.
      *
-     * @param string $key
-     *
+     * @param  string $key
      * @return bool
      */
     protected function isKeyPath(string $key)
@@ -72,9 +100,8 @@ class ConfigLoader
     /**
      * Get config by key.
      *
-     * @param string $key
-     * @param array  ...$params
-     *
+     * @param  string $key
+     * @param  array  ...$params
      * @return mixed
      */
     public function get(string $key, ...$params)
@@ -149,7 +176,7 @@ class ConfigLoader
             ->map(fn ($item) => ucfirst(Str::camel($item)))
             ->implode('/');
 
-        return base_path("fjord/app/Config/{$path}Config.php");
+        return base_path("lit/app/Config/{$path}Config.php");
     }
 
     /**
@@ -177,7 +204,7 @@ class ConfigLoader
     {
         // Replacing path for windows and unix.
         $modified = str_replace('\\', '/', $path);
-        $modified = str_replace(str_replace('\\', '/', base_path('fjord/app/Config')).'/', '', $modified);
+        $modified = str_replace(str_replace('\\', '/', base_path('lit/app/Config')).'/', '', $modified);
         $modified = str_replace('Config.php', '', $modified);
 
         return explode('/', $modified);
@@ -192,7 +219,7 @@ class ConfigLoader
      */
     public function getKeyFromNamespace(string $namespace)
     {
-        return collect(explode('\\', Str::replaceLast('Config', '', str_replace('FjordApp\\Config\\', '', $namespace))))
+        return collect(explode('\\', Str::replaceLast('Config', '', str_replace('Lit\\Config\\', '', $namespace))))
             ->map(fn ($item) => Str::snake($item))
             ->implode('.');
     }

@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Ignite\Crud;
 
 use Carbon\CarbonInterface;
-use Fjord\Crud\Models\FormBlock;
-use Fjord\Crud\Models\FormField;
-use Fjord\Support\VueProp;
+use Ignite\Crud\Models\Form;
+use Ignite\Crud\Models\Repeatable;
+use Ignite\Support\VueProp;
 
 class CrudJs extends VueProp
 {
@@ -91,7 +91,7 @@ class CrudJs extends VueProp
      */
     public function usesJsoncastValue()
     {
-        return $this->model instanceof FormField
-            || $this->model instanceof FormBlock;
+        return $this->model instanceof Form
+            || $this->model instanceof Repeatable;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Fields\Relations;
+namespace Ignite\Crud\Fields\Relations;
 
 class OneRelationField extends LaravelRelationField
 {
@@ -11,7 +11,7 @@ class OneRelationField extends LaravelRelationField
      *
      * @var string
      */
-    protected $component = 'fj-field-relation';
+    protected $component = 'lit-field-relation';
 
     /**
      * Available preview types.

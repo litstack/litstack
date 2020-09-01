@@ -1,15 +1,15 @@
 <?php
 
-namespace FjordApp\Config\Crud;
+namespace Lit\Config\Crud;
 
-use Fjord\Crud\Config\CrudConfig;
-use Fjord\Crud\CrudShow;
+use Ignite\Crud\Config\CrudConfig;
+use Ignite\Crud\CrudShow;
 
 class BlockInBlockConfig extends CrudConfig
 {
-    public $model = \FjordTest\TestSupport\Models\Post::class;
+    public $model = \Tests\TestSupport\Models\Post::class;
 
-    public $controller = \FjordTest\TestSupport\Controllers\BlockInBlockController::class;
+    public $controller = \Tests\TestSupport\Controllers\BlockInBlockController::class;
 
     public function routePrefix()
     {

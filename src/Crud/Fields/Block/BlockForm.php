@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields\Block;
+namespace Ignite\Crud\Fields\Block;
 
-use Fjord\Crud\BaseForm;
+use Ignite\Crud\BaseForm;
 use InvalidArgumentException;
 
 class BlockForm extends BaseForm

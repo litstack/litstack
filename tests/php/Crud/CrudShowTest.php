@@ -1,12 +1,12 @@
 <?php
 
-namespace FjordTest\Crud;
+namespace Tests\Crud;
 
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\CrudShow;
-use Fjord\Exceptions\Traceable\InvalidArgumentException;
-use FjordTest\BackendTestCase;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\CrudShow;
+use Ignite\Exceptions\Traceable\InvalidArgumentException;
 use Illuminate\Database\Eloquent\Model;
+use Tests\BackendTestCase;
 
 class CrudShowTest extends BackendTestCase
 {
@@ -39,8 +39,8 @@ class CrudShowTest extends BackendTestCase
 
         $components = $this->page->getComponents();
         $this->assertCount(1, $components);
-        $this->assertEquals('fj-field-wrapper', $components[0]->getName());
-        $this->assertEquals('fj-field-wrapper-card', $components[0]->wrapperComponent->getName());
+        $this->assertEquals('lit-field-wrapper', $components[0]->getName());
+        $this->assertEquals('lit-field-wrapper-card', $components[0]->wrapperComponent->getName());
     }
 
     /** @test */

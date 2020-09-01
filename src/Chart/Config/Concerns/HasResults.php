@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Chart\Config\Concerns;
+namespace Ignite\Chart\Config\Concerns;
 
 use Closure;
 use Illuminate\Support\Collection;

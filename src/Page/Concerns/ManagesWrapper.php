@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Page\Concerns;
+namespace Ignite\Page\Concerns;
 
 use Closure;
 
@@ -77,7 +77,7 @@ trait ManagesWrapper
             $component = component($component);
         }
 
-        return $this->component('fj-field-wrapper')
+        return $this->component('lit-field-wrapper')
             ->wrapperComponent($component);
     }
 }

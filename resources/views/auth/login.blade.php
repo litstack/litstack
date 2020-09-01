@@ -1,4 +1,4 @@
-@extends('fjord::landing')
+@extends('litstack::landing')
 
 @section('title')
     Login
@@ -14,18 +14,18 @@
                         <div class="col-sm-10">
                             <form method="POST" id="login" onsubmit="doLogin(event)" class="mt-4 mb-4">
                                 @csrf
-                                <h6 class="mb-3">{{ __f('login.login') }}</h6>
+                                <h6 class="mb-3">{{ __lit('login.login') }}</h6>
                                 <div class="form-group">
                                     <input 
                                         id="email" 
                                         class="form-control @error('email') is-invalid @enderror" 
                                         name="email" 
                                         required 
-                                        @if(config('fjord.login.username'))
-                                        placeholder="{{ ucfirst(__f('login.email_or_username')) }} "
+                                        @if(config('lit.login.username'))
+                                        placeholder="{{ ucfirst(__lit('login.email_or_username')) }} "
                                         type="text"
                                         @else
-                                        placeholder="{{ ucfirst(__f('base.email')) }}"
+                                        placeholder="{{ ucfirst(__lit('base.email')) }}"
                                         autocomplete="email" 
                                         type="email"
                                         @endif
@@ -40,7 +40,7 @@
 
                                 <div class="form-group ">
                                     <input 
-                                        placeholder="{{ ucfirst(__f('base.password')) }}" 
+                                        placeholder="{{ ucfirst(__lit('base.password')) }}" 
                                         id="password" type="password" 
                                         class="form-control @error('password') is-invalid @enderror" 
                                         name="password" 
@@ -59,23 +59,23 @@
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember">
 
                                         <label class="form-check-label" for="remember">
-                                            {{ __f('login.remember_me') }}
+                                            {{ __lit('login.remember_me') }}
                                         </label>
                                     </div>
                                     {{--
                                     <a href="{{ route('password.request') }}" id="forgot-password" style="display:none;">
-                                        {{ __f('login.forgot_password') }}
+                                        {{ __lit('login.forgot_password') }}
                                     </a>
                                     --}}                                    
                                 </div>
 
                                 <div class="text-danger text-center" id="login-failed" style="display:none;">
-                                    {{ __f('login.failed') }}
+                                    {{ __lit('login.failed') }}
                                 </div>
 
                                 <div class="form-group row mt-4 justify-content-center d-flex">
                                         <button type="submit" class="btn btn-primary">
-                                            {{ __f('login.do_login') }}
+                                            {{ __lit('login.do_login') }}
                                         </button>
                                 </div>
                             </form>
@@ -91,7 +91,7 @@
 
             const data = new FormData(document.forms.login);
 
-            let promise = axios.post('{{ Fjord::route('login.post') }}', data)
+            let promise = axios.post('{{ Lit::route('login.post') }}', data)
             promise.then(function(response) {
                 window.location = response.data
             })

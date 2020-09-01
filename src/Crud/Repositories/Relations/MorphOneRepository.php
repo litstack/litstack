@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Crud\Repositories\Relations;
+namespace Ignite\Crud\Repositories\Relations;
 
-use Fjord\Crud\Fields\Relations\MorphOne;
-use Fjord\Crud\Repositories\BaseFieldRepository;
-use Fjord\Crud\Requests\CrudUpdateRequest;
+use Ignite\Crud\Fields\Relations\MorphOne;
+use Ignite\Crud\Repositories\BaseFieldRepository;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 
 class MorphOneRepository extends BaseFieldRepository
 {

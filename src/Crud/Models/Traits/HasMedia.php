@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Models\Traits;
+namespace Ignite\Crud\Models\Traits;
 
-use Fjord\Crud\Models\Media;
+use Ignite\Crud\Models\Media;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
@@ -25,7 +25,7 @@ trait HasMedia
      */
     public function media(): MorphMany
     {
-        // Using Fjord media model.
+        // Using Lit media model.
         return $this->morphMany(Media::class, 'model');
     }
 
@@ -38,7 +38,7 @@ trait HasMedia
      */
     public function registerMediaConversions(SpatieMedia $media = null): void
     {
-        foreach (config('fjord.mediaconversions.default') as $key => $value) {
+        foreach (config('lit.mediaconversions.default') as $key => $value) {
             $this->addMediaConversion($key)
                 ->width($value[0])
                 ->height($value[1])

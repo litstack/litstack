@@ -1,12 +1,12 @@
 <?php
 
-namespace FjordTest\Browser;
+namespace Tests\Browser;
 
-use Fjord\Crud\Models\FormBlock;
-use FjordApp\Config\Crud\BlockInBlockConfig;
-use FjordTest\FrontendTestCase;
-use FjordTest\TestSupport\Models\Post;
-use FjordTest\Traits\InteractsWithCrud;
+use Ignite\Crud\Models\FormBlock;
+use Lit\Config\Crud\BlockInBlockConfig;
+use Tests\FrontendTestCase;
+use Tests\TestSupport\Models\Post;
+use Tests\Traits\InteractsWithCrud;
 
 class BlockInBlockTest extends FrontendTestCase
 {
@@ -19,7 +19,7 @@ class BlockInBlockTest extends FrontendTestCase
         parent::setUp();
 
         $this->post = Post::create([]);
-        $this->actingAs($this->admin, 'fjord');
+        $this->actingAs($this->admin, 'lit');
     }
 
     /** @test */
@@ -30,11 +30,11 @@ class BlockInBlockTest extends FrontendTestCase
         $this->browse(function ($browser) {
             $url = $this->getCrudRoute("/{$this->post->id}/");
             $browser
-                ->loginAs($this->admin, 'fjord')
+                ->loginAs($this->admin, 'lit')
                 ->visit($url)
-                ->waitFor('.fj-block-content')
-                ->click('.fj-block-content .fj-block-add-card')
-                ->waitFor('.fj-block-content .fj-block')
+                ->waitFor('.lit-block-content')
+                ->click('.lit-block-content .lit-block-add-card')
+                ->waitFor('.lit-block-content .lit-block')
                 ->waitUsing(1, 10, function () {
                     return ! $this->post->refresh()->content->isEmpty();
                 }, 'Parent Block was not created.');
@@ -50,19 +50,19 @@ class BlockInBlockTest extends FrontendTestCase
         $this->browse(function ($browser) {
             $url = $this->getCrudRoute("/{$this->post->id}/");
             $browser
-                 ->loginAs($this->admin, 'fjord')
-                 ->visit($url)
-                 ->waitFor('.fj-block-content')
-                 ->click('.fj-block-content .fj-block-add-card')
-                 ->waitFor('.fj-block-content .fj-block')
-                 ->click('.fj-block-content .fj-block-card .fj-block-add-text')
-                 ->waitFor('.fj-block-card .fj-block', 10)
-                 ->waitUsing(1, 10, function () {
-                     return ! $this->post->refresh()->content->first()->card->isEmpty();
-                 }, 'Child block was not created.')
-                 ->waitUsing(1, 10, function () {
-                     return $this->post->content->first()->card->first() instanceof FormBlock;
-                 }, 'Child block is not an instanceof FormBlock.');
+                ->loginAs($this->admin, 'lit')
+                ->visit($url)
+                ->waitFor('.lit-block-content')
+                ->click('.lit-block-content .lit-block-add-card')
+                ->waitFor('.lit-block-content .lit-block')
+                ->click('.lit-block-content .lit-block-card .lit-block-add-text')
+                ->waitFor('.lit-block-card .lit-block', 10)
+                ->waitUsing(1, 10, function () {
+                    return ! $this->post->refresh()->content->first()->card->isEmpty();
+                }, 'Child block was not created.')
+                ->waitUsing(1, 10, function () {
+                    return $this->post->content->first()->card->first() instanceof FormBlock;
+                }, 'Child block is not an instanceof FormBlock.');
         });
     }
 
@@ -75,16 +75,16 @@ class BlockInBlockTest extends FrontendTestCase
         $this->browse(function ($browser) {
             $url = $this->getCrudRoute("/{$this->post->id}/");
             $browser
-                 ->loginAs($this->admin, 'fjord')
-                 ->visit($url)
-                 ->waitFor('.fj-block-content')
-                 ->click('.fj-block-content .fj-block-add-card')
-                 ->waitFor('.fj-block-content .fj-block')
-                 ->click('.fj-block-content .fj-block-card .fj-block-add-text')
-                 ->waitFor('.fj-block-card .fj-block', 10)
-                 ->type('.fj-block-card .fj-block textarea', 'Hello World')
-                 ->waitFor('.fj-save-button .btn-primary')
-                 ->click('.fj-save-button .btn-primary')
+                ->loginAs($this->admin, 'lit')
+                ->visit($url)
+                ->waitFor('.lit-block-content')
+                ->click('.lit-block-content .lit-block-add-card')
+                ->waitFor('.lit-block-content .lit-block')
+                ->click('.lit-block-content .lit-block-card .lit-block-add-text')
+                ->waitFor('.lit-block-card .lit-block', 10)
+                ->type('.lit-block-card .lit-block textarea', 'Hello World')
+                ->waitFor('.lit-save-button .btn-primary')
+                ->click('.lit-save-button .btn-primary')
                 ->waitUsing(1, 10, function () {
                     $repeatable = $this->post->refresh()->content->first()->card->first();
 

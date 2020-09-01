@@ -1,13 +1,14 @@
 {
-	"name": "fjord",
-	"description": "Fjord is a multilanguage admin-panel/cms scaffolding package that helps you creating CRUD in seconds via Artisan-commands. It also lets you manage the \"static\" content of each of your websites pages (Headlines, Text, Images), as well repetitive mixed contents you define. Generating content as well as passing it to your views and retrieving it is super simple.",
+	"name": "litstack",
+	"description": "Litstack is a multilanguage admin-panel/cms scaffolding package that helps you creating CRUD in seconds via Artisan-commands. It also lets you manage the \"static\" content of each of your websites pages (Headlines, Text, Images), as well repetitive mixed contents you define. Generating content as well as passing it to your views and retrieving it is super simple.",
 	"version": "2.0.0",
 	"main": "./resources/js/index.js",
 	"scripts": {
 		"test": "npm run test:js && npm run test:php",
 		"test:js": "./node_modules/.bin/jest .*.spec.js",
 		"test:php": "composer test",
-		"production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+		"production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+		"development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
 	},
 	"jest": {
 		"moduleFileExtensions": [
@@ -20,9 +21,9 @@
 			".*\\.(vue)$": "vue-jest"
 		},
 		"moduleNameMapper": {
-			"fjord-test": "<rootDir>/tests/javascript/bootstrap.js",
-			"@fj-js(.*)$": "<rootDir>/resources/js/$1",
-			"@fj-sass(.*)$": "<rootDir>/resources/sass/$1"
+			"lit-test": "<rootDir>/tests/javascript/bootstrap.js",
+			"@lit-js(.*)$": "<rootDir>/resources/js/$1",
+			"@lit-sass(.*)$": "<rootDir>/resources/sass/$1"
 		}
 	},
 	"config": {
@@ -31,9 +32,9 @@
 		}
 	},
 	"keywords": [
-		"fjord",
+		"lit",
 		"cms",
-		"fjord-cms"
+		"litstack-cms"
 	],
 	"author": [
 		"Jannes Behrens",

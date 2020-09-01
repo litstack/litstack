@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Page\Traits;
+namespace Ignite\Page\Traits;
 
 trait Expandable
 {

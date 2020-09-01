@@ -1,68 +1,87 @@
 import Bus from './event.bus';
-import store from '@fj-js/store';
+import store from '@lit-js/store';
 
 const methods = {
-    axiosResponseSuccess(response) {
-        if (typeof response.data !== 'object') {
-            return response;
-        }
+	/**
+	 * Handle successfull axios response.
+	 *
+	 * @param {Object} response
+	 */
+	axiosResponseSuccess(response) {
+		if (typeof response.data !== 'object') {
+			return response;
+		}
 
-        if (!('message' in response.data)) {
-            return response;
-        }
+		if (!('message' in response.data)) {
+			return response;
+		}
 
-        // Create toast if the response has a message.
-        let message = response.data.message;
-        let variant = 'success';
-        if ('variant' in response.data) {
-            variant = response.data.variant;
-        }
+		// Create toast if the response has a message.
+		let message = response.data.message;
+		let variant = 'success';
+		if ('variant' in response.data) {
+			variant = response.data.variant;
+		}
 
-        message = this.$te(`messages.${message}`)
-            ? this.$t(`messages.${message}`)
-            : message;
+		message = this.$te(`messages.${message}`)
+			? this.$t(`messages.${message}`)
+			: message;
 
-        this.$bvToast.toast(message, { variant });
+		this.$bvToast.toast(message, { variant });
 
-        return response;
-    },
-    axiosResponseError(error) {
-        // Any status codes that falls outside the range of 2xx cause this function to trigger
-        // Do something with response error
-        if (!error.response) {
-            return Promise.reject(error);
-        }
+		return response;
+	},
 
-        if (typeof error.response.data !== 'object') {
-            return Promise.reject(error);
-        }
+	/**
+	 * Handle axios error.
+	 *
+	 * @param {Object} error
+	 */
+	axiosResponseError(error) {
+		// Any status codes that falls outside the range of 2xx cause this function to trigger
+		// Do something with response error
 
-        if (!('message' in error.response.data)) {
-            return Promise.reject(error);
-        }
+		console.log(store.getters.debug);
+		if (!error.response) {
+			return Promise.reject(error);
+		}
 
-        let message = error.response.data.message;
+		// Show livewire error in development.
+		if (store.getters.debug) {
+			livewire.connection.driver.showHtmlModal(error.response.data);
+			return Promise.reject(error);
+		}
 
-        if ([405, 404].includes(error.response.status) && !message) {
-            message = this.$t('fj.errors.not_found');
-        }
+		if (typeof error.response.data !== 'object') {
+			return Promise.reject(error);
+		}
 
-        message = this.$te(`messages.${message}`)
-            ? this.$t(`messages.${message}`)
-            : message;
+		if (!('message' in error.response.data)) {
+			return Promise.reject(error);
+		}
 
-        this.$bvToast.toast(message, {
-            variant: 'danger'
-        });
+		let message = error.response.data.message;
 
-        return Promise.reject(error);
-    }
+		if ([405, 404].includes(error.response.status) && !message) {
+			message = this.$t('lit.errors.not_found');
+		}
+
+		message = this.$te(`messages.${message}`)
+			? this.$t(`messages.${message}`)
+			: message;
+
+		this.$bvToast.toast(message, {
+			variant: 'danger',
+		});
+
+		return Promise.reject(error);
+	},
 };
 
-const setBaseUrl = config => {
-    window.axios.defaults.baseURL = store.state.config.baseURL;
+const setBaseUrl = () => {
+	window.axios.defaults.baseURL = store.state.config.baseURL;
 };
 
-Bus.$on('configSet', setBaseUrl);
+Bus.$on('mounted', setBaseUrl);
 
 export default methods;

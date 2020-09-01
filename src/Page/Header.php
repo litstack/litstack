@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Page;
+namespace Ignite\Page;
 
-use Fjord\Page\Actions\ButtonSmAction;
-use Fjord\Support\VueProp;
+use Ignite\Page\Actions\ButtonSmAction;
+use Ignite\Support\VueProp;
 
 class Header extends VueProp
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Translation;
+namespace Ignite\Translation;
 
 /**
  * Generator inspired by martinlindhe.

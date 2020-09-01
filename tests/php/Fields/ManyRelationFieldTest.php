@@ -1,13 +1,13 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\Fields\Relations\ManyRelationField;
-use Fjord\Exceptions\Traceable\InvalidArgumentException;
-use FjordTest\BackendTestCase;
-use FjordTest\Traits\InteractsWithConfig;
-use FjordTest\Traits\InteractsWithFields;
+use Ignite\Crud\Fields\Relations\ManyRelationField;
+use Ignite\Exceptions\Traceable\InvalidArgumentException;
 use Illuminate\Database\Eloquent\Model;
+use Tests\BackendTestCase;
+use Tests\Traits\InteractsWithConfig;
+use Tests\Traits\InteractsWithFields;
 
 class ManyRelationFieldTest extends BackendTestCase
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Crud\Repositories\Relations;
+namespace Ignite\Crud\Repositories\Relations;
 
-use Fjord\Crud\Fields\Relations\HasMany;
-use Fjord\Crud\Repositories\BaseFieldRepository;
-use Fjord\Crud\Requests\CrudUpdateRequest;
+use Ignite\Crud\Fields\Relations\HasMany;
+use Ignite\Crud\Repositories\BaseFieldRepository;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 
 class HasManyRepository extends BaseFieldRepository
 {

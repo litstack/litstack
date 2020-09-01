@@ -1,8 +1,8 @@
-@auth('fjord')
-    <nav class="fj-navigation">
+@auth('lit')
+    <nav class="lit-navigation">
 
-        @include('fjord::partials.nav_loader')
+        @include('litstack::partials.nav_loader')
 
-        <fj-main-navigation :items="{{collect(fjord()->config('navigation')->main)}}"></fj-navigation>
+        <lit-main-navigation :items="{{collect(lit()->config('navigation')->main)}}"></lit-navigation>
     </nav>
 @endauth

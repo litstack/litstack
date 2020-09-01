@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\User\Controllers;
+namespace Ignite\User\Controllers;
 
-use Fjord\Support\IndexTable;
+use Ignite\Support\IndexTable;
 use Illuminate\Http\Request;
 
 class ProfileController
@@ -16,7 +16,7 @@ class ProfileController
      */
     public function sessions(Request $request)
     {
-        return IndexTable::query(fjord_user()->sessions()->getQuery())
+        return IndexTable::query(lit_user()->sessions()->getQuery())
             ->request($request)
             ->get();
     }

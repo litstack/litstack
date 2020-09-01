@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields\ListField;
+namespace Ignite\Crud\Fields\ListField;
 
-use Fjord\Crud\Models\FormListItem;
+use Ignite\Crud\Models\ListItem;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -44,7 +44,7 @@ class ListCollection extends Collection
     /**
      * Get depth for item.
      *
-     * @param  array|FormListItem $item
+     * @param  array|ListItem $item
      * @return int
      */
     protected function getDepth($item)

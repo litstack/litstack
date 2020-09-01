@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
-use Fjord\Crud\BaseField;
+use Ignite\Crud\BaseField;
 use Illuminate\Support\Facades\Hash;
 use LogicException;
 
@@ -16,7 +16,7 @@ class Password extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-password';
+    protected $component = 'lit-field-password';
 
     /**
      * Required field attributes.
@@ -140,8 +140,8 @@ class Password extends BaseField
         }
 
         $confirmationRule = function ($attribute, $value, $fail) {
-            if (! Hash::check($value, fjord_user()->password)) {
-                return $fail(__f('validation.incorrect_password'));
+            if (! Hash::check($value, lit_user()->password)) {
+                return $fail(__lit('validation.incorrect_password'));
             }
         };
 

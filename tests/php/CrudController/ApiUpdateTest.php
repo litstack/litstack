@@ -1,16 +1,16 @@
 <?php
 
-namespace FjordTest\CrudController;
+namespace Tests\CrudController;
 
-use FjordTest\FrontendTestCase;
-use FjordTest\TestSupport\Models\Post;
-use FjordTest\Traits\InteractsWithCrud;
+use Tests\FrontendTestCase;
+use Tests\TestSupport\Models\Post;
+use Tests\Traits\InteractsWithCrud;
 
 /**
  * This test is using the Crud Post.
  *
- * @see FjordApp\Config\Crud\PostConfig
- * @see FjordTest\TestSupport\Models\Post
+ * @see Lit\Config\Crud\PostConfig
+ * @see Tests\TestSupport\Models\Post
  */
 class ApiUpdateTest extends FrontendTestCase
 {
@@ -21,7 +21,7 @@ class ApiUpdateTest extends FrontendTestCase
         parent::setUp();
 
         $this->post = Post::create([]);
-        $this->actingAs($this->admin, 'fjord');
+        $this->actingAs($this->admin, 'lit');
     }
 
     public function refreshModel()

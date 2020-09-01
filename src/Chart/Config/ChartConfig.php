@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Chart\Config;
+namespace Ignite\Chart\Config;
 
-use Fjord\Chart\Chart;
-use Fjord\Support\Bootstrap;
+use Ignite\Chart\Chart;
+use Ignite\Support\Bootstrap;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;

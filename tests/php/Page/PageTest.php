@@ -1,15 +1,15 @@
 <?php
 
-namespace FjordTest\Page;
+namespace Tests\Page;
 
-use Fjord\Exceptions\NotLoggedInException;
-use Fjord\Page\Header;
-use Fjord\Page\Navigation;
-use Fjord\Page\Page;
-use FjordTest\BackendTestCase;
+use Ignite\Exceptions\NotLoggedInException;
+use Ignite\Page\Header;
+use Ignite\Page\Navigation;
+use Ignite\Page\Page;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class PageTest extends BackendTestCase
 {
@@ -74,7 +74,7 @@ class PageTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_render_method_needs_logged_in_fjord_user()
+    public function test_render_method_needs_logged_in_lit_user()
     {
         $slot = m::mock('slot');
         $slot->shouldReceive('getViews')->andReturn([]);

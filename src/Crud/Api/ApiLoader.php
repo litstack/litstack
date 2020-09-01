@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Crud\Api;
+namespace Ignite\Crud\Api;
 
 use BadMethodCallException;
-use Fjord\Config\ConfigHandler;
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Controllers\CrudBaseController;
-use Fjord\Crud\CrudShow;
+use Ignite\Config\ConfigHandler;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Controllers\CrudBaseController;
+use Ignite\Crud\CrudShow;
 use Illuminate\Support\Str;
 
 class ApiLoader

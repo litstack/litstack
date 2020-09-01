@@ -1,13 +1,13 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\Fields\Relations\LaravelRelationField;
-use Fjord\Page\Table\ColumnBuilder;
-use FjordTest\BackendTestCase;
-use FjordTest\Traits\InteractsWithConfig;
-use FjordTest\Traits\InteractsWithFields;
+use Ignite\Crud\Fields\Relations\LaravelRelationField;
+use Ignite\Page\Table\ColumnBuilder;
 use Illuminate\Database\Eloquent\Model;
+use Tests\BackendTestCase;
+use Tests\Traits\InteractsWithConfig;
+use Tests\Traits\InteractsWithFields;
 
 class LaravelRelationFieldTest extends BackendTestCase
 {

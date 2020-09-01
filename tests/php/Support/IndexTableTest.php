@@ -1,12 +1,12 @@
 <?php
 
-namespace FjordTest\Support;
+namespace Tests\Support;
 
-use Fjord\Support\IndexTable;
-use FjordTest\BackendTestCase;
+use Ignite\Support\IndexTable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class IndexTableTest extends BackendTestCase
 {

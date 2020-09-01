@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
-use Fjord\Crud\BaseField;
+use Ignite\Crud\BaseField;
 
 class Checkboxes extends BaseField
 {
@@ -13,7 +13,7 @@ class Checkboxes extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-checkboxes';
+    protected $component = 'lit-field-checkboxes';
 
     /**
      * Required field attributes.

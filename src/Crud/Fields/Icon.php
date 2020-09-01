@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
-use Fjord\Crud\BaseField;
+use Ignite\Crud\BaseField;
 
 class Icon extends BaseField
 {
@@ -13,7 +13,7 @@ class Icon extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-icon';
+    protected $component = 'lit-field-icon';
 
     /**
      * Required field attributes.
@@ -29,7 +29,7 @@ class Icon extends BaseField
      */
     public function mount()
     {
-        $this->icons(require fjord_path('src/Crud/Fields/Defaults/fontawesome_icons.php'));
+        $this->icons(require lit_vendor_path('src/Crud/Fields/Defaults/fontawesome_icons.php'));
         $this->search(true);
     }
 

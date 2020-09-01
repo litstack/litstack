@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Page\Table\Components;
+namespace Ignite\Page\Table\Components;
 
 use ErrorException;
-use Fjord\Contracts\Page\Column;
-use Fjord\Exceptions\Traceable\InvalidArgumentException;
-use Fjord\Vue\Component;
+use Ignite\Contracts\Page\Column;
+use Ignite\Exceptions\Traceable\InvalidArgumentException;
+use Ignite\Vue\Component;
 
 class ColumnComponent extends Component implements Column
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Api;
+namespace Ignite\Crud\Api;
 
 class ApiRepositories
 {

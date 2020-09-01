@@ -2,10 +2,10 @@
 
 namespace Tests\Application;
 
-use Fjord\Support\Facades\FjordApp;
-use Fjord\Translation\Translator;
-use FjordTest\BackendTestCase;
+use Ignite\Support\Facades\Lit;
+use Ignite\Translation\Translator;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class ApplicationTests extends BackendTestCase
 {
@@ -15,7 +15,7 @@ class ApplicationTests extends BackendTestCase
         $translator = m::mock(Translator::class);
         $translator->shouldReceive('getLocale')->once()->andReturn('result');
         $this->app->bind(Translator::class, fn () => $translator);
-        $this->assertSame('result', FjordApp::getLocale());
+        $this->assertSame('result', Lit::getLocale());
     }
 
     /** @test */
@@ -25,7 +25,7 @@ class ApplicationTests extends BackendTestCase
         $translator->shouldReceive('isLocale')->withArgs(['en'])->once()->andReturn(true);
         $translator->shouldReceive('isLocale')->withArgs(['de'])->once()->andReturn(false);
         $this->app->bind(Translator::class, fn () => $translator);
-        $this->assertTrue(FjordApp::isLocale('en'));
-        $this->assertFalse(FjordApp::isLocale('de'));
+        $this->assertTrue(Lit::isLocale('en'));
+        $this->assertFalse(Lit::isLocale('de'));
     }
 }

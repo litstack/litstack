@@ -1,18 +1,18 @@
 <?php
 
-namespace Fjord\Application\Navigation;
+namespace Ignite\Application\Navigation;
 
 use Closure;
-use Fjord\Config\ConfigFactory;
-use Fjord\Config\ConfigHandler;
+use Ignite\Config\ConfigFactory;
+use Ignite\Config\ConfigHandler;
 
 class NavigationConfigFactory extends ConfigFactory
 {
     /**
      * Resolve query.
      *
-     * @param \Fjord\Config\ConfigHandler $config
-     * @param Closure                     $method
+     * @param \Ignite\Config\ConfigHandler $config
+     * @param Closure                      $method
      *
      * @return Navigation
      */
@@ -24,9 +24,8 @@ class NavigationConfigFactory extends ConfigFactory
     /**
      * Resolve query.
      *
-     * @param \Fjord\Config\ConfigHandler $config
-     * @param Closure                     $method
-     *
+     * @param  \Ignite\Config\ConfigHandler $config
+     * @param  Closure                      $method
      * @return Navigation
      */
     public function main(ConfigHandler $config, Closure $method)
@@ -43,7 +42,9 @@ class NavigationConfigFactory extends ConfigFactory
      */
     protected function nav(Closure $method)
     {
-        $nav = new Navigation();
+        $nav = new Navigation(
+            app(PresetFactory::class)
+        );
 
         $method($nav);
 

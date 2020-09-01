@@ -1,13 +1,13 @@
 <?php
 
-namespace Fjord\Page\Actions;
+namespace Ignite\Page\Actions;
 
 use Closure;
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Field;
-use Fjord\Support\Bootstrap;
-use Fjord\Vue\Component;
-use Fjord\Vue\Traits\StaticComponentName;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Field;
+use Ignite\Support\Bootstrap;
+use Ignite\Vue\Component;
+use Ignite\Vue\Traits\StaticComponentName;
 use InvalidArgumentException;
 
 class ActionModal extends Component

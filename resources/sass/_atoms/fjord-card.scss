@@ -1,88 +1,88 @@
 .card {
-    .card {
-        border-radius: 3px;
-    }
-    &.no-fx {
-        box-shadow: none;
-        border: 1px solid $border;
-    }
+	.card {
+		border-radius: 3px;
+	}
+	&.no-fx {
+		box-shadow: none;
+		border: 1px solid $border;
+	}
 
-    box-shadow: $box-shadow;
+	box-shadow: $box-shadow;
 
-    border-radius: 6px;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    border: none;
-    border-top: 3px solid $primary;
+	border-radius: 6px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	border: none;
+	border-top: 3px solid $primary;
 
-    table.table {
-        th,
-        td,
-        thead th,
-        tbody + tbody {
-            border-color: $border;
-        }
-    }
+	table.table {
+		th,
+		td,
+		thead th,
+		tbody + tbody {
+			border-color: $border;
+		}
+	}
 
-    &:not(.fjord-block) {
-        .card-body {
-            & > table.table {
-                margin: 0 -20px;
-                width: calc(100% + 2.5rem);
-                thead {
-                    th {
-                        border-top: 0;
-                    }
-                }
-                th,
-                td {
-                    &:first-child {
-                        padding-left: 2.5rem;
-                    }
-                    &:last-child {
-                        padding-right: 2.5rem;
-                    }
-                }
-            }
-        }
-    }
+	&:not(.lit-block) {
+		.card-body {
+			& > table.table {
+				margin: 0 -20px;
+				width: calc(100% + 2.5rem);
+				thead {
+					th {
+						border-top: 0;
+					}
+				}
+				th,
+				td {
+					&:first-child {
+						padding-left: 2.5rem;
+					}
+					&:last-child {
+						padding-right: 2.5rem;
+					}
+				}
+			}
+		}
+	}
 }
-.fjord-card {
-    &__1x1 {
-        height: 0;
-        padding: 0 !important;
-        padding-bottom: 100% !important;
-        position: relative;
-        img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    }
-    &__image {
-        cursor: grab;
-        img {
-            width: 100%;
-            border-top-left-radius: $radius;
-            border-top-right-radius: $radius;
-            border: 3px solid white;
-        }
-    }
+.lit-card {
+	&__1x1 {
+		height: 0;
+		padding: 0 !important;
+		padding-bottom: 100% !important;
+		position: relative;
+		img {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+	&__image {
+		cursor: grab;
+		img {
+			width: 100%;
+			border-top-left-radius: $radius;
+			border-top-right-radius: $radius;
+			border: 3px solid white;
+		}
+	}
 }
 
-.fjord-fjorm-collapse {
-    border: none;
-    outline: none;
-    color: inherit;
-    background: transparent;
-    height: 15px;
-    width: 15px;
-    line-height: 15px;
-    padding: 0;
-    color: $blue;
+.lit-form-collapse {
+	border: none;
+	outline: none;
+	color: inherit;
+	background: transparent;
+	height: 15px;
+	width: 15px;
+	line-height: 15px;
+	padding: 0;
+	color: $blue;
 }
 
 .form-control-expand {
-    flex-grow: 1;
+	flex-grow: 1;
 }

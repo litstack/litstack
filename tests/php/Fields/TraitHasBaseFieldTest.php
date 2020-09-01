@@ -1,11 +1,11 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\Field;
-use Fjord\Crud\Fields\Traits\HasBaseField;
-use FjordTest\BackendTestCase;
-use FjordTest\Traits\InteractsWithFields;
+use Ignite\Crud\Field;
+use Ignite\Crud\Fields\Traits\HasBaseField;
+use Tests\BackendTestCase;
+use Tests\Traits\InteractsWithFields;
 
 class TraitHasBaseFieldTest extends BackendTestCase
 {

@@ -1,28 +1,26 @@
 <?php
 
-namespace Fjord\Translation;
+namespace Ignite\Translation;
 
 use Illuminate\Support\ServiceProvider;
 
 class TranslationServiceProvider extends ServiceProvider
 {
     /**
-     * Register translator.
+     * Register litstack translator.
      *
      * @return void
      */
     public function register()
     {
-        $this->app->singleton('fjord.translator', function () {
+        $this->app->singleton('lit.translator', function () {
             $translator = new Translator();
 
             $translator->addPath(
-                fjord_path('resources/lang')
+                lit_vendor_path('resources/lang')
             );
 
             return $translator;
         });
-
-        $this->app->bind(Translator::class, 'fjord.translator');
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Ignite\Crud;
 
-use Fjord\Crud\Config\CrudConfig;
-use Fjord\Crud\Config\FormConfig;
-use Fjord\Support\Facades\Config;
-use Fjord\Support\Facades\Crud;
+use Ignite\Crud\Config\CrudConfig;
+use Ignite\Crud\Config\FormConfig;
+use Ignite\Support\Facades\Config;
+use Ignite\Support\Facades\Crud;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\File;
@@ -67,7 +67,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 return;
             }
 
-            return fjord()->config($key);
+            return lit()->config($key);
         });
     }
 
@@ -78,11 +78,11 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     protected function mapCrudRoutes()
     {
-        if (! fjord()->installed()) {
+        if (! lit()->installed()) {
             return;
         }
 
-        $files = File::allFiles(fjord_config_path());
+        $files = File::allFiles(lit_config_path());
 
         foreach ($files as $file) {
             if ($file->isDir()) {
@@ -93,7 +93,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 continue;
             }
 
-            $namespace = str_replace('/', '\\', 'FjordApp'.explode('fjord/app', str_replace('.php', '', $file))[1]);
+            $namespace = str_replace('/', '\\', 'Lit'.explode('lit/app', str_replace('.php', '', $file))[1]);
             $reflection = new ReflectionClass($namespace);
 
             if (! $reflection->getParentClass()) {
@@ -121,7 +121,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     protected function mapFormRoutes()
     {
-        $configPath = fjord_config_path('Form');
+        $configPath = lit_config_path('Form');
         $directories = glob($configPath.'/*', GLOB_ONLYDIR);
 
         foreach ($directories as $formDirectory) {

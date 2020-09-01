@@ -1,12 +1,12 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\BaseField;
-use Fjord\Crud\Fields\Traits\HasBaseField;
-use FjordTest\Traits\InteractsWithFields;
-use FjordTest\Traits\TestHelpers;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\Fields\Traits\HasBaseField;
 use PHPUnit\Framework\TestCase;
+use Tests\Traits\InteractsWithFields;
+use Tests\Traits\TestHelpers;
 
 class BaseFieldTest extends TestCase
 {

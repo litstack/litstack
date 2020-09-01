@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Page\Actions;
+namespace Ignite\Page\Actions;
 
-use Fjord\Support\HasAttributes;
+use Ignite\Support\HasAttributes;
 
 class AttributeBag
 {

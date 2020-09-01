@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Config;
+namespace Ignite\Config;
 
 use BadMethodCallException;
-use Fjord\Support\Facades\Config;
+use Ignite\Support\Facades\Config;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
@@ -42,7 +42,8 @@ class ConfigHandler
     /**
      * Create new ConfigHandler instance.
      *
-     * @param Instance $config
+     * @param  mixed $config
+     * @return void
      */
     public function __construct($config)
     {
@@ -83,7 +84,7 @@ class ConfigHandler
         $parent = $reflector->getParentClass();
         $uses = class_uses_recursive($this->config);
 
-        foreach (fjord()->getConfigFactories() as $dependency => $factory) {
+        foreach (Config::factories() as $dependency => $factory) {
 
             // Matching parent class.
             if ($parent) {
@@ -111,11 +112,10 @@ class ConfigHandler
     /**
      * Register config factory.
      *
-     * @param string $factory
+     * @param  string $factory
+     * @return void
      *
      * @throws \TypeError
-     *
-     * @return void
      */
     public function registerFactory($factory)
     {
@@ -144,9 +144,8 @@ class ConfigHandler
     /**
      * Load select config attributes.
      *
-     * @param string|array ...$keys
-     *
-     * @return array $attributes
+     * @param  string|array ...$keys
+     * @return array        $attributes
      */
     public function get(...$keys)
     {
@@ -176,8 +175,7 @@ class ConfigHandler
     /**
      * Check if config has method.
      *
-     * @param string $method
-     *
+     * @param  string $method
      * @return bool
      */
     public function hasMethod(string $method)
@@ -202,8 +200,7 @@ class ConfigHandler
     /**
      * Get config attribute from loaded stack or new.
      *
-     * @param string $name
-     *
+     * @param  string $name
      * @return mixed
      */
     public function getAttribute(string $name)
@@ -225,9 +222,8 @@ class ConfigHandler
     /**
      * Call config method and store attributes.
      *
-     * @param string $method
-     * @param array  ...$parameters
-     *
+     * @param  string $method
+     * @param  array  ...$parameters
      * @return mixed
      */
     public function callMethod($method, $parameters)
@@ -242,9 +238,8 @@ class ConfigHandler
     /**
      * Set attribute.
      *
-     * @param string $name
-     * @param mixed  $value
-     *
+     * @param  string $name
+     * @param  mixed  $value
      * @return void
      */
     public function setAttribute(string $name, $value)
@@ -255,8 +250,7 @@ class ConfigHandler
     /**
      * Check if a method has a factory.
      *
-     * @param string $method
-     *
+     * @param  string $method
      * @return bool
      */
     public function methodHasFactory(string $method)
@@ -267,9 +261,8 @@ class ConfigHandler
     /**
      * Get factory for method.
      *
-     * @param string $method
-     *
-     * @return Instance
+     * @param  string $method
+     * @return mixed
      */
     public function getMethodFactory(string $method)
     {
@@ -279,9 +272,8 @@ class ConfigHandler
     /**
      * Resolve config method.
      *
-     * @param string $name
-     * @param array  $parameters
-     *
+     * @param  string $name
+     * @param  array  $parameters
      * @return array
      */
     protected function resolveMethod($method, $parameters = [])
@@ -298,7 +290,7 @@ class ConfigHandler
     /**
      * Get config.
      *
-     * @return Instance
+     * @return mixed
      */
     public function getConfig()
     {
@@ -308,8 +300,7 @@ class ConfigHandler
     /**
      * Get method name.
      *
-     * @param string $method
-     *
+     * @param  string $method
      * @return string
      */
     public function getMethodName(string $method)
@@ -320,12 +311,11 @@ class ConfigHandler
     /**
      * Call config class method.
      *
-     * @param string $method
-     * @param array  $parameters
+     * @param  string $method
+     * @param  array  $parameters
+     * @return mixed
      *
      * @throws BadMethodCallException
-     *
-     * @return mixed
      */
     public function __call($method, $parameters)
     {
@@ -345,8 +335,7 @@ class ConfigHandler
     /**
      * Get config attribute.
      *
-     * @param string $name
-     *
+     * @param  string $name
      * @return mixed
      */
     public function __get(string $name)

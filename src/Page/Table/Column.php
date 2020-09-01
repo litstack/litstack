@@ -1,14 +1,14 @@
 <?php
 
-namespace Fjord\Page\Table;
+namespace Ignite\Page\Table;
 
 use ErrorException;
-use Fjord\Contracts\Page\Column as ColumnInterface;
-use Fjord\Contracts\Page\Table;
-use Fjord\Exceptions\MissingAttributeException;
-use Fjord\Exceptions\Traceable\InvalidArgumentException;
-use Fjord\Support\HasAttributes;
-use Fjord\Support\VueProp;
+use Ignite\Contracts\Page\Column as ColumnInterface;
+use Ignite\Contracts\Page\Table;
+use Ignite\Exceptions\MissingAttributeException;
+use Ignite\Exceptions\Traceable\InvalidArgumentException;
+use Ignite\Support\HasAttributes;
+use Ignite\Support\VueProp;
 
 class Column extends VueProp implements ColumnInterface
 {

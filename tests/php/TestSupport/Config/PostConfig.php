@@ -1,16 +1,16 @@
 <?php
 
-namespace FjordApp\Config\Crud;
+namespace Lit\Config\Crud;
 
-use Fjord\Crud\Config\CrudConfig;
-use Fjord\Crud\CrudShow;
-use Fjord\Vue\Crud\CrudTable;
+use Ignite\Crud\Config\CrudConfig;
+use Ignite\Crud\CrudShow;
+use Ignite\Vue\Crud\CrudTable;
 
 class PostConfig extends CrudConfig
 {
-    public $model = \FjordTest\TestSupport\Models\Post::class;
+    public $model = \Tests\TestSupport\Models\Post::class;
 
-    public $controller = \FjordTest\TestSupport\Controllers\PostController::class;
+    public $controller = \Tests\TestSupport\Controllers\PostController::class;
 
     public function names()
     {

@@ -1,14 +1,14 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\BaseField;
-use Fjord\Crud\Casts\Route as RouteCast;
-use Fjord\Crud\Fields\Route;
-use Fjord\Crud\Fields\Route\RouteCollectionResolver;
-use FjordTest\BackendTestCase;
-use FjordTest\Traits\InteractsWithFields;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\Casts\Route as RouteCast;
+use Ignite\Crud\Fields\Route;
+use Ignite\Crud\Fields\Route\RouteCollectionResolver;
 use Mockery as m;
+use Tests\BackendTestCase;
+use Tests\Traits\InteractsWithFields;
 
 class FieldRouteTest extends BackendTestCase
 {
@@ -42,7 +42,7 @@ class FieldRouteTest extends BackendTestCase
         $resolver = m::mock(RouteCollectionResolver::class);
         $closure = fn () => null;
         $resolver->shouldReceive('register')->withArgs(['name', $closure]);
-        app()->bind('fjord.crud.route.resolver', fn () => $resolver);
+        app()->bind('lit.crud.route.resolver', fn () => $resolver);
         Route::register('name', $closure);
     }
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\BaseField;
-use Fjord\Crud\Fields\Input;
-use Fjord\Crud\Fields\Traits\FieldHasRules;
-use Fjord\Crud\Fields\Traits\TranslatableField;
-use FjordTest\Traits\InteractsWithFields;
-use FjordTest\Traits\TestHelpers;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\Fields\Input;
+use Ignite\Crud\Fields\Traits\FieldHasRules;
+use Ignite\Crud\Fields\Traits\TranslatableField;
 use PHPUnit\Framework\TestCase;
+use Tests\Traits\InteractsWithFields;
+use Tests\Traits\TestHelpers;
 
 class FieldInputTest extends TestCase
 {

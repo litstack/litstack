@@ -1,8 +1,8 @@
 <?php
 
-namespace FjordTest\Page;
+namespace Tests\Page;
 
-use Fjord\Page\Table\Components\ToggleComponent;
+use Ignite\Page\Table\Components\ToggleComponent;
 use PHPUnit\Framework\TestCase;
 
 class ToggleComponentTest extends TestCase

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Page\Table\Components;
+namespace Ignite\Page\Table\Components;
 
-use Fjord\Vue\Traits\StaticComponentName;
+use Ignite\Vue\Traits\StaticComponentName;
 use Illuminate\Contracts\View\View;
 
 class BladeColumnComponent extends ColumnComponent
@@ -14,7 +14,7 @@ class BladeColumnComponent extends ColumnComponent
      *
      * @var string
      */
-    protected $name = 'fj-blade';
+    protected $name = 'lit-blade';
 
     /**
      * Set blade view.

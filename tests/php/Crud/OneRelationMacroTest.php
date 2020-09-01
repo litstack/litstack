@@ -1,12 +1,12 @@
 <?php
 
-namespace FjordTest\Crud;
+namespace Tests\Crud;
 
-use Fjord\Crud\Models\FormRelation;
-use FjordTest\BackendTestCase;
-use FjordTest\TestSupport\Models\Post;
+use Ignite\Crud\Models\Relation as RelationModel;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Mockery as m;
+use Tests\BackendTestCase;
+use Tests\TestSupport\Models\Post;
 
 class OneRelationMacroTest extends BackendTestCase
 {
@@ -14,7 +14,7 @@ class OneRelationMacroTest extends BackendTestCase
     {
         parent::setUp();
 
-        $this->installFjord();
+        $this->installLit();
         $this->migrate();
 
         // Setting up form relation.
@@ -67,7 +67,7 @@ class OneRelationMacroTest extends BackendTestCase
 
     protected function createFormRelation($name, $count = 1)
     {
-        factory(FormRelation::class, $count)->create([
+        factory(RelationModel::class, $count)->create([
             'name' => $name,
             'from' => $this->model,
             'to'   => $this->related,

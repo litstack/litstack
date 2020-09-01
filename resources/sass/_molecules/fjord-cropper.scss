@@ -1,50 +1,50 @@
-.fjord-cropper {
-    position: fixed;
-    display: none;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.3);
-    z-index: 10;
+.lit-cropper {
+	position: fixed;
+	display: none;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 10;
 
-    &__modal {
-        width: 80vw;
-        height: 70vh;
-        background-color: white;
-        border-radius: 5px;
-        margin: auto;
-        margin-top: 10vh;
-        padding: 20px;
-    }
-    &__canvas,
-    &__preview {
-        &-wrapper {
-            height: 0px;
-            position: relative;
-        }
-        position: absolute;
-        overflow: hidden;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
+	&__modal {
+		width: 80vw;
+		height: 70vh;
+		background-color: white;
+		border-radius: 5px;
+		margin: auto;
+		margin-top: 10vh;
+		padding: 20px;
+	}
+	&__canvas,
+	&__preview {
+		&-wrapper {
+			height: 0px;
+			position: relative;
+		}
+		position: absolute;
+		overflow: hidden;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
 }
 
 .r2x1 {
-    position: relative;
-    padding-bottom: 50%;
+	position: relative;
+	padding-bottom: 50%;
 }
 .r4x3 {
-    position: relative;
-    padding-bottom: 75%;
+	position: relative;
+	padding-bottom: 75%;
 }
 .r16x9 {
-    position: relative;
-    padding-bottom: 56.25%;
+	position: relative;
+	padding-bottom: 56.25%;
 }
 .r16x10 {
-    position: relative;
-    padding-bottom: 62.5%;
+	position: relative;
+	padding-bottom: 62.5%;
 }

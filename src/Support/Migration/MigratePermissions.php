@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Support\Migration;
+namespace Ignite\Support\Migration;
 
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -14,13 +14,15 @@ trait MigratePermissions
      */
     protected function upPermissions()
     {
-        $admin = Role::where('guard_name', 'fjord')
+        $admins = Role::where('guard_name', 'lit')
             ->where('name', 'admin')
-            ->first();
+            ->get();
 
         foreach ($this->permissions as $permission) {
-            Permission::firstOrCreate(['guard_name' => 'fjord', 'name' => $permission]);
-            $admin->givePermissionTo($permission);
+            Permission::firstOrCreate(['guard_name' => 'lit', 'name' => $permission]);
+            foreach ($admins as $admin) {
+                $admin->givePermissionTo($permission);
+            }
         }
     }
 
@@ -31,18 +33,41 @@ trait MigratePermissions
      */
     protected function downPermissions()
     {
-        $admin = Role::where('guard_name', 'fjord')
+        $admins = Role::where('guard_name', 'lit')
             ->where('name', 'admin')
-            ->first();
+            ->get();
 
-        $permissions = Permission::where('guard_name', 'fjord')
+        $permissions = Permission::where('guard_name', 'lit')
             ->whereIn('name', $this->permissions)
             ->get();
 
-        // Delete permissions.
         foreach ($permissions as $permission) {
-            $admin->revokePermissionTo($permission->name);
+            foreach ($admins as $admin) {
+                $admin->revokePermissionTo($permission->name);
+            }
             $permission->delete();
+        }
+    }
+
+    /**
+     * Combine operations and groups.
+     *
+     * @param  array $operations
+     * @param  array $groups
+     * @return void
+     */
+    public function combineOperationsAndGroups(array $operations, array $groups)
+    {
+        foreach ($operations as $operation) {
+            foreach ($groups as $group) {
+                $permission = "{$operation} {$group}";
+
+                if (in_array($permission, $this->permissions)) {
+                    continue;
+                }
+
+                $this->permissions[] = $permission;
+            }
         }
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Translation\i18nGenerator;
-use FjordTest\Traits\TestHelpers;
+use Ignite\Translation\i18nGenerator;
 use PHPUnit\Framework\TestCase;
+use Tests\Traits\TestHelpers;
 
 class i18nGeneratorTest extends TestCase
 {

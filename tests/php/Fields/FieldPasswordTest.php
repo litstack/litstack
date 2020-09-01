@@ -1,14 +1,14 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\BaseField;
-use Fjord\Crud\Fields\Password;
-use Fjord\Crud\Fields\Traits\FieldHasRules;
-use FjordTest\BackendTestCase;
-use FjordTest\Traits\InteractsWithFields;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\Fields\Password;
+use Ignite\Crud\Fields\Traits\FieldHasRules;
 use Illuminate\Support\Facades\Hash;
 use Mockery as m;
+use Tests\BackendTestCase;
+use Tests\Traits\InteractsWithFields;
 
 class FieldPasswordTest extends BackendTestCase
 {

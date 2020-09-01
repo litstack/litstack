@@ -1,20 +1,20 @@
 <?php
 
-namespace Fjord\Support\Facades;
+namespace Ignite\Support\Facades;
 
-use Fjord\Support\FacadeNeedsFjordsInstalled;
+use Ignite\Support\FacadeNeedsLitInstalled;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Fjord\Crud\FormFieldCollection|\Fjord\Crud\Models\FormField load(string $collection = null, string $name = null)
+ * @method static \Ignite\Crud\FormCollection|\Ignite\Crud\Models\Form load(string $collection = null, string $name = null)
  * @method static field(string $alias, string $field)
  * @method static bool fieldExists(string $alias)
  *
- * @see \Fjord\Crud\Form
+ * @see \Ignite\Crud\Form
  */
 class Form extends Facade
 {
-    use FacadeNeedsFjordsInstalled;
+    use FacadeNeedsLitInstalled;
 
     /**
      * Get the registered name of the component.
@@ -23,6 +23,6 @@ class Form extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'fjord.form';
+        return 'lit.form';
     }
 }

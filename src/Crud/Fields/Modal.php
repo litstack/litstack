@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
 use Closure;
-use Fjord\Crud\BaseField;
-use Fjord\Crud\BaseForm;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\BaseForm;
 
 class Modal extends BaseField
 {
@@ -15,7 +15,7 @@ class Modal extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-modal';
+    protected $component = 'lit-field-modal';
 
     /**
      * Required field attributes.

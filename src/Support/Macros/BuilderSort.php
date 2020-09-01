@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Support\Macros;
+namespace Ignite\Support\Macros;
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;

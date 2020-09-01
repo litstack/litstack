@@ -1,13 +1,13 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Ignite\Crud;
 
 use Closure;
-use Fjord\Exceptions\Traceable\BadMethodCallException;
-use Fjord\Exceptions\Traceable\InvalidArgumentException;
-use Fjord\Exceptions\Traceable\MissingAttributeException;
-use Fjord\Support\HasAttributes;
-use Fjord\Support\VueProp;
+use Ignite\Exceptions\Traceable\BadMethodCallException;
+use Ignite\Exceptions\Traceable\InvalidArgumentException;
+use Ignite\Exceptions\Traceable\MissingAttributeException;
+use Ignite\Support\HasAttributes;
+use Ignite\Support\VueProp;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
@@ -409,7 +409,7 @@ class Field extends VueProp
 
         $closure = $this->authorize;
 
-        return $closure(fjord_user());
+        return $closure(lit_user());
     }
 
     /**

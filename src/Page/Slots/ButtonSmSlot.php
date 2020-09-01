@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Page\Slots;
+namespace Ignite\Page\Slots;
 
-use Fjord\Vue\Components\ButtonComponent;
+use Ignite\Vue\Components\ButtonComponent;
 
 class ButtonSmSlot extends BaseSlot
 {

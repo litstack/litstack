@@ -1,4 +1,4 @@
-@extends('fjord::landing')
+@extends('litstack::landing')
 
 @section('title')
     Reset Password ({{ $email }})
@@ -16,7 +16,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <form method="POST" action="{{ route('fjord.password.request') }}">
+                    <form method="POST" action="{{ route('lit.password.request') }}">
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">

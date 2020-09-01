@@ -1,11 +1,11 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\BaseField;
-use Fjord\Crud\Fields\Range;
-use FjordTest\Traits\InteractsWithFields;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\Fields\Range;
 use PHPUnit\Framework\TestCase;
+use Tests\Traits\InteractsWithFields;
 
 class FieldRangeTest extends TestCase
 {

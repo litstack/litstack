@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Crud\Fields\Relations;
+namespace Ignite\Crud\Fields\Relations;
 
 use Closure;
-use Fjord\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Fields\Traits\HasBaseField;
 use InvalidArgumentException;
 
 class MorphToRegistrar extends LaravelRelationField
@@ -50,7 +50,7 @@ class MorphToRegistrar extends LaravelRelationField
         $selectId = (new $this->model())->{$this->id}()->getMorphType();
 
         $select = $this->formInstance->select($selectId)
-            ->title(__f('base.item_select', ['item' => $this->title]))
+            ->title(__lit('base.item_select', ['item' => $this->title]))
             ->storable(false);
 
         $morph = new MorphTypeManager($this->id, $this->formInstance, $select);

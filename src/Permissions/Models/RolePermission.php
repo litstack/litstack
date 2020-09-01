@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Permissions\Models;
+namespace Ignite\Permissions\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

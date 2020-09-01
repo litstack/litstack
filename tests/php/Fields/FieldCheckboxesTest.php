@@ -1,11 +1,11 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\BaseField;
-use Fjord\Crud\Fields\Checkboxes;
-use FjordTest\Traits\InteractsWithFields;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\Fields\Checkboxes;
 use PHPUnit\Framework\TestCase;
+use Tests\Traits\InteractsWithFields;
 
 class FieldCheckboxesTest extends TestCase
 {

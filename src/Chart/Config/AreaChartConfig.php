@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Chart\Config;
+namespace Ignite\Chart\Config;
 
 abstract class AreaChartConfig extends ChartConfig
 {

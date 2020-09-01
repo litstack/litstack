@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Models\Traits;
+namespace Ignite\Crud\Models\Traits;
 
 use Cviebrock\EloquentSluggable\Sluggable as CviebrockSluggable;
 

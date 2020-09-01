@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Page;
+namespace Ignite\Page;
 
-use Fjord\Page\Actions\ButtonAction;
-use Fjord\Page\Actions\ButtonSmAction;
-use Fjord\Page\Actions\DropdownItemAction;
-use Fjord\Support\VueProp;
+use Ignite\Page\Actions\ButtonAction;
+use Ignite\Page\Actions\ButtonSmAction;
+use Ignite\Page\Actions\DropdownItemAction;
+use Ignite\Support\VueProp;
 
 class Navigation extends VueProp
 {

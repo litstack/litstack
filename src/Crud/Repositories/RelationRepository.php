@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Crud\Repositories;
+namespace Ignite\Crud\Repositories;
 
-use Fjord\Crud\Fields\Relations\LaravelRelationField;
-use Fjord\Crud\Fields\Relations\OneRelationField;
-use Fjord\Crud\Requests\CrudReadRequest;
-use Fjord\Crud\Requests\CrudUpdateRequest;
-use Fjord\Support\IndexTable;
+use Ignite\Crud\Fields\Relations\LaravelRelationField;
+use Ignite\Crud\Fields\Relations\OneRelationField;
+use Ignite\Crud\Requests\CrudReadRequest;
+use Ignite\Crud\Requests\CrudUpdateRequest;
+use Ignite\Support\IndexTable;
 use Illuminate\Database\Eloquent\Collection;
 
 class RelationRepository extends BaseFieldRepository

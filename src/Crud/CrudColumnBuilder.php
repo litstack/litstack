@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Ignite\Crud;
 
-use Fjord\Config\ConfigHandler;
-use Fjord\Contracts\Page\Column;
-use Fjord\Page\Table\ColumnBuilder;
+use Ignite\Config\ConfigHandler;
+use Ignite\Contracts\Page\Column;
+use Ignite\Page\Table\ColumnBuilder;
 
 class CrudColumnBuilder extends ColumnBuilder
 {
@@ -28,8 +28,8 @@ class CrudColumnBuilder extends ColumnBuilder
     /**
      * Add table column to cols stack.
      *
-     * @param  string                       $label
-     * @return \Fjord\Contracts\Page\Column
+     * @param  string                        $label
+     * @return \Ignite\Contracts\Page\Column
      */
     public function col($label = ''): Column
     {

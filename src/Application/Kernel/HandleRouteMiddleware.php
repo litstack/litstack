@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Application\Kernel;
+namespace Ignite\Application\Kernel;
 
 use Closure;
 use Illuminate\Support\Facades\Request;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Request;
 class HandleRouteMiddleware
 {
     /**
-     * Execute Fjord kernel method handleRoute.
+     * Execute Lit kernel method handleRoute.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure                 $next
@@ -17,7 +17,7 @@ class HandleRouteMiddleware
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        app()->get(\FjordApp\Kernel::class)->handleRoute(Request::route());
+        app()->get(\Lit\Kernel::class)->handleRoute(Request::route());
 
         return $next($request);
     }

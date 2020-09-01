@@ -1,31 +1,16 @@
 <?php
 
-namespace Fjord\Application;
+namespace Ignite\Application;
 
-use Fjord\Translation\Translator;
+use Ignite\Translation\Translator;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\Facades\View as ViewFactory;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-/**
- * The Application class manages all depencies for the view fjord::app:
- * Bootstrapping Application,
- * Registering and booting packages,
- * Registering and calling config handlers,
- * Binding css files for fjord,
- * Bind composer to the fjord::app view.
- */
 class Application
 {
     use Concerns\ManagesAssets;
-
-    /**
-     * Registered config factories.
-     *
-     * @var array
-     */
-    protected $configFactories = [];
 
     /**
      * Indicates if the application has been bootstrapped before.
@@ -42,15 +27,6 @@ class Application
     protected $laravel;
 
     /**
-     * Singleton classes.
-     *
-     * @var array
-     */
-    protected $singletons = [
-        'packages' => Package\Packages::class,
-    ];
-
-    /**
      * Create new Application instance.
      *
      * @param  LaravelApplication $laravel
@@ -62,7 +38,7 @@ class Application
     }
 
     /**
-     * Get locale for the Fjord application.
+     * Get locale for the Lit application.
      *
      * @return string
      */
@@ -72,7 +48,7 @@ class Application
     }
 
     /**
-     * Check if the Fjord application is running in a locale.
+     * Check if the Lit application is running in a locale.
      *
      * @param  string $locale
      * @return bool
@@ -83,14 +59,14 @@ class Application
     }
 
     /**
-     * Bind composer to fjord::app view.
+     * Bind composer to litstack::app view.
      *
      * @param  string                   $composer
      * @return \Illuminate\View\Factory
      */
     public function composer(string $composer)
     {
-        return ViewFactory::composer('fjord::app', $composer);
+        return ViewFactory::composer('litstack::app', $composer);
     }
 
     /**
@@ -119,32 +95,18 @@ class Application
     }
 
     /**
-     * Boot packages and build Vue application.
+     *  Build Vue application.
      *
      * @param  Illuminate\View\View $view
      * @return void
      */
     public function build(View $view)
     {
-        $this->bootPackages();
-
         $this->get('vue.app')->bindView($view);
     }
 
     /**
-     * Boot all packages.
-     *
-     * @return void
-     */
-    protected function bootPackages()
-    {
-        foreach ($this->get('packages')->all() as $package) {
-            $package->boot($this);
-        }
-    }
-
-    /**
-     * Get Fjord application binding.
+     * Get Lit application binding.
      *
      * @param  string   $binding
      * @return instance
@@ -164,28 +126,6 @@ class Application
     public function bind($abstract, $concrete)
     {
         $this->laravel->bind($this->getAbstract($abstract), $concrete);
-    }
-
-    /**
-     * Register config handler.
-     *
-     * @param  string $dependency
-     * @param  string $handler
-     * @return void
-     */
-    public function registerConfigFactory(string $dependency, string $factory)
-    {
-        $this->configFactories[$dependency] = $factory;
-    }
-
-    /**
-     * Get config factories.
-     *
-     * @return array
-     */
-    public function getConfigFactories()
-    {
-        return $this->configFactories;
     }
 
     /**
@@ -211,13 +151,13 @@ class Application
     }
 
     /**
-     * Get abstract for fjord application.
+     * Get abstract for lit application.
      *
      * @param  string $abstract
      * @return string
      */
     public function getAbstract($abstract)
     {
-        return Str::start($abstract, 'fjord.');
+        return Str::start($abstract, 'lit.');
     }
 }

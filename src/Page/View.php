@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Page;
+namespace Ignite\Page;
 
-use Fjord\Support\VueProp;
+use Ignite\Support\VueProp;
 use Illuminate\Contracts\View\View as LaravelView;
 
 class View extends VueProp

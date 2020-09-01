@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Contracts\Page;
+namespace Ignite\Contracts\Page;
 
 interface Column
 {

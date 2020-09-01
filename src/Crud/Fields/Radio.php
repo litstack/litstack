@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
-use Fjord\Crud\BaseField;
+use Ignite\Crud\BaseField;
 
 class Radio extends BaseField
 {
@@ -13,7 +13,7 @@ class Radio extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-radio';
+    protected $component = 'lit-field-radio';
 
     /**
      * Required attributes.

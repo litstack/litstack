@@ -1,10 +1,10 @@
 <?php
 
-namespace FjordApp\Config\Form\DummyCollection;
+namespace Lit\Config\Form\DummyCollection;
 
-use Fjord\Crud\CrudShow;
-use Fjord\Crud\Config\FormConfig;
-use FjordApp\Controllers\Form\DummyCollection\DummyController;
+use Ignite\Crud\CrudShow;
+use Ignite\Crud\Config\FormConfig;
+use Lit\Http\Controllers\Form\DummyCollection\DummyController;
 
 class DummyConfigClassName extends FormConfig
 {
@@ -40,7 +40,7 @@ class DummyConfigClassName extends FormConfig
     /**
      * Setup create and edit form.
      *
-     * @param \Fjord\Crud\CrudShow $page
+     * @param \Lit\Crud\CrudShow $page
      * @return void
      */
     public function show(CrudShow $page)

@@ -1,0 +1,13 @@
+table {
+	td.col-sm {
+		// Reducing column width.
+		width: 1%;
+		white-space: nowrap;
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+	}
+
+	td.lit-table-col {
+		vertical-align: middle;
+	}
+}

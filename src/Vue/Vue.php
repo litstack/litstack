@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Vue;
+namespace Ignite\Vue;
 
 use Closure;
-use Fjord\Contracts\Vue\Vue as VueContract;
+use Ignite\Contracts\Vue\Vue as VueContract;
 
 class Vue implements VueContract
 {
@@ -56,5 +56,15 @@ class Vue implements VueContract
         }
 
         return new Component($name);
+    }
+
+    /**
+     * Get all registered vue components.
+     *
+     * @return array
+     */
+    public function all()
+    {
+        return $this->components;
     }
 }

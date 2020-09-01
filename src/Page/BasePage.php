@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Page;
+namespace Ignite\Page;
 
-use Fjord\Contracts\Page\Page;
-use Fjord\Support\HasAttributes;
-use Fjord\Vue\Components\BladeComponent;
+use Ignite\Contracts\Page\Page;
+use Ignite\Support\HasAttributes;
+use Ignite\Vue\Components\BladeComponent;
 use Illuminate\Contracts\View\View;
 use InvalidArgumentException;
 
@@ -44,8 +44,8 @@ abstract class BasePage implements Page
     /**
      * Add Vue component to stack.
      *
-     * @param  \Fjord\Vue\Component|string $component
-     * @return \Fjord\Vue\Component
+     * @param  \Ignite\Vue\Component|string $component
+     * @return \Ignite\Vue\Component
      */
     public function component($component)
     {
@@ -85,7 +85,32 @@ abstract class BasePage implements Page
 
         $this->views[] = $view;
 
-        return $this->component('fj-blade')->prop('view', $view);
+        return $this->component('lit-blade')->prop('view', $view);
+    }
+
+    /**
+     * Get views.
+     *
+     * @return array
+     */
+    public function getViews()
+    {
+        return $this->views;
+    }
+
+    /**
+     * Bind livewire component to page.
+     *
+     * @param  string         $component
+     * @param  array          $data
+     * @return BladeComponent
+     */
+    public function livewire($component, $data = [])
+    {
+        return $this->view('litstack::partials.livewire', [
+            'component' => $component,
+            'data'      => $data,
+        ]);
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Support;
+namespace Ignite\Support;
 
 use File;
 use Illuminate\Support\Str;

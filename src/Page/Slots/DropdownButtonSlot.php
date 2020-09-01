@@ -1,16 +1,16 @@
 <?php
 
-namespace Fjord\Page\Slots;
+namespace Ignite\Page\Slots;
 
 class DropdownButtonSlot extends BaseSlot
 {
     /**
      * Get action compoent.
      *
-     * @return Fjord\Vue\Component
+     * @return Lit\Vue\Component
      */
     protected function getActionComponent()
     {
-        return $this->component('fj-page-action');
+        return $this->component('lit-page-action');
     }
 }

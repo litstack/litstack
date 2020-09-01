@@ -1,14 +1,14 @@
 <?php
 
-namespace Fjord\Crud\Controllers;
+namespace Ignite\Crud\Controllers;
 
-use Fjord\Crud\Fields\Media\MediaField;
-use Fjord\Crud\Models\FjordFormModel;
-use Fjord\Crud\RelationField;
-use Fjord\Crud\Requests\CrudCreateRequest;
-use Fjord\Crud\Requests\CrudDeleteRequest;
-use Fjord\Crud\Requests\CrudReadRequest;
-use Fjord\Crud\Requests\CrudUpdateRequest;
+use Ignite\Crud\Fields\Media\MediaField;
+use Ignite\Crud\Models\LitFormModel;
+use Ignite\Crud\RelationField;
+use Ignite\Crud\Requests\CrudCreateRequest;
+use Ignite\Crud\Requests\CrudDeleteRequest;
+use Ignite\Crud\Requests\CrudReadRequest;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
@@ -22,14 +22,14 @@ abstract class CrudController extends CrudBaseController
     protected $model;
 
     /**
-     * Authorize request for permission operation and authenticated fjord-user.
+     * Authorize request for permission operation and authenticated lit-user.
      * Operations: create, read, update, delete.
      *
-     * @param  \Fjord\User\Models\FjordUser $user
-     * @param  string                       $operation
+     * @param  \Lit\Models\User $user
+     * @param  string           $operation
      * @return bool
      */
-    //abstract public function authorize(FjordUser $user, string $operation, $id = null);
+    //abstract public function authorize(User $user, string $operation, $id = null);
 
     /**
      * Create new CrudController instance.
@@ -94,7 +94,7 @@ abstract class CrudController extends CrudBaseController
         $models->map(fn ($item) => $item->delete());
 
         return response()->success(
-            __f_choice('messages.deleted_items', count($models))
+            __lit_choice('messages.deleted_items', count($models))
         );
     }
 
@@ -167,7 +167,7 @@ abstract class CrudController extends CrudBaseController
         $model->last_edit;
 
         // Append media.
-        if (! $model instanceof FjordFormModel) {
+        if (! $model instanceof LitFormModel) {
             foreach ($this->config->show->getRegisteredFields() as $field) {
                 if ($field instanceof MediaField) {
                     $model->append($field->id);
@@ -208,7 +208,7 @@ abstract class CrudController extends CrudBaseController
         [$previous, $next] = $this->closeSiblings($id);
 
         // Show near items.
-        $page->navigationLeft()->component('fj-crud-show-near-items')->bind([
+        $page->navigationLeft()->component('lit-crud-show-near-items')->bind([
             'next'         => $next,
             'previous'     => $previous,
             'route-prefix' => $this->config->routePrefix,

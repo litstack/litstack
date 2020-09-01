@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Page\Slots;
+namespace Ignite\Page\Slots;
 
-use Fjord\Support\VueProp;
-use Fjord\Vue\Component;
+use Ignite\Support\VueProp;
+use Ignite\Vue\Component;
 use Illuminate\Contracts\View\View;
 
 abstract class BaseSlot extends VueProp
@@ -25,15 +25,15 @@ abstract class BaseSlot extends VueProp
     /**
      * Get action compoent.
      *
-     * @return Fjord\Vue\Component
+     * @return Lit\Vue\Component
      */
     abstract protected function getActionComponent();
 
     /**
      * Add action.
      *
-     * @param  string              $action
-     * @return Fjord\Vue\Component
+     * @param  string            $action
+     * @return Lit\Vue\Component
      */
     public function action($action)
     {
@@ -70,7 +70,7 @@ abstract class BaseSlot extends VueProp
 
         $this->views[] = $view;
 
-        $this->component('fj-blade')->prop('view', $view);
+        $this->component('lit-blade')->prop('view', $view);
 
         return $view;
     }

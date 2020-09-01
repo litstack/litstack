@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
-use Fjord\Crud\BaseField;
+use Ignite\Crud\BaseField;
 
 class Boolean extends BaseField
 {
@@ -13,7 +13,7 @@ class Boolean extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-boolean';
+    protected $component = 'lit-field-boolean';
 
     /**
      * Cast field value.

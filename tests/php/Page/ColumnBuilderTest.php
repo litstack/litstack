@@ -1,17 +1,17 @@
 <?php
 
-namespace FjordTest\Page;
+namespace Tests\Page;
 
-use Fjord\Page\Table\Casts\MoneyColumn;
-use Fjord\Page\Table\Column;
-use Fjord\Page\Table\ColumnBuilder;
-use Fjord\Page\Table\Components\BladeColumnComponent;
-use Fjord\Page\Table\Components\ColumnComponent;
-use Fjord\Page\Table\Table;
-use FjordTest\BackendTestCase;
+use Ignite\Page\Table\Casts\MoneyColumn;
+use Ignite\Page\Table\Column;
+use Ignite\Page\Table\ColumnBuilder;
+use Ignite\Page\Table\Components\BladeColumnComponent;
+use Ignite\Page\Table\Components\ColumnComponent;
+use Ignite\Page\Table\Table;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Support\Facades\View;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class ColumnBuilderTest extends BackendTestCase
 {
@@ -76,7 +76,7 @@ class ColumnBuilderTest extends BackendTestCase
         $builder = new ColumnBuilder;
         $result = $builder->toggle('active');
         $this->assertInstanceOf(ColumnComponent::class, $result);
-        $this->assertEquals('fj-col-toggle', $result->getName());
+        $this->assertEquals('lit-col-toggle', $result->getName());
     }
 
     /** @test */
@@ -101,7 +101,7 @@ class ColumnBuilderTest extends BackendTestCase
         $builder = new ColumnBuilder;
         $result = $builder->image('Image');
         $this->assertInstanceOf(ColumnComponent::class, $result);
-        $this->assertEquals('fj-col-image', $result->getName());
+        $this->assertEquals('lit-col-image', $result->getName());
     }
 
     /** @test */
@@ -118,7 +118,7 @@ class ColumnBuilderTest extends BackendTestCase
         $builder = new ColumnBuilder;
         $result = $builder->relation('User');
         $this->assertInstanceOf(ColumnComponent::class, $result);
-        $this->assertEquals('fj-col-crud-relation', $result->getName());
+        $this->assertEquals('lit-col-crud-relation', $result->getName());
     }
 
     /** @test */

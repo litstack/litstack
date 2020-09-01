@@ -1,24 +1,14 @@
 <?php
 
-namespace Fjord\Auth;
+namespace Ignite\Auth;
 
-use Fjord\Auth\Controllers\AuthController;
-use Fjord\Auth\Controllers\ResetPasswordController;
-use Fjord\Support\Facades\FjordRoute;
+use Ignite\Auth\Controllers\AuthController;
+use Ignite\Auth\Controllers\ResetPasswordController;
+use Ignite\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
-    /**
-     * Boot application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        parent::boot();
-    }
-
     /**
      * Map routes.
      *
@@ -36,26 +26,29 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     protected function mapAuthRoutes()
     {
-        FjordRoute::public()
+        Route::public()
             ->get('login', AuthController::class.'@login')
             ->name('login');
 
-        FjordRoute::public()
+        Route::public()
             ->post('login', AuthController::class.'@authenticate')
             ->name('login.post');
 
-        FjordRoute::post('logout', AuthController::class.'@logout')
+        Route::post('logout', AuthController::class.'@logout')
             ->name('logout');
 
-        FjordRoute::post('logout/session', AuthController::class.'@logoutSession')
+        Route::post('logout/session', AuthController::class.'@logoutSession')
             ->name('logout.session');
 
-        FjordRoute::post('/fjord/register', AuthController::class.'@register')
+        Route::post('/lit/register', AuthController::class.'@register')
             ->name('register');
 
-        FjordRoute::public()
-            ->get('/fjord/password/reset/{token}', ResetPasswordController::class.'@showResetForm')->name('password.reset');
-        FjordRoute::public()
-            ->post('/fjord/password/reset', ResetPasswordController::class.'@reset')->name('password.request');
+        Route::public()
+            ->get('/lit/password/reset/{token}', ResetPasswordController::class.'@showResetForm')
+            ->name('password.reset');
+
+        Route::public()
+            ->post('/lit/password/reset', ResetPasswordController::class.'@reset')
+            ->name('password.request');
     }
 }

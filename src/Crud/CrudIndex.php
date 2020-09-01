@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Ignite\Crud;
 
 use Closure;
-use Fjord\Config\ConfigHandler;
-use Fjord\Crud\Actions\DestroyAction;
-use Fjord\Page\Page;
-use Fjord\Page\Table\Table;
+use Ignite\Config\ConfigHandler;
+use Ignite\Crud\Actions\DestroyAction;
+use Ignite\Page\Page;
+use Ignite\Page\Table\Table;
 
 class CrudIndex extends Page
 {
@@ -40,7 +40,7 @@ class CrudIndex extends Page
     /**
      * Resolve action component.
      *
-     * @param  \Fjord\Vue\Component $component
+     * @param  \Ignite\Vue\Component $component
      * @return void
      */
     public function resolveAction($component)
@@ -75,8 +75,8 @@ class CrudIndex extends Page
     /**
      * Create CrudIndex table.
      *
-     * @param  Closure                 $closure
-     * @return \Fjord\Page\Table\Table
+     * @param  Closure                  $closure
+     * @return \Ignite\Page\Table\Table
      */
     public function table(Closure $closure)
     {
@@ -89,7 +89,7 @@ class CrudIndex extends Page
         $table->singularName($this->config->names['singular']);
         $table->pluralName($this->config->names['plural']);
 
-        $table->action(ucfirst(__f('base.delete')), DestroyAction::class);
+        $table->action(ucfirst(__lit('base.delete')), DestroyAction::class);
 
         $closure($builder);
         $this->component($table->getComponent());

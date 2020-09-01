@@ -1,13 +1,14 @@
 <?php
 
-namespace Fjord\Crud\Controllers;
+namespace Ignite\Crud\Controllers;
 
-use Fjord\Crud\Models\FormField;
-use Fjord\Crud\Requests\CrudCreateRequest;
-use Fjord\Crud\Requests\CrudReadRequest;
-use Fjord\Crud\Requests\FormReadRequest;
-use Fjord\User\Models\FjordUser;
+use Ignite\Crud\Models\Form;
+use Ignite\Crud\Models\Form as FormModel;
+use Ignite\Crud\Requests\CrudCreateRequest;
+use Ignite\Crud\Requests\CrudReadRequest;
+use Ignite\Crud\Requests\FormReadRequest;
 use Illuminate\Database\Eloquent\Builder;
+use Lit\Models\User;
 
 abstract class FormController extends CrudBaseController
 {
@@ -16,18 +17,18 @@ abstract class FormController extends CrudBaseController
      *
      * @var string
      */
-    protected $model = FormField::class;
+    protected $model = FormModel::class;
 
     /**
-     * Authorize request for permission operation and authenticated fjord-user.
+     * Authorize request for permission operation and authenticated lit-user.
      * Operations: read, update.
      *
-     * @param \Fjord\User\Models\FjordUser $user
-     * @param string                       $operation
+     * @param \Lit\Models\User $user
+     * @param string           $operation
      *
      * @return bool
      */
-    public function authorize(FjordUser $user, string $operation): bool
+    public function authorize(User $user, string $operation): bool
     {
         return true;
     }
@@ -98,7 +99,7 @@ abstract class FormController extends CrudBaseController
             }
         }
 
-        $model = FormField::firstOrCreate([
+        $model = Form::firstOrCreate([
             'config_type' => get_class($this->config->getConfig()),
         ], [
             'form_name'  => $this->config->formName,
@@ -115,9 +116,9 @@ abstract class FormController extends CrudBaseController
     }
 
     /**
-     * Deny storing form FormField model.
+     * Deny storing form Form model.
      *
-     * @param \Fjord\Crud\Requests\CrudCreateRequest $request
+     * @param \Ignite\Crud\Requests\CrudCreateRequest $request
      *
      * @return mixed
      */
@@ -127,7 +128,7 @@ abstract class FormController extends CrudBaseController
     }
 
     /**
-     * Deny filling attributes to FormField Model.
+     * Deny filling attributes to Form Model.
      *
      * @return void
      */

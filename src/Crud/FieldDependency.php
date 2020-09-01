@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Ignite\Crud;
 
-use Fjord\Support\VueProp;
+use Ignite\Support\VueProp;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 

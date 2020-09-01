@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Chart\Engine;
+namespace Ignite\Chart\Engine;
 
-use Fjord\Chart\ChartSet;
+use Ignite\Chart\ChartSet;
 
 class NumberEngine extends ChartEngine
 {
@@ -11,7 +11,7 @@ class NumberEngine extends ChartEngine
      *
      * @var string
      */
-    protected $component = 'fj-chart-number';
+    protected $component = 'lit-chart-number';
 
     /**
      * Render chart by type.

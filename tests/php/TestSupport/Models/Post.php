@@ -1,8 +1,8 @@
 <?php
 
-namespace FjordTest\TestSupport\Models;
+namespace Tests\TestSupport\Models;
 
-use Fjord\Crud\Models\Traits\HasMedia;
+use Ignite\Crud\Models\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia as HasMediaContract;
 

@@ -1,1 +1,1 @@
-require('fjord/resources/js/mix.js');
+require('litstack/resources/js/mix.js');

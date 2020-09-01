@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Contracts\Page;
+namespace Ignite\Contracts\Page;
 
 interface Page
 {
@@ -15,8 +15,8 @@ interface Page
     /**
      * Adds Vue component to page.
      *
-     * @param  string               $name
-     * @return \Fjord\Vue\Component
+     * @param  string                $name
+     * @return \Ignite\Vue\Component
      */
     public function component($name);
 

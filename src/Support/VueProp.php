@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Support;
+namespace Ignite\Support;
 
-use Fjord\Contracts\Vue\Renderable;
-use Fjord\Vue\Traits\RenderableAsProp;
+use Ignite\Contracts\Vue\Renderable;
+use Ignite\Vue\Traits\RenderableAsProp;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 

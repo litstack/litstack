@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields\Relations;
+namespace Ignite\Crud\Fields\Relations;
 
-use Fjord\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Fields\Traits\HasBaseField;
 
 class MorphTo extends OneRelationField
 {

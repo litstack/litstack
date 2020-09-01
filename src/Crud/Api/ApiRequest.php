@@ -1,12 +1,11 @@
 <?php
 
-namespace Fjord\Crud\Api;
+namespace Ignite\Crud\Api;
 
 use Closure;
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Controllers\CrudBaseController;
-use Fjord\Crud\Field;
-use Fjord\Crud\Models\Traits\TrackEdits;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Controllers\CrudBaseController;
+use Ignite\Crud\Field;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
 use TypeError;
@@ -116,35 +115,7 @@ class ApiRequest
             abort(404, debug($e->getMessage()));
         }
 
-        $this->storeEdit();
-
         return $response;
-    }
-
-    /**
-     * Store model edit.
-     *
-     * @return void
-     */
-    protected function storeEdit()
-    {
-        if (in_array($this->method, ['load', 'index'])) {
-            return;
-        }
-
-        $model = $this->getModel();
-
-        if (! $model) {
-            return;
-        }
-
-        if (! in_array(TrackEdits::class, class_uses_recursive($model))) {
-            return;
-        }
-
-        $abstract = $this->hasChild() ? $this->childAbstract : $this->abstract;
-
-        $model->edited("{$abstract}:{$this->method}");
     }
 
     /**

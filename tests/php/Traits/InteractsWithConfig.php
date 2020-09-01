@@ -1,9 +1,9 @@
 <?php
 
-namespace FjordTest\Traits;
+namespace Tests\Traits;
 
-use Fjord\Config\ConfigHandler;
-use Fjord\Support\Facades\Config;
+use Ignite\Config\ConfigHandler;
+use Ignite\Support\Facades\Config;
 
 trait InteractsWithConfig
 {
@@ -33,7 +33,7 @@ trait InteractsWithConfig
      */
     public function overrideConfigLoaderSingleton()
     {
-        $this->app['fjord.app']->singleton('config.loader', function () {
+        $this->app['lit.app']->singleton('config.loader', function () {
             return new ConfigLoader(
                 function (string $key) {
                     return $this->configExists($key);

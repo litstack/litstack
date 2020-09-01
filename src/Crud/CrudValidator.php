@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Ignite\Crud;
 
 class CrudValidator
 {
@@ -22,7 +22,7 @@ class CrudValidator
         $rules = $form->getRules($type);
         $attributeNames = self::getValidationAttributeNames($form);
 
-        validator()->validate($attributes, $rules, __f('validation'), $attributeNames);
+        validator()->validate($attributes, $rules, __lit('validation'), $attributeNames);
     }
 
     /**

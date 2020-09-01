@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Vue;
+namespace Ignite\Vue;
 
 use Illuminate\Http\Request;
 

@@ -2,20 +2,20 @@
 
 namespace DummyNamespace;
 
-use Fjord\User\Models\FjordUser;
-use Fjord\Crud\Controllers\FormController;
+use Lit\Models\User;
+use Ignite\Crud\Controllers\FormController;
 
 class DummyClass extends FormController
 {
     /**
-     * Authorize request for authenticated fjord-user and permission operation.
+     * Authorize request for authenticated lit-user and permission operation.
      * Operations: read, update
      *
-     * @param FjordUser $user
+     * @param User $user
      * @param string $operation
      * @return boolean
      */
-    public function authorize(FjordUser $user, string $operation): bool
+    public function authorize(User $user, string $operation): bool
     {
         return true;
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Page;
+namespace Ignite\Page;
 
-use Fjord\Page\Actions\AttributeBag;
+use Ignite\Page\Actions\AttributeBag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

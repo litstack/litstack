@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Translation\Controllers;
+namespace Ignite\Translation\Controllers;
 
 use Illuminate\Http\Request;
 
@@ -14,11 +14,11 @@ class SetLocaleController
      */
     public function __invoke(Request $request)
     {
-        if (! in_array($request->locale, config('fjord.translatable.locales'))) {
+        if (! in_array($request->locale, config('lit.translatable.locales'))) {
             abort(404, "Locale [{$request->locale}] is not available.");
         }
 
-        fjord_user()->update([
+        lit_user()->update([
             'locale' => $request->locale,
         ]);
     }

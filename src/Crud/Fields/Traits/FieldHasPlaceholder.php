@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Fields\Traits;
+namespace Ignite\Crud\Fields\Traits;
 
 trait FieldHasPlaceholder
 {

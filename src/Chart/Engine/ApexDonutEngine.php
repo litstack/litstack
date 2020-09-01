@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Chart\Engine;
+namespace Ignite\Chart\Engine;
 
-use Fjord\Chart\ChartSet;
+use Ignite\Chart\ChartSet;
 
 class ApexDonutEngine extends ChartEngine
 {
@@ -11,7 +11,7 @@ class ApexDonutEngine extends ChartEngine
      *
      * @var string
      */
-    protected $component = 'fj-chart-apex-donut';
+    protected $component = 'lit-chart-apex-donut';
 
     /**
      * Render chart by type.

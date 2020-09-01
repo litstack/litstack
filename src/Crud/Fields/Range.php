@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
-use Fjord\Crud\BaseField;
+use Ignite\Crud\BaseField;
 
 class Range extends BaseField
 {
@@ -13,7 +13,7 @@ class Range extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-range';
+    protected $component = 'lit-field-range';
 
     /**
      * Required field attributes.

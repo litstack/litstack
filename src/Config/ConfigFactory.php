@@ -1,13 +1,13 @@
 <?php
 
-namespace Fjord\Config;
+namespace Ignite\Config;
 
 class ConfigFactory
 {
     /**
      * ConfigHandler instance.
      *
-     * @var \Fjord\Config\ConfigHandler
+     * @var \Ignite\Config\ConfigHandler
      */
     protected $handler;
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace FjordApp\Config\Crud;
+namespace Lit\Config\Crud;
 
-use Fjord\Crud\CrudShow;
-use Fjord\Crud\CrudIndex;
-use Fjord\Crud\Config\CrudConfig;
+use Ignite\Crud\CrudShow;
+use Ignite\Crud\CrudIndex;
+use Ignite\Crud\Config\CrudConfig;
 use Illuminate\Support\Str;
 
 use App\Models\DummyClassname;
-use FjordApp\Controllers\Crud\DummyClassnameController;
+use Lit\Http\Controllers\Crud\DummyClassnameController;
 
 class DummyClassnameConfig extends CrudConfig
 {
@@ -34,8 +34,8 @@ class DummyClassnameConfig extends CrudConfig
     public function names()
     {
         return [
-            'singular' => ucfirst(__f('models.DummyTablename')),
-            'plural' => ucfirst(__f('models.DummyTablename')),
+            'singular' => ucfirst(__lit('models.DummyTablename')),
+            'plural' => ucfirst(__lit('models.DummyTablename')),
         ];
     }
 
@@ -52,7 +52,7 @@ class DummyClassnameConfig extends CrudConfig
     /**
      * Build index page.
      *
-     * @param Fjord\Crud\CrudIndex $page
+     * @param \Ignite\Crud\CrudIndex $page
      * @return void
      */
     public function index(CrudIndex $page)
@@ -68,8 +68,8 @@ class DummyClassnameConfig extends CrudConfig
             ->sortByDefault('id.desc')
             ->search('title')
             ->sortBy([
-                'id.desc' => __f('fj.sort_new_to_old'),
-                'id.asc' => __f('fj.sort_old_to_new'),
+                'id.desc' => __lit('lit.sort_new_to_old'),
+                'id.asc' => __lit('lit.sort_old_to_new'),
             ])
             ->width(12);
     }
@@ -77,7 +77,7 @@ class DummyClassnameConfig extends CrudConfig
     /**
      * Setup show page.
      *
-     * @param \Fjord\Crud\CrudShow $page
+     * @param \Ignite\Crud\CrudShow $page
      * @return void
      */
     public function show(CrudShow $page)

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Chart\Contracts;
+namespace Ignite\Chart\Contracts;
 
-use Fjord\Chart\ChartSet;
+use Ignite\Chart\ChartSet;
 
 interface Engine
 {

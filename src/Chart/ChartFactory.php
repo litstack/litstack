@@ -1,23 +1,23 @@
 <?php
 
-namespace Fjord\Chart;
+namespace Ignite\Chart;
 
-use Fjord\Chart\Engine\ChartEngineResolver;
-use Fjord\Config\ConfigHandler;
+use Ignite\Chart\Engine\ChartEngineResolver;
+use Ignite\Config\ConfigHandler;
 
 class ChartFactory
 {
     /**
      * Chart engine resolver instance.
      *
-     * @var \Fjord\Chart\Engine\ChartEngineResolver
+     * @var \Ignite\Chart\Engine\ChartEngineResolver
      */
     protected $resolver;
 
     /**
      * Create new ConfigFactory instance..
      *
-     * @param \Fjord\Chart\Engine\ChartEngineResolver $resolver
+     * @param \Ignite\Chart\Engine\ChartEngineResolver $resolver
      */
     public function __construct(ChartEngineResolver $resolver)
     {
@@ -51,7 +51,7 @@ class ChartFactory
     /**
      * Get engine resolver.
      *
-     * @return \Fjord\Chart\Engine\ChartEngineResolver
+     * @return \Ignite\Chart\Engine\ChartEngineResolver
      */
     public function getResolver()
     {

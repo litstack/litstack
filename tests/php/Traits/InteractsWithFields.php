@@ -1,6 +1,6 @@
 <?php
 
-namespace FjordTest\Traits;
+namespace Tests\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 

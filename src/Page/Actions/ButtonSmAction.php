@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Page\Actions;
+namespace Ignite\Page\Actions;
 
-use Fjord\Vue\Components\ButtonComponent;
+use Ignite\Vue\Components\ButtonComponent;
 
 class ButtonSmAction extends BaseAction
 {

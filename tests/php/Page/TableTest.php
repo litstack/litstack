@@ -1,15 +1,15 @@
 <?php
 
-namespace FjordTest\Page;
+namespace Tests\Page;
 
-use Fjord\Exceptions\Traceable\MissingAttributeException;
-use Fjord\Page\Table\ColumnBuilder;
-use Fjord\Page\Table\Table;
-use Fjord\Vue\Component;
-use FjordTest\BackendTestCase;
+use Ignite\Exceptions\Traceable\MissingAttributeException;
+use Ignite\Page\Table\ColumnBuilder;
+use Ignite\Page\Table\Table;
+use Ignite\Vue\Component;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class TableTest extends BackendTestCase
 {

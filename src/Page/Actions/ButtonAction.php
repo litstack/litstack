@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Page\Actions;
+namespace Ignite\Page\Actions;
 
-use Fjord\Support\Bootstrap;
-use Fjord\Vue\Components\ButtonComponent;
+use Ignite\Support\Bootstrap;
+use Ignite\Vue\Components\ButtonComponent;
 
 class ButtonAction extends BaseAction
 {

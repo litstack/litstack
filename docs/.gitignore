@@ -1,5 +1,0 @@
-# Dependency directories
-node_modules/
-
-# vuepress build output
-.vuepress/dist

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Fields\Route;
+namespace Ignite\Crud\Fields\Route;
 
 use Closure;
 use Illuminate\Support\Arr;
@@ -158,6 +158,6 @@ class RouteCollection extends Collection
      */
     public static function resolve($collection)
     {
-        return fjord_app('crud.route.resolver')->resolve($collection);
+        return lit_app('crud.route.resolver')->resolve($collection);
     }
 }

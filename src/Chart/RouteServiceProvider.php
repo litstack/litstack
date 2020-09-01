@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Chart;
+namespace Ignite\Chart;
 
-use Fjord\Support\Facades\FjordRoute;
+use Ignite\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
@@ -14,6 +14,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     public function map()
     {
-        FjordRoute::post('/chart-data', ChartController::class);
+        Route::post('/chart-data', ChartController::class);
     }
 }

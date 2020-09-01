@@ -1,10 +1,10 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\Casts\Route;
-use FjordTest\BackendTestCase;
+use Ignite\Crud\Casts\Route;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class RouteCastTest extends BackendTestCase
 {
@@ -15,7 +15,7 @@ class RouteCastTest extends BackendTestCase
         $collection = m::mock('route_collection');
         $resolver->shouldReceive('resolve')->withArgs(['main'])->andReturn($collection);
         $collection->shouldReceive('findRoute')->withArgs(['test'])->andReturn('result');
-        app()->bind('fjord.crud.route.resolver', fn () => $resolver);
+        app()->bind('lit.crud.route.resolver', fn () => $resolver);
         $cast = new Route;
         $result = $cast->get(null, '', 'main.test', []);
         $this->assertEquals('result', $result);

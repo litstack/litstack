@@ -1,8 +1,8 @@
 <?php
 
-namespace FjordTest\Traits;
+namespace Tests\Traits;
 
-use Fjord\Fjord\Fjord;
+use Ignite\Lit\Lit;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application;
 use Mockery as m;
@@ -12,10 +12,10 @@ trait InteractsWithComponents
     public function setupApplication()
     {
         $this->app = new Application;
-        $this->app['fjord'] = m::mock(Fjord::class);
-        $components = m::mock(Fjord::class);
+        $this->app['lit'] = m::mock(Lit::class);
+        $components = m::mock(Lit::class);
         $components->shouldReceive('isRegistered')->andReturn(false);
-        $this->app['fjord']->shouldReceive('get')->andReturn($components);
+        $this->app['lit']->shouldReceive('get')->andReturn($components);
         Container::setInstance($this->app);
     }
 }

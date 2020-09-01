@@ -1,15 +1,15 @@
 <?php
 
-namespace Fjord\Application;
+namespace Ignite\Application;
 
 use Illuminate\View\View;
 
 class Kernel
 {
     /**
-     * Fjord application instance.
+     * Lit application instance.
      *
-     * @var Fjord\Application\Application
+     * @var Lit\Application\Application
      */
     protected $app;
 
@@ -20,24 +20,20 @@ class Kernel
      * @var array
      */
     protected $bootstrappers = [
-        Bootstrap\RegisterSingletons::class,
         Bootstrap\BootstrapKernel::class,
-        Bootstrap\DiscoverPackages::class,
-        Bootstrap\RegisterConfigFactories::class,
-        Bootstrap\RegisterPackages::class,
     ];
 
     /**
-     * Fjord application service providers.
+     * Lit application service providers.
      *
      * @var array
      */
     public $providers = [];
 
     /**
-     * Create a new Fjord kernel instance.
+     * Create a new Lit kernel instance.
      *
-     * @param \Fjord\Application\Application $app
+     * @param \Ignite\Application\Application $app
      *
      * @return void
      */
@@ -59,7 +55,7 @@ class Kernel
     }
 
     /**
-     * Handle fjord::app view before it gets executed.
+     * Handle litstack::app view before it gets executed.
      *
      * @return void
      */

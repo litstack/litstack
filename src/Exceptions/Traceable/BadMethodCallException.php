@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Exceptions\Traceable;
+namespace Ignite\Exceptions\Traceable;
 
 use BadMethodCallException as BaseBadMethodCallException;
-use Fjord\Contracts\Exceptions\Traceable;
-use Fjord\Support\TraceableException;
+use Ignite\Contracts\Exceptions\Traceable;
+use Ignite\Support\TraceableException;
 
 class BadMethodCallException extends BaseBadMethodCallException implements Traceable
 {

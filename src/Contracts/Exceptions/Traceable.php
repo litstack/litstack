@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Contracts\Exceptions;
+namespace Ignite\Contracts\Exceptions;
 
 use Exception;
 

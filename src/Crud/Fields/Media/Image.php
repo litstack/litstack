@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Crud\Fields\Media;
+namespace Ignite\Crud\Fields\Media;
 
-use Fjord\Crud\Fields\Traits\HasBaseField;
-use Fjord\Crud\Fields\Traits\TranslatableField;
+use Ignite\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Fields\Traits\TranslatableField;
 
 class Image extends MediaField
 {

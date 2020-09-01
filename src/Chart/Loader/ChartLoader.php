@@ -1,14 +1,14 @@
 <?php
 
-namespace Fjord\Chart\Loader;
+namespace Ignite\Chart\Loader;
 
 use BadMethodCallException;
 use Carbon\CarbonInterface;
 use Closure;
 use Exception;
-use Fjord\Chart\ChartRequest;
-use Fjord\Chart\Contracts\Engine;
-use Fjord\Config\ConfigHandler;
+use Ignite\Chart\ChartRequest;
+use Ignite\Chart\Contracts\Engine;
+use Ignite\Config\ConfigHandler;
 use Illuminate\Support\Str;
 
 abstract class ChartLoader
@@ -35,8 +35,8 @@ abstract class ChartLoader
     /**
      * Create new DonutLoader instance.
      *
-     * @param \Fjord\Config\ConfigHandler   $config
-     * @param \Fjord\Chart\Contracts\Engine $engine
+     * @param \Ignite\Config\ConfigHandler   $config
+     * @param \Ignite\Chart\Contracts\Engine $engine
      */
     public function __construct(ConfigHandler $config, Engine $engine)
     {

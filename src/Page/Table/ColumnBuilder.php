@@ -1,17 +1,17 @@
 <?php
 
-namespace Fjord\Page\Table;
+namespace Ignite\Page\Table;
 
-use Fjord\Contracts\Page\Column as ColumnContract;
-use Fjord\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
-use Fjord\Crud\Fields\Relations\LaravelRelationField;
-use Fjord\Page\Table\Casts\MoneyColumn;
-use Fjord\Page\Table\Components\BladeColumnComponent;
-use Fjord\Page\Table\Components\ColumnComponent;
-use Fjord\Page\Table\Components\ImageComponent;
-use Fjord\Page\Table\Components\RelationComponent;
-use Fjord\Page\Table\Components\ToggleComponent;
-use Fjord\Support\VueProp;
+use Ignite\Contracts\Page\Column as ColumnContract;
+use Ignite\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
+use Ignite\Crud\Fields\Relations\LaravelRelationField;
+use Ignite\Page\Table\Casts\MoneyColumn;
+use Ignite\Page\Table\Components\BladeColumnComponent;
+use Ignite\Page\Table\Components\ColumnComponent;
+use Ignite\Page\Table\Components\ImageComponent;
+use Ignite\Page\Table\Components\RelationComponent;
+use Ignite\Page\Table\Components\ToggleComponent;
+use Ignite\Support\VueProp;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\View as ViewFactory;
 
@@ -80,7 +80,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
         }
 
         return $this->col(ucfirst($column))
-            ->class('fj-col-money')
+            ->class('lit-col-money')
             ->value("{{$column}}")
             ->sortBy($column)
             ->right();
@@ -109,9 +109,24 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
             $view = ViewFactory::make($view);
         }
 
-        $this->component(new BladeColumnComponent('fj-blade'))->prop('view', $view);
+        $this->component(new BladeColumnComponent('lit-blade'))->prop('view', $view);
 
         return $view;
+    }
+
+    /**
+     * Add livewire component column.
+     *
+     * @param  string $component
+     * @param  array  $data
+     * @return View
+     */
+    public function livewire($component, $data = [])
+    {
+        return $this->view('litstack::partials.livewire', [
+            'component' => $component,
+            'data'      => $data,
+        ]);
     }
 
     /**
@@ -122,7 +137,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      */
     public function toggle($attribute)
     {
-        return $this->component(new ToggleComponent('fj-col-toggle'))
+        return $this->component(new ToggleComponent('lit-col-toggle'))
             ->prop('link', false)
             ->prop('local_key', $attribute);
     }
@@ -135,7 +150,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      */
     public function image($label = '')
     {
-        return $this->component(new ImageComponent('fj-col-image'))->label($label);
+        return $this->component(new ImageComponent('lit-col-image'))->label($label);
     }
 
     /**
@@ -157,7 +172,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      */
     public function relation($label = '')
     {
-        return $this->component(new RelationComponent('fj-col-crud-relation'))->prop('label', $label);
+        return $this->component(new RelationComponent('lit-col-crud-relation'))->prop('label', $label);
     }
 
     /**

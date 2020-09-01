@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Chart\Loader\Concerns;
+namespace Ignite\Chart\Loader\Concerns;
 
 trait HasGoal
 {

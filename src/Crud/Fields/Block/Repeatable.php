@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Crud\Fields\Block;
+namespace Ignite\Crud\Fields\Block;
 
 use Closure;
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Models\FormBlock;
-use Fjord\Page\Table\ColumnBuilder;
-use Fjord\Support\VueProp;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Models\Repeatable as RepeatableModel;
+use Ignite\Page\Table\ColumnBuilder;
+use Ignite\Support\VueProp;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
@@ -71,7 +71,7 @@ class Repeatable extends VueProp
      */
     public function form(Closure $closure)
     {
-        $form = new BlockForm(FormBlock::class);
+        $form = new BlockForm(RepeatableModel::class);
 
         $form->setRoutePrefix($this->getRoutePrefix());
 

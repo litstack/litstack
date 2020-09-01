@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Permissions\Controllers;
+namespace Ignite\Permissions\Controllers;
 
-use Fjord\Page\Table\ColumnBuilder;
-use Fjord\Page\Table\Table;
-use Fjord\Permissions\Models\RolePermission;
-use Fjord\Permissions\Requests\RolePermission\ReadRolePermissionRequest;
-use Fjord\Support\IndexTable;
+use Ignite\Page\Table\ColumnBuilder;
+use Ignite\Page\Table\Table;
+use Ignite\Permissions\Models\RolePermission;
+use Ignite\Permissions\Requests\RolePermission\ReadRolePermissionRequest;
+use Ignite\Support\IndexTable;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
@@ -31,13 +31,13 @@ class PermissionController extends Controller
     {
         $config = [
             'sortBy' => [
-                'id.desc' => __f('fj.sort_new_to_old'),
-                'id.asc'  => __f('fj.sort_old_to_new'),
+                'id.desc' => __lit('lit.sort_new_to_old'),
+                'id.asc'  => __lit('lit.sort_old_to_new'),
             ],
             'sortByDefault' => 'id.desc',
         ];
 
-        return view('fjord::app')->withComponent('fj-permissions')
+        return view('litstack::app')->withComponent('lit-permissions')
             ->withTitle('Permissions')
             ->withProps([
                 'cols'             => $this->getCols(),
@@ -71,18 +71,18 @@ class PermissionController extends Controller
     {
         $index = new ColumnBuilder;
 
-        $index->component('fj-index-group-name')
-            ->label(ucfirst(__f('base.group')))
+        $index->component('lit-index-group-name')
+            ->label(ucfirst(__lit('base.group')))
             ->sortBy('permission_group');
 
         foreach ($this->getUniqueOperations() as $operation) {
-            $index->component('fj-permissions-toggle')
+            $index->component('lit-permissions-toggle')
                 ->prop('operation', $operation)
-                ->label(ucfirst(__f("base.{$operation}")));
+                ->label(ucfirst(__lit("base.{$operation}")));
         }
 
-        $index->component('fj-permissions-toggle-all')
-            ->label(ucfirst(__f('fj.toggle_all')))
+        $index->component('lit-permissions-toggle-all')
+            ->label(ucfirst(__lit('lit.toggle_all')))
             ->small();
 
         return $index;
@@ -100,7 +100,7 @@ class PermissionController extends Controller
             '*',
             DB::raw("SUBSTRING_INDEX(name, ' ', 1) AS operation"),
             DB::raw("SUBSTRING_INDEX(name, ' ', -1) AS permission_group"),
-        ])->whereRaw("SUBSTRING_INDEX(name, ' ', -1) != 'fjord-role-permissions'");
+        ])->whereRaw("SUBSTRING_INDEX(name, ' ', -1) != 'lit-role-permissions'");
 
         $data = IndexTable::query($query)
             ->request($request)
@@ -112,7 +112,7 @@ class PermissionController extends Controller
 
         $data['count'] = $data['unique_items']->count();
 
-        // Converting Object to array for component fj-index-table.
+        // Converting Object to array for component lit-index-table.
         $data['unique_items'] = array_values($data['unique_items']->toArray());
 
         return $data;

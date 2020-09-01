@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Crud\Fields\Relations;
+namespace Ignite\Crud\Fields\Relations;
 
 use Closure;
-use Fjord\Crud\RelationField;
-use Fjord\Page\Table\ColumnBuilder;
-use Fjord\Support\Facades\Config;
-use Fjord\Support\Facades\Crud;
+use Ignite\Crud\RelationField;
+use Ignite\Page\Table\ColumnBuilder;
+use Ignite\Support\Facades\Config;
+use Ignite\Support\Facades\Crud;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
@@ -394,7 +394,7 @@ class LaravelRelationField extends RelationField
      */
     public function getQuery()
     {
-        return $this->query->withCasts($this->casts);
+        return $this->modifyQuery($this->query);
     }
 
     /**

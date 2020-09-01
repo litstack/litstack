@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Chart\Engine;
+namespace Ignite\Chart\Engine;
 
 use Closure;
 use InvalidArgumentException;

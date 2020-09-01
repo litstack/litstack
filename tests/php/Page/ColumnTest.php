@@ -1,9 +1,9 @@
 <?php
 
-namespace FjordTest\Page;
+namespace Tests\Page;
 
-use Fjord\Exceptions\MissingAttributeException;
-use Fjord\Page\Table\Column;
+use Ignite\Exceptions\MissingAttributeException;
+use Ignite\Page\Table\Column;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 

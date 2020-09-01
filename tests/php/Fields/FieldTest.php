@@ -1,15 +1,15 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Field;
-use Fjord\Crud\FieldDependency;
-use Fjord\Exceptions\Traceable\MissingAttributeException;
-use Fjord\User\Models\FjordUser;
-use FjordTest\BackendTestCase;
-use FjordTest\Traits\InteractsWithFields;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Field;
+use Ignite\Crud\FieldDependency;
+use Ignite\Exceptions\Traceable\MissingAttributeException;
 use Illuminate\Support\Facades\Auth;
+use Lit\Models\User;
+use Tests\BackendTestCase;
+use Tests\Traits\InteractsWithFields;
 
 class FieldTest extends BackendTestCase
 {
@@ -119,19 +119,19 @@ class FieldTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_authorized_passes_logged_in_fjord_user_to_closure()
+    public function test_authorized_passes_logged_in_lit_user_to_closure()
     {
         $field = $this->getField(DummyField::class);
 
-        $fjordUser = factory(FjordUser::class)->create([
-            'username' => 'dummy_fjord_user',
+        $User = factory(User::class)->create([
+            'username' => 'dummy_lit_user',
         ]);
 
-        Auth::guard('fjord')->login($fjordUser);
+        Auth::guard('lit')->login($User);
 
-        $field->authorize(function ($user) use ($fjordUser) {
-            $this->assertInstanceOf(FjordUser::class, $user);
-            $this->assertEquals($user, $fjordUser);
+        $field->authorize(function ($user) use ($User) {
+            $this->assertInstanceOf(User::class, $user);
+            $this->assertEquals($user, $User);
         });
         $field->authorized();
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
-use Fjord\Crud\BaseField;
+use Ignite\Crud\BaseField;
 
 class Select extends BaseField
 {
@@ -13,7 +13,7 @@ class Select extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-select';
+    protected $component = 'lit-field-select';
 
     /**
      * Required attributes.

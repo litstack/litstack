@@ -1,14 +1,14 @@
 <?php
 
-namespace FjordTest\Crud;
+namespace Tests\Crud;
 
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Field;
-use Fjord\Exceptions\Traceable\BadMethodCallException;
-use Fjord\Support\Facades\Fjord;
-use FjordTest\BackendTestCase;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Field;
+use Ignite\Exceptions\Traceable\BadMethodCallException;
+use Ignite\Support\Facades\Lit;
 use Illuminate\Database\Eloquent\Model;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class BaseFormTest extends BackendTestCase
 {
@@ -81,7 +81,7 @@ class BaseFormTest extends BackendTestCase
     {
         $this->form->setRoutePrefix('dummy_prefix');
         $this->assertEquals('dummy_prefix', $this->form->getRoutePrefix());
-        $this->form->setRoutePrefix(Fjord::url('dummy_prefix'));
+        $this->form->setRoutePrefix(Lit::url('dummy_prefix'));
         $this->assertEquals('dummy_prefix', $this->form->getRoutePrefix());
     }
 

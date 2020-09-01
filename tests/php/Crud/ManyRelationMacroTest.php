@@ -1,13 +1,13 @@
 <?php
 
-namespace FjordTest\Crud;
+namespace Tests\Crud;
 
-use Fjord\Crud\Models\FormRelation;
-use FjordTest\BackendTestCase;
-use FjordTest\TestSupport\Models\Post;
+use Ignite\Crud\Models\Relation as RelationModel;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Mockery as m;
+use Tests\BackendTestCase;
+use Tests\TestSupport\Models\Post;
 
 class ManyRelationMacroTest extends BackendTestCase
 {
@@ -15,7 +15,7 @@ class ManyRelationMacroTest extends BackendTestCase
     {
         parent::setUp();
 
-        $this->installFjord();
+        $this->installLit();
         $this->migrate();
 
         // Setting up form relation.
@@ -65,7 +65,7 @@ class ManyRelationMacroTest extends BackendTestCase
     public function it_returns_collection_instance_if_one_relation_exists()
     {
         $model = $this->getModel('many_relation');
-        factory(FormRelation::class, 1)->create([
+        factory(RelationModel::class, 1)->create([
             'name' => 'many_relation',
             'from' => $this->model,
             'to'   => $this->related1,
@@ -85,12 +85,12 @@ class ManyRelationMacroTest extends BackendTestCase
 
     protected function createFormRelation($name, $count = 1)
     {
-        factory(FormRelation::class, $count)->create([
+        factory(RelationModel::class, $count)->create([
             'name' => $name,
             'from' => $this->model,
             'to'   => $this->related1,
         ]);
-        factory(FormRelation::class, $count)->create([
+        factory(RelationModel::class, $count)->create([
             'name' => $name,
             'from' => $this->model,
             'to'   => $this->related2,

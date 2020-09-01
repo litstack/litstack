@@ -1,9 +1,9 @@
 <?php
 
-namespace FjordTest\Page;
+namespace Tests\Page;
 
-use Fjord\Page\Table\Components\BladeColumnComponent;
-use Fjord\Page\Table\Components\ColumnComponent;
+use Ignite\Page\Table\Components\BladeColumnComponent;
+use Ignite\Page\Table\Components\ColumnComponent;
 use Illuminate\Contracts\View\View;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
@@ -26,7 +26,7 @@ class BladeColumnComponentTest extends TestCase
     /** @test */
     public function it_has_correct_name()
     {
-        $this->assertEquals('fj-blade', $this->component->getName());
+        $this->assertEquals('lit-blade', $this->component->getName());
     }
 
     /** @test */

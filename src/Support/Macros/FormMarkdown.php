@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Support\Macros;
+namespace Ignite\Support\Macros;
 
-use Fjord\Crud\BaseForm;
-use Fjord\Support\Facades\FjordApp;
+use Ignite\Crud\BaseForm;
+use Ignite\Support\Facades\Lit;
 use ParsedownExtra;
 
 class FormMarkdown
@@ -16,11 +16,11 @@ class FormMarkdown
     public function __construct()
     {
         BaseForm::macro('markdown', function (string $markup) {
-            FjordApp::script(fjord()->url('js/prism.js'));
+            Lit::script(lit()->url('js/prism.js'));
 
             $parsed = (new ParsedownExtra)->text($markup);
 
-            return $this->component('fj-field-markdown')->prop('markdown', $parsed);
+            return $this->component('lit-field-markdown')->prop('markdown', $parsed);
         });
     }
 }

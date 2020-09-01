@@ -1,13 +1,13 @@
 <?php
 
-namespace Fjord\Crud\Repositories;
+namespace Ignite\Crud\Repositories;
 
-use Fjord\Config\ConfigHandler;
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Controllers\CrudBaseController;
-use Fjord\Crud\Fields\Media\MediaField;
-use Fjord\Crud\Requests\CrudReadRequest;
-use Fjord\Crud\Requests\CrudUpdateRequest;
+use Ignite\Config\ConfigHandler;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Controllers\CrudBaseController;
+use Ignite\Crud\Fields\Media\MediaField;
+use Ignite\Crud\Requests\CrudReadRequest;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 
 class MediaRepository extends BaseFieldRepository
 {
@@ -72,7 +72,7 @@ class MediaRepository extends BaseFieldRepository
     public function destroy(CrudUpdateRequest $request, $model)
     {
         if ($model->media()->findOrFail($request->media_id)->delete()) {
-            return response()->success(__f('fj.image_deleted'));
+            return response()->success(__lit('lit.image_deleted'));
         }
     }
 
@@ -106,7 +106,7 @@ class MediaRepository extends BaseFieldRepository
     {
         $request->validate([
             'media' => 'required|max:'.$this->field->maxFileSize * 1000,
-        ], __f('validation'), [
+        ], __lit('validation'), [
             'media' => $this->field->title,
         ]);
 

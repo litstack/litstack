@@ -1,22 +1,16 @@
 <?php
 
-namespace Fjord\Permissions;
+namespace Ignite\Permissions;
 
-use Fjord\Permissions\Controllers\PermissionController;
-use Fjord\Permissions\Controllers\RoleController;
-use Fjord\Permissions\Controllers\RolePermissionController;
-use Fjord\Support\Facades\Package;
+use Ignite\Permissions\Controllers\PermissionController;
+use Ignite\Permissions\Controllers\RoleController;
+use Ignite\Permissions\Controllers\RolePermissionController;
+use Ignite\Support\Facades\Nav;
+use Ignite\Support\Facades\Route as LitstackRoute;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
-    /**
-     * Package instance.
-     *
-     * @var mixed
-     */
-    protected $package;
-
     /**
      * Boot application services.
      *
@@ -24,8 +18,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     public function boot()
     {
-        $this->package = Package::get('aw-studio/fjord');
-
         parent::boot();
 
         $provider = $this;
@@ -52,12 +44,12 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     protected function addNavPresets()
     {
-        $this->package->addNavPreset('permissions', [
-            'link'      => route('fjord.aw-studio.fjord.permissions'),
-            'title'     => fn () => __f('fj.permissions'),
+        Nav::preset('permissions', [
+            'link'      => route('lit.permissions'),
+            'title'     => fn () => __lit('lit.permissions'),
             'icon'      => fa('unlock-alt'),
             'authorize' => function ($user) {
-                return $user->can('read fjord-role-permissions');
+                return $user->can('read lit-role-permissions');
             },
         ]);
     }
@@ -69,32 +61,25 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     protected function mapRolePermissionRoutes()
     {
-        $route = $this->package->route()
-            ->get('/permissions', PermissionController::class.'@index')
+        LitstackRoute::get('/permissions', PermissionController::class.'@index')
             ->name('permissions');
 
-        $this->package->route()
-            ->post('/fjord-user/{user_id}/role/{role_id}', RoleController::class.'@assignRoleToUser')
+        LitstackRoute::post('/lit-user/{user_id}/role/{role_id}', RoleController::class.'@assignRoleToUser')
             ->name('role.assign');
 
-        $this->package->route()
-            ->delete('/fjord-user/{user_id}/role/{role_id}', RoleController::class.'@removeRoleFromUser')
+        LitstackRoute::delete('/lit-user/{user_id}/role/{role_id}', RoleController::class.'@removeRoleFromUser')
             ->name('role.remove');
 
-        $this->package->route()
-            ->post('/role', RoleController::class.'@store')
+        LitstackRoute::post('/role', RoleController::class.'@store')
             ->name('role.store');
 
-        $this->package->route()
-            ->delete('/role/{id}', RoleController::class.'@destroy')
+        LitstackRoute::delete('/role/{id}', RoleController::class.'@destroy')
             ->name('role.destroy');
 
-        $this->package->route()
-            ->post('permissions/index', PermissionController::class.'@fetchIndex')
+        LitstackRoute::post('permissions/index', PermissionController::class.'@fetchIndex')
             ->name('permissions.index');
 
-        $this->package->route()
-            ->put('/role_permissions', RolePermissionController::class.'@update')
+        LitstackRoute::put('/role_permissions', RolePermissionController::class.'@update')
             ->name('role_permissions.update');
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
-use Fjord\Crud\BaseField;
+use Ignite\Crud\BaseField;
 
 class Input extends BaseField
 {
@@ -15,7 +15,7 @@ class Input extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-input';
+    protected $component = 'lit-field-input';
 
     /**
      * Required field attributes.

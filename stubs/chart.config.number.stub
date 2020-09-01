@@ -2,9 +2,9 @@
 
 namespace DummyNamespace;
 
-use Fjord\Chart\Chart;
+use Ignite\Chart\Chart;
 use Illuminate\Support\Collection; 
-use Fjord\Chart\Config\NumberChartConfig;
+use Ignite\Chart\Config\NumberChartConfig;
 
 class DummyClass extends NumberChartConfig
 {

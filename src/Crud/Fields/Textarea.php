@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
-use Fjord\Crud\BaseField;
+use Ignite\Crud\BaseField;
 
 class Textarea extends BaseField
 {
@@ -15,7 +15,7 @@ class Textarea extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-textarea';
+    protected $component = 'lit-field-textarea';
 
     /**
      * Required field attributes.

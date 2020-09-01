@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Crud\Repositories;
+namespace Ignite\Crud\Repositories;
 
-use Fjord\Crud\CrudValidator;
-use Fjord\Crud\Models\FjordFormModel;
-use Fjord\Crud\Requests\CrudCreateRequest;
-use Fjord\Crud\Requests\CrudReadRequest;
-use Fjord\Crud\Requests\CrudUpdateRequest;
+use Ignite\Crud\CrudValidator;
+use Ignite\Crud\Models\LitFormModel;
+use Ignite\Crud\Requests\CrudCreateRequest;
+use Ignite\Crud\Requests\CrudReadRequest;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 
 class DefaultRepository extends BaseFieldRepository
 {
@@ -84,7 +84,7 @@ class DefaultRepository extends BaseFieldRepository
 
         $model->save();
 
-        if ($model instanceof FjordFormModel) {
+        if ($model instanceof LitFormModel) {
             $model->update($attributes);
         }
 

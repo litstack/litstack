@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Translation;
+namespace Ignite\Translation;
 
-use Fjord\Application\Application;
+use Ignite\Application\Application;
 use Illuminate\Support\Facades\Lang;
 
 class Translator
@@ -22,7 +22,7 @@ class Translator
     protected $namespaces = [];
 
     /**
-     * Get translation for Fjord application.
+     * Get translation for Lit application.
      *
      * @param  string      $key
      * @param  array       $replace
@@ -45,14 +45,15 @@ class Translator
     }
 
     /**
-     * Get choice translation for Fjord application.
+     * Get choice translation for Lit application.
      *
      * @param  string               $key
      * @param  \Countable|int|array $number
      * @param  array                $replace
+     * @param  string|null          $locale
      * @return string
      */
-    public function choice(string $key = null, $number, $replace = [])
+    public function choice(string $key = null, $number, $replace, $locale = null)
     {
         $langKey = $this->getLangKey($key);
 
@@ -60,7 +61,11 @@ class Translator
             return $key;
         }
 
-        return trans_choice($langKey, $number, $replace, $this->getLocale());
+        if (is_null($locale)) {
+            $locale = $this->getLocale();
+        }
+
+        return trans_choice($langKey, $number, $replace, $locale);
     }
 
     /**
@@ -89,25 +94,25 @@ class Translator
     }
 
     /**
-     * Get locale for Fjord application.
+     * Get locale for Lit application.
      *
      * @return string
      */
     public function getLocale()
     {
-        $fallback = config('fjord.translatable.fallback_locale');
+        $fallback = config('lit.translatable.fallback_locale');
 
         // Not translatable
-        if (! config('fjord.translatable.translatable')) {
+        if (! config('lit.translatable.translatable')) {
             return $fallback;
         }
 
-        $locale = fjord_user()
-            ? fjord_user()->locale
+        $locale = lit_user()
+            ? lit_user()->locale
             : $this->getBrowserLocale();
 
         // Locale not allowed.
-        if (! in_array($locale, config('fjord.translatable.locales'))) {
+        if (! in_array($locale, config('lit.translatable.locales'))) {
             return $fallback;
         }
 
@@ -122,15 +127,15 @@ class Translator
     public function getBrowserLocale()
     {
         if (! isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            return config('fjord.translatable.fallback_locale');
+            return config('lit.translatable.fallback_locale');
         }
 
         return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2)
-            ?? config('fjord.translatable.fallback_locale');
+            ?? config('lit.translatable.fallback_locale');
     }
 
     /**
-     * Check if the Fjord application is running in a locale.
+     * Check if the Lit application is running in a locale.
      *
      * @param  string $locale
      * @return bool
@@ -148,7 +153,7 @@ class Translator
      */
     protected function getNamespaceFromPath(string $path)
     {
-        return "fjord/{$path}";
+        return "lit/{$path}";
     }
 
     /**

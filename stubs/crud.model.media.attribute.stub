@@ -1,7 +1,7 @@
 /**
      * Image attribute.
      *
-     * @return \Fjord\Crud\Models\Media
+     * @return \Lit\Crud\Models\Media
      */
     public function getImageAttribute()
     {

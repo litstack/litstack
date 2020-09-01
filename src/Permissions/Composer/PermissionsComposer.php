@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Permissions\Composer;
+namespace Ignite\Permissions\Composer;
 
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
@@ -15,9 +15,7 @@ class PermissionsComposer
      */
     public function compose(View $view)
     {
-        fjord()
-            ->app()
-            ->get('vue.app')
+        app('lit.vue.app')
             ->prop('permissions', $this->getPermissions())
             ->prop('roles', Role::all());
     }
@@ -29,6 +27,6 @@ class PermissionsComposer
      */
     protected function getPermissions()
     {
-        return fjord_user()->getAllPermissions();
+        return lit_user()->getAllPermissions();
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace FjordTest\TestSupport\Models;
+namespace Tests\TestSupport\Models;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Fjord\Crud\Models\Traits\Translatable;
-use FjordTest\TestSupport\Models\Translations\TranslatablePostTranslation;
+use Ignite\Crud\Models\Traits\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Tests\TestSupport\Models\Translations\TranslatablePostTranslation;
 
 class TranslatablePost extends Model implements TranslatableContract
 {

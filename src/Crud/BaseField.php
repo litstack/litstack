@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Ignite\Crud;
 
-use Fjord\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Fields\Traits\HasBaseField;
 
 class BaseField extends Field
 {

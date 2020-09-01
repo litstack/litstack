@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Page\Table\Components;
+namespace Ignite\Page\Table\Components;
 
 class ImageComponent extends ColumnComponent
 {

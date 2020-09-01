@@ -1,4 +1,4 @@
-// Fjord Bootstrap Theme.
+// Lit Bootstrap Theme.
 //
 // This File overrides all neccessary Bootstrap sass variables that should be
 // overwritten.
@@ -40,16 +40,20 @@ $gray: $gray-600 !default;
 
 $theme-colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
-$theme-colors: map-merge(( //'primary': $primary,
-        //'secondary': $secondary,
-        //'success': $success,
-        //'info': $info,
-        //'warning': $warning,
-        //'danger': $danger,
-        //'light': $light,
-        //'dark': $dark,
-        'gray': $gray),
-    $theme-colors);
+$theme-colors: map-merge(
+	(
+		//'primary': $primary,
+			//'secondary': $secondary,
+			//'success': $success,
+			//'info': $info,
+			//'warning': $warning,
+			//'danger': $danger,
+			//'light': $light,
+			//'dark': $dark,
+			'gray': $gray
+	),
+	$theme-colors
+);
 
 // Options
 //
@@ -82,13 +86,16 @@ $spacer-x: 2rem;
 // This variable affects the `.h-*` and `.w-*` classes.
 $sizes: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
-$sizes: map-merge(( //25: 25%,
-        //50: 50%,
-        //75: 75%,
-        //100: 100%,
-        //auto: auto
-    ),
-    $sizes);
+$sizes: map-merge(
+	(
+		//25: 25%,
+			//50: 50%,
+			//75: 75%,
+			//100: 100%,
+			//auto: auto
+	),
+	$sizes
+);
 
 // Body
 //
@@ -118,16 +125,20 @@ $body-bg: $gray-200 !default;
 //
 // Define the maximum width of `.container` for different screen sizes.
 
-$grid-breakpoints: (xs: 0,
-    sm: 576px,
-    md: 768px,
-    lg: 992px,
-    xl: 1200px) !default;
+$grid-breakpoints: (
+	xs: 0,
+	sm: 576px,
+	md: 768px,
+	lg: 992px,
+	xl: 1200px,
+) !default;
 
-$container-max-widths: (sm: 540px,
-    md: 720px,
-    lg: 960px,
-    xl: 1140px) !default;
+$container-max-widths: (
+	sm: 540px,
+	md: 720px,
+	lg: 960px,
+	xl: 1140px,
+) !default;
 
 // Grid columns
 //
@@ -521,7 +532,8 @@ $modal-footer-border-width: $border-width !default;
 $modal-footer-border-color: $gray-400 !default;
 $modal-header-padding-y: $modal-inner-padding !default;
 $modal-header-padding-x: $modal-inner-padding !default;
-$modal-header-padding: $modal-header-padding-y $modal-header-padding-x 0 $modal-header-padding-x !default; // Keep this for backwards compatibility
+$modal-header-padding: $modal-header-padding-y $modal-header-padding-x 0
+	$modal-header-padding-x !default; // Keep this for backwards compatibility
 //
 //$modal-xl: 1140px !default;
 //$modal-lg: 800px !default;
@@ -599,10 +611,10 @@ $alert-padding-x: 2.5rem !default;
 //$alert-border-level: -9 !default;
 //$alert-color-level: 6 !default;
 
-// Bootstrap and Fjord
+// Bootstrap and Lit
 //
 // Variables, Mixins & Functions
 @import '~bootstrap/scss/_functions';
 @import '~bootstrap/scss/_variables';
 @import '~bootstrap/scss/_mixins';
-@import '_variables_fjord';
+@import '_variables_lit';

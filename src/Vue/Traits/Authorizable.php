@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Vue\Traits;
+namespace Ignite\Vue\Traits;
 
 use Closure;
 
@@ -39,6 +39,6 @@ trait Authorizable
 
         $closure = $this->authorizeClosure;
 
-        return $closure(fjord_user());
+        return $closure(lit_user());
     }
 }

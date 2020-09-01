@@ -1,14 +1,14 @@
-@extends('fjord::index')
+@extends('litstack::index')
 
 @section('title')
     @isset($title)
-        {{ucfirst($title)}}
+        {{ strip_tags(ucfirst($title)) }}
     @endisset
 @endsection
 
 @section('content')
-    @include('fjord::vue.component', [
-        'component' => 'fjord-app',
-        'props' => ((array) \Fjord\Support\Facades\VueApp::render())['props']
+    @include('litstack::vue.component', [
+        'component' => 'litstack-app',
+        'props' => ((array) \Ignite\Support\Facades\VueApp::render())['props']
     ])
 @endsection

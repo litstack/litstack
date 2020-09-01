@@ -1,18 +1,17 @@
 <?php
 
-namespace Fjord\Application\Bootstrap;
+namespace Ignite\Application\Bootstrap;
 
-use Fjord\Application\Application;
-use FjordApp\Kernel;
-use Illuminate\Console\Application as Artisan;
+use Ignite\Application\Application;
 use Illuminate\Support\Facades\App;
+use Lit\Kernel;
 
 class BootstrapKernel
 {
     /**
-     * Registers artisan commands of all fjord packages.
+     * Bootstrap.
      *
-     * @param  \Fjord\Application\Application $app
+     * @param  \Ignite\Application\Application $app
      * @return void
      */
     public function bootstrap(Application $app, Kernel $kernel)
@@ -24,9 +23,9 @@ class BootstrapKernel
     }
 
     /**
-     * Register package providers.
+     * Register providers.
      *
-     * @param  mixed $package
+     * @param  array $providers
      * @return void
      */
     public function registerProviders($providers)

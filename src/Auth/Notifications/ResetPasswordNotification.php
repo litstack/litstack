@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Auth\Notifications;
+namespace Ignite\Auth\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;

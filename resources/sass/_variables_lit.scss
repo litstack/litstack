@@ -1,0 +1,108 @@
+// Lit Variables.
+//
+// This file contains all variables that are used for the Lit construct and are
+// not used for bootstrap components.
+//
+// Variables should follow the `$component-state-property-size` formula for
+// consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
+
+// Spinner
+//
+//
+$spinner-size: 200px;
+$spinner-border-width: 5px;
+$spinner-theme-default: $primary;
+
+// Toasts
+//
+//
+$toast-margin: map-get($spacers, 3);
+
+// Dropdown
+//
+//
+$dropdown-shadow: 0 0 40px 0 rgba($secondary, 0.15);
+
+// Topbar
+//
+// Topbar above main navigation.
+$topbar-bg: $gray-900;
+$topbar-height: 85px;
+$topbar-padding: 20px;
+$topbar-button-color: $gray;
+
+$topbar-dropdown-bg: $gray-800;
+$topbar-dropdown-color: $white;
+$topbar-dropdown-width: 300px;
+$topbar-dropdown-hover-color: $white;
+$topbar-dropdown-hover-bg: $gray-600;
+
+// Main Navigation
+//
+//
+
+// Sidebar
+$sidebar-width: 290px;
+
+// Nav
+$nav-bg: $white;
+$nav-height: 5rem;
+$nav-tab-height: 28px;
+$nav-padding-top: 20px;
+$nav-height-mobile: 3.5rem;
+
+$nav-breakpoint-mobile: 'lg';
+
+// Title
+$nav-title-color: $primary;
+$nav-title-font-size: $font-size-sm * 0.875;
+$nav-title-letter-spacing: 0.075rem;
+
+// Item
+$nav-item-color: $yiq-text-dark;
+$nav-item-icon-color: $gray-500;
+
+$nav-item-active-bg: $gray-200;
+$nav-item-active-color: $primary;
+$nav-item-active-border-width: 3px;
+$nav-item-active-font-weight: $font-weight-normal;
+
+$nav-item-hover-bg: $gray-300;
+
+$nav-item-collapsed-padding-left: $list-group-item-padding-x * 1.5;
+
+// Page
+//
+// All variables for components inside a Page.
+
+// Container
+$container-padding-y: $card-spacer-y;
+$container-padding-x: $card-spacer-x;
+
+// Page Navigation
+$page-nav-padding-y: $container-padding-y / 2;
+
+// Field Icon
+//
+//
+$field-icon-spacer: map-get($spacers, 3);
+$field-icon-btn-width: 2.5rem;
+
+// Blocks
+//
+//
+$block-bg: $body-bg;
+$block-in-block-bg: $white;
+
+$block-spacer-y: $alert-padding-y;
+$block-spacer-x: $alert-padding-x;
+
+// Buttons
+$button-sm-height: 1.75rem;
+$button-md-height: 2.5rem;
+$button-lg-height: 3.125rem;
+
+$button-primary-shadow: 0px 6px 15px 1px rgba(0, 0, 0, 0.2);
+
+// Mobile Margins
+$page-margin-sm: 1rem;

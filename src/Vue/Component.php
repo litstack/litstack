@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Vue;
+namespace Ignite\Vue;
 
 use Exception;
-use Fjord\Contracts\Vue\Authorizable as AuthorizableContract;
-use Fjord\Support\VueProp;
-use Fjord\Vue\Traits\Authorizable;
+use Ignite\Contracts\Vue\Authorizable as AuthorizableContract;
+use Ignite\Support\VueProp;
+use Ignite\Vue\Traits\Authorizable;
 
 class Component extends VueProp implements AuthorizableContract
 {

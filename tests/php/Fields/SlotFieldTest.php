@@ -1,11 +1,11 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\Field;
-use FjordTest\Traits\InteractsWithFields;
-use FjordTest\Traits\TestHelpers;
+use Ignite\Crud\Field;
 use PHPUnit\Framework\TestCase;
+use Tests\Traits\InteractsWithFields;
+use Tests\Traits\TestHelpers;
 
 class SlotFieldTest extends TestCase
 {

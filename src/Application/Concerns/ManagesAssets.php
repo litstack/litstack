@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Application\Concerns;
+namespace Ignite\Application\Concerns;
 
 trait ManagesAssets
 {

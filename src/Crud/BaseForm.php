@@ -1,25 +1,25 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Ignite\Crud;
 
 use Closure;
-use Fjord\Contracts\Crud\Form;
-use Fjord\Crud\Fields\Block\Block;
-use Fjord\Crud\Fields\Component;
-use Fjord\Crud\Fields\Relations\BelongsTo;
-use Fjord\Crud\Fields\Relations\BelongsToMany;
-use Fjord\Crud\Fields\Relations\HasMany;
-use Fjord\Crud\Fields\Relations\HasOne;
-use Fjord\Crud\Fields\Relations\MorphMany;
-use Fjord\Crud\Fields\Relations\MorphOne;
-use Fjord\Crud\Fields\Relations\MorphToMany;
-use Fjord\Crud\Fields\Relations\MorphToRegistrar;
-use Fjord\Crud\Models\FormField;
-use Fjord\Exceptions\Traceable\BadMethodCallException;
-use Fjord\Page\BasePage;
-use Fjord\Support\Facades\Fjord;
-use Fjord\Support\Facades\Form as FormFacade;
-use Fjord\Vue\Traits\RenderableAsProp;
+use Ignite\Contracts\Crud\Form;
+use Ignite\Crud\Fields\Block\Block;
+use Ignite\Crud\Fields\Component;
+use Ignite\Crud\Fields\Relations\BelongsTo;
+use Ignite\Crud\Fields\Relations\BelongsToMany;
+use Ignite\Crud\Fields\Relations\HasMany;
+use Ignite\Crud\Fields\Relations\HasOne;
+use Ignite\Crud\Fields\Relations\MorphMany;
+use Ignite\Crud\Fields\Relations\MorphOne;
+use Ignite\Crud\Fields\Relations\MorphToMany;
+use Ignite\Crud\Fields\Relations\MorphToRegistrar;
+use Ignite\Curd\Models\Form as FormModel;
+use Ignite\Exceptions\Traceable\BadMethodCallException;
+use Ignite\Page\BasePage;
+use Ignite\Support\Facades\Form as FormFacade;
+use Ignite\Support\Facades\Lit;
+use Ignite\Vue\Traits\RenderableAsProp;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Str;
@@ -117,8 +117,8 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     /**
      * Add Vue component field.
      *
-     * @param  string|Component     $component
-     * @return \Fjord\Vue\Component
+     * @param  string|Component      $component
+     * @return \Ignite\Vue\Component
      */
     public function component($component)
     {
@@ -140,7 +140,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
      */
     public function group(Closure $closure)
     {
-        return $this->wrapper('fj-field-wrapper-group', function () use ($closure) {
+        return $this->wrapper('lit-field-wrapper-group', function () use ($closure) {
             $closure($this);
         });
     }
@@ -181,8 +181,8 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
      */
     public function setRoutePrefix($prefix)
     {
-        if (Str::startsWith($prefix, Fjord::url(''))) {
-            $prefix = Str::replaceFirst(Fjord::url(''), '', $prefix);
+        if (Str::startsWith($prefix, Lit::url(''))) {
+            $prefix = Str::replaceFirst(Lit::url(''), '', $prefix);
         }
 
         $this->routePrefix = $prefix;
@@ -226,7 +226,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
 
         if ($this->inWrapper() && $fieldInstance->shouldBeRegistered()) {
             $this->wrapper
-                ->component('fj-field')
+                ->component('lit-field')
                 ->prop('field', $fieldInstance);
         }
 
@@ -268,7 +268,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
      */
     public function relation(string $name)
     {
-        if (FormField::class === $this->model) {
+        if (FormModel::class === $this->model) {
             throw new InvalidArgumentException('Laravel relations are not available in Forms. Use fields oneRelation or manyRelation instead.');
         }
 
@@ -399,7 +399,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
      * @param  array  $parameters
      * @return void
      *
-     * @throws \Fjord\Exceptions\Traceable\BadMethodCallException
+     * @throws \Ignite\Exceptions\Traceable\BadMethodCallException
      */
     public function __call($method, $parameters)
     {

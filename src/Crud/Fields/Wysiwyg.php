@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
-use Fjord\Crud\BaseField;
+use Ignite\Crud\BaseField;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 
@@ -16,7 +16,7 @@ class Wysiwyg extends BaseField
      *
      * @var string
      */
-    protected $component = 'fj-field-wysiwyg';
+    protected $component = 'lit-field-wysiwyg';
 
     /**
      * Required field attributes.

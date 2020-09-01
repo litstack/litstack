@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Application\Controllers;
+namespace Ignite\Application\Controllers;
 
 use Illuminate\Routing\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

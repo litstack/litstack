@@ -1,17 +1,17 @@
 <?php
 
-namespace Fjord\Auth\Controllers;
+namespace Ignite\Auth\Controllers;
 
-use Fjord\Auth\Actions\AuthenticationAction;
-use Fjord\Auth\Requests\FjordSessionLogoutRequest;
-use Fjord\Support\Facades\Fjord;
-use Fjord\User\Models\FjordUser;
+use Ignite\Auth\Actions\AuthenticationAction;
+use Ignite\Auth\Requests\LitSessionLogoutRequest;
+use Ignite\Support\Facades\Lit;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Lit\Models\User;
 
 class AuthController extends Controller
 {
@@ -29,21 +29,20 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->defaultUrl = Fjord::url(
-            config('fjord.default_route')
+        $this->defaultUrl = Lit::url(
+            config('lit.default_route')
         );
     }
 
     /**
-     * Authenticate FjordUser.
+     * Authenticate User.
      *
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return redirect
      */
     public function authenticate(Request $request, AuthenticationAction $authentication)
     {
-        $request->validate($this->getAuthenticationRules(), __f('validation'));
+        $request->validate($this->getAuthenticationRules(), __lit('validation'));
 
         $this->denyDefaultAdminInProduction($request);
 
@@ -52,7 +51,7 @@ class AuthController extends Controller
         $attempt = $authentication->execute($request->only('email', 'password'), $remember);
 
         if (! $attempt) {
-            abort(401, __f('login.failed'));
+            abort(401, __lit('login.failed'));
         }
 
         return $this->loginSucceeded();
@@ -77,7 +76,7 @@ class AuthController extends Controller
             return;
         }
 
-        abort(401, __f('login.failed'));
+        abort(401, __lit('login.failed'));
     }
 
     /**
@@ -92,7 +91,7 @@ class AuthController extends Controller
             'password' => 'required',
         ];
 
-        if (config('fjord.login.username')) {
+        if (config('lit.login.username')) {
             return $rules;
         }
 
@@ -118,11 +117,11 @@ class AuthController extends Controller
      */
     public function login()
     {
-        if (fjord_user()) {
+        if (lit_user()) {
             return redirect($this->defaultUrl);
         }
 
-        return view('fjord::auth.login');
+        return view('litstack::auth.login');
     }
 
     /**
@@ -134,19 +133,19 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return view('fjord::auth.login');
+        return view('litstack::auth.login');
     }
 
     /**
      * Logout session.
      *
-     * @param FjordSessionLogoutRequest $request
+     * @param LitSessionLogoutRequest $request
      *
      * @return void
      */
-    public function logoutSession(FjordSessionLogoutRequest $request)
+    public function logoutSession(LitSessionLogoutRequest $request)
     {
-        $session = fjord_user()->sessions()->findOrFail($request->id);
+        $session = lit_user()->sessions()->findOrFail($request->id);
 
         Session::getHandler()->destroy($session->session_id);
 
@@ -158,7 +157,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Create new FjordUser.
+     * Create new User.
      *
      * @param Request                  $request
      * @param ForgotPasswordController $sendResetLink
@@ -168,20 +167,20 @@ class AuthController extends Controller
     public function register(Request $request, ForgotPasswordController $sendResetLink)
     {
         $rules = [
-            'username'   => ['string', 'max:255', 'unique:fjord_users'],
+            'username'   => ['string', 'max:255', 'unique:lit_users'],
             'first_name' => ['string', 'max:255'],
             'last_name'  => ['string', 'max:255'],
-            'email'      => ['required', 'string', 'email', 'max:255', 'unique:fjord_users'],
+            'email'      => ['required', 'string', 'email', 'max:255', 'unique:lit_users'],
             'password'   => ['required', 'string', 'min:8'],
         ];
 
         $request->validate($rules);
 
-        $user = FjordUser::create([
+        $user = User::create([
             'username'   => $request->username,
             'first_name' => $request->first_name,
             'last_name'  => $request->last_name,
-            'locale'     => $request->locale ?? config('fjord.locale'),
+            'locale'     => $request->locale ?? config('lit.locale'),
             'email'      => $request->email,
             'password'   => Hash::make($request->password),
         ]);

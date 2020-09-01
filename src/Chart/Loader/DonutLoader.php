@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Chart\Loader;
+namespace Ignite\Chart\Loader;
 
 use Carbon\CarbonInterface;
 use Closure;
-use Fjord\Chart\ChartSet;
+use Ignite\Chart\ChartSet;
 
 class DonutLoader extends ChartLoader
 {

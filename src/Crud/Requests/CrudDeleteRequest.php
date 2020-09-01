@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Requests;
+namespace Ignite\Crud\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;

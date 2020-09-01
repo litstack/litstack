@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Contracts\Vue;
+namespace Ignite\Contracts\Vue;
 
 interface Vue
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Support;
+namespace Ignite\Support;
 
 /**
  * @see https://getbootstrap.com

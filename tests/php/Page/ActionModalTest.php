@@ -1,12 +1,12 @@
 <?php
 
-namespace Fjord\Test\Page;
+namespace Lit\Test\Page;
 
-use Fjord\Page\Actions\ActionModal;
-use Fjord\Vue\Traits\StaticComponentName;
-use FjordTest\Traits\TestHelpers;
+use Ignite\Page\Actions\ActionModal;
+use Ignite\Vue\Traits\StaticComponentName;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Tests\Traits\TestHelpers;
 
 class ActionModalTest extends TestCase
 {

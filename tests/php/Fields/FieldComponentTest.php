@@ -1,19 +1,18 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\Fields\Component;
-use FjordTest\Traits\InteractsWithComponents;
-use FjordTest\Traits\InteractsWithFields;
-use PHPUnit\Framework\TestCase;
+use Ignite\Crud\Fields\Component;
+use Tests\BackendTestCase;
+use Tests\Traits\InteractsWithFields;
 
-class FieldComponentTest extends TestCase
+class FieldComponentTest extends BackendTestCase
 {
-    use InteractsWithFields, InteractsWithComponents;
+    use InteractsWithFields;
 
     public function setUp(): void
     {
-        $this->setupApplication();
+        parent::setUp();
 
         $this->field = $this->getField(Component::class, 'dummy-component');
     }
@@ -22,7 +21,7 @@ class FieldComponentTest extends TestCase
     public function it_sets_component()
     {
         $component = component('dummy-component');
-        $this->assertInstanceOf(\Fjord\Vue\Component::class, $this->field->getComponent());
+        $this->assertInstanceOf(\Ignite\Vue\Component::class, $this->field->getComponent());
         $this->assertEquals($component, $this->field->getComponent());
     }
 }

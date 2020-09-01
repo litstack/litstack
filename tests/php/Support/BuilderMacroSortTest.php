@@ -1,15 +1,15 @@
 <?php
 
-namespace FjordTest;
+namespace Tests;
 
 use BadMethodCallException;
-use Fjord\Crud\Models\FormRelation;
-use Fjord\Support\Macros\BuilderSort;
-use FjordTest\TestSupport\Models\Post;
-use FjordTest\TestSupport\Models\TranslatablePost;
-use FjordTest\TestSupport\Models\User;
+use Ignite\Crud\Models\FormRelation;
+use Ignite\Support\Macros\BuilderSort;
 use Illuminate\Database\Eloquent\Model;
 use ReflectionClass;
+use Tests\TestSupport\Models\Post;
+use Tests\TestSupport\Models\TranslatablePost;
+use Tests\TestSupport\Models\User;
 
 class BuilderMacroSortTest extends BackendTestCase
 {
@@ -19,7 +19,7 @@ class BuilderMacroSortTest extends BackendTestCase
 
         $this->macro = new BuilderSort();
         $this->macro->setQuery(DummyModel::query());
-        $this->installFjord();
+        $this->installLit();
         $this->migrate();
     }
 

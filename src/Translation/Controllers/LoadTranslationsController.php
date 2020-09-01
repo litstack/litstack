@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Translation\Controllers;
+namespace Ignite\Translation\Controllers;
 
-use Fjord\Translation\i18nGenerator;
+use Ignite\Translation\i18nGenerator;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
@@ -23,13 +23,13 @@ class LoadTranslationsController extends Controller
      */
     public function __construct()
     {
-        foreach (config('fjord.translatable.locales') as $locale) {
+        foreach (config('lit.translatable.locales') as $locale) {
             $this->translations[$locale] = [];
         }
     }
 
     /**
-     * lang.js file for i18n translations in Fjord application.
+     * lang.js file for i18n translations in Lit application.
      *
      * @return response
      */
@@ -37,7 +37,7 @@ class LoadTranslationsController extends Controller
     {
         $this->loadTranslations();
 
-        $locale = fjord()->getLocale();
+        $locale = lit()->getLocale();
 
         $translations = [$locale => []];
         if (array_key_exists($locale, $this->translations)) {
@@ -53,15 +53,15 @@ class LoadTranslationsController extends Controller
     }
 
     /**
-     * Load translations from registered paths for Fjord application
+     * Load translations from registered paths for Lit application
      * and merge simmilar groups.
      *
      * @return void
      */
     protected function loadTranslations()
     {
-        foreach (app('fjord.translator')->getPaths() as $path) {
-            foreach (config('fjord.translatable.locales') as $locale) {
+        foreach (app('lit.translator')->getPaths() as $path) {
+            foreach (config('lit.translatable.locales') as $locale) {
                 $dir = realpath($path.DIRECTORY_SEPARATOR.$locale);
                 $this->getTranslationsFromPath($locale, $dir);
             }

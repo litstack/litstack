@@ -1,8 +1,7 @@
 <?php
 
-namespace Fjord\Application\Navigation;
+namespace Ignite\Application\Navigation;
 
-use Fjord\Support\Facades\Package;
 use Illuminate\Contracts\Support\Arrayable;
 
 class Navigation implements Arrayable
@@ -13,6 +12,24 @@ class Navigation implements Arrayable
      * @var array
      */
     protected $entries = [];
+
+    /**
+     * Navigation preset factory instance.
+     *
+     * @var PresetFactory
+     */
+    protected $factory;
+
+    /**
+     * Create new Navigation instance.
+     *
+     * @param  PresetFactory $factory
+     * @return void
+     */
+    public function __construct(PresetFactory $factory)
+    {
+        $this->factory = $factory;
+    }
 
     /**
      * Navigation title.
@@ -83,7 +100,7 @@ class Navigation implements Arrayable
     public function preset(string $name, array $params = [])
     {
         return $this->entry(
-            Package::navPreset($name, $params)
+            $this->factory->getPreset($name, $params)
         );
     }
 
@@ -126,6 +143,6 @@ class Navigation implements Arrayable
             return $params['authorize'];
         }
 
-        return $params['authorize'](fjord_user());
+        return $params['authorize'](lit_user());
     }
 }

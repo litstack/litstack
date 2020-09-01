@@ -1,10 +1,10 @@
 <?php
 
-namespace FjordTest\Browser;
+namespace Tests\Browser;
 
-use Fjord\Support\Facades\Fjord;
-use Fjord\User\Models\FjordUser;
-use FjordTest\FrontendTestCase;
+use Ignite\Support\Facades\Lit;
+use Lit\Models\User;
+use Tests\FrontendTestCase;
 
 /**
  * Testing that login works after installation.
@@ -15,10 +15,10 @@ class LoginTest extends FrontendTestCase
     {
         parent::setUp();
 
-        if ($this->user = FjordUser::where('email', 'test@test.com')->first()) {
+        if ($this->user = User::where('email', 'test@test.com')->first()) {
             return;
         }
-        $this->user = factory(FjordUser::class)->create([
+        $this->user = factory(User::class)->create([
             'username' => 'test',
             'email'    => 'test@test.com',
             'password' => bcrypt('secret'),
@@ -33,9 +33,9 @@ class LoginTest extends FrontendTestCase
         $this->skipIfChromedriverIsNotRunning();
 
         $this->browse(function ($browser) {
-            $browser->visit(config('fjord.route_prefix'))
+            $browser->visit(config('lit.route_prefix'))
                 ->assertSee('Login')
-                ->assertPathIs(Fjord::url('login'));
+                ->assertPathIs(Lit::url('login'));
         });
     }
 
@@ -47,13 +47,13 @@ class LoginTest extends FrontendTestCase
         $this->skipIfChromedriverIsNotRunning();
 
         $this->browse(function ($browser) {
-            $browser->visit(config('fjord.route_prefix'))
+            $browser->visit(config('lit.route_prefix'))
                 ->type('email', $this->user->email)
                 ->type('password', 'secret')
                 ->press('.btn-primary')
-                ->waitUntil('window.location.pathname != "'.Fjord::url('login').'"', 15)
+                ->waitUntil('window.location.pathname != "'.Lit::url('login').'"', 15)
                 // it redirects to correct route.
-                ->assertPathIs(Fjord::url(config('fjord.default_route')));
+                ->assertPathIs(Lit::url(config('lit.default_route')));
         });
     }
 }

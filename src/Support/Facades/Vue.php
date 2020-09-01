@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Support\Facades;
+namespace Ignite\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Fjord\Vue\Vuew
+ * @see \Ignite\Vue\Vuew
  */
 class Vue extends Facade
 {
@@ -16,6 +16,6 @@ class Vue extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'fjord.vue';
+        return 'lit.vue';
     }
 }

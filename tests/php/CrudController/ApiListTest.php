@@ -1,28 +1,29 @@
 <?php
 
-namespace FjordTest\CrudController;
+namespace Tests\CrudController;
 
-use Fjord\Crud\Models\FormListItem;
-use FjordTest\BackendTestCase;
-use FjordTest\TestSupport\Models\Post;
-use FjordTest\Traits\InteractsWithCrud;
+use Ignite\Crud\Models\ListItem;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\BackendTestCase;
+use Tests\TestSupport\Models\Post;
+use Tests\Traits\InteractsWithCrud;
 
 /**
  * This test is using the Crud Post.
  *
- * @see FjordTest\TestSupport\Config\PostConfig
- * @see FjordTest\TestSupport\Models\Post
+ * @see Tests\TestSupport\Config\PostConfig
+ * @see Tests\TestSupport\Models\Post
  */
 class ApiListTest extends BackendTestCase
 {
-    use InteractsWithCrud;
+    use InteractsWithCrud, RefreshDatabase;
 
     public function setUp(): void
     {
         parent::setUp();
 
         $this->post = Post::create([]);
-        $this->actingAs($this->admin, 'fjord');
+        $this->actingAs($this->admin, 'lit');
     }
 
     // Store
@@ -30,7 +31,7 @@ class ApiListTest extends BackendTestCase
     /** @test */
     public function it_can_store_list_item()
     {
-        $this->assertEquals(0, FormListItem::count());
+        $this->assertEquals(0, ListItem::count());
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/store");
 
         $result = $this->post($url, [
@@ -39,7 +40,7 @@ class ApiListTest extends BackendTestCase
                 'test_list_input' => 'some text',
             ],
         ])->assertStatus(200)->decodeResponseJson();
-        $this->assertEquals(1, FormListItem::count());
+        $this->assertEquals(1, ListItem::count());
 
         $listItem = $this->post->test_list()->first();
         $this->assertEquals('test_list', $listItem->field_id);
@@ -53,7 +54,7 @@ class ApiListTest extends BackendTestCase
     /** @test */
     public function it_can_store_multiple_list_item_and_automatically_adds_order_column()
     {
-        $this->assertEquals(0, FormListItem::count());
+        $this->assertEquals(0, ListItem::count());
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/store");
         $params = [
             'field_id' => 'test_list',
@@ -63,7 +64,7 @@ class ApiListTest extends BackendTestCase
         ];
         $result = $this->post($url, $params)->assertStatus(200);
         $result = $this->post($url, $params)->assertStatus(200);
-        $this->assertEquals(2, FormListItem::count());
+        $this->assertEquals(2, ListItem::count());
 
         $listItem = $this->post->test_list->last();
         $this->assertEquals(1, $listItem->order_column);
@@ -74,9 +75,9 @@ class ApiListTest extends BackendTestCase
     /** @test */
     public function it_cannot_store_for_not_existing_parent_id()
     {
-        $this->assertEquals(0, FormListItem::count());
+        $this->assertEquals(0, ListItem::count());
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/store");
-        $request = $this->post($url)->assertStatus(404);
+        $request = $this->json('POST', $url)->assertStatus(404);
     }
 
     // Store
@@ -84,7 +85,7 @@ class ApiListTest extends BackendTestCase
     /** @test */
     public function it_can_store_for_existing_parent_id()
     {
-        $this->assertEquals(0, FormListItem::count());
+        $this->assertEquals(0, ListItem::count());
         $parent = $this->createListItem();
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/store");
         $request = $this->post($url, [
@@ -100,7 +101,7 @@ class ApiListTest extends BackendTestCase
     {
         $listItem1 = $this->createListItem();
         $listItem2 = $this->createListItem();
-        $this->assertEquals(2, FormListItem::count());
+        $this->assertEquals(2, ListItem::count());
 
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/destroy");
         $request = $this->delete($url, [
@@ -119,11 +120,12 @@ class ApiListTest extends BackendTestCase
     {
         $listItem1 = $this->createListItem();
         $listItem2 = $this->createListItem();
-        $this->assertEquals(2, FormListItem::count());
+        $this->assertEquals(2, ListItem::count());
 
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/index");
 
         $result = $this->post($url, ['field_id' => 'test_list'])->assertStatus(200)->decodeResponseJson();
+
         $this->assertCount(2, $result);
         $this->assertEquals($listItem1->id, $result[0]['attributes']['id']);
         $this->assertEquals($listItem2->id, $result[1]['attributes']['id']);
@@ -136,7 +138,7 @@ class ApiListTest extends BackendTestCase
     {
         // Creating 2 block.
         $listItem = $this->createListItem();
-        $this->assertEquals(1, FormListItem::count());
+        $this->assertEquals(1, ListItem::count());
 
         // Update listItem.
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/list");
@@ -200,7 +202,6 @@ class ApiListTest extends BackendTestCase
                     ['id' => $listItem3->id, 'order_column' => 1, 'parent_id' => $listItem2->id],
                 ],
             ],
-
         ])->assertStatus(200);
 
         $listItems = $this->post->test_list()->orderBy('id')->get();
@@ -237,8 +238,8 @@ class ApiListTest extends BackendTestCase
 
     public function createListItem($parent_id = 0)
     {
-        return FormListItem::create([
-            'config_type'  => \FjordApp\Config\Crud\PostConfig::class,
+        return ListItem::create([
+            'config_type'  => \Lit\Config\Crud\PostConfig::class,
             'model_type'   => get_class($this->post),
             'model_id'     => $this->post->id,
             'field_id'     => 'test_list',

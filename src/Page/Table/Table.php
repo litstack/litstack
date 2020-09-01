@@ -1,11 +1,11 @@
 <?php
 
-namespace Fjord\Page\Table;
+namespace Ignite\Page\Table;
 
 use Closure;
-use Fjord\Contracts\Page\Table as TableContract;
-use Fjord\Exceptions\Traceable\MissingAttributeException;
-use Fjord\Support\HasAttributes;
+use Ignite\Contracts\Page\Table as TableContract;
+use Ignite\Exceptions\Traceable\MissingAttributeException;
+use Ignite\Support\HasAttributes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
@@ -32,12 +32,12 @@ class Table extends BaseTable implements TableContract
      *
      * @var string
      */
-    protected $componentName = 'fj-page-table';
+    protected $componentName = 'lit-page-table';
 
     /**
      * Vue component instance.
      *
-     * @var \Fjord\Vue\Component
+     * @var \Ignite\Vue\Component
      */
     protected $component;
 
@@ -112,8 +112,8 @@ class Table extends BaseTable implements TableContract
     public static function numericOrder($column = 'id')
     {
         return [
-            "{$column}.desc" => __f('fj.sort_new_to_old'),
-            "{$column}.asc"  => __f('fj.sort_old_to_new'),
+            "{$column}.desc" => __lit('lit.sort_new_to_old'),
+            "{$column}.asc"  => __lit('lit.sort_old_to_new'),
         ];
     }
 

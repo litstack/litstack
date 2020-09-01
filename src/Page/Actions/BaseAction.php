@@ -1,10 +1,10 @@
 <?php
 
-namespace Fjord\Page\Actions;
+namespace Ignite\Page\Actions;
 
-use Fjord\Contracts\Page\ActionFactory;
-use Fjord\Page\RunActionEvent;
-use Fjord\Vue\Component;
+use Ignite\Contracts\Page\ActionFactory;
+use Ignite\Page\RunActionEvent;
+use Ignite\Vue\Component;
 
 abstract class BaseAction implements ActionFactory
 {
@@ -25,7 +25,7 @@ abstract class BaseAction implements ActionFactory
     {
         $actionInstance = app()->make($action);
 
-        $component = component('fj-action')
+        $component = component('lit-action')
             ->prop('wrapper', $this->createComponent()->content($title))
             ->on('run', RunActionEvent::class)
             ->prop('eventData', ['action' => $action]);

@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Crud\Fields;
+namespace Ignite\Crud\Fields;
 
-use Fjord\Crud\Field;
-use Fjord\Exceptions\MethodNotFoundException;
+use Ignite\Crud\Field;
+use Ignite\Exceptions\MethodNotFoundException;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 class Component extends Field
@@ -15,7 +15,7 @@ class Component extends Field
      *
      * @var string
      */
-    protected $component = 'fj-field-component';
+    protected $component = 'lit-field-component';
 
     /**
      * Set default attributes.
@@ -56,7 +56,7 @@ class Component extends Field
      * @param string $method
      * @param array  $params
      *
-     * @throws \Fjord\Exceptions\MethodNotFoundException
+     * @throws \Ignite\Exceptions\MethodNotFoundException
      *
      * @return static|void
      */

@@ -1,15 +1,15 @@
 <?php
 
-namespace FjordTest\Traits;
+namespace Tests\Traits;
 
-use Fjord\Crud\RouteServiceProvider;
-use Fjord\Support\Facades\Config;
-use FjordApp\Config\Crud\PostConfig;
+use Ignite\Crud\RouteServiceProvider;
+use Ignite\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
+use Lit\Config\Crud\PostConfig;
 
 trait InteractsWithCrud
 {
-    use CreateFjordUsers;
+    use CreateLitUsers;
 
     /**
      * Get crud route.
@@ -20,7 +20,7 @@ trait InteractsWithCrud
      */
     public function getCrudRoute(string $route)
     {
-        return fjord()->url(strip_slashes(
+        return lit()->url(strip_slashes(
             Config::get($this->config ?? PostConfig::class)->route_prefix."/{$route}"
         ));
     }
@@ -57,16 +57,16 @@ trait InteractsWithCrud
      */
     public function publishCrudConfig()
     {
-        if (File::exists(base_path('fjord/app/Config/Crud/PostConfig.php'))) {
+        if (File::exists(base_path('lit/app/Config/Crud/PostConfig.php'))) {
             return;
         }
 
-        if (! File::exists(base_path('fjord/app/Config/Crud'))) {
-            File::makeDirectory(base_path('fjord/app/Config/Crud'));
+        if (! File::exists(base_path('lit/app/Config/Crud'))) {
+            File::makeDirectory(base_path('lit/app/Config/Crud'));
         }
 
-        File::copy(__DIR__.'/../TestSupport/Config/PostConfig.php', base_path('fjord/app/Config/Crud/PostConfig.php'));
-        File::copy(__DIR__.'/../TestSupport/Config/BlockInBlockConfig.php', base_path('fjord/app/Config/Crud/BlockInBlockConfig.php'));
+        File::copy(__DIR__.'/../TestSupport/Config/PostConfig.php', base_path('lit/app/Config/Crud/PostConfig.php'));
+        File::copy(__DIR__.'/../TestSupport/Config/BlockInBlockConfig.php', base_path('lit/app/Config/Crud/BlockInBlockConfig.php'));
     }
 
     /**
@@ -76,6 +76,6 @@ trait InteractsWithCrud
      */
     public function refreshCrudConfig()
     {
-        File::copy(__DIR__.'/../TestSupport/Config/PostConfig.php', base_path('fjord/app/Config/Crud/PostConfig.php'));
+        File::copy(__DIR__.'/../TestSupport/Config/PostConfig.php', base_path('lit/app/Config/Crud/PostConfig.php'));
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Chart\Engine;
+namespace Ignite\Chart\Engine;
 
-use Fjord\Chart\ChartSet;
+use Ignite\Chart\ChartSet;
 
 class ApexProgressEngine extends ChartEngine
 {
@@ -11,7 +11,7 @@ class ApexProgressEngine extends ChartEngine
      *
      * @var string
      */
-    protected $component = 'fj-chart-apex-progress';
+    protected $component = 'lit-chart-apex-progress';
 
     /**
      * Render chart by type.

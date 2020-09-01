@@ -1,14 +1,14 @@
 <?php
 
-namespace FjordTest\Fields;
+namespace Tests\Fields;
 
-use Fjord\Crud\BaseField;
-use Fjord\Crud\Fields\Traits\FieldHasRules;
-use Fjord\Crud\Fields\Traits\TranslatableField;
-use Fjord\Crud\Fields\Wysiwyg;
-use FjordTest\Traits\InteractsWithFields;
-use FjordTest\Traits\TestHelpers;
+use Ignite\Crud\BaseField;
+use Ignite\Crud\Fields\Traits\FieldHasRules;
+use Ignite\Crud\Fields\Traits\TranslatableField;
+use Ignite\Crud\Fields\Wysiwyg;
 use PHPUnit\Framework\TestCase;
+use Tests\Traits\InteractsWithFields;
+use Tests\Traits\TestHelpers;
 
 class FieldWysiwygTest extends TestCase
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud;
+namespace Ignite\Crud;
 
-use Fjord\Page\RunActionEvent;
+use Ignite\Page\RunActionEvent;
 use Illuminate\Http\Request;
 
 class RunCrudActionEvent extends RunActionEvent

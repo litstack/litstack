@@ -1,9 +1,9 @@
 <?php
 
-namespace Fjord\Page\Traits;
+namespace Ignite\Page\Traits;
 
-use Fjord\Chart\Chart;
-use Fjord\Support\Facades\Config;
+use Ignite\Chart\Chart;
+use Ignite\Support\Facades\Config;
 use InvalidArgumentException;
 
 trait HasCharts
@@ -11,8 +11,8 @@ trait HasCharts
     /**
      * Add chart.
      *
-     * @param  string               $name
-     * @return \Fjord\Vue\Component
+     * @param  string                $name
+     * @return \Ignite\Vue\Component
      */
     public function chart(string $name)
     {
@@ -20,7 +20,7 @@ trait HasCharts
             throw new InvalidArgumentException("Chart config [{$name}] not found.");
         }
 
-        $chart = app('fjord.chart.factory')->make($config);
+        $chart = app('lit.chart.factory')->make($config);
 
         $this->registerChart($chart);
 

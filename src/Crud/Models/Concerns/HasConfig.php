@@ -1,6 +1,6 @@
 <?php
 
-namespace Fjord\Crud\Models\Concerns;
+namespace Ignite\Crud\Models\Concerns;
 
 trait HasConfig
 {
@@ -11,7 +11,7 @@ trait HasConfig
      */
     public function getConfigAttribute()
     {
-        return fjord()->config($this->config_type, static::class);
+        return lit()->config($this->config_type, static::class);
     }
 
     public function config()

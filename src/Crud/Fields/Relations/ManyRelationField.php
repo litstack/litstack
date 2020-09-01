@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Crud\Fields\Relations;
+namespace Ignite\Crud\Fields\Relations;
 
-use Fjord\Exceptions\Traceable\InvalidArgumentException;
+use Ignite\Exceptions\Traceable\InvalidArgumentException;
 
 class ManyRelationField extends LaravelRelationField
 {
@@ -13,7 +13,7 @@ class ManyRelationField extends LaravelRelationField
      *
      * @var string
      */
-    protected $component = 'fj-field-relation';
+    protected $component = 'lit-field-relation';
 
     /**
      * Available preview types.

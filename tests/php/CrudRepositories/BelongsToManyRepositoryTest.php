@@ -1,20 +1,20 @@
 <?php
 
-namespace FjordTest\CrudRepositories;
+namespace Tests\CrudRepositories;
 
-use Fjord\Config\ConfigHandler;
-use Fjord\Crud\Api\ApiRepositories;
-use Fjord\Crud\BaseForm;
-use Fjord\Crud\Controllers\CrudController;
-use Fjord\Crud\Fields\Relations\BelongsToMany;
-use Fjord\Crud\Repositories\Relations\BelongsToManyRepository;
-use Fjord\Crud\Requests\CrudUpdateRequest;
-use FjordTest\BackendTestCase;
+use Ignite\Config\ConfigHandler;
+use Ignite\Crud\Api\ApiRepositories;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Controllers\CrudController;
+use Ignite\Crud\Fields\Relations\BelongsToMany;
+use Ignite\Crud\Repositories\Relations\BelongsToManyRepository;
+use Ignite\Crud\Requests\CrudUpdateRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 /**
  * @see https://laravel.com/docs/7.x/eloquent-relationships#many-to-many

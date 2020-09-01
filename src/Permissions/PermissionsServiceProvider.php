@@ -1,8 +1,8 @@
 <?php
 
-namespace Fjord\Permissions;
+namespace Ignite\Permissions;
 
-use Fjord\Permissions\Composer\PermissionsComposer;
+use Ignite\Permissions\Composer\PermissionsComposer;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,7 +15,7 @@ class PermissionsServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        fjord()->composer(PermissionsComposer::class);
+        lit_app()->composer(PermissionsComposer::class);
     }
 
     /**
