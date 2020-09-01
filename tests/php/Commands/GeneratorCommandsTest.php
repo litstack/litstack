@@ -49,7 +49,7 @@ class GeneratorCommandsTest extends BackendTestCase
     public function it_creates_job()
     {
         $this->artisan('lit:job', ['name' => 'foo']);
-        $this->assertFileExists(base_path('lit/app/Jobs/Foo.php'));
+        $this->assertFileExists(lit()->getPath('app/Jobs/Foo.php'));
         $this->assertTrue(class_exists(\Lit\Jobs\Foo::class));
     }
 
@@ -60,7 +60,7 @@ class GeneratorCommandsTest extends BackendTestCase
             $this->markTestSkipped('Cast command not available in Laravel '.Application::VERSION);
         }
         $this->artisan('lit:cast', ['name' => 'foo']);
-        $this->assertFileExists(base_path('lit/app/Casts/Foo.php'));
+        $this->assertFileExists(lit()->getPath('app/Casts/Foo.php'));
         $this->assertTrue(class_exists(\Lit\Casts\Foo::class));
     }
 
@@ -68,7 +68,7 @@ class GeneratorCommandsTest extends BackendTestCase
     public function it_creates_request()
     {
         $this->artisan('lit:request', ['name' => 'foo']);
-        $this->assertFileExists(base_path('lit/app/Http/Requests/Foo.php'));
+        $this->assertFileExists(lit()->getPath('app/Http/Requests/Foo.php'));
         $this->assertTrue(class_exists(\Lit\Http\Requests\Foo::class));
     }
 
@@ -76,7 +76,7 @@ class GeneratorCommandsTest extends BackendTestCase
     public function it_creates_provider()
     {
         $this->artisan('lit:provider', ['name' => 'foo']);
-        $this->assertFileExists(base_path('lit/app/Providers/Foo.php'));
+        $this->assertFileExists(lit()->getPath('app/Providers/Foo.php'));
         $this->assertTrue(class_exists(\Lit\Providers\Foo::class));
     }
 
@@ -84,7 +84,7 @@ class GeneratorCommandsTest extends BackendTestCase
     public function it_creates_resource()
     {
         $this->artisan('lit:resource', ['name' => 'foo']);
-        $this->assertFileExists(base_path('lit/app/Http/Resources/Foo.php'));
+        $this->assertFileExists(lit()->getPath('app/Http/Resources/Foo.php'));
         $this->assertTrue(class_exists(\Lit\Http\Resources\Foo::class));
     }
 
@@ -92,7 +92,7 @@ class GeneratorCommandsTest extends BackendTestCase
     public function it_creates_middleware()
     {
         $this->artisan('lit:middleware', ['name' => 'foo']);
-        $this->assertFileExists(base_path('lit/app/Http/Middleware/Foo.php'));
+        $this->assertFileExists(lit()->getPath('app/Http/Middleware/Foo.php'));
         $this->assertTrue(class_exists(\Lit\Http\Middleware\Foo::class));
     }
 
@@ -100,8 +100,8 @@ class GeneratorCommandsTest extends BackendTestCase
     public function it_create_component_and_its_view()
     {
         $this->artisan('lit:component', ['name' => 'Foo']);
-        $this->assertFileExists(base_path('lit/app/View/Components/Foo.php'));
-        $this->assertFileExists(base_path('lit/resources/views/components/foo.blade.php'));
+        $this->assertFileExists(lit()->getPath('app/View/Components/Foo.php'));
+        $this->assertFileExists(lit()->getPath('resources/views/components/foo.blade.php'));
         $this->assertTrue(class_exists(\Lit\View\Components\Foo::class));
     }
 
