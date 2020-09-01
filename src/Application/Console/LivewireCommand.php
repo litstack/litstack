@@ -4,7 +4,6 @@ namespace Ignite\Application\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\File;
 use Livewire\Commands\ComponentParser;
 
 class LivewireCommand extends Command

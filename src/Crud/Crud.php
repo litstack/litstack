@@ -105,7 +105,7 @@ class Crud
 
                 Nav::preset($config->getKey(), [
                     'link'      => Lit::url($config->routePrefix),
-                    'title'     => fn ()     => ucfirst($config->names['plural']),
+                    'title'     => fn () => ucfirst($config->names['plural']),
                     'authorize' => function (User $user) use ($config) {
                         return (new $config->controller())->authorize($user, 'read');
                     },
@@ -138,7 +138,7 @@ class Crud
                 // Nav preset.
                 Nav::preset("form.{$collection}.{$form}", [
                     'link'      => Lit::url($config->route_prefix),
-                    'title'     => fn ()     => ucfirst($config->names['singular']),
+                    'title'     => fn () => ucfirst($config->names['singular']),
                     'authorize' => function (User $user) use ($config) {
                         return (new $config->controller())->authorize($user, 'read');
                     },

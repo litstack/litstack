@@ -3,8 +3,8 @@
 namespace Lit\Http\Controllers\User;
 
 use Ignite\Crud\Controllers\CrudController;
-use Lit\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Lit\Models\User;
 
 class ProfileSettingsController extends CrudController
 {
