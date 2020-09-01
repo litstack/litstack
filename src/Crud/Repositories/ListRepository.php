@@ -236,7 +236,7 @@ class ListRepository extends BaseFieldRepository
     /**
      * Get parent by id.
      *
-     * @param  string|int   $parentId
+     * @param  string|int $parentId
      * @return ListItem
      */
     protected function getParent($model, $parentId = 0)

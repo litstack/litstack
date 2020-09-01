@@ -2,8 +2,8 @@
 
 namespace Ignite\Crud;
 
-use Illuminate\Support\Collection;
 use Ignite\Crud\Models\Form as FormModel;
+use Illuminate\Support\Collection;
 
 class Form
 {

@@ -2,12 +2,12 @@
 
 namespace Ignite\Crud\Models\Relations;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\ServiceProvider;
 use Ignite\Crud\Fields\ListField\ListRelation;
 use Ignite\Crud\Models\ListItem;
 use Ignite\Crud\Models\Relation;
 use Ignite\Crud\Models\Repeatable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\ServiceProvider;
 
 class CrudRelations extends ServiceProvider
 {

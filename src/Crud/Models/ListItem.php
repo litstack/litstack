@@ -2,10 +2,10 @@
 
 namespace Ignite\Crud\Models;
 
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Support\Collection;
 use Ignite\Crud\Fields\ListField\ListCollection;
 use Ignite\Crud\Fields\ListField\ListField;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Collection;
 
 class ListItem extends LitFormModel
 {

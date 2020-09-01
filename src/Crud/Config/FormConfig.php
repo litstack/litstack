@@ -2,9 +2,9 @@
 
 namespace Ignite\Crud\Config;
 
-use Illuminate\Support\Str;
 use Ignite\Crud\Models\Form;
 use Ignite\Support\Facades\Crud;
+use Illuminate\Support\Str;
 
 class FormConfig
 {

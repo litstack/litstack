@@ -6,10 +6,10 @@ use Ignite\Crud\BaseForm;
 use Ignite\Crud\Field;
 use Ignite\Crud\FieldDependency;
 use Ignite\Exceptions\Traceable\MissingAttributeException;
+use Illuminate\Support\Facades\Auth;
 use Lit\Models\User;
 use Tests\BackendTestCase;
 use Tests\Traits\InteractsWithFields;
-use Illuminate\Support\Facades\Auth;
 
 class FieldTest extends BackendTestCase
 {

@@ -147,12 +147,12 @@ abstract class ChartLoader
     protected function getLabelResolverConfig()
     {
         return [
-            'today'      => fn ($time) => $time->hour,
-            'yesterday'  => fn ($time) => $time->hour,
-            'last7days'  => fn ($time) => $time->format('l'),
-            'thisweek'   => fn ($time) => $time->format('l'),
+            'today'      => fn ($time)      => $time->hour,
+            'yesterday'  => fn ($time)  => $time->hour,
+            'last7days'  => fn ($time)  => $time->format('l'),
+            'thisweek'   => fn ($time)   => $time->format('l'),
             'last30days' => fn ($time) => $time->format('l'),
-            'thismonth'  => fn ($time) => $time->format('l'),
+            'thismonth'  => fn ($time)  => $time->format('l'),
         ];
     }
 

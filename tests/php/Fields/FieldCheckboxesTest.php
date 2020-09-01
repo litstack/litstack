@@ -4,8 +4,8 @@ namespace Tests\Fields;
 
 use Ignite\Crud\BaseField;
 use Ignite\Crud\Fields\Checkboxes;
-use Tests\Traits\InteractsWithFields;
 use PHPUnit\Framework\TestCase;
+use Tests\Traits\InteractsWithFields;
 
 class FieldCheckboxesTest extends TestCase
 {

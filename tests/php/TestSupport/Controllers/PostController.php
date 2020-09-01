@@ -3,8 +3,8 @@
 namespace Tests\TestSupport\Controllers;
 
 use Ignite\Crud\Controllers\CrudController;
-use Lit\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Lit\Models\User;
 
 class PostController extends CrudController
 {
@@ -19,8 +19,8 @@ class PostController extends CrudController
      * Authorize request for permission operation and authenticated lit-user.
      * Operations: create, read, update, delete.
      *
-     * @param User $user
-     * @param string    $operation
+     * @param User   $user
+     * @param string $operation
      *
      * @return bool
      */

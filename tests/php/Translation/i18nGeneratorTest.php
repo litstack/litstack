@@ -3,8 +3,8 @@
 namespace Tests\Fields;
 
 use Ignite\Translation\i18nGenerator;
-use Tests\Traits\TestHelpers;
 use PHPUnit\Framework\TestCase;
+use Tests\Traits\TestHelpers;
 
 class i18nGeneratorTest extends TestCase
 {

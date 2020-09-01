@@ -38,7 +38,7 @@ class Chart extends VueProp
      * Create new Chart instance.
      *
      * @param \Ignite\Chart\Contracts\Engine $engine
-     * @param ConfigHandler                 $config
+     * @param ConfigHandler                  $config
      */
     public function __construct(Engine $engine, ConfigHandler $config)
     {

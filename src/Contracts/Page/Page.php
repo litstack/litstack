@@ -15,7 +15,7 @@ interface Page
     /**
      * Adds Vue component to page.
      *
-     * @param  string               $name
+     * @param  string                $name
      * @return \Ignite\Vue\Component
      */
     public function component($name);

@@ -9,11 +9,11 @@ use Ignite\Crud\Controllers\CrudController;
 use Ignite\Crud\Fields\Relations\HasMany;
 use Ignite\Crud\Repositories\Relations\HasManyRepository;
 use Ignite\Crud\Requests\CrudUpdateRequest;
-use Tests\BackendTestCase;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 /**
  * @see https://laravel.com/docs/7.x/eloquent-relationships#one-to-man

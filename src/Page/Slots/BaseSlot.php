@@ -32,7 +32,7 @@ abstract class BaseSlot extends VueProp
     /**
      * Add action.
      *
-     * @param  string              $action
+     * @param  string            $action
      * @return Lit\Vue\Component
      */
     public function action($action)

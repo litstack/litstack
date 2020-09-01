@@ -4,8 +4,8 @@ namespace Tests\TestSupport\Models;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Ignite\Crud\Models\Traits\Translatable;
-use Tests\TestSupport\Models\Translations\TranslatablePostTranslation;
 use Illuminate\Database\Eloquent\Model;
+use Tests\TestSupport\Models\Translations\TranslatablePostTranslation;
 
 class TranslatablePost extends Model implements TranslatableContract
 {

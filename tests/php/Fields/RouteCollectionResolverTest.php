@@ -4,8 +4,8 @@ namespace Tests\Fields;
 
 use Ignite\Crud\Fields\Route\RouteCollection;
 use Ignite\Crud\Fields\Route\RouteCollectionResolver;
-use Tests\BackendTestCase;
 use InvalidArgumentException;
+use Tests\BackendTestCase;
 
 class RouteCollectionResolverTest extends BackendTestCase
 {

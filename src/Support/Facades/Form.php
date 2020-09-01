@@ -2,8 +2,8 @@
 
 namespace Ignite\Support\Facades;
 
-use Illuminate\Support\Facades\Facade;
 use Ignite\Support\FacadeNeedsLitInstalled;
+use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static \Ignite\Crud\FormCollection|\Ignite\Crud\Models\Form load(string $collection = null, string $name = null)

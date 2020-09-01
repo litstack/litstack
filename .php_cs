@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-$styles = [
+$rules = [
     'phpdoc_align' => ['align' => 'vertical'],
     'ordered_imports' => ['sort_algorithm' => 'alpha'],
     'array_indentation' => true,
@@ -122,6 +122,18 @@ $styles = [
     'method_chaining_indentation' => true,
 ];
 
+$finder = Symfony\Component\Finder\Finder::create()
+    ->notPath('tests/resources/*')
+    ->in([
+        __DIR__ . '/src',
+        __DIR__ . '/tests',
+    ])
+    ->name('*.php')
+    ->notName('*.blade.php')
+    ->ignoreDotFiles(true)
+    ->ignoreVCS(true);
+
 return PhpCsFixer\Config::create()
-    ->setRules($styleCiLaravel)
-    ->setLineEnding("\n");
+    ->setRules($rules)
+    ->setLineEnding("\n")
+    ->setFinder($finder);

@@ -5,11 +5,11 @@ namespace Tests;
 use BadMethodCallException;
 use Ignite\Crud\Models\FormRelation;
 use Ignite\Support\Macros\BuilderSort;
+use Illuminate\Database\Eloquent\Model;
+use ReflectionClass;
 use Tests\TestSupport\Models\Post;
 use Tests\TestSupport\Models\TranslatablePost;
 use Tests\TestSupport\Models\User;
-use Illuminate\Database\Eloquent\Model;
-use ReflectionClass;
 
 class BuilderMacroSortTest extends BackendTestCase
 {

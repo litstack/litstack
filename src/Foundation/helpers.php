@@ -321,7 +321,7 @@ if (! function_exists('medialibrary_config')) {
             // For old versions.
             return 'medialibrary';
         }
-        
+
         // For new versions.
         return 'media-library';
     }

@@ -6,10 +6,10 @@ use Ignite\Exceptions\Traceable\MissingAttributeException;
 use Ignite\Page\Table\ColumnBuilder;
 use Ignite\Page\Table\Table;
 use Ignite\Vue\Component;
-use Tests\BackendTestCase;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class TableTest extends BackendTestCase
 {

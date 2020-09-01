@@ -13,7 +13,7 @@ class CrudIndexConfigFactory extends ConfigFactory
      * Setup index table.
      *
      * @param  \Ignite\Config\Types\CrudConfig $config
-     * @param  Closure                        $method
+     * @param  Closure                         $method
      * @return \Ignite\Vue\Crud\CrudTable
      */
     public function index(ConfigHandler $config, Closure $method)

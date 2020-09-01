@@ -4,11 +4,11 @@ namespace Ignite\Crud\Models;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
-use Illuminate\Database\Eloquent\Model;
 use Ignite\Crud\Fields\Media\MediaField;
 use Ignite\Crud\Fields\Relations\ManyRelationField;
 use Ignite\Crud\RelationField;
 use Ignite\Support\Facades\Config;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 

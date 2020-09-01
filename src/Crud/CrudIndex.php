@@ -75,7 +75,7 @@ class CrudIndex extends Page
     /**
      * Create CrudIndex table.
      *
-     * @param  Closure                 $closure
+     * @param  Closure                  $closure
      * @return \Ignite\Page\Table\Table
      */
     public function table(Closure $closure)

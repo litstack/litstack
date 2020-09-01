@@ -3,8 +3,8 @@
 namespace Tests\TestSupport\Controllers;
 
 use Ignite\Crud\Controllers\CrudController;
-use Lit\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Lit\Models\User;
 
 class BlockInBlockController extends CrudController
 {

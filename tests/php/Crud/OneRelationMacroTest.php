@@ -2,8 +2,8 @@
 
 namespace Tests\Crud;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Ignite\Crud\Models\Relation as RelationModel;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Mockery as m;
 use Tests\BackendTestCase;
 use Tests\TestSupport\Models\Post;

@@ -2,10 +2,10 @@
 
 namespace Tests\Foundation;
 
-use Tests\BackendTestCase;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Console\CastMakeCommand;
+use Illuminate\Support\Facades\Artisan;
+use Tests\BackendTestCase;
 
 class CommandsRegisteredTest extends BackendTestCase
 {

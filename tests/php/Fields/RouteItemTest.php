@@ -4,9 +4,9 @@ namespace Tests\Fields;
 
 use Ignite\Crud\Fields\Route\RouteCollection;
 use Ignite\Crud\Fields\Route\RouteItem;
-use Tests\BackendTestCase;
 use Illuminate\Http\Request;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class RouteItemTest extends BackendTestCase
 {

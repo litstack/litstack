@@ -5,10 +5,10 @@ namespace Tests\Fields;
 use Ignite\Crud\BaseField;
 use Ignite\Crud\Fields\Password;
 use Ignite\Crud\Fields\Traits\FieldHasRules;
-use Tests\BackendTestCase;
-use Tests\Traits\InteractsWithFields;
 use Illuminate\Support\Facades\Hash;
 use Mockery as m;
+use Tests\BackendTestCase;
+use Tests\Traits\InteractsWithFields;
 
 class FieldPasswordTest extends BackendTestCase
 {

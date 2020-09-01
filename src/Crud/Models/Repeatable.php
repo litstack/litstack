@@ -3,10 +3,10 @@
 namespace Ignite\Crud\Models;
 
 use BadMethodCallException;
+use Ignite\Crud\Fields\Block\Block;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\ForwardsCalls;
-use Ignite\Crud\Fields\Block\Block;
 
 class Repeatable extends LitFormModel
 {

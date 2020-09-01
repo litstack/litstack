@@ -3,14 +3,14 @@
 namespace Ignite\Crud\Fields\Block;
 
 use Closure;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Str;
-use Illuminate\Support\Traits\ForwardsCalls;
-use Illuminate\View\Compilers\ComponentTagCompiler;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Models\Repeatable as RepeatableModel;
 use Ignite\Page\Table\ColumnBuilder;
 use Ignite\Support\VueProp;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Str;
+use Illuminate\Support\Traits\ForwardsCalls;
+use Illuminate\View\Compilers\ComponentTagCompiler;
 
 class Repeatable extends VueProp
 {

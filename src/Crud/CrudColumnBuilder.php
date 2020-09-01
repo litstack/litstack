@@ -28,7 +28,7 @@ class CrudColumnBuilder extends ColumnBuilder
     /**
      * Add table column to cols stack.
      *
-     * @param  string                       $label
+     * @param  string                        $label
      * @return \Ignite\Contracts\Page\Column
      */
     public function col($label = ''): Column

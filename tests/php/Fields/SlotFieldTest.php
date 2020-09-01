@@ -3,9 +3,9 @@
 namespace Tests\Fields;
 
 use Ignite\Crud\Field;
+use PHPUnit\Framework\TestCase;
 use Tests\Traits\InteractsWithFields;
 use Tests\Traits\TestHelpers;
-use PHPUnit\Framework\TestCase;
 
 class SlotFieldTest extends TestCase
 {

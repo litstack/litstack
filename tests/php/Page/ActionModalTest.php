@@ -4,9 +4,9 @@ namespace Lit\Test\Page;
 
 use Ignite\Page\Actions\ActionModal;
 use Ignite\Vue\Traits\StaticComponentName;
-use Tests\Traits\TestHelpers;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Tests\Traits\TestHelpers;
 
 class ActionModalTest extends TestCase
 {

@@ -5,9 +5,9 @@ namespace Tests\CrudRepositories;
 use Ignite\Crud\Field;
 use Ignite\Crud\Fields\Relations\ManyRelation;
 use Ignite\Crud\Repositories\Relations\Concerns\ManagesRelated;
-use Tests\BackendTestCase;
 use Mockery as m;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Tests\BackendTestCase;
 
 class CheckMaxItemsTest extends BackendTestCase
 {

@@ -6,9 +6,9 @@ use Ignite\Crud\BaseField;
 use Ignite\Crud\Fields\Input;
 use Ignite\Crud\Fields\Traits\FieldHasRules;
 use Ignite\Crud\Fields\Traits\TranslatableField;
+use PHPUnit\Framework\TestCase;
 use Tests\Traits\InteractsWithFields;
 use Tests\Traits\TestHelpers;
-use PHPUnit\Framework\TestCase;
 
 class FieldInputTest extends TestCase
 {

@@ -2,10 +2,10 @@
 
 namespace Tests\Crud;
 
-use Illuminate\Database\Eloquent\Model;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\CrudShow;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
+use Illuminate\Database\Eloquent\Model;
 use Tests\BackendTestCase;
 
 class CrudShowTest extends BackendTestCase

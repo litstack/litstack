@@ -6,10 +6,10 @@ use Ignite\Exceptions\NotLoggedInException;
 use Ignite\Page\Header;
 use Ignite\Page\Navigation;
 use Ignite\Page\Page;
-use Tests\BackendTestCase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class PageTest extends BackendTestCase
 {

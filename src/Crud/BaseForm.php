@@ -3,11 +3,6 @@
 namespace Ignite\Crud;
 
 use Closure;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Jsonable;
-use Illuminate\Support\Str;
-use Illuminate\Support\Traits\Macroable;
-use InvalidArgumentException;
 use Ignite\Contracts\Crud\Form;
 use Ignite\Crud\Fields\Block\Block;
 use Ignite\Crud\Fields\Component;
@@ -25,6 +20,11 @@ use Ignite\Page\BasePage;
 use Ignite\Support\Facades\Form as FormFacade;
 use Ignite\Support\Facades\Lit;
 use Ignite\Vue\Traits\RenderableAsProp;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Macroable;
+use InvalidArgumentException;
 
 class BaseForm extends BasePage implements Form, Arrayable, Jsonable
 {
@@ -117,7 +117,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     /**
      * Add Vue component field.
      *
-     * @param  string|Component   $component
+     * @param  string|Component      $component
      * @return \Ignite\Vue\Component
      */
     public function component($component)

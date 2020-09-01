@@ -8,10 +8,10 @@ use Ignite\Page\Table\ColumnBuilder;
 use Ignite\Page\Table\Components\BladeColumnComponent;
 use Ignite\Page\Table\Components\ColumnComponent;
 use Ignite\Page\Table\Table;
-use Tests\BackendTestCase;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Support\Facades\View;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class ColumnBuilderTest extends BackendTestCase
 {

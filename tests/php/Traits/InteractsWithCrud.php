@@ -4,8 +4,8 @@ namespace Tests\Traits;
 
 use Ignite\Crud\RouteServiceProvider;
 use Ignite\Support\Facades\Config;
-use Lit\Config\Crud\PostConfig;
 use Illuminate\Support\Facades\File;
+use Lit\Config\Crud\PostConfig;
 
 trait InteractsWithCrud
 {

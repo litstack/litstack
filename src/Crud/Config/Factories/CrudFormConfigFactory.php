@@ -16,7 +16,7 @@ class CrudFormConfigFactory extends ConfigFactory
      * Setup create and edit form.
      *
      * @param  \Ignite\Config\ConfigHandler $config
-     * @param  Closure                     $method
+     * @param  Closure                      $method
      * @return \Ignite\Crud\CrudForm
      */
     public function show(ConfigHandler $config, Closure $method)

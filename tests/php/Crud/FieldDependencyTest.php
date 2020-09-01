@@ -4,10 +4,10 @@ namespace Tests;
 
 use Ignite\Crud\Field;
 use Ignite\Crud\FieldDependency;
-use Tests\Traits\TestHelpers;
 use InvalidArgumentException;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
+use Tests\Traits\TestHelpers;
 
 class FieldDependencyTest extends TestCase
 {

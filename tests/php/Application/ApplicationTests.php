@@ -4,8 +4,8 @@ namespace Tests\Application;
 
 use Ignite\Support\Facades\Lit;
 use Ignite\Translation\Translator;
-use Tests\BackendTestCase;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class ApplicationTests extends BackendTestCase
 {

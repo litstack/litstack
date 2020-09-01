@@ -120,7 +120,7 @@ class CrudShow extends Page
     /**
      * Add Vue component.
      *
-     * @param  string               $component
+     * @param  string                $component
      * @return \Ignite\Vue\Component
      */
     public function component($component)

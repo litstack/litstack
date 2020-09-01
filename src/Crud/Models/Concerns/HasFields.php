@@ -62,7 +62,7 @@ trait HasFields
     /**
      * Find field by id.
      *
-     * @param  string            $id
+     * @param  string             $id
      * @return \Ignite\Crud\Field
      */
     public function findField($id)

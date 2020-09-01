@@ -3,12 +3,12 @@
 namespace Tests\Translation;
 
 use Ignite\Translation\Controllers\SetLocaleController;
-use Tests\BackendTestCase;
-use Tests\Traits\CreateLitUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mockery as m;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Tests\BackendTestCase;
+use Tests\Traits\CreateLitUsers;
 
 class SetLocaleControllerTest extends BackendTestCase
 {

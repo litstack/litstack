@@ -183,8 +183,8 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Get repeatable model.
      *
-     * @param  Request   $request
-     * @param  mixed     $model
+     * @param  Request    $request
+     * @param  mixed      $model
      * @return Repeatable
      */
     public function getModel(Request $request, $model, $childRepository)

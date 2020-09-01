@@ -3,11 +3,11 @@
 namespace Tests;
 
 use BadMethodCallException;
+use Ignite\Crud\Models\Relation;
+use Ignite\Support\Macros\BuilderSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Ignite\Crud\Models\Relation;
-use Ignite\Support\Macros\BuilderSearch;
 use Mockery as m;
 use Tests\TestSupport\Models\Post;
 use Tests\TestSupport\Models\Tag;

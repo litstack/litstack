@@ -4,10 +4,10 @@ namespace Tests\Fields;
 
 use Ignite\Crud\Fields\Relations\ManyRelationField;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
+use Illuminate\Database\Eloquent\Model;
 use Tests\BackendTestCase;
 use Tests\Traits\InteractsWithConfig;
 use Tests\Traits\InteractsWithFields;
-use Illuminate\Database\Eloquent\Model;
 
 class ManyRelationFieldTest extends BackendTestCase
 {

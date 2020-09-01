@@ -2,9 +2,9 @@
 
 namespace Tests;
 
-use Tests\Traits\TestHelpers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\Dusk\TestCase as OrchestraDuskTestCase;
+use Tests\Traits\TestHelpers;
 
 class BackendTestCase extends OrchestraDuskTestCase
 {

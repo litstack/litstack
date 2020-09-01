@@ -3,8 +3,8 @@
 namespace Tests\Fields;
 
 use Ignite\Crud\Casts\Route;
-use Tests\BackendTestCase;
 use Mockery as m;
+use Tests\BackendTestCase;
 
 class RouteCastTest extends BackendTestCase
 {
