@@ -1,6 +1,6 @@
 <?php
 
-namespace Ignite\Commands;
+namespace Ignite\Page\Console;
 
 use Ignite\Console\GeneratorCommand;
 use Illuminate\Console\Command;
