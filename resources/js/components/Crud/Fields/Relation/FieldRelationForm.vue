@@ -11,14 +11,19 @@
             />
         </b-row>
         <template v-slot:modal-footer>
-            <b-button
-                class="lit-save-button"
-                variant="primary"
-                :disabled="!canSave"
-                @click="Lit.bus.$emit('save')"
-            >
-                {{ __('lit.save') }}
-            </b-button>
+            <div class="d-flex justify-content-between w-100">
+                <div>
+                    <lit-crud-language />
+                </div>
+                <b-button
+                    class="lit-save-button"
+                    variant="primary"
+                    :disabled="!canSave"
+                    @click="Lit.bus.$emit('save')"
+                >
+                    {{ __('lit.save') }}
+                </b-button>
+            </div>
         </template>
     </b-modal>
 </template>
