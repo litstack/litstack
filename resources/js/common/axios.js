@@ -27,7 +27,7 @@ const methods = {
 			? i18n.t(`messages.${message}`)
 			: message;
 
-		toast(message, { variant });
+		window.toast(message, { variant });
 
 		return response;
 	},

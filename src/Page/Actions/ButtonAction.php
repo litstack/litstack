@@ -3,7 +3,7 @@
 namespace Ignite\Page\Actions;
 
 use Ignite\Support\Bootstrap;
-use Ignite\Vue\Components\ButtonComponent;
+use Ignite\Support\Vue\ButtonComponent;
 
 class ButtonAction extends BaseAction
 {

@@ -72,6 +72,17 @@ class Slot extends VueProp
     }
 
     /**
+     * Flush slot.
+     *
+     * @return void
+     */
+    public function flush()
+    {
+        $this->components = [];
+        $this->views = [];
+    }
+
+    /**
      * Add component to Slot.
      *
      * @return Component

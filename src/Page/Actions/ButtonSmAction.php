@@ -2,7 +2,7 @@
 
 namespace Ignite\Page\Actions;
 
-use Ignite\Vue\Components\ButtonComponent;
+use Ignite\Support\Vue\ButtonComponent;
 
 class ButtonSmAction extends BaseAction
 {

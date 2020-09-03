@@ -49,6 +49,34 @@ class Table extends BaseTable implements TableContract
     protected $casts = [];
 
     /**
+     * Gets alphabetic order configuration.
+     *
+     * @param  string $column
+     * @return array
+     */
+    public static function alphabeticOrder($column = 'title')
+    {
+        return [
+            "{$column}.desc" => 'A -> Z',
+            "{$column}.asc"  => 'Z -> A',
+        ];
+    }
+
+    /**
+     * Gets numeric order configuration.
+     *
+     * @param  string $column
+     * @return array
+     */
+    public static function numericOrder($column = 'id')
+    {
+        return [
+            "{$column}.desc" => __lit('lit.sort_new_to_old'),
+            "{$column}.asc"  => __lit('lit.sort_old_to_new'),
+        ];
+    }
+
+    /**
      * Create new Table instance.
      *
      * @param string        $routePrefix
@@ -87,34 +115,6 @@ class Table extends BaseTable implements TableContract
         $this->setAttribute('route_prefix', $routePrefix);
 
         return $this;
-    }
-
-    /**
-     * Gets alphabetic order configuration.
-     *
-     * @param  string $column
-     * @return array
-     */
-    public static function alphabeticOrder($column = 'title')
-    {
-        return [
-            "{$column}.desc" => 'A -> Z',
-            "{$column}.asc"  => 'Z -> A',
-        ];
-    }
-
-    /**
-     * Gets numeric order configuration.
-     *
-     * @param  string $column
-     * @return array
-     */
-    public static function numericOrder($column = 'id')
-    {
-        return [
-            "{$column}.desc" => __lit('lit.sort_new_to_old'),
-            "{$column}.asc"  => __lit('lit.sort_old_to_new'),
-        ];
     }
 
     /**
