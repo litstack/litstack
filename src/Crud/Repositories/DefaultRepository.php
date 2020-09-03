@@ -3,10 +3,13 @@
 namespace Ignite\Crud\Repositories;
 
 use Ignite\Crud\CrudValidator;
+use Ignite\Crud\Field;
+use Ignite\Crud\Fields\Relations\LaravelRelationField;
 use Ignite\Crud\Models\LitFormModel;
 use Ignite\Crud\Requests\CrudCreateRequest;
 use Ignite\Crud\Requests\CrudReadRequest;
 use Ignite\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Http\Request;
 
 class DefaultRepository extends BaseFieldRepository
 {
@@ -85,5 +88,40 @@ class DefaultRepository extends BaseFieldRepository
         }
 
         return crud($model);
+    }
+
+    /**
+     * Get child field for relation fields.
+     *
+     * @param  Request $request
+     * @param  string  $field_id
+     * @return Field
+     */
+    public function getField(Request $request, $field_id)
+    {
+        if (! $this->field instanceof LaravelRelationField) {
+            abort(404);
+        }
+
+        return $this->field->form->findField($field_id)
+            ?: abort(404, debug("Coulnd't find field [$field_id]"));
+    }
+
+    /**
+     * Get relation model.
+     *
+     * @param  Request    $request
+     * @param  mixed      $model
+     * @return Repeatable
+     */
+    public function getModel(Request $request, $model, $childRepository)
+    {
+        if (! $this->field instanceof LaravelRelationField) {
+            abort(404);
+        }
+
+        return $this->field->getRelationQuery($model)
+            ->where('id', $request->relation_id)
+            ->firstOrFail();
     }
 }

@@ -422,4 +422,34 @@ class LaravelRelationField extends RelationField
 
         return $this;
     }
+
+    /**
+     * Add form to the relation.
+     *
+     * @param  Closure $closure
+     * @return $this
+     */
+    public function form(Closure $closure)
+    {
+        if (! $this->relatedModelClass) {
+            throw new InvalidArgumentException('Missing related model.');
+        }
+
+        $form = new RelationForm($this->relatedModelClass);
+
+        $form->setRoutePrefix($this->formInstance->getRoutePrefix());
+
+        $form->registered(function ($field) {
+            $field->setAttribute('params', [
+                'field_id'       => $this->id,
+                'child_field_id' => $field->id,
+            ]);
+        });
+
+        $closure($form);
+
+        $this->setAttribute('form', $form);
+
+        return $this;
+    }
 }

@@ -103,6 +103,7 @@
                     @_sorted="sorted"
                     :class="{ paginated: total > items.length }"
                     v-on="$listeners"
+                    v-bind="$attrs"
                 />
 
                 <lit-base-index-table-index-indicator
