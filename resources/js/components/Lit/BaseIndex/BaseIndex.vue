@@ -34,16 +34,23 @@
                             :name-plural="namePlural"
                             :filter-scopes="filter_scopes"
                             @search="doSearch"
+                            :style="
+                                filter_scopes.length > 0
+                                    ? 'border-right-color: transparent'
+                                    : ''
+                            "
                         />
 
                         <b-input-group-append
                             is-text
+                            class="lit-index-table__active-filters"
                             variant="primary"
                             v-if="filter_scopes.length > 0"
+                            style="background:transparent;border-left:none;"
                         >
                             <b-tag
                                 style="height: 28px;"
-                                variant="info"
+                                variant="primary"
                                 v-for="(scope, key) in filter_scopes"
                                 :key="key"
                                 @remove="removeFilter(scope)"
@@ -433,6 +440,13 @@ export default {
 <style lang="scss">
 @import '@lit-sass/_variables';
 .lit-index-table {
+    &__active-filters {
+        .input-group-text {
+            background: transparent;
+            border-left: white 1px solid;
+            padding-right: 0.3125rem;
+        }
+    }
     .nav-tabs {
         margin-left: 0;
         margin-right: 0;
