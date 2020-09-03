@@ -58,35 +58,35 @@ class GeneratorCommandsTest extends BackendTestCase
         if (! class_exists(CastMakeCommand::class)) {
             $this->markTestSkipped('Cast command not available in Laravel '.Application::VERSION);
         }
-        $this->artisan('lit:cast', ['name' => 'foo']);
+        $this->artisan('lit:cast', ['name' => 'Foo']);
         $this->assertFileExists(lit()->getPath('app/Casts/Foo.php'));
     }
 
     /** @test */
     public function it_creates_request()
     {
-        $this->artisan('lit:request', ['name' => 'foo']);
+        $this->artisan('lit:request', ['name' => 'Foo']);
         $this->assertFileExists(lit()->getPath('app/Http/Requests/Foo.php'));
     }
 
     /** @test */
     public function it_creates_provider()
     {
-        $this->artisan('lit:provider', ['name' => 'foo']);
+        $this->artisan('lit:provider', ['name' => 'Foo']);
         $this->assertFileExists(lit()->getPath('app/Providers/Foo.php'));
     }
 
     /** @test */
     public function it_creates_resource()
     {
-        $this->artisan('lit:resource', ['name' => 'foo']);
+        $this->artisan('lit:resource', ['name' => 'Foo']);
         $this->assertFileExists(lit()->getPath('app/Http/Resources/Foo.php'));
     }
 
     /** @test */
     public function it_creates_middleware()
     {
-        $this->artisan('lit:middleware', ['name' => 'foo']);
+        $this->artisan('lit:middleware', ['name' => 'Foo']);
         $this->assertFileExists(lit()->getPath('app/Http/Middleware/Foo.php'));
     }
 

@@ -82,7 +82,7 @@ if (! function_exists('lit')) {
     /**
      * Get the Lit facade.
      *
-     * @return Lit\Foundation\Litstack
+     * @return \Ignite\Foundation\Litstack
      */
     function lit()
     {

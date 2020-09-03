@@ -7,20 +7,6 @@ use Ignite\Support\Migration\MigratePermissions;
 
 class DummyClassname extends Migration
 {
-    use MigratePermissions;
-
-    /**
-     * Permissions that should be created for this crud.
-     *
-     * @var array
-     */
-    protected $permissions = [
-        'create DummyTablename',
-        'read DummyTablename',
-        'update DummyTablename',
-        'delete DummyTablename',
-    ];
-
     /**
      * Run the migrations.
      *
@@ -57,8 +43,6 @@ class DummyClassname extends Migration
             $table->unique(['DummyForeignId', 'locale']);
             $table->foreign('DummyForeignId')->references('id')->on('DummyTablename')->onDelete('cascade');
         });
-
-        $this->upPermissions();
     }
 
     /**
@@ -70,7 +54,5 @@ class DummyClassname extends Migration
     {
         Schema::dropIfExists('DummyTranslationTablename');
         Schema::dropIfExists('DummyTablename');
-
-        $this->downPermissions();
     }
 }

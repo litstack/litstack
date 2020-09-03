@@ -7,20 +7,6 @@ use Ignite\Support\Migration\MigratePermissions;
 
 class DummyClassname extends Migration
 {
-    use MigratePermissions;
-
-    /**
-     * Permissions that should be created for this crud.
-     *
-     * @var array
-     */
-    protected $permissions = [
-        'create DummyTablename',
-        'read DummyTablename',
-        'update DummyTablename',
-        'delete DummyTablename',
-    ];
-
     /**
      * Run the migrations.
      *
@@ -36,8 +22,6 @@ class DummyClassname extends Migration
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
-        
-        $this->upPermissions();
     }
 
     /**
@@ -48,7 +32,5 @@ class DummyClassname extends Migration
     public function down()
     {
         Schema::dropIfExists('DummyTablename');
-
-        $this->downPermissions();
     }
 }

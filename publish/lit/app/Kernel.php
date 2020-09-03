@@ -13,6 +13,7 @@ class Kernel extends LitstackKernel
      */
     public $providers = [
         Providers\LitstackServiceProvider::class,
+        Providers\LivewireServiceProvider::class,
         Providers\LocalizationServiceProvider::class,
     ];
 }

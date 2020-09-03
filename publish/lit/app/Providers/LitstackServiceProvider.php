@@ -13,7 +13,7 @@ class LitstackServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(base_path('lit/resources/views'), 'lit');
+        $this->loadViewsFrom(lit_resource_path('views'), 'lit');
     }
 
     /**

@@ -45,11 +45,11 @@ class ChartController
     protected function makeLoader(string $chartType, ConfigHandler $config, Engine $engine): ChartLoader
     {
         $loader = [
-            'donut'     => fn () => new DonutLoader($config, $engine),
-            'area'      => fn () => new AreaLoader($config, $engine),
+            'donut'     => fn ()     => new DonutLoader($config, $engine),
+            'area'      => fn ()      => new AreaLoader($config, $engine),
             'radialBar' => fn () => new ProgressLoader($config, $engine),
-            'bar'       => fn () => new BarLoader($config, $engine),
-            'number'    => fn () => new NumberLoader($config, $engine),
+            'bar'       => fn ()       => new BarLoader($config, $engine),
+            'number'    => fn ()    => new NumberLoader($config, $engine),
         ][$chartType] ?? abort(404);
 
         return $loader();

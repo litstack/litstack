@@ -26,7 +26,9 @@ trait ManagesGeneration
     protected function getPath($name)
     {
         return Str::replaceFirst(
-            $this->laravel['path'], lit()->getPath().'/app', parent::getPath($name)
+            $this->laravel['path'],
+            lit()->getPath().'/app',
+            parent::getPath($name)
         );
     }
 
@@ -39,12 +41,23 @@ trait ManagesGeneration
     protected function mockBasePath(Closure $closure)
     {
         $original = $this->laravel->basePath();
-        $this->laravel->setBasePath(lit()->getPath());
+        $this->laravel->setBasePath(lit()->basePath());
 
         $result = $closure();
 
         $this->laravel->setBasePath($original);
 
         return $result;
+    }
+
+    /**
+     * Get the litstack view directory path.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    protected function viewPath($path = '')
+    {
+        return lit_resource_path('views').($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
 }

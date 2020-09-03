@@ -169,7 +169,7 @@ class CrudServiceProvider extends LaravelServiceProvider
     protected function registerCrudCommand($abstract)
     {
         $this->app->singleton($abstract, function ($app) {
-            return new CrudCommand();
+            return new CrudCommand($app['files']);
         });
     }
 

@@ -25,7 +25,9 @@ class ComponentCommand extends ComponentMakeCommand
     protected function buildClass($name)
     {
         return Str::replaceFirst(
-            'components', 'lit::components', parent::buildClass($name)
+            'components',
+            'lit::components',
+            parent::buildClass($name)
         );
     }
 
