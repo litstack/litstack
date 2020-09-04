@@ -23,9 +23,9 @@ class LaravelRelationField extends RelationField
     /**
      * Index query modifier.
      *
-     * @var Closure|null
+     * @var array
      */
-    protected $previewModifier;
+    protected $previewModifier = [];
 
     /**
      * Relation model class.
@@ -83,7 +83,6 @@ class LaravelRelationField extends RelationField
         $this->query = $this->getRelatedModelClass()::query();
 
         $this->setOrderDefaults();
-        //$this->setAttribute('model', $this->getRelatedModelClass());
 
         // Set relation attributes.
         if (method_exists($this, 'setRelationAttributes')) {
@@ -177,7 +176,7 @@ class LaravelRelationField extends RelationField
      */
     public function query(Closure $closure)
     {
-        $this->previewModifier = $closure;
+        $this->previewModifier[] = $closure;
 
         return $this;
     }
@@ -254,12 +253,9 @@ class LaravelRelationField extends RelationField
     {
         $query->withCasts($this->casts);
 
-        if (! $this->previewModifier instanceof Closure) {
-            return $query;
+        foreach ($this->previewModifier as $modifier) {
+            $modifier($query);
         }
-
-        $modifier = $this->previewModifier;
-        $modifier($query);
 
         return $query;
     }
@@ -435,7 +431,7 @@ class LaravelRelationField extends RelationField
             throw new InvalidArgumentException('Missing related model.');
         }
 
-        $form = new RelationForm($this->relatedModelClass);
+        $form = new RelationForm($this->relatedModelClass, $this);
 
         $form->setRoutePrefix($this->formInstance->getRoutePrefix());
 

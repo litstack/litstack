@@ -5,7 +5,7 @@ namespace Ignite\Crud\Fields\Relations;
 use Ignite\Crud\BaseForm;
 use Illuminate\Support\Traits\ForwardsCalls;
 
-class RelationPivotForm extends BaseForm
+class PivotField extends BaseForm
 {
     use ForwardsCalls;
 
@@ -38,6 +38,10 @@ class RelationPivotForm extends BaseForm
     {
         $field = $this->forwardCallTo($this->form, $method, $parameters);
         $field->setAttribute('is_pivot', true);
+
+        $this->form
+            ->getParentField()
+            ->query(fn ($query) => $query->withPivot($field->id));
 
         return $field;
     }
