@@ -186,6 +186,8 @@ class LitstackServiceProvider extends ServiceProvider
         $this->app->singleton('lit', function ($app) {
             return new Litstack($app);
         });
+
+        $this->app->bind(Litstack::class, 'lit');
     }
 
     /**
