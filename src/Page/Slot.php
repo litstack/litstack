@@ -52,6 +52,23 @@ class Slot extends VueProp
     }
 
     /**
+     * Determines if slot has component.
+     *
+     * @param  string $name
+     * @return bool
+     */
+    public function hasComponent($name)
+    {
+        foreach ($this->components as $component) {
+            if ($component->getName() == $name) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Add action.
      *
      * @param  string                $title
