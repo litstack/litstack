@@ -99,78 +99,84 @@ abstract class ChartLoader
     protected function getStartTimeConfig()
     {
         return [
-            'today'      => now()->startOfDay(),
-            'yesterday'  => now()->startOfDay()->subDay(),
-            'last7days'  => now()->subDays(7),
-            'thisweek'   => now()->startOfWeek(),
-            'last30days' => now()->subDays(30),
-            'thismonth'  => now()->startOfMonth(),
-            'thisyear'   => now()->startOfYear(),
+            'last24hours' => now()->subHours(24),
+            'today'       => now()->startOfDay(),
+            'yesterday'   => now()->startOfDay()->subDay(),
+            'last7days'   => now()->subDays(7),
+            'thisweek'    => now()->startOfWeek(),
+            'last30days'  => now()->subDays(30),
+            'thismonth'   => now()->startOfMonth(),
+            'thisyear'    => now()->startOfYear(),
         ];
     }
 
     protected function getIterationsConfig()
     {
         return [
-            'today'      => 24,
-            'yesterday'  => 24,
-            'last7days'  => 7,
-            'thisweek'   => 7,
-            'last30days' => 30,
-            'thismonth'  => 31,
-            'thisyear'   => 12,
+            'last24hours' => 24,
+            'today'       => 24,
+            'yesterday'   => 24,
+            'last7days'   => 7,
+            'thisweek'    => 7,
+            'last30days'  => 30,
+            'thismonth'   => 31,
+            'thisyear'    => 12,
         ];
     }
 
     protected function getTimeResolverConfig()
     {
         return [
-            'today'      => fn ($time, $i) => $time->addHours($i),
-            'yesterday'  => fn ($time, $i) => $time->addHours($i),
-            'last7days'  => fn ($time, $i) => $time->addDays($i),
-            'thisweek'   => fn ($time, $i) => $time->addDays($i),
-            'last30days' => fn ($time, $i) => $time->addDays($i),
-            'thismonth'  => fn ($time, $i) => $time->addDays($i),
-            'thisyear'   => fn ($time, $i) => $time->addMonths($i),
+            'last24hours' => fn ($time, $i) => $time->addHours($i),
+            'today'       => fn ($time, $i) => $time->addHours($i),
+            'yesterday'   => fn ($time, $i) => $time->addHours($i),
+            'last7days'   => fn ($time, $i) => $time->addDays($i),
+            'thisweek'    => fn ($time, $i) => $time->addDays($i),
+            'last30days'  => fn ($time, $i) => $time->addDays($i),
+            'thismonth'   => fn ($time, $i) => $time->addDays($i),
+            'thisyear'    => fn ($time, $i) => $time->addMonths($i),
         ];
     }
 
     protected function getQueryResolverConfig()
     {
         return [
-            'today'      => fn ($query, $column, $time) => $query->whereInHour($column, $time),
-            'yesterday'  => fn ($query, $column, $time) => $query->whereInHour($column, $time),
-            'last7days'  => fn ($query, $column, $time) => $query->whereInDay($column, $time),
-            'thisweek'   => fn ($query, $column, $time) => $query->whereInDay($column, $time),
-            'last30days' => fn ($query, $column, $time) => $query->whereInDay($column, $time),
-            'thismonth'  => fn ($query, $column, $time) => $query->whereInDay($column, $time),
-            'thisyear'   => fn ($query, $column, $time) => $query->whereInMonth($column, $time),
+            'last24hours' => fn ($query, $column, $time) => $query->whereInHour($column, $time),
+            'today'       => fn ($query, $column, $time) => $query->whereInHour($column, $time),
+            'yesterday'   => fn ($query, $column, $time) => $query->whereInHour($column, $time),
+            'last7days'   => fn ($query, $column, $time) => $query->whereInDay($column, $time),
+            'thisweek'    => fn ($query, $column, $time) => $query->whereInDay($column, $time),
+            'last30days'  => fn ($query, $column, $time) => $query->whereInDay($column, $time),
+            'thismonth'   => fn ($query, $column, $time) => $query->whereInDay($column, $time),
+            'thisyear'    => fn ($query, $column, $time) => $query->whereInMonth($column, $time),
         ];
     }
 
     protected function getLabelResolverConfig()
     {
         return [
-            'today'      => fn ($time)      => $time->hour,
-            'yesterday'  => fn ($time)  => $time->hour,
-            'last7days'  => fn ($time)  => $time->format('l'),
-            'thisweek'   => fn ($time)   => $time->format('l'),
-            'last30days' => fn ($time) => $time->format('l'),
-            'thismonth'  => fn ($time)  => $time->format('l'),
-            'thisyear'   => fn ($time)   => $time->format('MMMM'),
+            'last24hours' => fn ($time) => $time->hour,
+            'today'       => fn ($time)       => $time->hour,
+            'yesterday'   => fn ($time)   => $time->hour,
+            'last7days'   => fn ($time)   => $time->format('l'),
+            'thisweek'    => fn ($time)    => $time->format('l'),
+            'last30days'  => fn ($time)  => $time->format('l'),
+            'thismonth'   => fn ($time)   => $time->format('l'),
+            'thisyear'    => fn ($time)    => $time->format('MMMM'),
         ];
     }
 
     protected function getNamesConfig()
     {
         return [
-            'today'      => ['Today', 'Yesterday'],
-            'yesterday'  => ['Yesterday', 'Day before Yesterday'],
-            'last7days'  => ['Last 7 Days', 'Previous 7 Days'],
-            'thisweek'   => ['This Week', 'Last Week'],
-            'last30days' => ['Last 30 Days', 'Previouse 30 Days'],
-            'thismonth'  => ['This Month', 'Last Month'],
-            'thisyear'   => ['This Year', 'Last Year'],
+            'last24hours' => ['Last 24 Hours', 'Prevouis 24 Hours'],
+            'today'       => ['Today', 'Yesterday'],
+            'yesterday'   => ['Yesterday', 'Day before Yesterday'],
+            'last7days'   => ['Last 7 Days', 'Previous 7 Days'],
+            'thisweek'    => ['This Week', 'Last Week'],
+            'last30days'  => ['Last 30 Days', 'Previouse 30 Days'],
+            'thismonth'   => ['This Month', 'Last Month'],
+            'thisyear'    => ['This Year', 'Last Year'],
         ];
     }
 

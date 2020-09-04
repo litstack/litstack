@@ -86,9 +86,15 @@ class ChartSet
         return new self($query, $valueResolver, $timeResolver);
     }
 
+    /**
+     * Set label resolver.
+     *
+     * @param  Closure $closure
+     * @return $this
+     */
     public function label(Closure $closure)
     {
-        $this->labelClosure = $closure;
+        $this->labelResolver = $closure;
 
         return $this;
     }
@@ -96,8 +102,7 @@ class ChartSet
     /**
      * Set time.
      *
-     * @param CarbonInterface $time
-     *
+     * @param  CarbonInterface $time
      * @return $this
      */
     public function time(CarbonInterface $time)
@@ -110,8 +115,7 @@ class ChartSet
     /**
      * Set iterations.
      *
-     * @param int $iterations
-     *
+     * @param  int   $iterations
      * @return $this
      */
     public function iterations(int $iterations)

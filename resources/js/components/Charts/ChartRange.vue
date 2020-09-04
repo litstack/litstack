@@ -35,6 +35,10 @@ export default {
             },
             options: [
                 {
+                    title: 'Last 24 Hours',
+                    key: 'last24hours'
+                },
+                {
                     title: 'Today',
                     key: 'today'
                 },
