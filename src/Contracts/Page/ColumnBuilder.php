@@ -32,6 +32,15 @@ interface ColumnBuilder
     public function view($view): View;
 
     /**
+     * Add livewire component column.
+     *
+     * @param  string $component
+     * @param  array  $data
+     * @return View
+     */
+    public function livewire($component, $data = []);
+
+    /**
      * Registers image column.
      *
      * @param  string         $label
