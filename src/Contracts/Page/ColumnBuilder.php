@@ -48,6 +48,15 @@ interface ColumnBuilder
     public function avatar($label = '');
 
     /**
+     * Create new Money column.
+     *
+     * @param  string $column
+     * @param  string $currency
+     * @return Column
+     */
+    public function money($column, $currency = 'EUR', $locale = null);
+
+    /**
      * Registers relation column.
      *
      * @param  string $label
