@@ -6,5 +6,8 @@ use Ignite\Crud\BaseForm;
 
 class RelationForm extends BaseForm
 {
-    //
+    public function pivot()
+    {
+        return new RelationPivotForm($this);
+    }
 }

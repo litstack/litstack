@@ -43,14 +43,53 @@ class DefaultRepository extends BaseFieldRepository
             CrudValidator::UPDATE
         );
 
-        $this->fillAttributesToModel($model, (array) $payload);
-        $attributes = $this->formatAttributes((array) $payload, $this->form->getRegisteredFields());
+        [$attributes, $pivot] = $this->filterPivotAttributes((array) $payload);
+
+        if (! empty($pivot)) {
+            $this->updateExistingPivot($model, $pivot);
+        }
+
+        $this->fillAttributesToModel($model, $attributes);
+        $attributes = $this->formatAttributes($attributes, $this->form->getRegisteredFields());
 
         $this->controller->fillOnUpdate($model);
 
         $model->update($attributes);
 
         return crud($model);
+    }
+
+    protected function updateExistingPivot($related, $attributes)
+    {
+        $model = $this->field->getParentForm()->getModel()::findOrFail(
+            request()->route('id')
+        );
+
+        $relation = $this->field->local_key;
+
+        $model->$relation()->updateExistingPivot(
+            $related->id, $attributes
+        );
+    }
+
+    protected function filterPivotAttributes($attributes)
+    {
+        $pivot = [];
+
+        foreach ($this->form->getRegisteredFields() as $field) {
+            if (! $field->is_pivot) {
+                continue;
+            }
+
+            if (! array_key_exists($field->id, $attributes)) {
+                continue;
+            }
+
+            $pivot[$field->id] = $attributes[$field->id];
+            unset($attributes[$field->id]);
+        }
+
+        return [$attributes, $pivot];
     }
 
     /**
@@ -99,6 +138,7 @@ class DefaultRepository extends BaseFieldRepository
      */
     public function getField(Request $request, $field_id)
     {
+        return $this->field;
         if (! $this->field instanceof LaravelRelationField) {
             abort(404);
         }

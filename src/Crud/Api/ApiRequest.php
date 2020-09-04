@@ -262,7 +262,9 @@ class ApiRequest
             return $field->form;
         }
 
-        return $this->loader->loadFormOrFail($this->request->route('form_type') ?? 'show');
+        return $this->loader->loadFormOrFail(
+            $this->request->route('form_type') ?? 'show'
+        );
     }
 
     /**

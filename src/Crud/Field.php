@@ -100,6 +100,16 @@ class Field extends VueProp
     }
 
     /**
+     * Get parent form instance.
+     *
+     * @return BaseForm
+     */
+    public function getParentForm()
+    {
+        return $this->formInstance;
+    }
+
+    /**
      * Get repository instance.
      *
      * @return null|instance

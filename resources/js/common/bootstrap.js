@@ -30,8 +30,8 @@ Bus.$on('mounted', () => {
     if (!store.getters.debug) {
         return;
     }
-    // window.axios.defaults.headers['Accept'] =
-    //     'text/plain, application/json, */*';
+    window.axios.defaults.headers['Accept'] =
+        'text/plain, application/json, */*';
 });
 
 try {

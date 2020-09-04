@@ -5,7 +5,7 @@ namespace Lit\Http\Controllers\Crud;
 use Illuminate\Database\Eloquent\Builder;
 
 use Lit\Models\User;
-use Lit\Crud\Controllers\CrudController;
+use Ignite\Crud\Controllers\CrudController;
 
 class DummyClass extends CrudController
 {
