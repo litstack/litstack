@@ -162,7 +162,7 @@ abstract class ChartLoader
             'thisweek'    => fn ($time)    => $time->format('l'),
             'last30days'  => fn ($time)  => $time->format('l'),
             'thismonth'   => fn ($time)   => $time->format('l'),
-            'thisyear'    => fn ($time)    => $time->format('MMMM'),
+            'thisyear'    => fn ($time)    => $time->format('M'),
         ];
     }
 

@@ -1,7 +1,7 @@
 <template>
     <b-dropdown
         :text="active.title"
-        :variant="'primary'"
+        variant="outline-secondary"
         class="mt-auto mb-2"
         right
     >

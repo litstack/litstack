@@ -114,6 +114,20 @@ class Slot extends VueProp
     }
 
     /**
+     * Prepend component to Slot.
+     *
+     * @return Component
+     */
+    public function prependComponent($component)
+    {
+        $component = component($component);
+
+        array_unshift($this->components, $component);
+
+        return $component;
+    }
+
+    /**
      * Add Blade View to stack.
      *
      * @param  string|View $view
