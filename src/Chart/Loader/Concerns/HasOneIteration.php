@@ -18,6 +18,7 @@ trait HasOneIteration
             'thisweek'   => fn ($query, $column, $time) => $query->whereInWeek($column, $time),
             'last30days' => fn ($query, $column, $time) => $query->whereInDays($column, $time, 30),
             'thismonth'  => fn ($query, $column, $time) => $query->whereInMonth($column, $time),
+            'thisyear'   => fn ($query, $column, $time) => $query->whereInYear($column, $time),
         ];
     }
 }

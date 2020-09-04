@@ -40,6 +40,7 @@ trait HasGoal
             'thisweek'   => true,
             'last30days' => true,
             'thismonth'  => true,
+            'thisyear'   => false,
         ];
     }
 }

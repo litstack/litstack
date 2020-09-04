@@ -68,6 +68,7 @@ class AreaLoader extends ChartLoader
             'thisweek'   => fn ($time)   => $time->subWeek(),
             'last30days' => fn ($time) => $time->subDays(30),
             'thismonth'  => fn ($time)  => $time->subMonth(),
+            'thisyear'   => fn ($time)   => $time->subYear(),
         ];
     }
 }

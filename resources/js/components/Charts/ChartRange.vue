@@ -57,6 +57,10 @@ export default {
                 {
                     title: 'This Month',
                     key: 'thismonth'
+                },
+                {
+                    title: 'This Year',
+                    key: 'thisyear'
                 }
             ]
         };

@@ -105,6 +105,7 @@ abstract class ChartLoader
             'thisweek'   => now()->startOfWeek(),
             'last30days' => now()->subDays(30),
             'thismonth'  => now()->startOfMonth(),
+            'thisyear'   => now()->startOfYear(),
         ];
     }
 
@@ -117,6 +118,7 @@ abstract class ChartLoader
             'thisweek'   => 7,
             'last30days' => 30,
             'thismonth'  => 31,
+            'thisyear'   => 12,
         ];
     }
 
@@ -129,6 +131,7 @@ abstract class ChartLoader
             'thisweek'   => fn ($time, $i) => $time->addDays($i),
             'last30days' => fn ($time, $i) => $time->addDays($i),
             'thismonth'  => fn ($time, $i) => $time->addDays($i),
+            'thisyear'   => fn ($time, $i) => $time->addMonths($i),
         ];
     }
 
@@ -141,6 +144,7 @@ abstract class ChartLoader
             'thisweek'   => fn ($query, $column, $time) => $query->whereInDay($column, $time),
             'last30days' => fn ($query, $column, $time) => $query->whereInDay($column, $time),
             'thismonth'  => fn ($query, $column, $time) => $query->whereInDay($column, $time),
+            'thisyear'   => fn ($query, $column, $time) => $query->whereInMonth($column, $time),
         ];
     }
 
@@ -153,6 +157,7 @@ abstract class ChartLoader
             'thisweek'   => fn ($time)   => $time->format('l'),
             'last30days' => fn ($time) => $time->format('l'),
             'thismonth'  => fn ($time)  => $time->format('l'),
+            'thisyear'   => fn ($time)   => $time->format('MMMM'),
         ];
     }
 
@@ -165,6 +170,7 @@ abstract class ChartLoader
             'thisweek'   => ['This Week', 'Last Week'],
             'last30days' => ['Last 30 Days', 'Previouse 30 Days'],
             'thismonth'  => ['This Month', 'Last Month'],
+            'thisyear'   => ['This Year', 'Last Year'],
         ];
     }
 
