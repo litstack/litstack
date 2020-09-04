@@ -218,6 +218,9 @@ export default {
          */
         format(value) {
             if (this.chart.format) {
+                require('numeral/locales/de');
+                numeral.locale('de');
+                numeral.localeData('de').delimiters.thousands = '.';
                 value = numeral(value).format(this.chart.format);
             }
             if (this.chart.prefix) {

@@ -162,7 +162,7 @@ class Chart extends VueProp
             $currency = '$';
         }
 
-        $this->format('0,0[.]00')->suffix(" {$currency}");
+        $this->format('0,0.00')->suffix(" {$currency}");
 
         return $this;
     }
