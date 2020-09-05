@@ -4,6 +4,9 @@ namespace Ignite\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
+/**
+ * @see \Ignite\Application\Navigation\PresetFactory
+ */
 class Nav extends Facade
 {
     /**

@@ -8,7 +8,7 @@ use Ignite\User\Requests\UserReadRequest;
 use Illuminate\Http\Request;
 use Lit\Models\User;
 
-class FjordUserController
+class UserController
 {
     /**
      * Create new UserController instance.

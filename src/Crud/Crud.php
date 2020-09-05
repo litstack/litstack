@@ -103,13 +103,19 @@ class Crud
                 $this->makeCrudRoutes($config);
                 $this->makeFieldRoutes($config->controller);
 
-                Nav::preset($config->getKey(), [
-                    'link'      => Lit::url($config->routePrefix),
-                    'title'     => fn ()     => ucfirst($config->names['plural']),
-                    'authorize' => function (User $user) use ($config) {
-                        return (new $config->controller())->authorize($user, 'read');
-                    },
-                ]);
+                Nav::preset(
+                    [
+                        get_class($config->getConfig()),
+                        $config->getKey()
+                    ],
+                    [
+                        'link'      => Lit::url($config->routePrefix),
+                        'title'     => fn () => ucfirst($config->names['plural']),
+                        'authorize' => function (User $user) use ($config) {
+                            return (new $config->controller())->authorize($user, 'read');
+                        },
+                    ]
+                );
             });
         });
     }
@@ -136,13 +142,19 @@ class Crud
                 $this->makeFieldRoutes($config->controller);
 
                 // Nav preset.
-                Nav::preset("form.{$collection}.{$form}", [
-                    'link'      => Lit::url($config->route_prefix),
-                    'title'     => fn ()     => ucfirst($config->names['singular']),
-                    'authorize' => function (User $user) use ($config) {
-                        return (new $config->controller())->authorize($user, 'read');
-                    },
-                ]);
+                Nav::preset(
+                    [
+                        get_class($config->getConfig()),
+                        "form.{$collection}.{$form}"
+                    ],
+                    [
+                        'link'      => Lit::url($config->route_prefix),
+                        'title'     => fn () => ucfirst($config->names['singular']),
+                        'authorize' => function (User $user) use ($config) {
+                            return (new $config->controller())->authorize($user, 'read');
+                        },
+                    ]
+                );
             });
         });
     }

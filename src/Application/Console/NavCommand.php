@@ -51,13 +51,15 @@ class NavCommand extends Command
     {
         $entries = [];
         foreach ($this->factory->all() as $preset) {
-            $link = $preset['link'] instanceof Closure
-                ? $preset['link']()
-                : $preset['link'];
+            $entry = $preset['entry'];
+
+            $link = $entry['link'] instanceof Closure
+                ? $entry['link']()
+                : $entry['link'];
 
             $entries[] = [
-                'keys' => $keys,
-                'link' => $link,
+                'keys' => implode(", ", $preset['keys']),
+                'link' => url($link),
             ];
         }
 
