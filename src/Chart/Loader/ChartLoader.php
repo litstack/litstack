@@ -155,14 +155,14 @@ abstract class ChartLoader
     protected function getLabelResolverConfig()
     {
         return [
-            'last24hours' => fn ($time) => $time->hour,
-            'today'       => fn ($time)       => $time->hour,
-            'yesterday'   => fn ($time)   => $time->hour,
-            'last7days'   => fn ($time)   => $time->format('l'),
-            'thisweek'    => fn ($time)    => $time->format('l'),
-            'last30days'  => fn ($time)  => $time->format('l'),
-            'thismonth'   => fn ($time)   => $time->format('l'),
-            'thisyear'    => fn ($time)    => $time->format('M'),
+            'last24hours' => fn ($time) => $time->isoFormat('dddd HH:00'),
+            'today'       => fn ($time) => $time->isoFormat('dddd HH:mm'),
+            'yesterday'   => fn ($time) => $time->isoFormat('dddd HH:mm'),
+            'last7days'   => fn ($time) => $time->getTranslatedDayName('dddd'),
+            'thisweek'    => fn ($time) => $time->getTranslatedDayName('dddd'),
+            'last30days'  => fn ($time) => $time->isoFormat('Do MMMM'),
+            'thismonth'   => fn ($time) => $time->isoFormat('Do MMMM'),
+            'thisyear'    => fn ($time) => $time->getTranslatedMonthName('MMMM'),
         ];
     }
 
