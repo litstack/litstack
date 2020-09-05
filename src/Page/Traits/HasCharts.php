@@ -24,6 +24,12 @@ trait HasCharts
 
         $this->registerChart($chart);
 
+        $slot = $this->navigationRight();
+
+        if (! $slot->hasComponent('lit-chart-range')) {
+            $slot->prependComponent('lit-chart-range');
+        }
+
         return $chart;
     }
 

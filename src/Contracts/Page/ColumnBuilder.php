@@ -32,6 +32,15 @@ interface ColumnBuilder
     public function view($view): View;
 
     /**
+     * Add livewire component column.
+     *
+     * @param  string $component
+     * @param  array  $data
+     * @return View
+     */
+    public function livewire($component, $data = []);
+
+    /**
      * Registers image column.
      *
      * @param  string         $label
@@ -46,6 +55,15 @@ interface ColumnBuilder
      * @return ImageComponent
      */
     public function avatar($label = '');
+
+    /**
+     * Create new Money column.
+     *
+     * @param  string $column
+     * @param  string $currency
+     * @return Column
+     */
+    public function money($column, $currency = 'EUR', $locale = null);
 
     /**
      * Registers relation column.

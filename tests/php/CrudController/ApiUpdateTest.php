@@ -4,6 +4,7 @@ namespace Tests\CrudController;
 
 use Tests\FrontendTestCase;
 use Tests\TestSupport\Models\Post;
+use Tests\TestSupport\Models\User;
 use Tests\Traits\InteractsWithCrud;
 
 /**
@@ -20,7 +21,8 @@ class ApiUpdateTest extends FrontendTestCase
     {
         parent::setUp();
 
-        $this->post = Post::create([]);
+        $this->user = User::create(['name' => 'foo']);
+        $this->post = Post::create(['user_id' => $this->user->id]);
         $this->actingAs($this->admin, 'lit');
     }
 
@@ -47,5 +49,23 @@ class ApiUpdateTest extends FrontendTestCase
 
         $this->refreshModel();
         $this->assertEquals($this->post->title, 'dummy title');
+    }
+
+    /** @test */
+    public function test_update_related_attributes()
+    {
+        $url = $this->getCrudRoute("/{$this->post->id}/api/show");
+
+        $response = $this->put($url, [
+            'child_field_id' => 'name',
+            'field_id'       => 'user',
+            'payload'        => [
+                'name' => 'bar',
+            ],
+            'relation_id' => $this->user->id,
+        ]);
+        $response->assertStatus(200);
+
+        $this->assertEquals($this->user->refresh()->name, 'bar');
     }
 }

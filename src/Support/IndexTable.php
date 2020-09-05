@@ -4,6 +4,7 @@ namespace Ignite\Support;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
@@ -224,9 +225,9 @@ class IndexTable
             return;
         }
 
-        // TODO: Apply multiple filters
-        $scope = $this->request->filter;
-        $this->query = $this->query->$scope();
+        foreach (Arr::wrap($this->request->filter) as $scope) {
+            $this->query = $this->query->$scope();
+        }
     }
 
     /**

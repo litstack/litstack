@@ -23,9 +23,9 @@ class LaravelRelationField extends RelationField
     /**
      * Index query modifier.
      *
-     * @var Closure|null
+     * @var array
      */
-    protected $previewModifier;
+    protected $previewModifier = [];
 
     /**
      * Relation model class.
@@ -83,7 +83,6 @@ class LaravelRelationField extends RelationField
         $this->query = $this->getRelatedModelClass()::query();
 
         $this->setOrderDefaults();
-        //$this->setAttribute('model', $this->getRelatedModelClass());
 
         // Set relation attributes.
         if (method_exists($this, 'setRelationAttributes')) {
@@ -177,7 +176,7 @@ class LaravelRelationField extends RelationField
      */
     public function query(Closure $closure)
     {
-        $this->previewModifier = $closure;
+        $this->previewModifier[] = $closure;
 
         return $this;
     }
@@ -254,12 +253,9 @@ class LaravelRelationField extends RelationField
     {
         $query->withCasts($this->casts);
 
-        if (! $this->previewModifier instanceof Closure) {
-            return $query;
+        foreach ($this->previewModifier as $modifier) {
+            $modifier($query);
         }
-
-        $modifier = $this->previewModifier;
-        $modifier($query);
 
         return $query;
     }
@@ -419,6 +415,36 @@ class LaravelRelationField extends RelationField
     public function confirm($confirm = true)
     {
         $this->setAttribute('confirm', $confirm);
+
+        return $this;
+    }
+
+    /**
+     * Add form to the relation.
+     *
+     * @param  Closure $closure
+     * @return $this
+     */
+    public function form(Closure $closure)
+    {
+        if (! $this->relatedModelClass) {
+            throw new InvalidArgumentException('Missing related model.');
+        }
+
+        $form = new RelationForm($this->relatedModelClass, $this);
+
+        $form->setRoutePrefix($this->formInstance->getRoutePrefix());
+
+        $form->registered(function ($field) {
+            $field->setAttribute('params', [
+                'field_id'       => $this->id,
+                'child_field_id' => $field->id,
+            ]);
+        });
+
+        $closure($form);
+
+        $this->setAttribute('form', $form);
 
         return $this;
     }

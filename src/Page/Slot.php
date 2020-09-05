@@ -52,6 +52,23 @@ class Slot extends VueProp
     }
 
     /**
+     * Determines if slot has component.
+     *
+     * @param  string $name
+     * @return bool
+     */
+    public function hasComponent($name)
+    {
+        foreach ($this->components as $component) {
+            if ($component->getName() == $name) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Add action.
      *
      * @param  string                $title
@@ -92,6 +109,20 @@ class Slot extends VueProp
         $component = component($component);
 
         $this->components[] = $component;
+
+        return $component;
+    }
+
+    /**
+     * Prepend component to Slot.
+     *
+     * @return Component
+     */
+    public function prependComponent($component)
+    {
+        $component = component($component);
+
+        array_unshift($this->components, $component);
 
         return $component;
     }

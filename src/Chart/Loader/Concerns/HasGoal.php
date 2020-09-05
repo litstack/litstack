@@ -34,12 +34,14 @@ trait HasGoal
     protected function getShowGoalConfig()
     {
         return [
-            'today'      => false,
-            'yesterday'  => false,
-            'last7days'  => true,
-            'thisweek'   => true,
-            'last30days' => true,
-            'thismonth'  => true,
+            'last24hours' => false,
+            'today'       => false,
+            'yesterday'   => false,
+            'last7days'   => true,
+            'thisweek'    => true,
+            'last30days'  => true,
+            'thismonth'   => true,
+            'thisyear'    => false,
         ];
     }
 }

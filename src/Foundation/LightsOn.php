@@ -49,15 +49,17 @@ class LightsOn
         );
 
         $this->laravel->singleton('lit.app', function ($app) {
-            return new \Ignite\Application\Application($app);
+            $litstackApp = new \Ignite\Application\Application($app);
+
+            // Bind litstack application.
+            $this->litstack->bindApp($litstackApp);
+
+            return $litstackApp;
         });
 
         $this->laravel->singleton(\Lit\Kernel::class, function ($app) {
             return new \Lit\Kernel($app->get('lit.app'));
         });
-
-        // Bind litstack application.
-        $this->litstack->bindApp($this->laravel['lit.app']);
 
         // Initialize kernel singleton.
         $this->laravel[\Lit\Kernel::class];

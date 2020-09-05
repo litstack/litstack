@@ -1,8 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use PhpCsFixer\ConfigInterface;
-use Illuminate\Support\Facades\File;
 
 if (! function_exists('fa')) {
     /**
@@ -234,8 +234,8 @@ if (! function_exists('fix_file')) {
     /**
      * Fixes the given file using php-cs-fixer.
      *
-     * @param string  $path
-     * @param ConfigInterface|null $config
+     * @param  string               $path
+     * @param  ConfigInterface|null $config
      * @return void
      */
     function fix_file($path, ConfigInterface $config = null)
@@ -243,15 +243,16 @@ if (! function_exists('fix_file')) {
         if (is_null($config)) {
             $config = require lit_vendor_path('fixer/.php_cs_config');
         }
-        
+
         $rules = json_encode($config->getRules());
 
         $cmd = implode(' ', [
             base_path('vendor/bin/php-cs-fixer'), 'fix',
-            app_path('Models/Test.php'), "--rules='{$rules}'",
+            $path, "--rules='{$rules}'",
             '--config='.lit_vendor_path('fixer/.php_cs_config'),
-            '--allow-risky=yes'
+            '--allow-risky=yes',
         ]);
+
         exec($cmd);
     }
 }

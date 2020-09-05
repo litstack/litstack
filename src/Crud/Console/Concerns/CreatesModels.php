@@ -176,6 +176,6 @@ trait CreatesModels
      */
     protected function modelExists()
     {
-        return $this->files->exists($this->configPath());
+        return $this->files->exists($this->modelPath());
     }
 }

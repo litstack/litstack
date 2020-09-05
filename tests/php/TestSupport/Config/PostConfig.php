@@ -96,5 +96,12 @@ class PostConfig extends CrudConfig
                         ->maxFiles(2);
                 });
             });
+
+        $form->relation('user')
+            ->title('User')
+            ->preview(fn ($preview) => null)
+            ->form(function ($form) {
+                $form->input('name')->title('Name');
+            });
     }
 }
