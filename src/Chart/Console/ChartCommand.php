@@ -17,7 +17,9 @@ class ChartCommand extends GeneratorCommand
                             {--donut : Whether to create donut chart }
                             {--progress : Whether to create progress chart }
                             {--bar : Whether to create bar chart }
-                            {--number : Whether to create number chart }';
+                            {--number : Whether to create number chart }
+                            {--model= : Name of the corresponding model }
+                            {--relation= : Name of the model relation }';
 
     /**
      * The console command description.
@@ -49,6 +51,8 @@ class ChartCommand extends GeneratorCommand
         }
 
         parent::handle();
+
+        $this->fixGeneratedFile();
     }
 
     /**
@@ -65,6 +69,60 @@ class ChartCommand extends GeneratorCommand
             'number'   => lit_vendor_path('stubs/chart.config.number.stub'),
             'area'     => lit_vendor_path('stubs/chart.config.area.stub'),
         ][$this->chartType];
+    }
+
+    /**
+     * Build the class with the given name.
+     *
+     * @param  string $name
+     * @return string
+     */
+    public function buildClass($name)
+    {
+        $stub = parent::buildClass($name);
+
+        return $this->replaceModel($stub)->replaceRelation($stub);
+    }
+
+    /**
+     * Replace the model name for the given stub.
+     *
+     * @param  string $stub
+     * @return string
+     */
+    protected function replaceModel(&$stub)
+    {
+        $model = $this->option('model') ?: 'Model';
+
+        $stub = str_replace(
+            ['DummyModel', '{{ model }}', '{{model}}'], $model, $stub
+        );
+
+        return $this;
+    }
+
+    /**
+     * Replace the relation name for the given stub.
+     *
+     * @param  string $stub
+     * @return string
+     */
+    protected function replaceRelation($stub)
+    {
+        $relation = '';
+
+        if ($name = $this->option('relation')) {
+            $relation = '/**
+     * Name of the relationship for the given model.
+     * 
+     * @var string
+     */
+    public $relation = \''.$name.'\';';
+        }
+
+        return str_replace(
+            ['DummyRelation', '{{ relation }}', '{{relation}}'], $relation, $stub
+        );
     }
 
     /**

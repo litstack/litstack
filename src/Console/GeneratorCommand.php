@@ -54,4 +54,18 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
             str_replace('\\', '/', $name).'.php'
         );
     }
+
+    /**
+     * Fix the generated file.
+     *
+     * @return void
+     */
+    protected function fixGeneratedFile()
+    {
+        $path = $this->getPath(
+            $this->qualifyClass($this->getNameInput())
+        );
+
+        fix_file($path);
+    }
 }

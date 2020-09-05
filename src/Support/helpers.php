@@ -251,6 +251,7 @@ if (! function_exists('fix_file')) {
             $path, "--rules='{$rules}'",
             '--config='.lit_vendor_path('fixer/.php_cs_config'),
             '--allow-risky=yes',
+            '2> /dev/null',
         ]);
 
         exec($cmd);

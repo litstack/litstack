@@ -12,7 +12,7 @@ class DummyClass extends DonutChartConfig
      *
      * @var string
      */
-    public $model = \App\Models\Model::class;
+    public $model = \App\Models\{{ model }}::class;
 
     /**
      * Chart title.
