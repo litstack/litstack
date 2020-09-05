@@ -4,9 +4,12 @@ namespace Ignite\Chart\Config;
 
 use Ignite\Chart\Chart;
 use Ignite\Support\Bootstrap;
-use Illuminate\Database\Eloquent\Builder;
+use InvalidArgumentException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 abstract class ChartConfig
 {
@@ -32,11 +35,61 @@ abstract class ChartConfig
     public $variant = Bootstrap::PRIMARY;
 
     /**
+     * The name of the relationship.
+     *
+     * @var string
+     */
+    public $relation;
+
+    /**
      * Chart title.
      *
      * @return string
      */
     abstract public function title(): string;
+
+    /**
+     * Get model instance.
+     *
+     * @return void
+     */
+    public function getModel()
+    {
+        return new $this->model;
+    }
+
+    /**
+     * Get initial query.
+     *
+     * @return Builder
+     */
+    public function query()
+    {
+        if (! request()->id && !is_null($this->relation)) {
+            abort(404, debug('Missing request key [id] for chart.'));
+        }
+
+        if (! $id = request()->id) {
+            return $this->model::query();
+        }
+        
+        if ($this->relation) {
+            return $this->getRelationQuery($this->model::findOrFail($id));
+        }
+
+        return $this->model::where('id', $id);
+    }
+
+    /**
+     * Get relationship query.
+     *
+     * @param Builder $query
+     * @return Relation
+     */
+    protected function getRelationQuery($model)
+    {
+        return $model->{$this->relation}();
+    }
 
     /**
      * Mount.
@@ -54,7 +107,6 @@ abstract class ChartConfig
      * Add count select to query.
      *
      * @param Builder $query
-     *
      * @return Builder
      */
     protected function count($query)
@@ -71,7 +123,6 @@ abstract class ChartConfig
      *
      * @param Builder $query
      * @param string  $column
-     *
      * @return Builder
      */
     protected function average($query, string $column)
@@ -88,7 +139,6 @@ abstract class ChartConfig
      *
      * @param Builder $query
      * @param string  $column
-     *
      * @return Builder
      */
     protected function sum($query, string $column)
@@ -105,7 +155,6 @@ abstract class ChartConfig
      *
      * @param Builder $query
      * @param string  $column
-     *
      * @return Builder
      */
     protected function min($query, string $column)
@@ -122,7 +171,6 @@ abstract class ChartConfig
      *
      * @param Builder $query
      * @param string  $column
-     *
      * @return Builder
      */
     protected function max($query, string $column)

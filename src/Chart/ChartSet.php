@@ -65,7 +65,7 @@ class ChartSet
      * @param Closure $valueResolver
      * @param Closure $timeResolver
      */
-    public function __construct(Builder $query, Closure $valueResolver, Closure $timeResolver)
+    public function __construct($query, Closure $valueResolver, Closure $timeResolver)
     {
         $this->query = $query;
         $this->valueResolver = $valueResolver;
@@ -81,7 +81,7 @@ class ChartSet
      *
      * @return void
      */
-    public static function make(Builder $query, Closure $valueResolver, Closure $timeResolver)
+    public static function make($query, Closure $valueResolver, Closure $timeResolver)
     {
         return new self($query, $valueResolver, $timeResolver);
     }

@@ -32,7 +32,7 @@ class NumberLoader extends ChartLoader
     ): array {
         $nextTimeResolver = $this->getNextTimeResolver();
 
-        $query = $this->config->model::query();
+        $query = $this->config->query();
 
         $set = ChartSet::make($query, $valueResolver, $timeResolver)
             ->label($labelResolver)

@@ -31,7 +31,7 @@ class AreaLoader extends ChartLoader
     ): array {
         $nextTimeResolver = $this->getNextTimeResolver();
 
-        $query = $this->config->model::query();
+        $query = $this->config->query();
 
         $set = ChartSet::make($query, $valueResolver, $timeResolver)
             ->label($labelResolver)
@@ -63,13 +63,13 @@ class AreaLoader extends ChartLoader
     {
         return [
             'last24hours' => fn ($time) => $time->subDay(),
-            'today'       => fn ($time)       => $time->subDay(),
-            'yesterday'   => fn ($time)   => $time->subWeek(),
-            'last7days'   => fn ($time)   => $time->subWeek(),
-            'thisweek'    => fn ($time)    => $time->subWeek(),
-            'last30days'  => fn ($time)  => $time->subDays(30),
-            'thismonth'   => fn ($time)   => $time->subMonth(),
-            'thisyear'    => fn ($time)    => $time->subYear(),
+            'today'       => fn ($time) => $time->subDay(),
+            'yesterday'   => fn ($time) => $time->subWeek(),
+            'last7days'   => fn ($time) => $time->subWeek(),
+            'thisweek'    => fn ($time) => $time->subWeek(),
+            'last30days'  => fn ($time) => $time->subDays(30),
+            'thismonth'   => fn ($time) => $time->subMonth(),
+            'thisyear'    => fn ($time) => $time->subYear(),
         ];
     }
 }
