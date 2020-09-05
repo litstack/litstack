@@ -9,11 +9,13 @@ use Ignite\Chart\Config\NumberChartConfig;
 class DummyClass extends NumberChartConfig
 {
     /**
-     * Model class.
+     * The model class of the chart.
      *
      * @var string
      */
     public $model = \App\Models\{{ model }}::class;
+
+    DummyRelation
 
     /**
      * Chart title.

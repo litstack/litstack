@@ -8,11 +8,13 @@ use Ignite\Chart\Config\DonutChartConfig;
 class DummyClass extends DonutChartConfig
 {
     /**
-     * Model class.
+     * The model class of the chart.
      *
      * @var string
      */
     public $model = \App\Models\{{ model }}::class;
+
+    DummyRelation
 
     /**
      * Chart title.
