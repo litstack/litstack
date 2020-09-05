@@ -145,6 +145,7 @@ class ChartSet
     public function load(CarbonInterface $time)
     {
         $this->time = $time;
+        $this->time->setLocale(lit()->getLocale());
         $this->reset();
 
         $statements = [];
