@@ -14,7 +14,7 @@ class DummyClassname extends Model DummyImplement
      *
      * @var array
      */
-    protected $fillable = ['title', 'text'];
+    protected $fillable = ['title'];
     DummyVars
     DummyWiths
     DummySluggable

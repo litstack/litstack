@@ -46,7 +46,7 @@ class DummyClassnameConfig extends CrudConfig
      */
     public function routePrefix()
     {
-        return Str::slug((new $this->model)->getTable());
+        return 'DummySlug';
     }
 
     /**

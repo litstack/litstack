@@ -26,6 +26,7 @@ trait CreatesConfig
             'DummyTablename' => $this->table,
             'DummySingularname' => $this->model,
             'DummyPluralname' => ucfirst(Str::plural($this->model)),
+            'DummySlug' => Str::slug($this->table),
         ] as $search => $replace) {
             $content = str_replace($search, $replace, $content);
         }
