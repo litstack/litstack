@@ -9,6 +9,7 @@ use Ignite\Page\Table\Casts\MoneyColumn;
 use Ignite\Page\Table\Components\BladeColumnComponent;
 use Ignite\Page\Table\Components\ColumnComponent;
 use Ignite\Page\Table\Components\ImageComponent;
+use Ignite\Page\Table\Components\ProgressComponent;
 use Ignite\Page\Table\Components\RelationComponent;
 use Ignite\Page\Table\Components\ToggleComponent;
 use Ignite\Support\VueProp;
@@ -50,6 +51,16 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Get column stack.
+     *
+     * @return array
+     */
+    public function getColumns()
+    {
+        return $this->columns;
     }
 
     /**
@@ -127,6 +138,14 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
             'component' => $component,
             'data'      => $data,
         ]);
+    }
+
+    public function progress($attribute, $max = 100)
+    {
+        return $this->component(new ProgressComponent('lit-col-progress'))
+            ->value("{{$attribute}}")
+            ->variant('danger')
+            ->max($max);
     }
 
     /**
