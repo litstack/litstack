@@ -34,8 +34,8 @@ class DummyClassnameConfig extends CrudConfig
     public function names()
     {
         return [
-            'singular' => ucfirst(__lit('models.DummyTablename')),
-            'plural' => ucfirst(__lit('models.DummyTablename')),
+            'singular' => 'DummySingularname',
+            'plural'   => 'DummyPluralname',
         ];
     }
 
@@ -57,21 +57,14 @@ class DummyClassnameConfig extends CrudConfig
      */
     public function index(CrudIndex $page)
     {
-        // Expand html container to full width.
-        $page->expand(false);
-
         $page->table(function ($table) {
-            $table->col('title')
-                ->value('{title}')
-                ->sortBy('title');
+            $table->col('title')->value('{title}')->sortBy('title');
         })
-            ->sortByDefault('id.desc')
             ->search('title')
             ->sortBy([
                 'id.desc' => __lit('lit.sort_new_to_old'),
                 'id.asc' => __lit('lit.sort_old_to_new'),
-            ])
-            ->width(12);
+            ]);
     }
 
     /**
@@ -84,9 +77,7 @@ class DummyClassnameConfig extends CrudConfig
     {
         $page->card(function($form) {
 
-            $form->input('title')
-                ->title('Title')
-                ->width(6);
+            $form->input('title')->title('Title')->width(6);
             
         });
     }

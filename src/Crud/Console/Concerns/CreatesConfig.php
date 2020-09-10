@@ -2,6 +2,8 @@
 
 namespace Ignite\Crud\Console\Concerns;
 
+use Illuminate\Support\Str;
+
 trait CreatesConfig
 {
     /**
@@ -19,8 +21,14 @@ trait CreatesConfig
 
         $content = $this->files->get($this->configStubPath());
 
-        $content = str_replace('DummyClassname', $this->model, $content);
-        $content = str_replace('DummyTablename', $this->table, $content);
+        foreach ([
+            'DummyClassname' => $this->model,
+            'DummyTablename' => $this->table,
+            'DummySingularname' => $this->model,
+            'DummyPluralname' => ucfirst(Str::plural($this->model)),
+        ] as $search => $replace) {
+            $content = str_replace($search, $replace, $content);
+        }
 
         $this->files->ensureDirectoryExists(dirname($this->configPath()));
         $this->files->put($this->configPath(), $content);
