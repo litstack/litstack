@@ -76,7 +76,7 @@ jobs:
 
             - name: Install dependencies
               run: |
-                  composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.orchestra }}" --no-interaction --no-update
+                  composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
                   composer update --${{ matrix.stability }} --prefer-dist --no-interaction
                   php tests/install
 
@@ -129,7 +129,7 @@ jobs:
 
             - name: Install dependencies
               run: |
-                  composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.orchestra }}" --no-interaction --no-update
+                  composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
                   composer update --prefer-stable --prefer-dist --no-interaction
                   php tests/install
 
