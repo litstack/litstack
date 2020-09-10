@@ -29,7 +29,7 @@
   */
 
 /*!
- * ApexCharts v3.20.0
+ * ApexCharts v3.20.1
  * (c) 2018-2020 Juned Chhipa
  * Released under the MIT License.
  */
@@ -43,13 +43,13 @@
  */
 
 /*!
- * Cropper.js v1.5.8
+ * Cropper.js v1.5.9
  * https://fengyuanchen.github.io/cropperjs
  *
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2020-09-05T09:47:28.489Z
+ * Date: 2020-09-10T13:16:26.743Z
  */
 
 /*!
