@@ -144,7 +144,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     {
         return $this->component(new ProgressComponent('lit-col-progress'))
             ->value("{{$attribute}}")
-            ->variant('danger')
+            ->variant('primary')
             ->max($max);
     }
 
