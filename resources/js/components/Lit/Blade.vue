@@ -18,17 +18,27 @@ export default {
 		wrapper: {},
 	},
 	methods: {
+		hasScriptTags() {
+			return this.view.match(
+				/<\s*script[^>]*>([^<]*)<\s*\/\s*script\s*>/
+			);
+		},
 		getTemplate(createElement) {
 			if (this.wrapper) {
 				return (
 					'<lit-base-component :component="' +
 					this.escapeHtmlSpecialChars(JSON.stringify(this.wrapper)) +
 					'">' +
-					this.view +
+					this.getView() +
 					'</lit-base-component>'
 				);
 			}
-			return '<div class="w-100">' + this.view + '</div>';
+			return '<div class="w-100">' + this.getView() + '</div>';
+		},
+		getView() {
+			return this.view
+				.replace('<script', '<component is="script"')
+				.replace('</scri' + 'pt', '</component');
 		},
 		escapeHtmlSpecialChars(str) {
 			return str
