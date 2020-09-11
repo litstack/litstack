@@ -67,8 +67,8 @@ class ControllerCommand extends GeneratorCommand
     {
         $replace = [
             'default' => fn () => [],
-            'form'    => fn ()    => $this->buildCrudReplacements($name),
-            'crud'    => fn ()    => $this->buildCrudReplacements($name),
+            'form'    => fn () => $this->buildCrudReplacements($name),
+            'crud'    => fn () => $this->buildCrudReplacements($name),
         ][$this->type]();
 
         return str_replace(

@@ -4,12 +4,10 @@ namespace Ignite\Chart\Config;
 
 use Ignite\Chart\Chart;
 use Ignite\Support\Bootstrap;
-use InvalidArgumentException;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 abstract class ChartConfig
 {
@@ -65,14 +63,14 @@ abstract class ChartConfig
      */
     public function query()
     {
-        if (! request()->id && !is_null($this->relation)) {
+        if (! request()->id && ! is_null($this->relation)) {
             abort(404, debug('Missing request key [id] for chart.'));
         }
 
         if (! $id = request()->id) {
             return $this->model::query();
         }
-        
+
         if ($this->relation) {
             return $this->getRelationQuery($this->model::findOrFail($id));
         }

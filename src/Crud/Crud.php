@@ -106,7 +106,7 @@ class Crud
                 Nav::preset(
                     [
                         get_class($config->getConfig()),
-                        $config->getKey()
+                        $config->getKey(),
                     ],
                     [
                         'link'      => Lit::url($config->routePrefix),
@@ -145,7 +145,7 @@ class Crud
                 Nav::preset(
                     [
                         get_class($config->getConfig()),
-                        "form.{$collection}.{$form}"
+                        "form.{$collection}.{$form}",
                     ],
                     [
                         'link'      => Lit::url($config->route_prefix),

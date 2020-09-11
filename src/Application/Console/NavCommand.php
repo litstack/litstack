@@ -58,7 +58,7 @@ class NavCommand extends Command
                 : $entry['link'];
 
             $entries[] = [
-                'keys' => implode(", ", $preset['keys']),
+                'keys' => implode(', ', $preset['keys']),
                 'link' => url($link),
             ];
         }
