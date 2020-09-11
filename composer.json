@@ -12,7 +12,7 @@
 		"erusev/parsedown-extra": "^0.8",
 		"spatie/laravel-permission": "^2.37|^3.0",
 		"astrotomic/laravel-translatable": "^11.0",
-		"cviebrock/eloquent-sluggable": "^4.8|^6.0|^7.0",
+		"cviebrock/eloquent-sluggable": "^7.0|^8.0",
 		"laravel/ui": "^2.0",
 		"spatie/laravel-medialibrary": "^8.2",
 		"livewire/livewire": "^1.0|^2.0",
