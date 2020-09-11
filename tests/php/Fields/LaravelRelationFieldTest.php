@@ -93,7 +93,7 @@ class LaravelRelationFieldTest extends BackendTestCase
         $this->assertEquals($freshQuery, $modifiedQuery);
 
         // Asserting that modifier is called.
-        $this->setUnaccessibleProperty($this->field, 'previewModifier', $modifier);
+        $this->setUnaccessibleProperty($this->field, 'previewModifier', [$modifier]);
         $this->callUnaccessibleMethod($this->field, 'modifyQuery', [$freshQuery]);
         $this->assertTrue($this->modifierCalled);
     }

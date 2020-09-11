@@ -49,9 +49,9 @@ class ManyRelationFieldTest extends BackendTestCase
     /** @test */
     public function test_sortable_method()
     {
-        $this->setUnaccessibleProperty($this->field, 'previewModifier', function ($query) {
+        $this->setUnaccessibleProperty($this->field, 'previewModifier', [function ($query) {
             $query->orderBy('dummy_order_column');
-        });
+        }]);
         $this->field->sortable();
         $this->assertTrue($this->field->getAttribute('sortable'));
 
