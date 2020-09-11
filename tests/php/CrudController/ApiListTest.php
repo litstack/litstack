@@ -4,6 +4,7 @@ namespace Tests\CrudController;
 
 use Ignite\Crud\Models\ListItem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Testing\AssertableJsonString;
 use Tests\BackendTestCase;
 use Tests\TestSupport\Models\Post;
 use Tests\Traits\InteractsWithCrud;
@@ -125,6 +126,10 @@ class ApiListTest extends BackendTestCase
         $url = $this->getCrudRoute("/{$this->post->id}/api/show/list/index");
 
         $result = $this->post($url, ['field_id' => 'test_list'])->assertStatus(200)->decodeResponseJson();
+
+        if ($result instanceof AssertableJsonString) {
+            $result = $result->json();
+        }
 
         $this->assertCount(2, $result);
         $this->assertEquals($listItem1->id, $result[0]['attributes']['id']);

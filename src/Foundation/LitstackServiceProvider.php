@@ -264,6 +264,8 @@ class LitstackServiceProvider extends ServiceProvider
      */
     protected function loadFactories()
     {
-        $this->app[Factory::class]->load(__DIR__.'/../Factories');
+        $this->app->afterResolving(Factory::class, function ($factory) {
+            $factory->load(__DIR__.'/../Factories');
+        });
     }
 }
