@@ -88,11 +88,16 @@ class LivewireCommand extends Command
 
         $this->exists = $this->files->exists($this->parser->classPath());
 
-        $this->call('make:livewire', [
-            'name'     => $this->argument('name'),
-            '--force'  => $force = $this->option('force'),
-            '--inline' => $inline = $this->option('inline'),
-        ]);
+        $arguments = [
+            'name'    => $this->argument('name'),
+            '--force' => $force = $this->option('force'),
+        ];
+
+        if ($inline = $this->option('inline')) {
+            $arguments['--inline'] = $inline;
+        }
+
+        $this->call('make:livewire', $arguments);
 
         $this->fixViewNamespace($force, $inline);
 

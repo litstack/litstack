@@ -5,6 +5,7 @@ namespace Tests\Commands;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Console\CastMakeCommand;
 use Illuminate\Support\Facades\File;
+use Livewire\Commands\MakeCommand;
 use Tests\BackendTestCase;
 
 class GeneratorCommandsTest extends BackendTestCase
@@ -32,6 +33,10 @@ class GeneratorCommandsTest extends BackendTestCase
     /** @test */
     public function it_passes_inline_to_livewire_component()
     {
+        $command = $this->app->make(MakeCommand::class);
+        if (! array_key_exists('inline', $command->getDefinition()->getOptions())) {
+            $this->markTestSkipped('The inline option is not available for the current livewire version.');
+        }
         $this->artisan('lit:livewire', ['name' => 'foo', '--inline' => true]);
         $this->assertFileExists(base_path('lit/app/Http/Livewire/Foo.php'));
         $this->assertFalse(file_exists(base_path('lit/resources/views/livewire/foo.blade.php')));
