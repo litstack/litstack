@@ -4,6 +4,7 @@ namespace Ignite\Crud\Config\Factories\Concerns;
 
 use Ignite\Config\ConfigHandler;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 trait ManagesBreadcrumb
 {
@@ -50,8 +51,13 @@ trait ManagesBreadcrumb
         }
 
         if (! is_null($model = $parentConfig->getModelInstance())) {
+            $title = $parentConfig->names['singular'];
+            if ($title == Str::singular(class_basename($parentConfig->model))) {
+                $title = $model->id;
+            }
+
             return [[
-                'title' => $parentConfig->names['singular'],
+                'title' => $title,
                 'url'   => $parentConfig->routePrefix().'/'.$model->id,
             ]];
         }
