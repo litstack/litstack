@@ -12,6 +12,18 @@ use Illuminate\Support\Facades\Route as RouteFacade;
 class CrudConfigFactory extends ConfigFactory
 {
     /**
+     * Get names.
+     *
+     * @param  ConfigHandler $config
+     * @param  Closure       $method
+     * @return array
+     */
+    public function names(ConfigHandler $config, Closure $method)
+    {
+        return $method($config->getModelInstance());
+    }
+
+    /**
      * Make route prefix.
      *
      * @param  \Ignite\Config\ConfigHandler $config

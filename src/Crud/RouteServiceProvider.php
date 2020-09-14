@@ -82,6 +82,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             return;
         }
 
+        // Todo: Cache this
+
         $files = File::allFiles(lit_config_path());
 
         foreach ($files as $file) {
@@ -100,7 +102,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 continue;
             }
 
-            if (! new $namespace() instanceof CrudConfig) {
+            if (! is_subclass_of($namespace, CrudConfig::class)) {
                 continue;
             }
 

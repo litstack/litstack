@@ -107,18 +107,16 @@ class ConfigLoader
     public function get(string $key, ...$params)
     {
         $key = $this->getKey($key);
+        $class = $this->getNamespaceFromKey($key);
 
         // Return from stack if already loaded.
-        if (array_key_exists($key, $this->loaded)) {
-            return $this->loaded[$key];
+        if ($this->loaded($key)) {
+            return $this->loaded[$class];
         }
 
         if (! $this->exists($key)) {
             return;
         }
-
-        // Get classname by key.
-        $class = $this->getNamespaceFromKey($key);
 
         // Initialize new config handler.
         $instance = new ConfigHandler(
@@ -127,9 +125,22 @@ class ConfigLoader
         );
 
         // Add config to stack.
-        $this->loaded[$key] = $instance;
+        $this->loaded[$class] = $instance;
 
         return $instance;
+    }
+
+    /**
+     * Determines wheter a config for the given key has been loaded before.
+     *
+     * @param  string $key
+     * @return bool
+     */
+    public function loaded($key)
+    {
+        return array_key_exists(
+            $this->getNamespaceFromKey($this->getKey($key)), $this->loaded
+        );
     }
 
     /**

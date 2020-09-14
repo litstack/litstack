@@ -49,6 +49,13 @@ trait ManagesBreadcrumb
             return $route;
         }
 
+        if (! is_null($model = $parentConfig->getModelInstance())) {
+            return [[
+                'title' => $parentConfig->names['singular'],
+                'url'   => $parentConfig->routePrefix().'/'.$model->id,
+            ]];
+        }
+
         $search = str_replace('.', '_', $parentConfig->getKey());
 
         foreach ($route->parameters as $parameter => $id) {

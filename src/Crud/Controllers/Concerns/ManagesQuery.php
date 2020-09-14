@@ -4,6 +4,7 @@ namespace Ignite\Crud\Controllers\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 trait ManagesQuery
 {
@@ -68,7 +69,17 @@ trait ManagesQuery
             '.', '_', $this->config->parentConfig()->getKey()
         );
 
-        foreach (Route::current()->parameters as $parameter => $value) {
+        try {
+            $route = Route::getRoutes()->match(request());
+        } catch (HttpException $e) {
+            return;
+        }
+
+        if (! $route) {
+            return;
+        }
+
+        foreach ($route->parameters as $parameter => $value) {
             if ($search == $parameter) {
                 return (int) $value;
             }

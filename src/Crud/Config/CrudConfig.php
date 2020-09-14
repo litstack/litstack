@@ -6,7 +6,10 @@ use Ignite\Crud\Config\Traits\HasCrudIndex;
 use Ignite\Crud\Config\Traits\HasCrudShow;
 use Ignite\Support\Facades\Config;
 use Ignite\Support\Facades\Crud;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 abstract class CrudConfig
 {
@@ -28,25 +31,74 @@ abstract class CrudConfig
     public $model;
 
     /**
-     * Set bootstrap container on index page to fluid.
+     * The model instance.
      *
-     * @var bool
+     * @var Model
      */
-    public $expandIndexContainer = false;
+    protected $modelInstance;
 
     /**
-     * Set bootstrap container on create and update page to fluid.
+     * Create new CrudConfig instance.
      *
-     * @var bool
+     * @return void
      */
-    public $expandFormContainer = false;
+    public function __construct()
+    {
+        app()->booted(function () {
+            $this->setModelInstanceFromCurrentRoute();
+        });
+    }
 
     /**
-     * Order column for model.
+     * Set model instance from current route.
      *
-     * @var string
+     * @return void
      */
-    public $orderColumn = 'order_column';
+    public function setModelInstanceFromCurrentRoute()
+    {
+        try {
+            $route = Route::getRoutes()->match(request());
+        } catch (HttpException $e) {
+            return;
+        }
+
+        if (! $route) {
+            return;
+        }
+
+        $search = str_replace('.', '_', Config::getKey(static::class));
+
+        foreach ($route->parameters as $parameter => $id) {
+            if ($parameter != $search) {
+                continue;
+            }
+
+            $this->modelInstance = $this->controllerInstance()
+                ->getQuery()
+                ->find($id);
+        }
+    }
+
+    /**
+     * Set model instance.
+     *
+     * @param  Model $model
+     * @return void
+     */
+    public function setModelInstance(Model $model)
+    {
+        $this->modelInstance = $model;
+    }
+
+    /**
+     * Get model instance.
+     *
+     * @return Model|null
+     */
+    public function getModelInstance()
+    {
+        return $this->modelInstance;
+    }
 
     /**
      * Crud permissions for operations create, read, update and delete.
@@ -79,18 +131,6 @@ abstract class CrudConfig
         }
 
         return Config::get($this->parent);
-    }
-
-    /**
-     * Get a new controller instance.
-     *
-     * @return void
-     */
-    public function controllerInstance()
-    {
-        return app()->make($this->controller, [
-            'config' => Config::get(get_class($this)),
-        ]);
     }
 
     /**
