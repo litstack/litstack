@@ -115,7 +115,7 @@ class DefaultRepository extends BaseFieldRepository
         }
 
         $model = $this->controller->getModel();
-        $model = new $model($attributes);
+        $model = $this->controller->initialQuery()->make($attributes);
 
         $this->fillAttributesToModel($model, (array) $payload);
         $this->controller->fillOnStore($model);

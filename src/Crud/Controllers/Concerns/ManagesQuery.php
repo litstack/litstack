@@ -42,7 +42,7 @@ trait ManagesQuery
      *
      * @return Builder
      */
-    protected function initialQuery()
+    public function initialQuery()
     {
         if (! $this->config->has('parent')) {
             return $this->model::query();
