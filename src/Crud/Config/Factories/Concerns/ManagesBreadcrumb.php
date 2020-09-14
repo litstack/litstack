@@ -57,7 +57,7 @@ trait ManagesBreadcrumb
             }
 
             return [[
-                'title' => $title,
+                'title' => strlen($title) > 20 ? substr($title, 0, 20).'...' : $title,
                 'url'   => $parentConfig->routePrefix().'/'.$model->id,
             ]];
         }
