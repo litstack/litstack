@@ -69,7 +69,11 @@
         <livewire:scripts />
         <script>
             document.addEventListener("livewire:load", () => {
-                window.livewire.components.hooks.register('beforeDomUpdate', function(component,dom) {
+                let hook = 'element.updating'
+                if(!window.livewire.components.hooks.availableHooks.includes(hook)) {
+                    hook = 'beforeDomUpdate'
+                }
+                window.livewire.components.hooks.register(hook, function(component,dom) {
                     dom.html = new Vue({template:dom.html})
                         .$mount()
                         .$el.outerHTML;

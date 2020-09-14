@@ -3,7 +3,6 @@
 namespace Lit\Http\Controllers\User;
 
 use Ignite\Crud\Controllers\CrudController;
-use Illuminate\Database\Eloquent\Builder;
 use Lit\Models\User;
 
 class ProfileSettingsController extends CrudController
@@ -33,8 +32,8 @@ class ProfileSettingsController extends CrudController
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(): Builder
+    public function query($query)
     {
-        return $this->model::where('id', lit_user()->id);
+        $query->where('id', lit_user()->id);
     }
 }

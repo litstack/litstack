@@ -3,7 +3,6 @@
 namespace Lit\Http\Controllers\User;
 
 use Ignite\Crud\Controllers\CrudController;
-use Illuminate\Database\Eloquent\Builder;
 use Lit\Models\User;
 
 class UserController extends CrudController
@@ -42,8 +41,8 @@ class UserController extends CrudController
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(): Builder
+    public function query($query)
     {
-        return $this->model::query();
+        //
     }
 }
