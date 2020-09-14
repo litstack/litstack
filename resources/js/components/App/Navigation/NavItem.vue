@@ -84,11 +84,14 @@ export default {
 	},
 	methods: {
 		isActive(item) {
-			const link = window.location.pathname;
-			if (Lit.baseURL.includes(link)) {
-				return link.includes(item.link);
+			const currentLink = window.location.pathname;
+			if (item.link == Lit.baseURL) {
+				return currentLink == item.link;
 			}
-			return link.includes(item.link);
+			if (Lit.baseURL.includes(currentLink)) {
+				return currentLink.includes(item.link);
+			}
+			return currentLink.includes(item.link);
 		},
 	},
 	computed: {
