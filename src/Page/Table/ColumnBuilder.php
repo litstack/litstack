@@ -140,6 +140,13 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
         ]);
     }
 
+    /**
+     * Add progress column.
+     *
+     * @param  string            $attribute
+     * @param  int               $max
+     * @return ProgressComponent
+     */
     public function progress($attribute, $max = 100)
     {
         return $this->component(new ProgressComponent('lit-col-progress'))
