@@ -11,7 +11,7 @@ class ControllerCommandTest extends BackendTestCase
     {
         $this->artisan('lit:controller DummyDefaultController');
 
-        $this->assertFileExists(base_path('lit/app/Controllers/DummyDefaultController.php'));
+        $this->assertFileExists(base_path('lit/app/Http/Controllers/DummyDefaultController.php'));
     }
 
     /** @test */
@@ -19,10 +19,10 @@ class ControllerCommandTest extends BackendTestCase
     {
         $this->artisan('lit:controller DummyFormController --form');
 
-        $this->assertFileExists(base_path('lit/app/Controllers/Form/DummyFormController.php'));
+        $this->assertFileExists(base_path('lit/app/Http/Controllers/Form/DummyFormController.php'));
         $this->assertInstanceOf(
             \Ignite\Crud\Controllers\FormController::class,
-            new \Lit\Controllers\Form\DummyFormController()
+            new \Lit\Http\Controllers\Form\DummyFormController()
         );
     }
 
@@ -31,10 +31,10 @@ class ControllerCommandTest extends BackendTestCase
     {
         $this->artisan('lit:controller DummyCrudController --crud');
 
-        $this->assertFileExists(base_path('lit/app/Controllers/Crud/DummyCrudController.php'));
+        $this->assertFileExists(base_path('lit/app/Http/Controllers/Crud/DummyCrudController.php'));
         $this->assertInstanceOf(
             \Ignite\Crud\Controllers\CrudController::class,
-            new \Lit\Controllers\Crud\DummyCrudController()
+            new \Lit\Http\Controllers\Crud\DummyCrudController()
         );
     }
 }

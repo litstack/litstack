@@ -90,7 +90,7 @@ trait ManagesPaths
      */
     protected function controllerStubPath()
     {
-        return lit_vendor_path('stubs/CrudController.stub');
+        return lit_vendor_path('stubs/crud.controller.stub');
     }
 
     /**
@@ -100,7 +100,7 @@ trait ManagesPaths
      */
     protected function configStubPath()
     {
-        return lit_vendor_path('stubs/CrudConfig.stub');
+        return lit_vendor_path('stubs/crud.config.stub');
     }
 
     /**
@@ -120,7 +120,7 @@ trait ManagesPaths
      */
     protected function translationModelStubPath()
     {
-        return lit_vendor_path('stubs/CrudTranslationModel.stub');
+        return lit_vendor_path('stubs/crud.model.translation.stub');
     }
 
     /**
@@ -140,7 +140,7 @@ trait ManagesPaths
      */
     protected function translationModelSlugUniqueStubPath()
     {
-        return lit_vendor_path('stubs/CrudTranslationModelSlugUnique.stub');
+        return lit_vendor_path('stubs/crud.model.translation.unique.slug.stub');
     }
 
     /**

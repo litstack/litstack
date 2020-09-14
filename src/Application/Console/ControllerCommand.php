@@ -51,7 +51,7 @@ class ControllerCommand extends GeneratorCommand
         return [
             'default' => lit_vendor_path('stubs/controller.default.stub'),
             'form'    => lit_vendor_path('stubs/controller.form.stub'),
-            'crud'    => lit_vendor_path('stubs/controller.crud.stub'),
+            'crud'    => lit_vendor_path('stubs/crud.controller.stub'),
         ][$this->type];
     }
 
@@ -67,8 +67,8 @@ class ControllerCommand extends GeneratorCommand
     {
         $replace = [
             'default' => fn () => [],
-            'form'    => fn () => $this->buildCrudReplacements($name),
-            'crud'    => fn () => $this->buildCrudReplacements($name),
+            'form'    => fn ()    => $this->buildCrudReplacements($name),
+            'crud'    => fn ()    => $this->buildCrudReplacements($name),
         ][$this->type]();
 
         return str_replace(
@@ -133,9 +133,9 @@ class ControllerCommand extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         return [
-            'default' => $rootNamespace."\Controllers",
-            'form'    => $rootNamespace."\Controllers\Form",
-            'crud'    => $rootNamespace."\Controllers\Crud",
+            'default' => $rootNamespace."\Http\Controllers",
+            'form'    => $rootNamespace."\Http\Controllers\Form",
+            'crud'    => $rootNamespace."\Http\Controllers\Crud",
         ][$this->type];
     }
 }
