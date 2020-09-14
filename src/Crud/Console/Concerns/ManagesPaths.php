@@ -66,7 +66,7 @@ trait ManagesPaths
      */
     protected function configPath()
     {
-        return lit()->path("Config/Crud/{$this->model}Config.php");
+        return lit()->path("Config/Crud/{$this->config}.php");
     }
 
     /**

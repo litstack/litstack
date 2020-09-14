@@ -182,18 +182,6 @@ class Page extends BasePage implements Expandable
     }
 
     /**
-     * Add subpage.
-     *
-     * @param  string    $title
-     * @param  string    $url
-     * @return Component
-     */
-    public function subPage($title, $url)
-    {
-        return $this->subPages->component('a')->prop('href', lit()->url($url))->child($title);
-    }
-
-    /**
      * Render page.
      *
      * @return array

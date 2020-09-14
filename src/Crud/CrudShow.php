@@ -6,6 +6,13 @@ use Closure;
 use Ignite\Crud\Fields\Component;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
 use Ignite\Page\Page;
+use Ignite\Support\Facades\Config;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Support\Traits\Macroable;
 
@@ -49,6 +56,56 @@ class CrudShow extends Page
         // Add form lifecycle hooks.
         $this->form->registering(fn ($field) => $this->registeringField($field));
         $this->form->registered(fn ($field) => $this->registeredField($field));
+    }
+
+    /**
+     * Add subpage.
+     *
+     * @param  string    $config
+     * @return Component
+     */
+    public function subPage($config)
+    {
+        $config = Config::get($config);
+
+        $title = $config->names['plural'];
+        $prefix = $config->routePrefix();
+
+        if ($this->isOneRelation($query = $config->controllerInstance()->getQuery())) {
+            if (! $model = $query->first()) {
+                return;
+            }
+
+            $config->setModelInstance($model);
+            $title = $config->names()['singular'];
+            $prefix = "{$prefix}/{$model->id}";
+        }
+
+        return $this->subPages->component('a')
+            ->prop('href', lit()->url($prefix))
+            ->child($title);
+    }
+
+    /**
+     * Determines if query is instance of a "one relation".
+     *
+     * @param  Relation $query
+     * @return bool
+     */
+    protected function isOneRelation($query)
+    {
+        $relations = [
+            BelongsTo::class, HasOne::class, MorphOne::class, MorphTo::class,
+            HasOneThrough::class,
+        ];
+
+        foreach ($relations as $relation) {
+            if ($query instanceof $relation) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

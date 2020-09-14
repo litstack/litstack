@@ -19,7 +19,7 @@ class CrudCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'lit:crud {model}
+    protected $signature = 'lit:crud {model} {config?}
                             {--media : Wether this model has media} 
                             {--translatable : Wether this model should be translatable} 
                             {--slug : Wether this model should have a slug}';
@@ -105,6 +105,7 @@ class CrudCommand extends Command
         }
 
         $this->model = ucfirst(Str::singular($this->model));
+        $this->config = $this->argument('config') ?: "{$this->model}Config";
         $this->table = Str::snake(Str::plural($this->model));
         $this->translationsTable = Str::singular($this->table).'_translations';
 
