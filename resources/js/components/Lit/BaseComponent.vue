@@ -10,6 +10,7 @@ export default {
 					...this.$listeners,
 					...this.events,
 				},
+				domProps: this.component.domProps,
 				attrs: this.props,
 				slot: this.slot,
 				ref: 'component',

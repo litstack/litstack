@@ -83,7 +83,7 @@ class CrudShow extends Page
 
         return $this->subPages->component('a')
             ->prop('href', lit()->url($prefix))
-            ->child($title);
+            ->domProp('innerHTML', $title);
     }
 
     /**

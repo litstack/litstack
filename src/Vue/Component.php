@@ -54,6 +54,13 @@ class Component extends VueProp implements AuthorizableContract
     protected $children = [];
 
     /**
+     * DOM properties.
+     *
+     * @var array
+     */
+    protected $domProps = [];
+
+    /**
      * Create new Component instance.
      *
      * @param  string $name
@@ -134,6 +141,31 @@ class Component extends VueProp implements AuthorizableContract
         }
 
         return $this;
+    }
+
+    /**
+     * Set dom prop.
+     *
+     * @param  string $name
+     * @param  mixed  $value
+     * @return string
+     */
+    public function domProp($name, $value)
+    {
+        $this->domProps[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get dom prop.
+     *
+     * @param  string $name
+     * @return mixed
+     */
+    public function getDomProp($name)
+    {
+        return $this->domProps[$name] ?? null;
     }
 
     /**
@@ -343,6 +375,7 @@ class Component extends VueProp implements AuthorizableContract
         $rendered = [
             'name'     => $this->name,
             'props'    => collect($this->props),
+            'domProps' => $this->domProps,
             'events'   => $this->events,
             'slot'     => $this->slot,
             'children' => $this->children,
