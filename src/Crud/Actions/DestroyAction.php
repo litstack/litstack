@@ -5,6 +5,7 @@ namespace Ignite\Crud\Actions;
 use Ignite\Page\Actions\ActionModal;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\RouteParameterBinder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -60,10 +61,16 @@ class DestroyAction
             return $this->successMessage($models);
         }
 
-        // Redirect to index if referer route is "show" of the crud.
-        return redirect(
-            route(Str::replaceLast('show', 'index', $route->getName()))
+        $parameters = (new RouteParameterBinder($route))
+            ->parameters(new RequestMock($request->headers->get('referer')));
+
+        $url = route(
+            Str::replaceLast('show', 'index', $route->getName()),
+            $parameters
         );
+
+        // Redirect to index if referer route is "show" of the crud.
+        return redirect(explode('?', $url)[0]);
     }
 
     /**
