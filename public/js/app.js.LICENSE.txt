@@ -29,13 +29,13 @@
   */
 
 /*!
- * ApexCharts v3.20.1
+ * ApexCharts v3.20.2
  * (c) 2018-2020 Juned Chhipa
  * Released under the MIT License.
  */
 
 /*!
- * BootstrapVue Icons, generated from Bootstrap Icons 1.0.0-alpha5
+ * BootstrapVue Icons, generated from Bootstrap Icons 1.0.0
  *
  * @link https://icons.getbootstrap.com/
  * @license MIT
