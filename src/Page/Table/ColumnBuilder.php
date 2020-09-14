@@ -5,6 +5,7 @@ namespace Ignite\Page\Table;
 use Ignite\Contracts\Page\Column as ColumnContract;
 use Ignite\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
 use Ignite\Crud\Fields\Relations\LaravelRelationField;
+use Ignite\Page\Table\Casts\CarbonColumn;
 use Ignite\Page\Table\Casts\MoneyColumn;
 use Ignite\Page\Table\Components\BladeColumnComponent;
 use Ignite\Page\Table\Components\ColumnComponent;
@@ -153,6 +154,21 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
             ->value("{{$attribute}}")
             ->variant('primary')
             ->max($max);
+    }
+
+    public function date($attribute, $format)
+    {
+        if ($this->parent) {
+            $this->parent->cast(
+                $attribute,
+                CarbonColumn::class.":{$format}"
+            );
+        }
+
+        return $this->col(ucfirst($attribute))
+            ->class('lit-col-money')
+            ->value("{{$attribute}}")
+            ->sortBy($attribute);
     }
 
     /**
