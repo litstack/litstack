@@ -130,7 +130,17 @@ abstract class CrudConfig
             return;
         }
 
-        return Config::get($this->parent);
+        return Config::get($this->parent[0]);
+    }
+
+    /**
+     * Get the parent relation name.
+     *
+     * @return string
+     */
+    public function relation()
+    {
+        return $this->parent[1];
     }
 
     /**

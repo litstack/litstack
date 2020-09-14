@@ -5,7 +5,6 @@ namespace Ignite\Crud\Config\Factories;
 use Closure;
 use Ignite\Config\ConfigFactory;
 use Ignite\Config\ConfigHandler;
-use Ignite\Support\Facades\Config;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route as RouteFacade;
 
@@ -35,10 +34,10 @@ class CrudConfigFactory extends ConfigFactory
         $prefix = '';
 
         if ($config->has('parent')) {
-            $parent = Config::get($config->parent);
-            $attribute = str_replace('.', '_', $parent->getKey());
+            $parentConfig = $config->parentConfig;
+            $attribute = str_replace('.', '_', $parentConfig->getKey());
 
-            $prefix .= "{$parent->route_prefix}/{{$attribute}}/";
+            $prefix .= "{$parentConfig->route_prefix}/{{$attribute}}/";
         }
 
         $prefix .= $method();
