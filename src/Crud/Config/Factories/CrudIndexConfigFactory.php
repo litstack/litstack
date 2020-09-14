@@ -9,6 +9,8 @@ use Ignite\Crud\CrudIndex;
 
 class CrudIndexConfigFactory extends ConfigFactory
 {
+    use Concerns\ManagesBreadcrumb;
+
     /**
      * Setup index table.
      *
@@ -25,6 +27,8 @@ class CrudIndexConfigFactory extends ConfigFactory
         }
 
         $page->title($config->names['plural'] ?? '');
+
+        $page->breadcrumb($this->getBreadcrumb($config, false));
 
         $method($page);
 

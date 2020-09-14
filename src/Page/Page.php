@@ -4,6 +4,7 @@ namespace Ignite\Page;
 
 use Ignite\Contracts\Page\Expandable;
 use Ignite\Exceptions\NotLoggedInException;
+use Ignite\Vue\Component;
 
 class Page extends BasePage implements Expandable
 {
@@ -23,6 +24,13 @@ class Page extends BasePage implements Expandable
      * @var array|null
      */
     protected $back;
+
+    /**
+     * Breadcrumb array.
+     *
+     * @var array
+     */
+    protected $breadcrumb = [];
 
     /**
      * Navigation instance. Represents Vue component [lit-navigation] in [lit-page].
@@ -47,6 +55,7 @@ class Page extends BasePage implements Expandable
     {
         $this->navigation = new Navigation($this);
         $this->header = new Header($this);
+        $this->subPages = new Slot($this);
     }
 
     /**
@@ -75,6 +84,18 @@ class Page extends BasePage implements Expandable
         ];
 
         return $this;
+    }
+
+    public function breadcrumb(array $breadcrumb)
+    {
+        $this->breadcrumb = $breadcrumb;
+
+        return $this;
+    }
+
+    public function getBreadcrumb()
+    {
+        return $this->breadcrumb;
     }
 
     /**
@@ -161,6 +182,18 @@ class Page extends BasePage implements Expandable
     }
 
     /**
+     * Add subpage.
+     *
+     * @param  string    $title
+     * @param  string    $url
+     * @return Component
+     */
+    public function subPage($title, $url)
+    {
+        return $this->subPages->component('a')->prop('href', lit()->url($url))->child($title);
+    }
+
+    /**
      * Render page.
      *
      * @return array
@@ -176,7 +209,9 @@ class Page extends BasePage implements Expandable
         return array_merge([
             'navigation' => $this->navigation,
             'header'     => $this->header,
+            'subPages'   => $this->subPages,
             'back'       => $this->back,
+            'breadcrumb' => $this->breadcrumb,
         ], parent::render());
     }
 

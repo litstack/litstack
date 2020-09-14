@@ -32,16 +32,6 @@ abstract class CrudController extends CrudBaseController
     //abstract public function authorize(User $user, string $operation, $id = null);
 
     /**
-     * Create new CrudController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->config = $this->loadConfig();
-    }
-
-    /**
      * Load model.
      *
      * @param  CrudReadRequest $request
@@ -50,7 +40,7 @@ abstract class CrudController extends CrudBaseController
      */
     public function load(CrudReadRequest $request, $id)
     {
-        $model = $this->query()->findOrFail($id);
+        $model = $this->getQuery()->findOrFail($id);
 
         return crud(
             $model
@@ -77,7 +67,7 @@ abstract class CrudController extends CrudBaseController
     public function destroy(CrudDeleteRequest $request, $id)
     {
         $this->delete(
-            $this->query()->where('id', $id)
+            $this->getQuery()->where('id', $id)
         );
     }
 
@@ -152,10 +142,12 @@ abstract class CrudController extends CrudBaseController
      * @param  int                       $id
      * @return \Illuminate\Http\Response
      */
-    public function show(CrudReadRequest $request, $id)
+    public function show(CrudReadRequest $request, ...$parameters)
     {
+        $id = last($parameters);
+
         // Eager loads relations.
-        $query = $this->query();
+        $query = $this->getQuery();
         foreach ($this->config->show->getRegisteredFields() as $field) {
             if ($field instanceof RelationField && ! $field instanceof MediaField) {
                 $query->with($field->getRelationName());
@@ -204,7 +196,7 @@ abstract class CrudController extends CrudBaseController
             'config'     => $config,
         ]);
 
-        [$previous, $next] = $this->closeSiblings($id);
+        [$previous, $next] = $this->nearSiblings($id);
 
         // Show near items.
         $page->navigationLeft()->component('lit-crud-show-near-items')->bind([
@@ -226,7 +218,7 @@ abstract class CrudController extends CrudBaseController
     {
         $ids = $request->ids ?? abort(404);
 
-        $models = $this->query()
+        $models = $this->getQuery()
             ->whereIn('id', $ids)
             ->get();
 
@@ -247,15 +239,15 @@ abstract class CrudController extends CrudBaseController
      * @param  int   $id
      * @return array
      */
-    protected function closeSiblings($id)
+    protected function nearSiblings($id)
     {
-        $previous = $this->query()
+        $previous = $this->getQuery()
             ->where('id', '<', $id)
             ->orderBy('id', 'desc')
             ->select('id')
             ->first()->id ?? null;
 
-        $next = $this->query()
+        $next = $this->getQuery()
             ->where('id', '>', $id)
             ->orderBy('id')
             ->select('id')

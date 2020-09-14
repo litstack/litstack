@@ -8,12 +8,24 @@
 				<b-button
 					size="sm"
 					variant="link"
-					v-if="back"
+					v-if="breadcrumb.length > 0"
 					class="lit-page-navigation__go_back"
-					:href="`${Lit.baseURL}${back}`"
 				>
+					<!-- href="`${Lit.baseURL}${back}`" -->
 					<lit-fa-icon icon="list-ul" class="mr-1" />
-					<span v-html="backText ? backText : 'Go Back'" />
+					<!-- <span v-html="backText ? backText : 'Go Back'" /> -->
+					<template v-for="(item, i) in breadcrumb">
+						<a
+							:href="`${Lit.baseURL}${item.url}`"
+							class="text-secondary"
+						>
+							{{ item.title }}
+						</a>
+
+						<template v-if="i < breadcrumb.length - 1">
+							/
+						</template>
+					</template>
 				</b-button>
 				<div class="d-inline-block">
 					<slot name="left" />
@@ -79,6 +91,9 @@ export default {
 		},
 		backText: {
 			type: String,
+		},
+		breadcrumb: {
+			type: Array,
 		},
 		controls: {
 			type: Array,

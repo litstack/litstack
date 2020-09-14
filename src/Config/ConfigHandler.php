@@ -85,7 +85,6 @@ class ConfigHandler
         $uses = class_uses_recursive($this->config);
 
         foreach (Config::factories() as $dependency => $factory) {
-
             // Matching parent class.
             if ($parent) {
                 if ($this->config instanceof $dependency) {
@@ -203,7 +202,7 @@ class ConfigHandler
      * @param  string $name
      * @return mixed
      */
-    public function getAttribute(string $name)
+    public function getAttribute($name)
     {
         if (array_key_exists($name, $this->attributes)) {
             return $this->attributes[$name];

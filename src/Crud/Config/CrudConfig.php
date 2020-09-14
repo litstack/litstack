@@ -4,6 +4,7 @@ namespace Ignite\Crud\Config;
 
 use Ignite\Crud\Config\Traits\HasCrudIndex;
 use Ignite\Crud\Config\Traits\HasCrudShow;
+use Ignite\Support\Facades\Config;
 use Ignite\Support\Facades\Crud;
 use Illuminate\Support\Str;
 
@@ -64,6 +65,32 @@ abstract class CrudConfig
         }
 
         return $permissions;
+    }
+
+    /**
+     * Get the parent config.
+     *
+     * @return void
+     */
+    public function parentConfig()
+    {
+        if (! $this->parent) {
+            return;
+        }
+
+        return Config::get($this->parent);
+    }
+
+    /**
+     * Get a new controller instance.
+     *
+     * @return void
+     */
+    public function controllerInstance()
+    {
+        return app()->make($this->controller, [
+            'config' => Config::get(get_class($this)),
+        ]);
     }
 
     /**

@@ -3,6 +3,7 @@
 		<lit-navigation
 			:back="goBack.route || false"
 			:back-text="goBack.text || ''"
+			:breadcrumb="page.breadcrumb || {}"
 		>
 			<template :slot="slot" v-for="(part, slot) in page.navigation">
 				<lit-base-component
@@ -18,6 +19,14 @@
 				class="d-flex justify-content-between align-items-baseline"
 				v-html="page.header.title"
 			/>
+			<template slot="controls">
+				<lit-base-component
+					v-for="(component, key) in page.subPages.components"
+					v-bind="{ ...page.props, ...$attrs }"
+					:component="component"
+					:key="`header-controls-${key}`"
+				/>
+			</template>
 			<template slot="actions">
 				<lit-base-component
 					v-for="(component, key) in page.header.left.components"

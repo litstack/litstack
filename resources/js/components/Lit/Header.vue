@@ -7,6 +7,11 @@
 				</h3>
 			</slot>
 		</b-col>
+		<b-col cols="12" class="d-flex justify-content-between">
+			<div>
+				<slot name="controls" />
+			</div>
+		</b-col>
 		<b-col
 			cols="12"
 			class="d-flex justify-content-between lit-container-header__actions"

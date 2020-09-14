@@ -12,6 +12,8 @@ use Ignite\Crud\CrudShow;
 
 class CrudFormConfigFactory extends ConfigFactory
 {
+    use Concerns\ManagesBreadcrumb;
+
     /**
      * Setup create and edit form.
      *
@@ -24,7 +26,7 @@ class CrudFormConfigFactory extends ConfigFactory
         $form = new BaseForm($config->model);
 
         $form->setRoutePrefix(
-            strip_slashes($config->route_prefix.'/{id}/api/show')
+            strip_slashes($config->routePrefix().'/{id}/api/show')
         );
 
         $page = new CrudShow($form);
@@ -35,9 +37,10 @@ class CrudFormConfigFactory extends ConfigFactory
 
         $page->navigationRight()->component('lit-crud-language');
 
-        if ($config->has('index')) {
-            $page->goBack($config->names['plural'], $config->route_prefix);
-        }
+        $page->breadcrumb($this->getBreadcrumb($config));
+        // if ($config->has('index')) {
+        //     $page->goBack($config->names['plural'], $config->route_prefix);
+        // }
 
         $page->title($config->names['singular'] ?? '');
 

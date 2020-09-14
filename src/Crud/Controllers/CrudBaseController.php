@@ -2,6 +2,7 @@
 
 namespace Ignite\Crud\Controllers;
 
+use Ignite\Config\ConfigHandler;
 use Ignite\Crud\Actions\ActionResolver;
 use Ignite\Crud\Api\ApiLoader;
 use Ignite\Crud\Api\ApiRequest;
@@ -12,14 +13,23 @@ use Illuminate\Http\Request;
 
 abstract class CrudBaseController
 {
-    use Concerns\ManagesConfig;
+    use Concerns\ManagesConfig,
+        Concerns\ManagesQuery;
 
     /**
-     * Initial query.
+     * Create new CrudBaseController instance.
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  ConfigHandler|null $config
+     * @return void
      */
-    abstract public function query(): Builder;
+    public function __construct(ConfigHandler $config = null)
+    {
+        if (is_null($config)) {
+            $this->config = $this->loadConfig();
+        } else {
+            $this->config = $config;
+        }
+    }
 
     /**
      * Fill model on store.
@@ -75,7 +85,7 @@ abstract class CrudBaseController
             abort(404, debug("Missing table action [{$key}] in ".get_class($this->config->getConfig())));
         }
 
-        $models = $this->query()->whereIn('id', $request->ids ?? [])->get();
+        $models = $this->getQuery()->whereIn('id', $request->ids ?? [])->get();
 
         return $action->resolve($models);
     }
@@ -88,7 +98,7 @@ abstract class CrudBaseController
      */
     public function findOrFail($id)
     {
-        return $this->query()->findOrFail($id);
+        return $this->getQuery()->findOrFail($id);
     }
 
     /**
@@ -117,7 +127,7 @@ abstract class CrudBaseController
     public function indexTable(CrudReadRequest $request)
     {
         $table = $this->config->index->getTable();
-        $query = $table->getQuery($this->query());
+        $query = $table->getQuery($this->getQuery());
 
         $index = IndexTable::query($query)
             ->request($request)

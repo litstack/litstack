@@ -127,7 +127,7 @@ class LaravelRelationField extends RelationField
         $relatedConfig = Config::get($configKey);
 
         if (! $this->related_route_prefix) {
-            $this->routePrefix($relatedConfig->route_prefix);
+            $this->routePrefix($relatedConfig->routePrefix());
         }
         if ($relatedConfig->has('index')) {
             $this->setAttribute('preview', $relatedConfig->index->getTable()->getTable());
@@ -213,7 +213,7 @@ class LaravelRelationField extends RelationField
             }
         }
 
-        $this->routePrefix($this->relatedConfig->route_prefix);
+        $this->routePrefix($this->relatedConfig->routePrefix());
 
         return $this;
     }

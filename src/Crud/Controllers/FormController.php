@@ -7,7 +7,6 @@ use Ignite\Crud\Models\Form as FormModel;
 use Ignite\Crud\Requests\CrudCreateRequest;
 use Ignite\Crud\Requests\CrudReadRequest;
 use Ignite\Crud\Requests\FormReadRequest;
-use Illuminate\Database\Eloquent\Builder;
 use Lit\Models\User;
 
 abstract class FormController extends CrudBaseController
@@ -34,14 +33,6 @@ abstract class FormController extends CrudBaseController
     }
 
     /**
-     * Create new CrudController instance.
-     */
-    public function __construct()
-    {
-        $this->config = $this->loadConfig();
-    }
-
-    /**
      * Load model.
      *
      * @param CrudReadRequest $request
@@ -51,7 +42,7 @@ abstract class FormController extends CrudBaseController
      */
     public function load(CrudReadRequest $request, $id)
     {
-        $model = $this->query()->findOrFail($id);
+        $model = $this->getQuery()->findOrFail($id);
 
         return crud(
             $model
@@ -63,7 +54,7 @@ abstract class FormController extends CrudBaseController
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(): Builder
+    public function query($query)
     {
         return $this->model::query();
     }

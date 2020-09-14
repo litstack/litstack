@@ -2,6 +2,7 @@
 
 namespace Ignite\Crud\Controllers\Concerns;
 
+use Ignite\Config\ConfigHandler;
 use Illuminate\Support\Facades\Request;
 
 trait ManagesConfig
@@ -12,6 +13,17 @@ trait ManagesConfig
      * @var \Ignite\Config\ConfigHandler
      */
     protected $config;
+
+    /**
+     * Set config manually.
+     *
+     * @param  ConfigHandler $config
+     * @return void
+     */
+    public function setConfig(ConfigHandler $config)
+    {
+        $this->config = $config;
+    }
 
     /**
      * Get config.

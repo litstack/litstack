@@ -3,6 +3,8 @@
 namespace Ignite\Crud;
 
 use Ignite\Crud\Api\ApiRepositories;
+use Ignite\Crud\Config\CrudConfig;
+use Ignite\Crud\Config\Factories\CrudConfigFactory;
 use Ignite\Crud\Config\Factories\CrudFormConfigFactory;
 use Ignite\Crud\Config\Factories\CrudIndexConfigFactory;
 use Ignite\Crud\Config\Traits\HasCrudIndex;
@@ -113,6 +115,7 @@ class CrudServiceProvider extends LaravelServiceProvider
      * @var array
      */
     protected $configFactories = [
+        CrudConfig::class   => CrudConfigFactory::class,
         HasCrudShow::class  => CrudFormConfigFactory::class,
         HasCrudIndex::class => CrudIndexConfigFactory::class,
     ];

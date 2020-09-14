@@ -204,7 +204,7 @@ class Table extends BaseTable implements TableContract
      * @param  Builder $query
      * @return Builder
      */
-    public function getQuery(Builder $query)
+    public function getQuery($query)
     {
         $query->withCasts($this->casts);
 

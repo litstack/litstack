@@ -111,7 +111,7 @@ class DefaultRepository extends BaseFieldRepository
         $attributes = $this->formatAttributes((array) $payload, $this->form->getRegisteredFields());
 
         if ($this->config->sortable) {
-            $attributes[$this->config->orderColumn] = $this->controller->query()->count() + 1;
+            $attributes[$this->config->orderColumn] = $this->controller->getQuery()->count() + 1;
         }
 
         $model = $this->controller->getModel();

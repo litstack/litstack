@@ -4,6 +4,8 @@ namespace Ignite\Config;
 
 use Ignite\Application\Navigation\Config;
 use Ignite\Application\Navigation\NavigationConfigFactory;
+use Ignite\Crud\Config\CrudConfig;
+use Ignite\Crud\Config\Factories\CrudConfigFactory;
 use Ignite\Crud\Config\Factories\CrudFormConfigFactory;
 use Ignite\Crud\Config\Factories\CrudIndexConfigFactory;
 use Ignite\Crud\Config\Traits\HasCrudIndex;
@@ -22,6 +24,7 @@ class ConfigServiceProvider extends ServiceProvider
         Config::class => NavigationConfigFactory::class,
 
         // Crud
+        CrudConfig::class   => CrudConfigFactory::class,
         HasCrudShow::class  => CrudFormConfigFactory::class,
         HasCrudIndex::class => CrudIndexConfigFactory::class,
     ];
