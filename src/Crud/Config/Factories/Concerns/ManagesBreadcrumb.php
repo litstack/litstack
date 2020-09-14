@@ -17,7 +17,7 @@ trait ManagesBreadcrumb
     {
         $breadcrumb = [];
 
-        if ($withIndex) {
+        if ($withIndex && $config->has('index')) {
             $breadcrumb = [[
                 'title' => $config->names['plural'],
                 'url'   => $config->routePrefix(),
