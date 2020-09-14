@@ -6,8 +6,6 @@ use Ignite\Config\ConfigHandler;
 use Ignite\Crud\Actions\ActionResolver;
 use Ignite\Crud\Api\ApiLoader;
 use Ignite\Crud\Api\ApiRequest;
-use Ignite\Crud\Requests\CrudReadRequest;
-use Ignite\Support\IndexTable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -116,27 +114,6 @@ abstract class CrudBaseController
         ]);
 
         return $api->handle();
-    }
-
-    /**
-     * Load index table items.
-     *
-     * @param  CrudReadRequest $request
-     * @return array           $items
-     */
-    public function indexTable(CrudReadRequest $request)
-    {
-        $table = $this->config->index->getTable();
-        $query = $table->getQuery($this->getQuery());
-
-        $index = IndexTable::query($query)
-            ->request($request)
-            ->search($table->getAttribute('search'))
-            ->get();
-
-        $index['items'] = crud($index['items']);
-
-        return $index;
     }
 
     /**

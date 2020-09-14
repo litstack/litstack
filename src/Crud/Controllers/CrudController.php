@@ -9,6 +9,7 @@ use Ignite\Crud\Requests\CrudCreateRequest;
 use Ignite\Crud\Requests\CrudDeleteRequest;
 use Ignite\Crud\Requests\CrudReadRequest;
 use Ignite\Crud\Requests\CrudUpdateRequest;
+use Ignite\Support\IndexTable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
@@ -30,6 +31,17 @@ abstract class CrudController extends CrudBaseController
      * @return bool
      */
     //abstract public function authorize(User $user, string $operation, $id = null);
+
+    /**
+     * Modify initial query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
+     * @return void
+     */
+    public function query($query)
+    {
+        //
+    }
 
     /**
      * Load model.
@@ -96,9 +108,7 @@ abstract class CrudController extends CrudBaseController
     public function index(CrudReadRequest $request)
     {
         $config = $this->config->get(
-            'route_prefix',
-            'names',
-            'permissions'
+            'route_prefix', 'names', 'permissions'
         );
 
         $page = $this->config->index->bind([
@@ -106,6 +116,27 @@ abstract class CrudController extends CrudBaseController
         ]);
 
         return $page;
+    }
+
+    /**
+     * Load index table items.
+     *
+     * @param  CrudReadRequest $request
+     * @return array           $items
+     */
+    public function indexTable(CrudReadRequest $request)
+    {
+        $table = $this->config->index->getTable();
+        $query = $table->getQuery($this->getQuery());
+
+        $index = IndexTable::query($query)
+            ->request($request)
+            ->search($table->getAttribute('search'))
+            ->get();
+
+        $index['items'] = crud($index['items']);
+
+        return $index;
     }
 
     /**
