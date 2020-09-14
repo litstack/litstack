@@ -41,7 +41,6 @@ const methods = {
 		// Any status codes that falls outside the range of 2xx cause this function to trigger
 		// Do something with response error
 
-		console.log(store.getters.debug);
 		if (!error.response) {
 			return Promise.reject(error);
 		}
@@ -51,7 +50,12 @@ const methods = {
 			store.getters.debug &&
 			!error.response.headers['content-type'].includes('application/json')
 		) {
-			livewire.connection.driver.showHtmlModal(error.response.data);
+			if ('driver' in livewire.connection) {
+				livewire.connection.driver.showHtmlModal(error.response.data);
+			} else {
+				livewire.connection.showHtmlModal(error.response.data);
+			}
+
 			return Promise.reject(error);
 		}
 
