@@ -56,7 +56,7 @@ trait ManagesPaths
      */
     protected function controllerPath()
     {
-        return lit()->path("Http/Controllers/Crud/{$this->model}Controller.php");
+        return lit()->path("Http/Controllers/Crud/{$this->controller}.php");
     }
 
     /**

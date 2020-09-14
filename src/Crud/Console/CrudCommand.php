@@ -106,6 +106,7 @@ class CrudCommand extends Command
 
         $this->model = ucfirst(Str::singular($this->model));
         $this->config = $this->argument('config') ?: "{$this->model}Config";
+        $this->controller = Str::replaceLast('Config', '', $this->config).'Controller';
         $this->table = Str::snake(Str::plural($this->model));
         $this->translationsTable = Str::singular($this->table).'_translations';
 
