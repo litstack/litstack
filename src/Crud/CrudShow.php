@@ -64,7 +64,7 @@ class CrudShow extends Page
      * @param  string    $config
      * @return Component
      */
-    public function subPage($config)
+    public function subPage($config, $icon = null)
     {
         $config = Config::get($config);
 
@@ -83,7 +83,7 @@ class CrudShow extends Page
 
         return $this->subPages->component('a')
             ->prop('href', lit()->url($prefix))
-            ->domProp('innerHTML', $title);
+            ->domProp('innerHTML', $icon ? "{$icon} {$title}" : $title);
     }
 
     /**
