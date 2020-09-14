@@ -124,7 +124,7 @@ trait CreatesModels
             return false;
         }
 
-        $content = file_get_contents(__DIR__.'/../../stubs/CrudTranslationModel.stub');
+        $content = file_get_contents($this->translationModelStubPath());
 
         $content = str_replace('DummyClassname', $this->model.'Translation', $content);
 
@@ -133,10 +133,10 @@ trait CreatesModels
             $content = str_replace('DummyTraits', "use Ignite\Crud\Models\Traits\Sluggable;\nDummyTraits", $content);
             $content = str_replace('DummyTraits', "use Illuminate\Database\Eloquent\Builder;\nDummyTraits", $content);
 
-            $sluggableContents = file_get_contents(__DIR__.'/../../stubs/crud.model.sluggable.stub');
+            $sluggableContents = file_get_contents($this->sluggableModelStubPath());
             $content = str_replace('DummySluggable', $sluggableContents."\n".'DummySluggable', $content);
 
-            $sluggableContents = file_get_contents(__DIR__.'/../../stubs/CrudTranslationModelSlugUnique.stub');
+            $sluggableContents = file_get_contents($this->translationModelSlugUniqueStubPath());
             $content = str_replace('DummySluggable', $sluggableContents, $content);
 
             $uses = ['Sluggable'];
@@ -150,8 +150,6 @@ trait CreatesModels
                 }
                 $content = str_replace('DummyUses', $str.';', $content);
             }
-
-            return $content;
         }
 
         // Remove placeholders.

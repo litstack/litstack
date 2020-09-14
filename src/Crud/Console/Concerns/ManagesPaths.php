@@ -118,6 +118,36 @@ trait ManagesPaths
      *
      * @return string
      */
+    protected function translationModelStubPath()
+    {
+        return lit_vendor_path('stubs/CrudTranslationModel.stub');
+    }
+
+    /**
+     * Get path to the config stub.
+     *
+     * @return string
+     */
+    protected function sluggableModelStubPath()
+    {
+        return lit_vendor_path('stubs/crud.model.sluggable.stub');
+    }
+
+    /**
+     * Get path to the config stub.
+     *
+     * @return string
+     */
+    protected function translationModelSlugUniqueStubPath()
+    {
+        return lit_vendor_path('stubs/CrudTranslationModelSlugUnique.stub');
+    }
+
+    /**
+     * Get path to the config stub.
+     *
+     * @return string
+     */
     protected function modelSluggableStubPath()
     {
         return lit_vendor_path('stubs/crud.model.sluggable.stub');

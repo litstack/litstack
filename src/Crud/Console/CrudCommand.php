@@ -5,6 +5,8 @@ namespace Ignite\Crud\Console;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class CrudCommand extends Command
 {
@@ -19,10 +21,7 @@ class CrudCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'lit:crud {model} {config?}
-                            {--media : Wether this model has media} 
-                            {--translatable : Wether this model should be translatable} 
-                            {--slug : Wether this model should have a slug}';
+    protected $name = 'lit:crud';
 
     /**
      * The console command description.
@@ -58,7 +57,7 @@ class CrudCommand extends Command
         $this->info('/_____//_/ \__/   \____//_/ |_| \____//_____/   ');
         $this->info('                                                ');
 
-        $this->getArguments();
+        $this->setArguments();
 
         $this->createModel();
         $this->createMigration();
@@ -93,11 +92,38 @@ class CrudCommand extends Command
     }
 
     /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getArguments()
+    {
+        return [
+            ['model', InputArgument::REQUIRED, 'The name of the model class'],
+            ['config', InputArgument::OPTIONAL, 'The name of the config class'],
+        ];
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+            ['media', 'm', InputOption::VALUE_NONE, 'Wether this model has media'],
+            ['translatable', 't', InputOption::VALUE_NONE, 'Wether this model should be translatable'],
+            ['slug', 's', InputOption::VALUE_NONE, 'Wether this model should have a slug'],
+        ];
+    }
+
+    /**
      * Get arguments.
      *
      * @return void
      */
-    protected function getArguments()
+    protected function setArguments()
     {
         $this->model = $this->argument('model');
         if (! $this->model) {

@@ -6,10 +6,10 @@
      * @param mixed $attribute
      * @param array $config
      * @param string $slug
-     * @return Builder
+     * @return void
      */
     public function scopeWithUniqueSlugConstraints(Builder $query, $model, $attribute, $config, $slug)
     {
-        return $query->where('locale', $model->locale);
+        $query->where('locale', $model->locale);
     }
 
