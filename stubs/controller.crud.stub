@@ -10,13 +10,6 @@ use Ignite\Crud\Controllers\CrudController;
 class DummyClass extends CrudController
 {
     /**
-     * Crud model class name.
-     *
-     * @var string
-     */
-    protected $model = \App\Models\DummyModelClass::class;
-
-    /**
      * Authorize request for authenticated lit-user and permission operation.
      * Operations: create, read, update, delete
      *
@@ -28,15 +21,5 @@ class DummyClass extends CrudController
     public function authorize(User $user, string $operation, $id = null): bool
     {
         return $user->can("{$operation} DummyTableName");
-    }
-
-    /**
-     * Initial query.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function query(): Builder
-    {
-        return $this->model::query();
     }
 }
