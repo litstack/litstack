@@ -104,9 +104,9 @@ class Crud
                 $this->makeCrudRoutes($config, str_replace('.', '_', $config->getKey()));
                 $this->makeFieldRoutes($config->controller);
 
-                // if ($config->has('parent')) {
-                //     return;
-                // }
+                if ($config->has('parent')) {
+                    return;
+                }
 
                 Nav::preset(
                     [
