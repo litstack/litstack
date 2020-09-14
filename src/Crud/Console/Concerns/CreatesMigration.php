@@ -52,7 +52,7 @@ trait CreatesMigration
      */
     protected function migrationClassName()
     {
-        return 'Create'.ucfirst(Str::plural($this->model)).'Table';
+        return 'Create'.ucfirst(Str::plural($this->model)).($this->translatable ? 'Tables' : 'Table');
     }
 
     /**

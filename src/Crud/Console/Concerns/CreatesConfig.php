@@ -22,7 +22,8 @@ trait CreatesConfig
         $content = $this->files->get($this->configStubPath());
 
         foreach ([
-            'DummyClassname' => $this->model,
+            'DummyClassname' => $this->config,
+            'DummyModelclass' => $this->model,
             'DummyTablename' => $this->table,
             'DummySingularname' => $this->model,
             'DummyPluralname' => ucfirst(Str::plural($this->model)),

@@ -7,10 +7,10 @@ use Ignite\Crud\CrudIndex;
 use Ignite\Crud\Config\CrudConfig;
 use Illuminate\Support\Str;
 
-use App\Models\DummyClassname;
+use App\Models\DummyModelclass;
 use Lit\Http\Controllers\Crud\DummyClassnameController;
 
-class DummyClassnameConfig extends CrudConfig
+class DummyClassname extends CrudConfig
 {
     /**
      * Model class.

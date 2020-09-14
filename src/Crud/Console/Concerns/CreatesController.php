@@ -19,7 +19,7 @@ trait CreatesController
 
         $content = $this->files->get($this->controllerStubPath());
 
-        $content = str_replace('DummyClass', $this->model.'Controller', $content);
+        $content = str_replace('DummyClass', $this->controller, $content);
         $content = str_replace('DummyModelClass', "\\App\\Models\\{$this->model}", $content);
         $content = str_replace('DummyTableName', $this->table, $content);
 

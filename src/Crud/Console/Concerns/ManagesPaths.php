@@ -44,8 +44,10 @@ trait ManagesPaths
 
         $timestamp = str_replace(' ', '_', str_replace('-', '_', str_replace(':', '', now())));
 
+        $table = $this->translatable ? 'tables' : 'table';
+
         return $this->migrationPath = database_path(
-            "migrations/{$timestamp}_create_{$this->table}_table.php"
+            "migrations/{$timestamp}_create_{$this->table}_{$table}.php"
         );
     }
 
