@@ -20,6 +20,7 @@ class DummyClass extends CrudController
      */
     public function authorize(User $user, string $operation, $id = null): bool
     {
-        return $user->can("{$operation} DummyTableName");
+        // return $user->can("{$operation} DummyTableName");
+        return true;
     }
 }

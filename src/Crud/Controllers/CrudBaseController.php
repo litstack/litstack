@@ -15,6 +15,13 @@ abstract class CrudBaseController
         Concerns\ManagesQuery;
 
     /**
+     * Model class.
+     *
+     * @var string
+     */
+    protected $model;
+
+    /**
      * Create new CrudBaseController instance.
      *
      * @param  ConfigHandler|null $config
@@ -27,6 +34,8 @@ abstract class CrudBaseController
         } else {
             $this->config = $config;
         }
+
+        $this->model = $this->config->model ?? null;
     }
 
     /**
