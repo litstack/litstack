@@ -25,7 +25,7 @@ class CrudCommandTest extends BackendTestCase
         $this->assertFileExists(app_path('Models/Foo.php'));
 
         $this->artisan('migrate');
-        Schema::hasTable('foos');
+        $this->assertTableExists('foos');
     }
 
     /** @test */
@@ -45,9 +45,40 @@ class CrudCommandTest extends BackendTestCase
         $this->artisan('lit:crud Bar -t');
 
         $this->assertCount(1, File::glob(database_path('migrations/*create_bars_tables.php')));
+        $this->assertFileExists(base_path('app/Models/Translations/BarTranslation.php'));
 
         $this->artisan('migrate');
-        Schema::hasTable('bars');
-        Schema::hasTable('bar_translations');
+        $this->assertTableExists('bars');
+        $this->assertTableExists('bar_translations');
+
+        $this->assertTableHasColumn('bar_translations', 'id');
+        $this->assertTableHasColumn('bar_translations', 'bar_id');
+        $this->assertTableHasColumn('bar_translations', 'locale');
+    }
+
+    /** @test */
+    public function test_migration_sluggable()
+    {
+        $this->artisan('lit:crud Baz -s');
+        $this->artisan('migrate');
+        $this->assertTableExists('bazs');
+    }
+
+    /** @test */
+    public function test_generation_for_sluggable_and_translatable()
+    {
+        $this->artisan('lit:crud Dummy -s -t');
+
+        $this->assertFileExists(base_path('app/Models/Translations/DummyTranslation.php'));
+    }
+
+    protected function assertTableExists($table)
+    {
+        $this->assertTrue(Schema::hasTable($table), "Failed asserting that table {$table} exists.");
+    }
+
+    protected function assertTableHasColumn($table, $column)
+    {
+        $this->assertTrue(Schema::hasColumn($table, $column), "Failed asserting that table {$table} hast column {$column}.");
     }
 }

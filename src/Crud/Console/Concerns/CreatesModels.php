@@ -13,7 +13,7 @@ trait CreatesModels
      */
     protected function createModel()
     {
-        if ($this->configExists()) {
+        if ($this->modelExists()) {
             $this->line("Model {$this->model} already exists.");
 
             return false;
@@ -58,18 +58,18 @@ trait CreatesModels
             $builder->withTraits("use Ignite\Crud\Models\Traits\Translatable;");
             $builder->withVars('
     /**
-     * Translated attributes.
+     * The attributes to be translated.
      *
      * @var array
      */
-    public $translatedAttributes = [\'title\', \'text\'];');
+    public $translatedAttributes = [\'title\'];');
 
-            $attributeContents = file_get_contents(lit_vendor_path('stubs/crud.model.translation.attribute.stub'));
-            $builder->withGetAttributes($attributeContents);
+            // $attributeContents = file_get_contents(lit_vendor_path('stubs/crud.model.translation.attribute.stub'));
+            // $builder->withGetAttributes($attributeContents);
 
             $implements[] = 'TranslatableContract';
             $uses[] = 'Translatable';
-            $appends[] = 'translation';
+            // $appends[] = 'translation';
             $with[] = 'translations';
 
             $this->createTranslationModel();

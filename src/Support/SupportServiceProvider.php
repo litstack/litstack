@@ -34,6 +34,7 @@ class SupportServiceProvider extends ServiceProvider
         Macros\BladeBlock::class,
         Macros\RouteMatchesUri::class,
         Macros\ResponseMacros::class,
+        Macros\BlueprintTranslates::class,
     ];
 
     /**
