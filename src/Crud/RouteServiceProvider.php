@@ -55,40 +55,38 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     protected function getCrudConfigs()
     {
-        return Cache::remember('lit.crud.configs', 5, function () {
-            $configs = collect([]);
-            $files = File::allFiles(lit_config_path());
+        $configs = collect([]);
+        $files = File::allFiles(lit_config_path());
 
-            foreach ($files as $file) {
-                if ($file->isDir()) {
-                    continue;
-                }
-
-                if (! Str::contains($file, '.php')) {
-                    continue;
-                }
-
-                $namespace = str_replace('/', '\\', 'Lit'.explode('lit/app', str_replace('.php', '', $file))[1]);
-                $reflection = new ReflectionClass($namespace);
-
-                if (! $reflection->getParentClass()) {
-                    continue;
-                }
-
-                if (! is_subclass_of($namespace, CrudConfig::class)) {
-                    continue;
-                }
-
-                $config = Config::getFromPath($file);
-
-                if (! $config) {
-                    continue;
-                }
-                $configs->push($config);
+        foreach ($files as $file) {
+            if ($file->isDir()) {
+                continue;
             }
 
-            return $configs;
-        });
+            if (! Str::contains($file, '.php')) {
+                continue;
+            }
+
+            $namespace = str_replace('/', '\\', 'Lit'.explode('lit/app', str_replace('.php', '', $file))[1]);
+            $reflection = new ReflectionClass($namespace);
+
+            if (! $reflection->getParentClass()) {
+                continue;
+            }
+
+            if (! is_subclass_of($namespace, CrudConfig::class)) {
+                continue;
+            }
+
+            $config = Config::getFromPath($file);
+
+            if (! $config) {
+                continue;
+            }
+            $configs->push($config);
+        }
+
+        return $configs;
     }
 
     /**
@@ -110,30 +108,28 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     public function getFormConfigs()
     {
-        return Cache::remember('lit.form.configs', 5, function () {
-            $configs = collect([]);
-            $configPath = lit_config_path('Form');
-            $directories = glob($configPath.'/*', GLOB_ONLYDIR);
+        $configs = collect([]);
+        $configPath = lit_config_path('Form');
+        $directories = glob($configPath.'/*', GLOB_ONLYDIR);
 
-            foreach ($directories as $formDirectory) {
-                $configFiles = glob("{$formDirectory}/*.php");
-                foreach ($configFiles as $path) {
-                    $configKey = Config::getKeyFromPath($path);
+        foreach ($directories as $formDirectory) {
+            $configFiles = glob("{$formDirectory}/*.php");
+            foreach ($configFiles as $path) {
+                $configKey = Config::getKeyFromPath($path);
 
-                    $config = Config::get($configKey);
-                    if (! $config) {
-                        continue;
-                    }
-
-                    if (! $config->getConfig() instanceof FormConfig) {
-                        continue;
-                    }
-
-                    $configs->push($config);
+                $config = Config::get($configKey);
+                if (! $config) {
+                    continue;
                 }
-            }
 
-            return $configs;
-        });
+                if (! $config->getConfig() instanceof FormConfig) {
+                    continue;
+                }
+
+                $configs->push($config);
+            }
+        }
+
+        return $configs;
     }
 }
