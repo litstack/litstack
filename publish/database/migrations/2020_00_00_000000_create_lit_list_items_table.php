@@ -32,14 +32,8 @@ class CreateLitListItemsTable extends Migration
         });
 
         Schema::create('lit_list_item_translations', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('lit_list_item_id')->unsigned();
-            $table->string('locale')->index();
-
+            $table->translates('lit_list_items', 'lit_list_item_id');
             $table->text('value')->nullable();
-
-            $table->unique(['lit_list_item_id', 'locale']);
-            $table->foreign('lit_list_item_id')->references('id')->on('lit_list_items')->onDelete('cascade');
         });
     }
 

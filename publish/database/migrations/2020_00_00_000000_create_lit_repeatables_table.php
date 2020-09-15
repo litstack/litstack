@@ -31,14 +31,8 @@ class CreateLitRepeatablesTable extends Migration
         });
 
         Schema::create('lit_repeatable_translations', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('lit_repeatable_id')->unsigned();
-            $table->string('locale')->index();
-
+            $table->translates('lit_repeatables', 'lit_repeatable_id');
             $table->text('value')->nullable();
-
-            $table->unique(['lit_repeatable_id', 'locale']);
-            $table->foreign('lit_repeatable_id')->references('id')->on('lit_repeatables')->onDelete('cascade');
         });
     }
 

@@ -29,14 +29,8 @@ class CreateLitFormsTable extends Migration
         });
 
         Schema::create('lit_form_translations', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('lit_form_id')->unsigned();
-            $table->string('locale')->index();
-
+            $table->translates('lit_forms', 'lit_form_id');
             $table->text('value')->nullable();
-
-            $table->unique(['lit_form_id', 'locale']);
-            $table->foreign('lit_form_id')->references('id')->on('lit_forms')->onDelete('cascade');
         });
     }
 
