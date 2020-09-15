@@ -2,6 +2,7 @@
 
 namespace Ignite\Crud;
 
+use Closure;
 use Ignite\Application\Navigation\PresetFactory;
 use Ignite\Config\ConfigHandler;
 use Ignite\Foundation\Litstack;
@@ -73,7 +74,7 @@ class CrudRouter
                 $this->makeCrudRoutes($config);
                 $this->makeFieldRoutes($config);
                 $this->setNavigationPreset(
-                    $config, ucfirst($config->names['plural'])
+                    $config, fn () => ucfirst($config->names['plural'])
                 );
             });
         });
@@ -96,7 +97,7 @@ class CrudRouter
                 $this->makeFormRoutes($config);
                 $this->makeFieldRoutes($config);
                 $this->setNavigationPreset(
-                    $config, ucfirst($config->names['singular'])
+                    $config, fn () => ucfirst($config->names['singular'])
                 );
             });
         });
@@ -176,7 +177,7 @@ class CrudRouter
      * @param  ConfigHandler $config
      * @return void
      */
-    protected function setNavigationPreset(ConfigHandler $config, $title)
+    protected function setNavigationPreset(ConfigHandler $config, Closure $title)
     {
         // Navigation preset will only be created for root crud configs.
         if ($config->has('parent')) {
@@ -185,7 +186,7 @@ class CrudRouter
 
         $this->nav->preset($this->getNavigationPresetKeys($config), [
             'link'      => $this->litstack->url($config->routePrefix),
-            'title'     => fn ()     => $title,
+            'title'     => $title,
             'authorize' => function (User $user) use ($config) {
                 return $config->authorize($user, 'read');
             },
