@@ -117,7 +117,7 @@ class ListRepository extends BaseFieldRepository
         );
 
         $order_column = ListItem::where([
-            'config_type' => $this->config->getType(),
+            'config_type' => $this->config->getNamespace(),
             'form_type'   => $payload->form_type ?? 'show',
             'model_type'  => get_class($model),
             'model_id'    => $model->id,

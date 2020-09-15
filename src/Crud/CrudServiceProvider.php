@@ -147,6 +147,25 @@ class CrudServiceProvider extends LaravelServiceProvider
         $this->registerCrud();
 
         $this->registerApiRepositories();
+
+        $this->registerCrudRouter();
+    }
+
+    /**
+     * Register the singleton.
+     *
+     * @return void
+     */
+    protected function registerCrudRouter()
+    {
+        $this->app->singleton('lit.crud.router', function ($app) {
+            return new CrudRouter(
+                $app['router'],
+                $app['lit.router'],
+                $app['lit.nav'],
+                $app['lit']
+            );
+        });
     }
 
     /**

@@ -53,13 +53,13 @@ class ConfigHandler
     }
 
     /**
-     * Get namespace of config.
+     * Get namespace of the config.
      *
-     * @return string
+     * @return string|null
      */
-    public function getType()
+    public function getNamespace()
     {
-        return $this->config === null ? null : get_class($this->config);
+        return is_null($this->config) ? null : get_class($this->config);
     }
 
     /**

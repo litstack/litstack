@@ -112,7 +112,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                 continue;
             }
 
-            Crud::routes($config);
+            $this->app['lit.crud.router']->routes($config);
         }
     }
 
@@ -140,7 +140,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
                     continue;
                 }
 
-                Crud::formRoutes($config);
+                $this->app['lit.crud.router']->formRoutes($config);
+                // Crud::formRoutes($config);
             }
         }
     }

@@ -5,6 +5,7 @@ namespace Ignite\Crud\Config\Traits;
 use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Builder;
+use Lit\Models\User;
 
 trait HasCrudShow
 {
@@ -39,5 +40,17 @@ trait HasCrudShow
     public function query()
     {
         return $this->controllerInstance()->getQuery();
+    }
+
+    /**
+     * Authorize the page for the given user and operation.
+     *
+     * @param  User   $user
+     * @param  string $operation
+     * @return bool
+     */
+    public function authorize(User $user, $operation)
+    {
+        return $this->controllerInstance()->authorize($user, $operation);
     }
 }
