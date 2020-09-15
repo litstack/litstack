@@ -7,9 +7,7 @@ use Ignite\Crud\Config\FormConfig;
 use Ignite\Support\Facades\Config;
 use Ignite\Support\Facades\Crud;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Support\Str;
 use ReflectionClass;
 
@@ -26,49 +24,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
         $this->mapCrudRoutes();
         $this->mapFormRoutes();
-    }
-
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->macros();
-    }
-
-    /**
-     * Register macros.
-     *
-     * @return void
-     */
-    public function macros()
-    {
-        RouteFacade::macro('config', function ($class) {
-            $this->config = $class;
-
-            if (isset($this->groupStack[0])) {
-                $this->groupStack[0]['config'] = $this->config;
-            }
-
-            return $this;
-        });
-
-        Route::macro('config', function ($config) {
-            $this->action['config'] = $config;
-
-            return $this;
-        });
-
-        Route::macro('getConfig', function () {
-            $key = $this->action['config'] ?? null;
-            if (! $key) {
-                return;
-            }
-
-            return lit()->config($key);
-        });
     }
 
     /**

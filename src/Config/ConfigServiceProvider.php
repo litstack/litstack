@@ -45,5 +45,7 @@ class ConfigServiceProvider extends ServiceProvider
 
             return $loader;
         });
+
+        (new RouterMacros)->register();
     }
 }
