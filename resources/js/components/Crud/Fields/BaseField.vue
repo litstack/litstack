@@ -1,15 +1,18 @@
 <template>
 	<lit-col :width="width" :class="field.class">
-		<div :class="`pb-4 lit-form lit-form-item-${field.id}`">
-			<h6 class="lit-form-item-title mb-0 d-flex justify-content-between">
-				<label :for="field.id" v-html="field.title"></label>
+		<div :class="`pb-3 lit-form lit-form-item-${field.id}`">
+			<label
+				class="lit-form-item-title mb-2 d-flex justify-content-between"
+				:for="field.id"
+			>
+				<span v-html="field.title"></span>
 				<div>
 					<slot name="title-right" />
 					<b-badge v-if="field.translatable" variant="secondary">
 						<small>{{ language }}</small>
 					</b-badge>
 				</div>
-			</h6>
+			</label>
 			<p class="text-secondary" v-if="field.info">{{ field.info }}</p>
 			<div class="input-group">
 				<slot :state="state" />
