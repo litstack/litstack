@@ -223,7 +223,7 @@ class CrudShow extends Page
             $this->inCard = true;
             $closure($this);
             $this->inCard = false;
-        })->class('mb-5');
+        })->class('mb-4');
     }
 
     /**
