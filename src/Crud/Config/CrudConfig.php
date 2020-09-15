@@ -112,7 +112,7 @@ abstract class CrudConfig
 
         foreach ($operations as $operation) {
             $permissions[$operation] = lit_user()
-                ? Crud::authorize($this->controller, $operation)
+                ? $this->authorize(lit_user(), $operation)
                 : false;
         }
 

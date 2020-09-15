@@ -3,7 +3,6 @@
 namespace Ignite\Crud\Config;
 
 use Ignite\Crud\Models\Form;
-use Ignite\Support\Facades\Crud;
 use Illuminate\Support\Str;
 
 class FormConfig
@@ -78,8 +77,8 @@ class FormConfig
     public function permissions()
     {
         return [
-            'read'   => Crud::authorize($this->controller, 'read'),
-            'update' => Crud::authorize($this->controller, 'update'),
+            'read'   => $this->authorize(lit_user(), 'read'),
+            'update' => $this->authorize(lit_user(), 'update'),
         ];
     }
 
