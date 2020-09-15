@@ -51,9 +51,14 @@ trait ManagesQuery
 
         $parentController = $this->config->parentConfig()->controllerInstance();
 
-        $parent = $parentController->getQuery()->findOrFail(
+        $parent = $parentController->getQuery()->find(
             $this->getParentId()
         );
+
+        if (is_null($parent)) {
+            $model = $parentController->getModel();
+            $parent = new $model;
+        }
 
         return $parent->{$this->config->relation}();
     }
