@@ -1,5 +1,10 @@
 <template>
-	<lit-base-field :field="field" :model="model" :value="value">
+	<lit-base-field
+		:field="field"
+		:model="model"
+		:value="value"
+		class="lit-field__range"
+	>
 		<b-input-group>
 			<b-form-input
 				ref="input"
@@ -90,7 +95,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@lit-sass/_variables';
-.lit-form-item-range {
+.lit-field__range {
 	.input-group {
 		height: $button-md-height / 1.5;
 		align-items: center;
