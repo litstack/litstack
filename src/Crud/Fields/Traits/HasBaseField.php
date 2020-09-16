@@ -56,6 +56,19 @@ trait HasBaseField
     }
 
     /**
+     * Set field description.
+     *
+     * @param  string $info
+     * @return $this
+     */
+    public function info(string $info)
+    {
+        $this->setAttribute('info', $info);
+
+        return $this;
+    }
+
+    /**
      * Set hint.
      *
      * @param string $hint

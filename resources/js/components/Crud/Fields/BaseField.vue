@@ -11,9 +11,22 @@
 					<b-badge v-if="field.translatable" variant="secondary">
 						<small>{{ language }}</small>
 					</b-badge>
+
+					<template v-if="field.info">
+						<lit-fa-icon
+							:id="`lit-form-item-${field.id}-info`"
+							icon="question-circle"
+							class="text-secondary"
+						/>
+						<b-tooltip
+							:target="`lit-form-item-${field.id}-info`"
+							:delay="10"
+						>
+							{{ field.info }}
+						</b-tooltip>
+					</template>
 				</div>
 			</label>
-			<p class="text-secondary" v-if="field.info">{{ field.info }}</p>
 			<div class="input-group">
 				<slot :state="state" />
 				<b-form-invalid-feedback
