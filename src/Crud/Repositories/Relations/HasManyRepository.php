@@ -2,6 +2,7 @@
 
 namespace Ignite\Crud\Repositories\Relations;
 
+use Ignite\Config\ConfigHandler;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Crud\Fields\Relations\HasMany;
