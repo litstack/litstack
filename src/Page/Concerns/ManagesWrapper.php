@@ -3,6 +3,7 @@
 namespace Ignite\Page\Concerns;
 
 use Closure;
+use Ignite\Page\Wrapper\CardWrapper;
 
 trait ManagesWrapper
 {
@@ -77,7 +78,20 @@ trait ManagesWrapper
             $component = component($component);
         }
 
-        return $this->component('lit-field-wrapper')
+        return $this->component('lit-wrapper')
             ->wrapperComponent($component);
+    }
+
+    /**
+     * Create b-card wrapper.
+     *
+     * @param  int         $cols
+     * @param  Closure     $closure
+     * @return CardWrapper
+     */
+    public function card(Closure $closure)
+    {
+        return $this->wrapper(new CardWrapper, fn ($form) => $closure($this))
+            ->class('mb-4');
     }
 }

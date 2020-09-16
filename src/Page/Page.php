@@ -2,10 +2,8 @@
 
 namespace Ignite\Page;
 
-use Closure;
 use Ignite\Contracts\Page\Expandable;
 use Ignite\Exceptions\NotLoggedInException;
-use Ignite\Page\Wrapper\CardWrapper;
 use Ignite\Vue\Component;
 
 class Page extends BasePage implements Expandable
@@ -57,19 +55,6 @@ class Page extends BasePage implements Expandable
     {
         $this->navigation = new Navigation($this);
         $this->header = new Header($this);
-    }
-
-    /**
-     * Create b-card wrapper.
-     *
-     * @param  int         $cols
-     * @param  Closure     $closure
-     * @return CardWrapper
-     */
-    public function card(Closure $closure)
-    {
-        return $this->wrapper(new CardWrapper, fn ($form) => $closure($this))
-            ->class('mb-4');
     }
 
     /**

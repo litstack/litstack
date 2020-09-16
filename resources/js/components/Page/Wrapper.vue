@@ -12,7 +12,7 @@
 
 <script>
 export default {
-	name: 'FieldWrapper',
+	name: 'Wrapper',
 	props: {
 		wrapperComponent: {
 			type: Object,
