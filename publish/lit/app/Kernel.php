@@ -15,5 +15,6 @@ class Kernel extends LitstackKernel
         Providers\LitstackServiceProvider::class,
         Providers\LivewireServiceProvider::class,
         Providers\LocalizationServiceProvider::class,
+        Providers\RouteServiceProvider::class,
     ];
 }
