@@ -46,7 +46,7 @@ export default {
 			required: true,
 		},
 		operations: {
-			type: Array,
+			type: [Array, Object],
 			required: true,
 		},
 		roles: {
