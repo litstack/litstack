@@ -1,16 +1,11 @@
 <template>
-	<b-button
-		variant="primary"
-		size="sm"
-		v-b-modal.lit-page-preview
-		v-if="config.preview_route"
-	>
+	<span>
 		<lit-fa-icon icon="eye" />
 
 		{{ __('lit.preview') }}
 
-		<lit-page-preview :show="true" :route="config.preview_route" />
-	</b-button>
+		<lit-page-preview :show="true" :route="url" />
+	</span>
 </template>
 
 <script>
@@ -18,10 +13,17 @@ import { mapGetters } from 'vuex';
 export default {
 	name: 'CrudPreview',
 	props: {
-		config: {
+		url: {
+			type: String,
 			required: true,
-			type: Object,
 		},
+	},
+	mounted() {
+		this.$nextTick(() => {
+			this.$parent.$parent.$el.addEventListener('click', () => {
+				this.$bvModal.show('lit-page-preview');
+			});
+		});
 	},
 };
 </script>

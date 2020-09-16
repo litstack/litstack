@@ -7,6 +7,7 @@ use Ignite\Crud\Fields\Component;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
 use Ignite\Page\Page;
 use Ignite\Support\Facades\Config;
+use Ignite\Support\Vue\ButtonComponent;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
@@ -106,6 +107,27 @@ class CrudShow extends Page
         }
 
         return false;
+    }
+
+    /**
+     * Add crud preview for the given url.
+     *
+     * @param  string          $url
+     * @return ButtonComponent
+     */
+    public function preview($url)
+    {
+        if ($url instanceof Closure) {
+            $url = $url(app()->getLocale());
+        }
+
+        $preview = component('lit-crud-preview')->prop('url', $url);
+
+        return $this->headerRight()
+            ->component(new ButtonComponent)
+            ->child($preview)
+            ->size('sm')
+            ->variant('primary');
     }
 
     /**
