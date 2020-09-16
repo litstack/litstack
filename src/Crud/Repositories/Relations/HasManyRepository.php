@@ -2,6 +2,8 @@
 
 namespace Ignite\Crud\Repositories\Relations;
 
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Crud\Fields\Relations\HasMany;
 use Ignite\Crud\Repositories\BaseFieldRepository;
 use Ignite\Crud\Requests\CrudUpdateRequest;
@@ -19,8 +21,14 @@ class HasManyRepository extends BaseFieldRepository
 
     /**
      * Create new HasManyRepository instance.
+     *
+     * @param  ConfigHandler      $config
+     * @param  CrudBaseController $controller
+     * @param  BaseForm           $form
+     * @param  HasMany            $field
+     * @return void
      */
-    public function __construct($config, $controller, $form, HasMany $field)
+    public function __construct(ConfigHandler $config, CrudBaseController $controller, BaseForm $form, HasMany $field)
     {
         parent::__construct($config, $controller, $form, $field);
     }
