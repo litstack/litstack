@@ -55,7 +55,6 @@ class Page extends BasePage implements Expandable
     {
         $this->navigation = new Navigation($this);
         $this->header = new Header($this);
-        $this->subPages = new Slot($this);
     }
 
     /**
@@ -197,7 +196,6 @@ class Page extends BasePage implements Expandable
         return array_merge([
             'navigation' => $this->navigation,
             'header'     => $this->header,
-            'subPages'   => $this->subPages,
             'back'       => $this->back,
             'breadcrumb' => $this->breadcrumb,
         ], parent::render());
