@@ -96,11 +96,15 @@ class PermissionController extends Controller
      */
     public function fetchIndex(ReadRolePermissionRequest $request)
     {
+        $role = Role::findOrFail($request->tab['id']);
+
         $query = Permission::select([
             '*',
             DB::raw("SUBSTRING_INDEX(name, ' ', 1) AS operation"),
             DB::raw("SUBSTRING_INDEX(name, ' ', -1) AS permission_group"),
-        ])->whereRaw("SUBSTRING_INDEX(name, ' ', -1) != 'lit-role-permissions'");
+        ])
+            ->whereRaw("SUBSTRING_INDEX(name, ' ', -1) != 'lit-role-permissions'")
+            ->where('guard_name', $role->guard_name);
 
         $data = IndexTable::query($query)
             ->request($request)
