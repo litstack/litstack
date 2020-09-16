@@ -5,6 +5,7 @@ namespace Tests\Crud;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\CrudShow;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
+use Ignite\Support\Vue\ButtonComponent;
 use Illuminate\Database\Eloquent\Model;
 use Tests\BackendTestCase;
 
@@ -70,6 +71,19 @@ class CrudShowTest extends BackendTestCase
         $components = $this->page->getComponents();
         $this->assertCount(1, $components);
         $this->assertEquals($component, $components[0]);
+    }
+
+    /** @test */
+    public function test_preview_returns_button_component()
+    {
+        $this->assertInstanceOf(ButtonComponent::class, $this->page->preview('foo'));
+    }
+
+    /** @test */
+    public function test_preview_adds_component_to_headerRight_slot()
+    {
+        $this->page->preview('foo');
+        $this->assertTrue($this->page->headerRight()->hasComponent('b-button'));
     }
 }
 
