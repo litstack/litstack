@@ -23,7 +23,7 @@
                         @if(array_key_exists('icon', $entry))
                             <div class="mr-2 d-inline-block lit-topbar__icon">{!! $entry['icon'] !!}</div>
                         @endif
-                         {{ $entry['title'] }}
+                         {!! $entry['title'] !!}
                     </b-dropdown-item>
                 @endisset
                 @isset ($entry['component'])
