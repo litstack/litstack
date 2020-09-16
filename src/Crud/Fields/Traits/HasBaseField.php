@@ -28,6 +28,16 @@ trait HasBaseField
     }
 
     /**
+     * Set default title.
+     *
+     * @return string
+     */
+    protected function setTitleDefault()
+    {
+        return ucfirst($this->id);
+    }
+
+    /**
      * Set field title.
      *
      * @param string $title
