@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="lit-permisson-toggle">
 		<b-form-checkbox
 			v-model="checked"
 			name="check-button"
@@ -9,6 +9,7 @@
 				}
 			"
 			:disabled="!permission"
+			:class="{ disabled: !permission }"
 			switch
 		/>
 	</div>
@@ -108,7 +109,10 @@ export default {
 			'litPermissionsRolePermissions',
 		]),
 		group() {
-			return this.item.name.split(' ').slice(1).join(' ');
+			return this.item.name
+				.split(' ')
+				.slice(1)
+				.join(' ');
 		},
 		permissionName() {
 			return `${this.operation} ${this.group}`;
@@ -124,3 +128,8 @@ export default {
 	},
 };
 </script>
+<style lang="scss">
+.lit-permisson-toggle > .disabled {
+	opacity: 0.5;
+}
+</style>
