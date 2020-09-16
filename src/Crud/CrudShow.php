@@ -62,8 +62,8 @@ class CrudShow extends Page
     /**
      * Add subpage.
      *
-     * @param  string    $config
-     * @return Component
+     * @param  string          $config
+     * @return ButtonComponent
      */
     public function subPage($config, $icon = null)
     {
@@ -82,7 +82,9 @@ class CrudShow extends Page
             $prefix = "{$prefix}/{$model->id}";
         }
 
-        return $this->subPages->component('a')
+        return $this->headerLeft()->component(new ButtonComponent)
+            ->size('sm')
+            ->variant('transparent')
             ->prop('href', lit()->url($prefix))
             ->domProp('innerHTML', $icon ? "{$icon} {$title}" : $title);
     }
