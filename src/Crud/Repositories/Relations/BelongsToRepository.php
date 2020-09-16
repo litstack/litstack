@@ -2,6 +2,9 @@
 
 namespace Ignite\Crud\Repositories\Relations;
 
+use Ignite\Config\ConfigHandler;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Crud\Fields\Relations\BelongsTo;
 use Ignite\Crud\Repositories\BaseFieldRepository;
 use Ignite\Crud\Requests\CrudUpdateRequest;
@@ -19,8 +22,14 @@ class BelongsToRepository extends BaseFieldRepository
 
     /**
      * Create new BelongsToRepository instance.
+     *
+     * @param  ConfigHandler      $config
+     * @param  CrudBaseController $controller
+     * @param  BaseForm           $form
+     * @param  BelongsTo          $field
+     * @return void
      */
-    public function __construct($config, $controller, $form, BelongsTo $field)
+    public function __construct(ConfigHandler $config, CrudBaseController $controller, BaseForm $form, BelongsTo $field)
     {
         parent::__construct($config, $controller, $form, $field);
     }
@@ -38,11 +47,6 @@ class BelongsToRepository extends BaseFieldRepository
 
         $model->{$this->field->id}()->associate($related);
         $model->save();
-
-        // $belongsTo = $this->field->getRelationQuery($model);
-
-        // $model->{$belongsTo->getForeignKeyName()} = $related->{$belongsTo->getOwnerKeyName()};
-        // $model->save();
     }
 
     /**
