@@ -130,6 +130,6 @@ export default {
 </script>
 <style lang="scss">
 .lit-permisson-toggle > .disabled {
-	opacity: 0.5;
+	opacity: 0.25;
 }
 </style>
