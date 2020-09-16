@@ -1,29 +1,37 @@
 .btn-transparent {
-    @include button-variant(
-        transparent,
-        transparent,
-        map-get($theme-colors, 'light')
-    );
-    color: $text-muted;
+	@include button-variant(
+		transparent,
+		transparent,
+		map-get($theme-colors, 'light')
+	);
+	color: $text-muted;
 
-    &:active {
-        color: $text-muted !important;
-    }
+	&:active {
+		color: $text-muted !important;
+	}
+
+	&.focus,
+	&:focus,
+	&:hover {
+		color: #212227 !important;
+		background-color: rgba(207, 217, 226, 0.5) !important;
+		border-color: transparent;
+	}
 }
 
 .btn-input {
-    @include button-variant(
-        white,
-        $input-border-color,
-        $gray-100,
-        $input-border-color,
-        $gray-100,
-        $input-border-color
-    );
+	@include button-variant(
+		white,
+		$input-border-color,
+		$gray-100,
+		$input-border-color,
+		$gray-100,
+		$input-border-color
+	);
 
-    color: $input-color;
+	color: $input-color;
 
-    &:active {
-        color: $input-color !important;
-    }
+	&:active {
+		color: $input-color !important;
+	}
 }
