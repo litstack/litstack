@@ -2,6 +2,7 @@
 
 namespace Tests\Commands;
 
+use Ignite\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Tests\BackendTestCase;
@@ -26,6 +27,21 @@ class CrudCommandTest extends BackendTestCase
 
         $this->artisan('migrate');
         $this->assertTableExists('foos');
+    }
+
+    /** @test */
+    public function test_generated_config()
+    {
+        $this->artisan('lit:crud Foo');
+
+        // Config
+        $this->assertFileExists(base_path('lit/app/Config/Crud/FooConfig.php'));
+        $this->assertInstanceOf(\Ignite\Crud\Config\CrudConfig::class, new \Lit\Config\Crud\FooConfig());
+
+        $config = Config::get(\Lit\Config\Crud\FooConfig::class);
+
+        $this->assertSame(\Lit\Http\Controllers\Crud\FooController::class, $config->controller);
+        $this->assertSame(\App\Models\Foo::class, $config->model);
     }
 
     /** @test */

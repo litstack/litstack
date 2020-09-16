@@ -24,6 +24,7 @@ trait CreatesConfig
         foreach ([
             'DummyClassname' => $this->config,
             'DummyModelclass' => $this->model,
+            'DummyControllerclass' => $this->controller,
             'DummyTablename' => $this->table,
             'DummySingularname' => $this->model,
             'DummyPluralname' => ucfirst(Str::plural($this->model)),
