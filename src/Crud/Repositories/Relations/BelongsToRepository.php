@@ -28,35 +28,33 @@ class BelongsToRepository extends BaseFieldRepository
     /**
      * Create new belongsTo relation.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
      * @return void
      */
     public function create(CrudUpdateRequest $request, $model)
     {
         $related = $this->getRelated($request, $model);
 
-        $belongsTo = $this->field->getRelationQuery($model);
-
-        $model->{$belongsTo->getForeignKeyName()} = $related->{$belongsTo->getOwnerKeyName()};
+        $model->{$this->field->id}()->associate($related);
         $model->save();
+
+        // $belongsTo = $this->field->getRelationQuery($model);
+
+        // $model->{$belongsTo->getForeignKeyName()} = $related->{$belongsTo->getOwnerKeyName()};
+        // $model->save();
     }
 
     /**
      * Destroy belongsTo relation.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)
     {
-        $belongsTo = $this->field->getRelationQuery($model);
-
-        $model->update([
-            $belongsTo->getForeignKeyName() => null,
-        ]);
+        $model->{$this->field->id}()->dissociate();
+        $model->save();
     }
 }

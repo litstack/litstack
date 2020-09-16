@@ -52,8 +52,8 @@ class BelongsToRepositoryTest extends BackendTestCase
         $request = m::mock(CrudUpdateRequest::class);
         $request->related_id = $user->id;
 
+        $this->field->shouldReceive('getAttribute')->once()->withArgs(['id'])->andReturn('user');
         $this->field->shouldReceive('getQuery')->andReturn($user->query());
-        $this->field->shouldReceive('getRelationQuery')->andReturn($phone->user());
         $this->repository->create($request, $phone);
 
         $this->assertEquals($user->id, $phone->refresh()->user->id);
@@ -70,7 +70,7 @@ class BelongsToRepositoryTest extends BackendTestCase
         $request = m::mock(CrudUpdateRequest::class);
         $request->related_id = $user->id;
 
-        $this->field->shouldReceive('getRelationQuery')->andReturn($phone->user());
+        $this->field->shouldReceive('getAttribute')->once()->withArgs(['id'])->andReturn('user');
         $this->repository->destroy($request, $phone);
 
         $phone = BelongsToRepositoryPhone::first();
