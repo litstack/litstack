@@ -94,6 +94,9 @@ export default {
 		},
 		breadcrumb: {
 			type: Array,
+			default() {
+				return [];
+			},
 		},
 		controls: {
 			type: Array,
