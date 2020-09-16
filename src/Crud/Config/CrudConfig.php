@@ -2,6 +2,7 @@
 
 namespace Ignite\Crud\Config;
 
+use ErrorException;
 use Ignite\Crud\Config\Traits\HasCrudIndex;
 use Ignite\Crud\Config\Traits\HasCrudShow;
 use Ignite\Support\Facades\Config;
@@ -73,9 +74,15 @@ abstract class CrudConfig
                 continue;
             }
 
-            $this->modelInstance = $this->controllerInstance()
-                ->getQuery()
-                ->find($id);
+            try {
+                $this->modelInstance = $this->controllerInstance()
+                    ->getQuery()
+                    ->find($id);
+            } catch (ErrorException $e) {
+                //
+            }
+
+            break;
         }
     }
 
