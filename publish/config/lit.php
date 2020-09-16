@@ -65,6 +65,9 @@ return [
 
         'translatable' => true,
 
+        /**
+         * The languages in which your litstack application should be displayed.
+         */
         'locales' => [
             'en',
             'de',
@@ -87,7 +90,7 @@ return [
 
     'assets' => [
         // Set path to the main app.js file.
-        'app_js'  => null,
+        'app_js' => null,
 
         'scripts' => [
             'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js',
@@ -132,7 +135,9 @@ return [
     'crud' => [
 
         'preview' => [
-            // devices: mobile / tablet / desktop
+            /**
+             * Available devices: mobile / tablet / desktop.
+             */
             'default_device' => 'desktop',
         ],
     ],
