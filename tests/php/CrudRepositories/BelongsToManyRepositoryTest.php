@@ -58,6 +58,7 @@ class BelongsToManyRepositoryTest extends BackendTestCase
         $request->related_id = $user->id;
 
         $this->field->sortable = false;
+        $this->field->shouldReceive('getAttribute')->once()->withArgs(['id'])->andReturn('users');
         $this->field->shouldReceive('getQuery')->andReturn($user->query());
         $this->field->shouldReceive('getRelationQuery')->andReturn($role->users());
         $this->repository->create($request, $role);
@@ -77,6 +78,7 @@ class BelongsToManyRepositoryTest extends BackendTestCase
 
         $this->field->sortable = true;
         $this->field->orderColumn = 'order_column';
+        $this->field->shouldReceive('getAttribute')->once()->withArgs(['id'])->andReturn('users');
         $this->field->shouldReceive('getQuery')->once()->andReturn(BelongsToManyRepositoryUser::query());
         $this->field->shouldReceive('getQuery')->once()->andReturn(BelongsToManyRepositoryUser::query());
         $this->field->shouldReceive('getRelationQuery')->twice()->andReturn($role->users());
@@ -108,8 +110,9 @@ class BelongsToManyRepositoryTest extends BackendTestCase
         $request = m::mock(CrudUpdateRequest::class);
         $request->related_id = $user->id;
 
-        $this->field->shouldReceive('getQuery')->andReturn($user->query());
-        $this->field->shouldReceive('getRelationQuery')->andReturn($role->users());
+        $this->field->shouldReceive('getAttribute')->once()->withArgs(['id'])->andReturn('users');
+        $this->field->shouldReceive('getQuery')->once()->andReturn($user->query());
+        $this->field->shouldReceive('getRelationQuery')->once()->andReturn($role->users());
         $this->repository->destroy($request, $role);
 
         $this->assertCount(0, $role->refresh()->users);

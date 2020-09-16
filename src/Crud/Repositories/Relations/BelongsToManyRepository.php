@@ -6,7 +6,6 @@ use Ignite\Crud\Fields\Relations\BelongsTo;
 use Ignite\Crud\Fields\Relations\BelongsToMany;
 use Ignite\Crud\Repositories\BaseFieldRepository;
 use Ignite\Crud\Requests\CrudUpdateRequest;
-use Illuminate\Support\Facades\DB;
 
 class BelongsToManyRepository extends BaseFieldRepository
 {
@@ -41,18 +40,12 @@ class BelongsToManyRepository extends BaseFieldRepository
 
         $related = $this->getRelated($request, $model);
 
-        $belongsToMany = $this->field->getRelationQuery($model);
-
-        $query = [
-            $belongsToMany->getForeignPivotKeyName() => $model->{$belongsToMany->getParentKeyName()},
-            $belongsToMany->getRelatedPivotKeyName() => $related->{$belongsToMany->getRelatedKeyName()},
-        ];
-
+        $query = [];
         if ($this->field->sortable) {
-            $query[$this->field->orderColumn] = $belongsToMany->count();
+            $query[$this->field->orderColumn] = $this->field->getRelationQuery($model)->count();
         }
 
-        DB::table($belongsToMany->getTable())->insert($query);
+        $model->{$this->field->id}()->attach($related->getKey(), $query);
     }
 
     /**
@@ -67,11 +60,6 @@ class BelongsToManyRepository extends BaseFieldRepository
     {
         $related = $this->getRelated($request, $model);
 
-        $belongsToMany = $this->field->getRelationQuery($model);
-
-        return DB::table($belongsToMany->getTable())->where([
-            $belongsToMany->getForeignPivotKeyName() => $model->{$belongsToMany->getParentKeyName()},
-            $belongsToMany->getRelatedPivotKeyName() => $related->{$belongsToMany->getRelatedKeyName()},
-        ])->delete();
+        $model->{$this->field->id}()->detach($related->getKey());
     }
 }
