@@ -28,6 +28,8 @@ trait CreatesConfig
             'DummySingularname' => $this->model,
             'DummyPluralname' => ucfirst(Str::plural($this->model)),
             'DummySlug' => Str::slug($this->table),
+            'DummyNamesParameter' => $this->getNamesParameter(),
+            'DummyNamesDoc' => $this->getNamesParameterDoc(),
         ] as $search => $replace) {
             $content = str_replace($search, $replace, $content);
         }
@@ -49,5 +51,15 @@ trait CreatesConfig
     protected function configExists()
     {
         return $this->files->exists($this->configPath());
+    }
+
+    protected function getNamesParameter()
+    {
+        return "{$this->model} \$".lcfirst($this->model).' = null';
+    }
+
+    protected function getNamesParameterDoc()
+    {
+        return "@param {$this->model}|null ".lcfirst($this->model);
     }
 }

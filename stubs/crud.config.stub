@@ -29,9 +29,10 @@ class DummyClassname extends CrudConfig
     /**
      * Model singular and plural name.
      *
+     * DummyNamesDoc
      * @return array
      */
-    public function names()
+    public function names(DummyNamesParameter)
     {
         return [
             'singular' => 'DummySingularname',
