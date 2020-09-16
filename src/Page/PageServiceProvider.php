@@ -2,10 +2,12 @@
 
 namespace Ignite\Page;
 
+use Ignite\Crud\Vue\WrapperComponent;
 use Ignite\Page\Console\ActionCommand;
 use Ignite\Page\Table\Components\ImageComponent;
 use Ignite\Page\Table\Components\RelationComponent;
 use Ignite\Page\Table\Components\ToggleComponent;
+use Ignite\Page\Wrapper\CardWrapperComponent;
 use Illuminate\Support\ServiceProvider;
 
 class PageServiceProvider extends ServiceProvider
@@ -28,6 +30,8 @@ class PageServiceProvider extends ServiceProvider
         'lit-col-image'         => ImageComponent::class,
         'lit-col-toggle'        => ToggleComponent::class,
         'lit-col-crud-relation' => RelationComponent::class,
+        'lit-wrapper'           => WrapperComponent::class,
+        'lit-wrapper-card'      => CardWrapperComponent::class,
     ];
 
     /**

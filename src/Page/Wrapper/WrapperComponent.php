@@ -1,11 +1,21 @@
 <?php
 
-namespace Ignite\Crud\Vue;
+namespace Ignite\Page\Wrapper;
 
 use Ignite\Vue\Component;
+use Ignite\Vue\Traits\StaticComponentName;
 
-class FieldWrapperComponent extends Component
+class WrapperComponent extends Component
 {
+    use StaticComponentName;
+
+    /**
+     * The Vue component name.
+     *
+     * @var string
+     */
+    protected $name = 'lit-wrapper';
+
     /**
      * Before mount lifecycle hook.
      *

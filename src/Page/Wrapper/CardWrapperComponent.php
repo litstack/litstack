@@ -1,14 +1,22 @@
 <?php
 
-namespace Ignite\Crud\Vue;
+namespace Ignite\Page\Wrapper;
 
 use Ignite\Contracts\Vue\Resizable;
 use Ignite\Vue\Component;
 use Ignite\Vue\Traits\CanBeResized;
+use Ignite\Vue\Traits\StaticComponentName;
 
-class FieldWrapperCardComponent extends Component implements Resizable
+class CardWrapperComponent extends Component implements Resizable
 {
-    use CanBeResized;
+    use StaticComponentName, CanBeResized;
+
+    /**
+     * The Vue component name.
+     *
+     * @var string
+     */
+    protected $name = 'lit-wrapper-card';
 
     /**
      * Handle beforeMount.
@@ -19,6 +27,16 @@ class FieldWrapperCardComponent extends Component implements Resizable
     {
         $this->class('mb-4');
         $this->width(12);
+    }
+
+    /**
+     * Set card to secondary.
+     *
+     * @return $this
+     */
+    public function secondary()
+    {
+        return $this->class('crud-card-secondary');
     }
 
     /**

@@ -22,13 +22,13 @@ class ComponentsRegisteredTest extends BackendTestCase
     /** @test */
     public function test_lit_field_wrapper_component_is_registered()
     {
-        $this->assertComponentRegistered('lit-field-wrapper');
+        $this->assertComponentRegistered('lit-wrapper');
     }
 
     /** @test */
     public function test_lit_field_wrapper_card_component_is_registered()
     {
-        $this->assertComponentRegistered('lit-field-wrapper-card');
+        $this->assertComponentRegistered('lit-wrapper-card');
     }
 
     /** @test */

@@ -49,8 +49,6 @@ use Ignite\Crud\Repositories\Relations\MorphOneRepository;
 use Ignite\Crud\Repositories\Relations\MorphToManyRepository;
 use Ignite\Crud\Repositories\Relations\MorphToRepository;
 use Ignite\Crud\Repositories\Relations\OneRelationRepository;
-use Ignite\Crud\Vue\FieldWrapperCardComponent;
-use Ignite\Crud\Vue\FieldWrapperComponent;
 use Ignite\Crud\Vue\FieldWrapperGroupComponent;
 use Ignite\Support\Facades\Form as FormFacade;
 use Illuminate\Foundation\AliasLoader;
@@ -64,8 +62,6 @@ class CrudServiceProvider extends LaravelServiceProvider
      * @var array
      */
     protected $vueComponents = [
-        'lit-field-wrapper'       => FieldWrapperComponent::class,
-        'lit-field-wrapper-card'  => FieldWrapperCardComponent::class,
         'lit-field-wrapper-group' => FieldWrapperGroupComponent::class,
     ];
 

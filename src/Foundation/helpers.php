@@ -70,6 +70,10 @@ if (! function_exists('component')) {
             return $name;
         }
 
+        if (is_subclass_of($name, \Ignite\Vue\Component::class)) {
+            return new $name;
+        }
+
         if (Vue::has($name) || is_null($fallback)) {
             return Vue::make($name);
         }

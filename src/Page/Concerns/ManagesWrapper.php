@@ -4,6 +4,8 @@ namespace Ignite\Page\Concerns;
 
 use Closure;
 use Ignite\Page\Wrapper\CardWrapper;
+use Ignite\Page\Wrapper\CardWrapperComponent;
+use Ignite\Page\Wrapper\WrapperComponent;
 
 trait ManagesWrapper
 {
@@ -78,7 +80,7 @@ trait ManagesWrapper
             $component = component($component);
         }
 
-        return $this->component('lit-wrapper')
+        return $this->component(WrapperComponent::class)
             ->wrapperComponent($component);
     }
 
@@ -91,7 +93,7 @@ trait ManagesWrapper
      */
     public function card(Closure $closure)
     {
-        return $this->wrapper(new CardWrapper, fn ($form) => $closure($this))
+        return $this->wrapper(new CardWrapperComponent, fn ($form) => $closure($this))
             ->class('mb-4');
     }
 }
