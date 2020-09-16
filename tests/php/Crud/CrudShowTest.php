@@ -41,7 +41,7 @@ class CrudShowTest extends BackendTestCase
         $components = $this->page->getComponents();
         $this->assertCount(1, $components);
         $this->assertEquals('lit-field-wrapper', $components[0]->getName());
-        $this->assertEquals('lit-field-wrapper-card', $components[0]->wrapperComponent->getName());
+        $this->assertEquals('lit-wrapper-card', $components[0]->wrapperComponent->getName());
     }
 
     /** @test */

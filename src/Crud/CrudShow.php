@@ -243,11 +243,11 @@ class CrudShow extends Page
      */
     public function card(Closure $closure)
     {
-        return $this->wrapper('lit-field-wrapper-card', function ($form) use ($closure) {
+        return parent::card(function ($form) use ($closure) {
             $this->inCard = true;
             $closure($this);
             $this->inCard = false;
-        })->class('mb-4');
+        });
     }
 
     /**
