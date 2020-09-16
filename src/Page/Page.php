@@ -85,6 +85,12 @@ class Page extends BasePage implements Expandable
         return $this;
     }
 
+    /**
+     * Set breadcrumb array.
+     *
+     * @param  array $breadcrumb
+     * @return $this
+     */
     public function breadcrumb(array $breadcrumb)
     {
         $this->breadcrumb = $breadcrumb;
@@ -92,6 +98,11 @@ class Page extends BasePage implements Expandable
         return $this;
     }
 
+    /**
+     * Get breadcrumb.
+     *
+     * @return void
+     */
     public function getBreadcrumb()
     {
         return $this->breadcrumb;
