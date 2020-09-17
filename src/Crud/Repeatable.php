@@ -2,6 +2,7 @@
 
 namespace Ignite\Crud;
 
+use Ignite\Crud\Fields\Block\Repeatable as RegisteredRepeatable;
 use Ignite\Crud\Fields\Block\RepeatableForm;
 use Ignite\Page\Table\ColumnBuilder;
 
@@ -22,4 +23,16 @@ abstract class Repeatable
      * @return void
      */
     abstract public function form(RepeatableForm $form);
+
+    /**
+     * Mount the repeatable.
+     *
+     * @param  RegisteredRepeatable $repeatable
+     * @return void
+     */
+    public function mount(RegisteredRepeatable $repeatable)
+    {
+        // $repeatable->title('Foo');
+        // $repeatable->view('repeatable.foo');
+    }
 }
