@@ -33,9 +33,9 @@ class Repeatable extends VueProp
     protected $xComponent;
 
     /**
-     * BlockForm instance.
+     * RepeatableForm instance.
      *
-     * @var BlockForm
+     * @var RepeatableForm
      */
     protected $form;
 
@@ -71,7 +71,7 @@ class Repeatable extends VueProp
      */
     public function form(Closure $closure)
     {
-        $form = new BlockForm(RepeatableModel::class);
+        $form = new RepeatableForm(RepeatableModel::class);
 
         $form->setRoutePrefix($this->getRoutePrefix());
 

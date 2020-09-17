@@ -2,7 +2,13 @@
 
 namespace Ignite\Application;
 
+use Ignite\Crud\Fields\Block\Repeatables;
+use Ignite\Crud\Repeatable;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
+use ReflectionClass;
+use Symfony\Component\Finder\Finder;
 
 class Kernel
 {
@@ -73,7 +79,20 @@ class Kernel
      */
     public function bootstrap()
     {
+        app()->afterResolving('lit.form', function () {
+            $this->repeatables();
+        });
+
         $this->app->bootstrapWith($this->bootstrappers, $this);
+    }
+
+    /**
+     * Register the crud repeatables.
+     *
+     * @return void
+     */
+    public function repeatables()
+    {
     }
 
     /**
@@ -86,5 +105,50 @@ class Kernel
     public function build(View $view)
     {
         $this->app->build($view);
+    }
+
+    /**
+     * Register repeatables in the given directory.
+     *
+     * @param  array|string $paths
+     * @return void
+     */
+    protected function loadRepeatablesFrom($paths)
+    {
+        $paths = array_unique(Arr::wrap($paths));
+
+        $paths = array_filter($paths, function ($path) {
+            return is_dir($path);
+        });
+
+        if (empty($paths)) {
+            return;
+        }
+
+        $namespace = 'Lit\\';
+
+        foreach ((new Finder)->in($paths)->files() as $repeatable) {
+            $repeatable = $namespace.str_replace(
+                ['/', '.php'],
+                ['\\', ''],
+                Str::after($repeatable->getPathname(), realpath(lit_path()).DIRECTORY_SEPARATOR)
+            );
+
+            if (! is_subclass_of($repeatable, Repeatable::class) ||
+                (new ReflectionClass($repeatable))->isAbstract()) {
+                continue;
+            }
+
+            $name = Str::snake(Str::replaceLast('Repeatable', '', $repeatable));
+
+            Repeatables::macro($name, function (...$parameters) use ($repeatable, $name) {
+                $repeatable = $repeatable(...$parameters);
+
+                $this->add($name, function ($form, $preview) use ($repeatable) {
+                    $repeatable->preview($preview);
+                    $repeatable->preview($form);
+                });
+            });
+        }
     }
 }

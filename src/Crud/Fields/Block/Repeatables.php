@@ -94,7 +94,7 @@ class Repeatables extends VueProp
      *
      * @param string $name
      *
-     * @return BlockForm
+     * @return RepeatableForm
      */
     public function get($name)
     {

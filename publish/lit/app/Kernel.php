@@ -17,4 +17,14 @@ class Kernel extends LitstackKernel
         Providers\LocalizationServiceProvider::class,
         Providers\RouteServiceProvider::class,
     ];
+
+    /**
+     * Register the crud repeatables.
+     *
+     * @return void
+     */
+    public function repeatables()
+    {
+        $this->loadRepeatablesFrom(__DIR__.'/Repeatables');
+    }
 }

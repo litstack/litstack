@@ -5,7 +5,7 @@ namespace Ignite\Crud\Fields\Block;
 use Ignite\Crud\BaseForm;
 use InvalidArgumentException;
 
-class BlockForm extends BaseForm
+class RepeatableForm extends BaseForm
 {
     /**
      * Laravel relations not allowed for block.

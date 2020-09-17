@@ -11,6 +11,7 @@ use Ignite\Crud\Config\Traits\HasCrudIndex;
 use Ignite\Crud\Config\Traits\HasCrudShow;
 use Ignite\Crud\Console\CrudCommand;
 use Ignite\Crud\Console\FormCommand;
+use Ignite\Crud\Console\RepeatableCommand;
 use Ignite\Crud\Fields\Block\Block;
 use Ignite\Crud\Fields\Boolean;
 use Ignite\Crud\Fields\Checkboxes;
@@ -101,8 +102,9 @@ class CrudServiceProvider extends LaravelServiceProvider
      * @var array
      */
     protected $commands = [
-        'Crud' => 'lit.command.crud',
-        'Form' => 'lit.command.form',
+        'Crud'       => 'lit.command.crud',
+        'Form'       => 'lit.command.form',
+        'Repeatable' => 'lit.command.repeatable',
     ];
 
     /**
@@ -201,6 +203,19 @@ class CrudServiceProvider extends LaravelServiceProvider
     {
         $this->app->singleton($abstract, function ($app) {
             return new FormCommand($app['files'], $app['lit']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param  string $abstract
+     * @return void
+     */
+    protected function registerRepeatableCommand($abstract)
+    {
+        $this->app->singleton($abstract, function ($app) {
+            return new RepeatableCommand($app['files']);
         });
     }
 

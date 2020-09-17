@@ -1,0 +1,32 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ignite\Crud\Fields\Block\RepeatableForm;
+use Ignite\Crud\Repeatable;
+use Ignite\Page\Table\ColumnBuilder;
+
+class DummyClass extends Repeatable
+{
+    /**
+     * Build repeatable preview.
+     *
+     * @param  ColumnBuilder $preview
+     * @return void
+     */
+    public function preview(ColumnBuilder $preview)
+    {
+        //
+    }
+
+    /**
+     * Build repeatable form.
+     *
+     * @param  RepeatableForm $form
+     * @return void
+     */
+    public function form(RepeatableForm $form)
+    {
+        //
+    }
+}
