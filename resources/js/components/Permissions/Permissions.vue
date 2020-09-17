@@ -1,40 +1,31 @@
 <template>
-	<lit-container fluid="lg">
-		<lit-navigation>
-			<lit-role-create @created="addRole" slot="right" />
-		</lit-navigation>
-		<lit-header :title="__('base.permissions').capitalize()" />
-
-		<b-row>
-			<b-col>
-				<lit-index-table
-					:cols="cols"
-					:tabs="roleNames"
-					:items="permissions"
-					:count="count"
-					:loadItems="loadPermissions"
-					:searchKeys="config.search"
-					:nameSingular="__('base.permissions')"
-					:namePlural="__('base.permissions')"
-					:sortBy="config.sortBy"
-					no-select
-				>
-					<template v-slot:header="{ tab }">
-						<div class="mb-3 d-flex justify-content-between">
-							<div></div>
-							<div>
-								<lit-role-delete
-									:tab="tab"
-									:cantDeleteRoleIds="cantDeleteRoleIds"
-									@deleted="removeRole(tab)"
-								/>
-							</div>
-						</div>
-					</template>
-				</lit-index-table>
-			</b-col>
-		</b-row>
-	</lit-container>
+	<lit-col>
+		<lit-index-table
+			:cols="cols"
+			:tabs="roleNames"
+			:items="permissions"
+			:count="count"
+			:loadItems="loadPermissions"
+			:searchKeys="config.search"
+			:nameSingular="__('base.permissions')"
+			:namePlural="__('base.permissions')"
+			:sortBy="config.sortBy"
+			no-select
+		>
+			<template v-slot:header="{ tab }">
+				<div class="mb-3 d-flex justify-content-between">
+					<div></div>
+					<div>
+						<lit-role-delete
+							:tab="tab"
+							:cantDeleteRoleIds="cantDeleteRoleIds"
+							@deleted="removeRole(tab)"
+						/>
+					</div>
+				</div>
+			</template>
+		</lit-index-table>
+	</lit-col>
 </template>
 
 <script>

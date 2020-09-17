@@ -9,7 +9,7 @@
 			"
 		>
 			<b-form-group
-				:label="__('lit.permissions.enter_rolename')"
+				:label="__('fjpermissions.enter_rolename')"
 				label-for="name"
 				:state="nameState"
 			>
@@ -70,7 +70,9 @@ export default {
 			}
 
 			let role = response.data;
-			this.$emit('created', role);
+
+			window.location.reload();
+
 			this.visible = false;
 
 			this.$bvToast.toast(

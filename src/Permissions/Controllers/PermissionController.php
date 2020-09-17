@@ -2,6 +2,7 @@
 
 namespace Ignite\Permissions\Controllers;
 
+use Ignite\Page\Page;
 use Ignite\Page\Table\ColumnBuilder;
 use Ignite\Page\Table\Table;
 use Ignite\Permissions\Models\RolePermission;
@@ -27,25 +28,32 @@ class PermissionController extends Controller
      * @param  ReadRolePermissionRequest $request
      * @return View
      */
-    public function index(ReadRolePermissionRequest $request)
+    public function index(ReadRolePermissionRequest $request, Page $page)
     {
-        $config = [
-            'sortBy' => [
-                'id.desc' => __lit('lit.sort_new_to_old'),
-                'id.asc'  => __lit('lit.sort_old_to_new'),
-            ],
-            'sortByDefault' => 'id.desc',
-        ];
+        $page->title(ucfirst(__lit('base.permissions')));
 
-        return view('litstack::app')->withComponent('lit-permissions')
-            ->withTitle('Permissions')
-            ->withProps([
-                'cols'             => $this->getCols(),
-                'roles'            => Role::all(),
-                'operations'       => $this->getUniqueOperations(),
-                'role_permissions' => RolePermission::all(),
-                'config'           => $config,
-            ]);
+        $operations = $this->getUniqueOperations();
+        if ($operations->count() > 6) {
+            $page->expand();
+        }
+
+        $page->navigationRight()->component('lit-role-create');
+
+        $page->component('lit-permissions')->bind([
+            'cols'             => $this->getCols(),
+            'roles'            => Role::all(),
+            'operations'       => $operations,
+            'role_permissions' => RolePermission::all(),
+            'config'           => [
+                'sortBy' => [
+                    'id.desc' => __lit('lit.sort_new_to_old'),
+                    'id.asc'  => __lit('lit.sort_old_to_new'),
+                ],
+                'sortByDefault' => 'id.desc',
+            ],
+        ]);
+
+        return $page;
     }
 
     /**
