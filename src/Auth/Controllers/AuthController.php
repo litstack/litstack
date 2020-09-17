@@ -3,14 +3,11 @@
 namespace Ignite\Auth\Controllers;
 
 use Ignite\Auth\Actions\AuthenticationAction;
-use Ignite\Auth\Requests\LitSessionLogoutRequest;
 use Ignite\Support\Facades\Lit;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 use Lit\Models\User;
 
 class AuthController extends Controller
@@ -134,65 +131,5 @@ class AuthController extends Controller
         Auth::logout();
 
         return view('litstack::auth.login');
-    }
-
-    /**
-     * Logout session.
-     *
-     * @param LitSessionLogoutRequest $request
-     *
-     * @return void
-     */
-    public function logoutSession(LitSessionLogoutRequest $request)
-    {
-        $session = lit_user()->sessions()->findOrFail($request->id);
-
-        Session::getHandler()->destroy($session->session_id);
-
-        if ($session->session_id == Session::getId()) {
-            $this->logout();
-        }
-
-        $session->delete();
-    }
-
-    /**
-     * Create new User.
-     *
-     * @param Request                  $request
-     * @param ForgotPasswordController $sendResetLink
-     *
-     * @return void
-     */
-    public function register(Request $request, ForgotPasswordController $sendResetLink)
-    {
-        $rules = [
-            'username'   => ['string', 'max:255', 'unique:lit_users'],
-            'first_name' => ['string', 'max:255'],
-            'last_name'  => ['string', 'max:255'],
-            'email'      => ['required', 'string', 'email', 'max:255', 'unique:lit_users'],
-            'password'   => ['required', 'string', 'min:8'],
-        ];
-
-        $request->validate($rules);
-
-        $user = User::create([
-            'username'   => $request->username,
-            'first_name' => $request->first_name,
-            'last_name'  => $request->last_name,
-            'locale'     => $request->locale ?? config('lit.locale'),
-            'email'      => $request->email,
-            'password'   => Hash::make($request->password),
-        ]);
-
-        // Assign default role.
-        $user->assignRole('user');
-
-        // Send reset link.
-        if ($request->sendResetLink) {
-            $sendResetLink->execute($request);
-        }
-
-        return $user;
     }
 }

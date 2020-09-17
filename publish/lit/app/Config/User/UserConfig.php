@@ -58,7 +58,7 @@ class UserConfig extends CrudConfig
     public function index(CrudIndex $page)
     {
         $page->table(fn ($table) => $this->indexTable($table))
-            ->query(fn ($query) => $query->with('ordered_roles'))
+            ->query(fn ($query)  => $query->with('ordered_roles'))
             ->sortByDefault('id.desc')
             ->search('username', 'first_name', 'last_name', 'email');
     }
@@ -102,13 +102,13 @@ class UserConfig extends CrudConfig
             $form->input('first_name')
                 ->width(1 / 2)
                 ->creationRules('required')
-                ->rules('min:2')
+                ->rules('min:2', 'max:255')
                 ->title(ucwords(__lit('base.first_name')));
 
             $form->input('last_name')
                 ->width(1 / 2)
                 ->creationRules('required')
-                ->rules('min:2')
+                ->rules('min:2', 'max:255')
                 ->title(ucwords(__lit('base.last_name')));
 
             $form->input('email')

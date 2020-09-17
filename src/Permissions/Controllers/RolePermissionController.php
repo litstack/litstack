@@ -4,11 +4,35 @@ namespace Ignite\Permissions\Controllers;
 
 use Ignite\Permissions\Models\RolePermission;
 use Ignite\Permissions\Requests\RolePermission\UpdateRolePermissionRequest;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Contracts\Cache\Repository as Cache;
 use Spatie\Permission\Models\Role;
 
 class RolePermissionController
 {
+    /**
+     * Cache repository instance.
+     *
+     * @var Cache
+     */
+    protected $cache;
+
+    /**
+     * Create new RolePermissionController instance.
+     *
+     * @param  Cache $cache
+     * @return void
+     */
+    public function __construct(Cache $cache)
+    {
+        $this->cache = $cache;
+    }
+
+    /**
+     * Toggle role permission.
+     *
+     * @param  UpdateRolePermissionRequest $request
+     * @return void
+     */
     public function update(UpdateRolePermissionRequest $request)
     {
         $role = Role::findOrFail($request->role['id']);
@@ -19,7 +43,7 @@ class RolePermissionController
             $role->givePermissionTo($request->permission);
         }
 
-        Cache::forget('spatie.permission.cache');
+        $this->cache->forget('spatie.permission.cache');
 
         return RolePermission::all();
     }
