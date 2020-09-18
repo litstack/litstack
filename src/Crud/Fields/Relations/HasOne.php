@@ -25,30 +25,13 @@ class HasOne extends OneRelationField
     public $requiredAttributes = [];
 
     /**
-     * Available Field attributes.
-     *
-     * @var array
-     */
-    public $availableAttributes = [
-        'form',
-    ];
-
-    /**
-     * Default Field attributes.
-     *
-     * @var array
-     */
-    public $defaultAttributes = [];
-
-    /**
      * Set relation attributes.
      *
-     * @param string $model
-     *
+     * @param  string $model
      * @return self
      */
     protected function setRelationAttributes($relation)
     {
-        $this->attributes['foreign_key'] = $relation->getForeignKeyName();
+        $this->setAttribute('foreign_key', $relation->getForeignKeyName());
     }
 }
