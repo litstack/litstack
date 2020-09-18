@@ -14,9 +14,7 @@ class FieldDependency extends VueProp
      * @var array
      */
     protected static $conditions = [
-        'when',
-        'whenNot',
-        'whenContains',
+        'when', 'whenNot', 'whenContains',
     ];
 
     /**
@@ -27,11 +25,11 @@ class FieldDependency extends VueProp
     protected $condition;
 
     /**
-     * Field dependant.
+     * Attribute name.
      *
-     * @var Field
+     * @var string
      */
-    protected $dependent;
+    protected $attribute;
 
     /**
      * Dependency value.
@@ -44,11 +42,11 @@ class FieldDependency extends VueProp
      * Create new Dependency.
      *
      * @param  string     $contains
-     * @param  Field      $dependent
+     * @param  string     $attribute
      * @param  string|int $value
      * @return void
      */
-    public function __construct(string $condition, Field $dependent, $value)
+    public function __construct(string $condition, $attribute, $value)
     {
         if (! self::conditionExists($condition)) {
             throw new InvalidArgumentException(
@@ -57,7 +55,7 @@ class FieldDependency extends VueProp
         }
 
         $this->condition = $condition;
-        $this->dependent = $dependent;
+        $this->attribute = $attribute;
         $this->value = $value;
     }
 
@@ -84,13 +82,13 @@ class FieldDependency extends VueProp
     }
 
     /**
-     * Gets depandant.
+     * Get attribute name.
      *
-     * @return Field
+     * @return string
      */
-    public function getDependent()
+    public function getAttributeName()
     {
-        return $this->dependent;
+        return $this->attribute;
     }
 
     /**
@@ -117,12 +115,13 @@ class FieldDependency extends VueProp
      * Create new Dependency instance.
      *
      * @param  string     $condition
+     * @param  string     $attribute
      * @param  string|int $value
      * @return self
      */
-    public static function make(string $condition, Field $dependent, $value)
+    public static function make(string $condition, $attribute, $value)
     {
-        return new self($condition, $dependent, $value);
+        return new self($condition, $attribute, $value);
     }
 
     /**
@@ -134,7 +133,7 @@ class FieldDependency extends VueProp
     {
         return [
             'condition' => $this->condition,
-            'attribute' => $this->dependent->id,
+            'attribute' => $this->attribute,
             'value'     => $this->value,
         ];
     }

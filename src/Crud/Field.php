@@ -211,21 +211,17 @@ class Field extends VueProp
     /**
      * Resolve field dependencies.
      *
-     * @param  self|string $field
+     * @param  self|string $attribute
      * @param  int|string  $value
      * @return array
-     *
-     * @throws InvalidArgumentException
      */
-    protected function resolveDependencyArguments($field, $value)
+    protected function resolveDependencyArguments($attribute, $value)
     {
-        if (is_string($field)) {
-            if (! $field = $this->formInstance->findField($fieldId = $field)) {
-                throw new InvalidArgumentException("Couldn't find field [{$fieldId}]");
-            }
+        if (is_subclass_of($attribute, self::class)) {
+            $attribute = $attribute->id;
         }
 
-        return [$field, $value];
+        return [$attribute, $value];
     }
 
     /**
@@ -261,8 +257,7 @@ class Field extends VueProp
     /**
      * Format value before saving it to database.
      *
-     * @param string $value
-     *
+     * @param  string $value
      * @return void
      */
     public function format($value)

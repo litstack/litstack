@@ -16,11 +16,10 @@ class FieldDependencyTest extends TestCase
     /** @test */
     public function test_constructor()
     {
-        $field = m::mock(Field::class);
-        $dependecy = new FieldDependency('when', $field, 'dummy value');
+        $dependecy = new FieldDependency('when', 'foo', 'dummy value');
 
         $this->assertSame('when', $this->getUnaccessibleProperty($dependecy, 'condition'));
-        $this->assertSame($field, $this->getUnaccessibleProperty($dependecy, 'dependent'));
+        $this->assertSame('foo', $this->getUnaccessibleProperty($dependecy, 'attribute'));
         $this->assertSame('dummy value', $this->getUnaccessibleProperty($dependecy, 'value'));
     }
 

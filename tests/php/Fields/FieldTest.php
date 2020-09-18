@@ -146,7 +146,7 @@ class FieldTest extends BackendTestCase
         $this->assertSame($field, $field->when($dependent, 'dummy-value'));
         $this->assertCount(1, $field->getDependencies());
         $this->assertInstanceOf(FieldDependency::class, $dependency = $field->getDependencies()->first());
-        $this->assertSame($dependent, $dependency->getDependent());
+        $this->assertSame($dependent->id, $dependency->getAttributeName());
     }
 
     /** @test */
@@ -159,7 +159,7 @@ class FieldTest extends BackendTestCase
         $this->assertSame($field, $field->when('dependent', 'dummy-value'));
         $this->assertCount(1, $field->getDependencies());
         $this->assertInstanceOf(FieldDependency::class, $dependency = $field->getDependencies()->first());
-        $this->assertSame($dependent, $dependency->getDependent());
+        $this->assertSame($dependent->id, $dependency->getAttributeName());
     }
 }
 
