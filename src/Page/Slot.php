@@ -4,19 +4,14 @@ namespace Ignite\Page;
 
 use Ignite\Contracts\Page\ActionFactory;
 use Ignite\Support\VueProp;
-use Ignite\Vue\Component;
 use Ignite\Vue\Components\ButtonComponent;
+use Ignite\Vue\Traits\HasVueComponents;
 use Illuminate\Contracts\View\View;
 use InvalidArgumentException;
 
 class Slot extends VueProp
 {
-    /**
-     * Component stack.
-     *
-     * @var array
-     */
-    protected $components = [];
+    use HasVueComponents;
 
     /**
      * View stack.
@@ -53,23 +48,6 @@ class Slot extends VueProp
     }
 
     /**
-     * Determines if slot has component.
-     *
-     * @param  string $name
-     * @return bool
-     */
-    public function hasComponent($name)
-    {
-        foreach ($this->components as $component) {
-            if ($component->getName() == $name) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Add action.
      *
      * @param  string                $title
@@ -102,34 +80,6 @@ class Slot extends VueProp
     {
         $this->components = [];
         $this->views = [];
-    }
-
-    /**
-     * Add component to Slot.
-     *
-     * @return Component
-     */
-    public function component($component)
-    {
-        $component = component($component);
-
-        $this->components[] = $component;
-
-        return $component;
-    }
-
-    /**
-     * Prepend component to Slot.
-     *
-     * @return Component
-     */
-    public function prependComponent($component)
-    {
-        $component = component($component);
-
-        array_unshift($this->components, $component);
-
-        return $component;
     }
 
     /**

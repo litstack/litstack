@@ -42,6 +42,7 @@ class MorphOneRepositoryTest extends BackendTestCase
     {
         Schema::dropIfExists('posts');
         Schema::dropIfExists('images');
+        parent::tearDown();
     }
 
     /** @test */

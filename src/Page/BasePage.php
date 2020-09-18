@@ -5,20 +5,15 @@ namespace Ignite\Page;
 use Ignite\Contracts\Page\Page;
 use Ignite\Support\HasAttributes;
 use Ignite\Vue\Components\BladeComponent;
+use Ignite\Vue\Traits\HasVueComponents;
 use Illuminate\Contracts\View\View;
 use InvalidArgumentException;
 
 abstract class BasePage implements Page
 {
     use HasAttributes,
+        HasVueComponents,
         Concerns\ManagesWrapper;
-
-    /**
-     * CrudIndex container components.
-     *
-     * @var array
-     */
-    protected $components = [];
 
     /**
      * Props that should be bound to child Vue components.
@@ -58,16 +53,6 @@ abstract class BasePage implements Page
         }
 
         return $component;
-    }
-
-    /**
-     * Get components.
-     *
-     * @return void
-     */
-    public function getComponents()
-    {
-        return $this->components;
     }
 
     /**

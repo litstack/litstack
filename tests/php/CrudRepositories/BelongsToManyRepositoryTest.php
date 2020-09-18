@@ -46,6 +46,7 @@ class BelongsToManyRepositoryTest extends BackendTestCase
         Schema::dropIfExists('users');
         Schema::dropIfExists('roles');
         Schema::dropIfExists('role_user');
+        parent::tearDown();
     }
 
     /** @test */
@@ -60,7 +61,7 @@ class BelongsToManyRepositoryTest extends BackendTestCase
         $this->field->sortable = false;
         $this->field->shouldReceive('getAttribute')->once()->withArgs(['id'])->andReturn('users');
         $this->field->shouldReceive('getQuery')->andReturn($user->query());
-        $this->field->shouldReceive('getRelationQuery')->andReturn($role->users());
+        // $this->field->shouldReceive('getRelationQuery')->andReturn($role->users());
         $this->repository->create($request, $role);
 
         $this->assertCount(1, $role->refresh()->users);
@@ -78,10 +79,10 @@ class BelongsToManyRepositoryTest extends BackendTestCase
 
         $this->field->sortable = true;
         $this->field->orderColumn = 'order_column';
-        $this->field->shouldReceive('getAttribute')->once()->withArgs(['id'])->andReturn('users');
+        $this->field->shouldReceive('getAttribute')->withArgs(['id'])->andReturn('users');
         $this->field->shouldReceive('getQuery')->once()->andReturn(BelongsToManyRepositoryUser::query());
         $this->field->shouldReceive('getQuery')->once()->andReturn(BelongsToManyRepositoryUser::query());
-        $this->field->shouldReceive('getRelationQuery')->twice()->andReturn($role->users());
+        // $this->field->shouldReceive('getRelationQuery')->twice()->andReturn($role->users());
 
         $request = m::mock(CrudUpdateRequest::class);
         $request->related_id = $user1->id;
@@ -112,7 +113,7 @@ class BelongsToManyRepositoryTest extends BackendTestCase
 
         $this->field->shouldReceive('getAttribute')->once()->withArgs(['id'])->andReturn('users');
         $this->field->shouldReceive('getQuery')->once()->andReturn($user->query());
-        $this->field->shouldReceive('getRelationQuery')->once()->andReturn($role->users());
+        // $this->field->shouldReceive('getRelationQuery')->once()->andReturn($role->users());
         $this->repository->destroy($request, $role);
 
         $this->assertCount(0, $role->refresh()->users);

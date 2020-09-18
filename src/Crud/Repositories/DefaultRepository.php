@@ -59,6 +59,13 @@ class DefaultRepository extends BaseFieldRepository
         return crud($model);
     }
 
+    /**
+     * Update pivot fields.
+     *
+     * @param  Model $related
+     * @param  array $attributes
+     * @return void
+     */
     protected function updateExistingPivot($related, $attributes)
     {
         $model = $this->field->getParentForm()->getModel()::findOrFail(
@@ -72,6 +79,12 @@ class DefaultRepository extends BaseFieldRepository
         );
     }
 
+    /**
+     * Filter pivot attributes.
+     *
+     * @param  array $attributes
+     * @return void
+     */
     protected function filterPivotAttributes($attributes)
     {
         $pivot = [];

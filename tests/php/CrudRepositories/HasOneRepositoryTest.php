@@ -41,6 +41,7 @@ class HasOneRepositoryTest extends BackendTestCase
     {
         Schema::dropIfExists('users');
         Schema::dropIfExists('phone');
+        parent::tearDown();
     }
 
     /** @test */

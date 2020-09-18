@@ -42,6 +42,7 @@ class MorphManyRepositoryTest extends BackendTestCase
     {
         Schema::dropIfExists('posts');
         Schema::dropIfExists('comments');
+        parent::tearDown();
     }
 
     /** @test */

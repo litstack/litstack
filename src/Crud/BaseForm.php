@@ -125,7 +125,6 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
         return $this->registerField(FormFacade::getField('component'), $component);
 
         if ($this->inWrapper()) {
-            dd('a');
             parent::component($component->comp);
         }
 
