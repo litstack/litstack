@@ -3,18 +3,20 @@
 namespace Ignite\Crud;
 
 use Closure;
+use Ignite\Contracts\Vue\Authorizable as AuthorizableContract;
 use Ignite\Exceptions\Traceable\BadMethodCallException;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
 use Ignite\Exceptions\Traceable\MissingAttributeException;
 use Ignite\Support\HasAttributes;
 use Ignite\Support\VueProp;
+use Ignite\Vue\Traits\Authorizable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
 
-class Field extends VueProp
+class Field extends VueProp implements AuthorizableContract
 {
-    use ForwardsCalls, HasAttributes;
+    use ForwardsCalls, HasAttributes, Authorizable;
 
     /**
      * Model class.
@@ -97,6 +99,20 @@ class Field extends VueProp
         $this->setDefaultsFromClassMethods();
         $this->mount();
         $this->mergeRequiredAttributes();
+    }
+
+    /**
+     * Set default field attributes.
+     *
+     * @return void
+     */
+    public function mount()
+    {
+        // Set the field default attributes in here.
+
+        // $this->something('value');
+        // or:
+        // $this->setAttribute('something', 'value');
     }
 
     /**
@@ -340,12 +356,11 @@ class Field extends VueProp
     /**
      * Set slot component.
      *
-     * @param string $slot
-     * @param string $component
+     * @param  string $slot
+     * @param  string $component
+     * @return void
      *
      * @throws \InvalidArgumentException
-     *
-     * @return void
      */
     public function slot(string $slot, string $component)
     {
@@ -380,41 +395,12 @@ class Field extends VueProp
     /**
      * Get slot method name.
      *
-     * @param string $slot
-     *
+     * @param  string $slot
      * @return string
      */
     protected function getSlotMethodName(string $slot)
     {
         return Str::camel("{$slot}_slot");
-    }
-
-    /**
-     * Set authorize closure.
-     *
-     * @param Closure $closure
-     *
-     * @return void
-     */
-    public function authorize(Closure $closure)
-    {
-        $this->authorize = $closure;
-    }
-
-    /**
-     * Execute authorize method.
-     *
-     * @return bool
-     */
-    public function authorized()
-    {
-        if (! $this->authorize) {
-            return true;
-        }
-
-        $closure = $this->authorize;
-
-        return $closure(lit_user());
     }
 
     /**
@@ -432,20 +418,6 @@ class Field extends VueProp
             $attributeValue = $this->{$method}();
             $this->setAttribute($attributeName, $attributeValue);
         }
-    }
-
-    /**
-     * Set default field attributes.
-     *
-     * @return void
-     */
-    public function mount()
-    {
-        // Set the field default attributes in here.
-
-        // $this->something('value');
-        // or:
-        // $this->setAttribute('something', 'value');
     }
 
     /**

@@ -20,5 +20,5 @@ interface Authorizable
      *
      * @return bool
      */
-    public function isAuthorized(): bool;
+    public function check(): bool;
 }

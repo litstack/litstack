@@ -31,7 +31,7 @@ trait Authorizable
      *
      * @return bool
      */
-    public function isAuthorized(): bool
+    public function check(): bool
     {
         if (! $this->authorizeClosure) {
             return true;
