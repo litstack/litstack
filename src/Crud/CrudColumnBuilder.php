@@ -4,7 +4,9 @@ namespace Ignite\Crud;
 
 use Ignite\Config\ConfigHandler;
 use Ignite\Contracts\Page\Column;
+use Ignite\Contracts\Page\Column as ColumnContract;
 use Ignite\Page\Table\ColumnBuilder;
+use Ignite\Vue\Component;
 
 class CrudColumnBuilder extends ColumnBuilder
 {
@@ -83,5 +85,21 @@ class CrudColumnBuilder extends ColumnBuilder
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Create new action column.
+     *
+     * @param  string    $title
+     * @param  string    $action
+     * @return Component
+     */
+    public function action($title, $action): ColumnContract
+    {
+        $wrapper = parent::action($title, $action);
+
+        last($this->columns)->on('run', RunCrudActionEvent::class);
+
+        return $wrapper;
     }
 }

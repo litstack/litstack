@@ -6,6 +6,7 @@ use Closure;
 use Ignite\Contracts\Page\Table as TableContract;
 use Ignite\Exceptions\Traceable\MissingAttributeException;
 use Ignite\Support\HasAttributes;
+use Ignite\Vue\Component;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 

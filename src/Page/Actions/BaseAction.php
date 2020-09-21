@@ -21,12 +21,15 @@ abstract class BaseAction implements ActionFactory
      * @param  string    $action
      * @return Component
      */
-    public function make($title, $action)
+    public function make($title, $action, $wrapper = null)
     {
         $actionInstance = app()->make($action);
 
+        // Add title as content to wrapper.
+        $wrapper = $this->getWrapper()->content($title);
+
         $component = component('lit-action')
-            ->prop('wrapper', $this->createComponent()->content($title))
+            ->prop('wrapper', $wrapper)
             ->on('run', RunActionEvent::class)
             ->prop('eventData', ['action' => $action]);
 
@@ -39,5 +42,18 @@ abstract class BaseAction implements ActionFactory
         }
 
         return $component;
+    }
+
+    /**
+     * Get wrapper.
+     *
+     * @param  string|null|Component $wrapper
+     * @return Component
+     */
+    protected function getWrapper($wrapper = null)
+    {
+        return is_null($wrapper)
+            ? $this->createComponent()
+            : component($wrapper);
     }
 }

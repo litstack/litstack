@@ -15,15 +15,13 @@
 			:href="link"
 			:target="isExternal(link) ? '_blank' : ''"
 		>
-			<component
+			<lit-base-component
 				v-if="col.name !== undefined"
-				:is="col.name"
+				:component="component"
 				:item="item"
-				:col="col"
 				:format="getColValue"
 				@reload="reload"
 				v-on="$listeners"
-				v-bind="{ ...getColComponentProps(), ...$attrs, value }"
 			/>
 
 			<span v-else v-html="value" />
@@ -69,6 +67,16 @@ export default {
 	},
 	computed: {
 		...mapGetters(['baseURL']),
+		component() {
+			return {
+				...this.col,
+				props: {
+					...this.getColComponentProps(),
+					...this.$attrs,
+					value: this.value,
+				},
+			};
+		},
 		percentageColsCount() {
 			let count = 0;
 			for (let i = 0; i < this.cols.length; i++) {

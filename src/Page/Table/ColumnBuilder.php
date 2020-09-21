@@ -5,6 +5,7 @@ namespace Ignite\Page\Table;
 use Ignite\Contracts\Page\Column as ColumnContract;
 use Ignite\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
 use Ignite\Crud\Fields\Relations\LaravelRelationField;
+use Ignite\Page\Actions\TableButtonAction;
 use Ignite\Page\Table\Casts\CarbonColumn;
 use Ignite\Page\Table\Casts\MoneyColumn;
 use Ignite\Page\Table\Components\BladeColumnComponent;
@@ -14,6 +15,7 @@ use Ignite\Page\Table\Components\ProgressComponent;
 use Ignite\Page\Table\Components\RelationComponent;
 use Ignite\Page\Table\Components\ToggleComponent;
 use Ignite\Support\VueProp;
+use Ignite\Vue\Component;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\View as ViewFactory;
 
@@ -76,18 +78,31 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     }
 
     /**
+     * Create new action column.
+     *
+     * @param  string    $title
+     * @param  string    $action
+     * @return Component
+     */
+    public function action($title, $action): ColumnContract
+    {
+        $this->columns[] = $component = (new TableButtonAction)->make($title, $action);
+
+        return $component->getProp('wrapper')->link(false);
+    }
+
+    /**
      * Create new Money column.
      *
      * @param  string $column
      * @param  string $currency
      * @return Column
      */
-    public function money($column, $currency = 'EUR', $locale = null)
+    public function money($column, $currency = 'EUR', $locale = null): ColumnContract
     {
         if ($this->parent) {
             $this->parent->cast(
-                $column,
-                MoneyColumn::class.":{$currency},{$locale}"
+                $column, MoneyColumn::class.":{$currency},{$locale}"
             );
         }
 

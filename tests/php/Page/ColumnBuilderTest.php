@@ -6,6 +6,7 @@ use Ignite\Page\Table\Casts\MoneyColumn;
 use Ignite\Page\Table\Column;
 use Ignite\Page\Table\ColumnBuilder;
 use Ignite\Page\Table\Components\BladeColumnComponent;
+use Ignite\Page\Table\Components\ButtonComponent;
 use Ignite\Page\Table\Components\ColumnComponent;
 use Ignite\Page\Table\Table;
 use Illuminate\Contracts\View\View as ViewContract;
@@ -30,6 +31,22 @@ class ColumnBuilderTest extends BackendTestCase
         $columns = $this->getUnaccessibleProperty($builder, 'columns');
         $this->assertCount(1, $columns);
         $this->assertInstanceOf(Column::class, $columns[0]);
+    }
+
+    /** @test */
+    public function test_action_method_returns_table_button_component()
+    {
+        $builder = new ColumnBuilder;
+        $this->assertInstanceOf(ButtonComponent::class, $builder->action('foo', DummyColumnAction::class));
+    }
+
+    /** @test */
+    public function test_action_method_registers_component()
+    {
+        $builder = new ColumnBuilder;
+        $builder->action('foo', DummyColumnAction::class);
+        $columns = $this->getUnaccessibleProperty($builder, 'columns');
+        $this->assertCount(1, $columns);
     }
 
     /** @test */
@@ -156,4 +173,8 @@ class ColumnBuilderTest extends BackendTestCase
         $this->setUnaccessibleProperty($builder, 'columns', ['column']);
         $this->assertEquals(['column'], $builder->render());
     }
+}
+
+class DummyColumnAction
+{
 }
