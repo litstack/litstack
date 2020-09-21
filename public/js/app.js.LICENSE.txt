@@ -29,7 +29,7 @@
   */
 
 /*!
- * ApexCharts v3.20.2
+ * ApexCharts v3.21.0
  * (c) 2018-2020 Juned Chhipa
  * Released under the MIT License.
  */
@@ -148,11 +148,4 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */
-
-/**!
- * Sortable 1.10.2
- * @author	RubaXa   <trash@rubaxa.org>
- * @author	owenm    <owen23355@gmail.com>
- * @license MIT
  */
