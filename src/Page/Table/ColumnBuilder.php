@@ -5,11 +5,13 @@ namespace Ignite\Page\Table;
 use Ignite\Contracts\Page\Column as ColumnContract;
 use Ignite\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
 use Ignite\Crud\Fields\Relations\LaravelRelationField;
+use Ignite\Page\Actions\DropdownItemAction;
 use Ignite\Page\Actions\TableButtonAction;
 use Ignite\Page\Table\Casts\CarbonColumn;
 use Ignite\Page\Table\Casts\MoneyColumn;
 use Ignite\Page\Table\Components\BladeColumnComponent;
 use Ignite\Page\Table\Components\ColumnComponent;
+use Ignite\Page\Table\Components\DropdownComponent;
 use Ignite\Page\Table\Components\ImageComponent;
 use Ignite\Page\Table\Components\ProgressComponent;
 use Ignite\Page\Table\Components\RelationComponent;
@@ -89,6 +91,32 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
         $this->columns[] = $component = (new TableButtonAction)->make($title, $action);
 
         return $component->getProp('wrapper')->link(false);
+    }
+
+    /**
+     * Create new actions column.
+     *
+     * @param  string    $title
+     * @param  string    $action
+     * @return Component
+     */
+    public function actions($actions, $text = '<i class="fas fa-ellipsis-v"></i>'): ColumnContract
+    {
+        $this->columns[] = $dropdown = (new DropdownComponent);
+
+        foreach ($actions as $title => $action) {
+            $action = (new DropdownItemAction)->make($title, $action);
+
+            $dropdown->item($action);
+        }
+
+        return $dropdown->link(false)
+            ->size('sm')
+            ->text($text)
+            ->noCaret()
+            ->variant('transparent')
+            ->class('dropdown-sm-square')
+            ->small();
     }
 
     /**

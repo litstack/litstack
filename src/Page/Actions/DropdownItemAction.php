@@ -2,6 +2,8 @@
 
 namespace Ignite\Page\Actions;
 
+use Ignite\Support\Vue\DropdownItemComponent;
+
 class DropdownItemAction extends BaseAction
 {
     /**
@@ -11,6 +13,6 @@ class DropdownItemAction extends BaseAction
      */
     protected function createComponent()
     {
-        return component('b-dropdown-item');
+        return (new DropdownItemComponent)->size('sm');
     }
 }
