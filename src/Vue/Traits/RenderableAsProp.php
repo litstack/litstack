@@ -81,4 +81,14 @@ trait RenderableAsProp
             return $item->check();
         });
     }
+
+    /**
+     * Parse to string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->toJson();
+    }
 }
