@@ -91,18 +91,6 @@ class FieldTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_authorize_method_sets_authorize_closure()
-    {
-        $field = $this->getField(DummyField::class);
-
-        $authorizeClosure = function () {
-        };
-
-        $field->authorize($authorizeClosure);
-        $this->assertEquals($authorizeClosure, $this->getUnaccessibleProperty($field, 'authorize'));
-    }
-
-    /** @test */
     public function test_authorized_method()
     {
         $field = $this->getField(DummyField::class);
@@ -110,12 +98,12 @@ class FieldTest extends BackendTestCase
         $field->authorize(function () {
             return true;
         });
-        $this->assertTrue($field->authorized());
+        $this->assertTrue($field->check());
 
         $field->authorize(function () {
             return false;
         });
-        $this->assertFalse($field->authorized());
+        $this->assertFalse($field->check());
     }
 
     /** @test */
@@ -132,8 +120,10 @@ class FieldTest extends BackendTestCase
         $field->authorize(function ($user) use ($User) {
             $this->assertInstanceOf(User::class, $user);
             $this->assertEquals($user, $User);
+
+            return true;
         });
-        $field->authorized();
+        $field->check();
     }
 
     /** @test */

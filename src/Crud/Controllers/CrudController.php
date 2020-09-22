@@ -54,9 +54,7 @@ abstract class CrudController extends CrudBaseController
     {
         $model = $this->getQuery()->findOrFail($id);
 
-        return crud(
-            $model
-        );
+        return crud($model);
     }
 
     /**
@@ -148,11 +146,9 @@ abstract class CrudController extends CrudBaseController
     public function create(CrudCreateRequest $request)
     {
         $config = $this->config->get(
-            'show',
-            'names',
-            'permissions',
-            'route_prefix'
+            'show', 'names', 'permissions', 'route_prefix'
         );
+
         $config['form'] = $config['show'];
         unset($config['show']);
 

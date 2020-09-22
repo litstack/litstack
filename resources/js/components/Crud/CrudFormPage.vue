@@ -11,7 +11,7 @@ export default {
 			required: true,
 		},
 		crudModel: {
-			type: Object,
+			type: [Array, Object],
 			required: true,
 		},
 		config: {

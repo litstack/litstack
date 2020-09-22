@@ -75,7 +75,7 @@ trait RenderableAsProp
             return $item;
         })->filter(function ($item) {
             if (! $item instanceof Authorizable) {
-                return $item;
+                return true;
             }
 
             return $item->check();

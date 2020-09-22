@@ -3,8 +3,7 @@
 namespace Ignite\Crud;
 
 use Carbon\CarbonInterface;
-use Ignite\Crud\Models\Form;
-use Ignite\Crud\Models\Repeatable;
+use Ignite\Crud\Models\LitFormModel;
 use Ignite\Support\VueProp;
 
 class CrudJs extends VueProp
@@ -69,8 +68,7 @@ class CrudJs extends VueProp
     /**
      * Cast attributes for Fields.
      *
-     * @param array $array
-     *
+     * @param  array $array
      * @return array
      */
     public function castAttributes(array $array)
@@ -91,7 +89,6 @@ class CrudJs extends VueProp
      */
     public function usesJsoncastValue()
     {
-        return $this->model instanceof Form
-            || $this->model instanceof Repeatable;
+        return $this->model instanceof LitFormModel;
     }
 }
