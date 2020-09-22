@@ -1,24 +1,24 @@
 /*!
-    * tiptap v1.29.5
+    * tiptap v1.29.6
     * (c) 2020 überdosis GbR (limited liability)
     * @license MIT
     */
 
 /*!
-    * tiptap-commands v1.14.5
+    * tiptap-commands v1.14.6
     * (c) 2020 überdosis GbR (limited liability)
     * @license MIT
     */
 
 /*!
-    * tiptap-extensions v1.32.4
+    * tiptap-extensions v1.32.7
     * (c) 2020 überdosis GbR (limited liability)
     * @license MIT
     */
 
 /*!
-    * tiptap-utils v1.10.0
-    * (c) 2020 Scrumpy UG (limited liability)
+    * tiptap-utils v1.10.4
+    * (c) 2020 überdosis GbR (limited liability)
     * @license MIT
     */
 
@@ -29,13 +29,13 @@
   */
 
 /*!
- * ApexCharts v3.20.0
+ * ApexCharts v3.21.0
  * (c) 2018-2020 Juned Chhipa
  * Released under the MIT License.
  */
 
 /*!
- * BootstrapVue Icons, generated from Bootstrap Icons 1.0.0-alpha5
+ * BootstrapVue Icons, generated from Bootstrap Icons 1.0.0
  *
  * @link https://icons.getbootstrap.com/
  * @license MIT
@@ -43,13 +43,13 @@
  */
 
 /*!
- * Cropper.js v1.5.7
+ * Cropper.js v1.5.9
  * https://fengyuanchen.github.io/cropperjs
  *
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2020-05-23T05:23:00.081Z
+ * Date: 2020-09-10T13:16:26.743Z
  */
 
 /*!
@@ -148,11 +148,4 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */
-
-/**!
- * Sortable 1.10.2
- * @author	RubaXa   <trash@rubaxa.org>
- * @author	owenm    <owen23355@gmail.com>
- * @license MIT
  */
