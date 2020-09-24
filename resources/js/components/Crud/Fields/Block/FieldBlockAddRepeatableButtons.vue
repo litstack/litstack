@@ -9,7 +9,7 @@
             @click.prevent="add(type)"
         >
             <fa-icon icon="plus" />
-            add {{ type }}
+            {{ type }}
         </b-button>
     </div>
 </template>
