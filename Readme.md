@@ -15,7 +15,7 @@ A package for building Admin-Interfaces that help maintaining the data of your a
 
 If You are working in Laravel 8.x install the new version:
 
-```php
+```shell
 composer require litstack/litstack ^3.0
 ```
 
