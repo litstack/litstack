@@ -2,8 +2,8 @@
 
 namespace Ignite\Application;
 
-use Ignite\Crud\Fields\Block\Repeatables;
 use Ignite\Crud\Repeatable;
+use Ignite\Support\Facades\Crud;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -139,16 +139,11 @@ class Kernel
                 continue;
             }
 
-            $name = Str::snake(Str::replaceLast('Repeatable', '', $repeatable));
+            $name = Str::snake(Str::replaceLast(
+                'Repeatable', '', class_basename($repeatable)
+            ));
 
-            Repeatables::macro($name, function (...$parameters) use ($repeatable, $name) {
-                $repeatable = $repeatable(...$parameters);
-
-                $this->add($name, function ($form, $preview) use ($repeatable) {
-                    $repeatable->preview($preview);
-                    $repeatable->preview($form);
-                });
-            });
+            Crud::repeatable($name, $repeatable);
         }
     }
 }

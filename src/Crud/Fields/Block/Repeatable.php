@@ -23,6 +23,11 @@ class Repeatable extends VueProp
      */
     protected $viewName;
 
+    /**
+     * View data.
+     *
+     * @var array
+     */
     protected $viewData = [];
 
     /**
@@ -55,13 +60,6 @@ class Repeatable extends VueProp
         $this->name = $name;
     }
 
-    protected function getRoutePrefix()
-    {
-        return Str::finish("{$this->field->route_prefix}", '/block');
-
-        return strip_slashes("{$this->field->route_prefix}/block");
-    }
-
     /**
      * Configure repeatable form.
      *
@@ -73,7 +71,9 @@ class Repeatable extends VueProp
     {
         $form = new RepeatableForm(RepeatableModel::class);
 
-        $form->setRoutePrefix($this->getRoutePrefix());
+        $form->setRoutePrefix(
+            Str::finish("{$this->field->route_prefix}", '/block')
+        );
 
         $form->registered(function ($field) {
             $field->setAttribute('params', [
