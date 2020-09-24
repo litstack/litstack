@@ -41,7 +41,7 @@ class PermissionController extends Controller
 
         $page->component('lit-permissions')->bind([
             'cols'             => $this->getCols(),
-            'roles'            => Role::all(),
+            'roles'            => Role::where('guard_name', 'lit')->get(),
             'operations'       => $operations,
             'role_permissions' => RolePermission::all(),
             'config'           => [
