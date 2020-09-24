@@ -3,6 +3,8 @@
 namespace Ignite\Crud\Config;
 
 use Ignite\Crud\Models\Form;
+use Ignite\Support\Facades\Config;
+use Ignite\Support\Facades\Form as FormFacade;
 use Illuminate\Support\Str;
 
 class FormConfig
@@ -22,6 +24,18 @@ class FormConfig
      * @var string
      */
     public $controller;
+
+    /**
+     * Load model.
+     *
+     * @return Form|null
+     */
+    public static function load()
+    {
+        $config = Config::get(static::class);
+
+        return FormFacade::load($config->collection, $config->formName);
+    }
 
     /**
      * Create new FormConfig instance.
