@@ -35,7 +35,7 @@ export default {
 					[this.local_key]: val,
 				}
 			);
-			this.$bvToast.toast(this.__('lit.saved'), { variant: 'success' });
+			this.$bvToast.toast(this.__('base.saved'), { variant: 'success' });
 		},
 	},
 };

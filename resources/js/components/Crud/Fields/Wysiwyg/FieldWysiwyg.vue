@@ -170,9 +170,7 @@
 								>
 									<small>
 										{{
-											trans(
-												'crud.fields.wysiwyg.new_window'
-											)
+											__('crud.fields.wysiwyg.new_window')
 										}}
 									</small>
 								</b-checkbox>
@@ -182,7 +180,7 @@
 									size="sm"
 									@click="setLinkUrl(commands.custom_link)"
 								>
-									{{ trans('lit.save') }}
+									{{ __('base.save') }}
 								</b-button>
 							</b-dropdown-form>
 						</b-dropdown>

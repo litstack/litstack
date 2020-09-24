@@ -73,7 +73,7 @@
 						:disabled="!canSave"
 						@click="Lit.bus.$emit('save')"
 					>
-						{{ __('lit.save') }}
+						{{ __('base.save') }}
 					</b-button>
 				</div>
 			</div>

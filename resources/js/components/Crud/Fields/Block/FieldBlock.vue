@@ -267,9 +267,12 @@ export default {
 
 			Lit.bus.$emit('field:updated', 'block:deleted');
 
-			this.$bvToast.toast(this.__('lit.deleted_block'), {
-				variant: 'success',
-			});
+			this.$bvToast.toast(
+				this.__('base.item_delete', { item: 'Repeatable' }),
+				{
+					variant: 'success',
+				}
+			);
 		},
 
 		/**

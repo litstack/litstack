@@ -48,7 +48,7 @@
 					v-bind:disabled="!canSave"
 					@click="Lit.bus.$emit('save')"
 				>
-					{{ __('lit.save') }}
+					{{ __('base.save') }}
 				</b-button>
 			</template>
 		</b-modal>

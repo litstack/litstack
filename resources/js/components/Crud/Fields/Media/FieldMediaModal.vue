@@ -61,7 +61,7 @@
 					v-if="!field.readonly"
 				>
 					<i class="far fa-trash-alt"></i>
-					{{ __('lit.delete') }}
+					{{ __('base.delete') }}
 				</b-button>
 			</div>
 			<div class="d-flex">
@@ -75,7 +75,7 @@
 					:disabled="!canSave"
 					@click="Lit.bus.$emit('save')"
 				>
-					{{ __('lit.save') }}
+					{{ __('base.save') }}
 				</b-button>
 			</div>
 		</div>

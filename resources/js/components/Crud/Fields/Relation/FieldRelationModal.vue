@@ -96,8 +96,8 @@ export default {
 	computed: {
 		title() {
 			return this.field.many
-				? this.__('lit.add_model', { model: this.field.title })
-				: this.__('lit.select_item', { item: this.field.title });
+				? this.__('base.item_add', { item: this.field.title })
+				: this.__('base.item_select', { item: this.field.title });
 		},
 	},
 };

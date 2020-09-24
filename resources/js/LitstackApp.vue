@@ -157,7 +157,7 @@ export default {
 			let results = await this.$store.dispatch('save');
 
 			if (results.hasSucceeded()) {
-				this.$bvToast.toast(this.__('lit.saved'), {
+				this.$bvToast.toast(this.__('base.saved'), {
 					variant: 'success',
 				});
 			}

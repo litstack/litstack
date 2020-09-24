@@ -24,7 +24,7 @@
 					<b-button
 						variant="transparent"
 						v-b-tooltip
-						:title="__('lit.delete_model', { model: 'Block' })"
+						:title="__('lit.item_delete', { item: 'Repeatable' })"
 						size="sm"
 						class="btn-square lit-block-delete"
 						@click="$emit('deleteItem')"

@@ -53,7 +53,7 @@ export default {
 			);
 
 			this.$bvToast.toast(
-				this.__('litpermissions.role_assigned', {
+				this.__('lit.permissions.role_assigned', {
 					username: this.item.name,
 					role: this.__(`roles.${role.name}`),
 				}),

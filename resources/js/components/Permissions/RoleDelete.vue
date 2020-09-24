@@ -13,7 +13,7 @@
 		<b-modal
 			id="lit-confirm-delete-role"
 			:title="
-				__('lit.confirm_delete', {
+				__('messages.actions.are_you_sure', {
 					model: tab.title,
 				})
 			"
@@ -22,7 +22,7 @@
 				show
 				variant="warning"
 				v-html="
-					__(`litpermissions.confirm_delete_role_msg`, {
+					__(`lit.permissionsconfirm_delete_role_msg`, {
 						role: tab.title,
 					})
 				"
@@ -71,7 +71,7 @@ export default {
 			this.$emit('deleted');
 
 			this.$bvToast.toast(
-				this.__('litpermissions.deleted_role', {
+				this.__('lit.permissions.deleted_role', {
 					role: role.title,
 				}),
 				{

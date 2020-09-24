@@ -38,7 +38,7 @@ export default {
 			});
 
 			this.$bvToast.toast(
-				this.__('litpermissions.all_permission_updated', {
+				this.__('lit.permissions.all_permission_updated', {
 					group: this.$te(`permissions.${this.group}`)
 						? this.__(`permissions.${this.group}`).capitalize()
 						: this.group.capitalize(),
@@ -80,7 +80,10 @@ export default {
 			'litPermissionsRolePermissions',
 		]),
 		group() {
-			return this.item.name.split(' ').slice(1).join(' ');
+			return this.item.name
+				.split(' ')
+				.slice(1)
+				.join(' ');
 		},
 	},
 };
