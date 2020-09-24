@@ -11,6 +11,16 @@ A package for building Admin-Interfaces that help maintaining the data of your a
 
 ![Interface](./docs/preview.png 'Interface')
 
+## Laravel 8
+
+If You are working in Laravel 8.x install the new version:
+
+```php
+composer require litstack/litstack ^3.0
+```
+
+The official docs can be found on [litstack.io/docs](https://litstack.io/docs/master).
+
 ## Features
 
 -   Code Driven Configuration
