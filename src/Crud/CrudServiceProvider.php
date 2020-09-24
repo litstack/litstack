@@ -215,7 +215,7 @@ class CrudServiceProvider extends LaravelServiceProvider
     protected function registerRepeatableCommand($abstract)
     {
         $this->app->singleton($abstract, function ($app) {
-            return new RepeatableCommand($app['files']);
+            return new RepeatableCommand($app['files'], $app['lit']);
         });
     }
 

@@ -3,7 +3,7 @@
 namespace Ignite\Crud\Console;
 
 use Ignite\Application\Console\Concerns\ManagesGeneration;
-use Illuminate\Console\GeneratorCommand;
+use Ignite\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 
 class RepeatableCommand extends GeneratorCommand
