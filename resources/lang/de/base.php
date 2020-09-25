@@ -51,4 +51,5 @@ return [
     'unauthorized'     => 'Nicht authorisiert!',
     'page'             => 'Seite',
     'pages'            => 'Seiten',
+    'toggle_all'       => 'alle an/aus',
 ];

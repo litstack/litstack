@@ -56,22 +56,24 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     public function addNavPresets()
     {
-        if (! $config = lit()->config('user.profile_settings')) {
-            return;
-        }
+        $this->callAfterResolving('lit.nav', function ($nav) {
+            if (! $config = lit()->config('user.profile_settings')) {
+                return;
+            }
 
-        Nav::preset('profile', [
-            'link' => function () use ($config) {
-                $id = app()->runningInConsole()
-                    ? '{user_id}'
-                    : lit_user()->id;
+            $nav->preset('profile', [
+                'link' => function () use ($config) {
+                    $id = app()->runningInConsole()
+                        ? '{user_id}'
+                        : lit_user()->id;
 
-                return lit()->url(
-                    "$config->route_prefix/{$id}"
-                );
-            },
-            'title' => fn () => __lit('lit.profile'),
-            'icon'  => fa('user-cog'),
-        ]);
+                    return lit()->url(
+                        "$config->route_prefix/{$id}"
+                    );
+                },
+                'title' => fn () => ucfirst(__lit('base.profile')),
+                'icon'  => fa('user-cog'),
+            ]);
+        });
     }
 }

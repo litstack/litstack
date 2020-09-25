@@ -46,8 +46,7 @@ class UserController
     /**
      * Delete multiple users.
      *
-     * @param Request $request
-     *
+     * @param  Request $request
      * @return void
      */
     public function deleteAll(UserDeleteRequest $request)
@@ -64,8 +63,7 @@ class UserController
     /**
      * Fetch index.
      *
-     * @param Request $request
-     *
+     * @param  Request $request
      * @return array
      */
     public function fetchIndex(UserReadRequest $request)

@@ -79,11 +79,11 @@ class Kernel
      */
     public function bootstrap()
     {
-        app()->afterResolving('lit.form', function () {
-            $this->repeatables();
-        });
-
         $this->app->bootstrapWith($this->bootstrappers, $this);
+
+        if (method_exists($this, 'mount')) {
+            app()->call([$this, 'mount']);
+        }
     }
 
     /**
@@ -93,6 +93,7 @@ class Kernel
      */
     public function repeatables()
     {
+        //
     }
 
     /**
@@ -115,35 +116,37 @@ class Kernel
      */
     protected function loadRepeatablesFrom($paths)
     {
-        $paths = array_unique(Arr::wrap($paths));
+        app()->afterResolving('lit.form', function () use ($paths) {
+            $paths = array_unique(Arr::wrap($paths));
 
-        $paths = array_filter($paths, function ($path) {
-            return is_dir($path);
-        });
+            $paths = array_filter($paths, function ($path) {
+                return is_dir($path);
+            });
 
-        if (empty($paths)) {
-            return;
-        }
+            if (empty($paths)) {
+                return;
+            }
 
-        $namespace = 'Lit\\';
+            $namespace = 'Lit\\';
 
-        foreach ((new Finder)->in($paths)->files() as $repeatable) {
-            $repeatable = $namespace.str_replace(
+            foreach ((new Finder)->in($paths)->files() as $repeatable) {
+                $repeatable = $namespace.str_replace(
                 ['/', '.php'],
                 ['\\', ''],
                 Str::after($repeatable->getPathname(), realpath(lit_path()).DIRECTORY_SEPARATOR)
             );
 
-            if (! is_subclass_of($repeatable, Repeatable::class) ||
+                if (! is_subclass_of($repeatable, Repeatable::class) ||
                 (new ReflectionClass($repeatable))->isAbstract()) {
-                continue;
-            }
+                    continue;
+                }
 
-            $name = Str::snake(Str::replaceLast(
+                $name = Str::snake(Str::replaceLast(
                 'Repeatable', '', class_basename($repeatable)
             ));
 
-            Crud::repeatable($name, $repeatable);
-        }
+                Crud::repeatable($name, $repeatable);
+            }
+        });
     }
 }

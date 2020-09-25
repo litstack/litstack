@@ -51,4 +51,5 @@ return [
     'unauthorized'     => 'This action is unauthorized!',
     'page'             => 'page',
     'pages'            => 'pages',
+    'toggle_all'       => 'toggle all',
 ];

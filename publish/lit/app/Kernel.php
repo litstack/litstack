@@ -19,11 +19,11 @@ class Kernel extends LitstackKernel
     ];
 
     /**
-     * Register the crud repeatables.
+     * Mount litstack application.
      *
      * @return void
      */
-    public function repeatables()
+    public function mount()
     {
         $this->loadRepeatablesFrom(__DIR__.'/Repeatables');
     }

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<b-button variant="secondary" size="sm" @click="toggle">
-			{{ __('lit.toggle_all') }}
+			{{ __('base.toggle_all') }}
 		</b-button>
 	</div>
 </template>
