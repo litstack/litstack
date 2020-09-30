@@ -20,43 +20,9 @@
     @include('litstack::partials.google_analytics')
 </head>
 
-
-<body onload="makeVisible()">
-    <div id="litstack" class="no-nav">
-
-        <main>
-            <div class="lit-content">
-                <div class="lit-container lit-landing-page container sm pt-5">
-
-                    {{-- <div class="text-center">
-                        <div class="lit-brand">
-                            @include('litstack::partials.logo')
-                        </div>
-                    </div> --}}
-                    
-                    @yield('content')
-            
-                </div>
-            </div>
-            
-             @include('litstack::partials.spinner')
-        </main>
-        
-
-    </div>
+<body>   
+     @yield('content')
 
     <script src="{{ Lit::route('app2.js') }}" defer></script>
-
-    <script type="text/javascript">
-        function makeVisible(){
-            let spinner = document.getElementById("lit-spinner");
-            let main = document.querySelector("div#litstack > main");
-            if(spinner && main) {
-                spinner.classList.add('loaded');
-                main.classList.add('loaded');
-            }
-        }
-    </script>
 </body>
-
 </html>
