@@ -43,11 +43,11 @@ trait ConfiguresProfileSettings
                 ->name('Change E-Mail')
                 ->confirmWithPassword()
                 ->form(function ($modal) {
-                $modal->input('email')
+                    $modal->input('email')
                     ->width(12)
                     ->rules('required')
                     ->title('E-Mail');
-            })->width(6);
+                })->width(6);
 
             $form->input('username')
                 ->width(6)
