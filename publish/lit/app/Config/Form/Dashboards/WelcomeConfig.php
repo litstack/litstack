@@ -26,6 +26,16 @@ class WelcomeConfig extends FormConfig
     }
 
     /**
+     * Welcome title.
+     *
+     * @return string
+     */
+    public function title()
+    {
+        return __lit('base.user_welcome', ['user' => lit_user()->first_name]);
+    }
+
+    /**
      * Setup create and edit form.
      *
      * @param  \Ignite\Crud\CrudShow $page

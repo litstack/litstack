@@ -15,6 +15,7 @@ return [
     'item_assign'      => ':item zuweisen',
     'item_settings'    => ':item Einstellungen',
     'item_item'        => ':item Element',
+    'user_welcome'     => 'Wilkommen :user',
     'profile'          => 'Konto',
     'password'         => 'Passwort',
     'name'             => 'Name',

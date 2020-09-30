@@ -15,6 +15,7 @@ return [
     'item_assign'      => 'assign :item',
     'item_settings'    => ':item settings',
     'item_item'        => ':item item',
+    'user_welcome'     => 'Welcome :user',
     'profile'          => 'profile',
     'password'         => 'password',
     'name'             => 'name',

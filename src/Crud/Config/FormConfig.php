@@ -104,8 +104,18 @@ class FormConfig
     public function names()
     {
         return [
-            'singular' => ucfirst(Str::singular($this->formName())),
+            'singular' => $this->title(),
         ];
+    }
+
+    /**
+     * The form title.
+     *
+     * @return string
+     */
+    public function title()
+    {
+        return ucfirst(Str::singular($this->formName()));
     }
 
     /**

@@ -112,6 +112,7 @@ abstract class CrudController extends CrudBaseController
         $page = $this->config->index->bind([
             'config' => $config,
         ]);
+        $page->bindToView(['config' => $this->config]);
 
         return $page;
     }
@@ -195,10 +196,7 @@ abstract class CrudController extends CrudBaseController
 
         // Load config attributes.
         $config = $this->config->get(
-            'show',
-            'route_prefix',
-            'names',
-            'permissions',
+            'show', 'route_prefix', 'names', 'permissions',
         );
         $config['form'] = $config['show'];
         unset($config['show']);

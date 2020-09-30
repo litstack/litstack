@@ -69,10 +69,7 @@ abstract class FormController extends CrudBaseController
     public function show(CrudReadRequest $request)
     {
         $config = $this->config->get(
-            'names',
-            'show',
-            'permissions',
-            'route_prefix',
+            'names', 'show', 'permissions', 'route_prefix',
         );
         $config['form'] = $config['show'];
         unset($config['show']);
@@ -101,6 +98,7 @@ abstract class FormController extends CrudBaseController
             'crud-model' => crud($model),
             'config'     => $config,
         ]);
+        $page->bindToView(['config' => $this->config]);
 
         return $page;
     }
