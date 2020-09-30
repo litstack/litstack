@@ -62,6 +62,8 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         LitstackRoute::public()->get('js/ctk.js', FileController::class.'@ctkJs')->name('ctk.js');
         LitstackRoute::public()->get('css/app.css', FileController::class.'@litCss')->name('css');
         LitstackRoute::public()->get('images/lit-logo.png', FileController::class.'@litLogo')->name('logo');
+
+        // Favicon.
         LitstackRoute::public()->get('favicon/favicon-32x32.png', FileController::class.'@litFaviconBig')->name('favicon-big');
         LitstackRoute::public()->get('favicon/favicon-16x16.png', FileController::class.'@litFaviconSmall')->name('favicon-small');
     }
