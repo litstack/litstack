@@ -230,7 +230,7 @@ if (! function_exists('__lit_choice')) {
      */
     function __lit_choice($key, $number, $replace = [])
     {
-        return lit()->trans_choice($key, $number, $replace);
+        return lit()->transChoice($key, $number, $replace);
     }
 }
 
@@ -245,7 +245,7 @@ if (! function_exists('__lit_c')) {
      */
     function __lit_c($key, $number, $replace = [])
     {
-        return lit()->trans_choice($key, $number, $replace);
+        return lit()->transChoice($key, $number, $replace);
     }
 }
 

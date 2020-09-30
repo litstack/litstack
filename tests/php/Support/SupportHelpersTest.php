@@ -5,6 +5,7 @@ namespace Tests\Support;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Ignite\Crud\Models\Traits\Translatable;
 use Ignite\Foundation\Litstack;
+use Ignite\Translation\Translator;
 use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Application;
@@ -16,6 +17,18 @@ class SupportHelpersTest extends TestCase
     public function tearDown(): void
     {
         m::close();
+    }
+
+    /** @test */
+    public function test_lit_choice_translation_helper()
+    {
+        $app = new Application;
+        $litstack = $app['lit'] = app(Litstack::class);
+        $translator = $app['lit.translator'] = m::mock(Translator::class);
+        Container::setInstance($app);
+        $translator->shouldReceive('choice')->withArgs(['foo', 1, [], null])->andReturn('result')->twice();
+        $this->assertSame('result', __lit_choice('foo', 1));
+        $this->assertSame('result', __lit_c('foo', 1));
     }
 
     /** @test */
