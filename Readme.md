@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="400px" src="https://raw.githubusercontent.com/litstack/art/master/logo/png/litstack_logo.png">
+    <img width="350px" style="max-width:100%;" src="https://raw.githubusercontent.com/litstack/art/master/logo/png/litstack_logo.png">
 </p>
 
 <p align="center">

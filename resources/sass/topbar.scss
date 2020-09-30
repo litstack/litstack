@@ -12,6 +12,10 @@ div#litstack nav.lit-topbar {
 	z-index: 9;
 	border-right: $border-width solid $border-color;
 
+	.lit-brand svg {
+		margin-bottom: -6px;
+	}
+
 	.lit-topbar__icon {
 		width: 23px;
 	}
