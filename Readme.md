@@ -21,8 +21,7 @@ Read the [Docs](https://litstack.io/docs) and learn how to build your custom
 Admin panel. Use your knowledge about Laravel standards and do much work in
 little time.
 
-Feel free to ask us anything on our
-[discord chanel](https://discord.gg/u4qpb5P).
+Join us on our [discord chanel](https://discord.gg/u4qpb5P).
 
 ## Contributing
 
