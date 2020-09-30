@@ -46,7 +46,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     {
         $this->app['lit.nav']->preset('permissions', [
             'link'      => route('lit.permissions'),
-            'title'     => fn ()     => ucfirst(__lit('base.permissions')),
+            'title'     => fn () => ucfirst(__lit('base.permissions')),
             'icon'      => fa('unlock-alt'),
             'authorize' => function ($user) {
                 return $user->can('read lit-role-permissions');
