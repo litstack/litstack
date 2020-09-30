@@ -7,11 +7,16 @@ use Ignite\Page\Page;
 
 class WelcomeController extends FormController
 {
+    /**
+     * Get welcome page.
+     *
+     * @return \Ignite\Page\Page
+     */
     public function __invoke()
     {
         $page = new Page;
 
-        $page->view('lit::welcome');
+        $page->htmlTitle(__lit('base.hello'))->view('lit::welcome');
 
         return $page;
     }

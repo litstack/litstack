@@ -47,6 +47,13 @@ class Page extends BasePage implements Expandable
     protected $header;
 
     /**
+     * Html title.
+     *
+     * @var string
+     */
+    protected $htmlTitle;
+
+    /**
      * Create new Page instance.
      *
      * @return void
@@ -139,6 +146,29 @@ class Page extends BasePage implements Expandable
     public function getTitle()
     {
         return $this->header->getTitle();
+    }
+
+    /**
+     * Set html title.
+     *
+     * @param  string $title
+     * @return void
+     */
+    public function htmlTitle($title)
+    {
+        $this->htmlTitle = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get html title.
+     *
+     * @return string
+     */
+    public function getHtmlTitle()
+    {
+        return $this->htmlTitle ?? $this->getTitle();
     }
 
     /**
@@ -244,7 +274,7 @@ class Page extends BasePage implements Expandable
             ->withProps(array_merge([
                 'page' => collect($this->render()),
             ], $this->props))
-            ->withTitle($this->getTitle())
+            ->withTitle($this->getHtmlTitle())
             ->render();
     }
 }
