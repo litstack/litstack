@@ -1,5 +1,5 @@
 <lit-col width="12" class="d-flex justify-content-center">
-    <div style="margin-top: 25vh;">
+    <div>
         <div class="text-center mb-2">
         <svg width="50px" height="100%" viewBox="0 0 169 263" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
             <g transform="matrix(1,0,0,1,-204.96,-204.96)">

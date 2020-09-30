@@ -71,40 +71,40 @@
 
 body,
 html {
-	background-color: $body-bg;
-	font-family: 'Inter', sans-serif;
+    background-color: $body-bg;
+    font-family: 'Inter', sans-serif;
 
-	* {
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-	}
+    * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 }
 
 div#litstack {
-	background-color: $body-bg;
-	min-height: 100vh;
+    background-color: $body-bg;
+    min-height: 100vh;
 
-	.btn:focus {
-		outline: none !important;
-		box-shadow: none !important;
-	}
+    .btn:focus {
+        outline: none !important;
+        box-shadow: none !important;
+    }
 }
 
 .form-control-expand {
-	flex-grow: 1;
+    flex-grow: 1;
 }
 
 .modal-backdrop {
-	opacity: 0.5 !important;
+    opacity: 0.5 !important;
 }
 
 .lit-trash {
-	svg:hover {
-		cursor: pointer;
-		color: black;
-	}
+    svg:hover {
+        cursor: pointer;
+        color: black;
+    }
 }
 
 .lit-draggable__dragbar {
-	cursor: pointer;
+    cursor: pointer;
 }
