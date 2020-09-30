@@ -66,7 +66,6 @@ return [
     'deleted_item'         => ':item gelöscht',
     'n_items_selected'     => ':count Element ausgewählt | :count Elemente ausgewählt',
     'all'                  => 'alle',
-    'profile'              => 'Konto',
     'last_edited'          => 'Zuletzt editiert <b>:time</b> von <b>{user}</b>',
     'toggle_all'           => 'alle an/aus',
     'create'               => 'Erstellen',
