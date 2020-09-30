@@ -16,7 +16,7 @@ class WelcomeController extends FormController
     {
         $page = new Page;
 
-        $page->htmlTitle(__lit('base.hello'))->view('lit::welcome');
+        $page->htmlTitle(ucfirst(__lit('base.hello')))->view('lit::welcome');
 
         return $page;
     }
