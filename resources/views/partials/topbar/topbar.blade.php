@@ -1,7 +1,8 @@
 <nav class="lit-topbar justify-content-between align-items-center">
     <div>
         <a href="{{lit()->url('/')}}" class="lit-brand">
-            <img src="{{ route('lit.logo') }}" class="img-fluid" alt="">
+            @include('litstack::partials.logo')
+            {{-- <img src="{{ route('lit.logo') }}" class="img-fluid" alt=""> --}}
         </a>
     </div>
     <div>
