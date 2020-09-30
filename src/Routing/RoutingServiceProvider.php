@@ -16,7 +16,5 @@ class RoutingServiceProvider extends ServiceProvider
         $this->app->singleton('lit.router', function ($app) {
             return new Router($app['events'], $app);
         });
-
-        $this->app->bind(Router::class, 'lit.router');
     }
 }
