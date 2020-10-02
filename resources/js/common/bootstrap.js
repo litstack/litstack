@@ -30,8 +30,11 @@ Bus.$on('mounted', () => {
     if (!store.getters.debug) {
         return;
     }
-    window.axios.defaults.headers['Accept'] =
-        'text/plain, application/json, */*';
+    
+    // TODO: Axios need's to prefer a json response in order to read validation erros.
+    // 
+    //window.axios.defaults.headers['Accept'] =
+    //  'text/plain, application/json, */*';
 });
 
 try {
