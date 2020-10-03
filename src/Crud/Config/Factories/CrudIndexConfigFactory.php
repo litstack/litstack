@@ -25,7 +25,7 @@ class CrudIndexConfigFactory extends ConfigFactory
         if ($config->has('show')) {
             $page->navigationRight()->component('b-button')
                 ->variant('primary')
-                ->child(__lit('base.item_create', ['item' => $config->names['singular']]))
+                ->child($this->createButtonText($config))
                 ->prop('href', lit()->url($config->routePrefix().'/create'));
         }
 
@@ -36,5 +36,18 @@ class CrudIndexConfigFactory extends ConfigFactory
         $method($page);
 
         return $page;
+    }
+
+    /**
+     * Get create button text.
+     *
+     * @param  ConfigHandler $config
+     * @return string
+     */
+    protected function createButtonText(ConfigHandler $config)
+    {
+        return ucfirst(
+            __lit('base.item_create', ['item' => $config->names['singular']])
+        );
     }
 }
