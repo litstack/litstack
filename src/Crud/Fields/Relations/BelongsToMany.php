@@ -2,7 +2,9 @@
 
 namespace Ignite\Crud\Fields\Relations;
 
+use Closure;
 use Ignite\Crud\Fields\Traits\HasBaseField;
+use Illuminate\Database\Eloquent\Model;
 
 class BelongsToMany extends ManyRelationField
 {
@@ -18,53 +20,38 @@ class BelongsToMany extends ManyRelationField
     ];
 
     /**
-     * Required attributes.
+     * Attaching callback.
      *
-     * @var array
+     * @var Closure|null
      */
-    public $requiredAttributes = [
-        'title',
-        'model',
-        'preview',
-    ];
+    protected $attachingCallback;
 
     /**
-     * Available Field attributes.
+     * Fill pivot attributes.
      *
-     * @var array
+     * @param  Closure $closure
+     * @return $this
      */
-    public $availableAttributes = [
-        'title',
-        'model',
-        'form',
-        'hint',
-        'query',
-        'preview',
-        'confirm',
-        'sortable',
-        'filter',
-        'relatedCols',
-        'small',
-        'perPage',
-        'searchable',
-        'tags',
-        'tagVariant',
-        'showTableHead',
-    ];
+    public function withPivotAttributes(Closure $closure)
+    {
+        $this->attachingCallback = $closure;
+
+        return $this;
+    }
 
     /**
-     * Default Field attributes.
+     * Get attributes to be attached.
      *
-     * @var array
+     * @param  Model $model
+     * @param  Model $related
+     * @return array
      */
-    public $defaultAttributes = [
-        'confirm'     => false,
-        'sortable'    => false,
-        'relatedCols' => 12,
-        'small'       => false,
-        'perPage'     => 10,
-        'searchable'  => false,
-        'tags'        => false,
-        'tagVariant'  => 'secondary',
-    ];
+    public function getPivotAttributes(Model $model, Model $related): array
+    {
+        if (! $this->attachingCallback instanceof Closure) {
+            return [];
+        }
+
+        return call_user_func($this->attachingCallback, $model, $related);
+    }
 }
