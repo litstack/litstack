@@ -40,12 +40,12 @@ class BelongsToManyRepository extends BaseFieldRepository
 
         $related = $this->getRelated($request, $model);
 
-        $query = [];
+        $attributes = $this->field->getPivotAttributes($model, $related);
         if ($this->field->sortable) {
-            $query[$this->field->orderColumn] = $this->field->getRelationQuery($model)->count();
+            $attributes[$this->field->orderColumn] = $this->field->getRelationQuery($model)->count();
         }
 
-        $model->{$this->field->id}()->attach($related->getKey(), $query);
+        $model->{$this->field->id}()->attach($related->getKey(), $attributes);
     }
 
     /**
