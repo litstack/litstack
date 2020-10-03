@@ -175,7 +175,7 @@ class Field extends VueProp implements AuthorizableContract
      */
     public function getTitle()
     {
-        return collect(explode('_', $this->getAttribute('id')))->map(function ($word) {
+        return collect(explode('_', Str::snake($this->getAttribute('id'))))->map(function ($word) {
             return ucfirst($word);
         })->implode(' ');
     }
