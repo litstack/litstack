@@ -34,7 +34,7 @@ trait HasBaseField
      */
     protected function setTitleDefault()
     {
-        return ucfirst($this->id);
+        return $this->getTitle();
     }
 
     /**

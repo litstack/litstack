@@ -13,8 +13,6 @@ A package for building Admin-Interfaces that help maintaining the data of your
 applications. It provides an intuitive interface and the tools needed to manage
 your project's Users, Models and free Forms for Pages, Settings etc.
 
-![Interface](./docs/preview.png 'Interface')
-
 ## Official Documentation
 
 Read the [Docs](https://litstack.io/docs) and learn how to build your custom
@@ -27,7 +25,7 @@ Join us on our [discord chanel](https://discord.gg/u4qpb5P).
 
 We are happy that you are considering about contributing to the project.
 Checkout the contribution guide on
-[litstack.io](https://litstack.io/docs/prologue/contributing). Contributions of
+[litstack.io](https://litstack.io/docs/prologue/contribution). Contributions of
 any kind welcome!
 
 ## License
