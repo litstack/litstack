@@ -11,6 +11,13 @@ class Repeatables extends VueProp
     use Macroable;
 
     /**
+     * Block field instance.
+     *
+     * @var Block
+     */
+    protected $field;
+
+    /**
      * Registered forms.
      *
      * @var array
@@ -34,7 +41,8 @@ class Repeatables extends VueProp
     /**
      * Create new Repeatables instance.
      *
-     * @param Block $field
+     * @param  Block $field
+     * @return void
      */
     public function __construct(Block $field)
     {
@@ -44,17 +52,21 @@ class Repeatables extends VueProp
     /**
      * Add repeatable.
      *
-     * @param string  $name
-     * @param Closure $closure
-     * @return
+     * @param  string       $type
+     * @param  Closure|null $closure
+     * @return Repeatable
      */
-    public function add(string $name, Closure $closure)
+    public function add(string $type, Closure $closure = null)
     {
-        $rep = new Repeatable($this->field, $name);
+        if (class_exists($type)) {
+            $rep = new $type($this->field);
+        } else {
+            $rep = new Repeatable($this->field, $type);
+        }
 
-        $rep->form($closure);
+        $rep->makeForm($closure);
 
-        $this->repeatables[$name] = $rep;
+        $this->repeatables[$rep->getType()] = $rep;
 
         return $rep;
     }
@@ -62,26 +74,25 @@ class Repeatables extends VueProp
     /**
      * Add nested block repeatable.
      *
-     * @param  string     $name
+     * @param  string     $type
      * @param  Closure    $closure
      * @return Repeatable
      */
-    public function block($name, Closure $closure)
+    public function block($type, Closure $closure)
     {
-        return $this->add($name, fn ($form, $preview) => $form
-            ->block($name)
-            ->title($name)
-            ->repeatables($closure)
-            )->view('litstack::repeatables.block', [
-                'type' => $name,
+        return $this->add($type, fn ($form, $preview) => $form
+            ->block($type)
+            ->title($type)
+            ->repeatables($closure))
+            ->view('litstack::repeatables.block', [
+                'type' => $type,
             ]);
     }
 
     /**
      * Check if form exists.
      *
-     * @param string $name
-     *
+     * @param  string $name
      * @return bool
      */
     public function has(string $name)
@@ -92,8 +103,7 @@ class Repeatables extends VueProp
     /**
      * Get form by name.
      *
-     * @param string $name
-     *
+     * @param  string         $name
      * @return RepeatableForm
      */
     public function get($name)
