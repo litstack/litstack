@@ -28,21 +28,23 @@
 				:class="{ 'mb-0': field.readonly }"
 				v-else-if="sortableBlocks.length > 0"
 			>
-				<lit-field-repeatable
-					ref="block"
-					v-for="block in sortableBlocks"
-					:key="block.id"
-					:block="block"
-					:field="field"
-					:model="model"
-					:width="field.blockWidth"
-					:reload="reloadBlock"
-					:model-id="modelId || model.id"
-					:preview="field.repeatables[block.type].preview"
-					:fields="field.repeatables[block.type].form.fields"
-					:set-route-prefix="setFieldsRoutePrefixBlockId"
-					@deleteItem="deleteBlock(block)"
-				/>
+				<template v-for="block in sortableBlocks">
+					<lit-field-repeatable
+						v-if="block.type in field.repeatables"
+						ref="block"
+						:key="block.id"
+						:block="block"
+						:field="field"
+						:model="model"
+						:width="field.blockWidth"
+						:reload="reloadBlock"
+						:model-id="modelId || model.id"
+						:preview="field.repeatables[block.type].preview"
+						:fields="field.repeatables[block.type].form.fields"
+						:set-route-prefix="setFieldsRoutePrefixBlockId"
+						@deleteItem="deleteBlock(block)"
+					/>
+				</template>
 			</draggable>
 
 			<div v-else>
