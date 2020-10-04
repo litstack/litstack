@@ -23,7 +23,8 @@ class CrudIndexConfigFactory extends ConfigFactory
         $page = new CrudIndex($config);
 
         if ($config->has('show')) {
-            $page->navigationRight()->component('b-button')
+            $page->navigationRight()
+                ->component('b-button')
                 ->variant('primary')
                 ->child($this->createButtonText($config))
                 ->prop('href', lit()->url($config->routePrefix().'/create'));
