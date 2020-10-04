@@ -42,6 +42,27 @@ class RepeatableCommand extends GeneratorCommand
     }
 
     /**
+     * Build the class with the given name.
+     *
+     * Remove the base controller import if we are already in base namespace.
+     *
+     * @param  string $name
+     * @return string
+     */
+    protected function buildClass($name)
+    {
+        $replace = [
+            'DummyType' => $this->argument('name'),
+        ];
+
+        return str_replace(
+            array_keys($replace),
+            array_values($replace),
+            parent::buildClass($name)
+        );
+    }
+
+    /**
      * Get the default namespace for the class.
      *
      * @param  string $rootNamespace

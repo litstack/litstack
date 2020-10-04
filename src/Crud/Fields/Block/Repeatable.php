@@ -11,17 +11,25 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\View\Compilers\ComponentTagCompiler;
+use InvalidArgumentException;
 
 class Repeatable extends VueProp
 {
     use ForwardsCalls;
 
     /**
-     * View name.
+     * Repeatable type.
      *
-     * @var string|null
+     * @var string
      */
-    protected $viewName;
+    protected $type;
+
+    /**
+     * The represantive view of the repeatable.
+     *
+     * @var string
+     */
+    protected $view;
 
     /**
      * View data.
@@ -53,21 +61,62 @@ class Repeatable extends VueProp
 
     /**
      * Create new Repeatable instance.
+     *
+     * @param  Block       $field
+     * @param  string|null $type
+     * @return void
      */
-    public function __construct(Block $field, string $name)
+    public function __construct(Block $field, string $type = null)
     {
         $this->field = $field;
-        $this->name = $name;
+
+        if (! is_null($type)) {
+            $this->type = $type;
+        } elseif (is_null($this->type)) {
+            throw new InvalidArgumentException(
+                'Missing property [type] for '.self::class
+            );
+        }
+    }
+
+    /**
+     * Prepare preview.
+     *
+     * @param  ColumnBuilder $builder
+     * @return void
+     */
+    protected function preview(ColumnBuilder $builder): void
+    {
+    }
+
+    /**
+     * Handle form.
+     *
+     * @param  RepeatableForm $form
+     * @return void
+     */
+    protected function form(RepeatableForm $form): void
+    {
+        //
+    }
+
+    /**
+     * Get repeatable type.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
      * Configure repeatable form.
      *
-     * @param Closure $closure
-     *
+     * @param  Closure|null $closure
      * @return $this
      */
-    public function form(Closure $closure)
+    public function makeForm(Closure $closure = null)
     {
         $form = new RepeatableForm(RepeatableModel::class);
 
@@ -79,13 +128,18 @@ class Repeatable extends VueProp
             $field->setAttribute('params', [
                 'field_id'        => $this->field->id,
                 'repeatable_id'   => null,
-                'repeatable_type' => $this->name,
+                'repeatable_type' => $this->type,
             ]);
         });
 
         $this->preview = new ColumnBuilder;
 
-        $closure($form, $this->preview);
+        if (is_null($closure)) {
+            $this->form($form);
+            $this->preview($this->preview);
+        } else {
+            $closure($form, $this->preview);
+        }
 
         $this->form = $form;
 
@@ -165,7 +219,7 @@ class Repeatable extends VueProp
      */
     public function view(string $name, $data = [])
     {
-        $this->viewName = $name;
+        $this->view = $name;
         $this->viewData = $data;
 
         return $this;
@@ -178,7 +232,7 @@ class Repeatable extends VueProp
      */
     public function hasView()
     {
-        return $this->viewName != null;
+        return ! is_null($this->view);
     }
 
     /**
@@ -188,7 +242,7 @@ class Repeatable extends VueProp
      */
     public function getView()
     {
-        return view($this->viewName, $this->viewData);
+        return view($this->view, $this->viewData);
     }
 
     /**
