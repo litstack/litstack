@@ -9,7 +9,8 @@
 				:no-label="true"
 				:inline="field.inline"
 				:formatted="field.formatted"
-				:onlyDate="field.only_date"
+				:only-date="field.only_date"
+				:only-time="field.only_time"
 				color="var(--primary)"
 				v-on:input="$emit('input', $event)"
 			/>
