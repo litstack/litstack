@@ -5,11 +5,12 @@
 				:id="`${field.id}-${makeid(10)}`"
 				:value="value"
 				:label="field.label"
-				:format="'YYYY-MM-DD HH:mm:ss'"
+				:format="format"
 				:no-label="true"
 				:inline="field.inline"
 				:formatted="field.formatted"
-				:onlyDate="field.only_date"
+				:only-date="field.only_date"
+				:only-time="field.only_time"
 				color="var(--primary)"
 				v-on:input="$emit('input', $event)"
 			/>
@@ -40,6 +41,15 @@ export default {
 		return {
 			datetimeString: '',
 		};
+	},
+	computed: {
+		format() {
+			if (this.field.only_time) {
+				return 'HH:mm:ss';
+			}
+
+			return 'YYYY-MM-DD HH:mm:ss';
+		},
 	},
 	methods: {
 		makeid(length) {

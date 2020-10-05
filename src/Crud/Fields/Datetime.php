@@ -96,6 +96,25 @@ class Datetime extends BaseField
     }
 
     /**
+     * Set only time.
+     *
+     * @param  bool  $date
+     * @return $this
+     */
+    public function onlyTime(bool $timeOnly = true)
+    {
+        $this->setAttribute('only_time', $timeOnly);
+
+        $this->onlyDate(false);
+
+        if ($timeOnly) {
+            $this->formatted('LT');
+        }
+
+        return $this;
+    }
+
+    /**
      * Cast field value.
      *
      * @param  mixed $value
