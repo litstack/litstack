@@ -174,8 +174,11 @@ abstract class CrudController extends CrudBaseController
     {
         $id = last($parameters);
 
-        // Eager loads relations.
-        $query = $this->getQuery();
+        $this->config->show->resolveQuery(
+            $query = $this->getQuery()
+        );
+
+        // Now we are loading all relations from relation or media fields.
         foreach ($this->config->show->getRegisteredFields() as $field) {
             if ($field instanceof RelationField && ! $field instanceof MediaField) {
                 $query->with($field->getRelationName());

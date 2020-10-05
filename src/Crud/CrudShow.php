@@ -8,6 +8,7 @@ use Ignite\Exceptions\Traceable\InvalidArgumentException;
 use Ignite\Page\Page;
 use Ignite\Support\Facades\Config;
 use Ignite\Support\Vue\ButtonComponent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
@@ -46,6 +47,13 @@ class CrudShow extends Page
     protected $form;
 
     /**
+     * Query resolver.
+     *
+     * @var Closure
+     */
+    protected $queryResolver;
+
+    /**
      * Create new CrudShow instance.
      */
     public function __construct(BaseForm $form)
@@ -57,6 +65,34 @@ class CrudShow extends Page
         // Add form lifecycle hooks.
         $this->form->registering(fn ($field) => $this->registeringField($field));
         $this->form->registered(fn ($field) => $this->registeredField($field));
+    }
+
+    /**
+     * Set query resolver.
+     *
+     * @param  Closure $closure
+     * @return $this
+     */
+    public function query(Closure $closure)
+    {
+        $this->queryResolver = $closure;
+
+        return $this;
+    }
+
+    /**
+     * Resolve query.
+     *
+     * @param  Builder $query
+     * @return void
+     */
+    public function resolveQuery($query)
+    {
+        if (! $this->queryResolver instanceof Closure) {
+            return;
+        }
+
+        call_user_func($this->queryResolver, $query);
     }
 
     /**
