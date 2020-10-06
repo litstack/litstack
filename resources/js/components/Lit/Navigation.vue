@@ -62,7 +62,7 @@
 						variant="outline-secondary"
 						class="btn-square mr-3"
 						v-b-tooltip
-						:title="__('lit.undo_changes')"
+						:title="__('base.undo_changes')"
 						@click="Lit.bus.$emit('cancelSave')"
 					>
 						<lit-fa-icon icon="undo" />

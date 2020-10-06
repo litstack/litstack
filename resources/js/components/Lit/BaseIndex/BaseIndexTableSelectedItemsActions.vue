@@ -9,13 +9,13 @@
                     <strong>
                         {{
                             trans_choice(
-                                'lit.n_items_selected',
+                                'crud.n_items_selected',
                                 selectedItems.length
                             )
                         }}
                         {{
                             selectedItems.length == items.length
-                                ? `(${__('lit.all')})`
+                                ? `(${__('base.all')})`
                                 : ''
                         }}
                     </strong>

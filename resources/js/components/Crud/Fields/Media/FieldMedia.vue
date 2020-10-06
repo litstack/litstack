@@ -31,7 +31,7 @@
 							<vue-dropzone
 								v-if="
 									!field.readonly &&
-									images.length < field.maxFiles
+										images.length < field.maxFiles
 								"
 								slot="drop"
 								class="lit-dropzone"
@@ -152,7 +152,7 @@ export default {
 				method: 'POST',
 				paramName: 'media',
 				dictDefaultMessage: `<i class="fas fa-file-import d-block"></i> ${this.__(
-					'lit.drag_and_drop'
+					'base.drag_and_drop'
 				)}`,
 				headers: {
 					'X-CSRF-TOKEN': document.head.querySelector(
@@ -290,9 +290,12 @@ export default {
 		 */
 		uploadSuccess(file, response) {
 			this.uploads++;
-			this.$bvToast.toast(this.__('lit.image_uploaded'), {
-				variant: 'success',
-			});
+			this.$bvToast.toast(
+				this.__('crud.fields.media.messages.image_uploaded'),
+				{
+					variant: 'success',
+				}
+			);
 			this.images.push(response);
 			this.$emit('reload');
 			Lit.bus.$emit('field:updated', 'image:uploaded');
@@ -422,7 +425,7 @@ export default {
 						height: file.height,
 					});
 					// Turn the canvas into a Blob (file object without a name)
-					canvas.toBlob(function (blob) {
+					canvas.toBlob(function(blob) {
 						done(blob);
 					});
 				}

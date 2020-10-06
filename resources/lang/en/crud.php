@@ -1,18 +1,42 @@
 <?php
 
 return [
-    'last_edited' => 'Last edited <b>:time</b> by <b>:user</b>',
-    'fields'      => [
+
+    /*
+    |--------------------------------------------------------------------------
+    | CRUD Translations
+    |--------------------------------------------------------------------------
+    |
+    | The crud translations include all translations related to the litstack
+    | crud system. This includes fields and other parts of the crud pages.
+    |
+    */
+
+    'preview'          => 'Preview',
+    'of'               => 'of',
+    'n_items_selected' => ':count item selected | :count items selected',
+
+    'messages' => [
+        'not_created' => ':model has to be created in order to add <i>:relation</i>.',
+    ],
+
+    'fields' => [
         'blocks' => [
             'expand'       => 'expand',
             'expand_all'   => 'expand all',
             'collapse_all' => 'collapse all',
+            'messages'     => [
+                'new_block' => 'Added new :type block',
+
+            ],
         ],
         'relation' => [
             'goto'     => 'Go to relation',
             'unlink'   => 'Unlink relation',
             'edit'     => 'Edit relation',
             'messages' => [
+                'relation_linked'   => '{relation} successfully linked.',
+                'relation_unlinked' => 'Relation unlinked.',
                 'confirm_unlink'    => 'Please confirm that you wish to unlink the item.',
                 'max_items_reached' => 'A maximum of :count items can be selected.',
             ],

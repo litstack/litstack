@@ -4,7 +4,7 @@
 			show
 			variant="warning"
 			v-html="
-				__('lit.not_created', {
+				__('crud.messages.not_created', {
 					relation: field.title,
 					model: 'Item',
 				})

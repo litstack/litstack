@@ -2,7 +2,7 @@
 	<div>
 		<small class="text-primary lit-crud-index-table__index-indicator">
 			<template v-if="total">
-				{{ from }} - {{ to }} {{ __('lit.of') }} {{ total }}
+				{{ from }} - {{ to }} {{ __('crud.of') }} {{ total }}
 			</template>
 		</small>
 	</div>

@@ -22,7 +22,7 @@
 				show
 				variant="warning"
 				v-html="
-					__(`lit.permissionsconfirm_delete_role_msg`, {
+					__(`permissions.messages.confirm_delete_role_msg`, {
 						role: tab.title,
 					})
 				"
@@ -71,7 +71,7 @@ export default {
 			this.$emit('deleted');
 
 			this.$bvToast.toast(
-				this.__('lit.permissions.deleted_role', {
+				this.__('permissions.messages.deleted_role', {
 					role: role.title,
 				}),
 				{

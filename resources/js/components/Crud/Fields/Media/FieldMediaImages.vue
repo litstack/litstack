@@ -156,7 +156,7 @@ export default {
 				return;
 			}
 
-			this.$bvToast.toast(this.__('lit.order_changed'), {
+			this.$bvToast.toast(this.__('base.messages.order_changed'), {
 				variant: 'success',
 			});
 			this.$emit('newOrder');

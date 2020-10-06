@@ -1,18 +1,42 @@
 <?php
 
 return [
-    'last_edited' => 'Zuletzt editiert <b>:time</b> von <b>:user</b>',
-    'fields'      => [
-        'blocks' => [
+
+    /*
+    |--------------------------------------------------------------------------
+    | CRUD Translations
+    |--------------------------------------------------------------------------
+    |
+    | The crud translations include all translations related to the litstack
+    | crud system. This includes fields and other parts of the crud pages.
+    |
+    */
+
+    'preview'          => 'Vorschau',
+    'of'               => 'von',
+    'n_items_selected' => ':count Element ausgewählt | :count Elemente ausgewählt',
+
+    'messages' => [
+        'not_created' => ':model muss erstellt werden, um <i>:relation</i> hinzufügen zu können.',
+    ],
+
+    'fields' => [
+        'block' => [
             'expand'       => 'ausklappen',
             'expand_all'   => 'Alle ausklappen',
             'collapse_all' => 'Alle einklappen',
+            'messages'     => [
+                'new_block' => 'Neuen Block hinzugefügt (:type)',
+            ],
+
         ],
         'relation' => [
             'goto'     => 'zur Verknüpfung',
             'unlink'   => 'Verknüpfung aufheben',
             'edit'     => 'Verknüpfung bearbeiten',
             'messages' => [
+                'relation_linked'   => ':relation erfolreich verknüpft',
+                'relation_unlinked' => 'Verknüpfung aufgehoben.',
                 'confirm_unlink'    => 'Bitte bestätigen Sie, dass Sie die Verknüpfung aufheben möchten.',
                 'max_items_reached' => 'Es können maximal :count items ausgewählt werden..',
             ],
@@ -27,7 +51,13 @@ return [
                 'confirm_delete_info' => 'Wenn Sie diesen Element entfernen, entfernen Sie dadurch auch alle darunter befindlichen Elemente.',
             ],
         ],
+        'media' => [
+            'messages' => [
+                'image_uploaded' => 'Bild erfolgreich hochgeladen',
+            ],
+        ],
     ],
+
     'meta' => [
         'title_hint'       => 'Leicht verständlicher sinnvoller Satz. Gibt eine Vorstellung, worum es im Seiteninhalt geht. Maximal :width breit.',
         'keywords_hint'    => 'Die wichtigsten Schlüsselwörter des Seiteninhaltes. Einzelne (wenige) Wörter durch Kommata getrennt.',

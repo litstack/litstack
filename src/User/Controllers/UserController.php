@@ -3,7 +3,6 @@
 namespace Ignite\User\Controllers;
 
 use Ignite\Support\IndexTable;
-use Ignite\User\Requests\UserDeleteRequest;
 use Ignite\User\Requests\UserReadRequest;
 use Illuminate\Http\Request;
 use Lit\Models\User;
@@ -41,23 +40,6 @@ class UserController
             ->withProps([
                 'config' => $config,
             ]);
-    }
-
-    /**
-     * Delete multiple users.
-     *
-     * @param  Request $request
-     * @return void
-     */
-    public function deleteAll(UserDeleteRequest $request)
-    {
-        IndexTable::deleteSelected(User::class, $request);
-
-        return response([
-            'message' => __lit('lit.deleted_all', [
-                'count' => count($request->ids),
-            ]),
-        ]);
     }
 
     /**

@@ -86,9 +86,12 @@ export default {
 		 * Show new repeatable toast.
 		 */
 		showNewRepeatableToast(type) {
-			this.$bvToast.toast(this.__('lit.new_block', { type }), {
-				variant: 'success',
-			});
+			this.$bvToast.toast(
+				this.__('crud.fields.block.messages.new_block', { type }),
+				{
+					variant: 'success',
+				}
+			);
 		},
 	},
 };

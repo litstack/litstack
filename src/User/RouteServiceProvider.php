@@ -46,7 +46,6 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         LitstackRoute::get('profile-sessions', ProfileController::class.'@sessions')->name('sessions');
         LitstackRoute::get('/lit/users', UserController::class.'@showIndex')->name('users');
         LitstackRoute::post('/lit/users-index', UserController::class.'@fetchIndex')->name('users.index');
-        LitstackRoute::post('/lit/users/delete-all', UserController::class.'@deleteAll')->name('users.delete');
     }
 
     /**

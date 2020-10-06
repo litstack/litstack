@@ -361,7 +361,7 @@ export default {
 			}
 
 			this.$bvToast.toast(
-				this.__('lit.relation_added', {
+				this.__('crud.fields.relation.messages.relation_linked', {
 					relation: this.field.title,
 				}),
 				{
@@ -432,9 +432,12 @@ export default {
 				return;
 			}
 
-			this.$bvToast.toast(this.__('lit.relation_unlinked'), {
-				variant: 'success',
-			});
+			this.$bvToast.toast(
+				this.__('crud.fields.relation.messages.relation_unlinked'),
+				{
+					variant: 'success',
+				}
+			);
 
 			if (this.field.many) {
 				for (let i in this.allSelectedRelations) {
@@ -492,7 +495,7 @@ export default {
 			this.$emit('reload');
 			Lit.bus.$emit('field:updated', 'relation:ordered');
 
-			this.$bvToast.toast(this.__('lit.order_changed'), {
+			this.$bvToast.toast(this.__('base.messages.order_changed'), {
 				variant: 'success',
 			});
 		},

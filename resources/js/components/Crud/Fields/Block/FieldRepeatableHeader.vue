@@ -6,7 +6,7 @@
 					<div
 						class="lit-draggable__dragbar lit-block__dragbar"
 						v-b-tooltip
-						:title="__('lit.change_order')"
+						:title="__('base.change_order').capitalize()"
 						v-if="sortable"
 					>
 						<i class="fas fa-grip-horizontal text-secondary"></i>
@@ -24,7 +24,7 @@
 					<b-button
 						variant="transparent"
 						v-b-tooltip
-						:title="__('lit.item_delete', { item: 'Repeatable' })"
+						:title="__('base.item_delete', { item: 'Repeatable' })"
 						size="sm"
 						class="btn-square lit-block-delete"
 						@click="$emit('deleteItem')"
@@ -35,7 +35,7 @@
 				<b-td class="col-sm pl-2 pr-0" v-if="fields.length > 0">
 					<b-button
 						variant="outline-secondary"
-						:title="__('crud.fields.blocks.expand')"
+						:title="__('crud.fields.block.expand')"
 						size="sm"
 						class="btn-square"
 						@click="$emit('toggleExpand')"
