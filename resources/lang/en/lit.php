@@ -1,16 +1,11 @@
 <?php
 
+/**
+ * @deprecated 3.0.3
+ *
+ * @see https://github.com/litstack/lang
+ */
+
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Lit Translations
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines contain the translations for specific parts
-    | of the litstack applications.
-    |
-    */
-
     'user_administration' => 'User Administration',
 ];

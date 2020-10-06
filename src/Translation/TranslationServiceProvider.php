@@ -16,9 +16,8 @@ class TranslationServiceProvider extends ServiceProvider
         $this->app->singleton('lit.translator', function () {
             $translator = new Translator();
 
-            $translator->addPath(
-                lit_vendor_path('resources/lang')
-            );
+            $translator->addPath(lit_vendor_path('resources/lang'));
+            $translator->addPath(base_path('vendor/litstack/lang/src'));
 
             return $translator;
         });
