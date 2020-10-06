@@ -17,7 +17,7 @@ class TranslationServiceProvider extends ServiceProvider
             $translator = new Translator();
 
             $translator->addPath(lit_vendor_path('resources/lang'));
-            $translator->addPath(base_path('vendor/litstack/lang/src'));
+            $translator->addPath(lit_vendor_path('../lang/src'));
 
             return $translator;
         });
