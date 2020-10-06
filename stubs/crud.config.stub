@@ -78,7 +78,7 @@ class DummyClassname extends CrudConfig
     {
         $page->card(function($form) {
 
-            $form->input('title')->title('Title')->width(6);
+            $form->input('title');
             
         });
     }
