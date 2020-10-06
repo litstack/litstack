@@ -70,7 +70,7 @@ class RepeatableCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Repeatables';
+        return $rootNamespace.'\Repeatables';
     }
 
     /**
@@ -82,7 +82,7 @@ class RepeatableCommand extends GeneratorCommand
     protected function qualifyClass($name)
     {
         if (! Str::endsWith($name, 'Repeatable')) {
-            $name = Str::studly($name) . 'Repeatable';
+            $name = Str::studly($name).'Repeatable';
         }
 
         return parent::qualifyClass($name);

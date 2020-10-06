@@ -16,6 +16,13 @@ class DummyClass extends Repeatable
     protected $type = 'DummyType';
 
     /**
+     * The represantive view of the repeatable.
+     *
+     * @var string
+     */
+    protected $view = 'rep.DummyType';
+
+    /**
      * Build the repeatable preview.
      *
      * @param  ColumnBuilder $preview

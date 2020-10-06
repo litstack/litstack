@@ -9,7 +9,7 @@
 			"
 		>
 			<b-form-group
-				:label="__('fjpermissions.enter_rolename')"
+				:label="__('permissions.role_name').capitalizeAll()"
 				label-for="name"
 				:state="nameState"
 			>
@@ -76,7 +76,7 @@ export default {
 			this.visible = false;
 
 			this.$bvToast.toast(
-				this.__('lit.permissions.added_role', {
+				this.__('permissions.messages.added_role', {
 					role: role.name.capitalize(),
 				}),
 				{

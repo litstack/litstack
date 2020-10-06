@@ -70,7 +70,7 @@ const methods = {
 		let message = error.response.data.message;
 
 		if ([405, 404].includes(error.response.status) && !message) {
-			message = i18n.$t('lit.errors.not_found');
+			message = i18n.$t('messages.not_found');
 		}
 
 		message = i18n.te(`messages.${message}`)

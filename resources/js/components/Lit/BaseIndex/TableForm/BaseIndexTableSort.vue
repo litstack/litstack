@@ -8,7 +8,7 @@
 	>
 		<template v-slot:button-content>
 			<lit-fa-icon icon="sort-amount-down" />
-			<span class="d-none d-lg-inline-block">{{ __('lit.sort') }}</span>
+			<span class="d-none d-lg-inline-block">{{ __('base.sort') }}</span>
 		</template>
 
 		<b-dropdown-item

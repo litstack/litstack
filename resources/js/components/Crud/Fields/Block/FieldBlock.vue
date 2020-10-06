@@ -9,7 +9,7 @@
 				<lit-fa-icon :icon="expandedAll ? 'angle-up' : 'angle-down'" />
 				{{
 					__(
-						`crud.fields.blocks.${
+						`crud.fields.block.${
 							expandedAll ? 'collapse_all' : 'expand_all'
 						}`
 					).toLowerCase()
@@ -310,7 +310,7 @@ export default {
 
 			Lit.bus.$emit('field:updated', 'block:ordered');
 
-			this.$bvToast.toast(this.__('lit.order_changed'), {
+			this.$bvToast.toast(this.__('base.messages.order_changed'), {
 				variant: 'success',
 			});
 		},

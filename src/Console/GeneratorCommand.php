@@ -51,7 +51,7 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
 
         return $this->litstack->path(
-            str_replace('\\', '/', $name) . '.php'
+            str_replace('\\', '/', $name).'.php'
         );
     }
 

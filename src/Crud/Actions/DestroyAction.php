@@ -21,7 +21,7 @@ class DestroyAction
      */
     public function modal(ActionModal $modal)
     {
-        $modal->message(__lit('messages.actions.are_you_sure'))
+        $modal->message(__lit('base.messages.are_you_sure'))
             ->confirmVariant('danger')
             ->confirmText(ucfirst(__lit('base.delete')));
     }

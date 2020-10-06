@@ -38,7 +38,7 @@ export default {
 			});
 
 			this.$bvToast.toast(
-				this.__('lit.permissions.all_permission_updated', {
+				this.__('permissions.messages.all_permission_updated', {
 					group: this.$te(`permissions.${this.group}`)
 						? this.__(`permissions.${this.group}`).capitalize()
 						: this.group.capitalize(),

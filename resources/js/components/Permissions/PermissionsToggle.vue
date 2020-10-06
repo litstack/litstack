@@ -61,10 +61,16 @@ export default {
 			}
 
 			this.$bvToast.toast(
-				this.__('lit.permission_updated', {
-					operation: this.__(`lit.${this.operation}`),
-					group: this.$te(`permissions.${this.group}`)
-						? this.__(`permissions.${this.group}`).toString()
+				this.__('permissions.messages.permission_updated', {
+					operation: this.$te(
+						`permissions.operations.${this.operation}`
+					)
+						? this.__(
+								`permissions.operations.${this.operation}`
+						  ).toString()
+						: this.operation.capitalize(),
+					group: this.$te(`permissions.groups.${this.group}`)
+						? this.__(`permissions.groups.${this.group}`).toString()
 						: this.group.capitalize(),
 				}),
 				{

@@ -44,9 +44,9 @@ trait ConfiguresProfileSettings
                 ->confirmWithPassword()
                 ->form(function ($modal) {
                     $modal->input('email')
-                    ->width(12)
-                    ->rules('required')
-                    ->title('E-Mail');
+                        ->width(12)
+                        ->rules('required')
+                        ->title('E-Mail');
                 })->width(6);
 
             $form->input('username')
@@ -68,7 +68,7 @@ trait ConfiguresProfileSettings
         }
 
         $form->info(ucwords(__lit('base.language')))->width(4)
-            ->text(__lit('lit.profile.messages.language'));
+            ->text(__lit('profile.messages.language'));
 
         $form->card(fn ($form) => $form->component('lit-locales')->class('mb-4'))
             ->width(8)
@@ -89,7 +89,7 @@ trait ConfiguresProfileSettings
             $form->modal('change_password')
                 ->title('Password')
                 ->variant('primary')
-                ->name(fa('user-shield').' '.__lit('lit.profile.change_password'))
+                ->name(fa('user-shield').' '.__lit('profile.change_password'))
                 ->form(function ($modal) {
                     $modal->password('old_password')
                         ->title('Old Password')

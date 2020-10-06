@@ -2,7 +2,7 @@
 	<span>
 		<lit-fa-icon icon="eye" />
 
-		{{ __('lit.preview') }}
+		{{ __('crud.preview') }}
 
 		<lit-page-preview :show="true" :route="url" />
 	</span>

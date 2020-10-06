@@ -46,8 +46,8 @@ class PermissionController extends Controller
             'role_permissions' => RolePermission::all(),
             'config'           => [
                 'sortBy' => [
-                    'id.desc' => __lit('lit.sort_new_to_old'),
-                    'id.asc'  => __lit('lit.sort_old_to_new'),
+                    'id.desc' => __lit('crud.sort_new_to_old'),
+                    'id.asc'  => __lit('crud.sort_old_to_new'),
                 ],
                 'sortByDefault' => 'id.desc',
             ],
@@ -86,21 +86,32 @@ class PermissionController extends Controller
         foreach ($this->getUniqueOperations() as $operation) {
             $index->component('lit-permissions-toggle')
                 ->prop('operation', $operation)
-                ->label(ucfirst(__lit("base.{$operation}")));
+                ->label($this->translateOperation($operation));
         }
 
         $index->component('lit-permissions-toggle-all')
-            ->label(ucfirst(__lit('lit.toggle_all')))
+            ->label(ucfirst(__lit('base.toggle_all')))
             ->small();
 
         return $index;
     }
 
     /**
+     * Translation operation.
+     *
+     * @param  string $operation
+     * @return string
+     */
+    protected function translateOperation($operation)
+    {
+        return ucfirst(__lit_("permissions.permission.{$operation}", $operation));
+    }
+
+    /**
      * Fetch index.
      *
      * @param  ReadRolePermissionRequest $request
-     * @return void
+     * @return array
      */
     public function fetchIndex(ReadRolePermissionRequest $request)
     {
