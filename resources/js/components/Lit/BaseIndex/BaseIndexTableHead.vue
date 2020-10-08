@@ -21,7 +21,7 @@
 					<span v-html="col.label" />
 					<span class="d-inline-block ml-2" v-if="key == activeCol">
 						<lit-fa-icon
-							icon="sort-amount-down-alt"
+							icon="sort-amount-up"
 							v-if="sort == 'asc'"
 						/>
 						<lit-fa-icon
