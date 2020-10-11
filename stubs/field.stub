@@ -1,0 +1,25 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ignite\Crud\BaseField;
+
+class DummyClass extends BaseField
+{
+    /**
+     * Vue component name.
+     *
+     * @var string
+     */
+    protected $component = 'DummyComponent';
+
+    /**
+     * Set field defaults.
+     *
+     * @return void
+     */
+    public function mount()
+    {
+        //
+    }
+}

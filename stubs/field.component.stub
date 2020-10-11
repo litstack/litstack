@@ -1,0 +1,25 @@
+<template>
+    <lit-base-field :field="field">
+        <!-- ... -->
+    </lit-base-field>
+</template>
+
+<script>
+export default {
+    name: 'DummyComponent',
+    props: {
+        field: {
+            required: true,
+            type: Object
+        },
+        value: {
+            required: true
+        }
+    },
+    methods: {
+        update(value) {
+            this.$emit('input', value)
+        }
+    }
+};
+</script>
