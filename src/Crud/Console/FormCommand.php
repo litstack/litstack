@@ -13,8 +13,8 @@ class FormCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'lit:form {name?}
-                            {--collection= : Form collection name } 
+    protected $signature = 'lit:form {name?} {collection?}
+                            {--collection= : Form collection name }
                             {--form= : Form name}';
 
     /**
@@ -136,11 +136,11 @@ class FormCommand extends GeneratorCommand
      */
     protected function setCollectionAndFormName()
     {
-        $collection = $this->option('collection');
+        $collection = $this->argument('collection') ?? $this->option('collection');
         if (! $collection) {
             $collection = $this->ask('enter the collection name (snake_case, plural)');
         }
-        $formName = $this->option('form');
+        $formName = $this->argument('name') ?? $this->option('form');
         if (! $formName) {
             $formName = $this->ask('enter the form name (snake_case)');
         }
