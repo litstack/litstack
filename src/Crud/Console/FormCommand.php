@@ -13,8 +13,8 @@ class FormCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'lit:form {name?}
-                            {--collection= : Form collection name } 
+    protected $signature = 'lit:form {name?} {collection?}
+                            {--collection= : Form collection name }
                             {--form= : Form name}';
 
     /**
