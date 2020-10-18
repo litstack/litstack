@@ -13,13 +13,13 @@ A package for building Admin-Interfaces that help maintaining the data of your
 applications. It provides an intuitive interface and the tools needed to manage
 your project's Users, Models and free Forms for Pages, Settings etc.
 
+Join us on our [discord chanel](https://discord.gg/u4qpb5P).
+
 ## Official Documentation
 
 Read the [Docs](https://litstack.io/docs) and learn how to build your custom
 Admin panel. Use your knowledge about Laravel standards and do much work in
 little time.
-
-Join us on our [discord chanel](https://discord.gg/u4qpb5P).
 
 ## Contributing
 
