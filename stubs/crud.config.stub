@@ -59,13 +59,10 @@ class DummyClassname extends CrudConfig
     public function index(CrudIndex $page)
     {
         $page->table(function ($table) {
-            $table->col('title')->value('{title}')->sortBy('title');
-        })
-            ->search('title')
-            ->sortBy([
-                'id.desc' => __lit('crud.sort_new_to_old'),
-                'id.asc' => __lit('crud.sort_old_to_new'),
-            ]);
+
+            $table->col('Title')->value('{title}')->sortBy('title');
+            
+        })->search('title');
     }
 
     /**

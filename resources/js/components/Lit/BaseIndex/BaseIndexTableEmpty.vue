@@ -5,7 +5,9 @@
 				<lit-fa-icon icon="robot" size="5x" />
 			</div>
 			<div>
-				{{ __('messages.no_items_found', { items: namePlural }) }}
+				{{
+					trans_choice('base.no_item_found', 2, { item: namePlural })
+				}}
 			</div>
 		</td>
 	</tr>
