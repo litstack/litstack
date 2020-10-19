@@ -11,6 +11,11 @@ class TranslatorTest extends BackendTestCase
     public function test_registered_translator_has_path_to_package_translations()
     {
         $this->assertContains(
+            litstack_lang_path(),
+            $this->app[Translator::class]->getPaths()
+        );
+
+        $this->assertContains(
             lit_vendor_path('resources/lang'),
             $this->app[Translator::class]->getPaths()
         );
