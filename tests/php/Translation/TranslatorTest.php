@@ -14,10 +14,5 @@ class TranslatorTest extends BackendTestCase
             litstack_lang_path(),
             $this->app[Translator::class]->getPaths()
         );
-
-        $this->assertContains(
-            lit_vendor_path('resources/lang'),
-            $this->app[Translator::class]->getPaths()
-        );
     }
 }
