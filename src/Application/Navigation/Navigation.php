@@ -45,21 +45,23 @@ class Navigation extends VueProp
     /**
      * Navigation group.
      *
-     * @param  array $params
-     * @param  array $children
-     * @return array $entry
+     * @param  string|array $title
+     * @param  array        $children
+     * @return Group
      */
-    public function group(array $params, array $children = [])
+    public function group($title, array $children = [])
     {
+        $params = [];
+        if (is_array($title)) {
+            $params = $title;
+            $title = $title['title'] ?? '';
+        }
+
         if (! $this->authorize($params)) {
             return;
         }
 
-        $params['type'] = 'group';
-
-        return array_merge([
-            'children' => $children,
-        ], $params);
+        return new Group($title, $children, $params);
     }
 
     /**

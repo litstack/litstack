@@ -75,13 +75,51 @@ class NavigationTest extends TestCase
     /** @test */
     public function test_group_method()
     {
-        $this->assertEquals(['title' => 'foo', 'type' => 'group', 'children' => ['child' => 'bar']], $this->nav->group(['title' => 'foo'], ['child' => 'bar']));
+        $group = $this->nav->group(['title' => 'foo'], ['child' => 'bar']);
+
+        $this->assertEquals([
+            'title'    => 'foo',
+            'type'     => 'group',
+            'children' => ['child' => 'bar'],
+        ], $group->toArray());
+    }
+
+    /** @test */
+    public function test_group_method_with_method_chaining()
+    {
+        $group = $this->nav->group('foo')->icon('bar');
+
+        $this->assertEquals([
+            'title'    => 'foo',
+            'type'     => 'group',
+            'children' => [],
+            'icon'     => 'bar',
+        ], $group->toArray());
+    }
+
+    /** @test */
+    public function test_entries_can_be_added_to_group_with_method_chaining()
+    {
+        $entry1 = m::mock(Entry::class);
+        $entry1->shouldReceive('toArray')->andReturn('entry1');
+        $entry2 = m::mock(Entry::class);
+        $entry2->shouldReceive('toArray')->andReturn('entry2');
+        $group = $this->nav->group('foo')->child($entry1)->child($entry2);
+
+        $this->assertEquals([
+            'title'    => 'foo',
+            'type'     => 'group',
+            'children' => ['entry1', 'entry2'],
+        ], $group->toArray());
     }
 
     /** @test */
     public function test_section_method()
     {
         $navigation = app(Navigation::class);
-        $this->assertEquals([['foo', 'bar']], $this->nav->section(['foo', 'bar'])->toArray());
+        $this->assertEquals(
+            [['foo', 'bar']],
+            $this->nav->section(['foo', 'bar'])->toArray()
+        );
     }
 }
