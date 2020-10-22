@@ -1,24 +1,39 @@
 import store from '@lit-js/store';
 
+
 /**
  * Crud Model.
  */
 export default class CrudModel {
+    fillable = []
+
 	/**
 	 * Create new CrudModel instance.
 	 *
 	 * @param {*} config
 	 */
-	constructor(config) {
+	constructor(config = {}) {
 		this.originals = {};
 		this.attributes = config.attributes;
 		this.translatable = config.translatable;
-		this.cast = config.cast;
+        this.cast = config.cast;
+        
+        this.fill(data)
+
+		this.attributes = config;
 
 		this.setOriginals();
 
 		return new Proxy(this, this);
-	}
+    }
+    
+    fill() {
+        for() {
+            if(fillable) {
+                this.attributes[key] = value;
+            }
+        }
+    }
 
 	_getTranslatedAttribute(key, attributes) {
 		let lng = store.state.config.language;

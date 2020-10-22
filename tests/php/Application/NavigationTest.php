@@ -71,4 +71,17 @@ class NavigationTest extends TestCase
             'type'  => 'entry',
         ], $entry->toArray());
     }
+
+    /** @test */
+    public function test_group_method()
+    {
+        $this->assertEquals(['title' => 'foo', 'type' => 'group', 'children' => ['child' => 'bar']], $this->nav->group(['title' => 'foo'], ['child' => 'bar']));
+    }
+
+    /** @test */
+    public function test_section_method()
+    {
+        $navigation = app(Navigation::class);
+        $this->assertEquals([['foo', 'bar']], $this->nav->section(['foo', 'bar'])->toArray());
+    }
 }
