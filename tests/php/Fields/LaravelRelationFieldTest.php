@@ -2,9 +2,13 @@
 
 namespace Tests\Fields;
 
+use Ignite\Crud\Config\CrudConfig;
+use Ignite\Crud\CrudIndex;
 use Ignite\Crud\Fields\Relations\LaravelRelationField;
 use Ignite\Page\Table\ColumnBuilder;
+use Ignite\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
 use Tests\BackendTestCase;
 use Tests\Traits\InteractsWithConfig;
 use Tests\Traits\InteractsWithFields;
@@ -201,6 +205,39 @@ class LaravelRelationFieldTest extends BackendTestCase
 
         $this->assertSame($this->field, $this->field->getAttribute('preview')->getParent());
     }
+
+    /** @test */
+    public function test_use_fails_when_model_is_different()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->field->use(LaravelRelationFieldDummyRelationWithDifferentModelConfig::class);
+    }
+
+    /** @test */
+    public function test_use_fails_when_config_doesnt_exist()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Couldn't find config " . Foo::class);
+        $this->field->use(Foo::class);
+    }
+
+    /** @test */
+    public function test_use_adds_search_keys()
+    {
+        $this->field->use(LaravelRelationFieldDummyRelationConfig::class);
+        $this->assertEquals(['foo', 'bar'], $this->field->search);
+    }
+
+    /** @test */
+    public function test_use_adds_column_preview()
+    {
+        $this->field->use(LaravelRelationFieldDummyRelationConfig::class);
+        $relatedConfig = Config::get(LaravelRelationFieldDummyRelationConfig::class);
+        $this->assertEquals(
+            $relatedConfig->index->getTable()->getBuilder(),
+            $this->field->preview
+        );
+    }
 }
 
 class LaravelRelationFieldRelationConfig
@@ -227,4 +264,29 @@ class LaravelRelationFieldModel extends Model
 
 class DummyLaravelRelationField extends LaravelRelationField
 {
+}
+
+class LaravelRelationFieldDummyRelationConfig extends CrudConfig
+{
+    public $model = LaravelRelationFieldRelation::class;
+
+    public function names()
+    {
+        return [
+            'singular' => 'FooSingular',
+            'plural'   => 'FooPlural',
+        ];
+    }
+
+    public function index(CrudIndex $page)
+    {
+        $page->table(function ($table) {
+            $table->col('Title');
+        })->search('foo', 'bar');
+    }
+}
+
+class LaravelRelationFieldDummyRelationWithDifferentModelConfig extends CrudConfig
+{
+    public $model = Foo::class;
 }

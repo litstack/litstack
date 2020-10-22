@@ -106,15 +106,20 @@ class ConfigLoader
      */
     public function get(string $key, ...$params)
     {
-        $key = $this->getKey($key);
-        $class = $this->getNamespaceFromKey($key);
+        if (class_exists($key)) {
+            $class = $key;
+            $key = $this->getKey($key);
+        } else {
+            $key = $this->getKey($key);
+            $class = $this->getNamespaceFromKey($key);
+        }
 
         // Return from stack if already loaded.
-        if ($this->loaded($key)) {
+        if ($this->loaded($class)) {
             return $this->loaded[$class];
         }
 
-        if (! $this->exists($key)) {
+        if (! $this->exists($class)) {
             return;
         }
 
@@ -133,38 +138,53 @@ class ConfigLoader
     /**
      * Determines wheter a config for the given key has been loaded before.
      *
+     * @param  string $class
+     * @return bool
+     */
+    public function loaded($class)
+    {
+        if (! $this->isNamespace($class)) {
+            $class = $this->getNamespaceFromKey($this->getKey($class));
+        }
+
+        return array_key_exists($class, $this->loaded);
+    }
+
+    /**
+     * Determine if a key is a namespace.
+     *
      * @param  string $key
      * @return bool
      */
-    public function loaded($key)
+    protected function isNamespace($key)
     {
-        return array_key_exists(
-            $this->getNamespaceFromKey($this->getKey($key)), $this->loaded
-        );
+        if (class_exists($key)) {
+            return true;
+        }
+
+        return Str::contains($key, '\\');
     }
 
     /**
      * Get namespace of config by key.
      *
-     * @param string $key
-     *
+     * @param  string $key
      * @return string
      */
     public function getNamespaceFromKey(string $key)
     {
         $name = '';
         foreach (explode('.', $key) as $part) {
-            $name .= '\\'.ucfirst(Str::camel($part));
+            $name .= '\\' . ucfirst(Str::camel($part));
         }
 
-        return $this->namespace.$name.'Config';
+        return $this->namespace . $name . 'Config';
     }
 
     /**
      * Get config from path.
      *
-     * @param string $path
-     *
+     * @param  string        $path
      * @return ConfigHandler
      */
     public function getFromPath(string $path)
@@ -177,8 +197,7 @@ class ConfigLoader
     /**
      * Get path from key.
      *
-     * @param string $key
-     *
+     * @param  string $key
      * @return string
      */
     public function getPathFromKey(string $key)
@@ -193,8 +212,7 @@ class ConfigLoader
     /**
      * Get key from path.
      *
-     * @param string $path
-     *
+     * @param  string $path
      * @return string
      */
     public function getKeyFromPath(string $path)
@@ -207,15 +225,14 @@ class ConfigLoader
     /**
      * Explode path.
      *
-     * @param string $path
-     *
+     * @param  string $path
      * @return array
      */
     protected function explodePath(string $path)
     {
         // Replacing path for windows and unix.
         $modified = str_replace('\\', '/', $path);
-        $modified = str_replace(str_replace('\\', '/', base_path('lit/app/Config')).'/', '', $modified);
+        $modified = str_replace(str_replace('\\', '/', base_path('lit/app/Config')) . '/', '', $modified);
         $modified = str_replace('Config.php', '', $modified);
 
         return explode('/', $modified);
@@ -224,8 +241,7 @@ class ConfigLoader
     /**
      * Get key from namespace.
      *
-     * @param string $namespace
-     *
+     * @param  string $namespace
      * @return string
      */
     public function getKeyFromNamespace(string $namespace)
@@ -238,12 +254,15 @@ class ConfigLoader
     /**
      * Check if config class exists.
      *
-     * @param string $key
-     *
+     * @param  string $key
      * @return bool
      */
     public function exists(string $key)
     {
+        if (class_exists($key)) {
+            return true;
+        }
+
         $this->getPathFromKey($key);
 
         return File::exists(
