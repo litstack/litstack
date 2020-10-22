@@ -175,10 +175,10 @@ class ConfigLoader
     {
         $name = '';
         foreach (explode('.', $key) as $part) {
-            $name .= '\\' . ucfirst(Str::camel($part));
+            $name .= '\\'.ucfirst(Str::camel($part));
         }
 
-        return $this->namespace . $name . 'Config';
+        return $this->namespace.$name.'Config';
     }
 
     /**
@@ -232,7 +232,7 @@ class ConfigLoader
     {
         // Replacing path for windows and unix.
         $modified = str_replace('\\', '/', $path);
-        $modified = str_replace(str_replace('\\', '/', base_path('lit/app/Config')) . '/', '', $modified);
+        $modified = str_replace(str_replace('\\', '/', base_path('lit/app/Config')).'/', '', $modified);
         $modified = str_replace('Config.php', '', $modified);
 
         return explode('/', $modified);

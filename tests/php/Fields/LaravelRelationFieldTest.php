@@ -217,7 +217,7 @@ class LaravelRelationFieldTest extends BackendTestCase
     public function test_use_fails_when_config_doesnt_exist()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Couldn't find config " . Foo::class);
+        $this->expectExceptionMessage("Couldn't find config ".Foo::class);
         $this->field->use(Foo::class);
     }
 

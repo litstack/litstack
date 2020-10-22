@@ -103,7 +103,7 @@ class LaravelRelationField extends RelationField
     {
         $this->relatedModelClass = $model;
 
-        $relatedConfigKey = 'crud.' . Str::snake(class_basename($model));
+        $relatedConfigKey = 'crud.'.Str::snake(class_basename($model));
 
         if (Config::exists($relatedConfigKey) && ! $this->relatedConfig) {
             $this->use($relatedConfigKey);
@@ -160,7 +160,7 @@ class LaravelRelationField extends RelationField
 
         $order = $orders[0];
         if (method_exists($this->relation, 'getTable')) {
-            $orderColumn = str_replace($this->relation->getTable() . '.', '', $order['column']);
+            $orderColumn = str_replace($this->relation->getTable().'.', '', $order['column']);
         } else {
             $orderColumn = $order['column'];
         }
@@ -199,7 +199,7 @@ class LaravelRelationField extends RelationField
         if ($this->relatedConfig->model != $this->getRelatedModelClass()
         && $this->getRelatedModelClass() != null) {
             throw new LitstackInvalidArgumentException(
-                "Invalid CRUD Config {$config} for Model {$this->relatedConfig->model}, must be " . $this->getRelatedModelClass() . " for relation [{$this->id}].",
+                "Invalid CRUD Config {$config} for Model {$this->relatedConfig->model}, must be ".$this->getRelatedModelClass()." for relation [{$this->id}].",
                 [
                     'function' => 'use',
                 ]
