@@ -2,9 +2,9 @@
 
 namespace Ignite\Application\Navigation;
 
-use Illuminate\Contracts\Support\Arrayable;
+use Ignite\Support\VueProp;
 
-class Navigation implements Arrayable
+class Navigation extends VueProp
 {
     /**
      * Navigation entries.
@@ -35,14 +35,11 @@ class Navigation implements Arrayable
      * Navigation title.
      *
      * @param  string $title
-     * @return string $title
+     * @return Title
      */
     public function title(string $title)
     {
-        return [
-            'title' => $title,
-            'type'  => 'title',
-        ];
+        return new Title($title);
     }
 
     /**
@@ -70,7 +67,7 @@ class Navigation implements Arrayable
      *
      * @param  string|array $title
      * @param  array        $params
-     * @return array        $entry
+     * @return Entry
      */
     public function entry($title, array $params = [])
     {
@@ -84,10 +81,7 @@ class Navigation implements Arrayable
             return;
         }
 
-        return array_merge($params, [
-            'title' => $title,
-            'type'  => 'entry',
-        ]);
+        return new Entry($title, $params);
     }
 
     /**
@@ -117,12 +111,7 @@ class Navigation implements Arrayable
         return $this;
     }
 
-    /**
-     * To array.
-     *
-     * @return array
-     */
-    public function toArray()
+    public function render(): array
     {
         return $this->entries;
     }
