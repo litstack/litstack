@@ -1,6 +1,8 @@
 * text=auto
 
 /public linguist-generated
+/public/*.js -diff
+/public/*.css -diff
 /docs export-ignore
 /.github export-ignore
 /tests export-ignore
