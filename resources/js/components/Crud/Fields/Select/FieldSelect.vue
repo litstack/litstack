@@ -6,7 +6,7 @@
 				:options="options"
 				:label="isArray ? null : 'value'"
 				:reduce="isArray ? (item) => item : (item) => item.key"
-                :placeholder="field.placeholder"
+				:placeholder="field.placeholder"
 				class="w-100"
 				v-on:input="$emit('input', $event)"
 			>
@@ -128,9 +128,9 @@ export default {
 		font-weight: 400;
 		color: black;
 		height: 38px;
-        &::placeholder {
-            color: $gray-600;
-        }
+		&::placeholder {
+			color: $gray-600;
+		}
 	}
 
 	&.vs--open {
