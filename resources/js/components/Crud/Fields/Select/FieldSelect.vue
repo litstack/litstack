@@ -52,8 +52,10 @@ export default {
 		},
 	},
 	beforeMount() {
-		this.$emit('input', String(this.value));
-	},
+        if(this.value){
+            this.$emit('input', String(this.value));
+        }
+    },
 	computed: {
 		isArray() {
 			return Array.isArray(this.field.options);
