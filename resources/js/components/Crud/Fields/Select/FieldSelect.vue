@@ -6,6 +6,7 @@
 				:options="options"
 				:label="isArray ? null : 'value'"
 				:reduce="isArray ? (item) => item : (item) => item.key"
+				:placeholder="field.placeholder"
 				class="w-100"
 				v-on:input="$emit('input', $event)"
 			>
@@ -52,8 +53,10 @@ export default {
 		},
 	},
 	beforeMount() {
-		this.$emit('input', String(this.value));
-	},
+        if(this.value){
+            this.$emit('input', String(this.value));
+        }
+    },
 	computed: {
 		isArray() {
 			return Array.isArray(this.field.options);
@@ -95,7 +98,7 @@ export default {
 		color: white;
 		box-shadow: none;
 	}
-	.vs__search::placeholder,
+
 	.vs__dropdown-toggle,
 	.vs__dropdown-menu {
 		background: transparent;
@@ -125,6 +128,9 @@ export default {
 		font-weight: 400;
 		color: black;
 		height: 38px;
+		&::placeholder {
+			color: $gray-600;
+		}
 	}
 
 	&.vs--open {
