@@ -179,7 +179,9 @@ class CrudShow extends Page
         $component->on('run', RunCrudActionEvent::class)
             ->prop('eventData', array_merge(
                 $component->getProp('eventData'),
-                ['model' => $this->form->getModel()]
+                [
+                    'model' => $this->form->getModel(),
+                ]
             ));
     }
 

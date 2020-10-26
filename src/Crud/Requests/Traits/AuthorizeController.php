@@ -10,9 +10,8 @@ trait AuthorizeController
     /**
      * Check authorize method in controller.
      *
-     * @param Request $request
-     * @param string  $operation
-     *
+     * @param  Request $request
+     * @param  string  $operation
      * @return bool
      */
     public function authorizeController(Request $request, string $operation, $controller = null): bool
@@ -22,7 +21,7 @@ trait AuthorizeController
         }
 
         if (! $controller) {
-            $controller = $request->route()->controller;
+            $controller = $this->getCrudController($request);
         }
 
         $reflection = new ReflectionClass($controller);
@@ -35,5 +34,20 @@ trait AuthorizeController
 
         return with(new $controller())
             ->authorize(lit_user(), $operation, $request->id);
+    }
+
+    /**
+     * Get CRUD controller for the given request.
+     *
+     * @param  Request $request
+     * @return string
+     */
+    protected function getCrudController(Request $request)
+    {
+        if ($config = $request->route()->getConfig()) {
+            return $config->controller;
+        }
+
+        return $request->route()->controller;
     }
 }

@@ -37,7 +37,7 @@ class Select extends BaseField
     }
 
     /**
-     * Set select palceholder
+     * Set select palceholder.
      *
      * @param string $placeholder
      * @return self
