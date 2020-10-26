@@ -27,7 +27,7 @@ class CrudIndexConfigFactory extends ConfigFactory
                 ->component('b-button')
                 ->variant('primary')
                 ->child($this->createButtonText($config))
-                ->prop('href', lit()->url($config->routePrefix() . '/create'));
+                ->prop('href', lit()->url($config->routePrefix().'/create'));
         }
 
         $page->title($config->names['plural'] ?? '');
