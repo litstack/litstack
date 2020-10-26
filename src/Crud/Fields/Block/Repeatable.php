@@ -60,6 +60,13 @@ class Repeatable extends VueProp
     protected $preview;
 
     /**
+     * Button text.
+     *
+     * @var string
+     */
+    protected $button;
+
+    /**
      * Create new Repeatable instance.
      *
      * @param  Block       $field
@@ -69,12 +76,13 @@ class Repeatable extends VueProp
     public function __construct(Block $field, string $type = null)
     {
         $this->field = $field;
+        $this->button = $type;
 
         if (! is_null($type)) {
             $this->type = $type;
         } elseif (is_null($this->type)) {
             throw new InvalidArgumentException(
-                'Missing property [type] for '.self::class
+                'Missing property [type] for ' . self::class
             );
         }
     }
@@ -156,6 +164,7 @@ class Repeatable extends VueProp
         return [
             'form'    => $this->form,
             'preview' => $this->preview,
+            'button'  => $this->button,
         ];
     }
 
@@ -170,13 +179,26 @@ class Repeatable extends VueProp
     }
 
     /**
-     * Get x component.
+     * Get blade component.
      *
      * @return string|null
      */
     public function getX()
     {
         return $this->xComponent;
+    }
+
+    /**
+     * Set button text.
+     *
+     * @param  string $text
+     * @return $this
+     */
+    public function button($text)
+    {
+        $this->button = $text;
+
+        return $this;
     }
 
     /**
