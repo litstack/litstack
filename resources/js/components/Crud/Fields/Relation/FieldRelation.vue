@@ -234,7 +234,7 @@ export default {
 				small: true,
 			});
 		}
-		if (!_.isEmpty(this.field.form)) {
+		if (!_.isEmpty(this.field.form) && this.field.form.allow.update) {
 			this.cols.push({
 				label: '',
 				name: 'lit-field-relation-col-edit',

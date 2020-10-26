@@ -22,7 +22,7 @@ class CrudIndexConfigFactory extends ConfigFactory
     {
         $page = new CrudIndex($config);
 
-        if ($config->has('show')) {
+        if ($this->canCreate($config)) {
             $page->navigationRight()
                 ->component('b-button')
                 ->variant('primary')
@@ -37,6 +37,18 @@ class CrudIndexConfigFactory extends ConfigFactory
         $method($page);
 
         return $page;
+    }
+
+    /**
+     * Determines if a user can create a  new crud model.
+     *
+     * @param  ConfigHandler $config
+     * @return bool
+     */
+    protected function canCreate(ConfigHandler $config)
+    {
+        return $config->has('show')
+            && $config->authorize(lit_user(), 'create');
     }
 
     /**

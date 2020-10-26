@@ -3,9 +3,14 @@
 		:id="modalId"
 		size="lg"
 		hide-footer
-		:title="title"
 		content-class="lit-relation-modal"
 	>
+		<template slot="modal-title">
+			{{ title.capitalize() }}
+			<!-- <b-button size="sm" variant="primary" @click="createNew">
+				<lit-fa-icon icon="plus" /> Create New
+			</b-button> -->
+		</template>
 		<lit-index-table
 			ref="table"
 			:cols="cols"
@@ -61,6 +66,9 @@ export default {
 		};
 	},
 	methods: {
+		createNew() {
+			this.$bvModal.hide(this.modalId);
+		},
 		remove(item) {
 			this.$emit('remove', item);
 		},

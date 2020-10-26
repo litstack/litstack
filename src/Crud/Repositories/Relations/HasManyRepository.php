@@ -37,9 +37,8 @@ class HasManyRepository extends BaseFieldRepository
     /**
      * Create new hasMany relation.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
      * @return void
      */
     public function create(CrudUpdateRequest $request, $model)
@@ -63,9 +62,8 @@ class HasManyRepository extends BaseFieldRepository
     /**
      * Remove hasMany relation.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)

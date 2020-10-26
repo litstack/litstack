@@ -77,8 +77,7 @@ class NavigationConfigFactory extends ConfigFactory
     /**
      * Is section emtpy. True when it only has titles.
      *
-     * @param array $section
-     *
+     * @param  array $section
      * @return bool
      */
     protected function isSectionEmpty($section)

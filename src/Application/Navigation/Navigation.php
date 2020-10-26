@@ -2,9 +2,9 @@
 
 namespace Ignite\Application\Navigation;
 
-use Illuminate\Contracts\Support\Arrayable;
+use Ignite\Support\VueProp;
 
-class Navigation implements Arrayable
+class Navigation extends VueProp
 {
     /**
      * Navigation entries.
@@ -35,34 +35,33 @@ class Navigation implements Arrayable
      * Navigation title.
      *
      * @param  string $title
-     * @return string $title
+     * @return Title
      */
     public function title(string $title)
     {
-        return [
-            'title' => $title,
-            'type'  => 'title',
-        ];
+        return new Title($title);
     }
 
     /**
      * Navigation group.
      *
-     * @param  array $params
-     * @param  array $children
-     * @return array $entry
+     * @param  string|array $title
+     * @param  array        $children
+     * @return Group
      */
-    public function group(array $params, array $children = [])
+    public function group($title, array $children = [])
     {
+        $params = [];
+        if (is_array($title)) {
+            $params = $title;
+            $title = $title['title'] ?? '';
+        }
+
         if (! $this->authorize($params)) {
             return;
         }
 
-        $params['type'] = 'group';
-
-        return array_merge([
-            'children' => $children,
-        ], $params);
+        return new Group($title, $children, $params);
     }
 
     /**
@@ -70,7 +69,7 @@ class Navigation implements Arrayable
      *
      * @param  string|array $title
      * @param  array        $params
-     * @return array        $entry
+     * @return Entry
      */
     public function entry($title, array $params = [])
     {
@@ -84,10 +83,7 @@ class Navigation implements Arrayable
             return;
         }
 
-        return array_merge($params, [
-            'title' => $title,
-            'type'  => 'entry',
-        ]);
+        return new Entry($title, $params);
     }
 
     /**
@@ -117,12 +113,7 @@ class Navigation implements Arrayable
         return $this;
     }
 
-    /**
-     * To array.
-     *
-     * @return array
-     */
-    public function toArray()
+    public function render(): array
     {
         return $this->entries;
     }

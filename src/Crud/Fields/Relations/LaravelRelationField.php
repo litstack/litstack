@@ -4,6 +4,7 @@ namespace Ignite\Crud\Fields\Relations;
 
 use Closure;
 use Ignite\Crud\RelationField;
+use Ignite\Exceptions\Traceable\InvalidArgumentException as LitstackInvalidArgumentException;
 use Ignite\Page\Table\ColumnBuilder;
 use Ignite\Support\Facades\Config;
 use Ignite\Support\Facades\Crud;
@@ -195,8 +196,14 @@ class LaravelRelationField extends RelationField
             throw new InvalidArgumentException("Couldn't find config {$config}");
         }
 
-        if ($this->relatedConfig->model != $this->getRelatedModelClass() && $this->getRelatedModelClass() != null) {
-            throw new InvalidArgumentException("Related config {$config} must be using model ".$this->getRelatedModelClass());
+        if ($this->relatedConfig->model != $this->getRelatedModelClass()
+        && $this->getRelatedModelClass() != null) {
+            throw new LitstackInvalidArgumentException(
+                "Invalid CRUD Config {$config} for Model {$this->relatedConfig->model}, must be ".$this->getRelatedModelClass()." for relation [{$this->id}].",
+                [
+                    'function' => 'use',
+                ]
+            );
         }
 
         if (method_exists($this, 'model')) {
@@ -204,12 +211,13 @@ class LaravelRelationField extends RelationField
         }
         if ($this->relatedConfig->has('index')) {
             if ($this->relatedConfig->index) {
-                $table = clone $this->relatedConfig->index
-                    ->getTable()
-                    ->getBuilder()
-                    ->disableLinks();
+                $table = clone $this->relatedConfig->index->getTable();
 
-                $this->setAttribute('preview', $table);
+                $this->search($table->search);
+
+                $this->setAttribute(
+                    'preview', $table->getBuilder()->disableLinks()
+                );
             }
         }
 

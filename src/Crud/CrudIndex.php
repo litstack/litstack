@@ -48,7 +48,10 @@ class CrudIndex extends Page
         $component->on('run', RunCrudActionEvent::class)
             ->prop('eventData', array_merge(
                 $component->getProp('eventData'),
-                ['model' => $this->config->model]
+                [
+                    'model'  => $this->config->model,
+                    'config' => $this->config->getNamespace(),
+                ]
             ));
     }
 
@@ -108,7 +111,10 @@ class CrudIndex extends Page
             $component->on('click', RunCrudActionEvent::class)
                 ->prop('eventData', array_merge(
                     $component->getProp('eventData'),
-                    ['model' => $this->config->model]
+                    [
+                        'model'  => $this->config->model,
+                        'config' => $this->config->getNamespace(),
+                    ]
                 ));
         }
 

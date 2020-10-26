@@ -35,4 +35,17 @@ class Select extends BaseField
 
         return $this;
     }
+
+    /**
+     * Set select palceholder.
+     *
+     * @param string $placeholder
+     * @return self
+     */
+    public function placeholder(string $placeholder)
+    {
+        $this->setAttribute('placeholder', $placeholder);
+
+        return $this;
+    }
 }

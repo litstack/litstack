@@ -4,12 +4,12 @@
 			class="mr-2"
 			:class="`lit-block-add-${type}`"
 			size="sm"
-			v-for="(repeatables, type) in field.repeatables"
+			v-for="(repeatable, type) in field.repeatables"
 			:key="type"
 			@click.prevent="add(type)"
 		>
 			<lit-fa-icon icon="plus" />
-			add {{ type }}
+			{{ repeatable.button }}
 		</b-button>
 	</div>
 </template>
