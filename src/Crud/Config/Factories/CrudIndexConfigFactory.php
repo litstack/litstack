@@ -47,6 +47,10 @@ class CrudIndexConfigFactory extends ConfigFactory
      */
     protected function canCreate(ConfigHandler $config)
     {
+        if (! $user = lit_user()) {
+            return false;
+        }
+
         return $config->has('show')
             && $config->authorize(lit_user(), 'create');
     }
