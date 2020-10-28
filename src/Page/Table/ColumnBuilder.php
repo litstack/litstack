@@ -231,9 +231,17 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      */
     public function toggle($attribute)
     {
-        return $this->component(new ToggleComponent('lit-col-toggle'))
+        $component = $this->component(new ToggleComponent('lit-col-toggle'))
             ->prop('link', false)
-            ->prop('local_key', $attribute);
+            ->prop('local_key', $attribute)
+            ->small()
+            ->right();
+
+        if ($this->config) {
+            $component->routePrefix($this->config->route_prefix);
+        }
+
+        return $component;
     }
 
     /**
