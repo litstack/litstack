@@ -4,6 +4,7 @@ namespace Ignite\Crud;
 
 use Closure;
 use Ignite\Crud\Fields\Component;
+use Ignite\Crud\Models\Form;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
 use Ignite\Page\Page;
 use Ignite\Support\Facades\Config;
@@ -65,6 +66,24 @@ class CrudShow extends Page
         // Add form lifecycle hooks.
         $this->form->registering(fn ($field) => $this->registeringField($field));
         $this->form->registered(fn ($field) => $this->registeredField($field));
+    }
+
+    /**
+     * Add chart.
+     *
+     * @param  string                $name
+     * @return \Ignite\Vue\Component
+     */
+    public function chart(string $name)
+    {
+        $chart = parent::chart($name);
+
+        $chart->setAttribute('send_model_id',
+            ! is_subclass_of($this->form->getModel(), Form::class)
+            && $this->form->getModel() != Form::class
+        );
+
+        return $chart;
     }
 
     /**
