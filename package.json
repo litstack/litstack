@@ -65,14 +65,14 @@
 		"node-sass-glob-importer": "^5.3.2",
 		"regenerator-runtime": "^0.13.5",
 		"resolve-url-loader": "^3.1.0",
-		"sass": "^1.26.10",
-		"sass-loader": "^8.0.0",
 		"vue-jest": "^3.0.5",
-		"vue-template-compiler": "^2.6.11",
 		"vuepress": "^1.2.0",
 		"webpack": "^4.44.1"
 	},
 	"dependencies": {
+		"sass": "^1.26.10",
+		"sass-loader": "^8.0.0",
+		"vue-template-compiler": "^2.6.11",
 		"@fortawesome/fontawesome-svg-core": "^1.2.27",
 		"@fortawesome/free-brands-svg-icons": "^5.12.1",
 		"@fortawesome/free-regular-svg-icons": "^5.12.1",
