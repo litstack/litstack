@@ -18,6 +18,6 @@ class ToggleComponentTest extends TestCase
     public function test_routePrefix_method()
     {
         $this->assertEquals($this->component, $this->component->routePrefix('foo'));
-        $this->assertEquals('foo', $this->component->getProp('routePrefix'));
+        $this->assertEquals('foo/{id}/api/show', $this->component->getProp('routePrefix'));
     }
 }
