@@ -277,16 +277,17 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      * Add relation column.
      *
      * @param  string            $label
+     * @param  string            $config
      * @return RelationComponent
      */
-    public function relation($related = '')
+    public function relation($related = '', $config = '')
     {
         $component = $this->component(new RelationComponent('lit-col-crud-relation'))
             ->prop('label', preg_replace('/(?<=\\w)(?=[A-Z])/', ' $1', Str::studly($related)))
             ->related($related);
 
-        if ($this->config) {
-            $component->routePrefix($this->config->route_prefix);
+        if (class_exists($config)) {
+            $component->crud($config);
         }
 
         return $component;

@@ -2,6 +2,8 @@
 
 namespace Ignite\Page\Table\Components;
 
+use Ignite\Support\Facades\Config;
+
 class RelationComponent extends ColumnComponent
 {
     /**
@@ -24,6 +26,17 @@ class RelationComponent extends ColumnComponent
     public function routePrefix($routePrefix)
     {
         return $this->prop('routePrefix', $routePrefix);
+    }
+
+    /**
+     * Set route prefix from crud config.
+     *
+     * @param  string $config
+     * @return $this
+     */
+    public function crud($config)
+    {
+        return $this->routePrefix(Config::get($config)->route_prefix);
     }
 
     /**
