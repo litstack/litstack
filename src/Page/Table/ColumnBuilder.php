@@ -39,6 +39,13 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     protected $parent;
 
     /**
+     * ColumnBuilder Config.
+     *
+     * @var ConfigHandler|null
+     */
+    protected $config;
+
+    /**
      * Set table instance.
      *
      * @param  Table|LaravelRelationField $parent
