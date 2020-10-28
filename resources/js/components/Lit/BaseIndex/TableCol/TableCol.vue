@@ -11,7 +11,7 @@
 		:style="colWidth"
 	>
 		<component
-			:is="true ? 'a' : 'span'"
+			:is="link ? 'a' : 'span'"
 			:href="link"
 			:target="isExternal(link) ? '_blank' : ''"
 		>

@@ -2,24 +2,25 @@
 
 namespace Ignite\Page\Table;
 
-use Ignite\Contracts\Page\Column as ColumnContract;
-use Ignite\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
-use Ignite\Crud\Fields\Relations\LaravelRelationField;
-use Ignite\Page\Actions\DropdownItemAction;
-use Ignite\Page\Actions\TableButtonAction;
-use Ignite\Page\Table\Casts\CarbonColumn;
+use Ignite\Vue\Component;
+use Ignite\Support\VueProp;
+use Illuminate\Support\Str;
+use Illuminate\Contracts\View\View;
 use Ignite\Page\Table\Casts\MoneyColumn;
-use Ignite\Page\Table\Components\BladeColumnComponent;
-use Ignite\Page\Table\Components\ColumnComponent;
-use Ignite\Page\Table\Components\DropdownComponent;
+use Ignite\Page\Table\Casts\CarbonColumn;
+use Ignite\Page\Actions\TableButtonAction;
+use Ignite\Page\Actions\DropdownItemAction;
 use Ignite\Page\Table\Components\ImageComponent;
+use Ignite\Page\Table\Components\ColumnComponent;
+use Ignite\Page\Table\Components\ToggleComponent;
+use Ignite\Contracts\Page\Column as ColumnContract;
+use Ignite\Page\Table\Components\DropdownComponent;
 use Ignite\Page\Table\Components\ProgressComponent;
 use Ignite\Page\Table\Components\RelationComponent;
-use Ignite\Page\Table\Components\ToggleComponent;
-use Ignite\Support\VueProp;
-use Ignite\Vue\Component;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\View as ViewFactory;
+use Ignite\Crud\Fields\Relations\LaravelRelationField;
+use Ignite\Page\Table\Components\BladeColumnComponent;
+use Ignite\Contracts\Page\ColumnBuilder as ColumnBuilderContract;
 
 class ColumnBuilder extends VueProp implements ColumnBuilderContract
 {
@@ -130,7 +131,8 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     {
         if ($this->parent) {
             $this->parent->cast(
-                $column, MoneyColumn::class.":{$currency},{$locale}"
+                $column,
+                MoneyColumn::class.":{$currency},{$locale}"
             );
         }
 
@@ -145,7 +147,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      * Add table column to cols stack and set component.
      *
      * @param  string          $component
-     * @return ColumnComponent
+     * @return ColumnComponent|mixed
      */
     public function component($component): ColumnContract
     {
@@ -255,9 +257,17 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      * @param  string            $label
      * @return RelationComponent
      */
-    public function relation($label = '')
+    public function relation($related = '')
     {
-        return $this->component(new RelationComponent('lit-col-crud-relation'))->prop('label', $label);
+        $component = $this->component(new RelationComponent('lit-col-crud-relation'))
+            ->prop('label', preg_replace('/(?<=\\w)(?=[A-Z])/', " $1", Str::studly($related)))
+            ->related($related);
+
+        if ($this->config) {
+            $component->routePrefix($this->config->route_prefix);
+        }
+
+        return $component;
     }
 
     /**
