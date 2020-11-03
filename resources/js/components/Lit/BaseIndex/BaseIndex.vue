@@ -229,7 +229,10 @@ export default {
 			},
 		},
 		defaultFilter: {
-			type: String,
+			type: [Object, Array],
+			default() {
+				return [];
+			},
 		},
 		sortBy: {
 			type: Object,
@@ -275,8 +278,11 @@ export default {
 	},
 	beforeMount() {
 		if (this.defaultFilter) {
-			this.addFilter(this.defaultFilter);
+			for (let i = 0; i < this.defaultFilter.length; i++) {
+				this.addFilter(this.defaultFilter[i]);
+			}
 		}
+
 		if (this.hasTabs) {
 			this.tab = this.tabs[0];
 		}

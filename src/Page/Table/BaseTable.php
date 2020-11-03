@@ -244,10 +244,10 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Set default filter.
      *
-     * @param  string $filter
+     * @param  string ...$filter
      * @return $this
      */
-    public function defaultFilter($filter)
+    public function defaultFilter(...$filter)
     {
         $this->setAttribute('defaultFilter', $filter);
 
