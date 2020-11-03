@@ -168,24 +168,20 @@ export default {
 				}
 
 				if (!('field_id' in (this.field.params || {}))) {
-					// if (block.id != fields[i].params.repeatable_id) {
+					console.log('a', field.id, field.params.field_id);
+					fields[i].params.child_field_id = field.id;
 					fields[i].params.child_repeatable_id = block.id;
-					// } else {
-					//     console.log(
-					//         block.id,
-					//         fields[i],
-					//         'maxFileSize' in fields[i]
-					//     );
-					// }
 				} else {
 					if ('child_repeatable_id' in this.field.params) {
 						fields[
 							i
 						].params.child_repeatable_id = this.field.params.child_repeatable_id;
 					}
+					console.log('b', field);
 					fields[i].params.child_field_id = this.field.id;
 					fields[i].params.field_id = this.field.params.field_id;
 				}
+				console.log('c', field.params);
 			}
 			return fields;
 		},
