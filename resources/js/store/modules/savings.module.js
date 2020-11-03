@@ -97,6 +97,10 @@ export const mutations = {
 	ADD_SAVE_JOB(state, job) {
 		let saveJob = null;
 		let index = state.jobs.findIndex((j) => {
+			if (job.id && j.id) {
+				return job.id == j.id;
+			}
+
 			return j.method == job.method && j.route == job.route;
 		});
 
@@ -107,6 +111,7 @@ export const mutations = {
 				route: job.route,
 				method: job.method,
 				params: {},
+				id: job.id,
 			};
 		}
 

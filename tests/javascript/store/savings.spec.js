@@ -2,6 +2,7 @@ require('lit-test');
 
 import store from '@lit-js/store';
 import { methods } from '@lit-js/store/modules/savings.module';
+import { extendWith } from 'lodash';
 
 beforeEach(() => {});
 
@@ -61,6 +62,26 @@ describe('commit ADD_SAVE_JOB', () => {
 		expect(Object.keys(store.getters.saveJobs[0].params).length).toBe(2);
 		expect(store.getters.saveJobs[0].params).toHaveProperty('dummy_key');
 		expect(store.getters.saveJobs[0].params).toHaveProperty('other_key');
+	});
+
+	it('adds savejob twice when id is different', () => {
+		let job = {
+			route_prefix: 'dummy_prefix',
+			method: 'PUT',
+			key: 'dummy_key',
+			id: 'foo',
+			params: { a: 'value' },
+		};
+
+		store.commit('ADD_SAVE_JOB', job);
+		expect(store.getters.saveJobs.length).toBe(1);
+
+		// Changing id and expecting to have another save job even if the method
+		// and route is the same.
+		job.id = 'bar';
+
+		store.commit('ADD_SAVE_JOB', job);
+		expect(store.getters.saveJobs.length).toBe(2);
 	});
 });
 

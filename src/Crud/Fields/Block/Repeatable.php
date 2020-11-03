@@ -76,7 +76,6 @@ class Repeatable extends VueProp
     public function __construct(Block $field, string $type = null)
     {
         $this->field = $field;
-        $this->button = $type;
 
         if (! is_null($type)) {
             $this->type = $type;
@@ -84,6 +83,10 @@ class Repeatable extends VueProp
             throw new InvalidArgumentException(
                 'Missing property [type] for '.self::class
             );
+        }
+
+        if (is_null($this->button)) {
+            $this->button = $this->type;
         }
     }
 

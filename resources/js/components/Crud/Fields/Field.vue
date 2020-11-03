@@ -90,6 +90,11 @@ export default {
 			 * Request method.
 			 */
 			method: 'PUT',
+
+			/**
+			 * Save job id.
+			 */
+			jobId: null,
 		};
 	},
 	beforeMount() {
@@ -108,6 +113,10 @@ export default {
 		Lit.bus.$on('fieldChanged', () =>
 			this.resolveDependecies(this.field.dependencies)
 		);
+
+		this.$on('setSaveJobId', (id) => {
+			this.jobId = id;
+		});
 	},
 	computed: {
 		...mapGetters(['language']),
@@ -319,7 +328,9 @@ export default {
 				method: this.method,
 			};
 
-			//console.log('CHANGED', this.field.route_prefix, this.value);
+			if (this.jobId) {
+				job.id = this.jobId;
+			}
 
 			if (this.hasValueChanged()) {
 				this.$store.commit('ADD_SAVE_JOB', job);
