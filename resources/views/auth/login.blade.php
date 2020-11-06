@@ -94,7 +94,7 @@
             </div>
         </div>
 
-        <div class="col-6 text-center dark-logo" style="background:#0a0e23;">
+        <div class="col-6 text-center dark-logo" style="background:#0a0e23; display: flex; justify-content: center; align-items: center;">
             <svg width="300px" height="100%" viewBox="0 0 889 263" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
                 <g transform="matrix(1,0,0,1,-204.96,-204.96)">
                     <path d="M204.96,368.93C204.96,391.57 223.31,409.92 245.95,409.92C268.59,409.92 286.94,391.57 286.94,368.93L286.94,245.95L204.96,245.95L204.96,368.93Z" style="fill:rgb(73,81,242);fill-rule:nonzero;"/>
