@@ -4,6 +4,8 @@ namespace Ignite\Crud\Fields\Block;
 
 use Closure;
 use Ignite\Crud\BaseForm;
+use Ignite\Crud\Field;
+use Ignite\Crud\Fields\Relations\LaravelRelationField;
 use Ignite\Crud\Models\Repeatable as RepeatableModel;
 use Ignite\Page\Table\ColumnBuilder;
 use Ignite\Support\VueProp;
@@ -140,6 +142,7 @@ class Repeatable extends VueProp
                 'field_id'        => $this->field->id,
                 'repeatable_id'   => null,
                 'repeatable_type' => $this->type,
+                'child_field_id'  => $this->getChildFieldId($field),
             ]);
         });
 
@@ -155,6 +158,21 @@ class Repeatable extends VueProp
         $this->form = $form;
 
         return $this;
+    }
+
+    /**
+     * Get child field id.
+     *
+     * @param  Field       $field
+     * @return string|void
+     */
+    protected function getChildfieldId(Field $field)
+    {
+        if (! $field instanceof LaravelRelationField) {
+            return;
+        }
+
+        return $field->id;
     }
 
     /**
