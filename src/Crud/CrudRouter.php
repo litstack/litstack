@@ -142,7 +142,6 @@ class CrudRouter
         if ($config->has('index')) {
             $this->router->get('/', [$config->controller, 'index'])->name('index');
             $this->router->post('/index', [$config->controller, 'indexTable'])->name('index.items');
-            $this->router->post('/filter/{filter}', [$config->controller, 'filter'])->name('index.filter');
         }
 
         // Show routes.
