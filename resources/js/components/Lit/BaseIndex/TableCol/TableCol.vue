@@ -194,7 +194,9 @@ export default {
 				return {};
 			}
 
-			let compiled = {};
+			let compiled = {
+				'event-data': { ids: [this.item.id] },
+			};
 
 			for (let name in this.col.props) {
 				let prop = this.col.props[name];

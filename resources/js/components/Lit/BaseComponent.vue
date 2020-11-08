@@ -41,7 +41,10 @@ export default {
 			return {
 				...this.$attrs,
 				...this.component.props,
-				eventData: this.eventData,
+				eventData: {
+					...this.eventData,
+					...(this.$attrs['event-data'] || {}),
+				},
 				sendingEventRequest: this.sendingEventRequest,
 			};
 		},
@@ -114,6 +117,8 @@ export default {
 				return await axios.post(`handle-event`, {
 					...this.eventData,
 					...(this.component.props.eventData || {}),
+					...(this.$attrs['event-data'] || {}),
+					...(this.$attrs['eventData'] || {}),
 					...data,
 					handler,
 				});
