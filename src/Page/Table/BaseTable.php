@@ -193,7 +193,7 @@ class BaseTable extends VueProp implements TableContract
      * Set search keys.
      *
      * @param  array $keys
-     * @return void
+     * @return $this
      */
     public function search(...$keys)
     {

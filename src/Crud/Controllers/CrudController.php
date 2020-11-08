@@ -58,6 +58,18 @@ abstract class CrudController extends CrudBaseController
     }
 
     /**
+     * Apply filter.
+     *
+     * @param CrudReadRequest $request
+     * @param string $filter
+     * @return void
+     */
+    public function filter(CrudReadRequest $request, $filter)
+    {
+        
+    }
+
+    /**
      * Delete by query.
      *
      * @param  Builder $query

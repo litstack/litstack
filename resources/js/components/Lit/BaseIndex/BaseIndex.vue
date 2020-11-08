@@ -55,7 +55,18 @@
 								:key="key"
 								@remove="removeFilter(scope)"
 							>
-								{{ scope }}
+								<template v-if="typeof scope == 'object'">
+									<template
+										v-for="(value,
+										attribute) in scope.values"
+									>
+										{{ scope.attributeNames[attribute] }}:
+										{{ value }}
+									</template>
+								</template>
+								<template v-else>
+									{{ scope }}
+								</template>
 							</b-tag>
 						</b-input-group-append>
 					</b-input-group>
@@ -355,9 +366,46 @@ export default {
 				return;
 			}
 
-			this.filter_scopes.push(filter);
+			if (typeof filter === 'object') {
+				this.addCustomFilter(filter);
+			} else {
+				this.addFilterScope(filter);
+			}
 			this.resetCurrentPage();
 			this._loadItems();
+		},
+		addCustomFilter(newFilter) {
+			let match = false;
+			this.filter_scopes = _.map(this.filter_scopes, function(filter) {
+				if (typeof scope === 'object') {
+					return filter;
+				}
+				if (filter.filter != newFilter.filter) {
+					return filter;
+				}
+
+				filter.values = {
+					...filter.values,
+					...newFilter.values,
+				};
+				filter.attributeNames = {
+					...filter.attributeNames,
+					...newFilter.attributeNames,
+				};
+
+				match = true;
+
+				return filter;
+			});
+
+			if (match) {
+				return;
+			}
+
+			this.filter_scopes.push(newFilter);
+		},
+		addFilterScope(scope) {
+			this.filter_scopes.push(scope);
 		},
 		removeFilter(filter) {
 			console.log(
