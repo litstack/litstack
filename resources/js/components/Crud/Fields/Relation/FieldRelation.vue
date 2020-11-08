@@ -188,8 +188,8 @@ export default {
 		 * @return {String}
 		 */
 		modalId() {
-			return `form-relation-table-${
-				this.field.id
+			return `form-relation-table-${this.field.id}-${
+				this.model.id
 			}-${this.field.route_prefix.replace(/\//g, '-')}`;
 		},
 
