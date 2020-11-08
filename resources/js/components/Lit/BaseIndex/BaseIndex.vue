@@ -61,7 +61,10 @@
 										attribute) in scope.values"
 									>
 										{{ scope.attributeNames[attribute] }}:
-										{{ value }}
+										<span v-if="typeof value == 'object'">{{
+											value.join(', ')
+										}}</span>
+										<span v-else>{{ value }}</span>
 									</template>
 								</template>
 								<template v-else>
