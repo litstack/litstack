@@ -68,7 +68,7 @@ class CrudIndex extends Page
     /**
      * Get CrudIndex table.
      *
-     * @return void
+     * @return CrudIndexTable|null
      */
     public function getTable()
     {
@@ -78,13 +78,13 @@ class CrudIndex extends Page
     /**
      * Create CrudIndex table.
      *
-     * @param  Closure                  $closure
-     * @return \Ignite\Page\Table\Table
+     * @param  Closure        $closure
+     * @return CrudIndexTable
      */
     public function table(Closure $closure)
     {
         $this->table = $table = new CrudIndexTable(
-            $this->config->routePrefix(),
+            $this->config,
             $builder = new CrudColumnBuilder($this->config)
         );
 

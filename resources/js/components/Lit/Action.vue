@@ -31,6 +31,7 @@
 					:field="field"
 					:model-id="0"
 					:model="attributes"
+					:save="false"
 				/>
 			</div>
 		</lit-base-component>
@@ -66,10 +67,9 @@ export default {
 	},
 	methods: {
 		/**
-		 * Run
+		 * Run.
 		 */
 		runOrShowModal() {
-			console.log('RUN', !!this.modal);
 			if (this.modal) {
 				this.$bvModal.show(this.modalId);
 			} else {
@@ -87,7 +87,7 @@ export default {
 		uuidv4() {
 			return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
 				/[xy]/g,
-				function (c) {
+				function(c) {
 					var r = (Math.random() * 16) | 0,
 						v = c == 'x' ? r : (r & 0x3) | 0x8;
 					return v.toString(16);

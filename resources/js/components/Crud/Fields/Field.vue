@@ -18,7 +18,8 @@ export default {
 		}
 
 		let props = this.field.props ? this.field.props : {};
-		let modelId = this.modelId === 0 ? this.model.id : this.modelId;
+        let modelId = this.modelId === 0 ? this.model.id : this.modelId;
+        
 
 		let vm = createElement(this.field.component, {
 			props: {
@@ -62,6 +63,14 @@ export default {
 		field: {
 			type: Object,
 			required: true,
+		},
+
+		/**
+		 * Determine's if field changes should be added to save jobs.
+		 */
+		save: {
+			type: Boolean,
+			default: true,
 		},
 	},
 	data() {
@@ -145,8 +154,12 @@ export default {
 		input(newValue) {
 			this.value = newValue;
 			this.fillValueToModel(newValue);
-			this.addSaveJob();
-			this.$emit('changed');
+
+			if (this.save) {
+				this.addSaveJob();
+			}
+
+            this.$emit('changed', newValue);
 			Lit.bus.$emit('fieldChanged', this.field.local_key);
 		},
 
