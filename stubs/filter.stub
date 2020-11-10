@@ -1,0 +1,34 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Database\Eloquent\Builder;
+use Ignite\Crud\Filter\Filter;
+use Ignite\Crud\Filter\FilterForm;
+use Ignite\Support\AttributeBag;
+
+class DummyClass extends Filter
+{
+    /**
+     * Apply field attributes to query.
+     *
+     * @param Builder $query
+     * @param AttributeBag $attributes
+     * @var void
+     */
+    public function apply($query, AttributeBag $attributes)
+    {
+        //
+    }
+
+    /**
+     * Add filter form fields.
+     *
+     * @param FilterForm $form
+     * @return void
+     */
+    public function form(FilterForm $form)
+    {
+        //
+    }
+}

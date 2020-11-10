@@ -11,6 +11,7 @@ use Ignite\Crud\Config\Traits\HasCrudIndex;
 use Ignite\Crud\Config\Traits\HasCrudShow;
 use Ignite\Crud\Console\CrudCommand;
 use Ignite\Crud\Console\FieldCommand;
+use Ignite\Crud\Console\FilterCommand;
 use Ignite\Crud\Console\FormCommand;
 use Ignite\Crud\Console\RepeatableCommand;
 use Ignite\Crud\Fields\Block\Block;
@@ -106,6 +107,7 @@ class CrudServiceProvider extends LaravelServiceProvider
         'Crud'       => 'lit.command.crud',
         'Form'       => 'lit.command.form',
         'Field'      => 'lit.command.field',
+        'Filter'     => 'lit.command.filters',
         'Repeatable' => 'lit.command.repeatable',
     ];
 
@@ -218,6 +220,19 @@ class CrudServiceProvider extends LaravelServiceProvider
     {
         $this->app->singleton($abstract, function ($app) {
             return new FieldCommand($app['files'], $app['lit']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param  string $abstract
+     * @return void
+     */
+    protected function registerFilterCommand($abstract)
+    {
+        $this->app->singleton($abstract, function ($app) {
+            return new FilterCommand($app['files'], $app['lit']);
         });
     }
 
