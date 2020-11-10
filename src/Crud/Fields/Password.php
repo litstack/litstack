@@ -86,9 +86,10 @@ class Password extends BaseField
     /**
      * DEPRECATED use rulesOnly.
      *
-     * @param bool $dontStore
-     *
+     * @param  bool  $dontStore
      * @return $this
+     *
+     * @deprecated
      */
     public function dontStore(bool $dontStore = true)
     {
