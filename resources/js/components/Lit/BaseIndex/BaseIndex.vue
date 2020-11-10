@@ -48,29 +48,12 @@
 							v-if="filter_scopes.length > 0"
 							style="background:transparent;border-left:none;"
 						>
-							<b-tag
-								style="height: 28px;"
-								variant="primary"
+							<lit-base-index-filter-tag
 								v-for="(scope, key) in filter_scopes"
 								:key="key"
-								@remove="removeFilter(scope)"
-							>
-								<template v-if="typeof scope == 'object'">
-									<template
-										v-for="(value,
-										attribute) in scope.values"
-									>
-										{{ scope.attributeNames[attribute] }}:
-										<span v-if="typeof value == 'object'">{{
-											value.join(', ')
-										}}</span>
-										<span v-else>{{ value }}</span>
-									</template>
-								</template>
-								<template v-else>
-									{{ scope }}
-								</template>
-							</b-tag>
+								:filter="scope"
+								@remove="removeFilter"
+							/>
 						</b-input-group-append>
 					</b-input-group>
 					<lit-base-index-table-filter
