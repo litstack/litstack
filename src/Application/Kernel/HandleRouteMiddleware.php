@@ -17,7 +17,7 @@ class HandleRouteMiddleware
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        app()->get(\Lit\Kernel::class)->handleRoute(Request::route());
+        app()->get(\Ignite\Application\Kernel::class)->handleRoute(Request::route());
 
         return $next($request);
     }

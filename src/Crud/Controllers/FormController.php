@@ -7,8 +7,6 @@ use Ignite\Crud\Models\Form as FormModel;
 use Ignite\Crud\Requests\CrudCreateRequest;
 use Ignite\Crud\Requests\CrudReadRequest;
 use Ignite\Crud\Requests\FormReadRequest;
-use Illuminate\Contracts\Auth\Access\Authorizable;
-use Lit\Models\User;
 
 abstract class FormController extends CrudBaseController
 {
@@ -18,20 +16,6 @@ abstract class FormController extends CrudBaseController
      * @var string
      */
     protected $model = FormModel::class;
-
-    /**
-     * Authorize request for permission operation and authenticated lit-user.
-     * Operations: read, update.
-     *
-     * @param Authorizable $user
-     * @param string       $operation
-     *
-     * @return bool
-     */
-    public function authorize(Authorizable $user, string $operation): bool
-    {
-        return true;
-    }
 
     /**
      * Load model.

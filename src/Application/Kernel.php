@@ -5,6 +5,7 @@ namespace Ignite\Application;
 use Ignite\Crud\Repeatable;
 use Ignite\Support\Facades\Crud;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use ReflectionClass;
@@ -48,6 +49,16 @@ class Kernel
         $this->app = $app;
 
         $this->bootstrap();
+    }
+
+    /**
+     * Get the authenticated litstack user.
+     *
+     * @return \Illuminate\Contracts\Auth\Access\Authorizable|null
+     */
+    public function user()
+    {
+        return Auth::guard('lit')->user();
     }
 
     /**

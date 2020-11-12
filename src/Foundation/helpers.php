@@ -2,7 +2,6 @@
 
 use Ignite\Support\Facades\Vue;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 if (! function_exists('production')) {
@@ -121,7 +120,7 @@ if (! function_exists('lit_user')) {
      */
     function lit_user()
     {
-        return Auth::guard('lit')->user();
+        return app(\Ignite\Application\Kernel::class)->user();
     }
 }
 

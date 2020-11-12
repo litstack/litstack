@@ -3,6 +3,7 @@
 namespace Lit;
 
 use Ignite\Application\Kernel as LitstackKernel;
+use Illuminate\Support\Facades\Auth;
 
 class Kernel extends LitstackKernel
 {
@@ -26,5 +27,15 @@ class Kernel extends LitstackKernel
     public function mount()
     {
         $this->loadRepeatablesFrom(__DIR__.'/Repeatables');
+    }
+
+    /**
+     * Get the authenticated litstack user.
+     *
+     * @return \Illuminate\Contracts\Auth\Access\Authorizable|null
+     */
+    public function user()
+    {
+        return Auth::guard('lit')->user();
     }
 }

@@ -35,7 +35,6 @@ return [
     */
 
     'login' => [
-
         'username' => true,
     ],
 
