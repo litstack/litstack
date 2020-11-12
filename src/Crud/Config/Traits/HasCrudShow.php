@@ -4,8 +4,8 @@ namespace Ignite\Crud\Config\Traits;
 
 use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Support\Facades\Config;
+use Illuminate\Contracts\Auth\Access\Authorizable;
 use Illuminate\Database\Eloquent\Builder;
-use Lit\Models\User;
 
 trait HasCrudShow
 {
@@ -45,11 +45,11 @@ trait HasCrudShow
     /**
      * Authorize the page for the given user and operation.
      *
-     * @param  User   $user
-     * @param  string $operation
+     * @param  Authorizable $user
+     * @param  string       $operation
      * @return bool
      */
-    public function authorize(User $user, $operation)
+    public function authorize(Authorizable $user, $operation)
     {
         return $this->controllerInstance()->authorize($user, $operation);
     }
