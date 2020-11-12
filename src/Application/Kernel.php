@@ -39,16 +39,6 @@ class Kernel
     public $providers = [];
 
     /**
-     * Middlewares that are used by litstack routes for authenticated users.
-     *
-     * @var array
-     */
-    protected $middlewares = [
-        'web',
-        'lit.auth:lit',
-    ];
-
-    /**
      * Create a new Lit kernel instance.
      *
      * @param  \Ignite\Application\Application $app
@@ -68,11 +58,11 @@ class Kernel
      */
     public function user()
     {
-        return Auth::guard('lit')->user();
+        return Auth::guard(config('lit.guard'))->user();
     }
 
     /**
-     * Authorize litstack user.
+     * Determine if an authenticated user has access to the litstack application.
      *
      * @param  Authorizable $user
      * @return bool
@@ -89,7 +79,10 @@ class Kernel
      */
     public function getMiddlewares()
     {
-        return $this->middlewares;
+        return [
+            'web',
+            'lit.auth:'.config('lit.guard'),
+        ];
     }
 
     /**
