@@ -22,8 +22,9 @@ class HttpErrorComposer
             return;
         }
 
-        // Compose Lit error pages only when logged in.
-        if (! lit_user()) {
+        // Compose Lit error pages only when logged in and user has access to
+        // litstack.
+        if (! lit()->authorized()) {
             return;
         }
 

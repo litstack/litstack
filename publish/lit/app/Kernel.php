@@ -3,6 +3,7 @@
 namespace Lit;
 
 use Ignite\Application\Kernel as LitstackKernel;
+use Illuminate\Contracts\Auth\Access\Authorizable;
 use Illuminate\Support\Facades\Auth;
 
 class Kernel extends LitstackKernel
@@ -20,6 +21,16 @@ class Kernel extends LitstackKernel
     ];
 
     /**
+     * Middlewares that are used by litstack routes for authenticated users.
+     *
+     * @var array
+     */
+    protected $middlewares = [
+        'web',
+        'lit.auth:lit',
+    ];
+
+    /**
      * Mount litstack application.
      *
      * @return void
@@ -32,10 +43,25 @@ class Kernel extends LitstackKernel
     /**
      * Get the authenticated litstack user.
      *
-     * @return \Illuminate\Contracts\Auth\Access\Authorizable|null
+     * @return Authorizable|null
      */
     public function user()
     {
         return Auth::guard('lit')->user();
+    }
+
+    /**
+     * Authorize litstack user.
+     *
+     * @param  Authorizable $user
+     * @return bool
+     */
+    public function authozire(Authorizable $user): bool
+    {
+        if (config('app.env') == 'production' && $user->email == 'admin@admin.com') {
+            return false;
+        }
+
+        return true;
     }
 }

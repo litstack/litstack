@@ -4,6 +4,7 @@ namespace Ignite\Application;
 
 use Ignite\Crud\Repeatable;
 use Ignite\Support\Facades\Crud;
+use Illuminate\Contracts\Auth\Access\Authorizable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -38,10 +39,19 @@ class Kernel
     public $providers = [];
 
     /**
+     * Middlewares that are used by litstack routes for authenticated users.
+     *
+     * @var array
+     */
+    protected $middlewares = [
+        'web',
+        'lit.auth:lit',
+    ];
+
+    /**
      * Create a new Lit kernel instance.
      *
-     * @param \Ignite\Application\Application $app
-     *
+     * @param  \Ignite\Application\Application $app
      * @return void
      */
     public function __construct(Application $app)
@@ -59,6 +69,27 @@ class Kernel
     public function user()
     {
         return Auth::guard('lit')->user();
+    }
+
+    /**
+     * Authorize litstack user.
+     *
+     * @param  Authorizable $user
+     * @return bool
+     */
+    public function authorize(Authorizable $user): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get middlewares.
+     *
+     * @return array
+     */
+    public function getMiddlewares()
+    {
+        return $this->middlewares;
     }
 
     /**
