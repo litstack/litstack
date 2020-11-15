@@ -259,6 +259,7 @@ class Litstack implements LitstackContract
         $groups = [
             'lit'            => [self::class, \Ignite\Contracts\Foundation\Litstack::class],
             'lit.app'        => [\Ignite\Application\Application::class],
+            'lit.auth'       => [\Ignite\Contracts\Auth\Authentication::class, \Ignite\Auth\Authentication::class],
             'lit.config'     => [\Ignite\Config\ConfigLoader::class],
             'lit.crud'       => [\Ignite\Crud\Crud::class],
             'lit.nav'        => [\Ignite\Application\Navigation\PresetFactory::class],

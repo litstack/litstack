@@ -24,6 +24,7 @@
                             </svg>
                         </div>
                         
+                        <div class="form-fields">
                         <div class="form-group mb-5">
                             <input 
                                 id="email" 
@@ -64,6 +65,17 @@
                                 </span>
                             @enderror
                         </div>
+                    </div>
+
+                        {{-- <div class="form-group mb-3 mt-5">
+                            <input 
+                                placeholder="{{ ucfirst(__lit('2fa.code')) }}" 
+                                id="code"
+                                class="form-control lit-login-form" 
+                                name="code" 
+                                required 
+                                />
+                        </div> --}}
         
                         <div class="form-group d-flex justify-content-between">
                             <div class="form-check">
@@ -73,13 +85,8 @@
                                     {{ __lit('login.remember_me') }}
                                 </label>
                             </div>
-                            {{--
-                            <a href="{{ route('password.request') }}" id="forgot-password" style="display:none;">
-                                {{ __lit('login.forgot_password') }}
-                            </a>
-                            --}}                                    
                         </div>
-        
+
                         <div class="text-danger text-center" id="login-failed" style="display:none;">
                             {{ __lit('login.failed') }}
                         </div>
@@ -116,12 +123,13 @@
         </div>
     </div>
     <script type="text/javascript">
-        function doLogin(e) {
+        const loginRoute = '{{ Lit::route('login.post') }}';
+        window.doLogin = function(e) {
             e.preventDefault()
 
             const data = new FormData(document.forms.login);
 
-            let promise = axios.post('{{ Lit::route('login.post') }}', data)
+            let promise = axios.post(loginRoute, data)
             promise.then(function(response) {
                 window.location = response.data
             })
@@ -134,4 +142,7 @@
     @if(isset($script))
         <script src="{{ $script }}"></script>
     @endif
+    @foreach(lit_app()->getLoginScripts() as $src)
+        <script src="{{ $src }}"></script>
+    @endforeach
 @endsection

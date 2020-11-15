@@ -36,6 +36,10 @@ class AuthServiceProvider extends LaravelServiceProvider
     public function register()
     {
         $this->registerCommands();
+
+        $this->app->singleton('lit.auth', function ($app) {
+            return new Authentication($app['auth']);
+        });
     }
 
     /**

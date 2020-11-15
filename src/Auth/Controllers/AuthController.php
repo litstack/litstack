@@ -2,7 +2,7 @@
 
 namespace Ignite\Auth\Controllers;
 
-use Ignite\Auth\Actions\AuthenticationAction;
+use Ignite\Contracts\Auth\Authentication;
 use Ignite\Support\Facades\Lit;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -34,10 +34,11 @@ class AuthController extends Controller
     /**
      * Authenticate User.
      *
-     * @param  Request  $request
+     * @param  Request        $request
+     * @param  Authentication $auth
      * @return redirect
      */
-    public function authenticate(Request $request, AuthenticationAction $authentication)
+    public function authenticate(Request $request, Authentication $auth)
     {
         $request->validate($this->getAuthenticationRules(), __lit('validation'));
 
@@ -45,7 +46,9 @@ class AuthController extends Controller
 
         $remember = $request->remember == 'on' || $request->remember;
 
-        $attempt = $authentication->execute($request->only('email', 'password'), $remember);
+        $attempt = $auth->attempt(
+            $request->only('email', 'password'), $remember, $request->all()
+        );
 
         if (! $attempt) {
             abort(401, __lit('login.failed'));
