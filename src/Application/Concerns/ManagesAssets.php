@@ -89,7 +89,7 @@ trait ManagesAssets
         $info = pathinfo($path);
 
         $uri = implode('/', [
-            $info['extension'],
+            $info['extension'] ?? 'dist',
             $info['basename'],
         ]);
 
@@ -98,7 +98,7 @@ trait ManagesAssets
                 ->header('Content-Type', [
                     'js'  => 'application/javascript; charset=utf-8',
                     'css' => 'text/css',
-                ][$info['extension']] ?? 'text/'.$info['extension']);
+                ][$info['extension'] ?? 'plain'] ?? 'text/'.$info['extension'] ?? 'plain');
         });
 
         return url($route->uri);

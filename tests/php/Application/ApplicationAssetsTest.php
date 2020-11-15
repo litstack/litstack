@@ -20,7 +20,7 @@ class ApplicationAssetsTest extends TestCase
     public function test_script_can_be_added()
     {
         $application = new Application(new LaravelApplication);
-        $this->assertInstanceOf(Application::class, $application->script('src'));
-        $this->assertContains('src', $application->getScripts());
+        $this->assertInstanceOf(Application::class, $application->script('foo'));
+        $this->assertContains('foo', $application->getScripts());
     }
 }
