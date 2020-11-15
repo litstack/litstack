@@ -8,16 +8,6 @@ use Illuminate\Support\Facades\Route;
 class Router
 {
     /**
-     * Middlewares that are used by Lit routes for authenticated users.
-     *
-     * @var array
-     */
-    protected $middlewares = [
-        'web',
-        'lit.auth:lit',
-    ];
-
-    /**
      * Public middlewares.
      *
      * @var array
@@ -41,6 +31,16 @@ class Router
     }
 
     /**
+     * Get middlewares.
+     *
+     * @return array
+     */
+    protected function getMiddelwares()
+    {
+        return app(\Ignite\Application\Kernel::class)->getMiddlewares();
+    }
+
+    /**
      * Get route preset.
      *
      * @return \Illuminate\Support\Facades\Route
@@ -49,7 +49,7 @@ class Router
     {
         return Route::prefix(config('lit.route_prefix'))
             ->as('lit.')
-            ->middleware($this->middlewares);
+            ->middleware($this->getMiddelwares());
     }
 
     /**
@@ -66,7 +66,7 @@ class Router
         }
         $attributes['prefix'] = config('lit.route_prefix').'/'.($attributes['prefix'] ?? '');
         $attributes['as'] = 'lit.'.($attributes['as'] ?? '');
-        $attributes['middleware'] = array_merge($attributes['middlewares'] ?? [], $this->middlewares);
+        $attributes['middleware'] = array_merge($attributes['middlewares'] ?? [], $this->getMiddelwares());
         Route::group($attributes, $closure);
     }
 

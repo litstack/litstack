@@ -23,7 +23,9 @@ class AuthServiceProvider extends LaravelServiceProvider
      */
     public function boot()
     {
-        $this->app->register(RouteServiceProvider::class);
+        if (lit()->installed()) {
+            $this->app->register(RouteServiceProvider::class);
+        }
     }
 
     /**

@@ -4,7 +4,9 @@ namespace Ignite\Application;
 
 use Ignite\Crud\Repeatable;
 use Ignite\Support\Facades\Crud;
+use Illuminate\Contracts\Auth\Access\Authorizable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use ReflectionClass;
@@ -39,8 +41,7 @@ class Kernel
     /**
      * Create a new Lit kernel instance.
      *
-     * @param \Ignite\Application\Application $app
-     *
+     * @param  \Ignite\Application\Application $app
      * @return void
      */
     public function __construct(Application $app)
@@ -48,6 +49,40 @@ class Kernel
         $this->app = $app;
 
         $this->bootstrap();
+    }
+
+    /**
+     * Get the authenticated litstack user.
+     *
+     * @return \Illuminate\Contracts\Auth\Access\Authorizable|null
+     */
+    public function user()
+    {
+        return Auth::guard(config('lit.guard'))->user();
+    }
+
+    /**
+     * Determine if an authenticated user has access to the litstack application.
+     *
+     * @param  Authorizable $user
+     * @return bool
+     */
+    public function authorize(Authorizable $user): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get middlewares.
+     *
+     * @return array
+     */
+    public function getMiddlewares()
+    {
+        return [
+            'web',
+            'lit.auth:'.config('lit.guard'),
+        ];
     }
 
     /**
