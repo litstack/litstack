@@ -6,7 +6,7 @@ const Lit = {
 	bus: Bus,
 	config: {},
 	baseURL: null,
-	bootingCallbacks: window.Lit.bootingCallbacks,
+	bootingCallbacks: window.Lit?.bootingCallbacks || [],
 
 	/**
 	 * Get node env.
