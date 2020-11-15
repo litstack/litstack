@@ -2,6 +2,8 @@
 
 namespace Ignite\Application\Concerns;
 
+use Ignite\Support\Facades\Route;
+
 trait ManagesAssets
 {
     /**
@@ -30,7 +32,7 @@ trait ManagesAssets
             return;
         }
 
-        $this->scripts[] = $src;
+        $this->scripts[] = $this->resolveAssetPath($src);
 
         return $this;
     }
@@ -47,7 +49,7 @@ trait ManagesAssets
             return;
         }
 
-        $this->styles[] = $path;
+        $this->styles[] = $this->resolveAssetPath($path);
 
         return $this;
     }
@@ -70,5 +72,35 @@ trait ManagesAssets
     public function getScripts()
     {
         return $this->scripts;
+    }
+
+    /**
+     * Resolve path to asset.
+     *
+     * @param  string $path
+     * @return void
+     */
+    protected function resolveAssetPath($path)
+    {
+        if (! file_exists($path)) {
+            return $path;
+        }
+
+        $info = pathinfo($path);
+
+        $uri = implode('/', [
+            $info['extension'],
+            $info['basename'],
+        ]);
+
+        $route = Route::public()->get($uri, function () use ($path, $info) {
+            return response(app('files')->get($path), 200)
+                ->header('Content-Type', [
+                    'js'  => 'application/javascript; charset=utf-8',
+                    'css' => 'text/css',
+                ][$info['extension']] ?? 'text/'.$info['extension']);
+        });
+
+        return url($route->uri);
     }
 }
