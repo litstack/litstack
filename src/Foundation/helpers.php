@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\File;
 
 if (! function_exists('production')) {
     /**
-     * Determines wether app is running in production.
+     * Determines whether app is running in production.
      *
      * @return bool
      */

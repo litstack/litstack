@@ -32,7 +32,7 @@ const initialState = {
 	baseURL: '',
 
 	/**
-	 * Wether debug mode is enabled.
+	 * whether debug mode is enabled.
 	 */
 	debug: false,
 };
