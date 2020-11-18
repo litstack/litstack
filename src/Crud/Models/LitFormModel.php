@@ -47,6 +47,13 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     protected $casts = ['value' => 'json'];
 
     /**
+     * Translations array.
+     *
+     * @var array|null
+     */
+    protected $translationsArray;
+
+    /**
      * Register media conversions for field.
      *
      * @param  SpatieMedia $media
@@ -64,7 +71,11 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
      */
     public function getTranslationAttribute()
     {
-        return $this->getTranslationsArray();
+        if (! is_null($this->translationsArray)) {
+            return $this->translationsArray;
+        }
+
+        return $this->translationsArray = $this->getTranslationsArray();
     }
 
     /**
