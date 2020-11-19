@@ -8,6 +8,7 @@ use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Crud\Fields\Media\MediaField;
 use Ignite\Crud\Requests\CrudReadRequest;
 use Ignite\Crud\Requests\CrudUpdateRequest;
+use Spatie\MediaLibrary\Support\ImageFactory;
 
 class MediaRepository extends BaseFieldRepository
 {
@@ -122,6 +123,11 @@ class MediaRepository extends BaseFieldRepository
         $customProperties = $this->field->translatable ?? false
             ? [app()->getLocale() => $properties]
             : $properties;
+
+        $customProperties['original_dimensions'] = [
+            'width' => ImageFactory::load($request->media->path())->getWidth(),
+            'height' => ImageFactory::load($request->media->path())->getHeight(),
+        ];
 
         $media = $model->addMedia($request->media)
             ->preservingOriginal()
