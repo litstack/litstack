@@ -4,6 +4,7 @@ namespace Ignite\Crud\Repositories;
 
 use Ignite\Config\ConfigHandler;
 use Ignite\Crud\BaseForm;
+use Illuminate\Support\Str;
 use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Crud\Fields\Media\MediaField;
 use Ignite\Crud\Requests\CrudReadRequest;
