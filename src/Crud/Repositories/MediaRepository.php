@@ -124,10 +124,13 @@ class MediaRepository extends BaseFieldRepository
             ? [app()->getLocale() => $properties]
             : $properties;
 
-        $customProperties['original_dimensions'] = [
-            'width' => ImageFactory::load($request->media->path())->getWidth(),
-            'height' => ImageFactory::load($request->media->path())->getHeight(),
-        ];
+
+        if (Str::startsWith($request->media->getClientMimeType(), 'image')) {
+            $customProperties['original_dimensions'] = [
+                'width' => ImageFactory::load($request->media->path()) ->getWidth(),
+                'height' => ImageFactory::load($request->media->path())->getHeight(),
+            ];
+        }
 
         $media = $model->addMedia($request->media)
             ->preservingOriginal()
