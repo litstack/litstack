@@ -9,6 +9,10 @@
     <a href="https://packagist.org/packages/litstack/litstack"><img src="https://img.shields.io/github/license/litstack/litstack?color=%2331c653" alt="License"></a>
 </p>
 
+<p align="center">
+    <img style="max-width:100%;" src="https://litstack.io/images/litstack_interface.png">
+</p>
+
 A package for building Admin-Interfaces that help maintaining the data of your
 applications. It provides an intuitive interface and the tools needed to manage
 your project's Users, Models and free Forms for Pages, Settings etc.
