@@ -124,7 +124,7 @@ class MediaRepository extends BaseFieldRepository
         $customProperties = $this->field->translatable ?? false
             ? [app()->getLocale() => $properties]
             : $properties;
-        
+
         $image = ImageFactory::load($request->media->path());
 
         if (Str::startsWith($request->media->getClientMimeType(), 'image')) {
