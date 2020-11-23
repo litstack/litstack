@@ -15,7 +15,7 @@ class DummyClassname extends Migration
     public function up()
     {
         Schema::create('DummyTablename', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             DummySlug
             $table->timestamps();
         });
