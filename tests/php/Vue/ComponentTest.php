@@ -125,7 +125,6 @@ class ComponentTest extends TestCase
         $component = new RenderComponentTest('foo');
         $rendered = $component->render();
         $this->assertTrue($component->mountedCalled);
-        $this->assertTrue($component->renderingCalled);
         $this->assertTrue($component->renderedCalled);
     }
 }
@@ -143,17 +142,11 @@ class BeforeMountComponentTest extends Component
 class RenderComponentTest extends Component
 {
     public $mountedCalled = false;
-    public $renderingCalled = false;
     public $renderedCalled = false;
 
     public function mounted()
     {
         $this->mountedCalled = true;
-    }
-
-    public function rendering()
-    {
-        $this->renderingCalled = true;
     }
 
     public function rendered($rendered)

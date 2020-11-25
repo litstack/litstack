@@ -7,6 +7,7 @@ use Ignite\Config\ConfigHandler;
 use Ignite\Crud\Actions\DestroyAction;
 use Ignite\Page\Page;
 use Ignite\Page\Table\Table;
+use Illuminate\Http\Request;
 
 class CrudIndex extends Page
 {
@@ -35,6 +36,17 @@ class CrudIndex extends Page
 
         $this->config = $config;
         $this->setDefaults();
+    }
+
+    /**
+     * Get the current form.
+     *
+     * @param  Request             $request
+     * @return BaseForm|mixed|null
+     */
+    public function getForm(Request $request)
+    {
+        return $this->table->getBuilder()->getForm($request->form_key);
     }
 
     /**

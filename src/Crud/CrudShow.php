@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Request;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Support\Traits\Macroable;
 
@@ -320,9 +321,10 @@ class CrudShow extends Page
     /**
      * Get form instance.
      *
-     * @return void
+     * @param  Request             $request
+     * @return BaseForm|mixed|null
      */
-    public function getForm()
+    public function getForm(Request $request)
     {
         return $this->form;
     }
