@@ -67,7 +67,7 @@ export default {
 		);
 
 		Lit.bus.$on('saved', () => {
-			this.$bvModal.close(this.modalId);
+			this.$bvModal.hide(this.modalId);
 		});
 	},
 	methods: {
