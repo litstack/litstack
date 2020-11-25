@@ -128,7 +128,7 @@ class Datetime extends BaseField
 
         return new Carbon($value);
     }
-    
+
     /**
      * Align datepicker on right.
      *
