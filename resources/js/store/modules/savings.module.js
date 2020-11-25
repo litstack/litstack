@@ -78,7 +78,7 @@ export const actions = {
 		}
 
 		Lit.bus.$emit('saved', results);
-		Lit.bus.$emit('reload', results);
+		Lit.bus.$emit('reload');
 
 		return results;
 	},
