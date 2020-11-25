@@ -26,7 +26,7 @@ export default {
 			},
 		},
 		square: {
-			type: String,
+			type: Boolean,
 		},
 		item: {
 			type: Object,
