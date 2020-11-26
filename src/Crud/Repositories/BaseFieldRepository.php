@@ -126,15 +126,15 @@ abstract class BaseFieldRepository
      * @param  array   $ids
      * @return void
      */
-    protected function orderField($query, Field $field, array $ids)
+    public function orderField($query, Field $field, array $ids)
     {
         $orderColumn = $field->orderColumn ?? 'order_column';
 
         foreach ($ids as $order => $id) {
             if ($query instanceof BelongsToMany) {
-                $query->updateExistingPivot($id, [$orderColumn => $order]);
+                (clone $query)->updateExistingPivot($id, [$orderColumn => $order]);
             } else {
-                $query->where(
+                (clone $query)->where(
                     $query->getModel()->getQualifiedKeyName(), $id
                 )->update([$orderColumn => $order]);
             }
