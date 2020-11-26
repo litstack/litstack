@@ -47,17 +47,26 @@
                 size="full"
                 v-if="field.crop !== false"
                 @shown="crop()"
-                @hidden="resetCropper()"
+                @close="cancel()"
             >
                 <div class="row full-height">
                     <div class="col-8 full-height">
                         <div class="lit-cropper__canvas-wrapper">
-                            <div class="lit-cropper__canvas full-height"></div>
+                            <div
+                                class="lit-cropper__canvas full-height"
+                                ref="cropperCanvas"
+                            ></div>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="r4x3">
-                            <div class="lit-cropper__preview"></div>
+                            <div
+                                class="lit-cropper__preview"
+                                ref="cropperPreview"
+                            ></div>
+                        </div>
+                        <div>
+                            <pre>{{ cropperSettings }}</pre>
                         </div>
                     </div>
                 </div>
@@ -65,16 +74,21 @@
                     slot="modal-footer"
                     class="w-100 d-flex justify-content-end"
                 >
-                    <b-button id="cropper-cancel" variant="secondary" size="sm">
+                    <b-button variant="secondary" size="sm" @click="cancel()">
                         Cancel
                     </b-button>
                     <b-button
-                        id="cropper-save"
+                        @click="save()"
                         variant="primary"
                         size="sm"
                         class="ml-2"
                     >
                         Save
+                        <b-spinner
+                            variant="secondary"
+                            v-if="busy"
+                            small
+                        ></b-spinner>
                     </b-button>
                 </div>
             </b-modal>
@@ -139,7 +153,7 @@ export default {
                 url: '',
                 transformFile: this.transformFile,
                 parallelUploads: 1,
-                autoProcessQueue: false,
+                autoProcessQueue: true,
                 thumbnailWidth: 150,
                 maxFilesize: 100,
                 maxFiles: this.field.maxFiles,
@@ -158,14 +172,19 @@ export default {
             },
             busy: false,
             uploadProgress: 0,
+            // Cropper
+            cropper: null,
+            image: null,
+            canvas: null,
             file: null,
             done: null,
+            cropperSettings: null,
         };
     },
     beforeMount() {
         this.media = this.model[this.field.id] || [];
 
-        this.dropzoneOptions.url = this.getUploadUrl();
+        this.dropzoneOptions.url = this.uploadUrl;
 
         if (this.field.accept !== true && this.field.accept !== undefined) {
             this.dropzoneOptions.acceptedFiles = this.field.accept;
@@ -176,6 +195,12 @@ export default {
         if (Object.keys(this.media)[0] != '0' && !_.isEmpty(this.media)) {
             this.images = [this.media];
         }
+
+        document.addEventListener('keyup', evt => {
+            if (evt.keyCode === 27) {
+                this.cancel();
+            }
+        });
     },
     computed: {
         ...mapGetters(['baseURL', 'language']),
@@ -208,6 +233,9 @@ export default {
         cropperId() {
             return `lit-cropper-${this.field.route_prefix.replace(/\//g, '-')}`;
         },
+        uploadUrl() {
+            return `${this.baseURL}${this.field.route_prefix}/media`;
+        },
     },
     watch: {
         images(val) {
@@ -220,17 +248,28 @@ export default {
     },
     methods: {
         /**
-         * Get cropper id.
+         * Cancel cropping.
          */
-        getCropperId() {
-            return `lit-cropper-${this.field.route_prefix.replace(/\//g, '-')}`;
+        cancel() {
+            this.dropzone.removeAllFiles();
+            this.dropzone.removeAllFiles(true);
+            this.$bvModal.hide(this.cropperId);
         },
-
         /**
-         * Get upload url.
+         * Upload file with cropping information
          */
-        getUploadUrl() {
-            return `${this.baseURL}${this.field.route_prefix}/media`;
+        save() {
+            let done = this.done;
+            this.dropzoneOptions.params.crop = this.cropperSettings;
+            this.done(this.file);
+        },
+        initCropper() {
+            this.cropper = null;
+            this.image = null;
+            this.canvas = null;
+            this.file = null;
+            this.done = null;
+            this.cropperSettings = null;
         },
 
         /**
@@ -262,6 +301,7 @@ export default {
          * Handle upload success.
          */
         uploadSuccess(file, response) {
+            this.busy = false;
             this.uploads++;
             this.$bvToast.toast(
                 this.__('crud.fields.media.messages.image_uploaded'),
@@ -270,8 +310,7 @@ export default {
                 }
             );
             this.images.push(response);
-            this.$emit('reload');
-            Lit.bus.$emit('field:updated', 'image:uploaded');
+            this.$bvModal.hide(this.cropperId);
         },
 
         /**
@@ -279,6 +318,8 @@ export default {
          */
         queueComplete() {
             this.busy = false;
+            this.$emit('reload');
+            Lit.bus.$emit('field:updated', 'image:uploaded');
         },
 
         /**
@@ -319,6 +360,7 @@ export default {
          * Transform file before upload.
          */
         transformFile(file, done) {
+            this.initCropper();
             // If image doesn't require cropping, return bare image
             //
             //
@@ -332,7 +374,7 @@ export default {
             //
             this.file = file;
             this.done = done;
-            console.log(this.cropperId);
+
             this.$bvModal.show(this.cropperId);
         },
 
@@ -340,75 +382,31 @@ export default {
          * Crop image.
          */
         crop() {
-            let file = this.file;
-            let done = this.done;
-
             // Set some constants
             //
             //
-            const DROPZONE = this.dropzone;
-            const CANVAS = $(`#${this.getCropperId()} .lit-cropper__canvas`);
-            let uploadable = true;
+            this.canvas = this.$refs.cropperCanvas;
 
             // Create an image node for Cropper.js
             //
             //
-            var image = new Image();
-            image.src = URL.createObjectURL(file);
+            this.image = new Image();
+            this.image.src = URL.createObjectURL(this.file);
 
-            CANVAS.append(image);
+            this.canvas.append(this.image);
 
             // Create Cropper
             //
             //
-            var cropper = new Cropper(image, {
+            this.cropper = new Cropper(this.image, {
                 aspectRatio: this.field.crop,
                 viewMode: 2,
-                preview: $(`#${this.getCropperId()} .lit-cropper__preview`)[0],
+                preview: this.$refs.cropperPreview,
             });
 
-            console.log('foo');
-
-            image.addEventListener('crop', function(event) {
-                console.log(event.detail);
-                // event.detail.x
-                // event.detail.y
-                // event.detail.width
-                // event.detail.height
-                // event.detail.rotate
-                // event.detail.scaleX
-                // event.detail.scaleY
+            this.image.addEventListener('crop', event => {
+                this.cropperSettings = event.detail;
             });
-
-            // User Actions
-            //
-            //
-            $(document).keydown(e => {
-                if (e.keyCode == 27) {
-                    uploadable = false;
-                    this.dropzone.removeAllFiles();
-                    // Cancel current uploads
-                    this.dropzone.removeAllFiles(true);
-                    CANVAS.html('');
-                }
-            });
-
-            $('body').on('click', '#cropper-cancel', () => {
-                uploadable = false;
-                this.dropzone.removeAllFiles();
-                // Cancel current uploads
-                this.dropzone.removeAllFiles(true);
-                CANVAS.html('');
-                this.$bvModal.hide(this.cropperId);
-            });
-        },
-
-        /**
-         * Reset cropper.
-         */
-        resetCropper() {
-            this.file = null;
-            this.done = null;
         },
     },
 };
