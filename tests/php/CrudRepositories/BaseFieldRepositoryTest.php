@@ -2,21 +2,16 @@
 
 namespace Tests\CrudRepositories;
 
-use Mockery as m;
-use Ignite\Crud\Field;
-use Ignite\Crud\BaseForm;
-use Tests\BackendTestCase;
 use Ignite\Config\ConfigHandler;
-use Illuminate\Support\Facades\DB;
-use Ignite\Crud\Api\ApiRepositories;
-use Illuminate\Support\Facades\Schema;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Controllers\CrudController;
+use Ignite\Crud\Field;
+use Ignite\Crud\Repositories\BaseFieldRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Ignite\Crud\Controllers\CrudController;
-use Ignite\Crud\Requests\CrudUpdateRequest;
-use Ignite\Crud\Fields\Relations\BelongsToMany;
-use Ignite\Crud\Repositories\BaseFieldRepository;
-use Ignite\Crud\Repositories\Relations\BelongsToManyRepository;
+use Illuminate\Support\Facades\Schema;
+use Mockery as m;
+use Tests\BackendTestCase;
 
 class BaseFieldRepositoryTest extends BackendTestCase
 {
@@ -26,7 +21,7 @@ class BaseFieldRepositoryTest extends BackendTestCase
 
         Schema::dropIfExists('roles');
         Schema::create('users', fn ($table) => $table->id());
-        Schema::create('roles', function ($table) { 
+        Schema::create('roles', function ($table) {
             $table->id();
             $table->integer('order_column')->nullable();
         });
@@ -87,7 +82,6 @@ class BaseFieldRepositoryTest extends BackendTestCase
         $this->repository->orderField($role->users(), $this->field, $ids);
 
         $users = $role->users()->withPivot('order_column')->get();
-        
 
         $this->assertEquals(
             0, $users->where('id', $user2->id)->first()->pivot->order_column
@@ -100,7 +94,6 @@ class BaseFieldRepositoryTest extends BackendTestCase
 
 class TestBaseFieldRepository extends BaseFieldRepository
 {
-
 }
 
 class BaseFieldRepositoryUser extends Model
