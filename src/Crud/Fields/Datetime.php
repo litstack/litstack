@@ -128,4 +128,17 @@ class Datetime extends BaseField
 
         return new Carbon($value);
     }
+
+    /**
+     * Align datepicker on right.
+     *
+     * @param  bool  $right
+     * @return $this
+     */
+    public function right(bool $right = true)
+    {
+        $this->setAttribute('right', $right);
+
+        return $this;
+    }
 }
