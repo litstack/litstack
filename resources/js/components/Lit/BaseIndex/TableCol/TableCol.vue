@@ -147,11 +147,7 @@ export default {
 			let value = '';
 
 			if (col.value_options) {
-				value = col.value_options[item[col.value]];
-
-				if (value === undefined && col.default_value) {
-					value = col.default_value;
-				}
+				value = this.getValueOption(col, item);
 			} else {
 				value = col.value;
 			}
@@ -164,6 +160,23 @@ export default {
 			}
 
 			return this.format(value);
+		},
+		getValueOption(col, item) {
+			let key = item[col.value];
+
+			if (key === true) {
+				key = 1;
+			} else if (key === false) {
+				key = 0;
+			}
+
+			let value = col.value_options[key];
+
+			if (value === undefined && col.default_value) {
+				value = col.default_value;
+			}
+
+			return value;
 		},
 		format(value) {
 			if (!value) {

@@ -3,10 +3,12 @@
 namespace Ignite\Crud;
 
 use Ignite\Config\ConfigHandler;
+use Ignite\Contracts\Crud\Formable;
 use Ignite\Contracts\Page\Column;
 use Ignite\Contracts\Page\Column as ColumnContract;
 use Ignite\Page\Table\ColumnBuilder;
 use Ignite\Vue\Component;
+use Illuminate\Support\Str;
 
 class CrudColumnBuilder extends ColumnBuilder
 {
@@ -18,6 +20,13 @@ class CrudColumnBuilder extends ColumnBuilder
     protected $config;
 
     /**
+     * Forms.
+     *
+     * @var array
+     */
+    protected $forms = [];
+
+    /**
      * Create new CrudColumnBuilder instance.
      *
      * @param ConfigHandler $config
@@ -25,6 +34,61 @@ class CrudColumnBuilder extends ColumnBuilder
     public function __construct(ConfigHandler $config)
     {
         $this->config = $config;
+    }
+
+    /**
+     * Get form for the given key.
+     *
+     * @param  string              $key
+     * @return BaseForm|mixed|void
+     */
+    public function getForm($key)
+    {
+        return $this->forms[$key] ?? null;
+    }
+
+    /**
+     * Add form field to table.
+     *
+     * @param  string $title
+     * @return void
+     */
+    public function field($label)
+    {
+        $formKey = Str::snake($label);
+
+        $this->forms[$formKey] = $form = new BaseForm($this->config->model);
+
+        $form->setRoutePrefix(
+            strip_slashes($this->config->routePrefix().'/{id}/api/index')
+        );
+
+        $form->registered(function ($field) use ($label, $formKey) {
+            $field->noTitle();
+
+            $field->mergeOrSetAttribute('params', ['form_key' => $formKey]);
+
+            $field->rendering(function ($field) use ($formKey) {
+                if (! $field instanceof Formable) {
+                    return;
+                }
+
+                if (! $form = $field->getForm()) {
+                    return;
+                }
+
+                $form->registered(
+                    fn ($nested) => $nested->mergeOrSetAttribute('params', ['form_key' => $formKey])
+                );
+            });
+
+            $this->component('lit-col-field')
+                ->label($label)
+                ->prop('field', $field)
+                ->link(false);
+        });
+
+        return $form;
     }
 
     /**

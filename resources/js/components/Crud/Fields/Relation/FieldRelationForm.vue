@@ -65,6 +65,10 @@ export default {
 			Lit.clone(this.field.form.fields),
 			this.relation
 		);
+
+		Lit.bus.$on('saved', () => {
+			this.$bvModal.hide(this.modalId);
+		});
 	},
 	methods: {
 		setFieldsRoutePrefixId(fields, relation) {

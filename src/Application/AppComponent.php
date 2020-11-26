@@ -23,7 +23,7 @@ class AppComponent extends Component
      *
      * @return void
      */
-    public function rendering()
+    public function mounted()
     {
         $this->prop('debug', config('app.debug'));
         $this->prop('config', collect(config('lit')));

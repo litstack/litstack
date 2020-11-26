@@ -6,6 +6,7 @@ use BadMethodCallException;
 use Ignite\Config\ConfigHandler;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Controllers\CrudBaseController;
+use Ignite\Crud\CrudIndex;
 use Ignite\Crud\CrudShow;
 use Illuminate\Support\Str;
 
@@ -56,8 +57,8 @@ class ApiLoader
 
         $form = $this->config->{$type};
 
-        if ($form instanceof CrudShow) {
-            $form = $form->getForm();
+        if ($form instanceof CrudShow || $form instanceof CrudIndex) {
+            $form = $form->getForm(request());
         }
 
         if (! $form instanceof BaseForm) {

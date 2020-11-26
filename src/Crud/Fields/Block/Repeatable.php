@@ -138,7 +138,7 @@ class Repeatable extends VueProp
         );
 
         $form->registered(function ($field) {
-            $field->setAttribute('params', [
+            $field->mergeOrSetAttribute('params', [
                 'field_id'        => $this->field->id,
                 'repeatable_id'   => null,
                 'repeatable_type' => $this->type,

@@ -24,6 +24,22 @@ trait HasAttributes
     }
 
     /**
+     * Merge or set attribute value.
+     *
+     * @param  string $name
+     * @param  array  $value
+     * @return void
+     */
+    public function mergeOrSetAttribute(string $name, array $value)
+    {
+        if (! $this->hasAttribute($name)) {
+            $this->setAttribute($name, $value);
+        }
+
+        $this->attributes[$name] = array_merge($this->attributes[$name], $value);
+    }
+
+    /**
      * Get attribute by name.
      *
      * @param  string $name

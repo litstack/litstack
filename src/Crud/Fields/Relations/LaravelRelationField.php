@@ -444,7 +444,7 @@ class LaravelRelationField extends RelationField
         $form->setRoutePrefix($this->formInstance->getRoutePrefix());
 
         $form->registered(function ($field) {
-            $field->setAttribute('params', [
+            $field->mergeOrSetAttribute('params', [
                 'field_id'       => $this->id,
                 'child_field_id' => $field->id,
             ]);

@@ -18,6 +18,13 @@ class CrudIndexTable extends Table
     protected $config;
 
     /**
+     * Table column builder.
+     *
+     * @var CrudColumnBuilder
+     */
+    protected $builder;
+
+    /**
      * Create new CrudIndexTable instance.
      *
      * @param  ConfigHandler $config
