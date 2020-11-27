@@ -280,7 +280,10 @@ export default {
          */
         save() {
             let done = this.done;
-            this.dropzoneOptions.params.crop = this.cropperSettings;
+            this.dropzoneOptions.params.crop = JSON.stringify(
+                this.cropperSettings
+            );
+
             this.done(this.file);
         },
         initCropper() {
