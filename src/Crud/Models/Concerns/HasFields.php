@@ -4,6 +4,7 @@ namespace Ignite\Crud\Models\Concerns;
 
 use Ignite\Crud\Field;
 use Ignite\Crud\Fields\Media\MediaField;
+use Ignite\Crud\Models\LitFormModel;
 use Ignite\Crud\Models\Media;
 use Ignite\Crud\RelationField;
 use Illuminate\Support\Collection;
@@ -151,5 +152,33 @@ trait HasFields
         $value = $this->translation[$locale] ?? [];
 
         return $value[$field->local_key] ?? null;
+    }
+
+    /**
+     * Convert the model's fields to an array.
+     *
+     * @return array
+     */
+    public function fieldsToArray(): array
+    {
+        $fields = $this->fields->map(fn ($field) => $field->id);
+
+        $data = [];
+
+        foreach ($fields as $field) {
+            $value = $this[$field];
+
+            if ($value instanceof Collection) {
+                $value = $value->map(function ($item) {
+                    return $item instanceof LitFormModel
+                        ? $item->fieldsToArray()
+                        : $item->toArray();
+                })->toArray();
+            }
+
+            $data[$field] = $value;
+        }
+
+        return $data;
     }
 }

@@ -25,7 +25,8 @@
 		"laravel/dusk": "^6.1",
 		"orchestra/testbench-dusk": "^5.2|^6.0",
 		"phpunit/phpunit": "^8.0|^9.0",
-		"laravel/legacy-factories": "^1.0.4"
+		"laravel/legacy-factories": "^1.0.4",
+		"spatie/phpunit-snapshot-assertions": "^4.2"
 	},
 	"authors": [
 		{
