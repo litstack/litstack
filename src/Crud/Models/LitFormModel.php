@@ -294,7 +294,7 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     /**
      * Set config_type attribute.
      *
-     * @param string $value
+     * @param  string $value
      * @return void
      */
     public function setConfigTypeAttribute($value)
@@ -307,7 +307,7 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     /**
      * Set field ids to be able to check if field exists in getAttribute method.
      *
-     * @param self $model
+     * @param  self $model
      * @return void
      */
     protected static function setModelFieldIds(self $model)
@@ -356,8 +356,8 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     /**
      * Modified to return relation instances for relation fields.
      *
-     * @param string $method
-     * @param array  $params
+     * @param  string $method
+     * @param  array  $params
      * @return mixed
      */
     public function __call($method, $params)

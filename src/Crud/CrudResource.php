@@ -27,7 +27,7 @@ class CrudResource extends JsonResource
     /**
      * Create a new resource instance.
      *
-     * @param  LitFormModel  $resource
+     * @param  LitFormModel $resource
      * @return void
      */
     public function __construct(LitFormModel $resource)
@@ -38,7 +38,7 @@ class CrudResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
@@ -77,7 +77,7 @@ class CrudResource extends JsonResource
     public function except(...$except)
     {
         $except = Arr::flatten($except);
-        
+
         return $this->only(
             collect($this->getFieldIds())->filter(fn ($id) => ! in_array($id, $except))
         );
