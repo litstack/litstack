@@ -11,7 +11,7 @@ class Media extends MediaModel
      *
      * @var array
      */
-    protected $appends = ['url', 'conversion_urls'];
+    protected $appends = ['url', 'conversion_urls', 'original_url'];
 
     /**
      * Get url attribute.
@@ -20,7 +20,27 @@ class Media extends MediaModel
      */
     public function getUrlAttribute()
     {
+        return $this->getUrl('preview');
+    }
+
+    /**
+     * Get url attribute.
+     *
+     * @return string
+     */
+    public function getOriginalUrlAttribute()
+    {
         return $this->getUrl();
+    }
+
+    /**
+     * Determine if the media is cropped.
+     *
+     * @return bool
+     */
+    public function getIsCroppedAttribute()
+    {
+        return  array_key_exists('crop', $this->custom_properties);
     }
 
     /**

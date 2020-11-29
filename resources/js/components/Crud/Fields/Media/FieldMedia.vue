@@ -196,7 +196,7 @@ export default {
             this.images = [this.media];
         }
 
-        document.addEventListener('keyup', evt => {
+        document.addEventListener('keyup', (evt) => {
             if (evt.keyCode === 27) {
                 this.cancel();
             }
@@ -230,9 +230,16 @@ export default {
             return count;
         },
 
+        /**
+         * Cropper id.
+         */
         cropperId() {
             return `lit-cropper-${this.field.route_prefix.replace(/\//g, '-')}`;
         },
+
+        /**
+         * The upload url.
+         */
         uploadUrl() {
             return `${this.baseURL}${this.field.route_prefix}/media`;
         },
@@ -260,9 +267,15 @@ export default {
          */
         save() {
             let done = this.done;
-            this.dropzoneOptions.params.crop = this.cropperSettings;
+            this.dropzoneOptions.params.crop = JSON.stringify(
+                this.cropperSettings
+            );
             this.done(this.file);
         },
+
+        /**
+         * Initialize cropper.
+         */
         initCropper() {
             this.cropper = null;
             this.image = null;
@@ -401,10 +414,10 @@ export default {
             this.cropper = new Cropper(this.image, {
                 aspectRatio: this.field.crop,
                 viewMode: 2,
-                preview: this.$refs.cropperPreview,
+                preview: document.querySelector('.lit-cropper__preview'),
             });
 
-            this.image.addEventListener('crop', event => {
+            this.image.addEventListener('crop', (event) => {
                 this.cropperSettings = event.detail;
             });
         },

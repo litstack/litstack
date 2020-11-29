@@ -32,8 +32,7 @@ trait HasMedia
     /**
      * Register media conversions.
      *
-     * @param SpatieMedia $media
-     *
+     * @param  SpatieMedia $media
      * @return void
      */
     public function registerMediaConversions(SpatieMedia $media = null): void

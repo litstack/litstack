@@ -16,7 +16,8 @@
 		"cviebrock/eloquent-sluggable": "^7.0|^8.0",
 		"spatie/laravel-medialibrary": "^8.0",
 		"livewire/livewire": "^1.0|^2.0",
-		"friendsofphp/php-cs-fixer": "^2.0"
+		"friendsofphp/php-cs-fixer": "^2.0",
+		"intervention/image": "^2.0"
 	},
 	"require-dev": {
 		"facade/ignition": "~2.0",
