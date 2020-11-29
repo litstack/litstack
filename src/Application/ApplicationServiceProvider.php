@@ -19,22 +19,6 @@ use Illuminate\View\View as ViewClass;
 class ApplicationServiceProvider extends ServiceProvider
 {
     /**
-     * Litstack application service providers.
-     *
-     * @var array
-     */
-    protected $providers = [
-        \Ignite\Config\ConfigServiceProvider::class,
-        \Ignite\Translation\TranslationServiceProvider::class,
-        \Ignite\Permissions\PermissionsServiceProvider::class,
-        \Ignite\Vue\VueServiceProvider::class,
-        \Ignite\Chart\ChartServiceProvider::class,
-        \Ignite\Crud\CrudServiceProvider::class,
-        \Ignite\User\UserServiceProvider::class,
-        \Ignite\Page\PageServiceProvider::class,
-    ];
-
-    /**
      * Register the application services.
      *
      * @return void
@@ -60,7 +44,7 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     protected function registerProviders()
     {
-        foreach ($this->providers as $provider) {
+        foreach (config('lit.providers') as $provider) {
             $this->app->register($provider);
         }
     }
