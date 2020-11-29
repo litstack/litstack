@@ -61,12 +61,15 @@
 
                 <template v-if="!cropping">
                     <div class="mb-2">
-                        <label class="mb-1">
-                            Title
-                        </label>
-                        <b-badge v-if="field.translatable" variant="primary">
-                            <small>{{ language }}</small>
-                        </b-badge>
+                        <div class="mb-2 d-flex justify-content-between">
+                            <label class="m-0">Title</label>
+                            <b-badge
+                                v-if="field.translatable"
+                                variant="secondary"
+                            >
+                                <small>{{ language }}</small>
+                            </b-badge>
+                        </div>
 
                         <b-input
                             v-bind:readonly="field.readonly"
@@ -74,18 +77,35 @@
                             class="dark"
                             @input="changed($event, 'title', image)"
                         />
+                        <span class="form-text" style="color:#98959c;">
+                            {{
+                                __(
+                                    'crud.fields.media.messages.image_title_hint'
+                                )
+                            }}
+                        </span>
                     </div>
                     <div class="mb-2">
-                        <label class="mb-1">Alt</label>
-                        <b-badge v-if="field.translatable" variant="primary">
-                            <small>{{ language }}</small>
-                        </b-badge>
+                        <div class="mb-2 d-flex justify-content-between">
+                            <label class="m-0">Alt</label>
+                            <b-badge
+                                v-if="field.translatable"
+                                variant="secondary"
+                            >
+                                <small>{{ language }}</small>
+                            </b-badge>
+                        </div>
                         <b-input
                             v-bind:readonly="field.readonly"
                             :value="getCustomProperty(image, 'alt')"
                             class="dark"
                             @input="changed($event, 'alt', image)"
                         />
+                        <span class="form-text" style="color:#98959c;">
+                            {{
+                                __('crud.fields.media.messages.image_alt_hint')
+                            }}
+                        </span>
                     </div>
                 </template>
             </lit-col>
