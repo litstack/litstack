@@ -39,7 +39,6 @@
                             />
                         </lit-field-media-images>
                     </div>
-                    <pre>{{ dropzoneOptions }}</pre>
                 </b-row>
             </div>
             <b-modal
@@ -65,8 +64,29 @@
                                 ref="cropperPreview"
                             ></div>
                         </div>
-                        <div>
-                            <pre>{{ cropperSettings }}</pre>
+                        <div class="pt-4" v-if="cropperSettings">
+                            <table class="table table-sm">
+                                <tr>
+                                    <td>Width:</td>
+                                    <td>
+                                        {{ Math.round(cropperSettings.width) }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Height:</td>
+                                    <td>
+                                        {{ Math.round(cropperSettings.height) }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>X:</td>
+                                    <td>{{ Math.round(cropperSettings.x) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>X:</td>
+                                    <td>{{ Math.round(cropperSettings.y) }}</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
