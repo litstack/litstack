@@ -55,9 +55,9 @@ class CrudResource extends JsonResource
             $value = $this->getAttribute($field->local_key);
 
             if ($value instanceof Collection) {
-                $value = $value->map(function ($item) {
+                $value = $value->map(function ($item) use ($request) {
                     return $item instanceof LitFormModel
-                        ? $item->fieldsToArray()
+                        ? (new $this($item))->toArray($request)
                         : $item->toArray();
                 })->toArray();
             }
@@ -69,19 +69,15 @@ class CrudResource extends JsonResource
     }
 
     /**
-     * Set field ids that should'nt be rendered by the resource.
+     * Set field ids that shouldn't be rendered by the resource.
      *
      * @param  array ...$except
      * @return $this
      */
     public function except(...$except)
     {
-        if (count($except) <= 1) {
-            $except = Arr::wrap($except[0]);
-        } else {
-            $except = $except;
-        }
-
+        $except = Arr::flatten($except);
+        
         return $this->only(
             collect($this->getFieldIds())->filter(fn ($id) => ! in_array($id, $except))
         );

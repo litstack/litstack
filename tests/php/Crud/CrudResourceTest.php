@@ -23,7 +23,7 @@ class CrudResourceTest extends BackendTestCase
     }
 
     /** @test */
-    public function it_renders_field_data()
+    public function it_renders_fields_data()
     {
         $model = new DummyLitFormModel([
             'config_type' => Fixtures\ConfigWithTwoInputFormFields::class,
@@ -58,15 +58,13 @@ class CrudResourceTest extends BackendTestCase
         $this->assertEquals(['foo'], $resource->getExcept());
         $this->assertEquals(['bar', 'baz'], $resource->getOnly());
 
-        $resource = new CrudResource($model);
-        $resource->except(['foo', 'bar']);
-        $this->assertEquals(['foo', 'bar'], $resource->getExcept());
-        $this->assertEquals(['baz'], $resource->getOnly());
-
-        $resource = new CrudResource($model);
         $resource->except('foo', 'bar');
         $this->assertEquals(['foo', 'bar'], $resource->getExcept());
         $this->assertEquals(['baz'], $resource->getOnly());
+
+        $resource->except(['bar']);
+        $this->assertEquals(['bar'], $resource->getExcept());
+        $this->assertEquals(['foo', 'baz'], $resource->getOnly());
     }
 
     /** @test */
@@ -80,14 +78,12 @@ class CrudResourceTest extends BackendTestCase
         $this->assertEquals(['bar', 'baz'], $resource->getExcept());
         $this->assertEquals(['foo'], $resource->getOnly());
 
-        $resource = new CrudResource($model);
-        $resource->only(['foo', 'bar']);
-        $this->assertEquals(['baz'], $resource->getExcept());
-        $this->assertEquals(['foo', 'bar'], $resource->getOnly());
-
-        $resource = new CrudResource($model);
         $resource->only('foo', 'bar');
         $this->assertEquals(['baz'], $resource->getExcept());
         $this->assertEquals(['foo', 'bar'], $resource->getOnly());
+
+        $resource->only(['bar']);
+        $this->assertEquals(['foo', 'baz'], $resource->getExcept());
+        $this->assertEquals(['bar'], $resource->getOnly());
     }
 }

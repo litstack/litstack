@@ -5,10 +5,8 @@ namespace Ignite\Crud\Models\Concerns;
 use Ignite\Crud\CrudResource;
 use Ignite\Crud\Field;
 use Ignite\Crud\Fields\Media\MediaField;
-use Ignite\Crud\Models\LitFormModel;
 use Ignite\Crud\Models\Media;
 use Ignite\Crud\RelationField;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 
 trait HasFields
@@ -157,35 +155,15 @@ trait HasFields
     }
 
     /**
-     * Convert the model's fields to an array.
+     * Return the resource instance of this model.
      *
-     * @return array
+     * @return CrudResource
      */
     public function resource(): CrudResource
     {
         $class = $this->getResourceClass();
 
         return new $class($this);
-
-        $data = [
-            'id' => $this->id,
-        ];
-
-        foreach ($this->fields as $field) {
-            $value = $this->getAttribute($field->local_key);
-
-            if ($value instanceof Collection) {
-                $value = $value->map(function ($item) {
-                    return $item instanceof LitFormModel
-                        ? $item->fieldsToArray()
-                        : $item->toArray();
-                })->toArray();
-            }
-
-            $data[$field->id] = $value;
-        }
-
-        return $data;
     }
 
     /**
