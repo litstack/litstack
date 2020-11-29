@@ -59,7 +59,7 @@ return [
     | Feel free to remove services if you don't need them.
     |
     */
-    
+
     'providers' => [
         \Ignite\Config\ConfigServiceProvider::class,
         \Ignite\Translation\TranslationServiceProvider::class,
