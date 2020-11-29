@@ -46,20 +46,20 @@ class CrudResource extends JsonResource
         $data = [
             'id' => $this->id,
         ];
-        
+
         foreach ($this->fields as $field) {
             if (! $this->shouldBeRendered($field)) {
                 continue;
             }
 
             $value = $this->getAttribute($field->local_key);
-            
+
             if ($value instanceof Collection) {
                 $value = $value->map(function ($item) use ($request) {
                     if ($item instanceof LitFormModel) {
                         return $item->resource()->toArray($request);
                     }
-                    
+
                     return $item;
                 })->toArray();
             }
@@ -142,7 +142,7 @@ class CrudResource extends JsonResource
         if ($field instanceof Field) {
             $field = $field->local_key;
         }
-        
+
         return in_array($field, $this->getOnly());
     }
 }

@@ -3,8 +3,6 @@
 namespace Tests\Crud;
 
 use Ignite\Crud\CrudResource;
-use Ignite\Crud\Field;
-use Ignite\Crud\Fields\Block\Block;
 use Ignite\Crud\Models\LitFormModel;
 use Ignite\Crud\Models\Repeatable;
 use Mockery as m;
@@ -24,7 +22,7 @@ class CrudResourceTest extends BackendTestCase
         DummyLitFormModel::schemaDown();
         parent::tearDown();
     }
-    
+
     /** @test */
     public function it_renders_block_data()
     {
@@ -32,8 +30,7 @@ class CrudResourceTest extends BackendTestCase
             'config_type' => Fixtures\ConfigWithBlockField::class,
         ]);
         $model->save();
-        // $model->update(['foo' => 'fooo', 'bar' => 'barr']);
-        
+
         $repeatable = new Repeatable();
         $repeatable->type = 'text';
         $repeatable->model_type = get_class($model);
@@ -44,15 +41,13 @@ class CrudResourceTest extends BackendTestCase
         $repeatable->value = ['text' => 'foo'];
         $repeatable->order_column = 0;
         $repeatable->save();
-        
-        $resource = new CrudResource($model);
 
         $this->assertEquals(
             [
                 'id' => $model->id,
                 'content' => [
-                    ['id' => $repeatable->id, 'text' => 'foo']
-                ]
+                    ['id' => $repeatable->id, 'text' => 'foo'],
+                ],
             ],
             $model->resource()->toArray(request())
         );
