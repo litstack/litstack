@@ -2,22 +2,33 @@
 
 namespace Tests\Crud;
 
-use Ignite\Crud\Models\Form;
-use Spatie\Snapshots\MatchesSnapshots;
+use Ignite\Crud\CrudShow;
 use Tests\BackendTestCase;
+use Ignite\Crud\Models\Form;
+use Ignite\Crud\CrudResource;
+use Ignite\Crud\Config\CrudConfig;
+use Ignite\Crud\Models\LitFormModel;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Tests\Crud\Fixtures\DummyLitFormModel;
 
 class LitFormModelTest extends BackendTestCase
 {
-    use MatchesSnapshots;
-
-    /** @test */
-    public function test_fieldsToArray_method()
+    public function setUp():void
     {
-        $form = new Form();
-
-        // Fill form with these fields: input, select, block, and list.
-        // Needs help: how to fill the form?
-
-        $this->assertMatchesSnapshot($form->fieldsToArray());
+        parent::setUp();
+        DummyLitFormModel::schemaUp();
+    }
+    
+    public function tearDown():void
+    {
+        DummyLitFormModel::schemaDown();
+        parent::tearDown();
+    }
+    
+    /** @test */
+    public function test_resource_method_returns_crud_resource()
+    {
+        $this->assertInstanceOf(CrudResource::class, DummyLitFormModel::create()->resource());
     }
 }

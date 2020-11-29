@@ -3,11 +3,13 @@
 namespace Ignite\Crud\Models\Concerns;
 
 use Ignite\Crud\Field;
-use Ignite\Crud\Fields\Media\MediaField;
-use Ignite\Crud\Models\LitFormModel;
+use Ignite\Crud\CrudResource;
 use Ignite\Crud\Models\Media;
 use Ignite\Crud\RelationField;
 use Illuminate\Support\Collection;
+use Ignite\Crud\Models\LitFormModel;
+use Ignite\Crud\Fields\Media\MediaField;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 trait HasFields
 {
@@ -105,11 +107,11 @@ trait HasFields
         if ($field instanceof RelationField) {
             return $this->getRelationValue($field->id);
         }
-
+        
         if ($field->translatable) {
             return $this->getTranslatedFieldValue($field, $locale ?: app()->getLocale());
         }
-
+        
         return $this->value[$field->local_key] ?? null;
     }
 
@@ -159,14 +161,18 @@ trait HasFields
      *
      * @return array
      */
-    public function fieldsToArray(): array
+    public function resource(): CrudResource
     {
-        $fields = $this->fields->map(fn ($field) => $field->id);
+        $class = $this->getResourceClass();
 
-        $data = [];
-
-        foreach ($fields as $field) {
-            $value = $this[$field];
+        return new $class($this);
+        
+        $data = [
+            'id' => $this->id
+        ];
+        
+        foreach ($this->fields as $field) {
+            $value = $this->getAttribute($field->local_key);
 
             if ($value instanceof Collection) {
                 $value = $value->map(function ($item) {
@@ -176,9 +182,23 @@ trait HasFields
                 })->toArray();
             }
 
-            $data[$field] = $value;
+            $data[$field->id] = $value;
         }
 
         return $data;
+    }
+
+    /**
+     * Get JsonResource class name.
+     *
+     * @return string
+     */
+    protected function getResourceClass()
+    {
+        if (property_exists($this, 'resource')) {
+            return $this->resource;
+        }
+        
+        return CrudResource::class;
     }
 }
