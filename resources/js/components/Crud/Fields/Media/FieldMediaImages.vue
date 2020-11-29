@@ -84,7 +84,7 @@
                     }).capitalize() + '?'
                 "
             >
-                {{ __('messages.cant_be_undone') }}
+                {{ __('base.messages.are_you_sure') }}
 
                 <template v-slot:modal-footer>
                     <b-button
