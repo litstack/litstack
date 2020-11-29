@@ -2,8 +2,8 @@
 
 namespace Tests\Crud\Fixtures;
 
-use Ignite\Crud\CrudShow;
 use Ignite\Crud\Config\CrudConfig;
+use Ignite\Crud\CrudShow;
 
 class ConfigWithTwoInputFormFields extends CrudConfig
 {

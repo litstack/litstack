@@ -248,7 +248,7 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
         if (! in_array($key, $this->fieldIds)) {
             return parent::getAttribute($key);
         }
-        
+
         return $this->getFormattedFieldValue(
             $this->findField($key)
         );
@@ -264,7 +264,7 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     {
         $this->fieldIds = $ids;
     }
-    
+
     /**
      * Get field ids.
      *
@@ -290,7 +290,7 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
 
         return $model;
     }
-    
+
     /**
      * Set config_type attribute.
      *
@@ -300,10 +300,10 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     public function setConfigTypeAttribute($value)
     {
         $this->attributes['config_type'] = $value;
-        
+
         static::setModelFieldIds($this);
     }
-    
+
     /**
      * Set field ids to be able to check if field exists in getAttribute method.
      *
@@ -315,11 +315,11 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
         if (! $model->config_type) {
             return;
         }
-        
-        if (!empty($model->fieldIds)) {
+
+        if (! empty($model->fieldIds)) {
             return;
         }
-        
+
         $model->setFieldIds($model->fields->map(function ($field) {
             return $field->id;
         })->toArray());

@@ -3,8 +3,8 @@
 namespace Tests\Crud\Fixtures;
 
 use Ignite\Crud\Models\LitFormModel;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class DummyLitFormModel extends LitFormModel
 {
@@ -13,7 +13,7 @@ class DummyLitFormModel extends LitFormModel
     protected $translationModel = DummyLitFormModelTranslations::class;
     protected $translationForeignKey = 'lit_form_id';
     public $fillable = [
-        'form_type', 'value', 'config_type'
+        'form_type', 'value', 'config_type',
     ];
     protected $with = [
         'translations', 'media',
@@ -21,7 +21,7 @@ class DummyLitFormModel extends LitFormModel
     protected $casts = [
         'value' => 'json',
     ];
-    
+
     public static function schemaUp()
     {
         Schema::create('dummy_lit_form_model', function (Blueprint $table) {

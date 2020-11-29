@@ -2,14 +2,14 @@
 
 namespace Ignite\Crud\Models\Concerns;
 
-use Ignite\Crud\Field;
 use Ignite\Crud\CrudResource;
+use Ignite\Crud\Field;
+use Ignite\Crud\Fields\Media\MediaField;
+use Ignite\Crud\Models\LitFormModel;
 use Ignite\Crud\Models\Media;
 use Ignite\Crud\RelationField;
-use Illuminate\Support\Collection;
-use Ignite\Crud\Models\LitFormModel;
-use Ignite\Crud\Fields\Media\MediaField;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Collection;
 
 trait HasFields
 {
@@ -107,11 +107,11 @@ trait HasFields
         if ($field instanceof RelationField) {
             return $this->getRelationValue($field->id);
         }
-        
+
         if ($field->translatable) {
             return $this->getTranslatedFieldValue($field, $locale ?: app()->getLocale());
         }
-        
+
         return $this->value[$field->local_key] ?? null;
     }
 
@@ -166,11 +166,11 @@ trait HasFields
         $class = $this->getResourceClass();
 
         return new $class($this);
-        
+
         $data = [
-            'id' => $this->id
+            'id' => $this->id,
         ];
-        
+
         foreach ($this->fields as $field) {
             $value = $this->getAttribute($field->local_key);
 
@@ -198,7 +198,7 @@ trait HasFields
         if (property_exists($this, 'resource')) {
             return $this->resource;
         }
-        
+
         return CrudResource::class;
     }
 }

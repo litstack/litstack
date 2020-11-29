@@ -2,11 +2,10 @@
 
 namespace Ignite\Crud;
 
-use Ignite\Crud\Field;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Ignite\Crud\Models\LitFormModel;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 class CrudResource extends JsonResource
 {
@@ -17,14 +16,14 @@ class CrudResource extends JsonResource
      * @var array|null
      */
     protected $only;
-    
+
     /**
      * The resource instance.
      *
      * @var LitFormModel
      */
     public $resource;
-    
+
     /**
      * Create a new resource instance.
      *
@@ -45,11 +44,11 @@ class CrudResource extends JsonResource
     public function toArray($request)
     {
         $data = [
-            'id' => $this->id
+            'id' => $this->id,
         ];
-        
+
         foreach ($this->fields as $field) {
-            if (!$this->shouldBeRendered($field)) {
+            if (! $this->shouldBeRendered($field)) {
                 return;
             }
 
@@ -65,10 +64,10 @@ class CrudResource extends JsonResource
 
             $data[$field->id] = $value;
         }
-        
+
         return $data;
     }
-    
+
     /**
      * Set field ids that should'nt be rendered by the resource.
      *
@@ -82,7 +81,7 @@ class CrudResource extends JsonResource
         } else {
             $except = $except;
         }
-                        
+
         return $this->only(
             collect($this->getFieldIds())->filter(fn ($id) => ! in_array($id, $except))
         );
@@ -103,10 +102,10 @@ class CrudResource extends JsonResource
         } else {
             $this->only = Arr::wrap($only[0]);
         }
-                        
+
         return $this;
     }
-    
+
     /**
      * Get except ids.
      *
@@ -119,7 +118,7 @@ class CrudResource extends JsonResource
             ->values()
             ->toArray();
     }
-    
+
     /**
      * Get only ids.
      *
@@ -130,15 +129,15 @@ class CrudResource extends JsonResource
         if (is_null($this->only)) {
             return $this->getFieldIds();
         }
-        
+
         return $this->only;
     }
-    
+
     /**
      * Determine if a field should be rendered by the resource.
      *
      * @param  string $field
-     * @return boolean
+     * @return bool
      */
     public function shouldBeRendered($field)
     {
