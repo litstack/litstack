@@ -46,10 +46,19 @@ export default {
          * @param {Object} data
          */
         crop(data = {}) {
+            this.reset();
+
+            this.$nextTick(() => {
+                this.init(data);
+            });
+        },
+
+        init(data) {
             // Set some constants
             //
             //
             this.canvas = this.$refs.cropperCanvas;
+            window.canvas = this.canvas;
 
             // Create an image node for Cropper.js
             //
@@ -77,6 +86,16 @@ export default {
             this.image.addEventListener('crop', (event) => {
                 applyCrop(event);
             });
+        },
+
+        reset() {
+            try {
+                this.cropper.close();
+            } catch (e) {}
+
+            this.cropper = null;
+            this.canvas = null;
+            this.image = null;
         },
     },
 };

@@ -14,7 +14,7 @@
                 <template v-if="field.type == 'image'">
                     <img
                         v-if="!croppable || !cropping"
-                        :src="imgPath(image)"
+                        :src="imageUrl"
                         class="lit-image-preview"
                     />
 
@@ -25,7 +25,7 @@
                         :field="field"
                         :image="image"
                         ref="cropper"
-                        @cropped="changed($event, 'crop', image)"
+                        @cropped="cropped($event)"
                     />
                 </template>
 
@@ -39,6 +39,17 @@
 
             <lit-col :width="4" v-if="field.type == 'image'">
                 <div
+                    class="justify-content-between mb-3"
+                    :style="`display:${cropping ? 'flex' : 'none'}`"
+                >
+                    <b-button @click="cancelCrop">
+                        {{ __('base.undo_changes').capitalize() }}
+                    </b-button>
+                    <b-button variant="primary" @click="toggleCrop">
+                        {{ __('base.done').capitalize() }}
+                    </b-button>
+                </div>
+                <div
                     class="r4x3 mb-2"
                     :style="`display:${cropping ? 'block' : 'none'}`"
                 >
@@ -47,42 +58,36 @@
                         ref="cropperPreview"
                     ></div>
                 </div>
-                <div class="mb-2">
-                    <label class="mb-1">
-                        Title
-                    </label>
-                    <b-badge v-if="field.translatable" variant="primary">
-                        <small>{{ language }}</small>
-                    </b-badge>
 
-                    <b-input
-                        v-bind:readonly="field.readonly"
-                        :value="getCustomProperty(image, 'title')"
-                        class="dark"
-                        @input="changed($event, 'title', image)"
-                    />
-                </div>
-                <div class="mb-2">
-                    <label class="mb-1">Alt</label>
-                    <b-badge v-if="field.translatable" variant="primary">
-                        <small>{{ language }}</small>
-                    </b-badge>
-                    <b-input
-                        v-bind:readonly="field.readonly"
-                        :value="getCustomProperty(image, 'alt')"
-                        class="dark"
-                        @input="changed($event, 'alt', image)"
-                    />
-                </div>
-                <b-button
-                    v-if="croppable"
-                    @click="toggleCrop"
-                    class="w-100 mt-2"
-                    variant="primary"
-                >
-                    <lit-fa-icon icon="crop-alt" />
-                    Resize
-                </b-button>
+                <template v-if="!cropping">
+                    <div class="mb-2">
+                        <label class="mb-1">
+                            Title
+                        </label>
+                        <b-badge v-if="field.translatable" variant="primary">
+                            <small>{{ language }}</small>
+                        </b-badge>
+
+                        <b-input
+                            v-bind:readonly="field.readonly"
+                            :value="getCustomProperty(image, 'title')"
+                            class="dark"
+                            @input="changed($event, 'title', image)"
+                        />
+                    </div>
+                    <div class="mb-2">
+                        <label class="mb-1">Alt</label>
+                        <b-badge v-if="field.translatable" variant="primary">
+                            <small>{{ language }}</small>
+                        </b-badge>
+                        <b-input
+                            v-bind:readonly="field.readonly"
+                            :value="getCustomProperty(image, 'alt')"
+                            class="dark"
+                            @input="changed($event, 'alt', image)"
+                        />
+                    </div>
+                </template>
             </lit-col>
         </div>
         <div slot="modal-footer" class="w-100 d-flex justify-content-between">
@@ -93,9 +98,18 @@
                     v-if="!field.readonly"
                 >
                     <i class="far fa-trash-alt"></i>
-                    {{ __('base.delete') }}
+                    {{ __('base.delete').capitalize() }}
                 </b-button>
             </div>
+            <b-button
+                v-if="croppable"
+                @click="toggleCrop"
+                variant="primary"
+                :disabled="cropping"
+            >
+                <lit-fa-icon icon="crop-alt" />
+                {{ __('base.crop').capitalize() }}
+            </b-button>
             <div class="d-flex">
                 <lit-crud-language
                     class="mr-2"
@@ -107,7 +121,7 @@
                     :disabled="!canSave"
                     @click="Lit.bus.$emit('save')"
                 >
-                    {{ __('base.save') }}
+                    {{ __('base.save').capitalize() }}
                 </b-button>
             </div>
         </div>
@@ -148,14 +162,39 @@ export default {
             original: {},
             file: null,
             cropping: false,
+            url: null,
         };
     },
     beforeMount() {
         this.setFileObject();
-        console.log(this.image);
+
         this.setOriginal();
+        Lit.bus.$on('saved', () => {
+            this.setOriginal();
+        });
+    },
+    mounted() {
+        this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
+            if (!this.cropping) {
+                return;
+            }
+
+            this.cancelCrop();
+        });
     },
     methods: {
+        cropped(crop) {
+            this.url = this.$refs.cropper.cropper
+                .getCroppedCanvas()
+                .toDataURL('image/jpeg', 1);
+            this.changed(crop, 'crop', this.image);
+            this.$forceUpdate();
+        },
+        cancelCrop() {
+            this.changed(this.original.crop, 'crop', this.image);
+            this.url = null;
+            this.toggleCrop();
+        },
         toggleCrop() {
             if (this.cropping) {
             } else {
@@ -189,7 +228,7 @@ export default {
 
         setOriginal() {
             if (this.image.custom_properties) {
-                this.original = this.image.custom_properties;
+                this.original = Lit.clone(this.image.custom_properties);
             }
         },
 
@@ -295,6 +334,17 @@ export default {
          */
         croppable() {
             return this.field.crop !== false && this.field.crop !== undefined;
+        },
+
+        /**
+         * Image url.
+         */
+        imageUrl() {
+            if (this.url !== null) {
+                return this.url;
+            }
+
+            return this.imgPath(this.image);
         },
     },
 };
