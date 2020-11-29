@@ -57,7 +57,7 @@ class CrudResource extends JsonResource
             if ($value instanceof Collection) {
                 $value = $value->map(function ($item) use ($request) {
                     return $item instanceof LitFormModel
-                        ? (new $this($item))->toArray($request)
+                        ? $item->resource()
                         : $item->toArray();
                 })->toArray();
             }
