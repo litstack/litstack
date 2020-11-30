@@ -9,7 +9,7 @@
 - Added `right` method to `datetime` field ([#96](https://github.com/litstack/litstack/pull/96))
 
 ### Fixed
-- Fixed installation issue with custom permissions tables names ([#106](https://github.com/litstack/litstack/pull/106))
+- Fixed installation issue with custom permissions tables names ([#105](https://github.com/litstack/litstack/issues/105), [#106](https://github.com/litstack/litstack/pull/106))
 - Fixed image column `square` ([#95](https://github.com/litstack/litstack/pull/95))
 
 ### Changed
