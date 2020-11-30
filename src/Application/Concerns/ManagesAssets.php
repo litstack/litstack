@@ -2,6 +2,8 @@
 
 namespace Ignite\Application\Concerns;
 
+use Ignite\Support\Facades\Route;
+
 trait ManagesAssets
 {
     /**
@@ -19,6 +21,13 @@ trait ManagesAssets
     protected $scripts = [];
 
     /**
+     * Included login scripts.
+     *
+     * @var array
+     */
+    protected $loginScripts = [];
+
+    /**
      * Add script to the application.
      *
      * @param  string $src
@@ -30,7 +39,24 @@ trait ManagesAssets
             return;
         }
 
-        $this->scripts[] = $src;
+        $this->scripts[] = $this->resolveAssetPath($src);
+
+        return $this;
+    }
+
+    /**
+     * Add script to the application.
+     *
+     * @param  string $src
+     * @return $this
+     */
+    public function loginScript($src)
+    {
+        if (in_array($src, $this->loginScripts)) {
+            return;
+        }
+
+        $this->loginScripts[] = $this->resolveAssetPath($src);
 
         return $this;
     }
@@ -47,7 +73,7 @@ trait ManagesAssets
             return;
         }
 
-        $this->styles[] = $path;
+        $this->styles[] = $this->resolveAssetPath($path);
 
         return $this;
     }
@@ -70,5 +96,45 @@ trait ManagesAssets
     public function getScripts()
     {
         return $this->scripts;
+    }
+
+    /**
+     * Get login scripts.
+     *
+     * @return array
+     */
+    public function getLoginScripts()
+    {
+        return $this->loginScripts;
+    }
+
+    /**
+     * Resolve path to asset.
+     *
+     * @param  string $path
+     * @return void
+     */
+    protected function resolveAssetPath($path)
+    {
+        if (! file_exists($path)) {
+            return $path;
+        }
+
+        $info = pathinfo($path);
+
+        $uri = implode('/', [
+            $info['extension'] ?? 'dist',
+            $info['basename'],
+        ]);
+
+        $route = Route::public()->get($uri, function () use ($path, $info) {
+            return response(app('files')->get($path), 200)
+                ->header('Content-Type', [
+                    'js'  => 'application/javascript; charset=utf-8',
+                    'css' => 'text/css',
+                ][$info['extension'] ?? 'plain'] ?? 'text/'.$info['extension'] ?? 'plain');
+        });
+
+        return url($route->uri);
     }
 }

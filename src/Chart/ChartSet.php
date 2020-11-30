@@ -193,7 +193,7 @@ class ChartSet
      */
     protected function getQueryFromStatements(array $selects)
     {
-        $query = array_pop($selects);
+        $query = array_shift($selects);
 
         foreach ($selects as $select) {
             $query->unionAll($select);

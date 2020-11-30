@@ -226,8 +226,26 @@ class IndexTable
         }
 
         foreach (Arr::wrap($this->request->filter) as $scope) {
-            $this->query = $this->query->$scope();
+            if (! is_array($scope)) {
+                $this->query = $this->query->$scope();
+            } else {
+                $this->applyFilterClass($scope['filter'], $scope['values']);
+            }
         }
+    }
+
+    /**
+     * Apply filter class.
+     *
+     * @param  string $namespace
+     * @param  array  $values
+     * @return void
+     */
+    protected function applyFilterClass($namespace, array $values)
+    {
+        $filter = (new $namespace);
+
+        $filter->apply($this->query, new AttributeBag($values));
     }
 
     /**

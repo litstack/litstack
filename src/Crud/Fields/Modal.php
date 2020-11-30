@@ -3,10 +3,11 @@
 namespace Ignite\Crud\Fields;
 
 use Closure;
+use Ignite\Contracts\Crud\Formable;
 use Ignite\Crud\BaseField;
 use Ignite\Crud\BaseForm;
 
-class Modal extends BaseField
+class Modal extends BaseField implements Formable
 {
     use Traits\FieldHasForm;
 
@@ -34,6 +35,19 @@ class Modal extends BaseField
         $this->size('md');
         $this->variant('secondary');
         $this->confirmWithPassword(false);
+    }
+
+    /**
+     * Set button component.
+     *
+     * @param  string $component
+     * @return $this
+     */
+    public function buttonComponent($component)
+    {
+        $this->setAttribute('button_component', component($component));
+
+        return $this;
     }
 
     /**
@@ -122,7 +136,7 @@ class Modal extends BaseField
         );
 
         $form->registered(function ($field) {
-            $field->setAttribute('params', [
+            $field->mergeOrSetAttribute('params', [
                 'field_id' => $this->id,
             ]);
         });
@@ -138,5 +152,15 @@ class Modal extends BaseField
         $this->setAttribute('form', $form);
 
         return $this;
+    }
+
+    /**
+     * Get the modal form.
+     *
+     * @return void|BaseForm
+     */
+    public function getForm()
+    {
+        return $this->form;
     }
 }

@@ -7,8 +7,8 @@ use Ignite\Application\Navigation\PresetFactory;
 use Ignite\Config\ConfigHandler;
 use Ignite\Foundation\Litstack;
 use Ignite\Routing\Router as LitstackRouter;
+use Illuminate\Contracts\Auth\Access\Authorizable;
 use Illuminate\Routing\Router as LaravelRouter;
-use Lit\Models\User;
 
 class CrudRouter
 {
@@ -67,7 +67,7 @@ class CrudRouter
     {
         $this->litstackRouter->group(function () use ($config) {
             $this->router->group([
-                'config' => $config->getKey(),
+                'config' => $config->getNamespace(),
                 'prefix' => "$config->routePrefix",
                 'as'     => $config->getKey().'.',
             ], function () use ($config) {
@@ -90,7 +90,7 @@ class CrudRouter
     {
         $this->litstackRouter->group(function () use ($config) {
             $this->router->group([
-                'config' => $config->getKey(),
+                'config' => $config->getNamespace(),
                 'prefix' => $config->routePrefix(),
                 'as'     => $config->getKey().'.',
             ], function () use ($config) {
@@ -187,7 +187,7 @@ class CrudRouter
         $this->nav->preset($this->getNavigationPresetKeys($config), [
             'link'      => $this->litstack->url($config->routePrefix),
             'title'     => $title,
-            'authorize' => function (User $user) use ($config) {
+            'authorize' => function (Authorizable $user) use ($config) {
                 return $config->authorize($user, 'read');
             },
         ]);

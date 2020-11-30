@@ -2,6 +2,9 @@
 
 namespace Ignite\Crud\Repositories;
 
+use Ignite\Config\ConfigHandler;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Crud\CrudValidator;
 use Ignite\Crud\Fields\Block\Block;
 use Ignite\Crud\Models\Repeatable;
@@ -19,9 +22,17 @@ class BlockRepository extends BaseFieldRepository
     protected $field;
 
     /**
-     * Create new BlockRepository instance.
+     * Create new BlockRepostory instance.
+     *
+     * @param ConfigHandler      $config
+     * @param CrudBaseController $controller
+     * @param BaseForm           $form
+     * @param Block              $field
      */
-    public function __construct($config, $controller, $form, Block $field)
+    public function __construct(ConfigHandler $config,
+                                CrudBaseController $controller,
+                                BaseForm $form,
+                                Block $field)
     {
         parent::__construct($config, $controller, $form, $field);
     }

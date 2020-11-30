@@ -28,6 +28,15 @@
         <livewire:styles />
     @endif
 
+    <script>
+        window.Lit = {
+            bootingCallbacks: [],
+            booting: function(cb) {
+		        this.bootingCallbacks.push(cb);
+	        },
+        }
+    </script>
+
 </head>
 
 <body>
@@ -58,12 +67,13 @@
 
     <!-- lit translations -->
     <script src="{{ lit()->route('lit-translations') }}"></script>
-    <!-- lit app js -->
-    <script src="{{ lit_js() }}" defer></script>
-    
+
     @foreach(lit_app()->getScripts() as $src)
         <script src="{{ $src }}"></script>
     @endforeach
+
+    <!-- lit app js -->
+    <script src="{{ lit_js() }}" defer></script>
 
     @if(Lit::usesLivewire())
         <livewire:scripts />

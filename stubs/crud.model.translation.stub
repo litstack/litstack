@@ -9,7 +9,7 @@ class DummyClassname extends Model
     DummyUses
 
     /**
-     * Wether the model uses the default timestamp columns.
+     * whether the model uses the default timestamp columns.
      *
      * @var boolean
      */

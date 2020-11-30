@@ -142,7 +142,7 @@ class ColumnBuilderTest extends BackendTestCase
     public function test_relation_method_sets_label()
     {
         $builder = new ColumnBuilder;
-        $result = $builder->relation('User');
+        $result = $builder->relation('user');
         $this->assertEquals('User', $result->getProp('label'));
     }
 

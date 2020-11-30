@@ -47,6 +47,13 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     protected $casts = ['value' => 'json'];
 
     /**
+     * Translations array.
+     *
+     * @var array|null
+     */
+    protected $translationsArray;
+
+    /**
      * Register media conversions for field.
      *
      * @param  SpatieMedia $media
@@ -64,7 +71,11 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
      */
     public function getTranslationAttribute()
     {
-        return $this->getTranslationsArray();
+        if (! is_null($this->translationsArray)) {
+            return $this->translationsArray;
+        }
+
+        return $this->translationsArray = $this->getTranslationsArray();
     }
 
     /**
@@ -255,6 +266,16 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     }
 
     /**
+     * Get field ids.
+     *
+     * @return array
+     */
+    public function getFieldIds()
+    {
+        return $this->fieldIds;
+    }
+
+    /**
      * Create a new model instance that is existing.
      *
      * @param  array       $attributes
@@ -263,15 +284,45 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
      */
     public function newFromBuilder($attributes = [], $connection = null)
     {
-        $model = parent::newFromBuilder($attributes, $connection);
+        static::setModelFieldIds(
+            $model = parent::newFromBuilder($attributes, $connection)
+        );
 
-        // Set field ids to be able to check if field exists in getAttribute
-        // method.
+        return $model;
+    }
+
+    /**
+     * Set config_type attribute.
+     *
+     * @param  string $value
+     * @return void
+     */
+    public function setConfigTypeAttribute($value)
+    {
+        $this->attributes['config_type'] = $value;
+
+        static::setModelFieldIds($this);
+    }
+
+    /**
+     * Set field ids to be able to check if field exists in getAttribute method.
+     *
+     * @param  self $model
+     * @return void
+     */
+    protected static function setModelFieldIds(self $model)
+    {
+        if (! $model->config_type) {
+            return;
+        }
+
+        if (! empty($model->fieldIds)) {
+            return;
+        }
+
         $model->setFieldIds($model->fields->map(function ($field) {
             return $field->id;
         })->toArray());
-
-        return $model;
     }
 
     /**
@@ -305,12 +356,11 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     /**
      * Modified to return relation instances for relation fields.
      *
-     * @param string $method
-     * @param array  $params
-     *
+     * @param  string $method
+     * @param  array  $params
      * @return mixed
      */
-    public function __call($method, $params = [])
+    public function __call($method, $params)
     {
         if (! in_array($method, $this->fieldIds)) {
             return parent::__call($method, $params);

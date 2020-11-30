@@ -94,7 +94,11 @@ export default {
 			try {
 				return await axios.post(
 					`${this.field.route_prefix}/relation/index`,
-					{ field_id: this.field.id, ...payload }
+					{
+						field_id: this.field.id,
+						...this.field.params,
+						...payload,
+					}
 				);
 			} catch (e) {
 				console.log(e);

@@ -188,8 +188,8 @@ export default {
 		 * @return {String}
 		 */
 		modalId() {
-			return `form-relation-table-${
-				this.field.id
+			return `form-relation-table-${this.field.id}-${
+				this.model.id
 			}-${this.field.route_prefix.replace(/\//g, '-')}`;
 		},
 
@@ -329,6 +329,7 @@ export default {
 					`${this.field.route_prefix}/relation/load`,
 					{
 						field_id: this.field.id,
+						...this.field.params,
 						...payload,
 					}
 				);
@@ -398,6 +399,7 @@ export default {
 					{
 						field_id: this.field.id,
 						related_id: relation.id,
+						...this.field.params,
 					}
 				);
 			} catch (e) {
@@ -470,6 +472,7 @@ export default {
 					{
 						field_id: this.field.id,
 						related_id: relation.id,
+						...this.field.params,
 					}
 				);
 			} catch (e) {
@@ -507,7 +510,11 @@ export default {
 			try {
 				return await axios.put(
 					`${this.field.route_prefix}/relation/order`,
-					{ field_id: this.field.id, ...payload }
+					{
+						field_id: this.field.id,
+						...this.field.params,
+						...payload,
+					}
 				);
 			} catch (e) {
 				console.log(e);

@@ -27,6 +27,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Lit Guard
+    |--------------------------------------------------------------------------
+    |
+    | The guard that is used to authenticate users that are allowed into the
+    | litstack application.
+    |
+    */
+
+    'guard' => 'lit',
+
+    /*
+    |--------------------------------------------------------------------------
     | Lit Login
     |--------------------------------------------------------------------------
     |
@@ -35,8 +47,28 @@ return [
     */
 
     'login' => [
-
         'username' => true,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Litstack Service Providers
+    |--------------------------------------------------------------------------
+    |
+    | The service providers listed here will be automatically loaded  if litstack is installed.
+    | Feel free to remove services if you don't need them.
+    |
+    */
+
+    'providers' => [
+        \Ignite\Config\ConfigServiceProvider::class,
+        \Ignite\Translation\TranslationServiceProvider::class,
+        \Ignite\Permissions\PermissionsServiceProvider::class,
+        \Ignite\Vue\VueServiceProvider::class,
+        \Ignite\Chart\ChartServiceProvider::class,
+        \Ignite\Crud\CrudServiceProvider::class,
+        \Ignite\User\UserServiceProvider::class,
+        \Ignite\Page\PageServiceProvider::class,
     ],
 
     /*

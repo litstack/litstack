@@ -94,16 +94,6 @@ class Component extends VueProp implements AuthorizableContract
     }
 
     /**
-     * Rendering lifecycle hook.
-     *
-     * @return void
-     */
-    protected function rendering()
-    {
-        //
-    }
-
-    /**
      * Rendered lifecycle hook.
      *
      * @param  array $rendered
@@ -369,7 +359,6 @@ class Component extends VueProp implements AuthorizableContract
     {
         $this->checkComplete();
 
-        $this->rendering();
         $this->mounted();
 
         $rendered = [

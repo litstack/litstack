@@ -112,9 +112,9 @@ class CrudCommand extends Command
     protected function getOptions()
     {
         return [
-            ['media', 'm', InputOption::VALUE_NONE, 'Wether this model has media'],
-            ['translatable', 't', InputOption::VALUE_NONE, 'Wether this model should be translatable'],
-            ['slug', 's', InputOption::VALUE_NONE, 'Wether this model should have a slug'],
+            ['media', 'm', InputOption::VALUE_NONE, 'whether this model has media'],
+            ['translatable', 't', InputOption::VALUE_NONE, 'whether this model should be translatable'],
+            ['slug', 's', InputOption::VALUE_NONE, 'whether this model should have a slug'],
         ];
     }
 

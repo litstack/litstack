@@ -23,16 +23,6 @@ abstract class CrudController extends CrudBaseController
     protected $model;
 
     /**
-     * Authorize request for permission operation and authenticated lit-user.
-     * Operations: create, read, update, delete.
-     *
-     * @param  \Lit\Models\User $user
-     * @param  string           $operation
-     * @return bool
-     */
-    //abstract public function authorize(User $user, string $operation, $id = null);
-
-    /**
      * Modify initial query.
      *
      * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query

@@ -4,17 +4,27 @@
 			:variant="field.variant"
 			v-b-modal="modalId"
 			v-html="field.name"
-			v-if="!field.preview"
+			v-if="!field.preview && !field.button_component"
 		/>
-		<template v-else>
-			<div class="w-100" v-html="_format(field.preview, model)" />
-			<a
-				href="#"
-				v-b-modal="modalId"
-				v-html="field.name"
-				@click.prevent=""
-			/>
-		</template>
+
+		<div
+			v-if="field.preview"
+			class="w-100"
+			v-html="_format(field.preview, model)"
+		/>
+		<a
+			href="#"
+			v-b-modal="modalId"
+			v-html="field.name"
+			@click.prevent=""
+			v-if="!field.button_component"
+		/>
+		<lit-base-component
+			v-else
+			@show="$bvModal.show(modalId)"
+			:component="field.button_component"
+			:model="model"
+		/>
 		<b-form-invalid-feedback
 			v-for="(message, key) in messages"
 			:key="key"

@@ -183,6 +183,23 @@ class Litstack implements LitstackContract
     }
 
     /**
+     * Determines if a user is authenticated and authorized to view the litstack
+     * interface.
+     *
+     * @return bool
+     */
+    public function authorized()
+    {
+        if (! $user = $this->user()) {
+            return false;
+        }
+
+        return $this->laravel[
+            \Ignite\Application\Kernel::class
+        ]->authorize($user);
+    }
+
+    /**
      * Add css file to the application.
      *
      * @param  string $path
@@ -242,6 +259,7 @@ class Litstack implements LitstackContract
         $groups = [
             'lit'            => [self::class, \Ignite\Contracts\Foundation\Litstack::class],
             'lit.app'        => [\Ignite\Application\Application::class],
+            'lit.auth'       => [\Ignite\Contracts\Auth\Authentication::class, \Ignite\Auth\Authentication::class],
             'lit.config'     => [\Ignite\Config\ConfigLoader::class],
             'lit.crud'       => [\Ignite\Crud\Crud::class],
             'lit.nav'        => [\Ignite\Application\Navigation\PresetFactory::class],

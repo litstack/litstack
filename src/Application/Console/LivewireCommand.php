@@ -14,8 +14,8 @@ class LivewireCommand extends Command
      * @var string
      */
     protected $signature = 'lit:livewire {name} 
-                            {--force : Wether to overwrite the existing component and view} 
-                            {--inline : Wether to only create the component file}';
+                            {--force : whether to overwrite the existing component and view} 
+                            {--inline : whether to only create the component file}';
 
     /**
      * Command description.
@@ -46,7 +46,7 @@ class LivewireCommand extends Command
     protected $files;
 
     /**
-     * Wether the livewire component file already exists.
+     * whether the livewire component file already exists.
      *
      * @var bool
      */

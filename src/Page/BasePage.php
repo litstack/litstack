@@ -7,6 +7,7 @@ use Ignite\Support\HasAttributes;
 use Ignite\Vue\Components\BladeComponent;
 use Ignite\Vue\Traits\HasVueComponents;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use InvalidArgumentException;
 
 abstract class BasePage implements Page
@@ -35,6 +36,24 @@ abstract class BasePage implements Page
      * @var array
      */
     protected $viewData = [];
+
+    /**
+     * Extend the page.
+     *
+     * @param  string $alias
+     * @param         $name
+     * @return void
+     */
+    public function extend($alias, $name = null)
+    {
+        $extensions = new Collection(
+            app('lit.page')->getExtensions($alias, $name)
+        );
+
+        foreach ($extensions as $extension) {
+            $extension($this);
+        }
+    }
 
     /**
      * Add Vue component to stack.

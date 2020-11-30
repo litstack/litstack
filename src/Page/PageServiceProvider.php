@@ -52,6 +52,20 @@ class PageServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerCommands();
+
+        $this->registerFactory();
+    }
+
+    /**
+     * Register page factory.
+     *
+     * @return void
+     */
+    protected function registerFactory()
+    {
+        $this->app->singleton('lit.page', function () {
+            return new Factory;
+        });
     }
 
     /**

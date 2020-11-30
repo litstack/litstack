@@ -71,7 +71,7 @@ export default {
         ...mapGetters(['language', 'languages']),
 
         /**
-         * Wether to show dropdown or not.
+         * whether to show dropdown or not.
          *
          * @return {Boolean}
          */

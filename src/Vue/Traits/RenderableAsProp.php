@@ -2,6 +2,7 @@
 
 namespace Ignite\Vue\Traits;
 
+use Closure;
 use Ignite\Contracts\Vue\Authorizable;
 use Illuminate\Support\Collection;
 
@@ -13,6 +14,13 @@ trait RenderableAsProp
      * @return array
      */
     abstract public function render(): array;
+
+    /**
+     * Rendering lifecycle hooks.
+     *
+     * @var array
+     */
+    protected $renderingHooks = [];
 
     /**
      * Get array.
@@ -36,12 +44,29 @@ trait RenderableAsProp
     }
 
     /**
+     * Add rendering lifecycle hook.
+     *
+     * @param  Closure $hook
+     * @return $this
+     */
+    public function rendering(Closure $hook)
+    {
+        $this->renderingHooks[] = $hook;
+
+        return $this;
+    }
+
+    /**
      * Get rendered.
      *
      * @return Collection
      */
     protected function getRendered(): Collection
     {
+        foreach ($this->renderingHooks as $hook) {
+            $hook($this);
+        }
+
         $rendered = collect($this->render());
 
         $rendered = $this->authorized($rendered);

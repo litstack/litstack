@@ -38,6 +38,19 @@ trait HasBaseField
     }
 
     /**
+     * Hide the title.
+     *
+     * @param  bool  $noTitle
+     * @return $this
+     */
+    public function noTitle(bool $noTitle = true)
+    {
+        $this->setAttribute('no_title', $noTitle);
+
+        return $this;
+    }
+
+    /**
      * Set field title.
      *
      * @param string $title

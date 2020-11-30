@@ -193,7 +193,7 @@ class BaseTable extends VueProp implements TableContract
      * Set search keys.
      *
      * @param  array $keys
-     * @return void
+     * @return $this
      */
     public function search(...$keys)
     {
@@ -237,6 +237,19 @@ class BaseTable extends VueProp implements TableContract
     public function filter(array $filter)
     {
         $this->setAttribute('filter', $filter);
+
+        return $this;
+    }
+
+    /**
+     * Set default filter.
+     *
+     * @param  string ...$filter
+     * @return $this
+     */
+    public function defaultFilter(...$filter)
+    {
+        $this->setAttribute('defaultFilter', $filter);
 
         return $this;
     }

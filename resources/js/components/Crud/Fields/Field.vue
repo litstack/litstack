@@ -18,7 +18,8 @@ export default {
 		}
 
 		let props = this.field.props ? this.field.props : {};
-		let modelId = this.modelId === 0 ? this.model.id : this.modelId;
+        let modelId = this.modelId === 0 ? this.model.id : this.modelId;
+        
 
 		let vm = createElement(this.field.component, {
 			props: {
@@ -63,6 +64,14 @@ export default {
 			type: Object,
 			required: true,
 		},
+
+		/**
+		 * Determine's if field changes should be added to save jobs.
+		 */
+		save: {
+			type: Boolean,
+			default: true,
+		},
 	},
 	data() {
 		return {
@@ -90,6 +99,11 @@ export default {
 			 * Request method.
 			 */
 			method: 'PUT',
+
+			/**
+			 * Save job id.
+			 */
+			jobId: null,
 		};
 	},
 	beforeMount() {
@@ -108,6 +122,10 @@ export default {
 		Lit.bus.$on('fieldChanged', () =>
 			this.resolveDependecies(this.field.dependencies)
 		);
+
+		this.$on('setSaveJobId', (id) => {
+			this.jobId = id;
+		});
 	},
 	computed: {
 		...mapGetters(['language']),
@@ -136,8 +154,12 @@ export default {
 		input(newValue) {
 			this.value = newValue;
 			this.fillValueToModel(newValue);
-			this.addSaveJob();
-			this.$emit('changed');
+
+			if (this.save) {
+				this.addSaveJob();
+			}
+
+            this.$emit('changed', newValue);
 			Lit.bus.$emit('fieldChanged', this.field.local_key);
 		},
 
@@ -319,7 +341,9 @@ export default {
 				method: this.method,
 			};
 
-			//console.log('CHANGED', this.field.route_prefix, this.value);
+			if (this.jobId) {
+				job.id = this.jobId;
+			}
 
 			if (this.hasValueChanged()) {
 				this.$store.commit('ADD_SAVE_JOB', job);

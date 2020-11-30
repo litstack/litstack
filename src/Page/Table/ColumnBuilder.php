@@ -20,6 +20,7 @@ use Ignite\Support\VueProp;
 use Ignite\Vue\Component;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\View as ViewFactory;
+use Illuminate\Support\Str;
 
 class ColumnBuilder extends VueProp implements ColumnBuilderContract
 {
@@ -36,6 +37,13 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      * @var Table|LaravelRelationField|null
      */
     protected $parent;
+
+    /**
+     * ColumnBuilder Config.
+     *
+     * @var ConfigHandler|null
+     */
+    protected $config;
 
     /**
      * Set table instance.
@@ -130,7 +138,8 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     {
         if ($this->parent) {
             $this->parent->cast(
-                $column, MoneyColumn::class.":{$currency},{$locale}"
+                $column,
+                MoneyColumn::class.":{$currency},{$locale}"
             );
         }
 
@@ -144,8 +153,8 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add table column to cols stack and set component.
      *
-     * @param  string          $component
-     * @return ColumnComponent
+     * @param  string                $component
+     * @return ColumnComponent|mixed
      */
     public function component($component): ColumnContract
     {
@@ -199,6 +208,13 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
             ->max($max);
     }
 
+    /**
+     * Add date column.
+     *
+     * @param  string $attribute
+     * @param  string $format
+     * @return Column
+     */
     public function date($attribute, $format)
     {
         if ($this->parent) {
@@ -222,9 +238,17 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      */
     public function toggle($attribute)
     {
-        return $this->component(new ToggleComponent('lit-col-toggle'))
+        $component = $this->component(new ToggleComponent('lit-col-toggle'))
             ->prop('link', false)
-            ->prop('local_key', $attribute);
+            ->prop('local_key', $attribute)
+            ->small()
+            ->right();
+
+        if ($this->config) {
+            $component->routePrefix($this->config->route_prefix);
+        }
+
+        return $component;
     }
 
     /**
@@ -253,11 +277,20 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      * Add relation column.
      *
      * @param  string            $label
+     * @param  string            $config
      * @return RelationComponent
      */
-    public function relation($label = '')
+    public function relation($related = '', $config = '')
     {
-        return $this->component(new RelationComponent('lit-col-crud-relation'))->prop('label', $label);
+        $component = $this->component(new RelationComponent('lit-col-crud-relation'))
+            ->prop('label', preg_replace('/(?<=\\w)(?=[A-Z])/', ' $1', Str::studly($related)))
+            ->related($related);
+
+        if (class_exists($config)) {
+            $component->crud($config);
+        }
+
+        return $component;
     }
 
     /**

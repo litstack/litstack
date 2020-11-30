@@ -53,11 +53,25 @@ trait ManagesGeneration
     /**
      * Get the litstack view directory path.
      *
-     * @param  string  $path
+     * @param  string $path
      * @return string
      */
     protected function viewPath($path = '')
     {
         return lit_resource_path('views').($path ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+
+    /**
+     * Fix the generated file.
+     *
+     * @return void
+     */
+    protected function fixGeneratedFile()
+    {
+        $path = $this->getPath(
+            $this->qualifyClass($this->getNameInput())
+        );
+
+        fix_file($path);
     }
 }

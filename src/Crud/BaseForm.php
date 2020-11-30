@@ -256,6 +256,10 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     public function registered(Closure $closure)
     {
         $this->registerFieldHooks[] = $closure;
+
+        foreach ($this->registeredFields as $field) {
+            $closure($field);
+        }
     }
 
     /**

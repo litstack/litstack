@@ -3,6 +3,7 @@
 namespace Lit;
 
 use Ignite\Application\Kernel as LitstackKernel;
+use Illuminate\Contracts\Auth\Access\Authorizable;
 
 class Kernel extends LitstackKernel
 {
@@ -26,5 +27,20 @@ class Kernel extends LitstackKernel
     public function mount()
     {
         $this->loadRepeatablesFrom(__DIR__.'/Repeatables');
+    }
+
+    /**
+     * Determine if an authenticated user has access to the litstack application.
+     *
+     * @param  Authorizable $user
+     * @return bool
+     */
+    public function authorize(Authorizable $user): bool
+    {
+        if (config('app.env') == 'production' && $user->email == 'admin@admin.com') {
+            return false;
+        }
+
+        return true;
     }
 }

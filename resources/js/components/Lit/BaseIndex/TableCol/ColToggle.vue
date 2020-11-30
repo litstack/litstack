@@ -30,9 +30,11 @@ export default {
 	methods: {
 		async update(val) {
 			let response = await axios.put(
-				`${this.routePrefix}/${this.item.id}/api`,
+				this.routePrefix.replace('{id}', this.item.id),
 				{
-					[this.local_key]: val,
+					payload: {
+						[this.local_key]: val,
+					},
 				}
 			);
 			this.$bvToast.toast(this.__('base.saved'), { variant: 'success' });

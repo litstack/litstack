@@ -4,6 +4,8 @@ namespace Ignite\Crud\Fields\Block;
 
 use Closure;
 use Ignite\Crud\BaseForm;
+use Ignite\Crud\Field;
+use Ignite\Crud\Fields\Relations\LaravelRelationField;
 use Ignite\Crud\Models\Repeatable as RepeatableModel;
 use Ignite\Page\Table\ColumnBuilder;
 use Ignite\Support\VueProp;
@@ -76,7 +78,6 @@ class Repeatable extends VueProp
     public function __construct(Block $field, string $type = null)
     {
         $this->field = $field;
-        $this->button = $type;
 
         if (! is_null($type)) {
             $this->type = $type;
@@ -84,6 +85,10 @@ class Repeatable extends VueProp
             throw new InvalidArgumentException(
                 'Missing property [type] for '.self::class
             );
+        }
+
+        if (is_null($this->button)) {
+            $this->button = $this->type;
         }
     }
 
@@ -133,10 +138,11 @@ class Repeatable extends VueProp
         );
 
         $form->registered(function ($field) {
-            $field->setAttribute('params', [
+            $field->mergeOrSetAttribute('params', [
                 'field_id'        => $this->field->id,
                 'repeatable_id'   => null,
                 'repeatable_type' => $this->type,
+                'child_field_id'  => $this->getChildFieldId($field),
             ]);
         });
 
@@ -152,6 +158,21 @@ class Repeatable extends VueProp
         $this->form = $form;
 
         return $this;
+    }
+
+    /**
+     * Get child field id.
+     *
+     * @param  Field       $field
+     * @return string|void
+     */
+    protected function getChildfieldId(Field $field)
+    {
+        if (! $field instanceof LaravelRelationField) {
+            return;
+        }
+
+        return $field->id;
     }
 
     /**

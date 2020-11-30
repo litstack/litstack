@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import Bus from './event.bus';
 import store from '@lit-js/store';
 
@@ -5,6 +6,7 @@ const Lit = {
 	bus: Bus,
 	config: {},
 	baseURL: null,
+	bootingCallbacks: window.Lit?.bootingCallbacks || [],
 
 	/**
 	 * Get node env.
@@ -52,7 +54,20 @@ const Lit = {
 	clone(obj) {
 		return JSON.parse(JSON.stringify(obj));
 	},
+
+	/**
+	 * Add booting callback.
+	 *
+	 * @param {Function} cb
+	 */
+	booting(cb) {
+		this.bootingCallbacks.push(cb);
+	},
 };
+
+for (let i = 0; i < Lit.bootingCallbacks.length; i++) {
+	Lit.bootingCallbacks[i](Vue);
+}
 
 window.Lit = Lit;
 

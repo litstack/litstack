@@ -2,12 +2,11 @@
 
 use Ignite\Support\Facades\Vue;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 if (! function_exists('production')) {
     /**
-     * Determines wether app is running in production.
+     * Determines whether app is running in production.
      *
      * @return bool
      */
@@ -121,7 +120,7 @@ if (! function_exists('lit_user')) {
      */
     function lit_user()
     {
-        return Auth::guard('lit')->user();
+        return app(\Ignite\Application\Kernel::class)->user();
     }
 }
 

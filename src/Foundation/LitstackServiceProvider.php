@@ -76,12 +76,11 @@ class LitstackServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application services.
      *
-     * @param  LaravelRouter $router
      * @return void
      */
-    public function boot(LaravelRouter $router)
+    public function boot()
     {
-        $this->middlewares($router);
+        $this->middlewares();
 
         $this->publish();
     }
@@ -89,15 +88,15 @@ class LitstackServiceProvider extends ServiceProvider
     /**
      * Register middlewares.
      *
-     * @param  Router $router
      * @return void
      */
-    protected function middlewares(LaravelRouter $router)
+    protected function middlewares()
     {
-        // TODO: use afterResolving callback.
-        foreach ($this->middlewares as $alias => $middleware) {
-            $router->aliasMiddleware($alias, $middleware);
-        }
+        $this->callAfterResolving('router', function (LaravelRouter $router) {
+            foreach ($this->middlewares as $alias => $middleware) {
+                $router->aliasMiddleware($alias, $middleware);
+            }
+        });
     }
 
     /**

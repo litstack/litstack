@@ -52,6 +52,8 @@ trait ConfiguresProfileSettings
             $form->input('username')
                 ->width(6)
                 ->title(ucwords(__lit('base.username')));
+
+            $form->extend(static::class, 'settings');
         })->width(8)->class('mb-5');
     }
 
@@ -83,29 +85,35 @@ trait ConfiguresProfileSettings
      */
     public function security($page)
     {
-        $page->info(ucwords(__lit('base.security')))->width(4);
+        $page->group(function ($page) {
+            $page->info(ucwords(__lit('base.security')));
+        })->width(4);
 
-        $page->card(function ($form) {
-            $form->modal('change_password')
-                ->title('Password')
-                ->variant('primary')
-                ->name(fa('user-shield').' '.__lit('profile.change_password'))
-                ->form(function ($modal) {
-                    $modal->password('old_password')
-                        ->title('Old Password')
-                        ->confirm();
+        $page->group(function ($page) {
+            $page->card(function ($form) {
+                $form->modal('change_password')
+                    ->title('Password')
+                    ->variant('primary')
+                    ->name(fa('user-shield').' '.__lit('profile.change_password'))
+                    ->form(function ($modal) {
+                        $modal->password('old_password')
+                            ->title('Old Password')
+                            ->confirm();
 
-                    $modal->password('password')
-                        ->title('New Password')
-                        ->rules('required', 'min:5')
-                        ->minScore(0);
+                        $modal->password('password')
+                            ->title('New Password')
+                            ->rules('required', 'min:5')
+                            ->minScore(0);
 
-                    $modal->password('password_confirmation')
-                        ->rules('required', 'same:password')
-                        ->dontStore()
-                        ->title('New Password')
-                        ->noScore();
-                });
+                        $modal->password('password_confirmation')
+                            ->rules('required', 'same:password')
+                            ->dontStore()
+                            ->title('New Password')
+                            ->noScore();
+                    });
+            });
+
+            $page->extend(static::class, 'security');
         })->width(8);
     }
 }

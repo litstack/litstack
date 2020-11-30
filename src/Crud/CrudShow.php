@@ -4,6 +4,7 @@ namespace Ignite\Crud;
 
 use Closure;
 use Ignite\Crud\Fields\Component;
+use Ignite\Crud\Models\Form;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
 use Ignite\Page\Page;
 use Ignite\Support\Facades\Config;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Request;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Support\Traits\Macroable;
 
@@ -65,6 +67,24 @@ class CrudShow extends Page
         // Add form lifecycle hooks.
         $this->form->registering(fn ($field) => $this->registeringField($field));
         $this->form->registered(fn ($field) => $this->registeredField($field));
+    }
+
+    /**
+     * Add chart.
+     *
+     * @param  string                $name
+     * @return \Ignite\Vue\Component
+     */
+    public function chart(string $name)
+    {
+        $chart = parent::chart($name);
+
+        $chart->setAttribute('send_model_id',
+            ! is_subclass_of($this->form->getModel(), Form::class)
+            && $this->form->getModel() != Form::class
+        );
+
+        return $chart;
     }
 
     /**
@@ -301,9 +321,10 @@ class CrudShow extends Page
     /**
      * Get form instance.
      *
-     * @return void
+     * @param  Request             $request
+     * @return BaseForm|mixed|null
      */
-    public function getForm()
+    public function getForm(Request $request)
     {
         return $this->form;
     }

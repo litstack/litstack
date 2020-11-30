@@ -168,15 +168,7 @@ export default {
 				}
 
 				if (!('field_id' in (this.field.params || {}))) {
-					// if (block.id != fields[i].params.repeatable_id) {
 					fields[i].params.child_repeatable_id = block.id;
-					// } else {
-					//     console.log(
-					//         block.id,
-					//         fields[i],
-					//         'maxFileSize' in fields[i]
-					//     );
-					// }
 				} else {
 					if ('child_repeatable_id' in this.field.params) {
 						fields[

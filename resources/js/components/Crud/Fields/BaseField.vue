@@ -1,9 +1,16 @@
 <template>
 	<lit-col :width="width" :class="field.class">
-		<div :class="`pb-3 lit-form lit-form-item-${field.id}`">
+		<div
+			:class="
+				`${field.no_title ? '' : 'pb-3'} lit-form lit-form-item-${
+					field.id
+				}`
+			"
+		>
 			<label
 				class="lit-form-item-title mb-2 d-flex justify-content-between"
 				:for="field.id"
+				v-if="!field.no_title"
 			>
 				<span v-html="field.title"></span>
 				<div>

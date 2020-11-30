@@ -6,6 +6,7 @@ use Ignite\Config\ConfigHandler;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Crud\Field;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
 
 abstract class BaseFieldRepository
@@ -125,26 +126,17 @@ abstract class BaseFieldRepository
      * @param  array   $ids
      * @return void
      */
-    protected function orderField($query, Field $field, array $ids)
+    public function orderField($query, Field $field, array $ids)
     {
-        $idKey = $query->getModel()->getTable().'.id';
-        $models = $query->whereIn($idKey, $ids)->get();
-
-        $oderColumn = $field->orderColumn ?? 'order_column';
+        $orderColumn = $field->orderColumn ?? 'order_column';
 
         foreach ($ids as $order => $id) {
-            $model = $models->where('id', $id)->first();
-
-            if (! $model) {
-                continue;
-            }
-
-            if ($model->pivot) {
-                $model->pivot->{$oderColumn} = $order;
-                $model->pivot->save();
+            if ($query instanceof BelongsToMany) {
+                (clone $query)->updateExistingPivot($id, [$orderColumn => $order]);
             } else {
-                $model->{$oderColumn} = $order;
-                $model->save();
+                (clone $query)->where(
+                    $query->getModel()->getQualifiedKeyName(), $id
+                )->update([$orderColumn => $order]);
             }
         }
     }

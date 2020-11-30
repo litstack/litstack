@@ -24,6 +24,7 @@
                             </svg>
                         </div>
                         
+                        <div class="form-fields">
                         <div class="form-group mb-5">
                             <input 
                                 id="email" 
@@ -64,6 +65,17 @@
                                 </span>
                             @enderror
                         </div>
+                    </div>
+
+                        {{-- <div class="form-group mb-3 mt-5">
+                            <input 
+                                placeholder="{{ ucfirst(__lit('2fa.code')) }}" 
+                                id="code"
+                                class="form-control lit-login-form" 
+                                name="code" 
+                                required 
+                                />
+                        </div> --}}
         
                         <div class="form-group d-flex justify-content-between">
                             <div class="form-check">
@@ -73,13 +85,8 @@
                                     {{ __lit('login.remember_me') }}
                                 </label>
                             </div>
-                            {{--
-                            <a href="{{ route('password.request') }}" id="forgot-password" style="display:none;">
-                                {{ __lit('login.forgot_password') }}
-                            </a>
-                            --}}                                    
                         </div>
-        
+
                         <div class="text-danger text-center" id="login-failed" style="display:none;">
                             {{ __lit('login.failed') }}
                         </div>
@@ -94,7 +101,7 @@
             </div>
         </div>
 
-        <div class="col-6 text-center dark-logo" style="background:#0a0e23;">
+        <div class="col-6 text-center dark-logo" style="background:#0a0e23; display: flex; justify-content: center; align-items: center;">
             <svg width="300px" height="100%" viewBox="0 0 889 263" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
                 <g transform="matrix(1,0,0,1,-204.96,-204.96)">
                     <path d="M204.96,368.93C204.96,391.57 223.31,409.92 245.95,409.92C268.59,409.92 286.94,391.57 286.94,368.93L286.94,245.95L204.96,245.95L204.96,368.93Z" style="fill:rgb(73,81,242);fill-rule:nonzero;"/>
@@ -116,12 +123,13 @@
         </div>
     </div>
     <script type="text/javascript">
-        function doLogin(e) {
+        const loginRoute = '{{ Lit::route('login.post') }}';
+        window.doLogin = function(e) {
             e.preventDefault()
 
             const data = new FormData(document.forms.login);
 
-            let promise = axios.post('{{ Lit::route('login.post') }}', data)
+            let promise = axios.post(loginRoute, data)
             promise.then(function(response) {
                 window.location = response.data
             })
@@ -134,4 +142,7 @@
     @if(isset($script))
         <script src="{{ $script }}"></script>
     @endif
+    @foreach(lit_app()->getLoginScripts() as $src)
+        <script src="{{ $src }}"></script>
+    @endforeach
 @endsection

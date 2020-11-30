@@ -14,6 +14,6 @@ class HandleViewComposer
      */
     public function compose(View $view)
     {
-        app()->get(\Lit\Kernel::class)->handleView($view);
+        app(\Ignite\Application\Kernel::class)->handleView($view);
     }
 }

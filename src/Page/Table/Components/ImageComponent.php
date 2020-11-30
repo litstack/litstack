@@ -21,7 +21,7 @@ class ImageComponent extends ColumnComponent
         return $this->prop('maxWidth', $maxHeight);
     }
 
-    public function square(bool $square = true)
+    public function square($square)
     {
         return $this->prop('square', $square);
     }
