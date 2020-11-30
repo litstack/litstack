@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ModelRole extends Model
 {
-    /**
-     * Database table name.
-     *
-     * @var string
-     */
-    protected $table = 'model_has_roles';
+    public function getTable()
+    {
+        return config('permission.table_names.model_has_roles', parent::getTable());
+    }
 }

@@ -114,7 +114,7 @@ class InstallCommand extends Command
             'last_name'  => '',
             'password'   => bcrypt('secret'),
         ]);
-        DB::table('model_has_roles')->insert([
+        DB::table(config('permission.table_names.model_has_roles'))->insert([
             'role_id'    => Role::where('name', 'admin')->where('guard_name', 'lit')->first()->id,
             'model_type' => 'Lit\\Models\\User',
             'model_id'   => DB::table('lit_users')->where('email', 'admin@admin.com')->first()->id,
