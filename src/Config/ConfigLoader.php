@@ -63,7 +63,7 @@ class ConfigLoader
      * @param  sring  $key
      * @return string
      */
-    public function getKey(string $key)
+    public function getKey($key)
     {
         if ($this->isKeyNamespace($key)) {
             return $this->getKeyFromNamespace($key);
@@ -81,7 +81,7 @@ class ConfigLoader
      * @param  string $key
      * @return bool
      */
-    protected function isKeyNamespace(string $key)
+    protected function isKeyNamespace($key)
     {
         return ! Str::contains($key, '.') && Str::contains($key, '\\');
     }
@@ -92,7 +92,7 @@ class ConfigLoader
      * @param  string $key
      * @return bool
      */
-    protected function isKeyPath(string $key)
+    protected function isKeyPath($key)
     {
         return ! Str::contains($key, '.') && Str::contains($key, '/');
     }
@@ -104,7 +104,7 @@ class ConfigLoader
      * @param  array  ...$params
      * @return mixed
      */
-    public function get(string $key, ...$params)
+    public function get($key, ...$params)
     {
         if (class_exists($key)) {
             $class = $key;
@@ -171,7 +171,7 @@ class ConfigLoader
      * @param  string $key
      * @return string
      */
-    public function getNamespaceFromKey(string $key)
+    public function getNamespaceFromKey($key)
     {
         $name = '';
         foreach (explode('.', $key) as $part) {
