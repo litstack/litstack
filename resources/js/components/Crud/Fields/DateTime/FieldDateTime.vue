@@ -13,6 +13,7 @@
 				:only-time="field.only_time"
 				:right="field.right"
 				:minute-interval="field.minute_interval"
+				:disabled-hours="field.disabled_hours"
 				color="var(--primary)"
 				v-on:input="$emit('input', $event)"
 			/>

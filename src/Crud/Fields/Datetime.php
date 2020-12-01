@@ -154,4 +154,17 @@ class Datetime extends BaseField
 
         return $this;
     }
+
+    /**
+     * Set disabled hours option.
+     *
+     * @param  int   $disabledHours
+     * @return $this
+     */
+    public function disabledHours(array $disabledHours = [])
+    {
+        $this->setAttribute('disabled_hours', $disabledHours);
+
+        return $this;
+    }
 }

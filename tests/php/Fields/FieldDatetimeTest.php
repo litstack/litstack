@@ -81,4 +81,18 @@ class FieldDatetimeTest extends BackendTestCase
         // Assert method returns field instance.
         $this->assertEquals($this->field, $this->field->minuteInterval());
     }
+
+    /** @test */
+    public function test_disabled_hours_method()
+    {
+        $this->field->disabledHours(['00', '01']);
+        $this->assertArrayHasKey('disabled_hours', $this->field->getAttributes());
+        $this->assertEquals(['00', '01'], $this->field->getAttribute('disabled_hours'));
+
+        $this->field->disabledHours();
+        $this->assertEquals([], $this->field->getAttribute('disabled_hours'));
+
+        // Assert method returns field instance.
+        $this->assertEquals($this->field, $this->field->disabledHours());
+    }
 }
