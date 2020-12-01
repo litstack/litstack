@@ -9,6 +9,7 @@ use Ignite\Crud\Models\LitFormModel;
 use Ignite\Crud\Requests\CrudCreateRequest;
 use Ignite\Crud\Requests\CrudReadRequest;
 use Ignite\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class DefaultRepository extends BaseFieldRepository
@@ -29,10 +30,9 @@ class DefaultRepository extends BaseFieldRepository
     /**
      * Update model.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     * @param object            $payload
-     *
+     * @param  CrudUpdateRequest $request
+     * @param  mixed             $model
+     * @param  object            $payload
      * @return CrudJs
      */
     public function update(CrudUpdateRequest $request, $model, $payload)
@@ -83,7 +83,7 @@ class DefaultRepository extends BaseFieldRepository
      * Filter pivot attributes.
      *
      * @param  array $attributes
-     * @return void
+     * @return array
      */
     protected function filterPivotAttributes($attributes)
     {
@@ -108,12 +108,12 @@ class DefaultRepository extends BaseFieldRepository
     /**
      * Store new model.
      *
-     * @param CrudCreateRequest $request
-     * @param object            $payload
-     *
+     * @param  CrudCreateRequest $request
+     * @param  object            $payload
+     * @param  Model             $model
      * @return CrudJs
      */
-    public function store(CrudCreateRequest $request, $payload)
+    public function store(CrudCreateRequest $request, $payload, $model = null)
     {
         CrudValidator::validate(
             (array) $payload,
@@ -127,8 +127,11 @@ class DefaultRepository extends BaseFieldRepository
             $attributes[$this->config->orderColumn] = $this->controller->getQuery()->count() + 1;
         }
 
-        $model = $this->controller->getModel();
-        $model = $this->controller->initialQuery()->make($attributes);
+        if (is_null($model)) {
+            $model = $this->controller->initialQuery()->make($attributes);
+        } else {
+            $model->fill($attributes);
+        }
 
         $this->fillAttributesToModel($model, (array) $payload);
         $this->controller->fillOnStore($model);
@@ -163,14 +166,18 @@ class DefaultRepository extends BaseFieldRepository
     /**
      * Get relation model.
      *
-     * @param  Request    $request
-     * @param  mixed      $model
-     * @return Repeatable
+     * @param  Request $request
+     * @param  mixed   $model
+     * @return Model
      */
     public function getModel(Request $request, $model, $childRepository)
     {
         if (! $this->field instanceof LaravelRelationField) {
             abort(404);
+        }
+
+        if (is_null($request->relation_id)) {
+            return $this->field->getRelationQuery($model)->make();
         }
 
         return $this->field->getRelationQuery($model)

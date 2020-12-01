@@ -58,7 +58,9 @@ class BelongsToManyRepository extends BaseFieldRepository
      */
     public function destroy(CrudUpdateRequest $request, $model)
     {
-        $related = $this->getRelated($request, $model);
+        if (! $related = $this->getRelatedOrDelete($request, $model)) {
+            return;
+        }
 
         $model->{$this->field->id}()->detach($related->getKey());
     }

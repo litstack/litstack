@@ -64,7 +64,9 @@ class MorphOneRepository extends BaseFieldRepository
      */
     public function destroy(CrudUpdateRequest $request, $model)
     {
-        $related = $this->getRelated($request, $model);
+        if (! $related = $this->getRelatedOrDelete($request, $model)) {
+            return;
+        }
 
         $morphOne = $this->field->getRelationQuery($model);
 

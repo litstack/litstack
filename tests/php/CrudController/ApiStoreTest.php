@@ -29,8 +29,8 @@ class ApiStoreTest extends BackendTestCase
     {
         // Asserting 302 since we have the creationRule required for the title.
         $url = $this->getCrudRoute('/api/show');
-        $response = $this->post($url);
-        $response->assertStatus(302);
+        $response = $this->json('POST', $url);
+        $response->assertJsonValidationErrors('title');
     }
 
     /** @test */
@@ -38,15 +38,15 @@ class ApiStoreTest extends BackendTestCase
     {
         // Asserting 302 since we have the rule min:2 for the title.
         $url = $this->getCrudRoute('/api/show');
-        $response = $this->post($url, ['payload' => ['title' => 'a']]);
-        $response->assertStatus(302);
+        $response = $this->json('POST', $url, ['payload' => ['title' => 'a']]);
+        $response->assertJsonValidationErrors('title');
     }
 
     /** @test */
     public function it_stores_model()
     {
         $url = $this->getCrudRoute('/api/show');
-        $response = $this->post($url, [
+        $response = $this->json('POST', $url, [
             'payload' => ['title' => 'dummy title'],
         ]);
         $response->assertStatus(200);

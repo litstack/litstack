@@ -7,7 +7,7 @@
 		:title="__('crud.fields.relation.unlink')"
 		@click="$emit('unlink', item)"
 	>
-		<lit-fa-icon icon="unlink" />
+		<lit-fa-icon :icon="field.delete_unlinked ? 'trash-alt' : 'unlink'" />
 	</b-button>
 </template>
 
@@ -15,6 +15,10 @@
 export default {
 	name: 'FieldRelationColUnlink',
 	props: {
+		field: {
+			type: Object,
+			required: true,
+		},
 		item: {
 			type: Object,
 			required: true,

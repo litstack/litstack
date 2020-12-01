@@ -3,7 +3,11 @@
 		:id="`modal-${field.id}-${relation.id}`"
 		:title="__('base.item_remove', { item: field.names.singular })"
 	>
-		{{ __('crud.fields.relation.messages.confirm_unlink') }}
+		{{
+			field.delete_unlinked
+				? __('base.messages.are_you_sure')
+				: __('crud.fields.relation.messages.confirm_unlink')
+		}}
 
 		<template v-slot:modal-footer>
 			<b-button

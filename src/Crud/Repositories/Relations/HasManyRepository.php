@@ -68,7 +68,9 @@ class HasManyRepository extends BaseFieldRepository
      */
     public function destroy(CrudUpdateRequest $request, $model)
     {
-        $related = $this->getRelated($request, $model);
+        if (! $related = $this->getRelatedOrDelete($request, $model)) {
+            return;
+        }
 
         $hasMany = $this->field->getRelationQuery($model);
 
