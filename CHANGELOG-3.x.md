@@ -9,7 +9,7 @@
 - Added `right` method to `datetime` field ([#96](https://github.com/litstack/litstack/pull/96))
 - Added boolean support for table column value options ([
 129f722](https://github.com/litstack/litstack/commit/129f722e26f5af7f386cc46e2b4aac9fe783ea49))
-- Added datetime field methods `minuteInterval` and disableHours ([110](https://github.com/litstack/litstack/pull/110))
+- Added datetime field methods `minuteInterval` and `disableHours` ([#110](https://github.com/litstack/litstack/pull/110))
 
 ### Fixed
 - Fixed relation form modal closing after saving ([62db77e](https://github.com/litstack/litstack/commit/62db77e92fe5b29d7fdd27393e7e8c3a41f4573d))
