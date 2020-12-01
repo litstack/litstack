@@ -141,4 +141,17 @@ class Datetime extends BaseField
 
         return $this;
     }
+
+    /**
+     * Set timepicker minute interval.
+     *
+     * @param  int   $interval
+     * @return $this
+     */
+    public function minuteInterval(int $interval = 1)
+    {
+        $this->setAttribute('minute_interval', $interval);
+
+        return $this;
+    }
 }

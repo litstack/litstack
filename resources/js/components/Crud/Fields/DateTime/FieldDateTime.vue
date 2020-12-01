@@ -11,7 +11,8 @@
 				:formatted="field.formatted"
 				:only-date="field.only_date"
 				:only-time="field.only_time"
-		                :right="field.right"
+				:right="field.right"
+				:minute-interval="field.minute_interval"
 				color="var(--primary)"
 				v-on:input="$emit('input', $event)"
 			/>
