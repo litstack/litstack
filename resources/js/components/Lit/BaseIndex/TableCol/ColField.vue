@@ -1,6 +1,6 @@
 <template>
-	<div class="d-flex align-items-center">
-		<lit-field :model="item" :field="Lit.clone(field)" />
+	<div class="d-flex align-items-center row">
+		<lit-field :model="item" :field="Lit.clone(colField)" />
 	</div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
 		item: {
 			type: Object,
 		},
-		field: {
+		colField: {
 			type: Object,
 		},
 	},

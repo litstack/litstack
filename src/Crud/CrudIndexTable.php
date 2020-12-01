@@ -4,7 +4,6 @@ namespace Ignite\Crud;
 
 use Ignite\Config\ConfigHandler;
 use Ignite\Contracts\Page\Action;
-use Ignite\Contracts\Page\ColumnBuilder;
 use Ignite\Crud\Filter\FilterForm;
 use Ignite\Page\Table\Table;
 
@@ -27,11 +26,11 @@ class CrudIndexTable extends Table
     /**
      * Create new CrudIndexTable instance.
      *
-     * @param  ConfigHandler $config
-     * @param  ColumnBuilder $builder
+     * @param  ConfigHandler     $config
+     * @param  CrudColumnBuilder $builder
      * @return void
      */
-    public function __construct(ConfigHandler $config, ColumnBuilder $builder)
+    public function __construct(ConfigHandler $config, CrudColumnBuilder $builder)
     {
         $this->config = $config;
 
