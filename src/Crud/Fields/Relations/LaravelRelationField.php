@@ -518,4 +518,17 @@ class LaravelRelationField extends RelationField
 
         return $this;
     }
+
+    /**
+     * Option to hide the relation link.
+     *
+     * @param  bool  $hidden
+     * @return $this
+     */
+    public function hideRelationLink(bool $hidden = true)
+    {
+        $this->setAttribute('hide_relation_link', $hidden);
+
+        return $this;
+    }
 }
