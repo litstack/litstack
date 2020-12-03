@@ -13,6 +13,26 @@ trait HasMedia
     use InteractsWithMedia;
 
     /**
+     * The key to determine which conversions in config should be used.
+     *
+     * @var string
+     */
+    protected $conversionsKey = 'default';
+
+    /**
+     * Set the conversions key.
+     *
+     * @param  string $key
+     * @return $this
+     */
+    public function setConversionsKey(string $key): self
+    {
+        $this->conversionsKey = $key;
+
+        return $this;
+    }
+
+    /**
      * Media relation.
      *
      * @return morphMany
@@ -31,9 +51,15 @@ trait HasMedia
      */
     public function registerMediaConversions(SpatieMedia $media = null): void
     {
+        $possibleConversions = config('lit.mediaconversions');
+
+        if (! array_key_exists($this->conversionsKey, $possibleConversions)) {
+            throw new \Exception('The conversions key does not exist in the config.');
+        }
+
         $this->applyCrop($this->addMediaConversion('preview'), $media);
 
-        foreach (config('lit.mediaconversions.default') as $key => $value) {
+        foreach ($possibleConversions[$this->conversionsKey] as $key => $value) {
             $conversion = $this->addMediaConversion($key)
                 ->keepOriginalImageFormat()
                 ->width($value[0])
