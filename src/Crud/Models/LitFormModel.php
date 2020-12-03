@@ -9,7 +9,6 @@ use Ignite\Crud\Fields\Relations\ManyRelationField;
 use Ignite\Crud\RelationField;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 
 /**
  * The LitFormModel stores field data in as json in a column.
@@ -50,17 +49,6 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
      * @var array|null
      */
     protected $translationsArray;
-
-    /**
-     * Register media conversions for field.
-     *
-     * @param  SpatieMedia $media
-     * @return void
-     */
-    public function registerMediaConversions(SpatieMedia $media = null): void
-    {
-        $this->registerCrudMediaConversions($media);
-    }
 
     /**
      * Get translation attribute.

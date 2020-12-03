@@ -29,7 +29,7 @@ trait HasMedia
      * @param  SpatieMedia $media
      * @return void
      */
-    public function registerCrudMediaConversions(SpatieMedia $media = null)
+    public function registerMediaConversions(SpatieMedia $media = null): void
     {
         $this->applyCrop($this->addMediaConversion('preview'), $media);
 
