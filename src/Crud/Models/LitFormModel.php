@@ -18,7 +18,7 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     use Translatable,
         Concerns\HasConfig,
         Concerns\HasFields,
-        Concerns\HasMedia;
+        Traits\HasMedia;
 
     /**
      * "value" is translatable but since non translatable fields are stored in

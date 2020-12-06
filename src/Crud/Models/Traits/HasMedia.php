@@ -1,6 +1,6 @@
 <?php
 
-namespace Ignite\Crud\Models\Concerns;
+namespace Ignite\Crud\Models\Traits;
 
 use Ignite\Crud\Models\Media;
 use Illuminate\Database\Eloquent\Relations\MorphMany;

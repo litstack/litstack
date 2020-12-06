@@ -31,7 +31,7 @@ trait CreatesModels
         // model has media
         if ($this->media) {
             $builder->withTraits("use Spatie\MediaLibrary\HasMedia as HasMediaContract;");
-            $builder->withTraits("use Ignite\Crud\Models\Concerns\HasMedia;");
+            $builder->withTraits("use Ignite\Crud\Models\Traits\HasMedia;");
 
             $attributeContents = file_get_contents(lit_vendor_path('stubs/crud.model.media.attribute.stub'));
             $builder->withGetAttributes($attributeContents);
