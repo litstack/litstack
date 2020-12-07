@@ -2,6 +2,7 @@
 
 namespace Ignite\Crud\Repositories\Relations\Concerns;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 trait ManagesRelated
@@ -15,6 +16,35 @@ trait ManagesRelated
     protected function getRelated(Request $request, $model)
     {
         return $this->field->getQuery()->findOrFail($request->related_id);
+    }
+
+    /**
+     * Get related model from request and delete if it should be deleted.
+     *
+     * @param  Request $request
+     * @return mixed
+     */
+    public function getRelatedOrDelete(Request $request, $model)
+    {
+        return $this->deleteIfDesired(
+            $request, $this->getRelated($request, $model)
+        );
+    }
+
+    /**
+     * Delete the related model if.
+     *
+     * @param  Request    $request
+     * @param  Model      $model
+     * @return void|Model
+     */
+    protected function deleteIfDesired(Request $request, Model $related)
+    {
+        if (! $request->delete_unlinked) {
+            return $related;
+        }
+
+        $related->delete();
     }
 
     /**

@@ -35,7 +35,9 @@ class CrudFormConfigFactory extends ConfigFactory
             $page->navigationControls()->action(ucfirst(__lit('base.delete')), DestroyAction::class);
         }
 
-        $page->navigationRight()->component('lit-crud-language');
+        if (is_translatable($config->model)) {
+            $page->navigationRight()->component('lit-crud-language');
+        }
 
         $page->breadcrumb($this->getBreadcrumb($config));
         // if ($config->has('index')) {

@@ -70,6 +70,7 @@ class HasOneRepositoryTest extends BackendTestCase
 
         $request = m::mock(CrudUpdateRequest::class);
         $request->related_id = $phone->id;
+        $request->delete_unlinked = false;
 
         $this->field->shouldReceive('getQuery')->andReturn($phone->query());
         $this->field->shouldReceive('getRelationQuery')->andReturn($user->phone());

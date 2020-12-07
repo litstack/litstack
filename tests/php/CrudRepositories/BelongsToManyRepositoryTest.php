@@ -110,6 +110,7 @@ class BelongsToManyRepositoryTest extends BackendTestCase
 
         $request = m::mock(CrudUpdateRequest::class);
         $request->related_id = $user->id;
+        $request->delete_unlinked = false;
 
         $this->field->shouldReceive('getAttribute')->once()->withArgs(['id'])->andReturn('users');
         $this->field->shouldReceive('getQuery')->once()->andReturn($user->query());

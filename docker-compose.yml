@@ -1,0 +1,16 @@
+version: '3'
+
+networks:
+  laravel:
+
+services:
+  php:
+    image: thomasowow/laravel-php:7.4
+    container_name: li-php
+    tty: true
+    environment:
+      - COMPOSER_MEMORY_LIMIT=-1
+    volumes:
+      - .:/var/www/html:cached
+    networks:
+      - laravel
