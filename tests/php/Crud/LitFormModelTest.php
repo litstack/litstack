@@ -104,7 +104,6 @@ class LitFormModelTest extends BackendTestCase
         $media->file_name = 'foo';
         $media->disk = 'foo';
         $media->manipulations = 'foo';
-        $media->generated_conversions = 'foo';
         $media->responsive_images = 'foo';
         $media->custom_properties = [];
         $media->size = 0;
@@ -134,7 +133,6 @@ class LitFormModelTest extends BackendTestCase
         $media->file_name = 'foo';
         $media->disk = 'foo';
         $media->manipulations = 'foo';
-        $media->generated_conversions = 'foo';
         $media->responsive_images = 'foo';
         $media->custom_properties = [];
         $media->size = 0;
