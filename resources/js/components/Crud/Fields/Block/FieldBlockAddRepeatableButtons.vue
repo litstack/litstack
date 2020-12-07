@@ -1,7 +1,7 @@
 <template>
 	<div class="mt-2">
 		<b-button
-			class="mr-2"
+			class="text-capitalize mr-2"
 			:class="`lit-block-add-${type}`"
 			size="sm"
 			v-for="(repeatable, type) in field.repeatables"
