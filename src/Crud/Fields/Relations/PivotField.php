@@ -3,6 +3,7 @@
 namespace Ignite\Crud\Fields\Relations;
 
 use Ignite\Crud\BaseForm;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 class PivotField extends BaseForm
@@ -41,7 +42,11 @@ class PivotField extends BaseForm
 
         $this->form
             ->getParentField()
-            ->query(fn ($query) => $query->withPivot($field->id));
+            ->query(function ($query) use ($field) {
+                if ($query instanceof BelongsToMany) {
+                    $query->withPivot($field->id);
+                }
+            });
 
         return $field;
     }
