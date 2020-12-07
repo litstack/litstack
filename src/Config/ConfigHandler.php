@@ -51,6 +51,18 @@ class ConfigHandler
 
         $this->findConfigFactories();
     }
+    
+    /**
+     * Set a config attribute.
+     *
+     * @param string $attribute
+     * @param mixed $value
+     * @return void
+     */
+    public function set($attribute, $value)
+    {
+        $this->attributes[$attribute] = $value;
+    }
 
     /**
      * Get namespace of the config.
