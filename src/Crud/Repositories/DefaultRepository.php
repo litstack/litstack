@@ -180,8 +180,10 @@ class DefaultRepository extends BaseFieldRepository
             return $this->field->getRelationQuery($model)->make();
         }
 
-        return $this->field->getRelationQuery($model)
-            ->where('id', $request->relation_id)
+        $query = $this->field->getRelationQuery($model);
+
+        return $query
+            ->where($query->qualifyColumn('id'), $request->relation_id)
             ->firstOrFail();
     }
 }
