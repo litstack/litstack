@@ -6,6 +6,7 @@ use Ignite\Crud\CrudResource;
 use Ignite\Crud\Models\Media;
 use Ignite\Crud\Models\Repeatable;
 use Illuminate\Support\Facades\Storage;
+use PDOException;
 use Tests\BackendTestCase;
 use Tests\Crud\Fixtures\DummyLitFormModel;
 
@@ -109,7 +110,15 @@ class LitFormModelTest extends BackendTestCase
         $media->size = 0;
         $media->model_type = DummyLitFormModel::class;
         $media->model_id = $model->id;
-        $media->save();
+        $media->fill([
+            'generated_conversions' => 'foo',
+        ]);
+
+        try {
+            $media->save();
+        } catch (PDOException $e) {
+            $this->markTestSkipped('Skipping for spatie/media-library < ^9.0');
+        }
 
         $this->assertInstanceOf(\Illuminate\Support\Collection::class, $model->images);
         $this->assertCount(1, $model->images);
@@ -127,7 +136,7 @@ class LitFormModelTest extends BackendTestCase
         ]);
         $model->save();
 
-        $media = new Media;
+        $media = new Media();
         $media->collection_name = 'image';
         $media->name = 'foo';
         $media->file_name = 'foo';
@@ -138,7 +147,15 @@ class LitFormModelTest extends BackendTestCase
         $media->size = 0;
         $media->model_type = DummyLitFormModel::class;
         $media->model_id = $model->id;
-        $media->save();
+        $media->fill([
+            'generated_conversions' => 'foo',
+        ]);
+
+        try {
+            $media->save();
+        } catch (PDOException $e) {
+            $this->markTestSkipped('Skipping for spatie/media-library < ^9.0');
+        }
 
         $this->assertInstanceOf(Media::class, $model->image);
         $this->assertEquals($media->id, $model->image->id);
