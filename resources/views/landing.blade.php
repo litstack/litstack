@@ -17,6 +17,10 @@
 
     <link href="{{ route('lit.css') }}" rel="stylesheet"/>
 
+    @foreach(lit_app()->getStyles() as $path)
+        <link href="{{ $path }}{{ asset_time() }}" rel="stylesheet">
+    @endforeach
+
     @include('litstack::partials.google_analytics')
 </head>
 

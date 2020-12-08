@@ -72,6 +72,7 @@
                         variant="primary"
                         size="md"
                         :disabled="!canSave"
+                        class="text-capitalize"
                         @click="Lit.bus.$emit('save')"
                     >
                         {{ __('base.save') }}

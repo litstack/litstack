@@ -5,14 +5,14 @@
 		:class="`lit-block-${field.id}`"
 	>
 		<template slot="title-right">
-			<a href="#" @click="toggleExpand" v-if="!this.create">
+			<a href="#" @click="toggleExpand" v-if="!this.create" class="text-capitalize">
 				<lit-fa-icon :icon="expandedAll ? 'angle-up' : 'angle-down'" />
 				{{
 					__(
 						`crud.fields.block.${
 							expandedAll ? 'collapse_all' : 'expand_all'
 						}`
-					).toLowerCase()
+					)
 				}}
 			</a>
 		</template>
