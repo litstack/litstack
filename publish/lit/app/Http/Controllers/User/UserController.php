@@ -2,8 +2,8 @@
 
 namespace Lit\Http\Controllers\User;
 
-use Illuminate\Contracts\Auth\Access\Authorizable;
 use Ignite\Crud\Controllers\CrudController;
+use Illuminate\Contracts\Auth\Access\Authorizable;
 use Lit\Models\User;
 
 class UserController extends CrudController

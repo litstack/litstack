@@ -51,7 +51,7 @@ class ConfigHandler
 
         $this->findConfigFactories();
     }
-    
+
     /**
      * Set a config attribute.
      *
