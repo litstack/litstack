@@ -185,15 +185,15 @@ return [
 
     'fields' => [
         /**
-         * Configuration for the WYSIWYG-Editor
+         * Configuration for the WYSIWYG-Editor.
          */
         'wysiwyg' => [
             /**
-             * The Headline-Levels that can be set
+             * The Headline-Levels that can be set.
              */
-            'headingLevels' => [2,3,4],
+            'headingLevels' => [2, 3, 4],
             /**
-             * Controls that should be shown in the WYSIWYG-Editor
+             * Controls that should be shown in the WYSIWYG-Editor.
              */
             'controls' => [
                 'format',
@@ -206,12 +206,12 @@ return [
                 'blockquote',
                 'href',
                 'colors',
-                'table'
+                'table',
             ],
             /**
              * Font colors to chose from
              */
-            'colors' => ['#4951f2', '#f67693', '#f6ed76', '#9ff2ae', '#83c2ff', '#70859c']
-        ]
+            'colors' => ['#4951f2', '#f67693', '#f6ed76', '#9ff2ae', '#83c2ff', '#70859c'],
+        ],
     ],
 ];
