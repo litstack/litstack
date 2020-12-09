@@ -105,52 +105,52 @@ export default {
     props: {
         namePlural: {
             type: String,
-            required: true
+            required: true,
         },
         sortable: {
             type: Boolean,
-            required: true
+            required: true,
         },
         cols: {
             required: true,
-            type: Array
+            type: Array,
         },
         items: {
             type: [Object, Array],
-            required: true
+            required: true,
         },
         radio: {
             type: Boolean,
             default() {
                 return false;
-            }
+            },
         },
         noSelect: {
             type: Boolean,
             default() {
                 return false;
-            }
+            },
         },
         noHead: {
             type: Boolean,
             default() {
                 return false;
-            }
+            },
         },
         small: {
             type: Boolean,
             default() {
                 return false;
-            }
+            },
         },
         busy: {
             type: Boolean,
-            required: true
+            required: true,
         },
         selectedItems: {
             type: Array,
-            required: true
-        }
+            required: true,
+        },
     },
     beforeMount() {
         this.sortableItems = this.items;
@@ -159,7 +159,7 @@ export default {
         return {
             selectedAll: false,
             indeterminate: false,
-            sortableItems: []
+            sortableItems: [],
         };
     },
     watch: {
@@ -182,7 +182,7 @@ export default {
             }
             this.selectedAll = false;
             this.indeterminate = val.length > 0 ? true : false;
-        }
+        },
     },
     computed: {
         ...mapGetters(['config']),
@@ -196,7 +196,7 @@ export default {
                 span++;
             }
             return span;
-        }
+        },
     },
     methods: {
         updateRow(row) {
@@ -257,13 +257,13 @@ export default {
             this.$emit('loadItems');
         },
         isItemSelected(item) {
-            return this.selectedItems.find(model => {
+            return this.selectedItems.find((model) => {
                 return model ? model.id == item.id : false;
             })
                 ? true
                 : false;
-        }
-    }
+        },
+    },
 };
 </script>
 

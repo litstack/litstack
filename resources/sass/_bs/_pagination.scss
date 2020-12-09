@@ -5,13 +5,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 0 .2rem;
+        margin: 0 0.2rem;
         border-radius: 0.625rem;
         color: $secondary;
     }
 
     li {
-
         a,
         span {
             border: none;
@@ -21,7 +20,6 @@
         &:nth-child(2),
         &:nth-last-child(1),
         &:nth-last-child(2) {
-
             a,
             span {
                 border: 1px solid $secondary;
@@ -41,7 +39,6 @@
                 }
             }
         }
-
     }
 
     .page-item.active .page-link {

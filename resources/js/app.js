@@ -6,5 +6,5 @@ import Litstack from './litstack';
 const store = {};
 
 new Litstack({
-	store,
+    store,
 });

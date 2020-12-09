@@ -11,12 +11,12 @@ export default {
     props: {
         selectedItems: {
             type: Array,
-            required: true
+            required: true,
         },
         routePrefix: {
             required: true,
-            type: String
-        }
+            type: String,
+        },
     },
     methods: {
         async deleteAll() {
@@ -31,7 +31,7 @@ export default {
             }
 
             this.$emit('reload');
-        }
-    }
+        },
+    },
 };
 </script>

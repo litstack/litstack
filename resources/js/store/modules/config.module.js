@@ -34,7 +34,7 @@ const initialState = {
     /**
      * whether debug mode is enabled.
      */
-    debug: false
+    debug: false,
 };
 
 const getters = {
@@ -64,7 +64,7 @@ const getters = {
     },
     lit_config(state) {
         return state.lit_config;
-    }
+    },
 };
 
 export const actions = {};
@@ -94,12 +94,12 @@ export const mutations = {
     SET_LANGUAGE(state, lng) {
         state.language = lng;
         Lit.bus.$emit('languageChanged', state.language);
-    }
+    },
 };
 
 export default {
     state,
     actions,
     mutations,
-    getters
+    getters,
 };

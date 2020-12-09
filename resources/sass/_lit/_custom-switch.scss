@@ -1,8 +1,8 @@
 .custom-switch {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .custom-control-input:disabled ~ .custom-control-label:before,
 .custom-control-input[disabled] ~ .custom-control-label:before {
-	background-color: #c3cad2;
+    background-color: #c3cad2;
 }

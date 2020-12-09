@@ -1,8 +1,8 @@
 // .lit-hide is hidden while the process of loading vue.
 .lit-hide {
-	display: none;
+    display: none;
 
-	&.show {
-		display: unset;
-	}
+    &.show {
+        display: unset;
+    }
 }

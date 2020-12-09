@@ -24,7 +24,7 @@
                             <vue-dropzone
                                 v-if="
                                     !field.readonly &&
-                                        images.length < field.maxFiles
+                                    images.length < field.maxFiles
                                 "
                                 slot="drop"
                                 class="lit-dropzone"

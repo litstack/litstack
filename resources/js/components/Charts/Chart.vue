@@ -16,14 +16,12 @@
                 <lit-spinner :variant="reverse" />
             </div>
             <div
-                :class="
-                    `lit-chart__wrapper ${
-                        chart.type == 'number' ? 'lit-chart__number' : ''
-                    }`
-                "
-                :style="
-                    `display: ${busy ? 'none' : 'block'};height: ${height};`
-                "
+                :class="`lit-chart__wrapper ${
+                    chart.type == 'number' ? 'lit-chart__number' : ''
+                }`"
+                :style="`display: ${
+                    busy ? 'none' : 'block'
+                };height: ${height};`"
             >
                 <component
                     v-if="chart.type != 'number'"
@@ -45,8 +43,8 @@
                     <template
                         v-if="
                             chart.type == 'area' ||
-                                chart.type == 'bar' ||
-                                chart.type == 'number'
+                            chart.type == 'bar' ||
+                            chart.type == 'number'
                         "
                     >
                         <h3 class="mb-0">
@@ -76,7 +74,7 @@
                         small
                         type="grow"
                         :variant="reverse"
-                        style="position:absolute;top:1.5rem;right:1.5rem;"
+                        style="position: absolute; top: 1.5rem; right: 1.5rem;"
                     />
                 </div>
             </div>
@@ -99,15 +97,15 @@ export default {
          * Component.
          */
         component: {
-            type: String
+            type: String,
         },
 
         /**
          * Crud model.
          */
         model: {
-            type: Object
-        }
+            type: Object,
+        },
     },
     data() {
         return {
@@ -166,8 +164,8 @@ export default {
              */
             active: {
                 title: 'Last 7 days',
-                key: 'last7days'
-            }
+                key: 'last7days',
+            },
         };
     },
     computed: {
@@ -207,12 +205,12 @@ export default {
             if (this.trend == 'up') return 'arrow-up';
             if (this.trend == 'down') return 'arrow-down';
             if (this.trend == 'same') return 'arrow-left';
-        }
+        },
     },
     beforeMount() {
         this.setHeight();
 
-        Lit.bus.$on('chartRangeChanged', range => (this.active = range));
+        Lit.bus.$on('chartRangeChanged', (range) => (this.active = range));
     },
     async mounted() {
         this.busy = true;
@@ -224,7 +222,7 @@ export default {
             this.busyReloading = true;
             await this.loadData();
             this.busyReloading = false;
-        }
+        },
     },
     methods: {
         /**
@@ -293,7 +291,7 @@ export default {
                 return await axios.post('chart-data', {
                     id: this.chart.send_model_id ? this.model?.id : null,
                     key: this.chart.name,
-                    type: this.active.key
+                    type: this.active.key,
                 });
             } catch (e) {
                 console.log(e);
@@ -326,8 +324,8 @@ export default {
             }
 
             this.result = this.format(this.result);
-        }
-    }
+        },
+    },
 };
 </script>
 

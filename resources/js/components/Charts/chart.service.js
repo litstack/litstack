@@ -13,7 +13,7 @@ export const COLORS = [
     '#67C2C5',
     '#8A70CF',
     '#FFFC67',
-    '#FEE566'
+    '#FEE566',
 ];
 
 export function firstColor(variant) {

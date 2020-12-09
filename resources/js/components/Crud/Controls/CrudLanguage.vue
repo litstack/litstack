@@ -20,12 +20,12 @@ export default {
                         class: { active: this.active(lang) },
                         attrs: {
                             variant: 'outline-primary',
-                            size: 'md'
+                            size: 'md',
                         },
                         on: {
-                            click: () => this.setLanguage(lang)
+                            click: () => this.setLanguage(lang),
                         },
-                        key: i
+                        key: i,
                     },
 
                     lang
@@ -40,8 +40,8 @@ export default {
                     variant: 'outline-primary',
                     split: true,
                     'split-variant': 'primary',
-                    text: this.language
-                }
+                    text: this.language,
+                },
             },
             children
         );
@@ -65,7 +65,7 @@ export default {
          */
         active(language) {
             return language == this.language;
-        }
+        },
     },
     computed: {
         ...mapGetters(['language', 'languages']),
@@ -95,7 +95,7 @@ export default {
          */
         child() {
             return this.dropdown ? 'b-dropdown-item' : 'b-button';
-        }
-    }
+        },
+    },
 };
 </script>

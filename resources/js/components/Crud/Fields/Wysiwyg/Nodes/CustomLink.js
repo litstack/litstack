@@ -9,7 +9,7 @@ export default class CustomLink extends Mark {
 
     get defaultOptions() {
         return {
-            openOnClick: false
+            openOnClick: false,
         };
     }
 
@@ -17,34 +17,34 @@ export default class CustomLink extends Mark {
         return {
             attrs: {
                 href: {
-                    default: null
+                    default: null,
                 },
                 target: {
-                    default: '_self'
-                }
+                    default: '_self',
+                },
             },
             inclusive: false,
             parseDOM: [
                 {
                     tag: 'a[href]',
-                    getAttrs: dom => ({
+                    getAttrs: (dom) => ({
                         href: dom.getAttribute('href'),
-                        target: dom.getAttribute('target')
-                    })
-                }
+                        target: dom.getAttribute('target'),
+                    }),
+                },
             ],
-            toDOM: node => [
+            toDOM: (node) => [
                 'a',
                 {
-                    ...node.attrs
+                    ...node.attrs,
                 },
-                0
-            ]
+                0,
+            ],
         };
     }
 
     commands({ type }) {
-        return attrs => {
+        return (attrs) => {
             if (attrs.href) {
                 return updateMark(type, attrs);
             }
@@ -58,8 +58,8 @@ export default class CustomLink extends Mark {
             pasteRule(
                 /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-zA-Z]{2,}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
                 type,
-                url => ({ href: url })
-            )
+                (url) => ({ href: url })
+            ),
         ];
     }
 
@@ -85,9 +85,9 @@ export default class CustomLink extends Mark {
                             event.stopPropagation();
                             window.open(attrs.href);
                         }
-                    }
-                }
-            })
+                    },
+                },
+            }),
         ];
     }
 }

@@ -15,13 +15,13 @@ export default {
             type: [Number, String],
             default() {
                 return 12;
-            }
-        }
+            },
+        },
     },
     computed: {
         cols() {
             return this.bCols(Number(this.width));
-        }
-    }
+        },
+    },
 };
 </script>

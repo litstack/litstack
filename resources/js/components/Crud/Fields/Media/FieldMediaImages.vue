@@ -53,11 +53,9 @@
                 <img
                     v-if="field.type == 'image'"
                     :src="imgPath(image)"
-                    :style="
-                        `object-fit: ${
-                            field.showFullImage ? 'contain' : 'cover'
-                        }`
-                    "
+                    :style="`object-fit: ${
+                        field.showFullImage ? 'contain' : 'cover'
+                    }`"
                 />
                 <lit-fa-icon
                     v-else

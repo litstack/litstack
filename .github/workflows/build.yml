@@ -32,7 +32,7 @@ jobs:
                   author_name: ${{ github.event.pusher.name }}
                   author_email: ${{ github.event.pusher.email }}
 
-                  message: "Apply production build from CI
-                  
-                  
-                  Co-authored-by: aw-ci-bot <bot@aw-studio.de>"
+                  message: 'Apply production build from CI
+
+
+                      Co-authored-by: aw-ci-bot <bot@aw-studio.de>'

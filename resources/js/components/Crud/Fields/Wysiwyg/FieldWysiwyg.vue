@@ -204,9 +204,7 @@
                                     @click="
                                         setFontColor(commands.font_color, color)
                                     "
-                                    :style="
-                                        `background: ${color}; border-color: ${color}`
-                                    "
+                                    :style="`background: ${color}; border-color: ${color}`"
                                 ></b-button>
                             </div>
                         </b-dropdown>
@@ -303,7 +301,7 @@ import {
     Table,
     TableHeader,
     TableCell,
-    TableRow
+    TableRow,
 } from 'tiptap-extensions';
 import CustomLink from './Nodes/CustomLink';
 import FontColor from './Nodes/FontColor';
@@ -315,30 +313,30 @@ export default {
         EditorContent,
         EditorMenuBar,
         'v-style': {
-            render: function(createElement) {
+            render: function (createElement) {
                 return createElement('style', this.$slots.default);
-            }
-        }
+            },
+        },
     },
     props: {
         field: {
             type: Object,
-            required: true
+            required: true,
         },
         model: {
             required: true,
-            type: Object
+            type: Object,
         },
         value: {
-            required: true
-        }
+            required: true,
+        },
     },
     data() {
         return {
             editor: null,
 
             linkUrl: null,
-            target: null
+            target: null,
         };
     },
     beforeMount() {
@@ -385,8 +383,8 @@ export default {
                     new Table({ resizable: true }),
                     new TableHeader(),
                     new TableCell(),
-                    new TableRow()
-                ]
+                    new TableRow(),
+                ],
             });
         },
         format(isActive) {
@@ -424,7 +422,7 @@ export default {
                 /(^(?:\s|[^@{])*?|[},]\s*)(\/\/.*\s+|.*\/\*[^*]*\*\/\s*|@media.*{\s*|@font-face.*{\s*)*([.#]?-?[_a-zA-Z]+[_a-zA-Z0-9-]*)(?=[^}]*{)/g,
                 `$1$2 #${this.identifier} $3`
             );
-        }
+        },
     },
     computed: {
         ...mapGetters(['lit_config']),
@@ -446,8 +444,8 @@ export default {
                 this.lit_config?.fields?.wysiwyg?.colors ||
                 null
             );
-        }
-    }
+        },
+    },
 };
 </script>
 <style lang="scss">

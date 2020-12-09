@@ -77,7 +77,7 @@
                             class="dark"
                             @input="changed($event, 'title', image)"
                         />
-                        <span class="form-text" style="color:#98959c;">
+                        <span class="form-text" style="color: #98959c;">
                             {{
                                 __(
                                     'crud.fields.media.messages.image_title_hint'
@@ -101,7 +101,7 @@
                             class="dark"
                             @input="changed($event, 'alt', image)"
                         />
-                        <span class="form-text" style="color:#98959c;">
+                        <span class="form-text" style="color: #98959c;">
                             {{
                                 __('crud.fields.media.messages.image_alt_hint')
                             }}

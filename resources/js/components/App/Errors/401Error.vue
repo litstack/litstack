@@ -1,9 +1,9 @@
 <template>
-	<lit-base-error code="401" message="Unauthorized." />
+    <lit-base-error code="401" message="Unauthorized." />
 </template>
 
 <script>
 export default {
-	name: 'Error401',
+    name: 'Error401',
 };
 </script>

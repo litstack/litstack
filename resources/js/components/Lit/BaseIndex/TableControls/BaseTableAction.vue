@@ -11,19 +11,19 @@ export default {
     props: {
         selectedItems: {
             type: Array,
-            required: true
+            required: true,
         },
         title: {},
         route: {
             required: true,
-            type: String
-        }
+            type: String,
+        },
     },
     methods: {
         async runAction() {
             try {
                 let response = axios.post(`${this.route}`, {
-                    ids: _.map(this.selectedItems, 'id')
+                    ids: _.map(this.selectedItems, 'id'),
                 });
             } catch (e) {
                 console.log(e);
@@ -31,7 +31,7 @@ export default {
             }
 
             this.$emit('reload');
-        }
-    }
+        },
+    },
 };
 </script>

@@ -1,40 +1,40 @@
 div#litstack {
-	display: grid;
-	grid-template:
-		't m'
-		's m';
-	grid-template-columns: $sidebar-width 1fr;
-	grid-template-rows: $topbar_height auto;
+    display: grid;
+    grid-template:
+        't m'
+        's m';
+    grid-template-columns: $sidebar-width 1fr;
+    grid-template-rows: $topbar_height auto;
 
-	&.no-nav {
-		grid-template:
-			'm'
-			'm';
-	}
+    &.no-nav {
+        grid-template:
+            'm'
+            'm';
+    }
 
-	main {
-		grid-area: m;
-		height: 100vh;
-		overflow: hidden;
-		overflow-y: scroll;
+    main {
+        grid-area: m;
+        height: 100vh;
+        overflow: hidden;
+        overflow-y: scroll;
 
-		> .lit-content {
-			display: none;
-		}
+        > .lit-content {
+            display: none;
+        }
 
-		&.loaded > .lit-content {
-			display: block;
-		}
-	}
+        &.loaded > .lit-content {
+            display: block;
+        }
+    }
 
-	@media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
-		display: block;
+    @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
+        display: block;
 
-		main {
-			margin: $nav-height-mobile 0;
-			padding: 1rem 0;
-			height: auto;
-			overflow: visible;
-		}
-	}
+        main {
+            margin: $nav-height-mobile 0;
+            padding: 1rem 0;
+            height: auto;
+            overflow: visible;
+        }
+    }
 }

@@ -1,45 +1,45 @@
 .lit-spinner {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
 
-	pointer-events: none;
-	opacity: 1;
-	transition: 0.2s all ease;
-	z-index: 8;
+    pointer-events: none;
+    opacity: 1;
+    transition: 0.2s all ease;
+    z-index: 8;
 }
 .lit-spinner.loaded {
-	opacity: 0;
+    opacity: 0;
 }
 .lds-ripple {
-	display: inline-block;
-	position: relative;
-	width: 200px;
-	height: 200px;
+    display: inline-block;
+    position: relative;
+    width: 200px;
+    height: 200px;
 }
 .lds-ripple div {
-	position: absolute;
-	border: 5px solid $primary;
-	opacity: 1;
-	border-radius: 50%;
+    position: absolute;
+    border: 5px solid $primary;
+    opacity: 1;
+    border-radius: 50%;
 
-	animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
 .lds-ripple div:nth-child(2) {
-	animation-delay: -0.5s;
+    animation-delay: -0.5s;
 }
 @keyframes lds-ripple {
-	0% {
-		width: 0;
-		height: 0;
-		opacity: 1;
-	}
-	100% {
-		width: 200px;
-		height: 200px;
-		opacity: 0;
-	}
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+    }
 }

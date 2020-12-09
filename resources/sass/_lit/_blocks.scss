@@ -1,13 +1,13 @@
 .lit-block {
-	background-color: $block-bg;
-	border-radius: $border-radius;
-	padding: $block-spacer-y $block-spacer-x;
+    background-color: $block-bg;
+    border-radius: $border-radius;
+    padding: $block-spacer-y $block-spacer-x;
 
-	.lit-block {
-		background-color: $block-in-block-bg;
-	}
+    .lit-block {
+        background-color: $block-in-block-bg;
+    }
 
-	.lit-draggable__dragbar {
-		cursor: grab;
-	}
+    .lit-draggable__dragbar {
+        cursor: grab;
+    }
 }

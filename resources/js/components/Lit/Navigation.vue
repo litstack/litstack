@@ -119,7 +119,7 @@ export default {
         this.scrollBehavior();
         this.saveShortCut();
 
-        this.$nextTick(async function() {
+        this.$nextTick(async function () {
             await this.saveButtonIsRendered('.lit-save-button');
             let ww = window.innerWidth;
             let button = document
@@ -139,7 +139,7 @@ export default {
         scrollBehavior() {
             document
                 .querySelector('div#litstack > main')
-                .addEventListener('scroll', e => {
+                .addEventListener('scroll', (e) => {
                     let header = document.querySelector('.lit-page-navigation');
                     let toasterSlot = document.querySelector('.b-toaster-slot');
 
@@ -166,7 +166,7 @@ export default {
         saveShortCut() {
             document.addEventListener(
                 'keydown',
-                e => {
+                (e) => {
                     if (
                         (window.navigator.platform.match('Mac')
                             ? e.metaKey

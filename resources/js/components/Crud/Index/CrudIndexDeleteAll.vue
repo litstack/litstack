@@ -11,11 +11,11 @@ export default {
     props: {
         selectedItems: {
             type: Array,
-            required: true
+            required: true,
         },
         sendAction: {
-            required: true
-        }
+            required: true,
+        },
     },
     methods: {
         async deleteAll() {
@@ -25,10 +25,10 @@ export default {
             );
 
             this.$bus.$emit('reloadCrudIndex');
-        }
+        },
     },
     computed: {
-        ...mapGetters(['form'])
-    }
+        ...mapGetters(['form']),
+    },
 };
 </script>

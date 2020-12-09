@@ -8,12 +8,12 @@ require('@lit-js/service/library.service');
 import Vue from 'vue';
 import mixins from '@lit-js/common/mixins';
 Vue.mixin({
-	methods: {
-		...mixins,
-		// mocking trans methods
-		trans: (key) => key,
-		__: (key) => key,
-	},
+    methods: {
+        ...mixins,
+        // mocking trans methods
+        trans: (key) => key,
+        __: (key) => key,
+    },
 });
 
 //import { createLocalVue } from '@vue/test-utils';

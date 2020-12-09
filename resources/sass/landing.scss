@@ -1,34 +1,34 @@
 .lit-landing-page {
-	.lit-brand {
-		margin-top: $spacer * 5;
-		margin-bottom: $spacer * 6;
+    .lit-brand {
+        margin-top: $spacer * 5;
+        margin-bottom: $spacer * 6;
 
-		svg {
-			//width: 150px !important;
-		}
-	}
+        svg {
+            //width: 150px !important;
+        }
+    }
 }
 
 .lit-login-form {
-	background-color: transparent !important;
-	border-width: 0 0 1px 0;
-	border-radius: 0;
-	padding: 0.3125rem 0;
-	outline: none !important;
-	box-shadow: none !important;
+    background-color: transparent !important;
+    border-width: 0 0 1px 0;
+    border-radius: 0;
+    padding: 0.3125rem 0;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 div#login {
-	.mobile-icon {
-		display: none;
-	}
+    .mobile-icon {
+        display: none;
+    }
 
-	@media (max-width: map-get($grid-breakpoints, 'lg')) {
-		.mobile-icon {
-			display: block;
-		}
-		.dark-logo {
-			display: none;
-		}
-	}
+    @media (max-width: map-get($grid-breakpoints, 'lg')) {
+        .mobile-icon {
+            display: block;
+        }
+        .dark-logo {
+            display: none;
+        }
+    }
 }

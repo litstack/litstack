@@ -1,10 +1,7 @@
 <template>
     <transition name="slide">
         <div v-if="selectedItems.length > 0">
-            <b-input-group
-                size="sm"
-                class="pt-1 pb-3"
-            >
+            <b-input-group size="sm" class="pt-1 pb-3">
                 <b-input-group-prepend is-text>
                     <strong>
                         {{
@@ -28,16 +25,14 @@
                         class="btn-brl-none"
                         variant="outline-secondary"
                     >
-                            <lit-base-component
-                                v-for="(component, key) in actions"
-                                :key="key"
-                                :component="component"
-                                :selectedItems="selectedItems"
-                                :event-data="{ids: _.map(selectedItems, 'id')}"
-                                @eventHandled="reload"
-                            />
-                            
-                        </b-dropdown>
+                        <lit-base-component
+                            v-for="(component, key) in actions"
+                            :key="key"
+                            :component="component"
+                            :selectedItems="selectedItems"
+                            :event-data="{ ids: _.map(selectedItems, 'id') }"
+                            @eventHandled="reload"
+                        />
                     </b-dropdown>
                 </template>
             </b-input-group>
@@ -52,22 +47,22 @@ export default {
     props: {
         items: {
             required: true,
-            type: [Object, Array]
+            type: [Object, Array],
         },
         selectedItems: {
             type: Array,
-            required: true
+            required: true,
         },
         actions: {
             required: true,
-            type: Array
-        }
+            type: Array,
+        },
     },
     methods: {
         reload() {
             this.$emit('reload');
-        }
-    }
+        },
+    },
 };
 </script>
 

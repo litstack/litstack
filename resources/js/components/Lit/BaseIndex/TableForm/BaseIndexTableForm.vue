@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: 'BaseIndexTableForm'
+    name: 'BaseIndexTableForm',
 };
 </script>
 <style lang="scss">

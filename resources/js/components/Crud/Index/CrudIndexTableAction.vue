@@ -11,14 +11,14 @@ export default {
     props: {
         selectedItems: {
             type: Array,
-            required: true
+            required: true,
         },
         title: {},
         routeId: {},
         routePrefix: {
             required: true,
-            type: String
-        }
+            type: String,
+        },
     },
     methods: {
         async runAction() {
@@ -33,10 +33,10 @@ export default {
             }
 
             this.$emit('reload');
-        }
+        },
     },
     computed: {
-        ...mapGetters(['form'])
-    }
+        ...mapGetters(['form']),
+    },
 };
 </script>

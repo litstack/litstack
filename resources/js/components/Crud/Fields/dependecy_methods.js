@@ -76,5 +76,5 @@ export default {
         if (typeof value == 'string' || typeof value == 'array') {
             return value.includes(dependency.value);
         }
-    }
+    },
 };

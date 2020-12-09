@@ -4,22 +4,22 @@ export default {
     props: {
         field: {
             required: true,
-            type: Object
+            type: Object,
         },
         model: {
             type: Object,
-            required: true
-        }
+            required: true,
+        },
     },
     render() {
         return this.$scopedSlots.default({
-            value: this.value
+            value: this.value,
         });
     },
     data() {
         return {
             value: null,
-            original: null
+            original: null,
         };
     },
     beforeMount() {
@@ -29,7 +29,7 @@ export default {
         changed(val) {
             console.log('Changed', val);
             //
-        }
-    }
+        },
+    },
 };
 </script>

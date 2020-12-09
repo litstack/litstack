@@ -13,11 +13,11 @@ export default {
     props: {
         field: {
             required: true,
-            type: Object
+            type: Object,
         },
         model: {
-            required: true
-        }
-    }
+            required: true,
+        },
+    },
 };
 </script>

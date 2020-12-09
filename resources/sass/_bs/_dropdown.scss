@@ -5,7 +5,7 @@
 
     &-sm {
         &-square {
-            &>.btn {
+            & > .btn {
                 height: $button-sm-height;
                 max-height: $button-sm-height;
                 width: $button-sm-height;
@@ -15,7 +15,7 @@
 
     &-md {
         &-square {
-            &>.btn {
+            & > .btn {
                 height: $button-md-height;
                 max-height: $button-md-height;
                 width: $button-md-height;
@@ -23,7 +23,7 @@
 
             &-mobile {
                 @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
-                    &>.btn {
+                    & > .btn {
                         padding: 0;
                         height: $button-md-height;
                         max-height: $button-md-height;
@@ -36,13 +36,11 @@
 
     &-lg {
         &-square {
-            &>.btn {
+            & > .btn {
                 height: $button-lg-height;
                 max-height: $button-lg-height;
                 width: $button-lg-height;
             }
-
-
         }
     }
 
@@ -50,7 +48,7 @@
     &-md,
     &-lg {
         &-square {
-            &>.btn {
+            & > .btn {
                 padding: 0;
                 display: inline-flex;
                 justify-content: center;

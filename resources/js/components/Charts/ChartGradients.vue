@@ -1,7 +1,7 @@
 <template>
     <div>
         <svg
-            style="width:0;height:0;position:absolute;"
+            style="width: 0; height: 0; position: absolute;"
             aria-hidden="true"
             focusable="false"
         >
@@ -14,11 +14,11 @@
             >
                 <stop
                     offset="0%"
-                    style="stop-color:rgb(255,255,255);stop-opacity:.2"
+                    style="stop-color: rgb(255, 255, 255); stop-opacity: 0.2;"
                 />
                 <stop
                     offset="100%"
-                    style="stop-color:rgb(255,255,255);stop-opacity:0"
+                    style="stop-color: rgb(255, 255, 255); stop-opacity: 0;"
                 />
             </linearGradient>
             <linearGradient
@@ -30,11 +30,11 @@
             >
                 <stop
                     offset="0%"
-                    style="stop-color:rgb(73,81,242);stop-opacity:.2"
+                    style="stop-color: rgb(73, 81, 242); stop-opacity: 0.2;"
                 />
                 <stop
                     offset="100%"
-                    style="stop-color:rgb(73,81,242);stop-opacity:0"
+                    style="stop-color: rgb(73, 81, 242); stop-opacity: 0;"
                 />
             </linearGradient>
         </svg>
@@ -43,6 +43,6 @@
 
 <script>
 export default {
-    name: 'ChartGradients'
+    name: 'ChartGradients',
 };
 </script>

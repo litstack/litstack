@@ -8,7 +8,7 @@ export default class FontColor extends Mark {
 
     get defaultOptions() {
         return {
-            style: null
+            style: null,
         };
     }
 
@@ -16,29 +16,29 @@ export default class FontColor extends Mark {
         return {
             attrs: {
                 style: {
-                    default: 'red'
-                }
+                    default: 'red',
+                },
             },
             parseDOM: [
                 {
                     tag: 'span',
-                    getAttrs: dom => ({
-                        style: dom.getAttribute('style')
-                    })
-                }
+                    getAttrs: (dom) => ({
+                        style: dom.getAttribute('style'),
+                    }),
+                },
             ],
-            toDOM: node => [
+            toDOM: (node) => [
                 'span',
                 {
-                    ...node.attrs
+                    ...node.attrs,
                 },
-                0
-            ]
+                0,
+            ],
         };
     }
 
     commands({ type }) {
-        return attrs => {
+        return (attrs) => {
             if (attrs.style) {
                 return updateMark(type, attrs);
             }
