@@ -8,7 +8,9 @@ use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Crud\Fields\Media\MediaField;
 use Ignite\Crud\Requests\CrudReadRequest;
 use Ignite\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\Conversions\FileManipulator;
 use Spatie\MediaLibrary\Support\ImageFactory;
 
 class MediaRepository extends BaseFieldRepository
@@ -23,10 +25,11 @@ class MediaRepository extends BaseFieldRepository
     /**
      * Create new MediaRepository instance.
      *
-     * @param ConfigHandler      $config
-     * @param CrudBaseController $controller
-     * @param BaseForm           $form
-     * @param MediaField         $field
+     * @param  ConfigHandler      $config
+     * @param  CrudBaseController $controller
+     * @param  BaseForm           $form
+     * @param  MediaField         $field
+     * @return void
      */
     public function __construct(ConfigHandler $config, $controller, $form, MediaField $field)
     {
@@ -47,6 +50,12 @@ class MediaRepository extends BaseFieldRepository
         $media = $model->media()->findOrFail($request->media_id);
         $media->custom_properties = $customProperties;
         $media->save();
+
+        if ($media->is_cropped) {
+            app(FileManipulator::class)->createDerivedFiles(
+                $model->media()->findOrFail($request->media_id)
+            );
+        }
     }
 
     /**
@@ -125,6 +134,10 @@ class MediaRepository extends BaseFieldRepository
             ? [app()->getLocale() => $properties]
             : $properties;
 
+        if ($crop = $this->getCropData($request)) {
+            $customProperties['crop'] = $crop;
+        }
+
         $image = ImageFactory::load($request->media->path());
 
         if (Str::startsWith($request->media->getClientMimeType(), 'image')) {
@@ -142,6 +155,21 @@ class MediaRepository extends BaseFieldRepository
         $media->url = $media->getUrl();
 
         return response()->json($media, 200);
+    }
+
+    /**
+     * Get crop data from request.
+     *
+     * @param  Request     $request
+     * @return void|object
+     */
+    protected function getCropData(Request $request)
+    {
+        if (! $crop = $request->crop) {
+            return;
+        }
+
+        return json_decode($crop);
     }
 
     /**

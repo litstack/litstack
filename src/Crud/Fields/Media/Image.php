@@ -59,11 +59,10 @@ class Image extends MediaField
     /**
      * Set crop ratio.
      *
-     * @param bool|float $ratio
-     *
+     * @param  bool|float $ratio
      * @return $this
      */
-    public function crop($ratio)
+    public function crop($ratio = 0)
     {
         $this->setAttribute('crop', $ratio);
 
