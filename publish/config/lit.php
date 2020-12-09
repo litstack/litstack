@@ -173,7 +173,7 @@ return [
             'default_device' => 'desktop',
         ],
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Lit Field-Settings
@@ -209,7 +209,7 @@ return [
                 'table',
             ],
             /**
-             * Font colors to chose from
+             * Font colors to chose from.
              */
             'colors' => ['#4951f2', '#f67693', '#f6ed76', '#9ff2ae', '#83c2ff', '#70859c'],
         ],
