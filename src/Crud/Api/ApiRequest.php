@@ -258,8 +258,16 @@ class ApiRequest
      */
     public function getForm(Field $field = null)
     {
-        if ($field && $field->form instanceof BaseForm) {
-            return $field->form;
+        if ($field) {
+            foreach (['form', 'update_form', 'creation_form'] as $attribute) {
+                $form = $field->getAttribute($attribute);
+
+                if (! $form instanceof BaseForm) {
+                    continue;
+                }
+
+                return $form;
+            }
         }
 
         return $this->loader->loadFormOrFail(

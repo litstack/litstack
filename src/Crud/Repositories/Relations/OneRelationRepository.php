@@ -65,5 +65,7 @@ class OneRelationRepository extends BaseFieldRepository
         ];
 
         Relation::where($query)->delete();
+
+        $this->deleteIfDesired($request, $related);
     }
 }

@@ -58,6 +58,8 @@ class BelongsToRepository extends BaseFieldRepository
      */
     public function destroy(CrudUpdateRequest $request, $model)
     {
+        $this->getRelatedOrDelete($request, $model);
+
         $model->{$this->field->id}()->dissociate();
         $model->save();
     }

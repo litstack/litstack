@@ -67,7 +67,7 @@ class CrudRouter
     {
         $this->litstackRouter->group(function () use ($config) {
             $this->router->group([
-                'config' => $config->getKey(),
+                'config' => $config->getNamespace(),
                 'prefix' => "$config->routePrefix",
                 'as'     => $config->getKey().'.',
             ], function () use ($config) {
@@ -90,7 +90,7 @@ class CrudRouter
     {
         $this->litstackRouter->group(function () use ($config) {
             $this->router->group([
-                'config' => $config->getKey(),
+                'config' => $config->getNamespace(),
                 'prefix' => $config->routePrefix(),
                 'as'     => $config->getKey().'.',
             ], function () use ($config) {

@@ -2,6 +2,7 @@
 
 namespace Ignite\Crud\Models\Concerns;
 
+use Ignite\Crud\CrudResource;
 use Ignite\Crud\Field;
 use Ignite\Crud\Fields\Media\MediaField;
 use Ignite\Crud\Models\Media;
@@ -151,5 +152,31 @@ trait HasFields
         $value = $this->translation[$locale] ?? [];
 
         return $value[$field->local_key] ?? null;
+    }
+
+    /**
+     * Return the resource instance of this model.
+     *
+     * @return CrudResource
+     */
+    public function resource(): CrudResource
+    {
+        $class = $this->getResourceClass();
+
+        return new $class($this);
+    }
+
+    /**
+     * Get JsonResource class name.
+     *
+     * @return string
+     */
+    protected function getResourceClass()
+    {
+        if (property_exists($this, 'resource')) {
+            return $this->resource;
+        }
+
+        return CrudResource::class;
     }
 }

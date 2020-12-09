@@ -73,6 +73,7 @@ class MorphOneRepositoryTest extends BackendTestCase
 
         $request = m::mock(CrudUpdateRequest::class);
         $request->related_id = $image->id;
+        $request->delete_unlinked = false;
 
         $this->field->shouldReceive('getQuery')->andReturn($image->query());
         $this->field->shouldReceive('getRelationQuery')->andReturn($post->image());

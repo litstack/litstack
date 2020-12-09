@@ -439,6 +439,22 @@ class LaravelRelationField extends RelationField
             throw new InvalidArgumentException('Missing related model.');
         }
 
+        $form = $this->makeForm();
+
+        $closure($form);
+
+        $this->setAttribute('update_form', $form);
+
+        return $this;
+    }
+
+    /**
+     * Make relation form.
+     *
+     * @return RelationForm
+     */
+    protected function makeForm()
+    {
         $form = new RelationForm($this->relatedModelClass, $this);
 
         $form->setRoutePrefix($this->formInstance->getRoutePrefix());
@@ -450,9 +466,56 @@ class LaravelRelationField extends RelationField
             ]);
         });
 
+        return $form;
+    }
+
+    /**
+     * Add creation form.
+     *
+     * @param  Closure $closure
+     * @return $this
+     */
+    public function create(Closure $closure)
+    {
+        $form = $this->makeForm();
+
         $closure($form);
 
-        $this->setAttribute('form', $form);
+        // $this->form(function($form) use($closure) {
+
+        // });
+        $this->setAttribute('creation_form', $form);
+
+        return $this;
+    }
+
+    /**
+     * Add create and update form.
+     *
+     * @param  Closure $closure
+     * @return $this
+     */
+    public function createAndUpdateForm(Closure $closure)
+    {
+        $this->create($closure);
+        $this->form($closure);
+
+        return $this;
+    }
+
+    /**
+     * Deletes the relation Model after unlinking the relation.
+     *
+     * @param  bool  $delete
+     * @return $this
+     */
+    public function deleteUnlinked(bool $delete = true)
+    {
+        $this->setAttribute('delete_unlinked', $delete);
+
+        $this->mergeOrSetAttribute('params', [
+            'delete_unlinked' => $delete,
+        ]);
 
         return $this;
     }

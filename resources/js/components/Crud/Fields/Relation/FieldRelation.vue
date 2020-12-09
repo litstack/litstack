@@ -4,8 +4,8 @@
 			<b-button
 				variant="secondary"
 				size="sm"
-				v-b-modal="modalId"
-				v-if="!field.readonly && !this.create"
+				v-b-modal="field.creation_form ? creationModalId : modalId"
+				v-if="!field.readonly && !create"
 			>
 				<lit-fa-icon :icon="field.many ? 'plus' : 'link'" />
 				{{
@@ -17,6 +17,14 @@
 								item: field.names.singular,
 						  })
 				}}
+				<lit-field-relation-form
+					:item="creationModel"
+					:modal-id="creationModalId"
+					:field="field"
+					:model="model"
+					:form="field.creation_form"
+					@update="$emit('update')"
+				/>
 			</b-button>
 		</template>
 
@@ -48,6 +56,7 @@
 					@sorted="newOrder"
 					@unlink="removeRelation"
 					:model="model"
+					:field="field"
 				/>
 			</div>
 			<div
@@ -179,6 +188,15 @@ export default {
 			 * Table cols in modal.
 			 */
 			modalCols: [],
+
+			/**
+			 * Creation model.
+			 */
+			creationModel: this.crud({
+				attributes: {},
+				translatable: false,
+				cast: true,
+			}),
 		};
 	},
 	computed: {
@@ -189,6 +207,17 @@ export default {
 		 */
 		modalId() {
 			return `form-relation-table-${this.field.id}-${
+				this.model.id
+			}-${this.field.route_prefix.replace(/\//g, '-')}`;
+		},
+
+		/**
+		 * Unique modal id for creation form modal.
+		 *
+		 * @return {String}
+		 */
+		creationModalId() {
+			return `form-relation-creation-${this.field.id}-${
 				this.model.id
 			}-${this.field.route_prefix.replace(/\//g, '-')}`;
 		},
@@ -234,7 +263,10 @@ export default {
 				small: true,
 			});
 		}
-		if (!_.isEmpty(this.field.form) && this.field.form.allow.update) {
+		if (
+			!_.isEmpty(this.field.update_form) &&
+			this.field.update_form.allow.update
+		) {
 			this.cols.push({
 				label: '',
 				name: 'lit-field-relation-col-edit',

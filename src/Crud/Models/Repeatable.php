@@ -160,12 +160,11 @@ class Repeatable extends LitFormModel
     /**
      * Modified calls.
      *
-     * @param string $method
-     * @param array  $params
-     *
+     * @param  string $method
+     * @param  array $params
      * @return mixed
      */
-    public function __call($method, $params = [])
+    public function __call($method, $params)
     {
         try {
             return parent::__call($method, $params);

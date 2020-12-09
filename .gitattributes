@@ -1,14 +1,21 @@
 * text=auto
 
+*.blade.php diff=html
+*.css diff=css
+*.html diff=html
+*.md diff=markdown
+*.php diff=php
+
+/.github export-ignore
+/docs export-ignore
 /public linguist-generated
 /public/*.js -diff
 /public/*.css -diff
-/docs export-ignore
-/.github export-ignore
 /tests export-ignore
-.styleci.yml export-ignore
 .babelrc export-ignore
-.prettierrc export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
+.prettierrc export-ignore
+.styleci.yml export-ignore
+CHANGELOG-* export-ignore
 phpunit.xml export-ignore

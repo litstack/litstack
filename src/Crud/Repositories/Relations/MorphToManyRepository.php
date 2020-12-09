@@ -70,10 +70,12 @@ class MorphToManyRepository extends BaseFieldRepository
 
         $morphToMany = $this->field->getRelationQuery($model);
 
-        return DB::table($morphToMany->getTable())->where([
+        DB::table($morphToMany->getTable())->where([
             $morphToMany->getRelatedPivotKeyName() => $related->{$morphToMany->getRelatedKeyName()},
             $morphToMany->getForeignPivotKeyName() => $model->{$morphToMany->getParentKeyName()},
             $morphToMany->getMorphType()           => $morphToMany->getMorphClass(),
         ])->delete();
+
+        $this->deleteIfDesired($request, $related);
     }
 }

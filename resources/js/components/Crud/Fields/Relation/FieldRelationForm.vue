@@ -49,6 +49,10 @@ export default {
 			require: true,
 			type: Object,
 		},
+		form: {
+			required: true,
+			type: Object,
+		},
 	},
 	computed: {
 		...mapGetters(['canSave']),
@@ -62,7 +66,7 @@ export default {
 	beforeMount() {
 		this.relation = this.item;
 		this.fields = this.setFieldsRoutePrefixId(
-			Lit.clone(this.field.form.fields),
+			Lit.clone(this.form.fields),
 			this.relation
 		);
 

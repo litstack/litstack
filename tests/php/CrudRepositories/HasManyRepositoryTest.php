@@ -80,6 +80,7 @@ class HasManyRepositoryTest extends BackendTestCase
 
         $request = m::mock(CrudUpdateRequest::class);
         $request->related_id = $comment->id;
+        $request->delete_unlinked = false;
 
         $this->field->shouldReceive('getQuery')->andReturn($comment->query());
         $this->field->shouldReceive('getRelationQuery')->andReturn($post->comments());
