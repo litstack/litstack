@@ -12,6 +12,7 @@
 - Added datetime field methods `minuteInterval` and `disableHours` ([#110](https://github.com/litstack/litstack/pull/110))
 - Added medialibrary 9 support ([720290d](https://github.com/litstack/litstack/commit/720290d4aec58d7811bb7b7dea4b9ad56e00be34))
 - Added wysiwyg field settings to `lit` config ([#120](https://github.com/litstack/litstack/pull/120))
+- Images can now be recropped after upload ([#108](https://github.com/litstack/litstack/pull/108))
 
 ### Fixed
 - Fixed relation form modal closing after saving ([62db77e](https://github.com/litstack/litstack/commit/62db77e92fe5b29d7fdd27393e7e8c3a41f4573d))
