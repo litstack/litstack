@@ -40,6 +40,10 @@ class Media extends MediaModel
      */
     public function getIsCroppedAttribute()
     {
+        if (! $this->custom_properties) {
+            return false;
+        }
+
         return  array_key_exists('crop', $this->custom_properties);
     }
 

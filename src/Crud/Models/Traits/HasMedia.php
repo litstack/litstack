@@ -83,6 +83,10 @@ trait HasMedia
             return;
         }
 
+        if (! $media->custom_properties) {
+            return;
+        }
+
         if (! array_key_exists('crop', $media->custom_properties)) {
             return;
         }
