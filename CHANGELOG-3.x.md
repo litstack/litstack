@@ -1,6 +1,14 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.2.1...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.2.2...3.x)
+
+### Added
+
+### Fixed
+
+### Changed
+
+## [v3.2.2](https://github.com/litstack/litstack/compare/v3.2.1...v3.2.2)
 
 ### Added
 
@@ -10,8 +18,6 @@
 
 -   Fixed sluggable stub ([f8515e8](https://github.com/litstack/litstack/commit/f8515e8d912acfd1a3cc12648aa45bb1f1f8b000))
 -   Fixed `manyRelation` and `oneRelation` field ([384f5e4](https://github.com/litstack/litstack/commit/384f5e4de12ed2d5e00cfe50862f5476c512c235), [2f04d4e](https://github.com/litstack/litstack/commit/2f04d4e22698aa6ad67d8ff5f76693bf31f2b52b))
-
-### Changed
 
 ## [v3.2.1](https://github.com/litstack/litstack/compare/v3.2.0...v3.2.1)
 
