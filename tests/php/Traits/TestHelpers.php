@@ -63,11 +63,12 @@ trait TestHelpers
         if (! is_string($object)) {
             $class = get_class($object);
         } else {
-            $class = $object;
+			$class = $object;
+			$object = null;
         }
 
         $reflection = new ReflectionProperty($class, $property);
-        $reflection->setAccessible(true);
+		$reflection->setAccessible(true);
 
         return $reflection->getValue($object);
     }

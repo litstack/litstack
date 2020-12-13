@@ -161,12 +161,8 @@ class LaravelRelationField extends RelationField
             return;
 		}
 
-		if(!$this->relation) {
-			return $this->setAttribute('orderColumn', 'order_column');
-		}
-
 		$order = $orders[0];
-        if (method_exists($this->relation, 'getTable')) {
+        if ($this->relation && method_exists($this->relation, 'getTable')) {
             $orderColumn = str_replace($this->relation->getTable().'.', '', $order['column']);
         } else {
             $orderColumn = $order['column'];
