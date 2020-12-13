@@ -8,7 +8,7 @@
         "fix": "vendor/bin/php-cs-fixer fix --allow-risky=yes --config=fixer/.php_cs"
     },
     "require": {
-        "php": ">=7.4",
+        "php": "^7.4|^8.0",
         "litstack/lang": "^3.0.4",
         "erusev/parsedown-extra": "^0.8",
         "spatie/laravel-permission": "^2.0|^3.0",
