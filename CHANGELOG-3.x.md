@@ -1,6 +1,18 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.2.0...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.2.1...3.x)
+
+### Added
+
+### Fixed
+
+### Changed
+
+## [v3.2.1](https://github.com/litstack/litstack/compare/v3.2.0...v3.2.1)
+
+### Fixed
+
+-   Fixed media field crop ([#123](https://github.com/litstack/litstack/issues/123), [c4542cb](https://github.com/litstack/litstack/commit/c4542cb3028f1f229ab8d679f7dccd2873aac285))
 
 ## [v3.2.0](https://github.com/litstack/litstack/compare/v3.1.3...v3.2.0)
 
