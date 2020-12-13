@@ -77,7 +77,6 @@ trait TraceableException
     {
         foreach ($options as $key => $value) {
             if (! array_key_exists($key, $trace)) {
-                false;
             }
 
             if ($trace[$key] != $value) {

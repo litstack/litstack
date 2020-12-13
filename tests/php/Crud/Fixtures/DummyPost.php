@@ -2,12 +2,12 @@
 
 namespace Tests\Crud\Fixtures;
 
-use Ignite\Crud\CrudShow;
 use Ignite\Crud\Config\CrudConfig;
-use Tests\Crud\Fixtures\DummyPost;
-use Illuminate\Support\Facades\Schema;
+use Ignite\Crud\CrudShow;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Tests\Crud\Fixtures\DummyPost;
 
 class DummyPost extends Model
 {
@@ -21,9 +21,9 @@ class DummyPost extends Model
             $table->id();
             $table->text('text')->nullable();
         });
-	}
-	
-	public static function schemaDown()
+    }
+
+    public static function schemaDown()
     {
         Schema::dropIfExists('posts');
     }

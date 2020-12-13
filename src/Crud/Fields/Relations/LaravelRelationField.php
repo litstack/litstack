@@ -152,16 +152,16 @@ class LaravelRelationField extends RelationField
      */
     protected function setOrderDefaults()
     {
-		$orders = $this->getRelationQuery(new $this->model())
-			->getQuery()
-			->getQuery()
-			->orders;
+        $orders = $this->getRelationQuery(new $this->model())
+            ->getQuery()
+            ->getQuery()
+            ->orders;
 
         if (empty($orders)) {
             return;
-		}
+        }
 
-		$order = $orders[0];
+        $order = $orders[0];
         if ($this->relation && method_exists($this->relation, 'getTable')) {
             $orderColumn = str_replace($this->relation->getTable().'.', '', $order['column']);
         } else {
