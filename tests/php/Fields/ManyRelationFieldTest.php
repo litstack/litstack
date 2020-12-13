@@ -25,7 +25,7 @@ class ManyRelationFieldTest extends BackendTestCase
         );
     }
 
-    public function getConfig()
+    public function getConfig(string $key, ...$params)
     {
         return new ManyRelationFieldRelationConfig();
     }

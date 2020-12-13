@@ -43,7 +43,16 @@ class LitFormModelTest extends BackendTestCase
         ]);
 
         $this->assertEquals(['foo' => 'bar'], $model->refresh()->value);
-    }
+	}
+	
+	/** @test */
+	public function it_works_for_lit_relations()
+	{
+		$model = new DummyLitFormModel([
+            'config_type' => Fixtures\ConfigWithLitRelations::class,
+		]);
+		$model->save();
+	}
 
     /** @test */
     public function it_translatable_field_values_to_translatable_value_column()

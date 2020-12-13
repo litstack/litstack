@@ -100,7 +100,6 @@ class MorphTo extends OneRelationField
      * Get results for model.
      *
      * @param mixed $model
-     *
      * @return mixed
      */
     public function getResults($model)
