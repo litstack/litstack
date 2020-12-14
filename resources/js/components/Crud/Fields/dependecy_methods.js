@@ -30,6 +30,8 @@ export default {
 
             let conditionFulfilled = conditionMethod(dependency);
 
+            console.log('fullfilled', conditionFulfilled);
+
             if (dependency.condition.startsWith('or') && !conditionFulfilled) {
                 continue;
             }
@@ -82,12 +84,17 @@ export default {
      * Determines if whenIn condition is fulfilled.
      */
     fulfillsWhenIn(dependency) {
+        console.log(dependency);
         const value = this.model[dependency.attribute];
 
         const expected = dependency.value;
 
         if (typeof expected === 'string' || typeof expected === 'array') {
             return expected.includes(value);
+        }
+
+        if (typeof expected === 'object') {
+            return Object.values(expected).includes(value);
         }
     },
 };
