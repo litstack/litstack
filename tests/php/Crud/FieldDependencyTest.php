@@ -31,6 +31,7 @@ class FieldDependencyTest extends TestCase
         $this->assertContains('when', $conditions);
         $this->assertContains('whenNot', $conditions);
         $this->assertContains('whenContains', $conditions);
+        $this->assertContains('whenIn', $conditions);
     }
 
     /** @test */
