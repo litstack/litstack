@@ -59,6 +59,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         LitstackRoute::get('js/app.js', FileController::class.'@litJs')->name('js');
         LitstackRoute::public()->get('js/app2.js', FileController::class.'@lit2Js')->name('app2.js');
         LitstackRoute::public()->get('js/prism.js', FileController::class.'@prismJs')->name('prism.js');
+        LitstackRoute::public()->get('js/cleave.js', FileController::class.'@cleaveJs')->name('cleave.js');
         LitstackRoute::public()->get('js/ctk.js', FileController::class.'@ctkJs')->name('ctk.js');
         LitstackRoute::public()->get('css/app.css', FileController::class.'@litCss')->name('css');
         LitstackRoute::public()->get('images/lit-logo.png', FileController::class.'@litLogo')->name('logo');
