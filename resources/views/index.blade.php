@@ -68,7 +68,8 @@
     <!-- lit translations -->
     <script src="{{ lit()->route('lit-translations') }}"></script>
 
-    @foreach(lit_app()->getScripts() as $src)
+	@foreach(lit_app()->getScripts() as $src)
+	
         <script src="{{ $src }}"></script>
     @endforeach
 

@@ -40,17 +40,6 @@ class FileController extends Controller
         return $this->sendFile(lit_vendor_path('public/js/prism.js'))
             ->header('Content-Type', 'application/javascript; charset=utf-8');
     }
-    
-    /**
-     * cleave.js.
-     *
-     * @return Response
-     */
-    public function cleaveJs()
-    {
-        return $this->sendFile(lit_vendor_path('public/js/cleave.js'))
-            ->header('Content-Type', 'application/javascript; charset=utf-8');
-    }
 
     /**
      * ctk.js.

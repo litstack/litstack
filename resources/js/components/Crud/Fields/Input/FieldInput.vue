@@ -12,6 +12,7 @@
             </b-input-group-prepend>
 
             <b-input
+                ref="input"
                 class="form-control lit-field-input"
                 :value="value"
                 :placeholder="field.placeholder"
