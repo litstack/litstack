@@ -1,16 +1,20 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.2.3...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.2.4...3.x)
 
 ### Added
-
--   Added `allowEmpty` method to route field ([#129](https://github.com/litstack/litstack/pull/129))
 
 ### Fixed
 
 ### Changed
 
-## [v3.2.2](https://github.com/litstack/litstack/compare/v3.2.2...v3.2.3)
+## [v3.2.4](https://github.com/litstack/litstack/compare/v3.2.3...v3.2.4)
+
+### Added
+
+-   Added `allowEmpty` method to route field ([#129](https://github.com/litstack/litstack/pull/129))
+
+## [v3.2.3](https://github.com/litstack/litstack/compare/v3.2.2...v3.2.3)
 
 ### Added
 
