@@ -25,11 +25,11 @@ class Route extends BaseField
      * @var array
      */
     public $required = ['collection'];
-    
+
     /**
      * Determines if the route can be empty.
      *
-     * @var boolean
+     * @var bool
      */
     protected $canBeEmpty = false;
 
@@ -44,11 +44,11 @@ class Route extends BaseField
 
         return $this;
     }
-    
+
     /**
      * Add's empty option to unset route.
      *
-     * @param  boolean $empty
+     * @param  bool $empty
      * @return $this
      */
     public function allowEmpty(bool $empty = true)
@@ -107,7 +107,7 @@ class Route extends BaseField
         if ($this->canBeEmpty) {
             $routes->prepend('---', '');
         }
-                
+
         return $routes->toArray();
     }
 
