@@ -1,6 +1,14 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.2.2...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.2.3...3.x)
+
+### Added
+
+### Fixed
+
+### Changed
+
+## [v3.2.2](https://github.com/litstack/litstack/compare/v3.2.2...v3.2.3)
 
 ### Added
 
@@ -10,8 +18,6 @@
 
 -   Fixed authentication with custom guard ([#103](https://github.com/litstack/litstack/issues/103), [#128](https://github.com/litstack/litstack/pull/128))
 -   Fixed modal bug for multiple image fields ([ad56d49](https://github.com/litstack/litstack/commit/ad56d4911dee16b47750be49e3c27acc7b5a96c9))
-
-### Changed
 
 ## [v3.2.2](https://github.com/litstack/litstack/compare/v3.2.1...v3.2.2)
 
