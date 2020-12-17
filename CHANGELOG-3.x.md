@@ -4,6 +4,8 @@
 
 ### Added
 
+-   Added `allowEmpty` method to route field ([#129](https://github.com/litstack/litstack/pull/129))
+
 ### Fixed
 
 ### Changed
