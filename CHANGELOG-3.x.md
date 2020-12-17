@@ -4,7 +4,12 @@
 
 ### Added
 
+-   Added `whenIn` field condition method ([#125](https://github.com/litstack/litstack/pull/125))
+
 ### Fixed
+
+-   Fixed authentication with custom guard ([#103](https://github.com/litstack/litstack/issues/103), [#128](https://github.com/litstack/litstack/pull/128))
+-   Fixed modal bug for multiple image fields ([ad56d49](https://github.com/litstack/litstack/commit/ad56d4911dee16b47750be49e3c27acc7b5a96c9))
 
 ### Changed
 
@@ -12,7 +17,7 @@
 
 ### Added
 
-- Added PHP 8.0 support ([#126](https://github.com/litstack/litstack/pull/126))
+-   Added PHP 8.0 support ([#126](https://github.com/litstack/litstack/pull/126))
 
 ### Fixed
 
