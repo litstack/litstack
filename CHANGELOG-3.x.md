@@ -4,6 +4,8 @@
 
 ### Added
 
+-   Added `confirmDelete` method to block field ([#131](https://github.com/litstack/litstack/pull/131))
+
 ### Fixed
 
 ### Changed
