@@ -28,7 +28,7 @@
         </div>
         <b-modal
             v-model="showConfirm"
-            :title="__('base.item_remove', { item: field.title })"
+            :title="__('base.item_remove', { item: field.title }).capitalize()"
         >
             {{
                 field.delete_unlinked
