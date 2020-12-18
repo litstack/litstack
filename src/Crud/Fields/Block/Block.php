@@ -51,7 +51,7 @@ class Block extends RelationField
 
         return $this;
     }
-    
+
     /**
      * Confirm deleting a repeatable in a modal.
      *
