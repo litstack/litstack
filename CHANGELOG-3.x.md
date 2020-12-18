@@ -4,11 +4,15 @@
 
 ### Added
 
--   Added `confirmDelete` method to block field ([#131](https://github.com/litstack/litstack/pull/131))
-
 ### Fixed
 
 ### Changed
+
+## [v3.2.5](https://github.com/litstack/litstack/compare/v3.2.4...v3.2.5)
+
+### Added
+
+-   Added `confirmDelete` method to block field ([#131](https://github.com/litstack/litstack/pull/131))
 
 ## [v3.2.4](https://github.com/litstack/litstack/compare/v3.2.3...v3.2.4)
 
