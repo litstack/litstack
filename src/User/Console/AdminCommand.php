@@ -43,6 +43,8 @@ class AdminCommand extends Command
         $model = app($this->getAuthenticationUserModel());
 
         if ($model->where('username', $username)->orWhere('email', $email)->exists()) {
+            $this->info('User already exists');
+
             return;
         }
 
