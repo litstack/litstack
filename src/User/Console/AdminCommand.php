@@ -64,7 +64,7 @@ class AdminCommand extends Command
     }
 
     /**
-     * Get the user model corresponding to the current auth guard
+     * Get the user model corresponding to the current auth guard.
      *
      * @return string
      */
