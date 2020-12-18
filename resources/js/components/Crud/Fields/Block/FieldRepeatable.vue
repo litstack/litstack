@@ -30,11 +30,7 @@
             v-model="showConfirm"
             :title="__('base.item_remove', { item: field.title }).capitalize()"
         >
-            {{
-                field.delete_unlinked
-                    ? __('base.messages.are_you_sure')
-                    : __('crud.fields.relation.messages.confirm_unlink')
-            }}
+            {{ __('base.messages.are_you_sure') }}
 
             <template v-slot:modal-footer>
                 <b-button
