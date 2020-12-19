@@ -42,7 +42,7 @@ class RoleController
 
         // Can't take away own admin role.
         if ($role->name == 'admin' && $user->id == lit_user()->id) {
-            return response()->danger(__lit('fjpermissions.cant_remove_admin_role'));
+            return response()->danger(__lit('permissions.messages.cant_remove_admin_role'));
         }
 
         // Remove role.
