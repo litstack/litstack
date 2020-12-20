@@ -2,6 +2,7 @@
 
 namespace Ignite\User\Console;
 
+use Ignite\Support\Facades\Lit;
 use Illuminate\Console\Command;
 use Spatie\Permission\Models\Role;
 
@@ -40,7 +41,7 @@ class AdminCommand extends Command
         $email = $this->ask('Enter the admin email');
         $password = $this->secret('Enter the admin password');
 
-        $model = app($this->getAuthenticationUserModel());
+        $model = app(Lit::getUserModel());
 
         if ($model->where('username', $username)->orWhere('email', $email)->exists()) {
             $this->info('User already exists');
@@ -62,17 +63,4 @@ class AdminCommand extends Command
 
         $this->info('User has been created');
     }
-
-    /**
-     * Get the user model corresponding to the current auth guard.
-     *
-     * @return string
-     */
-    public function getAuthenticationUserModel()
-    {
-        $driver = config('lit.guard');
-        $guardConfig = config("auth.guards.{$driver}");
-        return config("auth.providers.{$guardConfig['provider']}.model");
-    }
-
 }
