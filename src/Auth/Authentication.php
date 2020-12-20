@@ -50,7 +50,9 @@ class Authentication implements AuthenticationContract
         $this->auth = $auth;
         $this->guard = $auth->guard(config('lit.guard'));
 
-        $this->resetCredentialAttemps();
+        $this->attemptCredentials(
+            fn ($credentials) => $credentials
+        );
 
         if (config('lit.login.username')) {
             $this->attemptCredentials(function ($credentials) {
@@ -82,9 +84,7 @@ class Authentication implements AuthenticationContract
      */
     public function resetCredentialAttemps()
     {
-        $this->credentialResolvers = [
-            fn ($credentials) => $credentials,
-        ];
+        $this->credentialResolvers = [];
 
         return $this;
     }
