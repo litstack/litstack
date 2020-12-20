@@ -5,6 +5,7 @@ namespace Ignite\Auth;
 use Closure;
 use Ignite\Contracts\Auth\Authentication as AuthenticationContract;
 use Illuminate\Contracts\Auth\Factory;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,6 +33,13 @@ class Authentication implements AuthenticationContract
     protected $attempting = [];
 
     /**
+     * Credentials resolver.
+     *
+     * @var array
+     */
+    protected $credentialResolvers = [];
+
+    /**
      * Create new Authentication instance.
      *
      * @param  Factory $auth
@@ -41,6 +49,44 @@ class Authentication implements AuthenticationContract
     {
         $this->auth = $auth;
         $this->guard = $auth->guard(config('lit.guard'));
+
+        $this->resetCredentialAttemps();
+
+        if (config('lit.login.username')) {
+            $this->attemptCredentials(function ($credentials) {
+                $credentials['username'] = $credentials['email'];
+                unset($credentials['email']);
+
+                return $credentials;
+            });
+        }
+    }
+
+    /**
+     * Apply credentials resolver.
+     *
+     * @param  Closure $closure
+     * @return $this
+     */
+    public function attemptCredentials(Closure $closure)
+    {
+        $this->credentialResolvers[] = $closure;
+
+        return $this;
+    }
+
+    /**
+     * Reset Credential attempts.
+     *
+     * @return $this
+     */
+    public function resetCredentialAttemps()
+    {
+        $this->credentialResolvers = [
+            fn ($credentials) => $credentials,
+        ];
+
+        return $this;
     }
 
     /**
@@ -53,19 +99,28 @@ class Authentication implements AuthenticationContract
      */
     public function attempt($credentials, bool $remember = false, array $parameters = [])
     {
-        if ($this->guard->attempt($credentials, $remember)) {
-            return $this->extendedAttempt($parameters);
-        }
-
-        if (! config('lit.login.username')) {
+        if (! $this->attempts($credentials, $remember)) {
             return false;
         }
 
-        $credentials['username'] = $credentials['email'];
-        unset($credentials['email']);
+        return $this->extendedAttempt($parameters);
+    }
 
-        if ($this->guard->attempt($credentials, $remember)) {
-            return $this->extendedAttempt($parameters);
+    /**
+     * Do attempts with all credentials.
+     *
+     * @param  array $credentials
+     * @param  bool  $remember
+     * @return bool
+     */
+    protected function attempts($credentials, bool $remember)
+    {
+        foreach ($this->credentialResolvers as $resolver) {
+            $credentials = $resolver($credentials);
+
+            if ($this->guard->attempt($credentials, $remember)) {
+                return true;
+            }
         }
 
         return false;
