@@ -107,14 +107,15 @@ class LitstackTest extends BackendTestCase
     }
 
     /** @test */
-    public function test_script_method()
+    public function test_getUserModel_method()
     {
+        $this->app['config']->set('lit.guard', 'test');
+        $this->app['config']->set('auth.guards.test.provider', 'test_user');
+        $this->app['config']->set('auth.providers.test_user.model', 'foo');
         $app = m::mock(Application::class);
         $lit = app(Litstack::class);
         $lit->bindApp($app);
 
-        $app->shouldReceive('script')->withArgs(['path']);
-
-        $lit->script('path');
+        $this->assertSame('foo', $lit->getUserModel());
     }
 }
