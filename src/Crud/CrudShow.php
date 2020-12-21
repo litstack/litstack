@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Support\Traits\Macroable;
 
@@ -49,6 +50,13 @@ class CrudShow extends Page
     protected $form;
 
     /**
+     * Appended attributes.
+     *
+     * @var array
+     */
+    protected $appends = [];
+
+    /**
      * Query resolver.
      *
      * @var Closure
@@ -67,6 +75,29 @@ class CrudShow extends Page
         // Add form lifecycle hooks.
         $this->form->registering(fn ($field) => $this->registeringField($field));
         $this->form->registered(fn ($field) => $this->registeredField($field));
+    }
+
+    /**
+     * Set attributes that should be append.
+     *
+     * @param  array ...$appends
+     * @return $this
+     */
+    public function appends(...$appends)
+    {
+        $this->appends = Arr::flatten($appends);
+
+        return $this;
+    }
+
+    /**
+     * Get appends.
+     *
+     * @return array
+     */
+    public function getAppends()
+    {
+        return $this->appends;
     }
 
     /**
