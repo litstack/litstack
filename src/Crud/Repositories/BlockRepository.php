@@ -121,7 +121,9 @@ class BlockRepository extends BaseFieldRepository
 
         $order_column = $this->getOrderColumnForNewRepeatable($request, $model, $type);
 
-        $block = new Repeatable();
+        $class = config('lit.models.repeatable');
+
+        $block = new $class();
         $block->type = $type;
         $block->model_type = get_class($model);
         $block->model_id = $model->id;
@@ -210,8 +212,10 @@ class BlockRepository extends BaseFieldRepository
             return $childRepeatable;
         }
 
+        $class = config('lit.models.repeatable');
+
         // Loading child block for media and relation requests.
-        return Repeatable::where('model_type', Repeatable::class)
+        return $class::where('model_type', $class)
             ->where('model_id', $childRepeatable->id)
             ->where('id', $request->repeatable_id)->firstOrFail();
     }
@@ -226,7 +230,9 @@ class BlockRepository extends BaseFieldRepository
      */
     protected function getOrderColumnForNewRepeatable(Request $request, $model, $type)
     {
-        return Repeatable::where([
+        $class = config('lit.models.repeatable');
+
+        return $class::where([
             'type'        => $type,
             'model_type'  => get_class($model),
             'model_id'    => $model->id,

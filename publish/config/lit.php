@@ -73,6 +73,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Litstack Models
+    |--------------------------------------------------------------------------
+    |
+    | The fully qualified class names of the litstack models.
+    |
+    */
+
+    'models' => [
+        'repeatable' => \Ignite\Crud\Models\Repeatable::class,
+        'list_item'  => \Ignite\Crud\Models\ListItem::class,
+        'relation'   => \Ignite\Crud\Models\Relation::class,
+        'form'       => \Ignite\Crud\Models\Form::class,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Google Analytics Id
     |--------------------------------------------------------------------------
     |

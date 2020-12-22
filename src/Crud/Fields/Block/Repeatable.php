@@ -6,7 +6,6 @@ use Closure;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Field;
 use Ignite\Crud\Fields\Relations\LaravelRelationField;
-use Ignite\Crud\Models\Repeatable as RepeatableModel;
 use Ignite\Page\Table\ColumnBuilder;
 use Ignite\Support\VueProp;
 use Illuminate\Support\Facades\Blade;
@@ -131,7 +130,7 @@ class Repeatable extends VueProp
      */
     public function makeForm(Closure $closure = null)
     {
-        $form = new RepeatableForm(RepeatableModel::class);
+        $form = new RepeatableForm(config('lit.models.repeatable'));
 
         $form->setRoutePrefix(
             Str::finish("{$this->field->route_prefix}", '/block')

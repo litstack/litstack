@@ -3,6 +3,7 @@
 namespace Ignite\Foundation;
 
 use Illuminate\Foundation\Application;
+use InvalidArgumentException;
 
 class LightsOn
 {
@@ -12,6 +13,18 @@ class LightsOn
      * @var Application
      */
     protected $laravel;
+
+    /**
+     * The litstack model implementations.
+     *
+     * @var array
+     */
+    protected $models = [
+        'repeatable' => \Ignite\Crud\Models\Repeatable::class,
+        'list_item'  => \Ignite\Crud\Models\ListItem::class,
+        'relation'   => \Ignite\Crud\Models\Relation::class,
+        'form'       => \Ignite\Crud\Models\Form::class,
+    ];
 
     /**
      * Litstack instance.
@@ -44,6 +57,8 @@ class LightsOn
             return;
         }
 
+        $this->checkLitstackModels();
+
         $this->laravel->register(
             \Ignite\Application\ApplicationServiceProvider::class
         );
@@ -63,5 +78,27 @@ class LightsOn
 
         // Initialize kernel singleton.
         $this->laravel[\Ignite\Application\Kernel::class];
+    }
+
+    /**
+     * Check if the litstack models extend the correct classes.
+     *
+     * @return void
+     */
+    protected function checkLitstackModels()
+    {
+        foreach ($this->models as $key => $model) {
+            $implemenation = config("lit.models.{$key}");
+
+            if ($implemenation === $model) {
+                continue;
+            }
+
+            if (is_subclass_of($implemenation, $model)) {
+                continue;
+            }
+
+            throw new InvalidArgumentException("The model set in [lit.config.{$key}] must extend {$model}.");
+        }
     }
 }
