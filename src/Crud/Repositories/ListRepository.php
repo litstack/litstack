@@ -79,7 +79,9 @@ class ListRepository extends BaseFieldRepository
         $newDepth = ($parent->depth ?? 0) + 1;
         $this->checkMaxDepth($newDepth, $this->field->maxDepth);
 
-        $listItem = new ListItem([
+        $class = config('lit.models.list_item');
+
+        $listItem = new $class([
             'parent_id'   => $parent->id ?? 0,
             'config_type' => get_class($this->config->getConfig()),
             'form_type'   => $request->form_type ?? 'show',
@@ -116,7 +118,9 @@ class ListRepository extends BaseFieldRepository
             CrudValidator::CREATION
         );
 
-        $order_column = ListItem::where([
+        $class = config('lit.models.list_item');
+
+        $order_column = $class::where([
             'config_type' => $this->config->getNamespace(),
             'form_type'   => $payload->form_type ?? 'show',
             'model_type'  => get_class($model),
@@ -125,7 +129,7 @@ class ListRepository extends BaseFieldRepository
             'parent_id'   => $parent->id ?? 0,
         ])->count();
 
-        $listItem = new ListItem();
+        $listItem = new $class();
         $listItem->model_type = get_class($model);
         $listItem->model_id = $model->id;
         $listItem->field_id = $this->field->id;

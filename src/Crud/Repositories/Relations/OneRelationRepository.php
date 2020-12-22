@@ -38,10 +38,12 @@ class OneRelationRepository extends BaseFieldRepository
             'field_id'        => $this->field->id,
         ];
 
+        $class = config('lit.models.relation');
+
         // Replace previous relation with new one.
-        Relation::where($query)->delete();
+        $class::where($query)->delete();
         $query['to_model_id'] = $related->id;
-        Relation::create($query);
+        $class::create($query);
     }
 
     /**
@@ -64,7 +66,9 @@ class OneRelationRepository extends BaseFieldRepository
             'field_id'        => $this->field->id,
         ];
 
-        Relation::where($query)->delete();
+        $class = config('lit.models.relation');
+
+        $class::where($query)->delete();
 
         $this->deleteIfDesired($request, $related);
     }

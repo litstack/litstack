@@ -29,7 +29,9 @@ class Form
         $loadingCollection = $collection ? true : false;
         $loadingForm = $name ? true : false;
 
-        $query = FormModel::query();
+        $class = config('lit.models.form');
+
+        $query = $class::query();
 
         if ($collection) {
             $query->where('collection', $collection);

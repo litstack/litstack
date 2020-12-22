@@ -42,7 +42,7 @@ class FormConfig
      */
     public function __construct()
     {
-        $this->model = Form::class;
+        $this->model = config('lit.models.form');
     }
 
     /**

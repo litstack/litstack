@@ -3,7 +3,6 @@
 namespace Ignite\Crud\Models\Relations;
 
 use Ignite\Crud\Fields\ListField\ListRelation;
-use Ignite\Crud\Models\ListItem;
 use Ignite\Crud\Models\Relation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\ServiceProvider;
@@ -33,7 +32,7 @@ class CrudRelations extends ServiceProvider
         Builder::macro('listItems', function (string $fieldId) {
             $model = $this->getModel();
 
-            $morphMany = $model->morphMany(ListItem::class, 'model');
+            $morphMany = $model->morphMany(config('lit.models.list_item'), 'model');
 
             $relation = new ListRelation(
                 $morphMany->getQuery(),

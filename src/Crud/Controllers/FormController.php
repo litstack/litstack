@@ -2,8 +2,8 @@
 
 namespace Ignite\Crud\Controllers;
 
+use Ignite\Config\ConfigHandler;
 use Ignite\Crud\Models\Form;
-use Ignite\Crud\Models\Form as FormModel;
 use Ignite\Crud\Requests\CrudCreateRequest;
 use Ignite\Crud\Requests\CrudReadRequest;
 use Ignite\Crud\Requests\FormReadRequest;
@@ -15,7 +15,20 @@ abstract class FormController extends CrudBaseController
      *
      * @var string
      */
-    protected $model = FormModel::class;
+    protected $model;
+
+    /**
+     * Create new CrudBaseController instance.
+     *
+     * @param  ConfigHandler|null $config
+     * @return void
+     */
+    public function __construct(ConfigHandler $config = null)
+    {
+        parent::__construct($config);
+
+        $this->model = config('lit.models.form');
+    }
 
     /**
      * Load model.
@@ -71,7 +84,7 @@ abstract class FormController extends CrudBaseController
             }
         }
 
-        $model = Form::firstOrCreate([
+        $model = $this->model::firstOrCreate([
             'config_type' => get_class($this->config->getConfig()),
         ], [
             'form_name'  => $this->config->formName,

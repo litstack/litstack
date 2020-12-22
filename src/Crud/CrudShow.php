@@ -79,9 +79,11 @@ class CrudShow extends Page
     {
         $chart = parent::chart($name);
 
+        $class = config('lit.models.form');
+
         $chart->setAttribute('send_model_id',
-            ! is_subclass_of($this->form->getModel(), Form::class)
-            && $this->form->getModel() != Form::class
+            ! is_subclass_of($this->form->getModel(), $class)
+            && $this->form->getModel() != $class
         );
 
         return $chart;

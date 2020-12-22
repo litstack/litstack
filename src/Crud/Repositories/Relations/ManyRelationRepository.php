@@ -51,12 +51,14 @@ class ManyRelationRepository extends BaseFieldRepository
             'order_column'    => $order_column,
         ];
 
+        $class = config('lit.models.relation');
+
         // Check if relation already exists.
-        if (Relation::where($query)->exists()) {
+        if ($class::where($query)->exists()) {
             abort(404);
         }
 
-        Relation::create($query);
+        $class::create($query);
     }
 
     /**
@@ -79,7 +81,9 @@ class ManyRelationRepository extends BaseFieldRepository
             'field_id'        => $this->field->id,
         ];
 
-        Relation::where($query)->delete();
+        $class = config('lit.models.relation');
+
+        $class::where($query)->delete();
 
         $this->deleteIfDesired($request, $related);
     }
