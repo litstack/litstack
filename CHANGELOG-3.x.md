@@ -4,6 +4,8 @@
 
 ### Added
 
+-   Added `appends` method to Crud show page ([#135](https://github.com/litstack/litstack/pull/135))
+
 ### Fixed
 
 ### Changed
