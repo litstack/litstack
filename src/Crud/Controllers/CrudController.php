@@ -214,6 +214,10 @@ abstract class CrudController extends CrudBaseController
             'config'     => $config,
         ]);
 
+        foreach ($page->getAppends() as $attribute) {
+            $model->append($attribute);
+        }
+
         [$previous, $next] = $this->nearSiblings($id);
 
         // Show near items.
