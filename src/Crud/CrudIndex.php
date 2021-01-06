@@ -113,6 +113,19 @@ class CrudIndex extends Page
     }
 
     /**
+     * Create a new Info Card.
+     *
+     * @param string $title
+     * @return void
+     */
+    public function info(string $title = '')
+    {
+        $info = $this->component('lit-info')->title($title);
+
+        return $info;
+    }
+
+    /**
      * Render CrudIndex.
      *
      * @return array
