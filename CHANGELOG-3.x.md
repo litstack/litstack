@@ -5,8 +5,11 @@
 ### Added
 
 -   Added `appends` method to Crud show page ([#135](https://github.com/litstack/litstack/pull/135))
+-   Added `info` method to Crud index page ([e69a6e8](https://github.com/litstack/litstack/commit/e69a6e8a1ef99637aecdccd637d8b23c79c1b1e3))
 
 ### Fixed
+
+-   Fixed table column `date` method casting `null` as carbon instance ([338dae9](https://github.com/litstack/litstack/commit/338dae90d575a960206ea8ca100390e9cae7428a))
 
 ### Changed
 
