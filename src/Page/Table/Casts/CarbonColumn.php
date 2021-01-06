@@ -37,6 +37,10 @@ class CarbonColumn extends ColumnCast
      */
     public function get($model, $key, $value, $attributes)
     {
+        if (is_null($value)) {
+            return;
+        }
+
         return (new Carbon($value))->format($this->format);
     }
 }
