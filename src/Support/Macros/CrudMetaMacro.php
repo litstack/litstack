@@ -14,7 +14,7 @@ class CrudMetaMacro
     public function register()
     {
         CrudShow::macro('meta', function () {
-            $this->card(function ($card) {
+            return $this->card(function ($card) {
                 $metaMaxWith = '520px';
                 $card->wrapper('lit-utilities-meta-wrapper', function ($meta) use ($metaMaxWith) {
                     $meta->input('meta_title')
