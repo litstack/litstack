@@ -105,7 +105,7 @@ class ApplicationServiceProvider extends ServiceProvider
 
             $scripts = config('lit.assets.scripts') ?? [];
             foreach ($scripts as $script) {
-                $app->style($script);
+                $app->script($script);
             }
         });
     }
