@@ -10,6 +10,7 @@
 ### Fixed
 
 -   Fixed table column `date` method casting `null` as carbon instance ([338dae9](https://github.com/litstack/litstack/commit/338dae90d575a960206ea8ca100390e9cae7428a))
+-   Fixed crud model binding ([#141](https://github.com/litstack/litstack/pull/141))
 
 ### Changed
 
