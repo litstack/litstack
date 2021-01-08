@@ -82,6 +82,7 @@ class Kernel
         return [
             'web',
             'lit.auth:'.config('lit.guard'),
+            'lit.crud',
         ];
     }
 

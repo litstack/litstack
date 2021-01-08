@@ -55,8 +55,8 @@ class ConfigHandler
     /**
      * Set a config attribute.
      *
-     * @param string $attribute
-     * @param mixed $value
+     * @param  string $attribute
+     * @param  mixed  $value
      * @return void
      */
     public function set($attribute, $value)
@@ -72,6 +72,17 @@ class ConfigHandler
     public function getNamespace()
     {
         return is_null($this->config) ? null : get_class($this->config);
+    }
+
+    /**
+     * Determine if the config is an instance of the given class name or
+     * interface.
+     *
+     * @return bool
+     */
+    public function is($class)
+    {
+        return $this->config instanceof $class;
     }
 
     /**

@@ -39,18 +39,6 @@ abstract class CrudConfig
     protected $modelInstance;
 
     /**
-     * Create new CrudConfig instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        app()->booted(function () {
-            $this->setModelInstanceFromCurrentRoute();
-        });
-    }
-
-    /**
      * Set model instance from current route.
      *
      * @return void

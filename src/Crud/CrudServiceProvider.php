@@ -55,6 +55,7 @@ use Ignite\Crud\Repositories\Relations\OneRelationRepository;
 use Ignite\Crud\Vue\FieldWrapperGroupComponent;
 use Ignite\Support\Facades\Form as FormFacade;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class CrudServiceProvider extends LaravelServiceProvider
@@ -151,6 +152,10 @@ class CrudServiceProvider extends LaravelServiceProvider
         $this->registerApiRepositories();
 
         $this->registerCrudRouter();
+
+        $this->callAfterResolving('router', function (Router $router) {
+            $router->aliasMiddleware('lit.crud', CrudMiddleware::class);
+        });
     }
 
     /**
