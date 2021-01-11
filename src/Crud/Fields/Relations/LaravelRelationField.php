@@ -5,7 +5,6 @@ namespace Ignite\Crud\Fields\Relations;
 use Closure;
 use Ignite\Crud\RelationField;
 use Ignite\Exceptions\Traceable\InvalidArgumentException as LitstackInvalidArgumentException;
-use Ignite\Page\Table\ColumnBuilder;
 use Ignite\Support\Facades\Config;
 use Ignite\Support\Facades\Crud;
 use Illuminate\Support\Arr;
@@ -279,7 +278,7 @@ class LaravelRelationField extends RelationField
      */
     public function preview(Closure $closure)
     {
-        $builder = new ColumnBuilder;
+        $builder = new RelationColumnBuilder($this);
 
         // In order for the column builder to set a cast when creating a money
         // field, it is necessary to pass the field instance to the column builder.
@@ -470,6 +469,21 @@ class LaravelRelationField extends RelationField
         });
 
         return $form;
+    }
+
+    /**
+     * Get attribute by name.
+     *
+     * @param  string $name
+     * @return $this
+     */
+    public function getAttribute(string $name)
+    {
+        if ($name == 'form' && $key = request()->form_key) {
+            return $this->preview->getForm($key);
+        }
+
+        return parent::getAttribute($name);
     }
 
     /**
