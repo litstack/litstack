@@ -1,6 +1,5 @@
 <template>
     <div class="d-flex align-items-center">
-        Hello
         <lit-field :model="item" :field="field" />
     </div>
 </template>
