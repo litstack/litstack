@@ -152,7 +152,7 @@ class MediaRepository extends BaseFieldRepository
             ->withCustomProperties($customProperties)
             ->toMediaCollection($request->collection);
 
-        $media->url = $media->getUrl();
+        $media->showOrignial = true;
 
         return response()->json($media, 200);
     }
