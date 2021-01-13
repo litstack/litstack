@@ -147,7 +147,7 @@ abstract class CrudConfig
     {
         return 'crud/'.Str::slug((new $this->model())->getTable());
     }
-    
+
     /**
      * Get breadcrumb.
      *
@@ -155,7 +155,6 @@ abstract class CrudConfig
      */
     public function breadcrumb()
     {
-        return null;
     }
 
     /**
