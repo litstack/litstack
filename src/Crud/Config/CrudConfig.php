@@ -147,6 +147,16 @@ abstract class CrudConfig
     {
         return 'crud/'.Str::slug((new $this->model())->getTable());
     }
+    
+    /**
+     * Get breadcrumb.
+     *
+     * @return string
+     */
+    public function breadcrumb()
+    {
+        return null;
+    }
 
     /**
      * Model singular and plural name.

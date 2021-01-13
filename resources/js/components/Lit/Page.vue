@@ -4,6 +4,7 @@
             :back="goBack.route || false"
             :back-text="goBack.text || ''"
             :breadcrumb="page.breadcrumb || {}"
+            :current="page.header.title"
         >
             <template :slot="slot" v-for="(part, slot) in page.navigation">
                 <lit-base-component
