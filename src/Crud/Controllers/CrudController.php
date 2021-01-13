@@ -83,7 +83,7 @@ abstract class CrudController extends CrudBaseController
         $models->map(fn ($item) => $item->delete());
 
         return response()->success(
-            __lit_choice('messages.deleted_items', count($models))
+            __lit_choice('crud.messages.deleted_items', count($models))
         );
     }
 
