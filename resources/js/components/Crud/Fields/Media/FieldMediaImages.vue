@@ -179,7 +179,9 @@ export default {
          * Image path.
          */
         imgPath(image) {
-            console.log(Object.keys(image).includes('showOrignial'));
+            if (image.mime_type == 'image/svg+xml') {
+                return image.original_url;
+            }
             if (image.showOrignial == true) {
                 return image.original_url;
             }

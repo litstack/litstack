@@ -26,6 +26,9 @@ export default {
          * Image path.
          */
         imgPath() {
+            if (this.image.mime_type == 'image/svg+xml') {
+                return this.image.original_url;
+            }
             if (this.image.showOrignial == true) {
                 return this.image.original_url;
             }
