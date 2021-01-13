@@ -3,7 +3,6 @@
         :class="{
             'col-sm': isSmall(col),
             'lit-table-col': true,
-            pointer: col.link,
             'text-right': col.text_right,
             'text-center': col.text_center,
             ...col.classes,
@@ -116,7 +115,7 @@ export default {
     },
     methods: {
         isExternal(url) {
-            let domain = function (url) {
+            let domain = function(url) {
                 return url
                     .replace('http://', '')
                     .replace('https://', '')
@@ -226,11 +225,14 @@ export default {
 </script>
 <style lang="scss">
 table.b-table tr td > a {
+    display: inline-block;
+    width: 100%;
     color: unset;
     &:hover {
         text-decoration: none;
     }
 }
+
 .lit-col-money {
     font-variant-numeric: tabular-nums;
 }
