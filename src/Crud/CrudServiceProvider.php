@@ -22,6 +22,7 @@ use Ignite\Crud\Fields\Datetime;
 use Ignite\Crud\Fields\Icon;
 use Ignite\Crud\Fields\Input;
 use Ignite\Crud\Fields\ListField\ListField;
+use Ignite\Crud\Fields\Listing;
 use Ignite\Crud\Fields\Media\File;
 use Ignite\Crud\Fields\Media\Image;
 use Ignite\Crud\Fields\Modal;
@@ -95,6 +96,7 @@ class CrudServiceProvider extends LaravelServiceProvider
         'oneRelation'  => OneRelation::class,
         'manyRelation' => ManyRelation::class,
         'list'         => ListField::class,
+        'listing'      => Listing::class,
         'radio'        => Radio::class,
         'route'        => Route::class,
     ];
