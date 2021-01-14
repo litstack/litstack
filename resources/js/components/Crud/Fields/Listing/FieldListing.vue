@@ -71,10 +71,7 @@ export default {
                 this.add(i);
             }
         },
-        remove(n) {
-            this.val.splice(n, 1);
-            this.updateValues();
-        },
+
         updateValues() {
             this.val = [];
             if (this.value) {
@@ -93,6 +90,10 @@ export default {
          * Add field.
          */
         add(n) {
+            // TODO: for all locales
+            // 1. store current locale
+            // 2. switch to each locale and execute the following code for each locale
+            // 3. switch back to stored locale
             if (this.val.length <= n) {
                 this.val.push(this.empty());
             }
@@ -106,6 +107,14 @@ export default {
                     ref.$emit('input', this.val[n][field.id]);
                 }
             });
+        },
+        remove(n) {
+            // TODO: for all locales
+            // 1. store current locale
+            // 2. switch to each locale and execute the following code for each locale
+            // 3. switch back to stored locale
+            this.val.splice(n, 1);
+            this.updateValues();
         },
         empty() {
             let data = {};

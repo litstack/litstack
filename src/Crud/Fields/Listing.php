@@ -39,6 +39,11 @@ class Listing extends BaseField
     {
     }
 
+    public function sameNumberOfRowsForAllLocales($same)
+    {
+        $this->setAttribute('equal_rows', $same);
+    }
+
     /**
      * Cast field value.
      *
