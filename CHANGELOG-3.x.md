@@ -19,6 +19,8 @@
 
 ### Changed
 
+-   Changed field constructor ([#147](https://github.com/litstack/litstack/pull/147))
+
 ## [v3.2.5](https://github.com/litstack/litstack/compare/v3.2.4...v3.2.5)
 
 ### Added
