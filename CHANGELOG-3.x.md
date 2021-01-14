@@ -15,6 +15,7 @@
 -   Fixed crud model binding ([#141](https://github.com/litstack/litstack/pull/141))
 -   Fixed script mime types ([#142](https://github.com/litstack/litstack/pull/142))
 -   Fixed missing translations ([#145](https://github.com/litstack/litstack/pull/145))
+-   Fixed nested block fields ([#144](https://github.com/litstack/litstack/pull/144))
 
 ### Changed
 
