@@ -32,18 +32,17 @@ class MorphTo extends OneRelationField
     /**
      * Create new Field instance.
      *
-     * @param string      $id
-     * @param string      $model
-     * @param string|null $routePrefix
+     * @param  string $id
+     * @return void
      */
-    public function __construct(string $id, string $model, $routePrefix, $form)
+    public function __construct(string $id)
     {
         $dividedId = explode(static::ID_DIVIDER, $id);
         $this->relatedModelClass = last($dividedId);
         $this->setAttribute('morphType', last($dividedId));
         $id = $dividedId[0].static::ID_DIVIDER.(new $this->morphType())->getTable();
 
-        parent::__construct($id, $model, $routePrefix, $form);
+        parent::__construct($id);
 
         $this->setAttribute('local_key', $dividedId[0]);
     }
@@ -99,7 +98,7 @@ class MorphTo extends OneRelationField
     /**
      * Get results for model.
      *
-     * @param mixed $model
+     * @param  mixed $model
      * @return mixed
      */
     public function getResults($model)
