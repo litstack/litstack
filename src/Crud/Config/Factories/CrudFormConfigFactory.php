@@ -38,7 +38,7 @@ class CrudFormConfigFactory extends ConfigFactory
         if (is_translatable($config->model)) {
             $page->navigationRight()->component('lit-crud-language');
         }
-
+        // dump($this->getBreadcrumb($config));
         $page->breadcrumb($this->getBreadcrumb($config));
         // if ($config->has('index')) {
         //     $page->goBack($config->names['plural'], $config->route_prefix);

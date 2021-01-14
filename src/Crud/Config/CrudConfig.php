@@ -149,6 +149,15 @@ abstract class CrudConfig
     }
 
     /**
+     * Get breadcrumb.
+     *
+     * @return string
+     */
+    public function breadcrumb()
+    {
+    }
+
+    /**
      * Model singular and plural name.
      *
      * @return array

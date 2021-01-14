@@ -49,7 +49,6 @@ trait ManagesBreadcrumb
         if (! $route = Route::current()) {
             return $route;
         }
-
         if (! is_null($model = $parentConfig->getModelInstance())) {
             $title = $parentConfig->names['singular'];
             if ($title == Str::singular(class_basename($parentConfig->model))) {
@@ -69,9 +68,12 @@ trait ManagesBreadcrumb
                 continue;
             }
 
+            $breadcrumb = ! is_null($parentConfig->breadcrumb) ? $parentConfig->model::find($id)[$parentConfig->breadcrumb] : null;
+
             return [[
-                'title' => $id,
-                'url'   => $parentConfig->routePrefix().'/'.$id,
+                'title'      => $id,
+                'url'        => $parentConfig->routePrefix().'/'.$id,
+                'breadcrumb' => $breadcrumb,
             ]];
         }
 

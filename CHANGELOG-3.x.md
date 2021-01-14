@@ -7,12 +7,15 @@
 -   Added relation preview inline fields ([#143](https://github.com/litstack/litstack/pull/143))
 -   Added `appends` method to Crud show page ([#135](https://github.com/litstack/litstack/pull/135))
 -   Added `info` method to Crud index page ([e69a6e8](https://github.com/litstack/litstack/commit/e69a6e8a1ef99637aecdccd637d8b23c79c1b1e3))
+-   Added `translation` option to the crud meta macro ([#146](https://github.com/litstack/litstack/pull/146))
 
 ### Fixed
 
 -   Fixed table column `date` method casting `null` as carbon instance ([338dae9](https://github.com/litstack/litstack/commit/338dae90d575a960206ea8ca100390e9cae7428a))
 -   Fixed crud model binding ([#141](https://github.com/litstack/litstack/pull/141))
 -   Fixed script mime types ([#142](https://github.com/litstack/litstack/pull/142))
+-   Fixed missing translations ([#145](https://github.com/litstack/litstack/pull/145))
+-   Fixed nested block fields ([#144](https://github.com/litstack/litstack/pull/144))
 
 ### Changed
 

@@ -5,29 +5,29 @@
             class="d-flex justify-content-end justify-content-lg-between align-items-center lit-page-navigation__container"
         >
             <div class="lit-page-navigation-left d-none d-lg-block">
-                <b-button
-                    size="sm"
-                    variant="link"
+                <div
                     v-if="breadcrumb.length > 0"
-                    class="lit-page-navigation__go_back"
+                    class="lit-page-navigation__go_back d-inline-block small mr-3"
                 >
                     <!-- href="`${Lit.baseURL}${back}`" -->
-                    <lit-fa-icon icon="list-ul" class="mr-1" />
+                    <!-- <lit-fa-icon icon="list-ul" class="mr-1" /> -->
                     <!-- <span v-html="backText ? backText : 'Go Back'" /> -->
                     <template v-for="(item, i) in breadcrumb">
                         <a
                             :href="`${Lit.baseURL}${item.url}`"
                             class="text-secondary"
                             :key="i"
+                            >{{ linktext(item) }}</a
                         >
-                            {{ item.title }}
-                        </a>
 
                         <template v-if="i < breadcrumb.length - 1">
                             /
                         </template>
                     </template>
-                </b-button>
+                    <span v-if="current">
+                        / <strong>{{ current }}</strong>
+                    </span>
+                </div>
                 <div class="d-inline-block">
                     <slot name="left" />
                 </div>
@@ -100,6 +100,10 @@ export default {
                 return [];
             },
         },
+        current: {
+            type: String,
+            default: null,
+        },
         controls: {
             type: Array,
             default() {
@@ -119,7 +123,7 @@ export default {
         this.scrollBehavior();
         this.saveShortCut();
 
-        this.$nextTick(async function () {
+        this.$nextTick(async function() {
             await this.saveButtonIsRendered('.lit-save-button');
             let ww = window.innerWidth;
             let button = document
@@ -136,10 +140,13 @@ export default {
         });
     },
     methods: {
+        linktext(item) {
+            return (item.breadcrumb || item.title).trim();
+        },
         scrollBehavior() {
             document
                 .querySelector('div#litstack > main')
-                .addEventListener('scroll', (e) => {
+                .addEventListener('scroll', e => {
                     let header = document.querySelector('.lit-page-navigation');
                     let toasterSlot = document.querySelector('.b-toaster-slot');
 
@@ -166,7 +173,7 @@ export default {
         saveShortCut() {
             document.addEventListener(
                 'keydown',
-                (e) => {
+                e => {
                     if (
                         (window.navigator.platform.match('Mac')
                             ? e.metaKey
@@ -277,7 +284,7 @@ export default {
 
     &-left {
         > div > * {
-            margin-right: map-get($spacers, 2);
+            // margin-right: map-get($spacers, 2);
         }
     }
 
@@ -310,7 +317,7 @@ export default {
             }
         }
         .lit-page-navigation__go_back {
-            margin-left: -$btn-padding-x-sm;
+            // margin-left: -$btn-padding-x-sm;
         }
     }
     @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
