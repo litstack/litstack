@@ -77,21 +77,13 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Create new Field instance.
      *
-     * @param string      $id
-     * @param string      $model
-     * @param string|null $routePrefix
-     * @param mixed       $form
+     * @param  string $id
+     * @return void
      */
-    public function __construct(string $id, string $model, $routePrefix, $form)
+    public function __construct(string $id)
     {
-        $this->model = $model;
-        $this->formInstance = $form;
-
-        $this->validateFieldId($model, $id);
-
         $this->setAttribute('id', $id);
         $this->setAttribute('local_key', $id);
-        $this->setAttribute('route_prefix', $routePrefix);
         $this->setAttribute('component', $this->component);
         $this->setAttribute('readonly', false);
         $this->setAttribute('class', '');
@@ -99,6 +91,40 @@ class Field extends VueProp implements AuthorizableContract
         $this->setDefaultsFromClassMethods();
         $this->mount();
         $this->mergeRequiredAttributes();
+    }
+
+    /**
+     * Set route prefix.
+     *
+     * @param  string $routePrefix
+     * @return void
+     */
+    public function setRoutePrefix($routePrefix)
+    {
+        $this->setAttribute('route_prefix', $routePrefix);
+    }
+
+    /**
+     * Set parent form.
+     *
+     * @param  BaseForm $form
+     * @return void
+     */
+    public function setParentForm(BaseForm $form)
+    {
+        $this->formInstance = $form;
+    }
+
+    /**
+     * Set field model class.
+     *
+     * @param  string $model
+     * @return void
+     */
+    public function setModel($model)
+    {
+        $this->model = $model;
+        $this->validateFieldId($model, $this->id);
     }
 
     /**
