@@ -1,7 +1,11 @@
 <template>
     <lit-base-field :field="field">
-        <div v-for="(v, i) in val || []" class="w-100">
-            <div class="row">
+        <div
+            v-for="(v, i) in val || []"
+            :key="i"
+            class="w-100 lit-block d-flex align-items-center mb-3"
+        >
+            <div class="row w-100 mr-2">
                 <lit-field
                     v-for="(field, j) in field.fields"
                     :ref="`field.${i}.${j}`"
@@ -16,13 +20,20 @@
                     @changed="changed(i, field.id, $event)"
                 />
             </div>
-            <b-button @click="remove(i)">
-                -
+            <b-button
+                variant="transparent"
+                v-b-tooltip
+                :title="__('base.item_delete', { item: 'Item' })"
+                size="sm"
+                class="btn-square lit-block-delete"
+                @click="remove(i)"
+            >
+                <lit-fa-icon icon="trash" />
             </b-button>
         </div>
 
-        <b-button @click="add(val.length)">
-            +
+        <b-button @click="add(val.length)" size="sm">
+            <lit-fa-icon icon="plus" />
         </b-button>
     </lit-base-field>
 </template>
