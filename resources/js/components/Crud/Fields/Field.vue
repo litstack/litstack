@@ -188,6 +188,8 @@ export default {
                 locale = this.language;
             }
 
+            console.log('fillValueToModel', { value, locale });
+
             // Translatable field.
             if (this.field.translatable) {
                 return (this.model[locale][this.field.local_key] = value);
@@ -371,7 +373,6 @@ export default {
          * @return {Boolean}
          */
         compareValues(original, value) {
-            console.log({ original, value });
             if (Array.isArray(value) || typeof value === 'object') {
                 return !_.isEqual(original, value);
             }

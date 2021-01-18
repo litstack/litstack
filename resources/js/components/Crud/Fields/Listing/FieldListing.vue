@@ -58,7 +58,13 @@ export default {
             fieldModel: {},
             fieldCount: 0,
             val: [],
+            currentLocale: '',
         };
+    },
+    watch: {
+        value() {
+            this.val = this.value;
+        },
     },
     beforeMount() {
         if (this.value) {
@@ -66,23 +72,15 @@ export default {
         }
 
         this.makeModel();
-        this.addInitialRows();
 
         Lit.bus.$on('languageChanged', () => {
             this.$nextTick(this.updateValues);
         });
     },
+    mounted() {
+        this.updateValues();
+    },
     methods: {
-        addInitialRows() {
-            if (!this.val) {
-                return;
-            }
-
-            for (let i = 0; i < this.val.length; i++) {
-                this.add(i);
-            }
-        },
-
         updateValues() {
             this.val = [];
             if (this.value) {
@@ -92,7 +90,7 @@ export default {
                 for (let j = 0; j < this.field.fields.length; j++) {
                     let field = this.field.fields[j];
                     let ref = this.$refs[`field.${i}.${j}`][0];
-                    console.log('updateValues', this.val[i][field.id]);
+                    // console.log('updateValues', this.val[i][field.id]);
                     ref.$emit('input', this.val[i][field.id]);
                 }
             }
@@ -100,32 +98,90 @@ export default {
         /**
          * Add field.
          */
-        add(n) {
-            // TODO: for all locales
-            // 1. store current locale
-            // 2. switch to each locale and execute the following code for each locale
-            // 3. switch back to stored locale
-            if (this.val.length <= n) {
-                this.val.push(this.empty());
+        add(n, l = 0) {
+            if (!this.currentLocale) {
+                this.currentLocale = this.$store.state.config.language;
             }
 
-            this.$nextTick(() => {
-                for (let j = 0; j < this.field.fields.length; j++) {
-                    let field = this.field.fields[j];
-                    let ref = this.$refs[`field.${n}.${j}`][0];
-                    console.log('add', this.val[n][field.id]);
-                    console.log('add2', this.val[n]);
-                    ref.$emit('input', this.val[n][field.id]);
-                }
+            let locales = this.$store.getters.languages;
+
+            if (locales.length <= l) {
+                console.log('Go back to locale:', this.currentLocale);
+                this.$store.commit('SET_LANGUAGE', this.currentLocale);
+                this.currentLocale = null;
+
+                this.$nextTick(() => {
+                    this.updateValues();
+                });
+
+                return;
+            }
+
+            this.addForLocale(n, locales[l], () => {
+                this.add(n, l + 1);
             });
         },
-        remove(n) {
-            // TODO: for all locales
-            // 1. store current locale
-            // 2. switch to each locale and execute the following code for each locale
-            // 3. switch back to stored locale
-            this.val.splice(n, 1);
-            this.updateValues();
+        addForLocale(n, locale, callback) {
+            if (!locale) {
+                return;
+            }
+            this.$store.commit('SET_LANGUAGE', locale);
+
+            this.$nextTick(() => {
+                console.log('add', { n, locale });
+                if (this.val.length <= n) {
+                    this.val.push(this.empty());
+                }
+
+                this.$nextTick(() => {
+                    for (let j = 0; j < this.field.fields.length; j++) {
+                        let field = this.field.fields[j];
+                        let ref = this.$refs[`field.${n}.${j}`][0];
+                        ref.$emit('input', this.val[n][field.id]);
+                    }
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
+                });
+            });
+        },
+        remove(n, l = 0) {
+            if (!this.currentLocale) {
+                this.currentLocale = this.$store.state.config.language;
+            }
+
+            let locales = this.$store.getters.languages;
+
+            if (locales.length <= l) {
+                console.log('Go back to locale:', this.currentLocale);
+                this.$store.commit('SET_LANGUAGE', this.currentLocale);
+                this.currentLocale = null;
+
+                this.$nextTick(() => {
+                    this.updateValues();
+                });
+
+                return;
+            }
+
+            this.spliceForLocale(n, locales[l], () => {
+                this.remove(n, l + 1);
+            });
+        },
+        spliceForLocale(n, locale, callback) {
+            if (!locale) {
+                return;
+            }
+            this.$store.commit('SET_LANGUAGE', locale);
+
+            this.$nextTick(() => {
+                console.log('remove', { n, locale });
+                this.val.splice(n, 1);
+                this.$emit('input', this.val);
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            });
         },
         empty() {
             let data = {};
@@ -142,9 +198,10 @@ export default {
             if (typeof value[n] !== 'object') {
                 value[n] = {};
             }
-            console.log('changed', { n, attribute, newValue });
+            // console.log('changed', { n, attribute, newValue });
             value[parseInt(n)][attribute] = newValue;
             this.$emit('input', value);
+            console.log('input', { value });
         },
         makeModel() {
             this.fieldModel = this.crud({
