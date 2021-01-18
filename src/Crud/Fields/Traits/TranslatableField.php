@@ -10,8 +10,7 @@ trait TranslatableField
     /**
      * Set field translatable.
      *
-     * @param bool $translatable
-     *
+     * @param  bool $translatable
      * @return self
      */
     public function translatable(bool $translatable = true)
@@ -19,6 +18,15 @@ trait TranslatableField
         $this->setAttribute('translatable', $translatable);
 
         return $this;
+    }
+
+    public function setModel($model)
+    {
+        parent::setModel($model);
+
+        $this->setAttribute(
+            'translatable', $this->setTranslatableDefault()
+        );
     }
 
     /**

@@ -44,13 +44,23 @@ class LaravelRelationField extends RelationField
     /**
      * Create new Field instance.
      *
-     * @param string      $id
-     * @param string      $model
-     * @param string|null $routePrefix
+     * @param  string $id
+     * @return void
      */
-    public function __construct(string $id, string $model, $routePrefix, $form)
+    public function __construct(string $id)
     {
-        parent::__construct($id, $model, $routePrefix, $form);
+        parent::__construct($id);
+    }
+
+    /**
+     * Set model class.
+     *
+     * @param  string $model
+     * @return void
+     */
+    public function setModel($model)
+    {
+        parent::setModel($model);
 
         $this->initializeRelationField();
     }

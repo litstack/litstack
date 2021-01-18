@@ -33,6 +33,25 @@ class Password extends BaseField
     protected $rulesOnly = false;
 
     /**
+     * Set model class.
+     *
+     * @param  string $model
+     * @return void
+     *
+     * @throws LogicException
+     */
+    public function setModel($model)
+    {
+        parent::setModel($model);
+
+        if (in_array($this->id, (new $model)->getFillable())) {
+            throw new LogicException(
+                "Remove [{$this->id}] from your fillable attributes in [{$model}] in order to use the password field.",
+            );
+        }
+    }
+
+    /**
      * Fill model.
      *
      * @param mixed  $model
@@ -59,12 +78,6 @@ class Password extends BaseField
      */
     public function mount()
     {
-        if (in_array($this->id, (new $this->model)->getFillable())) {
-            throw new LogicException(
-                "Remove [{$this->id}] from your fillable attributes in [{$this->model}] in order to use the password field.",
-            );
-        }
-
         $this->minScore(1);
         $this->noScore(false);
     }
