@@ -188,6 +188,8 @@ export default {
                 locale = this.language;
             }
 
+            console.log('fillValueToModel', { value, locale });
+
             // Translatable field.
             if (this.field.translatable) {
                 return (this.model[locale][this.field.local_key] = value);
