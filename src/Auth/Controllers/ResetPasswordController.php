@@ -37,34 +37,9 @@ class ResetPasswordController
     public function showResetForm(Request $request, $token = null)
     {
         return view('litstack::auth.passwords.reset')->with([
-            'email'     => $request->email,
-            'token'     => $token,
-            'user_type' => config('lit.guard'),
+            'email' => $request->email,
+            'token' => $token,
         ]);
-    }
-
-    /**
-     * Get the password reset validation rules.
-     *
-     * @return array
-     */
-    protected function rules()
-    {
-        return [
-            'token'    => 'required',
-            'email'    => 'required|email',
-            'password' => 'required|string|confirmed|min:8',
-        ];
-    }
-
-    /**
-     * Set up Password broker.
-     *
-     * @return void
-     */
-    public function broker()
-    {
-        return Password::broker('lit_users');
     }
 
     /**
@@ -93,5 +68,42 @@ class ResetPasswordController
                     ? redirect($this->defaultUrl)->with('status', __($status))
                     : back()->withInput($request->only('email'))
                         ->withErrors(['email' => __($status)]);
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Auth\Passwords\PasswordBroker
+     */
+    public function broker()
+    {
+        return Password::broker($this->getGuardUserProvider());
+    }
+
+    /**
+     * Get the password reset validation rules.
+     *
+     * @return array
+     */
+    protected function rules()
+    {
+        return [
+            'token'    => 'required',
+            'email'    => 'required|email',
+            'password' => 'required|string|confirmed|min:8',
+        ];
+    }
+
+    /**
+     * Gets the user provider based on the configuration for litstack
+     * authentication guard.
+     *
+     * @return void
+     */
+    protected function getGuardUserProvider()
+    {
+        $litGuard = config('lit.guard');
+
+        return config('auth.guards')[$litGuard]['provider'];
     }
 }
