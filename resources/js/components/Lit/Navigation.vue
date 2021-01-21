@@ -25,7 +25,7 @@
                         </template>
                     </template>
                     <span v-if="current">
-                        / <strong>{{ current }}</strong>
+                        / <strong>{{ stripTags(current) }}</strong>
                     </span>
                 </div>
                 <div class="d-inline-block">
@@ -142,6 +142,9 @@ export default {
     methods: {
         linktext(item) {
             return (item.breadcrumb || item.title).trim();
+        },
+        stripTags(string) {
+            return string.replace(/(<([^>]+)>)/gi, '');
         },
         scrollBehavior() {
             document

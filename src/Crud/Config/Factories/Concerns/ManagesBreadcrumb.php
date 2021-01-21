@@ -24,7 +24,6 @@ trait ManagesBreadcrumb
                 'url'   => $config->routePrefix(),
             ]];
         }
-
         if (! $config->has('parent')) {
             return $breadcrumb;
         }
@@ -67,8 +66,7 @@ trait ManagesBreadcrumb
             if ($search != $parameter) {
                 continue;
             }
-
-            $breadcrumb = ! is_null($parentConfig->breadcrumb) ? $parentConfig->model::find($id)[$parentConfig->breadcrumb] : null;
+            $breadcrumb = ! is_null($parentConfig->breadcrumb) ? strip_tags($parentConfig->model::find($id)[$parentConfig->breadcrumb]) : null;
 
             return [[
                 'title'      => $id,
