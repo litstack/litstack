@@ -69,6 +69,7 @@ return [
         \Ignite\Crud\CrudServiceProvider::class,
         \Ignite\User\UserServiceProvider::class,
         \Ignite\Page\PageServiceProvider::class,
+        //\Ignite\Info\InfoServiceProvider::class,
     ],
 
     /*

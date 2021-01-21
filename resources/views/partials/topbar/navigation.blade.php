@@ -34,6 +34,12 @@
         @endforeach
     @endforeach
     <b-dropdown-divider></b-dropdown-divider>
+    @if (in_array(\Ignite\Info\InfoServiceProvider::class, config('lit.providers')))
+        <b-dropdown-item href="{{route('lit.info')}}">
+            <div class="mr-2 d-inline-block lit-topbar__icon">{!! fa('info') !!}</div>
+            System Info
+        </b-dropdown-item>
+    @endif
     <lit-logout :url="'{{route('lit.logout')}}'"></lit-logout>
     
 </b-dropdown>
