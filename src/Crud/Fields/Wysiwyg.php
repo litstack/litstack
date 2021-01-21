@@ -52,6 +52,19 @@ class Wysiwyg extends BaseField
     }
 
     /**
+     * Set fields that should be shown.
+     *
+     * @param  array $fields
+     * @return $this
+     */
+    public function only($fields)
+    {
+        $this->setAttribute('only', $fields);
+
+        return $this;
+    }
+
+    /**
      * Add custom css to editor.
      *
      * @param  string $path

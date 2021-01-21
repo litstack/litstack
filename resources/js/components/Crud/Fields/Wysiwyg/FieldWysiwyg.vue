@@ -404,6 +404,9 @@ export default {
             }
         },
         hasControl(control) {
+            if (this.field.only) {
+                return _.includes(this.field.only, control);
+            }
             return _.includes(this.lit_config.fields.wysiwyg.controls, control);
         },
         showLinkMenu(attrs) {
