@@ -98,9 +98,9 @@ class ResetPasswordController
      * Gets the user provider based on the configuration for litstack
      * authentication guard.
      *
-     * @return void
+     * @return string
      */
-    protected function getGuardUserProvider()
+    protected function getGuardUserProvider(): string
     {
         $litGuard = config('lit.guard');
 
