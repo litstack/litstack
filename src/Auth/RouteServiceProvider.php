@@ -3,6 +3,7 @@
 namespace Ignite\Auth;
 
 use Ignite\Auth\Controllers\AuthController;
+use Ignite\Auth\Controllers\ResetPasswordController;
 use Ignite\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
 
