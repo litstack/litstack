@@ -119,7 +119,9 @@ class CrudShow extends Page
         foreach ($this->events[$event] as $closure) {
             $closure(...Arr::flatten($parameters));
         }
-    /*
+    }
+
+    /**
      * Set attributes that should be append.
      *
      * @param  array ...$appends
