@@ -2,6 +2,7 @@
 
 namespace Ignite\Crud\Repositories;
 
+use Ignite\Crud\CrudShow;
 use Ignite\Crud\CrudValidator;
 use Ignite\Crud\Field;
 use Ignite\Crud\Fields\Relations\LaravelRelationField;
@@ -140,6 +141,10 @@ class DefaultRepository extends BaseFieldRepository
 
         if ($model instanceof LitFormModel) {
             $model->update($attributes);
+        }
+
+        if ($this->config instanceof CrudShow) {
+            $this->config->fireEvent('created', $model);
         }
 
         return crud($model);
