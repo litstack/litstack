@@ -9,6 +9,9 @@ use Ignite\Crud\Actions\DestroyAction;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Config\CrudConfig;
 use Ignite\Crud\CrudShow;
+use Illuminate\Support\Str;
+use ReflectionClass;
+use ReflectionMethod;
 
 class CrudFormConfigFactory extends ConfigFactory
 {
@@ -46,8 +49,41 @@ class CrudFormConfigFactory extends ConfigFactory
 
         $page->title($config->names['singular'] ?? '');
 
+        $this->bindEventsFromConfig($config, $page);
+
         $method($page);
 
         return $page;
+    }
+
+    /**
+     * Bind events from config.
+     *
+     * @param  ConfigHandler $config
+     * @param  CrudShow      $page
+     * @return void
+     */
+    protected function bindEventsFromConfig(ConfigHandler $config, CrudShow $page)
+    {
+        $reflector = new ReflectionClass($config->getConfig());
+
+        foreach ($reflector->getMethods() as $method) {
+            if ($method->getModifiers() != ReflectionMethod::IS_PUBLIC) {
+                continue;
+            }
+
+            if (! Str::startsWith($name = $method->getName(), 'on')) {
+                continue;
+            }
+
+            // Event naming: onFooBar -> foo.bar
+            $event = str_replace('_', '.',
+                Str::replaceFirst('on_', '', Str::snake($name))
+            );
+
+            $page->on(
+                $event, fn (...$parameters) => $config->{$name}(...$parameters)
+            );
+        }
     }
 }
