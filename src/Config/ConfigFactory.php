@@ -2,6 +2,8 @@
 
 namespace Ignite\Config;
 
+use ReflectionMethod;
+
 class ConfigFactory
 {
     /**
@@ -23,6 +25,17 @@ class ConfigFactory
     }
 
     /**
+     * Get alias for the given method.
+     *
+     * @param  string      $method
+     * @return bool|string
+     */
+    public function getAliasFor(ReflectionMethod $method)
+    {
+        return false;
+    }
+
+    /**
      * Handle config method.
      *
      * @param  Instance $config
@@ -30,7 +43,7 @@ class ConfigFactory
      * @param  array    $parameters
      * @return mixed
      */
-    public function handle($method, $parameters)
+    public function handle($method, $parameters, $alias = null)
     {
         $closure = function (...$params) use ($method, $parameters) {
             // Merge parameters coming from the factory and from calling the
@@ -39,6 +52,10 @@ class ConfigFactory
 
             return $this->handler->getConfig()->$method(...$params);
         };
+
+        if (! is_null($alias)) {
+            $method = $alias;
+        }
 
         // Call factory method.
         $attributes = $this->$method($this->handler, $closure);

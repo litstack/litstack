@@ -9,10 +9,38 @@ use Ignite\Crud\Actions\DestroyAction;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Config\CrudConfig;
 use Ignite\Crud\CrudShow;
+use ReflectionMethod;
 
 class CrudFormConfigFactory extends ConfigFactory
 {
     use Concerns\ManagesBreadcrumb;
+
+    /**
+     * Get alias for the given method.
+     *
+     * @param  string      $method
+     * @return bool|string
+     */
+    public function getAliasFor(ReflectionMethod $method)
+    {
+        if (empty($parameters = $method->getParameters())) {
+            return false;
+        }
+
+        $parameter = $parameters[0];
+
+        if (! $type = $parameter->getType()) {
+            return false;
+        }
+
+        $type = $type->getName();
+
+        if ($type == CrudShow::class || is_subclass_of($type, CrudShow::class)) {
+            return 'show';
+        }
+
+        return false;
+    }
 
     /**
      * Setup create and edit form.

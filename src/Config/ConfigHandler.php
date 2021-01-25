@@ -33,6 +33,13 @@ class ConfigHandler
     protected $factories = [];
 
     /**
+     * Config factory alias.
+     *
+     * @var array
+     */
+    protected $alias = [];
+
+    /**
      * Methods with their associated factories.
      *
      * @var array
@@ -55,8 +62,8 @@ class ConfigHandler
     /**
      * Set a config attribute.
      *
-     * @param string $attribute
-     * @param mixed $value
+     * @param  string $attribute
+     * @param  mixed  $value
      * @return void
      */
     public function set($attribute, $value)
@@ -149,6 +156,19 @@ class ConfigHandler
             }
 
             $this->methodFactories[$method->name] = $instance;
+        }
+
+        $reflector = new ReflectionClass($this->config);
+        foreach ($reflector->getMethods() as $method) {
+            if (! $alias = $instance->getAliasFor($method)) {
+                continue;
+            }
+
+            if ($alias == $method->getName()) {
+                continue;
+            }
+
+            $this->alias[$method->getName()] = $alias;
         }
     }
 
@@ -266,7 +286,7 @@ class ConfigHandler
      */
     public function methodHasFactory(string $method)
     {
-        return array_key_exists($method, $this->methodFactories);
+        return ! is_null($this->getMethodFactory($method));
     }
 
     /**
@@ -277,7 +297,11 @@ class ConfigHandler
      */
     public function getMethodFactory(string $method)
     {
-        return $this->methodFactories[$method];
+        if (array_key_exists($method, $this->alias)) {
+            $method = $this->alias[$method];
+        }
+
+        return $this->methodFactories[$method] ?? null;
     }
 
     /**
@@ -295,7 +319,9 @@ class ConfigHandler
 
         $factory = $this->getMethodFactory($method);
 
-        return $factory->handle($method, $parameters);
+        return $factory->handle(
+            $method, $parameters, $this->alias[$method] ?? null
+        );
     }
 
     /**
