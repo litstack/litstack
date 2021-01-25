@@ -32,7 +32,8 @@ class Wysiwyg extends BaseField
      */
     public function mount()
     {
-        //
+        $this->setAttribute('enableInputRules', false);
+        $this->setAttribute('enablePasteRules', false);
     }
 
     /**
@@ -51,6 +52,19 @@ class Wysiwyg extends BaseField
     }
 
     /**
+     * Set fields that should be shown.
+     *
+     * @param  array $fields
+     * @return $this
+     */
+    public function only($fields)
+    {
+        $this->setAttribute('only', $fields);
+
+        return $this;
+    }
+
+    /**
      * Add custom css to editor.
      *
      * @param  string $path
@@ -59,6 +73,32 @@ class Wysiwyg extends BaseField
     public function css(string $path)
     {
         $this->setAttribute('css', File::get($path));
+
+        return $this;
+    }
+
+    /**
+     * Enable input rules.
+     *
+     * @param  bool $search
+     * @return self
+     */
+    public function enableInputRules(bool $enabled = true)
+    {
+        $this->setAttribute('enableInputRules', $enabled);
+
+        return $this;
+    }
+
+    /**
+     * Enable paste rules.
+     *
+     * @param  bool $search
+     * @return self
+     */
+    public function enablePasteRules(bool $enabled = true)
+    {
+        $this->setAttribute('enablePasteRules', $enabled);
 
         return $this;
     }

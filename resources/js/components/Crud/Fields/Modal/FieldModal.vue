@@ -17,10 +17,11 @@
             v-b-modal="modalId"
             v-html="field.name"
             @click.prevent=""
-            v-if="!field.button_component"
+            v-if="!field.button_component && field.preview"
         />
         <lit-base-component
             v-else
+            v-b-modal="modalId"
             @show="$bvModal.show(modalId)"
             :component="field.button_component"
             :model="model"

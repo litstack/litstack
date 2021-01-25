@@ -39,18 +39,6 @@ abstract class CrudConfig
     protected $modelInstance;
 
     /**
-     * Create new CrudConfig instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        app()->booted(function () {
-            $this->setModelInstanceFromCurrentRoute();
-        });
-    }
-
-    /**
      * Set model instance from current route.
      *
      * @return void
@@ -158,6 +146,15 @@ abstract class CrudConfig
     public function routePrefix()
     {
         return 'crud/'.Str::slug((new $this->model())->getTable());
+    }
+
+    /**
+     * Get breadcrumb.
+     *
+     * @return string
+     */
+    public function breadcrumb()
+    {
     }
 
     /**

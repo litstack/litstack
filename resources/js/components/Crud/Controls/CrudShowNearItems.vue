@@ -3,20 +3,20 @@
         <b-button
             :href="`${Lit.baseURL}${routePrefix}/${previous}`"
             :disabled="!previous"
-            variant="outline-secondary"
+            variant="transparent"
             size="sm"
             class="btn-square"
         >
-            <lit-fa-icon icon="chevron-left" class="lit-near-items__prev" />
+            <lit-fa-icon icon="arrow-left" class="lit-near-items__prev" />
         </b-button>
         <b-button
             :href="`${Lit.baseURL}${routePrefix}/${next}`"
             :disabled="!next"
-            variant="outline-secondary"
+            variant="transparent"
             size="sm"
             class="btn-square"
         >
-            <lit-fa-icon icon="chevron-right" class="lit-near-items__next" />
+            <lit-fa-icon icon="arrow-right" class="lit-near-items__next" />
         </b-button>
     </div>
 </template>

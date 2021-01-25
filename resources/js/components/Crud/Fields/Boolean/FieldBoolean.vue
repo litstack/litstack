@@ -1,7 +1,7 @@
 <template>
     <lit-base-field :field="field" :model="model">
         <b-form-checkbox
-            v-model="value"
+            v-model="val"
             class="lit-form-item-boolean"
             name="check-button"
             switch
@@ -23,6 +23,19 @@ export default {
         },
         value: {
             required: true,
+        },
+    },
+    data() {
+        return {
+            val: null,
+        };
+    },
+    beforeMount() {
+        this.val = this.value;
+    },
+    watch: {
+        value(val) {
+            this.val = val;
         },
     },
 };

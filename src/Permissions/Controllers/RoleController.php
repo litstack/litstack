@@ -5,12 +5,26 @@ namespace Ignite\Permissions\Controllers;
 use Ignite\Permissions\Requests\Role\CreateRoleRequest;
 use Ignite\Permissions\Requests\Role\DeleteRoleRequest;
 use Ignite\Permissions\Requests\Role\UpdateRoleRequest;
+use Ignite\Support\Facades\Lit;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
-use Lit\Models\User;
 use Spatie\Permission\Models\Role;
 
 class RoleController
 {
+    /**
+     * Find or fail the user by the given id.
+     *
+     * @param  int             $id
+     * @return Authenticatable
+     */
+    protected function findOrFailUser($id): Authenticatable
+    {
+        $model = Lit::getUserModel();
+
+        return $model::findOrFail($id);
+    }
+
     /**
      * Assign role to lit-user.
      *
@@ -20,7 +34,7 @@ class RoleController
      */
     public function assignRoleToUser(UpdateRoleRequest $request, $user_id, $role_id)
     {
-        $user = User::findOrFail($user_id);
+        $user = $this->findOrFailUser($user_id);
 
         $role = Role::findOrFail($role_id);
 
@@ -36,13 +50,13 @@ class RoleController
      */
     public function removeRoleFromUser(UpdateRoleRequest $request, $user_id, $role_id)
     {
-        $user = User::findOrFail($user_id);
+        $user = $this->findOrFailUser($user_id);
 
         $role = $user->roles()->findOrFail($role_id);
 
         // Can't take away own admin role.
         if ($role->name == 'admin' && $user->id == lit_user()->id) {
-            return response()->danger(__lit('fjpermissions.cant_remove_admin_role'));
+            return response()->danger(__lit('permissions.messages.cant_remove_admin_role'));
         }
 
         // Remove role.

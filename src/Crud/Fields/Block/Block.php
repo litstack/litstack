@@ -35,6 +35,7 @@ class Block extends RelationField
     {
         $this->blockWidth(12);
         $this->setAttribute('orderColumn', 'order_column');
+        $this->confirmDelete();
     }
 
     /**
@@ -47,6 +48,19 @@ class Block extends RelationField
     public function blockWidth($width)
     {
         $this->setAttribute('blockWidth', $width);
+
+        return $this;
+    }
+
+    /**
+     * Confirm deleting a repeatable in a modal.
+     *
+     * @param bool $confirm
+     * @return $this
+     */
+    public function confirmDelete(bool $confirm = true)
+    {
+        $this->setAttribute('confirm_delete', $confirm);
 
         return $this;
     }

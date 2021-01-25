@@ -115,6 +115,7 @@ export default {
         Lit.bus.$on('saveCanceled', this.resetModelValuesToOriginal);
         Lit.bus.$on('languageChanged', this.setCurrentValue);
         Lit.bus.$on('saved', this.onSaved);
+        this.$on('input', this.input);
 
         // Render dependency stuff.
         this.resolveDependecies(this.field.dependencies);
@@ -122,7 +123,7 @@ export default {
             this.resolveDependecies(this.field.dependencies)
         );
 
-        this.$on('setSaveJobId', (id) => {
+        this.$on('setSaveJobId', id => {
             this.jobId = id;
         });
     },
@@ -186,6 +187,8 @@ export default {
             if (!locale) {
                 locale = this.language;
             }
+
+            console.log('fillValueToModel', { value, locale });
 
             // Translatable field.
             if (this.field.translatable) {
@@ -316,7 +319,7 @@ export default {
                 if (!value) {
                     continue;
                 }
-                this.original[locale] = value;
+                this.original[locale] = Lit.clone(value);
             }
         },
 
@@ -370,6 +373,10 @@ export default {
          * @return {Boolean}
          */
         compareValues(original, value) {
+            if (Array.isArray(value) || typeof value === 'object') {
+                return !_.isEqual(original, value);
+            }
+
             if (original !== null) {
                 return original != this.value;
             }

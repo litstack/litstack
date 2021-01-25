@@ -81,6 +81,6 @@ class DestroyAction
      */
     protected function successMessage(Collection $models)
     {
-        return response()->success(__lit_choice('messages.deleted_items', count($models)));
+        return response()->success(__lit_choice('crud.messages.deleted_items', count($models)));
     }
 }

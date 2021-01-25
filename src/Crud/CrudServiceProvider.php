@@ -22,6 +22,7 @@ use Ignite\Crud\Fields\Datetime;
 use Ignite\Crud\Fields\Icon;
 use Ignite\Crud\Fields\Input;
 use Ignite\Crud\Fields\ListField\ListField;
+use Ignite\Crud\Fields\Listing;
 use Ignite\Crud\Fields\Media\File;
 use Ignite\Crud\Fields\Media\Image;
 use Ignite\Crud\Fields\Modal;
@@ -55,6 +56,7 @@ use Ignite\Crud\Repositories\Relations\OneRelationRepository;
 use Ignite\Crud\Vue\FieldWrapperGroupComponent;
 use Ignite\Support\Facades\Form as FormFacade;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class CrudServiceProvider extends LaravelServiceProvider
@@ -94,6 +96,7 @@ class CrudServiceProvider extends LaravelServiceProvider
         'oneRelation'  => OneRelation::class,
         'manyRelation' => ManyRelation::class,
         'list'         => ListField::class,
+        'listing'      => Listing::class,
         'radio'        => Radio::class,
         'route'        => Route::class,
     ];
@@ -151,6 +154,10 @@ class CrudServiceProvider extends LaravelServiceProvider
         $this->registerApiRepositories();
 
         $this->registerCrudRouter();
+
+        $this->callAfterResolving('router', function (Router $router) {
+            $router->aliasMiddleware('lit.crud', CrudMiddleware::class);
+        });
     }
 
     /**

@@ -1,4 +1,4 @@
-@auth('lit')
+@auth(config('lit.guard'))
     <nav class="lit-navigation">
 
         @include('litstack::partials.nav_loader')

@@ -2,6 +2,7 @@
 
 namespace Tests\Traits;
 
+use Ignite\Crud\BaseForm;
 use Illuminate\Database\Eloquent\Model;
 
 trait InteractsWithFields
@@ -22,12 +23,13 @@ trait InteractsWithFields
             $model = DummyFieldModel::class;
         }
 
-        return new $fieldClass(
-            $id,
-            $model,
-            'dummy_route_prefix',
-            $form ? $form : new DummyFieldForm()
-        );
+        $field = new $fieldClass($id);
+
+        $field->setModel($model);
+        $field->setRoutePrefix('dummy_route_prefix');
+        $field->setParentForm($form ? $form : new DummyFieldForm($model));
+
+        return $field;
     }
 }
 
@@ -35,6 +37,6 @@ class DummyFieldModel extends Model
 {
 }
 
-class DummyFieldForm
+class DummyFieldForm extends BaseForm
 {
 }

@@ -1,14 +1,67 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.2.1...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.2.4...3.x)
 
 ### Added
 
+-   Added relation preview inline fields ([#143](https://github.com/litstack/litstack/pull/143))
+-   Added `appends` method to Crud show page ([#135](https://github.com/litstack/litstack/pull/135))
+-   Added `info` method to Crud index page ([e69a6e8](https://github.com/litstack/litstack/commit/e69a6e8a1ef99637aecdccd637d8b23c79c1b1e3))
+-   Added `translation` option to the crud meta macro ([#146](https://github.com/litstack/litstack/pull/146))
+-   Added new `Listing` field ([#148](https://github.com/litstack/litstack/pull/148))
+-   Added `only` method to wysiwyg ([3ad7a3c]( https://github.com/litstack/litstack/commit/3ad7a3ca6cd2ff4939c13429844dba1560d2191f)) 
+-   Added password reset functionality for litstack users ([#149](https://github.com/litstack/litstack/pull/149)) ([8b9c658](https://github.com/litstack/litstack/commit/8b9c6582dafaab6138343f2ec76393b60cccc0e5)) 
+
+
 ### Fixed
 
--   Fixed `manyRelation` and `oneRelation` field ([384f5e4](https://github.com/litstack/litstack/commit/384f5e4de12ed2d5e00cfe50862f5476c512c235), [2f04d4e](https://github.com/litstack/litstack/commit/2f04d4e22698aa6ad67d8ff5f76693bf31f2b52b))
+-   Fixed table column `date` method casting `null` as carbon instance ([338dae9](https://github.com/litstack/litstack/commit/338dae90d575a960206ea8ca100390e9cae7428a))
+-   Fixed crud model binding ([#141](https://github.com/litstack/litstack/pull/141))
+-   Fixed script mime types ([#142](https://github.com/litstack/litstack/pull/142))
+-   Fixed missing translations ([#145](https://github.com/litstack/litstack/pull/145))
+-   Fixed nested block fields ([#144](https://github.com/litstack/litstack/pull/144))
+-   Fixed tags in breadcrump navigation  ([dd16a1a](https://github.com/litstack/litstack/commit/dd16a1a227621a5e869aee2b39dec40b3e75dd06))
+-   Fixed duplicate change password link in user profile ([#151](https://github.com/litstack/litstack/pull/151))
+
 
 ### Changed
+
+-   Changed field constructor ([#147](https://github.com/litstack/litstack/pull/147))
+-   Disabled default input and paste rules for markdown in wysiwyg field ([3d01fa0](https://github.com/litstack/litstack/commit/3d01fa012f02cab2f312e5759eb3837e73986c37))
+
+## [v3.2.5](https://github.com/litstack/litstack/compare/v3.2.4...v3.2.5)
+
+### Added
+
+-   Added `confirmDelete` method to block field ([#131](https://github.com/litstack/litstack/pull/131))
+
+## [v3.2.4](https://github.com/litstack/litstack/compare/v3.2.3...v3.2.4)
+
+### Added
+
+-   Added `allowEmpty` method to route field ([#129](https://github.com/litstack/litstack/pull/129))
+
+## [v3.2.3](https://github.com/litstack/litstack/compare/v3.2.2...v3.2.3)
+
+### Added
+
+-   Added `whenIn` field condition method ([#125](https://github.com/litstack/litstack/pull/125))
+
+### Fixed
+
+-   Fixed authentication with custom guard ([#103](https://github.com/litstack/litstack/issues/103), [#128](https://github.com/litstack/litstack/pull/128))
+-   Fixed modal bug for multiple image fields ([ad56d49](https://github.com/litstack/litstack/commit/ad56d4911dee16b47750be49e3c27acc7b5a96c9))
+
+## [v3.2.2](https://github.com/litstack/litstack/compare/v3.2.1...v3.2.2)
+
+### Added
+
+-   Added PHP 8.0 support ([#126](https://github.com/litstack/litstack/pull/126))
+
+### Fixed
+
+-   Fixed sluggable stub ([f8515e8](https://github.com/litstack/litstack/commit/f8515e8d912acfd1a3cc12648aa45bb1f1f8b000))
+-   Fixed `manyRelation` and `oneRelation` field ([384f5e4](https://github.com/litstack/litstack/commit/384f5e4de12ed2d5e00cfe50862f5476c512c235), [2f04d4e](https://github.com/litstack/litstack/commit/2f04d4e22698aa6ad67d8ff5f76693bf31f2b52b))
 
 ## [v3.2.1](https://github.com/litstack/litstack/compare/v3.2.0...v3.2.1)
 

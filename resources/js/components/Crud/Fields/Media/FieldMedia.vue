@@ -24,7 +24,7 @@
                             <vue-dropzone
                                 v-if="
                                     !field.readonly &&
-                                    images.length < field.maxFiles
+                                        images.length < field.maxFiles
                                 "
                                 slot="drop"
                                 class="lit-dropzone"
@@ -216,7 +216,7 @@ export default {
             this.images = [this.media];
         }
 
-        document.addEventListener('keyup', (evt) => {
+        document.addEventListener('keyup', evt => {
             if (evt.keyCode === 27) {
                 this.cancel();
             }
@@ -254,7 +254,10 @@ export default {
          * Cropper id.
          */
         cropperId() {
-            return `lit-cropper-${this.field.route_prefix.replace(/\//g, '-')}`;
+            return `lit-cropper-${this.field.route_prefix.replace(
+                /\//g,
+                '-'
+            )}-${this.field.id}`;
         },
 
         /**
@@ -437,7 +440,7 @@ export default {
                 preview: document.querySelector('.lit-cropper__preview'),
             });
 
-            this.image.addEventListener('crop', (event) => {
+            this.image.addEventListener('crop', event => {
                 this.cropperSettings = event.detail;
             });
         },

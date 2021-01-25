@@ -45,6 +45,20 @@ class CrudShowTest extends BackendTestCase
     }
 
     /** @test */
+    public function test_appends_method_using_multiple_parameters()
+    {
+        $this->page->appends('foo', 'bar');
+        $this->assertEquals(['foo', 'bar'], $this->page->getAppends());
+    }
+
+    /** @test */
+    public function test_appends_method_using_single_attribute()
+    {
+        $this->page->appends(['foo', 'bar']);
+        $this->assertEquals(['foo', 'bar'], $this->page->getAppends());
+    }
+
+    /** @test */
     public function it_sets_different_info_heading_in_card()
     {
         $outsideInfo = $this->page->info('some title');

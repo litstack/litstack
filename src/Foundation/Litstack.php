@@ -88,6 +88,21 @@ class Litstack implements LitstackContract
     }
 
     /**
+     * Get litstack user model that is used for authentication.
+     *
+     * @return string
+     */
+    public function getUserModel()
+    {
+        $driver = $this->laravel['config']['lit.guard'];
+        $guard = $this->laravel['config']["auth.guards.{$driver}"];
+
+        return $this->laravel['config'][
+            "auth.providers.{$guard['provider']}.model"
+        ];
+    }
+
+    /**
      * Get Lit route by name.
      *
      * @param  string $name

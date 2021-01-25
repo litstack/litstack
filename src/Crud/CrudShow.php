@@ -50,6 +50,13 @@ class CrudShow extends Page
     protected $form;
 
     /**
+     * Appended attributes.
+     *
+     * @var array
+     */
+    protected $appends = [];
+
+    /**
      * Query resolver.
      *
      * @var Closure
@@ -112,6 +119,27 @@ class CrudShow extends Page
         foreach ($this->events[$event] as $closure) {
             $closure(...Arr::flatten($parameters));
         }
+    /*
+     * Set attributes that should be append.
+     *
+     * @param  array ...$appends
+     * @return $this
+     */
+    public function appends(...$appends)
+    {
+        $this->appends = Arr::flatten($appends);
+
+        return $this;
+    }
+
+    /**
+     * Get appends.
+     *
+     * @return array
+     */
+    public function getAppends()
+    {
+        return $this->appends;
     }
 
     /**

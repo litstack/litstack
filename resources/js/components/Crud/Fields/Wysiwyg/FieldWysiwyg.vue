@@ -204,7 +204,9 @@
                                     @click="
                                         setFontColor(commands.font_color, color)
                                     "
-                                    :style="`background: ${color}; border-color: ${color}`"
+                                    :style="
+                                        `background: ${color}; border-color: ${color}`
+                                    "
                                 ></b-button>
                             </div>
                         </b-dropdown>
@@ -313,7 +315,7 @@ export default {
         EditorContent,
         EditorMenuBar,
         'v-style': {
-            render: function (createElement) {
+            render: function(createElement) {
                 return createElement('style', this.$slots.default);
             },
         },
@@ -361,6 +363,8 @@ export default {
     methods: {
         init() {
             this.editor = new Editor({
+                disablePasteRules: !this.field.enablePasteRules,
+                disableInputRules: !this.field.enableInputRules,
                 extensions: [
                     new Blockquote(),
                     new CodeBlock(),
@@ -400,6 +404,9 @@ export default {
             }
         },
         hasControl(control) {
+            if (this.field.only) {
+                return _.includes(this.field.only, control);
+            }
             return _.includes(this.lit_config.fields.wysiwyg.controls, control);
         },
         showLinkMenu(attrs) {
