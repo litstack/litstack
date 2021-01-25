@@ -99,6 +99,28 @@ class CrudShowTest extends BackendTestCase
         $this->page->preview('foo');
         $this->assertTrue($this->page->headerRight()->hasComponent('b-button'));
     }
+
+    /** @test */
+    public function it_calls_event_handlers_when_model_event_is_fired()
+    {
+        $this->called = false;
+        $this->page->on('foo', function () {
+            $this->called = true;
+        });
+        $this->page->fireEvent('foo');
+        $this->assertTrue($this->called);
+    }
+
+    /** @test */
+    public function test_fireEvent_passes_parameters_to_event_handler()
+    {
+        $this->page->on('foo', function ($var1, $var2) {
+            $this->assertEquals('bar', $var1);
+            $this->assertEquals('baz', $var2);
+        });
+        $this->page->fireEvent('foo', ['bar', 'baz']);
+        $this->page->fireEvent('foo', 'bar', 'baz');
+    }
 }
 
 class CrudFormDummyModel extends Model

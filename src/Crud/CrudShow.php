@@ -64,7 +64,17 @@ class CrudShow extends Page
     protected $queryResolver;
 
     /**
+     * Event handlers for the associated events.
+     *
+     * @var array
+     */
+    protected $events = [];
+
+    /**
      * Create new CrudShow instance.
+     *
+     * @param  BaseForm $form
+     * @return void
      */
     public function __construct(BaseForm $form)
     {
@@ -75,6 +85,40 @@ class CrudShow extends Page
         // Add form lifecycle hooks.
         $this->form->registering(fn ($field) => $this->registeringField($field));
         $this->form->registered(fn ($field) => $this->registeredField($field));
+    }
+
+    /**
+     * Add crud event handler.
+     *
+     * @param  string  $event
+     * @param  Closure $closure
+     * @return void
+     */
+    public function on($event, Closure $closure)
+    {
+        if (! array_key_exists($event, $this->events)) {
+            $this->events[$event] = [];
+        }
+
+        $this->events[$event][] = $closure;
+    }
+
+    /**
+     * Fire model event.
+     *
+     * @param  string $event
+     * @param  array  ...$parameters
+     * @return void
+     */
+    public function fireEvent($event, ...$parameters)
+    {
+        if (! array_key_exists($event, $this->events)) {
+            return;
+        }
+
+        foreach ($this->events[$event] as $closure) {
+            $closure(...Arr::flatten($parameters));
+        }
     }
 
     /**
