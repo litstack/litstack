@@ -9,11 +9,10 @@
 -   Added `info` method to Crud index page ([e69a6e8](https://github.com/litstack/litstack/commit/e69a6e8a1ef99637aecdccd637d8b23c79c1b1e3))
 -   Added `translation` option to the crud meta macro ([#146](https://github.com/litstack/litstack/pull/146))
 -   Added new `Listing` field ([#148](https://github.com/litstack/litstack/pull/148))
--   Added `only` method to wysiwyg ([3ad7a3c]( https://github.com/litstack/litstack/commit/3ad7a3ca6cd2ff4939c13429844dba1560d2191f)) 
--   Added password reset functionality for litstack users ([#149](https://github.com/litstack/litstack/pull/149)) ([8b9c658](https://github.com/litstack/litstack/commit/8b9c6582dafaab6138343f2ec76393b60cccc0e5)) 
+-   Added `only` method to wysiwyg ([3ad7a3c](https://github.com/litstack/litstack/commit/3ad7a3ca6cd2ff4939c13429844dba1560d2191f))
+-   Added password reset functionality for litstack users ([#149](https://github.com/litstack/litstack/pull/149)) ([8b9c658](https://github.com/litstack/litstack/commit/8b9c6582dafaab6138343f2ec76393b60cccc0e5))
 -   Added crud events ([#152](https://github.com/litstack/litstack/pull/152))
--   Added raw editing in WYSIWYG ([cf8d0ce](https://github.com/litstack/litstack/commit/cf8d0ce233eec29b2858931f20cc3bee2cf61191))
-
+-   Added raw editing in WYSIWYG ([cf8d0ce](https://github.com/litstack/litstack/commit/cf8d0ce233eec29b2858931f20cc3bee2cf61191))([07cef8a](https://github.com/litstack/litstack/commit/07cef8af7fd77b4c6092b65bd852d0b57d2d2343))
 
 ### Fixed
 
@@ -22,9 +21,8 @@
 -   Fixed script mime types ([#142](https://github.com/litstack/litstack/pull/142))
 -   Fixed missing translations ([#145](https://github.com/litstack/litstack/pull/145))
 -   Fixed nested block fields ([#144](https://github.com/litstack/litstack/pull/144))
--   Fixed tags in breadcrump navigation  ([dd16a1a](https://github.com/litstack/litstack/commit/dd16a1a227621a5e869aee2b39dec40b3e75dd06))
+-   Fixed tags in breadcrump navigation ([dd16a1a](https://github.com/litstack/litstack/commit/dd16a1a227621a5e869aee2b39dec40b3e75dd06))
 -   Fixed duplicate change password link in user profile ([#151](https://github.com/litstack/litstack/pull/151))
-
 
 ### Changed
 
