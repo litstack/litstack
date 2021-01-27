@@ -12,6 +12,7 @@
 -   Added `only` method to wysiwyg ([3ad7a3c]( https://github.com/litstack/litstack/commit/3ad7a3ca6cd2ff4939c13429844dba1560d2191f)) 
 -   Added password reset functionality for litstack users ([#149](https://github.com/litstack/litstack/pull/149)) ([8b9c658](https://github.com/litstack/litstack/commit/8b9c6582dafaab6138343f2ec76393b60cccc0e5)) 
 -   Added crud events ([#152](https://github.com/litstack/litstack/pull/152))
+-   Added raw editing in WYSIWYG ([cf8d0ce](https://github.com/litstack/litstack/commit/cf8d0ce233eec29b2858931f20cc3bee2cf61191))
 
 
 ### Fixed
