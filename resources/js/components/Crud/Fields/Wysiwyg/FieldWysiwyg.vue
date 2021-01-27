@@ -218,21 +218,6 @@
                             :field="field"
                         />
 
-                        <!-- <b-button
-                            class="btn-square"
-                            size="sm"
-                            variant="outline-secondary"
-                            @click="
-                                commands.createTable({
-                                    rowsCount: 3,
-                                    colsCount: 3,
-                                    withHeaderRow: false
-                                })
-                            "
-                        >
-                            <lit-fa-icon icon="table" />
-                        </b-button> -->
-
                         <b-button
                             variant="outline-secondary"
                             size="sm"
@@ -251,18 +236,14 @@
                             <lit-fa-icon icon="redo" />
                         </b-button>
 
-                        <!-- <button
+                        <b-button
                             class="btn-square"
-                            @click="
-                                commands.createTable({
-                                    rowsCount: 3,
-                                    colsCount: 3,
-                                    withHeaderRow: false
-                                })
-                            "
+                            size="sm"
+                            :variant="editRaw ? 'primary' : 'outline-secondary'"
+                            @click="toggleHtmlView()"
                         >
-                            <lit-fa-icon name="table" />
-                        </button> -->
+                            <lit-fa-icon icon="code" />
+                        </b-button>
                     </div>
                 </editor-menu-bar>
 
@@ -270,7 +251,15 @@
                     :editor="editor"
                     class="lit-field-wysiwyg__content"
                     :id="identifier"
+                    v-if="!editRaw"
                 />
+
+                <b-form-textarea
+                    class="lit-field-wysiwyg_raw"
+                    v-model="value"
+                    v-if="editRaw"
+                    rows="3"
+                ></b-form-textarea>
             </div>
         </template>
         <template v-else>
@@ -336,7 +325,7 @@ export default {
     data() {
         return {
             editor: null,
-
+            editRaw: false,
             linkUrl: null,
             target: null,
         };
@@ -429,6 +418,9 @@ export default {
                 /(^(?:\s|[^@{])*?|[},]\s*)(\/\/.*\s+|.*\/\*[^*]*\*\/\s*|@media.*{\s*|@font-face.*{\s*)*([.#]?-?[_a-zA-Z]+[_a-zA-Z0-9-]*)(?=[^}]*{)/g,
                 `$1$2 #${this.identifier} $3`
             );
+        },
+        toggleHtmlView() {
+            this.editRaw = !this.editRaw;
         },
     },
     computed: {
@@ -523,6 +515,11 @@ export default {
             grid-gap: 0.5rem;
             padding: 0 0.5rem;
         }
+    }
+    &_raw {
+        border: none;
+        outline: none !important;
+        box-shadow: none !important;
     }
 }
 </style>
