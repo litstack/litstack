@@ -1,22 +1,23 @@
 <template>
     <lit-base-field :field="field" :model="model">
-        <template v-if="!field.readonly">
-            <vue-ctk-date-time-picker
-                :id="`${field.id}-${makeid(10)}`"
+        <template v-if="!field.readonly && date">
+            <v-date-picker
                 :value="value"
-                :label="field.label"
-                :format="format"
-                :no-label="true"
-                :inline="field.inline"
-                :formatted="field.formatted"
-                :only-date="field.only_date"
-                :only-time="field.only_time"
-                :right="field.right"
-                :minute-interval="field.minute_interval"
-                :disabled-hours="field.disabled_hours"
-                color="var(--primary)"
-                v-on:input="$emit('input', $event)"
-            />
+                @input="handleInput"
+                is24hr
+                :mode="mode"
+                :minute-increment="minuteIncrement"
+                :locale="Lit.getLocale()"
+                class="lit_date_time_picker"
+            >
+                <template v-slot="{ inputValue, inputEvents }">
+                    <input
+                        class="form-control lit-field-input"
+                        :value="inputValue"
+                        v-on="inputEvents"
+                    />
+                </template>
+            </v-date-picker>
         </template>
         <template v-else>
             <b-input class="form-control" :value="value" type="text" readonly />
@@ -42,30 +43,56 @@ export default {
     },
     data() {
         return {
-            datetimeString: '',
+            date: _.clone(this.value),
         };
     },
-    computed: {
-        format() {
-            if (this.field.only_time) {
-                return 'HH:mm:ss';
-            }
-
-            return 'YYYY-MM-DD HH:mm:ss';
+    watch: {
+        date(val) {
+            this.$emit('input', val);
         },
     },
     methods: {
-        makeid(length) {
-            var result = '';
-            var characters =
-                'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            var charactersLength = characters.length;
-            for (var i = 0; i < length; i++) {
-                result += characters.charAt(
-                    Math.floor(Math.random() * charactersLength)
-                );
+        handleInput(event) {
+            this.$emit('input', this.formatdDate(event));
+        },
+        formatdDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear(),
+                hours = '' + d.getHours(),
+                minutes = '' + d.getMinutes(),
+                seconds = '' + d.getSeconds();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            if (hours.length < 2) hours = '0' + hours;
+            if (minutes.length < 2) minutes = '0' + minutes;
+            if (seconds.length < 2) seconds = '0' + seconds;
+
+            return `${[year, month, day].join('-')} ${[
+                hours,
+                minutes,
+                seconds,
+            ].join(':')}`;
+        },
+    },
+    computed: {
+        mode() {
+            if (this.field.only_time) {
+                return 'time';
             }
-            return result;
+            if (this.field.only_date) {
+                return 'date';
+            }
+            return 'dateTime';
+        },
+        minuteIncrement() {
+            if (this.field.minute_interval) {
+                return this.field.minute_interval;
+            }
+            return 60;
         },
     },
 };
@@ -73,42 +100,16 @@ export default {
 
 <style lang="scss">
 @import '@lit-sass/_variables';
-@import '~vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
-
-.date-time-picker {
-    input {
-        display: inline-block !important;
-        width: 100% !important;
-        height: 2.5rem !important;
-        min-height: 2.5rem !important;
-        padding: $input-padding-y $input-padding-x !important;
-        font-size: $input-font-size !important;
-        font-weight: 400 !important;
-        line-height: 1.6 !important;
-        color: $input-color !important;
-        vertical-align: middle !important;
-        background-color: $input-bg !important;
-        border: $input-border-width solid $input-border-color !important;
-        border-radius: $input-border-radius !important;
-        -webkit-appearance: none !important;
+.lit_date_time_picker {
+    width: 100%;
+    .vc-highlight {
+        background: $primary !important;
     }
-    .datepicker-buttons-container {
-        .datepicker-button {
-            &.now {
-                .datepicker-button-effect {
-                    background: $primary;
-                }
-                .datepicker-button-content {
-                    color: $primary;
-                }
-            }
-            .datepicker-button-effect {
-                background: $success;
-            }
-            svg {
-                fill: $success;
-            }
-        }
+    .vc-weekday,
+    .vc-month,
+    .vc-day,
+    .vc-year {
+        color: $secondary !important;
     }
 }
 </style>
