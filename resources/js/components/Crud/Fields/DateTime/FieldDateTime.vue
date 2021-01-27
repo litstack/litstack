@@ -1,8 +1,8 @@
 <template>
     <lit-base-field :field="field" :model="model">
-        <template v-if="!field.readonly && date">
+        <template v-if="!field.readonly">
             <v-date-picker
-                :value="value"
+                :value="date"
                 @input="handleInput"
                 is24hr
                 :mode="mode"
@@ -43,13 +43,8 @@ export default {
     },
     data() {
         return {
-            date: _.clone(this.value),
+            date: this.value || new Date(new Date().setHours(0, 0, 0, 0)),
         };
-    },
-    watch: {
-        date(val) {
-            this.$emit('input', val);
-        },
     },
     methods: {
         handleInput(event) {
