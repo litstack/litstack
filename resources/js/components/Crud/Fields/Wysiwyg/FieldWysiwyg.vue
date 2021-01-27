@@ -256,7 +256,7 @@
 
                 <b-form-textarea
                     class="lit-field-wysiwyg_raw"
-                    v-model="value"
+                    v-model="valueCopy"
                     v-if="editRaw"
                     rows="3"
                 ></b-form-textarea>
@@ -328,6 +328,7 @@ export default {
             editRaw: false,
             linkUrl: null,
             target: null,
+            valueCopy: _.clone(this.value),
         };
     },
     beforeMount() {
@@ -338,6 +339,7 @@ export default {
 
         this.editor.on('update', ({ getHTML }) => {
             this.$emit('input', getHTML());
+            this.valueCopy = _.clone(getHTML());
         });
 
         Lit.bus.$on('languageChanged', () => {
@@ -348,6 +350,15 @@ export default {
     },
     beforeDestroy() {
         this.editor.destroy();
+    },
+    watch: {
+        valueCopy(val) {
+            if (this.editRaw) {
+                let data = this.stripScripts(val);
+                this.editor.setContent(data);
+                this.$emit('input', data);
+            }
+        },
     },
     methods: {
         init() {
@@ -379,6 +390,18 @@ export default {
                     new TableRow(),
                 ],
             });
+        },
+        // credits:
+        // https://stackoverflow.com/questions/6659351/removing-all-script-tags-from-html-with-js-regular-expression/6660151
+        stripScripts(s) {
+            var div = document.createElement('div');
+            div.innerHTML = s;
+            var scripts = div.getElementsByTagName('script');
+            var i = scripts.length;
+            while (i--) {
+                scripts[i].parentNode.removeChild(scripts[i]);
+            }
+            return div.innerHTML;
         },
         format(isActive) {
             if (isActive.paragraph()) {
