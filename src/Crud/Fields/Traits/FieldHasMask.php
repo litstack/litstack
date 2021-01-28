@@ -2,9 +2,6 @@
 
 namespace Ignite\Crud\Fields\Traits;
 
-use Closure;
-use Ignite\Support\Facades\Lit;
-
 trait FieldHasMask
 {
     /**
@@ -16,7 +13,7 @@ trait FieldHasMask
     public function mask(array $mask)
     {
         $this->setAttribute('mask', $mask);
-                
+
         return $this;
     }
 }
