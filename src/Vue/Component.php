@@ -4,6 +4,7 @@ namespace Ignite\Vue;
 
 use Exception;
 use Ignite\Contracts\Vue\Authorizable as AuthorizableContract;
+use Ignite\Support\Facades\Vue;
 use Ignite\Support\VueProp;
 use Ignite\Vue\Traits\Authorizable;
 
@@ -362,13 +363,14 @@ class Component extends VueProp implements AuthorizableContract
         $this->mounted();
 
         $rendered = [
-            'name'     => $this->name,
-            'props'    => collect($this->props),
-            'domProps' => $this->domProps,
-            'events'   => $this->events,
-            'slot'     => $this->slot,
-            'children' => $this->children,
-            'classes'  => $this->classes,
+            'name'        => $this->name,
+            'props'       => collect($this->props),
+            'domProps'    => $this->domProps,
+            'events'      => $this->events,
+            'slot'        => $this->slot,
+            'children'    => $this->children,
+            'classes'     => $this->classes,
+            'event_route' => Vue::getEventRoute(),
         ];
 
         $this->rendered($rendered);

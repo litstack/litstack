@@ -15,6 +15,13 @@ class Vue implements VueContract
     protected $components = [];
 
     /**
+     * Current event route.
+     *
+     * @var string
+     */
+    protected $eventRoute = 'handle-event';
+
+    /**
      * Regsiter component for the given name.
      *
      * @param  string         $name
@@ -30,6 +37,27 @@ class Vue implements VueContract
         $this->components[$name] = $component;
 
         return $this;
+    }
+
+    /**
+     * Set event route.
+     *
+     * @param  string $route
+     * @return void
+     */
+    public function setEventRoute($route)
+    {
+        $this->eventRoute = $route;
+    }
+
+    /**
+     * Set event route.
+     *
+     * @return void
+     */
+    public function getEventRoute()
+    {
+        return $this->eventRoute;
     }
 
     /**

@@ -14,6 +14,6 @@ class VueRouteServiceProvider extends RouteServiceProvider
      */
     public function map()
     {
-        Route::post('handle-event', EventController::class);
+        Route::post('handle-event', [EventController::class, 'handleVueEvent']);
     }
 }

@@ -6,13 +6,15 @@ use Ignite\Config\ConfigHandler;
 use Ignite\Crud\Actions\ActionResolver;
 use Ignite\Crud\Api\ApiLoader;
 use Ignite\Crud\Api\ApiRequest;
+use Ignite\Vue\Traits\HandlesVueEvent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 abstract class CrudBaseController
 {
     use Concerns\ManagesConfig,
-        Concerns\ManagesQuery;
+        Concerns\ManagesQuery,
+        HandlesVueEvent;
 
     /**
      * Model class.

@@ -84,7 +84,7 @@ export default {
             }
             for (let event in this.component.events) {
                 let handler = this.component.events[event];
-                this.events[event] = (data) => {
+                this.events[event] = data => {
                     this.handleEvent(handler, data);
                 };
             }
@@ -114,7 +114,7 @@ export default {
         },
         async sendHandleEvent(handler, data) {
             try {
-                return await axios.post(`handle-event`, {
+                return await axios.post(this.getEventUrl(), {
                     ...this.eventData,
                     ...(this.component.props.eventData || {}),
                     ...(this.$attrs['event-data'] || {}),
@@ -125,6 +125,10 @@ export default {
             } catch (e) {
                 console.log(e);
             }
+        },
+
+        getEventUrl() {
+            return this.component.event_url;
         },
 
         isFileDownload(response) {

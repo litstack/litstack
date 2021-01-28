@@ -51,6 +51,7 @@ class LitstackServiceProvider extends ServiceProvider
      */
     protected $middlewares = [
         'lit.auth' => \Ignite\Auth\Middleware\Authenticate::class,
+        'lit.crud' => \Ignite\Crud\CrudMiddleware::class,
     ];
 
     /**
