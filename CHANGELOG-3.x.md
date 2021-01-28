@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.3.1...3.x)
 
+### Changed
+
+-   Changed url after login to intendet url ([#157](https://github.com/litstack/litstack/pull/157))
+
 ## [v3.3.1](https://github.com/litstack/litstack/compare/v3.3.0...v3.3.1)
 
 ### Added
