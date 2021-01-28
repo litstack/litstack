@@ -236,7 +236,7 @@ export default {
     beforeMount() {
         this.cols = this.field.preview;
         this.modalCols = Lit.clone(this.field.preview);
-        if (this.field.related_route_prefix) {
+        if (this.field.related_route_prefix && this.field.relation_link) {
             this.cols.push({
                 label: '',
                 name: 'lit-field-relation-col-link',

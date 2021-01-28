@@ -4,10 +4,14 @@
         size="sm"
         class="btn-square"
         v-b-tooltip.hover
-        :title="__('crud.fields.relation.unlink')"
+        :title="
+            field.delete_unlinked
+                ? __('base.delete').capitalize()
+                : __('crud.fields.relation.unlink')
+        "
         @click="$emit('unlink', item)"
     >
-        <lit-fa-icon :icon="field.delete_unlinked ? 'trash-alt' : 'unlink'" />
+        <span v-html="icon"></span>
     </b-button>
 </template>
 
@@ -22,6 +26,17 @@ export default {
         item: {
             type: Object,
             required: true,
+        },
+    },
+    computed: {
+        icon() {
+            if ('unlink' in this.field.icons) {
+                return this.field.icons.unlink;
+            }
+
+            return field.delete_unlinked
+                ? '<i class="fas fa-trash-alt"></i>'
+                : '<i class="fas fa-unlink"></i>';
         },
     },
 };

@@ -77,6 +77,8 @@ class LaravelRelationField extends RelationField
         $this->search('title');
         $this->confirm();
         $this->small(false);
+        $this->hideRelationLink(false);
+        $this->setAttribute('icons', []);
     }
 
     /**
@@ -278,6 +280,35 @@ class LaravelRelationField extends RelationField
         }
 
         return $query;
+    }
+
+    /**
+     * Wether to hide the link to the relationship or not.
+     *
+     * @param  bool  $link
+     * @return $this
+     */
+    public function hideRelationLink(bool $link = true)
+    {
+        $this->setAttribute('hide_relation_link', $link);
+
+        return $this;
+    }
+
+    /**
+     * Set icon.
+     *
+     * @param  string $type
+     * @param  string $icon
+     * @return $this
+     */
+    public function icon($type, $icon)
+    {
+        $this->mergeOrSetAttribute('icons', [
+            $type => $icon,
+        ]);
+
+        return $this;
     }
 
     /**
