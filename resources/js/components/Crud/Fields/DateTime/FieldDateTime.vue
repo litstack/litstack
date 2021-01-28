@@ -43,14 +43,25 @@ export default {
     },
     data() {
         return {
-            date: this.value || new Date(new Date().setHours(0, 0, 0, 0)),
+            date: new Date(new Date().setHours(0, 0, 0, 0)),
         };
+    },
+    beforeMount() {
+        if (this.value) {
+            this.date = this.value;
+
+            if (this.field.only_time) {
+                this.date = `0000-01-01 ${this.value}`;
+            }
+        }
+
+        console.log({ date: this.date });
     },
     methods: {
         handleInput(event) {
-            this.$emit('input', this.formatdDate(event));
+            this.$emit('input', this.formatDate(event));
         },
-        formatdDate(date) {
+        formatDate(date) {
             var d = new Date(date),
                 month = '' + (d.getMonth() + 1),
                 day = '' + d.getDate(),
