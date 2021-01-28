@@ -16,6 +16,7 @@
 
 ### Fixed
 
+-   Fixed sort icon for index tables ([4cead36](https://github.com/litstack/litstack/commit/4cead3652f6f078d42531092f2562f8b5d5bd787))
 -   Fixed table column `date` method casting `null` as carbon instance ([338dae9](https://github.com/litstack/litstack/commit/338dae90d575a960206ea8ca100390e9cae7428a))
 -   Fixed crud model binding ([#141](https://github.com/litstack/litstack/pull/141))
 -   Fixed script mime types ([#142](https://github.com/litstack/litstack/pull/142))
