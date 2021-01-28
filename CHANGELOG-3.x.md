@@ -4,7 +4,7 @@
 
 ### Added
 
--   Added addMiddleware method to Kernel ([b748b37](https://github.com/litstack/litstack/commit/b748b37eddf50b7d508cd881cfe4c89087ef3509))
+-   Added `addMiddleware` method to Kernel ([b748b37](https://github.com/litstack/litstack/commit/b748b37eddf50b7d508cd881cfe4c89087ef3509))
 
 ## [v3.3.0](https://github.com/litstack/litstack/compare/v3.2.5...v3.3.0)
 
