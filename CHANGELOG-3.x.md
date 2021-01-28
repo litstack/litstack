@@ -4,6 +4,7 @@
 
 ### Added
 
+-   Added input masks ([#127](https://github.com/litstack/litstack/pull/127))
 -   Added relation preview inline fields ([#143](https://github.com/litstack/litstack/pull/143), [f44f333](https://github.com/litstack/litstack/commit/f44f333e22d98c23fa851228c43ac7a45b418939))
 -   Added `appends` method to Crud show page ([#135](https://github.com/litstack/litstack/pull/135))
 -   Added `info` method to Crud index page ([e69a6e8](https://github.com/litstack/litstack/commit/e69a6e8a1ef99637aecdccd637d8b23c79c1b1e3))
