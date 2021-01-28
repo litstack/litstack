@@ -4,7 +4,7 @@
 
 ### Added
 
--   Added relation preview inline fields ([#143](https://github.com/litstack/litstack/pull/143))
+-   Added relation preview inline fields ([#143](https://github.com/litstack/litstack/pull/143), [f44f333](https://github.com/litstack/litstack/commit/f44f333e22d98c23fa851228c43ac7a45b418939))
 -   Added `appends` method to Crud show page ([#135](https://github.com/litstack/litstack/pull/135))
 -   Added `info` method to Crud index page ([e69a6e8](https://github.com/litstack/litstack/commit/e69a6e8a1ef99637aecdccd637d8b23c79c1b1e3))
 -   Added `translation` option to the crud meta macro ([#146](https://github.com/litstack/litstack/pull/146))
