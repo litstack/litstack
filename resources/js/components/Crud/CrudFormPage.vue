@@ -46,21 +46,7 @@ export default {
             this.model = this.crud(response.data);
         },
         saved(results) {
-            let result;
-            result = results.findSucceeded(
-                'put',
-                `${this.config.route_prefix}/${this.model.id}/api/show`
-            );
-            if (result) {
-                this.model = this.crud(result.data);
-            }
-            result = results.findSucceeded(
-                'post',
-                `${this.config.route_prefix}/api/show`
-            );
-            if (result) {
-                this.model = this.crud(result.data);
-            }
+            this.reloadModel();
 
             if (
                 window.location.pathname.split('/').pop() == 'create' &&
