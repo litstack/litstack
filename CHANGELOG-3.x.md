@@ -2,7 +2,7 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.3.1...3.x)
 
-## [v3.3.0](https://github.com/litstack/litstack/compare/v3.3.0...v3.3.1)
+## [v3.3.1](https://github.com/litstack/litstack/compare/v3.3.0...v3.3.1)
 
 ### Added
 
