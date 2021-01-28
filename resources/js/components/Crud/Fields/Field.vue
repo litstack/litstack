@@ -196,13 +196,14 @@ export default {
 
             // Destory old cleave object if mask has changed.
             if (!_.isEqual(this.mask, mask) && this.cleave) {
+                console.log('Changed');
                 this.cleave.destroy();
             }
 
-            console.log(_.isEqual(this.mask, mask), mask);
+            console.log(_.isEqual(this.mask, mask), mask, this.mask);
             this.mask = mask;
 
-            this.cleave = new Cleave(input.$el, this.mask);
+            this.cleave = new Cleave(input.$el, Lit.clone(mask));
         },
 
         /**
@@ -212,7 +213,9 @@ export default {
             let mask = Lit.clone(this.field.mask);
 
             for (let key in mask) {
-                mask[key] = this._format(mask[key], this.model);
+                if (typeof mask[key] === 'string') {
+                    mask[key] = this._format(mask[key], this.model);
+                }
             }
 
             return mask;
