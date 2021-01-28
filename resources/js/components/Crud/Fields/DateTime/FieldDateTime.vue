@@ -51,11 +51,10 @@ export default {
             this.date = this.value;
 
             if (this.field.only_time) {
-                this.date = `0000-01-01 ${this.value}`;
+                let split = this.value.split(' ');
+                this.date = `0000-01-01 ${split[split.length - 1]}`;
             }
         }
-
-        console.log({ date: this.date });
     },
     methods: {
         handleInput(event) {
