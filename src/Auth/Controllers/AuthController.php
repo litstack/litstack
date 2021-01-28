@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Lit\Models\User;
 
 class AuthController extends Controller
@@ -54,7 +55,7 @@ class AuthController extends Controller
             abort(401, __lit('login.failed'));
         }
 
-        return $this->loginSucceeded();
+        return Session::pull('url.intended', $this->defaultUrl);
     }
 
     /**
