@@ -164,12 +164,14 @@ abstract class CrudController extends CrudBaseController
     {
         $id = last($parameters);
 
-        $this->config->show->resolveQuery(
+        $formName = last(explode('.', request()->route()->getName()));
+
+        $this->config->{$formName}->resolveQuery(
             $query = $this->getQuery()
         );
 
         // Now we are loading all relations from relation or media fields.
-        foreach ($this->config->show->getRegisteredFields() as $field) {
+        foreach ($this->config->{$formName}->getRegisteredFields() as $field) {
             if ($field instanceof RelationField && ! $field instanceof MediaField) {
                 $query->with($field->getRelationName());
             }
@@ -180,7 +182,7 @@ abstract class CrudController extends CrudBaseController
 
         // Append media.
         if (! $model instanceof LitFormModel) {
-            foreach ($this->config->show->getRegisteredFields() as $field) {
+            foreach ($this->config->{$formName}->getRegisteredFields() as $field) {
                 if ($field instanceof MediaField) {
                     $model->append($field->id);
                 }
@@ -189,10 +191,10 @@ abstract class CrudController extends CrudBaseController
 
         // Load config attributes.
         $config = $this->config->get(
-            'show', 'route_prefix', 'names', 'permissions',
+            $formName, 'route_prefix', 'names', 'permissions',
         );
-        $config['form'] = $config['show'];
-        unset($config['show']);
+        $config['form'] = $config[$formName];
+        unset($config[$formName]);
 
         // Set readonly if the user has no update permission for this crud.
         foreach ($config['form']->getRegisteredFields() as $field) {
@@ -206,7 +208,7 @@ abstract class CrudController extends CrudBaseController
             $config['preview_route'] = $this->config->previewRoute($model);
         }
 
-        $page = $this->config->show->bindToView([
+        $page = $this->config->{$formName}->bindToView([
             'model'  => $model,
             'config' => $this->config,
         ])->bindToVue([

@@ -49,12 +49,12 @@ class CrudFormConfigFactory extends ConfigFactory
      * @param  Closure                      $method
      * @return \Ignite\Crud\CrudForm
      */
-    public function show(ConfigHandler $config, Closure $method)
+    public function show(ConfigHandler $config, Closure $method, $alias)
     {
         $form = new BaseForm($config->model);
 
         $form->setRoutePrefix(
-            strip_slashes($config->routePrefix().'/{id}/api/show')
+            strip_slashes($config->routePrefix().'/{id}/api/'.$alias)
         );
 
         $page = new CrudShow($form);

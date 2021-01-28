@@ -173,6 +173,16 @@ class ConfigHandler
     }
 
     /**
+     * Get alias.
+     *
+     * @return array
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+
+    /**
      * Load select config attributes.
      *
      * @param  string|array ...$keys

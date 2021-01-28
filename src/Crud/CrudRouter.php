@@ -149,6 +149,14 @@ class CrudRouter
             $this->router->post('/{form}', [$config->controller, 'store'])->name('store');
             $this->router->get('/create', [$config->controller, 'create'])->name('create');
             $this->router->get("{{$attribute}}", [$config->controller, 'show'])->name('show');
+
+            foreach ($config->getAlias() as $alias => $method) {
+                if ($method !== 'show') {
+                    continue;
+                }
+
+                $this->router->get("{{$attribute}}/{$alias}", [$config->controller, 'show'])->name($alias);
+            }
         }
     }
 

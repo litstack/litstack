@@ -53,12 +53,13 @@ class ConfigFactory
             return $this->handler->getConfig()->$method(...$params);
         };
 
+        $call = $method;
         if (! is_null($alias)) {
-            $method = $alias;
+            $call = $alias;
         }
 
         // Call factory method.
-        $attributes = $this->$method($this->handler, $closure);
+        $attributes = $this->$call($this->handler, $closure, $method);
 
         // Set attributes.
         $this->handler->setAttribute($method, $attributes);
