@@ -2,6 +2,7 @@
 
 namespace Ignite\Application\Controllers;
 
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\File;
 
@@ -10,7 +11,7 @@ class FileController extends Controller
     /**
      * app.js.
      *
-     * @return response
+     * @return Response
      */
     public function litJs()
     {
@@ -21,7 +22,7 @@ class FileController extends Controller
     /**
      * app2.js.
      *
-     * @return response
+     * @return Response
      */
     public function lit2Js()
     {
@@ -32,7 +33,7 @@ class FileController extends Controller
     /**
      * prism.js.
      *
-     * @return response
+     * @return Response
      */
     public function prismJs()
     {
@@ -43,7 +44,7 @@ class FileController extends Controller
     /**
      * ctk.js.
      *
-     * @return response
+     * @return Response
      */
     public function ctkJs()
     {
@@ -54,7 +55,7 @@ class FileController extends Controller
     /**
      * app.css.
      *
-     * @return response
+     * @return Response
      */
     public function litCss()
     {
@@ -65,7 +66,7 @@ class FileController extends Controller
     /**
      * lit-logo.png.
      *
-     * @return response
+     * @return Response
      */
     public function litLogo()
     {
@@ -76,7 +77,7 @@ class FileController extends Controller
     /**
      * favicon-32x32.png.
      *
-     * @return response
+     * @return Response
      */
     public function litFaviconBig()
     {
@@ -87,7 +88,7 @@ class FileController extends Controller
     /**
      * favicon-16x16.png.
      *
-     * @return response
+     * @return Response
      */
     public function litFaviconSmall()
     {
@@ -98,9 +99,8 @@ class FileController extends Controller
     /**
      * Send file.
      *
-     * @param string $path
-     *
-     * @return void
+     * @param  string   $path
+     * @return Response
      */
     protected function sendFile(string $path)
     {

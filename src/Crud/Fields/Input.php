@@ -6,9 +6,10 @@ use Ignite\Crud\BaseField;
 
 class Input extends BaseField
 {
-    use Traits\FieldHasRules;
-    use Traits\TranslatableField;
-    use Traits\FieldHasPlaceholder;
+    use Traits\FieldHasMask,
+        Traits\FieldHasRules,
+        Traits\TranslatableField,
+        Traits\FieldHasPlaceholder;
 
     /**
      * Field Vue component.
