@@ -4,6 +4,12 @@
 
 ### Added
 
+-   Added addMiddleware method to Kernel ([b748b37](https://github.com/litstack/litstack/commit/b748b37eddf50b7d508cd881cfe4c89087ef3509))
+
+## [v3.3.0](https://github.com/litstack/litstack/compare/v3.2.5...v3.3.0)
+
+### Added
+
 -   Added input masks ([#127](https://github.com/litstack/litstack/pull/127))
 -   Added relation preview inline fields ([#143](https://github.com/litstack/litstack/pull/143), [f44f333](https://github.com/litstack/litstack/commit/f44f333e22d98c23fa851228c43ac7a45b418939))
 -   Added `appends` method to Crud show page ([#135](https://github.com/litstack/litstack/pull/135))
