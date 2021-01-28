@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex align-items-center">
-        <lit-field :model="item" :field="field" />
+        <lit-field :model="item" :field="field" ref="field" />
     </div>
 </template>
 
@@ -23,6 +23,9 @@ export default {
             field: {},
         };
     },
+    mounted() {
+        this.$refs.field.$emit('setSaveJobId', this.getSaveJobId());
+    },
     beforeMount() {
         this.field = this.setFieldRoutePrefixId(
             Lit.clone(this.colField),
@@ -30,6 +33,9 @@ export default {
         );
     },
     methods: {
+        getSaveJobId() {
+            return [this.field.id, this.item.id].join('.');
+        },
         setFieldRoutePrefixId(field, relation) {
             field.route_prefix = field.route_prefix.replace(
                 '{id}',

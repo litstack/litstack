@@ -50,7 +50,7 @@ export default {
             type: Object,
         },
         form: {
-            required: true,
+            // required: true,
             type: Object,
         },
     },
@@ -66,7 +66,7 @@ export default {
     beforeMount() {
         this.relation = this.item;
         this.fields = this.setFieldsRoutePrefixId(
-            Lit.clone(this.form.fields),
+            Lit.clone(this.form?.fields || {}),
             this.relation
         );
 
