@@ -4,12 +4,28 @@ namespace Ignite\Crud\Fields\DateTime;
 
 use Carbon\Carbon;
 use Ignite\Crud\BaseField;
+use Carbon\CarbonInterface;
 use Ignite\Crud\Fields\Traits\FieldHasRules;
 
 class BaseDateTime extends BaseField
 {
     use FieldHasRules;
 
+    /**
+     * Cast field value.
+     *
+     * @param  mixed $value
+     * @return bool
+     */
+    public function castValue($value)
+    {
+        if ($value instanceof CarbonInterface) {
+            return $value;
+        }
+
+        return new Carbon($value);
+    }
+    
     /**
      * Set mask.
      *
