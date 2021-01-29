@@ -18,7 +18,9 @@ use Ignite\Crud\Fields\Block\Block;
 use Ignite\Crud\Fields\Boolean;
 use Ignite\Crud\Fields\Checkboxes;
 use Ignite\Crud\Fields\Component;
-use Ignite\Crud\Fields\Datetime;
+use Ignite\Crud\Fields\DateTime\Date;
+use Ignite\Crud\Fields\DateTime\DateTime;
+use Ignite\Crud\Fields\DateTime\Time;
 use Ignite\Crud\Fields\Icon;
 use Ignite\Crud\Fields\Input;
 use Ignite\Crud\Fields\ListField\ListField;
@@ -81,8 +83,10 @@ class CrudServiceProvider extends LaravelServiceProvider
         'select'       => Select::class,
         'boolean'      => Boolean::class,
         'icon'         => Icon::class,
-        'datetime'     => Datetime::class,
-        'dt'           => Datetime::class,
+        'date'         => Date::class,
+        'time'         => Time::class,
+        'datetime'     => DateTime::class,
+        'dt'           => DateTime::class,
         'checkboxes'   => Checkboxes::class,
         'range'        => Range::class,
         'textarea'     => Textarea::class,
