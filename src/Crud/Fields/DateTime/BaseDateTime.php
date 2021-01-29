@@ -3,8 +3,8 @@
 namespace Ignite\Crud\Fields\DateTime;
 
 use Carbon\Carbon;
-use Ignite\Crud\BaseField;
 use Carbon\CarbonInterface;
+use Ignite\Crud\BaseField;
 use Ignite\Crud\Fields\Traits\FieldHasRules;
 
 class BaseDateTime extends BaseField
