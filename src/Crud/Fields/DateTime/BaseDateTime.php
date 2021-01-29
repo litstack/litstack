@@ -25,7 +25,7 @@ class BaseDateTime extends BaseField
 
         return new Carbon($value);
     }
-    
+
     /**
      * Set mask.
      *
