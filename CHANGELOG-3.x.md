@@ -6,6 +6,10 @@
 
 -   Changed url after login to intendet url ([#157](https://github.com/litstack/litstack/pull/157))
 
+### Added
+
+-   Added `date`, `time` and `datetime` fields as replacement for `datetime` url ([e197e28](https://github.com/litstack/litstack/commit/e197e2868e4a56b505592e681a7bf52fbac809a3))
+
 ## [v3.3.1](https://github.com/litstack/litstack/compare/v3.3.0...v3.3.1)
 
 ### Added
