@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.3.1...3.x)
 
+### Added
+
+-   Added default minute interval `5` ([a550bc2](https://github.com/litstack/litstack/commit/a550bc21e4f59073c258c443c58f617c18d604b5))
+
 ### Changed
 
 -   Changed url after login to intendet url ([#157](https://github.com/litstack/litstack/pull/157))
