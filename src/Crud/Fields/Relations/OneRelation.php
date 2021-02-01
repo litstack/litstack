@@ -3,6 +3,7 @@
 namespace Ignite\Crud\Fields\Relations;
 
 use Ignite\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Repositories\Relations\OneRelationRepository;
 
 class OneRelation extends OneRelationField
 {
@@ -24,6 +25,13 @@ class OneRelation extends OneRelationField
      * @var array
      */
     public $required = ['model'];
+
+    /**
+     * Repository class.
+     *
+     * @var string
+     */
+    protected $repository = OneRelationRepository::class;
 
     /**
      * Get relation for model.

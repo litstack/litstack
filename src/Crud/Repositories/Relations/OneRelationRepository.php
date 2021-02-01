@@ -4,10 +4,10 @@ namespace Ignite\Crud\Repositories\Relations;
 
 use Ignite\Crud\Fields\Relations\OneRelationField;
 use Ignite\Crud\Models\Relation;
-use Ignite\Crud\Repositories\BaseFieldRepository;
 use Ignite\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Database\Eloquent\Model;
 
-class OneRelationRepository extends BaseFieldRepository
+class OneRelationRepository extends RelationRepository
 {
     use Concerns\ManagesRelated;
 
@@ -31,6 +31,18 @@ class OneRelationRepository extends BaseFieldRepository
     {
         $related = $this->getRelated($request, $model);
 
+        $this->link($model, $related);
+    }
+
+    /**
+     * Link two models.
+     *
+     * @param  Model $model
+     * @param  Model $related
+     * @return void
+     */
+    public function link(Model $model, Model $related)
+    {
         $query = [
             'from_model_type' => get_class($model),
             'from_model_id'   => $model->id,

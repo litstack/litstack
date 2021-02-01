@@ -3,6 +3,7 @@
 namespace Ignite\Crud\Fields\Relations;
 
 use Ignite\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Repositories\Relations\MorphToRepository;
 
 class MorphTo extends OneRelationField
 {
@@ -28,6 +29,13 @@ class MorphTo extends OneRelationField
      * @var array
      */
     public $required = [];
+
+    /**
+     * Repository class.
+     *
+     * @var string
+     */
+    protected $repository = MorphToRepository::class;
 
     /**
      * Create new Field instance.

@@ -3,6 +3,7 @@
 namespace Ignite\Crud\Fields\Relations;
 
 use Ignite\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Repositories\Relations\HasManyRepository;
 
 class HasMany extends ManyRelationField
 {
@@ -41,6 +42,13 @@ class HasMany extends ManyRelationField
      * @var array
      */
     public $defaultAttributes = [];
+
+    /**
+     * Repository class.
+     *
+     * @var string
+     */
+    protected $repository = HasManyRepository::class;
 
     /**
      * Set relation attributes.
