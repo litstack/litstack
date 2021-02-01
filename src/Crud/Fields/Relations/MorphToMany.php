@@ -3,6 +3,7 @@
 namespace Ignite\Crud\Fields\Relations;
 
 use Ignite\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Repositories\Relations\MorphToManyRepository;
 
 class MorphToMany extends ManyRelationField
 {
@@ -39,4 +40,11 @@ class MorphToMany extends ManyRelationField
      * @var array
      */
     public $defaultAttributes = [];
+
+    /**
+     * Repository class.
+     *
+     * @var string
+     */
+    protected $repository = MorphToManyRepository::class;
 }

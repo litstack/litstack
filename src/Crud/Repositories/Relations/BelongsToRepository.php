@@ -6,10 +6,10 @@ use Ignite\Config\ConfigHandler;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Crud\Fields\Relations\BelongsTo;
-use Ignite\Crud\Repositories\BaseFieldRepository;
 use Ignite\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Database\Eloquent\Model;
 
-class BelongsToRepository extends BaseFieldRepository
+class BelongsToRepository extends RelationRepository
 {
     use Concerns\ManagesRelated;
 
@@ -45,6 +45,18 @@ class BelongsToRepository extends BaseFieldRepository
     {
         $related = $this->getRelated($request, $model);
 
+        $this->link($model, $related);
+    }
+
+    /**
+     * Link two models.
+     *
+     * @param  Model $model
+     * @param  Model $related
+     * @return void
+     */
+    public function link(Model $model, Model $related)
+    {
         $model->{$this->field->id}()->associate($related);
         $model->save();
     }

@@ -6,10 +6,10 @@ use Ignite\Config\ConfigHandler;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Crud\Fields\Relations\HasMany;
-use Ignite\Crud\Repositories\BaseFieldRepository;
 use Ignite\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Database\Eloquent\Model;
 
-class HasManyRepository extends BaseFieldRepository
+class HasManyRepository extends RelationRepository
 {
     use Concerns\ManagesRelated;
 
@@ -47,6 +47,18 @@ class HasManyRepository extends BaseFieldRepository
 
         $related = $this->getRelated($request, $model);
 
+        $this->link($model, $related);
+    }
+
+    /**
+     * Link two models.
+     *
+     * @param  Model $model
+     * @param  Model $related
+     * @return void
+     */
+    public function link(Model $model, Model $related)
+    {
         $hasMany = $this->field->getRelationQuery($model);
 
         $related->{$hasMany->getForeignKeyName()} = $model->{$hasMany->getLocalKeyName()};

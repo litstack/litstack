@@ -3,6 +3,7 @@
 namespace Ignite\Crud\Fields\Relations;
 
 use Ignite\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Repositories\Relations\ManyRelationRepository;
 
 class ManyRelation extends ManyRelationField
 {
@@ -24,6 +25,13 @@ class ManyRelation extends ManyRelationField
      * @var array
      */
     public $required = ['model'];
+
+    /**
+     * Repository class.
+     *
+     * @var string
+     */
+    protected $repository = ManyRelationRepository::class;
 
     /**
      * Get relation for model.

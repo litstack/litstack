@@ -4,10 +4,10 @@ namespace Ignite\Crud\Repositories\Relations;
 
 use Ignite\Crud\Fields\Relations\ManyRelationField;
 use Ignite\Crud\Models\Relation;
-use Ignite\Crud\Repositories\BaseFieldRepository;
 use Ignite\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Database\Eloquent\Model;
 
-class ManyRelationRepository extends BaseFieldRepository
+class ManyRelationRepository extends RelationRepository
 {
     use Concerns\ManagesRelated;
 
@@ -40,6 +40,18 @@ class ManyRelationRepository extends BaseFieldRepository
 
         $related = $this->getRelated($request, $model);
 
+        $this->link($related, $model);
+    }
+
+    /**
+     * Link two models.
+     *
+     * @param  Model $model
+     * @param  Model $related
+     * @return void
+     */
+    public function link(Model $model, Model $related)
+    {
         $order_column = $this->field->getRelationQuery($model)->count();
 
         $query = [

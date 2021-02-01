@@ -3,10 +3,10 @@
 namespace Ignite\Crud\Repositories\Relations;
 
 use Ignite\Crud\Fields\Relations\HasOne;
-use Ignite\Crud\Repositories\BaseFieldRepository;
 use Ignite\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Database\Eloquent\Model;
 
-class HasOneRepository extends BaseFieldRepository
+class HasOneRepository extends RelationRepository
 {
     use Concerns\ManagesRelated;
 
@@ -37,6 +37,18 @@ class HasOneRepository extends BaseFieldRepository
     {
         $related = $this->getRelated($request, $model);
 
+        $this->link($model, $related);
+    }
+
+    /**
+     * Link two models.
+     *
+     * @param  Model $model
+     * @param  Model $related
+     * @return void
+     */
+    public function link(Model $model, Model $related)
+    {
         $hasOne = $this->field->getRelationQuery($model);
 
         $query = [

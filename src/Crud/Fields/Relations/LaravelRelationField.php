@@ -39,7 +39,14 @@ class LaravelRelationField extends RelationField
      *
      * @var array
      */
-    protected $casts = [];
+	protected $casts = [];
+	
+	/**
+     * Repository class.
+     *
+     * @var string
+     */
+    protected $repository = null;
 
     /**
      * Create new Field instance.
@@ -510,6 +517,16 @@ class LaravelRelationField extends RelationField
         });
 
         return $form;
+    }
+
+    /**
+     * Get repository.
+     *
+     * @return void
+     */
+    public function getRepository()
+    {
+        return $this->repository;
     }
 
     /**

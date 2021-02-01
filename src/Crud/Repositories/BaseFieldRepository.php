@@ -6,6 +6,7 @@ use Ignite\Config\ConfigHandler;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Crud\Field;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
 

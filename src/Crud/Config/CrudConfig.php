@@ -39,6 +39,13 @@ abstract class CrudConfig
     protected $modelInstance;
 
     /**
+     * Wether the model should be sortable.
+     *
+     * @var bool
+     */
+    public $sortable = false;
+
+    /**
      * Set model instance from current route.
      *
      * @return void
