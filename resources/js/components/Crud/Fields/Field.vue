@@ -201,7 +201,6 @@ export default {
                 this.cleave.destroy();
             }
 
-            console.log(_.isEqual(this.mask, mask), mask, this.mask);
             this.mask = mask;
 
             this.cleave = new Cleave(input.$el, Lit.clone(mask));

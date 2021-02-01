@@ -50,6 +50,8 @@ export default {
             this.model = this.crud(response.data);
         },
         saved(results) {
+            this.setModelFromResults(results);
+
             this.reloadModel();
 
             if (
@@ -59,6 +61,27 @@ export default {
                 setTimeout(() => {
                     window.location.replace(`${this.model.id}`);
                 }, 1);
+            }
+        },
+        setModelFromResults(results) {
+            if (this.model.id) {
+                return;
+            }
+
+            let result;
+            result = results.findSucceeded(
+                'put',
+                `${this.config.route_prefix}/${this.model.id}/api/show`
+            );
+            if (result) {
+                this.model = this.crud(result.data);
+            }
+            result = results.findSucceeded(
+                'post',
+                `${this.config.route_prefix}/api/show`
+            );
+            if (result) {
+                this.model = this.crud(result.data);
             }
         },
         scrollToFormFieldFromHash() {
