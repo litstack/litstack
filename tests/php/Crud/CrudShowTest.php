@@ -2,11 +2,13 @@
 
 namespace Tests\Crud;
 
+use Ignite\Config\ConfigHandler;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\CrudShow;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
 use Ignite\Support\Vue\ButtonComponent;
 use Illuminate\Database\Eloquent\Model;
+use Mockery as m;
 use Tests\BackendTestCase;
 
 class CrudShowTest extends BackendTestCase
@@ -17,7 +19,9 @@ class CrudShowTest extends BackendTestCase
 
         $form = new BaseForm(CrudFormDummyModel::class);
 
-        $this->page = new CrudShow($form);
+        $config = m::mock(ConfigHandler::class);
+
+        $this->page = new CrudShow($config, $form);
     }
 
     /** @test */

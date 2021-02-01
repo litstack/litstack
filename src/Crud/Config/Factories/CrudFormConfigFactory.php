@@ -32,7 +32,7 @@ class CrudFormConfigFactory extends ConfigFactory
             strip_slashes($config->routePrefix().'/{id}/api/show')
         );
 
-        $page = new CrudShow($form);
+        $page = new CrudShow($config, $form);
 
         if ($config->instanceOf(CrudConfig::class)) {
             $page->navigationControls()->action(ucfirst(__lit('base.delete')), DestroyAction::class);

@@ -3,6 +3,7 @@
 namespace Ignite\Crud;
 
 use Closure;
+use Ignite\Config\ConfigHandler;
 use Ignite\Crud\Fields\Component;
 use Ignite\Crud\Models\Form;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
@@ -71,15 +72,24 @@ class CrudShow extends Page
     protected $events = [];
 
     /**
+     * ConfigHandler instance.
+     *
+     * @var ConfigHandler
+     */
+    protected $config;
+
+    /**
      * Create new CrudShow instance.
      *
-     * @param  BaseForm $form
+     * @param  ConfigHandler $config
+     * @param  BaseForm      $form
      * @return void
      */
-    public function __construct(BaseForm $form)
+    public function __construct(ConfigHandler $config, BaseForm $form)
     {
         parent::__construct();
 
+        $this->config = $config;
         $this->form = $form;
 
         // Add form lifecycle hooks.
@@ -275,7 +285,8 @@ class CrudShow extends Page
             ->prop('eventData', array_merge(
                 $component->getProp('eventData'),
                 [
-                    'model' => $this->form->getModel(),
+                    'config' => $this->config->getNamespace(),
+                    'model'  => $this->form->getModel(),
                 ]
             ));
     }

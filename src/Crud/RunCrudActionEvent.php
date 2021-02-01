@@ -3,6 +3,7 @@
 namespace Ignite\Crud;
 
 use Ignite\Page\RunActionEvent;
+use Ignite\Support\Facades\Config;
 use Illuminate\Http\Request;
 
 class RunCrudActionEvent extends RunActionEvent
@@ -15,6 +16,12 @@ class RunCrudActionEvent extends RunActionEvent
      */
     public function handle(Request $request)
     {
+        $config = Config::get($request->config);
+
+        if (! $config || ! $config->has('controller')) {
+            abort(404, debug("Invalid config [$request->config] for action {$request->action}."));
+        }
+
         $request->route()->config($request->config);
 
         return parent::handle($request);
