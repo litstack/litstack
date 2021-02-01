@@ -39,9 +39,9 @@ class LaravelRelationField extends RelationField
      *
      * @var array
      */
-	protected $casts = [];
-	
-	/**
+    protected $casts = [];
+
+    /**
      * Repository class.
      *
      * @var string
