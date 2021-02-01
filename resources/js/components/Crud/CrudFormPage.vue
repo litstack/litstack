@@ -34,6 +34,10 @@ export default {
     },
     methods: {
         async reloadModel() {
+            if (!this.model.id) {
+                return;
+            }
+
             let response;
             try {
                 response = await axios.get(
