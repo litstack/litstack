@@ -6,6 +6,11 @@
 
 -   Added default minute interval `5` ([a550bc2](https://github.com/litstack/litstack/commit/a550bc21e4f59073c258c443c58f617c18d604b5))
 
+### Fixed
+
+-   Fixed crud action for CrudShow ([ecddd85](https://github.com/litstack/litstack/commit/ecddd8515ea28832185193ddeae80a00be2c6e5f))
+-   Fixed redirecting after creating new model ([9ac2014](https://github.com/litstack/litstack/commit/9ac201472900dd595b82cd3a9947e8adef635de2))
+
 ### Changed
 
 -   Changed url after login to intendet url ([#157](https://github.com/litstack/litstack/pull/157))
