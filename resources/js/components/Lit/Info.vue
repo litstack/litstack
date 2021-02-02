@@ -1,10 +1,10 @@
 <template>
     <lit-col :width="width">
-        <component :is="heading" v-html="title" v-if="title != ''" />
+        <component :is="heading" v-html="_format(title, model)" v-if="title != ''" />
         <p
             :key="key"
             v-for="(info, key) in text"
-            v-html="info"
+            v-html="_format(info, model)"
             class="text-secondary"
         />
     </lit-col>
