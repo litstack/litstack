@@ -34,7 +34,7 @@ export default {
                 return this.field.icons.unlink;
             }
 
-            return field.delete_unlinked
+            return this.field.delete_unlinked
                 ? '<i class="fas fa-trash-alt"></i>'
                 : '<i class="fas fa-unlink"></i>';
         },
