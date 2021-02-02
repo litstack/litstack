@@ -2,6 +2,17 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.3.2...3.x)
 
+### Added
+
+-  Added formatting model attributes for page info and text field ([#159](https://github.com/litstack/litstack/pull/159))
+
+### Fixed
+
+-  Fixed unlink or delete colum in crud relation table ([#158](https://github.com/litstack/litstack/pull/158))
+
+### Changed
+
+
 ## [v3.3.2](https://github.com/litstack/litstack/compare/v3.3.1...v3.3.2)
 
 ### Added
