@@ -5,10 +5,11 @@ namespace Ignite\Crud\Config\Factories;
 use Closure;
 use Ignite\Config\ConfigFactory;
 use Ignite\Config\ConfigHandler;
+use Ignite\Contracts\Crud\CrudCreate;
+use Ignite\Contracts\Crud\CrudUpdate;
 use Ignite\Crud\Actions\DestroyAction;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Config\CrudConfig;
-use Ignite\Crud\CrudShow;
 use ReflectionMethod;
 
 class CrudFormConfigFactory extends ConfigFactory
@@ -35,7 +36,7 @@ class CrudFormConfigFactory extends ConfigFactory
 
         $type = $type->getName();
 
-        if ($type == CrudShow::class || is_subclass_of($type, CrudShow::class)) {
+        if (is_subclass_of($type, CrudCreate::class) || is_subclass_of($type, CrudUpdate::class)) {
             return 'show';
         }
 
@@ -57,7 +58,8 @@ class CrudFormConfigFactory extends ConfigFactory
             strip_slashes($config->routePrefix().'/{id}/api/'.$alias)
         );
 
-        $page = new CrudShow($form);
+        $pageClass = $this->resolvePageClass($config, $alias);
+        $page = new $pageClass($form);
 
         if ($config->instanceOf(CrudConfig::class)) {
             $page->navigationControls()->action(ucfirst(__lit('base.delete')), DestroyAction::class);
@@ -77,5 +79,26 @@ class CrudFormConfigFactory extends ConfigFactory
         $method($page);
 
         return $page;
+    }
+
+    /**
+     * Get the page class for the given alias.
+     *
+     * @param  ConfigHandler $config
+     * @param  string        $method
+     * @return string
+     */
+    protected function resolvePageClass(ConfigHandler $config, string $method = 'show')
+    {
+        if ($config->methodNeeds($method, CrudCreate::class, $pos = 0) &&
+            $config->methodNeeds($method, CrudUpdate::class, $pos = 0)) {
+            return \Ignite\Crud\CrudShow::class;
+        }
+
+        if ($config->methodNeeds($method, CrudCreate::class, $pos = 0)) {
+            return \Ignite\Crud\CrudCreate::class;
+        }
+
+        return \Ignite\Crud\CrudUpdate::class;
     }
 }
