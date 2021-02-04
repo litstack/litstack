@@ -77,7 +77,7 @@ abstract class CrudConfig
     public function getRouteFor($model)
     {
         $uri = implode('/', [
-            $this->routePrefix(),
+            $this->get()->routePrefix(),
             $model->getKey(),
             $this->getRouteSuffix($this->getFormNameFor($model)),
         ]);
@@ -239,7 +239,7 @@ abstract class CrudConfig
         return component('b-button')
             ->variant('primary')
             ->child($this->createButtonText())
-            ->prop('href', lit()->url($this->routePrefix().'/create'));
+            ->prop('href', lit()->url($this->get()->routePrefix().'/create'));
     }
 
     /**
