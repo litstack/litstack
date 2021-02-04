@@ -83,7 +83,7 @@ abstract class CrudController extends CrudBaseController
         $models->map(fn ($item) => $item->delete());
 
         return response()->success(
-            __lit_choice('messages.deleted_items', count($models))
+            __lit_choice('crud.messages.deleted_items', count($models))
         );
     }
 
@@ -96,7 +96,9 @@ abstract class CrudController extends CrudBaseController
     public function index(CrudReadRequest $request)
     {
         $config = $this->config->get(
-            'route_prefix', 'names', 'permissions'
+            'route_prefix',
+            'names',
+            'permissions'
         );
 
         $page = $this->config->index->bind([
@@ -224,10 +226,14 @@ abstract class CrudController extends CrudBaseController
             'config'     => $config,
         ]);
 
+        foreach ($page->getAppends() as $attribute) {
+            $model->append($attribute);
+        }
+
         [$previous, $next] = $this->nearSiblings($id);
 
         // Show near items.
-        $page->navigationLeft()->component('lit-crud-show-near-items')->bind([
+        $page->headerRight()->component('lit-crud-show-near-items')->bind([
             'next'         => $next,
             'previous'     => $previous,
             'route-prefix' => $this->config->routePrefix,

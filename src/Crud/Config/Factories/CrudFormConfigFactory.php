@@ -10,6 +10,9 @@ use Ignite\Contracts\Crud\CrudUpdate;
 use Ignite\Crud\Actions\DestroyAction;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Config\CrudConfig;
+use Ignite\Crud\CrudShow;
+use Illuminate\Support\Str;
+use ReflectionClass;
 use ReflectionMethod;
 
 class CrudFormConfigFactory extends ConfigFactory
@@ -59,7 +62,7 @@ class CrudFormConfigFactory extends ConfigFactory
         );
 
         $pageClass = $this->resolvePageClass($config, $alias);
-        $page = new $pageClass($form);
+        $page = new $pageClass($config, $form);
 
         if ($config->instanceOf(CrudConfig::class)) {
             $page->navigationControls()->action(ucfirst(__lit('base.delete')), DestroyAction::class);
@@ -68,13 +71,15 @@ class CrudFormConfigFactory extends ConfigFactory
         if (is_translatable($config->model)) {
             $page->navigationRight()->component('lit-crud-language');
         }
-
+        // dump($this->getBreadcrumb($config));
         $page->breadcrumb($this->getBreadcrumb($config));
         // if ($config->has('index')) {
         //     $page->goBack($config->names['plural'], $config->route_prefix);
         // }
 
         $page->title($config->names['singular'] ?? '');
+
+        $this->bindEventsFromConfig($config, $page);
 
         $method($page);
 
@@ -100,5 +105,35 @@ class CrudFormConfigFactory extends ConfigFactory
         }
 
         return \Ignite\Crud\CrudUpdate::class;
+    }
+    /**
+     * Bind events from config.
+     *
+     * @param  ConfigHandler $config
+     * @param  CrudShow      $page
+     * @return void
+     */
+    protected function bindEventsFromConfig(ConfigHandler $config, CrudShow $page)
+    {
+        $reflector = new ReflectionClass($config->getConfig());
+
+        foreach ($reflector->getMethods() as $method) {
+            if ($method->getModifiers() != ReflectionMethod::IS_PUBLIC) {
+                continue;
+            }
+
+            if (! Str::startsWith($name = $method->getName(), 'on')) {
+                continue;
+            }
+
+            // Event naming: onFooBar -> foo.bar
+            $event = str_replace('_', '.',
+                Str::replaceFirst('on_', '', Str::snake($name))
+            );
+
+            $page->on(
+                $event, fn (...$parameters) => $config->{$name}(...$parameters)
+            );
+        }
     }
 }

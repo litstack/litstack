@@ -34,6 +34,10 @@ export default {
     },
     methods: {
         async reloadModel() {
+            if (!this.model.id) {
+                return;
+            }
+
             let response;
             try {
                 response = await axios.get(
@@ -46,6 +50,24 @@ export default {
             this.model = this.crud(response.data);
         },
         saved(results) {
+            this.setModelFromResults(results);
+
+            this.reloadModel();
+
+            if (
+                window.location.pathname.split('/').pop() == 'create' &&
+                this.model.id
+            ) {
+                setTimeout(() => {
+                    window.location.replace(`${this.model.id}`);
+                }, 1);
+            }
+        },
+        setModelFromResults(results) {
+            if (this.model.id) {
+                return;
+            }
+
             let result;
             result = results.findSucceeded(
                 'put',
@@ -60,15 +82,6 @@ export default {
             );
             if (result) {
                 this.model = this.crud(result.data);
-            }
-
-            if (
-                window.location.pathname.split('/').pop() == 'create' &&
-                this.model.id
-            ) {
-                setTimeout(() => {
-                    window.location.replace(`${this.model.id}`);
-                }, 1);
             }
         },
         scrollToFormFieldFromHash() {

@@ -1,22 +1,34 @@
 <template>
     <lit-base-field :field="field" :model="model">
         <template v-if="!field.readonly">
-            <vue-ctk-date-time-picker
-                :id="`${field.id}-${makeid(10)}`"
-                :value="value"
-                :label="field.label"
-                :format="format"
-                :no-label="true"
-                :inline="field.inline"
-                :formatted="field.formatted"
-                :only-date="field.only_date"
-                :only-time="field.only_time"
-                :right="field.right"
-                :minute-interval="field.minute_interval"
-                :disabled-hours="field.disabled_hours"
-                color="var(--primary)"
-                v-on:input="$emit('input', $event)"
-            />
+            <div @mouseenter="handleMouseEnter" class="w-100">
+                <v-date-picker
+                    v-model="datetime"
+                    :model-config="modelConfig"
+                    :minute-increment="field.minute_interval"
+                    :mode="field.mode"
+                    :is24hr="field.is24hr"
+                    :locale="Lit.getLocale()"
+                    :is-expanded="field.expand"
+                    :trim-weeks="field.trimWeeks"
+                    :rows="field.rows"
+                    :min-date="field.minDate"
+                    :max-date="field.maxDate"
+                    :attributes="attributes"
+                    class="lit_date_time_picker"
+                >
+                    <template
+                        v-slot="{ inputValue, inputEvents }"
+                        v-if="!field.inline"
+                    >
+                        <input
+                            class="form-control lit-field-input"
+                            :value="inputValue"
+                            v-on="inputEvents"
+                        />
+                    </template>
+                </v-date-picker>
+            </div>
         </template>
         <template v-else>
             <b-input class="form-control" :value="value" type="text" readonly />
@@ -40,32 +52,76 @@ export default {
             required: true,
         },
     },
-    data() {
-        return {
-            datetimeString: '',
-        };
-    },
-    computed: {
-        format() {
-            if (this.field.only_time) {
-                return 'HH:mm:ss';
-            }
+    beforeMount() {
+        if (this.value) this.datetime = this.value;
 
-            return 'YYYY-MM-DD HH:mm:ss';
+        this.modelConfig.mask = this.field.mask || 'YYYY-MM-DD HH:mm:ss';
+    },
+    watch: {
+        datetime(val) {
+            this.$emit('input', val);
         },
     },
+    data() {
+        return {
+            datetime: null,
+            modelConfig: {
+                type: 'string',
+                mask: null,
+            },
+        };
+    },
     methods: {
-        makeid(length) {
-            var result = '';
-            var characters =
-                'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            var charactersLength = characters.length;
-            for (var i = 0; i < length; i++) {
-                result += characters.charAt(
-                    Math.floor(Math.random() * charactersLength)
-                );
+        // cheat for buggy impossible null value
+        handleMouseEnter() {
+            if (!this.datetime) {
+                this.datetime = this.now();
             }
-            return result;
+        },
+        now() {
+            var d = new Date(),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear(),
+                hours = '' + d.getHours(),
+                minutes = '' + d.getMinutes(),
+                seconds = '' + d.getSeconds();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            if (hours.length < 2) hours = '0' + hours;
+            if (minutes.length < 2) minutes = '0' + minutes;
+            if (seconds.length < 2) seconds = '0' + seconds;
+
+            return `${[year, month, day].join('-')} ${[
+                hours,
+                minutes,
+                seconds,
+            ].join(':')}`;
+        },
+    },
+    computed: {
+        attributes() {
+            if (!this.field.events) {
+                return;
+            }
+
+            return [
+                ...this.field.events.map(event => ({
+                    dates: event.date,
+                    dot: {
+                        color: event.color,
+                        class: event.class,
+                    },
+                    popover: {
+                        label: event.label,
+                        labelClass: 'w-100',
+                        visibility: 'focus',
+                    },
+                    customData: event,
+                })),
+            ];
         },
     },
 };
@@ -73,42 +129,24 @@ export default {
 
 <style lang="scss">
 @import '@lit-sass/_variables';
-@import '~vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
-
-.date-time-picker {
-    input {
-        display: inline-block !important;
-        width: 100% !important;
-        height: 2.5rem !important;
-        min-height: 2.5rem !important;
-        padding: $input-padding-y $input-padding-x !important;
-        font-size: $input-font-size !important;
-        font-weight: 400 !important;
-        line-height: 1.6 !important;
-        color: $input-color !important;
-        vertical-align: middle !important;
-        background-color: $input-bg !important;
-        border: $input-border-width solid $input-border-color !important;
-        border-radius: $input-border-radius !important;
-        -webkit-appearance: none !important;
+.lit_date_time_picker {
+    * {
+        font-family: 'Inter';
     }
-    .datepicker-buttons-container {
-        .datepicker-button {
-            &.now {
-                .datepicker-button-effect {
-                    background: $primary;
-                }
-                .datepicker-button-content {
-                    color: $primary;
-                }
-            }
-            .datepicker-button-effect {
-                background: $success;
-            }
-            svg {
-                fill: $success;
-            }
-        }
+    .vc-weekday,
+    .vc-month,
+    .vc-day,
+    .vc-year {
+        color: $secondary !important;
+    }
+    .vc-highlight {
+        background: $primary !important;
+    }
+    .vc-date {
+        display: none !important;
+    }
+    &.vc-container {
+        border-color: $secondary !important;
     }
 }
 </style>

@@ -24,18 +24,13 @@ class TraitTranslatableFieldTest extends BackendTestCase
     /** @test */
     public function it_notices_translatable_attributes_on_translatable_models()
     {
-        $field = $this->getField(
-            TranslatableField::class,
-            'translated_attribute',
-            TranslatableFieldModel::class
-        );
+        $field = new TranslatableField('translated_attribute');
+        $field->setModel(TranslatableFieldModel::class);
         $this->assertTrue($field->translatable);
 
-        $field = $this->getField(
-            TranslatableField::class,
-            'non_translated_attribute',
-            TranslatableFieldModel::class
-        );
+        $field = new TranslatableField('non_translated_attribute');
+        $field->setModel(TranslatableFieldModel::class);
+
         $this->assertFalse($field->translatable);
     }
 

@@ -18,7 +18,6 @@
                           })
                 }}
                 <lit-field-relation-form
-                    :item="creationModel"
                     :modal-id="creationModalId"
                     :field="field"
                     :model="model"
@@ -188,15 +187,6 @@ export default {
              * Table cols in modal.
              */
             modalCols: [],
-
-            /**
-             * Creation model.
-             */
-            creationModel: this.crud({
-                attributes: {},
-                translatable: false,
-                cast: true,
-            }),
         };
     },
     computed: {
@@ -246,7 +236,7 @@ export default {
     beforeMount() {
         this.cols = this.field.preview;
         this.modalCols = Lit.clone(this.field.preview);
-        if (this.field.related_route_prefix) {
+        if (this.field.related_route_prefix && this.field.relation_link) {
             this.cols.push({
                 label: '',
                 name: 'lit-field-relation-col-link',

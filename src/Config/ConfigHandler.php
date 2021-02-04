@@ -90,6 +90,17 @@ class ConfigHandler
     }
 
     /**
+     * Determine if the config is an instance of the given class name or
+     * interface.
+     *
+     * @return bool
+     */
+    public function is($class)
+    {
+        return $this->config instanceof $class;
+    }
+
+    /**
      * Determines if config is an instance of the given abstract.
      *
      * @param  string $abstract

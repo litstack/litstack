@@ -20,6 +20,15 @@ class Kernel extends LitstackKernel
     ];
 
     /**
+     * The litstack application's HTTP middleware stack.
+     *
+     * @var array
+     */
+    protected $middlewares = [
+        //
+    ];
+
+    /**
      * Mount litstack application.
      *
      * @return void

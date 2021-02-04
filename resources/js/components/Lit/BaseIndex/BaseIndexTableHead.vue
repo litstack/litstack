@@ -20,14 +20,7 @@
                 >
                     <span v-html="col.label" />
                     <span class="d-inline-block ml-2" v-if="key == activeCol">
-                        <lit-fa-icon
-                            icon="sort-amount-up"
-                            v-if="sort == 'asc'"
-                        />
-                        <lit-fa-icon
-                            icon="sort-amount-down"
-                            v-if="sort == 'desc'"
-                        />
+                        <span v-html="sortIcon"> </span>
                     </span>
                 </div>
             </th>
@@ -63,6 +56,19 @@ export default {
             sort: null,
             activeCol: null,
         };
+    },
+    watch: {
+        sort() {
+            console.log('abc');
+            this.$forceUpdate();
+        },
+    },
+    computed: {
+        sortIcon() {
+            return this.sort == 'asc'
+                ? `<i class="fas fa-sort-amount-up"></i>`
+                : `<i class="fas fa-sort-amount-down"></i>`;
+        },
     },
     methods: {
         sortCol(value, sort_by, index) {

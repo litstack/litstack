@@ -5,7 +5,6 @@ namespace Ignite\Crud\Fields\Relations;
 use Closure;
 use Ignite\Crud\RelationField;
 use Ignite\Exceptions\Traceable\InvalidArgumentException as LitstackInvalidArgumentException;
-use Ignite\Page\Table\ColumnBuilder;
 use Ignite\Support\Facades\Config;
 use Ignite\Support\Facades\Crud;
 use Illuminate\Support\Arr;
@@ -43,15 +42,32 @@ class LaravelRelationField extends RelationField
     protected $casts = [];
 
     /**
+     * Repository class.
+     *
+     * @var string
+     */
+    protected $repository = null;
+
+    /**
      * Create new Field instance.
      *
-     * @param string      $id
-     * @param string      $model
-     * @param string|null $routePrefix
+     * @param  string $id
+     * @return void
      */
-    public function __construct(string $id, string $model, $routePrefix, $form)
+    public function __construct(string $id)
     {
-        parent::__construct($id, $model, $routePrefix, $form);
+        parent::__construct($id);
+    }
+
+    /**
+     * Set model class.
+     *
+     * @param  string $model
+     * @return void
+     */
+    public function setModel($model)
+    {
+        parent::setModel($model);
 
         $this->initializeRelationField();
     }
@@ -68,6 +84,8 @@ class LaravelRelationField extends RelationField
         $this->search('title');
         $this->confirm();
         $this->small(false);
+        $this->hideRelationLink(false);
+        $this->setAttribute('icons', []);
     }
 
     /**
@@ -272,6 +290,35 @@ class LaravelRelationField extends RelationField
     }
 
     /**
+     * Wether to hide the link to the relationship or not.
+     *
+     * @param  bool  $link
+     * @return $this
+     */
+    public function hideRelationLink(bool $link = true)
+    {
+        $this->setAttribute('hide_relation_link', $link);
+
+        return $this;
+    }
+
+    /**
+     * Set icon.
+     *
+     * @param  string $type
+     * @param  string $icon
+     * @return $this
+     */
+    public function icon($type, $icon)
+    {
+        $this->mergeOrSetAttribute('icons', [
+            $type => $icon,
+        ]);
+
+        return $this;
+    }
+
+    /**
      * Build relation index table.
      *
      * @param  Closure $closure
@@ -279,7 +326,7 @@ class LaravelRelationField extends RelationField
      */
     public function preview(Closure $closure)
     {
-        $builder = new ColumnBuilder;
+        $builder = new RelationColumnBuilder($this);
 
         // In order for the column builder to set a cast when creating a money
         // field, it is necessary to pass the field instance to the column builder.
@@ -470,6 +517,31 @@ class LaravelRelationField extends RelationField
         });
 
         return $form;
+    }
+
+    /**
+     * Get repository.
+     *
+     * @return void
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
+
+    /**
+     * Get attribute by name.
+     *
+     * @param  string $name
+     * @return $this
+     */
+    public function getAttribute(string $name)
+    {
+        if ($name == 'form' && $key = request()->form_key) {
+            return $this->preview->getForm($key);
+        }
+
+        return parent::getAttribute($name);
     }
 
     /**

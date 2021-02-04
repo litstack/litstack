@@ -35,7 +35,6 @@ export default {
     props: {
         item: {
             type: Object,
-            required: true,
         },
         modalId: {
             required: true,
@@ -50,7 +49,7 @@ export default {
             type: Object,
         },
         form: {
-            required: true,
+            // required: true,
             type: Object,
         },
     },
@@ -65,16 +64,31 @@ export default {
     },
     beforeMount() {
         this.relation = this.item;
+
+        if (!this.item) {
+            this.resetRelationModel();
+        }
+
         this.fields = this.setFieldsRoutePrefixId(
-            Lit.clone(this.form.fields),
+            Lit.clone(this.form?.fields || {}),
             this.relation
         );
 
         Lit.bus.$on('saved', () => {
             this.$bvModal.hide(this.modalId);
+            if (!this.item) {
+                this.resetRelationModel();
+            }
         });
     },
     methods: {
+        resetRelationModel() {
+            this.relation = this.crud({
+                attributes: {},
+                translatable: false,
+                cast: true,
+            });
+        },
         setFieldsRoutePrefixId(fields, relation) {
             for (let i in fields) {
                 let field = fields[i];

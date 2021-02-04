@@ -11,7 +11,7 @@
                 :fields="_fields"
                 :preview="preview"
                 :delete-icon="deleteIcon"
-                @deleteItem="$emit('deleteItem')"
+                @deleteItem="deleteItem"
                 @toggleExpand="expand = !expand"
             />
             <div :class="`lit-block-form ${expand ? 'show' : ''}`">
@@ -26,6 +26,34 @@
                 />
             </div>
         </div>
+        <b-modal
+            v-model="showConfirm"
+            :title="__('base.item_remove', { item: field.title }).capitalize()"
+        >
+            {{ __('base.messages.are_you_sure') }}
+
+            <template v-slot:modal-footer>
+                <b-button
+                    variant="secondary"
+                    size="sm"
+                    class="float-right"
+                    @click="showConfirm = false"
+                >
+                    {{ __('base.cancel').capitalize() }}
+                </b-button>
+                <a
+                    href="#"
+                    @click.prevent="
+                        $emit('deleteItem');
+                        showConfirm = false;
+                    "
+                    class="lit-trash btn btn-danger btn-sm"
+                >
+                    <lit-fa-icon icon="unlink" />
+                    {{ __('base.delete').capitalize() }}
+                </a>
+            </template>
+        </b-modal>
     </lit-col>
 </template>
 
@@ -90,6 +118,7 @@ export default {
         return {
             expand: false,
             _fields: [],
+            showConfirm: null,
         };
     },
     watch: {
@@ -102,14 +131,22 @@ export default {
     beforeMount() {
         this._fields = this.setRoutePrefix(Lit.clone(this.fields), this.block);
 
-        this.$on('expand', (expand) => {
+        this.$on('expand', expand => {
             this.expand = expand;
         });
-        this.$on('refresh', (expand) => {
+        this.$on('refresh', expand => {
             this.$refs.header.$emit('refresh');
         });
     },
     methods: {
+        deleteItem() {
+            if (!this.field.confirm_delete) {
+                return this.$emit('deleteItem');
+            }
+
+            this.showConfirm = true;
+        },
+
         /**
          * Refresh table cols on change.
          */

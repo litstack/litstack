@@ -204,7 +204,9 @@
                                     @click="
                                         setFontColor(commands.font_color, color)
                                     "
-                                    :style="`background: ${color}; border-color: ${color}`"
+                                    :style="
+                                        `background: ${color}; border-color: ${color}`
+                                    "
                                 ></b-button>
                             </div>
                         </b-dropdown>
@@ -215,21 +217,6 @@
                             :commands="commands"
                             :field="field"
                         />
-
-                        <!-- <b-button
-                            class="btn-square"
-                            size="sm"
-                            variant="outline-secondary"
-                            @click="
-                                commands.createTable({
-                                    rowsCount: 3,
-                                    colsCount: 3,
-                                    withHeaderRow: false
-                                })
-                            "
-                        >
-                            <lit-fa-icon icon="table" />
-                        </b-button> -->
 
                         <b-button
                             variant="outline-secondary"
@@ -249,18 +236,14 @@
                             <lit-fa-icon icon="redo" />
                         </b-button>
 
-                        <!-- <button
+                        <b-button
                             class="btn-square"
-                            @click="
-                                commands.createTable({
-                                    rowsCount: 3,
-                                    colsCount: 3,
-                                    withHeaderRow: false
-                                })
-                            "
+                            size="sm"
+                            :variant="editRaw ? 'primary' : 'outline-secondary'"
+                            @click="toggleHtmlView()"
                         >
-                            <lit-fa-icon name="table" />
-                        </button> -->
+                            <lit-fa-icon icon="code" />
+                        </b-button>
                     </div>
                 </editor-menu-bar>
 
@@ -268,7 +251,15 @@
                     :editor="editor"
                     class="lit-field-wysiwyg__content"
                     :id="identifier"
+                    v-if="!editRaw"
                 />
+
+                <b-form-textarea
+                    class="lit-field-wysiwyg_raw"
+                    v-model="valueCopy"
+                    v-if="editRaw"
+                    rows="3"
+                ></b-form-textarea>
             </div>
         </template>
         <template v-else>
@@ -313,7 +304,7 @@ export default {
         EditorContent,
         EditorMenuBar,
         'v-style': {
-            render: function (createElement) {
+            render: function(createElement) {
                 return createElement('style', this.$slots.default);
             },
         },
@@ -334,9 +325,10 @@ export default {
     data() {
         return {
             editor: null,
-
+            editRaw: false,
             linkUrl: null,
             target: null,
+            valueCopy: _.clone(this.value),
         };
     },
     beforeMount() {
@@ -347,6 +339,7 @@ export default {
 
         this.editor.on('update', ({ getHTML }) => {
             this.$emit('input', getHTML());
+            this.valueCopy = _.clone(getHTML());
         });
 
         Lit.bus.$on('languageChanged', () => {
@@ -358,9 +351,20 @@ export default {
     beforeDestroy() {
         this.editor.destroy();
     },
+    watch: {
+        valueCopy(val) {
+            if (this.editRaw) {
+                let data = this.stripScripts(val);
+                this.editor.setContent(data);
+                this.$emit('input', data);
+            }
+        },
+    },
     methods: {
         init() {
             this.editor = new Editor({
+                disablePasteRules: !this.field.enablePasteRules,
+                disableInputRules: !this.field.enableInputRules,
                 extensions: [
                     new Blockquote(),
                     new CodeBlock(),
@@ -387,6 +391,18 @@ export default {
                 ],
             });
         },
+        // credits:
+        // https://stackoverflow.com/questions/6659351/removing-all-script-tags-from-html-with-js-regular-expression/6660151
+        stripScripts(s) {
+            var div = document.createElement('div');
+            div.innerHTML = s;
+            var scripts = div.getElementsByTagName('script');
+            var i = scripts.length;
+            while (i--) {
+                scripts[i].parentNode.removeChild(scripts[i]);
+            }
+            return div.innerHTML;
+        },
         format(isActive) {
             if (isActive.paragraph()) {
                 return 'Paragraph';
@@ -400,6 +416,9 @@ export default {
             }
         },
         hasControl(control) {
+            if (this.field.only) {
+                return _.includes(this.field.only, control);
+            }
             return _.includes(this.lit_config.fields.wysiwyg.controls, control);
         },
         showLinkMenu(attrs) {
@@ -422,6 +441,9 @@ export default {
                 /(^(?:\s|[^@{])*?|[},]\s*)(\/\/.*\s+|.*\/\*[^*]*\*\/\s*|@media.*{\s*|@font-face.*{\s*)*([.#]?-?[_a-zA-Z]+[_a-zA-Z0-9-]*)(?=[^}]*{)/g,
                 `$1$2 #${this.identifier} $3`
             );
+        },
+        toggleHtmlView() {
+            this.editRaw = !this.editRaw;
         },
     },
     computed: {
@@ -516,6 +538,11 @@ export default {
             grid-gap: 0.5rem;
             padding: 0 0.5rem;
         }
+    }
+    &_raw {
+        border: none;
+        outline: none !important;
+        box-shadow: none !important;
     }
 }
 </style>

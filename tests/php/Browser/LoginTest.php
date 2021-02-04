@@ -53,7 +53,7 @@ class LoginTest extends FrontendTestCase
                 ->press('.btn-primary')
                 ->waitUntil('window.location.pathname != "'.Lit::url('login').'"', 15)
                 // it redirects to correct route.
-                ->assertPathIs(Lit::url(config('lit.default_route')));
+                ->assertPathIs(rtrim(Lit::url(config('lit.default_route')), '/'));
         });
     }
 }

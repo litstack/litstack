@@ -69,6 +69,9 @@ return [
         \Ignite\Crud\CrudServiceProvider::class,
         \Ignite\User\UserServiceProvider::class,
         \Ignite\Page\PageServiceProvider::class,
+
+        // Uncomment to enable a link to your system info in the topbar navigation.
+        //\Ignite\Info\InfoServiceProvider::class,
     ],
 
     /*
@@ -126,6 +129,9 @@ return [
 
         'scripts' => [
             'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.0.2/addons/cleave-phone.de.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.0.2/addons/cleave-phone.us.js',
         ],
         'styles' => [
             //

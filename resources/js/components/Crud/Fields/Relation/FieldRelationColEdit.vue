@@ -7,7 +7,8 @@
         :title="__('crud.fields.relation.edit')"
         @click="edit()"
     >
-        <lit-fa-icon icon="edit" />
+        <span v-html="icon"></span>
+
         <lit-field-relation-form
             :item="item"
             :modal-id="modalId"
@@ -43,6 +44,15 @@ export default {
         return {
             modalId: '',
         };
+    },
+    computed: {
+        icon() {
+            if ('edit' in this.field.icons) {
+                return this.field.icons.edit;
+            }
+
+            return '<i class="fas fa-edit"><i/>';
+        },
     },
     methods: {
         rowModalId(item) {

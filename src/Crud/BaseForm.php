@@ -205,12 +205,15 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
      * @param  array  $params
      * @return Field  $field
      */
-    public function registerField($field, string $id, $params = [])
+    public function registerField($field, ...$params)
     {
         if ($field instanceof Field) {
             $fieldInstance = $field;
         } else {
-            $fieldInstance = new $field($id, $this->model, $this->routePrefix, $this);
+            $fieldInstance = new $field(...$params);
+            $fieldInstance->setModel($this->model);
+            $fieldInstance->setParentForm($this);
+            $fieldInstance->setRoutePrefix($this->routePrefix);
         }
 
         foreach ($this->registeringFieldHooks as $hook) {

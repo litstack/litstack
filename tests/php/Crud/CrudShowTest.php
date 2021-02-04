@@ -2,11 +2,13 @@
 
 namespace Tests\Crud;
 
+use Ignite\Config\ConfigHandler;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\CrudShow;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
 use Ignite\Support\Vue\ButtonComponent;
 use Illuminate\Database\Eloquent\Model;
+use Mockery as m;
 use Tests\BackendTestCase;
 
 class CrudShowTest extends BackendTestCase
@@ -17,7 +19,9 @@ class CrudShowTest extends BackendTestCase
 
         $form = new BaseForm(CrudFormDummyModel::class);
 
-        $this->page = new CrudShow($form);
+        $config = m::mock(ConfigHandler::class);
+
+        $this->page = new CrudShow($config, $form);
     }
 
     /** @test */
@@ -42,6 +46,20 @@ class CrudShowTest extends BackendTestCase
         $this->assertCount(1, $components);
         $this->assertEquals('lit-wrapper', $components[0]->getName());
         $this->assertEquals('lit-wrapper-card', $components[0]->wrapperComponent->getName());
+    }
+
+    /** @test */
+    public function test_appends_method_using_multiple_parameters()
+    {
+        $this->page->appends('foo', 'bar');
+        $this->assertEquals(['foo', 'bar'], $this->page->getAppends());
+    }
+
+    /** @test */
+    public function test_appends_method_using_single_attribute()
+    {
+        $this->page->appends(['foo', 'bar']);
+        $this->assertEquals(['foo', 'bar'], $this->page->getAppends());
     }
 
     /** @test */
@@ -84,6 +102,28 @@ class CrudShowTest extends BackendTestCase
     {
         $this->page->preview('foo');
         $this->assertTrue($this->page->headerRight()->hasComponent('b-button'));
+    }
+
+    /** @test */
+    public function it_calls_event_handlers_when_model_event_is_fired()
+    {
+        $this->called = false;
+        $this->page->on('foo', function () {
+            $this->called = true;
+        });
+        $this->page->fireEvent('foo');
+        $this->assertTrue($this->called);
+    }
+
+    /** @test */
+    public function test_fireEvent_passes_parameters_to_event_handler()
+    {
+        $this->page->on('foo', function ($var1, $var2) {
+            $this->assertEquals('bar', $var1);
+            $this->assertEquals('baz', $var2);
+        });
+        $this->page->fireEvent('foo', ['bar', 'baz']);
+        $this->page->fireEvent('foo', 'bar', 'baz');
     }
 }
 

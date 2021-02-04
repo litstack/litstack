@@ -37,6 +37,7 @@ class Datetime extends BaseField
         $this->formatted('l');
         $this->inline(false);
         $this->onlyDate(true);
+        $this->minuteInterval(5);
     }
 
     /**

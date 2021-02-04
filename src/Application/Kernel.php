@@ -39,6 +39,13 @@ class Kernel
     public $providers = [];
 
     /**
+     * Middlewares.
+     *
+     * @var array
+     */
+    protected $middlewares = [];
+
+    /**
      * Create a new Lit kernel instance.
      *
      * @param  \Ignite\Application\Application $app
@@ -79,10 +86,22 @@ class Kernel
      */
     public function getMiddlewares()
     {
-        return [
+        return array_merge([
             'web',
             'lit.auth:'.config('lit.guard'),
-        ];
+            'lit.crud',
+        ], $this->middlewares);
+    }
+
+    /**
+     * Add litstack middleware.
+     *
+     * @param  string $middleware
+     * @return void
+     */
+    public function addMiddleware($middleware)
+    {
+        $this->middlewares[] = $middleware;
     }
 
     /**

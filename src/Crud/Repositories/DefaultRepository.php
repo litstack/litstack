@@ -123,7 +123,7 @@ class DefaultRepository extends BaseFieldRepository
 
         $attributes = $this->formatAttributes((array) $payload, $this->form->getRegisteredFields());
 
-        if ($this->config->sortable) {
+        if ($this->configMatchesModel($model) && $this->config->sortable) {
             $attributes[$this->config->orderColumn] = $this->controller->getQuery()->count() + 1;
         }
 
@@ -134,7 +134,10 @@ class DefaultRepository extends BaseFieldRepository
         }
 
         $this->fillAttributesToModel($model, (array) $payload);
-        $this->controller->fillOnStore($model);
+
+        if ($this->configMatchesModel($model)) {
+            $this->controller->fillOnStore($model);
+        }
 
         $model->save();
 
@@ -142,7 +145,27 @@ class DefaultRepository extends BaseFieldRepository
             $model->update($attributes);
         }
 
+        if ($this->config->has('show')) {
+            $this->config->show->fireEvent('created', $model);
+        }
+
         return crud($model);
+    }
+
+    /**
+     * Determines if the current config matches the model. This will not be true
+     * when a relationship model is handled.
+     *
+     * @param  mixed $model
+     * @return bool
+     */
+    protected function configMatchesModel($model)
+    {
+        if (is_null($model)) {
+            return true;
+        }
+
+        return get_class($model) == $this->config->model;
     }
 
     /**
@@ -177,6 +200,15 @@ class DefaultRepository extends BaseFieldRepository
         }
 
         if (is_null($request->relation_id)) {
+            if ($this->config->has('show')) {
+                $this->config->show->on('created', function ($related) use ($model) {
+                    $repository = $this->field->getRepository();
+                    $repository = new $repository($this->config, $this->controller, $this->form, $this->field);
+
+                    $repository->link($model, $related);
+                });
+            }
+
             return $this->field->getRelationQuery($model)->make();
         }
 

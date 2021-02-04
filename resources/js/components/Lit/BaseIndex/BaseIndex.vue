@@ -504,6 +504,7 @@ export default {
         margin-left: -$card-spacer-x;
         margin-right: -$card-spacer-x;
         min-width: calc(100% + #{2 * $card-spacer-x});
+        overflow-x: initial;
         @media (max-width: map-get($grid-breakpoints, $nav-breakpoint-mobile)) {
             margin-left: -$page-margin-sm;
             margin-right: -$page-margin-sm;

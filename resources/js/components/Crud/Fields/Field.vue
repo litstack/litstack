@@ -33,6 +33,7 @@ export default {
                 // TODO: Except input ?
                 //...this.$listeners
             },
+            ref: 'field',
         });
 
         return vm;
@@ -103,6 +104,16 @@ export default {
              * Save job id.
              */
             jobId: null,
+
+            /**
+             * cleave mask.
+             */
+            cleave: null,
+
+            /**
+             * Current mask object.
+             */
+            mask: null,
         };
     },
     beforeMount() {
@@ -115,16 +126,21 @@ export default {
         Lit.bus.$on('saveCanceled', this.resetModelValuesToOriginal);
         Lit.bus.$on('languageChanged', this.setCurrentValue);
         Lit.bus.$on('saved', this.onSaved);
+        this.$on('input', this.input);
 
         // Render dependency stuff.
         this.resolveDependecies(this.field.dependencies);
-        Lit.bus.$on('fieldChanged', () =>
-            this.resolveDependecies(this.field.dependencies)
-        );
+        Lit.bus.$on('fieldChanged', () => {
+            this.resolveDependecies(this.field.dependencies);
+            this.applyMask();
+        });
 
-        this.$on('setSaveJobId', (id) => {
+        this.$on('setSaveJobId', id => {
             this.jobId = id;
         });
+    },
+    mounted() {
+        this.applyMask();
     },
     computed: {
         ...mapGetters(['language']),
@@ -152,6 +168,7 @@ export default {
          */
         input(newValue) {
             this.value = newValue;
+
             this.fillValueToModel(newValue);
 
             if (this.save) {
@@ -160,6 +177,48 @@ export default {
 
             this.$emit('changed', newValue);
             Lit.bus.$emit('fieldChanged', this.field.local_key);
+        },
+
+        /**
+         * Apply mask to field.
+         */
+        applyMask() {
+            if (!this.field.mask) {
+                return;
+            }
+
+            let input = this.$refs.field.$refs.input;
+
+            if (!input) {
+                return;
+            }
+
+            let mask = this.getMask();
+
+            // Destory old cleave object if mask has changed.
+            if (!_.isEqual(this.mask, mask) && this.cleave) {
+                console.log('Changed');
+                this.cleave.destroy();
+            }
+
+            this.mask = mask;
+
+            this.cleave = new Cleave(input.$el, Lit.clone(mask));
+        },
+
+        /**
+         * Compute mask.
+         */
+        getMask() {
+            let mask = Lit.clone(this.field.mask);
+
+            for (let key in mask) {
+                if (typeof mask[key] === 'string') {
+                    mask[key] = this._format(mask[key], this.model);
+                }
+            }
+
+            return mask;
         },
 
         /**
@@ -316,7 +375,7 @@ export default {
                 if (!value) {
                     continue;
                 }
-                this.original[locale] = value;
+                this.original[locale] = Lit.clone(value);
             }
         },
 
@@ -370,6 +429,10 @@ export default {
          * @return {Boolean}
          */
         compareValues(original, value) {
+            if (Array.isArray(value) || typeof value === 'object') {
+                return !_.isEqual(original, value);
+            }
+
             if (original !== null) {
                 return original != this.value;
             }

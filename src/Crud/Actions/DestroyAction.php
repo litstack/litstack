@@ -2,6 +2,7 @@
 
 namespace Ignite\Crud\Actions;
 
+use Ignite\Crud\Requests\CrudDeleteRequest;
 use Ignite\Page\Actions\ActionModal;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -33,7 +34,7 @@ class DestroyAction
      * @param  Collection $models
      * @return Response
      */
-    public function run(Request $request, Collection $models)
+    public function run(CrudDeleteRequest $request, Collection $models)
     {
         $models->each->delete();
 
@@ -81,6 +82,6 @@ class DestroyAction
      */
     protected function successMessage(Collection $models)
     {
-        return response()->success(__lit_choice('messages.deleted_items', count($models)));
+        return response()->success(__lit_choice('crud.messages.deleted_items', count($models)));
     }
 }

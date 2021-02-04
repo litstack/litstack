@@ -6,10 +6,10 @@ use Ignite\Config\ConfigHandler;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Crud\Fields\Relations\MorphMany;
-use Ignite\Crud\Repositories\BaseFieldRepository;
 use Ignite\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Database\Eloquent\Model;
 
-class MorphManyRepository extends BaseFieldRepository
+class MorphManyRepository extends RelationRepository
 {
     use Concerns\ManagesRelated;
 
@@ -47,6 +47,18 @@ class MorphManyRepository extends BaseFieldRepository
 
         $related = $this->getRelated($request, $model);
 
+        $this->link($model, $related);
+    }
+
+    /**
+     * Link two models.
+     *
+     * @param  Model $model
+     * @param  Model $related
+     * @return void
+     */
+    public function link(Model $model, Model $related)
+    {
         $morphMany = $this->field->getRelationQuery($model);
 
         $related->{$morphMany->getMorphType()} = get_class($model);

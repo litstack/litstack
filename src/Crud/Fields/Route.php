@@ -27,6 +27,13 @@ class Route extends BaseField
     public $required = ['collection'];
 
     /**
+     * Determines if the route can be empty.
+     *
+     * @var bool
+     */
+    protected $canBeEmpty = false;
+
+    /**
      * Set route collection.
      *
      * @return void
@@ -34,6 +41,19 @@ class Route extends BaseField
     public function collection(string $name)
     {
         $this->setAttribute('collection', $name);
+
+        return $this;
+    }
+
+    /**
+     * Add's empty option to unset route.
+     *
+     * @param  bool $empty
+     * @return $this
+     */
+    public function allowEmpty(bool $empty = true)
+    {
+        $this->canBeEmpty = $empty;
 
         return $this;
     }
@@ -70,7 +90,7 @@ class Route extends BaseField
      */
     protected function renderCollection(RouteCollection $collection)
     {
-        return $collection->map(function ($item) {
+        $routes = $collection->map(function ($item) {
             if ($item instanceof RouteCollection) {
                 return [
                     'label'   => $item->getTitle(),
@@ -82,7 +102,13 @@ class Route extends BaseField
                 'text'  => $item->getTitle(),
                 'value' => $item->getId(),
             ];
-        })->toArray();
+        });
+
+        if ($this->canBeEmpty) {
+            $routes->prepend('---', '');
+        }
+
+        return $routes->toArray();
     }
 
     /**

@@ -40,16 +40,11 @@ abstract class CrudConfig
     protected $modelInstance;
 
     /**
-     * Create new CrudConfig instance.
+     * Wether the model should be sortable.
      *
-     * @return void
+     * @var bool
      */
-    public function __construct()
-    {
-        app()->booted(function () {
-            $this->setModelInstanceFromCurrentRoute();
-        });
-    }
+    public $sortable = false;
 
     /**
      * Get the form name for the given Model.
@@ -202,6 +197,15 @@ abstract class CrudConfig
     public function routePrefix()
     {
         return 'crud/'.Str::slug((new $this->model())->getTable());
+    }
+
+    /**
+     * Get breadcrumb.
+     *
+     * @return string
+     */
+    public function breadcrumb()
+    {
     }
 
     /**

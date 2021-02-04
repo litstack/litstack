@@ -18,10 +18,13 @@ use Ignite\Crud\Fields\Block\Block;
 use Ignite\Crud\Fields\Boolean;
 use Ignite\Crud\Fields\Checkboxes;
 use Ignite\Crud\Fields\Component;
-use Ignite\Crud\Fields\Datetime;
+use Ignite\Crud\Fields\DateTime\Date;
+use Ignite\Crud\Fields\DateTime\DateTime;
+use Ignite\Crud\Fields\DateTime\Time;
 use Ignite\Crud\Fields\Icon;
 use Ignite\Crud\Fields\Input;
 use Ignite\Crud\Fields\ListField\ListField;
+use Ignite\Crud\Fields\Listing;
 use Ignite\Crud\Fields\Media\File;
 use Ignite\Crud\Fields\Media\Image;
 use Ignite\Crud\Fields\Modal;
@@ -55,6 +58,7 @@ use Ignite\Crud\Repositories\Relations\OneRelationRepository;
 use Ignite\Crud\Vue\FieldWrapperGroupComponent;
 use Ignite\Support\Facades\Form as FormFacade;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class CrudServiceProvider extends LaravelServiceProvider
@@ -79,8 +83,10 @@ class CrudServiceProvider extends LaravelServiceProvider
         'select'       => Select::class,
         'boolean'      => Boolean::class,
         'icon'         => Icon::class,
-        'datetime'     => Datetime::class,
-        'dt'           => Datetime::class,
+        'date'         => Date::class,
+        'time'         => Time::class,
+        'datetime'     => DateTime::class,
+        'dt'           => DateTime::class,
         'checkboxes'   => Checkboxes::class,
         'range'        => Range::class,
         'textarea'     => Textarea::class,
@@ -94,6 +100,7 @@ class CrudServiceProvider extends LaravelServiceProvider
         'oneRelation'  => OneRelation::class,
         'manyRelation' => ManyRelation::class,
         'list'         => ListField::class,
+        'listing'      => Listing::class,
         'radio'        => Radio::class,
         'route'        => Route::class,
     ];
@@ -151,6 +158,10 @@ class CrudServiceProvider extends LaravelServiceProvider
         $this->registerApiRepositories();
 
         $this->registerCrudRouter();
+
+        $this->callAfterResolving('router', function (Router $router) {
+            $router->aliasMiddleware('lit.crud', CrudMiddleware::class);
+        });
     }
 
     /**

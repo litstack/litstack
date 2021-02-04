@@ -2,8 +2,8 @@
 
 namespace Ignite\User\Console;
 
+use Ignite\Support\Facades\Lit;
 use Illuminate\Console\Command;
-use Lit\Models\User;
 use Spatie\Permission\Models\Role;
 
 class AdminCommand extends Command
@@ -41,11 +41,15 @@ class AdminCommand extends Command
         $email = $this->ask('Enter the admin email');
         $password = $this->secret('Enter the admin password');
 
-        if (User::where('username', $username)->orWhere('email', $email)->exists()) {
+        $model = app(Lit::getUserModel());
+
+        if ($model->where('username', $username)->orWhere('email', $email)->exists()) {
+            $this->info('User already exists');
+
             return;
         }
 
-        $user = new User([
+        $user = new $model([
             'username'   => $username,
             'email'      => $email,
             'first_name' => $first_name,

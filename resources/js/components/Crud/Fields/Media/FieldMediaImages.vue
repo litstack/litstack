@@ -50,12 +50,10 @@
                     'lit-image-card__image': true,
                 }"
             >
-                <img
+                <lit-field-media-image
+                    :field="field"
+                    :image="image"
                     v-if="field.type == 'image'"
-                    :src="imgPath(image)"
-                    :style="`object-fit: ${
-                        field.showFullImage ? 'contain' : 'cover'
-                    }`"
                 />
                 <lit-fa-icon
                     v-else
@@ -181,7 +179,13 @@ export default {
          * Image path.
          */
         imgPath(image) {
-            return image.url;
+            if (image.mime_type == 'image/svg+xml') {
+                return image.original_url;
+            }
+            if (image.showOrignial == true) {
+                return image.original_url;
+            }
+            return image.url || image.original_url;
         },
 
         /**

@@ -13,7 +13,7 @@
         <b-modal
             id="lit-confirm-delete-role"
             :title="
-                __('messages.actions.are_you_sure', {
+                __('base.messages.are_you_sure', {
                     model: tab.title,
                 })
             "

@@ -3,6 +3,7 @@
 namespace Ignite\Crud\Fields\Relations;
 
 use Ignite\Crud\Fields\Traits\HasBaseField;
+use Ignite\Crud\Repositories\Relations\MorphOneRepository;
 
 class MorphOne extends OneRelationField
 {
@@ -39,4 +40,11 @@ class MorphOne extends OneRelationField
      * @var array
      */
     public $defaultAttributes = [];
+
+    /**
+     * Repository class.
+     *
+     * @var string
+     */
+    protected $repository = MorphOneRepository::class;
 }
