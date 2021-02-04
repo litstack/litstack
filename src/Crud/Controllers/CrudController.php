@@ -136,14 +136,17 @@ abstract class CrudController extends CrudBaseController
      */
     public function create(CrudCreateRequest $request)
     {
+        $formName = $this->getFormName($request);
+
         $config = $this->config->get(
-            'show', 'names', 'permissions', 'route_prefix'
+            $formName, 'names', 'permissions', 'route_prefix'
         );
 
-        $config['form'] = $config['show'];
-        unset($config['show']);
+        $config['form_name'] = $formName;
+        $config['form'] = $config[$formName];
+        unset($config[$formName]);
 
-        $page = $this->config->show->bindToView([
+        $page = $this->config->{$formName}->bindToView([
             'model'  => new $this->model(),
             'config' => $this->config,
         ])->bindToVue([
@@ -163,8 +166,7 @@ abstract class CrudController extends CrudBaseController
     public function show(CrudReadRequest $request, ...$parameters)
     {
         $id = last($parameters);
-
-        $formName = last(explode('.', request()->route()->getName()));
+        $formName = $this->getFormName($request);
 
         $this->config->{$formName}->resolveQuery(
             $query = $this->getQuery()
@@ -193,6 +195,8 @@ abstract class CrudController extends CrudBaseController
         $config = $this->config->get(
             $formName, 'route_prefix', 'names', 'permissions',
         );
+
+        $config['form_name'] = $formName;
         $config['form'] = $config[$formName];
         unset($config[$formName]);
 

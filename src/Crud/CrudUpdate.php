@@ -2,6 +2,9 @@
 
 namespace Ignite\Crud;
 
-class CrudUpdate extends CrudShow
+use Ignite\Contracts\Crud\CrudUpdate as CrudUpateContract;
+
+class CrudUpdate extends BaseCrudShow implements CrudUpateContract
 {
+    //
 }

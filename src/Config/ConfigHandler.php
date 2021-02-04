@@ -5,6 +5,7 @@ namespace Ignite\Config;
 use BadMethodCallException;
 use Ignite\Support\Facades\Config;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionMethod;
 use TypeError;
@@ -45,6 +46,13 @@ class ConfigHandler
      * @var array
      */
     protected $methodFactories = [];
+
+    /**
+     * ReflectionClass instance.
+     *
+     * @var ReflectionClass
+     */
+    protected $reflector;
 
     /**
      * Create new ConfigHandler instance.
@@ -93,13 +101,78 @@ class ConfigHandler
     }
 
     /**
+     * Get the config reflector.
+     *
+     * @return ReflectionClass
+     */
+    public function getReflector()
+    {
+        if ($this->reflector) {
+            return $this->reflector;
+        }
+
+        return $this->reflector = new ReflectionClass($this->config);
+    }
+
+    /**
+     * Get method reflector.
+     *
+     * @param  string                $name
+     * @return ReflectionMethod|null
+     */
+    public function getMethodReflector($name)
+    {
+        return collect(
+            $this->getReflector()->getMethods()
+        )->first(function (ReflectionMethod $method) use ($name) {
+            return $method->getName() == $name;
+        });
+    }
+
+    /**
+     * Determines wether the method requires the abstract as parameter at the
+     * given position.
+     *
+     * @param  string       $method
+     * @param  string|mixed $abstract
+     * @param  int          $position
+     * @return bool
+     *
+     * @throws InvalidArgumentException
+     */
+    public function methodNeeds($method, $abstract, $position = 0)
+    {
+        if (! $reflector = $this->getMethodReflector($method)) {
+            throw new InvalidArgumentException('Method not found '.$this->getNamespace()."::{$method}.");
+        }
+
+        if (! $parameter = $reflector->getParameters()[$position] ?? null) {
+            throw new InvalidArgumentException('Method '.$this->getNamespace()."::{$method} has no parameter as position [{$position}].");
+        }
+
+        if (! $type = $parameter->getType()) {
+            return false;
+        }
+
+        if (! $name = $type->getName()) {
+            return false;
+        }
+
+        if ($name == $abstract) {
+            return true;
+        }
+
+        return is_subclass_of($name, $abstract);
+    }
+
+    /**
      * Find factories by config depenecies.
      *
      * @return void
      */
     public function findConfigFactories()
     {
-        $reflector = new ReflectionClass($this->config);
+        $reflector = $this->getReflector();
         $parent = $reflector->getParentClass();
         $uses = class_uses_recursive($this->config);
 

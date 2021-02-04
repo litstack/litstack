@@ -2,8 +2,9 @@
 
 namespace Ignite\Crud;
 
-use Ignite\Page\Page;
+use Ignite\Contracts\Crud\CrudCreate as CurdCreateContract;
 
-class CrudCreate extends Page
+class CrudCreate extends BaseCrudShow implements CurdCreateContract
 {
+    //
 }
