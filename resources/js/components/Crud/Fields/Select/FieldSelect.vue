@@ -5,7 +5,7 @@
                 :value="value"
                 :options="options"
                 :label="isArray ? null : 'value'"
-                :reduce="isArray ? (item) => item : (item) => item.key"
+                :reduce="isArray ? item => item : item => item.key"
                 :placeholder="field.placeholder"
                 class="w-100"
                 v-on:input="$emit('input', $event)"
@@ -19,7 +19,12 @@
         </template>
 
         <template v-else>
-            <b-input class="form-control" :value="value" type="text" readonly />
+            <b-input
+                class="form-control"
+                :value="reduceByValue(value)"
+                type="text"
+                readonly
+            />
         </template>
         <slot />
     </lit-base-field>
@@ -57,10 +62,21 @@ export default {
             this.$emit('input', String(this.value));
         }
     },
+    methods: {
+        reduceByValue(value) {
+            for (let i = 0; i < this.options.length; i++) {
+                let option = this.options[i];
+                if (option.key == value) {
+                    return option.value;
+                }
+            }
+        },
+    },
     computed: {
         isArray() {
             return Array.isArray(this.field.options);
         },
+
         options() {
             if (this.isArray) {
                 return this.field.options;
