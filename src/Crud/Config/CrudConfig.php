@@ -51,6 +51,49 @@ abstract class CrudConfig
     }
 
     /**
+     * Get the form name for the given Model.
+     *
+     * @param  Model  $model
+     * @return string
+     */
+    public function getFormNameFor($model)
+    {
+        return 'show';
+    }
+
+    /**
+     * Get the route for the given model.
+     *
+     * @param  Model  $model
+     * @return string
+     */
+    public function getRouteFor($model)
+    {
+        $uri = implode('/', [
+            $this->routePrefix(),
+            $model->getKey(),
+            $this->getRouteSuffix($this->getFormNameFor($model)),
+        ]);
+
+        return rtrim($uri, '\//');
+    }
+
+    /**
+     * Get route suffix for the given form name.
+     *
+     * @param  string $formName
+     * @return string
+     */
+    public function getRouteSuffix(string $formName)
+    {
+        if ($formName == 'show') {
+            return '';
+        }
+
+        return $formName;
+    }
+
+    /**
      * Set model instance from current route.
      *
      * @return void

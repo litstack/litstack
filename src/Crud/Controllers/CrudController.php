@@ -123,6 +123,10 @@ abstract class CrudController extends CrudBaseController
             ->search($table->getAttribute('search'))
             ->get();
 
+        foreach ($index['items'] as $item) {
+            $item['_lit_route'] = $this->config->getRouteFor($item);
+        }
+
         $index['items'] = crud($index['items']);
 
         return $index;

@@ -178,9 +178,10 @@ class CrudRouter
         }
 
         $attribute = $this->getRouteAttribute($config);
-        $suffix = $this->getRouteSuffix($method);
+        $suffix = $config->getRouteSuffix($method);
+        $uri = rtrim("{{$attribute}}/{$suffix}", '\//');
 
-        $this->router->get("{{$attribute}}{$suffix}", [$config->controller, 'show'])->name($method);
+        $this->router->get($uri, [$config->controller, 'show'])->name($method);
     }
 
     /**
@@ -196,21 +197,11 @@ class CrudRouter
             return;
         }
 
-        $suffix = $this->getRouteSuffix($method);
+        $suffix = $config->getRouteSuffix($method);
+        $uri = ltrim("{$suffix}/create", '/');
 
         $this->router->post('/{form}', [$config->controller, 'store'])->name('store');
-        $this->router->get("{$suffix}/create", [$config->controller, 'create'])->name("create.{$method}");
-    }
-
-    /**
-     * Get the route suffix for the give config method.
-     *
-     * @param  string $method
-     * @return string
-     */
-    protected function getRouteSuffix($method)
-    {
-        return $method == 'show' ? '' : "/{$method}";
+        $this->router->get($uri, [$config->controller, 'create'])->name("create.{$method}");
     }
 
     /**

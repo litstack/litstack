@@ -138,7 +138,7 @@ class CrudColumnBuilder extends ColumnBuilder
             return false;
         }
 
-        return $this->config->routePrefix().'/{id}';
+        return '{_lit_route}';
     }
 
     /**
