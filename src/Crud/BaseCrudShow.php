@@ -24,7 +24,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Support\Traits\Macroable;
 
-class BaseCrudShow extends BaseCrudShow implements CrudCreate, CrudUpdate
+class BaseCrudShow extends Page implements CrudCreate, CrudUpdate
 {
     use ForwardsCalls,
         Macroable {
