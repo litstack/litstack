@@ -7,6 +7,7 @@ use Ignite\Crud\Config\Traits\HasCrudIndex;
 use Ignite\Crud\Config\Traits\HasCrudShow;
 use Ignite\Support\Facades\Config;
 use Ignite\Support\Facades\Crud;
+use Ignite\Vue\Component;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -216,6 +217,27 @@ abstract class CrudConfig
             'singular' => ucfirst(Str::singular($tableName)),
             'plural'   => ucfirst($tableName),
         ];
+    }
+
+    public function createButton(): Component
+    {
+        return component('b-button')
+            ->variant('primary')
+            ->child($this->createButtonText())
+            ->prop('href', lit()->url($this->routePrefix().'/create'));
+    }
+
+    /**
+     * Get create button text.
+     *
+     * @param  ConfigHandler $config
+     * @return string
+     */
+    protected function createButtonText()
+    {
+        return ucfirst(
+            __lit('base.item_create', ['item' => $this->names()['singular']])
+        );
     }
 
     /**
