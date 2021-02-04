@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.3.3...3.x)
 
+### Added
+
+-   Added multiple crud form functionality :fire: ([#161](https://github.com/litstack/litstack/pull/161))
+
 ## [v3.3.2](https://github.com/litstack/litstack/compare/v3.3.2...v3.3.3)
 
 ### Added
