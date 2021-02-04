@@ -7,6 +7,7 @@ use Ignite\Crud\Config\Traits\HasCrudIndex;
 use Ignite\Crud\Config\Traits\HasCrudShow;
 use Ignite\Support\Facades\Config;
 use Ignite\Support\Facades\Crud;
+use Ignite\Vue\Component;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -44,6 +45,49 @@ abstract class CrudConfig
      * @var bool
      */
     public $sortable = false;
+
+    /**
+     * Get the form name for the given Model.
+     *
+     * @param  Model  $model
+     * @return string
+     */
+    public function getFormNameFor($model)
+    {
+        return 'show';
+    }
+
+    /**
+     * Get the route for the given model.
+     *
+     * @param  Model  $model
+     * @return string
+     */
+    public function getRouteFor($model)
+    {
+        $uri = implode('/', [
+            $this->routePrefix(),
+            $model->getKey(),
+            $this->getRouteSuffix($this->getFormNameFor($model)),
+        ]);
+
+        return rtrim($uri, '\//');
+    }
+
+    /**
+     * Get route suffix for the given form name.
+     *
+     * @param  string $formName
+     * @return string
+     */
+    public function getRouteSuffix(string $formName)
+    {
+        if ($formName == 'show') {
+            return '';
+        }
+
+        return $formName;
+    }
 
     /**
      * Set model instance from current route.
@@ -177,6 +221,27 @@ abstract class CrudConfig
             'singular' => ucfirst(Str::singular($tableName)),
             'plural'   => ucfirst($tableName),
         ];
+    }
+
+    public function createButton(): Component
+    {
+        return component('b-button')
+            ->variant('primary')
+            ->child($this->createButtonText())
+            ->prop('href', lit()->url($this->routePrefix().'/create'));
+    }
+
+    /**
+     * Get create button text.
+     *
+     * @param  ConfigHandler $config
+     * @return string
+     */
+    protected function createButtonText()
+    {
+        return ucfirst(
+            __lit('base.item_create', ['item' => $this->names()['singular']])
+        );
     }
 
     /**

@@ -5,6 +5,8 @@ namespace Ignite\Crud;
 use Closure;
 use Ignite\Application\Navigation\PresetFactory;
 use Ignite\Config\ConfigHandler;
+use Ignite\Contracts\Crud\CrudCreate;
+use Ignite\Contracts\Crud\CrudUpdate;
 use Ignite\Foundation\Litstack;
 use Ignite\Routing\Router as LitstackRouter;
 use Illuminate\Contracts\Auth\Access\Authorizable;
@@ -146,10 +148,60 @@ class CrudRouter
 
         // Show routes.
         if ($config->has('show')) {
-            $this->router->post('/{form}', [$config->controller, 'store'])->name('store');
-            $this->router->get('/create', [$config->controller, 'create'])->name('create');
-            $this->router->get("{{$attribute}}", [$config->controller, 'show'])->name('show');
+            $this->makeCreateRoutes($config);
+            $this->makeUpdateRoutes($config);
         }
+
+        foreach ($config->getAlias() as $alias => $method) {
+            if ($method !== 'show') {
+                continue;
+            }
+
+            $this->makeCreateRoutes($config, $alias);
+            $this->makeUpdateRoutes($config, $alias);
+
+            // $this->router->get("{{$attribute}}/{$alias}", [$config->controller, 'show'])->name($alias);
+        }
+    }
+
+    /**
+     * Make update routes.
+     *
+     * @param  ConfigHandler $config
+     * @param  string        $method
+     * @return void
+     */
+    public function makeUpdateRoutes(ConfigHandler $config, $method = 'show')
+    {
+        if (! $config->methodNeeds($method, CrudUpdate::class, $pos = 0)) {
+            return;
+        }
+
+        $attribute = $this->getRouteAttribute($config);
+        $suffix = $config->getRouteSuffix($method);
+        $uri = rtrim("{{$attribute}}/{$suffix}", '\//');
+
+        $this->router->get($uri, [$config->controller, 'show'])->name($method);
+    }
+
+    /**
+     * Make crud create routes.
+     *
+     * @param  ConfigHandler $config
+     * @param  string        $method
+     * @return void
+     */
+    protected function makeCreateRoutes(ConfigHandler $config, $method = 'show')
+    {
+        if (! $config->methodNeeds($method, CrudCreate::class, $pos = 0)) {
+            return;
+        }
+
+        $suffix = $config->getRouteSuffix($method);
+        $uri = ltrim("{$suffix}/create", '/');
+
+        $this->router->post('/{form}', [$config->controller, 'store'])->name('store');
+        $this->router->get($uri, [$config->controller, 'create'])->name("create.{$method}");
     }
 
     /**

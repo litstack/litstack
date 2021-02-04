@@ -134,4 +134,15 @@ abstract class CrudBaseController
     {
         return $this->model;
     }
+
+    /**
+     * Get form name from requset.
+     *
+     * @param  Request $request
+     * @return string
+     */
+    protected function getFormName(Request $request)
+    {
+        return last(explode('.', $request->route()->getName()));
+    }
 }
