@@ -106,6 +106,7 @@ class CrudFormConfigFactory extends ConfigFactory
 
         return \Ignite\Crud\CrudUpdate::class;
     }
+
     /**
      * Bind events from config.
      *

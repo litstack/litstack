@@ -3,6 +3,9 @@
 namespace Ignite\Crud;
 
 use Closure;
+use Ignite\Config\ConfigHandler;
+use Ignite\Contracts\Crud\CrudCreate;
+use Ignite\Contracts\Crud\CrudUpdate;
 use Ignite\Crud\Fields\Component;
 use Ignite\Crud\Models\Form;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
@@ -17,10 +20,11 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Support\Traits\Macroable;
 
-class BaseCrudShow extends Page
+class BaseCrudShow extends BaseCrudShow implements CrudCreate, CrudUpdate
 {
     use ForwardsCalls,
         Macroable {
@@ -49,6 +53,13 @@ class BaseCrudShow extends Page
     protected $form;
 
     /**
+     * Appended attributes.
+     *
+     * @var array
+     */
+    protected $appends = [];
+
+    /**
      * Query resolver.
      *
      * @var Closure
@@ -56,17 +67,93 @@ class BaseCrudShow extends Page
     protected $queryResolver;
 
     /**
-     * Create new CrudShow instance.
+     * Event handlers for the associated events.
+     *
+     * @var array
      */
-    public function __construct(BaseForm $form)
+    protected $events = [];
+
+    /**
+     * ConfigHandler instance.
+     *
+     * @var ConfigHandler
+     */
+    protected $config;
+
+    /**
+     * Create new CrudShow instance.
+     *
+     * @param  ConfigHandler $config
+     * @param  BaseForm      $form
+     * @return void
+     */
+    public function __construct(ConfigHandler $config, BaseForm $form)
     {
         parent::__construct();
 
+        $this->config = $config;
         $this->form = $form;
 
         // Add form lifecycle hooks.
         $this->form->registering(fn ($field) => $this->registeringField($field));
         $this->form->registered(fn ($field) => $this->registeredField($field));
+    }
+
+    /**
+     * Add crud event handler.
+     *
+     * @param  string  $event
+     * @param  Closure $closure
+     * @return void
+     */
+    public function on($event, Closure $closure)
+    {
+        if (! array_key_exists($event, $this->events)) {
+            $this->events[$event] = [];
+        }
+
+        $this->events[$event][] = $closure;
+    }
+
+    /**
+     * Fire model event.
+     *
+     * @param  string $event
+     * @param  array  ...$parameters
+     * @return void
+     */
+    public function fireEvent($event, ...$parameters)
+    {
+        if (! array_key_exists($event, $this->events)) {
+            return;
+        }
+
+        foreach ($this->events[$event] as $closure) {
+            $closure(...Arr::flatten($parameters));
+        }
+    }
+
+    /**
+     * Set attributes that should be append.
+     *
+     * @param  array ...$appends
+     * @return $this
+     */
+    public function appends(...$appends)
+    {
+        $this->appends = Arr::flatten($appends);
+
+        return $this;
+    }
+
+    /**
+     * Get appends.
+     *
+     * @return array
+     */
+    public function getAppends()
+    {
+        return $this->appends;
     }
 
     /**
@@ -200,7 +287,8 @@ class BaseCrudShow extends Page
             ->prop('eventData', array_merge(
                 $component->getProp('eventData'),
                 [
-                    'model' => $this->form->getModel(),
+                    'config' => $this->config->getNamespace(),
+                    'model'  => $this->form->getModel(),
                 ]
             ));
     }
