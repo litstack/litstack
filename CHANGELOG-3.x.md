@@ -9,9 +9,7 @@
 ### Fixed
 
 -  Fixed unlink or delete colum in crud relation table ([#158](https://github.com/litstack/litstack/pull/158))
-
-### Changed
-
+-  Fixed css ([#160](https://github.com/litstack/litstack/pull/160))
 
 ## [v3.3.2](https://github.com/litstack/litstack/compare/v3.3.1...v3.3.2)
 
