@@ -181,7 +181,7 @@ class CrudRouter
         $suffix = $config->getRouteSuffix($method);
         $uri = rtrim("{{$attribute}}/{$suffix}", '\//');
 
-        $this->router->get($uri, [$config->controller, 'show'])->name($method);
+        $route = $this->router->get($uri, [$config->controller, 'show'])->name($method);
     }
 
     /**

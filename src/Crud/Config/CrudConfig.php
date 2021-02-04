@@ -3,6 +3,7 @@
 namespace Ignite\Crud\Config;
 
 use ErrorException;
+use Ignite\Config\ConfigHandler;
 use Ignite\Crud\Config\Traits\HasCrudIndex;
 use Ignite\Crud\Config\Traits\HasCrudShow;
 use Ignite\Support\Facades\Config;
@@ -55,6 +56,16 @@ abstract class CrudConfig
     public function getFormNameFor($model)
     {
         return 'show';
+    }
+
+    /**
+     * Get config handler.
+     *
+     * @return ConfigHandler
+     */
+    public function get()
+    {
+        return Config::get(static::class);
     }
 
     /**
