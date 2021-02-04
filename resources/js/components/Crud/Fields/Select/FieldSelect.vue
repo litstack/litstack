@@ -133,11 +133,15 @@ export default {
         }
     }
 
+    .vs__selected-options {
+        flex-wrap: unset;
+    }
+
     &.vs--open {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         .vs__search {
-            background-color: white;
+            background-color: transparent;
         }
         .vs__open-indicator {
             margin-top: -4px;
