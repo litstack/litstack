@@ -78,7 +78,7 @@ const Lit = {
         var timeout;
 
         // Calling debounce returns a new anonymous function
-        return function () {
+        return function() {
             // reference the context and args for the setTimeout function
             var context = this,
                 args = arguments;
@@ -94,7 +94,7 @@ const Lit = {
             clearTimeout(timeout);
 
             // Set the new timeout
-            timeout = setTimeout(function () {
+            timeout = setTimeout(function() {
                 // Inside the timeout function, clear the timeout variable
                 // which will let the next execution run when in 'immediate' mode
                 timeout = null;

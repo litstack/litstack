@@ -62,7 +62,7 @@ export const actions = {
 
         // Parallel map flow.
         let results = new ResultsHandler(
-            await Promise.all(promises.map((p) => p.catch((e) => e)))
+            await Promise.all(promises.map(p => p.catch(e => e)))
         );
 
         for (let i in results.results) {
@@ -97,7 +97,7 @@ export const state = Object.assign({}, initialState);
 export const mutations = {
     ADD_SAVE_JOB(state, job) {
         let saveJob = null;
-        let index = state.jobs.findIndex((j) => {
+        let index = state.jobs.findIndex(j => {
             if (job.id && j.id) {
                 return job.id == j.id;
             }
@@ -126,7 +126,7 @@ export const mutations = {
         }
     },
     REMOVE_SAVE_JOB(state, job) {
-        let index = state.jobs.findIndex((j) => {
+        let index = state.jobs.findIndex(j => {
             return j.method == job.method && j.route == job.route;
         });
 

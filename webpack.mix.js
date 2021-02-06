@@ -10,6 +10,7 @@ mix.webpackConfig({
         alias: {
             '@lit-js': path.resolve(__dirname, 'resources/js/'),
             '@lit-sass': path.resolve(__dirname, 'resources/sass/'),
+            vue$: 'vue/dist/vue',
         },
     },
 });
