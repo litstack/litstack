@@ -82,6 +82,9 @@ export default {
         Lit.bus.$on('fieldChanged', () =>
             this.resolveDependecies(this.dependencies)
         );
+        Lit.bus.$on('reloaded', () => {
+            this.resolveDependecies(this.dependencies);
+        });
     },
     methods: {
         ...dependencyMethods,

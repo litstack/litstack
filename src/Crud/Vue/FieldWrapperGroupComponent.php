@@ -18,8 +18,8 @@ class FieldWrapperGroupComponent extends Component implements Resizable
      */
     public function beforeMount()
     {
-        $this->props['dependencies'][] = collect([]);
-        $this->class('mb-4');
+        $this->props['dependencies'] = collect([]);
+        $this->class('');
         $this->width(12);
     }
 
@@ -31,7 +31,7 @@ class FieldWrapperGroupComponent extends Component implements Resizable
      */
     public function addDependency(FieldDependency $dependency)
     {
-        $this->props['dependencies'][] = $dependency;
+        $this->props['dependencies']->add($dependency);
 
         return $this;
     }

@@ -84,7 +84,7 @@ export default {
             }
             for (let event in this.component.events) {
                 let handler = this.component.events[event];
-                this.events[event] = (data) => {
+                this.events[event] = data => {
                     this.handleEvent(handler, data);
                 };
             }

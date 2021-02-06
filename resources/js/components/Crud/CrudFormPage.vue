@@ -31,6 +31,7 @@ export default {
 
         Lit.bus.$on('saved', this.saved);
         Lit.bus.$on('field:updated', this.reloadModel);
+        Lit.bus.$on('reload', this.reloadModel);
     },
     methods: {
         async reloadModel() {
@@ -48,6 +49,10 @@ export default {
                 return;
             }
             this.model = this.crud(response.data);
+
+            this.$nextTick(() => {
+                Lit.bus.$emit('reloaded');
+            });
         },
         saved(results) {
             this.setModelFromResults(results);

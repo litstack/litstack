@@ -9,6 +9,7 @@ use Ignite\Contracts\Crud\CrudUpdate;
 use Ignite\Crud\Fields\Component;
 use Ignite\Crud\Models\Form;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
+use Ignite\Page\Actions\ActionModal;
 use Ignite\Page\Page;
 use Ignite\Support\Facades\Config;
 use Ignite\Support\Vue\ButtonComponent;
@@ -273,6 +274,45 @@ class BaseCrudShow extends Page implements CrudCreate, CrudUpdate
             ->child($preview)
             ->size('sm')
             ->variant('primary');
+    }
+
+    /**
+     * Add action to page.
+     *
+     * @param  string          $title
+     * @param  string          $action
+     * @return Component|mixed
+     */
+    public function action($title, $action)
+    {
+        $actionInstance = app()->make($action);
+
+        $button = (new ButtonComponent())
+            ->child($title)
+            ->size('sm')
+            ->variant('primary')
+            ->class('mb-3');
+
+        $component = component('lit-action')
+            ->prop('wrapper', $button)
+            ->on('run', RunActionEvent::class)
+            ->prop('eventData', ['action' => $action]);
+
+        if (method_exists($actionInstance, 'modal')) {
+            $component->prop('modal', $modal = new ActionModal);
+
+            $actionInstance->modal(
+                    $modal->title($title)
+                );
+        }
+
+        $this->resolveAction($component);
+
+        $this->wrapper('lit-col', function () use ($component) {
+            $this->component($component);
+        });
+
+        return $button;
     }
 
     /**
