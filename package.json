@@ -73,7 +73,7 @@
         "resolve-url-loader": "^3.1.0",
         "vue-jest": "^3.0.5",
         "vuepress": "^1.2.0",
-        "webpack": "^4.44.1"
+        "webpack": "^5.0"
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.27",
