@@ -6,6 +6,10 @@
 
 -   Added multiple crud form functionality :fire: ([#161](https://github.com/litstack/litstack/pull/161))
 
+### Changed
+
+-   Changed to version of laravel-mix from v5.0 to v6.0 ([#165](https://github.com/litstack/litstack/pull/165))
+
 ## [v3.3.3](https://github.com/litstack/litstack/compare/v3.3.2...v3.3.3)
 
 ### Added
