@@ -1,45 +1,31 @@
 /*!
-    * tiptap v1.29.6
-    * (c) 2020 überdosis GbR (limited liability)
+    * tiptap v1.32.0
+    * (c) 2021 überdosis GbR (limited liability)
     * @license MIT
     */
 
 /*!
-    * tiptap-commands v1.14.6
-    * (c) 2020 überdosis GbR (limited liability)
+    * tiptap-extensions v1.35.0
+    * (c) 2021 überdosis GbR (limited liability)
     * @license MIT
     */
 
 /*!
-    * tiptap-extensions v1.33.1
-    * (c) 2020 überdosis GbR (limited liability)
+    * tiptap-utils v1.13.0
+    * (c) 2021 überdosis GbR (limited liability)
     * @license MIT
     */
 
 /*!
-    * tiptap-utils v1.10.4
-    * (c) 2020 überdosis GbR (limited liability)
-    * @license MIT
-    */
-
-/*!
-  * Bootstrap v4.5.3 (https://getbootstrap.com/)
-  * Copyright 2011-2020 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Bootstrap v4.6.0 (https://getbootstrap.com/)
+  * Copyright 2011-2021 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
 
 /*!
- * ApexCharts v3.22.1
- * (c) 2018-2020 Juned Chhipa
+ * ApexCharts v3.24.0
+ * (c) 2018-2021 Juned Chhipa
  * Released under the MIT License.
- */
-
-/*!
- * BootstrapVue Icons, generated from Bootstrap Icons 1.0.0
- *
- * @link https://icons.getbootstrap.com/
- * @license MIT
- * https://github.com/twbs/icons/blob/master/LICENSE.md
  */
 
 /*!
@@ -84,20 +70,9 @@
  */
 
 /*!
- * vuex v3.5.1
- * (c) 2020 Evan You
+ * vuex v3.6.2
+ * (c) 2021 Evan You
  * @license MIT
- */
-
-/*! 
-  * portal-vue © Thorsten Lünborg, 2019 
-  * 
-  * Version: 2.1.7
-  * 
-  * LICENCE: MIT 
-  * 
-  * https://github.com/linusborg/portal-vue
-  * 
  */
 
 /*! @preserve
