@@ -5,10 +5,15 @@
 ### Added
 
 -   Added multiple crud form functionality :fire: ([#161](https://github.com/litstack/litstack/pull/161))
+-   Added the possibility to add actions anywhere on the cudshow ([49b7d1c](https://github.com/litstack/litstack/commit/49b7d1cecff0cd7caaffaabdef2cc5f703950973))
 
 ### Changed
 
 -   Changed to version of laravel-mix from v5.0 to v6.0 ([#165](https://github.com/litstack/litstack/pull/165))
+
+## Fixed
+
+-   Fixed field conditions apply after model saving ([49b7d1c](https://github.com/litstack/litstack/commit/49b7d1cecff0cd7caaffaabdef2cc5f703950973))
 
 ## [v3.3.3](https://github.com/litstack/litstack/compare/v3.3.2...v3.3.3)
 
