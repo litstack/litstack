@@ -6,6 +6,7 @@
 
 -   Added multiple crud form functionality :fire: ([#161](https://github.com/litstack/litstack/pull/161))
 -   Added the possibility to add actions anywhere on the cudshow ([49b7d1c](https://github.com/litstack/litstack/commit/49b7d1cecff0cd7caaffaabdef2cc5f703950973))
+-   Added custom style for table columns ([85de72d](https://github.com/litstack/litstack/commit/85de72d7403382d3039f3a7a689a36eaf8b519b8))
 
 ### Changed
 
