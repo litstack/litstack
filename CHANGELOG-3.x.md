@@ -10,7 +10,7 @@
 
 ### Changed
 
--   Changed to version of laravel-mix from v5.0 to v6.0 ([#165](https://github.com/litstack/litstack/pull/165))
+-   Changed to version of laravel-mix from v5.0 to v6.0 ([#165](https://github.com/litstack/litstack/pull/165), [7787747](https://github.com/litstack/litstack/commit/77877470636fe28c01f3fcf31447ecd86acded1a))
 
 ## Fixed
 
