@@ -85,4 +85,12 @@ interface Column
      * @return $this
      */
     public function maxChars(int $max);
+
+    /**
+     * Table column style.
+     *
+     * @param  string $style
+     * @return $this
+     */
+    public function style($style);
 }

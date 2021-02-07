@@ -7,7 +7,7 @@
             'text-center': col.text_center,
             ...col.classes,
         }"
-        :style="colWidth"
+        :style="`${colWidth} ${getStyle(col)}`"
     >
         <component
             :is="link ? 'a' : 'span'"
@@ -66,6 +66,7 @@ export default {
     },
     computed: {
         ...mapGetters(['baseURL']),
+
         component() {
             return {
                 ...this.col,
@@ -142,11 +143,38 @@ export default {
         reload() {
             this.$emit('reload');
         },
+        getStyle(col) {
+            let style = '';
+
+            if (!col.style) {
+                return style;
+            }
+
+            if (col.style_options) {
+                style = this.getOption(
+                    this.item,
+                    col.style,
+                    col.style_options,
+                    col.style_value
+                );
+            } else {
+                style = col.style;
+            }
+
+            console.log(style);
+
+            return style;
+        },
         getColValue(col, item) {
             let value = '';
 
             if (col.value_options) {
-                value = this.getValueOption(col, item);
+                value = this.getOption(
+                    item,
+                    col.value,
+                    col.value_options,
+                    col.default_value
+                );
             } else {
                 value = col.value;
             }
@@ -160,8 +188,8 @@ export default {
 
             return this.format(value);
         },
-        getValueOption(col, item) {
-            let key = item[col.value];
+        getOption(item, attribute, options, def) {
+            let key = item[attribute];
 
             if (key === true) {
                 key = 1;
@@ -169,10 +197,10 @@ export default {
                 key = 0;
             }
 
-            let value = col.value_options[key];
+            let value = options[key];
 
-            if (value === undefined && col.default_value) {
-                value = col.default_value;
+            if (value === undefined && def) {
+                value = def;
             }
 
             return value;

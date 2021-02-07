@@ -30,6 +30,23 @@ trait ManagesColumn
     }
 
     /**
+     * Set table column style.
+     *
+     * @param  string     $style
+     * @param  array|null $options
+     * @param  mixed      $default
+     * @return $this
+     */
+    public function style($style, array $options = null, $default = null)
+    {
+        $this->prop('style', $style);
+        $this->prop('style_options', $options);
+        $this->prop('style_value', $default);
+
+        return $this;
+    }
+
+    /**
      * Set text align to right or left.
      *
      * @param  bool  $right

@@ -77,6 +77,23 @@ class Column extends VueProp implements ColumnInterface
     }
 
     /**
+     * Set table column style.
+     *
+     * @param  string     $style
+     * @param  array|null $options
+     * @param  mixed      $default
+     * @return $this
+     */
+    public function style($style, array $options = null, $default = null)
+    {
+        $this->setAttribute('style', $style);
+        $this->setAttribute('style_options', $options);
+        $this->setAttribute('style_value', $default);
+
+        return $this;
+    }
+
+    /**
      * Set column class.
      *
      * @param  string $class
