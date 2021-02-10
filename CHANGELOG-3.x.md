@@ -14,6 +14,7 @@
 
 ## Fixed
 
+-   Fixed breaking changes in datetime field ([86bbe9b](https://github.com/litstack/litstack/commit/86bbe9bb76484da3ac3430c72ce23ab0b97db743))
 -   Fixed field conditions apply after model saving ([49b7d1c](https://github.com/litstack/litstack/commit/49b7d1cecff0cd7caaffaabdef2cc5f703950973))
 
 ## [v3.3.3](https://github.com/litstack/litstack/compare/v3.3.2...v3.3.3)
