@@ -168,4 +168,56 @@ class BaseDateTime extends BaseField
 
         return $this;
     }
+
+    /**
+     * Deprecated Set only date.
+     *
+     * @deprecated
+     * @param  bool $onlyDate
+     * @return void
+     */
+    public function onlyDate(bool $onlyDate = true)
+    {
+        if ($onlyDate) {
+            $this->setAttribute('mask', 'YYYY-MM-DD');
+            $this->setAttribute('mode', 'date');
+        } else {
+            $this->setAttribute('mask', 'YYYY-MM-DD HH:mm:ss');
+            $this->setAttribute('mode', 'datetime');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Deprecated Set only time.
+     *
+     * @deprecated
+     * @param  bool $onlyDate
+     * @return void
+     */
+    public function onlyTime(bool $onlyTime = true)
+    {
+        if ($onlyTime) {
+            $this->setAttribute('mask', 'HH:mm:ss');
+            $this->setAttribute('mode', 'time');
+        } else {
+            $this->setAttribute('mask', 'YYYY-MM-DD HH:mm:ss');
+            $this->setAttribute('mode', 'datetime');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Deprecated Set formatted.
+     *
+     * @deprecated
+     * @param  string $format
+     * @return $this
+     */
+    public function formatted(string $format)
+    {
+        return $this;
+    }
 }
