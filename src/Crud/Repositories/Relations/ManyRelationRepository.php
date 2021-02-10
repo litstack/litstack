@@ -40,7 +40,7 @@ class ManyRelationRepository extends RelationRepository
 
         $related = $this->getRelated($request, $model);
 
-        $this->link($related, $model);
+        $this->link($model, $related);
     }
 
     /**
