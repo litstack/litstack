@@ -17,6 +17,10 @@
                 :step="field.step"
                 v-bind:disabled="field.readonly"
             />
+            <div
+                :style="`width: ${(value / field.max) * 100}%`"
+                class="lit-range-progress"
+            ></div>
         </b-input-group>
 
         <slot />
@@ -95,6 +99,15 @@ export default {
 
 <style lang="scss" scoped>
 @import '@lit-sass/_variables';
+.lit-range-progress {
+    position: absolute;
+    height: 3px;
+    left: 0;
+    background: $primary;
+    z-index: 3;
+    pointer-events: none;
+    border-radius: 9999px;
+}
 .lit-field__range {
     .input-group {
         height: $button-md-height / 1.5;
@@ -120,7 +133,7 @@ export default {
             height: 13px;
             width: 13px;
             border-radius: 13px;
-            background: $secondary;
+            background: $primary;
             cursor: pointer;
             margin-top: -6px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
             box-shadow: $button-primary-shadow;
