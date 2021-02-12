@@ -248,7 +248,11 @@ export default {
             }
 
             // Translatable field.
-            if (this.field.translatable && this.model[locale]) {
+            if (this.field.translatable) {
+                if(!(locale in this.model)) {
+                    this.model[locale] = {};
+                }
+            
                 return (this.model[locale][this.field.local_key] = value);
             }
 
