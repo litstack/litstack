@@ -6,7 +6,7 @@
 
 -   Fixed editing translatable fields when locale is not in model ([#168](https://github.com/litstack/litstack/pull/168))
 
-## [v3.3.3](https://github.com/litstack/litstack/compare/v3.3.3...v3.4.0)
+## [v3.4.0](https://github.com/litstack/litstack/compare/v3.3.3...v3.4.0)
 
 ### Added
 
