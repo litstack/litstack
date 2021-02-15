@@ -4,6 +4,7 @@ namespace Ignite\Config;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use ReflectionClass;
 
 /**
  * Config singleton.
@@ -123,16 +124,52 @@ class ConfigLoader
             return;
         }
 
-        // Initialize new config handler.
-        $instance = new ConfigHandler(
-            // Passing params to new instance.
-            new $class(...$params)
-        );
+        $instance = $this->make($class, ...$params);
 
         // Add config to stack.
         $this->loaded[$class] = $instance;
 
         return $instance;
+    }
+
+    public function make($class, ...$params)
+    {
+        // Initialize new config handler.
+        $handler = new ConfigHandler(
+            // Passing params to new instance.
+            $config = new $class(...$params)
+        );
+
+        $this->registerConfigFactories($handler, $config);
+
+        return $handler;
+    }
+
+    /**
+     * Find factories by config depenecies.
+     *
+     * @param  ConfigHandler $handler
+     * @param  mixed         $config
+     * @return void
+     */
+    protected function registerConfigFactories($handler, $config)
+    {
+        $reflector = new ReflectionClass($config);
+        $parent = $reflector->getParentClass();
+        $uses = class_uses_recursive($config);
+
+        foreach ($this->factories() as $dependency => $factory) {
+            // Matching parent class.
+            if ($parent) {
+                if ($config instanceof $dependency) {
+                    $handler->registerFactory($factory);
+                }
+            }
+
+            if (in_array($dependency, $uses)) {
+                $handler->registerFactory($factory);
+            }
+        }
     }
 
     /**

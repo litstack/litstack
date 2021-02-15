@@ -82,8 +82,7 @@ class Chart extends VueProp
     /**
      * Chart variant.
      *
-     * @param string $variant
-     *
+     * @param  string $variant
      * @return $this
      */
     public function variant(string $variant)
@@ -96,8 +95,7 @@ class Chart extends VueProp
     /**
      * Chart title.
      *
-     * @param string $title
-     *
+     * @param  string $title
      * @return $this
      */
     public function title(string $title)
@@ -110,8 +108,7 @@ class Chart extends VueProp
     /**
      * Value prefix.
      *
-     * @param string $prefix
-     *
+     * @param  string $prefix
      * @return $this
      */
     public function prefix(string $prefix)

@@ -64,7 +64,7 @@ class CrudFormConfigFactory extends ConfigFactory
         $pageClass = $this->resolvePageClass($config, $alias);
         $page = new $pageClass($config, $form);
 
-        if ($config->instanceOf(CrudConfig::class)) {
+        if ($config->is(CrudConfig::class)) {
             $page->navigationControls()->action(ucfirst(__lit('base.delete')), DestroyAction::class);
         }
 

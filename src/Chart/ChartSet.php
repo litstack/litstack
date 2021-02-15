@@ -100,7 +100,7 @@ class ChartSet
     }
 
     /**
-     * Set time.
+     * Set start time.
      *
      * @param  CarbonInterface $time
      * @return $this
@@ -173,9 +173,8 @@ class ChartSet
     /**
      * Get values from selects.
      *
-     * @param array $selects
-     *
-     * @return \Illuminate\Support\Collection
+     * @param  array      $selects
+     * @return Collection
      */
     protected function getValuesFromStatements(array $selects)
     {
@@ -187,8 +186,7 @@ class ChartSet
     /**
      * Modify query with select statement.
      *
-     * @param array $select
-     *
+     * @param  array   $select
      * @return Builder
      */
     protected function getQueryFromStatements(array $selects)
@@ -205,9 +203,8 @@ class ChartSet
     /**
      * Convert null values to integer.
      *
-     * @param \Illuminate\Support\Collection $values
-     *
-     * @return \Illuminate\Support\Collection
+     * @param  Collection $values
+     * @return Collection
      */
     protected function convertNullValues(Collection $values)
     {
@@ -231,8 +228,7 @@ class ChartSet
     /**
      * Get label from time.
      *
-     * @param \Carbon\CarbonInterface $time
-     *
+     * @param  \Carbon\CarbonInterface $time
      * @return string
      */
     public function getLabelFromTime(CarbonInterface $time)
@@ -246,8 +242,7 @@ class ChartSet
     /**
      * Get select query from time.
      *
-     * @param \Carbon\CarbonInterface $time
-     *
+     * @param  CarbonInterface $time
      * @return Builder
      */
     public function getSelectFromTime(CarbonInterface $time)

@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionMethod;
+use ReflectionType;
 use TypeError;
 
 class ConfigHandler
@@ -63,8 +64,6 @@ class ConfigHandler
     public function __construct($config)
     {
         $this->config = $config;
-
-        $this->findConfigFactories();
     }
 
     /**
@@ -98,17 +97,6 @@ class ConfigHandler
     public function is($class)
     {
         return $this->config instanceof $class;
-    }
-
-    /**
-     * Determines if config is an instance of the given abstract.
-     *
-     * @param  string $abstract
-     * @return bool
-     */
-    public function instanceOf($abstract)
-    {
-        return $this->config instanceof $abstract;
     }
 
     /**
@@ -165,6 +153,29 @@ class ConfigHandler
             return false;
         }
 
+        if ($type instanceof ReflectionType) {
+            return $this->isTypeAbstract($type, $abstract);
+        }
+
+        // ReflectionUnionType in php >= 8
+        foreach ($type->getTypes() as $type) {
+            if ($this->isTypeAbstract($type, $abstract)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine if the reflection type implements the given abstract.
+     *
+     * @param  ReflectionType $type
+     * @param  string         $abstract
+     * @return bool
+     */
+    protected function isTypeAbstract(ReflectionType $type, $abstract)
+    {
         if (! $name = $type->getName()) {
             return false;
         }
@@ -174,31 +185,6 @@ class ConfigHandler
         }
 
         return is_subclass_of($name, $abstract);
-    }
-
-    /**
-     * Find factories by config depenecies.
-     *
-     * @return void
-     */
-    public function findConfigFactories()
-    {
-        $reflector = $this->getReflector();
-        $parent = $reflector->getParentClass();
-        $uses = class_uses_recursive($this->config);
-
-        foreach (Config::factories() as $dependency => $factory) {
-            // Matching parent class.
-            if ($parent) {
-                if ($this->config instanceof $dependency) {
-                    $this->registerFactory($factory);
-                }
-            }
-
-            if (in_array($dependency, $uses)) {
-                $this->registerFactory($factory);
-            }
-        }
     }
 
     /**
@@ -414,7 +400,9 @@ class ConfigHandler
         $factory = $this->getMethodFactory($method);
 
         return $factory->handle(
-            $method, $parameters, $this->alias[$method] ?? null
+            $method,
+            $parameters,
+            $this->alias[$method] ?? null
         );
     }
 
