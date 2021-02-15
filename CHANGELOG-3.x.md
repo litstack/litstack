@@ -5,6 +5,7 @@
 ### Fixed
 
 -   Fixed editing translatable fields when locale is not in model ([#168](https://github.com/litstack/litstack/pull/168))
+-   Fixed `CrudCreate` and `CrudUpdate` ([8996d4e](https://github.com/litstack/litstack/commit/8996d4ea22df4c6624dfd69ba0d711ccf459348b))
 
 ## [v3.4.0](https://github.com/litstack/litstack/compare/v3.3.3...v3.4.0)
 
