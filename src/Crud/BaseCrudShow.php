@@ -4,8 +4,6 @@ namespace Ignite\Crud;
 
 use Closure;
 use Ignite\Config\ConfigHandler;
-use Ignite\Contracts\Crud\CrudCreate;
-use Ignite\Contracts\Crud\CrudUpdate;
 use Ignite\Crud\Fields\Component;
 use Ignite\Crud\Models\Form;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
@@ -25,7 +23,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Support\Traits\Macroable;
 
-class BaseCrudShow extends Page implements CrudCreate, CrudUpdate
+class BaseCrudShow extends Page
 {
     use ForwardsCalls,
         Macroable {
