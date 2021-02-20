@@ -9,7 +9,8 @@ use Illuminate\Support\Str;
 
 class FormConfig
 {
-    use Traits\HasCrudShow;
+    use Traits\HasCrudShow,
+        Concerns\ManagesActions;
 
     /**
      * Form field model class.

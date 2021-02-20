@@ -4,6 +4,7 @@ namespace Ignite\Page;
 
 use Ignite\Contracts\Page\Expandable;
 use Ignite\Exceptions\NotLoggedInException;
+use Ignite\Page\Actions\ActionComponent;
 use Ignite\Vue\Component;
 
 class Page extends BasePage implements Expandable
@@ -65,12 +66,12 @@ class Page extends BasePage implements Expandable
     }
 
     /**
-     * Resolve action component.
+     * Bind the action to the page.
      *
-     * @param  \Ignite\Vue\Component $component
+     * @param  ActionComponent $component
      * @return void
      */
-    public function resolveAction($component)
+    public function bindAction(ActionComponent $component)
     {
         //
     }

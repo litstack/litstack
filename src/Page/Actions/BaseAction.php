@@ -3,7 +3,6 @@
 namespace Ignite\Page\Actions;
 
 use Ignite\Contracts\Page\ActionFactory;
-use Ignite\Page\RunActionEvent;
 use Ignite\Vue\Component;
 
 abstract class BaseAction implements ActionFactory
@@ -28,20 +27,7 @@ abstract class BaseAction implements ActionFactory
         // Add title as content to wrapper.
         $wrapper = $this->getWrapper()->content($title);
 
-        $component = component('lit-action')
-            ->prop('wrapper', $wrapper)
-            ->on('run', RunActionEvent::class)
-            ->prop('eventData', ['action' => $action]);
-
-        if (method_exists($actionInstance, 'modal')) {
-            $component->prop('modal', $modal = new ActionModal);
-
-            $actionInstance->modal(
-                $modal->title($title)
-            );
-        }
-
-        return $component;
+        return new ActionComponent($action, $title, $wrapper);
     }
 
     /**

@@ -257,7 +257,7 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Get builder.
      *
-     * @return ColumnBuilder
+     * @return ColumnBuilder|mixed
      */
     public function getBuilder()
     {

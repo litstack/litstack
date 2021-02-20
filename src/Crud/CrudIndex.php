@@ -5,6 +5,7 @@ namespace Ignite\Crud;
 use Closure;
 use Ignite\Config\ConfigHandler;
 use Ignite\Crud\Actions\DestroyAction;
+use Ignite\Page\Actions\ActionComponent;
 use Ignite\Page\Page;
 use Ignite\Page\Table\Table;
 use Illuminate\Http\Request;
@@ -50,21 +51,14 @@ class CrudIndex extends Page
     }
 
     /**
-     * Resolve action component.
+     * Bind the action to the CrudIndex page.
      *
-     * @param  \Ignite\Vue\Component $component
+     * @param  ActionComponent $component
      * @return void
      */
-    public function resolveAction($component)
+    public function bindAction(ActionComponent $component)
     {
-        $component->on('run', RunCrudActionEvent::class)
-            ->prop('eventData', array_merge(
-                $component->getProp('eventData'),
-                [
-                    'model'  => $this->config->model,
-                    'config' => $this->config->getNamespace(),
-                ]
-            ));
+        $this->config->bindAction($component);
     }
 
     /**
@@ -115,7 +109,7 @@ class CrudIndex extends Page
     /**
      * Create a new Info Card.
      *
-     * @param string $title
+     * @param  string $title
      * @return void
      */
     public function info(string $title = '')

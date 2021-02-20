@@ -16,8 +16,9 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 abstract class CrudConfig
 {
-    use HasCrudShow;
-    use HasCrudIndex;
+    use HasCrudShow,
+        HasCrudIndex,
+        Concerns\ManagesActions;
 
     /**
      * Controller class.

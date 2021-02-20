@@ -17,7 +17,7 @@ trait HasVueComponents
      * Add Vue component to stack.
      *
      * @param  \Ignite\Vue\Component|string $component
-     * @return \Ignite\Vue\Component
+     * @return \Ignite\Vue\Component|mixed
      */
     public function component($component)
     {

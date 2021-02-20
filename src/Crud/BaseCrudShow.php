@@ -7,7 +7,7 @@ use Ignite\Config\ConfigHandler;
 use Ignite\Crud\Fields\Component;
 use Ignite\Crud\Models\Form;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
-use Ignite\Page\Actions\ActionModal;
+use Ignite\Page\Actions\ActionComponent;
 use Ignite\Page\Page;
 use Ignite\Support\Facades\Config;
 use Ignite\Support\Vue\ButtonComponent;
@@ -283,28 +283,15 @@ class BaseCrudShow extends Page
      */
     public function action($title, $action)
     {
-        $actionInstance = app()->make($action);
-
-        $button = (new ButtonComponent())
+        $button = component(ButtonComponent::class)
             ->child($title)
             ->size('sm')
             ->variant('primary')
             ->class('mb-3');
 
-        $component = component('lit-action')
-            ->prop('wrapper', $button)
-            ->on('run', RunActionEvent::class)
-            ->prop('eventData', ['action' => $action]);
+        $component = new ActionComponent($action, $title, $button);
 
-        if (method_exists($actionInstance, 'modal')) {
-            $component->prop('modal', $modal = new ActionModal);
-
-            $actionInstance->modal(
-                    $modal->title($title)
-                );
-        }
-
-        $this->resolveAction($component);
+        $this->bindAction($component);
 
         $this->wrapper('lit-col', function () use ($component) {
             $this->component($component);
@@ -314,21 +301,14 @@ class BaseCrudShow extends Page
     }
 
     /**
-     * Resolve action component.
+     * Bind the action to the page.
      *
-     * @param  \Ignite\Vue\Component $component
+     * @param  ActionComponent $component
      * @return void
      */
-    public function resolveAction($component)
+    public function bindAction(ActionComponent $component)
     {
-        $component->on('run', RunCrudActionEvent::class)
-            ->prop('eventData', array_merge(
-                $component->getProp('eventData'),
-                [
-                    'config' => $this->config->getNamespace(),
-                    'model'  => $this->form->getModel(),
-                ]
-            ));
+        $this->config->bindAction($component);
     }
 
     /**
@@ -385,8 +365,8 @@ class BaseCrudShow extends Page
     /**
      * Add Vue component.
      *
-     * @param  string                $component
-     * @return \Ignite\Vue\Component
+     * @param  string                      $component
+     * @return \Ignite\Vue\Component|mixed
      */
     public function component($component)
     {
