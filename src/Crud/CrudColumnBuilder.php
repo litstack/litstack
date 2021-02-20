@@ -92,15 +92,15 @@ class CrudColumnBuilder extends ColumnBuilder
     /**
      * Create new action column.
      *
-     * @param  string    $title
-     * @param  string    $action
-     * @return Component
+     * @param  string          $title
+     * @param  string          $action
+     * @return Component|mixed
      */
     public function action($title, $action): ColumnContract
     {
         $wrapper = parent::action($title, $action);
 
-        last($this->columns)->on('run', RunCrudActionEvent::class);
+        $this->config->bindAction(last($this->columns));
 
         return $wrapper;
     }
