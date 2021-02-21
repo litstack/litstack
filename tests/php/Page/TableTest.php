@@ -9,10 +9,27 @@ use Ignite\Vue\Component;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Mockery as m;
-use Tests\BackendTestCase;
+use PHPUnit\Framework\TestCase;
+use Tests\Traits\InteractsWithComponents;
+use Tests\Traits\TestHelpers;
 
-class TableTest extends BackendTestCase
+class TableTest extends TestCase
 {
+    use InteractsWithComponents, TestHelpers;
+
+    public function setUp(): void
+    {
+        $this->setupApplication();
+        $this->app['lit'] = $this->lit = m::mock('lit');
+        $this->lit->shouldReceive('trans');
+        $this->lit->shouldReceive('trans');
+    }
+
+    public function tearDown(): void
+    {
+        m::close();
+    }
+
     /** @test */
     public function test_getComponent_method_returns_component()
     {
@@ -268,33 +285,5 @@ class TableTest extends BackendTestCase
         $table->model('Model');
         $this->assertArrayHasKey('cols', $rendered = $table->render());
         $this->assertEquals($builder, $rendered['cols']);
-    }
-
-    /** @test */
-    public function test_alphabeticOrder_method()
-    {
-        $this->assertEquals([
-            'title.desc' => 'A -> Z',
-            'title.asc'  => 'Z -> A',
-        ], Table::alphabeticOrder());
-
-        $this->assertEquals([
-            'foo.desc' => 'A -> Z',
-            'foo.asc'  => 'Z -> A',
-        ], Table::alphabeticOrder('foo'));
-    }
-
-    /** @test */
-    public function test_numericOrder_method()
-    {
-        $this->assertEquals([
-            'id.desc' => 'New first',
-            'id.asc'  => 'Old first',
-        ], Table::numericOrder());
-
-        $this->assertEquals([
-            'foo.desc' => 'New first',
-            'foo.asc'  => 'Old first',
-        ], Table::numericOrder('foo'));
     }
 }

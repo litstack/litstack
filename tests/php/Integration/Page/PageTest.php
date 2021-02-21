@@ -6,7 +6,7 @@ use Ignite\Page\Page;
 use Tests\BackendTestCase;
 use Tests\Traits\ActingAsLitUserMock;
 
-class ActionIntegrationTest extends BackendTestCase
+class PageTest extends BackendTestCase
 {
     use ActingAsLitUserMock;
 
