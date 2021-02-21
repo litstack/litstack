@@ -275,32 +275,6 @@ class BaseCrudShow extends Page
     }
 
     /**
-     * Add action to page.
-     *
-     * @param  string          $title
-     * @param  string          $action
-     * @return Component|mixed
-     */
-    public function action($title, $action)
-    {
-        $button = component(ButtonComponent::class)
-            ->child($title)
-            ->size('sm')
-            ->variant('primary')
-            ->class('mb-3');
-
-        $component = new ActionComponent($action, $title, $button);
-
-        $this->bindAction($component);
-
-        $this->wrapper('lit-col', function () use ($component) {
-            $this->component($component);
-        });
-
-        return $button;
-    }
-
-    /**
      * Bind the action to the page.
      *
      * @param  ActionComponent $component
