@@ -22,8 +22,6 @@ abstract class BaseAction implements ActionFactory
      */
     public function make($title, $action, $wrapper = null)
     {
-        $actionInstance = app()->make($action);
-
         // Add title as content to wrapper.
         $wrapper = $this->getWrapper()->content($title);
 

@@ -9,11 +9,13 @@ use Ignite\Vue\Component;
 use InvalidArgumentException;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
-use Tests\Traits\TestHelpers;
 
 class ActionComponentTest extends TestCase
 {
-    use TestHelpers;
+    public function tearDown(): void
+    {
+        m::close();
+    }
 
     /** @test */
     public function it_has_run_event()

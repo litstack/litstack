@@ -2,20 +2,16 @@
 
 namespace Tests\Traits;
 
-use Ignite\Lit\Lit;
-use Illuminate\Container\Container;
+use Ignite\Vue\Vue;
 use Illuminate\Foundation\Application;
-use Mockery as m;
+use Illuminate\Support\Facades\Facade;
 
 trait InteractsWithComponents
 {
     public function setupApplication()
     {
         $this->app = new Application;
-        $this->app['lit'] = m::mock(Lit::class);
-        $components = m::mock(Lit::class);
-        $components->shouldReceive('isRegistered')->andReturn(false);
-        $this->app['lit']->shouldReceive('get')->andReturn($components);
-        Container::setInstance($this->app);
+        $this->app->singleton('lit.vue', fn () => new Vue);
+        Facade::setFacadeApplication($this->app);
     }
 }
