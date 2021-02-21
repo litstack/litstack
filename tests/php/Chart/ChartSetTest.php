@@ -56,7 +56,7 @@ class ChartSetTest extends TestCase
         $chart = new ChartSet(
             $query,
             fn ($query) => $query->where('foo', 'bar'),
-            fn ($time)  => $time
+            fn ($time) => $time
         );
 
         $this->assertSame($chart, $chart->iterations($iterations));
