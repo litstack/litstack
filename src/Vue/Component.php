@@ -230,6 +230,16 @@ class Component extends VueProp implements AuthorizableContract
     }
 
     /**
+     * Get the component events.
+     *
+     * @return array
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    /**
      * Gets event handler.
      *
      * @param  string      $event
