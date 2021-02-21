@@ -118,25 +118,4 @@ class CrudIndex extends Page
 
         return $info;
     }
-
-    /**
-     * Render CrudIndex.
-     *
-     * @return array
-     */
-    public function render(): array
-    {
-        foreach ($this->table->getActions() as $component) {
-            $component->on('click', RunCrudActionEvent::class)
-                ->prop('eventData', array_merge(
-                    $component->getProp('eventData'),
-                    [
-                        'model'  => $this->config->model,
-                        'config' => $this->config->getNamespace(),
-                    ]
-                ));
-        }
-
-        return parent::render();
-    }
 }
