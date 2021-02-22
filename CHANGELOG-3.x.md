@@ -1,11 +1,14 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.0...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.1...3.x)
+
+## [v3.4.1](https://github.com/litstack/litstack/compare/v3.4.0...v3.4.1)
 
 ### Fixed
 
 -   Fixed editing translatable fields when locale is not in model ([#168](https://github.com/litstack/litstack/pull/168))
 -   Fixed `CrudCreate` and `CrudUpdate` ([8996d4e](https://github.com/litstack/litstack/commit/8996d4ea22df4c6624dfd69ba0d711ccf459348b))
+-   Fixed chart `last` intervals not including current interval ([b38407d](https://github.com/litstack/litstack/commit/b38407dff0d47f1d11cec75835bab716373a8679), [#169](https://github.com/litstack/litstack/issues/169))
 
 ## [v3.4.0](https://github.com/litstack/litstack/compare/v3.3.3...v3.4.0)
 
