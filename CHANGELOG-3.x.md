@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.1...3.x)
 
+### Fixed
+
+-   Fixed images not showing in nested blocks ([617dbaa](https://github.com/litstack/litstack/commit/617dbaa221976ee5b4b857fc026020afebb3243d))
+
 ## [v3.4.1](https://github.com/litstack/litstack/compare/v3.4.0...v3.4.1)
 
 ### Fixed
