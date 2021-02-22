@@ -2,7 +2,7 @@
 
 namespace Ignite\Page;
 
-use Ignite\Page\Actions\AttributeBag;
+use Ignite\Support\AttributeBag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
