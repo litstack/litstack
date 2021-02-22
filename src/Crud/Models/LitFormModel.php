@@ -4,9 +4,9 @@ namespace Ignite\Crud\Models;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
-use Ignite\Crud\Fields\Media\MediaField;
-use Ignite\Crud\Fields\Relations\ManyRelationField;
 use Ignite\Crud\RelationField;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 
@@ -325,15 +325,20 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
                 continue;
             }
 
-            $attributes[$field->id] = $this->getFormattedFieldValue($field);
+            $value = $this->getFormattedFieldValue($field);
 
-            if ($field instanceof MediaField || $field instanceof ManyRelationField) {
-                if ($field instanceof MediaField && $field->maxFiles == 1) {
-                    continue;
-                }
-                $items = $this->getFormattedFieldValue($field);
-                $attributes["first_{$field->id}"] = $items ? $items->first() : null;
+            if ($value instanceof EloquentCollection) {
+
+                // Adding "first_..." to the attributes. This allows to show the
+                // first image of a collection for example in a repeatable preview.
+                $attributes["first_{$field->id}"] = $value ? $value->first() : null;
             }
+
+            if ($value instanceof Arrayable) {
+                $value = $value->toArray();
+            }
+
+            $attributes[$field->id] = $value;
         }
 
         return $attributes;
