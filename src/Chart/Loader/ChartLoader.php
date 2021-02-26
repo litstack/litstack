@@ -6,7 +6,6 @@ use BadMethodCallException;
 use Carbon\CarbonInterface;
 use Closure;
 use Exception;
-use Ignite\Chart\ChartRequest;
 use Ignite\Chart\Contracts\Engine;
 use Ignite\Config\ConfigHandler;
 use Illuminate\Support\Str;
@@ -44,11 +43,9 @@ abstract class ChartLoader
         $this->engine = $engine;
     }
 
-    public function get(ChartRequest $request)
+    public function get(string $timespanType)
     {
-        $this->setTimespanType(
-            $request->type ?: abort(404)
-        );
+        $this->setTimespanType($timespanType);
 
         $startTime = $this->getStartTime();
         $timeResolver = $this->getStartTime();
@@ -156,13 +153,13 @@ abstract class ChartLoader
     {
         return [
             'last24hours' => fn ($time) => $time->isoFormat('dddd HH:00'),
-            'today'       => fn ($time) => $time->isoFormat('dddd HH:mm'),
-            'yesterday'   => fn ($time) => $time->isoFormat('dddd HH:mm'),
-            'last7days'   => fn ($time) => $time->getTranslatedDayName('dddd'),
-            'thisweek'    => fn ($time) => $time->getTranslatedDayName('dddd'),
-            'last30days'  => fn ($time) => $time->isoFormat('Do MMMM'),
-            'thismonth'   => fn ($time) => $time->isoFormat('Do MMMM'),
-            'thisyear'    => fn ($time) => $time->getTranslatedMonthName('MMMM'),
+            'today'       => fn ($time)       => $time->isoFormat('dddd HH:mm'),
+            'yesterday'   => fn ($time)   => $time->isoFormat('dddd HH:mm'),
+            'last7days'   => fn ($time)   => $time->getTranslatedDayName('dddd'),
+            'thisweek'    => fn ($time)    => $time->getTranslatedDayName('dddd'),
+            'last30days'  => fn ($time)  => $time->isoFormat('Do MMMM'),
+            'thismonth'   => fn ($time)   => $time->isoFormat('Do MMMM'),
+            'thisyear'    => fn ($time)    => $time->getTranslatedMonthName('MMMM'),
         ];
     }
 
