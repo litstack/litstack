@@ -63,13 +63,13 @@ class AreaLoader extends ChartLoader
     {
         return [
             'last24hours' => fn ($time) => $time->subHours(23),
-            'today'       => fn ($time)       => $time->subDay(),
-            'yesterday'   => fn ($time)   => $time->subWeek(),
-            'last7days'   => fn ($time)   => $time->subDays(6),
-            'thisweek'    => fn ($time)    => $time->subWeek(),
-            'last30days'  => fn ($time)  => $time->subDays(29),
-            'thismonth'   => fn ($time)   => $time->subMonth(),
-            'thisyear'    => fn ($time)    => $time->subYear(),
+            'today'       => fn ($time) => $time->subDay(),
+            'yesterday'   => fn ($time) => $time->subWeek(),
+            'last7days'   => fn ($time) => $time->subDays(6),
+            'thisweek'    => fn ($time) => $time->subWeek(),
+            'last30days'  => fn ($time) => $time->subDays(29),
+            'thismonth'   => fn ($time) => $time->subMonth(),
+            'thisyear'    => fn ($time) => $time->subYear(),
         ];
     }
 }
