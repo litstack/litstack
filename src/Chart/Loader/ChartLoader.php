@@ -6,7 +6,6 @@ use BadMethodCallException;
 use Carbon\CarbonInterface;
 use Closure;
 use Exception;
-use Ignite\Chart\ChartRequest;
 use Ignite\Chart\Contracts\Engine;
 use Ignite\Config\ConfigHandler;
 use Illuminate\Support\Str;
@@ -44,11 +43,9 @@ abstract class ChartLoader
         $this->engine = $engine;
     }
 
-    public function get(ChartRequest $request)
+    public function get(string $timespanType)
     {
-        $this->setTimespanType(
-            $request->type ?: abort(404)
-        );
+        $this->setTimespanType($timespanType);
 
         $startTime = $this->getStartTime();
         $timeResolver = $this->getStartTime();

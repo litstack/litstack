@@ -30,7 +30,7 @@ class ChartController
 
         $loader = $this->makeLoader($chart->getAttribute('type'), $config, $engine);
 
-        return $loader->get($request);
+        return $loader->get($request->type ?: abort(404));
     }
 
     /**
