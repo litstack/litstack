@@ -9,11 +9,7 @@ class DummyClass
     public function register()
     {
         BaseForm::macro('DummyTypeMacro', function () {
-            $this->block('DummyType')
-                ->title('DummyType')
-                ->repeatables(function ($repeatables) {
-                    // Add your Repeatables here
-                });
+            // $this->input('text');
         });
     }
 }
