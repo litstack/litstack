@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.1...3.x)
 
+### Added
+
+-   Added `lit:macro` Command ([295cd89](https://github.com/litstack/litstack/commit/295cd89e3373c17045e4433dae1cc04598de7257))
+
 ### Fixed
 
 -   Fixed images not showing in nested blocks ([617dbaa](https://github.com/litstack/litstack/commit/617dbaa221976ee5b4b857fc026020afebb3243d))
@@ -35,12 +39,12 @@
 
 ### Added
 
--  Added formatting model attributes for page info and text field ([#159](https://github.com/litstack/litstack/pull/159))
+-   Added formatting model attributes for page info and text field ([#159](https://github.com/litstack/litstack/pull/159))
 
 ### Fixed
 
--  Fixed unlink or delete colum in crud relation table ([#158](https://github.com/litstack/litstack/pull/158))
--  Fixed css ([#160](https://github.com/litstack/litstack/pull/160))
+-   Fixed unlink or delete colum in crud relation table ([#158](https://github.com/litstack/litstack/pull/158))
+-   Fixed css ([#160](https://github.com/litstack/litstack/pull/160))
 
 ## [v3.3.2](https://github.com/litstack/litstack/compare/v3.3.1...v3.3.2)
 
