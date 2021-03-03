@@ -27,6 +27,10 @@ class CrudFormConfigFactory extends ConfigFactory
      */
     public function getAliasFor(ReflectionMethod $method)
     {
+        if (! $method->isPublic()) {
+            return false;
+        }
+
         if (empty($parameters = $method->getParameters())) {
             return false;
         }
@@ -37,6 +41,7 @@ class CrudFormConfigFactory extends ConfigFactory
             return false;
         }
 
+        // TODO: ReflectionUnionType
         $type = $type->getName();
 
         if (is_subclass_of($type, CrudCreate::class) || is_subclass_of($type, CrudUpdate::class)) {
