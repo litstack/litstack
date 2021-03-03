@@ -1,0 +1,15 @@
+<?php
+
+namespace Lit\Macros;
+
+use Ignite\Crud\BaseForm;
+
+class DummyClass
+{
+    public function register()
+    {
+        BaseForm::macro('DummyTypeMacro', function () {
+            // $this->input('text');
+        });
+    }
+}

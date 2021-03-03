@@ -13,6 +13,7 @@ use Ignite\Crud\Console\CrudCommand;
 use Ignite\Crud\Console\FieldCommand;
 use Ignite\Crud\Console\FilterCommand;
 use Ignite\Crud\Console\FormCommand;
+use Ignite\Crud\Console\MacroCommand;
 use Ignite\Crud\Console\RepeatableCommand;
 use Ignite\Crud\Fields\Block\Block;
 use Ignite\Crud\Fields\Boolean;
@@ -116,6 +117,7 @@ class CrudServiceProvider extends LaravelServiceProvider
         'Field'      => 'lit.command.field',
         'Filter'     => 'lit.command.filters',
         'Repeatable' => 'lit.command.repeatable',
+        'Macro'      => 'lit.command.macro',
     ];
 
     /**
@@ -257,6 +259,19 @@ class CrudServiceProvider extends LaravelServiceProvider
     {
         $this->app->singleton($abstract, function ($app) {
             return new RepeatableCommand($app['files'], $app['lit']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param  string $abstract
+     * @return void
+     */
+    protected function registerMacroCommand($abstract)
+    {
+        $this->app->singleton($abstract, function ($app) {
+            return new MacroCommand($app['files'], $app['lit']);
         });
     }
 

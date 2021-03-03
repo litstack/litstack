@@ -29,7 +29,7 @@ little time.
 
 We are happy that you are considering about contributing to the project.
 Checkout the contribution guide on
-[litstack.io](https://litstack.io/docs/prologue/contribution). Contributions of
+[litstack.io](https://litstack.io/docs/prologue/contribution). The contribution guide can be found in the [litstack documentation](https://litstack.io/docs/prologue/contribution). Contributions of
 any kind welcome!
 
 ## License
