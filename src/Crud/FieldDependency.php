@@ -132,6 +132,16 @@ class FieldDependency extends VueProp
     }
 
     /**
+     * Get dependor.
+     *
+     * @return string
+     */
+    public function getDependor()
+    {
+        return $this->dependor;
+    }
+
+    /**
      * Create new Dependency instance.
      *
      * @param  string     $condition

@@ -62,7 +62,7 @@ class Component extends VueProp implements AuthorizableContract
     protected $domProps = [];
 
     /**
-     * Field dependencies.
+     * Rendering dependencies.
      *
      * @var array
      */
@@ -389,6 +389,16 @@ class Component extends VueProp implements AuthorizableContract
         $this->dependor = $dependor;
 
         return $this;
+    }
+
+    /**
+     * Get dependencies.
+     *
+     * @return string
+     */
+    public function getDependencies()
+    {
+        return $this->dependencies;
     }
 
     /**
