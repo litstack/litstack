@@ -425,7 +425,7 @@ class Component extends VueProp implements AuthorizableContract
      * @param  array  $params
      * @return mixed
      */
-    public function __call($method, $parameters = [])
+    public function __call($method, array $parameters)
     {
         if (FieldDependency::conditionExists($method)) {
             $dependency = FieldDependency::make($method, ...$parameters);
