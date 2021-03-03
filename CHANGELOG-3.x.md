@@ -8,6 +8,7 @@
 
 ### Fixed
 
+-   Fixed overflow on login page ([#172](https://github.com/litstack/litstack/pull/172))
 -   Fixed images not showing in nested blocks ([617dbaa](https://github.com/litstack/litstack/commit/617dbaa221976ee5b4b857fc026020afebb3243d))
 -   Fixed `morphOne` relation ([d6f94b3](https://github.com/litstack/litstack/commit/d6f94b39203038711eb0ee0d16eef577a5ff8037))
 
