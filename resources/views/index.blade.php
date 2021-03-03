@@ -39,7 +39,7 @@
 
 </head>
 
-<body>
+<body class="overflow-hidden">
     @php
         lit()->config('navigation')->topbar;
         lit()->config('navigation')->main;
