@@ -4,7 +4,7 @@
 
 ### Added
 
--   Added `lit:macro` Command ([295cd89](https://github.com/litstack/litstack/commit/295cd89e3373c17045e4433dae1cc04598de7257))
+-   Added `lit:form-macro` Command ([295cd89](https://github.com/litstack/litstack/commit/295cd89e3373c17045e4433dae1cc04598de7257), [09fdbea](https://github.com/litstack/litstack/commit/09fdbea199e52c00cbd3cb13e5195ed66d87e0bd), [4d29a4d](https://github.com/litstack/litstack/commit/4d29a4d22a4ea9bed851093f772833944349fab1))
 
 ### Fixed
 
