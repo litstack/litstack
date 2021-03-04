@@ -6,6 +6,10 @@
 
 -   Fixed Range-Field display bug for min values greater than 0 ([6d1c208](https://github.com/litstack/litstack/commit/6d1c2086683095d756dc520909c501671fe8f87f))
 
+### Updates / Enhancements
+
+-   Updated v-calendar which allows time-field to be null ([e4a7036](https://github.com/litstack/litstack/commit/e4a7036cabfcc99c638ce97a06088e3f5c5810b8))
+
 ## [v3.4.2](https://github.com/litstack/litstack/compare/v3.4.1...v3.4.2)
 
 ### Added
