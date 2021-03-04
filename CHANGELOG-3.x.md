@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.2...3.x)
 
+### Fixed
+
+-   Fixed Range-Field display bug for min values greater than 0 ([6d1c208](https://github.com/litstack/litstack/commit/6d1c2086683095d756dc520909c501671fe8f87f))
+
 ## [v3.4.2](https://github.com/litstack/litstack/compare/v3.4.1...v3.4.2)
 
 ### Added
