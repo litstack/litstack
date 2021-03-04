@@ -18,7 +18,10 @@
                 v-bind:disabled="field.readonly"
             />
             <div
-                :style="`width: ${(value / field.max) * 100}%`"
+                :style="
+                    `width: ${((value - field.min) / (field.max - field.min)) *
+                        100}%`
+                "
                 class="lit-range-progress"
             ></div>
         </b-input-group>
