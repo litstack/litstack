@@ -1,10 +1,13 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.2...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.3...3.x)
+
+## [v3.4.3](https://github.com/litstack/litstack/compare/v3.4.2...v3.4.3)
 
 ### Fixed
 
 -   Fixed Range-Field display bug for min values greater than 0 ([6d1c208](https://github.com/litstack/litstack/commit/6d1c2086683095d756dc520909c501671fe8f87f))
+-   Fixed multiple actions in index tables ([6024801](https://github.com/litstack/litstack/commit/6024801caca86cfe65be0d731393a30689fa7680))
 
 ### Updates / Enhancements
 
