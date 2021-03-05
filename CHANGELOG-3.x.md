@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.3...3.x)
 
+### Fixed
+
+-   Fixed single actio in index table ([9ce87d1](https://github.com/litstack/litstack/commit/9ce87d11956a7bd738bcedc7a32fb79b57bf8db4))
+
 ## [v3.4.3](https://github.com/litstack/litstack/compare/v3.4.2...v3.4.3)
 
 ### Fixed
