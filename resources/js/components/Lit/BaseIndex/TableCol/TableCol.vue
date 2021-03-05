@@ -161,8 +161,6 @@ export default {
                 style = col.style;
             }
 
-            console.log(style);
-
             return style;
         },
         getColValue(col, item) {
@@ -234,16 +232,16 @@ export default {
                 return {};
             }
 
-            let compiled = {
-                'event-data': { ids: [this.item.id] },
-            };
+            let props = Lit.clone(this.col.props);
 
-            for (let name in this.col.props) {
-                let prop = this.col.props[name];
-                compiled[name] = prop;
+            if (!('eventData' in props)) {
+                props.eventData = {};
             }
 
-            return compiled;
+            props.eventData.ids = [this.item.id];
+            props['event-data'] = { ids: [this.item.id] };
+
+            return props;
         },
         isSmall(col) {
             return col.small === true;
