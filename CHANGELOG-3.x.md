@@ -5,6 +5,7 @@
 ### Fixed
 
 -   Fixed Range-Field display bug for min values greater than 0 ([6d1c208](https://github.com/litstack/litstack/commit/6d1c2086683095d756dc520909c501671fe8f87f))
+-   Fixed multiple actions in index tables ([6024801](https://github.com/litstack/litstack/commit/6024801caca86cfe65be0d731393a30689fa7680))
 
 ### Updates / Enhancements
 
