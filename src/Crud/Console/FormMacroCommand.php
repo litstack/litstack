@@ -6,7 +6,7 @@ use Ignite\Application\Console\Concerns\ManagesGeneration;
 use Ignite\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 
-class MacroCommand extends GeneratorCommand
+class FormMacroCommand extends GeneratorCommand
 {
     use ManagesGeneration;
 
@@ -15,21 +15,21 @@ class MacroCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'lit:macro';
+    protected $name = 'lit:form-macro';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new Macro class';
+    protected $description = 'Create a new Form Macro class';
 
     /**
      * The type of class being generated.
      *
      * @var string
      */
-    protected $type = 'Macro';
+    protected $type = 'Form Macro';
 
     /**
      * Get the stub file for the generator.
@@ -38,7 +38,7 @@ class MacroCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return lit_vendor_path('stubs/macro.stub');
+        return lit_vendor_path('stubs/form.macro.stub');
     }
 
     /**
@@ -70,7 +70,7 @@ class MacroCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Macros';
+        return $rootNamespace.'\Macros\Form';
     }
 
     /**

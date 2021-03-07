@@ -1,14 +1,29 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.1...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.3...3.x)
 
-### Added
-
--   Added `lit:macro` Command ([295cd89](https://github.com/litstack/litstack/commit/295cd89e3373c17045e4433dae1cc04598de7257), [09fdbea](https://github.com/litstack/litstack/commit/09fdbea199e52c00cbd3cb13e5195ed66d87e0bd))
+## [v3.4.3](https://github.com/litstack/litstack/compare/v3.4.2...v3.4.3)
 
 ### Fixed
 
+-   Fixed Range-Field display bug for min values greater than 0 ([6d1c208](https://github.com/litstack/litstack/commit/6d1c2086683095d756dc520909c501671fe8f87f))
+-   Fixed multiple actions in index tables ([6024801](https://github.com/litstack/litstack/commit/6024801caca86cfe65be0d731393a30689fa7680))
+
+### Updates / Enhancements
+
+-   Updated v-calendar which allows time-field to be null ([e4a7036](https://github.com/litstack/litstack/commit/e4a7036cabfcc99c638ce97a06088e3f5c5810b8))
+
+## [v3.4.2](https://github.com/litstack/litstack/compare/v3.4.1...v3.4.2)
+
+### Added
+
+-   Added `lit:form-macro` Command ([295cd89](https://github.com/litstack/litstack/commit/295cd89e3373c17045e4433dae1cc04598de7257), [09fdbea](https://github.com/litstack/litstack/commit/09fdbea199e52c00cbd3cb13e5195ed66d87e0bd), [4d29a4d](https://github.com/litstack/litstack/commit/4d29a4d22a4ea9bed851093f772833944349fab1))
+
+### Fixed
+
+-   Fixed overflow on login page ([#172](https://github.com/litstack/litstack/pull/172))
 -   Fixed images not showing in nested blocks ([617dbaa](https://github.com/litstack/litstack/commit/617dbaa221976ee5b4b857fc026020afebb3243d))
+-   Fixed `morphOne` relation ([d6f94b3](https://github.com/litstack/litstack/commit/d6f94b39203038711eb0ee0d16eef577a5ff8037))
 
 ## [v3.4.1](https://github.com/litstack/litstack/compare/v3.4.0...v3.4.1)
 

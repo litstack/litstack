@@ -63,6 +63,29 @@ class MorphOneRepositoryTest extends BackendTestCase
     }
 
     /** @test */
+    public function test_create_unsets_previous()
+    {
+        $post = MorphOneRepositoryPost::create();
+        $image1 = MorphOneRepositoryImage::create([
+            'imageable_type' => MorphOneRepositoryPost::class,
+            'imageable_id'   => $post->id,
+        ]);
+        $image2 = MorphOneRepositoryImage::create();
+
+        $request = m::mock(CrudUpdateRequest::class);
+        $request->related_id = $image2->id;
+
+        $this->field->shouldReceive('getQuery')->andReturn($image2->query());
+        $this->field->shouldReceive('getRelationQuery')->andReturn($post->image());
+        $this->repository->create($request, $post);
+
+        $this->assertNotNull($post->refresh()->image);
+        $this->assertEquals($image2->id, $post->refresh()->image->id);
+        $this->assertEmpty($image1->refresh()->imageable_type);
+        $this->assertEmpty($image1->refresh()->imageable_id);
+    }
+
+    /** @test */
     public function test_destroy_method()
     {
         $post = MorphOneRepositoryPost::create();

@@ -5,6 +5,7 @@ namespace Ignite\Crud;
 use Ignite\Config\ConfigHandler;
 use Ignite\Contracts\Page\Column;
 use Ignite\Contracts\Page\Column as ColumnContract;
+use Ignite\Page\Actions\ActionComponent;
 use Ignite\Page\Table\ColumnBuilder;
 use Ignite\Vue\Component;
 
@@ -103,5 +104,25 @@ class CrudColumnBuilder extends ColumnBuilder
         $this->config->bindAction(last($this->columns));
 
         return $wrapper;
+    }
+
+    /**
+     * Create new actions column.
+     *
+     * @param  string    $title
+     * @param  string    $action
+     * @return Component
+     */
+    public function actions($actions, $text = '<i class="fas fa-ellipsis-v"></i>'): ColumnContract
+    {
+        $column = parent::actions($actions, $text);
+
+        foreach (last($this->columns)->getChildren() as $child) {
+            if ($child instanceof ActionComponent) {
+                $this->config->bindAction($child);
+            }
+        }
+
+        return $column;
     }
 }

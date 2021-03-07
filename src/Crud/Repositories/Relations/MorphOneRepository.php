@@ -58,12 +58,13 @@ class MorphOneRepository extends RelationRepository
         ];
 
         // Remove existsing morphOne relations.
-        $morphOne->where($query)->update([
-            $morphOne->getMorphType()      => '',
-            $morphOne->getForeignKeyName() => 0,
-        ]);
+        $morphOne->where($query)
+            ->where('id', '!=', $related->id)
+            ->update([
+                $morphOne->getMorphType()      => '',
+                $morphOne->getForeignKeyName() => 0,
+            ]);
 
-        // Create new relation.
         $related->update($query);
     }
 
