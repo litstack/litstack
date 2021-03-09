@@ -93,7 +93,12 @@ class RouteItem implements Arrayable, Jsonable
             $pattern .= '*';
         }
 
-        if (! Request::is($pattern)) {
+        if ($pattern == '') {
+            $patterns = [$pattern, '/'];
+        } else {
+            $patterns = [$pattern];
+        }
+        if (! Request::is(...$patterns)) {
             return false;
         }
 
