@@ -24,7 +24,7 @@
     @include('litstack::partials.google_analytics')
 </head>
 
-<body>   
+<body class="overflow-hidden">
      @yield('content')
 
     <script src="{{ Lit::route('app2.js') }}" defer></script>

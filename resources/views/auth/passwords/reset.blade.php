@@ -5,8 +5,7 @@ Reset Password ({{ $email }})
 @endsection
 
 @section('content')
-<div class="row"
-     style="position: absolute;top:0;right:0;left:0;bottom:0;">
+<div class="row vh-100">
     <div class="col-12 col-lg-6 h-100">
         <div class="d-flex justify-content-center align-items-center h-100">
             <div class="col-8">
