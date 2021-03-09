@@ -120,7 +120,7 @@ class RouteItemTest extends BackendTestCase
         $request = m::mock(Request::class);
         app()->bind('request', fn () => $request);
 
-        $request->shouldReceive('is')->withArgs([''])->once()->andReturn(true);
+        $request->shouldReceive('is')->withArgs(['', '/'])->once()->andReturn(true);
         $item = new RouteItem('', '', fn () => '/');
         $this->assertTrue($item->isActive());
     }
