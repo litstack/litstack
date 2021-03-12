@@ -15,4 +15,20 @@ trait Translatable
     {
         return $this->getTranslationsArray();
     }
+    
+    /**
+     * Retrieve the model for a translated, bound value.
+     *
+     * @param  mixed                                    $value
+     * @param  string|null                              $field
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value, $field = null)
+    {
+        if (in_array($field, $this->translatedAttributes)) {
+            return $this->whereTranslation($field, $value)->first();
+        }
+
+        return $this->where($field ?? $this->getRouteKeyName(), $value)->first();
+    }
 }
