@@ -25,10 +25,12 @@ trait Translatable
      */
     public function resolveRouteBinding($value, $field = null)
     {
+        $field = $field ?? $this->getRouteKeyName();
+
         if (in_array($field, $this->translatedAttributes)) {
             return $this->whereTranslation($field, $value)->first();
         }
 
-        return $this->where($field ?? $this->getRouteKeyName(), $value)->first();
+        return $this->where($field, $value)->first();
     }
 }
