@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.4...3.x)
 
+### Changed
+
+-   Changed reset password screen to match login ([#175](https://github.com/litstack/litstack/pull/175))
+
 ## [v3.4.4](https://github.com/litstack/litstack/compare/v3.4.3...v3.4.4)
 
 ### Fixed
