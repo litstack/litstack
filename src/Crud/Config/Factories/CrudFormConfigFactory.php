@@ -14,6 +14,7 @@ use Ignite\Crud\CrudShow;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
+use ReflectionUnionType;
 
 class CrudFormConfigFactory extends ConfigFactory
 {
@@ -41,11 +42,17 @@ class CrudFormConfigFactory extends ConfigFactory
             return false;
         }
 
-        // TODO: ReflectionUnionType
-        $type = $type->getName();
+        $types = [$type];
+        if ($type instanceof ReflectionUnionType) {
+            $types = $type->getTypes();
+        }
 
-        if (is_subclass_of($type, CrudCreate::class) || is_subclass_of($type, CrudUpdate::class)) {
-            return 'show';
+        foreach ($types as $type) {
+            $type = $type->getName();
+
+            if (is_subclass_of($type, CrudCreate::class) || is_subclass_of($type, CrudUpdate::class)) {
+                return 'show';
+            }
         }
 
         return false;
