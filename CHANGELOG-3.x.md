@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.4...3.x)
 
+### Fixed
+
+-   Fixed crud forms using union types ([ed16f23](https://github.com/litstack/litstack/commit/ed16f2347b84964d0e803bd4fe5eae86e9a67237))
+
 ### Changed
 
 -   Changed reset password screen to match login ([#175](https://github.com/litstack/litstack/pull/175))
