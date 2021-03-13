@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.4...3.x)
 
+### Added
+
+-   Added `isoFormat` option to datetime field ([a48798c](https://github.com/litstack/litstack/commit/a48798ce6d781b2ad36ba8877c9a9fa9ee2c9795))
+
 ### Fixed
 
 -   Fixed crud forms using union types ([ed16f23](https://github.com/litstack/litstack/commit/ed16f2347b84964d0e803bd4fe5eae86e9a67237))
