@@ -215,12 +215,12 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      * @param  string $format
      * @return Column
      */
-    public function date($attribute, $format)
+    public function date($attribute, $format, $isoFormat = false)
     {
         if ($this->parent) {
             $this->parent->cast(
                 $attribute,
-                CarbonColumn::class.":{$format}"
+                CarbonColumn::class.":{$format},{$isoFormat}"
             );
         }
 

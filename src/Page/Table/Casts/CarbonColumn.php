@@ -19,11 +19,13 @@ class CarbonColumn extends ColumnCast
      *
      * @param  string      $currency
      * @param  string|null $locale
+     * @param  bool        $isoFormat
      * @return void
      */
-    public function __construct($format = 'd.m.Y')
+    public function __construct($format = 'd.m.Y', $isoFormat = false)
     {
         $this->format = $format;
+        $this->isoFormat = $isoFormat;
     }
 
     /**
@@ -41,8 +43,11 @@ class CarbonColumn extends ColumnCast
             return;
         }
 
-        return (new Carbon($value))
-            ->setTimezone(config('app.timezone'))
-            ->format($this->format);
+        $time = (new Carbon($value))
+            ->setTimezone(config('app.timezone'));
+
+        return $this->isoFormat
+            ? $time->isoFormat($this->format)
+            : $time->format($this->format);
     }
 }
