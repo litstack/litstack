@@ -2,8 +2,8 @@
 
 namespace Ignite\Page\Table\Casts;
 
-use Carbon\Carbon;
 use Ignite\Page\Table\ColumnCast;
+use Illuminate\Support\Carbon;
 
 class CarbonColumn extends ColumnCast
 {
@@ -15,7 +15,7 @@ class CarbonColumn extends ColumnCast
     protected $format;
 
     /**
-     * Create new MoneyCast instance.
+     * Create new CarbonColumn instance.
      *
      * @param  string      $currency
      * @param  string|null $locale
@@ -41,6 +41,8 @@ class CarbonColumn extends ColumnCast
             return;
         }
 
-        return (new Carbon($value))->format($this->format);
+        return (new Carbon($value))
+            ->setTimezone(config('app.timezone'))
+            ->format($this->format);
     }
 }
