@@ -35,7 +35,19 @@ class FormConfig
     {
         $config = Config::get(static::class);
 
-        return FormFacade::load($config->collection, $config->formName);
+        $model = FormFacade::load($config->collection, $config->formName);
+
+        if (! $model) {
+            $model = Form::firstOrCreate([
+                'config_type' => static::class,
+            ], [
+                'form_name'  => $config->formName,
+                'collection' => $config->collection,
+                'form_type'  => 'show',
+            ]);
+        }
+
+        return $model;
     }
 
     /**

@@ -71,13 +71,7 @@ abstract class FormController extends CrudBaseController
             }
         }
 
-        $model = Form::firstOrCreate([
-            'config_type' => get_class($this->config->getConfig()),
-        ], [
-            'form_name'  => $this->config->formName,
-            'collection' => $this->config->collection,
-            'form_type'  => 'show',
-        ]);
+        $model = get_class($this->config)::load();
 
         $page = $this->config->show->bind([
             'crud-model' => crud($model),
