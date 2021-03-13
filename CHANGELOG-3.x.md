@@ -9,6 +9,7 @@
 ### Changed
 
 -   Changed reset password screen to match login ([#175](https://github.com/litstack/litstack/pull/175))
+-   Changed form gets created in `load` method of its config ([2c57597](https://github.com/litstack/litstack/commit/2c5759767c033503488099d29125d03f15e948b3))
 
 ## [v3.4.4](https://github.com/litstack/litstack/compare/v3.4.3...v3.4.4)
 
