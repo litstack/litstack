@@ -5,6 +5,7 @@
 ### Fixed
 
 -   Fixed crud forms using union types ([ed16f23](https://github.com/litstack/litstack/commit/ed16f2347b84964d0e803bd4fe5eae86e9a67237))
+-   Fixed `date` column uses application timezone ([38420d6](https://github.com/litstack/litstack/commit/38420d63ee188e346888139a40c5f3afb8e00131))
 
 ### Changed
 
