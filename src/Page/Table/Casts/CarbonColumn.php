@@ -15,6 +15,13 @@ class CarbonColumn extends ColumnCast
     protected $format;
 
     /**
+     * Wheter to use iso format.
+     *
+     * @var bool
+     */
+    protected $isoFormat;
+
+    /**
      * Create new CarbonColumn instance.
      *
      * @param  string      $currency
