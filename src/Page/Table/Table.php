@@ -58,8 +58,8 @@ class Table extends BaseTable implements TableContract
     public static function alphabeticOrder($column = 'title')
     {
         return [
-            "{$column}.desc" => 'A -> Z',
-            "{$column}.asc"  => 'Z -> A',
+            "{$column}.asc"  => 'A -> Z',
+            "{$column}.desc" => 'Z -> A',
         ];
     }
 
