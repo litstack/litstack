@@ -60,6 +60,16 @@ class Column extends VueProp implements ColumnInterface
     }
 
     /**
+     * Set white-space to `nowrap`.
+     *
+     * @return $this
+     */
+    public function nowrap()
+    {
+        return $this->style('white-space: nowrap');
+    }
+
+    /**
      * Set value.
      *
      * @param  string     $value

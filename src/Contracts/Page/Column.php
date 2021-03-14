@@ -81,8 +81,8 @@ interface Column
     /**
      * Set a maxium of characters that should be displayed in the column.
      *
-     * @param  int   $max
-     * @return $this
+     * @param  int         $max
+     * @return $this|mixed
      */
     public function maxChars(int $max);
 
