@@ -5,6 +5,7 @@
 ### Added
 
 -   Added `isoFormat` option to datetime field ([a48798c](https://github.com/litstack/litstack/commit/a48798ce6d781b2ad36ba8877c9a9fa9ee2c9795))
+-   Added `readOnly` for `boolean`, `radio` and `checkboxes`fields ([014ac13](https://github.com/litstack/litstack/commit/014ac13e5b6e723c489bec14453c2bf9294b1c88))
 
 ### Fixed
 
