@@ -64,7 +64,7 @@ export default {
     },
     data() {
         return {
-            datetime: 12,
+            datetime: null,
             modelConfig: {
                 type: 'string',
                 mask: null,
@@ -75,6 +75,8 @@ export default {
         setInitialValue() {
             if (this.value) {
                 this.datetime = this.value;
+            } else if (this.field.mode == 'time') {
+                this.datetime = 1;
             }
         },
     },
