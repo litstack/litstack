@@ -164,18 +164,16 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add Blade View column.
      *
-     * @param  View|string $view
-     * @return View
+     * @param  View|string    $view
+     * @return ColumnContract
      */
-    public function view($view): View
+    public function view($view): ColumnContract
     {
         if (! $view instanceof View) {
             $view = ViewFactory::make($view);
         }
 
-        $this->component(new BladeColumnComponent('lit-blade'))->prop('view', $view);
-
-        return $view;
+        return $this->component(new BladeColumnComponent('lit-blade'))->prop('view', $view);
     }
 
     /**
