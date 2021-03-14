@@ -163,9 +163,13 @@ class ChartSet
             $this->labels[] = $this->getLabelFromTime($time);
         }
 
-        $this->values[] = $this->convertNullValues(
+        try {
+            $this->values[] = $this->convertNullValues(
             $this->getValuesFromStatements($statements)
         );
+        } catch (\Throwable $e) {
+            dd($statements);
+        }
 
         return $this;
     }
