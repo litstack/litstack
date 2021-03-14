@@ -10,6 +10,12 @@
 
 -   Fixed crud forms using union types ([ed16f23](https://github.com/litstack/litstack/commit/ed16f2347b84964d0e803bd4fe5eae86e9a67237))
 -   Fixed `date` column uses application timezone ([38420d6](https://github.com/litstack/litstack/commit/38420d63ee188e346888139a40c5f3afb8e00131))
+-   Fixed relation table `unlink` button ([73ecf04](https://github.com/litstack/litstack/commit/73ecf04603c9709af324fbf93c4b172a169542e7))
+-   Fixed empty `time` field not editable ([e4861a5](https://github.com/litstack/litstack/commit/e4861a5a33b7368d7b087966b8310dc4b3675c1d))
+-   Fixed empty `time` field not editable ([e4861a5](https://github.com/litstack/litstack/commit/e4861a5a33b7368d7b087966b8310dc4b3675c1d))
+-   Fixed `no items selected` for list field ([e4861a5](https://github.com/litstack/litstack/commit/e4861a5a33b7368d7b087966b8310dc4b3675c1d))
+-   Fixed `checkboxes` acting like `radio` ([e4334d4](https://github.com/litstack/litstack/commit/e4334d4b71dde9544e44729a4e1837d6c4752bf6))
+-   Fixed stacked `checkboxes` css ([c9ae4a7](https://github.com/litstack/litstack/commit/c9ae4a74265c2af02065a49e59e622f59850264a))
 
 ### Changed
 
