@@ -71,7 +71,7 @@ abstract class FormController extends CrudBaseController
             }
         }
 
-        $model = get_class($this->config)::load();
+        $model = $this->config->getNamespace()::load();
 
         $page = $this->config->show->bind([
             'crud-model' => crud($model),

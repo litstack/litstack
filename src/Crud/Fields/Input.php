@@ -28,8 +28,7 @@ class Input extends BaseField
     /**
      * Set max chars.
      *
-     * @param int $max
-     *
+     * @param  int   $max
      * @return $this
      */
     public function max(int $max)

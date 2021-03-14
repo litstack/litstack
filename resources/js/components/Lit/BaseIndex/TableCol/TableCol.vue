@@ -232,7 +232,7 @@ export default {
                 return {};
             }
 
-            let props = Lit.clone(this.col.props);
+            let props = Lit.clone(this.col.props || {});
 
             if (!('eventData' in props)) {
                 props.eventData = {};
