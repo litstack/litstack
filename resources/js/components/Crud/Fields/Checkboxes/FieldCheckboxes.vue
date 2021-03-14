@@ -52,7 +52,6 @@ export default {
 <style lang="scss">
 @import '@lit-sass/_variables';
 .lit-form-item-checkboxes {
-    height: $button-md-height / 1.5;
     align-items: center;
 }
 </style>
