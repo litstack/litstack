@@ -1,10 +1,9 @@
 <template>
     <lit-base-field :field="field" :model="model">
         <b-checkbox-group
-            :checked="value"
+            v-model="selected"
             :options="field.options"
             :stacked="field.stacked"
-            @input="$emit('input', $event)"
             class="lit-form-item-checkboxes"
         />
     </lit-base-field>
@@ -24,6 +23,27 @@ export default {
         },
         value: {
             required: true,
+        },
+    },
+    data() {
+        return {
+            original: null,
+            selected: [],
+        };
+    },
+    beforeMount() {
+        this.original = this.value;
+        if (!_.isEmpty(this.value)) {
+            this.selected = this.value;
+        }
+    },
+    watch: {
+        selected(val) {
+            if (_.isEmpty(this.original) && _.isEmpty(val)) {
+                this.$emit('input', this.original);
+            } else {
+                this.$emit('input', val);
+            }
         },
     },
 };
