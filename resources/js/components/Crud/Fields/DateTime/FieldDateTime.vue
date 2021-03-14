@@ -53,7 +53,7 @@ export default {
         },
     },
     beforeMount() {
-        if (this.value) this.datetime = this.value;
+        this.setInitialValue();
 
         this.modelConfig.mask = this.field.mask || 'YYYY-MM-DD HH:mm:ss';
     },
@@ -64,12 +64,19 @@ export default {
     },
     data() {
         return {
-            datetime: null,
+            datetime: 12,
             modelConfig: {
                 type: 'string',
                 mask: null,
             },
         };
+    },
+    methods: {
+        setInitialValue() {
+            if (this.value) {
+                this.datetime = this.value;
+            }
+        },
     },
     computed: {
         attributes() {

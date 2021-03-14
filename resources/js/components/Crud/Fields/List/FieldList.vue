@@ -35,6 +35,7 @@
                 :modalId="modalId()"
             />
             <b-alert
+                v-if="_.isEmpty(list) && !busy"
                 class="w-100"
                 show
                 variant="info"
@@ -148,7 +149,7 @@ export default {
         },
 
         async orderListItems() {
-            let items = _.map(this.flattenCrud(this.list), (item) => {
+            let items = _.map(this.flattenCrud(this.list), item => {
                 return {
                     id: item.id,
                     order_column: item.order_column,
@@ -289,7 +290,7 @@ export default {
          */
         flattenNodeGenerator(node, parent, index, settings, stack) {
             const { itemsKey, idKey } = settings;
-            return (list) => {
+            return list => {
                 node = settings.initNode(node);
                 node[idKey] = node[idKey] || settings.generateUniqueId();
 
@@ -332,7 +333,7 @@ export default {
             const stack = [];
             const _tree = tree;
             const settings = {
-                initNode: (node) => node,
+                initNode: node => node,
                 itemsKey: 'children',
                 idKey: 'id',
                 uniqueIdStart: 1,
@@ -364,7 +365,7 @@ export default {
             }
 
             // cleanup
-            list = _.map(list, (item) => {
+            list = _.map(list, item => {
                 if (!item.parent_id) {
                     item.parent_id = 0;
                 }
@@ -389,7 +390,7 @@ export default {
          * https://stackoverflow.com/questions/18017869/build-tree-array-from-flat-array-in-javascript
          */
         unflatten(array, parent, tree) {
-            array = _.sortBy(array, (item) => {
+            array = _.sortBy(array, item => {
                 return item.order_column;
             });
 
@@ -400,7 +401,7 @@ export default {
                 parent.children = [];
             }
 
-            var children = _.filter(array, (child) => {
+            var children = _.filter(array, child => {
                 return child.parent_id == parent.id;
             });
 
@@ -410,7 +411,7 @@ export default {
                 } else {
                     parent['children'] = children;
                 }
-                _.each(children, (child) => {
+                _.each(children, child => {
                     this.unflatten(array, child);
                 });
             }
