@@ -1,6 +1,12 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.4...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.5...3.x)
+
+### Fixed
+
+-   Fixed scrolling on mobile ([1f0513d](https://github.com/litstack/litstack/commit/1f0513d675d16629645f64cdff59bc37cb4adb87))
+
+## [v3.4.4](https://github.com/litstack/litstack/compare/v3.4.4...v3.4.5)
 
 ### Added
 
