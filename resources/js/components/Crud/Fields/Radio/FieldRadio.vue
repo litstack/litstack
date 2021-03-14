@@ -4,6 +4,7 @@
             :checked="value"
             :options="field.options"
             :stacked="field.stacked"
+            :disabled="field.readonly"
             @input="$emit('input', $event)"
         />
     </lit-base-field>

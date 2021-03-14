@@ -167,6 +167,10 @@ export default {
          * @return {undefined}
          */
         input(newValue) {
+            if (this.field.readonly) {
+                return;
+            }
+
             this.value = newValue;
 
             this.fillValueToModel(newValue);
@@ -248,10 +252,10 @@ export default {
 
             // Translatable field.
             if (this.field.translatable) {
-                if(!(locale in this.model)) {
+                if (!(locale in this.model)) {
                     this.model[locale] = {};
                 }
-            
+
                 return (this.model[locale][this.field.local_key] = value);
             }
 

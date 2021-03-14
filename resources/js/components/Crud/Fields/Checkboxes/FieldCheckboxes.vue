@@ -4,6 +4,7 @@
             v-model="selected"
             :options="field.options"
             :stacked="field.stacked"
+            :disabled="field.readonly"
             class="lit-form-item-checkboxes"
         />
     </lit-base-field>
