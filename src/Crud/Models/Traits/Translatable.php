@@ -15,7 +15,7 @@ trait Translatable
     {
         return $this->getTranslationsArray();
     }
-    
+
     /**
      * Retrieve the model for a translated, bound value.
      *
@@ -28,7 +28,7 @@ trait Translatable
         $field = $field ?? $this->getRouteKeyName();
 
         if (in_array($field, $this->translatedAttributes)) {
-            return $this->whereTranslation($field, $value)->first();
+            return $this->whereTranslation($field, $value, app()->getLocale())->firstOrFail();
         }
 
         return $this->where($field, $value)->first();
