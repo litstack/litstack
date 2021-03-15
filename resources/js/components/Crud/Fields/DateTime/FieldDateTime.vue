@@ -75,8 +75,6 @@ export default {
         setInitialValue() {
             if (this.value) {
                 this.datetime = this.value;
-            } else if (this.field.mode == 'time') {
-                this.datetime = 1;
             }
         },
     },
