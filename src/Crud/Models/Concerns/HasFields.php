@@ -2,9 +2,9 @@
 
 namespace Ignite\Crud\Models\Concerns;
 
-use Ignite\Crud\CrudResource;
 use Ignite\Crud\Field;
 use Ignite\Crud\Fields\Media\MediaField;
+use Ignite\Crud\FormResource;
 use Ignite\Crud\Models\Media;
 use Ignite\Crud\RelationField;
 use Illuminate\Support\Collection;
@@ -157,9 +157,9 @@ trait HasFields
     /**
      * Return the resource instance of this model.
      *
-     * @return CrudResource
+     * @return FormResource
      */
-    public function resource(): CrudResource
+    public function resource(): FormResource
     {
         $class = $this->getResourceClass();
 
@@ -177,6 +177,6 @@ trait HasFields
             return $this->resource;
         }
 
-        return CrudResource::class;
+        return FormResource::class;
     }
 }

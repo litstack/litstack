@@ -327,7 +327,7 @@ class ConfigHandler
             return $this->resolveMethod($method);
         }
 
-        return $this->config->$name;
+        return $this->config->$name ?? null;
     }
 
     /**

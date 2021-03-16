@@ -14,4 +14,14 @@ class ResourceCommand extends ResourceMakeCommand
      * @var string
      */
     protected $name = 'lit:resource';
+
+    /**
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
+    protected function getStub()
+    {
+        return lit_vendor_path('stubs/crud.resource.stub');
+    }
 }

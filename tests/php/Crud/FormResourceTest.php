@@ -2,14 +2,14 @@
 
 namespace Tests\Crud;
 
-use Ignite\Crud\CrudResource;
+use Ignite\Crud\FormResource;
 use Ignite\Crud\Models\LitFormModel;
 use Ignite\Crud\Models\Repeatable;
 use Mockery as m;
 use Tests\BackendTestCase;
 use Tests\Crud\Fixtures\DummyLitFormModel;
 
-class CrudResourceTest extends BackendTestCase
+class FormResourceTest extends BackendTestCase
 {
     public function setUp(): void
     {
@@ -44,7 +44,7 @@ class CrudResourceTest extends BackendTestCase
 
         $this->assertEquals(
             [
-                'id' => $model->id,
+                'id'      => $model->id,
                 'content' => [
                     ['id' => $repeatable->id, 'text' => 'foo'],
                 ],
@@ -74,7 +74,7 @@ class CrudResourceTest extends BackendTestCase
         $model = m::mock(LitFormModel::class);
         $model->shouldReceive('getFieldIds')->andReturn(['foo', 'bar', 'baz']);
 
-        $resource = new CrudResource($model);
+        $resource = new FormResource($model);
         $this->assertEquals(['foo', 'bar', 'baz'], $resource->getOnly());
     }
 
@@ -84,7 +84,7 @@ class CrudResourceTest extends BackendTestCase
         $model = m::mock(LitFormModel::class);
         $model->shouldReceive('getFieldIds')->andReturn(['foo', 'bar', 'baz']);
 
-        $resource = new CrudResource($model);
+        $resource = new FormResource($model);
         $resource->except('foo');
         $this->assertEquals(['foo'], $resource->getExcept());
         $this->assertEquals(['bar', 'baz'], $resource->getOnly());
@@ -104,7 +104,7 @@ class CrudResourceTest extends BackendTestCase
         $model = m::mock(LitFormModel::class);
         $model->shouldReceive('getFieldIds')->andReturn(['foo', 'bar', 'baz']);
 
-        $resource = new CrudResource($model);
+        $resource = new FormResource($model);
         $resource->only('foo');
         $this->assertEquals(['bar', 'baz'], $resource->getExcept());
         $this->assertEquals(['foo'], $resource->getOnly());

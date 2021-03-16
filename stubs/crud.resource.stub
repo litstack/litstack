@@ -1,0 +1,21 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ignite\Crud\CrudResource;
+
+class DummyClassname extends CrudResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return array
+     */
+    public function toArray($request)
+    {
+        return [
+            //
+        ];
+    }
+}

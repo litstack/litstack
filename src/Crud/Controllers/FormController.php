@@ -30,7 +30,7 @@ abstract class FormController extends CrudBaseController
         $model = $this->getQuery()->findOrFail($id);
 
         return crud(
-            $model
+            $model, $this->config
         );
     }
 
@@ -74,7 +74,7 @@ abstract class FormController extends CrudBaseController
         $model = $this->config->getNamespace()::load();
 
         $page = $this->config->show->bind([
-            'crud-model' => crud($model),
+            'crud-model' => crud($model, $this->config),
             'config'     => $config,
         ]);
         $page->bindToView(['config' => $this->config]);

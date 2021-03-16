@@ -32,7 +32,7 @@ class ListRepository extends BaseFieldRepository
             return $this->field->itemAuthorized($item, 'read');
         });
 
-        return crud($items);
+        return crud($items, $this->field);
     }
 
     /**
@@ -59,7 +59,7 @@ class ListRepository extends BaseFieldRepository
 
         $listItem->update($attributes);
 
-        return crud($listItem);
+        return crud($listItem, $this->field);
     }
 
     /**
@@ -85,7 +85,7 @@ class ListRepository extends BaseFieldRepository
             'form_type'   => $request->form_type ?? 'show',
         ]);
 
-        return crud($listItem);
+        return crud($listItem, $this->field);
     }
 
     /**
@@ -138,7 +138,7 @@ class ListRepository extends BaseFieldRepository
 
         $listItem->update((array) $payload);
 
-        return crud($listItem);
+        return crud($listItem, $this->field);
     }
 
     /**

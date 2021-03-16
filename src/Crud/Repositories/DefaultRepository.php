@@ -24,7 +24,7 @@ class DefaultRepository extends BaseFieldRepository
      */
     public function load(CrudReadRequest $request, $model)
     {
-        return crud($model);
+        return crud($model, $this->config);
     }
 
     /**
@@ -56,7 +56,7 @@ class DefaultRepository extends BaseFieldRepository
 
         $model->update($attributes);
 
-        return crud($model);
+        return crud($model, $this->config);
     }
 
     /**
@@ -149,7 +149,7 @@ class DefaultRepository extends BaseFieldRepository
             $this->config->show->fireEvent('created', $model);
         }
 
-        return crud($model);
+        return crud($model, $this->config);
     }
 
     /**

@@ -47,7 +47,8 @@ class BlockRepository extends BaseFieldRepository
     public function load(CrudReadRequest $request, $model)
     {
         return crud(
-            $this->getRepeatable($model, $request->repeatable_id)
+            $this->getRepeatable($model, $request->repeatable_id),
+            $this->field,
         );
     }
 
@@ -60,7 +61,7 @@ class BlockRepository extends BaseFieldRepository
      */
     public function index(CrudReadRequest $request, $model)
     {
-        return crud($this->field->getResults($model));
+        return crud($this->field->getResults($model), $this->field);
     }
 
     /**
@@ -102,7 +103,7 @@ class BlockRepository extends BaseFieldRepository
 
         $repeatableModel->update($attributes);
 
-        return crud($repeatable);
+        return crud($repeatable, $this->field);
     }
 
     /**
@@ -131,7 +132,7 @@ class BlockRepository extends BaseFieldRepository
         $block->order_column = $order_column;
         $block->save();
 
-        return crud($block);
+        return crud($block, $this->field);
     }
 
     /**
