@@ -1,7 +1,13 @@
 <script>
+import dependencyMethods from './../Crud/Fields/dependecy_methods';
+
 export default {
     name: 'BaseComponent',
     render(createElement) {
+        if (!this.shouldRender) {
+            return;
+        }
+
         return createElement(
             this.component.name,
             {
@@ -25,18 +31,34 @@ export default {
         },
         eventData: {
             type: Object,
-            default() {
-                return {};
-            },
+            default: () => {},
         },
     },
     data() {
         return {
+            /**
+             * Determines if the field fulfills conditions.
+             */
+            fulfillsConditions: true,
+
             events: {},
             sendingEventRequest: false,
         };
     },
     computed: {
+        /**
+         * Determines if the component should be rendered.
+         *
+         * @return {Boolean}
+         */
+        shouldRender() {
+            if (!this.component.dependencies) {
+                return true;
+            }
+
+            return this.fulfillsConditions;
+        },
+
         props() {
             return {
                 ...this.$attrs,
@@ -57,8 +79,15 @@ export default {
     },
     beforeMount() {
         this.setEvents();
+
+        this.resolveDependecies(this.component.dependencies);
+        Lit.bus.$on('fieldChanged', () => {
+            this.resolveDependecies(this.component.dependencies);
+        });
     },
     methods: {
+        ...dependencyMethods,
+
         createChildren(createElement) {
             let children = [];
             for (let i in this.children) {
@@ -84,7 +113,7 @@ export default {
             }
             for (let event in this.component.events) {
                 let handler = this.component.events[event];
-                this.events[event] = data => {
+                this.events[event] = (data) => {
                     this.handleEvent(handler, data);
                 };
             }
@@ -96,6 +125,16 @@ export default {
 
             if (!response) {
                 return;
+            }
+
+            if (
+                typeof response.data == 'object' &&
+                'redirect' in response.data
+            ) {
+                let a = document.createElement('a');
+                a.target = '_blank';
+                a.href = response.data.redirect;
+                a.click();
             }
 
             let responseURL = response.request.responseURL;

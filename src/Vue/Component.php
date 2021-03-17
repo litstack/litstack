@@ -4,6 +4,7 @@ namespace Ignite\Vue;
 
 use Exception;
 use Ignite\Contracts\Vue\Authorizable as AuthorizableContract;
+use Ignite\Crud\FieldDependency;
 use Ignite\Support\VueProp;
 use Ignite\Vue\Traits\Authorizable;
 
@@ -59,6 +60,20 @@ class Component extends VueProp implements AuthorizableContract
      * @var array
      */
     protected $domProps = [];
+
+    /**
+     * Rendering dependencies.
+     *
+     * @var array
+     */
+    protected $dependencies = [];
+
+    /**
+     * The object that the component dependencies are linked to.
+     *
+     * @var string
+     */
+    protected $dependor = 'model';
 
     /**
      * Create new Component instance.
@@ -361,6 +376,42 @@ class Component extends VueProp implements AuthorizableContract
     }
 
     /**
+     * Add dependency.
+     *
+     * @param  FieldDependency $dependency
+     * @return $this
+     */
+    public function addDependency(FieldDependency $dependency)
+    {
+        $this->dependencies[] = $dependency;
+
+        return $this;
+    }
+
+    /**
+     * Set the object name that the component depends on.
+     *
+     * @param  string $dependor
+     * @return $this
+     */
+    public function dependsOn($dependor)
+    {
+        $this->dependor = $dependor;
+
+        return $this;
+    }
+
+    /**
+     * Get dependencies.
+     *
+     * @return string
+     */
+    public function getDependencies()
+    {
+        return $this->dependencies;
+    }
+
+    /**
      * Get array.
      *
      * @return array
@@ -372,17 +423,35 @@ class Component extends VueProp implements AuthorizableContract
         $this->mounted();
 
         $rendered = [
-            'name'     => $this->name,
-            'props'    => collect($this->props),
-            'domProps' => $this->domProps,
-            'events'   => $this->events,
-            'slot'     => $this->slot,
-            'children' => $this->children,
-            'classes'  => $this->classes,
+            'name'         => $this->name,
+            'props'        => collect($this->props),
+            'domProps'     => $this->domProps,
+            'events'       => $this->events,
+            'slot'         => $this->slot,
+            'children'     => $this->children,
+            'classes'      => $this->classes,
+            'dependencies' => $this->dependencies,
         ];
 
         $this->rendered($rendered);
 
         return $rendered;
+    }
+
+    /**
+     * Call component method.
+     *
+     * @param  string $method
+     * @param  array  $params
+     * @return mixed
+     */
+    public function __call($method, array $parameters)
+    {
+        if (FieldDependency::conditionExists($method)) {
+            $dependency = FieldDependency::make($method, ...$parameters);
+            $dependency->setDependor($this->dependor);
+
+            return $this->addDependency($dependency);
+        }
     }
 }

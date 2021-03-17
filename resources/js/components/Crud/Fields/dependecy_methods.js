@@ -1,5 +1,14 @@
 export default {
     /**
+     * Get dependor.
+     *
+     * @return {String}
+     */
+    getDependor(dependor = 'model') {
+        return this[dependor] || this.$attrs[dependor] || {};
+    },
+
+    /**
      * Resolve depencies.
      *
      * @param  {array}     dependencies
@@ -53,21 +62,27 @@ export default {
      * Determines if when condition is fulfilled.
      */
     fulfillsWhen(dependency) {
-        return this.model[dependency.attribute] == dependency.value;
+        return (
+            this.getDependor(dependency.dependor)[dependency.attribute] ==
+            dependency.value
+        );
     },
 
     /**
      * Determines if whenNot condition is fulfilled.
      */
     fulfillsWhenNot(dependency) {
-        return this.model[dependency.attribute] != dependency.value;
+        return (
+            this.getDependor(dependency.dependor)[dependency.attribute] !=
+            dependency.value
+        );
     },
 
     /**
      * Determines if whenContains condition is fulfilled.
      */
     fulfillsWhenContains(dependency) {
-        let value = this.model[dependency.attribute];
+        let value = this.getDependor(dependency.dependor)[dependency.attribute];
 
         if (!value) {
             return;
@@ -82,7 +97,9 @@ export default {
      * Determines if whenIn condition is fulfilled.
      */
     fulfillsWhenIn(dependency) {
-        const value = this.model[dependency.attribute];
+        const value = this.getDependor(dependency.dependor)[
+            dependency.attribute
+        ];
 
         const expected = dependency.value;
 
