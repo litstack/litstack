@@ -35,6 +35,13 @@ class ActionComponent extends Component
     protected $title;
 
     /**
+     * The namespace of the action.
+     *
+     * @var string
+     */
+    protected $action;
+
+    /**
      * Create new ActionComponent instance.
      *
      * @param string    $action
@@ -43,6 +50,7 @@ class ActionComponent extends Component
     public function __construct($action, $title, Component $wrapper = null)
     {
         $this->title = $title;
+        $this->action = $action;
         $this->addEventData(['action' => $action]);
 
         if ($wrapper) {
@@ -50,6 +58,29 @@ class ActionComponent extends Component
         }
 
         $this->setModal($action);
+    }
+
+    /**
+     * Authorize the component.
+     *
+     * @param  Closure|bool $authorizer
+     * @return $this
+     */
+    public function authorize($authorizer)
+    {
+        $this->getProp('wrapper')->authorize($authorizer);
+
+        return parent::authorize($authorizer);
+    }
+
+    /**
+     * Get action namespace.
+     *
+     * @return string
+     */
+    public function getNamespace()
+    {
+        return $this->action;
     }
 
     /**
