@@ -4,7 +4,7 @@
 
 ### Added
 
--   Added model dependencies for all components ([#173](https://github.com/litstack/litstack/pull/173), ([015c9ed](https://github.com/litstack/litstack/commit/015c9edc317a8e43f9011f634485c21cfb6f41c6)))
+-   Added model dependencies for all components ([#173](https://github.com/litstack/litstack/pull/173), [015c9ed](https://github.com/litstack/litstack/commit/015c9edc317a8e43f9011f634485c21cfb6f41c6))
 -   Added route binding for translatable models ([#179](https://github.com/litstack/litstack/pull/179))
 -   Added the ability to apply a resource to cruds ([fcb4bc3](https://github.com/litstack/litstack/commit/fcb4bc3c2eb84d52ac11ab3aa68aea0424570d3c))
 
