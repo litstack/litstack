@@ -18,7 +18,8 @@ abstract class CrudConfig
 {
     use HasCrudShow,
         HasCrudIndex,
-        Concerns\ManagesActions;
+        Concerns\ManagesActions,
+        Concerns\ManagesPermissions;
 
     /**
      * Controller class.
@@ -163,7 +164,7 @@ abstract class CrudConfig
      *
      * @return array
      */
-    public function permissions()
+    public function permissions(): array
     {
         $permissions = [];
         $operations = ['create', 'read', 'update', 'delete'];

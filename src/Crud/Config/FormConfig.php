@@ -10,7 +10,8 @@ use Illuminate\Support\Str;
 class FormConfig
 {
     use Traits\HasCrudShow,
-        Concerns\ManagesActions;
+        Concerns\ManagesActions,
+        Concerns\ManagesPermissions;
 
     /**
      * Form field model class.
@@ -101,7 +102,7 @@ class FormConfig
      *
      * @return array
      */
-    public function permissions()
+    public function permissions(): array
     {
         return [
             'read'   => $this->authorize(lit_user(), 'read'),
