@@ -42,6 +42,13 @@ class ActionComponent extends Component
     protected $action;
 
     /**
+     * The action instance.
+     *
+     * @var mixed
+     */
+    protected $instance;
+
+    /**
      * Create new ActionComponent instance.
      *
      * @param string    $action
@@ -57,7 +64,8 @@ class ActionComponent extends Component
             $this->wrapper($wrapper);
         }
 
-        $this->setModal($action);
+        $this->setModal();
+        $this->setAuthorization();
     }
 
     /**
@@ -73,6 +81,16 @@ class ActionComponent extends Component
         }
 
         return parent::authorize($authorizer);
+    }
+
+    /**
+     * Get the action instance.
+     *
+     * @return mixed
+     */
+    public function getInstance()
+    {
+        return $this->instance ?: $this->instance = app()->make($this->action);
     }
 
     /**
@@ -102,9 +120,9 @@ class ActionComponent extends Component
      * @param  string $action
      * @return void
      */
-    protected function setModal($action)
+    protected function setModal()
     {
-        $instance = app()->make($action);
+        $instance = $this->getInstance();
 
         if (! method_exists($instance, 'modal')) {
             return;
@@ -113,6 +131,23 @@ class ActionComponent extends Component
         $this->prop('modal', $modal = $this->newActionModal());
 
         $instance->modal($modal->title($this->title));
+    }
+
+    /**
+     * Set action authorization.
+     *
+     * @param  string $action
+     * @return void
+     */
+    protected function setAuthorization()
+    {
+        $instance = $this->getInstance();
+
+        if (! method_exists($instance, 'authorize')) {
+            return;
+        }
+
+        $this->authorize(fn ($user) => $instance->authorize($user));
     }
 
     /**

@@ -44,6 +44,10 @@ class ConfigManagesActionsTest extends TestCase
         $action = new ActionComponent(ActionThatNeedsDeletePermission::class, 'foo');
         $config->bindAction($action);
         $this->assertFalse($action->check());
+
+        $action = new ActionComponent(ActionThatNeedsDeletePermissionButHasAuthorizeMethod::class, 'foo');
+        $config->bindAction($action);
+        $this->assertTrue($action->check());
     }
 }
 
@@ -56,6 +60,18 @@ class ActionThatNeedsReadPermission
 
 class ActionThatNeedsDeletePermission
 {
+    public function run(CrudDeleteRequest $request)
+    {
+    }
+}
+
+class ActionThatNeedsDeletePermissionButHasAuthorizeMethod
+{
+    public function authorize($user)
+    {
+        return true;
+    }
+
     public function run(CrudDeleteRequest $request)
     {
     }

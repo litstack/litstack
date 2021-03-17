@@ -14,6 +14,13 @@ trait Authorizable
     protected $authorizer = true;
 
     /**
+     * Determines wether an authorization has been set.
+     *
+     * @var bool
+     */
+    protected $authorizationSet = false;
+
+    /**
      * Set authorize closure.
      *
      * @param  Closure|bool $closure
@@ -23,7 +30,19 @@ trait Authorizable
     {
         $this->authorizer = $closure;
 
+        $this->authorizationSet = true;
+
         return $this;
+    }
+
+    /**
+     * Determines wether an authorization has been set.
+     *
+     * @return bool
+     */
+    public function authorizationHasBeenSet()
+    {
+        return $this->authorizationSet;
     }
 
     /**

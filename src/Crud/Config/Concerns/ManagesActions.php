@@ -24,10 +24,13 @@ trait ManagesActions
     public function bindAction(ActionComponent $action)
     {
         $action->setEventHandler(RunCrudActionEvent::class)
-            ->addEventData($this->getActionEventData())
-            ->authorize(function ($user) use ($action) {
+            ->addEventData($this->getActionEventData());
+
+        if (! $action->authorizationHasBeenSet()) {
+            $action->authorize(function ($user) use ($action) {
                 return $this->canUserCallAction($user, $action);
             });
+        }
     }
 
     /**
