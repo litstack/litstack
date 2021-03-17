@@ -1,8 +1,9 @@
 <template>
     <lit-base-component
+        v-bind="$attrs"
         :component="wrapper"
-        @click="runOrShowModal"
         style="position: relative;"
+        @click="runOrShowModal"
     >
         <b-spinner
             v-if="sendingEventRequest"
@@ -18,8 +19,9 @@
             "
         />
         <lit-base-component
-            :component="modal"
             v-if="modal"
+            v-bind="$attrs"
+            :component="modal"
             :id="modalId"
             @ok="runAction"
         >

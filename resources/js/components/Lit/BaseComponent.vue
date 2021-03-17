@@ -81,7 +81,7 @@ export default {
         this.setEvents();
 
         this.resolveDependecies(this.component.dependencies);
-        Lit.bus.$on('fieldChanged', () => {
+        Lit.bus.$on('resolveDependencies', () => {
             this.resolveDependecies(this.component.dependencies);
         });
     },
