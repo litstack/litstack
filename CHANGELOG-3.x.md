@@ -6,10 +6,15 @@
 
 -   Added model dependencies for all components ([#173](https://github.com/litstack/litstack/pull/173))
 -   Added route binding for translatable models ([#179](https://github.com/litstack/litstack/pull/179))
+-   Added the ability to apply a resource to cruds ([fcb4bc3](https://github.com/litstack/litstack/commit/fcb4bc3c2eb84d52ac11ab3aa68aea0424570d3c))
 
 ### Fixed
 
 -   Fixed scrolling on mobile ([1f0513d](https://github.com/litstack/litstack/commit/1f0513d675d16629645f64cdff59bc37cb4adb87))
+
+### Changed
+
+-   Changed namespace of `Ignite\Crud\CrudResource` to `Ignite\Crud\FormResource` ([fcb4bc3](https://github.com/litstack/litstack/commit/fcb4bc3c2eb84d52ac11ab3aa68aea0424570d3c))
 
 ## [v3.4.4](https://github.com/litstack/litstack/compare/v3.4.4...v3.4.5)
 
