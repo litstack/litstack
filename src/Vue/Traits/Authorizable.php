@@ -7,21 +7,21 @@ use Closure;
 trait Authorizable
 {
     /**
-     * Authorize closure.
+     * Authorize closure or boolean.
      *
-     * @var Closure
+     * @var Closure|bool
      */
-    protected $authorizeClosure;
+    protected $authorizer = true;
 
     /**
      * Set authorize closure.
      *
-     * @param  Closure $closure
+     * @param  Closure|bool $closure
      * @return $this
      */
-    public function authorize(Closure $closure)
+    public function authorize($closure)
     {
-        $this->authorizeClosure = $closure;
+        $this->authorizer = $closure;
 
         return $this;
     }
@@ -33,12 +33,10 @@ trait Authorizable
      */
     public function check(): bool
     {
-        if (! $this->authorizeClosure) {
-            return true;
+        if ($this->authorizer instanceof Closure) {
+            return call_user_func($this->authorizer, lit_user());
         }
 
-        $closure = $this->authorizeClosure;
-
-        return $closure(lit_user());
+        return $this->authorizer;
     }
 }

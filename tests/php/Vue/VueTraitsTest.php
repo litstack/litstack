@@ -54,6 +54,17 @@ class VueTraitsTest extends TestCase
 
         $this->assertSame(['data' => 'foo'], $obj->toArray());
     }
+
+    /** @test */
+    public function it_filters_unauthorized_with_boolean_value()
+    {
+        $obj = new AuthorizableDummyRenderable;
+        $obj->data = 'foo';
+
+        $obj->authorize(false);
+
+        $this->assertSame(['data' => 'foo'], $obj->toArray());
+    }
 }
 
 class DummyRenderable extends VueProp
