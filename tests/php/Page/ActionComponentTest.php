@@ -86,6 +86,15 @@ class ActionComponentTest extends TestCase
         $action = new ActionComponent(DummyActionWithModal::class, 'foo');
         $this->assertInstanceOf(ActionModal::class, $action->getProp('modal'));
     }
+
+    /** @test */
+    public function it_authorizes_wrapper()
+    {
+        $wrapper = m::mock(Component::class);
+        $wrapper->shouldReceive('authorize')->withArgs([false])->once();
+        $action = new ActionComponent(DummyAction::class, 'foo', $wrapper);
+        $action->authorize(false);
+    }
 }
 
 class DummyRunActionEvent extends RunActionEvent
