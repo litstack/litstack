@@ -68,7 +68,9 @@ class ActionComponent extends Component
      */
     public function authorize($authorizer)
     {
-        $this->getProp('wrapper')->authorize($authorizer);
+        if ($wrapper = $this->getProp('wrapper')) {
+            $wrapper->authorize($authorizer);
+        }
 
         return parent::authorize($authorizer);
     }
