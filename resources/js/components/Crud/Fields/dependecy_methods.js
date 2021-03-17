@@ -99,6 +99,25 @@ export default {
     },
 
     /**
+     * Determines if whenContains condition is fulfilled.
+     */
+     fulfillsWhenNotIn(dependency) {
+        let value = this.getDependor(dependency.dependor)[
+            dependency.attribute
+        ];
+
+        const expected = dependency.value;
+
+        if (typeof expected === 'array') {
+            return !expected.includes(value);
+        }
+
+        if (typeof expected === 'object') {
+            return !Object.values(expected).includes(value);
+        }
+    },
+
+    /**
      * Determines if whenIn condition is fulfilled.
      */
     fulfillsWhenIn(dependency) {
