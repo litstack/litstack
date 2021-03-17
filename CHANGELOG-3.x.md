@@ -2,6 +2,11 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.5...3.x)
 
+### Added
+
+-   Added model dependencies for all components ([#173](https://github.com/litstack/litstack/pull/173))
+-   Added route binding for translatable models ([#179](https://github.com/litstack/litstack/pull/179))
+
 ### Fixed
 
 -   Fixed scrolling on mobile ([1f0513d](https://github.com/litstack/litstack/commit/1f0513d675d16629645f64cdff59bc37cb4adb87))
