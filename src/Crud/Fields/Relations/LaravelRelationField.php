@@ -3,6 +3,7 @@
 namespace Ignite\Crud\Fields\Relations;
 
 use Closure;
+use Ignite\Crud\CrudResource;
 use Ignite\Crud\RelationField;
 use Ignite\Exceptions\Traceable\InvalidArgumentException as LitstackInvalidArgumentException;
 use Ignite\Support\Facades\Config;
@@ -49,6 +50,13 @@ class LaravelRelationField extends RelationField
     protected $repository = null;
 
     /**
+     * Resource class.
+     *
+     * @var CrudResource|null
+     */
+    public $resource;
+
+    /**
      * Create new Field instance.
      *
      * @param  string $id
@@ -86,6 +94,19 @@ class LaravelRelationField extends RelationField
         $this->small(false);
         $this->hideRelationLink(false);
         $this->setAttribute('icons', []);
+    }
+
+    /**
+     * Set add button text.
+     *
+     * @param  string $text
+     * @return $this
+     */
+    public function addButtonText($text)
+    {
+        $this->setAttribute('add_button_text', $text);
+
+        return $this;
     }
 
     /**
@@ -473,6 +494,19 @@ class LaravelRelationField extends RelationField
     public function confirm($confirm = true)
     {
         $this->setAttribute('confirm', $confirm);
+
+        return $this;
+    }
+
+    /**
+     * Set the resource class.
+     *
+     * @param  string $resource
+     * @return $this
+     */
+    public function resource($resource)
+    {
+        $this->resource = $resource;
 
         return $this;
     }
