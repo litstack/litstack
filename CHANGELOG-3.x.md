@@ -8,6 +8,9 @@
 -   Added route binding for translatable models ([#179](https://github.com/litstack/litstack/pull/179))
 -   Added the ability to apply a resource to cruds ([fcb4bc3](https://github.com/litstack/litstack/commit/fcb4bc3c2eb84d52ac11ab3aa68aea0424570d3c))
 -   Added `whenNotIn` dependency method ([e51e066](https://github.com/litstack/litstack/commit/e51e06664cf0873b5053374102467a93cf50fa99))
+-   Added `can` method that checks permission to crud config ([83d68ad](https://github.com/litstack/litstack/commit/83d68ad457c0e2ef09d77bec02eabb5cb1298d3e))
+-   Added allowing `boolean` value for authorizing components ([2f4c47d](https://github.com/litstack/litstack/commit/2f4c47dd8f08ebb9333e2e3bc3ef85cdd6454267))
+-   Added unauthorized actions are not rendered ([fad348f](https://github.com/litstack/litstack/commit/fad348f618a0e375a4ca6d6c0b91a70f5b53782d))
 
 ### Fixed
 
