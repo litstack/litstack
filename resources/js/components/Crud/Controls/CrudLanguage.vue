@@ -3,6 +3,14 @@ import { mapGetters } from 'vuex';
 
 export default {
     name: 'CrudLanguage',
+    props: {
+        variant: {
+            type: String,
+            default() {
+                return 'primary'
+            }
+        }
+    },
     render(createElement) {
         if (this.languages.length < 2) {
             return;
@@ -19,7 +27,7 @@ export default {
                     {
                         class: { active: this.active(lang) },
                         attrs: {
-                            variant: 'outline-primary',
+                            variant: `outline-${this.variant}`,
                             size: 'md',
                         },
                         on: {

@@ -4,7 +4,7 @@
 
         {{ __('crud.preview') }}
 
-        <lit-page-preview :show="true" :route="url" />
+        <lit-page-preview :show="true" :routes="urls" />
     </span>
 </template>
 
@@ -13,8 +13,8 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'CrudPreview',
     props: {
-        url: {
-            type: String,
+        urls: {
+            type: Object,
             required: true,
         },
     },

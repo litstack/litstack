@@ -274,16 +274,26 @@ class BaseCrudShow extends Page
     /**
      * Add crud preview for the given url.
      *
-     * @param  string          $url
+     * @param  string|Closure  $url
      * @return ButtonComponent
      */
     public function preview($url)
     {
-        if ($url instanceof Closure) {
-            $url = $url(app()->getLocale());
+        $urls = [];
+        foreach (array_merge(config('translatable.locales'), [app()->getLocale()]) as $locale) {
+            if ($url instanceof Closure) {
+                if (! $model = $this->config->getModelInstance()) {
+                    $urls[$locale] = '';
+
+                    continue;
+                }
+                $urls[$locale] = $url($model, $locale);
+            } else {
+                $urls[$locale] = $url;
+            }
         }
 
-        $preview = component('lit-crud-preview')->prop('url', $url);
+        $preview = component('lit-crud-preview')->prop('urls', $urls);
 
         return $this->headerRight()
             ->component(new ButtonComponent)

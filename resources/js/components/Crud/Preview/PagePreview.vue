@@ -3,8 +3,7 @@
         <template slot="modal-header" slot-scope="{ close }">
             <!-- Emulate built in modal header close button action -->
 
-            <div></div>
-
+            <div class="d-flex justify-content-between w-100">
             <div class="device-btns">
                 <b-button
                     class="mr-2 btn-square"
@@ -35,16 +34,19 @@
                 </b-button>
             </div>
 
-            <div></div>
+            <div>
+                <lit-crud-language variant="secondary" v-if="!uniqueRoutes"/>
+            </div>
 
             <button
                 type="button"
                 aria-label="Close"
-                class="close"
+                class="close p-0 m-1"
                 @click="close()"
             >
                 ×
             </button>
+            </div>
         </template>
 
         <div :class="`device ${device}`">
@@ -71,9 +73,9 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'PagePreview',
     props: {
-        route: {
+        routes: {
             required: true,
-            type: String,
+            type: Object,
         },
     },
     data() {
@@ -90,13 +92,27 @@ export default {
         },
     },
     computed: {
-        ...mapGetters(['config']),
+        ...mapGetters(['config', 'language']),
         showRoute() {
             if (!this.route.includes('//')) {
                 return this.route;
             }
             return this.route.split('//')[1];
         },
+        route() {
+            return this.routes[this.language];
+        },
+        uniqueRoutes() {
+            let first = this.routes[(Object.keys(this.routes)[0])];
+
+            for(let locale in this.routes) {
+                if(this.routes[locale] != first) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     },
 };
 </script>
