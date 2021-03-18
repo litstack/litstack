@@ -82,7 +82,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      * @param  string $label
      * @return Column
      */
-    public function col($label = ''): ColumnContract
+    public function col($label = '')
     {
         return $this->columns[] = new Column($label);
     }

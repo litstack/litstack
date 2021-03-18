@@ -13,7 +13,7 @@ interface ColumnBuilder
      * @param  string $label
      * @return Column
      */
-    public function col($label = ''): Column;
+    public function col($label = '');
 
     /**
      * Registers Vue component column.

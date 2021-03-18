@@ -33,10 +33,10 @@ class CrudColumnBuilder extends ColumnBuilder
     /**
      * Add table column to cols stack.
      *
-     * @param  string                        $label
-     * @return \Ignite\Contracts\Page\Column
+     * @param  string       $label
+     * @return Column|mixed
      */
-    public function col($label = ''): Column
+    public function col($label = '')
     {
         return parent::col($label)->link($this->defaultLink());
     }
