@@ -7,23 +7,26 @@
                 v-b-modal="field.creation_form ? creationModalId : modalId"
                 v-if="!field.readonly && !create"
             >
-                <lit-fa-icon :icon="field.many ? 'plus' : 'link'" />
-                {{
-                    field.many
-                        ? __('base.item_add', {
-                              item: field.names.singular,
-                          })
-                        : __('base.item_select', {
-                              item: field.names.singular,
-                          })
-                }}
-                <lit-field-relation-form
-                    :modal-id="creationModalId"
-                    :field="field"
-                    :model="model"
-                    :form="field.creation_form"
-                    @update="$emit('update')"
-                />
+                <span v-if="field.add_button_text" v-html="field.add_button_text"/>
+                <template v-else>
+                    <lit-fa-icon :icon="field.many ? 'plus' : 'link'" />
+                    {{
+                        field.many
+                            ? __('base.item_add', {
+                                item: field.names.singular,
+                            })
+                            : __('base.item_select', {
+                                item: field.names.singular,
+                            })
+                    }}
+                    <lit-field-relation-form
+                        :modal-id="creationModalId"
+                        :field="field"
+                        :model="model"
+                        :form="field.creation_form"
+                        @update="$emit('update')"
+                    />
+                </template>
             </b-button>
         </template>
 
@@ -61,6 +64,11 @@
             <div
                 v-else-if="field.previewType == 'tags'"
                 class="lit-field-relation-tags mt-2"
+                :class="{
+                    'lit-field-relation-tags-small': field.small,
+                    'pt-0': !field.small,
+                    'mt-1': field.small,
+                }"
             >
                 <div
                     class="mt-3 text-center text-secondary"
@@ -78,7 +86,14 @@
                     v-for="(relation, key) in selectedRelations"
                     :key="key"
                     @remove="removeRelation(relation)"
-                    class="mr-3 mt-3"
+                    :class="{
+                        'relation-tag-sm': field.small,
+                        'mr-1': field.small,
+                        'mt-1': field.small,
+                        'mt-3': !field.small,
+                        'mr-3': !field.small,
+                    }"
+                    tag-pills
                     :variant="field.tagVariant"
                 >
                     <span v-html="_format(field.tagValue, relation)" />
@@ -560,8 +575,18 @@ export default {
         border: $input-border-width solid $input-border-color;
         border-radius: $input-border-radius;
         padding: map-get($spacers, 3);
-        padding-top: 0;
         width: 100%;
+
+        &-small {
+            padding: 0;
+            border: none;
+            margin-bottom: 1rem;
+        }
+
+        .relation-tag-sm {
+            padding: 0 0.5rem;
+            font-size: 0.75rem;
+        }
     }
 
     &-link {
