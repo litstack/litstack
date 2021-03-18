@@ -193,7 +193,7 @@ export default {
         translate(col, item) {
             if(col.trans_choice_attribute) {
                 return this.trans_choice(
-                    col.value, col.trans_choice_attribute, item
+                    col.value, item[col.trans_choice_attribute], item
                 );
             }
         
