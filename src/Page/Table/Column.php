@@ -2,13 +2,13 @@
 
 namespace Ignite\Page\Table;
 
-use ErrorException;
 use Ignite\Contracts\Page\Column as ColumnInterface;
 use Ignite\Contracts\Page\Table;
 use Ignite\Exceptions\MissingAttributeException;
 use Ignite\Exceptions\Traceable\InvalidArgumentException;
 use Ignite\Support\HasAttributes;
 use Ignite\Support\VueProp;
+use Throwable;
 
 class Column extends VueProp implements ColumnInterface
 {
@@ -82,6 +82,35 @@ class Column extends VueProp implements ColumnInterface
         $this->setAttribute('value', $value);
         $this->setAttribute('value_options', $options);
         $this->setAttribute('default_value', $default);
+
+        return $this;
+    }
+
+    /**
+     * Add column translation.
+     *
+     * @param  string $value
+     * @return $this
+     */
+    public function trans($value)
+    {
+        $this->value($value);
+        $this->setAttribute('trans', true);
+
+        return $this;
+    }
+
+    /**
+     * Add column translation choice.
+     *
+     * @param  string $value
+     * @param  string $attribute
+     * @return $this
+     */
+    public function transChoice($value, $attribute)
+    {
+        $this->trans($value);
+        $this->setAttribute('trans_choice_attribute', $attribute);
 
         return $this;
     }
@@ -210,7 +239,7 @@ class Column extends VueProp implements ColumnInterface
         // Test regular expression:
         try {
             preg_match($regex, '');
-        } catch (ErrorException $e) {
+        } catch (Throwable $e) {
             throw new InvalidArgumentException($e->getMessage(), [
                 'function' => 'regex',
                 'class'    => self::class,

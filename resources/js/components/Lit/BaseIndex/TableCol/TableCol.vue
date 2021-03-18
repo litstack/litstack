@@ -166,6 +166,10 @@ export default {
         getColValue(col, item) {
             let value = '';
 
+            if(col.trans) {
+                return this.translate(col, item);
+            }
+
             if (col.value_options) {
                 value = this.getOption(
                     item,
@@ -185,6 +189,15 @@ export default {
             }
 
             return this.format(value);
+        },
+        translate(col, item) {
+            if(col.trans_choice_attribute) {
+                return this.trans_choice(
+                    col.value, col.trans_choice_attribute, item
+                );
+            }
+        
+            return this.trans(col.value, item);
         },
         getOption(item, attribute, options, def) {
             let key = item[attribute];
