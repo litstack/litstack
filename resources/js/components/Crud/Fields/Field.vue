@@ -131,7 +131,7 @@ export default {
         // Render dependency stuff.
         this.resolveDependecies(this.field.dependencies);
         Lit.bus.$on('resolveDependencies', () => {
-            this.resolveDependecies(this.component.dependencies);
+            this.resolveDependecies(this.field.dependencies);
         });
         Lit.bus.$on('fieldChanged', () => {
             Lit.bus.$emit('resolveDependencies');

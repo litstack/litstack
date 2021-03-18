@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Support\Traits\Macroable;
 
@@ -202,6 +203,19 @@ class BaseCrudShow extends Page
     }
 
     /**
+     * Determines if page is update.
+     *
+     * @return bool
+     */
+    public function isCreate()
+    {
+        $route = request()->route();
+
+        return str_contains($route->getName(), '.create')
+            || Str::endsWith($route->getName(), '.store');
+    }
+
+    /**
      * Add subpage.
      *
      * @param  string          $config
@@ -209,6 +223,10 @@ class BaseCrudShow extends Page
      */
     public function subPage($config, $icon = null)
     {
+        if ($this->isCreate()) {
+            return false;
+        }
+
         $config = Config::get($config);
 
         $title = $config->names['plural'];
