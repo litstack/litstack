@@ -8,12 +8,14 @@
         v-bind:small="small"
     >
         <lit-base-index-table-head
+            v-if="!noHead"
             :cols="cols"
             :sortable="sortable"
             :selectedItems="selectedItems"
-            @sort="sort"
-            v-if="!noHead"
             :no-select="noSelect"
+            :sort-by-column="sortByColumn"
+            :sort-by-direction="sortByDirection"
+            @sort="sort"
         >
             <b-checkbox
                 ref="headerCheckbox"
@@ -151,6 +153,12 @@ export default {
             type: Array,
             required: true,
         },
+        sortByColumn: {
+            type: String,
+        },
+        sortByDirection: {
+            type: String,
+        },
     },
     beforeMount() {
         this.sortableItems = this.items;
@@ -250,8 +258,8 @@ export default {
             }
             //this.$forceUpdate();
         },
-        sort(sort) {
-            this.$emit('sort', sort);
+        sort({column, direction}) {
+            this.$emit('sort', {column, direction});
         },
         _loadItems() {
             this.$emit('loadItems');
