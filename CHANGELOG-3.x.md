@@ -11,14 +11,20 @@
 -   Added `can` method that checks permission to crud config ([83d68ad](https://github.com/litstack/litstack/commit/83d68ad457c0e2ef09d77bec02eabb5cb1298d3e))
 -   Added allowing `boolean` value for authorizing components ([2f4c47d](https://github.com/litstack/litstack/commit/2f4c47dd8f08ebb9333e2e3bc3ef85cdd6454267))
 -   Added unauthorized actions are not rendered ([fad348f](https://github.com/litstack/litstack/commit/fad348f618a0e375a4ca6d6c0b91a70f5b53782d))
+-   Added multilanguage preview ([112decc](https://github.com/litstack/litstack/commit/112decc63f3f09d6bbe8f9910e4d43449f070fe8))
+-   Added index table column dependencies ([ee6b223](https://github.com/litstack/litstack/commit/ee6b22384f93cdd22126a06c8362173c0e6465d4))
+-   Added `trans` and `transChoice` index table columns ([646dcad](https://github.com/litstack/litstack/commit/646dcadebea3ab5c94c4e0bbaa1b21e475702a76), [a2661ba](https://github.com/litstack/litstack/commit/a2661ba23356d03104e967a047900c2771ed2b93))
 
 ### Fixed
 
 -   Fixed scrolling on mobile ([1f0513d](https://github.com/litstack/litstack/commit/1f0513d675d16629645f64cdff59bc37cb4adb87))
+-   Fixed chart `averag` total ([b619a3e](https://github.com/litstack/litstack/commit/b619a3eefd823a75151659df750b1dfb8b378612))
+-   Fixed donut chart stub ([36daf0d](https://github.com/litstack/litstack/commit/36daf0dfb53068102155d9f8a01b667a7831b072))
 
 ### Changed
 
 -   Changed namespace of `Ignite\Crud\CrudResource` to `Ignite\Crud\FormResource` ([fcb4bc3](https://github.com/litstack/litstack/commit/fcb4bc3c2eb84d52ac11ab3aa68aea0424570d3c))
+-   Improved index table sorting ([9dac78f](https://github.com/litstack/litstack/commit/9dac78f8240dded9c52131a1516530d0059c3476))
 
 ## [v3.4.4](https://github.com/litstack/litstack/compare/v3.4.4...v3.4.5)
 
