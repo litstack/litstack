@@ -19,7 +19,7 @@
                     }"
                 >
                     <span v-html="col.label" />
-                    <span class="d-inline-block ml-2" v-if="col.sort_by == sortByColumn">
+                    <span class="d-inline-block ml-2" v-if="col.sort_by == sortByColumn && sortByColumn != null">
                         <span v-html="sortIcon"/>
                     </span>
                 </div>
