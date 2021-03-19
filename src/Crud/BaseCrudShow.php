@@ -223,10 +223,6 @@ class BaseCrudShow extends Page
      */
     public function subPage($config, $icon = null)
     {
-        if ($this->isCreate()) {
-            return false;
-        }
-
         $config = Config::get($config);
 
         $title = $config->names['plural'];
@@ -246,7 +242,8 @@ class BaseCrudShow extends Page
             ->size('sm')
             ->variant('transparent')
             ->prop('href', lit()->url($prefix))
-            ->domProp('innerHTML', $icon ? "{$icon} {$title}" : $title);
+            ->domProp('innerHTML', $icon ? "{$icon} {$title}" : $title)
+            ->authorize($this->isCreate());
     }
 
     /**

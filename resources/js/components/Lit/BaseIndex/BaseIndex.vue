@@ -304,12 +304,18 @@ export default {
     },
     computed: {
         sortByColumn() {
+            if(!this.sort_by_key){
+                return;
+            }
             return _(this.sort_by_key.split('.'))
                 .tap(a => a.pop())
                 .value()
                 .join('.');
         },
         sortByDirection() {
+            if(!this.sort_by_key){
+                return;
+            }
             return _.last(this.sort_by_key.split('.'));
         },
         canSort() {
