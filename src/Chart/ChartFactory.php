@@ -42,7 +42,6 @@ class ChartFactory
 
         $chart->title($config->title);
         $chart->variant($config->variant);
-
         $config->mount($chart);
 
         return $chart;

@@ -5,6 +5,13 @@ namespace Ignite\Chart\Config;
 abstract class DonutChartConfig extends ChartConfig
 {
     /**
+     * Chart type.
+     *
+     * @var string
+     */
+    public $type = 'donut';
+
+    /**
      * Chart engine.
      *
      * @var string

@@ -2,11 +2,6 @@
 
 namespace Ignite\Chart;
 
-use Ignite\Chart\Config\AreaChartConfig;
-use Ignite\Chart\Config\BarChartConfig;
-use Ignite\Chart\Config\DonutChartConfig;
-use Ignite\Chart\Config\NumberChartConfig;
-use Ignite\Chart\Config\ProgressChartConfig;
 use Ignite\Chart\Contracts\Engine;
 use Ignite\Config\ConfigHandler;
 use Ignite\Support\VueProp;
@@ -45,7 +40,6 @@ class Chart extends VueProp
         $this->engine = $engine;
         $this->config = $config;
         $this->setAttribute('type', $this->getTypeFromConfig());
-
         $this->setAttribute('width', 12);
     }
 
@@ -56,17 +50,7 @@ class Chart extends VueProp
      */
     protected function getTypeFromConfig()
     {
-        foreach ([
-            AreaChartConfig::class => 'area',
-            DonutChartConfig::class => 'donut',
-            ProgressChartConfig::class => 'radialBar',
-            BarChartConfig::class => 'bar',
-            NumberChartConfig::class => 'number',
-        ] as $class => $type) {
-            if ($this->config->getConfig() instanceof $class) {
-                return $type;
-            }
-        }
+        return $this->config->type;
     }
 
     /**

@@ -7,6 +7,13 @@ abstract class NumberChartConfig extends ChartConfig
     use Concerns\HasResults;
 
     /**
+     * Chart type.
+     *
+     * @var string
+     */
+    public $type = 'number';
+
+    /**
      * Chart engine.
      *
      * @var string

@@ -12,6 +12,13 @@ abstract class ProgressChartConfig extends ChartConfig
     public $engine = 'apex.progress';
 
     /**
+     * Chart type.
+     *
+     * @var string
+     */
+    public $type = 'progress';
+
+    /**
      * Calculate value.
      *
      * @param Builder $query

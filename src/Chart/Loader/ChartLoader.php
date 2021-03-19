@@ -153,13 +153,13 @@ abstract class ChartLoader
     {
         return [
             'last24hours' => fn ($time) => $time->isoFormat('dddd HH:00'),
-            'today'       => fn ($time) => $time->isoFormat('dddd HH:mm'),
-            'yesterday'   => fn ($time) => $time->isoFormat('dddd HH:mm'),
-            'last7days'   => fn ($time) => $time->getTranslatedDayName('dddd'),
-            'thisweek'    => fn ($time) => $time->getTranslatedDayName('dddd'),
-            'last30days'  => fn ($time) => $time->isoFormat('Do MMMM'),
-            'thismonth'   => fn ($time) => $time->isoFormat('Do MMMM'),
-            'thisyear'    => fn ($time) => $time->getTranslatedMonthName('MMMM'),
+            'today'       => fn ($time)       => $time->isoFormat('dddd HH:mm'),
+            'yesterday'   => fn ($time)   => $time->isoFormat('dddd HH:mm'),
+            'last7days'   => fn ($time)   => $time->getTranslatedDayName('dddd'),
+            'thisweek'    => fn ($time)    => $time->getTranslatedDayName('dddd'),
+            'last30days'  => fn ($time)  => $time->isoFormat('Do MMMM'),
+            'thismonth'   => fn ($time)   => $time->isoFormat('Do MMMM'),
+            'thisyear'    => fn ($time)    => $time->getTranslatedMonthName('MMMM'),
         ];
     }
 
