@@ -275,7 +275,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      * Add relation column.
      *
      * @param  string            $label
-     * @param  string            $config
+     * @param  string|array      $config
      * @return RelationComponent
      */
     public function relation($related = '', $config = '')
@@ -284,8 +284,12 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
             ->prop('label', preg_replace('/(?<=\\w)(?=[A-Z])/', ' $1', Str::studly($related)))
             ->related($related);
 
-        if (class_exists($config)) {
+        if (is_array($config)) {
             $component->crud($config);
+        } else {
+            if (class_exists($config)) {
+                $component->crud($config);
+            }
         }
 
         return $component;

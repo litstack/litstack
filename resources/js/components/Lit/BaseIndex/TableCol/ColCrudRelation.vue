@@ -25,7 +25,7 @@ export default {
         },
         routePrefix: {
             required: false,
-            type: String,
+            type: String|Object,
         },
         format: {
             type: Function,
@@ -37,6 +37,9 @@ export default {
             return this.item[this.related];
         },
         relationLink() {
+            if(typeof this.routePrefix == 'object') {
+                return this.routePrefix[this.item[`${this.related}_type`]];
+            }
             if (this.routePrefix) {
                 return this.routePrefix;
             }

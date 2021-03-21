@@ -21,12 +21,18 @@ trait ManagesColumn
     /**
      * Set value.
      *
-     * @param  string $value
+     * @param  string     $value
+     * @param  array|null $options
+     * @param  mixed      $default
      * @return $this
      */
-    public function value($value)
+    public function value($value, array $options = null, $default = null)
     {
-        return $this->prop('value', $value);
+        $this->prop('value', $value);
+        $this->prop('value_options', $options);
+        $this->prop('default_value', $default);
+
+        return $this;
     }
 
     /**

@@ -194,7 +194,7 @@ class ChartSet
         $results = $this->getQueryFromStatements($selects);
 
         if ($this->resultResolver instanceof Closure) {
-            return call_user_func($this->resultResolver, $results->get(), $this);
+            return call_user_func($this->resultResolver, $results, $this);
         }
 
         return $results

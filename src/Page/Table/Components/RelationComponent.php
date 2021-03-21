@@ -20,7 +20,7 @@ class RelationComponent extends ColumnComponent
     /**
      * Related route prefix.
      *
-     * @param  string $routePrefix
+     * @param  string|array $routePrefix
      * @return $this
      */
     public function routePrefix($routePrefix)
@@ -36,7 +36,33 @@ class RelationComponent extends ColumnComponent
      */
     public function crud($config)
     {
-        return $this->routePrefix(Config::get($config)->route_prefix);
+        if (is_array($config)) {
+            $prefixes = [];
+            foreach ($config as $model => $c) {
+                $prefixes[$model] = Config::get($c)->route_prefix;
+            }
+
+            return $this->routePrefix($prefixes);
+        } else {
+            return $this->routePrefix(Config::get($config)->route_prefix);
+        }
+    }
+
+    /**
+     * Set value.
+     *
+     * @param  string|array $value
+     * @param  array|null   $options
+     * @param  mixed        $default
+     * @return $this
+     */
+    public function value($value, array $options = null, $default = null)
+    {
+        if (is_array($value)) {
+            return parent::value("{$this->related}_type", $value);
+        } else {
+            return parent::value($value);
+        }
     }
 
     /**
