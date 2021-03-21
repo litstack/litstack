@@ -1,6 +1,8 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.5...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.5.0...3.x)
+
+## [v3.5.0](https://github.com/litstack/litstack/compare/v3.4.5...v3.5.0)
 
 ### Added
 
@@ -30,7 +32,7 @@
 -   Changed namespace of `Ignite\Crud\CrudResource` to `Ignite\Crud\FormResource` ([fcb4bc3](https://github.com/litstack/litstack/commit/fcb4bc3c2eb84d52ac11ab3aa68aea0424570d3c))
 -   Improved index table sorting ([9dac78f](https://github.com/litstack/litstack/commit/9dac78f8240dded9c52131a1516530d0059c3476))
 
-## [v3.4.4](https://github.com/litstack/litstack/compare/v3.4.4...v3.4.5)
+## [v3.4.5](https://github.com/litstack/litstack/compare/v3.4.4...v3.4.5)
 
 ### Added
 
