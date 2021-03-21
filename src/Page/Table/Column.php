@@ -116,17 +116,6 @@ class Column extends VueProp implements ColumnInterface
     }
 
     /**
-     * Add singular or plural column.
-     *
-     * @param  string $string
-     * @param  string $attribute
-     * @return $this
-     */
-    public function choice($string, $attribute)
-    {
-    }
-
-    /**
      * Set table column style.
      *
      * @param  string     $style
