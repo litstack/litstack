@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.5.0...3.x)
 
+### Fixed
+
+-   Fixed relation link missing in relation table ([#180](https://github.com/litstack/litstack/pull/180))
+
 ## [v3.5.0](https://github.com/litstack/litstack/compare/v3.4.5...v3.5.0)
 
 ### Added
