@@ -1,6 +1,14 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.5...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.5.1...3.x)
+
+## [v3.5.1](https://github.com/litstack/litstack/compare/v3.5.0...v3.5.1)
+
+### Fixed
+
+-   Fixed relation link missing in relation table ([#180](https://github.com/litstack/litstack/pull/180))
+
+## [v3.5.0](https://github.com/litstack/litstack/compare/v3.4.5...v3.5.0)
 
 ### Added
 
@@ -14,19 +22,23 @@
 -   Added multilanguage preview ([112decc](https://github.com/litstack/litstack/commit/112decc63f3f09d6bbe8f9910e4d43449f070fe8))
 -   Added index table column dependencies ([ee6b223](https://github.com/litstack/litstack/commit/ee6b22384f93cdd22126a06c8362173c0e6465d4))
 -   Added `trans` and `transChoice` index table columns ([646dcad](https://github.com/litstack/litstack/commit/646dcadebea3ab5c94c4e0bbaa1b21e475702a76), [a2661ba](https://github.com/litstack/litstack/commit/a2661ba23356d03104e967a047900c2771ed2b93))
+-   Added support for `morphTo` relationships in index table columns ([fd7f5e8](https://github.com/litstack/litstack/commit/fd7f5e8121be77ca362b506cd32a2c83c83c5d58))
+-   Added ability to apply column options to inline field columns ([fd7f5e8](https://github.com/litstack/litstack/commit/fd7f5e8121be77ca362b506cd32a2c83c83c5d58))
 
 ### Fixed
 
 -   Fixed scrolling on mobile ([1f0513d](https://github.com/litstack/litstack/commit/1f0513d675d16629645f64cdff59bc37cb4adb87))
 -   Fixed chart `averag` total ([b619a3e](https://github.com/litstack/litstack/commit/b619a3eefd823a75151659df750b1dfb8b378612))
 -   Fixed donut chart stub ([36daf0d](https://github.com/litstack/litstack/commit/36daf0dfb53068102155d9f8a01b667a7831b072))
+-   Fixed relationship index table cannot be sorted ([fd7f5e8](https://github.com/litstack/litstack/commit/fd7f5e8121be77ca362b506cd32a2c83c83c5d58))
+
 
 ### Changed
 
 -   Changed namespace of `Ignite\Crud\CrudResource` to `Ignite\Crud\FormResource` ([fcb4bc3](https://github.com/litstack/litstack/commit/fcb4bc3c2eb84d52ac11ab3aa68aea0424570d3c))
 -   Improved index table sorting ([9dac78f](https://github.com/litstack/litstack/commit/9dac78f8240dded9c52131a1516530d0059c3476))
 
-## [v3.4.4](https://github.com/litstack/litstack/compare/v3.4.4...v3.4.5)
+## [v3.4.5](https://github.com/litstack/litstack/compare/v3.4.4...v3.4.5)
 
 ### Added
 
