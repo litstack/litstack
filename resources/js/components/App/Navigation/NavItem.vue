@@ -24,9 +24,12 @@
                 class="d-flex justify-content-between align-items-center"
                 v-else
             >
-                <div>
-                    <span v-html="item.icon" class="lit-nav-item_icon"></span>
-                    <span v-html="item.title" />
+                <div class="d-flex w-100">
+                    <span v-html="item.icon" class="lit-nav-item_icon"/>
+                    <span v-html="item.title" class="ml-1" style="flex-grow: 1;"/>
+                    <span v-if="item.badge">
+                        <span v-html="item.badge" :class="`badge badge-${item.badge_variant || 'primary'}`"/>
+                    </span>
                 </div>
                 <div
                     class="lit-navigation-hasChildren lit-nav-item_icon lit-nav-toggle"

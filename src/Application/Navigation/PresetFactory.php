@@ -71,6 +71,10 @@ class PresetFactory
             $preset['link'] = $preset['link']();
         }
 
+        if (($preset['badge'] ?? null) instanceof Closure) {
+            $preset['badge'] = $preset['badge']();
+        }
+
         return $preset;
     }
 

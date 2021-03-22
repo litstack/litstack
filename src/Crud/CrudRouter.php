@@ -237,8 +237,11 @@ class CrudRouter
         }
 
         $this->nav->preset($this->getNavigationPresetKeys($config), [
-            'link'      => $this->litstack->url($config->routePrefix),
-            'title'     => $title,
+            'link'  => $this->litstack->url($config->routePrefix),
+            'title' => $title,
+            'badge' => function () use ($config) {
+                return $config->has('badge') ? $config->badge() : null;
+            },
             'authorize' => function (Authorizable $user) use ($config) {
                 return $config->authorize($user, 'read');
             },

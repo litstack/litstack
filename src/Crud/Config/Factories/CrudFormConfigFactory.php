@@ -8,6 +8,7 @@ use Ignite\Config\ConfigHandler;
 use Ignite\Contracts\Crud\CrudCreate;
 use Ignite\Contracts\Crud\CrudUpdate;
 use Ignite\Crud\Actions\DestroyAction;
+use Ignite\Crud\BaseCrudShow;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Config\CrudConfig;
 use Ignite\Crud\CrudShow;
@@ -122,11 +123,11 @@ class CrudFormConfigFactory extends ConfigFactory
     /**
      * Bind events from config.
      *
-     * @param  ConfigHandler $config
-     * @param  CrudShow      $page
+     * @param  BaseCrudShow $config
+     * @param  CrudShow     $page
      * @return void
      */
-    protected function bindEventsFromConfig(ConfigHandler $config, CrudShow $page)
+    protected function bindEventsFromConfig(ConfigHandler $config, BaseCrudShow $page)
     {
         $reflector = new ReflectionClass($config->getConfig());
 
