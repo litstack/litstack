@@ -251,13 +251,10 @@ export default {
     beforeMount() {
         this.cols = this.field.preview;
         this.modalCols = Lit.clone(this.field.preview);
-        if (this.field.related_route_prefix && this.field.relation_link) {
+        if (this.field.related_route_prefix && !this.field.hide_relation_link) {
             this.cols.push({
                 label: '',
                 name: 'lit-field-relation-col-link',
-                props: {
-                    field: this.field,
-                },
                 small: true,
             });
         }
