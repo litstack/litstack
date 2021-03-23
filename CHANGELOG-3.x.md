@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.5.1...3.x)
 
+### Added
+
+-   Added `badge` option for navigation entries ([9c397b7](https://github.com/litstack/litstack/commit/9c397b7663cec6de98f17751417c0c8cddb96ef9))
+
+### Fixed
+
 -   Fixed select field background ([04dd7f1](https://github.com/litstack/litstack/commit/04dd7f1dc441d75a9e8c3fae2a7ae0658e156468))
+-   Fixed subPages are not only shown on create ([d6e8c85](https://github.com/litstack/litstack/commit/d6e8c8544903b18a313a08e744c7e76f28d79276))
+-   Fixed custom styles are not applied to index table columns ([323c14b](https://github.com/litstack/litstack/commit/323c14b163a00abea917296e140afca169652ff5))
 
 ## [v3.5.1](https://github.com/litstack/litstack/compare/v3.5.0...v3.5.1)
 
