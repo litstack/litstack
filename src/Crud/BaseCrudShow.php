@@ -166,7 +166,8 @@ class BaseCrudShow extends Page
     {
         $chart = parent::chart($name);
 
-        $chart->setAttribute('send_model_id',
+        $chart->setAttribute(
+            'send_model_id',
             ! is_subclass_of($this->form->getModel(), Form::class)
             && $this->form->getModel() != Form::class
         );
@@ -243,7 +244,7 @@ class BaseCrudShow extends Page
             ->variant('transparent')
             ->prop('href', lit()->url($prefix))
             ->domProp('innerHTML', $icon ? "{$icon} {$title}" : $title)
-            ->authorize($this->isCreate());
+            ->authorize(! $this->isCreate());
     }
 
     /**
