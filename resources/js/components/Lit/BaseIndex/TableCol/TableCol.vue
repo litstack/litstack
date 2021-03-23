@@ -7,7 +7,7 @@
             'text-center': col.text_center,
             ...col.classes,
         }"
-        :style="`${colWidth} ${getStyle(col)}`"
+        :style="`${colWidth}; ${getStyle(col)}`"
     >
         <component
             :is="link ? 'a' : 'span'"
