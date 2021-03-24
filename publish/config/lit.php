@@ -12,7 +12,19 @@ return [
     |
     */
 
-    'route_prefix' => 'admin',
+    'route_prefix' => env('LITSTACK_ROUTE_PREFIX', 'admin'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Lit Domain
+    |--------------------------------------------------------------------------
+    |
+    | You may wish do make the litstack admin panel accessible form a certain
+    | domain, e.g. http://admin.your-domain.tld
+    |
+    */
+
+    'domain' => env('LITSTACK_DOMAIN', null),
 
     /*
     |--------------------------------------------------------------------------

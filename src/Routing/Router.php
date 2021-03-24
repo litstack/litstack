@@ -31,7 +31,13 @@ class Router
     public function __construct()
     {
         $this->prepareUsing(function () {
-            return Route::prefix(config('lit.route_prefix'));
+            $route = Route::prefix(config('lit.route_prefix'));
+
+            if ($domain = config('lit.domain')) {
+                $route->domain($domain);
+            }
+
+            return $route;
         });
     }
 
