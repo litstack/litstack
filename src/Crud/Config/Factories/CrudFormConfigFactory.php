@@ -51,7 +51,10 @@ class CrudFormConfigFactory extends ConfigFactory
         foreach ($types as $type) {
             $type = $type->getName();
 
-            if (is_subclass_of($type, CrudCreate::class) || is_subclass_of($type, CrudUpdate::class)) {
+            if (is_subclass_of($type, CrudCreate::class) ||
+                is_subclass_of($type, CrudUpdate::class) ||
+                $type == CrudCreate::class ||
+                $type == CrudUpdate::class) {
                 return 'show';
             }
         }
