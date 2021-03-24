@@ -10,7 +10,6 @@
                 v-for="(i, index) in item"
                 :item="i"
                 :key="index"
-                v-if="!(i instanceof String) && i !== null"
             />
             <hr class="lit-navitem-divider" />
         </template>
@@ -87,6 +86,9 @@ export default {
     },
     methods: {
         isActive(item) {
+            if('active' in item) {
+                return item.active;
+            }
             const currentLink = window.location.pathname;
             if (item.link == Lit.baseURL) {
                 return currentLink == item.link;
