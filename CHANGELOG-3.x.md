@@ -5,6 +5,7 @@
 ### Added
 
 -   Added `badge` option for navigation entries ([9c397b7](https://github.com/litstack/litstack/commit/9c397b7663cec6de98f17751417c0c8cddb96ef9))
+-   Added option to `domain` serve litstack from a certain domain ([b2b6509](https://github.com/litstack/litstack/commit/b2b65095f2fba5fa49b8a6c09eca1ff82373ce1b), [c19c69c](https://github.com/litstack/litstack/commit/c19c69c98c0450997871e5a9d35b004f35026430), [956b251](https://github.com/litstack/litstack/commit/956b251cf60cc18bfa2b2490755c20392f488d63))
 
 ### Fixed
 
