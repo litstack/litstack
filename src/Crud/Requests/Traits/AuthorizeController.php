@@ -3,7 +3,9 @@
 namespace Ignite\Crud\Requests\Traits;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use ReflectionClass;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 trait AuthorizeController
 {
@@ -32,8 +34,16 @@ trait AuthorizeController
                 ->authorize(lit_user(), $operation);
         }
 
+        $modelId = null;
+        $config = $this->getCurrentCrudConfigFromRequest($request);
+
+        if ($config->controller == $controller &&
+            $model = $config->getModelInstance()) {
+            $modelId = $model->getKey();
+        }
+
         return with(new $controller())
-            ->authorize(lit_user(), $operation, $request->id);
+            ->authorize(lit_user(), $operation, $modelId);
     }
 
     /**
@@ -49,5 +59,16 @@ trait AuthorizeController
         }
 
         return $request->route()->controller;
+    }
+
+    protected function getCurrentCrudConfigFromRequest(Request $request)
+    {
+        try {
+            $route = Route::getRoutes()->match($request);
+        } catch (HttpException $e) {
+            return;
+        }
+
+        return $route->getConfig();
     }
 }

@@ -9,6 +9,7 @@ use Ignite\Crud\Models\LitFormModel;
 use Ignite\Crud\Requests\CrudCreateRequest;
 use Ignite\Crud\Requests\CrudReadRequest;
 use Ignite\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -113,8 +114,14 @@ class DefaultRepository extends BaseFieldRepository
      * @param  Model             $model
      * @return CrudJs
      */
-    public function store(CrudCreateRequest $request, $payload, $model = null)
+    public function store(Request $request, $payload, $model = null)
     {
+        $operation = $this->field instanceof LaravelRelationField ? 'update' : 'create';
+
+        if (! $this->config->can($operation)) {
+            throw new AuthenticationException;
+        }
+
         CrudValidator::validate(
             (array) $payload,
             $this->form,
