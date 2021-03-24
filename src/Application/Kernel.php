@@ -39,11 +39,25 @@ class Kernel
     public $providers = [];
 
     /**
-     * Middlewares.
+     * Middlewares that are applied to auth routes.
      *
      * @var array
      */
     protected $middlewares = [];
+
+    /**
+     * Middlewares that are applied to guest routes.
+     *
+     * @var array
+     */
+    protected $guestMiddlewares = [];
+
+    /**
+     * Middlewares that are applied to both, guest and auth routes.
+     *
+     * @var array
+     */
+    protected $publicMiddlewares = [];
 
     /**
      * Create a new Lit kernel instance.
@@ -86,11 +100,38 @@ class Kernel
      */
     public function getMiddlewares()
     {
+        return array_merge(
+            [
+                'lit.auth:'.config('lit.guard'),
+                'lit.crud',
+            ],
+            $this->getPublicMiddlewares(),
+            $this->middlewares
+        );
+    }
+
+    /**
+     * Get public middlewares.
+     *
+     * @return array
+     */
+    public function getPublicMiddlewares()
+    {
         return array_merge([
             'web',
-            'lit.auth:'.config('lit.guard'),
-            'lit.crud',
-        ], $this->middlewares);
+        ], $this->publicMiddlewares);
+    }
+
+    /**
+     * Get public middlewares.
+     *
+     * @return array
+     */
+    public function getGuestMiddlewares()
+    {
+        return array_merge([
+            'web',
+        ], $this->guestMiddlewares);
     }
 
     /**

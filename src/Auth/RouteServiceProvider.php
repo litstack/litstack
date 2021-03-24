@@ -26,11 +26,11 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
      */
     protected function mapAuthRoutes()
     {
-        Route::public()->get('password/reset/{token}', ResetPasswordController::class.'@showResetForm')->name('password.reset');
-        Route::public()->post('password/reset', ResetPasswordController::class.'@request')->name('password.request');
+        Route::guest()->get('password/reset/{token}', ResetPasswordController::class.'@showResetForm')->name('password.reset');
+        Route::guest()->post('password/reset', ResetPasswordController::class.'@request')->name('password.request');
 
-        Route::public()->get('login', AuthController::class.'@login')->name('login');
-        Route::public()->post('login', AuthController::class.'@authenticate')->name('login.post');
+        Route::guest()->get('login', AuthController::class.'@login')->name('login');
+        Route::guest()->post('login', AuthController::class.'@authenticate')->name('login.post');
         Route::post('logout', AuthController::class.'@logout')->name('logout');
     }
 }
