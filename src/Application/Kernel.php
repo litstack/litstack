@@ -101,11 +101,11 @@ class Kernel
     public function getMiddlewares()
     {
         return array_merge(
+            $this->getPublicMiddlewares(),
             [
                 'lit.auth:'.config('lit.guard'),
                 'lit.crud',
             ],
-            $this->getPublicMiddlewares(),
             $this->middlewares
         );
     }
@@ -226,10 +226,10 @@ class Kernel
 
             foreach ((new Finder)->in($paths)->files() as $repeatable) {
                 $repeatable = $namespace.str_replace(
-                ['/', '.php'],
-                ['\\', ''],
-                Str::after($repeatable->getPathname(), realpath(lit_path()).DIRECTORY_SEPARATOR)
-            );
+                    ['/', '.php'],
+                    ['\\', ''],
+                    Str::after($repeatable->getPathname(), realpath(lit_path()).DIRECTORY_SEPARATOR)
+                );
 
                 if (! is_subclass_of($repeatable, Repeatable::class) ||
                 (new ReflectionClass($repeatable))->isAbstract()) {
@@ -237,8 +237,10 @@ class Kernel
                 }
 
                 $name = Str::snake(Str::replaceLast(
-                'Repeatable', '', class_basename($repeatable)
-            ));
+                    'Repeatable',
+                    '',
+                    class_basename($repeatable)
+                ));
 
                 Crud::repeatable($name, $repeatable);
             }
