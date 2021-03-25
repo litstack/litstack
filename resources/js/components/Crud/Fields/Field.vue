@@ -522,8 +522,8 @@ export default {
          */
         getSaveJobKey() {
             return this.field.translatable
-                ? `${this.language}.${this.field.local_key}`
-                : this.field.local_key;
+                ? `${this.language}.${this.field.id}`
+                : this.field.id;
         },
 
         /**
