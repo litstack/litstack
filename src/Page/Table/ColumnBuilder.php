@@ -96,7 +96,11 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      */
     public function action($title, $action): ColumnContract
     {
-        $this->columns[] = $component = (new TableButtonAction)->make($title, $action);
+        $component = (new TableButtonAction)->make($title, $action);
+
+        if ($component->check()) {
+            $this->columns[] = $component;
+        }
 
         return $component->getProp('wrapper')->link(false);
     }
@@ -302,6 +306,6 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      */
     public function render(): array
     {
-        return $this->columns;
+        return array_values($this->columns);
     }
 }

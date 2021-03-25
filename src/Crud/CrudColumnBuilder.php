@@ -103,6 +103,10 @@ class CrudColumnBuilder extends ColumnBuilder
 
         $this->config->bindAction(last($this->columns));
 
+        if (! $wrapper->check()) {
+            unset($this->columns[count($this->columns) - 1]);
+        }
+
         return $wrapper;
     }
 
