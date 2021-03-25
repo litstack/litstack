@@ -53,6 +53,19 @@ class DateRange extends Field implements ModifiesMultipleAttributes
     }
 
     /**
+     * Set timepicker is24hr.
+     *
+     * @param  int   $is24hr
+     * @return $this
+     */
+    public function is24hr(bool $is24hr = true)
+    {
+        $this->setAttribute('is24hr', $is24hr);
+
+        return $this;
+    }
+
+    /**
      * Set default attributes.
      *
      * @return void
@@ -62,7 +75,7 @@ class DateRange extends Field implements ModifiesMultipleAttributes
         $this->setAttribute('mode', 'date');
         // $this->mask('YYYY-MM-DD');
         // $this->mode('date');
-        // $this->is24hr(true);
+        $this->is24hr(true);
         // $this->minuteInterval(1);
     }
 }

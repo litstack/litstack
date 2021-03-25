@@ -6,6 +6,7 @@
                     v-model="range"
                     :mode="field.mode"
                     :model-config="modelConfig"
+                    :is24hr="field.is24hr"
                     class="lit_date_time_picker"
                     is-range
                 >
@@ -122,6 +123,8 @@ export default {
 
 <style lang="scss">
 @import '@lit-sass/_variables';
+// #a0a5f8
+// #c8d6fb
 .lit_date_time_picker {
     * {
         font-family: 'Inter';
@@ -132,8 +135,14 @@ export default {
     .vc-year {
         color: $secondary !important;
     }
+    .vc-highlights + span{
+        color: white !important;
+    }
     .vc-highlight {
         background: $primary !important;
+        * {
+           color: white !important;
+        }
     }
     .vc-date {
         display: none !important;
@@ -142,4 +151,5 @@ export default {
         border-color: $secondary !important;
     }
 }
+
 </style>
