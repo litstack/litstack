@@ -53,7 +53,7 @@
             >
                 <small
                     class="form-text text-muted"
-                    v-html="field.hint && !noHint ? field.hint : ''"
+                    v-html="field.hint && !noHint ? _format(field.hint, model) : ''"
                 />
 
                 <small class="form-text text-muted" v-if="value">

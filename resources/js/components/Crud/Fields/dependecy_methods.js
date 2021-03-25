@@ -71,12 +71,7 @@ export default {
     /**
      * Determines if whenNot condition is fulfilled.
      */
-    fulfillsWhenNot(dependency) {
-        console.log(dependency.attribute, this.getDependor(dependency.dependor)[dependency.attribute], this.getDependor(dependency.dependor))
-        
-        setTimeout(() => {
-            console.log(this.$attrs)
-        }, 1000);
+    fulfillsWhenNot(dependency) {        
         return (
             this.getDependor(dependency.dependor)[dependency.attribute] !=
             dependency.value

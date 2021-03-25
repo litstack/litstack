@@ -20,6 +20,7 @@ use Ignite\Crud\Fields\Boolean;
 use Ignite\Crud\Fields\Checkboxes;
 use Ignite\Crud\Fields\Component;
 use Ignite\Crud\Fields\DateTime\Date;
+use Ignite\Crud\Fields\DateTime\DateRange;
 use Ignite\Crud\Fields\DateTime\DateTime;
 use Ignite\Crud\Fields\DateTime\Time;
 use Ignite\Crud\Fields\Icon;
@@ -88,6 +89,7 @@ class CrudServiceProvider extends LaravelServiceProvider
         'time'         => Time::class,
         'datetime'     => DateTime::class,
         'dt'           => DateTime::class,
+        'daterange'    => DateRange::class,
         'checkboxes'   => Checkboxes::class,
         'range'        => Range::class,
         'textarea'     => Textarea::class,

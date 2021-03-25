@@ -212,6 +212,11 @@ class BaseCrudShow extends Page
     {
         $route = request()->route();
 
+        if (request()->method() != 'GET') {
+            return request()->method() == 'POST'
+                && count(explode('/', Str::after(request()->url(), '/api/'))) == 1;
+        }
+
         return str_contains($route->getName(), '.create')
             || Str::endsWith($route->getName(), '.store');
     }

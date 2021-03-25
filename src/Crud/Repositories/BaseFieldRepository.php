@@ -3,6 +3,7 @@
 namespace Ignite\Crud\Repositories;
 
 use Ignite\Config\ConfigHandler;
+use Ignite\Contracts\Crud\Fields\ModifiesMultipleAttributes;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Controllers\CrudBaseController;
 use Ignite\Crud\Field;
@@ -72,11 +73,19 @@ abstract class BaseFieldRepository
     protected function fillAttributesToModel($model, array $attributes)
     {
         foreach ($this->form->getRegisteredFields() as $field) {
-            if (! array_key_exists($field->local_key, $attributes)) {
+            if (! array_key_exists($field->id, $attributes)) {
                 continue;
             }
 
-            $field->fillModel($model, $field->local_key, $attributes[$field->local_key]);
+            $fill = [$field->local_key];
+            if ($field instanceof ModifiesMultipleAttributes) {
+                $fill = $field->getModifiedAttributes();
+                $attributes = $attributes[$field->id];
+            }
+
+            foreach ($fill as $attribute) {
+                $field->fillModel($model, $attribute, $attributes[$attribute]);
+            }
         }
     }
 
@@ -104,15 +113,26 @@ abstract class BaseFieldRepository
     protected function formatAttributes(array $attributes, $fields)
     {
         foreach ($fields as $field) {
-            if (! array_key_exists($field->local_key, $attributes)) {
+            if (! array_key_exists($field->id, $attributes)) {
                 continue;
             }
 
             // Format value before update.
             if (method_exists($field, 'format')) {
-                $attributes[$field->local_key] = $field->format(
-                    $attributes[$field->local_key]
+                $attributes[$field->id] = $field->format(
+                    $attributes[$field->id]
                 );
+            }
+
+            if ($field instanceof ModifiesMultipleAttributes) {
+                foreach ($field->getModifiedAttributes() as $attribute) {
+                    if (array_key_exists($attribute, $attributes[$field->id])) {
+                        $attributes[$attribute] = $attributes[$field->id][$attribute];
+                    }
+
+                    continue;
+                }
+                unset($attributes[$field->id]);
             }
         }
 
