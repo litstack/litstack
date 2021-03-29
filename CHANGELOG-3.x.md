@@ -6,6 +6,7 @@
 
 -   Added `badge` option for navigation entries ([9c397b7](https://github.com/litstack/litstack/commit/9c397b7663cec6de98f17751417c0c8cddb96ef9))
 -   Added option to `domain` serve litstack from a certain domain ([b2b6509](https://github.com/litstack/litstack/commit/b2b65095f2fba5fa49b8a6c09eca1ff82373ce1b), [c19c69c](https://github.com/litstack/litstack/commit/c19c69c98c0450997871e5a9d35b004f35026430), [956b251](https://github.com/litstack/litstack/commit/956b251cf60cc18bfa2b2490755c20392f488d63))
+-   Added `daterange` field ([2d72292](https://github.com/litstack/litstack/commit/2d72292cfabd651f6701ea7f4cc00246d8f7985c), [7cd2923](https://github.com/litstack/litstack/commit/7cd29232cdea8d7f63babf060a0a912523a3d31b), [7cea863](https://github.com/litstack/litstack/commit/7cea8639b21526716638a4e80f2958d05f0025f7))
 
 ### Fixed
 
