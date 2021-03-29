@@ -12,6 +12,7 @@
 -   Fixed select field background ([04dd7f1](https://github.com/litstack/litstack/commit/04dd7f1dc441d75a9e8c3fae2a7ae0658e156468))
 -   Fixed subPages are not only shown on create ([d6e8c85](https://github.com/litstack/litstack/commit/d6e8c8544903b18a313a08e744c7e76f28d79276))
 -   Fixed custom styles are not applied to index table columns ([323c14b](https://github.com/litstack/litstack/commit/323c14b163a00abea917296e140afca169652ff5))
+-   Fixed relation edit button ([ea6bd08](https://github.com/litstack/litstack/commit/ea6bd089d470d22fe57d52c567c48228105c13b5))
 
 ## [v3.5.1](https://github.com/litstack/litstack/compare/v3.5.0...v3.5.1)
 
