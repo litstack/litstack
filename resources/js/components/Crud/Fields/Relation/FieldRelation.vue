@@ -272,9 +272,6 @@ export default {
             this.cols.push({
                 label: '',
                 name: 'lit-field-relation-col-edit',
-                props: {
-                    field: this.field,
-                },
                 small: true,
             });
         }

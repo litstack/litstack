@@ -11,6 +11,7 @@ class FormConfig
 {
     use Traits\HasCrudShow,
         Concerns\ManagesActions,
+        Concerns\ManagesConfig,
         Concerns\ManagesPermissions;
 
     /**

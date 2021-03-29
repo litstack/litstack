@@ -19,6 +19,7 @@ abstract class CrudConfig
     use HasCrudShow,
         HasCrudIndex,
         Concerns\ManagesActions,
+        Concerns\ManagesConfig,
         Concerns\ManagesPermissions;
 
     /**
@@ -58,16 +59,6 @@ abstract class CrudConfig
     public function getFormNameFor($model)
     {
         return 'show';
-    }
-
-    /**
-     * Get config handler.
-     *
-     * @return ConfigHandler
-     */
-    public function get()
-    {
-        return Config::get(static::class);
     }
 
     /**
