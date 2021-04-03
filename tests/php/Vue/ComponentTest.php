@@ -4,6 +4,7 @@ namespace Tests;
 
 use Ignite\Crud\FieldDependency;
 use Ignite\Vue\Component;
+use Ignite\Vue\Event;
 use PHPUnit\Framework\TestCase;
 
 class ComponentTest extends TestCase
@@ -75,8 +76,8 @@ class ComponentTest extends TestCase
     public function test_on_method()
     {
         $component = new Component('foo');
-        $this->assertSame($component, $component->on('click', 'handler'));
-        $this->assertSame('handler', $component->getEventHandler('click'));
+        $this->assertInstanceOf(Event::class, $component->on('click', 'handler'));
+        $this->assertSame('handler', $component->getEventHandler('click')->getHandler());
     }
 
     /** @test */

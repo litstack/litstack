@@ -233,15 +233,15 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Add event handler.
      *
-     * @param  string $event
+     * @param  string $name
      * @param  string $handler
-     * @return $this
+     * @return Event
      */
-    public function on($event, $handler)
+    public function on($name, $handler)
     {
-        $this->events[$event] = $handler;
+        $this->events[$name] = $event = new Event($name, $handler);
 
-        return $this;
+        return $event;
     }
 
     /**

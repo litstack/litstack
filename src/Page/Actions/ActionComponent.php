@@ -2,6 +2,7 @@
 
 namespace Ignite\Page\Actions;
 
+use Ignite\Contracts\Page\FileDownloadAction;
 use Ignite\Page\RunActionEvent;
 use Ignite\Vue\Component;
 use Ignite\Vue\Traits\StaticComponentName;
@@ -170,7 +171,13 @@ class ActionComponent extends Component
     {
         $this->throwIfHandlerIsNotValid($handler);
 
-        return $this->on('run', $handler);
+        $this
+            ->on('run', $handler)
+            ->isFileDownload(
+                is_subclass_of($this->action, FileDownloadAction::class)
+            );
+
+        return $this;
     }
 
     /**

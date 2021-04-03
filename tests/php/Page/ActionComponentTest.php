@@ -57,7 +57,7 @@ class ActionComponentTest extends TestCase
         $action->setEventHandler(DummyRunActionEvent::class);
         $events = $action->getEvents();
         $this->assertArrayHasKey('run', $events);
-        $this->assertSame(DummyRunActionEvent::class, $events['run']);
+        $this->assertSame(DummyRunActionEvent::class, $events['run']->getHandler());
     }
 
     /** @test */

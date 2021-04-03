@@ -111,16 +111,17 @@ export default {
             if (!this.component.events) {
                 return;
             }
-            for (let event in this.component.events) {
-                let handler = this.component.events[event];
-                this.events[event] = (data) => {
-                    this.handleEvent(handler, data);
+            
+            for (let name in this.component.events) {
+                let event = this.component.events[name];
+                this.events[name] = (data) => {
+                    this.handleEvent(event, data);
                 };
             }
         },
-        async handleEvent(handler, data) {
+        async handleEvent(event, data) {
             this.sendingEventRequest = true;
-            let response = await this.sendHandleEvent(handler, data);
+            let response = await this.sendHandleEvent(event, data);
             this.sendingEventRequest = false;
 
             if (!response) {
@@ -151,7 +152,7 @@ export default {
 
             this.$emit('eventHandled', response);
         },
-        async sendHandleEvent(handler, data) {
+        async sendHandleEvent(event, data) {
             try {
                 return await axios.post(`handle-event`, {
                     ...this.eventData,
@@ -159,11 +160,21 @@ export default {
                     ...(this.$attrs['event-data'] || {}),
                     ...(this.$attrs['eventData'] || {}),
                     ...data,
-                    handler,
-                });
+                    handler: event.handler,
+                }, this.getEventRequestOptions(event));
             } catch (e) {
                 console.log(e);
             }
+        },
+
+        getEventRequestOptions(event) {
+            let options = {};
+
+            if(event.isFileDownload) {
+                options.responseType = 'blob';
+            }
+
+            return options;
         },
 
         isFileDownload(response) {
@@ -189,7 +200,7 @@ export default {
         },
 
         handleFileDownload(response) {
-            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const url = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
             const link = document.createElement('a');
             link.href = url;
             link.setAttribute(
@@ -205,7 +216,7 @@ export default {
             let split = response.headers['content-disposition'].split(
                 'filename='
             );
-            return split[split.length - 1];
+            return split[split.length - 1].replace(/["']/g, "");
         },
     },
 };
