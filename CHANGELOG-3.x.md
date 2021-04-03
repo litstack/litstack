@@ -2,7 +2,13 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.6.0...3.x)
 
--   Added form field rules for crud actions ([3c9d277](https://github.com/litstack/litstack/commit/3c9d277865bbe412dee9b4e76c4225003a2fea0b))
+### Added
+
+-   Added form field rules for crud actions ([3c9d277](https://github.com/litstack/litstack/commit/3c9d277865bbe412dee9b4e76c4225003a2fea0b), [33e8ed6](https://github.com/litstack/litstack/commit/33e8ed6445611c35b45dee9a8229320c6c67fb52))
+
+### Fixed
+
+-   Fixed ambiguous columns when searching ([eecd020](https://github.com/litstack/litstack/commit/eecd020a76eedd51473073a71892302e299b73c5))
 
 ## [v3.6.0](https://github.com/litstack/litstack/compare/v3.5.2...v3.6.0)
 
