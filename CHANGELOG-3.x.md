@@ -1,19 +1,30 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.5.1...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.6.0...3.x)
+
+## [v3.6.0](https://github.com/litstack/litstack/compare/v3.5.2...v3.6.0)
+
+### Added
+
+-   Added `daterange` field ([2d72292](https://github.com/litstack/litstack/commit/2d72292cfabd651f6701ea7f4cc00246d8f7985c), [7cd2923](https://github.com/litstack/litstack/commit/7cd29232cdea8d7f63babf060a0a912523a3d31b), [7cea863](https://github.com/litstack/litstack/commit/7cea8639b21526716638a4e80f2958d05f0025f7))
+-   Added support for pdf download in actions ([6c7546a](https://github.com/litstack/litstack/commit/6c7546a2a489b599be0d33e3046876f5dd32e580))
+
+### Fixed
+
+-   Fixed relation edit button ([ea6bd08](https://github.com/litstack/litstack/commit/ea6bd089d470d22fe57d52c567c48228105c13b5))
+
+## [v3.5.2](https://github.com/litstack/litstack/compare/v3.5.1...v3.5.2)
 
 ### Added
 
 -   Added `badge` option for navigation entries ([9c397b7](https://github.com/litstack/litstack/commit/9c397b7663cec6de98f17751417c0c8cddb96ef9))
 -   Added option to `domain` serve litstack from a certain domain ([b2b6509](https://github.com/litstack/litstack/commit/b2b65095f2fba5fa49b8a6c09eca1ff82373ce1b), [c19c69c](https://github.com/litstack/litstack/commit/c19c69c98c0450997871e5a9d35b004f35026430), [956b251](https://github.com/litstack/litstack/commit/956b251cf60cc18bfa2b2490755c20392f488d63))
--   Added `daterange` field ([2d72292](https://github.com/litstack/litstack/commit/2d72292cfabd651f6701ea7f4cc00246d8f7985c), [7cd2923](https://github.com/litstack/litstack/commit/7cd29232cdea8d7f63babf060a0a912523a3d31b), [7cea863](https://github.com/litstack/litstack/commit/7cea8639b21526716638a4e80f2958d05f0025f7))
 
 ### Fixed
 
 -   Fixed select field background ([04dd7f1](https://github.com/litstack/litstack/commit/04dd7f1dc441d75a9e8c3fae2a7ae0658e156468))
 -   Fixed subPages are not only shown on create ([d6e8c85](https://github.com/litstack/litstack/commit/d6e8c8544903b18a313a08e744c7e76f28d79276))
 -   Fixed custom styles are not applied to index table columns ([323c14b](https://github.com/litstack/litstack/commit/323c14b163a00abea917296e140afca169652ff5))
--   Fixed relation edit button ([ea6bd08](https://github.com/litstack/litstack/commit/ea6bd089d470d22fe57d52c567c48228105c13b5))
 
 ## [v3.5.1](https://github.com/litstack/litstack/compare/v3.5.0...v3.5.1)
 
