@@ -52,15 +52,16 @@ class BuilderMacroSearchTest extends BackendTestCase
     public function test_whereAttributeLike_function_for_non_translatable_model()
     {
         $builder = m::mock(Builder::class);
-        $builder->shouldReceive('getModel')->andReturn(new Post())->twice();
+        $builder->shouldReceive('getModel')->andReturn(new Post())->times(4);
 
-        $builder->shouldReceive('where')->with('text', 'LIKE', '%dan%')->once();
+        $builder->shouldReceive('where')->with('posts.text', 'LIKE', '%dan%')->once();
         $this->macro->whereAttributeLike($builder, 'text', 'dan', $or = false);
 
-        $builder->shouldReceive('orWhere')->with('text', 'LIKE', '%dan%')->once();
+        $builder->shouldReceive('orWhere')->with('posts.text', 'LIKE', '%dan%')->once();
         $this->macro->whereAttributeLike($builder, 'text', 'dan', $or = true);
     }
 
+    /** @test */
     public function test_whereAttributeLike_function_for_translatable_model()
     {
         $builder = m::mock(Builder::class);
@@ -72,10 +73,10 @@ class BuilderMacroSearchTest extends BackendTestCase
         $builder->shouldReceive('orWhereTranslationLike')->with('text', '%dan%')->once();
         $this->macro->whereAttributeLike($builder, 'text', 'dan', $or = true);
 
-        $builder->shouldReceive('where')->with('other', 'LIKE', '%dan%')->once();
+        $builder->shouldReceive('where')->with('t_posts.other', 'LIKE', '%dan%')->once();
         $this->macro->whereAttributeLike($builder, 'other', 'dan', $or = false);
 
-        $builder->shouldReceive('orWhere')->with('other', 'LIKE', '%dan%')->once();
+        $builder->shouldReceive('orWhere')->with('t_posts.other', 'LIKE', '%dan%')->once();
         $this->macro->whereAttributeLike($builder, 'other', 'dan', $or = true);
     }
 
