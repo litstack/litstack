@@ -90,11 +90,11 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Create new action column.
      *
-     * @param  string    $title
-     * @param  string    $action
-     * @return Component
+     * @param  string          $title
+     * @param  string          $action
+     * @return Component|mixed
      */
-    public function action($title, $action): ColumnContract
+    public function action($title, $action)
     {
         $component = (new TableButtonAction)->make($title, $action);
 

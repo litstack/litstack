@@ -20,6 +20,13 @@ class ActionComponent extends Component
     protected $name = 'lit-action';
 
     /**
+     * Action modal instance.
+     *
+     * @var ActionModal|null
+     */
+    protected $modal;
+
+    /**
      * Event handlers.
      *
      * @var array
@@ -67,6 +74,16 @@ class ActionComponent extends Component
 
         $this->setModal();
         $this->setAuthorization();
+    }
+
+    /**
+     * Get action modal instance.
+     *
+     * @return ActionModal|null
+     */
+    public function getModal()
+    {
+        return $this->modal;
     }
 
     /**
@@ -129,9 +146,9 @@ class ActionComponent extends Component
             return;
         }
 
-        $this->prop('modal', $modal = $this->newActionModal());
+        $this->prop('modal', $this->modal = $this->newActionModal());
 
-        $instance->modal($modal->title($this->title));
+        $instance->modal($this->modal->title($this->title));
     }
 
     /**

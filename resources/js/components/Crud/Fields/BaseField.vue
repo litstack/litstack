@@ -133,6 +133,7 @@ export default {
             this.$forceUpdate();
         });
         Lit.bus.$on('saved', this.checkForErrors);
+        Lit.bus.$on('response', this.handleResponse);
         Lit.bus.$on('saveCanceled', this.resetErrors);
     },
     methods: {
@@ -146,27 +147,47 @@ export default {
             this.messages = [];
         },
 
+        handleResponse(response) {
+            if(!response.config.url.endsWith('handle-event')) {
+                return;
+            }
+            if(!this.field.for_action) {
+                return;
+            }
+            this.checkForErrorsInResponse(response)
+        },
+
         /**
          * Check results for erros.
          *
          * @param {Array} results
-         * @return
+         * @return undefined
          */
         checkForErrors(results) {
-            let result = results.findFailed(
+            let response = results.findFailed(
                 this.field._method,
                 this.field.route_prefix
             );
 
-            if (!result) {
+            if (!response) {
                 return this.resetErrors();
             }
 
-            if (!result.isAxiosError) {
+            this.checkForErrorsInResponse(response);
+        },
+
+        /**
+         * Check for erros in response.
+         *
+         * @param {Object} response
+         * @return undefined
+         */
+        checkForErrorsInResponse(response) {
+            if (!response.isAxiosError) {
                 return this.resetErrors();
             }
 
-            let errors = this.findErrors(result);
+            let errors = this.findErrors(response);
             if (!errors || _.isEmpty(errors)) {
                 return this.resetErrors();
             }

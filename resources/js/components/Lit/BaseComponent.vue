@@ -115,7 +115,7 @@ export default {
             for (let name in this.component.events) {
                 let event = this.component.events[name];
                 this.events[name] = (data) => {
-                    this.handleEvent(event, data);
+                    return this.handleEvent(event, data);
                 };
             }
         },
@@ -150,11 +150,14 @@ export default {
 
             Lit.bus.$emit('reload');
 
-            this.$emit('eventHandled', response);
+            this.$emit('eventHandled', {event, response});
+            Lit.bus.$emit('eventHandled', {event, response});
         },
         async sendHandleEvent(event, data) {
+            let response;
+            
             try {
-                return await axios.post(`handle-event`, {
+                response = await axios.post(`handle-event`, {
                     ...this.eventData,
                     ...(this.component.props.eventData || {}),
                     ...(this.$attrs['event-data'] || {}),
@@ -162,9 +165,13 @@ export default {
                     ...data,
                     handler: event.handler,
                 }, this.getEventRequestOptions(event));
+
+                Lit.bus.$emit('response', response);
             } catch (e) {
-                console.log(e);
+                Lit.bus.$emit('response', e);
             }
+
+            return response;
         },
 
         getEventRequestOptions(event) {

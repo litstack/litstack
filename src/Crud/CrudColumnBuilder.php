@@ -97,7 +97,7 @@ class CrudColumnBuilder extends ColumnBuilder
      * @param  string          $action
      * @return Component|mixed
      */
-    public function action($title, $action): ColumnContract
+    public function action($title, $action)
     {
         $wrapper = parent::action($title, $action);
 
