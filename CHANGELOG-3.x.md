@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.6.0...3.x)
 
+-   Added form field rules for crud actions ([3c9d277](https://github.com/litstack/litstack/commit/3c9d277865bbe412dee9b4e76c4225003a2fea0b))
+
 ## [v3.6.0](https://github.com/litstack/litstack/compare/v3.5.2...v3.6.0)
 
 ### Added
