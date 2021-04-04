@@ -9,6 +9,7 @@
 ### Fixed
 
 -   Fixed ambiguous columns when searching ([eecd020](https://github.com/litstack/litstack/commit/eecd020a76eedd51473073a71892302e299b73c5))
+-   Fixed actions that dont use modals ([89adfb8](https://github.com/litstack/litstack/commit/89adfb83fd70a85082a2993bf936df74c2f60b7f))
 
 ## [v3.6.0](https://github.com/litstack/litstack/compare/v3.5.2...v3.6.0)
 
