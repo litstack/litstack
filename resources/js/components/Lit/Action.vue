@@ -87,7 +87,9 @@ export default {
         },
 
         async runAction(e) {
-            e.preventDefault();
+            if(e) {
+                e.preventDefault();
+            }
 
             this.$emit('run', { attributes: this.attributes.attributes });
         },
