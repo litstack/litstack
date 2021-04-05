@@ -7,11 +7,12 @@
     </div>
     <div>
         <div class="lit-hide" id="lit-topbar-right">
-        
+            <div class="d-flex">
             @auth(config('lit.guard'))
+                @include('litstack::partials.topbar.search')
                 @include('litstack::partials.topbar.navigation')
             @endauth
-            
+            </div>
         </div>
     </div>
 </nav>
