@@ -194,6 +194,10 @@ export default {
                 return;
             }
 
+            if(!this.$refs.field) {
+                return;
+            }
+
             let input = this.$refs.field.$refs.input;
 
             if (!input) {
