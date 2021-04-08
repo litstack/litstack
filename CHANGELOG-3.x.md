@@ -1,6 +1,12 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.6.0...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.6.1...3.x)
+
+### Added
+
+- Password reset ([0dedfd7](https://github.com/litstack/litstack/commit/0dedfd71de8843b6c3fc872a7b8bac8bf9fc4cb7))
+
+## [v3.6.1](https://github.com/litstack/litstack/compare/v3.6.0...v3.6.1)
 
 ### Added
 
