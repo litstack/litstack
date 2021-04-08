@@ -81,6 +81,7 @@ return [
         \Ignite\Crud\CrudServiceProvider::class,
         \Ignite\User\UserServiceProvider::class,
         \Ignite\Page\PageServiceProvider::class,
+        //\Ignite\Auth\PasswordResetServiceProvider::class,
 
         // Uncomment to enable a link to your system info in the topbar navigation.
         //\Ignite\Info\InfoServiceProvider::class,

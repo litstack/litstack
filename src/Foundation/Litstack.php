@@ -105,12 +105,14 @@ class Litstack implements LitstackContract
     /**
      * Get Lit route by name.
      *
-     * @param  string $name
+     * @param  array|string $name
+     * @param  mixed        $parameters
+     * @param  bool         $absolute
      * @return string
      */
-    public function route(string $name)
+    public function route(string $name, $parameters = [], $absolute = true)
     {
-        return route("lit.{$name}");
+        return route("lit.{$name}", $parameters, $absolute);
     }
 
     /**

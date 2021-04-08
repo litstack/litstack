@@ -11,73 +11,34 @@
             <div class="col-8">
                 <strong class="mb-4">{{ ucwords(__lit('passwords.buttons.reset')) }}</strong>
                 <form method="POST"
-                      action="{{ route('lit.password.reset.store') }}"
+                      action="{{ route('lit.password.forgot.store') }}"
                       class="mt-4">
                     @csrf
-                    <input type="hidden"
-                           name="token"
-                           value="{{ $token }}">
-
                     <div class="form-group mb-3">
                         <input id="email"
                                type="email"
-                               placeholder="{{ __lit('base.email_address') }}"
-                               class="form-control @error('email') is-invalid @enderror lit-login-form"
+                               placeholder="{{ __('base.email_address') }}"
+                               class="form-control @error('email') is-invalid @enderror lit-login-form @if(Session::has('status')) is-valid @endif"
                                name="email"
-                               value="{{ $email }}"
                                required>
+
+                        {{-- {{ dd(get_defined_vars()) }} --}}
 
                         @if($errors->has('email'))
                             <span class="invalid-feedback">{{ $errors->first('email') }}</span>
                         @endif
-                    </div>
-                    <div class="form-group mb-3">
-                        <input placeholder="{{ ucfirst(__lit('base.password')) }}"
-                               id="password"
-                               type="password"
-                               class="form-control @error('password') is-invalid @enderror lit-login-form"
-                               name="password"
-                               required
-                               autofocus />
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                        @enderror
-                    </div>
 
-                    <div class="form-group mb-3">
-                        <input placeholder="{{ __lit('base.confirm_password') }}"
-                               id="password-confirm"
-                               type="password"
-                               class="form-control @error('password_confirmation') is-invalid @enderror lit-login-form"
-                               name="password_confirmation"
-                               required>
-
-                        @if($errors->has('password_confirmation'))
-                            <span class="invalid-feedback">
-                                <strong>{{ $errors->first('password_confirmation') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-
-                    <div class="text-center mt-2 mb-3">
-                        @if($errors->has('token'))
-                            <span class="invalid-feedback" style="display:block;">
-                                {{ $errors->first('token') }}
-                            </span>
+                        @if(Session::has('status'))
+                            <span class="valid-feedback">{{ Session::get('status') }}</span>
                         @endif
                     </div>
 
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
-                            @if($errors->has('token'))
-                                <a href="{{ lit()->route('password.forgot.show') }}" class="btn btn-primary">
-                                    {{ __lit('passwords.buttons.resend') }}
-                                </a>
-                            @else
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __lit('passwords.buttons.reset') }}
-                                </button>
-                            @endif                    
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                {{ __lit('passwords.buttons.send_reset') }}
+                            </button>
                         </div>
                     </div>
                 </form>

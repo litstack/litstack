@@ -3,6 +3,8 @@
 namespace Ignite\Auth\Controllers;
 
 use Ignite\Support\Facades\Lit;
+use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
@@ -30,6 +32,47 @@ class ResetPasswordController
     }
 
     /**
+     * Display the password forgot view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showForgotForm(Request $request)
+    {
+        return view('litstack::auth.passwords.forgot');
+    }
+
+    /**
+     * Handle an incoming forgot password request.
+     *
+     * @see https://laravel.com/docs/8.x/passwords#password-reset-link-handling-the-form-submission
+     *
+     * @param  \Illuminate\Http\Request          $request
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function forgot(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email:rfc,dns',
+        ]);
+
+        $status = $this->broker()->sendResetLink(
+            $request->only('email'),
+            function (CanResetPassword $user, string $token) {
+                if (method_exists($user, 'sendLitstackPasswordResetNotification')) {
+                    $user->sendLitstackPasswordResetNotification($token);
+                } else {
+                    $user->sendPasswordResetNotification($token);
+                }
+            });
+
+        return $status === Password::RESET_LINK_SENT
+            ? back()->with(['status' => __lit($status)])
+            : back()->withErrors(['email' => __lit($status)]);
+    }
+
+    /**
      * Display the password reset view.
      *
      * @return \Illuminate\View\View
@@ -45,29 +88,44 @@ class ResetPasswordController
     /**
      * Handle an incoming new password request.
      *
+     * @see https://laravel.com/docs/8.x/passwords#password-reset-link-handling-the-form-submission
+     *
      * @param  \Illuminate\Http\Request          $request
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function request(Request $request)
+    public function reset(Request $request)
     {
-        $request->validate($this->rules());
+        $request->validate([
+            'token'    => 'required',
+            'email'    => 'required|email:rfc,dns',
+            'password' => 'required|string|confirmed|min:8',
+        ]);
 
-        $status = $this->broker()->reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user) use ($request) {
-                $user->forceFill([
-                    'password'       => Hash::make($request->password),
-                    'remember_token' => Str::random(60),
-                ])->save();
-            }
+        $params = $request->only(
+            'email', 'password', 'password_confirmation', 'token'
         );
 
+        $status = $this->broker()->reset($params, function (Model $user) use ($request) {
+            $user->forceFill([
+                'password'       => Hash::make($request->password),
+                'remember_token' => Str::random(60),
+            ])->save();
+        });
+
+        if ($status == Password::INVALID_TOKEN) {
+            return back()
+                ->withInput($request->only('email'))
+                ->withErrors(['token' => __lit($status)]);
+        }
+
         return $status == Password::PASSWORD_RESET
-                    ? redirect($this->defaultUrl)->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                        ->withErrors(['email' => __($status)]);
+            ? redirect($this->defaultUrl)
+                ->with('status', __lit($status))
+            : back()
+                ->withInput($request->only('email'))
+                ->withErrors(['email' => __lit($status)]);
     }
 
     /**
@@ -81,20 +139,6 @@ class ResetPasswordController
     }
 
     /**
-     * Get the password reset validation rules.
-     *
-     * @return array
-     */
-    protected function rules()
-    {
-        return [
-            'token'    => 'required',
-            'email'    => 'required|email',
-            'password' => 'required|string|confirmed|min:8',
-        ];
-    }
-
-    /**
      * Gets the user provider based on the configuration for litstack
      * authentication guard.
      *
@@ -102,8 +146,8 @@ class ResetPasswordController
      */
     protected function getGuardUserProvider(): string
     {
-        $litGuard = config('lit.guard');
+        $guard = config('lit.guard');
 
-        return config('auth.guards')[$litGuard]['provider'];
+        return config("auth.guards.{$guard}.provider");
     }
 }
