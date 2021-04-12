@@ -1,7 +1,7 @@
 @extends('litstack::landing')
 
 @section('title')
-Reset Password ({{ $email }})
+{{ ucwords(__lit('passwords.buttons.reset')) }}
 @endsection
 
 @section('content')
@@ -9,9 +9,9 @@ Reset Password ({{ $email }})
     <div class="col-12 col-lg-6 h-100">
         <div class="d-flex justify-content-center align-items-center h-100">
             <div class="col-8">
-                <strong class="mb-4">{{ __('Reset Password') }}</strong>
+                <strong class="mb-4">{{ ucwords(__lit('passwords.buttons.reset')) }}</strong>
                 <form method="POST"
-                      action="{{ route('lit.password.request') }}"
+                      action="{{ route('lit.password.reset.store') }}"
                       class="mt-4">
                     @csrf
                     <input type="hidden"
@@ -21,16 +21,14 @@ Reset Password ({{ $email }})
                     <div class="form-group mb-3">
                         <input id="email"
                                type="email"
-                               placeholder="{{ __('E-Mail Address') }}"
+                               placeholder="{{ __lit('base.email_address') }}"
                                class="form-control @error('email') is-invalid @enderror lit-login-form"
                                name="email"
                                value="{{ $email }}"
                                required>
 
                         @if($errors->has('email'))
-                            <span class="invalid-feedback">
-                                <strong>{{ $errors->first('email') }}</strong>
-                            </span>
+                            <span class="invalid-feedback">{{ $errors->first('email') }}</span>
                         @endif
                     </div>
                     <div class="form-group mb-3">
@@ -42,15 +40,12 @@ Reset Password ({{ $email }})
                                required
                                autofocus />
                         @error('password')
-                            <span class="invalid-feedback"
-                                  role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group mb-3">
-                        <input placeholder="{{ __('Confirm Password') }}"
+                        <input placeholder="{{ __lit('base.confirm_password') }}"
                                id="password-confirm"
                                type="password"
                                class="form-control @error('password_confirmation') is-invalid @enderror lit-login-form"
@@ -64,12 +59,25 @@ Reset Password ({{ $email }})
                         @endif
                     </div>
 
+                    <div class="text-center mt-2 mb-3">
+                        @if($errors->has('token'))
+                            <span class="invalid-feedback" style="display:block;">
+                                {{ $errors->first('token') }}
+                            </span>
+                        @endif
+                    </div>
+
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
-                            <button type="submit"
-                                    class="btn btn-primary">
-                                {{ __('Reset Password') }}
-                            </button>
+                            @if($errors->has('token'))
+                                <a href="{{ lit()->route('password.forgot.show') }}" class="btn btn-primary">
+                                    {{ __lit('passwords.buttons.resend') }}
+                                </a>
+                            @else
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __lit('passwords.buttons.reset') }}
+                                </button>
+                            @endif                    
                         </div>
                     </div>
                 </form>

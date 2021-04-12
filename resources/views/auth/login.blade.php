@@ -64,6 +64,10 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
+
+                            @if(Session::has('status'))
+                                <span class="valid-feedback" style="display:block;">{{ Session::get('status') }}</span>
+                            @endif
                         </div>
                     </div>
 
@@ -85,6 +89,11 @@
                                     {{ __lit('login.remember_me') }}
                                 </label>
                             </div>
+                            @if(Route::has('lit.password.forgot.show'))
+                            <div>
+                                <a href="{{ lit()->route('password.forgot.show') }}">{{ __lit('login.forgot_password') }}</a>
+                            </div>
+                            @endif
                         </div>
 
                         <div class="text-danger text-center" id="login-failed" style="display:none;">

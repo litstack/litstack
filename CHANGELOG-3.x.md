@@ -1,6 +1,16 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.6.0...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.6.1...3.x)
+
+### Added
+
+- Password reset ([0dedfd7](https://github.com/litstack/litstack/commit/0dedfd71de8843b6c3fc872a7b8bac8bf9fc4cb7))
+
+### Fixed
+
+- Fixed sortable relations ([309a2c4](https://github.com/litstack/litstack/commit/309a2c49e401b70c0e532b44f6c0791837972fb6))
+
+## [v3.6.1](https://github.com/litstack/litstack/compare/v3.6.0...v3.6.1)
 
 ### Added
 
@@ -9,6 +19,8 @@
 ### Fixed
 
 -   Fixed ambiguous columns when searching ([eecd020](https://github.com/litstack/litstack/commit/eecd020a76eedd51473073a71892302e299b73c5))
+-   Fixed actions that dont use modals ([89adfb8](https://github.com/litstack/litstack/commit/89adfb83fd70a85082a2993bf936df74c2f60b7f))
+-   Fixed input masks ([b382988](https://github.com/litstack/litstack/commit/b3829887216d293ae183161b25205eb5e1bfd235))
 
 ## [v3.6.0](https://github.com/litstack/litstack/compare/v3.5.2...v3.6.0)
 
