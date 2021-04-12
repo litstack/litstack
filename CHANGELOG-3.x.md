@@ -6,6 +6,10 @@
 
 - Password reset ([0dedfd7](https://github.com/litstack/litstack/commit/0dedfd71de8843b6c3fc872a7b8bac8bf9fc4cb7))
 
+### Fixed
+
+- Fixed sortable relations ([309a2c4](https://github.com/litstack/litstack/commit/309a2c49e401b70c0e532b44f6c0791837972fb6))
+
 ## [v3.6.1](https://github.com/litstack/litstack/compare/v3.6.0...v3.6.1)
 
 ### Added
