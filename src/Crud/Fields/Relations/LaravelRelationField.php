@@ -207,6 +207,10 @@ class LaravelRelationField extends RelationField
             $orderColumn = $order['column'];
         }
 
+        if (str_contains($orderColumn, '.')) {
+            $orderColumn = Str::after($orderColumn, '.');
+        }
+
         $this->setAttribute('orderColumn', $orderColumn);
         $this->setAttribute('orderDirection', $order['direction']);
     }
