@@ -207,7 +207,7 @@ class LaravelRelationField extends RelationField
             $orderColumn = $order['column'];
         }
 
-        if (str_contains($orderColumn, '.')) {
+        if (Str::contains($orderColumn, '.')) {
             $orderColumn = Str::after($orderColumn, '.');
         }
 
