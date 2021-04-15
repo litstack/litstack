@@ -257,7 +257,7 @@ export default {
             return `lit-cropper-${this.field.route_prefix.replace(
                 /\//g,
                 '-'
-            )}-${this.field.id}`;
+            )}-${this.model.id}-${this.field.id}`;
         },
 
         /**
