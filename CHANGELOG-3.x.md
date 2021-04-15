@@ -4,6 +4,7 @@
 
 ### Added
 
+- Global search 🔥 ([#196](https://github.com/litstack/litstack/pull/196))
 - Password reset ([0dedfd7](https://github.com/litstack/litstack/commit/0dedfd71de8843b6c3fc872a7b8bac8bf9fc4cb7))
 
 ### Fixed
