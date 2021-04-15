@@ -284,7 +284,7 @@ export default {
 
             // Translatable field.
             if (this.field.translatable) {
-                if (!(locale in this.model)) {
+                if (!(locale in this.model.attributes)) {
                     this.model[locale] = {};
                 }
 
