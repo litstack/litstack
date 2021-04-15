@@ -9,6 +9,7 @@
 ### Fixed
 
 - Fixed sortable relations ([309a2c4](https://github.com/litstack/litstack/commit/309a2c49e401b70c0e532b44f6c0791837972fb6))
+- Fixed image cropper is throwing a vue error in reapeatables ([e689dd0](https://github.com/litstack/litstack/commit/e689dd0a74fc74c9189db9b34bf78d78c7c8989d))
 
 ## [v3.6.1](https://github.com/litstack/litstack/compare/v3.6.0...v3.6.1)
 
