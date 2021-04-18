@@ -125,7 +125,7 @@ return [
             'pl',
             'it',
             'tr',
-            'es'
+            'es',
         ],
 
         'fallback_locale' => 'en',
