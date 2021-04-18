@@ -92,7 +92,7 @@ trait ConfiguresProfileSettings
         $page->group(function ($page) {
             $page->card(function ($form) {
                 $form->modal('change_password')
-                    ->title('Password')
+                    ->title(ucfirst(__lit('base.password')))
                     ->variant('primary')
                     ->name(fa('user-shield').' '.__lit('profile.change_password'))
                     ->form(function ($modal) {
@@ -101,14 +101,14 @@ trait ConfiguresProfileSettings
                             ->confirm();
 
                         $modal->password('password')
-                            ->title('New Password')
+                            ->title(ucfirst(__lit('base.password')))
                             ->rules('required', 'min:5')
                             ->minScore(0);
 
                         $modal->password('password_confirmation')
                             ->rules('required', 'same:password')
                             ->dontStore()
-                            ->title('New Password')
+                            ->title(ucwords(__lit('profile.new_password')))
                             ->noScore();
                     });
             });
