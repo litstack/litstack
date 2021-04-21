@@ -130,8 +130,11 @@ export default {
 
         // Render dependency stuff.
         this.resolveDependecies(this.field.dependencies);
-        Lit.bus.$on('fieldChanged', () => {
+        Lit.bus.$on('resolveDependencies', () => {
             this.resolveDependecies(this.field.dependencies);
+        });
+        Lit.bus.$on('fieldChanged', () => {
+            Lit.bus.$emit('resolveDependencies');
             this.applyMask();
         });
 
@@ -167,6 +170,10 @@ export default {
          * @return {undefined}
          */
         input(newValue) {
+            if (this.field.readonly) {
+                return;
+            }
+
             this.value = newValue;
 
             this.fillValueToModel(newValue);
@@ -184,6 +191,10 @@ export default {
          */
         applyMask() {
             if (!this.field.mask) {
+                return;
+            }
+
+            if(!this.$refs.field) {
                 return;
             }
 
@@ -234,6 +245,19 @@ export default {
             this.storeOriginalValues();
         },
 
+        getKey() {
+            this.field.local_key;
+        },
+
+        getKeys() {
+            return this.field.local_keys;
+        },
+
+        fieldModifiesMultipleValues() {
+            return !this.field.local_key 
+                && this.field.local_keys instanceof Array;
+        },
+
         /**
          * Fill value to model.
          *
@@ -242,26 +266,38 @@ export default {
          * @return {undefined}
          */
         fillValueToModel(value, locale = null) {
+            if(!this.fieldModifiesMultipleValues()) {
+                return this.fillAttributeValueToModel(this.field.local_key, value, locale);
+            }
+
+            for(let i=0;i<this.field.local_keys.length;i++) {
+                let attribute = this.field.local_keys[i];
+
+                this.fillAttributeValueToModel(attribute, value[attribute], locale);
+            }
+        },
+
+        fillAttributeValueToModel(attribute, value, locale) {
             if (!locale) {
                 locale = this.language;
             }
 
             // Translatable field.
             if (this.field.translatable) {
-                if(!(locale in this.model)) {
+                if (!(locale in this.model.attributes)) {
                     this.model[locale] = {};
                 }
-            
-                return (this.model[locale][this.field.local_key] = value);
+
+                return (this.model[locale][attribute] = value);
             }
 
             // Lit model.
             if (this.model.usesJsonCast()) {
-                return (this.model.attributes[this.field.local_key] = value);
+                return (this.model.attributes[attribute] = value);
             }
 
             // Default non translatable field.
-            return (this.model[this.field.local_key] = value);
+            return (this.model[attribute] = value);
         },
 
         /**
@@ -302,13 +338,37 @@ export default {
          * Get value from model by locale.
          *
          * @param {String} locale
-         * @return {undefined}
+         * @return {any}
          */
         getValueFromLanguage(locale) {
             this.setDefaultModelValuesForLocale(locale);
 
-            let attribute = this.field.local_key;
+            if(!this.fieldModifiesMultipleValues()) {
+                return this.getAttributeValueFromLanguage(
+                    this.field.local_key, locale
+                );
+            }
 
+            let values = {}
+
+            for(let i=0;i<this.field.local_keys.length;i++) {
+                let attribute = this.field.local_keys[i];
+
+                values[attribute] = this.getAttributeValueFromLanguage(
+                    attribute, locale
+                );
+            }
+
+            return values;
+        },
+
+        /**
+         * Get attribute value from model by locale.
+         *
+         * @param {String} locale
+         * @return {any}
+         */
+        getAttributeValueFromLanguage(attribute, locale) {            
             if (this.field.translatable) {
                 return this.model[locale][attribute];
             }
@@ -455,8 +515,8 @@ export default {
          */
         getSaveJobPayload(value) {
             return this.field.translatable
-                ? { [this.language]: { [this.field.local_key]: value } }
-                : { [this.field.local_key]: value };
+                ? { [this.language]: { [this.field.id]: value } }
+                : { [this.field.id]: value };
         },
 
         /**
@@ -466,8 +526,8 @@ export default {
          */
         getSaveJobKey() {
             return this.field.translatable
-                ? `${this.language}.${this.field.local_key}`
-                : this.field.local_key;
+                ? `${this.language}.${this.field.id}`
+                : this.field.id;
         },
 
         /**

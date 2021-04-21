@@ -82,7 +82,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      * @param  string $label
      * @return Column
      */
-    public function col($label = ''): ColumnContract
+    public function col($label = '')
     {
         return $this->columns[] = new Column($label);
     }
@@ -90,13 +90,17 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Create new action column.
      *
-     * @param  string    $title
-     * @param  string    $action
-     * @return Component
+     * @param  string          $title
+     * @param  string          $action
+     * @return Component|mixed
      */
-    public function action($title, $action): ColumnContract
+    public function action($title, $action)
     {
-        $this->columns[] = $component = (new TableButtonAction)->make($title, $action);
+        $component = (new TableButtonAction)->make($title, $action);
+
+        if ($component->check()) {
+            $this->columns[] = $component;
+        }
 
         return $component->getProp('wrapper')->link(false);
     }
@@ -164,18 +168,16 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add Blade View column.
      *
-     * @param  View|string $view
-     * @return View
+     * @param  View|string    $view
+     * @return ColumnContract
      */
-    public function view($view): View
+    public function view($view): ColumnContract
     {
         if (! $view instanceof View) {
             $view = ViewFactory::make($view);
         }
 
-        $this->component(new BladeColumnComponent('lit-blade'))->prop('view', $view);
-
-        return $view;
+        return $this->component(new BladeColumnComponent('lit-blade'))->prop('view', $view);
     }
 
     /**
@@ -215,12 +217,12 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      * @param  string $format
      * @return Column
      */
-    public function date($attribute, $format)
+    public function date($attribute, $format, $isoFormat = false)
     {
         if ($this->parent) {
             $this->parent->cast(
                 $attribute,
-                CarbonColumn::class.":{$format}"
+                CarbonColumn::class.":{$format},{$isoFormat}"
             );
         }
 
@@ -277,7 +279,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      * Add relation column.
      *
      * @param  string            $label
-     * @param  string            $config
+     * @param  string|array      $config
      * @return RelationComponent
      */
     public function relation($related = '', $config = '')
@@ -286,8 +288,12 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
             ->prop('label', preg_replace('/(?<=\\w)(?=[A-Z])/', ' $1', Str::studly($related)))
             ->related($related);
 
-        if (class_exists($config)) {
+        if (is_array($config)) {
             $component->crud($config);
+        } else {
+            if (class_exists($config)) {
+                $component->crud($config);
+            }
         }
 
         return $component;
@@ -300,6 +306,6 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
      */
     public function render(): array
     {
-        return $this->columns;
+        return array_values($this->columns);
     }
 }

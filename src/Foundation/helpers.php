@@ -40,18 +40,18 @@ if (! function_exists('crud')) {
      * @param  mixed                          $model
      * @return \Ignite\Crud\CrudJs|Collection
      */
-    function crud($model)
+    function crud($model, $config)
     {
         if ($model instanceof Collection) {
             $cruds = collect([]);
             foreach ($model as $m) {
-                $cruds[] = crud($m);
+                $cruds[] = crud($m, $config);
             }
 
             return $cruds;
         }
 
-        return new \Ignite\Crud\CrudJs($model);
+        return new \Ignite\Crud\CrudJs($model, $config);
     }
 }
 

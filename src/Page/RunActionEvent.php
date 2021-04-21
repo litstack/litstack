@@ -25,12 +25,24 @@ class RunActionEvent
         $action = app()->make($request->action);
 
         $bindings = array_merge($this->getBindings($request), [
-            'attributes' => new AttributeBag($request->all()['attributes'] ?? []),
+            'attributes' => $this->getAttributeBag($request, $action),
         ]);
 
         $result = app()->call([$action, 'run'], $bindings);
 
         return $this->response($result);
+    }
+
+    /**
+     * Get attribute bag.
+     *
+     * @param  Request      $request
+     * @param  mixed        $action
+     * @return AttributeBag
+     */
+    protected function getAttributeBag(Request $request, $action)
+    {
+        return new AttributeBag($request->all()['attributes'] ?? []);
     }
 
     /**

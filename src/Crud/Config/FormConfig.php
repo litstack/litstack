@@ -10,7 +10,9 @@ use Illuminate\Support\Str;
 class FormConfig
 {
     use Traits\HasCrudShow,
-        Concerns\ManagesActions;
+        Concerns\ManagesActions,
+        Concerns\ManagesConfig,
+        Concerns\ManagesPermissions;
 
     /**
      * Form field model class.
@@ -35,7 +37,19 @@ class FormConfig
     {
         $config = Config::get(static::class);
 
-        return FormFacade::load($config->collection, $config->formName);
+        $model = FormFacade::load($config->collection, $config->formName);
+
+        if (! $model) {
+            $model = Form::firstOrCreate([
+                'config_type' => static::class,
+            ], [
+                'form_name'  => $config->formName,
+                'collection' => $config->collection,
+                'form_type'  => 'show',
+            ]);
+        }
+
+        return $model;
     }
 
     /**
@@ -89,7 +103,7 @@ class FormConfig
      *
      * @return array
      */
-    public function permissions()
+    public function permissions(): array
     {
         return [
             'read'   => $this->authorize(lit_user(), 'read'),

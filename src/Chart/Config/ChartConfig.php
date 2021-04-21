@@ -81,7 +81,7 @@ abstract class ChartConfig
     /**
      * Get relationship query.
      *
-     * @param Builder $query
+     * @param  Builder  $query
      * @return Relation
      */
     protected function getRelationQuery($model)
@@ -104,7 +104,7 @@ abstract class ChartConfig
     /**
      * Add count select to query.
      *
-     * @param Builder $query
+     * @param  Builder $query
      * @return Builder
      */
     protected function count($query)
@@ -119,13 +119,17 @@ abstract class ChartConfig
     /**
      * Add average select to query.
      *
-     * @param Builder $query
-     * @param string  $column
+     * @param  Builder $query
+     * @param  string  $column
      * @return Builder
      */
     protected function average($query, string $column)
     {
-        $this->resultResolver = fn (Collection $values) => $values->avg();
+        $this->resultResolver = function (Collection $values) {
+            return $values->filter(fn ($value) => $value > 0)
+                ->values()
+                ->avg() ?: 0;
+        };
 
         return (clone $query)->select(
             DB::raw("AVG({$column}) as value")
@@ -135,8 +139,8 @@ abstract class ChartConfig
     /**
      * Add sum select to query.
      *
-     * @param Builder $query
-     * @param string  $column
+     * @param  Builder $query
+     * @param  string  $column
      * @return Builder
      */
     protected function sum($query, string $column)
@@ -151,8 +155,8 @@ abstract class ChartConfig
     /**
      * Add min select to query.
      *
-     * @param Builder $query
-     * @param string  $column
+     * @param  Builder $query
+     * @param  string  $column
      * @return Builder
      */
     protected function min($query, string $column)
@@ -167,8 +171,8 @@ abstract class ChartConfig
     /**
      * Add max select to query.
      *
-     * @param Builder $query
-     * @param string  $column
+     * @param  Builder $query
+     * @param  string  $column
      * @return Builder
      */
     protected function max($query, string $column)

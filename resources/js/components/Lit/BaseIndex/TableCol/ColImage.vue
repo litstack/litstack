@@ -1,6 +1,10 @@
 <template>
-    <div :class="`lit-col-image ${!srcValue ? 'empty' : ''}`" :style="style">
-        <lit-fa-icon icon="image" v-if="!srcValue" />
+    <div
+        class="lit-col-image"
+        :class="!srcValue ? ['empty', ...imageClasses] : []"
+        :style="style"
+    >
+        <lit-fa-icon icon="image" v-if="!srcValue" :style="style" />
         <img :src="srcValue" :style="style" v-else />
     </div>
 </template>
@@ -34,6 +38,7 @@ export default {
         format: {
             type: Function,
         },
+        imageClasses: {},
     },
     computed: {
         srcValue() {

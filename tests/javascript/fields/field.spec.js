@@ -229,40 +229,42 @@ describe('fillValueToModel', () => {
 
 describe('save job', () => {
     it('gets correct save job key', () => {
+        field.id = 'dummy_field_id';
         field.local_key = 'dummy_attribute_name';
 
         field.translatable = false;
-        expect(wrapper.vm.getSaveJobKey()).toBe('dummy_attribute_name');
+        expect(wrapper.vm.getSaveJobKey()).toBe('dummy_field_id');
 
         field.translatable = true;
 
         store.commit('SET_LANGUAGE', 'en');
-        expect(wrapper.vm.getSaveJobKey()).toBe('en.dummy_attribute_name');
+        expect(wrapper.vm.getSaveJobKey()).toBe('en.dummy_field_id');
 
         store.commit('SET_LANGUAGE', 'de');
-        expect(wrapper.vm.getSaveJobKey()).toBe('de.dummy_attribute_name');
+        expect(wrapper.vm.getSaveJobKey()).toBe('de.dummy_field_id');
     });
 
     it('gets correct save job payload', () => {
         let params;
+        field.id = 'dummy_field_id';
         field.local_key = 'dummy_attribute_name';
 
         field.translatable = false;
         params = wrapper.vm.getSaveJobPayload('dummy value');
-        expect(params).toStrictEqual({ dummy_attribute_name: 'dummy value' });
+        expect(params).toStrictEqual({ dummy_field_id: 'dummy value' });
 
         field.translatable = true;
 
         store.commit('SET_LANGUAGE', 'en');
         params = wrapper.vm.getSaveJobPayload('dummy value');
         expect(params).toStrictEqual({
-            en: { dummy_attribute_name: 'dummy value' },
+            en: { dummy_field_id: 'dummy value' },
         });
 
         store.commit('SET_LANGUAGE', 'de');
         params = wrapper.vm.getSaveJobPayload('dummy value');
         expect(params).toStrictEqual({
-            de: { dummy_attribute_name: 'dummy value' },
+            de: { dummy_field_id: 'dummy value' },
         });
     });
 
@@ -304,6 +306,7 @@ describe('save job', () => {
     });
 
     it('adds save job to store', () => {
+        field.id = 'dummy_field_id';
         field.local_key = 'dummy_attribute_name';
         field.translatable = false;
         wrapper.vm.original = 'other value';
@@ -314,6 +317,7 @@ describe('save job', () => {
     });
 
     it('removes save job from store when value is original again', () => {
+        field.id = 'dummy_field_id';
         field.local_key = 'dummy_attribute_name';
         field.translatable = false;
         wrapper.vm.original = 'original value';
@@ -328,6 +332,7 @@ describe('save job', () => {
     });
 
     it('updates save job when value has changes', () => {
+        field.id = 'dummy_field_id';
         field.local_key = 'dummy_attribute_name';
         field.translatable = false;
         wrapper.vm.original = 'original value';
@@ -338,7 +343,7 @@ describe('save job', () => {
         expect(store.getters.saveJobs.length).toBe(1);
         expect(
             store.getters.saveJobs[0].params[jobKey].payload
-                .dummy_attribute_name
+                .dummy_field_id
         ).toBe('new value');
 
         wrapper.vm.value = 'other new value';
@@ -346,12 +351,13 @@ describe('save job', () => {
         expect(store.getters.saveJobs.length).toBe(1);
         expect(
             store.getters.saveJobs[0].params[jobKey].payload
-                .dummy_attribute_name
+                .dummy_field_id
         ).toBe('other new value');
     });
 
     it('adds save job to store for translatable field', () => {
         field.translatable = true;
+        field.id = 'dummy_field_id';
         field.local_key = 'dummy_attribute_name';
 
         wrapper.vm.original = {

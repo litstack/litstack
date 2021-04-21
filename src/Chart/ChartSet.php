@@ -52,6 +52,13 @@ class ChartSet
     protected $valueResolver;
 
     /**
+     * Result resolver closure.
+     *
+     * @var Closure
+     */
+    protected $resultResolver;
+
+    /**
      * Time resolver closure.
      *
      * @var Closure
@@ -75,11 +82,10 @@ class ChartSet
     /**
      * Make chart set.
      *
-     * @param Builder $query
-     * @param Closure $valueClosure
-     * @param Closure $timeResolver
-     *
-     * @return void
+     * @param  Builder $query
+     * @param  Closure $valueClosure
+     * @param  Closure $timeResolver
+     * @return self
      */
     public static function make($query, Closure $valueResolver, Closure $timeResolver)
     {
@@ -170,6 +176,13 @@ class ChartSet
         return $this;
     }
 
+    public function results(Closure $closure)
+    {
+        $this->resultResolver = $closure;
+
+        return $this;
+    }
+
     /**
      * Get values from selects.
      *
@@ -178,7 +191,13 @@ class ChartSet
      */
     protected function getValuesFromStatements(array $selects)
     {
-        return $this->getQueryFromStatements($selects)
+        $results = $this->getQueryFromStatements($selects);
+
+        if ($this->resultResolver instanceof Closure) {
+            return call_user_func($this->resultResolver, $results, $this);
+        }
+
+        return $results
             ->get('value')
             ->pluck('value');
     }
@@ -208,6 +227,10 @@ class ChartSet
      */
     protected function convertNullValues(Collection $values)
     {
+        if ($this->resultResolver) {
+            return $values;
+        }
+
         return $values->map(
             fn ($value) => (int) $value
         );

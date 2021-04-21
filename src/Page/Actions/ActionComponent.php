@@ -2,6 +2,7 @@
 
 namespace Ignite\Page\Actions;
 
+use Ignite\Contracts\Page\FileDownloadAction;
 use Ignite\Page\RunActionEvent;
 use Ignite\Vue\Component;
 use Ignite\Vue\Traits\StaticComponentName;
@@ -17,6 +18,13 @@ class ActionComponent extends Component
      * @var string
      */
     protected $name = 'lit-action';
+
+    /**
+     * Action modal instance.
+     *
+     * @var ActionModal|null
+     */
+    protected $modal;
 
     /**
      * Event handlers.
@@ -35,6 +43,20 @@ class ActionComponent extends Component
     protected $title;
 
     /**
+     * The namespace of the action.
+     *
+     * @var string
+     */
+    protected $action;
+
+    /**
+     * The action instance.
+     *
+     * @var mixed
+     */
+    protected $instance;
+
+    /**
      * Create new ActionComponent instance.
      *
      * @param string    $action
@@ -43,13 +65,60 @@ class ActionComponent extends Component
     public function __construct($action, $title, Component $wrapper = null)
     {
         $this->title = $title;
+        $this->action = $action;
         $this->addEventData(['action' => $action]);
 
         if ($wrapper) {
             $this->wrapper($wrapper);
         }
 
-        $this->setModal($action);
+        $this->setModal();
+        $this->setAuthorization();
+    }
+
+    /**
+     * Get action modal instance.
+     *
+     * @return ActionModal|null
+     */
+    public function getModal()
+    {
+        return $this->modal;
+    }
+
+    /**
+     * Authorize the component.
+     *
+     * @param  Closure|bool $authorizer
+     * @return $this
+     */
+    public function authorize($authorizer)
+    {
+        if ($wrapper = $this->getProp('wrapper')) {
+            $wrapper->authorize($authorizer);
+        }
+
+        return parent::authorize($authorizer);
+    }
+
+    /**
+     * Get the action instance.
+     *
+     * @return mixed
+     */
+    public function getInstance()
+    {
+        return $this->instance ?: $this->instance = app()->make($this->action);
+    }
+
+    /**
+     * Get action namespace.
+     *
+     * @return string
+     */
+    public function getNamespace()
+    {
+        return $this->action;
     }
 
     /**
@@ -69,17 +138,34 @@ class ActionComponent extends Component
      * @param  string $action
      * @return void
      */
-    protected function setModal($action)
+    protected function setModal()
     {
-        $instance = app()->make($action);
+        $instance = $this->getInstance();
 
         if (! method_exists($instance, 'modal')) {
             return;
         }
 
-        $this->prop('modal', $modal = $this->newActionModal());
+        $this->prop('modal', $this->modal = $this->newActionModal());
 
-        $instance->modal($modal->title($this->title));
+        $instance->modal($this->modal->title($this->title));
+    }
+
+    /**
+     * Set action authorization.
+     *
+     * @param  string $action
+     * @return void
+     */
+    protected function setAuthorization()
+    {
+        $instance = $this->getInstance();
+
+        if (! method_exists($instance, 'authorize')) {
+            return;
+        }
+
+        $this->authorize(fn ($user) => $instance->authorize($user));
     }
 
     /**
@@ -102,7 +188,13 @@ class ActionComponent extends Component
     {
         $this->throwIfHandlerIsNotValid($handler);
 
-        return $this->on('run', $handler);
+        $this
+            ->on('run', $handler)
+            ->isFileDownload(
+                is_subclass_of($this->action, FileDownloadAction::class)
+            );
+
+        return $this;
     }
 
     /**

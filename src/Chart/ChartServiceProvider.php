@@ -11,6 +11,12 @@ use Ignite\Chart\Engine\ApexEngine;
 use Ignite\Chart\Engine\ApexProgressEngine;
 use Ignite\Chart\Engine\ChartEngineResolver;
 use Ignite\Chart\Engine\NumberEngine;
+use Ignite\Chart\Loader\AreaLoader;
+use Ignite\Chart\Loader\BarLoader;
+use Ignite\Chart\Loader\ChartLoaderResolver;
+use Ignite\Chart\Loader\DonutLoader;
+use Ignite\Chart\Loader\NumberLoader;
+use Ignite\Chart\Loader\ProgressLoader;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
@@ -47,6 +53,7 @@ class ChartServiceProvider extends LaravelServiceProvider
         $this->registerCommands();
 
         $this->registerChartEngineResolver();
+        $this->registerChartLoaderResolver();
 
         $this->registerChartFactory();
     }
@@ -100,6 +107,36 @@ class ChartServiceProvider extends LaravelServiceProvider
     {
         $this->app->singleton('lit.chart.factory', function () {
             return new ChartFactory($this->app['lit.chart.engine.resolver']);
+        });
+    }
+
+    /**
+     * Register EngineResolver.
+     *
+     * @return void
+     */
+    public function registerChartLoaderResolver()
+    {
+        $this->app->singleton('lit.chart.loader.resolver', function () {
+            $resolver = new ChartLoaderResolver();
+
+            $resolver->register('area', function ($config, $engine) {
+                return new AreaLoader($config, $engine);
+            });
+            $resolver->register('bar', function ($config, $engine) {
+                return new BarLoader($config, $engine);
+            });
+            $resolver->register('donut', function ($config, $engine) {
+                return new DonutLoader($config, $engine);
+            });
+            $resolver->register('progress', function ($config, $engine) {
+                return new ProgressLoader($config, $engine);
+            });
+            $resolver->register('number', function ($config, $engine) {
+                return new NumberLoader($config, $engine);
+            });
+
+            return $resolver;
         });
     }
 

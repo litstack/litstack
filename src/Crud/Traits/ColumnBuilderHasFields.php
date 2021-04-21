@@ -2,6 +2,7 @@
 
 namespace Ignite\Crud\Traits;
 
+use Closure;
 use Ignite\Contracts\Crud\Formable;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Field;
@@ -19,10 +20,11 @@ trait ColumnBuilderHasFields
     /**
      * Add form field to table.
      *
-     * @param  string $title
+     * @param  string  $title
+     * @param  Closure $closure
      * @return void
      */
-    public function field($label)
+    public function field($label, Closure $closure = null)
     {
         $formKey = Str::snake($label);
 
@@ -32,7 +34,7 @@ trait ColumnBuilderHasFields
             strip_slashes($this->getFieldRoutePrefix())
         );
 
-        $form->registered(function ($field) use ($label, $formKey) {
+        $form->registered(function ($field) use ($label, $formKey, $closure) {
             $field->noTitle();
 
             $field->mergeOrSetAttribute('params', $this->getFieldParams($formKey, $field));
@@ -51,10 +53,14 @@ trait ColumnBuilderHasFields
                 );
             });
 
-            $this->component($this->getFieldColumnComponentName())
+            $column = $this->component($this->getFieldColumnComponentName())
                 ->label($label)
                 ->prop('col-field', $field)
                 ->link(false);
+
+            if ($closure instanceof Closure) {
+                $closure($column);
+            }
         });
 
         return $form;

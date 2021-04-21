@@ -3,14 +3,10 @@
 namespace Ignite\Chart;
 
 use Ignite\Chart\Contracts\Engine;
-use Ignite\Chart\Loader\AreaLoader;
-use Ignite\Chart\Loader\BarLoader;
 use Ignite\Chart\Loader\ChartLoader;
-use Ignite\Chart\Loader\DonutLoader;
-use Ignite\Chart\Loader\NumberLoader;
-use Ignite\Chart\Loader\ProgressLoader;
 use Ignite\Config\ConfigHandler;
 use Ignite\Support\Facades\Config;
+use InvalidArgumentException;
 
 class ChartController
 {
@@ -44,14 +40,10 @@ class ChartController
      */
     protected function makeLoader(string $chartType, ConfigHandler $config, Engine $engine): ChartLoader
     {
-        $loader = [
-            'donut'     => fn () => new DonutLoader($config, $engine),
-            'area'      => fn () => new AreaLoader($config, $engine),
-            'radialBar' => fn () => new ProgressLoader($config, $engine),
-            'bar'       => fn () => new BarLoader($config, $engine),
-            'number'    => fn () => new NumberLoader($config, $engine),
-        ][$chartType] ?? abort(404);
-
-        return $loader();
+        try {
+            return app('lit.chart.loader.resolver')->resolve($chartType, $config, $engine);
+        } catch (InvalidArgumentException $e) {
+            abort(404, debug($e->getMessage()));
+        }
     }
 }

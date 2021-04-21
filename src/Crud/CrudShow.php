@@ -5,7 +5,6 @@ namespace Ignite\Crud;
 use Closure;
 use Ignite\Contracts\Crud\CrudCreate;
 use Ignite\Contracts\Crud\CrudUpdate;
-use Illuminate\Support\Str;
 
 class CrudShow extends BaseCrudShow implements CrudCreate, CrudUpdate
 {
@@ -33,18 +32,5 @@ class CrudShow extends BaseCrudShow implements CrudCreate, CrudUpdate
         if (! $this->isCreate()) {
             $closure($this);
         }
-    }
-
-    /**
-     * Determines if page is update.
-     *
-     * @return bool
-     */
-    public function isCreate()
-    {
-        $route = request()->route();
-
-        return str_contains($route->getName(), '.create')
-            || Str::endsWith($route->getName(), '.store');
     }
 }

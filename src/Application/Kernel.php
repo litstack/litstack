@@ -39,11 +39,25 @@ class Kernel
     public $providers = [];
 
     /**
-     * Middlewares.
+     * Middlewares that are applied to auth routes.
      *
      * @var array
      */
     protected $middlewares = [];
+
+    /**
+     * Middlewares that are applied to guest routes.
+     *
+     * @var array
+     */
+    protected $guestMiddlewares = [];
+
+    /**
+     * Middlewares that are applied to both, guest and auth routes.
+     *
+     * @var array
+     */
+    protected $publicMiddlewares = [];
 
     /**
      * Create a new Lit kernel instance.
@@ -86,11 +100,38 @@ class Kernel
      */
     public function getMiddlewares()
     {
+        return array_merge(
+            $this->getPublicMiddlewares(),
+            [
+                'lit.auth:'.config('lit.guard'),
+                'lit.crud',
+            ],
+            $this->middlewares
+        );
+    }
+
+    /**
+     * Get public middlewares.
+     *
+     * @return array
+     */
+    public function getPublicMiddlewares()
+    {
         return array_merge([
             'web',
-            'lit.auth:'.config('lit.guard'),
-            'lit.crud',
-        ], $this->middlewares);
+        ], $this->publicMiddlewares);
+    }
+
+    /**
+     * Get public middlewares.
+     *
+     * @return array
+     */
+    public function getGuestMiddlewares()
+    {
+        return array_merge([
+            'web',
+        ], $this->guestMiddlewares);
     }
 
     /**
@@ -185,10 +226,10 @@ class Kernel
 
             foreach ((new Finder)->in($paths)->files() as $repeatable) {
                 $repeatable = $namespace.str_replace(
-                ['/', '.php'],
-                ['\\', ''],
-                Str::after($repeatable->getPathname(), realpath(lit_path()).DIRECTORY_SEPARATOR)
-            );
+                    ['/', '.php'],
+                    ['\\', ''],
+                    Str::after($repeatable->getPathname(), realpath(lit_path()).DIRECTORY_SEPARATOR)
+                );
 
                 if (! is_subclass_of($repeatable, Repeatable::class) ||
                 (new ReflectionClass($repeatable))->isAbstract()) {
@@ -196,8 +237,10 @@ class Kernel
                 }
 
                 $name = Str::snake(Str::replaceLast(
-                'Repeatable', '', class_basename($repeatable)
-            ));
+                    'Repeatable',
+                    '',
+                    class_basename($repeatable)
+                ));
 
                 Crud::repeatable($name, $repeatable);
             }

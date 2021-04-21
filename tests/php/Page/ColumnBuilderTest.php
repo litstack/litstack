@@ -72,7 +72,7 @@ class ColumnBuilderTest extends BackendTestCase
         $builder = new ColumnBuilder;
         $view = m::mock(ViewContract::class);
         View::partialMock()->shouldReceive('make')->withArgs(['dummy_view'])->andReturn($view);
-        $this->assertEquals($view, $builder->view('dummy_view'));
+        $this->assertInstanceOf(ColumnComponent::class, $builder->view('dummy_view'));
     }
 
     /** @test */

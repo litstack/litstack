@@ -13,7 +13,7 @@ interface ColumnBuilder
      * @param  string $label
      * @return Column
      */
-    public function col($label = ''): Column;
+    public function col($label = '');
 
     /**
      * Registers Vue component column.
@@ -27,9 +27,9 @@ interface ColumnBuilder
      * Registers Blade component column.
      *
      * @param  View|string $view
-     * @return View
+     * @return Column
      */
-    public function view($view): View;
+    public function view($view): Column;
 
     /**
      * Add livewire component column.

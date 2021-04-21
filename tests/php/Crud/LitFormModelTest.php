@@ -2,7 +2,7 @@
 
 namespace Tests\Crud;
 
-use Ignite\Crud\CrudResource;
+use Ignite\Crud\FormResource;
 use Ignite\Crud\Models\Media;
 use Ignite\Crud\Models\Repeatable;
 use Illuminate\Support\Facades\Storage;
@@ -27,7 +27,7 @@ class LitFormModelTest extends BackendTestCase
     /** @test */
     public function test_resource_method_returns_crud_resource()
     {
-        $this->assertInstanceOf(CrudResource::class, DummyLitFormModel::create()->resource());
+        $this->assertInstanceOf(FormResource::class, DummyLitFormModel::create()->resource());
     }
 
     /** @test */

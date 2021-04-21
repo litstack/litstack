@@ -148,6 +148,7 @@ class ActionModal extends Component
 
         $form->registering(function (Field $field) {
             $field->setAttribute('storable', false);
+            $field->setAttribute('for_action', true);
         });
 
         $closure($form);
@@ -155,6 +156,16 @@ class ActionModal extends Component
         $this->form = $form;
 
         return $this;
+    }
+
+    /**
+     * Get form instance.
+     *
+     * @return BaseForm|null
+     */
+    public function getForm()
+    {
+        return $this->form;
     }
 
     /**

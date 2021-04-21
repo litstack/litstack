@@ -2,7 +2,9 @@
 
 namespace Ignite\Support;
 
-class AttributeBag
+use Illuminate\Contracts\Support\Arrayable;
+
+class AttributeBag implements Arrayable
 {
     use HasAttributes;
 
@@ -25,6 +27,16 @@ class AttributeBag
     public function has($name)
     {
         return $this->hasAttribute($name);
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->attributes;
     }
 
     /**

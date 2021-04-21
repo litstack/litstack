@@ -2,7 +2,9 @@
 
 namespace Tests;
 
+use Ignite\Crud\FieldDependency;
 use Ignite\Vue\Component;
+use Ignite\Vue\Event;
 use PHPUnit\Framework\TestCase;
 
 class ComponentTest extends TestCase
@@ -74,8 +76,8 @@ class ComponentTest extends TestCase
     public function test_on_method()
     {
         $component = new Component('foo');
-        $this->assertSame($component, $component->on('click', 'handler'));
-        $this->assertSame('handler', $component->getEventHandler('click'));
+        $this->assertInstanceOf(Event::class, $component->on('click', 'handler'));
+        $this->assertSame('handler', $component->getEventHandler('click')->getHandler());
     }
 
     /** @test */
@@ -126,6 +128,33 @@ class ComponentTest extends TestCase
         $rendered = $component->render();
         $this->assertTrue($component->mountedCalled);
         $this->assertTrue($component->renderedCalled);
+    }
+
+    /** @test */
+    public function it_adds_dependency()
+    {
+        $component = new Component('foo');
+        $component->when('bar', 'baz');
+
+        $this->assertCount(1, $component->getDependencies());
+        $this->assertInstanceOf(FieldDependency::class, $component->getDependencies()[0]);
+        $dependency = $component->getDependencies()[0];
+        $this->assertSame('when', $dependency->getCondition());
+        $this->assertSame('bar', $dependency->getAttributeName());
+        $this->assertSame('baz', $dependency->getValue());
+    }
+
+    /** @test */
+    public function it_sets_dependency_dependor()
+    {
+        $component = new Component('foo');
+        $component->dependsOn('hello');
+        $component->when('bar', 'baz');
+
+        $this->assertCount(1, $component->getDependencies());
+        $this->assertInstanceOf(FieldDependency::class, $component->getDependencies()[0]);
+        $dependency = $component->getDependencies()[0];
+        $this->assertSame('hello', $dependency->getDependor());
     }
 }
 

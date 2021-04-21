@@ -11,13 +11,13 @@ class TableTest extends BackendTestCase
     public function test_alphabeticOrder_method()
     {
         $this->assertEquals([
-            'title.desc' => 'A -> Z',
-            'title.asc'  => 'Z -> A',
+            'title.asc'  => 'A -> Z',
+            'title.desc' => 'Z -> A',
         ], Table::alphabeticOrder());
 
         $this->assertEquals([
-            'foo.desc' => 'A -> Z',
-            'foo.asc'  => 'Z -> A',
+            'foo.asc'  => 'A -> Z',
+            'foo.desc' => 'Z -> A',
         ], Table::alphabeticOrder('foo'));
     }
 

@@ -7,6 +7,13 @@ abstract class BarChartConfig extends ChartConfig
     use Concerns\HasResults;
 
     /**
+     * Chart type.
+     *
+     * @var string
+     */
+    public $type = 'bar';
+
+    /**
      * Compare to previous time.
      *
      * @var bool

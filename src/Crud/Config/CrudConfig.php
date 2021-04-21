@@ -18,7 +18,9 @@ abstract class CrudConfig
 {
     use HasCrudShow,
         HasCrudIndex,
-        Concerns\ManagesActions;
+        Concerns\ManagesActions,
+        Concerns\ManagesConfig,
+        Concerns\ManagesPermissions;
 
     /**
      * Controller class.
@@ -57,16 +59,6 @@ abstract class CrudConfig
     public function getFormNameFor($model)
     {
         return 'show';
-    }
-
-    /**
-     * Get config handler.
-     *
-     * @return ConfigHandler
-     */
-    public function get()
-    {
-        return Config::get(static::class);
     }
 
     /**
@@ -163,7 +155,7 @@ abstract class CrudConfig
      *
      * @return array
      */
-    public function permissions()
+    public function permissions(): array
     {
         $permissions = [];
         $operations = ['create', 'read', 'update', 'delete'];

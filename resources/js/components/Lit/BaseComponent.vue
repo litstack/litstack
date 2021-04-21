@@ -1,7 +1,13 @@
 <script>
+import dependencyMethods from './../Crud/Fields/dependecy_methods';
+
 export default {
     name: 'BaseComponent',
     render(createElement) {
+        if (!this.shouldRender) {
+            return;
+        }
+
         return createElement(
             this.component.name,
             {
@@ -25,18 +31,34 @@ export default {
         },
         eventData: {
             type: Object,
-            default() {
-                return {};
-            },
+            default: () => {},
         },
     },
     data() {
         return {
+            /**
+             * Determines if the field fulfills conditions.
+             */
+            fulfillsConditions: true,
+
             events: {},
             sendingEventRequest: false,
         };
     },
     computed: {
+        /**
+         * Determines if the component should be rendered.
+         *
+         * @return {Boolean}
+         */
+        shouldRender() {
+            if (!this.component.dependencies) {
+                return true;
+            }
+
+            return this.fulfillsConditions;
+        },
+
         props() {
             return {
                 ...this.$attrs,
@@ -57,8 +79,15 @@ export default {
     },
     beforeMount() {
         this.setEvents();
+
+        this.resolveDependecies(this.component.dependencies);
+        Lit.bus.$on('resolveDependencies', () => {
+            this.resolveDependecies(this.component.dependencies);
+        });
     },
     methods: {
+        ...dependencyMethods,
+
         createChildren(createElement) {
             let children = [];
             for (let i in this.children) {
@@ -82,20 +111,31 @@ export default {
             if (!this.component.events) {
                 return;
             }
-            for (let event in this.component.events) {
-                let handler = this.component.events[event];
-                this.events[event] = data => {
-                    this.handleEvent(handler, data);
+            
+            for (let name in this.component.events) {
+                let event = this.component.events[name];
+                this.events[name] = (data) => {
+                    return this.handleEvent(event, data);
                 };
             }
         },
-        async handleEvent(handler, data) {
+        async handleEvent(event, data) {
             this.sendingEventRequest = true;
-            let response = await this.sendHandleEvent(handler, data);
+            let response = await this.sendHandleEvent(event, data);
             this.sendingEventRequest = false;
 
             if (!response) {
                 return;
+            }
+
+            if (
+                typeof response.data == 'object' &&
+                'redirect' in response.data
+            ) {
+                let a = document.createElement('a');
+                a.target = '_blank';
+                a.href = response.data.redirect;
+                a.click();
             }
 
             let responseURL = response.request.responseURL;
@@ -110,21 +150,38 @@ export default {
 
             Lit.bus.$emit('reload');
 
-            this.$emit('eventHandled', response);
+            this.$emit('eventHandled', {event, response});
+            Lit.bus.$emit('eventHandled', {event, response});
         },
-        async sendHandleEvent(handler, data) {
+        async sendHandleEvent(event, data) {
+            let response;
+            
             try {
-                return await axios.post(`handle-event`, {
+                response = await axios.post(`handle-event`, {
                     ...this.eventData,
                     ...(this.component.props.eventData || {}),
                     ...(this.$attrs['event-data'] || {}),
                     ...(this.$attrs['eventData'] || {}),
                     ...data,
-                    handler,
-                });
+                    handler: event.handler,
+                }, this.getEventRequestOptions(event));
+
+                Lit.bus.$emit('response', response);
             } catch (e) {
-                console.log(e);
+                Lit.bus.$emit('response', e);
             }
+
+            return response;
+        },
+
+        getEventRequestOptions(event) {
+            let options = {};
+
+            if(event.isFileDownload) {
+                options.responseType = 'blob';
+            }
+
+            return options;
         },
 
         isFileDownload(response) {
@@ -150,7 +207,7 @@ export default {
         },
 
         handleFileDownload(response) {
-            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const url = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
             const link = document.createElement('a');
             link.href = url;
             link.setAttribute(
@@ -166,7 +223,7 @@ export default {
             let split = response.headers['content-disposition'].split(
                 'filename='
             );
-            return split[split.length - 1];
+            return split[split.length - 1].replace(/["']/g, "");
         },
     },
 };

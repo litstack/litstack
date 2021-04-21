@@ -66,9 +66,10 @@
                     />
 
                     <lit-base-index-table-sort
-                        :sortBy="sortBy"
                         v-if="hasSort"
-                        :sortByDefault="sortByDefault"
+                        :sort-by="sortBy"
+                        :sort-by-default="sortByDefault"
+                        :sort-by-key="sort_by_key"
                         @sort="sort"
                     />
                 </lit-base-index-table-form>
@@ -93,6 +94,8 @@
                     :no-select="noSelect"
                     :small="small"
                     :selectedItems="selectedItems"
+                    :sort-by-column="sortByColumn"
+                    :sort-by-direction="sortByDirection"
                     @select="select"
                     @unselect="unselect"
                     @sort="sort"
@@ -300,6 +303,21 @@ export default {
         this._loadItems();
     },
     computed: {
+        sortByColumn() {
+            if(!this.sort_by_key){
+                return;
+            }
+            return _(this.sort_by_key.split('.'))
+                .tap(a => a.pop())
+                .value()
+                .join('.');
+        },
+        sortByDirection() {
+            if(!this.sort_by_key){
+                return;
+            }
+            return _.last(this.sort_by_key.split('.'));
+        },
         canSort() {
             if (!this.sortable) {
                 return false;
@@ -337,10 +355,6 @@ export default {
                 }
             }
             this.$emit('sorted', { sortedItems, ids });
-        },
-        sort(sort) {
-            this.sort_by_key = sort;
-            this._loadItems();
         },
         newTab(index) {
             this.tab = this.tabs[index];
@@ -406,8 +420,12 @@ export default {
         resetFilter() {
             this.filter_scopes = [];
         },
-        sort(key) {
-            this.sort_by_key = key;
+         sort({column, direction}) {
+            if(!column) {
+                this.sort_by_key = '';
+            } else {
+                this.sort_by_key = `${column}.${direction}`;
+            }
             this._loadItems();
         },
         unselect(item) {

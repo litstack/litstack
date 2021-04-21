@@ -1,7 +1,7 @@
 <template>
     <b-dropdown
         right
-        variant="outline-secondary"
+        :variant="hasActiveSort ? 'primary': 'outline-secondary'"
         v-if="sortBy"
         class="dropdown-md-square-mobile"
         no-caret
@@ -16,7 +16,7 @@
             :key="key"
             @click="sort(key)"
         >
-            <b-form-radio :checked="sort_by_key" :value="key">
+            <b-form-radio :checked="sortByKey" :value="key">
                 {{ text }}
             </b-form-radio>
         </b-dropdown-item>
@@ -35,17 +35,27 @@ export default {
             type: String,
             required: true,
         },
-    },
-    data() {
-        return {
-            sort_by_key: '',
-        };
+        sortByKey: {
+            type: String
+        }
     },
     methods: {
         sort(key) {
-            this.sort_by_key = key;
-            this.$emit('sort', key);
+            let column = _(key.split('.')).tap(a => a.pop()).value().join('.')
+            let direction = _.last(key.split('.'))
+            this.$emit('sort', {column, direction});
         },
     },
+    computed: {
+        hasActiveSort() {
+            for(let key in this.sortBy) {
+                if(this.sortByKey == key) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
 };
 </script>

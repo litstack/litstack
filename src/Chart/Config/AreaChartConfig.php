@@ -7,6 +7,13 @@ abstract class AreaChartConfig extends ChartConfig
     use Concerns\HasResults;
 
     /**
+     * Chart type.
+     *
+     * @var string
+     */
+    public $type = 'area';
+
+    /**
      * Compare to previous time.
      *
      * @var bool

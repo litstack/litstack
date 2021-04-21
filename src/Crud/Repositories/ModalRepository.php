@@ -46,6 +46,6 @@ class ModalRepository extends BaseFieldRepository
 
         $model->update($attributes);
 
-        return crud($model);
+        return crud($model, $this->config);
     }
 }

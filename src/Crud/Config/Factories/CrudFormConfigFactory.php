@@ -8,12 +8,14 @@ use Ignite\Config\ConfigHandler;
 use Ignite\Contracts\Crud\CrudCreate;
 use Ignite\Contracts\Crud\CrudUpdate;
 use Ignite\Crud\Actions\DestroyAction;
+use Ignite\Crud\BaseCrudShow;
 use Ignite\Crud\BaseForm;
 use Ignite\Crud\Config\CrudConfig;
 use Ignite\Crud\CrudShow;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
+use ReflectionUnionType;
 
 class CrudFormConfigFactory extends ConfigFactory
 {
@@ -41,11 +43,20 @@ class CrudFormConfigFactory extends ConfigFactory
             return false;
         }
 
-        // TODO: ReflectionUnionType
-        $type = $type->getName();
+        $types = [$type];
+        if ($type instanceof ReflectionUnionType) {
+            $types = $type->getTypes();
+        }
 
-        if (is_subclass_of($type, CrudCreate::class) || is_subclass_of($type, CrudUpdate::class)) {
-            return 'show';
+        foreach ($types as $type) {
+            $type = $type->getName();
+
+            if (is_subclass_of($type, CrudCreate::class) ||
+                is_subclass_of($type, CrudUpdate::class) ||
+                $type == CrudCreate::class ||
+                $type == CrudUpdate::class) {
+                return 'show';
+            }
         }
 
         return false;
@@ -115,11 +126,11 @@ class CrudFormConfigFactory extends ConfigFactory
     /**
      * Bind events from config.
      *
-     * @param  ConfigHandler $config
-     * @param  CrudShow      $page
+     * @param  BaseCrudShow $config
+     * @param  CrudShow     $page
      * @return void
      */
-    protected function bindEventsFromConfig(ConfigHandler $config, CrudShow $page)
+    protected function bindEventsFromConfig(ConfigHandler $config, BaseCrudShow $page)
     {
         $reflector = new ReflectionClass($config->getConfig());
 

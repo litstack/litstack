@@ -2,147 +2,57 @@
 
 namespace Ignite\Crud;
 
-use Ignite\Crud\Models\LitFormModel;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 
-class CrudResource extends JsonResource
+abstract class CrudResource extends JsonResource
 {
     /**
-     * A list of field ids that should be rendered by the resource. If only is
-     * null, all fields will be rendered.
+     * The config instance.
      *
-     * @var array|null
+     * @var ConfigHandler|Field
      */
-    protected $only;
-
-    /**
-     * The resource instance.
-     *
-     * @var LitFormModel
-     */
-    public $resource;
+    protected $config;
 
     /**
      * Create a new resource instance.
      *
-     * @param  LitFormModel $resource
+     * @param  mixed               $resource
+     * @param  ConfigHandler|Field $config
      * @return void
      */
-    public function __construct(LitFormModel $resource)
+    public function __construct($resource, $config)
     {
         parent::__construct($resource);
+        $this->config = $config;
     }
 
     /**
-     * Transform the resource into an array.
+     * Render the resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  Request $request
      * @return array
      */
-    public function toArray($request)
+    public function render($request)
     {
-        $data = [
-            'id' => $this->id,
-        ];
-
-        foreach ($this->fields as $field) {
-            if (! $this->shouldBeRendered($field)) {
-                continue;
-            }
-
-            $value = $this->getAttribute($field->local_key);
-
-            if ($value instanceof Collection) {
-                $value = $value->map(function ($item) use ($request) {
-                    if ($item instanceof LitFormModel) {
-                        return $item->resource()->toArray($request);
-                    }
-
-                    return $item;
-                })->toArray();
-            }
-
-            $data[$field->id] = $value;
-        }
-
-        return $data;
-    }
-
-    /**
-     * Set field ids that shouldn't be rendered by the resource.
-     *
-     * @param  array ...$except
-     * @return $this
-     */
-    public function except(...$except)
-    {
-        $except = Arr::flatten($except);
-
-        return $this->only(
-            collect($this->getFieldIds())->filter(fn ($id) => ! in_array($id, $except))
+        return array_merge(
+            $this->toArray($request),
+            $this->getCrudArray()
         );
     }
 
     /**
-     * Set field ids that should be rendered by the resource.
-     *
-     * @param  array ...$only
-     * @return $this
-     */
-    public function only(...$only)
-    {
-        if (count($only) > 1) {
-            $this->only = $only;
-        } elseif ($only[0] instanceof Collection) {
-            $this->only = Arr::wrap($only[0]->values()->toArray());
-        } else {
-            $this->only = Arr::wrap($only[0]);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get except ids.
+     * Get crud array.
      *
      * @return array
      */
-    public function getExcept()
+    protected function getCrudArray()
     {
-        return collect($this->getFieldIds())
-            ->filter(fn ($id) => ! in_array($id, $this->only))
-            ->values()
-            ->toArray();
-    }
+        $array = [];
 
-    /**
-     * Get only ids.
-     *
-     * @return array
-     */
-    public function getOnly()
-    {
-        if (is_null($this->only)) {
-            return $this->getFieldIds();
+        if ($this->_lit_route) {
+            $array['_lit_route'] = $this->_lit_route;
         }
 
-        return $this->only;
-    }
-
-    /**
-     * Determine if a field should be rendered by the resource.
-     *
-     * @param  string $field
-     * @return bool
-     */
-    public function shouldBeRendered($field)
-    {
-        if ($field instanceof Field) {
-            $field = $field->local_key;
-        }
-
-        return in_array($field, $this->getOnly());
+        return $array;
     }
 }

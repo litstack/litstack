@@ -1,6 +1,127 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.4.3...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.0...3.x)
+
+### Fixed
+
+-   Fixed translations ([a8d3409](https://github.com/litstack/litstack/commit/a8d3409f3865d4fb3c3ad6f5ae7253f0e9224f4b))
+
+## [v3.7.0](https://github.com/litstack/litstack/compare/v3.6.1...v3.7.0)
+
+### Added
+
+-   Global search 🔥 ([#196](https://github.com/litstack/litstack/pull/196))
+-   Password reset ([0dedfd7](https://github.com/litstack/litstack/commit/0dedfd71de8843b6c3fc872a7b8bac8bf9fc4cb7))
+
+### Fixed
+
+-   Fixed sortable relations ([309a2c4](https://github.com/litstack/litstack/commit/309a2c49e401b70c0e532b44f6c0791837972fb6))
+-   Fixed image cropper is throwing a vue error in reapeatables ([e689dd0](https://github.com/litstack/litstack/commit/e689dd0a74fc74c9189db9b34bf78d78c7c8989d))
+
+## [v3.6.1](https://github.com/litstack/litstack/compare/v3.6.0...v3.6.1)
+
+### Added
+
+-   Added form field rules for crud actions ([3c9d277](https://github.com/litstack/litstack/commit/3c9d277865bbe412dee9b4e76c4225003a2fea0b), [33e8ed6](https://github.com/litstack/litstack/commit/33e8ed6445611c35b45dee9a8229320c6c67fb52))
+
+### Fixed
+
+-   Fixed ambiguous columns when searching ([eecd020](https://github.com/litstack/litstack/commit/eecd020a76eedd51473073a71892302e299b73c5))
+-   Fixed actions that dont use modals ([89adfb8](https://github.com/litstack/litstack/commit/89adfb83fd70a85082a2993bf936df74c2f60b7f))
+-   Fixed input masks ([b382988](https://github.com/litstack/litstack/commit/b3829887216d293ae183161b25205eb5e1bfd235))
+
+## [v3.6.0](https://github.com/litstack/litstack/compare/v3.5.2...v3.6.0)
+
+### Added
+
+-   Added `daterange` field ([2d72292](https://github.com/litstack/litstack/commit/2d72292cfabd651f6701ea7f4cc00246d8f7985c), [7cd2923](https://github.com/litstack/litstack/commit/7cd29232cdea8d7f63babf060a0a912523a3d31b), [7cea863](https://github.com/litstack/litstack/commit/7cea8639b21526716638a4e80f2958d05f0025f7))
+-   Added support for pdf download in actions ([6c7546a](https://github.com/litstack/litstack/commit/6c7546a2a489b599be0d33e3046876f5dd32e580))
+
+### Fixed
+
+-   Fixed relation edit button ([ea6bd08](https://github.com/litstack/litstack/commit/ea6bd089d470d22fe57d52c567c48228105c13b5))
+
+## [v3.5.2](https://github.com/litstack/litstack/compare/v3.5.1...v3.5.2)
+
+### Added
+
+-   Added `badge` option for navigation entries ([9c397b7](https://github.com/litstack/litstack/commit/9c397b7663cec6de98f17751417c0c8cddb96ef9))
+-   Added option to `domain` serve litstack from a certain domain ([b2b6509](https://github.com/litstack/litstack/commit/b2b65095f2fba5fa49b8a6c09eca1ff82373ce1b), [c19c69c](https://github.com/litstack/litstack/commit/c19c69c98c0450997871e5a9d35b004f35026430), [956b251](https://github.com/litstack/litstack/commit/956b251cf60cc18bfa2b2490755c20392f488d63))
+
+### Fixed
+
+-   Fixed select field background ([04dd7f1](https://github.com/litstack/litstack/commit/04dd7f1dc441d75a9e8c3fae2a7ae0658e156468))
+-   Fixed subPages are not only shown on create ([d6e8c85](https://github.com/litstack/litstack/commit/d6e8c8544903b18a313a08e744c7e76f28d79276))
+-   Fixed custom styles are not applied to index table columns ([323c14b](https://github.com/litstack/litstack/commit/323c14b163a00abea917296e140afca169652ff5))
+
+## [v3.5.1](https://github.com/litstack/litstack/compare/v3.5.0...v3.5.1)
+
+### Fixed
+
+-   Fixed relation link missing in relation table ([#180](https://github.com/litstack/litstack/pull/180))
+
+## [v3.5.0](https://github.com/litstack/litstack/compare/v3.4.5...v3.5.0)
+
+### Added
+
+-   Added model dependencies for all components ([#173](https://github.com/litstack/litstack/pull/173), [015c9ed](https://github.com/litstack/litstack/commit/015c9edc317a8e43f9011f634485c21cfb6f41c6))
+-   Added route binding for translatable models ([#179](https://github.com/litstack/litstack/pull/179))
+-   Added the ability to apply a resource to cruds ([fcb4bc3](https://github.com/litstack/litstack/commit/fcb4bc3c2eb84d52ac11ab3aa68aea0424570d3c))
+-   Added `whenNotIn` dependency method ([e51e066](https://github.com/litstack/litstack/commit/e51e06664cf0873b5053374102467a93cf50fa99))
+-   Added `can` method that checks permission to crud config ([83d68ad](https://github.com/litstack/litstack/commit/83d68ad457c0e2ef09d77bec02eabb5cb1298d3e))
+-   Added allowing `boolean` value for authorizing components ([2f4c47d](https://github.com/litstack/litstack/commit/2f4c47dd8f08ebb9333e2e3bc3ef85cdd6454267))
+-   Added unauthorized actions are not rendered ([fad348f](https://github.com/litstack/litstack/commit/fad348f618a0e375a4ca6d6c0b91a70f5b53782d))
+-   Added multilanguage preview ([112decc](https://github.com/litstack/litstack/commit/112decc63f3f09d6bbe8f9910e4d43449f070fe8))
+-   Added index table column dependencies ([ee6b223](https://github.com/litstack/litstack/commit/ee6b22384f93cdd22126a06c8362173c0e6465d4))
+-   Added `trans` and `transChoice` index table columns ([646dcad](https://github.com/litstack/litstack/commit/646dcadebea3ab5c94c4e0bbaa1b21e475702a76), [a2661ba](https://github.com/litstack/litstack/commit/a2661ba23356d03104e967a047900c2771ed2b93))
+-   Added support for `morphTo` relationships in index table columns ([fd7f5e8](https://github.com/litstack/litstack/commit/fd7f5e8121be77ca362b506cd32a2c83c83c5d58))
+-   Added ability to apply column options to inline field columns ([fd7f5e8](https://github.com/litstack/litstack/commit/fd7f5e8121be77ca362b506cd32a2c83c83c5d58))
+
+### Fixed
+
+-   Fixed scrolling on mobile ([1f0513d](https://github.com/litstack/litstack/commit/1f0513d675d16629645f64cdff59bc37cb4adb87))
+-   Fixed chart `averag` total ([b619a3e](https://github.com/litstack/litstack/commit/b619a3eefd823a75151659df750b1dfb8b378612))
+-   Fixed donut chart stub ([36daf0d](https://github.com/litstack/litstack/commit/36daf0dfb53068102155d9f8a01b667a7831b072))
+-   Fixed relationship index table cannot be sorted ([fd7f5e8](https://github.com/litstack/litstack/commit/fd7f5e8121be77ca362b506cd32a2c83c83c5d58))
+
+
+### Changed
+
+-   Changed namespace of `Ignite\Crud\CrudResource` to `Ignite\Crud\FormResource` ([fcb4bc3](https://github.com/litstack/litstack/commit/fcb4bc3c2eb84d52ac11ab3aa68aea0424570d3c))
+-   Improved index table sorting ([9dac78f](https://github.com/litstack/litstack/commit/9dac78f8240dded9c52131a1516530d0059c3476))
+
+## [v3.4.5](https://github.com/litstack/litstack/compare/v3.4.4...v3.4.5)
+
+### Added
+
+-   Added `isoFormat` option to datetime field ([a48798c](https://github.com/litstack/litstack/commit/a48798ce6d781b2ad36ba8877c9a9fa9ee2c9795))
+-   Added `readOnly` for `boolean`, `radio` and `checkboxes`fields ([014ac13](https://github.com/litstack/litstack/commit/014ac13e5b6e723c489bec14453c2bf9294b1c88))
+-   Added `nowrap` table column option ([7c876b3](https://github.com/litstack/litstack/commit/7c876b39370d120c171d80c7ae26c5f19e6ab1ee))
+
+### Fixed
+
+-   Fixed crud forms using union types ([ed16f23](https://github.com/litstack/litstack/commit/ed16f2347b84964d0e803bd4fe5eae86e9a67237))
+-   Fixed `date` column uses application timezone ([38420d6](https://github.com/litstack/litstack/commit/38420d63ee188e346888139a40c5f3afb8e00131))
+-   Fixed relation table `unlink` button ([73ecf04](https://github.com/litstack/litstack/commit/73ecf04603c9709af324fbf93c4b172a169542e7))
+-   Fixed empty `time` field not editable ([e4861a5](https://github.com/litstack/litstack/commit/e4861a5a33b7368d7b087966b8310dc4b3675c1d))
+-   Fixed empty `time` field not editable ([e4861a5](https://github.com/litstack/litstack/commit/e4861a5a33b7368d7b087966b8310dc4b3675c1d))
+-   Fixed `no items selected` for list field ([e4861a5](https://github.com/litstack/litstack/commit/e4861a5a33b7368d7b087966b8310dc4b3675c1d))
+-   Fixed `checkboxes` acting like `radio` ([e4334d4](https://github.com/litstack/litstack/commit/e4334d4b71dde9544e44729a4e1837d6c4752bf6))
+-   Fixed stacked `checkboxes` css ([c9ae4a7](https://github.com/litstack/litstack/commit/c9ae4a74265c2af02065a49e59e622f59850264a))
+-   Fixed view column returning view instad of column ([9c903f4](https://github.com/litstack/litstack/commit/9c903f438d1fb468b48fe0cadae6e49d13060fcb))
+-   Fixed empty avatare column is not rounded ([7cc6f1b](https://github.com/litstack/litstack/commit/7cc6f1bf0288a0479da5458ec61f46316cacb73c))
+-   Fixed alphabetic table order reversed ([589bba3](https://github.com/litstack/litstack/commit/589bba3f6cd2e72b446361d55992f70859bf4715))
+
+### Changed
+
+-   Changed reset password screen to match login ([#175](https://github.com/litstack/litstack/pull/175))
+-   Changed form gets created in `load` method of its config ([2c57597](https://github.com/litstack/litstack/commit/2c5759767c033503488099d29125d03f15e948b3))
+
+## [v3.4.4](https://github.com/litstack/litstack/compare/v3.4.3...v3.4.4)
+
+### Fixed
+
+-   Fixed single actio in index table ([9ce87d1](https://github.com/litstack/litstack/commit/9ce87d11956a7bd738bcedc7a32fb79b57bf8db4))
 
 ## [v3.4.3](https://github.com/litstack/litstack/compare/v3.4.2...v3.4.3)
 

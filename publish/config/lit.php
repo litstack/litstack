@@ -12,7 +12,19 @@ return [
     |
     */
 
-    'route_prefix' => 'admin',
+    'route_prefix' => env('LITSTACK_ROUTE_PREFIX', 'admin'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Lit Domain
+    |--------------------------------------------------------------------------
+    |
+    | You may wish do make the litstack admin panel accessible form a certain
+    | domain, e.g. http://admin.your-domain.tld
+    |
+    */
+
+    'domain' => env('LITSTACK_DOMAIN', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -69,6 +81,8 @@ return [
         \Ignite\Crud\CrudServiceProvider::class,
         \Ignite\User\UserServiceProvider::class,
         \Ignite\Page\PageServiceProvider::class,
+        \Ignite\Search\SearchServiceProvider::class,
+        //\Ignite\Auth\PasswordResetServiceProvider::class,
 
         // Uncomment to enable a link to your system info in the topbar navigation.
         //\Ignite\Info\InfoServiceProvider::class,
@@ -106,6 +120,12 @@ return [
         'locales' => [
             'en',
             'de',
+            'fr',
+            'fa',
+            'pl',
+            'it',
+            'tr',
+            'es',
         ],
 
         'fallback_locale' => 'en',

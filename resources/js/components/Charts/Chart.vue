@@ -275,10 +275,16 @@ export default {
             if (!response) {
                 return;
             }
+
             if (this.chart.type == 'number') {
                 this.value = response.data.value;
             } else {
                 this.$refs.chart.update(response.data.chart);
+                try {
+                    this.$refs.chart.raw(response.data);
+                }catch(e) {
+
+                }
             }
             this.makeResults(response.data.results);
         },

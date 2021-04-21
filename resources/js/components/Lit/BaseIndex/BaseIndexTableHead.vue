@@ -12,15 +12,15 @@
                 }"
             >
                 <div
-                    @click="sortCol(col.value, col.sort_by, key)"
+                    @click="sortCol(col.sort_by)"
                     :class="{
-                        'text-muted': key != activeCol && activeCol != null,
+                        'text-muted': col.sort_by != sortByColumn && sortByColumn != null,
                         ['pointer']: col.sort_by ? true : false,
                     }"
                 >
                     <span v-html="col.label" />
-                    <span class="d-inline-block ml-2" v-if="key == activeCol">
-                        <span v-html="sortIcon"> </span>
+                    <span class="d-inline-block ml-2" v-if="col.sort_by == sortByColumn && sortByColumn != null">
+                        <span v-html="sortIcon"/>
                     </span>
                 </div>
             </th>
@@ -44,6 +44,12 @@ export default {
             type: Array,
             required: true,
         },
+        sortByColumn: {
+            type: String,
+        },
+        sortByDirection: {
+            type: String,
+        },
         noSelect: {
             type: Boolean,
             default() {
@@ -51,58 +57,52 @@ export default {
             },
         },
     },
-    data() {
-        return {
-            sort: null,
-            activeCol: null,
-        };
-    },
     watch: {
-        sort() {
+        sortByColumn() {
+            console.log('abc');
+            this.$forceUpdate();
+        },
+        sortByDirection() {
             console.log('abc');
             this.$forceUpdate();
         },
     },
     computed: {
         sortIcon() {
-            return this.sort == 'asc'
+            return this.sortByDirection == 'asc'
                 ? `<i class="fas fa-sort-amount-up"></i>`
                 : `<i class="fas fa-sort-amount-down"></i>`;
         },
     },
     methods: {
-        sortCol(value, sort_by, index) {
-            if (!sort_by) {
+        sortCol(column) {
+            if (!column) {
                 return;
             }
-            if (this.sort == null) {
-                this.sort = 'asc';
-            }
-            this.activeCol = index;
 
-            let sort = sort_by;
+            let direction = '';
 
-            if (!sort_by) {
-                sort = value
-                    .replace('{', '')
-                    .replace('}', '')
-                    .concat(`.${this.sort}`);
-            }
-
-            switch (this.sort) {
+            switch (this.sortByDirection) {
                 case 'asc':
-                    this.sort = 'desc';
+                    direction = null;
                     break;
                 case 'desc':
-                    this.sort = 'asc';
+                    direction = 'asc';
+                    break;
+                default:
+                    direction = 'asc';
                     break;
             }
 
-            sort = `${sort}.${this.sort}`;
+            if(this.sortByColumn != column) {
+                direction = 'desc';
+            }
 
-            // TODO: remove this when crud table uses lit-index-table
-            this.$bus.$emit('crudSort', sort);
-            this.$emit('sort', sort);
+            if(direction == null) { 
+                column = null;
+            }
+
+            this.$emit('sort', {column, direction});
         },
     },
 };

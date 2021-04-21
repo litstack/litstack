@@ -3,6 +3,7 @@
 namespace Ignite\Crud;
 
 use Carbon\CarbonInterface;
+use Ignite\Config\ConfigHandler;
 use Ignite\Crud\Models\LitFormModel;
 use Ignite\Support\VueProp;
 
@@ -16,13 +17,23 @@ class CrudJs extends VueProp
     protected $model;
 
     /**
+     * The config instance.
+     *
+     * @var ConfigHandler|Field
+     */
+    protected $config;
+
+    /**
      * Create new CrudJs instance.
      *
-     * @param mixed $model
+     * @param  mixed               $model
+     * @param  ConfigHandler|Field $config
+     * @return void
      */
-    public function __construct($model)
+    public function __construct($model, $config)
     {
         $this->model = $model;
+        $this->config = $config;
     }
 
     /**
@@ -46,6 +57,10 @@ class CrudJs extends VueProp
      */
     public function getModelAttributes()
     {
+        if ($resource = $this->getResource()) {
+            return $this->renderResource($resource);
+        }
+
         $array = $this->castAttributes(
             $this->model->toArray()
         );
@@ -63,6 +78,35 @@ class CrudJs extends VueProp
         $array = array_merge($translationsArray, $array);
 
         return $array;
+    }
+
+    /**
+     * Render resource.
+     *
+     * @param  CrudResource $resource
+     * @return array
+     */
+    public function renderResource(CrudResource $resource)
+    {
+        return $resource->render(request());
+    }
+
+    /**
+     * Get resource instance.
+     *
+     * @return FormResource
+     */
+    protected function getResource()
+    {
+        if (! $this->config) {
+            return;
+        }
+
+        if (! $resource = $this->config->resource) {
+            return;
+        }
+
+        return new $resource($this->model, $this->config);
     }
 
     /**

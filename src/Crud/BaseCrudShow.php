@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Support\Traits\Macroable;
 
@@ -165,7 +166,8 @@ class BaseCrudShow extends Page
     {
         $chart = parent::chart($name);
 
-        $chart->setAttribute('send_model_id',
+        $chart->setAttribute(
+            'send_model_id',
             ! is_subclass_of($this->form->getModel(), Form::class)
             && $this->form->getModel() != Form::class
         );
@@ -202,6 +204,24 @@ class BaseCrudShow extends Page
     }
 
     /**
+     * Determines if page is update.
+     *
+     * @return bool
+     */
+    public function isCreate()
+    {
+        $route = request()->route();
+
+        if (request()->method() != 'GET') {
+            return request()->method() == 'POST'
+                && count(explode('/', Str::after(request()->url(), '/api/'))) == 1;
+        }
+
+        return str_contains($route->getName(), '.create')
+            || Str::endsWith($route->getName(), '.store');
+    }
+
+    /**
      * Add subpage.
      *
      * @param  string          $config
@@ -228,7 +248,8 @@ class BaseCrudShow extends Page
             ->size('sm')
             ->variant('transparent')
             ->prop('href', lit()->url($prefix))
-            ->domProp('innerHTML', $icon ? "{$icon} {$title}" : $title);
+            ->domProp('innerHTML', $icon ? "{$icon} {$title}" : $title)
+            ->authorize(! $this->isCreate());
     }
 
     /**
@@ -256,16 +277,26 @@ class BaseCrudShow extends Page
     /**
      * Add crud preview for the given url.
      *
-     * @param  string          $url
+     * @param  string|Closure  $url
      * @return ButtonComponent
      */
     public function preview($url)
     {
-        if ($url instanceof Closure) {
-            $url = $url(app()->getLocale());
+        $urls = [];
+        foreach (array_merge(config('translatable.locales'), [app()->getLocale()]) as $locale) {
+            if ($url instanceof Closure) {
+                if (! $model = $this->config->getModelInstance()) {
+                    $urls[$locale] = '';
+
+                    continue;
+                }
+                $urls[$locale] = $url($model, $locale);
+            } else {
+                $urls[$locale] = $url;
+            }
         }
 
-        $preview = component('lit-crud-preview')->prop('url', $url);
+        $preview = component('lit-crud-preview')->prop('urls', $urls);
 
         return $this->headerRight()
             ->component(new ButtonComponent)

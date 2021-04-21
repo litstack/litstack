@@ -148,6 +148,25 @@ class ColumnTest extends TestCase
     }
 
     /** @test */
+    public function test_trans_method()
+    {
+        $column = new Column();
+        $this->assertEquals($column, $column->trans('foo'));
+        $this->assertTrue($column->getAttribute('trans'));
+        $this->assertEquals('foo', $column->getAttribute('value'));
+    }
+
+    /** @test */
+    public function test_transChoice_method()
+    {
+        $column = new Column();
+        $this->assertEquals($column, $column->transChoice('foo', 'bar'));
+        $this->assertTrue($column->getAttribute('trans'));
+        $this->assertEquals('foo', $column->getAttribute('value'));
+        $this->assertEquals('bar', $column->getAttribute('trans_choice_attribute'));
+    }
+
+    /** @test */
     public function it_renders_attributes()
     {
         $column = new Column('');

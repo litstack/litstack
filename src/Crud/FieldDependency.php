@@ -14,7 +14,7 @@ class FieldDependency extends VueProp
      * @var array
      */
     protected static $conditions = [
-        'when', 'whenNot', 'whenContains', 'whenIn',
+        'when', 'whenNot', 'whenContains', 'whenIn', 'whenNotIn',
     ];
 
     /**
@@ -39,6 +39,13 @@ class FieldDependency extends VueProp
     protected $value;
 
     /**
+     * Dependor.
+     *
+     * @var string
+     */
+    protected $dependor = 'model';
+
+    /**
      * Create new Dependency.
      *
      * @param  string     $contains
@@ -57,6 +64,19 @@ class FieldDependency extends VueProp
         $this->condition = $condition;
         $this->attribute = $attribute;
         $this->value = $value;
+    }
+
+    /**
+     * Set dependor.
+     *
+     * @param  string $dependor
+     * @return $this
+     */
+    public function setDependor(string $dependor)
+    {
+        $this->dependor = $dependor;
+
+        return $this;
     }
 
     /**
@@ -112,6 +132,16 @@ class FieldDependency extends VueProp
     }
 
     /**
+     * Get dependor.
+     *
+     * @return string
+     */
+    public function getDependor()
+    {
+        return $this->dependor;
+    }
+
+    /**
      * Create new Dependency instance.
      *
      * @param  string     $condition
@@ -135,6 +165,7 @@ class FieldDependency extends VueProp
             'condition' => $this->condition,
             'attribute' => $this->attribute,
             'value'     => $this->value,
+            'dependor'  => $this->dependor,
         ];
     }
 }

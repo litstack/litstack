@@ -5,6 +5,7 @@
             class="lit-form-item-boolean"
             name="check-button"
             switch
+            :disabled="field.readonly"
             @change="$emit('input', $event)"
         />
     </lit-base-field>

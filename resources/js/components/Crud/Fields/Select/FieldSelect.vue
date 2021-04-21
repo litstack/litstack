@@ -105,6 +105,7 @@ export default {
     box-shadow: none !important;
     padding: 0 0.5rem;
     height: 40px;
+    background: white;
     &:hover {
         border-color: $secondary;
     }

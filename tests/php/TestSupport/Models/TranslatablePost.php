@@ -11,7 +11,7 @@ class TranslatablePost extends Model implements TranslatableContract
 {
     use Translatable;
 
-    protected $table = 't_posts';
+    public $table = 't_posts';
 
     protected $translationModel = TranslatablePostTranslation::class;
 

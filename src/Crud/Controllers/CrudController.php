@@ -44,7 +44,7 @@ abstract class CrudController extends CrudBaseController
     {
         $model = $this->getQuery()->findOrFail($id);
 
-        return crud($model);
+        return crud($model, $this->config);
     }
 
     /**
@@ -129,7 +129,7 @@ abstract class CrudController extends CrudBaseController
             $item['_lit_route'] = $this->config->getRouteFor($item);
         }
 
-        $index['items'] = crud($index['items']);
+        $index['items'] = crud($index['items'], $this->config);
 
         return $index;
     }
@@ -156,7 +156,7 @@ abstract class CrudController extends CrudBaseController
             'model'  => new $this->model(),
             'config' => $this->config,
         ])->bindToVue([
-            'crud-model' => crud(new $this->model()),
+            'crud-model' => crud(new $this->model(), $this->config),
             'config'     => $config,
         ]);
 
@@ -222,7 +222,7 @@ abstract class CrudController extends CrudBaseController
             'model'  => $model,
             'config' => $this->config,
         ])->bindToVue([
-            'crud-model' => crud($model),
+            'crud-model' => crud($model, $this->config),
             'config'     => $config,
         ]);
 

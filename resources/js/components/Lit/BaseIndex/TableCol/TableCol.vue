@@ -7,7 +7,7 @@
             'text-center': col.text_center,
             ...col.classes,
         }"
-        :style="`${colWidth} ${getStyle(col)}`"
+        :style="`${colWidth}; ${getStyle(col)}`"
     >
         <component
             :is="link ? 'a' : 'span'"
@@ -161,12 +161,14 @@ export default {
                 style = col.style;
             }
 
-            console.log(style);
-
             return style;
         },
         getColValue(col, item) {
             let value = '';
+
+            if(col.trans) {
+                return this.translate(col, item);
+            }
 
             if (col.value_options) {
                 value = this.getOption(
@@ -187,6 +189,15 @@ export default {
             }
 
             return this.format(value);
+        },
+        translate(col, item) {
+            if(col.trans_choice_attribute) {
+                return this.trans_choice(
+                    col.value, item[col.trans_choice_attribute], item
+                );
+            }
+        
+            return this.trans(col.value, item);
         },
         getOption(item, attribute, options, def) {
             let key = item[attribute];
@@ -234,16 +245,16 @@ export default {
                 return {};
             }
 
-            let compiled = {
-                'event-data': { ids: [this.item.id] },
-            };
+            let props = Lit.clone(this.col.props || {});
 
-            for (let name in this.col.props) {
-                let prop = this.col.props[name];
-                compiled[name] = prop;
+            if (!('eventData' in props)) {
+                props.eventData = {};
             }
 
-            return compiled;
+            props.eventData.ids = [this.item.id];
+            props['event-data'] = { ids: [this.item.id] };
+
+            return props;
         },
         isSmall(col) {
             return col.small === true;

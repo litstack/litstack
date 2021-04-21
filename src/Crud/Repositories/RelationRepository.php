@@ -40,7 +40,7 @@ class RelationRepository extends BaseFieldRepository
             ->search($this->field->search)
             ->get();
 
-        $index['items'] = crud($index['items']);
+        $index['items'] = crud($index['items'], $this->field);
 
         return $index;
     }
@@ -66,12 +66,12 @@ class RelationRepository extends BaseFieldRepository
             $relations = IndexTable::query($query)
                 ->request($request)
                 ->search($this->field->search)
-                ->only(['filter', 'paginate', 'search'])
+                ->only(['filter', 'paginate', 'search', 'order'])
                 ->get();
         }
 
         $relations['items'] = crud(
-            $relations['items']
+            $relations['items'], $this->field
         );
 
         return $relations;
