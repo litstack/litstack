@@ -4,6 +4,7 @@ namespace Ignite\Foundation;
 
 use Ignite\Application\Application;
 use Ignite\Contracts\Foundation\Litstack as LitstackContract;
+use Ignite\Search\SearchServiceProvider;
 use Ignite\Support\Facades\Config;
 use Ignite\Translation\Translator;
 use Illuminate\Foundation\Application as LaravelApplication;
@@ -51,6 +52,18 @@ class Litstack implements LitstackContract
     public function isAppTranslatable()
     {
         return count(config('translatable.locales')) > 1;
+    }
+
+    /**
+     * Determine wether the search is enabled.
+     *
+     * @return bool
+     */
+    public function searchEnabled()
+    {
+        return (bool) $this->laravel->getProvider(
+            SearchServiceProvider::class
+        );
     }
 
     /**

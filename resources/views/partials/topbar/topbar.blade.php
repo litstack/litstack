@@ -9,7 +9,9 @@
         <div class="lit-hide" id="lit-topbar-right">
             <div class="d-flex">
             @auth(config('lit.guard'))
-                @include('litstack::partials.topbar.search')
+                @if(lit()->searchEnabled())
+                    @include('litstack::partials.topbar.search')
+                @endif 
                 @include('litstack::partials.topbar.navigation')
             @endauth
             </div>
