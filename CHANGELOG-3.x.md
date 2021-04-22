@@ -5,6 +5,7 @@
 ### Fixed
 
 -   Fixed translations ([a8d3409](https://github.com/litstack/litstack/commit/a8d3409f3865d4fb3c3ad6f5ae7253f0e9224f4b))
+-   Hide search button when search is not enabled ([f131fe4](https://github.com/litstack/litstack/commit/f131fe45d029fbc62d3ac1fbea9785d0f437e349))
 
 ## [v3.7.0](https://github.com/litstack/litstack/compare/v3.6.1...v3.7.0)
 
