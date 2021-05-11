@@ -7,17 +7,20 @@
                 v-b-modal="field.creation_form ? creationModalId : modalId"
                 v-if="!field.readonly && !create"
             >
-                <span v-if="field.add_button_text" v-html="field.add_button_text"/>
+                <span
+                    v-if="field.add_button_text"
+                    v-html="field.add_button_text"
+                />
                 <template v-else>
                     <lit-fa-icon :icon="field.many ? 'plus' : 'link'" />
                     {{
                         field.many
                             ? __('base.item_add', {
-                                item: field.names.singular,
-                            })
+                                  item: field.names.singular,
+                              })
                             : __('base.item_select', {
-                                item: field.names.singular,
-                            })
+                                  item: field.names.singular,
+                              })
                     }}
                     <lit-field-relation-form
                         :modal-id="creationModalId"
@@ -258,7 +261,11 @@ export default {
                 small: true,
             });
         }
-        if (!this.field.readonly) {
+        if (
+            !this.field.readonly &&
+            this.cols.filter(c => c.name == 'lit-field-relation-col-unlink')
+                .length == 0
+        ) {
             this.cols.push({
                 label: '',
                 name: 'lit-field-relation-col-unlink',

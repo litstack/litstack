@@ -4,7 +4,9 @@ namespace Ignite\Crud\Repositories;
 
 use Ignite\Crud\CrudValidator;
 use Ignite\Crud\Fields\Modal;
+use Ignite\Crud\Fields\Relations\LaravelRelationField;
 use Ignite\Crud\Requests\CrudUpdateRequest;
+use Illuminate\Http\Request;
 
 class ModalRepository extends BaseFieldRepository
 {
@@ -47,5 +49,30 @@ class ModalRepository extends BaseFieldRepository
         $model->update($attributes);
 
         return crud($model, $this->config);
+    }
+
+    /**
+     * Get child field for relation fields.
+     *
+     * @param  Request $request
+     * @param  string  $field_id
+     * @return Field
+     */
+    public function getField(Request $request, $field_id)
+    {
+        return $this->field->form->findField($field_id)
+            ?: abort(404, debug("Coulnd't find field [$field_id]"));
+    }
+
+    /**
+     * Get repeatable model.
+     *
+     * @param  Request    $request
+     * @param  mixed      $model
+     * @return Repeatable
+     */
+    public function getModel(Request $request, $model, $childRepository)
+    {
+        return $model;
     }
 }

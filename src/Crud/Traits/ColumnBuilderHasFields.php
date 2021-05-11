@@ -49,7 +49,7 @@ trait ColumnBuilderHasFields
                 }
 
                 $form->registered(
-                    fn ($nested) => $nested->mergeOrSetAttribute('params', $this->getFieldParams($formKey))
+                    fn ($nested) => $nested->mergeOrSetAttribute('params', $this->getFieldParams($formKey, $field))
                 );
             });
 

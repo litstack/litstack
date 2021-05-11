@@ -115,3 +115,10 @@ export default {
     },
 };
 </script>
+
+<style lang="scss">
+.modal-body .lit-field-relation {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+}
+</style>
