@@ -444,7 +444,6 @@ export default {
             );
         },
         toggleHtmlView() {
-            console.log('edit raw');
             this.editRaw = !this.editRaw;
         },
     },
