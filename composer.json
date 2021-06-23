@@ -11,7 +11,7 @@
         "php": "^7.4|^8.0",
         "litstack/lang": "^3.0.4",
         "erusev/parsedown-extra": "^0.8",
-        "spatie/laravel-permission": "^2.0|^3.0",
+        "spatie/laravel-permission": "^4.2",
         "astrotomic/laravel-translatable": "^11.0",
         "cviebrock/eloquent-sluggable": "^7.0|^8.0",
         "spatie/laravel-medialibrary": "^8.0|^9.0",
