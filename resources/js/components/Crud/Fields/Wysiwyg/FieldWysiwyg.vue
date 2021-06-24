@@ -170,7 +170,7 @@
                                     </small>
                                 </b-checkbox>
                                 <b-button
-                                    class="mt-1 float-right"
+                                    class="float-right mt-1"
                                     variant="primary"
                                     size="sm"
                                     @click="setLinkUrl(commands.custom_link)"
@@ -344,6 +344,7 @@ export default {
 
         Lit.bus.$on('languageChanged', () => {
             this.$nextTick(() => {
+                this.valueCopy = _.clone(this.value);
                 this.editor.setContent(this.value);
             });
         });

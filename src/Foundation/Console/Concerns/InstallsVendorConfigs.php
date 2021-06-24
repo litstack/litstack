@@ -3,7 +3,6 @@
 namespace Ignite\Foundation\Console\Concerns;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 
 trait InstallsVendorConfigs

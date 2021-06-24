@@ -4,7 +4,6 @@ namespace Ignite\Application\Bootstrap;
 
 use Ignite\Application\Application;
 use Ignite\Application\Kernel;
-use Illuminate\Support\Facades\App;
 
 class BootstrapKernel
 {
