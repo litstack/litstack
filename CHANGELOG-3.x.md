@@ -2,6 +2,9 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.1...3.x)
 
+### Fixed 
+
+-   Fixed wysiwyg raw lang switch ([#209](https://github.com/litstack/litstack/pull/209)) 
 
 ## [v3.7.1](https://github.com/litstack/litstack/compare/v3.7.0...v3.7.1)
 
