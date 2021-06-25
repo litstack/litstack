@@ -7,6 +7,7 @@ use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use Spatie\Permission\Models\Role;
 
 class PermissionsCommand extends RollbackCommand
 {
@@ -63,10 +64,13 @@ class PermissionsCommand extends RollbackCommand
         $migration = $this->migrator->resolve(
             $name = $this->migrator->getMigrationName($migrationPath)
         );
+
+        $roles_with_permissions = $this->getRolesWithPermissions();
+
         $this->line("<comment>Rolling back:</comment> {$name}");
         $migration->down();
         $this->line("<comment>Migrating:</comment> {$name}");
-        $migration->up();
+        $migration->up($roles_with_permissions);
         $this->line("<info>Migrating:</info> {$name}");
     }
 
@@ -78,5 +82,21 @@ class PermissionsCommand extends RollbackCommand
     protected function getOptions()
     {
         return [];
+    }
+
+    /**
+     * Get a list of all roles and their permissions.
+     *
+     * @return Illuminate\Support\Collection
+     */
+    public function getRolesWithPermissions()
+    {
+        $roles = Role::with('permissions')->get();
+
+        $roles_with_permissions = $roles->mapWithKeys(function ($role) {
+            return [$role->name => $role->permissions->pluck('name')];
+        });
+
+        return $roles_with_permissions;
     }
 }

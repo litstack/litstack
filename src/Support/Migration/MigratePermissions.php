@@ -12,7 +12,7 @@ trait MigratePermissions
      *
      * @return void
      */
-    protected function upPermissions()
+    protected function upPermissions($roles_with_permissions = null)
     {
         $admins = Role::where('guard_name', config('lit.guard'))
             ->where('name', 'admin')
@@ -22,6 +22,17 @@ trait MigratePermissions
             Permission::firstOrCreate(['guard_name' => config('lit.guard'), 'name' => $permission]);
             foreach ($admins as $admin) {
                 $admin->givePermissionTo($permission);
+            }
+        }
+
+        if ($roles_with_permissions) {
+            foreach ($roles_with_permissions as $role => $permissions) {
+                $role = Role::where('name', $role)->first();
+                if ($role) {
+                    foreach ($permissions as $permission) {
+                        $role->givePermissionTo($permission);
+                    }
+                }
             }
         }
     }
