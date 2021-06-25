@@ -20,8 +20,8 @@
                 <lit-base-index-table-form
                     v-if="
                         searchKeys.length != 0 ||
-                        !_.isEmpty(sortBy) ||
-                        !_.isEmpty(filter)
+                            !_.isEmpty(sortBy) ||
+                            !_.isEmpty(filter)
                     "
                 >
                     <b-input-group>
@@ -304,7 +304,7 @@ export default {
     },
     computed: {
         sortByColumn() {
-            if(!this.sort_by_key){
+            if (!this.sort_by_key) {
                 return;
             }
             return _(this.sort_by_key.split('.'))
@@ -313,7 +313,7 @@ export default {
                 .join('.');
         },
         sortByDirection() {
-            if(!this.sort_by_key){
+            if (!this.sort_by_key) {
                 return;
             }
             return _.last(this.sort_by_key.split('.'));
@@ -376,7 +376,7 @@ export default {
         },
         addCustomFilter(newFilter) {
             let match = false;
-            this.filter_scopes = _.map(this.filter_scopes, function (filter) {
+            this.filter_scopes = _.map(this.filter_scopes, function(filter) {
                 if (typeof scope === 'object') {
                     return filter;
                 }
@@ -420,8 +420,8 @@ export default {
         resetFilter() {
             this.filter_scopes = [];
         },
-         sort({column, direction}) {
-            if(!column) {
+        sort({ column, direction }) {
+            if (!column) {
                 this.sort_by_key = '';
             } else {
                 this.sort_by_key = `${column}.${direction}`;
@@ -444,7 +444,7 @@ export default {
             }
         },
         isItemSelected(item) {
-            return this.selectedItems.find((model) => {
+            return this.selectedItems.find(model => {
                 return model ? model.id == item.id : false;
             })
                 ? true
@@ -515,6 +515,9 @@ export default {
     .nav-tabs {
         margin-left: 0;
         margin-right: 0;
+        flex-wrap: nowrap;
+        width: 100%;
+        overflow-x: scroll;
     }
 
     .table-responsive {
