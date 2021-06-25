@@ -18,13 +18,15 @@ export default {
             type: [Object, Array],
         },
         col: {
-            required: true,
             type: Object,
         },
     },
     computed: {
         group() {
-            return this.item.name.split(' ').slice(1).join(' ');
+            return this.item.name
+                .split(' ')
+                .slice(1)
+                .join(' ');
         },
     },
 };
