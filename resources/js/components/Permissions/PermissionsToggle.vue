@@ -4,7 +4,7 @@
             v-model="checked"
             name="check-button"
             @change="
-                (val) => {
+                val => {
                     this.change(val, true);
                 }
             "
@@ -25,7 +25,6 @@ export default {
             type: [Object, Array],
         },
         col: {
-            required: true,
             type: Object,
         },
         operation: {
@@ -115,7 +114,10 @@ export default {
             'litPermissionsRolePermissions',
         ]),
         group() {
-            return this.item.name.split(' ').slice(1).join(' ');
+            return this.item.name
+                .split(' ')
+                .slice(1)
+                .join(' ');
         },
         permissionName() {
             return `${this.operation} ${this.group}`;

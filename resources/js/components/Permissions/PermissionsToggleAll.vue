@@ -1,13 +1,17 @@
 <template>
     <div>
-        <b-button variant="secondary" size="sm" @click="toggle">
-            {{ __('base.toggle_all') }}
-        </b-button>
+        <b-form-checkbox
+            v-model="on"
+            @change="
+                val => {
+                    this.toggle(val, true);
+                }
+            "
+            switch
+        />
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
     name: 'PermissionsToggleAll',
     props: {
@@ -16,22 +20,16 @@ export default {
             type: [Object, Array],
         },
         col: {
-            required: true,
             type: Object,
         },
     },
+    data() {
+        return {
+            on: false,
+        };
+    },
     methods: {
-        toggle() {
-            let count = 0;
-            for (let i = 0; i < this.litPermissionsOperations.length; i++) {
-                let operation = this.litPermissionsOperations[i];
-                if (this.roleHasPermission(operation)) {
-                    count++;
-                }
-            }
-            // toggle on if half or more of the operations are off
-            let on = count <= this.litPermissionsOperations.length / 2;
-
+        toggle(on) {
             this.$bus.$emit('litPermissionsToggleAll', {
                 on,
                 group: this.group,
@@ -48,39 +46,13 @@ export default {
                 }
             );
         },
-        roleHasPermission(operation) {
-            let permission = this.getPermission(operation);
-
-            if (!permission) {
-                return false;
-            }
-            return (
-                _.size(
-                    _.filter(this.litPermissionsRolePermissions, {
-                        role_id: this.litPermissionsRole.id,
-                        permission_id: permission.id,
-                    })
-                ) > 0
-            );
-        },
-        getPermission(operation) {
-            for (let id in this.litPermissionsPermissions) {
-                let permission = this.litPermissionsPermissions[id];
-                if (permission.name == `${operation} ${this.group}`) {
-                    return permission;
-                }
-            }
-        },
     },
     computed: {
-        ...mapGetters([
-            'litPermissionsOperations',
-            'litPermissionsRole',
-            'litPermissionsPermissions',
-            'litPermissionsRolePermissions',
-        ]),
         group() {
-            return this.item.name.split(' ').slice(1).join(' ');
+            return this.item.name
+                .split(' ')
+                .slice(1)
+                .join(' ');
         },
     },
 };
