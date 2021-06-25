@@ -74,12 +74,12 @@ class MakePermissions extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up($roles_with_permissions = null)
     {
         Role::firstOrCreate(['guard_name' => config('lit.guard'), 'name' => 'admin']);
         Role::firstOrCreate(['guard_name' => config('lit.guard'), 'name' => 'user']);
         $this->buildPermissions();
-        $this->upPermissions();
+        $this->upPermissions($roles_with_permissions);
     }
 
     /**
