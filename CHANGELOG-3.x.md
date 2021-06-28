@@ -6,6 +6,7 @@
 
 -   Fixed "toggle all" action in permissions table ([#216](https://github.com/litstack/litstack/pull/216))
 -   Fixed tabs horizontally scrollable ([#214](https://github.com/litstack/litstack/pull/214))
+-   Fixed down permissions ([#217](https://github.com/litstack/litstack/pull/217))
 
 ## [v3.7.2](https://github.com/litstack/litstack/compare/v3.7.1...v3.7.2)
 
