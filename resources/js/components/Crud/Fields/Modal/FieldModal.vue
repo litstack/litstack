@@ -116,9 +116,10 @@ export default {
             this.$bvModal.hide(this.modalId);
         },
         setId() {
-            this.modalId = `lit-field-modal-${
-                this.field.id
-            }-${this.field.route_prefix.replace(/\//g, '-')}`;
+            this.modalId = Lit.uuid();
+            // this.modalId = `lit-field-modal-${
+            //     this.field.id
+            // }-${this.field.route_prefix.replace(/\//g, '-')}`;
         },
     },
 };
