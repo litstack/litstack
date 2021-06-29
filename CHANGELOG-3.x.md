@@ -1,6 +1,17 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.2...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.3...3.x)
+
+### Fixed
+
+-   Fixed down permission ([#218](https://github.com/litstack/litstack/pull/218))
+-   Fixed static id for FieldModal before mount ([#218](https://github.com/litstack/litstack/pull/218))
+
+### Added
+
+-   Added `uuidv4` method to `window.Lit` ([#218](https://github.com/litstack/litstack/pull/218))
+
+## [v3.7.3](https://github.com/litstack/litstack/compare/v3.7.2...v3.7.3)
 
 ### Fixed
 
