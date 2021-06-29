@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.3...3.x)
 
+## [v3.7.4](https://github.com/litstack/litstack/compare/v3.7.3...v3.7.4)
+
 ### Fixed
 
 -   Fixed down permission ([#218](https://github.com/litstack/litstack/pull/218))
