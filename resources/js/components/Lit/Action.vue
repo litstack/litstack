@@ -26,7 +26,7 @@
             @ok="runAction"
         >
             <span>{{ modal.props.message }}</span>
-            <div class="row mt-2" v-if="modal.form">
+            <div class="mt-2 row" v-if="modal.form">
                 <lit-field
                     v-for="(field, key) in modal.form.fields"
                     :key="key"
@@ -58,7 +58,7 @@ export default {
     },
     data() {
         return {
-            modalId: this.uuidv4(),
+            modalId: Lit.uuidv4(),
             show: true,
             attributes: this.crud({
                 attributes: {},
@@ -68,8 +68,8 @@ export default {
         };
     },
     beforeMount() {
-        Lit.bus.$on('eventHandled', ({event, response}) => {
-            if(!response.isAxiosError) {
+        Lit.bus.$on('eventHandled', ({ event, response }) => {
+            if (!response.isAxiosError) {
                 this.$bvModal.hide(this.modalId);
             }
         });
@@ -87,25 +87,11 @@ export default {
         },
 
         async runAction(e) {
-            if(e) {
+            if (e) {
                 e.preventDefault();
             }
 
             this.$emit('run', { attributes: this.attributes.attributes });
-        },
-
-        /**
-         * A simple uuid using [Math.random].
-         */
-        uuidv4() {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-                /[xy]/g,
-                function (c) {
-                    var r = (Math.random() * 16) | 0,
-                        v = c == 'x' ? r : (r & 0x3) | 0x8;
-                    return v.toString(16);
-                }
-            );
         },
     },
 };

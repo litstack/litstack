@@ -85,20 +85,18 @@ export default {
             fields: [],
             state: null,
             messages: [],
+            modalId: null,
         };
     },
     beforeMount() {
         this.fields = Lit.clone(this.field.form.fields);
+        this.setId();
+
         Lit.bus.$on('saveCanceled', this.resetErrors);
         Lit.bus.$on('saved', this.resetErrors);
     },
     computed: {
         ...mapGetters(['canSave']),
-        modalId() {
-            return `lit-field-modal-${
-                this.field.id
-            }-${this.field.route_prefix.replace(/\//g, '-')}`;
-        },
     },
     methods: {
         resetErrors() {
@@ -111,6 +109,9 @@ export default {
         },
         cancel() {
             this.$bvModal.hide(this.modalId);
+        },
+        setId() {
+            this.modalId = Lit.uuidv4();
         },
     },
 };

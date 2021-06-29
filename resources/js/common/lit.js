@@ -112,6 +112,20 @@ const Lit = {
             if (callNow) func.apply(context, args);
         };
     },
+
+    /**
+     * A simple uuid using [Math.random].
+     *
+     */
+    uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(
+            c
+        ) {
+            var r = (Math.random() * 16) | 0,
+                v = c == 'x' ? r : (r & 0x3) | 0x8;
+            return v.toString(16);
+        });
+    },
 };
 
 for (let i = 0; i < Lit.bootingCallbacks.length; i++) {
