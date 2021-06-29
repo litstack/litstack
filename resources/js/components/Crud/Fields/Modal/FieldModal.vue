@@ -97,11 +97,6 @@ export default {
     },
     computed: {
         ...mapGetters(['canSave']),
-        // modalId() {
-        //     return `lit-field-modal-${
-        //         this.field.id
-        //     }-${this.field.route_prefix.replace(/\//g, '-')}`;
-        // },
     },
     methods: {
         resetErrors() {
@@ -116,10 +111,7 @@ export default {
             this.$bvModal.hide(this.modalId);
         },
         setId() {
-            this.modalId = Lit.uuid();
-            // this.modalId = `lit-field-modal-${
-            //     this.field.id
-            // }-${this.field.route_prefix.replace(/\//g, '-')}`;
+            this.modalId = Lit.uuidv4();
         },
     },
 };
