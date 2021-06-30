@@ -3,9 +3,12 @@
         <b-card
             no-body
             class="lit-index-table"
+            :class="{
+                'has-tabs': hasTabs,
+            }"
             :style="noCard ? 'box-shadow: none;' : ''"
         >
-            <b-tabs card v-if="hasTabs" @activate-tab="newTab">
+            <b-tabs v-if="hasTabs" @activate-tab="newTab">
                 <b-tab
                     :title="'title' in t ? t.title : t"
                     :active="t == tab"
@@ -515,9 +518,9 @@ export default {
     .nav-tabs {
         margin-left: 0;
         margin-right: 0;
-        flex-wrap: nowrap;
-        width: 100%;
-        overflow-x: scroll;
+        // flex-wrap: nowrap;
+        // width: 100%;
+        // overflow-x: scroll;
     }
 
     .table-responsive {
@@ -650,5 +653,36 @@ export default {
 }
 .lit-index-table-pagination {
     margin-top: -8px;
+}
+.card.has-tabs {
+    .tabs {
+        background: white;
+        border-top-left-radius: 0.625rem;
+        border-top-right-radius: 0.625rem;
+        border-bottom: 1px solid $gray-300;
+        .nav-tabs {
+            flex-wrap: wrap-reverse;
+        }
+    }
+    .nav-tabs .nav-link.active,
+    .nav-tabs .nav-item.show .nav-link {
+        color: white;
+        background-color: $secondary;
+        border: 1px solid $secondary;
+    }
+    .nav-tabs .nav-link,
+    .nav-tabs .nav-item.show .nav-link {
+        color: $secondary;
+    }
+    .nav-item .nav-link {
+        background: white;
+        border: 1px solid $gray-300;
+        border-top-left-radius: 0.625rem;
+        border-top-right-radius: 0.625rem;
+        border-bottom: none;
+    }
+    .nav-link {
+        padding: 0.75rem 2rem;
+    }
 }
 </style>
