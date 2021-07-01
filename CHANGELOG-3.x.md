@@ -1,6 +1,12 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.4...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.5...3.x)
+
+## [v3.7.5](https://github.com/litstack/litstack/compare/v3.7.4...v3.7.5)
+
+### Fixed
+
+-   Fixed tabs  ([#219](https://github.com/litstack/litstack/pull/219))
 
 ## [v3.7.4](https://github.com/litstack/litstack/compare/v3.7.3...v3.7.4)
 
