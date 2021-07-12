@@ -17,18 +17,6 @@ class AuthServiceProvider extends LaravelServiceProvider
     ];
 
     /**
-     * Bootstrap the application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        if (lit()->installed()) {
-            $this->app->register(RouteServiceProvider::class);
-        }
-    }
-
-    /**
      * Register application services.
      *
      * @return void
@@ -40,6 +28,10 @@ class AuthServiceProvider extends LaravelServiceProvider
         $this->app->singleton('lit.auth', function ($app) {
             return new Authentication($app['auth']);
         });
+
+        if (lit()->installed()) {
+            $this->app->register(RouteServiceProvider::class);
+        }
     }
 
     /**

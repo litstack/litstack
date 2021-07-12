@@ -103,7 +103,7 @@ class Kernel
         return array_merge(
             $this->getPublicMiddlewares(),
             [
-                'lit.auth:'.config('lit.guard'),
+                'lit.auth.middleware:'.config('lit.guard'),
                 'lit.crud',
             ],
             $this->middlewares
