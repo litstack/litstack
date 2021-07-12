@@ -50,7 +50,7 @@ class LitstackServiceProvider extends ServiceProvider
      * @var array
      */
     protected $middlewares = [
-        'lit.auth' => \Ignite\Auth\Middleware\Authenticate::class,
+        'lit.auth.middleware' => \Ignite\Auth\Middleware\Authenticate::class,
     ];
 
     /**
