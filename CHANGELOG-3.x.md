@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.5...3.x)
 
+### Fixed
+
+-   Fixed container alias & provider registration ([#223](https://github.com/litstack/litstack/pull/223))
+
 ## [v3.7.5](https://github.com/litstack/litstack/compare/v3.7.4...v3.7.5)
 
 ### Fixed
