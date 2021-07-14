@@ -40,7 +40,9 @@ use Ignite\Crud\Fields\Route\RouteCollectionResolver;
 use Ignite\Crud\Fields\Select;
 use Ignite\Crud\Fields\Textarea;
 use Ignite\Crud\Fields\Wysiwyg;
+use Ignite\Crud\Models\Form as FormModel;
 use Ignite\Crud\Models\Relations\CrudRelations;
+use Ignite\Crud\Observer\FormObserver;
 use Ignite\Crud\Repositories\BlockRepository;
 use Ignite\Crud\Repositories\DefaultRepository;
 use Ignite\Crud\Repositories\ListRepository;
@@ -144,6 +146,8 @@ class CrudServiceProvider extends LaravelServiceProvider
         $this->app->register(RouteServiceProvider::class);
 
         $this->registerVueComponents();
+
+        FormModel::observe(FormObserver::class);
     }
 
     /**
@@ -316,8 +320,8 @@ class CrudServiceProvider extends LaravelServiceProvider
         $loader = AliasLoader::getInstance();
         $loader->alias('Form', FormFacade::class);
 
-        $this->app->singleton('lit.form', function () {
-            $form = new Form();
+        $this->app->singleton('lit.form', function ($app) {
+            $form = new Form($app['cache']);
 
             $this->registerFields($form);
 
