@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.5...3.x)
 
+### Added
+
+-   Added form cache ([#224](https://github.com/litstack/litstack/pull/224))
+
 ## [v3.7.6](https://github.com/litstack/litstack/compare/v3.7.5...v3.7.6)
 
 ### Fixed
