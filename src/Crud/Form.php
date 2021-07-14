@@ -2,8 +2,9 @@
 
 namespace Ignite\Crud;
 
-use Ignite\Crud\Models\Form as FormModel;
+use Illuminate\Cache\CacheManager;
 use Illuminate\Support\Collection;
+use Ignite\Crud\Models\Form as FormModel;
 
 class Form
 {
@@ -13,6 +14,24 @@ class Form
      * @var array
      */
     protected $fields = [];
+
+    /**
+     * Cache manager instance.
+     *
+     * @var CacheManager
+     */
+    protected $cache;
+
+    /**
+     * Create new Form instance.
+     *
+     * @param  CacheManager $cache
+     * @return void
+     */
+    public function __construct(CacheManager $cache)
+    {
+        $this->cache = $cache;
+    }
 
     /**
      * Load FormField entries from database by collection name and|or for
@@ -26,22 +45,27 @@ class Form
      */
     public function load(string $collection = null, string $name = null)
     {
-        $loadingCollection = $collection ? true : false;
-        $loadingForm = $name ? true : false;
+        return $this->cache->remember(
+            $this->getCacheKey($collection, $name),
+            config('lit.crud.form_ttl'), 
+            function() use($collection, $name) {
+            $loadingCollection = $collection ? true : false;
+            $loadingForm = $name ? true : false;
 
-        $query = FormModel::query();
+            $query = FormModel::query();
 
-        if ($collection) {
-            $query->where('collection', $collection);
-        }
+            if ($collection) {
+                $query->where('collection', $collection);
+            }
 
-        if ($name) {
-            $query->where('form_name', $name);
-        }
+            if ($name) {
+                $query->where('form_name', $name);
+            }
 
-        $items = new FormCollection($query->get());
+            $items = new FormCollection($query->get());
 
-        return $this->getGroups($items, $loadingCollection, $loadingForm);
+            return $this->getGroups($items, $loadingCollection, $loadingForm);
+        });
     }
 
     /**
@@ -68,6 +92,30 @@ class Form
         }
 
         return $items;
+    }
+
+    /**
+     * Get cache key.
+     *
+     * @param  string  $collection
+     * @param  string  $name
+     * @return void
+     */
+    public function getCacheKey(string $collection = null, string $name = null)
+    {
+        $key = "lit.form";
+
+        if(is_null($collection)) {
+            return $key;
+        }
+
+        $key .= ".{$collection}";
+
+        if(is_null($collection)) {
+            return $key;
+        }
+
+        return $key . ".{$name}";
     }
 
     /**
