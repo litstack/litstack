@@ -2,9 +2,9 @@
 
 namespace Ignite\Crud;
 
+use Ignite\Crud\Models\Form as FormModel;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Support\Collection;
-use Ignite\Crud\Models\Form as FormModel;
 
 class Form
 {
@@ -47,25 +47,25 @@ class Form
     {
         return $this->cache->remember(
             $this->getCacheKey($collection, $name),
-            config('lit.crud.form_ttl'), 
-            function() use($collection, $name) {
-            $loadingCollection = $collection ? true : false;
-            $loadingForm = $name ? true : false;
+            config('lit.crud.form_ttl'),
+            function () use ($collection, $name) {
+                $loadingCollection = $collection ? true : false;
+                $loadingForm = $name ? true : false;
 
-            $query = FormModel::query();
+                $query = FormModel::query();
 
-            if ($collection) {
-                $query->where('collection', $collection);
-            }
+                if ($collection) {
+                    $query->where('collection', $collection);
+                }
 
-            if ($name) {
-                $query->where('form_name', $name);
-            }
+                if ($name) {
+                    $query->where('form_name', $name);
+                }
 
-            $items = new FormCollection($query->get());
+                $items = new FormCollection($query->get());
 
-            return $this->getGroups($items, $loadingCollection, $loadingForm);
-        });
+                return $this->getGroups($items, $loadingCollection, $loadingForm);
+            });
     }
 
     /**
@@ -103,19 +103,19 @@ class Form
      */
     public function getCacheKey(string $collection = null, string $name = null)
     {
-        $key = "lit.form";
+        $key = 'lit.form';
 
-        if(is_null($collection)) {
+        if (is_null($collection)) {
             return $key;
         }
 
         $key .= ".{$collection}";
 
-        if(is_null($collection)) {
+        if (is_null($collection)) {
             return $key;
         }
 
-        return $key . ".{$name}";
+        return $key.".{$name}";
     }
 
     /**

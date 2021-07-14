@@ -199,9 +199,9 @@ return [
             'default_device' => 'desktop',
         ],
 
-        // Indicates how long forms are cached (in minutes). The form cache 
+        // Indicates how long forms are cached (in minutes). The form cache
         // cleared everytime a form gets updated.
-        'form_ttl' => 60 * 24
+        'form_ttl' => 60 * 24,
     ],
 
     /*

@@ -2,9 +2,9 @@
 
 namespace Ignite\Crud\Observer;
 
+use Ignite\Crud\Form as FormLoader;
 use Ignite\Crud\Models\Form;
 use Illuminate\Cache\CacheManager;
-use Ignite\Crud\Form as FormLoader;
 
 class FormObserver
 {
