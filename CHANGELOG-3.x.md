@@ -1,12 +1,14 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.7...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.8...3.x)
+
+## [v3.7.8](https://github.com/litstack/litstack/compare/v3.7.7...v3.7.8)
 
 ### Added
 
 -   Added prepareAttributes repeatable lifecycle hook ([#228](https://github.com/litstack/litstack/pull/228))
 
-## [v3.7.6](https://github.com/litstack/litstack/compare/v3.7.6...v3.7.7)
+## [v3.7.7](https://github.com/litstack/litstack/compare/v3.7.6...v3.7.7)
 
 ### Added
 
