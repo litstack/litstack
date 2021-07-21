@@ -2,16 +2,15 @@
 
 namespace Ignite\Crud\Repositories;
 
-use Closure;
-use Ignite\Crud\BaseForm;
-use Illuminate\Http\Request;
-use Ignite\Crud\CrudValidator;
 use Ignite\Config\ConfigHandler;
-use Ignite\Crud\Models\Repeatable;
+use Ignite\Crud\BaseForm;
+use Ignite\Crud\Controllers\CrudBaseController;
+use Ignite\Crud\CrudValidator;
 use Ignite\Crud\Fields\Block\Block;
+use Ignite\Crud\Models\Repeatable;
 use Ignite\Crud\Requests\CrudReadRequest;
 use Ignite\Crud\Requests\CrudUpdateRequest;
-use Ignite\Crud\Controllers\CrudBaseController;
+use Illuminate\Http\Request;
 
 class BlockRepository extends BaseFieldRepository
 {
