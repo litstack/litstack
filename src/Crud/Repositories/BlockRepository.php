@@ -2,15 +2,16 @@
 
 namespace Ignite\Crud\Repositories;
 
-use Ignite\Config\ConfigHandler;
+use Closure;
 use Ignite\Crud\BaseForm;
-use Ignite\Crud\Controllers\CrudBaseController;
+use Illuminate\Http\Request;
 use Ignite\Crud\CrudValidator;
-use Ignite\Crud\Fields\Block\Block;
+use Ignite\Config\ConfigHandler;
 use Ignite\Crud\Models\Repeatable;
+use Ignite\Crud\Fields\Block\Block;
 use Ignite\Crud\Requests\CrudReadRequest;
 use Ignite\Crud\Requests\CrudUpdateRequest;
-use Illuminate\Http\Request;
+use Ignite\Crud\Controllers\CrudBaseController;
 
 class BlockRepository extends BaseFieldRepository
 {
@@ -100,6 +101,10 @@ class BlockRepository extends BaseFieldRepository
         );
 
         $attributes = $this->formatAttributes((array) $payload, $repeatable->getRegisteredFields());
+
+        foreach($this->field->getAttributeHooks() as $hook) {
+            $attributes = $hook($attributes, $model);
+        }
 
         $repeatableModel->update($attributes);
 
