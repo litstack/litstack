@@ -99,7 +99,9 @@ class BlockRepository extends BaseFieldRepository
             CrudValidator::UPDATE
         );
 
-        $attributes = $this->formatAttributes((array) $payload, $repeatable->getRegisteredFields());
+        $attributes = $repeatable->prepareAttributes(
+            $this->formatAttributes((array) $payload, $repeatable->getRegisteredFields())
+        );
 
         $repeatableModel->update($attributes);
 

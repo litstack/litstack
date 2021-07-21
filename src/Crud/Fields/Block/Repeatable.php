@@ -114,6 +114,17 @@ class Repeatable extends VueProp
     }
 
     /**
+     * Prepare attributes before updating the content of the repeatable.
+     *
+     * @param  array $attributes
+     * @return array
+     */
+    public function prepareAttributes($attributes)
+    {
+        return $attributes;
+    }
+
+    /**
      * Get repeatable type.
      *
      * @return string

@@ -99,7 +99,7 @@ class Block extends RelationField
      * Check if block has repeatable.
      *
      * @param  string $name
-     * @return bool
+     * @return Repeatable
      */
     public function getRepeatable($name)
     {
