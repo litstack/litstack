@@ -27,14 +27,6 @@ class Block extends RelationField
     public $required = ['title', 'repeatables'];
 
     /**
-     * Lifecycle hook to prepare attributes when storing or updating a 
-     * repeatable.
-     *
-     * @var array[Closure]
-     */
-    protected $attributeHooks = [];
-
-    /**
      * Set default field attributes.
      *
      * @return void
@@ -107,7 +99,7 @@ class Block extends RelationField
      * Check if block has repeatable.
      *
      * @param  string $name
-     * @return bool
+     * @return Repeatable
      */
     public function getRepeatable($name)
     {
@@ -125,30 +117,6 @@ class Block extends RelationField
         //         return $repeatable;
         //     }
         // }
-    }
-
-    /**
-     * Add lifecycle hook to prepare attributes when storing or updating a 
-     * repeatable.
-     *
-     * @param  Closure $closure
-     * @return $this
-     */
-    public function prepareAttributes(Closure $closure)
-    {
-        $this->attributeHooks[] = $closure;
-
-        return $this;
-    }
-
-    /**
-     * Get attribute hooks.
-     *
-     * @return array[Closure]
-     */
-    public function getAttributeHooks()
-    {
-        return $this->attributeHooks;
     }
 
     /**
