@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.8...3.x)
 
+### Added
+
+-   Added optional button for subPage registration ([#234](https://github.com/litstack/litstack/pull/234))
+
 ## [v3.7.8](https://github.com/litstack/litstack/compare/v3.7.7...v3.7.8)
 
 ### Added
