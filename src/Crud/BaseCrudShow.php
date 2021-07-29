@@ -227,7 +227,7 @@ class BaseCrudShow extends Page
      * @param  string          $config
      * @return ButtonComponent
      */
-    public function subPage($config, $icon = null)
+    public function subPage($config, $icon = null, $showButton = true)
     {
         $config = Config::get($config);
 
@@ -242,6 +242,10 @@ class BaseCrudShow extends Page
             $config->setModelInstance($model);
             $title = $config->names()['singular'];
             $prefix = "{$prefix}/{$model->id}";
+        }
+
+        if (! $showButton) {
+            return;
         }
 
         return $this->headerLeft()->component(new ButtonComponent)
