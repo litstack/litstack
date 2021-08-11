@@ -48,7 +48,7 @@ class FormResource extends JsonResource
 
         if (method_exists($this->resource, 'resourceAttributes')) {
             $attributes = array_merge(
-                $attributes, $this->resource->resourceAttribute()
+                $attributes, $this->resource->resourceAttributes()
             );
         }
 
