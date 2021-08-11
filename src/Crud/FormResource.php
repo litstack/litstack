@@ -46,7 +46,7 @@ class FormResource extends JsonResource
             'id' => $this->id,
         ];
 
-        if(method_exists($this->resource, 'resourceAttributes')) {
+        if (method_exists($this->resource, 'resourceAttributes')) {
             $attributes = array_merge(
                 $attributes, $this->resource->resourceAttribute()
             );
