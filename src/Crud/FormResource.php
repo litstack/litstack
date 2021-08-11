@@ -36,6 +36,26 @@ class FormResource extends JsonResource
     }
 
     /**
+     * Get default attributes.
+     *
+     * @return array
+     */
+    protected function getDefaultAttributes()
+    {
+        $attributes = [
+            'id' => $this->id,
+        ];
+
+        if (method_exists($this->resource, 'resourceAttributes')) {
+            $attributes = array_merge(
+                $attributes, $this->resource->resourceAttributes()
+            );
+        }
+
+        return $attributes;
+    }
+
+    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request $request
@@ -43,9 +63,7 @@ class FormResource extends JsonResource
      */
     public function toArray($request)
     {
-        $data = [
-            'id' => $this->id,
-        ];
+        $data = $this->getDefaultAttributes();
 
         foreach ($this->fields as $field) {
             if (! $this->shouldBeRendered($field)) {
