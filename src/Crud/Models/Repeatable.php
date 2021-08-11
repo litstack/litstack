@@ -90,6 +90,18 @@ class Repeatable extends LitFormModel
     }
 
     /**
+     * Get resource attributes.
+     *
+     * @return array
+     */
+    public function resourceAttributes()
+    {
+        return [
+            'type' => $this->type,
+        ];
+    }
+
+    /**
      * Get view name.
      *
      * @return string|null
