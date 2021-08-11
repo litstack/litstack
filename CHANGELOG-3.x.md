@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.9...3.x)
 
+-   Added `type` to repeatable resource ([#235](https://github.com/litstack/litstack/pull/235))
+
 ## [v3.7.9](https://github.com/litstack/litstack/compare/v3.7.8...v3.7.9)
 
 ### Added
