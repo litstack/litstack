@@ -1,6 +1,8 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.9...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.10...3.x)
+
+## [v3.7.10](https://github.com/litstack/litstack/compare/v3.7.9...v3.7.10)
 
 ### Added
 
