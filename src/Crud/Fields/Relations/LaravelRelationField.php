@@ -619,7 +619,7 @@ class LaravelRelationField extends RelationField
     /**
      * Allow linking models.
      *
-     * @param  boolean  $allow
+     * @param  bool  $allow
      * @return $this
      */
     public function allowLinking(bool $allow = true)
