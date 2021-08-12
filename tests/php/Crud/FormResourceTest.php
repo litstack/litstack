@@ -46,7 +46,7 @@ class FormResourceTest extends BackendTestCase
             [
                 'id'      => $model->id,
                 'content' => [
-                    ['id' => $repeatable->id, 'text' => 'foo'],
+                    ['id' => $repeatable->id, 'text' => 'foo', 'type' => 'text'],
                 ],
             ],
             $model->resource()->toArray(request())
