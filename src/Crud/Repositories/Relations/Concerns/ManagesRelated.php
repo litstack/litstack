@@ -27,7 +27,8 @@ trait ManagesRelated
     public function getRelatedOrDelete(Request $request, $model)
     {
         return $this->deleteIfDesired(
-            $request, $this->getRelated($request, $model)
+            $request,
+            $this->getRelated($request, $model)
         );
     }
 
