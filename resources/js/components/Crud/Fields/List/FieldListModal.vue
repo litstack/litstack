@@ -75,9 +75,6 @@ export default {
 
             this.fields = fields;
         },
-        getTitle() {
-            return this._format(this.field.previewTitle, this.item) || '';
-        },
     },
 
     computed: {
