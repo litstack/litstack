@@ -53,6 +53,16 @@ class FormConfig
     }
 
     /**
+     * Load resource array.
+     *
+     * @return array
+     */
+    public static function loadResourceArray(): array
+    {
+        return self::load()->resource()->toArray(request());
+    }
+
+    /**
      * Create new FormConfig instance.
      */
     public function __construct()
