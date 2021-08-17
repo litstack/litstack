@@ -180,4 +180,9 @@ export default {
         font-weight: $font-weight-normal;
     }
 }
+@media (min-width: 993px) {
+    .lit-draggable.lit-block {
+        margin: 0 -32px;
+    }
+}
 </style>

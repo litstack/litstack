@@ -69,6 +69,20 @@ class Repeatable extends VueProp
     protected $button;
 
     /**
+     * Icon icon.
+     *
+     * @var string
+     */
+    protected $icon;
+
+    /**
+     * Variant variant.
+     *
+     * @var string
+     */
+    protected $variant;
+
+    /**
      * Create new Repeatable instance.
      *
      * @param  Block       $field
@@ -83,7 +97,7 @@ class Repeatable extends VueProp
             $this->type = $type;
         } elseif (is_null($this->type)) {
             throw new InvalidArgumentException(
-                'Missing property [type] for '.self::class
+                'Missing property [type] for ' . self::class
             );
         }
 
@@ -197,6 +211,8 @@ class Repeatable extends VueProp
             'form'    => $this->form,
             'preview' => $this->preview,
             'button'  => $this->button,
+            'icon'    => $this->icon,
+            'variant' => $this->variant,
         ];
     }
 
@@ -229,6 +245,32 @@ class Repeatable extends VueProp
     public function button($text)
     {
         $this->button = $text;
+
+        return $this;
+    }
+
+    /**
+     * Set icon.
+     *
+     * @param  string $icon
+     * @return $this
+     */
+    public function icon($icon)
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    /**
+     * Set variant.
+     *
+     * @param  string $variant
+     * @return $this
+     */
+    public function variant($variant)
+    {
+        $this->variant = $variant;
 
         return $this;
     }
