@@ -1,6 +1,13 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.10...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.11...3.x)
+
+##  [v3.7.11](https://github.com/litstack/litstack/compare/v3.7.10...v3.7.11)
+
+### Added
+
+-   Added allowLinking method to relation field ([#236](https://github.com/litstack/litstack/pull/236))
+-   Added `loadResourceArray` helper to FormConfig ([#237](https://github.com/litstack/litstack/pull/237))
 
 ## [v3.7.10](https://github.com/litstack/litstack/compare/v3.7.9...v3.7.10)
 
