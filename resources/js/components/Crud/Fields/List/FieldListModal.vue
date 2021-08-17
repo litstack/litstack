@@ -1,6 +1,12 @@
 <template>
     <b-modal :id="modalId" :size="field.modalSize" centered>
-        <span slot="modal-title" v-html="_format(field.previewTitle, item)" />
+        <template v-slot:modal-title>
+            {{
+                __('base.item_add', {
+                    item: __('base.item_item', { item: field.title }),
+                })
+            }}
+        </template>
         <b-row>
             <lit-field
                 v-for="(itemField, key) in fields"
@@ -11,7 +17,7 @@
                 v-on="$listeners"
             />
         </b-row>
-        <template slot="modal-footer">
+        <template v-slot:modal-footer>
             <div class="d-flex justify-content-between w-100">
                 <div>
                     <lit-crud-language />
