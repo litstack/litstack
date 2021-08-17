@@ -1,7 +1,11 @@
 <template>
     <b-modal :id="modalId" :size="field.modalSize" centered>
         <template v-slot:modal-title>
-            <span v-html="_format(field.previewTitle, item)" />&nbsp;
+            {{
+                __('base.item_add', {
+                    item: __('base.item_item', { item: field.title }),
+                })
+            }}
         </template>
         <b-row>
             <lit-field
@@ -70,6 +74,9 @@ export default {
             }
 
             this.fields = fields;
+        },
+        getTitle() {
+            return this._format(this.field.previewTitle, this.item) || '';
         },
     },
 
