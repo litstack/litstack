@@ -29,11 +29,12 @@ class BlockRepository extends BaseFieldRepository
      * @param BaseForm           $form
      * @param Block              $field
      */
-    public function __construct(ConfigHandler $config,
-                                CrudBaseController $controller,
-                                BaseForm $form,
-                                Block $field)
-    {
+    public function __construct(
+        ConfigHandler $config,
+        CrudBaseController $controller,
+        BaseForm $form,
+        Block $field
+    ) {
         parent::__construct($config, $controller, $form, $field);
     }
 
@@ -122,7 +123,7 @@ class BlockRepository extends BaseFieldRepository
         $this->field->hasRepeatable($type)
             ?: abort(404, debug("Repeatable [{$type}] not found on block [{$this->field->id}]"));
 
-        $order_column = $this->getOrderColumnForNewRepeatable($request, $model, $type);
+        $order_column = $this->getOrderColumnForNewRepeatable($model);
 
         $block = new Repeatable();
         $block->type = $type;
@@ -227,10 +228,9 @@ class BlockRepository extends BaseFieldRepository
      * @param  string  $type
      * @return int
      */
-    protected function getOrderColumnForNewRepeatable(Request $request, $model, $type)
+    protected function getOrderColumnForNewRepeatable($model)
     {
         return Repeatable::where([
-            'type'        => $type,
             'model_type'  => get_class($model),
             'model_id'    => $model->id,
             'field_id'    => $this->field->id,
