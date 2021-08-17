@@ -94,6 +94,7 @@ class LaravelRelationField extends RelationField
         $this->small(false);
         $this->hideRelationLink(false);
         $this->setAttribute('icons', []);
+        $this->allowLinking();
     }
 
     /**
@@ -262,7 +263,8 @@ class LaravelRelationField extends RelationField
                 $this->search($table->search);
 
                 $this->setAttribute(
-                    'preview', $table->getBuilder()->disableLinks()
+                    'preview',
+                    $table->getBuilder()->disableLinks()
                 );
             }
         }
@@ -594,10 +596,8 @@ class LaravelRelationField extends RelationField
 
         $closure($form);
 
-        // $this->form(function($form) use($closure) {
-
-        // });
         $this->setAttribute('creation_form', $form);
+        $this->allowLinking(false);
 
         return $this;
     }
@@ -612,6 +612,19 @@ class LaravelRelationField extends RelationField
     {
         $this->create($closure);
         $this->form($closure);
+
+        return $this;
+    }
+
+    /**
+     * Allow linking models.
+     *
+     * @param  bool  $allow
+     * @return $this
+     */
+    public function allowLinking(bool $allow = true)
+    {
+        $this->setAttribute('allow_linking', $allow);
 
         return $this;
     }
