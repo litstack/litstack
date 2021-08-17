@@ -20,6 +20,9 @@
                     :col="col"
                     :cols="preview"
                 />
+                <b-td class="col-sm text-secondary pl-2">
+                    <slot />
+                </b-td>
                 <b-td class="col-sm text-secondary pl-2" v-if="!field.readonly">
                     <b-button
                         variant="transparent"
