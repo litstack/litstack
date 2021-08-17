@@ -65,6 +65,10 @@ export const actions = {
             await Promise.all(promises.map(p => p.catch(e => e)))
         );
 
+        if (results._hasSucceeded()) {
+            commit('FLUSH_SAVE_JOBS');
+        }
+
         for (let i in results.results) {
             let result = results.results[i];
             let job = state.jobs[i];
