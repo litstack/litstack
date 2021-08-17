@@ -97,7 +97,7 @@ class Repeatable extends VueProp
             $this->type = $type;
         } elseif (is_null($this->type)) {
             throw new InvalidArgumentException(
-                'Missing property [type] for ' . self::class
+                'Missing property [type] for '.self::class
             );
         }
 
