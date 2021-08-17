@@ -13,7 +13,18 @@
                 :delete-icon="deleteIcon"
                 @deleteItem="deleteItem"
                 @toggleExpand="expand = !expand"
-            />
+            >
+                <b-badge
+                    :variant="repeatable.variant"
+                    class="repeatable-type-badge"
+                >
+                    <span
+                        v-if="repeatable.icon"
+                        v-html="repeatable.icon"
+                    ></span>
+                    <span v-html="repeatableButtonText.capitalize()"></span>
+                </b-badge>
+            </lit-field-repeatable-header>
             <div :class="`lit-block-form ${expand ? 'show' : ''}`">
                 <lit-field-repeatable-form
                     :block="block"
@@ -165,6 +176,17 @@ export default {
             this.$refs.header.$emit('refresh');
         },
     },
+    computed: {
+        repeatableType() {
+            return this.block.attributes.type;
+        },
+        repeatable() {
+            return this.field.repeatables[this.repeatableType];
+        },
+        repeatableButtonText() {
+            return this.repeatable.button || this.repeatableType;
+        },
+    },
 };
 </script>
 
@@ -178,6 +200,11 @@ export default {
     }
     .lit-form-item-title {
         font-weight: $font-weight-normal;
+    }
+}
+@media (min-width: 993px) {
+    .lit-draggable.lit-block {
+        margin: 0 -32px;
     }
 }
 </style>

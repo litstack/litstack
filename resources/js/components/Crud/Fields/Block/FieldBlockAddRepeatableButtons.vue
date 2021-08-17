@@ -1,14 +1,18 @@
 <template>
-    <div class="mt-2">
+    <div class="mt-2 block-repeatable-buttons">
         <b-button
-            class="text-capitalize mr-2"
+            class="text-capitalize mr-2 mb-2"
             :class="`lit-block-add-${type}`"
             size="sm"
             v-for="(repeatable, type) in field.repeatables"
             :key="type"
             @click.prevent="add(type)"
+            :variant="repeatable.variant"
         >
-            <lit-fa-icon icon="plus" />
+            <lit-fa-icon icon="plus" v-if="!repeatable.icon" />
+            <span v-else v-html="repeatable.icon">
+                {{ repeatable.icon }}
+            </span>
             {{ repeatable.button }}
         </b-button>
     </div>
@@ -96,3 +100,9 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.block-repeatable-buttons {
+    margin-bottom: -16px;
+}
+</style>
