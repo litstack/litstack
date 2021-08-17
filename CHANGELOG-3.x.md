@@ -1,6 +1,18 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.11...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.12...3.x)
+
+##  [v3.7.12](https://github.com/litstack/litstack/compare/v3.7.11...v3.7.12)
+
+### Added
+
+- Added repeatable methods, Update block layout ([#238](https://github.com/litstack/litstack/pull/238))
+
+### Fixed
+
+- Fixed falsy ordering for sorted repeatables ([#239](https://github.com/litstack/litstack/pull/239))
+- Fixed unclickable close button ([#240](https://github.com/litstack/litstack/pull/240)) 
+- Fixed save job ([#241](https://github.com/litstack/litstack/pull/241))
 
 ##  [v3.7.11](https://github.com/litstack/litstack/compare/v3.7.10...v3.7.11)
 
