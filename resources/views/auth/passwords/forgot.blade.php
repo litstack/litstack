@@ -17,7 +17,7 @@
                     <div class="form-group mb-3">
                         <input id="email"
                                type="email"
-                               placeholder="{{ __('base.email_address') }}"
+                               placeholder="{{ __lit('base.email_address') }}"
                                class="form-control @error('email') is-invalid @enderror lit-login-form @if(Session::has('status')) is-valid @endif"
                                name="email"
                                required>
