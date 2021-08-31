@@ -115,6 +115,7 @@ class CrudCommand extends Command
             ['media', 'm', InputOption::VALUE_NONE, 'whether this model has media'],
             ['translatable', 't', InputOption::VALUE_NONE, 'whether this model should be translatable'],
             ['slug', 's', InputOption::VALUE_NONE, 'whether this model should have a slug'],
+            ['factory', 'f', InputOption::VALUE_NONE, 'whether to create a model factory'],
         ];
     }
 
@@ -139,5 +140,6 @@ class CrudCommand extends Command
         $this->media = $this->option('media');
         $this->slug = $this->option('slug');
         $this->translatable = $this->option('translatable');
+        $this->factory = $this->option('factory');
     }
 }
