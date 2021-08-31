@@ -32,6 +32,16 @@ trait ManagesPaths
     }
 
     /**
+     * Get path to the Model factory.
+     *
+     * @return string
+     */
+    protected function modelFactoryPath()
+    {
+        return database_path("factories/{$this->model}Factory.php");
+    }
+
+    /**
      * Get path to the Migration.
      *
      * @return string
