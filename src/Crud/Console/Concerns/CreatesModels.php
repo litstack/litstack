@@ -28,6 +28,13 @@ trait CreatesModels
 
         $builder->withClassname($this->model);
 
+        if ($this->factory) {
+            $builder->withTraits("use Illuminate\Database\Eloquent\Factories\HasFactory;");
+            $uses[] = 'HasFactory';
+
+            $this->createFactory();
+        }
+
         // model has media
         if ($this->media) {
             $builder->withTraits("use Spatie\MediaLibrary\HasMedia as HasMediaContract;");
@@ -163,6 +170,29 @@ trait CreatesModels
         fix_file($this->translationModelPath());
 
         $this->info('Translation model created!');
+
+        return true;
+    }
+
+    /**
+     * Calls the factory generator Command
+     *
+     * @return bool
+     */
+    public function createFactory()
+    {
+        if ($this->files->exists($this->modelFactoryPath())) {
+            $this->line('Model factory already exists.');
+
+            return false;
+        }
+
+        $this->callSilent('make:factory', [
+            'name' => $this->model . 'Factory',
+            '--model' => $this->model
+        ]);
+
+        $this->info('Model factory created!');
 
         return true;
     }
