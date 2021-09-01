@@ -175,7 +175,7 @@ trait CreatesModels
     }
 
     /**
-     * Calls the factory generator Command
+     * Calls the factory generator Command.
      *
      * @return bool
      */
@@ -188,8 +188,8 @@ trait CreatesModels
         }
 
         $this->callSilent('make:factory', [
-            'name' => $this->model . 'Factory',
-            '--model' => $this->model
+            'name' => $this->model.'Factory',
+            '--model' => $this->model,
         ]);
 
         $this->info('Model factory created!');
