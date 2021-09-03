@@ -141,6 +141,13 @@ export default {
         this.$on('setSaveJobId', id => {
             this.jobId = id;
         });
+        
+         /**
+         * Added by Dash Creative (J. Aller) need to set the timeout value.
+         */
+         this.timeout = null;
+         
+         
     },
     mounted() {
         this.applyMask();
@@ -184,6 +191,20 @@ export default {
 
             this.$emit('changed', newValue);
             Lit.bus.$emit('fieldChanged', this.field.local_key);
+            
+            
+            /**
+             * Added by Dash Creative (J. Aller) to emit on the global bus when an input field is changed/updated
+             * Waits 700ms between each emit to wait for user to stop typing
+             * Emits array(input_id, input_value)
+             */
+
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+                this.fieldValuePair = [this.field.local_key, newValue];
+                Lit.bus.$emit('fieldValueChanged', this.fieldValuePair);
+            }, 700);
+            
         },
 
         /**
