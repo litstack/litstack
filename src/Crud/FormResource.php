@@ -2,6 +2,7 @@
 
 namespace Ignite\Crud;
 
+use Ignite\Crud\Fields\Media\MediaField;
 use Ignite\Crud\Models\LitFormModel;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Arr;
@@ -70,7 +71,11 @@ class FormResource extends JsonResource
                 continue;
             }
 
-            $value = $this->getAttribute($field->local_key);
+            if ($field instanceof MediaField) {
+                $value = $this->getMedia($field->id);
+            } else {
+                $value = $this->getAttribute($field->local_key);
+            }
 
             if ($value instanceof Collection) {
                 $value = $value->map(function ($item) use ($request) {
