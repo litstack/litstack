@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.12...3.x)
 
+### Fixed
+
+- Fixed media maxFiles(1) for Intertia requests ([#244](https://github.com/litstack/litstack/pull/244))
+
 ##  [v3.7.12](https://github.com/litstack/litstack/compare/v3.7.11...v3.7.12)
 
 ### Added
