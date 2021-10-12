@@ -117,7 +117,7 @@ export default {
     name: 'FieldMediaImages',
     props: {
         images: {
-            type: Array,
+            type: Array|Object,
         },
         field: {
             required: true,
@@ -131,13 +131,22 @@ export default {
             type: Object,
         },
     },
-    data() {
-        return {
-            sortable: this.images,
-        };
-    },
     computed: {
         ...mapGetters(['form']),
+        sortable(){
+            if((typeof this.images) == 'array'){
+                return this.images;
+            }
+            if((typeof this.images) == 'object'){
+                let imageArray = [];
+
+                for (const key in this.images[0]) {
+                    imageArray.push({...this.images[0][key], id: key})
+                }
+
+                return imageArray
+            }
+        }
     },
     methods: {
         /**
