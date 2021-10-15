@@ -207,7 +207,7 @@ export default {
         },
 
         handleFileDownload(response) {
-            const url = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
+            const url = window.URL.createObjectURL(new Blob([response.data], {type: response.data.type}));
             const link = document.createElement('a');
             link.href = url;
             link.setAttribute(
