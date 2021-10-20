@@ -1,6 +1,19 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.12...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.14...3.x)
+
+##  [v3.7.14](https://github.com/litstack/litstack/compare/v3.7.13...v3.7.14)
+
+## Added
+
+- Add factory option flag to crud generator command ([#246](https://github.com/litstack/litstack/pull/246))
+
+## Fixed
+
+- Fix translation on forgot password page ([#245](https://github.com/litstack/litstack/pull/245))
+- Fix hardcoded response data type for file downloads ([#251](https://github.com/litstack/litstack/pull/251))
+
+##  [v3.7.13](https://github.com/litstack/litstack/compare/v3.7.12...v3.7.13)
 
 ### Fixed
 
