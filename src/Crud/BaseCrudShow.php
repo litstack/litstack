@@ -412,7 +412,7 @@ class BaseCrudShow extends Page
      *
      * @param  int     $cols
      * @param  Closure $closure
-     * @return void
+     * @return CardWrapperComponent
      */
     public function card(Closure $closure)
     {
