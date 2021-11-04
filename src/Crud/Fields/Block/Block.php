@@ -41,8 +41,7 @@ class Block extends RelationField
     /**
      * Set block width.
      *
-     * @param int|float $width
-     *
+     * @param  int|float  $width
      * @return $this
      */
     public function blockWidth($width)
@@ -55,7 +54,7 @@ class Block extends RelationField
     /**
      * Confirm deleting a repeatable in a modal.
      *
-     * @param bool $confirm
+     * @param  bool  $confirm
      * @return $this
      */
     public function confirmDelete(bool $confirm = true)
@@ -68,7 +67,7 @@ class Block extends RelationField
     /**
      * Add repeatables.
      *
-     * @param  Closure|Repeatables $closure
+     * @param  Closure|Repeatables  $closure
      * @return $this
      */
     public function repeatables($closure)
@@ -87,7 +86,7 @@ class Block extends RelationField
     /**
      * Check if block has repeatable.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return bool
      */
     public function hasRepeatable(string $name)
@@ -98,7 +97,7 @@ class Block extends RelationField
     /**
      * Check if block has repeatable.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return Repeatable
      */
     public function getRepeatable($name)
@@ -122,7 +121,7 @@ class Block extends RelationField
     /**
      * Get relation query for model.
      *
-     * @param  mixed $model
+     * @param  mixed  $model
      * @param  bool  $query
      * @return mixed
      */

@@ -41,7 +41,7 @@ class Repeatables extends VueProp
     /**
      * Create new Repeatables instance.
      *
-     * @param  Block $field
+     * @param  Block  $field
      * @return void
      */
     public function __construct(Block $field)
@@ -52,8 +52,8 @@ class Repeatables extends VueProp
     /**
      * Add repeatable.
      *
-     * @param  string       $type
-     * @param  Closure|null $closure
+     * @param  string  $type
+     * @param  Closure|null  $closure
      * @return Repeatable
      */
     public function add(string $type, Closure $closure = null)
@@ -74,8 +74,8 @@ class Repeatables extends VueProp
     /**
      * Add nested block repeatable.
      *
-     * @param  string     $type
-     * @param  Closure    $closure
+     * @param  string  $type
+     * @param  Closure  $closure
      * @return Repeatable
      */
     public function block($type, Closure $closure)
@@ -92,7 +92,7 @@ class Repeatables extends VueProp
     /**
      * Check if form exists.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return bool
      */
     public function has(string $name)
@@ -103,7 +103,7 @@ class Repeatables extends VueProp
     /**
      * Get form by name.
      *
-     * @param  string         $name
+     * @param  string  $name
      * @return RepeatableForm
      */
     public function get($name)
@@ -130,8 +130,7 @@ class Repeatables extends VueProp
     /**
      * Get form by key.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return void
      */
     public function __get(string $key)

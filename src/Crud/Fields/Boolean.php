@@ -18,8 +18,7 @@ class Boolean extends BaseField
     /**
      * Cast field value.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return bool
      */
     public function castValue($value)

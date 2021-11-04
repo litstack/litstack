@@ -14,8 +14,8 @@ class CrudIndexConfigFactory extends ConfigFactory
     /**
      * Setup index table.
      *
-     * @param  \Ignite\Config\Types\CrudConfig $config
-     * @param  Closure                         $method
+     * @param  \Ignite\Config\Types\CrudConfig  $config
+     * @param  Closure  $method
      * @return \Ignite\Vue\Crud\CrudTable
      */
     public function index(ConfigHandler $config, Closure $method)
@@ -38,7 +38,7 @@ class CrudIndexConfigFactory extends ConfigFactory
     /**
      * Determines if a user can create a  new crud model.
      *
-     * @param  ConfigHandler $config
+     * @param  ConfigHandler  $config
      * @return bool
      */
     protected function canCreate(ConfigHandler $config)

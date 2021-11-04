@@ -24,9 +24,9 @@ class Translator
     /**
      * Get translation for Lit application.
      *
-     * @param  string      $key
-     * @param  array       $replace
-     * @param  string|null $locale
+     * @param  string  $key
+     * @param  array  $replace
+     * @param  string|null  $locale
      * @return string
      */
     public function trans(string $key = null, $replace = [], $locale = null)
@@ -47,10 +47,10 @@ class Translator
     /**
      * Get choice translation for Lit application.
      *
-     * @param  string               $key
-     * @param  \Countable|int|array $number
-     * @param  array                $replace
-     * @param  string|null          $locale
+     * @param  string  $key
+     * @param  \Countable|int|array  $number
+     * @param  array  $replace
+     * @param  string|null  $locale
      * @return string
      */
     public function choice(string $key = null, $number, $replace, $locale = null)
@@ -71,7 +71,7 @@ class Translator
     /**
      * Get language key.
      *
-     * @param  string      $key
+     * @param  string  $key
      * @return string|bool
      */
     protected function getLangKey(string $key = null)
@@ -137,7 +137,7 @@ class Translator
     /**
      * Check if the Lit application is running in a locale.
      *
-     * @param  string $locale
+     * @param  string  $locale
      * @return bool
      */
     public function isLocale(string $locale)
@@ -148,7 +148,7 @@ class Translator
     /**
      * Get namespace from path.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return string $namespace
      */
     protected function getNamespaceFromPath(string $path)
@@ -159,7 +159,7 @@ class Translator
     /**
      * Add path.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return void
      */
     public function addPath(string $path)

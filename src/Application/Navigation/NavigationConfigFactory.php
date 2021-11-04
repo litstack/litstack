@@ -11,9 +11,8 @@ class NavigationConfigFactory extends ConfigFactory
     /**
      * Resolve query.
      *
-     * @param \Ignite\Config\ConfigHandler $config
-     * @param Closure                      $method
-     *
+     * @param  \Ignite\Config\ConfigHandler  $config
+     * @param  Closure  $method
      * @return Navigation
      */
     public function topbar(ConfigHandler $config, Closure $method)
@@ -24,8 +23,8 @@ class NavigationConfigFactory extends ConfigFactory
     /**
      * Resolve query.
      *
-     * @param  \Ignite\Config\ConfigHandler $config
-     * @param  Closure                      $method
+     * @param  \Ignite\Config\ConfigHandler  $config
+     * @param  Closure  $method
      * @return Navigation
      */
     public function main(ConfigHandler $config, Closure $method)
@@ -36,8 +35,7 @@ class NavigationConfigFactory extends ConfigFactory
     /**
      * Create and build new navigation.
      *
-     * @param Closure $method
-     *
+     * @param  Closure  $method
      * @return Navigation
      */
     protected function nav(Closure $method)
@@ -77,7 +75,7 @@ class NavigationConfigFactory extends ConfigFactory
     /**
      * Is section emtpy. True when it only has titles.
      *
-     * @param  array $section
+     * @param  array  $section
      * @return bool
      */
     protected function isSectionEmpty($section)

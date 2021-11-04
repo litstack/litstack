@@ -75,7 +75,7 @@ class ChartServiceProvider extends LaravelServiceProvider
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerChartCommand($abstract)
@@ -88,7 +88,7 @@ class ChartServiceProvider extends LaravelServiceProvider
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerAdminCommand($abstract)
@@ -159,8 +159,7 @@ class ChartServiceProvider extends LaravelServiceProvider
     /**
      * Register ApexEngine.
      *
-     * @param ChartEngineResolver $resolver
-     *
+     * @param  ChartEngineResolver  $resolver
      * @return void
      */
     public function registerApexEngine(ChartEngineResolver $resolver)

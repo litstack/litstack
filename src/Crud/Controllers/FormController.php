@@ -20,9 +20,8 @@ abstract class FormController extends CrudBaseController
     /**
      * Load model.
      *
-     * @param CrudReadRequest $request
-     * @param int             $id
-     *
+     * @param  CrudReadRequest  $request
+     * @param  int  $id
      * @return array
      */
     public function load(CrudReadRequest $request, $id)
@@ -47,8 +46,7 @@ abstract class FormController extends CrudBaseController
     /**
      * Edit form.
      *
-     * @param FormReadRequest $request
-     *
+     * @param  FormReadRequest  $request
      * @return View $view
      */
     public function show(CrudReadRequest $request)
@@ -85,8 +83,7 @@ abstract class FormController extends CrudBaseController
     /**
      * Deny storing form Form model.
      *
-     * @param \Ignite\Crud\Requests\CrudCreateRequest $request
-     *
+     * @param  \Ignite\Crud\Requests\CrudCreateRequest  $request
      * @return mixed
      */
     public function store(CrudCreateRequest $request)

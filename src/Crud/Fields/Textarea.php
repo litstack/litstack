@@ -38,8 +38,7 @@ class Textarea extends BaseField
     /**
      * Set max characters.
      *
-     * @param int $max
-     *
+     * @param  int  $max
      * @return $this
      */
     public function maxChars(int $max)
@@ -52,8 +51,7 @@ class Textarea extends BaseField
     /**
      * Set rows.
      *
-     * @param int $rowsrows
-     *
+     * @param  int  $rowsrows
      * @return $this
      */
     public function rows(int $rows)
@@ -66,8 +64,7 @@ class Textarea extends BaseField
     /**
      * Set max rows.
      *
-     * @param int $rows
-     *
+     * @param  int  $rows
      * @return $this
      */
     public function maxRows(int $rows)
@@ -80,8 +77,7 @@ class Textarea extends BaseField
     /**
      * Cast field value.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return bool
      */
     public function castValue($value)

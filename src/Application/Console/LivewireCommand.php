@@ -55,7 +55,7 @@ class LivewireCommand extends Command
     /**
      * Create new LitLivewireCommand instance.
      *
-     * @param  Filesystem $files
+     * @param  Filesystem  $files
      * @return void
      */
     public function __construct(Filesystem $files)
@@ -107,8 +107,8 @@ class LivewireCommand extends Command
     /**
      * Fix view namespace.
      *
-     * @param  bool $force
-     * @param  bool $inline
+     * @param  bool  $force
+     * @param  bool  $inline
      * @return void
      */
     protected function fixViewNamespace(bool $force = false, bool $inline = false)

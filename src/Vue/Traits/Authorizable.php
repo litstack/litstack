@@ -23,7 +23,7 @@ trait Authorizable
     /**
      * Set authorize closure.
      *
-     * @param  Closure|bool $closure
+     * @param  Closure|bool  $closure
      * @return $this
      */
     public function authorize($closure)

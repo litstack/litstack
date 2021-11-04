@@ -56,9 +56,8 @@ class FormCollection extends Collection
     /**
      * Get attribute.
      *
-     * @param string $key
-     * @param bool   $query
-     *
+     * @param  string  $key
+     * @param  bool  $query
      * @return void
      */
     public function getAttribute(string $key, $query = false)
@@ -85,8 +84,7 @@ class FormCollection extends Collection
     /**
      * Get attribute.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return void
      */
     public function __get($key)
@@ -97,9 +95,8 @@ class FormCollection extends Collection
     /**
      * Get query builder.
      *
-     * @param string $method
-     * @param array  $parameters
-     *
+     * @param  string  $method
+     * @param  array  $parameters
      * @return mixed
      */
     public function __call($method, $parameters)

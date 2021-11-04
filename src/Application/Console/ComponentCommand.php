@@ -19,7 +19,7 @@ class ComponentCommand extends ComponentMakeCommand
     /**
      * Build the class with the given name.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return string
      */
     protected function buildClass($name)

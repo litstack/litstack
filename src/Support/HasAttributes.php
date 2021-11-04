@@ -14,7 +14,7 @@ trait HasAttributes
     /**
      * Set attribute value.
      *
-     * @param  string $name
+     * @param  string  $name
      * @param  mixed  $value
      * @return void
      */
@@ -26,7 +26,7 @@ trait HasAttributes
     /**
      * Merge or set attribute value.
      *
-     * @param  string $name
+     * @param  string  $name
      * @param  array  $value
      * @return void
      */
@@ -42,7 +42,7 @@ trait HasAttributes
     /**
      * Get attribute by name.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return mixed
      */
     public function getAttribute(string $name)
@@ -63,7 +63,7 @@ trait HasAttributes
     /**
      * Determines if attribute with the given name exists.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return bool
      */
     public function hasAttribute(string $name)

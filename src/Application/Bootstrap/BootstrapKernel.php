@@ -10,7 +10,7 @@ class BootstrapKernel
     /**
      * Bootstrap.
      *
-     * @param  \Ignite\Application\Application $app
+     * @param  \Ignite\Application\Application  $app
      * @return void
      */
     public function bootstrap(Application $app, Kernel $kernel)
@@ -24,7 +24,7 @@ class BootstrapKernel
     /**
      * Register providers.
      *
-     * @param  array $providers
+     * @param  array  $providers
      * @return void
      */
     public function registerProviders($providers)

@@ -23,8 +23,8 @@ class LightsOn
     /**
      * Create new LightsOn instance.
      *
-     * @param  Application $app
-     * @param  Litstack    $litstack
+     * @param  Application  $app
+     * @param  Litstack  $litstack
      * @return void
      */
     public function __construct(Application $laravel, Litstack $litstack)

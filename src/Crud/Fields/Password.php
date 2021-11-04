@@ -35,7 +35,7 @@ class Password extends BaseField
     /**
      * Set model class.
      *
-     * @param  string $model
+     * @param  string  $model
      * @return void
      *
      * @throws LogicException
@@ -54,10 +54,9 @@ class Password extends BaseField
     /**
      * Fill model.
      *
-     * @param mixed  $model
-     * @param string $attributeName
-     * @param mixed  $attributeValue
-     *
+     * @param  mixed  $model
+     * @param  string  $attributeName
+     * @param  mixed  $attributeValue
      * @return void
      */
     public function fillModel($model, $attributeName, $attributeValue)
@@ -85,8 +84,7 @@ class Password extends BaseField
     /**
      * Only rules.
      *
-     * @param bool $noScore
-     *
+     * @param  bool  $noScore
      * @return $this
      */
     public function rulesOnly(bool $rulesOnly = true)
@@ -114,8 +112,7 @@ class Password extends BaseField
     /**
      * Set noScore.
      *
-     * @param bool $noScore
-     *
+     * @param  bool  $noScore
      * @return $this
      */
     public function noScore(bool $noScore = true)
@@ -128,8 +125,7 @@ class Password extends BaseField
     /**
      * Set minScore.
      *
-     * @param int $score
-     *
+     * @param  int  $score
      * @return $this
      */
     public function minScore(int $score)
@@ -143,8 +139,7 @@ class Password extends BaseField
     /**
      * Confirm the form using the current password.
      *
-     * @param Type $var
-     *
+     * @param  Type  $var
      * @return self
      */
     public function confirm($confirm = true)
@@ -168,8 +163,7 @@ class Password extends BaseField
     /**
      * Cast field value.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return bool
      */
     public function castValue($value)

@@ -21,7 +21,7 @@ trait ColumnBuilderHasFields
      * Add form field to table.
      *
      * @param  string  $title
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return void
      */
     public function field($label, Closure $closure = null)
@@ -69,7 +69,7 @@ trait ColumnBuilderHasFields
     /**
      * Get form for the given key.
      *
-     * @param  string              $key
+     * @param  string  $key
      * @return BaseForm|mixed|void
      */
     public function getForm($key)
@@ -80,7 +80,7 @@ trait ColumnBuilderHasFields
     /**
      * Get field params.
      *
-     * @param  string $formKey
+     * @param  string  $formKey
      * @param  Field  $field
      * @return array
      */

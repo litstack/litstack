@@ -23,10 +23,10 @@ class BelongsToRepository extends RelationRepository
     /**
      * Create new BelongsToRepository instance.
      *
-     * @param  ConfigHandler      $config
-     * @param  CrudBaseController $controller
-     * @param  BaseForm           $form
-     * @param  BelongsTo          $field
+     * @param  ConfigHandler  $config
+     * @param  CrudBaseController  $controller
+     * @param  BaseForm  $form
+     * @param  BelongsTo  $field
      * @return void
      */
     public function __construct(ConfigHandler $config, CrudBaseController $controller, BaseForm $form, BelongsTo $field)
@@ -37,8 +37,8 @@ class BelongsToRepository extends RelationRepository
     /**
      * Create new belongsTo relation.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
      * @return void
      */
     public function create(CrudUpdateRequest $request, $model)
@@ -51,8 +51,8 @@ class BelongsToRepository extends RelationRepository
     /**
      * Link two models.
      *
-     * @param  Model $model
-     * @param  Model $related
+     * @param  Model  $model
+     * @param  Model  $related
      * @return void
      */
     public function link(Model $model, Model $related)
@@ -64,8 +64,8 @@ class BelongsToRepository extends RelationRepository
     /**
      * Destroy belongsTo relation.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)

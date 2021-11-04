@@ -9,7 +9,7 @@ class RelationComponent extends ColumnComponent
     /**
      * Related attribute name.
      *
-     * @param  string $related
+     * @param  string  $related
      * @return $this
      */
     public function related($related)
@@ -20,7 +20,7 @@ class RelationComponent extends ColumnComponent
     /**
      * Related route prefix.
      *
-     * @param  string|array $routePrefix
+     * @param  string|array  $routePrefix
      * @return $this
      */
     public function routePrefix($routePrefix)
@@ -31,7 +31,7 @@ class RelationComponent extends ColumnComponent
     /**
      * Set route prefix from crud config.
      *
-     * @param  string $config
+     * @param  string  $config
      * @return $this
      */
     public function crud($config)
@@ -51,9 +51,9 @@ class RelationComponent extends ColumnComponent
     /**
      * Set value.
      *
-     * @param  string|array $value
-     * @param  array|null   $options
-     * @param  mixed        $default
+     * @param  string|array  $value
+     * @param  array|null  $options
+     * @param  mixed  $default
      * @return $this
      */
     public function value($value, array $options = null, $default = null)
@@ -68,7 +68,7 @@ class RelationComponent extends ColumnComponent
     /**
      * Deny to set link.
      *
-     * @param  string $link
+     * @param  string  $link
      * @return void
      */
     public function link($link)

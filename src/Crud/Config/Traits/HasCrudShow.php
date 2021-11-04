@@ -45,8 +45,8 @@ trait HasCrudShow
     /**
      * Authorize the page for the given user and operation.
      *
-     * @param  Authorizable $user
-     * @param  string       $operation
+     * @param  Authorizable  $user
+     * @param  string  $operation
      * @return bool
      */
     public function authorize(Authorizable $user, $operation)

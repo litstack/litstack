@@ -28,7 +28,7 @@ class FormResource extends JsonResource
     /**
      * Create a new resource instance.
      *
-     * @param  LitFormModel $resource
+     * @param  LitFormModel  $resource
      * @return void
      */
     public function __construct(LitFormModel $resource)
@@ -59,7 +59,7 @@ class FormResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function toArray($request)
@@ -96,7 +96,7 @@ class FormResource extends JsonResource
     /**
      * Set field ids that shouldn't be rendered by the resource.
      *
-     * @param  array ...$except
+     * @param  array  ...$except
      * @return $this
      */
     public function except(...$except)
@@ -111,7 +111,7 @@ class FormResource extends JsonResource
     /**
      * Set field ids that should be rendered by the resource.
      *
-     * @param  array ...$only
+     * @param  array  ...$only
      * @return $this
      */
     public function only(...$only)
@@ -157,7 +157,7 @@ class FormResource extends JsonResource
     /**
      * Determine if a field should be rendered by the resource.
      *
-     * @param  string $field
+     * @param  string  $field
      * @return bool
      */
     public function shouldBeRendered($field)

@@ -24,9 +24,9 @@ class CarbonColumn extends ColumnCast
     /**
      * Create new CarbonColumn instance.
      *
-     * @param  string      $currency
-     * @param  string|null $locale
-     * @param  bool        $isoFormat
+     * @param  string  $currency
+     * @param  string|null  $locale
+     * @param  bool  $isoFormat
      * @return void
      */
     public function __construct($format = 'd.m.Y', $isoFormat = false)
@@ -38,10 +38,10 @@ class CarbonColumn extends ColumnCast
     /**
      * Cast the given value.
      *
-     * @param  \Illuminate\Database\Eloquent\Model $model
-     * @param  string                              $key
-     * @param  mixed                               $value
-     * @param  array                               $attributes
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  string  $key
+     * @param  mixed  $value
+     * @param  array  $attributes
      * @return array
      */
     public function get($model, $key, $value, $attributes)

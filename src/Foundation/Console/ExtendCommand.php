@@ -25,7 +25,7 @@ class ExtendCommand extends Command
     /**
      * Create new ExtendCommand instance.
      *
-     * @param  Filesystem $files
+     * @param  Filesystem  $files
      * @return void
      */
     public function __construct(Filesystem $files)
@@ -50,8 +50,8 @@ class ExtendCommand extends Command
     /**
      * Run npm install.
      *
-     * @param  string $base
-     * @param  bool   $verbose
+     * @param  string  $base
+     * @param  bool  $verbose
      * @return void
      */
     protected function runNpmInstall($base, $verbose = false)

@@ -18,7 +18,6 @@ trait HasResults
      * Number that is displayed at the bottom left corner.
      *
      * @param \Illuminate\Support\Collection
-     *
      * @return int
      */
     public function result(Collection $values): int

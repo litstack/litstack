@@ -35,7 +35,7 @@ trait RenderableAsProp
     /**
      * To json.
      *
-     * @param  int    $options
+     * @param  int  $options
      * @return string
      */
     public function toJson($options = 0)
@@ -46,7 +46,7 @@ trait RenderableAsProp
     /**
      * Add rendering lifecycle hook.
      *
-     * @param  Closure $hook
+     * @param  Closure  $hook
      * @return $this
      */
     public function rendering(Closure $hook)
@@ -87,7 +87,7 @@ trait RenderableAsProp
     /**
      * Filter rendered collection authorized items.
      *
-     * @param  Collection $rendered
+     * @param  Collection  $rendered
      * @return Collection
      */
     protected function authorized(Collection $rendered): Collection

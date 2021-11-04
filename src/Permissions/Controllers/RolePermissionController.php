@@ -19,7 +19,7 @@ class RolePermissionController
     /**
      * Create new RolePermissionController instance.
      *
-     * @param  Cache $cache
+     * @param  Cache  $cache
      * @return void
      */
     public function __construct(Cache $cache)
@@ -30,7 +30,7 @@ class RolePermissionController
     /**
      * Toggle role permission.
      *
-     * @param  UpdateRolePermissionRequest $request
+     * @param  UpdateRolePermissionRequest  $request
      * @return void
      */
     public function update(UpdateRolePermissionRequest $request)

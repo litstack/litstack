@@ -32,7 +32,7 @@ class NavCommand extends Command
     /**
      * Create new NavCommand instance.
      *
-     * @param  PresetFactory $factory
+     * @param  PresetFactory  $factory
      * @return void
      */
     public function __construct(PresetFactory $factory)

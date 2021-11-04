@@ -9,8 +9,7 @@ trait FieldHasForm
     /**
      * Add form.
      *
-     * @param Closure $closure
-     *
+     * @param  Closure  $closure
      * @return this
      */
     abstract public function form(Closure $closure);

@@ -48,7 +48,7 @@ class Route extends BaseField
     /**
      * Add's empty option to unset route.
      *
-     * @param  bool $empty
+     * @param  bool  $empty
      * @return $this
      */
     public function allowEmpty(bool $empty = true)
@@ -85,7 +85,7 @@ class Route extends BaseField
     /**
      * Render route collection.
      *
-     * @param  RouteCollection $collection
+     * @param  RouteCollection  $collection
      * @return array
      */
     protected function renderCollection(RouteCollection $collection)
@@ -114,7 +114,7 @@ class Route extends BaseField
     /**
      * Cast value.
      *
-     * @param  string|null    $value
+     * @param  string|null  $value
      * @return RouteItem|null
      */
     public function castValue($value)
@@ -126,7 +126,7 @@ class Route extends BaseField
      * Register route collection.
      *
      * @param  string  $name
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return void
      */
     public static function register(string $name, Closure $closure)

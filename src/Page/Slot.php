@@ -37,8 +37,8 @@ class Slot extends VueProp
     /**
      * Create new Slot instance.
      *
-     * @param  BasePage           $page
-     * @param  ActionFactory|void $actionFactory
+     * @param  BasePage  $page
+     * @param  ActionFactory|void  $actionFactory
      * @return void
      */
     public function __construct(BasePage $page, ActionFactory $actionFactory = null)
@@ -50,8 +50,8 @@ class Slot extends VueProp
     /**
      * Add action.
      *
-     * @param  string                $title
-     * @param  string                $action
+     * @param  string  $title
+     * @param  string  $action
      * @return ButtonComponent|$this
      */
     public function action($title, $action)
@@ -85,7 +85,7 @@ class Slot extends VueProp
     /**
      * Add Blade View to stack.
      *
-     * @param  string|View $view
+     * @param  string|View  $view
      * @return View
      */
     public function view($view)

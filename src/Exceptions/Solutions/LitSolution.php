@@ -9,8 +9,7 @@ class LitSolution extends BaseSolution
     /**
      * Create new LitSolution instance.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return void
      */
     public function __construct(string $title)
@@ -35,8 +34,7 @@ class LitSolution extends BaseSolution
     /**
      * Set docs link.
      *
-     * @param string $link
-     *
+     * @param  string  $link
      * @return $this
      */
     public function setDocsLink(string $link)

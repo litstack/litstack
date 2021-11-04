@@ -10,10 +10,9 @@ trait TestHelpers
     /**
      * Calling protected or private class method.
      *
-     * @param mixed|string $abstract
-     * @param string       $method
-     * @param array        $params
-     *
+     * @param  mixed|string  $abstract
+     * @param  string  $method
+     * @param  array  $params
      * @return mixed
      */
     protected function callUnaccessibleMethod($abstract, string $method, array $params = [])
@@ -37,10 +36,9 @@ trait TestHelpers
     /**
      * Set protected or private class property value.
      *
-     * @param mixed  $instance
-     * @param string $property
-     * @param mixed  $value
-     *
+     * @param  mixed  $instance
+     * @param  string  $property
+     * @param  mixed  $value
      * @return void
      */
     public function setUnaccessibleProperty($instance, string $property, $value)
@@ -54,7 +52,7 @@ trait TestHelpers
      * Get protected or private class property value.
      *
      * @param  mixed  $object
-     * @param  string $property
+     * @param  string  $property
      * @param  mixed  $value
      * @return mixed
      */
@@ -76,9 +74,8 @@ trait TestHelpers
     /**
      * Assert class has trait.
      *
-     * @param string       $trait
-     * @param string|mixed $class
-     *
+     * @param  string  $trait
+     * @param  string|mixed  $class
      * @return void
      */
     public function assertHasTrait(string $trait, $class)

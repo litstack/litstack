@@ -11,7 +11,7 @@ abstract class Repeatable
     /**
      * Build repeatable preview.
      *
-     * @param  ColumnBuilder $preview
+     * @param  ColumnBuilder  $preview
      * @return void
      */
     abstract public function preview(ColumnBuilder $preview);
@@ -19,7 +19,7 @@ abstract class Repeatable
     /**
      * Build repeatable form.
      *
-     * @param  RepeatableForm $form
+     * @param  RepeatableForm  $form
      * @return void
      */
     abstract public function form(RepeatableForm $form);
@@ -27,7 +27,7 @@ abstract class Repeatable
     /**
      * Mount the repeatable.
      *
-     * @param  RegisteredRepeatable $repeatable
+     * @param  RegisteredRepeatable  $repeatable
      * @return void
      */
     public function mount(RegisteredRepeatable $repeatable)

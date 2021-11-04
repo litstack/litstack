@@ -23,10 +23,10 @@ class MorphManyRepository extends RelationRepository
     /**
      * Create new MorphManyRepository instance.
      *
-     * @param  ConfigHandler      $config
-     * @param  CrudBaseController $controller
-     * @param  BaseForm           $form
-     * @param  MorphMany          $field
+     * @param  ConfigHandler  $config
+     * @param  CrudBaseController  $controller
+     * @param  BaseForm  $form
+     * @param  MorphMany  $field
      * @return void
      */
     public function __construct($config, $controller, $form, MorphMany $field)
@@ -37,8 +37,8 @@ class MorphManyRepository extends RelationRepository
     /**
      * Create new morphMany relation.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
      * @return void
      */
     public function create(CrudUpdateRequest $request, $model)
@@ -53,8 +53,8 @@ class MorphManyRepository extends RelationRepository
     /**
      * Link two models.
      *
-     * @param  Model $model
-     * @param  Model $related
+     * @param  Model  $model
+     * @param  Model  $related
      * @return void
      */
     public function link(Model $model, Model $related)
@@ -75,8 +75,8 @@ class MorphManyRepository extends RelationRepository
     /**
      * Remove morphMany relation.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)

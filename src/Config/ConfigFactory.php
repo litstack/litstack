@@ -16,7 +16,7 @@ class ConfigFactory
     /**
      * Create new ConfigFactory instance.
      *
-     * @param  ConfigHandler $handler
+     * @param  ConfigHandler  $handler
      * @return void
      */
     public function __construct(ConfigHandler $handler)
@@ -27,7 +27,7 @@ class ConfigFactory
     /**
      * Get alias for the given method.
      *
-     * @param  string      $method
+     * @param  string  $method
      * @return bool|string
      */
     public function getAliasFor(ReflectionMethod $method)
@@ -38,9 +38,9 @@ class ConfigFactory
     /**
      * Handle config method.
      *
-     * @param  Instance $config
-     * @param  string   $method
-     * @param  array    $parameters
+     * @param  Instance  $config
+     * @param  string  $method
+     * @param  array  $parameters
      * @return mixed
      */
     public function handle($method, $parameters, $alias = null)

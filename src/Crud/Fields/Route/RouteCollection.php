@@ -32,8 +32,8 @@ class RouteCollection extends Collection
     /**
      * Create new RouteCollection isntance.
      *
-     * @param string $name
-     * @param array  $items
+     * @param  string  $name
+     * @param  array  $items
      */
     public function __construct(array $items, self $parent = null)
     {
@@ -44,9 +44,9 @@ class RouteCollection extends Collection
     /**
      * Add named route to collection.
      *
-     * @param  string         $title
-     * @param  string         $id
-     * @param  Closure|string $resolver
+     * @param  string  $title
+     * @param  string  $id
+     * @param  Closure|string  $resolver
      * @return $this
      */
     public function route($title, $id, $resolver)
@@ -61,7 +61,7 @@ class RouteCollection extends Collection
      *
      * @param  string  $title
      * @param  string  $id
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return $this
      */
     public function group($title, $id, Closure $closure)
@@ -77,7 +77,7 @@ class RouteCollection extends Collection
     /**
      * Set route collection id.
      *
-     * @param  string $id
+     * @param  string  $id
      * @return void
      */
     public function setId($id)
@@ -102,7 +102,7 @@ class RouteCollection extends Collection
     /**
      * Set title.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return void
      */
     public function setTitle($title)
@@ -123,7 +123,7 @@ class RouteCollection extends Collection
     /**
      * Find route.
      *
-     * @param  string         $id
+     * @param  string  $id
      * @return RouteItem|null
      */
     public function findRoute($id)
@@ -153,7 +153,7 @@ class RouteCollection extends Collection
     /**
      * Resolve route collection.
      *
-     * @param  string $collection
+     * @param  string  $collection
      * @return self
      */
     public static function resolve($collection)

@@ -36,9 +36,8 @@ class ManyRelation extends ManyRelationField
     /**
      * Get relation for model.
      *
-     * @param mixed $model
-     * @param bool  $query
-     *
+     * @param  mixed  $model
+     * @param  bool  $query
      * @return mixed
      */
     public function getRelationQuery($model)

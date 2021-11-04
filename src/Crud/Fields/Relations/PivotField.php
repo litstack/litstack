@@ -20,7 +20,7 @@ class PivotField extends BaseForm
     /**
      * Create new RelationPivotForm instance.
      *
-     * @param  RelationForm $form
+     * @param  RelationForm  $form
      * @return void
      */
     public function __construct(RelationForm $form)
@@ -31,7 +31,7 @@ class PivotField extends BaseForm
     /**
      * Forward calls to RelationForm.
      *
-     * @param  string $method
+     * @param  string  $method
      * @param  array  $parameters
      * @return mixed
      */

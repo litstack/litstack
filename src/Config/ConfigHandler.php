@@ -58,7 +58,7 @@ class ConfigHandler
     /**
      * Create new ConfigHandler instance.
      *
-     * @param  mixed $config
+     * @param  mixed  $config
      * @return void
      */
     public function __construct($config)
@@ -69,7 +69,7 @@ class ConfigHandler
     /**
      * Set a config attribute.
      *
-     * @param  string $attribute
+     * @param  string  $attribute
      * @param  mixed  $value
      * @return void
      */
@@ -116,7 +116,7 @@ class ConfigHandler
     /**
      * Get method reflector.
      *
-     * @param  string                $name
+     * @param  string  $name
      * @return ReflectionMethod|null
      */
     public function getMethodReflector($name)
@@ -132,9 +132,9 @@ class ConfigHandler
      * Determines wether the method requires the abstract as parameter at the
      * given position.
      *
-     * @param  string       $method
-     * @param  string|mixed $abstract
-     * @param  int          $position
+     * @param  string  $method
+     * @param  string|mixed  $abstract
+     * @param  int  $position
      * @return bool
      *
      * @throws InvalidArgumentException
@@ -170,8 +170,8 @@ class ConfigHandler
     /**
      * Determine if the reflection type implements the given abstract.
      *
-     * @param  ReflectionType $type
-     * @param  string         $abstract
+     * @param  ReflectionType  $type
+     * @param  string  $abstract
      * @return bool
      */
     protected function isTypeAbstract(ReflectionType $type, $abstract)
@@ -200,7 +200,7 @@ class ConfigHandler
     /**
      * Register config factory.
      *
-     * @param  string $factory
+     * @param  string  $factory
      * @return void
      *
      * @throws \TypeError
@@ -255,8 +255,8 @@ class ConfigHandler
     /**
      * Load select config attributes.
      *
-     * @param  string|array ...$keys
-     * @return array        $attributes
+     * @param  string|array  ...$keys
+     * @return array $attributes
      */
     public function get(...$keys)
     {
@@ -286,7 +286,7 @@ class ConfigHandler
     /**
      * Check if config has method.
      *
-     * @param  string $method
+     * @param  string  $method
      * @return bool
      */
     public function hasMethod(string $method)
@@ -311,7 +311,7 @@ class ConfigHandler
     /**
      * Get config attribute from loaded stack or new.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return mixed
      */
     public function getAttribute($name)
@@ -333,7 +333,7 @@ class ConfigHandler
     /**
      * Call config method and store attributes.
      *
-     * @param  string $method
+     * @param  string  $method
      * @param  array  ...$parameters
      * @return mixed
      */
@@ -349,7 +349,7 @@ class ConfigHandler
     /**
      * Set attribute.
      *
-     * @param  string $name
+     * @param  string  $name
      * @param  mixed  $value
      * @return void
      */
@@ -361,7 +361,7 @@ class ConfigHandler
     /**
      * Check if a method has a factory.
      *
-     * @param  string $method
+     * @param  string  $method
      * @return bool
      */
     public function methodHasFactory(string $method)
@@ -372,7 +372,7 @@ class ConfigHandler
     /**
      * Get factory for method.
      *
-     * @param  string $method
+     * @param  string  $method
      * @return mixed
      */
     public function getMethodFactory(string $method)
@@ -387,7 +387,7 @@ class ConfigHandler
     /**
      * Resolve config method.
      *
-     * @param  string $name
+     * @param  string  $name
      * @param  array  $parameters
      * @return array
      */
@@ -419,7 +419,7 @@ class ConfigHandler
     /**
      * Get method name.
      *
-     * @param  string $method
+     * @param  string  $method
      * @return string
      */
     public function getMethodName(string $method)
@@ -430,7 +430,7 @@ class ConfigHandler
     /**
      * Call config class method.
      *
-     * @param  string $method
+     * @param  string  $method
      * @param  array  $parameters
      * @return mixed
      *
@@ -454,7 +454,7 @@ class ConfigHandler
     /**
      * Get config attribute.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return mixed
      */
     public function __get(string $name)

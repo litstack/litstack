@@ -10,7 +10,7 @@ class SearchConfig extends Config
     /**
      * Setup search.
      *
-     * @param  Search $search
+     * @param  Search  $search
      * @return void
      */
     public function main(Search $search)

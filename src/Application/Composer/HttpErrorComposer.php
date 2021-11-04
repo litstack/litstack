@@ -12,7 +12,7 @@ class HttpErrorComposer
     /**
      * Show Lit error pages.
      *
-     * @param  View $view
+     * @param  View  $view
      * @return void
      */
     public function compose(View $view)

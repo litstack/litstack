@@ -83,7 +83,7 @@ class Result implements Arrayable
     /**
      * Set attribute value.
      *
-     * @param  string $name
+     * @param  string  $name
      * @param  mixed  $value
      * @return void
      */
@@ -105,7 +105,7 @@ class Result implements Arrayable
     /**
      * Get attribute by name.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return mixed
      */
     public function getAttribute(string $name)

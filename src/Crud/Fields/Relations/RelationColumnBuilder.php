@@ -27,7 +27,7 @@ class RelationColumnBuilder extends ColumnBuilder
     /**
      * Create new RelationColumnBuilder instance.
      *
-     * @param  LaravelRelationField $field
+     * @param  LaravelRelationField  $field
      * @return $this
      */
     public function __construct(LaravelRelationField $field)
@@ -58,7 +58,7 @@ class RelationColumnBuilder extends ColumnBuilder
     /**
      * Get field params.
      *
-     * @param  string $formKey
+     * @param  string  $formKey
      * @param  Field  $field
      * @return array
      */

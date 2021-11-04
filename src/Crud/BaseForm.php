@@ -95,7 +95,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     /**
      * Create new BaseForm instance.
      *
-     * @param  string $model
+     * @param  string  $model
      * @return void
      */
     public function __construct(string $model)
@@ -117,7 +117,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     /**
      * Add Vue component field.
      *
-     * @param  string|Component      $component
+     * @param  string|Component  $component
      * @return \Ignite\Vue\Component
      */
     public function component($component)
@@ -134,7 +134,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     /**
      * Add group wrapper.
      *
-     * @param  Closure   $closure
+     * @param  Closure  $closure
      * @return Component
      */
     public function group(Closure $closure)
@@ -147,8 +147,8 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     /**
      * Get rules for request.
      *
-     * @param  CrudCreateRequest|CrudUpdateRequest $request
-     * @param  string|null                         $type
+     * @param  CrudCreateRequest|CrudUpdateRequest  $request
+     * @param  string|null  $type
      * @return array
      */
     public function getRules($type = null)
@@ -175,7 +175,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     /**
      * Set form route prefix.
      *
-     * @param  string $prefix
+     * @param  string  $prefix
      * @return void
      */
     public function setRoutePrefix($prefix)
@@ -201,9 +201,9 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
      * Register new Field.
      *
      * @param  mixed  $field
-     * @param  string $id
+     * @param  string  $id
      * @param  array  $params
-     * @return Field  $field
+     * @return Field $field
      */
     public function registerField($field, ...$params)
     {
@@ -242,7 +242,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     /**
      * Before registering field hook.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return void
      */
     public function registering(Closure $closure)
@@ -253,7 +253,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     /**
      * Add after registering field hook.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return void
      */
     public function registered(Closure $closure)
@@ -306,7 +306,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     /**
      * Find registered field.
      *
-     * @param  string     $fieldId
+     * @param  string  $fieldId
      * @return Field|void
      */
     public function findField($fieldId)
@@ -339,7 +339,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     /**
      * Check if field with form exists.
      *
-     * @param  string $repeatable
+     * @param  string  $repeatable
      * @return bool
      */
     public function hasForm(string $name, string $repeatable = null)
@@ -362,7 +362,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     /**
      * Get form from field.
      *
-     * @param  string   $repeatable
+     * @param  string  $repeatable
      * @return BaseForm
      */
     public function getForm(string $name, string $repeatable = null)
@@ -401,7 +401,7 @@ class BaseForm extends BasePage implements Form, Arrayable, Jsonable
     /**
      * Call form method.
      *
-     * @param  string $method
+     * @param  string  $method
      * @param  array  $parameters
      * @return void
      *

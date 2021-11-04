@@ -11,7 +11,7 @@ class ListCollection extends Collection
     /**
      * Create a new collection.
      *
-     * @param  mixed $items
+     * @param  mixed  $items
      * @return void
      */
     public function __construct($items = [], $setDepth = false)
@@ -44,7 +44,7 @@ class ListCollection extends Collection
     /**
      * Get depth for item.
      *
-     * @param  array|ListItem $item
+     * @param  array|ListItem  $item
      * @return int
      */
     protected function getDepth($item)
@@ -91,10 +91,9 @@ class ListCollection extends Collection
     /**
      * Unflatten list items.
      *
-     * @param Collection $listItems
-     * @param int        $parent_id
-     * @param int        $depth
-     *
+     * @param  Collection  $listItems
+     * @param  int  $parent_id
+     * @param  int  $depth
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function unflattenList(self $listItems = null, $parent_id = 0, $depth = 1)

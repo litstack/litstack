@@ -74,7 +74,7 @@ class ChartCommand extends GeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return string
      */
     public function buildClass($name)
@@ -87,7 +87,7 @@ class ChartCommand extends GeneratorCommand
     /**
      * Replace the model name for the given stub.
      *
-     * @param  string $stub
+     * @param  string  $stub
      * @return string
      */
     protected function replaceModel(&$stub)
@@ -104,7 +104,7 @@ class ChartCommand extends GeneratorCommand
     /**
      * Replace the relation name for the given stub.
      *
-     * @param  string $stub
+     * @param  string  $stub
      * @return string
      */
     protected function replaceRelation($stub)
@@ -161,7 +161,7 @@ class ChartCommand extends GeneratorCommand
     /**
      * Get the destination class path.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return string
      */
     protected function getPath($name)
@@ -176,7 +176,7 @@ class ChartCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string $rootNamespace
+     * @param  string  $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
@@ -187,7 +187,7 @@ class ChartCommand extends GeneratorCommand
     /**
      * Parse the class name and format according to the root namespace.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return string
      */
     protected function qualifyClass($name)

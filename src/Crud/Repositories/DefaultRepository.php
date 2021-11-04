@@ -18,9 +18,8 @@ class DefaultRepository extends BaseFieldRepository
     /**
      * Load model.
      *
-     * @param CrudReadRequest $request
-     * @param mixed           $model
-     *
+     * @param  CrudReadRequest  $request
+     * @param  mixed  $model
      * @return CrudJs
      */
     public function load(CrudReadRequest $request, $model)
@@ -31,9 +30,9 @@ class DefaultRepository extends BaseFieldRepository
     /**
      * Update model.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
-     * @param  object            $payload
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
+     * @param  object  $payload
      * @return CrudJs
      */
     public function update(CrudUpdateRequest $request, $model, $payload)
@@ -63,8 +62,8 @@ class DefaultRepository extends BaseFieldRepository
     /**
      * Update pivot fields.
      *
-     * @param  Model $related
-     * @param  array $attributes
+     * @param  Model  $related
+     * @param  array  $attributes
      * @return void
      */
     protected function updateExistingPivot($related, $attributes)
@@ -83,7 +82,7 @@ class DefaultRepository extends BaseFieldRepository
     /**
      * Filter pivot attributes.
      *
-     * @param  array $attributes
+     * @param  array  $attributes
      * @return array
      */
     protected function filterPivotAttributes($attributes)
@@ -109,9 +108,9 @@ class DefaultRepository extends BaseFieldRepository
     /**
      * Store new model.
      *
-     * @param  CrudCreateRequest $request
-     * @param  object            $payload
-     * @param  Model             $model
+     * @param  CrudCreateRequest  $request
+     * @param  object  $payload
+     * @param  Model  $model
      * @return CrudJs
      */
     public function store(Request $request, $payload, $model = null)
@@ -163,7 +162,7 @@ class DefaultRepository extends BaseFieldRepository
      * Determines if the current config matches the model. This will not be true
      * when a relationship model is handled.
      *
-     * @param  mixed $model
+     * @param  mixed  $model
      * @return bool
      */
     protected function configMatchesModel($model)
@@ -178,7 +177,7 @@ class DefaultRepository extends BaseFieldRepository
     /**
      * Get child field for relation fields.
      *
-     * @param  Request $request
+     * @param  Request  $request
      * @param  string  $field_id
      * @return Field
      */
@@ -196,8 +195,8 @@ class DefaultRepository extends BaseFieldRepository
     /**
      * Get relation model.
      *
-     * @param  Request $request
-     * @param  mixed   $model
+     * @param  Request  $request
+     * @param  mixed  $model
      * @return Model
      */
     public function getModel(Request $request, $model, $childRepository)

@@ -146,8 +146,7 @@ class FormConfig
     /**
      * Form component.
      *
-     * @param Component $component
-     *
+     * @param  Component  $component
      * @return void
      */
     public function component($component)

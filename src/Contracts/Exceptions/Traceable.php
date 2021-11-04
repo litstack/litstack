@@ -16,10 +16,10 @@ interface Traceable
     /**
      * Create new Traceable instance.
      *
-     * @param  string    $message
-     * @param  array     $options
-     * @param  int       $code
-     * @param  Exception $previous
+     * @param  string  $message
+     * @param  array  $options
+     * @param  int  $code
+     * @param  Exception  $previous
      * @return void
      */
     public function __construct($message = null, array $options = [], $code = 0, Exception $previous = null);
@@ -27,7 +27,7 @@ interface Traceable
     /**
      * Set trace by options.
      *
-     * @param  array $options
+     * @param  array  $options
      * @return void
      */
     public function setTrace($options);

@@ -34,7 +34,7 @@ class Authentication implements AuthenticationContract
     /**
      * Create new Authentication instance.
      *
-     * @param  Factory $auth
+     * @param  Factory  $auth
      * @return void
      */
     public function __construct(Factory $auth)
@@ -46,9 +46,9 @@ class Authentication implements AuthenticationContract
     /**
      * Execute authentication.
      *
-     * @param  array $credentials
+     * @param  array  $credentials
      * @param  bool  $remember
-     * @param  array $parameters
+     * @param  array  $parameters
      * @return bool
      */
     public function attempt($credentials, bool $remember = false, array $parameters = [])
@@ -74,7 +74,7 @@ class Authentication implements AuthenticationContract
     /**
      * Add attempting closure.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return void
      */
     public function attempting(Closure $closure)
@@ -85,7 +85,7 @@ class Authentication implements AuthenticationContract
     /**
      * Execute extended attempt.
      *
-     * @param  array $parameters
+     * @param  array  $parameters
      * @return bool
      */
     protected function extendedAttempt(array $parameters)

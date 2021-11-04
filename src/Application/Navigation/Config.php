@@ -7,7 +7,7 @@ abstract class Config
     /**
      * Build topbar navigation.
      *
-     * @param  LitNavigation $nav
+     * @param  LitNavigation  $nav
      * @return void
      */
     abstract public function topbar(Navigation $nav);
@@ -15,7 +15,7 @@ abstract class Config
     /**
      * Build main navigation.
      *
-     * @param  LitNavigation $nav
+     * @param  LitNavigation  $nav
      * @return void
      */
     abstract public function main(Navigation $nav);

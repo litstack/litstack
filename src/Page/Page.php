@@ -69,9 +69,9 @@ class Page extends BasePage implements Expandable
     /**
      * Add action to page.
      *
-     * @param  string          $title
-     * @param  string          $action
-     * @param  Component       $wrapper
+     * @param  string  $title
+     * @param  string  $action
+     * @param  Component  $wrapper
      * @return Component|mixed
      */
     public function action($title, $action, Component $wrapper = null)
@@ -96,7 +96,7 @@ class Page extends BasePage implements Expandable
     /**
      * Bind the action to the page.
      *
-     * @param  ActionComponent $component
+     * @param  ActionComponent  $component
      * @return void
      */
     public function bindAction(ActionComponent $component)
@@ -107,8 +107,8 @@ class Page extends BasePage implements Expandable
     /**
      * Set go back route & text.
      *
-     * @param  string $text
-     * @param  string $route
+     * @param  string  $text
+     * @param  string  $route
      * @return $this
      */
     public function goBack(string $text, string $route)
@@ -124,7 +124,7 @@ class Page extends BasePage implements Expandable
     /**
      * Set breadcrumb array.
      *
-     * @param  array $breadcrumb
+     * @param  array  $breadcrumb
      * @return $this
      */
     public function breadcrumb(array $breadcrumb)
@@ -157,7 +157,7 @@ class Page extends BasePage implements Expandable
     /**
      * Set page title.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return string
      */
     public function title(string $title)
@@ -180,7 +180,7 @@ class Page extends BasePage implements Expandable
     /**
      * Set html title.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return void
      */
     public function htmlTitle($title)

@@ -13,7 +13,7 @@ class RunActionEvent
     /**
      * Handle RunActionEvent.
      *
-     * @param  Request $request
+     * @param  Request  $request
      * @return mixed
      */
     public function handle(Request $request)
@@ -36,8 +36,8 @@ class RunActionEvent
     /**
      * Get attribute bag.
      *
-     * @param  Request      $request
-     * @param  mixed        $action
+     * @param  Request  $request
+     * @param  mixed  $action
      * @return AttributeBag
      */
     protected function getAttributeBag(Request $request, $action)
@@ -48,7 +48,7 @@ class RunActionEvent
     /**
      * Gets response for the given result.
      *
-     * @param  mixed $result
+     * @param  mixed  $result
      * @return mixed
      */
     protected function response($result)

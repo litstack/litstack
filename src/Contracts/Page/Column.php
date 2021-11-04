@@ -7,7 +7,7 @@ interface Column
     /**
      * Set column label.
      *
-     * @param  string $label
+     * @param  string  $label
      * @return $this
      */
     public function label($label);
@@ -15,7 +15,7 @@ interface Column
     /**
      * Set the column value.
      *
-     * @param  string $value
+     * @param  string  $value
      * @return $this
      */
     public function value($value);
@@ -47,7 +47,7 @@ interface Column
     /**
      * Set column link.
      *
-     * @param  string|bool $link
+     * @param  string|bool  $link
      * @return $this
      */
     public function link($link);
@@ -55,7 +55,7 @@ interface Column
     /**
      * Set attribute by which the column should be sorted.
      *
-     * @param  string $attribute
+     * @param  string  $attribute
      * @return $this
      */
     public function sortBy($attribute);
@@ -63,7 +63,7 @@ interface Column
     /**
      * Set regular expression and replace for column value.
      *
-     * @param  string $regex
+     * @param  string  $regex
      * @return $this
      *
      * @throws InvalidArgumentException
@@ -81,7 +81,7 @@ interface Column
     /**
      * Set a maxium of characters that should be displayed in the column.
      *
-     * @param  int         $max
+     * @param  int  $max
      * @return $this|mixed
      */
     public function maxChars(int $max);
@@ -89,7 +89,7 @@ interface Column
     /**
      * Table column style.
      *
-     * @param  string $style
+     * @param  string  $style
      * @return $this
      */
     public function style($style);

@@ -12,7 +12,7 @@ class Search
     /**
      * Add search aspect.
      *
-     * @param  string $config
+     * @param  string  $config
      * @param  array  ...$keys
      * @return $this
      */

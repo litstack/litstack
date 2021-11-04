@@ -25,7 +25,7 @@ class InfoComponent extends Component implements Resizable
     /**
      * Sets the title.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return $this
      */
     public function title($title)
@@ -36,7 +36,7 @@ class InfoComponent extends Component implements Resizable
     /**
      * Sets the heading.
      *
-     * @param  string $heading
+     * @param  string  $heading
      * @return $this
      */
     public function heading($heading)
@@ -47,7 +47,7 @@ class InfoComponent extends Component implements Resizable
     /**
      * Add text.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return $this
      */
     public function text(string $text)

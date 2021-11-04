@@ -10,7 +10,7 @@ trait ManagesColumn
     /**
      * Set label.
      *
-     * @param  string $label
+     * @param  string  $label
      * @return $this
      */
     public function label($label)
@@ -21,9 +21,9 @@ trait ManagesColumn
     /**
      * Set value.
      *
-     * @param  string     $value
-     * @param  array|null $options
-     * @param  mixed      $default
+     * @param  string  $value
+     * @param  array|null  $options
+     * @param  mixed  $default
      * @return $this
      */
     public function value($value, array $options = null, $default = null)
@@ -38,9 +38,9 @@ trait ManagesColumn
     /**
      * Set table column style.
      *
-     * @param  string     $style
-     * @param  array|null $options
-     * @param  mixed      $default
+     * @param  string  $style
+     * @param  array|null  $options
+     * @param  mixed  $default
      * @return $this
      */
     public function style($style, array $options = null, $default = null)
@@ -102,7 +102,7 @@ trait ManagesColumn
     /**
      * Set column link.
      *
-     * @param  string|bool $link
+     * @param  string|bool  $link
      * @return $this
      */
     public function link($link)
@@ -113,7 +113,7 @@ trait ManagesColumn
     /**
      * Set attribute by which the column should be sorted.
      *
-     * @param  string $attribute
+     * @param  string  $attribute
      * @return $this
      */
     public function sortBy($attribute)
@@ -124,8 +124,8 @@ trait ManagesColumn
     /**
      * Set regular expression and replace for column value.
      *
-     * @param  string $regex
-     * @param  string $replace
+     * @param  string  $regex
+     * @param  string  $replace
      * @return $this
      *
      * @throws InvalidArgumentException
@@ -162,7 +162,7 @@ trait ManagesColumn
     /**
      * Set a maxium of characters that should be displayed in the column.
      *
-     * @param  int   $max
+     * @param  int  $max
      * @return $this
      */
     public function maxChars(int $max)

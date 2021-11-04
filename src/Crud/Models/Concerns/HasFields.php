@@ -52,7 +52,7 @@ trait HasFields
     /**
      * Determines if field with id exists.
      *
-     * @param  string $id
+     * @param  string  $id
      * @return bool
      */
     public function fieldExists(string $id)
@@ -63,7 +63,7 @@ trait HasFields
     /**
      * Find field by id.
      *
-     * @param  string             $id
+     * @param  string  $id
      * @return \Ignite\Crud\Field
      */
     public function findField($id)
@@ -78,8 +78,8 @@ trait HasFields
     /**
      * Get formatted values for the given form_field type.
      *
-     * @param  Field       $field
-     * @param  string|null $locale
+     * @param  Field  $field
+     * @param  string|null  $locale
      * @return mixed
      */
     public function getFormattedFieldValue(Field $field, $locale = null)
@@ -92,8 +92,8 @@ trait HasFields
     /**
      * Gets field value.
      *
-     * @param  Field       $field
-     * @param  string|null $locale
+     * @param  Field  $field
+     * @param  string|null  $locale
      * @return mixed
      */
     public function getFieldValue(Field $field, $locale = null)
@@ -116,7 +116,7 @@ trait HasFields
     /**
      * Get value for relation field.
      *
-     * @param  RelationField $field
+     * @param  RelationField  $field
      * @return mixed
      */
     public function getRelationFieldValue(RelationField $field)
@@ -127,7 +127,7 @@ trait HasFields
     /**
      * Get value for media field.
      *
-     * @param  MediaField       $field
+     * @param  MediaField  $field
      * @return Collection|Media
      */
     public function getMediaFieldValue(MediaField $field)
@@ -144,7 +144,7 @@ trait HasFields
      * Get translated field value.
      *
      * @param  Field  $field
-     * @param  string $locale
+     * @param  string  $locale
      * @return mixed
      */
     public function getTranslatedFieldValue(Field $field, string $locale)

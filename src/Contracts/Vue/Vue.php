@@ -7,8 +7,8 @@ interface Vue
     /**
      * Regsiter component for the given name.
      *
-     * @param  string         $name
-     * @param  Closure|string $component
+     * @param  string  $name
+     * @param  Closure|string  $component
      * @return $this
      */
     public function component($name, $component);
@@ -16,7 +16,7 @@ interface Vue
     /**
      * Determines if a component is registered.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return bool
      */
     public function has($name);
@@ -24,7 +24,7 @@ interface Vue
     /**
      * Create component instance from name.
      *
-     * @param  string          $name
+     * @param  string  $name
      * @return Component|mixed
      */
     public function make($name);

@@ -7,7 +7,7 @@ abstract class Filter
     /**
      * Creates filter form.
      *
-     * @param  FilterForm $form
+     * @param  FilterForm  $form
      * @return void
      */
     abstract public function form(FilterForm $form);

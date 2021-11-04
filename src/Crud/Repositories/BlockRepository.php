@@ -24,10 +24,10 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Create new BlockRepostory instance.
      *
-     * @param ConfigHandler      $config
-     * @param CrudBaseController $controller
-     * @param BaseForm           $form
-     * @param Block              $field
+     * @param  ConfigHandler  $config
+     * @param  CrudBaseController  $controller
+     * @param  BaseForm  $form
+     * @param  Block  $field
      */
     public function __construct(
         ConfigHandler $config,
@@ -41,8 +41,8 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Load repeatable.
      *
-     * @param  CrudReadRequest $request
-     * @param  mixed           $model
+     * @param  CrudReadRequest  $request
+     * @param  mixed  $model
      * @return CrudJs
      */
     public function load(CrudReadRequest $request, $model)
@@ -56,8 +56,8 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Fetch all repeatables.
      *
-     * @param  CrudReadRequest $request
-     * @param  mixed           $model
+     * @param  CrudReadRequest  $request
+     * @param  mixed  $model
      * @return CrudJs
      */
     public function index(CrudReadRequest $request, $model)
@@ -68,8 +68,8 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Destroy repeatable.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)
@@ -80,9 +80,9 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Update repeatable.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
-     * @param  object            $payload
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
+     * @param  object  $payload
      * @return CrudJs
      */
     public function update(CrudUpdateRequest $request, $model, $payload)
@@ -112,9 +112,9 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Store new repeatable in database.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
-     * @param  object            $payload
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
+     * @param  object  $payload
      * @return CrudJs
      */
     public function store(CrudUpdateRequest $request, $model, $payload)
@@ -141,9 +141,9 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Update repeatable order.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
-     * @param  object            $payload
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
+     * @param  object  $payload
      * @return mixed
      */
     public function order(CrudUpdateRequest $request, $model, $payload)
@@ -160,8 +160,8 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Get child field.
      *
-     * @param  Request    $request
-     * @param  string     $field_id
+     * @param  Request  $request
+     * @param  string  $field_id
      * @return Field|null
      */
     public function getField(Request $request, $field_id)
@@ -198,8 +198,8 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Get repeatable model.
      *
-     * @param  Request    $request
-     * @param  mixed      $model
+     * @param  Request  $request
+     * @param  mixed  $model
      * @return Repeatable
      */
     public function getModel(Request $request, $model, $childRepository)
@@ -223,8 +223,8 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Get order column for new repeatable.
      *
-     * @param  Request $request
-     * @param  mixed   $model
+     * @param  Request  $request
+     * @param  mixed  $model
      * @param  string  $type
      * @return int
      */
@@ -241,8 +241,8 @@ class BlockRepository extends BaseFieldRepository
     /**
      * Get repeatable.
      *
-     * @param  mixed      $model
-     * @param  int|string $id
+     * @param  mixed  $model
+     * @param  int|string  $id
      * @return Repeatable
      */
     protected function getRepeatable($model, $id)

@@ -33,7 +33,7 @@ class Litstack implements LitstackContract
     /**
      * Create Lit application.
      *
-     * @param LaravelApplication $laravel
+     * @param  LaravelApplication  $laravel
      */
     public function __construct(LaravelApplication $laravel)
     {
@@ -69,7 +69,7 @@ class Litstack implements LitstackContract
     /**
      * Bind Lit Application instance when Lit is installed.
      *
-     * @param  \Ignite\Application\Application $app
+     * @param  \Ignite\Application\Application  $app
      * @return void
      */
     public function bindApp(Application $app)
@@ -90,7 +90,7 @@ class Litstack implements LitstackContract
     /**
      * Get Lit url.
      *
-     * @param  string $url
+     * @param  string  $url
      * @return string
      */
     public function url(string $url)
@@ -118,9 +118,9 @@ class Litstack implements LitstackContract
     /**
      * Get Lit route by name.
      *
-     * @param  array|string $name
-     * @param  mixed        $parameters
-     * @param  bool         $absolute
+     * @param  array|string  $name
+     * @param  mixed  $parameters
+     * @param  bool  $absolute
      * @return string
      */
     public function route(string $name, $parameters = [], $absolute = true)
@@ -131,9 +131,9 @@ class Litstack implements LitstackContract
     /**
      * Get translation for Lit application.
      *
-     * @param  string      $key
-     * @param  array       $replace
-     * @param  string|null $locale
+     * @param  string  $key
+     * @param  array  $replace
+     * @param  string|null  $locale
      * @return string
      */
     public function trans(string $key = null, $replace = [], $locale = null)
@@ -150,10 +150,10 @@ class Litstack implements LitstackContract
     /**
      * Get choice translation for Lit application.
      *
-     * @param  string      $key
-     * @param  int         $number
-     * @param  array       $replace
-     * @param  string|null $locale
+     * @param  string  $key
+     * @param  int  $number
+     * @param  array  $replace
+     * @param  string|null  $locale
      * @return string
      */
     public function transChoice(string $key = null, $number, $replace = [], $locale = null)
@@ -180,9 +180,9 @@ class Litstack implements LitstackContract
     /**
      * Get translation for Lit application.
      *
-     * @param  string      $key
-     * @param  array       $replace
-     * @param  string|null $locale
+     * @param  string  $key
+     * @param  array  $replace
+     * @param  string|null  $locale
      * @return string
      */
     public function __(string $key = null, $replace = [], $locale = null)
@@ -193,8 +193,8 @@ class Litstack implements LitstackContract
     /**
      * Load config.
      *
-     * @param  string             $key
-     * @param  array              $params
+     * @param  string  $key
+     * @param  array  $params
      * @return ConfigHandler|null
      */
     public function config($key, ...$params)
@@ -232,7 +232,7 @@ class Litstack implements LitstackContract
     /**
      * Add css file to the application.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return void
      */
     public function style($path)
@@ -247,7 +247,7 @@ class Litstack implements LitstackContract
     /**
      * Add script to the application.
      *
-     * @param  string $src
+     * @param  string  $src
      * @return void
      */
     public function script($src)
@@ -340,7 +340,7 @@ class Litstack implements LitstackContract
     /**
      * Forward call to Lit Application.
      *
-     * @param  string $method
+     * @param  string  $method
      * @param  array  $params
      * @return mixed
      */

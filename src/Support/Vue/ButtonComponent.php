@@ -30,7 +30,7 @@ class ButtonComponent extends Component
     /**
      * Set button variant.
      *
-     * @param  string $variant
+     * @param  string  $variant
      * @return $this
      */
     public function variant($variant)
@@ -41,7 +41,7 @@ class ButtonComponent extends Component
     /**
      * Set button size.
      *
-     * @param  string $size
+     * @param  string  $size
      * @return $this
      */
     public function size($size)

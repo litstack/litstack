@@ -13,9 +13,9 @@ trait LoadsLivewireComponents
     /**
      * Load livewire components from the given path.
      *
-     * @param  string $namespace
-     * @param  string $path
-     * @param  string $refix
+     * @param  string  $namespace
+     * @param  string  $path
+     * @param  string  $refix
      * @return void
      */
     protected function loadLivewireComponentsFrom($namespace, $path, $prefix)
@@ -44,9 +44,9 @@ trait LoadsLivewireComponents
     /**
      * Get namespace from class name.
      *
-     * @param  string $class
-     * @param  string $namespace
-     * @param  string $prefix
+     * @param  string  $class
+     * @param  string  $namespace
+     * @param  string  $prefix
      * @return string
      */
     protected function getComponentName($class, $namespace, $prefix)
@@ -58,9 +58,9 @@ trait LoadsLivewireComponents
     /**
      * Guess livewire component class name.
      *
-     * @param  string $file
-     * @param  string $namespace
-     * @param  string $path
+     * @param  string  $file
+     * @param  string  $namespace
+     * @param  string  $path
      * @return string
      */
     protected function guessClassName(string $file, $namespace, $path)

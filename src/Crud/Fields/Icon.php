@@ -36,7 +36,7 @@ class Icon extends BaseField
     /**
      * Set search.
      *
-     * @param  bool $search
+     * @param  bool  $search
      * @return self
      */
     public function search(bool $search = true)
@@ -49,7 +49,7 @@ class Icon extends BaseField
     /**
      * Set icons.
      *
-     * @param  array $icons
+     * @param  array  $icons
      * @return self
      */
     public function icons(array $icons)
@@ -62,7 +62,7 @@ class Icon extends BaseField
     /**
      * Cast field value.
      *
-     * @param  mixed $value
+     * @param  mixed  $value
      * @return bool
      */
     public function castValue($value)

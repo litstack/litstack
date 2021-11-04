@@ -48,7 +48,7 @@ class FilterCommand extends GeneratorCommand
     /**
      * Build vue component.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return string
      */
     protected function buildComponent($name)
@@ -89,7 +89,7 @@ class FilterCommand extends GeneratorCommand
      *
      * Remove the base controller import if we are already in base namespace.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return string
      */
     // protected function buildClass($name)
@@ -108,7 +108,7 @@ class FilterCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string $rootNamespace
+     * @param  string  $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)

@@ -10,8 +10,7 @@ class ProfileController
     /**
      * Fetch index.
      *
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return array
      */
     public function sessions(Request $request)

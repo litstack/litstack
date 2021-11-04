@@ -17,7 +17,7 @@ class DestroyAction
     /**
      * Create the modal.
      *
-     * @param  ActionModal $model
+     * @param  ActionModal  $model
      * @return void
      */
     public function modal(ActionModal $modal)
@@ -30,8 +30,8 @@ class DestroyAction
     /**
      * Run the action.
      *
-     * @param  Request    $request
-     * @param  Collection $models
+     * @param  Request  $request
+     * @param  Collection  $models
      * @return Response
      */
     public function run(CrudDeleteRequest $request, Collection $models)
@@ -44,8 +44,8 @@ class DestroyAction
     /**
      * Resolve the response for the given request.
      *
-     * @param  Request    $request
-     * @param  Collection $models
+     * @param  Request  $request
+     * @param  Collection  $models
      * @return Response
      */
     protected function resolveResponse(Request $request, Collection $models)
@@ -77,7 +77,7 @@ class DestroyAction
     /**
      * Creates success response.
      *
-     * @param  Collection   $models
+     * @param  Collection  $models
      * @return JsonResponse
      */
     protected function successMessage(Collection $models)

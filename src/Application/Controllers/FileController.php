@@ -88,7 +88,7 @@ class FileController extends Controller
     /**
      * Send file.
      *
-     * @param  string   $path
+     * @param  string  $path
      * @return Response
      */
     protected function sendFile(string $path)

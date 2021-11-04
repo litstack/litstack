@@ -13,8 +13,7 @@ class ChartController
     /**
      * Get chart data.
      *
-     * @param ChartRequest $request
-     *
+     * @param  ChartRequest  $request
      * @return array
      */
     public function __invoke(ChartRequest $request)
@@ -32,10 +31,9 @@ class ChartController
     /**
      * Make chart loader.
      *
-     * @param string        $chartType
-     * @param ConfigHandler $config
-     * @param Engine        $engine
-     *
+     * @param  string  $chartType
+     * @param  ConfigHandler  $config
+     * @param  Engine  $engine
      * @return ChartLoader
      */
     protected function makeLoader(string $chartType, ConfigHandler $config, Engine $engine): ChartLoader

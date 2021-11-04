@@ -10,7 +10,7 @@ class BladeComponent extends Component
     /**
      * Set blade wrapper.
      *
-     * @param  Component|string $component
+     * @param  Component|string  $component
      * @return Component
      */
     public function wrapper($component)
@@ -23,7 +23,7 @@ class BladeComponent extends Component
     /**
      * Set wrapper width.
      *
-     * @param  float|int $width
+     * @param  float|int  $width
      * @return $this
      */
     public function width($width)

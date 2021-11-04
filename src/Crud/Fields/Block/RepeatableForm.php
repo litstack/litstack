@@ -10,7 +10,7 @@ class RepeatableForm extends BaseForm
     /**
      * Laravel relations not allowed for block.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return mixed
      *
      * @throws \InvalidArgumentException

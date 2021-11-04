@@ -10,11 +10,10 @@ trait InteractsWithFields
     /**
      * Get field instance from class.
      *
-     * @param string     $fieldClass
-     * @param string     $id
-     * @param string     $model
-     * @param mixed|null $form
-     *
+     * @param  string  $fieldClass
+     * @param  string  $id
+     * @param  string  $model
+     * @param  mixed|null  $form
      * @return mixed
      */
     public function getField(string $fieldClass, string $id = 'dummy_field', string $model = null, $form = null)

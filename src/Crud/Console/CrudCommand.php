@@ -33,7 +33,7 @@ class CrudCommand extends Command
     /**
      * Create new CrudCommand instance.
      *
-     * @param  Filesystem $files
+     * @param  Filesystem  $files
      * @return void
      */
     public function __construct(Filesystem $files)

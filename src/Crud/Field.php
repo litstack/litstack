@@ -77,7 +77,7 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Create new Field instance.
      *
-     * @param  string $id
+     * @param  string  $id
      * @return void
      */
     public function __construct(string $id)
@@ -96,7 +96,7 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Set route prefix.
      *
-     * @param  string $routePrefix
+     * @param  string  $routePrefix
      * @return void
      */
     public function setRoutePrefix($routePrefix)
@@ -107,7 +107,7 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Set parent form.
      *
-     * @param  BaseForm $form
+     * @param  BaseForm  $form
      * @return void
      */
     public function setParentForm(BaseForm $form)
@@ -118,7 +118,7 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Set field model class.
      *
-     * @param  string $model
+     * @param  string  $model
      * @return void
      */
     public function setModel($model)
@@ -170,8 +170,8 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Validate field id.
      *
-     * @param  string $model
-     * @param  string $id
+     * @param  string  $model
+     * @param  string  $id
      * @return void
      */
     protected function validateFieldId($model, $id)
@@ -209,10 +209,9 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Fill model.
      *
-     * @param mixed  $model
-     * @param string $attributeName
-     * @param mixed  $attributeValue
-     *
+     * @param  mixed  $model
+     * @param  string  $attributeName
+     * @param  mixed  $attributeValue
      * @return void
      */
     public function fillModel($model, $attributeName, $attributeValue)
@@ -222,8 +221,7 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Set readonly attribute.
      *
-     * @param bool $readonly
-     *
+     * @param  bool  $readonly
      * @return $this
      */
     public function readonly(bool $readonly = true)
@@ -236,7 +234,7 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Add dependency.
      *
-     * @param  FieldDependency $dependency
+     * @param  FieldDependency  $dependency
      * @return $this
      */
     public function addDependency(FieldDependency $dependency)
@@ -253,7 +251,7 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Resolve field dependencies.
      *
-     * @param  self|string $attribute
+     * @param  self|string  $attribute
      * @param  int|string  $value
      * @return array
      */
@@ -299,7 +297,7 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Format value before saving it to database.
      *
-     * @param  string $value
+     * @param  string  $value
      * @return void
      */
     public function format($value)
@@ -310,8 +308,7 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Cast model value for e.g. boolean.
      *
-     * @param Model $value
-     *
+     * @param  Model  $value
      * @return mixed
      */
     public function castValue($value)
@@ -322,8 +319,7 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Transform model value.
      *
-     * @param Model $value
-     *
+     * @param  Model  $value
      * @return mixed
      */
     public function transform($value)
@@ -352,9 +348,9 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Check if all required props have been set.
      *
-     * @throws \Exception
-     *
      * @return bool
+     *
+     * @throws \Exception
      */
     public function checkComplete()
     {
@@ -382,8 +378,8 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Set slot component.
      *
-     * @param  string $slot
-     * @param  string $component
+     * @param  string  $slot
+     * @param  string  $component
      * @return void
      *
      * @throws \InvalidArgumentException
@@ -406,8 +402,7 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Check if slot exists.
      *
-     * @param string $slot
-     *
+     * @param  string  $slot
      * @return void
      */
     public function slotExists(string $slot)
@@ -421,7 +416,7 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Get slot method name.
      *
-     * @param  string $slot
+     * @param  string  $slot
      * @return string
      */
     protected function getSlotMethodName(string $slot)
@@ -452,7 +447,7 @@ class Field extends VueProp implements AuthorizableContract
      * setNameDefault => name
      * setCamelCaseDefault => camelCase
      *
-     * @param  string $method
+     * @param  string  $method
      * @return string
      */
     protected function getDefaultSetterAttributeName(string $method)
@@ -503,7 +498,7 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Get attribute.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return any
      */
     public function __get(string $name)
@@ -514,7 +509,7 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Get attribute.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return any
      */
     public function __set(string $name, $value)
@@ -525,7 +520,7 @@ class Field extends VueProp implements AuthorizableContract
     /**
      * Call field method.
      *
-     * @param  string $method
+     * @param  string  $method
      * @param  array  $parameters
      * @return mixed
      *

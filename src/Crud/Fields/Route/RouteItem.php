@@ -41,10 +41,10 @@ class RouteItem implements Arrayable, Jsonable
     /**
      * Create new RouteItem instance.
      *
-     * @param  string          $title
-     * @param  string          $id
-     * @param  Closure         $resolver
-     * @param  RouteCollection $collection
+     * @param  string  $title
+     * @param  string  $id
+     * @param  Closure  $resolver
+     * @param  RouteCollection  $collection
      * @return void
      */
     public function __construct($title, $id, Closure $resolver, RouteCollection $collection = null)
@@ -82,7 +82,7 @@ class RouteItem implements Arrayable, Jsonable
     /**
      * Check's if the route is active and returns value if value is not null.
      *
-     * @param  mixed $value
+     * @param  mixed  $value
      * @return mixed
      */
     public function isActive($value = null)
@@ -121,7 +121,7 @@ class RouteItem implements Arrayable, Jsonable
     /**
      * Get the current decoded route info for the route.
      *
-     * @param  bool   $trimmed
+     * @param  bool  $trimmed
      * @return string
      */
     public function decodeRoute($trimmed = false)
@@ -168,7 +168,7 @@ class RouteItem implements Arrayable, Jsonable
     /**
      * To json.
      *
-     * @param  int    $options
+     * @param  int  $options
      * @return string
      */
     public function toJson($options = 0)

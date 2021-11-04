@@ -15,8 +15,7 @@ trait HasIndex
     /**
      * Setup index table.
      *
-     * @param \Ignite\Vue\Table $table
-     *
+     * @param  \Ignite\Vue\Table  $table
      * @return void
      */
     abstract public function index(Table $table);
@@ -24,8 +23,7 @@ trait HasIndex
     /**
      * Initialize index query.
      *
-     * @param Builder $query
-     *
+     * @param  Builder  $query
      * @return Builder $query
      */
     public function indexQuery(Builder $query)

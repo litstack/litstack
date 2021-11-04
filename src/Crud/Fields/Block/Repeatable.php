@@ -85,8 +85,8 @@ class Repeatable extends VueProp
     /**
      * Create new Repeatable instance.
      *
-     * @param  Block       $field
-     * @param  string|null $type
+     * @param  Block  $field
+     * @param  string|null  $type
      * @return void
      */
     public function __construct(Block $field, string $type = null)
@@ -109,7 +109,7 @@ class Repeatable extends VueProp
     /**
      * Prepare preview.
      *
-     * @param  ColumnBuilder $builder
+     * @param  ColumnBuilder  $builder
      * @return void
      */
     protected function preview(ColumnBuilder $builder): void
@@ -119,7 +119,7 @@ class Repeatable extends VueProp
     /**
      * Handle form.
      *
-     * @param  RepeatableForm $form
+     * @param  RepeatableForm  $form
      * @return void
      */
     protected function form(RepeatableForm $form): void
@@ -130,7 +130,7 @@ class Repeatable extends VueProp
     /**
      * Prepare attributes before updating the content of the repeatable.
      *
-     * @param  array $attributes
+     * @param  array  $attributes
      * @return array
      */
     public function prepareAttributes($attributes)
@@ -151,7 +151,7 @@ class Repeatable extends VueProp
     /**
      * Configure repeatable form.
      *
-     * @param  Closure|null $closure
+     * @param  Closure|null  $closure
      * @return $this
      */
     public function makeForm(Closure $closure = null)
@@ -188,7 +188,7 @@ class Repeatable extends VueProp
     /**
      * Get child field id.
      *
-     * @param  Field       $field
+     * @param  Field  $field
      * @return string|void
      */
     protected function getChildfieldId(Field $field)
@@ -239,7 +239,7 @@ class Repeatable extends VueProp
     /**
      * Set button text.
      *
-     * @param  string $text
+     * @param  string  $text
      * @return $this
      */
     public function button($text)
@@ -252,7 +252,7 @@ class Repeatable extends VueProp
     /**
      * Set icon.
      *
-     * @param  string $icon
+     * @param  string  $icon
      * @return $this
      */
     public function icon($icon)
@@ -265,7 +265,7 @@ class Repeatable extends VueProp
     /**
      * Set variant.
      *
-     * @param  string $variant
+     * @param  string  $variant
      * @return $this
      */
     public function variant($variant)
@@ -278,7 +278,7 @@ class Repeatable extends VueProp
     /**
      * Resolves Blade x component.
      *
-     * @param  array       $params
+     * @param  array  $params
      * @return string|null
      */
     public function getXClass(...$params)
@@ -297,7 +297,7 @@ class Repeatable extends VueProp
     /**
      * Set blade x component.
      *
-     * @param  string $component
+     * @param  string  $component
      * @return $this
      */
     public function x(string $component)
@@ -310,7 +310,7 @@ class Repeatable extends VueProp
     /**
      * Add blade x component.
      *
-     * @param  string $view
+     * @param  string  $view
      * @return $this
      */
     public function view(string $name, $data = [])
@@ -364,7 +364,7 @@ class Repeatable extends VueProp
     /**
      * Handle dynamic method calls to the repeatable.
      *
-     * @param  string $method
+     * @param  string  $method
      * @param  array  $parameters
      * @return mixed
      */

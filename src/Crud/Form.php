@@ -25,7 +25,7 @@ class Form
     /**
      * Create new Form instance.
      *
-     * @param  CacheManager $cache
+     * @param  CacheManager  $cache
      * @return void
      */
     public function __construct(CacheManager $cache)
@@ -39,8 +39,8 @@ class Form
      * returned where the respective collection or form can be called with the
      * name.
      *
-     * @param  string                   $collection
-     * @param  string                   $name
+     * @param  string  $collection
+     * @param  string  $name
      * @return FormCollection|FormModel
      */
     public function load(string $collection = null, string $name = null)
@@ -72,9 +72,9 @@ class Form
      * Get groups for collection and form_name and
      * create nested Collection based on the groups.
      *
-     * @param  Illuminate\Support\Collection $items
-     * @param  bool                          $loading_collection
-     * @param  bool                          $loading_name
+     * @param  Illuminate\Support\Collection  $items
+     * @param  bool  $loading_collection
+     * @param  bool  $loading_name
      * @return FormCollection
      */
     protected function getGroups(Collection $items, bool $loadingCollection, bool $loadingName)
@@ -121,7 +121,7 @@ class Form
     /**
      * Get collection groups.
      *
-     * @param  Collection     $items
+     * @param  Collection  $items
      * @return FormCollection
      */
     protected function getCollectionGroups(Collection $items)
@@ -140,7 +140,7 @@ class Form
     /**
      * Get form groups.
      *
-     * @param  Collection     $items
+     * @param  Collection  $items
      * @return FormCollection
      */
     protected function getFormGroups(Collection $items)
@@ -157,8 +157,8 @@ class Form
     /**
      * Add field.
      *
-     * @param  string $alias
-     * @param  string $field
+     * @param  string  $alias
+     * @param  string  $field
      * @return void
      */
     public function field($alias, $field)
@@ -169,8 +169,8 @@ class Form
     /**
      * Register field.
      *
-     * @param  string $alias
-     * @param  string $field
+     * @param  string  $alias
+     * @param  string  $field
      * @return void
      *
      * @deprecated
@@ -183,7 +183,7 @@ class Form
     /**
      * Determine if field alias exists.
      *
-     * @param  mixed $field
+     * @param  mixed  $field
      * @return bool
      */
     public function fieldExists(string $alias)
@@ -194,7 +194,7 @@ class Form
     /**
      * Get field by alias.
      *
-     * @param  string $alias
+     * @param  string  $alias
      * @return string
      */
     public function getFieldClass(string $alias)
@@ -215,7 +215,7 @@ class Form
     /**
      * Get field class for the given alias.
      *
-     * @param  string $alias
+     * @param  string  $alias
      * @return string
      */
     public function getField(string $alias)

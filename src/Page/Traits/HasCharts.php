@@ -11,7 +11,7 @@ trait HasCharts
     /**
      * Add chart.
      *
-     * @param  string                $name
+     * @param  string  $name
      * @return \Ignite\Vue\Component
      */
     public function chart(string $name)
@@ -36,7 +36,7 @@ trait HasCharts
     /**
      * Register chart component.
      *
-     * @param  Chart $chart
+     * @param  Chart  $chart
      * @return void
      */
     protected function registerChart(Chart $chart)

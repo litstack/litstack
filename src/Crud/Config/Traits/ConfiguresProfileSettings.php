@@ -21,7 +21,7 @@ trait ConfiguresProfileSettings
     /**
      * Build settings form.
      *
-     * @param  CrudShow $page
+     * @param  CrudShow  $page
      * @return void
      */
     public function settings(CrudShow $page)
@@ -60,7 +60,7 @@ trait ConfiguresProfileSettings
     /**
      * Change language.
      *
-     * @param  CrudShow $form
+     * @param  CrudShow  $form
      * @return void
      */
     public function language($form)
@@ -80,7 +80,7 @@ trait ConfiguresProfileSettings
     /**
      * User security.
      *
-     * @param  CrudShow $page
+     * @param  CrudShow  $page
      * @return void
      */
     public function security($page)

@@ -171,7 +171,7 @@ class Repeatable extends LitFormModel
     /**
      * Modified calls.
      *
-     * @param  string $method
+     * @param  string  $method
      * @param  array  $params
      * @return mixed
      */

@@ -35,7 +35,7 @@ class Crud
     /**
      * Register the given repeatable.
      *
-     * @param  string $repeatable
+     * @param  string  $repeatable
      * @return void
      *
      * @throws InvalidArgumentException

@@ -72,7 +72,7 @@ class Header extends VueProp
     /**
      * Set title.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return void
      */
     public function setTitle(string $title)

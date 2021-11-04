@@ -68,9 +68,9 @@ class ChartSet
     /**
      * Create new ChartSet instance.
      *
-     * @param Builder $query
-     * @param Closure $valueResolver
-     * @param Closure $timeResolver
+     * @param  Builder  $query
+     * @param  Closure  $valueResolver
+     * @param  Closure  $timeResolver
      */
     public function __construct($query, Closure $valueResolver, Closure $timeResolver)
     {
@@ -82,9 +82,9 @@ class ChartSet
     /**
      * Make chart set.
      *
-     * @param  Builder $query
-     * @param  Closure $valueClosure
-     * @param  Closure $timeResolver
+     * @param  Builder  $query
+     * @param  Closure  $valueClosure
+     * @param  Closure  $timeResolver
      * @return self
      */
     public static function make($query, Closure $valueResolver, Closure $timeResolver)
@@ -95,7 +95,7 @@ class ChartSet
     /**
      * Set label resolver.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return $this
      */
     public function label(Closure $closure)
@@ -108,7 +108,7 @@ class ChartSet
     /**
      * Set start time.
      *
-     * @param  CarbonInterface $time
+     * @param  CarbonInterface  $time
      * @return $this
      */
     public function time(CarbonInterface $time)
@@ -121,7 +121,7 @@ class ChartSet
     /**
      * Set iterations.
      *
-     * @param  int   $iterations
+     * @param  int  $iterations
      * @return $this
      */
     public function iterations(int $iterations)
@@ -186,7 +186,7 @@ class ChartSet
     /**
      * Get values from selects.
      *
-     * @param  array      $selects
+     * @param  array  $selects
      * @return Collection
      */
     protected function getValuesFromStatements(array $selects)
@@ -205,7 +205,7 @@ class ChartSet
     /**
      * Modify query with select statement.
      *
-     * @param  array   $select
+     * @param  array  $select
      * @return Builder
      */
     protected function getQueryFromStatements(array $selects)
@@ -222,7 +222,7 @@ class ChartSet
     /**
      * Convert null values to integer.
      *
-     * @param  Collection $values
+     * @param  Collection  $values
      * @return Collection
      */
     protected function convertNullValues(Collection $values)
@@ -239,8 +239,7 @@ class ChartSet
     /**
      * Get default label.
      *
-     * @param \Carbon\CarbonInterface $time
-     *
+     * @param  \Carbon\CarbonInterface  $time
      * @return string
      */
     protected function getDefaultLabel(CarbonInterface $time)
@@ -251,7 +250,7 @@ class ChartSet
     /**
      * Get label from time.
      *
-     * @param  \Carbon\CarbonInterface $time
+     * @param  \Carbon\CarbonInterface  $time
      * @return string
      */
     public function getLabelFromTime(CarbonInterface $time)
@@ -265,7 +264,7 @@ class ChartSet
     /**
      * Get select query from time.
      *
-     * @param  CarbonInterface $time
+     * @param  CarbonInterface  $time
      * @return Builder
      */
     public function getSelectFromTime(CarbonInterface $time)
@@ -298,8 +297,7 @@ class ChartSet
     /**
      * Get time from iteration key.
      *
-     * @param int $i
-     *
+     * @param  int  $i
      * @return \Carbon\CarbonInterface
      */
     protected function getTimeFromIterationKey(int $i): CarbonInterface

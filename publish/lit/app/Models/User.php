@@ -69,7 +69,7 @@ class User extends Authenticatable implements CanResetPasswordContract
     /**
      * Send password reset notification.
      *
-     * @param  string $token
+     * @param  string  $token
      * @return void
      */
     public function sendPasswordResetNotification($token)
@@ -84,7 +84,7 @@ class User extends Authenticatable implements CanResetPasswordContract
     /**
      * Has role admin scope.
      *
-     * @param  Builder $query
+     * @param  Builder  $query
      * @return Builder $query
      */
     public function scopeAdmin($query)
@@ -95,7 +95,7 @@ class User extends Authenticatable implements CanResetPasswordContract
     /**
      * Has role user scope.
      *
-     * @param  Builder $query
+     * @param  Builder  $query
      * @return Builder $query
      */
     public function scopeUser($query)

@@ -42,7 +42,7 @@ class CardWrapperComponent extends Component implements Resizable
     /**
      * Set the title.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return $this
      */
     public function title($title)

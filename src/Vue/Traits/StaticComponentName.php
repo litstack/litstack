@@ -7,7 +7,7 @@ trait StaticComponentName
     /**
      * Create new Component instance.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return void
      */
     public function __construct(string $name = null)

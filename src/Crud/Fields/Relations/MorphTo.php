@@ -40,7 +40,7 @@ class MorphTo extends OneRelationField
     /**
      * Create new Field instance.
      *
-     * @param  string $id
+     * @param  string  $id
      * @return void
      */
     public function __construct(string $id)
@@ -73,8 +73,7 @@ class MorphTo extends OneRelationField
     /**
      * Get relation.
      *
-     * @param mixed $model
-     *
+     * @param  mixed  $model
      * @return void
      */
     public function getRelationQuery($model)
@@ -106,7 +105,7 @@ class MorphTo extends OneRelationField
     /**
      * Get results for model.
      *
-     * @param  mixed $model
+     * @param  mixed  $model
      * @return mixed
      */
     public function getResults($model)

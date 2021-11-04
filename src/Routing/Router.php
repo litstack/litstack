@@ -44,7 +44,7 @@ class Router
     /**
      * Prepare litstack routes using the given Closure.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return $this
      */
     public function prepareUsing(Closure $closure)
@@ -109,8 +109,8 @@ class Router
     /**
      * Create a route group with shared attributes.
      *
-     * @param  Closure|array|string $attributes
-     * @param  Closure              $closure
+     * @param  Closure|array|string  $attributes
+     * @param  Closure  $closure
      * @return void
      */
     public function group($attributes, Closure $closure = null)

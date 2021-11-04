@@ -35,8 +35,8 @@ class AuthController extends Controller
     /**
      * Authenticate User.
      *
-     * @param  Request        $request
-     * @param  Authentication $auth
+     * @param  Request  $request
+     * @param  Authentication  $auth
      * @return redirect
      */
     public function authenticate(Request $request, Authentication $auth)

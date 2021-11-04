@@ -52,7 +52,7 @@ class UserConfig extends CrudConfig
     /**
      * Build user index table.
      *
-     * @param  CrudIndex $page
+     * @param  CrudIndex  $page
      * @return void
      */
     public function index(CrudIndex $page)
@@ -66,7 +66,7 @@ class UserConfig extends CrudConfig
     /**
      * User index table.
      *
-     * @param  ColumnBuilder $table
+     * @param  ColumnBuilder  $table
      * @return void
      */
     public function indexTable(ColumnBuilder $table)
@@ -93,7 +93,7 @@ class UserConfig extends CrudConfig
     /**
      * Crud show container.
      *
-     * @param  CrudShow $page
+     * @param  CrudShow  $page
      * @return void
      */
     public function show(CrudShow $page)

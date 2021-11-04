@@ -17,7 +17,7 @@ class Factory
      * Extend the given crud config.
      *
      * @param  string  $alias
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return void
      */
     public function extend($alias, Closure $closure)
@@ -36,8 +36,8 @@ class Factory
     /**
      * Get extensions for the given alias.
      *
-     * @param  string $alias
-     * @param  string $name
+     * @param  string  $alias
+     * @param  string  $name
      * @return array
      */
     public function getExtensions($alias, $name = null)

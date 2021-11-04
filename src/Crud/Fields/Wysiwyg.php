@@ -39,7 +39,7 @@ class Wysiwyg extends BaseField
     /**
      * Set font colors.
      *
-     * @param  array $colors
+     * @param  array  $colors
      * @return $this
      */
     public function colors($colors, ...$more)
@@ -54,7 +54,7 @@ class Wysiwyg extends BaseField
     /**
      * Set fields that should be shown.
      *
-     * @param  array $fields
+     * @param  array  $fields
      * @return $this
      */
     public function only($fields)
@@ -67,7 +67,7 @@ class Wysiwyg extends BaseField
     /**
      * Add custom css to editor.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return $this
      */
     public function css(string $path)
@@ -80,7 +80,7 @@ class Wysiwyg extends BaseField
     /**
      * Enable input rules.
      *
-     * @param  bool $search
+     * @param  bool  $search
      * @return self
      */
     public function enableInputRules(bool $enabled = true)
@@ -93,7 +93,7 @@ class Wysiwyg extends BaseField
     /**
      * Enable paste rules.
      *
-     * @param  bool $search
+     * @param  bool  $search
      * @return self
      */
     public function enablePasteRules(bool $enabled = true)
@@ -119,8 +119,7 @@ class Wysiwyg extends BaseField
     /**
      * Cast field value.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return bool
      */
     public function castValue($value)

@@ -48,9 +48,9 @@ class FieldDependency extends VueProp
     /**
      * Create new Dependency.
      *
-     * @param  string     $contains
-     * @param  string     $attribute
-     * @param  string|int $value
+     * @param  string  $contains
+     * @param  string  $attribute
+     * @param  string|int  $value
      * @return void
      */
     public function __construct(string $condition, $attribute, $value)
@@ -69,7 +69,7 @@ class FieldDependency extends VueProp
     /**
      * Set dependor.
      *
-     * @param  string $dependor
+     * @param  string  $dependor
      * @return $this
      */
     public function setDependor(string $dependor)
@@ -82,7 +82,7 @@ class FieldDependency extends VueProp
     /**
      * Determines if a condition exists.
      *
-     * @param  string $condition
+     * @param  string  $condition
      * @return bool
      */
     public static function conditionExists(string $condition)
@@ -144,9 +144,9 @@ class FieldDependency extends VueProp
     /**
      * Create new Dependency instance.
      *
-     * @param  string     $condition
-     * @param  string     $attribute
-     * @param  string|int $value
+     * @param  string  $condition
+     * @param  string  $attribute
+     * @param  string|int  $value
      * @return self
      */
     public static function make(string $condition, $attribute, $value)

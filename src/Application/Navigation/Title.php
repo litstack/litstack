@@ -9,7 +9,7 @@ class Title extends NavigationItem
     /**
      * Create new Title instance.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return void
      */
     public function __construct(string $title)

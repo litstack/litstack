@@ -11,7 +11,7 @@ class Group extends NavigationItem
     /**
      * Create new Title instance.
      *
-     * @param  string $title
+     * @param  string  $title
      * @param  array  $children
      * @param  array  $options
      * @return void
@@ -26,7 +26,7 @@ class Group extends NavigationItem
     /**
      * Set entry title.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return $this
      */
     public function title($title)
@@ -52,7 +52,7 @@ class Group extends NavigationItem
     /**
      * Set entry icon.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return $this
      */
     public function icon($icon)
@@ -65,7 +65,7 @@ class Group extends NavigationItem
     /**
      * Set authorize closure.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return $this
      */
     public function authorize(Closure $closure)

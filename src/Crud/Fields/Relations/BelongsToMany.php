@@ -29,7 +29,7 @@ class BelongsToMany extends ManyRelationField
     /**
      * Fill pivot attributes.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return $this
      */
     public function withPivotAttributes(Closure $closure)
@@ -42,8 +42,8 @@ class BelongsToMany extends ManyRelationField
     /**
      * Get attributes to be attached.
      *
-     * @param  Model $model
-     * @param  Model $related
+     * @param  Model  $model
+     * @param  Model  $related
      * @return array
      */
     public function getPivotAttributes(Model $model, Model $related): array

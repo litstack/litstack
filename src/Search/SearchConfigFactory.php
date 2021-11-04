@@ -11,8 +11,8 @@ class SearchConfigFactory extends ConfigFactory
     /**
      * Get main.
      *
-     * @param  ConfigHandler $config
-     * @param  Closure       $method
+     * @param  ConfigHandler  $config
+     * @param  Closure  $method
      * @return array
      */
     public function main(ConfigHandler $config, Closure $method)

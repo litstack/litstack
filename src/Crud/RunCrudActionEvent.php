@@ -12,7 +12,7 @@ class RunCrudActionEvent extends RunActionEvent
     /**
      * Handle RunActionEvent.
      *
-     * @param  Request $request
+     * @param  Request  $request
      * @return mixed
      */
     public function handle(Request $request)
@@ -31,8 +31,8 @@ class RunCrudActionEvent extends RunActionEvent
     /**
      * Get attribute bag.
      *
-     * @param  Request      $request
-     * @param  mixed        $action
+     * @param  Request  $request
+     * @param  mixed  $action
      * @return AttributeBag
      */
     protected function getAttributeBag(Request $request, $action)

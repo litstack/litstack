@@ -17,7 +17,7 @@ abstract class BaseAction implements ActionFactory
     /**
      * Create an action component.
      *
-     * @param  string    $action
+     * @param  string  $action
      * @return Component
      */
     public function make($title, $action, $wrapper = null)
@@ -31,7 +31,7 @@ abstract class BaseAction implements ActionFactory
     /**
      * Get wrapper.
      *
-     * @param  string|null|Component $wrapper
+     * @param  string|null|Component  $wrapper
      * @return Component
      */
     protected function getWrapper($wrapper = null)

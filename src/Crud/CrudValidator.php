@@ -11,10 +11,9 @@ class CrudValidator
     /**
      * Validate update or create request.
      *
-     * @param array       $attributes
-     * @param BaseForm    $form
-     * @param string|null $type
-     *
+     * @param  array  $attributes
+     * @param  BaseForm  $form
+     * @param  string|null  $type
      * @return void
      */
     public static function validate(array $attributes, BaseForm $form, $type = null)
@@ -28,8 +27,7 @@ class CrudValidator
     /**
      * Get validaton attribute names form field titles.
      *
-     * @param BaseForm $form
-     *
+     * @param  BaseForm  $form
      * @return array
      */
     protected static function getValidationAttributeNames($form)

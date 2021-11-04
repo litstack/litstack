@@ -20,7 +20,7 @@ if (! function_exists('debug')) {
     /**
      * Return default value in debug mode.
      *
-     * @param  mixed $value
+     * @param  mixed  $value
      * @return mixed
      */
     function debug($value)
@@ -37,7 +37,7 @@ if (! function_exists('crud')) {
     /**
      * Create new CrudJs instance.
      *
-     * @param  mixed                          $model
+     * @param  mixed  $model
      * @return \Ignite\Crud\CrudJs|Collection
      */
     function crud($model, $config)
@@ -59,8 +59,8 @@ if (! function_exists('component')) {
     /**
      * Get a new Vue component instance.
      *
-     * @param  \Ignite\Vue\Component|string $name
-     * @param  string                       $fallback
+     * @param  \Ignite\Vue\Component|string  $name
+     * @param  string  $fallback
      * @return \Ignite\Vue\Component|mixed
      */
     function component($name, $fallback = null)
@@ -97,7 +97,7 @@ if (! function_exists('lit_app')) {
     /**
      * Get Lit application instance.
      *
-     * @param  string|null                           $abstract
+     * @param  string|null  $abstract
      * @return \Ignite\Applicaiton\Application|mixed
      */
     function lit_app($abstract = null)
@@ -128,8 +128,7 @@ if (! function_exists('lit_config_path')) {
     /**
      * Path to Lit config files.
      *
-     * @param string $path
-     *
+     * @param  string  $path
      * @return void
      */
     function lit_config_path($path = '')
@@ -142,7 +141,7 @@ if (! function_exists('lit_resource_path')) {
     /**
      * Get the path to the Litstack resources directory.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return void
      */
     function lit_resource_path($path = '')
@@ -155,7 +154,7 @@ if (! function_exists('lit_lang_path')) {
     /**
      * Get the path to the Litstack package language files.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return string
      */
     function lit_lang_path(string $path = '')
@@ -168,7 +167,7 @@ if (! function_exists('lit_path')) {
     /**
      * Get the path to the litstack "app" directory.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return string
      */
     function lit_path(string $path = '')
@@ -181,7 +180,7 @@ if (! function_exists('lit_base_path')) {
     /**
      * Get the base path of the "lit" folder.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return string
      */
     function lit_base_path(string $path = '')
@@ -194,7 +193,7 @@ if (! function_exists('lit_vendor_path')) {
     /**
      * Get the path to the litstack package vendor folder.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return string
      */
     function lit_vendor_path(string $path = '')
@@ -207,9 +206,8 @@ if (! function_exists('__lit')) {
     /**
      * Translate by key.
      *
-     * @param string $key
-     * @param array  $replace
-     *
+     * @param  string  $key
+     * @param  array  $replace
      * @return void
      */
     function __lit($key = null, $replace = [])
@@ -222,9 +220,8 @@ if (! function_exists('__lit_choice')) {
     /**
      * Translate choice by key.
      *
-     * @param string $key
-     * @param array  $replace
-     *
+     * @param  string  $key
+     * @param  array  $replace
      * @return void
      */
     function __lit_choice($key, $number, $replace = [])
@@ -237,9 +234,8 @@ if (! function_exists('__lit_c')) {
     /**
      * Translate choice by key.
      *
-     * @param string $key
-     * @param array  $replace
-     *
+     * @param  string  $key
+     * @param  array  $replace
      * @return void
      */
     function __lit_c($key, $number, $replace = [])
@@ -252,10 +248,9 @@ if (! function_exists('__lit_')) {
     /**
      * Translate if key exists or returns default.
      *
-     * @param string $key
-     * @param string $default
-     * @param array  $replace
-     *
+     * @param  string  $key
+     * @param  string  $default
+     * @param  array  $replace
      * @return string
      */
     function __lit_($key, $default, $replace = [])

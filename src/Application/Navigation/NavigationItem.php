@@ -13,7 +13,7 @@ abstract class NavigationItem extends VueProp implements ArrayAccess
     /**
      * Set an attribute.
      *
-     * @param  string $key
+     * @param  string  $key
      * @param  mixed  $value
      * @return void
      */
@@ -29,7 +29,7 @@ abstract class NavigationItem extends VueProp implements ArrayAccess
     /**
      * Determine if an attribute value exists.
      *
-     * @param  string $key
+     * @param  string  $key
      * @return bool
      */
     public function offsetExists($offset)
@@ -40,7 +40,7 @@ abstract class NavigationItem extends VueProp implements ArrayAccess
     /**
      * Remove an attribute.
      *
-     * @param  string $key
+     * @param  string  $key
      * @return void
      */
     public function offsetUnset($offset)
@@ -51,7 +51,7 @@ abstract class NavigationItem extends VueProp implements ArrayAccess
     /**
      * Retrieve an attribute by key.
      *
-     * @param  string $key
+     * @param  string  $key
      * @return mixed
      */
     public function offsetGet($offset)

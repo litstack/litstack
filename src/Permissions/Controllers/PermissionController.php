@@ -25,7 +25,7 @@ class PermissionController extends Controller
     /**
      * Show index.
      *
-     * @param  ReadRolePermissionRequest $request
+     * @param  ReadRolePermissionRequest  $request
      * @return View
      */
     public function index(ReadRolePermissionRequest $request, Page $page)
@@ -99,7 +99,7 @@ class PermissionController extends Controller
     /**
      * Translation operation.
      *
-     * @param  string $operation
+     * @param  string  $operation
      * @return string
      */
     protected function translateOperation($operation)
@@ -110,7 +110,7 @@ class PermissionController extends Controller
     /**
      * Fetch index.
      *
-     * @param  ReadRolePermissionRequest $request
+     * @param  ReadRolePermissionRequest  $request
      * @return array
      */
     public function fetchIndex(ReadRolePermissionRequest $request)

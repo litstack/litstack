@@ -30,8 +30,7 @@ trait FieldHasRules
     /**
      * Validation rules.
      *
-     * @param string ...$rules
-     *
+     * @param  string  ...$rules
      * @return self
      */
     public function rules(...$rules)
@@ -44,8 +43,7 @@ trait FieldHasRules
     /**
      * Validation rules.
      *
-     * @param string ...$rules
-     *
+     * @param  string  ...$rules
      * @return self
      */
     public function creationRules(...$rules)
@@ -58,8 +56,7 @@ trait FieldHasRules
     /**
      * Validation rules.
      *
-     * @param string ...$rules
-     *
+     * @param  string  ...$rules
      * @return self
      */
     public function updateRules(...$rules)
@@ -72,8 +69,7 @@ trait FieldHasRules
     /**
      * Get rules for request.
      *
-     * @param string|null $type
-     *
+     * @param  string|null  $type
      * @return array
      */
     public function getRules($type = null)

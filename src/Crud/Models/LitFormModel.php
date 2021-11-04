@@ -104,7 +104,7 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     /**
      * Get translated attribute and the corresponding values from translation model.
      *
-     * @param  Model $translation
+     * @param  Model  $translation
      * @return array
      */
     public function getTranslatedAttributesFromTranslation(Model $translation)
@@ -124,7 +124,7 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     /**
      * Prepare attributes for save.
      *
-     * @param  array $attributes
+     * @param  array  $attributes
      * @return array
      */
     public function prepareAttributesForSave($attributes)
@@ -164,8 +164,8 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     /**
      * Update model.
      *
-     * @param  array $attributes
-     * @param  array $options
+     * @param  array  $attributes
+     * @param  array  $options
      * @return void
      */
     public function update(array $attributes = [], array $options = [])
@@ -179,7 +179,7 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     /**
      * Get a relationship.
      *
-     * @param  string $key
+     * @param  string  $key
      * @return mixed
      */
     public function getRelationValue($key)
@@ -224,7 +224,7 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     /**
      * Get attribute.
      *
-     * @param  string $key
+     * @param  string  $key
      * @return void
      */
     public function getAttribute($key)
@@ -243,7 +243,7 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     /**
      * Set field ids to be able to check if field exists in getAttribute method.
      *
-     * @param  array $ids
+     * @param  array  $ids
      * @return void
      */
     public function setFieldIds(array $ids)
@@ -264,8 +264,8 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     /**
      * Create a new model instance that is existing.
      *
-     * @param  array       $attributes
-     * @param  string|null $connection
+     * @param  array  $attributes
+     * @param  string|null  $connection
      * @return static
      */
     public function newFromBuilder($attributes = [], $connection = null)
@@ -280,7 +280,7 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     /**
      * Set config_type attribute.
      *
-     * @param  string $value
+     * @param  string  $value
      * @return void
      */
     public function setConfigTypeAttribute($value)
@@ -293,7 +293,7 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     /**
      * Set field ids to be able to check if field exists in getAttribute method.
      *
-     * @param  self $model
+     * @param  self  $model
      * @return void
      */
     protected static function setModelFieldIds(self $model)
@@ -347,7 +347,7 @@ abstract class LitFormModel extends Model implements HasMedia, TranslatableContr
     /**
      * Modified to return relation instances for relation fields.
      *
-     * @param  string $method
+     * @param  string  $method
      * @param  array  $params
      * @return mixed
      */

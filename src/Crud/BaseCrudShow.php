@@ -83,8 +83,8 @@ class BaseCrudShow extends Page
     /**
      * Create new CrudShow instance.
      *
-     * @param  ConfigHandler $config
-     * @param  BaseForm      $form
+     * @param  ConfigHandler  $config
+     * @param  BaseForm  $form
      * @return void
      */
     public function __construct(ConfigHandler $config, BaseForm $form)
@@ -103,7 +103,7 @@ class BaseCrudShow extends Page
      * Add crud event handler.
      *
      * @param  string  $event
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return void
      */
     public function on($event, Closure $closure)
@@ -118,7 +118,7 @@ class BaseCrudShow extends Page
     /**
      * Fire model event.
      *
-     * @param  string $event
+     * @param  string  $event
      * @param  array  ...$parameters
      * @return void
      */
@@ -136,7 +136,7 @@ class BaseCrudShow extends Page
     /**
      * Set attributes that should be append.
      *
-     * @param  array ...$appends
+     * @param  array  ...$appends
      * @return $this
      */
     public function appends(...$appends)
@@ -159,7 +159,7 @@ class BaseCrudShow extends Page
     /**
      * Add chart.
      *
-     * @param  string                $name
+     * @param  string  $name
      * @return \Ignite\Vue\Component
      */
     public function chart(string $name)
@@ -178,7 +178,7 @@ class BaseCrudShow extends Page
     /**
      * Set query resolver.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return $this
      */
     public function query(Closure $closure)
@@ -191,7 +191,7 @@ class BaseCrudShow extends Page
     /**
      * Resolve query.
      *
-     * @param  Builder $query
+     * @param  Builder  $query
      * @return void
      */
     public function resolveQuery($query)
@@ -224,7 +224,7 @@ class BaseCrudShow extends Page
     /**
      * Add subpage.
      *
-     * @param  string          $config
+     * @param  string  $config
      * @return ButtonComponent
      */
     public function subPage($config, $icon = null, $showButton = true)
@@ -259,7 +259,7 @@ class BaseCrudShow extends Page
     /**
      * Determines if query is instance of a "one relation".
      *
-     * @param  Relation $query
+     * @param  Relation  $query
      * @return bool
      */
     protected function isOneRelation($query)
@@ -312,7 +312,7 @@ class BaseCrudShow extends Page
     /**
      * Bind the action to the page.
      *
-     * @param  ActionComponent $component
+     * @param  ActionComponent  $component
      * @return void
      */
     public function bindAction(ActionComponent $component)
@@ -323,7 +323,7 @@ class BaseCrudShow extends Page
     /**
      * Registering field lifecycle hook.
      *
-     * @param  Field $field
+     * @param  Field  $field
      * @return void
      */
     protected function registeringField($field)
@@ -338,7 +338,7 @@ class BaseCrudShow extends Page
     /**
      * Registered Field lifecycle hook.
      *
-     * @param  Field $field
+     * @param  Field  $field
      * @return void
      */
     protected function registeredField($field)
@@ -351,7 +351,7 @@ class BaseCrudShow extends Page
     /**
      * Add group wrapper.
      *
-     * @param  Closure   $closure
+     * @param  Closure  $closure
      * @return Component
      */
     public function group(Closure $closure)
@@ -374,7 +374,7 @@ class BaseCrudShow extends Page
     /**
      * Add Vue component.
      *
-     * @param  string                      $component
+     * @param  string  $component
      * @return \Ignite\Vue\Component|mixed
      */
     public function component($component)
@@ -410,8 +410,8 @@ class BaseCrudShow extends Page
     /**
      * Create b-card wrapper.
      *
-     * @param  int     $cols
-     * @param  Closure $closure
+     * @param  int  $cols
+     * @param  Closure  $closure
      * @return void
      */
     public function card(Closure $closure)
@@ -436,7 +436,7 @@ class BaseCrudShow extends Page
     /**
      * Get form instance.
      *
-     * @param  Request             $request
+     * @param  Request  $request
      * @return BaseForm|mixed|null
      */
     public function getForm(Request $request)
@@ -447,7 +447,7 @@ class BaseCrudShow extends Page
     /**
      * Call CrudShow method.
      *
-     * @param  string $method
+     * @param  string  $method
      * @param  array  $parameters
      * @return mixed
      */

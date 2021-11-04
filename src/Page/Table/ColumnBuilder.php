@@ -48,7 +48,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Set table instance.
      *
-     * @param  Table|LaravelRelationField $parent
+     * @param  Table|LaravelRelationField  $parent
      * @return void
      */
     public function setParent($parent)
@@ -79,7 +79,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add column.
      *
-     * @param  string $label
+     * @param  string  $label
      * @return Column
      */
     public function col($label = '')
@@ -90,8 +90,8 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Create new action column.
      *
-     * @param  string          $title
-     * @param  string          $action
+     * @param  string  $title
+     * @param  string  $action
      * @return Component|mixed
      */
     public function action($title, $action)
@@ -108,8 +108,8 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Create new actions column.
      *
-     * @param  string    $title
-     * @param  string    $action
+     * @param  string  $title
+     * @param  string  $action
      * @return Component
      */
     public function actions($actions, $text = '<i class="fas fa-ellipsis-v"></i>'): ColumnContract
@@ -134,8 +134,8 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Create new Money column.
      *
-     * @param  string $column
-     * @param  string $currency
+     * @param  string  $column
+     * @param  string  $currency
      * @return Column
      */
     public function money($column, $currency = 'EUR', $locale = null): ColumnContract
@@ -157,7 +157,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add table column to cols stack and set component.
      *
-     * @param  string                $component
+     * @param  string  $component
      * @return ColumnComponent|mixed
      */
     public function component($component): ColumnContract
@@ -168,7 +168,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add Blade View column.
      *
-     * @param  View|string    $view
+     * @param  View|string  $view
      * @return ColumnContract
      */
     public function view($view): ColumnContract
@@ -183,7 +183,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add livewire component column.
      *
-     * @param  string $component
+     * @param  string  $component
      * @param  array  $data
      * @return View
      */
@@ -198,8 +198,8 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add progress column.
      *
-     * @param  string            $attribute
-     * @param  int               $max
+     * @param  string  $attribute
+     * @param  int  $max
      * @return ProgressComponent
      */
     public function progress($attribute, $max = 100)
@@ -213,8 +213,8 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add date column.
      *
-     * @param  string $attribute
-     * @param  string $format
+     * @param  string  $attribute
+     * @param  string  $format
      * @return Column
      */
     public function date($attribute, $format, $isoFormat = false)
@@ -235,7 +235,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add toggle column.
      *
-     * @param  string          $key
+     * @param  string  $key
      * @return ToggleComponent
      */
     public function toggle($attribute)
@@ -256,7 +256,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add image column.
      *
-     * @param  string         $label
+     * @param  string  $label
      * @return ImageComponent
      */
     public function image($label = '')
@@ -267,7 +267,7 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add avatar image column.
      *
-     * @param  string         $label
+     * @param  string  $label
      * @return ImageComponent
      */
     public function avatar($label = '')
@@ -278,8 +278,8 @@ class ColumnBuilder extends VueProp implements ColumnBuilderContract
     /**
      * Add relation column.
      *
-     * @param  string            $label
-     * @param  string|array      $config
+     * @param  string  $label
+     * @param  string|array  $config
      * @return RelationComponent
      */
     public function relation($related = '', $config = '')

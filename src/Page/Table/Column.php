@@ -24,7 +24,7 @@ class Column extends VueProp implements ColumnInterface
     /**
      * Create new Col instance.
      *
-     * @param  string $label
+     * @param  string  $label
      * @return void
      */
     public function __construct($label = null)
@@ -38,7 +38,7 @@ class Column extends VueProp implements ColumnInterface
     /**
      * Set parent table.
      *
-     * @param  Table $table
+     * @param  Table  $table
      * @return void
      */
     public function setTable(Table $table)
@@ -49,7 +49,7 @@ class Column extends VueProp implements ColumnInterface
     /**
      * Set label.
      *
-     * @param  string $label
+     * @param  string  $label
      * @return $this
      */
     public function label($label)
@@ -72,9 +72,9 @@ class Column extends VueProp implements ColumnInterface
     /**
      * Set value.
      *
-     * @param  string     $value
-     * @param  array|null $options
-     * @param  mixed      $default
+     * @param  string  $value
+     * @param  array|null  $options
+     * @param  mixed  $default
      * @return $this
      */
     public function value($value, array $options = null, $default = null)
@@ -89,7 +89,7 @@ class Column extends VueProp implements ColumnInterface
     /**
      * Add column translation.
      *
-     * @param  string $value
+     * @param  string  $value
      * @return $this
      */
     public function trans($value)
@@ -103,8 +103,8 @@ class Column extends VueProp implements ColumnInterface
     /**
      * Add column translation choice.
      *
-     * @param  string $value
-     * @param  string $attribute
+     * @param  string  $value
+     * @param  string  $attribute
      * @return $this
      */
     public function transChoice($value, $attribute)
@@ -118,9 +118,9 @@ class Column extends VueProp implements ColumnInterface
     /**
      * Set table column style.
      *
-     * @param  string     $style
-     * @param  array|null $options
-     * @param  mixed      $default
+     * @param  string  $style
+     * @param  array|null  $options
+     * @param  mixed  $default
      * @return $this
      */
     public function style($style, array $options = null, $default = null)
@@ -135,7 +135,7 @@ class Column extends VueProp implements ColumnInterface
     /**
      * Set column class.
      *
-     * @param  string $class
+     * @param  string  $class
      * @return $this
      */
     public function class($class)
@@ -199,7 +199,7 @@ class Column extends VueProp implements ColumnInterface
     /**
      * Set column link.
      *
-     * @param  string|bool $link
+     * @param  string|bool  $link
      * @return $this
      */
     public function link($link)
@@ -212,7 +212,7 @@ class Column extends VueProp implements ColumnInterface
     /**
      * Set attribute by which the column should be sorted.
      *
-     * @param  string $attribute
+     * @param  string  $attribute
      * @return $this
      */
     public function sortBy($attribute)
@@ -225,8 +225,8 @@ class Column extends VueProp implements ColumnInterface
     /**
      * Set regular expression and replace for column value.
      *
-     * @param  string $regex
-     * @param  string $replace
+     * @param  string  $regex
+     * @param  string  $replace
      * @return $this
      *
      * @throws InvalidArgumentException
@@ -265,7 +265,7 @@ class Column extends VueProp implements ColumnInterface
     /**
      * Set a maxium of characters that should be displayed in the column.
      *
-     * @param  int   $max
+     * @param  int  $max
      * @return $this
      */
     public function maxChars(int $max)

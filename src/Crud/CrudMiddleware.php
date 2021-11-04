@@ -11,8 +11,8 @@ class CrudMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -25,7 +25,7 @@ class CrudMiddleware
     /**
      * Bin model instance to the associated config.
      *
-     * @param  Request $request
+     * @param  Request  $request
      * @return void
      */
     protected function bindModelInstance(Request $request)

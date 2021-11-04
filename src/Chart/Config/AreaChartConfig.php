@@ -30,8 +30,7 @@ abstract class AreaChartConfig extends ChartConfig
     /**
      * Calculate value.
      *
-     * @param Builder $query
-     *
+     * @param  Builder  $query
      * @return int
      */
     abstract public function value($query);
