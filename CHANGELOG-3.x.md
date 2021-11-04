@@ -1,6 +1,12 @@
 # Release Notes for 3.x
 
-## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.14...3.x)
+## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.15...3.x)
+
+##  [v3.7.15](https://github.com/litstack/litstack/compare/v3.7.14...v3.7.15)
+
+## Added
+
+- Add option to configure litstack migrations path ([#253](https://github.com/litstack/litstack/pull/253))
 
 ##  [v3.7.14](https://github.com/litstack/litstack/compare/v3.7.13...v3.7.14)
 
