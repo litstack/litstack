@@ -244,4 +244,18 @@ return [
             'colors' => ['#4951f2', '#f67693', '#f6ed76', '#9ff2ae', '#83c2ff', '#70859c'],
         ],
     ],
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Lit Migrations path
+    |--------------------------------------------------------------------------
+    |
+    | You may configure a special path from which your Litstack migrations
+    | are loaded, for example when recreating user permissions.
+    |
+    */
+
+    'migrations' => [
+        'path' => database_path('migrations'),
+    ],
 ];
