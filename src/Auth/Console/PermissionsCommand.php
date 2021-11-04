@@ -52,7 +52,8 @@ class PermissionsCommand extends RollbackCommand
      */
     public function handle()
     {
-        $migrationsPath = database_path('migrations');
+       $migrationsPath = config('lit.migrations.path') ?? database_path('migrations');
+        
         $migrationPath = Collection::make($migrationsPath)
             ->flatMap(function ($path) {
                 return File::glob($path.'/*_make_permissions.php');
