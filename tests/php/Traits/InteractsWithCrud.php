@@ -14,8 +14,7 @@ trait InteractsWithCrud
     /**
      * Get crud route.
      *
-     * @param string $route
-     *
+     * @param  string  $route
      * @return void
      */
     public function getCrudRoute(string $route)

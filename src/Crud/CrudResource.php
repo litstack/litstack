@@ -16,8 +16,8 @@ abstract class CrudResource extends JsonResource
     /**
      * Create a new resource instance.
      *
-     * @param  mixed               $resource
-     * @param  ConfigHandler|Field $config
+     * @param  mixed  $resource
+     * @param  ConfigHandler|Field  $config
      * @return void
      */
     public function __construct($resource, $config)
@@ -29,7 +29,7 @@ abstract class CrudResource extends JsonResource
     /**
      * Render the resource.
      *
-     * @param  Request $request
+     * @param  Request  $request
      * @return array
      */
     public function render($request)

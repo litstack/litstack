@@ -24,8 +24,8 @@ class DateRange extends Field implements ModifiesMultipleAttributes
     /**
      * Create new Field instance.
      *
-     * @param  string $startAttribute
-     * @param  string $endAttribute
+     * @param  string  $startAttribute
+     * @param  string  $endAttribute
      * @return void
      */
     public function __construct(string $startAttribute, string $endAttribute)
@@ -55,7 +55,7 @@ class DateRange extends Field implements ModifiesMultipleAttributes
     /**
      * Set timepicker is24hr.
      *
-     * @param  int   $is24hr
+     * @param  int  $is24hr
      * @return $this
      */
     public function is24hr(bool $is24hr = true)

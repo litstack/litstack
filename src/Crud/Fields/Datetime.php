@@ -44,6 +44,7 @@ class Datetime extends BaseField
      * Inlcude ctk datetime picker script.
      *
      * @see https://github.com/chronotruck/vue-ctk-date-time-picker
+     *
      * @return void
      */
     protected function includeCtkScript()
@@ -54,7 +55,7 @@ class Datetime extends BaseField
     /**
      * Set formatted.
      *
-     * @param  string $format
+     * @param  string  $format
      * @return $this
      */
     public function formatted(string $format)
@@ -118,7 +119,7 @@ class Datetime extends BaseField
     /**
      * Cast field value.
      *
-     * @param  mixed $value
+     * @param  mixed  $value
      * @return bool
      */
     public function castValue($value)
@@ -146,7 +147,7 @@ class Datetime extends BaseField
     /**
      * Set timepicker minute interval.
      *
-     * @param  int   $interval
+     * @param  int  $interval
      * @return $this
      */
     public function minuteInterval(int $interval = 1)
@@ -159,7 +160,7 @@ class Datetime extends BaseField
     /**
      * Set disabled hours option.
      *
-     * @param  int   $disabledHours
+     * @param  int  $disabledHours
      * @return $this
      */
     public function disabledHours(array $disabledHours = [])

@@ -21,8 +21,7 @@ abstract class DonutChartConfig extends ChartConfig
     /**
      * Value.
      *
-     * @param Builder $query
-     *
+     * @param  Builder  $query
      * @return array
      */
     abstract public function value($query): array;

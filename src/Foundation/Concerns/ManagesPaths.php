@@ -21,7 +21,7 @@ trait ManagesPaths
     /**
      * Set the base path for the application.
      *
-     * @param  string $basePath
+     * @param  string  $basePath
      * @return $this
      */
     public function setBasePath($basePath)
@@ -36,7 +36,7 @@ trait ManagesPaths
     /**
      * Set path to the package vendor.
      *
-     * @param  string $vendorPath
+     * @param  string  $vendorPath
      * @return void
      */
     public function setVendorPath($vendorPath)
@@ -62,7 +62,7 @@ trait ManagesPaths
     /**
      * Get the path to the litstack "app" directory.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return string
      */
     public function path($path = '')
@@ -73,7 +73,7 @@ trait ManagesPaths
     /**
      * Get the base path of the "lit" folder.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return string
      */
     public function basePath($path = '')
@@ -94,7 +94,7 @@ trait ManagesPaths
     /**
      * Get the path to the Litstack resources directory.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return string
      */
     public function resourcePath($path = '')
@@ -105,7 +105,7 @@ trait ManagesPaths
     /**
      * Get the path to the litstack package vendor folder.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return string
      */
     public function vendorPath($path = '')

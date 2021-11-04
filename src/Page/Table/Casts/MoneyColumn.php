@@ -25,8 +25,8 @@ class MoneyColumn extends ColumnCast
     /**
      * Create new MoneyCast instance.
      *
-     * @param  string      $currency
-     * @param  string|null $locale
+     * @param  string  $currency
+     * @param  string|null  $locale
      * @return void
      */
     public function __construct($currency = 'EUR', $locale = null)
@@ -45,10 +45,10 @@ class MoneyColumn extends ColumnCast
     /**
      * Cast the given value.
      *
-     * @param  \Illuminate\Database\Eloquent\Model $model
-     * @param  string                              $key
-     * @param  mixed                               $value
-     * @param  array                               $attributes
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  string  $key
+     * @param  mixed  $value
+     * @param  array  $attributes
      * @return array
      */
     public function get($model, $key, $value, $attributes)

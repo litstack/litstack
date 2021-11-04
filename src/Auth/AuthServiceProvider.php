@@ -51,7 +51,7 @@ class AuthServiceProvider extends LaravelServiceProvider
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerPermissionsCommand($abstract)

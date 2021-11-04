@@ -18,7 +18,7 @@ trait ManagesActions
     /**
      * Bind an action to the config.
      *
-     * @param  ActionComponent $action
+     * @param  ActionComponent  $action
      * @return void
      */
     public function bindAction(ActionComponent $action)
@@ -36,8 +36,8 @@ trait ManagesActions
     /**
      * Determine if user can user call action.
      *
-     * @param  Authorizable    $user
-     * @param  ActionComponent $action
+     * @param  Authorizable  $user
+     * @param  ActionComponent  $action
      * @return bool
      */
     protected function canUserCallAction(Authorizable $user, ActionComponent $action)

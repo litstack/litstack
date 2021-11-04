@@ -26,8 +26,8 @@ class CrudJs extends VueProp
     /**
      * Create new CrudJs instance.
      *
-     * @param  mixed               $model
-     * @param  ConfigHandler|Field $config
+     * @param  mixed  $model
+     * @param  ConfigHandler|Field  $config
      * @return void
      */
     public function __construct($model, $config)
@@ -83,7 +83,7 @@ class CrudJs extends VueProp
     /**
      * Render resource.
      *
-     * @param  CrudResource $resource
+     * @param  CrudResource  $resource
      * @return array
      */
     public function renderResource(CrudResource $resource)
@@ -112,7 +112,7 @@ class CrudJs extends VueProp
     /**
      * Cast attributes for Fields.
      *
-     * @param  array $array
+     * @param  array  $array
      * @return array
      */
     public function castAttributes(array $array)

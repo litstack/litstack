@@ -18,8 +18,8 @@ class PresetFactory
     /**
      * Register navigation preset.
      *
-     * @param  array|string $keys
-     * @param  array        $entry
+     * @param  array|string  $keys
+     * @param  array  $entry
      * @return $this
      */
     public function preset($keys, array $entry)
@@ -47,7 +47,7 @@ class PresetFactory
     /**
      * Get preset for the given key and merge data to entry.
      *
-     * @param  string $key
+     * @param  string  $key
      * @param  array  $merge
      * @return array
      */
@@ -81,7 +81,7 @@ class PresetFactory
     /**
      * Determines if preset for the given key exists.
      *
-     * @param  string $key
+     * @param  string  $key
      * @return bool
      */
     public function hasPreset($key)
@@ -92,7 +92,7 @@ class PresetFactory
     /**
      * Find navigation preset by the given key.
      *
-     * @param  string     $desired
+     * @param  string  $desired
      * @return array|void
      */
     protected function findPresetByKey($desired)

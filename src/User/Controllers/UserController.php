@@ -22,7 +22,7 @@ class UserController
     /**
      * Show user index.
      *
-     * @param  UserReadRequest $request
+     * @param  UserReadRequest  $request
      * @return void
      */
     public function showIndex(UserReadRequest $request)
@@ -45,7 +45,7 @@ class UserController
     /**
      * Fetch index.
      *
-     * @param  Request $request
+     * @param  Request  $request
      * @return array
      */
     public function fetchIndex(UserReadRequest $request)

@@ -25,8 +25,8 @@ class FormObserver
     /**
      * Create new FormObserver instance.
      *
-     * @param CacheManager $cache
-     * @param FormLoader $loader
+     * @param  CacheManager  $cache
+     * @param  FormLoader  $loader
      * @return void
      */
     public function __construct(CacheManager $cache, FormLoader $loader)

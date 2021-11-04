@@ -41,7 +41,7 @@ class Kernel extends LitstackKernel
     /**
      * Determine if an authenticated user has access to the litstack application.
      *
-     * @param  Authorizable $user
+     * @param  Authorizable  $user
      * @return bool
      */
     public function authorize(Authorizable $user): bool

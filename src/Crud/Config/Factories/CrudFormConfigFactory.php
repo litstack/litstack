@@ -24,7 +24,7 @@ class CrudFormConfigFactory extends ConfigFactory
     /**
      * Get alias for the given method.
      *
-     * @param  string      $method
+     * @param  string  $method
      * @return bool|string
      */
     public function getAliasFor(ReflectionMethod $method)
@@ -65,8 +65,8 @@ class CrudFormConfigFactory extends ConfigFactory
     /**
      * Setup create and edit form.
      *
-     * @param  \Ignite\Config\ConfigHandler $config
-     * @param  Closure                      $method
+     * @param  \Ignite\Config\ConfigHandler  $config
+     * @param  Closure  $method
      * @return \Ignite\Crud\CrudForm
      */
     public function show(ConfigHandler $config, Closure $method, $alias)
@@ -105,8 +105,8 @@ class CrudFormConfigFactory extends ConfigFactory
     /**
      * Get the page class for the given alias.
      *
-     * @param  ConfigHandler $config
-     * @param  string        $method
+     * @param  ConfigHandler  $config
+     * @param  string  $method
      * @return string
      */
     protected function resolvePageClass(ConfigHandler $config, string $method = 'show')
@@ -126,8 +126,8 @@ class CrudFormConfigFactory extends ConfigFactory
     /**
      * Bind events from config.
      *
-     * @param  BaseCrudShow $config
-     * @param  CrudShow     $page
+     * @param  BaseCrudShow  $config
+     * @param  CrudShow  $page
      * @return void
      */
     protected function bindEventsFromConfig(ConfigHandler $config, BaseCrudShow $page)

@@ -12,8 +12,8 @@ class Authenticate extends Middleware
     /**
      * Determine if the user is logged in to any of the given guards.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  array                    $guards
+     * @param  \Illuminate\Http\Request  $request
+     * @param  array  $guards
      * @return void
      *
      * @throws \Illuminate\Auth\AuthenticationException
@@ -35,7 +35,7 @@ class Authenticate extends Middleware
      * Determine if the authenticated user is authorized to view the litstack
      * interface.
      *
-     * @param  Request $request
+     * @param  Request  $request
      * @return bool
      */
     protected function isUserAuthorized(Request $request)
@@ -66,8 +66,8 @@ class Authenticate extends Middleware
     /**
      * Handle an unauthenticated user.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  array                    $guards
+     * @param  \Illuminate\Http\Request  $request
+     * @param  array  $guards
      * @return void
      *
      * @throws \Illuminate\Auth\AuthenticationException
@@ -85,7 +85,7 @@ class Authenticate extends Middleware
      * Get the path the user should be redirected to when they are not
      * authenticated.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return string
      */
     protected function redirectTo($request)

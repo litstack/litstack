@@ -62,7 +62,7 @@ class Kernel
     /**
      * Create a new Lit kernel instance.
      *
-     * @param  \Ignite\Application\Application $app
+     * @param  \Ignite\Application\Application  $app
      * @return void
      */
     public function __construct(Application $app)
@@ -85,7 +85,7 @@ class Kernel
     /**
      * Determine if an authenticated user has access to the litstack application.
      *
-     * @param  Authorizable $user
+     * @param  Authorizable  $user
      * @return bool
      */
     public function authorize(Authorizable $user): bool
@@ -137,7 +137,7 @@ class Kernel
     /**
      * Add litstack middleware.
      *
-     * @param  string $middleware
+     * @param  string  $middleware
      * @return void
      */
     public function addMiddleware($middleware)
@@ -194,8 +194,7 @@ class Kernel
     /**
      * Build application for the given route.
      *
-     * @param Illuminate\View\View $view
-     *
+     * @param  Illuminate\View\View  $view
      * @return void
      */
     public function build(View $view)
@@ -206,7 +205,7 @@ class Kernel
     /**
      * Register repeatables in the given directory.
      *
-     * @param  array|string $paths
+     * @param  array|string  $paths
      * @return void
      */
     protected function loadRepeatablesFrom($paths)

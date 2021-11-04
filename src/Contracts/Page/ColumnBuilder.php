@@ -10,7 +10,7 @@ interface ColumnBuilder
     /**
      * Registers column.
      *
-     * @param  string $label
+     * @param  string  $label
      * @return Column
      */
     public function col($label = '');
@@ -18,7 +18,7 @@ interface ColumnBuilder
     /**
      * Registers Vue component column.
      *
-     * @param  string $component
+     * @param  string  $component
      * @return Column
      */
     public function component($component): Column;
@@ -26,7 +26,7 @@ interface ColumnBuilder
     /**
      * Registers Blade component column.
      *
-     * @param  View|string $view
+     * @param  View|string  $view
      * @return Column
      */
     public function view($view): Column;
@@ -34,7 +34,7 @@ interface ColumnBuilder
     /**
      * Add livewire component column.
      *
-     * @param  string $component
+     * @param  string  $component
      * @param  array  $data
      * @return View
      */
@@ -43,7 +43,7 @@ interface ColumnBuilder
     /**
      * Registers image column.
      *
-     * @param  string         $label
+     * @param  string  $label
      * @return ImageComponent
      */
     public function image($label = '');
@@ -51,7 +51,7 @@ interface ColumnBuilder
     /**
      * Add avatar image column.
      *
-     * @param  string         $label
+     * @param  string  $label
      * @return ImageComponent
      */
     public function avatar($label = '');
@@ -59,8 +59,8 @@ interface ColumnBuilder
     /**
      * Create new Money column.
      *
-     * @param  string $column
-     * @param  string $currency
+     * @param  string  $column
+     * @param  string  $currency
      * @return Column
      */
     public function money($column, $currency = 'EUR', $locale = null);
@@ -68,7 +68,7 @@ interface ColumnBuilder
     /**
      * Registers relation column.
      *
-     * @param  string $label
+     * @param  string  $label
      * @return mixed
      */
     public function relation($label = '');
@@ -76,7 +76,7 @@ interface ColumnBuilder
     /**
      * Registers toggle column.
      *
-     * @param  string $attribute
+     * @param  string  $attribute
      * @return Column
      */
     public function toggle($attribute);

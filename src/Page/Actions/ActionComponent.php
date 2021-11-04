@@ -59,8 +59,8 @@ class ActionComponent extends Component
     /**
      * Create new ActionComponent instance.
      *
-     * @param string    $action
-     * @param Component $wrapper
+     * @param  string  $action
+     * @param  Component  $wrapper
      */
     public function __construct($action, $title, Component $wrapper = null)
     {
@@ -89,7 +89,7 @@ class ActionComponent extends Component
     /**
      * Authorize the component.
      *
-     * @param  Closure|bool $authorizer
+     * @param  Closure|bool  $authorizer
      * @return $this
      */
     public function authorize($authorizer)
@@ -124,7 +124,7 @@ class ActionComponent extends Component
     /**
      * Set a wrapper component.
      *
-     * @param  Component $wrapper
+     * @param  Component  $wrapper
      * @return $this
      */
     public function wrapper(Component $wrapper)
@@ -135,7 +135,7 @@ class ActionComponent extends Component
     /**
      * Set action modal.
      *
-     * @param  string $action
+     * @param  string  $action
      * @return void
      */
     protected function setModal()
@@ -154,7 +154,7 @@ class ActionComponent extends Component
     /**
      * Set action authorization.
      *
-     * @param  string $action
+     * @param  string  $action
      * @return void
      */
     protected function setAuthorization()
@@ -181,7 +181,7 @@ class ActionComponent extends Component
     /**
      * Set the eventhandler.
      *
-     * @param  string $handler
+     * @param  string  $handler
      * @return $this
      */
     public function setEventHandler($handler)
@@ -200,7 +200,7 @@ class ActionComponent extends Component
     /**
      * Add event data.
      *
-     * @param  array $data
+     * @param  array  $data
      * @return void
      */
     public function addEventData(array $data)
@@ -214,7 +214,7 @@ class ActionComponent extends Component
     /**
      * Throw exception if the given handler cannot be used.
      *
-     * @param  string $handler
+     * @param  string  $handler
      * @return void
      *
      * @throws InvalidArgumentException

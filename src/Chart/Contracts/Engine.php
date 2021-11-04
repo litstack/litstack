@@ -16,9 +16,8 @@ interface Engine
     /**
      * Render chart.
      *
-     * @param array    $names
-     * @param ChartSet $set
-     *
+     * @param  array  $names
+     * @param  ChartSet  $set
      * @return mixed
      */
     public function render(array $names, ChartSet $set);

@@ -7,7 +7,7 @@ trait FieldHasMask
     /**
      * Set mask.
      *
-     * @param  array $mask
+     * @param  array  $mask
      * @return $this
      */
     public function mask(array $mask)

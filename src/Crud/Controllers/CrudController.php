@@ -25,7 +25,7 @@ abstract class CrudController extends CrudBaseController
     /**
      * Modify initial query.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder  $query
      * @return void
      */
     public function query($query)
@@ -36,8 +36,8 @@ abstract class CrudController extends CrudBaseController
     /**
      * Load model.
      *
-     * @param  CrudReadRequest $request
-     * @param  int             $id
+     * @param  CrudReadRequest  $request
+     * @param  int  $id
      * @return array
      */
     public function load(CrudReadRequest $request, $id)
@@ -50,7 +50,7 @@ abstract class CrudController extends CrudBaseController
     /**
      * Delete by query.
      *
-     * @param  Builder $query
+     * @param  Builder  $query
      * @return void
      */
     public function delete(Builder $query)
@@ -61,7 +61,7 @@ abstract class CrudController extends CrudBaseController
     /**
      * Delete one.
      *
-     * @param  CrudDeleteRequest $request
+     * @param  CrudDeleteRequest  $request
      * @return void
      */
     public function destroy(CrudDeleteRequest $request, $id)
@@ -74,8 +74,8 @@ abstract class CrudController extends CrudBaseController
     /**
      * Delete action.
      *
-     * @param  CrudDeleteRequest            $request
-     * @param  Collection                   $models
+     * @param  CrudDeleteRequest  $request
+     * @param  Collection  $models
      * @return Illuminate\Http\JsonResponse
      */
     public function deleteAction(CrudDeleteRequest $request, Collection $models)
@@ -90,7 +90,7 @@ abstract class CrudController extends CrudBaseController
     /**
      * Show Crud index.
      *
-     * @param  CrudReadRequest $request
+     * @param  CrudReadRequest  $request
      * @return View
      */
     public function index(CrudReadRequest $request)
@@ -112,8 +112,8 @@ abstract class CrudController extends CrudBaseController
     /**
      * Load index table items.
      *
-     * @param  CrudReadRequest $request
-     * @return array           $items
+     * @param  CrudReadRequest  $request
+     * @return array $items
      */
     public function indexTable(CrudReadRequest $request)
     {
@@ -137,7 +137,7 @@ abstract class CrudController extends CrudBaseController
     /**
      * Show Crud create.
      *
-     * @param  CrudCreateRequest $request
+     * @param  CrudCreateRequest  $request
      * @return void
      */
     public function create(CrudCreateRequest $request)
@@ -166,7 +166,7 @@ abstract class CrudController extends CrudBaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int                       $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show(CrudReadRequest $request, ...$parameters)
@@ -245,7 +245,7 @@ abstract class CrudController extends CrudBaseController
     /**
      * Sort.
      *
-     * @param  CrudUpdateRequest $request
+     * @param  CrudUpdateRequest  $request
      * @return void
      */
     public function order(CrudUpdateRequest $request)
@@ -270,7 +270,7 @@ abstract class CrudController extends CrudBaseController
     /**
      * Get close siblings.
      *
-     * @param  int   $id
+     * @param  int  $id
      * @return array
      */
     protected function nearSiblings($id)

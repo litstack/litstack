@@ -11,7 +11,7 @@ class CrudShow extends BaseCrudShow implements CrudCreate, CrudUpdate
     /**
      * Add only to create page.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return void
      */
     public function onlyOnCreate(Closure $closure)
@@ -24,7 +24,7 @@ class CrudShow extends BaseCrudShow implements CrudCreate, CrudUpdate
     /**
      * Add only to update page.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return void
      */
     public function onlyOnUpdate(Closure $closure)

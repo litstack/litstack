@@ -15,7 +15,7 @@ class RoleController
     /**
      * Find or fail the user by the given id.
      *
-     * @param  int             $id
+     * @param  int  $id
      * @return Authenticatable
      */
     protected function findOrFailUser($id): Authenticatable
@@ -28,8 +28,8 @@ class RoleController
     /**
      * Assign role to lit-user.
      *
-     * @param  Request $request
-     * @param  User    $user_id
+     * @param  Request  $request
+     * @param  User  $user_id
      * @return void
      */
     public function assignRoleToUser(UpdateRoleRequest $request, $user_id, $role_id)
@@ -44,8 +44,8 @@ class RoleController
     /**
      * Remove role to from lit-user.
      *
-     * @param  Request $request
-     * @param  User    $user_id
+     * @param  Request  $request
+     * @param  User  $user_id
      * @return void
      */
     public function removeRoleFromUser(UpdateRoleRequest $request, $user_id, $role_id)
@@ -71,7 +71,7 @@ class RoleController
     /**
      * Create new role.
      *
-     * @param  CreateRoleRequest $request
+     * @param  CreateRoleRequest  $request
      * @return Role
      */
     public function store(CreateRoleRequest $request)
@@ -86,8 +86,8 @@ class RoleController
     /**
      * Delete role.
      *
-     * @param  DeleteRoleRequest $request
-     * @param  int               $id
+     * @param  DeleteRoleRequest  $request
+     * @param  int  $id
      * @return void
      */
     public function destroy(DeleteRoleRequest $request, $id)

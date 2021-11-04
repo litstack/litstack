@@ -20,7 +20,7 @@ trait ManagesGeneration
     /**
      * Get the destination class path.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return string
      */
     protected function getPath($name)
@@ -35,7 +35,7 @@ trait ManagesGeneration
     /**
      * Mock base path.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return mixed
      */
     protected function mockBasePath(Closure $closure)
@@ -53,7 +53,7 @@ trait ManagesGeneration
     /**
      * Get the litstack view directory path.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return string
      */
     protected function viewPath($path = '')

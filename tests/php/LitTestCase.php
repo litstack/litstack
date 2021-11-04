@@ -111,7 +111,7 @@ trait LitTestCase
     /**
      * Get package provider.
      *
-     * @param  Application $app
+     * @param  Application  $app
      * @return array
      */
     protected function getPackageProviders($app)
@@ -122,7 +122,7 @@ trait LitTestCase
     /**
      * Setup app environment.
      *
-     * @param  Application $app
+     * @param  Application  $app
      * @return void
      */
     protected function getEnvironmentSetUp($app)

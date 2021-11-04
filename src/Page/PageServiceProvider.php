@@ -99,7 +99,7 @@ class PageServiceProvider extends ServiceProvider
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerActionCommand($abstract)

@@ -29,7 +29,7 @@ class Application
     /**
      * Create new Application instance.
      *
-     * @param  LaravelApplication $laravel
+     * @param  LaravelApplication  $laravel
      * @return void
      */
     public function __construct(LaravelApplication $laravel)
@@ -50,7 +50,7 @@ class Application
     /**
      * Check if the Lit application is running in a locale.
      *
-     * @param  string $locale
+     * @param  string  $locale
      * @return bool
      */
     public function isLocale(string $locale)
@@ -61,7 +61,7 @@ class Application
     /**
      * Bind composer to litstack::app view.
      *
-     * @param  string                   $composer
+     * @param  string  $composer
      * @return \Illuminate\View\Factory
      */
     public function composer(string $composer)
@@ -72,7 +72,7 @@ class Application
     /**
      * Run the given array of bootstrap classes.
      *
-     * @param  array $bootstrappers
+     * @param  array  $bootstrappers
      * @return void
      */
     public function bootstrapWith(array $bootstrappers, $kernel)
@@ -97,7 +97,7 @@ class Application
     /**
      *  Build Vue application.
      *
-     * @param  Illuminate\View\View $view
+     * @param  Illuminate\View\View  $view
      * @return void
      */
     public function build(View $view)
@@ -108,7 +108,7 @@ class Application
     /**
      * Get Lit application binding.
      *
-     * @param  string   $binding
+     * @param  string  $binding
      * @return instance
      */
     public function get($abstract)
@@ -119,8 +119,8 @@ class Application
     /**
      * Register a binding with the application.
      *
-     * @param  string         $abstract
-     * @param  Closure|string $concrete
+     * @param  string  $abstract
+     * @param  Closure|string  $concrete
      * @return void
      */
     public function bind($abstract, $concrete)
@@ -141,8 +141,8 @@ class Application
     /**
      * Register a shared binding in the application.
      *
-     * @param  string         $abstract
-     * @param  Closure|string $concrete
+     * @param  string  $abstract
+     * @param  Closure|string  $concrete
      * @return void
      */
     public function singleton($abstract, $concrete)
@@ -153,7 +153,7 @@ class Application
     /**
      * Get abstract for lit application.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return string
      */
     public function getAbstract($abstract)

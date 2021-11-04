@@ -25,10 +25,10 @@ class MediaRepository extends BaseFieldRepository
     /**
      * Create new MediaRepository instance.
      *
-     * @param  ConfigHandler      $config
-     * @param  CrudBaseController $controller
-     * @param  BaseForm           $form
-     * @param  MediaField         $field
+     * @param  ConfigHandler  $config
+     * @param  CrudBaseController  $controller
+     * @param  BaseForm  $form
+     * @param  MediaField  $field
      * @return void
      */
     public function __construct(ConfigHandler $config, $controller, $form, MediaField $field)
@@ -39,9 +39,9 @@ class MediaRepository extends BaseFieldRepository
     /**
      * Update media custom_properties.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
-     * @param  object            $payload
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
+     * @param  object  $payload
      * @return void
      */
     public function update(CrudUpdateRequest $request, $model, $payload)
@@ -61,8 +61,8 @@ class MediaRepository extends BaseFieldRepository
     /**
      * Store new media in model.
      *
-     * @param  CrudReadRequest $request
-     * @param  mixed           $model
+     * @param  CrudReadRequest  $request
+     * @param  mixed  $model
      * @return void
      */
     public function store(CrudUpdateRequest $request, $model)
@@ -76,8 +76,8 @@ class MediaRepository extends BaseFieldRepository
     /**
      * Destroy media from model.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)
@@ -92,8 +92,8 @@ class MediaRepository extends BaseFieldRepository
     /**
      * Order media.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
      * @return void
      */
     public function order(CrudUpdateRequest $request, $model)
@@ -111,8 +111,8 @@ class MediaRepository extends BaseFieldRepository
     /**
      * Store media to model.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
      * @return Response
      */
     protected function storeMediaToModel($request, $model)
@@ -160,7 +160,7 @@ class MediaRepository extends BaseFieldRepository
     /**
      * Get crop data from request.
      *
-     * @param  Request     $request
+     * @param  Request  $request
      * @return void|object
      */
     protected function getCropData(Request $request)
@@ -175,7 +175,7 @@ class MediaRepository extends BaseFieldRepository
     /**
      * Destroy previous media if there are to many.
      *
-     * @param  mixed $model
+     * @param  mixed  $model
      * @return void
      */
     public function destroyPreviousMedia($model)

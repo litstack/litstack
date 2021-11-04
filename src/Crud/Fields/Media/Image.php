@@ -31,8 +31,7 @@ class Image extends MediaField
     /**
      * Set showFullImage.
      *
-     * @param bool $showFullImage
-     *
+     * @param  bool  $showFullImage
      * @return $this
      */
     public function showFullImage(bool $showFullImage = true)
@@ -45,8 +44,7 @@ class Image extends MediaField
     /**
      * Set expand.
      *
-     * @param bool $sortable
-     *
+     * @param  bool  $sortable
      * @return $this
      */
     public function expand(bool $expand = true)
@@ -59,7 +57,7 @@ class Image extends MediaField
     /**
      * Set crop ratio.
      *
-     * @param  bool|float $ratio
+     * @param  bool|float  $ratio
      * @return $this
      */
     public function crop($ratio = 0)
@@ -72,8 +70,7 @@ class Image extends MediaField
     /**
      * Set firstBig.
      *
-     * @param bool $firstBig
-     *
+     * @param  bool  $firstBig
      * @return $this
      */
     public function firstBig(bool $firstBig = true)

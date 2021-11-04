@@ -92,8 +92,7 @@ abstract class ChartConfig
     /**
      * Mount.
      *
-     * @param Chart $chart
-     *
+     * @param  Chart  $chart
      * @return void
      */
     public function mount(Chart $chart)
@@ -104,7 +103,7 @@ abstract class ChartConfig
     /**
      * Add count select to query.
      *
-     * @param  Builder $query
+     * @param  Builder  $query
      * @return Builder
      */
     protected function count($query)
@@ -119,7 +118,7 @@ abstract class ChartConfig
     /**
      * Add average select to query.
      *
-     * @param  Builder $query
+     * @param  Builder  $query
      * @param  string  $column
      * @return Builder
      */
@@ -139,7 +138,7 @@ abstract class ChartConfig
     /**
      * Add sum select to query.
      *
-     * @param  Builder $query
+     * @param  Builder  $query
      * @param  string  $column
      * @return Builder
      */
@@ -155,7 +154,7 @@ abstract class ChartConfig
     /**
      * Add min select to query.
      *
-     * @param  Builder $query
+     * @param  Builder  $query
      * @param  string  $column
      * @return Builder
      */
@@ -171,7 +170,7 @@ abstract class ChartConfig
     /**
      * Add max select to query.
      *
-     * @param  Builder $query
+     * @param  Builder  $query
      * @param  string  $column
      * @return Builder
      */

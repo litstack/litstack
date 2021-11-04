@@ -19,7 +19,7 @@ class DropdownComponent extends ButtonComponent
     /**
      * Set dropdown button title.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return $this
      */
     public function text($title)

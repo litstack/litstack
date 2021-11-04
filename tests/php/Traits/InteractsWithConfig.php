@@ -10,8 +10,7 @@ trait InteractsWithConfig
     /**
      * Get config mock.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return void
      */
     abstract public function getConfig(string $key, ...$params);

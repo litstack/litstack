@@ -17,7 +17,7 @@ class ChartFactory
     /**
      * Create new ConfigFactory instance..
      *
-     * @param \Ignite\Chart\Engine\ChartEngineResolver $resolver
+     * @param  \Ignite\Chart\Engine\ChartEngineResolver  $resolver
      */
     public function __construct(ChartEngineResolver $resolver)
     {
@@ -27,8 +27,7 @@ class ChartFactory
     /**
      * Make chart from config.
      *
-     * @param ConfigHandler $config
-     *
+     * @param  ConfigHandler  $config
      * @return Chart
      */
     public function make(ConfigHandler $config)

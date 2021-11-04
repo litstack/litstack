@@ -37,7 +37,7 @@ trait HasCrudIndex
     /**
      * Initialize index query.
      *
-     * @param  Builder $query
+     * @param  Builder  $query
      * @return Builder $query
      */
     public function indexQuery(Builder $query)

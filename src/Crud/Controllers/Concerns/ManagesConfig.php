@@ -17,7 +17,7 @@ trait ManagesConfig
     /**
      * Set config manually.
      *
-     * @param  ConfigHandler $config
+     * @param  ConfigHandler  $config
      * @return void
      */
     public function setConfig(ConfigHandler $config)

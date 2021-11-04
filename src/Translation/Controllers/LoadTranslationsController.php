@@ -71,9 +71,9 @@ class LoadTranslationsController extends Controller
     /**
      * Get translations from path.
      *
-     * @param  string $locale
-     * @param  string $path
-     * @param  string $prefix
+     * @param  string  $locale
+     * @param  string  $path
+     * @param  string  $prefix
      * @return void
      */
     protected function getTranslationsFromPath(string $locale, string $path, string $prefix = '')
@@ -95,9 +95,9 @@ class LoadTranslationsController extends Controller
     /**
      * Add file to translations.
      *
-     * @param  string $locale
-     * @param  string $file
-     * @param  string $prefix
+     * @param  string  $locale
+     * @param  string  $file
+     * @param  string  $prefix
      * @return void
      */
     protected function addFileToTranslations(string $locale, string $file, string $prefix = '')

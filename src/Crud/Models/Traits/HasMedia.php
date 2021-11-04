@@ -22,7 +22,7 @@ trait HasMedia
     /**
      * Set the conversions key.
      *
-     * @param  string $key
+     * @param  string  $key
      * @return $this
      */
     public function setConversionsKey(string $key): self
@@ -46,7 +46,7 @@ trait HasMedia
     /**
      * Register media conversions for field.
      *
-     * @param  SpatieMedia $media
+     * @param  SpatieMedia  $media
      * @return void
      */
     public function registerMediaConversions(SpatieMedia $media = null): void
@@ -73,8 +73,8 @@ trait HasMedia
     /**
      * Apply crop to the given conversion.
      *
-     * @param  Conversion $conversion
-     * @param  Media      $media
+     * @param  Conversion  $conversion
+     * @param  Media  $media
      * @return void
      */
     protected function applyCrop(Conversion $conversion, Media $media = null)

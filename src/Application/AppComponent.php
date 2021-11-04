@@ -53,7 +53,7 @@ class AppComponent extends Component
     /**
      * Bind view data.
      *
-     * @param  View $view
+     * @param  View  $view
      * @return void
      */
     public function bindView(View $view)

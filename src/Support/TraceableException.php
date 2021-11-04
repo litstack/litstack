@@ -9,10 +9,10 @@ trait TraceableException
     /**
      * Create new TraceableException instance.
      *
-     * @param string    $message
-     * @param array     $options
-     * @param int       $code
-     * @param Exception $previous
+     * @param  string  $message
+     * @param  array  $options
+     * @param  int  $code
+     * @param  Exception  $previous
      */
     public function __construct($message = null, array $options = [], $code = 0, Exception $previous = null)
     {
@@ -24,7 +24,7 @@ trait TraceableException
     /**
      * Set trace.
      *
-     * @param  array $options
+     * @param  array  $options
      * @return void
      */
     public function setTrace($options)
@@ -50,7 +50,7 @@ trait TraceableException
     /**
      * Find trace by options.
      *
-     * @param  array      $options
+     * @param  array  $options
      * @return array|null
      */
     protected function findTrace(array $options)
@@ -69,8 +69,8 @@ trait TraceableException
     /**
      * Has trace options.
      *
-     * @param  array $trace
-     * @param  array $options
+     * @param  array  $trace
+     * @param  array  $options
      * @return bool
      */
     protected function hasTraceOptions($trace, $options)

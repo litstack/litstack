@@ -60,8 +60,7 @@ class BelongsTo extends OneRelationField
     /**
      * Set relation attributes.
      *
-     * @param string $model
-     *
+     * @param  string  $model
      * @return self
      */
     protected function setRelationAttributes($relation)

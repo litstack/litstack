@@ -7,8 +7,7 @@ trait ManagesLitRelationField
     /**
      * Set related model.
      *
-     * @param string $mode
-     *
+     * @param  string  $mode
      * @return void
      */
     public function model(string $model)

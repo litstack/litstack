@@ -206,7 +206,7 @@ class CrudServiceProvider extends LaravelServiceProvider
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerCrudCommand($abstract)
@@ -219,7 +219,7 @@ class CrudServiceProvider extends LaravelServiceProvider
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerFormCommand($abstract)
@@ -232,7 +232,7 @@ class CrudServiceProvider extends LaravelServiceProvider
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerFieldCommand($abstract)
@@ -245,7 +245,7 @@ class CrudServiceProvider extends LaravelServiceProvider
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerFilterCommand($abstract)
@@ -258,7 +258,7 @@ class CrudServiceProvider extends LaravelServiceProvider
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerRepeatableCommand($abstract)
@@ -271,7 +271,7 @@ class CrudServiceProvider extends LaravelServiceProvider
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerFormMacroCommand($abstract)
@@ -363,7 +363,7 @@ class CrudServiceProvider extends LaravelServiceProvider
     /**
      * Register fields.
      *
-     * @param  Form $field
+     * @param  Form  $field
      * @return void
      */
     protected function registerFields(Form $form)

@@ -8,8 +8,8 @@ if (! function_exists('fa')) {
     /**
      * Get a fontawesome icon.
      *
-     * @param  string $group
-     * @param  string $icon
+     * @param  string  $group
+     * @param  string  $icon
      * @return string
      */
     function fa(string $group, $icon = null)
@@ -27,7 +27,7 @@ if (! function_exists('strip_slashes')) {
     /**
      * Strip slashes for routes. Make /admin//route => /admin/route.
      *
-     * @param  string $string
+     * @param  string  $string
      * @return void
      */
     function strip_slashes(string $string)
@@ -40,7 +40,7 @@ if (! function_exists('is_closure')) {
     /**
      * Is Closure.
      *
-     * @param  mixed $t
+     * @param  mixed  $t
      * @return bool
      */
     function is_closure($t)
@@ -53,7 +53,7 @@ if (! function_exists('split_path')) {
     /**
      * Split path.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return string
      */
     function split_path(string $path)
@@ -70,7 +70,7 @@ if (! function_exists('is_translatable')) {
     /**
      * Is a Model translatable.
      *
-     * @param  string|mixed $model
+     * @param  string|mixed  $model
      * @return bool
      */
     function is_translatable($model)
@@ -93,9 +93,8 @@ if (! function_exists('is_attribute_translatable')) {
     /**
      * Is a Model attribute translatable.
      *
-     * @param mixed  $model
-     * @param string $attribute
-     *
+     * @param  mixed  $model
+     * @param  string  $attribute
      * @return bool
      */
     function is_attribute_translatable(string $attribute, $model)
@@ -116,7 +115,7 @@ if (! function_exists('has_media')) {
     /**
      * Determines if a model implements the HasMedia interface.
      *
-     * @param  mixed $model
+     * @param  mixed  $model
      * @return bool
      */
     function has_media($model)
@@ -129,7 +128,7 @@ if (! function_exists('is_valid_path')) {
     /**
      * Does a file exists.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return bool
      */
     function is_valid_path(string $path)
@@ -142,8 +141,7 @@ if (! function_exists('ph_cols')) {
     /**
      * Get ph cols from string length.
      *
-     * @param string $path
-     *
+     * @param  string  $path
      * @return bool
      */
     function ph_cols(string $string, $max = 12)
@@ -162,10 +160,9 @@ if (! function_exists('call_unaccessible_method')) {
     /**
      * Calling protected or private class method.
      *
-     * @param mixed|string $abstract
-     * @param string       $method
-     * @param array        $params
-     *
+     * @param  mixed|string  $abstract
+     * @param  string  $method
+     * @param  array  $params
      * @return mixed
      */
     function call_unaccessible_method($abstract, string $method, array $params = [])
@@ -191,10 +188,9 @@ if (! function_exists('set_unaccessible_property')) {
     /**
      * Set protected or private class property value.
      *
-     * @param mixed  $instance
-     * @param string $property
-     * @param mixed  $value
-     *
+     * @param  mixed  $instance
+     * @param  string  $property
+     * @param  mixed  $value
      * @return void
      */
     function set_unaccessible_property($instance, string $property, $value)
@@ -209,10 +205,9 @@ if (! function_exists('get_unaccessible_property')) {
     /**
      * Set protected or private class property value.
      *
-     * @param mixed  $instance
-     * @param string $property
-     * @param mixed  $value
-     *
+     * @param  mixed  $instance
+     * @param  string  $property
+     * @param  mixed  $value
      * @return void
      */
     function get_unaccessible_property($object, string $property)
@@ -234,8 +229,8 @@ if (! function_exists('fix_file')) {
     /**
      * Fixes the given file using php-cs-fixer.
      *
-     * @param  string               $path
-     * @param  ConfigInterface|null $config
+     * @param  string  $path
+     * @param  ConfigInterface|null  $config
      * @return void
      */
     function fix_file($path, ConfigInterface $config = null)

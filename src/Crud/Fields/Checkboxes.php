@@ -25,8 +25,7 @@ class Checkboxes extends BaseField
     /**
      * Set options.
      *
-     * @param array $options
-     *
+     * @param  array  $options
      * @return $this
      */
     public function options(array $options)
@@ -52,8 +51,7 @@ class Checkboxes extends BaseField
     /**
      * Cast field value.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return bool
      */
     public function castValue($value)

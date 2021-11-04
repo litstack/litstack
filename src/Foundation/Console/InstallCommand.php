@@ -39,7 +39,7 @@ class InstallCommand extends Command
     /**
      * Create new InstallCommand instance.
      *
-     * @param  Filesystem $files
+     * @param  Filesystem  $files
      * @return void
      */
     public function __construct(Filesystem $files)
@@ -126,8 +126,7 @@ class InstallCommand extends Command
     /**
      * Make directory if not exists.
      *
-     * @param string $path
-     *
+     * @param  string  $path
      * @return void
      */
     private function makeDirectory(string $path)

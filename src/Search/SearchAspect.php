@@ -25,7 +25,7 @@ class SearchAspect
     /**
      * Create new SearchAspect instance.
      *
-     * @param  string $config
+     * @param  string  $config
      * @param  array  $keys
      * @return void
      */
@@ -62,7 +62,7 @@ class SearchAspect
     /**
      * Set icon.
      *
-     * @param  string $icon
+     * @param  string  $icon
      * @return $this
      */
     public function icon($icon)
@@ -79,7 +79,7 @@ class SearchAspect
     /**
      * Set description.
      *
-     * @param  string $description
+     * @param  string  $description
      * @return $this
      */
     public function description($description)
@@ -96,7 +96,7 @@ class SearchAspect
     /**
      * Set title.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return $this
      */
     public function title($title)

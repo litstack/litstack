@@ -9,7 +9,7 @@ trait FacadeNeedsLitInstalled
     /**
      * Resolve the facade root instance from the container.
      *
-     * @param  object|string $name
+     * @param  object|string  $name
      * @return mixed
      */
     protected static function resolveFacadeInstance($name)

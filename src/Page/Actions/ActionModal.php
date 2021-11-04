@@ -44,7 +44,7 @@ class ActionModal extends Component
     /**
      * Set modal message.
      *
-     * @param  string $message
+     * @param  string  $message
      * @return void
      */
     public function message($message)
@@ -55,7 +55,7 @@ class ActionModal extends Component
     /**
      * Set modal title.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return $this
      */
     public function title($title)
@@ -67,7 +67,7 @@ class ActionModal extends Component
      * Set modal size.
      * Possible sizes: sm, md, lg, xl.
      *
-     * @param  string $size
+     * @param  string  $size
      * @return void
      */
     public function size($size)
@@ -82,7 +82,7 @@ class ActionModal extends Component
     /**
      * Set confirm vairant.
      *
-     * @param  string $variant
+     * @param  string  $variant
      * @return $this
      */
     public function confirmVariant(string $variant)
@@ -93,7 +93,7 @@ class ActionModal extends Component
     /**
      * Set confirm text.
      *
-     * @param  string $text
+     * @param  string  $text
      * @return $this
      */
     public function confirmText($text)
@@ -115,7 +115,7 @@ class ActionModal extends Component
     /**
      * Set cancel button variant.
      *
-     * @param  string $variant
+     * @param  string  $variant
      * @return $this
      */
     public function cancelVariant(string $variant)
@@ -126,7 +126,7 @@ class ActionModal extends Component
     /**
      * Set cancel button text.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return $this
      */
     public function cancelText($title)
@@ -137,7 +137,7 @@ class ActionModal extends Component
     /**
      * Create modal form.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return $this
      */
     public function form(Closure $closure)

@@ -41,11 +41,10 @@ class BuilderSearch
     /**
      * Search relation or attribute.
      *
-     * @param Builder $query
-     * @param string  $attribute
-     * @param string  $searchTerm
-     * @param bool    $or
-     *
+     * @param  Builder  $query
+     * @param  string  $attribute
+     * @param  string  $searchTerm
+     * @param  bool  $or
      * @return void
      */
     protected function searchRelationOrAttribute($query, $attribute, $searchTerm, $or)
@@ -73,11 +72,10 @@ class BuilderSearch
     /**
      * Where related attribute like.
      *
-     * @param Builder $query
-     * @param string  $relationName
-     * @param string  $attribute
-     * @param mixed   $searchTerm
-     *
+     * @param  Builder  $query
+     * @param  string  $relationName
+     * @param  string  $attribute
+     * @param  mixed  $searchTerm
      * @return void
      */
     public function whereRelatedAttributeLike($query, $relationName, $attribute, $searchTerm, $or = false)
@@ -92,11 +90,10 @@ class BuilderSearch
     /**
      * Where attribute like.
      *
-     * @param Builder $query
-     * @param string  $attribute
-     * @param mixed   $searchTerm
-     * @param bool    $or
-     *
+     * @param  Builder  $query
+     * @param  string  $attribute
+     * @param  mixed  $searchTerm
+     * @param  bool  $or
      * @return void
      */
     public function whereAttributeLike($query, $attribute, $searchTerm, $or = true)

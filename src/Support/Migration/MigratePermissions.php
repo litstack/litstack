@@ -52,8 +52,8 @@ trait MigratePermissions
     /**
      * Combine operations and groups.
      *
-     * @param  array $operations
-     * @param  array $groups
+     * @param  array  $operations
+     * @param  array  $groups
      * @return void
      */
     public function combineOperationsAndGroups(array $operations, array $groups)

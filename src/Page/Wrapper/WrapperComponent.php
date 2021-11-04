@@ -29,7 +29,7 @@ class WrapperComponent extends Component
     /**
      * Set wrapper component.
      *
-     * @param  Component $component
+     * @param  Component  $component
      * @return $thi
      */
     public function wrapperComponent(Component $component)
@@ -40,7 +40,7 @@ class WrapperComponent extends Component
     /**
      * Add child component.
      *
-     * @param  mixed $name
+     * @param  mixed  $name
      * @return void
      */
     public function component($component)

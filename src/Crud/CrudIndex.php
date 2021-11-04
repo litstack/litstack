@@ -29,7 +29,7 @@ class CrudIndex extends Page
     /**
      * Create new CrudIndex instance.
      *
-     * @param ConfigHandler $config
+     * @param  ConfigHandler  $config
      */
     public function __construct(ConfigHandler $config)
     {
@@ -42,7 +42,7 @@ class CrudIndex extends Page
     /**
      * Get the current form.
      *
-     * @param  Request             $request
+     * @param  Request  $request
      * @return BaseForm|mixed|null
      */
     public function getForm(Request $request)
@@ -53,7 +53,7 @@ class CrudIndex extends Page
     /**
      * Bind the action to the CrudIndex page.
      *
-     * @param  ActionComponent $component
+     * @param  ActionComponent  $component
      * @return void
      */
     public function bindAction(ActionComponent $component)
@@ -84,7 +84,7 @@ class CrudIndex extends Page
     /**
      * Create CrudIndex table.
      *
-     * @param  Closure        $closure
+     * @param  Closure  $closure
      * @return CrudIndexTable
      */
     public function table(Closure $closure)
@@ -109,7 +109,7 @@ class CrudIndex extends Page
     /**
      * Create a new Info Card.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return void
      */
     public function info(string $title = '')

@@ -63,7 +63,7 @@ class LitstackServiceProvider extends ServiceProvider
     /**
      * Create a new LitstackServiceProvider instance.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application $app
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
     public function __construct(Application $app)
@@ -135,7 +135,7 @@ class LitstackServiceProvider extends ServiceProvider
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerInstallCommand($abstract)
@@ -148,7 +148,7 @@ class LitstackServiceProvider extends ServiceProvider
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerExtendCommand($abstract)

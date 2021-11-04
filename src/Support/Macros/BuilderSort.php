@@ -37,8 +37,7 @@ class BuilderSort
     /**
      * Set query builder instance.
      *
-     * @param Builder $query
-     *
+     * @param  Builder  $query
      * @return void
      */
     public function setQuery(Builder $query)
@@ -49,9 +48,8 @@ class BuilderSort
     /**
      * Apply sort to query builder.
      *
-     * @param string $column
-     * @param string $direction
-     *
+     * @param  string  $column
+     * @param  string  $direction
      * @return Builder
      */
     public function sort(string $column, string $direction): Builder
@@ -68,8 +66,7 @@ class BuilderSort
     /**
      * Contains column string related column.
      *
-     * @param string $column
-     *
+     * @param  string  $column
      * @return bool
      */
     protected function isRelatedColumn(string $column)
@@ -83,7 +80,7 @@ class BuilderSort
      * @param  string  $related
      * @param  string  $column
      * @param  string  $direction
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return Builder
      */
     protected function sortByRelation(

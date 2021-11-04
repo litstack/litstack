@@ -9,8 +9,8 @@ class FilterForm extends BaseForm
     /**
      * Create new BaseForm instance.
      *
-     * @param  string $filter
-     * @param  string $model
+     * @param  string  $filter
+     * @param  string  $model
      * @return void
      */
     public function __construct(string $filter, string $model = '')

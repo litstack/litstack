@@ -46,7 +46,7 @@ class RepeatableCommand extends GeneratorCommand
      *
      * Remove the base controller import if we are already in base namespace.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return string
      */
     protected function buildClass($name)
@@ -65,7 +65,7 @@ class RepeatableCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string $rootNamespace
+     * @param  string  $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
@@ -76,7 +76,7 @@ class RepeatableCommand extends GeneratorCommand
     /**
      * Parse the class name and format according to the root namespace.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return string
      */
     protected function qualifyClass($name)

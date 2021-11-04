@@ -11,7 +11,7 @@ trait ManagesBreadcrumb
     /**
      * Get the breadcrumb for the given config.
      *
-     * @param  ConfigHandler $config
+     * @param  ConfigHandler  $config
      * @return array
      */
     protected function getBreadcrumb(ConfigHandler $config, $withIndex = true)
@@ -40,7 +40,7 @@ trait ManagesBreadcrumb
     /**
      * Get parent detail view breadcrumb.
      *
-     * @param  ConfigHandler $parentConfig
+     * @param  ConfigHandler  $parentConfig
      * @return array
      */
     protected function parentShowBreadcrumb(ConfigHandler $parentConfig): array

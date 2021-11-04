@@ -66,8 +66,7 @@ trait InstallsVendorConfigs
     /**
      * Publish medialibrary.
      *
-     * @param array $migrationFiles
-     *
+     * @param  array  $migrationFiles
      * @return void
      */
     protected function vendorMediaLibrary($migrationFiles)

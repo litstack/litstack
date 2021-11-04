@@ -81,7 +81,7 @@ abstract class CrudConfig
     /**
      * Get route suffix for the given form name.
      *
-     * @param  string $formName
+     * @param  string  $formName
      * @return string
      */
     public function getRouteSuffix(string $formName)
@@ -132,7 +132,7 @@ abstract class CrudConfig
     /**
      * Set model instance.
      *
-     * @param  Model $model
+     * @param  Model  $model
      * @return void
      */
     public function setModelInstance(Model $model)
@@ -238,7 +238,7 @@ abstract class CrudConfig
     /**
      * Get create button text.
      *
-     * @param  ConfigHandler $config
+     * @param  ConfigHandler  $config
      * @return string
      */
     protected function createButtonText()
@@ -251,7 +251,7 @@ abstract class CrudConfig
     /**
      * Index component.
      *
-     * @param  Component $component
+     * @param  Component  $component
      * @return void
      */
     public function indexComponent($component)
@@ -262,7 +262,7 @@ abstract class CrudConfig
     /**
      * Form component.
      *
-     * @param  Component $component
+     * @param  Component  $component
      * @return void
      */
     public function formComponent($component)

@@ -7,8 +7,7 @@ trait FieldHasPlaceholder
     /**
      * Set placeholder.
      *
-     * @param string $placeholder
-     *
+     * @param  string  $placeholder
      * @return $this
      */
     public function placeholder(string $placeholder)

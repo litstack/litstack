@@ -26,8 +26,8 @@ class Event extends VueProp
     /**
      * Create new Event instance.
      *
-     * @param  string $event
-     * @param  string $handler
+     * @param  string  $event
+     * @param  string  $handler
      * @return void
      */
     public function __construct($name, $handler)
@@ -39,7 +39,7 @@ class Event extends VueProp
     /**
      * Determine wether the event is a file download.
      *
-     * @param  bool $isDownload
+     * @param  bool  $isDownload
      * @return bool
      */
     public function isFileDownload(bool $isDownload = true)

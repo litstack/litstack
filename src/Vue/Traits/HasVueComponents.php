@@ -16,7 +16,7 @@ trait HasVueComponents
     /**
      * Add Vue component to stack.
      *
-     * @param  \Ignite\Vue\Component|string $component
+     * @param  \Ignite\Vue\Component|string  $component
      * @return \Ignite\Vue\Component|mixed
      */
     public function component($component)
@@ -27,7 +27,7 @@ trait HasVueComponents
     /**
      * Prepend component to Slot.
      *
-     * @param  \Ignite\Vue\Component|string $component
+     * @param  \Ignite\Vue\Component|string  $component
      * @return \Ignite\Vue\Component
      */
     public function prependComponent($component)
@@ -53,7 +53,7 @@ trait HasVueComponents
     /**
      * Determines if component for the given name is registered.
      *
-     * @param  \Ignite\Vue\Component|string $name
+     * @param  \Ignite\Vue\Component|string  $name
      * @return bool
      */
     public function hasComponent($component)

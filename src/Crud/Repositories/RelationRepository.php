@@ -29,8 +29,8 @@ class RelationRepository extends BaseFieldRepository
     /**
      * Load selectable relations.
      *
-     * @param  CrudReadRequest $request
-     * @param  mixed           $model
+     * @param  CrudReadRequest  $request
+     * @param  mixed  $model
      * @return array
      */
     public function index(CrudReadRequest $request, $model)
@@ -48,8 +48,8 @@ class RelationRepository extends BaseFieldRepository
     /**
      * Load selected relations.
      *
-     * @param  CrudReadRequest $request
-     * @param  mixed           $model
+     * @param  CrudReadRequest  $request
+     * @param  mixed  $model
      * @return void
      */
     public function load(CrudReadRequest $request, $model)
@@ -80,8 +80,8 @@ class RelationRepository extends BaseFieldRepository
     /**
      * Order relations.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
      * @return void
      */
     public function order(CrudUpdateRequest $request, $model)

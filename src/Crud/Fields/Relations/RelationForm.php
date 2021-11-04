@@ -26,8 +26,8 @@ class RelationForm extends BaseForm
     /**
      * Create new RelationForm instance.
      *
-     * @param  string               $model
-     * @param  LaravelRelationField $field
+     * @param  string  $model
+     * @param  LaravelRelationField  $field
      * @return void
      */
     public function __construct($model, LaravelRelationField $field)

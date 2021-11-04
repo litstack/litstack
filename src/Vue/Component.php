@@ -78,7 +78,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Create new Component instance.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return void
      */
     public function __construct(string $name)
@@ -111,7 +111,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Rendered lifecycle hook.
      *
-     * @param  array $rendered
+     * @param  array  $rendered
      * @return void
      */
     protected function rendered($rendered)
@@ -122,7 +122,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Add single prop.
      *
-     * @param  string $name
+     * @param  string  $name
      * @param  mixed  $value
      * @return self
      */
@@ -136,7 +136,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Bind multiple props.
      *
-     * @param  array $props
+     * @param  array  $props
      * @return self
      */
     public function bind(array $props)
@@ -151,7 +151,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Set dom prop.
      *
-     * @param  string $name
+     * @param  string  $name
      * @param  mixed  $value
      * @return string
      */
@@ -165,7 +165,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Get dom prop.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return mixed
      */
     public function getDomProp($name)
@@ -176,7 +176,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * The name of the slot, if this component is the child of another component.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return $this
      */
     public function slot($name)
@@ -199,7 +199,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Add child component.
      *
-     * @param  mixed $component
+     * @param  mixed  $component
      * @return $this
      */
     public function child($component)
@@ -222,7 +222,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Add content.
      *
-     * @param  string $content
+     * @param  string  $content
      * @return $this
      */
     public function content($content)
@@ -233,8 +233,8 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Add event handler.
      *
-     * @param  string $name
-     * @param  string $handler
+     * @param  string  $name
+     * @param  string  $handler
      * @return Event
      */
     public function on($name, $handler)
@@ -257,7 +257,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Gets event handler.
      *
-     * @param  string      $event
+     * @param  string  $event
      * @return string|null
      */
     public function getEventHandler($event)
@@ -268,7 +268,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Set component class.
      *
-     * @param  string $value
+     * @param  string  $value
      * @return void
      */
     public function class(string $class)
@@ -313,7 +313,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Get prop by name.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return mixed
      */
     public function getProp($name)
@@ -334,7 +334,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Get component attribute.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return void
      */
     public function __get(string $name)
@@ -359,8 +359,9 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Check for missing required props.
      *
-     * @throws \Exception
      * @return bool
+     *
+     * @throws \Exception
      */
     public function checkComplete()
     {
@@ -378,7 +379,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Add dependency.
      *
-     * @param  FieldDependency $dependency
+     * @param  FieldDependency  $dependency
      * @return $this
      */
     public function addDependency(FieldDependency $dependency)
@@ -391,7 +392,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Set the object name that the component depends on.
      *
-     * @param  string $dependor
+     * @param  string  $dependor
      * @return $this
      */
     public function dependsOn($dependor)
@@ -441,7 +442,7 @@ class Component extends VueProp implements AuthorizableContract
     /**
      * Call component method.
      *
-     * @param  string $method
+     * @param  string  $method
      * @param  array  $params
      * @return mixed
      */

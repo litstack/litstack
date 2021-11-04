@@ -14,12 +14,11 @@ class AreaLoader extends ChartLoader
     /**
      * Make series.
      *
-     * @param CarbonInterface $startTime
-     * @param int             $iterations
-     * @param Closure         $timeResolver
-     * @param Closure         $valueResolver
-     * @param Closure         $labelResolver
-     *
+     * @param  CarbonInterface  $startTime
+     * @param  int  $iterations
+     * @param  Closure  $timeResolver
+     * @param  Closure  $valueResolver
+     * @param  Closure  $labelResolver
      * @return array
      */
     protected function makeSeries(

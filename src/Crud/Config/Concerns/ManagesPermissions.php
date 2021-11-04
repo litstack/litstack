@@ -14,7 +14,7 @@ trait ManagesPermissions
     /**
      * Determines wether the config has permission for the given operation.
      *
-     * @param  string $operation
+     * @param  string  $operation
      * @return bool
      */
     public function can($operation)

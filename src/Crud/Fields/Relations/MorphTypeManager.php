@@ -28,8 +28,7 @@ class MorphTypeManager
     /**
      * Add morph type.
      *
-     * @param string $model
-     *
+     * @param  string  $model
      * @return void
      */
     public function to(string $model)

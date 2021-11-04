@@ -23,7 +23,7 @@ class Navigation extends VueProp
     /**
      * Create new Navigation instance.
      *
-     * @param  PresetFactory $factory
+     * @param  PresetFactory  $factory
      * @return void
      */
     public function __construct(PresetFactory $factory)
@@ -34,7 +34,7 @@ class Navigation extends VueProp
     /**
      * Navigation title.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return Title
      */
     public function title(string $title)
@@ -45,8 +45,8 @@ class Navigation extends VueProp
     /**
      * Navigation group.
      *
-     * @param  string|array $title
-     * @param  array        $children
+     * @param  string|array  $title
+     * @param  array  $children
      * @return Group
      */
     public function group($title, array $children = [])
@@ -67,8 +67,8 @@ class Navigation extends VueProp
     /**
      * Navigation entry.
      *
-     * @param  string|array $title
-     * @param  array        $params
+     * @param  string|array  $title
+     * @param  array  $params
      * @return Entry
      */
     public function entry($title, array $params = [])
@@ -89,7 +89,7 @@ class Navigation extends VueProp
     /**
      * Navigation entry preset.
      *
-     * @param  string $name
+     * @param  string  $name
      * @param  array  $params
      * @return array
      */
@@ -103,7 +103,7 @@ class Navigation extends VueProp
     /**
      * Add navigation section.
      *
-     * @param  array $entries
+     * @param  array  $entries
      * @return void
      */
     public function section(array $entries)
@@ -121,7 +121,7 @@ class Navigation extends VueProp
     /**
      * Authorize navigation entry.
      *
-     * @param  array $params
+     * @param  array  $params
      * @return bool
      */
     protected function authorize(array $params)

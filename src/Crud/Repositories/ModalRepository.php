@@ -28,9 +28,8 @@ class ModalRepository extends BaseFieldRepository
     /**
      * Update model form.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     *
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
      * @return void
      */
     public function update(CrudUpdateRequest $request, $model, $payload)
@@ -54,7 +53,7 @@ class ModalRepository extends BaseFieldRepository
     /**
      * Get child field for relation fields.
      *
-     * @param  Request $request
+     * @param  Request  $request
      * @param  string  $field_id
      * @return Field
      */
@@ -67,8 +66,8 @@ class ModalRepository extends BaseFieldRepository
     /**
      * Get repeatable model.
      *
-     * @param  Request    $request
-     * @param  mixed      $model
+     * @param  Request  $request
+     * @param  mixed  $model
      * @return Repeatable
      */
     public function getModel(Request $request, $model, $childRepository)

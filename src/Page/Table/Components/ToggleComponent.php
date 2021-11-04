@@ -7,7 +7,7 @@ class ToggleComponent extends ColumnComponent
     /**
      * Set route prefix.
      *
-     * @param  string $routePrefix
+     * @param  string  $routePrefix
      * @return $this
      */
     public function routePrefix($routePrefix)

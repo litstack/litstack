@@ -40,8 +40,8 @@ abstract class BasePage implements Page
     /**
      * Extend the page.
      *
-     * @param  string $alias
-     * @param         $name
+     * @param  string  $alias
+     * @param  $name
      * @return void
      */
     public function extend($alias, $name = null)
@@ -58,7 +58,7 @@ abstract class BasePage implements Page
     /**
      * Add Vue component to stack.
      *
-     * @param  \Ignite\Vue\Component|string $component
+     * @param  \Ignite\Vue\Component|string  $component
      * @return \Ignite\Vue\Component|mixed
      */
     public function component($component)
@@ -77,8 +77,8 @@ abstract class BasePage implements Page
     /**
      * Bind view to page.
      *
-     * @param  string|View    $view
-     * @param  array          $data
+     * @param  string|View  $view
+     * @param  array  $data
      * @return BladeComponent
      */
     public function view($view, array $data = [])
@@ -105,8 +105,8 @@ abstract class BasePage implements Page
     /**
      * Bind livewire component to page.
      *
-     * @param  string         $component
-     * @param  array          $data
+     * @param  string  $component
+     * @param  array  $data
      * @return BladeComponent
      */
     public function livewire($component, $data = [])
@@ -120,7 +120,7 @@ abstract class BasePage implements Page
     /**
      * Bind data to Vue components and Blade views.
      *
-     * @param  array $data
+     * @param  array  $data
      * @return $this
      */
     public function bind(array $data)
@@ -134,7 +134,7 @@ abstract class BasePage implements Page
     /**
      * Bind data to view.
      *
-     * @param  array $data
+     * @param  array  $data
      * @return void
      */
     public function bindToView(array $data)
@@ -147,7 +147,7 @@ abstract class BasePage implements Page
     /**
      * Bind props to page child Vue components.
      *
-     * @param  array $props
+     * @param  array  $props
      * @return $this
      */
     public function bindToVue(array $props)
@@ -160,7 +160,7 @@ abstract class BasePage implements Page
     /**
      * Bind a single prop to the page's Vue components.
      *
-     * @param  string $name
+     * @param  string  $name
      * @param  mixed  $value
      * @return $this
      */
@@ -191,8 +191,9 @@ abstract class BasePage implements Page
     /**
      * Get attribute by name.
      *
-     * @param  string                   $name
+     * @param  string  $name
      * @return mixed
+     *
      * @throws InvalidArgumentException
      */
     public function __get($name)
@@ -207,7 +208,7 @@ abstract class BasePage implements Page
     /**
      * Set attribute value.
      *
-     * @param  string $attribute
+     * @param  string  $attribute
      * @param  mixed  $value
      * @return void
      */

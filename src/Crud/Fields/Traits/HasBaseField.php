@@ -53,8 +53,7 @@ trait HasBaseField
     /**
      * Set field title.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function title(string $title)
@@ -71,7 +70,7 @@ trait HasBaseField
     /**
      * Set field description.
      *
-     * @param  string $info
+     * @param  string  $info
      * @return $this
      */
     public function info(string $info)
@@ -84,11 +83,10 @@ trait HasBaseField
     /**
      * Set hint.
      *
-     * @param string $hint
+     * @param  string  $hint
+     * @return $this
      *
      * @throws \InvalidArgumentException
-     *
-     * @return $this
      */
     public function hint(string $hint)
     {
@@ -109,8 +107,7 @@ trait HasBaseField
     /**
      * Set storable.
      *
-     * @param bool $storable
-     *
+     * @param  bool  $storable
      * @return $this
      */
     public function storable(bool $storable = true)
@@ -123,8 +120,7 @@ trait HasBaseField
     /**
      * Set width columns or raito.
      *
-     * @param int|float $width
-     *
+     * @param  int|float  $width
      * @return $this
      */
     public function width($width)

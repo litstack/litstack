@@ -106,8 +106,7 @@ class FrontendTestCase extends OrchestraDuskTestCase
     /**
      * Get package provider.
      *
-     * @param Application $app
-     *
+     * @param  Application  $app
      * @return array
      */
     protected function getPackageProviders($app)
@@ -145,7 +144,8 @@ class FrontendTestCase extends OrchestraDuskTestCase
     /**
      * Determine the application's base URL.
      *
-     * @var    string
+     * @var string
+     *
      * @return string
      */
     protected function baseUrl()

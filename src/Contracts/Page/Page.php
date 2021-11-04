@@ -7,7 +7,7 @@ interface Page
     /**
      * Add Blade View to page.
      *
-     * @param  string $view
+     * @param  string  $view
      * @return void
      */
     public function view($view);
@@ -15,7 +15,7 @@ interface Page
     /**
      * Adds Vue component to page.
      *
-     * @param  string                $name
+     * @param  string  $name
      * @return \Ignite\Vue\Component
      */
     public function component($name);
@@ -23,7 +23,7 @@ interface Page
     /**
      * Binds data to Vue components and Blade Views.
      *
-     * @param  array $data
+     * @param  array  $data
      * @return void
      */
     public function bind(array $data);
@@ -31,7 +31,7 @@ interface Page
     /**
      * Binds data to Blade Views.
      *
-     * @param  array $data
+     * @param  array  $data
      * @return void
      */
     public function bindToView(array $data);
@@ -39,7 +39,7 @@ interface Page
     /**
      * Bind props to Vue components.
      *
-     * @param  array $props
+     * @param  array  $props
      * @return void
      */
     public function bindToVue(array $props);

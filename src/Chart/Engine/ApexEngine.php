@@ -16,9 +16,8 @@ class ApexEngine extends ChartEngine
     /**
      * Render chart by type.
      *
-     * @param array    $names
-     * @param ChartSet $set
-     *
+     * @param  array  $names
+     * @param  ChartSet  $set
      * @return array
      */
     public function render(array $names, ChartSet $set)

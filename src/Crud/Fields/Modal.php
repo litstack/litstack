@@ -40,7 +40,7 @@ class Modal extends BaseField implements Formable
     /**
      * Set button component.
      *
-     * @param  string $component
+     * @param  string  $component
      * @return $this
      */
     public function buttonComponent($component)
@@ -53,8 +53,7 @@ class Modal extends BaseField implements Formable
     /**
      * Set modal preview.
      *
-     * @param string $variant
-     *
+     * @param  string  $variant
      * @return $this
      */
     public function preview(string $preview)
@@ -67,8 +66,7 @@ class Modal extends BaseField implements Formable
     /**
      * Set modal variant.
      *
-     * @param string $variant
-     *
+     * @param  string  $variant
      * @return $this
      */
     public function variant(string $variant)
@@ -81,8 +79,7 @@ class Modal extends BaseField implements Formable
     /**
      * Set modal name.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return $this
      */
     public function name(string $name)
@@ -95,8 +92,7 @@ class Modal extends BaseField implements Formable
     /**
      * Set modal window size.
      *
-     * @param string $size
-     *
+     * @param  string  $size
      * @return $this
      */
     public function size(string $size)
@@ -109,8 +105,7 @@ class Modal extends BaseField implements Formable
     /**
      * Set confirmWithPassword.
      *
-     * @param bool $confirmWithPassword
-     *
+     * @param  bool  $confirmWithPassword
      * @return $this
      */
     public function confirmWithPassword(bool $confirmWithPassword = true)
@@ -123,8 +118,7 @@ class Modal extends BaseField implements Formable
     /**
      * Add form to modal.
      *
-     * @param Closure $closure
-     *
+     * @param  Closure  $closure
      * @return void
      */
     public function form(Closure $closure)

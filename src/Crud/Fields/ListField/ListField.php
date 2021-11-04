@@ -56,8 +56,7 @@ class ListField extends RelationField
     /**
      * Preview title.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function previewTitle(string $title)
@@ -70,8 +69,7 @@ class ListField extends RelationField
     /**
      * Set max deth.
      *
-     * @param int $depth
-     *
+     * @param  int  $depth
      * @return $this
      */
     public function maxDepth(int $depth)
@@ -84,7 +82,7 @@ class ListField extends RelationField
     /**
      * Add authorize closure.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return $this
      */
     public function authorizeItem(Closure $closure)
@@ -97,7 +95,7 @@ class ListField extends RelationField
     /**
      * Determines if the given item is authorized.
      *
-     * @param  ListItem $item
+     * @param  ListItem  $item
      * @return bool
      */
     public function itemAuthorized(ListItem $item = null, $operation)
@@ -112,8 +110,7 @@ class ListField extends RelationField
     /**
      * Add form to modal.
      *
-     * @param Closure $closure
-     *
+     * @param  Closure  $closure
      * @return void
      */
     public function form(Closure $closure)
@@ -141,9 +138,8 @@ class ListField extends RelationField
     /**
      * Get relation query for model.
      *
-     * @param mixed $model
-     * @param bool  $query
-     *
+     * @param  mixed  $model
+     * @param  bool  $query
      * @return mixed
      */
     public function getRelationQuery($model)

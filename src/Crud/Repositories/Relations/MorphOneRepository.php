@@ -30,8 +30,8 @@ class MorphOneRepository extends RelationRepository
     /**
      * Create new MorphOne relation.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
      * @return void
      */
     public function create(CrudUpdateRequest $request, $model)
@@ -44,8 +44,8 @@ class MorphOneRepository extends RelationRepository
     /**
      * Link two models.
      *
-     * @param  Model $model
-     * @param  Model $related
+     * @param  Model  $model
+     * @param  Model  $related
      * @return void
      */
     public function link(Model $model, Model $related)
@@ -71,8 +71,8 @@ class MorphOneRepository extends RelationRepository
     /**
      * Remove MorphOne relation.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)

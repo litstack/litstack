@@ -10,7 +10,7 @@ trait TranslatableField
     /**
      * Set field translatable.
      *
-     * @param  bool $translatable
+     * @param  bool  $translatable
      * @return self
      */
     public function translatable(bool $translatable = true)

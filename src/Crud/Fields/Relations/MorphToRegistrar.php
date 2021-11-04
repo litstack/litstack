@@ -39,8 +39,7 @@ class MorphToRegistrar extends LaravelRelationField
     /**
      * Add morph types.
      *
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return self
      */
     public function morphTypes(Closure $closure)
@@ -72,8 +71,7 @@ class MorphToRegistrar extends LaravelRelationField
     /**
      * Build relation index table.
      *
-     * @param Closure $closure
-     *
+     * @param  Closure  $closure
      * @return void
      */
     public function preview(Closure $closure)

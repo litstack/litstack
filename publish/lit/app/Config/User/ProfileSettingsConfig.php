@@ -52,7 +52,7 @@ class ProfileSettingsConfig extends CrudConfig
     /**
      * Setup create and edit form.
      *
-     * @param  \Ignite\Crud\CrudShow $page
+     * @param  \Ignite\Crud\CrudShow  $page
      * @return void
      */
     public function show(CrudShow $page)

@@ -19,8 +19,8 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
     /**
      * Create new GeneratorCommand instance.
      *
-     * @param  Filesystem $files
-     * @param  Litstack   $litstack
+     * @param  Filesystem  $files
+     * @param  Litstack  $litstack
      * @return void
      */
     public function __construct(Filesystem $files, Litstack $litstack)
@@ -43,7 +43,7 @@ abstract class GeneratorCommand extends LaravelGeneratorCommand
     /**
      * Get the destination class path.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return string
      */
     protected function getPath($name)

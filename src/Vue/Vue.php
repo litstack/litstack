@@ -17,8 +17,8 @@ class Vue implements VueContract
     /**
      * Regsiter component for the given name.
      *
-     * @param  string         $name
-     * @param  Closure|string $component
+     * @param  string  $name
+     * @param  Closure|string  $component
      * @return $this
      */
     public function component($name, $component)
@@ -35,7 +35,7 @@ class Vue implements VueContract
     /**
      * Determines if a component is registered.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return bool
      */
     public function has($name)
@@ -46,7 +46,7 @@ class Vue implements VueContract
     /**
      * Create component instance from name.
      *
-     * @param  string          $name
+     * @param  string  $name
      * @return Component|mixed
      */
     public function make($name)

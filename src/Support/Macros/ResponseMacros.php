@@ -34,10 +34,10 @@ class ResponseMacros
     /**
      * Returns JsonResponse with variant "success".
      *
-     * @param  string       $message
-     * @param  int          $status
-     * @param  array        $headers
-     * @param  int          $options
+     * @param  string  $message
+     * @param  int  $status
+     * @param  array  $headers
+     * @param  int  $options
      * @return JsonResponse
      */
     protected function success($message, $status = 200, array $headers = [], $options = 0)
@@ -50,10 +50,10 @@ class ResponseMacros
     /**
      * Returns JsonResponse with variant "info".
      *
-     * @param  string       $message
-     * @param  int          $status
-     * @param  array        $headers
-     * @param  int          $options
+     * @param  string  $message
+     * @param  int  $status
+     * @param  array  $headers
+     * @param  int  $options
      * @return JsonResponse
      */
     protected function info($message, $status = 200, array $headers = [], $options = 0)
@@ -66,10 +66,10 @@ class ResponseMacros
     /**
      * Returns JsonResponse with variant "warning".
      *
-     * @param  string       $message
-     * @param  int          $status
-     * @param  array        $headers
-     * @param  int          $options
+     * @param  string  $message
+     * @param  int  $status
+     * @param  array  $headers
+     * @param  int  $options
      * @return JsonResponse
      */
     protected function warning($message, $status = 200, array $headers = [], $options = 0)
@@ -82,10 +82,10 @@ class ResponseMacros
     /**
      * Returns JsonResponse with variant "danger".
      *
-     * @param  string       $message
-     * @param  int          $status
-     * @param  array        $headers
-     * @param  int          $options
+     * @param  string  $message
+     * @param  int  $status
+     * @param  array  $headers
+     * @param  int  $options
      * @return JsonResponse
      */
     protected function danger($message, $status = 405, array $headers = [], $options = 0)

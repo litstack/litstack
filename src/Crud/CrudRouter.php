@@ -46,9 +46,9 @@ class CrudRouter
      * Create new CrudRouter instance.
      *
      * @param  LaravelRouter  $router
-     * @param  LitstackRouter $litstackRouter
+     * @param  LitstackRouter  $litstackRouter
      * @param  PresetFactory  $nav
-     * @param  Litstack       $litstack
+     * @param  Litstack  $litstack
      * @return void
      */
     public function __construct(LaravelRouter $router, LitstackRouter $litstackRouter, PresetFactory $nav, Litstack $litstack)
@@ -62,7 +62,7 @@ class CrudRouter
     /**
      * Generate crud routes for the given config.
      *
-     * @param  ConfigHandler $config
+     * @param  ConfigHandler  $config
      * @return void
      */
     public function routes(ConfigHandler $config)
@@ -85,7 +85,7 @@ class CrudRouter
     /**
      * Generate form routes.
      *
-     * @param  ConfigHandler $config
+     * @param  ConfigHandler  $config
      * @return void
      */
     public function formRoutes(ConfigHandler $config)
@@ -108,7 +108,7 @@ class CrudRouter
     /**
      * Get route attribute.
      *
-     * @param  ConfigHandler $config
+     * @param  ConfigHandler  $config
      * @return string
      */
     protected function getRouteAttribute(ConfigHandler $config)
@@ -119,7 +119,7 @@ class CrudRouter
     /**
      * Make form routes.
      *
-     * @param  ConfigHandler $config
+     * @param  ConfigHandler  $config
      * @return void
      */
     protected function makeFormRoutes(ConfigHandler $config)
@@ -130,7 +130,7 @@ class CrudRouter
     /**
      * Make crud routes.
      *
-     * @param  ConfigHandler $config
+     * @param  ConfigHandler  $config
      * @return void
      */
     public function makeCrudRoutes(ConfigHandler $config)
@@ -167,8 +167,8 @@ class CrudRouter
     /**
      * Make update routes.
      *
-     * @param  ConfigHandler $config
-     * @param  string        $method
+     * @param  ConfigHandler  $config
+     * @param  string  $method
      * @return void
      */
     public function makeUpdateRoutes(ConfigHandler $config, $method = 'show')
@@ -187,8 +187,8 @@ class CrudRouter
     /**
      * Make crud create routes.
      *
-     * @param  ConfigHandler $config
-     * @param  string        $method
+     * @param  ConfigHandler  $config
+     * @param  string  $method
      * @return void
      */
     protected function makeCreateRoutes(ConfigHandler $config, $method = 'show')
@@ -207,7 +207,7 @@ class CrudRouter
     /**
      * Make field routes.
      *
-     * @param  ConfigHandler $config
+     * @param  ConfigHandler  $config
      * @return void
      */
     protected function makeFieldRoutes(ConfigHandler $config)
@@ -226,7 +226,7 @@ class CrudRouter
     /**
      * Set the navigation preset for the given crud config.
      *
-     * @param  ConfigHandler $config
+     * @param  ConfigHandler  $config
      * @return void
      */
     protected function setNavigationPreset(ConfigHandler $config, Closure $title)
@@ -251,7 +251,7 @@ class CrudRouter
     /**
      * Get config navigation preset keys.
      *
-     * @param  ConfigHandler $config
+     * @param  ConfigHandler  $config
      * @return void
      */
     protected function getNavigationPresetKeys(ConfigHandler $config)

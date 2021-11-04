@@ -22,8 +22,8 @@ class ListRepository extends BaseFieldRepository
     /**
      * Load list items for model.
      *
-     * @param  CrudReadRequest $request
-     * @param  mixed           $model
+     * @param  CrudReadRequest  $request
+     * @param  mixed  $model
      * @return CrudJs
      */
     public function index(CrudReadRequest $request, $model)
@@ -38,9 +38,9 @@ class ListRepository extends BaseFieldRepository
     /**
      * Update list item.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
-     * @param  object            $payload
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
+     * @param  object  $payload
      * @return CrudJs
      */
     public function update(CrudUpdateRequest $request, $model, $payload)
@@ -65,9 +65,9 @@ class ListRepository extends BaseFieldRepository
     /**
      * Send new list item model.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
-     * @param  object            $payload
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
+     * @param  object  $payload
      * @return CrudJs
      */
     public function create(CrudUpdateRequest $request, $model, $payload)
@@ -91,9 +91,9 @@ class ListRepository extends BaseFieldRepository
     /**
      * Store new list item to database.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
-     * @param  object            $payload
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
+     * @param  object  $payload
      * @return CrudJs
      */
     public function store(CrudUpdateRequest $request, $model, $payload)
@@ -144,7 +144,7 @@ class ListRepository extends BaseFieldRepository
     /**
      * Destory list item.
      *
-     * @param  CrudReadRequest $request
+     * @param  CrudReadRequest  $request
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model, $payload)
@@ -155,9 +155,9 @@ class ListRepository extends BaseFieldRepository
     /**
      * Order list.
      *
-     * @param  CrudUpdateRequest $request
-     * @param  mixed             $model
-     * @param  object            $payload
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
+     * @param  object  $payload
      * @return void
      */
     public function order(CrudUpdateRequest $request, $model, $payload)
@@ -202,7 +202,7 @@ class ListRepository extends BaseFieldRepository
     /**
      * Get child field.
      *
-     * @param  string     $field_id
+     * @param  string  $field_id
      * @return Field|null
      */
     public function getField($field_id)
@@ -214,7 +214,7 @@ class ListRepository extends BaseFieldRepository
      * Get list item model.
      *
      * @param  Request  $request
-     * @param  mixed    $model
+     * @param  mixed  $model
      * @return ListItem
      */
     public function getModel(Request $request, $model)
@@ -225,7 +225,7 @@ class ListRepository extends BaseFieldRepository
     /**
      * Get list item.
      *
-     * @param  string|int $id
+     * @param  string|int  $id
      * @return ListItem
      */
     protected function getListItem($model, $id)
@@ -236,7 +236,7 @@ class ListRepository extends BaseFieldRepository
     /**
      * Get parent by id.
      *
-     * @param  string|int $parentId
+     * @param  string|int  $parentId
      * @return ListItem
      */
     protected function getParent($model, $parentId = 0)
@@ -267,7 +267,7 @@ class ListRepository extends BaseFieldRepository
     /**
      * Checks authorized.
      *
-     * @param  ListItem $item
+     * @param  ListItem  $item
      * @return void
      */
     protected function checkAuthorized(ListItem $item = null, $operation)

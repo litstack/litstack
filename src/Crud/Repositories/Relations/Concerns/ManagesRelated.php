@@ -10,7 +10,7 @@ trait ManagesRelated
     /**
      * Get related model from request.
      *
-     * @param  Request $request
+     * @param  Request  $request
      * @return mixed
      */
     protected function getRelated(Request $request, $model)
@@ -21,7 +21,7 @@ trait ManagesRelated
     /**
      * Get related model from request and delete if it should be deleted.
      *
-     * @param  Request $request
+     * @param  Request  $request
      * @return mixed
      */
     public function getRelatedOrDelete(Request $request, $model)
@@ -35,8 +35,8 @@ trait ManagesRelated
     /**
      * Delete the related model if.
      *
-     * @param  Request    $request
-     * @param  Model      $model
+     * @param  Request  $request
+     * @param  Model  $model
      * @return void|Model
      */
     protected function deleteIfDesired(Request $request, Model $related)
@@ -51,7 +51,7 @@ trait ManagesRelated
     /**
      * Check if max items are reached.
      *
-     * @param  mixed $model
+     * @param  mixed  $model
      * @return void
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException

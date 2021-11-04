@@ -24,8 +24,8 @@ class RouteCollectionResolver
     /**
      * Register a new collection resolver.
      *
-     * @param  string   $id
-     * @param  \Closure $resolver
+     * @param  string  $id
+     * @param  \Closure  $resolver
      * @return void
      */
     public function register($id, Closure $resolver)
@@ -38,7 +38,7 @@ class RouteCollectionResolver
     /**
      * Resolve an collection instance by id.
      *
-     * @param  string          $id
+     * @param  string  $id
      * @return RouteCollection
      *
      * @throws \InvalidArgumentException

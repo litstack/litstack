@@ -12,7 +12,7 @@ trait AuthorizeController
     /**
      * Check authorize method in controller.
      *
-     * @param  Request $request
+     * @param  Request  $request
      * @param  string  $operation
      * @return bool
      */
@@ -49,7 +49,7 @@ trait AuthorizeController
     /**
      * Get CRUD controller for the given request.
      *
-     * @param  Request $request
+     * @param  Request  $request
      * @return string
      */
     protected function getCrudController(Request $request)

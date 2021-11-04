@@ -37,8 +37,8 @@ class ConfigLoader
     /**
      * Register config factory for the given dependency.
      *
-     * @param  string $dependency
-     * @param  string $factory
+     * @param  string  $dependency
+     * @param  string  $factory
      * @return $this
      */
     public function factory($dependency, $factory)
@@ -79,7 +79,7 @@ class ConfigLoader
     /**
      * Is key namespace.
      *
-     * @param  string $key
+     * @param  string  $key
      * @return bool
      */
     protected function isKeyNamespace($key)
@@ -90,7 +90,7 @@ class ConfigLoader
     /**
      * Is key path.
      *
-     * @param  string $key
+     * @param  string  $key
      * @return bool
      */
     protected function isKeyPath($key)
@@ -101,7 +101,7 @@ class ConfigLoader
     /**
      * Get config by key.
      *
-     * @param  string $key
+     * @param  string  $key
      * @param  array  ...$params
      * @return mixed
      */
@@ -148,8 +148,8 @@ class ConfigLoader
     /**
      * Find factories by config depenecies.
      *
-     * @param  ConfigHandler $handler
-     * @param  mixed         $config
+     * @param  ConfigHandler  $handler
+     * @param  mixed  $config
      * @return void
      */
     protected function registerConfigFactories($handler, $config)
@@ -175,7 +175,7 @@ class ConfigLoader
     /**
      * Determines wheter a config for the given key has been loaded before.
      *
-     * @param  string $class
+     * @param  string  $class
      * @return bool
      */
     public function loaded($class)
@@ -190,7 +190,7 @@ class ConfigLoader
     /**
      * Determine if a key is a namespace.
      *
-     * @param  string $key
+     * @param  string  $key
      * @return bool
      */
     protected function isNamespace($key)
@@ -205,7 +205,7 @@ class ConfigLoader
     /**
      * Get namespace of config by key.
      *
-     * @param  string $key
+     * @param  string  $key
      * @return string
      */
     public function getNamespaceFromKey($key)
@@ -221,7 +221,7 @@ class ConfigLoader
     /**
      * Get config from path.
      *
-     * @param  string        $path
+     * @param  string  $path
      * @return ConfigHandler
      */
     public function getFromPath(string $path)
@@ -234,7 +234,7 @@ class ConfigLoader
     /**
      * Get path from key.
      *
-     * @param  string $key
+     * @param  string  $key
      * @return string
      */
     public function getPathFromKey(string $key)
@@ -249,7 +249,7 @@ class ConfigLoader
     /**
      * Get key from path.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return string
      */
     public function getKeyFromPath(string $path)
@@ -262,7 +262,7 @@ class ConfigLoader
     /**
      * Explode path.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return array
      */
     protected function explodePath(string $path)
@@ -278,7 +278,7 @@ class ConfigLoader
     /**
      * Get key from namespace.
      *
-     * @param  string $namespace
+     * @param  string  $namespace
      * @return string
      */
     public function getKeyFromNamespace(string $namespace)
@@ -291,7 +291,7 @@ class ConfigLoader
     /**
      * Check if config class exists.
      *
-     * @param  string $key
+     * @param  string  $key
      * @return bool
      */
     public function exists(string $key)

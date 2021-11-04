@@ -38,8 +38,8 @@ class Bootstrap
     /**
      * Make bootstrap badge.
      *
-     * @param  string $content
-     * @param  string $variant
+     * @param  string  $content
+     * @param  string  $variant
      * @return string
      */
     public static function badge($content, $variant = 'succcess')

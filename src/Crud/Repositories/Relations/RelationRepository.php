@@ -10,8 +10,8 @@ abstract class RelationRepository extends BaseFieldRepository
     /**
      * Link two models.
      *
-     * @param  Model $from
-     * @param  Model $to
+     * @param  Model  $from
+     * @param  Model  $to
      * @return void
      */
     abstract public function link(Model $from, Model $to);

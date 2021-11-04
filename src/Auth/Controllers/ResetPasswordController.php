@@ -46,7 +46,7 @@ class ResetPasswordController
      *
      * @see https://laravel.com/docs/8.x/passwords#password-reset-link-handling-the-form-submission
      *
-     * @param  \Illuminate\Http\Request          $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -90,7 +90,7 @@ class ResetPasswordController
      *
      * @see https://laravel.com/docs/8.x/passwords#password-reset-link-handling-the-form-submission
      *
-     * @param  \Illuminate\Http\Request          $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Illuminate\Validation\ValidationException

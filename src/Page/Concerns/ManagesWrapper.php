@@ -26,8 +26,8 @@ trait ManagesWrapper
     /**
      * Create a wrapper.
      *
-     * @param  string|Component $component
-     * @param  Closure          $closure
+     * @param  string|Component  $component
+     * @param  Closure  $closure
      * @return self
      */
     public function wrapper($component, Closure $closure)
@@ -71,7 +71,7 @@ trait ManagesWrapper
     /**
      * Get new wrapper.
      *
-     * @param  string|Component $component
+     * @param  string|Component  $component
      * @return component
      */
     protected function getNewWrapper($component)
@@ -87,8 +87,8 @@ trait ManagesWrapper
     /**
      * Create b-card wrapper.
      *
-     * @param  int         $cols
-     * @param  Closure     $closure
+     * @param  int  $cols
+     * @param  Closure  $closure
      * @return CardWrapper
      */
     public function card(Closure $closure)

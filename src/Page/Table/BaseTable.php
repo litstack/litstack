@@ -46,7 +46,7 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Create new Table instance.
      *
-     * @param ColumnBuilder $builder
+     * @param  ColumnBuilder  $builder
      */
     public function __construct(ColumnBuilder $builder)
     {
@@ -60,7 +60,7 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Set actions.
      *
-     * @param  array $actions
+     * @param  array  $actions
      * @return $this
      */
     public function setActions($actions)
@@ -73,8 +73,8 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Add action.
      *
-     * @param  string $title
-     * @param  string $action
+     * @param  string  $title
+     * @param  string  $action
      * @return $this
      */
     public function action($title, $action)
@@ -114,7 +114,7 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Set table route prefix.
      *
-     * @param  string $routePrefix
+     * @param  string  $routePrefix
      * @return $this
      */
     public function routePrefix(string $routePrefix)
@@ -127,7 +127,7 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Set singular name.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return $this
      */
     public function singularName($name)
@@ -140,7 +140,7 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Set plural name.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return void
      */
     public function pluralName($name)
@@ -153,7 +153,7 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Table card width.
      *
-     * @param  int|float $width
+     * @param  int|float  $width
      * @return $this
      */
     public function width($width)
@@ -166,7 +166,7 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Per page.
      *
-     * @param  int   $perPage
+     * @param  int  $perPage
      * @return $this
      */
     public function perPage(int $perPage)
@@ -179,7 +179,7 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Set sort by default.
      *
-     * @param  string $key
+     * @param  string  $key
      * @return $this
      */
     public function sortByDefault(string $attribute)
@@ -192,7 +192,7 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Set search keys.
      *
-     * @param  array $keys
+     * @param  array  $keys
      * @return $this
      */
     public function search(...$keys)
@@ -212,7 +212,7 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Set sortBy keys.
      *
-     * @param  array $sortBy
+     * @param  array  $sortBy
      * @return void
      */
     public function sortBy(...$keys)
@@ -231,7 +231,7 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Set table filters.
      *
-     * @param  array $filter
+     * @param  array  $filter
      * @return $this
      */
     public function filter(array $filter)
@@ -244,7 +244,7 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Set default filter.
      *
-     * @param  string ...$filter
+     * @param  string  ...$filter
      * @return $this
      */
     public function defaultFilter(...$filter)
@@ -280,7 +280,7 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Get attribute by name.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return mixed
      *
      * @throws InvalidArgumentException
@@ -297,7 +297,7 @@ class BaseTable extends VueProp implements TableContract
     /**
      * Set attribute value.
      *
-     * @param  string $attribute
+     * @param  string  $attribute
      * @param  mixed  $value
      * @return void
      */

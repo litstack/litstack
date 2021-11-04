@@ -100,7 +100,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerNavCommand($abstract)
@@ -113,7 +113,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerLivewireCommand($abstract)
@@ -126,7 +126,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerCastCommand($abstract)
@@ -147,7 +147,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerComponentCommand($abstract)
@@ -160,7 +160,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerJobCommand($abstract)
@@ -173,7 +173,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerRequestCommand($abstract)
@@ -186,7 +186,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerProviderCommand($abstract)
@@ -199,7 +199,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerResourceCommand($abstract)
@@ -212,7 +212,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerMiddlewareCommand($abstract)
@@ -225,7 +225,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerControllerCommand($abstract)

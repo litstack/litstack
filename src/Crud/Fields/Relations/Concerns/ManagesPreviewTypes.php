@@ -9,8 +9,7 @@ trait ManagesPreviewTypes
     /**
      * Relation Preview type.
      *
-     * @param string $type
-     *
+     * @param  string  $type
      * @return $this
      */
     public function type(string $type)

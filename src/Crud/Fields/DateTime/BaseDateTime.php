@@ -14,7 +14,7 @@ class BaseDateTime extends BaseField
     /**
      * Cast field value.
      *
-     * @param  mixed $value
+     * @param  mixed  $value
      * @return bool
      */
     public function castValue($value)
@@ -29,7 +29,7 @@ class BaseDateTime extends BaseField
     /**
      * Set mask.
      *
-     * @param  string $mask
+     * @param  string  $mask
      * @return $this
      */
     public function mask(string $mask = 'YYYY-MM-DD HH:mm:ss')
@@ -42,7 +42,7 @@ class BaseDateTime extends BaseField
     /**
      * Set timepicker minute interval.
      *
-     * @param  int   $interval
+     * @param  int  $interval
      * @return $this
      */
     public function minuteInterval(int $interval = 1)
@@ -55,7 +55,7 @@ class BaseDateTime extends BaseField
     /**
      * Set timepicker mode.
      *
-     * @param  int   $mode
+     * @param  int  $mode
      * @return $this
      */
     public function mode(string $mode)
@@ -68,7 +68,7 @@ class BaseDateTime extends BaseField
     /**
      * Set timepicker is24hr.
      *
-     * @param  int   $is24hr
+     * @param  int  $is24hr
      * @return $this
      */
     public function is24hr(bool $is24hr = true)
@@ -81,7 +81,7 @@ class BaseDateTime extends BaseField
     /**
      * Set timepicker inline.
      *
-     * @param  int   $inline
+     * @param  int  $inline
      * @return $this
      */
     public function inline(bool $inline = true)
@@ -94,7 +94,7 @@ class BaseDateTime extends BaseField
     /**
      * Expand timepicker.
      *
-     * @param  int   $expand
+     * @param  int  $expand
      * @return $this
      */
     public function expand(bool $expand = true)
@@ -107,7 +107,7 @@ class BaseDateTime extends BaseField
     /**
      * Trim weeks.
      *
-     * @param  int   $trimWeeks
+     * @param  int  $trimWeeks
      * @return $this
      */
     public function trimWeeks(bool $trimWeeks = true)
@@ -120,7 +120,7 @@ class BaseDateTime extends BaseField
     /**
      * Set rows.
      *
-     * @param  int   $rows
+     * @param  int  $rows
      * @return $this
      */
     public function rows(int $rows = 1)
@@ -133,7 +133,7 @@ class BaseDateTime extends BaseField
     /**
      * Set min date.
      *
-     * @param  int   $minDate
+     * @param  int  $minDate
      * @return $this
      */
     public function minDate(Carbon $minDate)
@@ -146,7 +146,7 @@ class BaseDateTime extends BaseField
     /**
      * Set max date.
      *
-     * @param  int   $maxDate
+     * @param  int  $maxDate
      * @return $this
      */
     public function maxDate(Carbon $maxDate)
@@ -159,7 +159,7 @@ class BaseDateTime extends BaseField
     /**
      * Set events.
      *
-     * @param  int   $events
+     * @param  int  $events
      * @return $this
      */
     public function events(array $events)
@@ -173,7 +173,8 @@ class BaseDateTime extends BaseField
      * Deprecated Set only date.
      *
      * @deprecated
-     * @param  bool $onlyDate
+     *
+     * @param  bool  $onlyDate
      * @return void
      */
     public function onlyDate(bool $onlyDate = true)
@@ -193,7 +194,8 @@ class BaseDateTime extends BaseField
      * Deprecated Set only time.
      *
      * @deprecated
-     * @param  bool $onlyDate
+     *
+     * @param  bool  $onlyDate
      * @return void
      */
     public function onlyTime(bool $onlyTime = true)
@@ -213,7 +215,8 @@ class BaseDateTime extends BaseField
      * Deprecated Set formatted.
      *
      * @deprecated
-     * @param  string $format
+     *
+     * @param  string  $format
      * @return $this
      */
     public function formatted(string $format)

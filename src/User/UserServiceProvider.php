@@ -55,7 +55,7 @@ class UserServiceProvider extends LaravelServiceProvider
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerAdminCommand($abstract)
@@ -68,7 +68,7 @@ class UserServiceProvider extends LaravelServiceProvider
     /**
      * Register the command.
      *
-     * @param  string $abstract
+     * @param  string  $abstract
      * @return void
      */
     protected function registerUserCommand($abstract)

@@ -11,7 +11,7 @@ class AttributeBag implements Arrayable
     /**
      * Create new AttributeBag instance.
      *
-     * @param array $attributes
+     * @param  array  $attributes
      */
     public function __construct(array $attributes = [])
     {
@@ -21,7 +21,7 @@ class AttributeBag implements Arrayable
     /**
      * Determines if bag has attribute with the given name.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return bool
      */
     public function has($name)
@@ -42,7 +42,7 @@ class AttributeBag implements Arrayable
     /**
      * Get attribute by name.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return mixed
      */
     public function __get($name)

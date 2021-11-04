@@ -30,8 +30,7 @@ class Component extends Field
     /**
      * Set component.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return void
      */
     public function setComponent(string $name)
@@ -53,12 +52,11 @@ class Component extends Field
     /**
      * Call field method.
      *
-     * @param string $method
-     * @param array  $params
+     * @param  string  $method
+     * @param  array  $params
+     * @return static|void
      *
      * @throws \Ignite\Exceptions\MethodNotFoundException
-     *
-     * @return static|void
      */
     public function __call($method, $params = [])
     {

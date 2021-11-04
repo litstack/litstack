@@ -11,7 +11,7 @@ class Entry extends NavigationItem
     /**
      * Create new Title instance.
      *
-     * @param  string $title
+     * @param  string  $title
      * @param  array  $options
      * @return void
      */
@@ -24,7 +24,7 @@ class Entry extends NavigationItem
     /**
      * Set entry title.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return $this
      */
     public function title($title)
@@ -37,7 +37,7 @@ class Entry extends NavigationItem
     /**
      * Set entry icon.
      *
-     * @param  string $title
+     * @param  string  $title
      * @return $this
      */
     public function icon($icon)
@@ -50,7 +50,7 @@ class Entry extends NavigationItem
     /**
      * Set authorize closure.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return $this
      */
     public function authorize(Closure $closure)

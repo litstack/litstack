@@ -15,12 +15,11 @@ abstract class ChartLoader
     /**
      * Make series.
      *
-     * @param CarbonInterface $startTime
-     * @param int             $iterations
-     * @param Closure         $timeResolver
-     * @param Closure         $valueResolver
-     * @param Closure         $labelResolver
-     *
+     * @param  CarbonInterface  $startTime
+     * @param  int  $iterations
+     * @param  Closure  $timeResolver
+     * @param  Closure  $valueResolver
+     * @param  Closure  $labelResolver
      * @return array
      */
     abstract protected function makeSeries(
@@ -34,8 +33,8 @@ abstract class ChartLoader
     /**
      * Create new DonutLoader instance.
      *
-     * @param \Ignite\Config\ConfigHandler   $config
-     * @param \Ignite\Chart\Contracts\Engine $engine
+     * @param  \Ignite\Config\ConfigHandler  $config
+     * @param  \Ignite\Chart\Contracts\Engine  $engine
      */
     public function __construct(ConfigHandler $config, Engine $engine)
     {

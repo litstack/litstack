@@ -13,8 +13,8 @@ class CrudConfigFactory extends ConfigFactory
     /**
      * Get names.
      *
-     * @param  ConfigHandler $config
-     * @param  Closure       $method
+     * @param  ConfigHandler  $config
+     * @param  Closure  $method
      * @return array
      */
     public function names(ConfigHandler $config, Closure $method)
@@ -25,8 +25,8 @@ class CrudConfigFactory extends ConfigFactory
     /**
      * Make route prefix.
      *
-     * @param  \Ignite\Config\ConfigHandler $config
-     * @param  Closure                      $method
+     * @param  \Ignite\Config\ConfigHandler  $config
+     * @param  Closure  $method
      * @return string
      */
     public function routePrefix(ConfigHandler $config, Closure $method)
@@ -53,7 +53,7 @@ class CrudConfigFactory extends ConfigFactory
      * Fill current parameter values to route prefix.
      *
      * @param  $prefix
-     * @param  Route $route
+     * @param  Route  $route
      * @return void
      */
     protected function fillParametersToRoutePrefix(&$prefix, Route $route)

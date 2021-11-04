@@ -29,9 +29,8 @@ class ManyRelationRepository extends RelationRepository
     /**
      * Create new manyRelation.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     *
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
      * @return void
      */
     public function create(CrudUpdateRequest $request, $model)
@@ -46,8 +45,8 @@ class ManyRelationRepository extends RelationRepository
     /**
      * Link two models.
      *
-     * @param  Model $model
-     * @param  Model $related
+     * @param  Model  $model
+     * @param  Model  $related
      * @return void
      */
     public function link(Model $model, Model $related)
@@ -74,9 +73,8 @@ class ManyRelationRepository extends RelationRepository
     /**
      * Destroy manyRelation.
      *
-     * @param CrudUpdateRequest $request
-     * @param mixed             $model
-     *
+     * @param  CrudUpdateRequest  $request
+     * @param  mixed  $model
      * @return void
      */
     public function destroy(CrudUpdateRequest $request, $model)

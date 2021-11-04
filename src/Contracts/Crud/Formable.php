@@ -10,7 +10,7 @@ interface Formable
     /**
      * Add a form.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return $this
      */
     public function form(Closure $closure);

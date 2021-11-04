@@ -14,7 +14,7 @@ interface Litstack
     /**
      * Get Lit route by name.
      *
-     * @param  string $name
+     * @param  string  $name
      * @return string
      */
     public function route(string $name);
@@ -29,7 +29,7 @@ interface Litstack
     /**
      * Add css file to the application.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return void
      */
     public function style($path);
@@ -37,7 +37,7 @@ interface Litstack
     /**
      * Add script to the application.
      *
-     * @param  string $src
+     * @param  string  $src
      * @return void
      */
     public function script($src);
@@ -52,9 +52,9 @@ interface Litstack
     /**
      * Get translation for Lit application.
      *
-     * @param  string      $key
-     * @param  array       $replace
-     * @param  string|null $locale
+     * @param  string  $key
+     * @param  array  $replace
+     * @param  string|null  $locale
      * @return string
      */
     public function trans(string $key = null, $replace = [], $locale = null);
@@ -62,10 +62,10 @@ interface Litstack
     /**
      * Get choice translation for Lit application.
      *
-     * @param  string      $key
-     * @param  int         $number
-     * @param  array       $replace
-     * @param  string|null $locale
+     * @param  string  $key
+     * @param  int  $number
+     * @param  array  $replace
+     * @param  string|null  $locale
      * @return string
      */
     public function transChoice(string $key = null, $number, $replace = [], $locale = null);
@@ -80,9 +80,9 @@ interface Litstack
     /**
      * Get translation for Lit application.
      *
-     * @param  string      $key
-     * @param  array       $replace
-     * @param  string|null $locale
+     * @param  string  $key
+     * @param  array  $replace
+     * @param  string|null  $locale
      * @return string
      */
     public function __(string $key = null, $replace = [], $locale = null);

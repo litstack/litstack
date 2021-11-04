@@ -64,10 +64,10 @@ class ApiRequest
     /**
      * Create new CrudApi request.
      *
-     * @param  ApiRepositories    $repositories
-     * @param  Request            $request
-     * @param  ApiLoader          $loader
-     * @param  CrudBaseController $controller
+     * @param  ApiRepositories  $repositories
+     * @param  Request  $request
+     * @param  ApiLoader  $loader
+     * @param  CrudBaseController  $controller
      * @return void
      */
     public function __construct(ApiRepositories $repositories, Request $request, ApiLoader $loader, CrudBaseController $controller)
@@ -135,8 +135,8 @@ class ApiRequest
     /**
      * Get parent model.
      *
-     * @param  mixed $parentRepository
-     * @param  mixed $model
+     * @param  mixed  $parentRepository
+     * @param  mixed  $model
      * @return mixed
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -175,7 +175,7 @@ class ApiRequest
     /**
      * Get child repository instance.
      *
-     * @param  mixed $parentRepository
+     * @param  mixed  $parentRepository
      * @return mixed
      */
     protected function getChildRepository($parentRepository)
@@ -230,7 +230,7 @@ class ApiRequest
      * Make repository instance with bindings.
      *
      * @param  string  $repository
-     * @param  Closure $fieldGetter
+     * @param  Closure  $fieldGetter
      * @return mixed
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -278,7 +278,7 @@ class ApiRequest
     /**
      * Get field instance.
      *
-     * @param  string|null $field_id
+     * @param  string|null  $field_id
      * @return Field|null
      */
     public function getField($field_id)
@@ -293,8 +293,8 @@ class ApiRequest
     /**
      * Pass field id or throw Http NotFoundException.
      *
-     * @param  string     $field_id
-     * @param  Field|null $field
+     * @param  string  $field_id
+     * @param  Field|null  $field
      * @return Field
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -335,7 +335,7 @@ class ApiRequest
     /**
      * Get repository method from request.
      *
-     * @param  Request $request
+     * @param  Request  $request
      * @return string
      */
     protected function getMethodFromRequest(Request $request)

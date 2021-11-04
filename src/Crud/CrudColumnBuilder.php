@@ -23,7 +23,7 @@ class CrudColumnBuilder extends ColumnBuilder
     /**
      * Create new CrudColumnBuilder instance.
      *
-     * @param ConfigHandler $config
+     * @param  ConfigHandler  $config
      */
     public function __construct(ConfigHandler $config)
     {
@@ -33,7 +33,7 @@ class CrudColumnBuilder extends ColumnBuilder
     /**
      * Add table column to cols stack.
      *
-     * @param  string       $label
+     * @param  string  $label
      * @return Column|mixed
      */
     public function col($label = '')
@@ -44,7 +44,7 @@ class CrudColumnBuilder extends ColumnBuilder
     /**
      * Add table column to cols stack and set component.
      *
-     * @param  string $component
+     * @param  string  $component
      * @return mixed
      */
     public function component($component): Column
@@ -93,8 +93,8 @@ class CrudColumnBuilder extends ColumnBuilder
     /**
      * Create new action column.
      *
-     * @param  string          $title
-     * @param  string          $action
+     * @param  string  $title
+     * @param  string  $action
      * @return Component|mixed
      */
     public function action($title, $action)
@@ -113,8 +113,8 @@ class CrudColumnBuilder extends ColumnBuilder
     /**
      * Create new actions column.
      *
-     * @param  string    $title
-     * @param  string    $action
+     * @param  string  $title
+     * @param  string  $action
      * @return Component
      */
     public function actions($actions, $text = '<i class="fas fa-ellipsis-v"></i>'): ColumnContract

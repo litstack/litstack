@@ -52,7 +52,7 @@ class Table extends BaseTable implements TableContract
     /**
      * Gets alphabetic order configuration.
      *
-     * @param  string $column
+     * @param  string  $column
      * @return array
      */
     public static function alphabeticOrder($column = 'title')
@@ -66,7 +66,7 @@ class Table extends BaseTable implements TableContract
     /**
      * Gets numeric order configuration.
      *
-     * @param  string $column
+     * @param  string  $column
      * @return array
      */
     public static function numericOrder($column = 'id')
@@ -80,8 +80,8 @@ class Table extends BaseTable implements TableContract
     /**
      * Create new Table instance.
      *
-     * @param string        $routePrefix
-     * @param ColumnBuilder $builder
+     * @param  string  $routePrefix
+     * @param  ColumnBuilder  $builder
      */
     public function __construct($routePrefix, ColumnBuilder $builder)
     {
@@ -108,7 +108,7 @@ class Table extends BaseTable implements TableContract
     /**
      * Set table route prefix.
      *
-     * @param  string $routePrefix
+     * @param  string  $routePrefix
      * @return $this
      */
     public function routePrefix(string $routePrefix)
@@ -121,7 +121,7 @@ class Table extends BaseTable implements TableContract
     /**
      * Set table model.
      *
-     * @param  string $model
+     * @param  string  $model
      * @return $this
      */
     public function model(string $model)
@@ -142,8 +142,8 @@ class Table extends BaseTable implements TableContract
     /**
      * Add cast for attribute.
      *
-     * @param  string $attribute
-     * @param  string $cast
+     * @param  string  $attribute
+     * @param  string  $cast
      * @return $this
      */
     public function cast($attribute, $cast)
@@ -156,7 +156,7 @@ class Table extends BaseTable implements TableContract
     /**
      * Add multiple table casts.
      *
-     * @param  array $casts
+     * @param  array  $casts
      * @return $this
      */
     public function casts(array $casts)
@@ -189,7 +189,7 @@ class Table extends BaseTable implements TableContract
     /**
      * Set query modifier.
      *
-     * @param  Closure $closure
+     * @param  Closure  $closure
      * @return $this
      */
     public function query(Closure $closure)
@@ -202,7 +202,7 @@ class Table extends BaseTable implements TableContract
     /**
      * Get modified query.
      *
-     * @param  Builder $query
+     * @param  Builder  $query
      * @return Builder
      */
     public function getQuery($query)
