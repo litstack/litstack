@@ -36,7 +36,7 @@ class ComponentCommand extends ComponentMakeCommand
      *
      * @return string view
      */
-    protected function writeView()
+    protected function writeView($onSuccess = null)
     {
         return $this->mockBasePath(fn () => parent::writeView());
     }
