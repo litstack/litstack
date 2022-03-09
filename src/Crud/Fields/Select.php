@@ -7,6 +7,7 @@ use Ignite\Crud\BaseField;
 class Select extends BaseField
 {
     use Traits\FieldHasRules;
+    use Traits\TranslatableField;
 
     /**
      * Field Vue component.
@@ -25,7 +26,7 @@ class Select extends BaseField
     /**
      * Set select options.
      *
-     * @param  array  $options
+     * @param  array $options
      * @return self
      */
     public function options(array $options)
@@ -38,7 +39,7 @@ class Select extends BaseField
     /**
      * Set select palceholder.
      *
-     * @param  string  $placeholder
+     * @param  string $placeholder
      * @return self
      */
     public function placeholder(string $placeholder)
