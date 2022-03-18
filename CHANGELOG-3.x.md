@@ -1,5 +1,9 @@
 # Release Notes for 3.x
 
+### Added
+
+-   Added crud index table resource ([#276](https://github.com/litstack/litstack/pull/276))
+
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.15...3.x)
 
 ##  [v3.7.17](https://github.com/litstack/litstack/compare/v3.7.16...v3.7.17)
