@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.15...3.x)
 
+##  [v3.7.17](https://github.com/litstack/litstack/compare/v3.7.16...v3.7.17)
+
 ### Fixed
 
 -   Fixed unique package script and style urls ([#275](https://github.com/litstack/litstack/pull/275))
