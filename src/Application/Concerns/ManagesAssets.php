@@ -13,6 +13,8 @@ trait ManagesAssets
      */
     protected $styles = [];
 
+    protected $urls = [];
+
     /**
      * Included scripts.
      *
@@ -30,7 +32,7 @@ trait ManagesAssets
     /**
      * Add script to the application.
      *
-     * @param  string  $src
+     * @param  string $src
      * @return $this
      */
     public function script($src)
@@ -47,7 +49,7 @@ trait ManagesAssets
     /**
      * Add script to the application.
      *
-     * @param  string  $src
+     * @param  string $src
      * @return $this
      */
     public function loginScript($src)
@@ -64,7 +66,7 @@ trait ManagesAssets
     /**
      * Add css file to the application.
      *
-     * @param  string  $path
+     * @param  string $path
      * @return $this
      */
     public function style($path)
@@ -111,7 +113,7 @@ trait ManagesAssets
     /**
      * Resolve path to asset.
      *
-     * @param  string  $path
+     * @param  string $path
      * @return void
      */
     protected function resolveAssetPath($path)
@@ -122,10 +124,7 @@ trait ManagesAssets
 
         $info = pathinfo($path);
 
-        $uri = implode('/', [
-            $info['extension'] ?? 'dist',
-            $info['basename'],
-        ]);
+        $uri = $this->generateUriFromPath($path);
 
         $route = Route::public()->get($uri, function () use ($path, $info) {
             return response(app('files')->get($path), 200)
@@ -136,5 +135,31 @@ trait ManagesAssets
         });
 
         return url($route->uri);
+    }
+
+    /**
+     * Generate unique uri for the given path.
+     *
+     * @param  string $path
+     * @return string
+     */
+    protected function generateUriFromPath($path)
+    {
+        $info = pathinfo($path);
+
+        $uri = implode('/', [
+            $info['extension'] ?? 'dist',
+            $info['basename'],
+        ]);
+
+        $i = 1;
+        while (in_array($uri, $this->urls)) {
+            $uri = implode('/', [
+                $info['extension'] ?? 'dist',
+                $i++.'-'.$info['basename'],
+            ]);
+        }
+
+        return $this->urls[] = $uri;
     }
 }
