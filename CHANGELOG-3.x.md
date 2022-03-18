@@ -2,19 +2,23 @@
 
 ## [Unreleased](https://github.com/litstack/litstack/compare/v3.7.15...3.x)
 
+### Fixed
+
+-   Fixed unique package script and style urls ([#275](https://github.com/litstack/litstack/pull/275))
+
 ##  [v3.7.15](https://github.com/litstack/litstack/compare/v3.7.14...v3.7.15)
 
-## Added
+### Added
 
 - Add option to configure litstack migrations path ([#253](https://github.com/litstack/litstack/pull/253))
 
 ##  [v3.7.14](https://github.com/litstack/litstack/compare/v3.7.13...v3.7.14)
 
-## Added
+### Added
 
 - Add factory option flag to crud generator command ([#246](https://github.com/litstack/litstack/pull/246))
 
-## Fixed
+### Fixed
 
 - Fix translation on forgot password page ([#245](https://github.com/litstack/litstack/pull/245))
 - Fix hardcoded response data type for file downloads ([#251](https://github.com/litstack/litstack/pull/251))
