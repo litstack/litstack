@@ -121,6 +121,6 @@ $rules = [
     'method_chaining_indentation' => true,
 ];
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config)
     ->setRules($rules)
     ->setLineEnding("\n");
