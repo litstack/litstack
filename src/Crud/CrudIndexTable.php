@@ -33,8 +33,8 @@ class CrudIndexTable extends Table
     /**
      * Create new CrudIndexTable instance.
      *
-     * @param  ConfigHandler     $config
-     * @param  CrudColumnBuilder $builder
+     * @param  ConfigHandler  $config
+     * @param  CrudColumnBuilder  $builder
      * @return void
      */
     public function __construct(ConfigHandler $config, CrudColumnBuilder $builder)
@@ -47,8 +47,8 @@ class CrudIndexTable extends Table
     /**
      * Add action.
      *
-     * @param  string $title
-     * @param  string $action
+     * @param  string  $title
+     * @param  string  $action
      * @return $this
      */
     public function action($title, $action)
@@ -63,7 +63,7 @@ class CrudIndexTable extends Table
     /**
      * Set table filters.
      *
-     * @param  array $filter
+     * @param  array  $filter
      * @return $this
      */
     public function filter(array $filter)
