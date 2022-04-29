@@ -32,7 +32,7 @@ trait ManagesAssets
     /**
      * Add script to the application.
      *
-     * @param  string $src
+     * @param  string  $src
      * @return $this
      */
     public function script($src)
@@ -49,7 +49,7 @@ trait ManagesAssets
     /**
      * Add script to the application.
      *
-     * @param  string $src
+     * @param  string  $src
      * @return $this
      */
     public function loginScript($src)
@@ -66,7 +66,7 @@ trait ManagesAssets
     /**
      * Add css file to the application.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return $this
      */
     public function style($path)
@@ -113,7 +113,7 @@ trait ManagesAssets
     /**
      * Resolve path to asset.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return void
      */
     protected function resolveAssetPath($path)
@@ -140,7 +140,7 @@ trait ManagesAssets
     /**
      * Generate unique uri for the given path.
      *
-     * @param  string $path
+     * @param  string  $path
      * @return string
      */
     protected function generateUriFromPath($path)
