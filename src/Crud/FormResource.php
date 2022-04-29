@@ -89,8 +89,10 @@ class FormResource extends JsonResource
 
             if ($field instanceof \Ignite\Crud\Fields\Route) {
                 $route = $this->getAttribute($field->local_key);
-                $route = $value->getId();
-                $data['route_id'] = $route;
+                if (! is_null($route)) {
+                    $route = $route->getId();
+                    $data['route_id'] = $route;
+                }
             }
 
             $data[$field->id] = $value;
