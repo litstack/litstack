@@ -156,7 +156,7 @@ class Password extends BaseField
 
         return $this->rulesOnly()
             ->noScore()
-            ->hint('Confirm with current password.')
+            ->hint(ucfirst(__lit('profile.password_confirm_hint')))
             ->rules('required', $confirmationRule);
     }
 
