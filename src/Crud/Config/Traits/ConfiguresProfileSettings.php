@@ -40,7 +40,7 @@ trait ConfiguresProfileSettings
                 ->title('E-Mail')
                 ->variant('primary')
                 ->preview('{email}')
-                ->name('Change E-Mail')
+                ->name(ucwords(__lit('profile.change_email')))
                 ->confirmWithPassword()
                 ->form(function ($modal) {
                     $modal->input('email')
