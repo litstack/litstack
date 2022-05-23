@@ -17,7 +17,7 @@ class PermissionsComposer
     {
         app('lit.vue.app')
             ->prop('permissions', $this->getPermissions())
-            ->prop('roles', Role::where('guard_name', config('lit.guard'))->get());
+            ->prop('roles', app(config('permission.models.role'))->where('guard_name', config('lit.guard'))->get());
     }
 
     /**
