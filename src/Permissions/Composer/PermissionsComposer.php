@@ -3,7 +3,6 @@
 namespace Ignite\Permissions\Composer;
 
 use Illuminate\View\View;
-use Spatie\Permission\Models\Role;
 
 class PermissionsComposer
 {
