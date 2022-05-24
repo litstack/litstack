@@ -139,7 +139,7 @@ class Modal extends BaseField implements Formable
 
         if ($this->confirmWithPassword) {
             $form->password('__p_confirm')
-                ->title('Password')
+                ->title(ucwords(__lit('base.password')))
                 ->confirm();
         }
 
