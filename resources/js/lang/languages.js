@@ -200,6 +200,15 @@ export default {
         nativeName: 'Chamoru',
         wikiUrl: 'https://en.wikipedia.org/wiki/Chamorro_language',
     },
+    ckb: {
+        '639-1': 'ku',
+        '639-2': 'kur',
+        '639-3': 'ckb',
+        family: 'Indo-European',
+        name: 'Kurdi-Sorani',
+        nativeName: 'کوردی',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Sorani',
+    },
     co: {
         '639-1': 'co',
         '639-2': 'cos',
