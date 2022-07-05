@@ -1,7 +1,11 @@
 <template>
     <lit-base-field :field="field" :model="model" class="">
         <template slot="title-right">
-            <b-button v-if="field.allow_linking" v-b-modal="modalId" size="sm">
+            <b-button
+                v-if="field.allow_linking && !field.readonly"
+                v-b-modal="modalId"
+                size="sm"
+            >
                 <lit-fa-icon icon="link" />
                 {{
                     __('base.item_select', {
