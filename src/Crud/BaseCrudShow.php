@@ -217,8 +217,8 @@ class BaseCrudShow extends Page
                 && count(explode('/', Str::after(request()->url(), '/api/'))) == 1;
         }
 
-        return str_contains($route->getName(), '.create')
-            || Str::endsWith($route->getName(), '.store');
+        return str_contains($route?->getName(), '.create')
+            || Str::endsWith($route?->getName(), '.store');
     }
 
     /**
@@ -248,7 +248,7 @@ class BaseCrudShow extends Page
             return;
         }
 
-        return $this->headerLeft()->component(new ButtonComponent)
+        return $this->headerLeft()->component(new ButtonComponent())
             ->size('sm')
             ->variant('transparent')
             ->prop('href', lit()->url($prefix))
@@ -303,7 +303,7 @@ class BaseCrudShow extends Page
         $preview = component('lit-crud-preview')->prop('urls', $urls);
 
         return $this->headerRight()
-            ->component(new ButtonComponent)
+            ->component(new ButtonComponent())
             ->child($preview)
             ->size('sm')
             ->variant('primary');
