@@ -27,7 +27,11 @@ const methods = {
             ? i18n.t(`messages.${message}`)
             : message;
 
-        window.toast(message, { variant });
+       try {
+            window.toast(message, { variant });
+        } catch (error) {
+            // Do nothing.
+        }
 
         return response;
     },
@@ -77,9 +81,13 @@ const methods = {
             ? i18n.t(`messages.${message}`)
             : message;
 
-        window.toast(message, {
-            variant: 'danger',
-        });
+        try {
+            window.toast(message, {
+                variant: "danger",
+            });
+        } catch (error) {
+            // Do nothing.
+        }
 
         return Promise.reject(error);
     },
