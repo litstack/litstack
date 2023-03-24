@@ -66,7 +66,9 @@ export default {
         };
     },
     beforeMount() {
+        // @deprecated
         window.toast = this.$bvToast.toast;
+
         this.fillStore();
         this.prepareProps();
         this.setAppLocale();
@@ -84,6 +86,11 @@ export default {
         this.$Bus.$on('error', (e) => {
             this.$bvToast.toast(e, {
                 variant: 'danger',
+            });
+        });
+        this.$Bus.$on('toast', (message, variant) => {
+            this.$bvToast.toast(message, {
+                variant,
             });
         });
     },

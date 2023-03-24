@@ -28,7 +28,7 @@ const methods = {
             : message;
 
        try {
-            window.toast(message, { variant });
+            Bus.$emit('toast', message, variant);
         } catch (error) {
             // Do nothing.
         }
@@ -82,9 +82,7 @@ const methods = {
             : message;
 
         try {
-            window.toast(message, {
-                variant: "danger",
-            });
+            Bus.$emit('toast', message, 'danger');
         } catch (error) {
             // Do nothing.
         }
