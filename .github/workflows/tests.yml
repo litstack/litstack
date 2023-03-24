@@ -38,14 +38,14 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                php: [8.0]
-                laravel: [8.*, 7.*]
+                php: [8.0, 8.1]
+                laravel: [9.*, 8.*, 7.*]
                 stability: [prefer-lowest, prefer-stable]
                 include:
-                    - laravel: 7.*
-                      orchestra: 5.*
                     - laravel: 8.*
                       orchestra: 6.*
+                    - laravel: 9.*
+                      orchestra: 7.*
 
         name:
             p ${{ matrix.php }} - l ${{ matrix.laravel }} - ${{ matrix.stability
@@ -95,8 +95,6 @@ jobs:
                 php: [8.0]
                 laravel: [8.*, 7.*]
                 include:
-                    - laravel: 7.*
-                      orchestra: 5.*
                     - laravel: 8.*
                       orchestra: 6.*
 
