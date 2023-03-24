@@ -42,8 +42,6 @@ jobs:
                 laravel: [9.*, 8.*, 7.*]
                 stability: [prefer-lowest, prefer-stable]
                 include:
-                    - laravel: 7.*
-                      orchestra: 5.*
                     - laravel: 8.*
                       orchestra: 6.*
                     - laravel: 9.*
@@ -94,11 +92,9 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                php: [7.4, 8.0]
+                php: [8.0]
                 laravel: [8.*, 7.*]
                 include:
-                    - laravel: 7.*
-                      orchestra: 5.*
                     - laravel: 8.*
                       orchestra: 6.*
 
