@@ -1,7 +1,7 @@
 <template>
     <div class="lit-col-relation">
         {{ value }}
-        <a :href="`${Lit.baseURL}${relationLink}/${relation.id}`">
+        <a  v-if="relation?.id" :href="`${Lit.baseURL}${relationLink}/${relation.id}`">
             <lit-fa-icon icon="external-link-alt" />
         </a>
     </div>
