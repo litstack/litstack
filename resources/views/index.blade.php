@@ -16,7 +16,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
 
-    <link href="{{ route('lit.css') }}" rel="stylesheet"/>
+    <link href="{{ lit_css() }}" rel="stylesheet"/>
     
     @foreach(lit_app()->getStyles() as $path)
         <link href="{{ $path }}{{ asset_time() }}" rel="stylesheet">
