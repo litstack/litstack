@@ -4,6 +4,7 @@ namespace Ignite\Foundation\Console\Concerns;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Spatie\Permission\PermissionServiceProvider;
 
 trait InstallsVendorConfigs
 {
@@ -80,12 +81,12 @@ trait InstallsVendorConfigs
         if (! $mediaMatch && $this->migrations()) {
             $this->callSilent('vendor:publish', [
                 '--provider' => "Spatie\MediaLibrary\MediaLibraryServiceProvider",
-                '--tag'      => 'migrations',
+                '--tag' => 'migrations',
             ]);
         }
         $this->callSilent('vendor:publish', [
             '--provider' => "Spatie\MediaLibrary\MediaLibraryServiceProvider",
-            '--tag'      => 'config',
+            '--tag' => 'config',
         ]);
         $content = file_get_contents(config_path(medialibrary_config_key().'.php'));
         $content = str_replace(
@@ -108,8 +109,8 @@ trait InstallsVendorConfigs
         }
 
         $this->callSilent('vendor:publish', [
-            '--provider' => \Spatie\Permission\PermissionServiceProvider::class,
-            '--tag'      => 'migrations',
+            '--provider' => PermissionServiceProvider::class,
+            // '--tag' => 'migrations',
         ]);
 
         $migrationsPath = app()->databasePath().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR;
@@ -122,6 +123,7 @@ trait InstallsVendorConfigs
         if ($name == basename($migration)) {
             return;
         }
+
         $this->files->move($migration, $migrationsPath.$name);
     }
 }

@@ -39,7 +39,6 @@ class InstallCommand extends Command
     /**
      * Create new InstallCommand instance.
      *
-     * @param  Filesystem  $files
      * @return void
      */
     public function __construct(Filesystem $files)
@@ -108,16 +107,16 @@ class InstallCommand extends Command
         }
 
         DB::table('lit_users')->insert([
-            'username'   => 'admin',
-            'email'      => 'admin@admin.com',
+            'username' => 'admin',
+            'email' => 'admin@admin.com',
             'first_name' => 'admin',
-            'last_name'  => '',
-            'password'   => bcrypt('secret'),
+            'last_name' => '',
+            'password' => bcrypt('secret'),
         ]);
         DB::table(config('permission.table_names.model_has_roles'))->insert([
-            'role_id'    => Role::where('name', 'admin')->where('guard_name', 'lit')->first()->id,
+            'role_id' => Role::where('name', 'admin')->where('guard_name', 'lit')->first()->id,
             'model_type' => 'Lit\\Models\\User',
-            'model_id'   => DB::table('lit_users')->where('email', 'admin@admin.com')->first()->id,
+            'model_id' => DB::table('lit_users')->where('email', 'admin@admin.com')->first()->id,
         ]);
 
         $this->info('created default admin (email: admin@admin.com, password: secret)');
@@ -126,7 +125,6 @@ class InstallCommand extends Command
     /**
      * Make directory if not exists.
      *
-     * @param  string  $path
      * @return void
      */
     private function makeDirectory(string $path)
@@ -156,13 +154,13 @@ class InstallCommand extends Command
         if ($this->migrations()) {
             $this->callSilent('vendor:publish', [
                 '--provider' => LitstackServiceProvider::class,
-                '--tag'      => 'migrations',
+                '--tag' => 'migrations',
             ]);
         }
 
         $this->callSilent('vendor:publish', [
             '--provider' => LitstackServiceProvider::class,
-            '--tag'      => 'config',
+            '--tag' => 'config',
         ]);
 
         // Migrate tables.
