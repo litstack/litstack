@@ -72,7 +72,7 @@ class Media extends MediaModel
     {
         $attribute = parent::getAttribute($name);
 
-        if ($attribute) {
+        if ($attribute !== null) {
             return $attribute;
         }
 
