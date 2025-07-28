@@ -233,7 +233,7 @@ if (! function_exists('fix_file')) {
      * @param  ConfigInterface|null  $config
      * @return void
      */
-    function fix_file($path, ConfigInterface $config = null)
+    function fix_file($path, ?ConfigInterface $config = null)
     {
         if (is_null($config)) {
             $config = require lit_vendor_path('fixer/.php_cs_config');
