@@ -127,7 +127,7 @@ class MediaRepository extends BaseFieldRepository
 
         $properties = [
             'title' => $request->title ?? null,
-            'alt'   => $request->alt ?? null,
+            'alt' => $request->alt ?? null,
         ];
 
         $customProperties = $this->field->translatable ?? false
@@ -142,7 +142,7 @@ class MediaRepository extends BaseFieldRepository
             $image = ImageFactory::load($request->media->path());
 
             $customProperties['original_dimensions'] = [
-                'width'  => $image->getWidth(),
+                'width' => $image->getWidth(),
                 'height' => $image->getHeight(),
             ];
         }
