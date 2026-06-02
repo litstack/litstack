@@ -138,9 +138,9 @@ class MediaRepository extends BaseFieldRepository
             $customProperties['crop'] = $crop;
         }
 
-        $image = ImageFactory::load($request->media->path());
-
         if (Str::startsWith($request->media->getClientMimeType(), 'image')) {
+            $image = ImageFactory::load($request->media->path());
+
             $customProperties['original_dimensions'] = [
                 'width'  => $image->getWidth(),
                 'height' => $image->getHeight(),
