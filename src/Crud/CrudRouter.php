@@ -216,7 +216,7 @@ class CrudRouter
         $this->router->post('/run-action/{key}', [$config->controller, 'runAction']);
         // Api
         $this->router->any('/api/{form_type}/{repository?}/{method?}/{child_method?}', [$config->controller, 'api'])->name('api');
-        $this->router->any('/{id}/api/{form_type}/{repository?}/{method?}/{child_method?}', [$config->controller, 'api'])->name('api');
+        $this->router->any('/{id}/api/{form_type}/{repository?}/{method?}/{child_method?}', [$config->controller, 'api'])->name('api.id');
 
         // List
         $this->router->get("/{{$attribute}}/{form}/list/{field_id}", [$config->controller, 'loadListItems'])->name('list.index');
